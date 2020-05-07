@@ -15,7 +15,7 @@ helm repo add sysdiglabs https://sysdiglabs.github.io/charts
 Then you can start using it:
 
 ```bash
-# List al charts:
+# List all charts:
 helm search repo sysdiglabs
 
 # Install Sysdig agent from the online charts repository with default settings using:
