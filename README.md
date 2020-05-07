@@ -25,7 +25,7 @@ helm install sysdig-agent --set sysdig.accessKey=YOUR-KEY-HERE sysdiglabs/sysdig
 ## Hosted charts in this repository
 
 See specific information about each chart with these links
-* [Sysdig agent](./sources/sysdig/README.md)
+* [Sysdig agent](./charts/sysdig/README.md)
 
 
 ## More information
