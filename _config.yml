@@ -1,1 +1,5 @@
 theme: jekyll-theme-cayman
+title: Sysdig Helm Charts Repository
+
+github:
+  is_project_page: false
