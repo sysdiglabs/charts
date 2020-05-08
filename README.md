@@ -10,6 +10,9 @@ To start using our charts, first add this _charts repository_ using the `helm` c
 ```bash
 # Add sysdiglab charts to helm
 helm repo add sysdiglabs https://sysdiglabs.github.io/charts
+
+# Update list of charts from all registered charts repositories
+helm repo update
 ```
 
 
