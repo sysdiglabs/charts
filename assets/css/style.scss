@@ -33,3 +33,9 @@ a {
 .highlight .c, .highlight .cd {
     color: #6666EE;
 }
+
+@media screen and (min-width: 64em) {
+    .main-content {
+        padding: 2rem 4rem;
+    }
+}
