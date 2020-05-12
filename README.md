@@ -1,6 +1,6 @@
 # Sysdig Helm Charts
 
-[This website](https://sysdiglabs.github.io/charts) is the official source for Sysdig's Helm charts.
+This is the official source for Sysdig's Helm charts.
 
 
 ## Add this charts repository to your local Helm
@@ -31,8 +31,8 @@ helm install sysdig-agent --set sysdig.accessKey=YOUR-KEY-HERE sysdiglabs/sysdig
 
 ## Hosted charts in this repository
 
-See specific information about each _chart_ with these links
-* [Chart: Sysdig agent](./charts/sysdig/README.md)
+See specific information about each _chart_ at the GitHub repostory:
+* [github.com/sysdiglabs/charts](https://github.com/sysdiglabs/charts)
 
 
 ## More information
