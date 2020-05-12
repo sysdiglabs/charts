@@ -41,4 +41,4 @@ You can find more information at:
 * [Chart Releaser GitHub Action](https://github.com/helm/chart-releaser-action)
 ---
 
-![Sysdig logo](./assets/img/sysdig-logo-220.png)
+![Sysdig logo](https://sysdiglabs.github.io/charts/assets/img/sysdig-logo-220.png)
