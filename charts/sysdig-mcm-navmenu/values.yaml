@@ -1,0 +1,22 @@
+replicaCount: 1
+
+image: 
+  repository: nginx
+  tag: 1.17-alpine
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  name: sysdig-navmenu-proxy
+  type: ClusterIP
+  externalPort: 8080
+  internalPort: 80
+  secureMenuId: administer-mcm
+  monitorMenuId: monitor
+
+# Set to true if using Sysdig Secure and Monitor SaaS
+saas: true
+companyName: ibm-mcm-demo
+
+# If saas is false, set your on-prem base URL (omit trailing slash)
+sysdigURL: https://HOSTNAME

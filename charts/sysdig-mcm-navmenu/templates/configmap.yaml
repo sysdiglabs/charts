@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "fullname" . }}-config
+data:
+  default.conf: |
+    server {
+      listen       {{ .Values.service.internalPort }};
+      server_name  localhost;
+
+      location /sysdig-secure {
+        rewrite ^/sysdig-secure(.*)$ {{ if .Values.saas }}https://secure.sysdig.com/api/oauth/openid/{{ .Values.companyName }}{{ else }}{{.Values.sysdigURL}}/api/oauth/openid{{ end }}?product=SDS permanent;
+      }
+      location /sysdig-monitor {
+        rewrite ^/sysdig-monitor(.*)$ {{ if .Values.saas }}https://app.sysdigcloud.com/api/oauth/openid/{{ .Values.companyName }}{{ else }}{{.Values.sysdigURL}}/api/oauth/openid{{ end }} permanent;
+      }
+    }

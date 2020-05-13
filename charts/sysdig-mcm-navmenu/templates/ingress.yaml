@@ -1,0 +1,24 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    app: {{ template "name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    inmenu: "true"
+  annotations: # NavMenu: add annotations from values.yaml
+    icp.management.ibm.com/auth-type: access-token
+    kubernetes.io/ingress.class: ibm-icp-management
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /sysdig-secure
+            backend:
+              serviceName: {{ template "fullname" . }}-secure
+              servicePort: {{ .Values.service.externalPort }}
+          - path: /sysdig-monitor
+            backend:
+              serviceName: {{ template "fullname" . }}-monitor
+              servicePort: {{ .Values.service.externalPort }}

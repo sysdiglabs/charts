@@ -1,0 +1,6 @@
+apiVersion: v2
+name: sysdig-admission-controller
+description: Sysdig Admission Controller using Sysdig Secure image scanner
+type: application
+version: 1.0.0
+appVersion: 1.0.0

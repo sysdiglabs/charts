@@ -1,0 +1,119 @@
+# Default values for sysdig-admission-controller.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: sysdiglabs/sysdig-admission-controller
+  pullPolicy: Always
+
+service:
+  port: 8443
+
+serviceAccount:
+  name:
+
+sysdigSecureApiUrl: https://api.sysdigcloud.com
+# Put your <Sysdig-Secure-Secret-Token> in this value
+sysdigSecureToken: ""
+
+#Set to true to increase verbosity and output OPA input and rules in the log
+verboseLog: false
+
+scanPolicies:
+
+  # If set to "true", a default set of rules will be generated from this YAML values.
+  # Otherwise, no rules will be generated, and only "customRules" below will apply
+  autoGenerate: true
+
+  # Default admission policy to apply: [accept | reject | scan-result]
+  defaultPolicy: scan-result
+
+  # What should we do if the Scan Result is not yet available (scan in progress): [accept | reject]
+  reportPending: reject
+
+  # What should we do if the Scan has failed (wrong credentials, misconfiguration, etc.): [accept | reject]
+  scanFailed: reject
+
+  # customPolicies:
+  #   - prefix: "my.totally-trusted-registry.com/"
+  #     action: accept
+  #   - prefix: "bad-registry.com/specific-repo/"
+  #     action: scan-result
+  #   - prefix: "bad-registry.com/"
+  #     action: reject
+  #   - prefix: "malware-registry.io/"
+  #     action: reject
+
+
+  byNamespace: {}
+  # byNamespace:
+  #  ns-dev:
+  #    # By default, images will be accepted in this NS regardless of the scan result
+  #    defaultPolicy: accept
+  #  ns-prod:
+  #    # All images rejected by default in this namespace
+  #    defaultPolicy: reject
+  #    # Images from "my-trusted-registry.com/" will be always accepted
+  #    customPolicies:
+  #      - prefix: "my-trusted-registry.com/"
+  #        action: accept
+  #      - prefix: "docker.io/"
+  #        action: scan-result
+  #  ns-playground:
+  #    defaultPolicy: accept
+  #    customPolicies: []
+
+preScanPolicies:
+
+  autoGenerate: true
+
+  defaultPolicy: scan
+
+  # customPolicies:
+  #   - prefix: "my.totally-trusted-registry.com/"
+  #     action: accept
+  #   - prefix: "bad-registry.com/specific-repo/"
+  #     action: scan
+  #   - prefix: "bad-registry.com/"
+  #     action: reject
+  #   - prefix: "malware-registry.io/"
+  #     action: reject
+  
+  byNamespace: {}
+  # byNamespace:
+  #   ns-prod:
+  #     defaultPolicy: reject
+  #     customPolicies:
+  #       - prefix: "my-trusted-registry.com/"
+  #         action: accept
+
+  #   ns-playground:
+  #     defaultPolicy: accept
+  #     customPolicies: []
+
+
+# Define a set of post-scan custom rego rules.
+customRules: ""
+
+# Define a set of pre-scan custom rego rules.
+preCustomRules: ""
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
