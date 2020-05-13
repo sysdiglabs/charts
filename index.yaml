@@ -1,0 +1,51 @@
+apiVersion: v1
+entries:
+  sysdig:
+  - apiVersion: v1
+    appVersion: 10.0.0
+    created: "2020-05-12T17:19:48.408609+02:00"
+    description: Sysdig Monitor and Secure agent
+    digest: 294f84e7933ea8f3a6ab8e5b6bdaf84de55adba7a237160c65419fa7a1ab31c7
+    home: https://www.sysdig.com/
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: lachlan@deis.com
+      name: lachie83
+    - email: jorge.salamero@sysdig.com
+      name: bencer
+    - email: nestor.salceda@sysdig.com
+      name: nestorsalceda
+    name: sysdig
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/sysdig-1.7.15/sysdig-1.7.15.tgz
+    version: 1.7.15
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2020-05-13T10:32:56.061349642Z"
+    description: Sysdig Admission Controller using Sysdig Secure image scanner
+    digest: fb3c3a567250cbdf7ab665b08beebadc7bef51d7e5d7e5ae0223bf9feebac0bd
+    name: sysdig-admission-controller
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/sysdig-admission-controller-1.0.0/sysdig-admission-controller-1.0.0.tgz
+    version: 1.0.0
+  sysdig-mcm-navmenu:
+  - apiVersion: v1
+    created: "2020-05-13T10:32:56.174515919Z"
+    description: Sysdig IBM MCM Nav Menu integration
+    digest: 7baef0a15e2644ce1f1b2b6f68213d02ce24644fc5f25269921e1c6bf2480c0b
+    name: sysdig-mcm-navmenu
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/sysdig-mcm-navmenu-1.0.0/sysdig-mcm-navmenu-1.0.0.tgz
+    version: 1.0.0
+generated: "2020-05-12T17:19:48.253395+02:00"
