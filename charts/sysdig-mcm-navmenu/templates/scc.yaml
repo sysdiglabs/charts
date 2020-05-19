@@ -1,3 +1,4 @@
+{{- if .Capabilities.APIVersions.Has "security.openshift.io/v1" }}
 apiVersion: security.openshift.io/v1
 kind: SecurityContextConstraints
 metadata:
@@ -23,4 +24,4 @@ volumes:
 - secret
 users:
 - system:serviceaccount:{{ .Release.Namespace }}:default
-
+{{ end -}}
