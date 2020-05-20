@@ -256,7 +256,7 @@ $ helm install --name my-release -f values.yaml stable/sysdig
 
 ### Automating the generation of custom-app-checks.yaml file
 
-Sometimes editing and maintaining YAML files can be a bit cumbersome and error prone, so we have created a script for automating this process and make your life easier.
+Sometimes editing and maintaining YAML files can be a bit cumbersome and error-prone, so we have created a script for automating this process and make your life easier.
 
 Imagine that you have custom AppChecks for a number of services like Redis, MongoDB and Traefik.
 
@@ -279,7 +279,7 @@ You can generate an additional values YAML file with the custom AppChecks:
 
 ```bash
 $ git clone https://github.com/kubernetes/charts.git
-$ cd stable/sysdig
+$ cd charts/stable/sysdig
 $ ./scripts/appchecks2helm appChecks/solr.py appChecks/traefik.py appChecks/nats.py > custom-app-checks.yaml
 ```
 
@@ -289,3 +289,16 @@ And deploy the Chart with both of them:
 $ helm install --name my-release -f custom-app-checks.yaml -f values.yaml stable/sysdig
 ```
 
+## Support
+
+For getting support from the Sysdig team, you should refer to the official
+[Sysdig Support page](https://sysdig.com/support).
+
+In addition to this, you can browse the documentation for the different
+components of the Sysdig Platform:
+
+* [Sysdig Monitor](https://app.sysdigcloud.com)
+* [Sysdig Secure](https://secure.sysdig.com)
+* [Platform Documentation](https://docs.sysdig.com/en/sysdig-platform.html)
+* [Monitor Documentation](https://docs.sysdig.com/en/sysdig-monitor.html)
+* [Secure Documentation](https://docs.sysdig.com/en/sysdig-secure.html)
