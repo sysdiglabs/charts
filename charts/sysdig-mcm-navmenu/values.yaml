@@ -1,9 +1,8 @@
 replicaCount: 1
 
-image: 
+image:
   repository: nginx
   tag: 1.17-alpine
-  tag: latest
   pullPolicy: IfNotPresent
 
 service:
@@ -16,7 +15,7 @@ service:
 
 # Set to true if using Sysdig Secure and Monitor SaaS
 saas: true
-companyName: ibm-mcm-demo
-
 # If saas is false, set your on-prem base URL (omit trailing slash)
 sysdigURL: https://HOSTNAME
+# Provide the companyName used in Sysdig platform (ask your admin or sales for this value) for OpenID Connect SSO
+companyName: ""
