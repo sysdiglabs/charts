@@ -2,57 +2,44 @@
 # Pre-Scan rules
 ##############################
 
-valid_policy_values := ["accept", "reject", "scan"]
+valid_policy_values := ["accept", "reject", "check-scan", "scan"]
 
 # Configuration errros
 
-config_error[msg] {
-        policy := final_image_policies[{"ns": false, "prefix": _, "image": _, "action": _}]
-        not policy.prefix == null
-        not valid_policy_value[policy.action]
-        msg := sprintf("Invalid value for customPolicy with prefix '%s' - '%s'", [policy.prefix, policy.action])
-}
-
-config_error[msg] {
-        policy := final_image_policies[{"ns": true, "prefix": _, "image": _, "action": _}]
-        not policy.prefix == null
-        not valid_policy_value[policy.action]
-        msg := sprintf("Invalid value for namespace '%s' customPolicy with prefix '%s' - '%s'", [namespace, policy.prefix, policy.action])
+config_error["ContainerObject.image is missing in input"] {
+        not input.ContainerObject.image
 }
 
 # Final decision
 
-final_image_policies[{"ns": ns, "prefix": prefix, "image": image, "action": action}] {
-        image := input.AdmissionRequest.object.spec.containers[_].image
-        policy := final_image_policy(image)
-        ns := policy.ns
-        prefix := policy.prefix
-        action := policy.action
+image := input.ContainerObject.image
+
+image_action_trigger_scan {
+        imagePolicy = {"ns": _, "prefix": _, "action": "scan"}
 }
 
-image_action_reject[[ns, prefix, image]] {
-        final_image_policies[{"ns": ns, "prefix": prefix, "image": image, "action": "reject"}]
+image_action_check_scan {
+        imagePolicy = {"ns": _, "prefix": _, "action": "check-scan"}
 }
 
-any_image_action_scan {
-        final_image_policies[{"ns": _, "prefix": _, "image": _, "action": "scan"}]
-}
-
-no_denied_pod {
-        deny_reasons := { reason | deny_pod[reason] }
+no_denied_image {
+        deny_reasons := { reason | deny_image[reason] }
         count(deny_reasons) == 0
 }
 
-allow_pod {
-        not any_image_action_scan
-        no_denied_pod
+scan_image {
+        image_action_trigger_scan
+        not image_action_check_scan
+        no_denied_image
 }
 
-deny_pod[msg] {
-        config_error[msg]
+allow_image {
+        not image_action_trigger_scan
+        not image_action_check_scan
+        no_denied_image
 }
 
-deny_pod[msg] {
-        image_action_reject[[ns, prefix, image]]
-        msg :=  sprintf("Image '%s' REJECTED. %s", [image, scope_str(ns, prefix)])
+deny_image[msg] {
+        image_action_reject[[ns, prefix]]
+        msg :=  sprintf("REJECTED. %s", [scope_str(ns, prefix)])
 }

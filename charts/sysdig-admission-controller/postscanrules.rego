@@ -59,19 +59,6 @@ config_error[msg] {
         msg := sprintf("Invalid value for scanFailed for namespace '%s' - '%s'", [namespace, scan_failed_action])
 }
 
-config_error[msg] {
-        imagePolicy.ns == false
-        not imagePolicy.prefix == null
-        not valid_policy_value[imagePolicy.action]
-        msg := sprintf("Invalid value for customPolicy with prefix '%s' - '%s'", [imagePolicy.prefix, imagePolicy.action])
-}
-
-config_error[msg] {
-        imagePolicy.ns == true
-        not imagePolicy.prefix == null
-        not valid_policy_value[imagePolicy.action]
-        msg := sprintf("Invalid value for namespace '%s' customPolicy with prefix '%s' - '%s'", [namespace, imagePolicy.prefix, imagePolicy.action])
-}
 
 # Scan result helpers
 
@@ -99,14 +86,8 @@ scan_result_unexpected[value] {
 
 image := input.ScanReport.ImageAndTag
 
-imagePolicy := final_image_policy(image)
-
 image_action_scan_result[[ns, prefix]] {
         imagePolicy = {"ns": ns, "prefix": prefix, "action": "scan-result"}
-}
-
-image_action_reject[[ns, prefix]] {
-        imagePolicy = {"ns": ns, "prefix": prefix, "action": "reject"}
 }
 
 deny_image_reason[[ns, custom_policy_prefix, reason]] {
@@ -136,11 +117,7 @@ deny_image_reason[[ns, custom_policy_prefix, "policy action is 'reject'"]] {
         image_action_reject[[ns, custom_policy_prefix]]
 }
 
-deny_image[msg] {
-        config_error[msg]
-}
-
-# Message is composed as "Image '<image>' REJECTED. <scope> - <reason>"
+# Message is composed as "REJECTED. <scope> - <reason>"
 # <scope> is composed of "<namespace> <policy>"
 # <namespace> is either:
 # - Global
@@ -151,5 +128,5 @@ deny_image[msg] {
 
 deny_image[msg] {
         deny_image_reason[[ns, prefix, reason_msg]]
-        msg :=  sprintf("Image '%s' REJECTED. %s - %s", [image, scope_str(ns, prefix), reason_msg])
+        msg :=  sprintf("REJECTED. %s - %s", [scope_str(ns, prefix), reason_msg])
 }
