@@ -10,10 +10,10 @@ data:
     # Helper variables
     policies := data.policies
     {{- if .Values.scanPolicies.autoGenerate }}
-    {{- $common := .Files.Get "commonrules.rego"}}
-    {{- if eq $common "" }}{{ fail "commonrules.rego file was not found"}}{{ end }}
-    {{- $rules := .Files.Get "postscanrules.rego"}}
-    {{- if eq $rules "" }}{{ fail "postscanrules.rego file was not found"}}{{ end }}
+    {{- $common := .Files.Get "rules/commonrules.rego"}}
+    {{- if eq $common "" }}{{ fail "rules/commonrules.rego file was not found"}}{{ end }}
+    {{- $rules := .Files.Get "rules/postscanrules.rego"}}
+    {{- if eq $rules "" }}{{ fail "rules/postscanrules.rego file was not found"}}{{ end }}
     {{ $common | nindent 4 }}
     {{- $rules | nindent 4 }}
     {{- end }}
