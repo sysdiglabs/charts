@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: {{ template "fullname" . }}-config
 data:
-  {{- if eq (default "" .Values.companyName) "" }}{{ fail "value 'companyName' is mandatory, but it is not set"}}{{ end }}
+  {{- if eq (default false .Values.saas) true }}{{- if eq (default "" .Values.companyName) "" }}{{ fail "value 'companyName' is mandatory, but it is not set"}}{{ end }}{{ end }}
   default.conf: |
     server {
       listen       {{ .Values.service.internalPort }};
