@@ -10,10 +10,10 @@ data:
     # Helper variables
     policies := data.preScanPolicies
     {{- if .Values.preScanPolicies.autoGenerate }}
-    {{- $common := .Files.Get "commonrules.rego"}}
-    {{- if eq $common "" }}{{ fail "commonrules.rego file was not found"}}{{ end }}
-    {{- $rules := .Files.Get "prescanrules.rego"}}
-    {{- if eq $rules "" }}{{ fail "prescanrules.rego file was not found"}}{{ end }}
+    {{- $common := .Files.Get "rules/commonrules.rego"}}
+    {{- if eq $common "" }}{{ fail "rules/commonrules.rego file was not found"}}{{ end }}
+    {{- $rules := .Files.Get "rules/prescanrules.rego"}}
+    {{- if eq $rules "" }}{{ fail "rules/prescanrules.rego file was not found"}}{{ end }}
     {{ $common | nindent 4 }}
     {{- $rules | nindent 4 }}
     {{- end }}

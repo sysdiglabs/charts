@@ -69,6 +69,20 @@ config_error[msg] {
         msg := sprintf("Invalid value for defaultPolicy for namespace '%s' - '%s'", [namespace, value])
 }
 
+config_error[msg] {
+        imagePolicy.ns == false
+        not imagePolicy.prefix == null
+        not valid_policy_value[imagePolicy.action]
+        msg := sprintf("Invalid value for customPolicy with prefix '%s' - '%s'", [imagePolicy.prefix, imagePolicy.action])
+}
+
+config_error[msg] {
+        imagePolicy.ns == true
+        not imagePolicy.prefix == null
+        not valid_policy_value[imagePolicy.action]
+        msg := sprintf("Invalid value for namespace '%s' customPolicy with prefix '%s' - '%s'", [namespace, imagePolicy.prefix, imagePolicy.action])
+}
+
 # Per-Image policy computation
 
 first_matching_custom_policy(policies, image) = [c |
@@ -95,4 +109,16 @@ final_image_policy(image) = policy {
         policy := custom_image_policy(image)
 } else = policy {
         policy :=  default_image_policy(image)
+}
+
+# Final decision
+
+imagePolicy := final_image_policy(image)
+
+image_action_reject[[ns, prefix]] {
+        imagePolicy = {"ns": ns, "prefix": prefix, "action": "reject"}
+}
+
+deny_image[msg] {
+        config_error[msg]
 }
