@@ -5,3 +5,4 @@
 - [ ] Chart Version bumped
 - [ ] Variables are documented in the README.md
 - [ ] Title of the PR starts with chart name (e.g. `[stable/mychartname]`)
+- [ ] PR only contains changes for one chart
