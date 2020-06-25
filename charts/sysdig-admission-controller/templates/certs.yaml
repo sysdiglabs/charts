@@ -28,12 +28,18 @@ metadata:
   name: {{ include "sysdig-image-scanner.name" . }}-webhook
 webhooks:
 - name: imagechecks.admission.sysdig.com
+  matchPolicy: Equivalent
   rules:
   - apiGroups: [""]
     apiVersions: ["v1"]
-    operations: ["CREATE"]
+    operations: ["CREATE", "UPDATE"]
     resources: ["pods"]
-    scope: "*"
+    scope: "Namespaced"
+  namespaceSelector:
+    matchExpressions:
+    - key: "imagechecks.admission.sysdig.com/skip"
+      operator: NotIn
+      values: ["true"]
   clientConfig:
     service:
       namespace: default
@@ -42,7 +48,8 @@ webhooks:
     caBundle: {{ $certList._2 }}
   admissionReviewVersions: ["v1beta1"]
   sideEffects: Some
-  timeoutSeconds: 10
+  timeoutSeconds: 15
+  failurePolicy: Fail
   reinvocationPolicy: IfNeeded
 ---
 apiVersion: v1
