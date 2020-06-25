@@ -24,15 +24,6 @@ If release name contains chart name it will be used as a full name.
 {{- end -}}
 {{- end -}}
 
-{{- define "sysdig-image-scanner.tag" -}}
-{{- if .Values.image.tag -}}
-{{- .Values.image.tag -}}
-{{- else -}}
-{{- .Chart.AppVersion -}}
-{{- end -}}
-{{- end -}}
-
-
 {{/*
 Create chart name and version as used by the chart label.
 */}}
@@ -77,4 +68,20 @@ Generate certificates for aggregated api server
 {{- $ca := genCA "sysdig-image-scanner-ca" 3650 -}}
 {{- $cert := genSignedCert ( printf "%s.%s.svc" (include "sysdig-image-scanner.name" .) .Release.Namespace ) nil nil 3650 $ca -}}
 {{- printf "%s$%s$%s" ($cert.Cert | b64enc) ($cert.Key | b64enc) ($ca.Cert | b64enc) -}}
+{{- end -}}
+
+
+{{/*
+Allow overriding registry and repository for air-gapped environments
+*/}}
+{{- define "sysdig-image-scanner.image" -}}
+{{- if .Values.image.overrideValue -}}
+    {{- .Values.image.overrideValue -}}
+{{- else -}}
+    {{- $imageRegistry := .Values.image.registry -}}
+    {{- $imageRepository := .Values.image.repository -}}
+    {{- $imageTag := .Values.image.tag | default .Chart.AppVersion -}}
+    {{- $globalRegistry := (default .Values.global dict).imageRegistry -}}
+    {{- $globalRegistry | default $imageRegistry | default "docker.io" -}} / {{- $imageRepository -}} : {{- $imageTag -}}
+{{- end -}}
 {{- end -}}

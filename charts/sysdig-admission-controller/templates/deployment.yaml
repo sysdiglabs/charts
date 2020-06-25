@@ -23,7 +23,7 @@ spec:
         fsGroup: 65532
       containers:
         - name: {{ .Chart.Name }}-webhook
-          image: "{{ .Values.image.repository }}:{{ include "sysdig-image-scanner.tag" . }}"
+          image: "{{ include "sysdig-image-scanner.image" . }}"
           args:
             - --secure-port={{ .Values.service.port }}
             - --tls-cert-file
