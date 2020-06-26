@@ -1,5 +1,11 @@
 # Changelog
 
+## 2020-06-26 Charts v1.1.3 app v1.1.0
+
+### Minor changes
+
+- Add pre-install hook in charts to automatically label admission controller namespace
+
 ## 2020-06-26 Charts v1.1.2 app v1.1.0
 
 ### Minor changes

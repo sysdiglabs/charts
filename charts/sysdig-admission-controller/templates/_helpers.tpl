@@ -85,3 +85,15 @@ Allow overriding registry and repository for air-gapped environments
     {{- $globalRegistry | default $imageRegistry | default "docker.io" -}} / {{- $imageRepository -}} : {{- $imageTag -}}
 {{- end -}}
 {{- end -}}
+
+{{- define "sysdig-image-scanner.kubectlImage" -}}
+{{- if .Values.kubectlImage.overrideValue -}}
+    {{- .Values.kubectlImage.overrideValue -}}
+{{- else -}}
+    {{- $imageRegistry := .Values.kubectlImage.registry -}}
+    {{- $imageRepository := .Values.kubectlImage.repository -}}
+    {{- $imageTag := .Values.kubectlImage.tag -}}
+    {{- $globalRegistry := (default .Values.global dict).imageRegistry -}}
+    {{- $globalRegistry | default $imageRegistry | default "docker.io" -}} / {{- $imageRepository -}} : {{- $imageTag -}}
+{{- end -}}
+{{- end -}}
