@@ -10,6 +10,13 @@ image:
   # Override the default image tag. If not specified, it defaults to appVersion in Chart.yaml
   tag:
 
+kubectlImage:
+  # This image is used for running kubectl and patch the sysdig-admission-controller NS labels
+  repository: bitnami/kubectl
+  tag: 1.17.4
+  pullPolicy: IfNotPresent
+
+
 service:
   port: 8443
 
