@@ -1,1 +1,3 @@
-sysdig.secure.apiToken: xxxxxx
+sysdig:
+  secure:
+    apiToken: xxxxxx
