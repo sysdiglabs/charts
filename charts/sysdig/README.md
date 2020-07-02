@@ -79,6 +79,8 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `auditLog.dynamicBackend.enabled` | Deploy the Audit Sink where Sysdig listens for K8s audit log events                 | `false`                                     |
 | `customAppChecks`                 | The custom app checks deployed with your agent                                      | `{}`                                        |
 | `tolerations`                     | The tolerations for scheduling                                                      | `node-role.kubernetes.io/master:NoSchedule` |
+| `prometheus.file`                 | Use file to configure promscrape                                                    | `false`                                         |
+| `prometheus.yaml`                 | prometheus.yaml content to configure metric collection: relabelling and filtering   | ` `                                         |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
@@ -298,6 +300,33 @@ And deploy the Chart with both of them:
 ```bash
 $ helm install --name my-release -f custom-app-checks.yaml -f values.yaml sysdiglabs/sysdig
 ```
+
+### Adding prometheus.yaml to configure promscrape
+
+Promscrape is the component used to collect Prometheus metrics from the sysdig agent. It is based on Prometheus and accepts the same configuration format.
+
+This file can contain relabelling rules and filters to remove certain metrics or add some configurations to the collection. An example of this file could be:
+
+```yaml
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+scrape_configs:
+- job_name: 'prometheus' # config for federation
+  honor_labels: true
+  metrics_path: '/federate'
+  metric_relabel_configs:
+  - regex: 'kubernetes_pod_name'
+    action: labeldrop
+  params:
+    'match[]':
+      - '{sysdig="true"}'
+  sysdig_sd_configs:
+  - tags:
+      namespace: monitoring
+      deployment: prometheus-server
+```
+`sysdig_sd_configs` allows to select the targets obtained by Sysdig agents to apply the rules in the job. Check [how to configure filtering in sysdig documentation](https://docs.sysdig.com/en/filtering-prometheus-metrics.html).
 
 ## Support
 
