@@ -174,3 +174,6 @@ tolerations:
     key: node-role.kubernetes.io/master
 
 # Promscrape prometheus.yaml not configured by default
+prometheus:
+  file: false
+  yaml: {}

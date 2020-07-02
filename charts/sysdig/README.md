@@ -79,7 +79,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `auditLog.dynamicBackend.enabled` | Deploy the Audit Sink where Sysdig listens for K8s audit log events                 | `false`                                     |
 | `customAppChecks`                 | The custom app checks deployed with your agent                                      | `{}`                                        |
 | `tolerations`                     | The tolerations for scheduling                                                      | `node-role.kubernetes.io/master:NoSchedule` |
-| `prometheus.file`                 | Use file to configure promscrape                                                    | ` `                                         |
+| `prometheus.file`                 | Use file to configure promscrape                                                    | `false`                                         |
 | `prometheus.yaml`                 | prometheus.yaml content to configure metric collection: relabelling and filtering   | ` `                                         |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
