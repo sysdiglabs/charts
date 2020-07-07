@@ -165,7 +165,7 @@ spec:
             - mountPath: /host/etc/os-release
               name: osrel
               readOnly: true
-            {{- if .Values.extraVolumes }}
+            {{- if .Values.extraVolumes.mounts }}
 {{ toYaml .Values.extraVolumes.mounts | indent 12 }}
             {{- end }}
       volumes:
@@ -217,7 +217,7 @@ spec:
           configMap:
             name: {{ template "sysdig.fullname" . }}-custom-app-checks
         {{- end }}
-        {{- if .Values.extraVolumes }}
+        {{- if .Values.extraVolumes.volumes }}
 {{ toYaml .Values.extraVolumes.volumes | indent 8 }}
         {{- end }}
   updateStrategy:
