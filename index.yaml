@@ -19,6 +19,38 @@ entries:
   sysdig:
   - apiVersion: v1
     appVersion: 10.2.0
+    created: "2020-07-08T11:09:50.218666263Z"
+    description: Sysdig Monitor and Secure agent
+    digest: 8c184c2513753b7d8fad799e264c0b51ee1378fea2d5e88d3b84963c828ed480
+    home: https://www.sysdig.com/
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: lachlan@deis.com
+      name: lachie83
+    - email: jorge.salamero@sysdig.com
+      name: bencer
+    - email: nestor.salceda@sysdig.com
+      name: nestorsalceda
+    - email: alvaro.iradier@sysdig.com
+      name: airadier
+    - email: carlos.arilla@sysdig.com
+      name: carillan81
+    name: sysdig
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/sysdig-1.8.3/sysdig-1.8.3.tgz
+    version: 1.8.3
+  - apiVersion: v1
+    appVersion: 10.2.0
     created: "2020-07-02T08:19:50.459966385Z"
     description: Sysdig Monitor and Secure agent
     digest: 72290cae94a240ac82f74a4dcea26c5dc72decd773a0fd234f88995de75a8450
