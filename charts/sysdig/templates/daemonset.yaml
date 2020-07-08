@@ -165,6 +165,9 @@ spec:
             - mountPath: /host/etc/os-release
               name: osrel
               readOnly: true
+            {{- if .Values.extraVolumes.mounts }}
+{{ toYaml .Values.extraVolumes.mounts | indent 12 }}
+            {{- end }}
       volumes:
         - name: modprobe-d
           hostPath:
@@ -213,6 +216,9 @@ spec:
         - name: custom-app-checks-volume
           configMap:
             name: {{ template "sysdig.fullname" . }}-custom-app-checks
+        {{- end }}
+        {{- if .Values.extraVolumes.volumes }}
+{{ toYaml .Values.extraVolumes.volumes | indent 8 }}
         {{- end }}
   updateStrategy:
 {{ toYaml .Values.daemonset.updateStrategy | indent 4 }}

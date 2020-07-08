@@ -79,8 +79,10 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `auditLog.dynamicBackend.enabled` | Deploy the Audit Sink where Sysdig listens for K8s audit log events                 | `false`                                     |
 | `customAppChecks`                 | The custom app checks deployed with your agent                                      | `{}`                                        |
 | `tolerations`                     | The tolerations for scheduling                                                      | `node-role.kubernetes.io/master:NoSchedule` |
-| `prometheus.file`                 | Use file to configure promscrape                                                    | `false`                                         |
+| `prometheus.file`                 | Use file to configure promscrape                                                    | `false`                                     |
 | `prometheus.yaml`                 | prometheus.yaml content to configure metric collection: relabelling and filtering   | ` `                                         |
+| `extraVolume.volumes`             | Additional volumes to mount in the sysdig agent to pass new secrets or configmaps   | `[]`                                        |
+| `extraVolume.mounts`              | Mount points for additional volumes                                                 | `[]`                                        |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
@@ -327,6 +329,30 @@ scrape_configs:
       deployment: prometheus-server
 ```
 `sysdig_sd_configs` allows to select the targets obtained by Sysdig agents to apply the rules in the job. Check [how to configure filtering in sysdig documentation](https://docs.sysdig.com/en/filtering-prometheus-metrics.html).
+
+
+### Adding additional volumes
+
+To add a new volume to the sysdig agent. 
+
+In order to pass new config maps or secrets used for authentication (for example for Prometheus endpoints) you can mount additional secrets, configmaps or volumes. An example of this could be:
+
+```yaml
+extraVolumes:
+  volumes:
+    - name: sysdig-new-cm
+      configMap:
+        name: my-cm
+        optional: true
+    - name: sysdig-new-secret
+        secret:
+        secretName: my-secret
+  mounts:
+    - mountPath: /opt/draios/cm
+      name: sysdig-new-cm
+    - mountPath: /opt/draios/secret
+      name: sysdig-new-secret
+```
 
 ## Support
 
