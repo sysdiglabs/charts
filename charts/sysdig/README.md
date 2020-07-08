@@ -81,8 +81,8 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `tolerations`                     | The tolerations for scheduling                                                      | `node-role.kubernetes.io/master:NoSchedule` |
 | `prometheus.file`                 | Use file to configure promscrape                                                    | `false`                                     |
 | `prometheus.yaml`                 | prometheus.yaml content to configure metric collection: relabelling and filtering   | ` `                                         |
-| `extraVolume.volumes`             | Additional volumes to mount in the sysdig agent to pass new secrets or configmaps   | `{}`                                         |
-| `extraVolume.mounts`              | Mount points for additional volumes                                                 | `{}`                                         |
+| `extraVolume.volumes`             | Additional volumes to mount in the sysdig agent to pass new secrets or configmaps   | `[]`                                        |
+| `extraVolume.mounts`              | Mount points for additional volumes                                                 | `[]`                                        |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
