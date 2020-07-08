@@ -179,8 +179,8 @@ prometheus:
   yaml: {}
 
 extraVolumes:
-  volumes: {}
-  mounts: {}
+  volumes: []
+  mounts: []
   # Allow passing extra volumes to the agent to mount secrets or certificates
   # to authenticate in different services.
   # Any kind of volume can be passed. Example:
