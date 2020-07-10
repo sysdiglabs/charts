@@ -8,13 +8,17 @@ metadata:
   name: {{ template "sysdig-image-scanner.fullname" . }}-scc
   labels:
 {{ include "sysdig-image-scanner.labels" . | indent 4 }}
+allowedCapabilities: []
 allowHostDirVolumePlugin: false
 allowHostIPC: false
 allowHostNetwork: false
 allowHostPID: false
 allowHostPorts: false
 allowPrivilegedContainer: false
+defaultAddCapabilities: []
+priority: 0
 readOnlyRootFilesystem: true
+requiredDropCapabilities: []
 runAsUser:
   type: "MustRunAs"
   uid: 65532
@@ -22,4 +26,8 @@ seLinuxContext:
   type: RunAsAny
 users:
 - system:serviceaccount:{{ .Release.Namespace }}:{{ include "sysdig-image-scanner.serviceAccountName" . }}
+volumes:
+ - configMap
+ - projected
+ - secret
 {{- end }}
