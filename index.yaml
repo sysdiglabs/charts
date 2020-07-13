@@ -3,6 +3,21 @@ entries:
   harbor-scanner-sysdig-secure:
   - apiVersion: v2
     appVersion: 0.1.0
+    created: "2020-07-13T15:21:39.809670237Z"
+    description: A Helm chart for Kubernetes
+    digest: b9b10a0c7724436ac8eea49cae64ddb50349ab7686a9ea46c68318767b860334
+    home: https://github.com/sysdiglabs/harbor-scanner-sysdig-secure
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    maintainers:
+    - email: nestor.salceda@sysdig.com
+      name: nestorsalceda
+    name: harbor-scanner-sysdig-secure
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/harbor-scanner-sysdig-secure-0.1.1/harbor-scanner-sysdig-secure-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 0.1.0
     created: "2020-06-29T16:50:19.186023664Z"
     description: A Helm chart for Kubernetes
     digest: 475d209e0f99ad4220d15949bda77be1abb8c7ba9d390554ff94d821bbcb58b1
