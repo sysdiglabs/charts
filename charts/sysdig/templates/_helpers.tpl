@@ -76,10 +76,16 @@ Return the proper Sysdig Agent image name for module building
 {{- end -}}
 
 {{/*
+Return the proper Sysdig Agent image name for the Node Image Analyzer
+*/}}
+{{- define "sysdig.image.nodeImageAnalyzer" -}}
+    {{- include "sysdig.imageRegistry" . -}} / {{- .Values.nodeImageAnalyzer.image.repository -}} : {{- .Values.nodeImageAnalyzer.image.tag -}}
+{{- end -}}
+
+{{/*
 Common labels
 */}}
 {{- define "sysdig.labels" -}}
-app.kubernetes.io/name: {{ include "sysdig.name" . }}
 helm.sh/chart: {{ include "sysdig.chart" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- if .Chart.AppVersion }}
