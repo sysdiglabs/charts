@@ -172,7 +172,7 @@ nodeImageAnalyzer:
     limits:
       cpu: 500m
       memory: 1024Mi
-  
+
   # Additional advanced settings
   settings: {}
 
