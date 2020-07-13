@@ -7,14 +7,11 @@ See the [Sysdig Admission Controller documentation](https://sysdiglabs.github.io
 ## Quick installation guide
 
 1. Create a *values.yaml* overriding the desired settings. The **sysdigSecureToken** value is mandatory. You can use [values.yaml file in the repository](https://raw.githubusercontent.com/sysdiglabs/charts/master/charts/sysdig-admission-controller/values.yaml) as a template.
-2. Create a namespace for the admission controller deployment, **add the label imagechecks.admission.sysdig.com/skip=true to the namespace**
+2. Create a namespace for the admission controller deployment:
 
 ```
 $ kubectl create ns sysdig-admission-controller
-$ kubectl label ns sysdig-admission-controller imagechecks.admission.sysdig.com/skip=true
 ```
-
-⚠️ **Warning** ⚠️: Don't forget adding the label **imagechecks.admission.sysdig.com/skip=true** to the namespace where the Admission controller will be deployed.
 
 3. Add Sysdig Helm charts repository:
 

@@ -49,4 +49,4 @@ spec:
       - name: ns-patch
         image: "{{ include "sysdig-image-scanner.kubectlImage" . }}"
         imagePullPolicy: {{ .Values.kubectlImage.pullPolicy }}
-        args: ["label", "namespace", "{{ .Release.Namespace }}", "imagechecks.admission.sysdig.com/skip=true"]
+        args: ["label", "namespace", "{{ .Release.Namespace }}", "--overwrite", "imagechecks.admission.sysdig.com/skip=true"]

@@ -1,5 +1,10 @@
 # Changelog
 
+## 2020-07-10 Charts v1.1.4 app v1.1.0
+
+- Overwrite NS label on pre-install, so it does not fail if already labelled
+- Make SecurityContextConstraint compatible with Openshift 4.3
+
 ## 2020-06-26 Charts v1.1.3 app v1.1.0
 
 ### Minor changes
