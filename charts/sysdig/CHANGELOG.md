@@ -5,6 +5,17 @@
 This file documents all notable changes to Sysdig Helm Chart. The release
 numbering uses [semantic versioning](http://semver.org).
 
+## v1.9.0
+
+### Major changes
+
+* Option to deploy the [Node Image Analyzer](https://docs.sysdig.com/en/scan-running-images.html).
+
+### Minor changes
+
+* Include get/list/watch endpoints in agent clusterrole permissions.
+
+
 ## v1.8.1
 
 ### Minor changes
