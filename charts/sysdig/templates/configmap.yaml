@@ -29,11 +29,21 @@ data:
 {{- if eq $disableCaptures "true" }}
     sysdig_capture_enabled: false 
 {{- end }}
-{{- if .Values.onPrem.enabled }}
-    collector: {{ include "get_or_fail_if_in_settings" (dict "root" . "key" "onPrem.collectorHost" "setting" "collector") }}
-    collector_port: {{ include "get_or_fail_if_in_settings" (dict "root" . "key" "onPrem.collectorPort" "setting" "collector_port") }}
-    ssl: {{ include "get_or_fail_if_in_settings" (dict "root" . "key" "onPrem.ssl" "setting" "ssl") }}
-    ssl_verify_certificate:  {{ include "get_or_fail_if_in_settings" (dict "root" . "key" "onPrem.sslVerifyCertificate" "setting" "ssl_verify_certificate") }}
+{{- $collectorHost := include "get_or_fail_if_in_settings" (dict "root" . "key" "collectorSettings.collectorHost" "setting" "collector")}}
+{{- if $collectorHost }}
+    collector: {{ $collectorHost }}
+{{- end }}
+{{- $collectorPort := include "get_or_fail_if_in_settings" (dict "root" . "key" "collectorSettings.collectorPort" "setting" "collector_port")}}
+{{- if $collectorPort }}
+    collector_port: {{ $collectorPort }}
+{{- end }}
+{{- $ssl := include "get_or_fail_if_in_settings" (dict "root" . "key" "collectorSettings.ssl" "setting" "ssl")}}
+{{- if $ssl }}
+    ssl: {{ $ssl }}
+{{- end }}
+{{- $sslVerifyCertificate := include "get_or_fail_if_in_settings" (dict "root" . "key" "collectorSettings.sslVerifyCertificate" "setting" "ssl_verify_certificate")}}
+{{- if $sslVerifyCertificate }}
+    ssl_verify_certificate: {{ $sslVerifyCertificate }}
 {{- end }}
 {{- if .Values.sysdig.settings }}
 {{ toYaml .Values.sysdig.settings | indent 4 }}

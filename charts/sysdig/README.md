@@ -118,21 +118,19 @@ Installing the agent using the Helm chart is also possible in this scenario, and
 
 | Parameter                                | Description                                              | Default |
 | ---                                      | ---                                                      | ---     |
-| `onPrem.enabled`                         | Set to _true_ to enable the On-Prem setting              | `false` |
-| `onPrem.collectorHost`                   | The IP address or hostname of the collector              | ` `     |
-| `onPrem.collectorPort`                   | The port where collector is listening                    | 6443    |
-| `onPrem.ssl`                             | The collector accepts SSL                                | `true`  |
-| `onPrem.sslVerifyCertificate`            | Set to false if you don't want to verify SSL certificate | `true`  |
+| `collectorSettings.collectorHost`        | The IP address or hostname of the collector              | ` `     |
+| `collectorSettings.collectorPort`        | The port where collector is listening                    | 6443    |
+| `collectorSettings.ssl`                  | The collector accepts SSL                                | `true`  |
+| `collectorSettings.sslVerifyCertificate` | Set to false if you don't want to verify SSL certificate | `true`  |
 
 For example:
 
 ```bash
 $ helm install --name my-release \
     --set sysdig.accessKey=YOUR-KEY-HERE \
-    --set onPrem=true \
-    --set onPrem.collectorHost=42.32.196.18 \
-    --set onPrem.collectorPort=6443 \
-    --set onPrem.sslVerifyCertificate=false \
+    --set collectorSettings.collectorHost=42.32.196.18 \
+    --set collectorSettings.collectorPort=6443 \
+    --set collectorSettings.sslVerifyCertificate=false \
     sysdiglabs/sysdig
 ```
 
