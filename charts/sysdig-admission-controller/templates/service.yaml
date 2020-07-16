@@ -7,7 +7,11 @@ metadata:
 spec:
   ports:
   - name: webhook-port
+    {{- if or (gt  (.Capabilities.KubeVersion.Major | atoi) 1 ) (gt (.Capabilities.KubeVersion.Minor | atoi) 14) }}
     port: {{ .Values.service.port }}
+    {{ else }}
+    port: 443
+    {{- end }}
     targetPort: {{ .Values.service.port }}
     protocol: TCP
   selector:

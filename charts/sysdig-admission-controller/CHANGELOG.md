@@ -1,6 +1,14 @@
 # Changelog
 
+## 2020-07-16 Charts v1.1.5 app v1.1.0
+
+### Minor changes
+
+- Make charts compatible with Kubernetes 1.14
+
 ## 2020-07-10 Charts v1.1.4 app v1.1.0
+
+### Minor changes
 
 - Overwrite NS label on pre-install, so it does not fail if already labelled
 - Make SecurityContextConstraint compatible with Openshift 4.3
