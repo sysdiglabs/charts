@@ -19,7 +19,9 @@ spec:
   service:
     namespace: {{ .Release.Namespace }}
     name: {{ include "sysdig-image-scanner.name" . }}
+    {{- if or (gt  (.Capabilities.KubeVersion.Major | atoi) 1 ) (gt (.Capabilities.KubeVersion.Minor | atoi) 14) }}
     port: {{ .Values.service.port }}
+    {{- end }}
   caBundle: {{ $certList._2 }}
 ---
 apiVersion: admissionregistration.k8s.io/v1beta1
@@ -28,7 +30,10 @@ metadata:
   name: {{ include "sysdig-image-scanner.name" . }}-webhook
 webhooks:
 - name: imagechecks.admission.sysdig.com
+  {{- if or (gt  (.Capabilities.KubeVersion.Major | atoi) 1 ) (gt (.Capabilities.KubeVersion.Minor | atoi) 14) }}
   matchPolicy: Equivalent
+  reinvocationPolicy: IfNeeded
+  {{- end }}
   rules:
   - apiGroups: [""]
     apiVersions: ["v1"]
@@ -50,7 +55,6 @@ webhooks:
   sideEffects: Some
   timeoutSeconds: 15
   failurePolicy: Fail
-  reinvocationPolicy: IfNeeded
 ---
 apiVersion: v1
 kind: Secret
