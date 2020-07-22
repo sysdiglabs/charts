@@ -121,13 +121,12 @@ slim:
     limits:
       memory: 512Mi
 
-# Set onPrem.enabled=true and set corresponding fields for Sysdig On-Prem installations
-onPrem:
-  enabled: false
+# For Sysdig On-Prem installations or for custom collector settings, set the following fields
+collectorSettings:
   collectorHost:
-  collectorPort: 6443
-  ssl: true
-  sslVerifyCertificate: true
+  collectorPort:
+  ssl:
+  sslVerifyCertificate:
 
 # Setting a cluster name allows you to filter events from this cluster using kubernetes.cluster.name
 clusterName: ""
@@ -139,6 +138,7 @@ sysdig:
   # Disable capture functionality (see https://docs.sysdig.com/en/disable-captures.html)
   disableCaptures: false
 
+  # Advanced settings. Any option in here will be directly translated into dragent.yaml in the Configmap
   settings: {}
     ### Agent tags
     # tags: linux:ubuntu,dept:dev,local:nyc

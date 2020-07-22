@@ -5,6 +5,12 @@
 This file documents all notable changes to Sysdig Helm Chart. The release
 numbering uses [semantic versioning](http://semver.org).
 
+## v1.9.1
+
+### Minor changes
+
+* Remove explicit *onPrem* option. Use *collectorSettings* section instead.
+
 ## v1.9.0
 
 ### Major changes
@@ -14,7 +20,6 @@ numbering uses [semantic versioning](http://semver.org).
 ### Minor changes
 
 * Include get/list/watch endpoints in agent clusterrole permissions.
-
 
 ## v1.8.1
 
