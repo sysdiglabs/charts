@@ -19,7 +19,8 @@ body, .main-content, .page-header {
     }
 }
 
-.main-content h1, .main-content h2, .main-content h3, .main-content h4, .main-content h5, .main-content h6 {
+.main-content h1, .main-content h2, .main-content h3, 
+.main-content h4, .main-content h5, .main-content h6 {
     color: #101820;
 }
 
@@ -46,14 +47,14 @@ a {
 
 .page-header {
     
-    background-image:url(https://sysdig.com/wp-content/themes/sysdig/assets/images/patterns/pill-general-2.svg); 
+    background-image:url({{ '/assets/img/pill-general-2.svg' | relative_url }}); 
     background-position-x:50%; 
     background-position-y:50%; 
     background-size:cover;
 }
 
 .main-content {
-    background-image:url(https://sysdig.com/wp-content/uploads/2019/10/sysdig-logo.svg); 
+    background-image:url({{ '/assets/img/sysdig-logo.svg' | relative_url }}); 
     background-size: 150px 50px; 
     background-position: 95% 10px; 
     background-repeat: no-repeat; 
