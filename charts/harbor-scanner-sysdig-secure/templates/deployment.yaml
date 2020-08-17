@@ -40,7 +40,7 @@ spec:
                   key: sysdig_secure_api_token
             {{- if .Values.inlineScanning.enabled }}
             - name: INLINE_SCANNING
-              value: "yes"
+              value: "true"
             - name: NAMESPACE_NAME
               value: {{ .Release.Namespace }}
             - name: CONFIGMAP_NAME
