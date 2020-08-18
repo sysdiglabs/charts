@@ -1,5 +1,11 @@
 # Changelog
 
+## 2020-08-18 Charts v1.1.6 app v1.1.0
+
+### Minor changes
+
+- Use existing extension-apiserver-authentication-reader in kube-system instead of creating a new one. Thanks to @dragon3 for the PR.
+
 ## 2020-07-16 Charts v1.1.5 app v1.1.0
 
 ### Minor changes

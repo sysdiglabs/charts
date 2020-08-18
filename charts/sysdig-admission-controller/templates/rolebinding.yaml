@@ -1,7 +1,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: {{ include "sysdig-image-scanner.name" . }}-auth-watcher
+  name: {{ include "sysdig-image-scanner.name" . }}-auth-reader
   namespace: kube-system
   labels:
     {{ include "sysdig-image-scanner.labels" . | nindent 4 }}
