@@ -5,6 +5,12 @@
 This file documents all notable changes to Sysdig Helm Chart. The release
 numbering uses [semantic versioning](http://semver.org).
 
+## v1.9.3
+
+### Minor changes
+
+* Redirect to agents dashboard instead of Explore tab.
+
 ## v1.9.2
 
 ### Minor changes
