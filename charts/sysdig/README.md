@@ -47,7 +47,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | ---                               | ---                                                                                     | ---                                         |
 | `image.registry`                  | Sysdig Agent image registry                                                             | `docker.io`                                 |
 | `image.repository`                | The image repository to pull from                                                       | `sysdig/agent`                              |
-| `image.tag`                       | The image tag to pull                                                                   | `10.4.0`                       |
+| `image.tag`                       | The image tag to pull                                                                   | `10.4.1`                       |
 | `image.pullPolicy`                | The Image pull policy                                                                   | `IfNotPresent`                              |
 | `image.pullSecrets`               | Image pull secrets                                                                      | `nil`                                       |
 | `resources.requests.cpu`          | CPU requested for being run in a node                                                   | `600m`                                      |
