@@ -63,4 +63,14 @@ rules:
       - get
       - list
       - watch
+{{- if .Values.psp.create  }}
+  - apiGroups:
+      - "policy"
+    resources: 
+      - "podsecuritypolicies"
+    resourceNames:
+      - "{{ template "sysdig.fullname" . }}"
+    verbs: 
+      - "use"
+{{- end }}
 {{- end }}
