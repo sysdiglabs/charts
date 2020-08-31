@@ -56,6 +56,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `resources.limits.memory`         | Memory limit                                                                            | `1536Mi`                                    |
 | `rbac.create`                     | If true, create & use RBAC resources                                                    | `true`                                      |
 | `scc.create`                      | Create OpenShift's Security Context Constraint                                          | `true`                                      |
+| `psp.create`                      | Create Pod Security Policy to allow the agent running in clusters with PSP enabled      | `true`                                      |
 | `serviceAccount.create`           | Create serviceAccount                                                                   | `true`                                      |
 | `serviceAccount.name`             | Use this value as serviceAccountName                                                    | ` `                                         |
 | `daemonset.updateStrategy.type`   | The updateStrategy for updating the daemonset                                           | `RollingUpdate`                             |

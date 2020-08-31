@@ -37,7 +37,11 @@ rbac:
   create: true
 
 scc:
-  # true here enabled creation of Security Context Constraints in Openshift
+  # true here enables creation of Security Context Constraints in Openshift
+  create: true
+
+psp:
+  # true here enables creation of Pod Security Policy to allow the agent run with the required permissions
   create: true
 
 serviceAccount:

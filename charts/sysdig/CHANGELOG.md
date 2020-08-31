@@ -5,6 +5,12 @@
 This file documents all notable changes to Sysdig Helm Chart. The release
 numbering uses [semantic versioning](http://semver.org).
 
+## v1.10.0
+
+### New features
+
+* Desploy a PSP and the PSP use permission to allow agent running with the required privileges in PSP enabled clusters.
+
 ## v1.9.5
 
 ### Minor changes
