@@ -116,6 +116,9 @@ customRules: ""
 # Define a set of pre-scan custom rego rules.
 preCustomRules: ""
 
+# Define a set of image metadata rego rules.
+metadataCustomRules: ""
+
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""

@@ -1,5 +1,13 @@
 # Changelog
 
+## 2020-09-02 Charts v1.2.0 app v1.2.0
+
+### Major changes
+
+- Run container evaluation in parallel
+- Add support for metadata evaluation phase - you can create rules to evaluate the image information and scan status (before retrieving Scan Report)
+- Update to OpenPolicyAgent 0.23.2 
+
 ## 2020-08-18 Charts v1.1.6 app v1.1.0
 
 ### Minor changes

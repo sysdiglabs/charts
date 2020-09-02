@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "sysdig-image-scanner.name" . }}-rules
+  labels:
+    {{ include "sysdig-image-scanner.labels" . | nindent 4 }}
+data:
+  pre-scan-rules.rego: |
+    package imageadmission
+    # Helper variables
+    policies := data.preScanPolicies
+    {{- if .Values.preScanPolicies.autoGenerate }}
+    {{- $common := .Files.Get "rules/commonrules.rego"}}
+    {{- if eq $common "" }}{{ fail "rules/commonrules.rego file was not found"}}{{ end }}
+    {{- $rules := .Files.Get "rules/prescanrules.rego"}}
+    {{- if eq $rules "" }}{{ fail "rules/prescanrules.rego file was not found"}}{{ end }}
+    {{ $common | nindent 4 }}
+    {{- $rules | nindent 4 }}
+    {{- end }}
+    ###### Begin: Custom Pre-Scan rules ######
+    {{ .Values.preCustomRules | nindent 4 }}
+    ###### End: Custom Pre-Scan rules ######
+  post-scan-rules.rego: |
+    package imageadmission
+    # Helper variables
+    policies := data.policies
+    {{- if .Values.scanPolicies.autoGenerate }}
+    {{- $common := .Files.Get "rules/commonrules.rego"}}
+    {{- if eq $common "" }}{{ fail "rules/commonrules.rego file was not found"}}{{ end }}
+    {{- $rules := .Files.Get "rules/postscanrules.rego"}}
+    {{- if eq $rules "" }}{{ fail "rules/postscanrules.rego file was not found"}}{{ end }}
+    {{ $common | nindent 4 }}
+    {{- $rules | nindent 4 }}
+    {{- end }}
+    ###### Begin: Custom Post-Scan rules ######
+    {{ .Values.customRules | nindent 4 }}
+    ###### End: Custom Post-Scan rules ######
+{{- if  .Values.metadataCustomRules }}
+  metadata-rules.rego: |
+    package imageadmission
+    ###### Begin: Custom metadata rules ######
+    {{ .Values.metadataCustomRules | nindent 4 }}
+    ###### End: Custom metadata rules ######
+{{- end}}
