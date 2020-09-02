@@ -48,18 +48,6 @@ spec:
             - name: NO_PROXY
               value: {{ .Values.noProxy }} 
           {{- end }}
-          envFrom:
-            - configMapRef:
-                name: image-scan-config
-            - secretRef:
-                name: sysdig-secure-token
-          volumeMounts:
-            - name: cert
-              mountPath: /cert
-              readOnly: true
-            - name: config
-              mountPath: /config
-              readOnly: true
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
@@ -73,7 +61,7 @@ spec:
             - name: cert
               mountPath: /cert
               readOnly: true
-            - name: config
+            - name: projected-config
               mountPath: /config
               readOnly: true
           resources:
@@ -82,13 +70,11 @@ spec:
       - name: cert
         secret:
           secretName: {{ include "sysdig-image-scanner.name" . }}-tls
-      - name: config
+      - name: projected-config
         projected:
           sources:
             - configMap:
-                name: {{ include "sysdig-image-scanner.name" . }}-pre-scan-rules
-            - configMap:
-                name: {{ include "sysdig-image-scanner.name" . }}-post-scan-rules
+                name: {{ include "sysdig-image-scanner.name" . }}-rules
             - configMap:
                 name: {{ include "sysdig-image-scanner.name" . }}-policy
     {{- with .Values.nodeSelector }}

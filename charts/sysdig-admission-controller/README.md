@@ -8,7 +8,8 @@
 * [Installation](#installation)
 * [Evaluation Engine](#evaluation-engine)
 * [Configuration Examples](#configuration-examples)
-
+* [Advanced](docs/Advanced.md)
+* [Testing Plan](docs/Advanced.md)
 ## Overview
 
 Sysdig’s Admission Controller combines the Sysdig Secure image scanner with the Rego-based policy language to evaluate the scan results and the admission context, providing great flexibility on the admission decision.
@@ -99,7 +100,7 @@ when something under docs_template/ is pushed to the repository, the `docs.yml` 
 ## Requirements
 
 * Helm 3
-* Kubernetes 1.14 or higher
+* Kubernetes 1.15 or higher
 
 ## Installation
 
@@ -193,7 +194,7 @@ Once the values.yaml is ready, just create the namespace and deploy using Helm 3
 ```
 $ kubectl create ns sysdig-admission-controller
 $ helm repo add sysdiglabs https://sysdiglabs.github.io/charts/
-$ helm install -n sysdig-admission-controller sysdig-admission-controller -f values.yaml sysdiglabs/sysdig-admission-controller --version 1.1.5
+$ helm install -n sysdig-admission-controller sysdig-admission-controller -f values.yaml sysdiglabs/sysdig-admission-controller --version 1.2.0
 ```
 
 After a few seconds, this chart will deploy all the required components:
@@ -330,7 +331,7 @@ You can modify this ConfigMap and adjust the settings as you need, and the chang
 
 When a pod is created or updated, a new *AdmissionRequest* is analyzed by the admission controller.
 
-The admission controller will evaluate if the pod is admitted or not in two phases: **pre-scan** and **scan** phase.
+The admission controller will evaluate the information and decide to admit or reject the pod in 3 phases: **pre-scan**, **metadata** and **scan** phase.
 
 On each phase, it will evaluate a set of rules using the available context, and then make a decision. 
 
@@ -340,16 +341,27 @@ The configuration from the ***sysdig-admission-controller-policy*** ConfigMap wi
 
 #### Pre-Scan phase
 
-In this phase, the pod is evaluated as a whole. The final decision on this phase will be one of:
+In this phase, the admission controller evaluates every container inside the pod, and takes on decision on the image:
 
-* **accept**: The pod is accepted, and no scan is required for any of the images.
-* **reject**: The pod is rejected, and no scan is performed on any of the images.
-* **scan**: No admission decision is done, and the pod progresses to the **scan phase**. A new scan **is triggered**, so in case there was no analysis previously performed on this image, a new one will start.
-* **check-scan**: No admission decision is done, and the pod progresses to the **scan phase**. But **NO scan is triggered** in Sysdig Secure. This means that if a report exists for that image, it will be recovered. But in case the image was not analyzed previously (for example, the scan was done when pushing the image to the registry, or in a CI/CD pipeline), it will be **evaluated as if the report were pending**.
+* **accept**: Accept the image. No scan performed. 
+* **check-scan**: Take no admission decision yet. The pod progresses to the **scan phase**. But **don't trigger a scan** in Sysdig Secure. This means that if a report exists for that image, it will be recovered. In case the image was not analyzed previously (for example, when pushing the image to the registry, or in a CI/CD pipeline), it will be **evaluated as if the report were pending**.
+* **scan**: Take no admission decision yet. The pod progresses to the **scan phase**. **Trigger a new scan**, so in case there was no previous analysis on this image, it requests a new one.
+* **reject**: Reject the image. No scan performed.
+
+Order is from less restrictive to most restrictive, and the most restrictive applies. For example:
+ * If the admission controller rejects any container in the pod, it rejects the whole pod.
+ * If any of the images evaluates to "scan", or "check-scan", the pod progresses to the **scan phase**.
+ * Only if all images evaluate to **accept**, the admission controller accepts the pod and evaluation finishes here.  
+
+#### Metadata phase
+
+For each container, if the *pre-scan* phase yields the **check-scan** result, and there are any metadata-rules defined (none by default), the admission controller evaluates this metadata-rules. The image information and scan status is available in the evaluation.
+
+In most common use cases, this phase can be ignored. 
 
 #### Scan phase
 
-In this phase, the scan report for every container inside the pod is also evaluated. Then a decision is made for each image. All the images for the containers in a pod need to be accepted for the pod to be accepted. Otherwise, the pod will be rejected.
+In this phase, the admission controller evaluates the scan report for every container inside the pod. Then it makes a decision for each image. All the images for the containers in a pod need to be accepted for the pod to be accepted. Otherwise, the pod will be rejected.
 
 Right before the scan phase:
 * If the evaluated action was *scan* in the pre-scan phase, a new scan will be triggered in Sysdig Image Scanner.
