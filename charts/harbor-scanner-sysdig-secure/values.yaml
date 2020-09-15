@@ -61,6 +61,7 @@ sysdig:
   secure:
     apiToken: ""
     url: "https://secure.sysdig.com"
+    verifySSL: true
 
 inlineScanning:
   enabled: false
