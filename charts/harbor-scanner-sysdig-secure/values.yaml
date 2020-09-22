@@ -65,8 +65,3 @@ sysdig:
 
 inlineScanning:
   enabled: false
-  harbor:
-    CA: ""
-    robotAccount:
-      name: ""
-      password: ""

@@ -45,8 +45,6 @@ spec:
               value: "true"
             - name: NAMESPACE_NAME
               value: {{ .Release.Namespace }}
-            - name: CONFIGMAP_NAME
-              value: {{ include "harbor-scanner-sysdig-secure.fullname" . }}
             - name: SECRET_NAME
               value: {{ include "harbor-scanner-sysdig-secure.fullname" . }}
             {{- end }}
