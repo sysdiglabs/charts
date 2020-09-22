@@ -53,9 +53,6 @@ Sysdig Secure chart and their default values:
 | `sysdig.secure.url`                           | Sysdig Secure endpoint                                                                                                      | `https://secure.sysdig.com`               |
 | `sysdig.secure.verifySSL`                     | Verify SSL certificate when connecting to Sysdig Secure endpoint                                                            | `true`                                    |
 | `inlineScanning.enabled`                      | Enable Inline Scanning feature                                                                                              | `false`                                   |
-| `inlineScanning.harbor.CA`                    | CA for downloading docker images from Harbor                                                                                | ` `                                       |
-| `inlineScanning.harbor.robotAccount.name`     | Robot account to use for downloading images from Harbor. This value is **mandatory** if `inlineScanning.enabled` is `true`. | ` `                                       |
-| `inlineScanning.harbor.robotAccount.password` | Robot account password. This value is **mandatory** if `inlineScanning.enabled` is `true`.                                  | ` `                                       |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
