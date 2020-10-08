@@ -9,7 +9,7 @@ image:
 
   registry: docker.io
   repository: sysdig/agent
-  tag: 10.4.1
+  tag: 10.5.0
   # Specify a imagePullPolicy
   # Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
   # ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -87,6 +87,9 @@ daemonset:
   annotations: {}
 
 # If is behind a proxy you can set the proxy server
+# This proxy settings apply for the App-Checks.
+# If you need to configure the agent to allow it to communicate with the Sysdig collector through an HTTP proxy check:
+# https://docs.sysdig.com/en/enable-http-proxy-for-agents.html 
 proxy:
   httpProxy:
   httpsProxy:
@@ -144,8 +147,14 @@ sysdig:
 
   # Advanced settings. Any option in here will be directly translated into dragent.yaml in the Configmap
   settings: {}
-    ### Agent tags
+    ### Example: Agent tags
     # tags: linux:ubuntu,dept:dev,local:nyc
+    ### Example: Proxy configuration (see https://docs.sysdig.com/en/enable-http-proxy-for-agents.html)
+    # ssl: false
+    # http_proxy:
+    #   proxy_host: squid.yourdomain.com
+    #   proxy_port: 3128
+    #   ssl: false
 
 secure:
   # true here enables Sysdig Secure: container run-time security & forensics
