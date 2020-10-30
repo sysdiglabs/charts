@@ -32,6 +32,10 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       hostPID: true
       terminationGracePeriodSeconds: 5
+      {{- if .Values.daemonset.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.daemonset.nodeSelector | indent 8 }}
+      {{- end }}
       {{- if .Values.daemonset.affinity }}
       affinity:
 {{ toYaml .Values.daemonset.affinity | indent 8 }}
