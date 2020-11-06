@@ -1,5 +1,9 @@
-theme: jekyll-theme-cayman
 title: Sysdig Helm Charts Repository
 
-github:
-  is_project_page: false
+remote_theme: sysdiglabs/jekyll-theme-sysdiglabs-docs@main
+
+sass:
+  style: compressed
+
+plugins:
+  - jekyll-remote-theme
