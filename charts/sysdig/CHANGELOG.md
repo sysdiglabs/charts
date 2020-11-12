@@ -5,6 +5,10 @@
 This file documents all notable changes to Sysdig Helm Chart. The release
 numbering uses [semantic versioning](http://semver.org).
 
+## v1.10.4
+
+* Use the latest image from Agent (10.6.0)
+
 ## v1.10.3
 
 ### Minor changes
