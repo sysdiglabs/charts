@@ -29,5 +29,14 @@ $ helm install sysdig-agent --set sysdig.accessKey=YOUR-KEY-HERE sysdig/sysdig
 
 ## Hosted charts in this repository
 
+<ul>
+{% for f in site.static_files %}
+    {% if f.path contains "/charts/" and f.path contains "/README.md" %}
+    {% assign path = f.path | replace: "/README.md", "" %}
+    <li><a href="{{site.baseurl}}{{path}}">{{ path | remove_first: "/charts/" }}</a></li>
+    {% endif %}
+{% endfor %}
+</ul>
+
 See specific information about each _chart_ at the GitHub repository:
 * [https://github.com/sysdiglabs/charts/tree/master/charts](https://github.com/sysdiglabs/charts/tree/master/charts)
