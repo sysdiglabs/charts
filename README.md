@@ -3,7 +3,7 @@
 This GitHub repository is the official source for Sysdig's Helm charts.
 
 For instructions about how to install charts from this repository, visit the public website at:
-[sysdiglabs.github.io/charts](https://sysdiglabs.github.io/charts) 
+[charts.sysdig.com/](https://charts.sysdig.com/)
 
 ## Make changes to an existing chart without publishing
 
@@ -35,10 +35,7 @@ and the list of all charts at `index.yaml` on _gh-pages_ branch will be updated 
 ## More information
 
 You can find more information at:
-* [sysdiglabs.github.io/charts](https://sysdiglabs.github.io/charts) 
+* [charts.sysdig.com/](https://charts.sysdig.com/) / [sysdiglabs.github.io/charts](https://sysdiglabs.github.io/charts) 
 * [The Helm package manager](https://helm.sh/)
 * [Chart Releaser](https://github.com/helm/chart-releaser)
 * [Chart Releaser GitHub Action](https://github.com/helm/chart-releaser-action)
----
-
-![Sysdig logo](https://sysdiglabs.github.io/charts/assets/img/sysdig-logo-220.png)
