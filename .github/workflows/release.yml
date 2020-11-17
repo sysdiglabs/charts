@@ -27,8 +27,8 @@ jobs:
 
       - name: Copy README.md files to gh-pages
         run: |
-          # Remove worktree from previous step, if existing
-          git worktree remove gh-pages || true
+          existing_worktree=$(git worktree list --porcelain | grep -B 2 "branch refs/heads/gh-pages" | head -n 1 | cut -d ' ' -f 2)
+          if [[ $existing_worktree != "" ]]; then git worktree remove -f $existing_worktree; fi
           tmp_folder=$(mktemp -d)
           git worktree add ${tmp_folder} gh-pages
           rm -f -r ${tmp_folder}/charts
