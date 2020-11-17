@@ -24,3 +24,11 @@ jobs:
         uses: helm/chart-releaser-action@v1.0.0-rc.2
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Copy README.md files to gh-pages
+        run: |
+          git rm --cached charts/**/README.md
+          git checkout -f gh-pages
+          git add charts
+          git commit -m "Updating README.md files"
+          git push
