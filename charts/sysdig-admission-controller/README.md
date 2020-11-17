@@ -1,22 +1,11 @@
-# Sysdig Admission Controller
-![Build & Test](https://github.com/sysdiglabs/sysdig-admission-controller/workflows/Build%20&%20Test/badge.svg)
-
-## Table of contents:
-
-* [Overview](#overview)
-* [Requirements](#requirements)
-* [Installation](#installation)
-* [Evaluation Engine](#evaluation-engine)
-* [Configuration Examples](#configuration-examples)
-* [Advanced](docs/Advanced.md)
-* [Testing Plan](docs/Advanced.md)
-## Overview
-
 Sysdig’s Admission Controller combines the Sysdig Secure image scanner with the Rego-based policy language to evaluate the scan results and the admission context, providing great flexibility on the admission decision.
 
-Using native Kubernetes API extensions to perform the image scanning on admission enables major threat prevention with the hardening use case: “Only the images that are explicitly approved will be allowed to run on your cluster.” 
+Using native Kubernetes API extensions to perform the image scanning on admission enables major threat prevention with the hardening use case: “Only the images that are explicitly approved will be allowed to run on your cluster.”
 
 The admission decision relies not only on the image name and tag, but also on additional context from the admission review, including the namespace, pod metadata, etc.
+
+* TOC
+{: toc}
 
 ### Features
 
@@ -38,64 +27,6 @@ The admission decision relies not only on the image name and tag, but also on ad
 ### Additional links
 
 [Blogpost](https://sysdig.com/blog/image-scanning-admission-controller/) (Slightly outdated since this was focused on our OPA integration, but contains the most important concepts)
-
-### Why this is valuable for Sysdig
-
-* Extends the scanning use cases to enable a prevention mode, as opposed to detection & reaction. Lack of prevention mechanisms has always been a pain point exploited by our competitors
-* Reinforces our "shift left" and "integrate with CI/CD" stories, if a user tries to bypass the pipeline, it will be stopped in its tracks
-* Unblocks several customer conversations that were waiting for this feature. Additionally, behaviour rules are easily modifiable to accommodate for custom requests
-
-### How to demo
-
-* Sysdig Admission Controller is deployed in the default (`+kube`) demo account, `demo-kube-aws` cluster
-* Only performing admission decisions on the admission namespace, to avoid disturbing the other applications in the cluster
-* Once a day, we will try to deploy an image in that namespace that doesn’t pass the scanning policy check.
-* Events sections in Sysdig Monitor
-* Use the free text search to look for `REJECTED`
-* You will find an event similar to this:
-
-```
-Error creating: admission webhook "imagechecks.admission.sysdig.com" denied the request: Image 'docker.io/airadier/test:bad' for container 'test' failed scan policy check: Image 'docker.io/airadier/test:bad' REJECTED. Global default policy - policy action is 'reject'
-```
-* It is important to note that you can create an alert that triggers every time a pod is rejected.
-* More advanced and flexible demos can be enabled, but so far they require `kubectl` access to the Kubernetes API.
-  
-### Limitations
-
-The first version requires directly managing and applying YAMLS using kubectl, deployment and rule maintenance is an involved process
-
-### Future milestones
-
-* Integrate the admission controller with the Sysdig Secure UI: mock https://jsfiddle.net/airadier/uh2jk94n/
-* Create an API to sync the admission controller components with the configuration stored in Sysdig Secure
-* Integrate with Node Image Analyzer to trigger inline scan before the pod is accepted
-* Integrate admission controller events with Sysdig Secure Event Feed
-
-## Public and private documentation
-
-This README.md is for internal usage, and the public facing documentation is stored in `docs/` folder, with index.md as index file.
-
-As most of the contents are shared between README.md and index.md, don't edit these files directly. Instead, edit `docs_template/README.md.j2`, which is a Jinja2 template.
-The templating system uses blocks like:
-
-
-```
-{% if target == "readme" -%}
-... README specific content ...
-{% endif %}
-```
-
-
-to include contents for only the internal README.md file, or:
-
-
-```
-{% if target == "web" -%}
-... web specific content ...
-{% endif %}
-```
-
-when something under docs_template/ is pushed to the repository, the `docs.yml` workflow will create and commit the updated docs from the template.
 
 ## Requirements
 
@@ -132,7 +63,7 @@ preScanPolicies:
   #     action: reject
   #   - prefix: "malware-registry.io/"
   #     action: reject
-  
+
   byNamespace:
     ns-prod:
       defaultPolicy: accept
@@ -235,7 +166,7 @@ preScanPolicies:
       action: reject
     - prefix: "internal-registry.com/"
       action: check-scan
-  
+
   byNamespace:
     playground:
       defaultPolicy: accept
@@ -333,7 +264,7 @@ When a pod is created or updated, a new *AdmissionRequest* is analyzed by the ad
 
 The admission controller will evaluate the information and decide to admit or reject the pod in 3 phases: **pre-scan**, **metadata** and **scan** phase.
 
-On each phase, it will evaluate a set of rules using the available context, and then make a decision. 
+On each phase, it will evaluate a set of rules using the available context, and then make a decision.
 
 The configuration from the ***sysdig-admission-controller-policy*** ConfigMap will modify the evaluation criteria.
 
@@ -343,7 +274,7 @@ The configuration from the ***sysdig-admission-controller-policy*** ConfigMap wi
 
 In this phase, the admission controller evaluates every container inside the pod, and takes on decision on the image:
 
-* **accept**: Accept the image. No scan performed. 
+* **accept**: Accept the image. No scan performed.
 * **check-scan**: Take no admission decision yet. The pod progresses to the **scan phase**. But **don't trigger a scan** in Sysdig Secure. This means that if a report exists for that image, it will be recovered. In case the image was not analyzed previously (for example, when pushing the image to the registry, or in a CI/CD pipeline), it will be **evaluated as if the report were pending**.
 * **scan**: Take no admission decision yet. The pod progresses to the **scan phase**. **Trigger a new scan**, so in case there was no previous analysis on this image, it requests a new one.
 * **reject**: Reject the image. No scan performed.
@@ -351,13 +282,13 @@ In this phase, the admission controller evaluates every container inside the pod
 Order is from less restrictive to most restrictive, and the most restrictive applies. For example:
  * If the admission controller rejects any container in the pod, it rejects the whole pod.
  * If any of the images evaluates to "scan", or "check-scan", the pod progresses to the **scan phase**.
- * Only if all images evaluate to **accept**, the admission controller accepts the pod and evaluation finishes here.  
+ * Only if all images evaluate to **accept**, the admission controller accepts the pod and evaluation finishes here.
 
 #### Metadata phase
 
 For each container, if the *pre-scan* phase yields the **check-scan** result, and there are any metadata-rules defined (none by default), the admission controller evaluates this metadata-rules. The image information and scan status is available in the evaluation.
 
-In most common use cases, this phase can be ignored. 
+In most common use cases, this phase can be ignored.
 
 #### Scan phase
 
@@ -412,12 +343,12 @@ Example:
   * **scan**: the image will be evaluated in **Scan Phase**. A new scan will be triggered for the image.
   * **check-scan**: the image will be evaluated in **Scan Phase**, using the latest available report for that image, if it exists.
 * **customPolicies**: The top-level *customPolicies* list sets specific behavior for images matching prefixes from the list. For each element in the list, the image name (composed of registry + repository:tag) is compared to the *prefix*. If the *prefix* matches the image (image name starts with this prefix), then the *action* is applied to that image, overriding the *defaultPolicy* action.
-  * As *action* overrides the *defaultPolicy*, it can take the same values: **accept**, **reject** or **scan**. 
+  * As *action* overrides the *defaultPolicy*, it can take the same values: **accept**, **reject** or **scan**.
   * If the image name does not match any element in the *customPolicies* list, the *defaultPolicy* will be applied.
   * In the example, images from *some-registry.com/whitelistedrepo/* will always be accepted, and images from *bad-registry.com/* will always be rejected. Other images would progress to **Scan phase**.
 * **byNamespace**: The *byNamespace* dictionary might contain entries for namespaces that want to override the top-level policies. For each namespace, the *defaultPolicy* setting or the *customPolicies* list can be specified, overriding the top-level settings for images deployed in that namespace.
   * If no *defaultPolicy* is defined for a namespace, the top-level setting is used.
-  * If no *customPolicies* is defined for a namespac, the top-level list applies. You can define an empty list, like in the example's namespace *playground* 
+  * If no *customPolicies* is defined for a namespac, the top-level list applies. You can define an empty list, like in the example's namespace *playground*
   * In this example, for *playground* namespace all images would be accepted, and the top-level *customPolicies* would not apply inside that namespace.
 
 ⚠️ Please note that *customPolicies* have the highest priority. So, if a namespace defines a *defaultPolicy* but does not define *customPolicies*, then an image deployed in that namespace could match entries in the top-level *customPolicies* before the namespace *defaultPolicy* applies.
@@ -520,7 +451,7 @@ The namespace where you deploy the Sysdig Admission Controller gets this label a
 
 #### List of valid registries
 
-* Specify a list of “valid” registries. 
+* Specify a list of “valid” registries.
 * Definition of “valid”: invalid registries will be DENIED always.
 * “Valid” registries will be scanned
 * Depending on the scan result, accept / reject image
@@ -654,4 +585,3 @@ or alternatively, if you want to also trigger a scan for the "critical images", 
       }
     }
 ```
-
