@@ -175,7 +175,7 @@ nodeImageAnalyzer:
   deploy: false
   image:
     repository: sysdig/node-image-analyzer
-    tag: 0.1.0
+    tag: 0.1.6
     pullPolicy: IfNotPresent
     # pullSecrets:
     #   - name: myRegistrKeySecretName
