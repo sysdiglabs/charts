@@ -1,5 +1,11 @@
 # Changelog
 
+## 2020-11-17 Charts v1.2.1 app v1.2.1
+
+### Minor changes
+
+- Update README.md
+
 ## 2020-09-02 Charts v1.2.0 app v1.2.0
 
 ### Major changes
