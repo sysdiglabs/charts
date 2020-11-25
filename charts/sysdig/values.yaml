@@ -183,7 +183,7 @@ nodeImageAnalyzer:
   settings:
     # The Docker socket path.
     # If a custom path is specified, ensure it is correctly mounted from the host inside the container.
-    # dockerSocketPath: unix:///var/run/docker/docker.sock
+    # dockerSocketPath: unix:///var/run/docker.sock
 
     # The socket path to a CRI compatible runtime, such as CRI-O.
     # If a custom path is specified, ensure it is correctly mounted from the host inside the container.
