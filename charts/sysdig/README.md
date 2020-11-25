@@ -47,7 +47,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | ---                                           | ---                                                                                      | ---                                         |
 | `image.registry`                              | Sysdig Agent image registry                                                              | `docker.io`                                 |
 | `image.repository`                            | The image repository to pull from                                                        | `sysdig/agent`                              |
-| `image.tag`                                   | The image tag to pull                                                                    | `10.6.0`                                    |
+| `image.tag`                                   | The image tag to pull                                                                    | `10.7.0`                                    |
 | `image.pullPolicy`                            | The Image pull policy                                                                    | `IfNotPresent`                              |
 | `image.pullSecrets`                           | Image pull secrets                                                                       | `nil`                                       |
 | `resources.requests.cpu`                      | CPU requested for being run in a node                                                    | `600m`                                      |
@@ -80,7 +80,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `auditLog.auditServerPort`                    | Port where Sysdig Agent listens for K8s audit log events                                 | `7765`                                      |
 | `auditLog.dynamicBackend.enabled`             | Deploy the Audit Sink where Sysdig listens for K8s audit log events                      | `false`                                     |
 | `customAppChecks`                             | The custom app checks deployed with your agent                                           | `{}`                                        |
-| `nodeImageAnalyzer.deploy`                    | Deploy the Node Image Analyzer (See https://docs.sysdig.com/en/scan-running-images.html) | `false`                                     |
+| `nodeImageAnalyzer.deploy`                    | Deploy the Node Image Analyzer (See https://docs.sysdig.com/en/scan-running-images.html) | `true`                                      |
 | `nodeImageAnalyzer.image.repository`          | The image repository to pull the Node Image Analyzer from                                | `sysdig/node-image-analyzer`                |
 | `nodeImageAnalyzer.image.tag`                 | The image tag to pull the Node Image Analyzer                                            | `0.1.6`                                     |
 | `nodeImageAnalyzer.image.pullPolicy`          | The Image pull policy for the Node Image Analyzer                                        | `IfNotPresent`                              |
