@@ -10,11 +10,12 @@ numbering uses [semantic versioning](http://semver.org).
 ### Major changes
 
 * Node Image Analyzer now deployed by default (`nodeImageAnalyzer.deploy` set to `true` by default)
+* Explain all Node Image Analyzer settings in values.yaml and README, and link to official Sysdig docs
 
 ### Minor changes
 
-** Use the latest image from Agent (10.7.0)
-
+* Use the latest image from Agent (10.7.0)
+* Change check_certificate to ssl_verify_certificate in NIA settings to sync with NIA configmap
 
 ## v1.10.5
 
