@@ -43,6 +43,9 @@ spec:
           configMap:
             name: {{ template "sysdig.fullname" . }}-image-analyzer
             optional: true
+        {{- if .Values.nodeImageAnalyzer.extraVolumes.volumes }}
+{{ toYaml .Values.nodeImageAnalyzer.extraVolumesvolumes | indent 8 }}
+        {{- end }}
       tolerations:
         - effect: NoSchedule
           key: node-role.kubernetes.io/master
@@ -71,6 +74,10 @@ spec:
             readOnly: true
           - mountPath: /var/lib/containers
             name: var-lib-containers-vol
+          # Custom volume mount here
+          {{- if .Values.extraVolumes.mounts }}
+{{ toYaml .Values.nodeImageAnalyzer.extraVolumes.mounts | indent 10 }}
+          {{- end }}
         env:
         - name: ACCESS_KEY
           valueFrom:
@@ -107,14 +114,18 @@ spec:
               name: {{ template "sysdig.fullname" . }}-image-analyzer
               key: cri_socket_path
               optional: true
-        #TODO: Get from agent config instead?
+        - name: CONTAINERD_SOCKET_PATH
+          valueFrom:
+            configMapKeyRef:
+              name: {{ template "sysdig.fullname" . }}-image-analyzer
+              key: containerd_socket_path
+              optional: true
         - name: AM_COLLECTOR_ENDPOINT
           valueFrom:
             configMapKeyRef:
               name: {{ template "sysdig.fullname" . }}-image-analyzer
               key: collector_endpoint
               optional: true
-        #TODO: Get from agent config instead?
         - name: AM_COLLECTOR_TIMEOUT
           valueFrom:
             configMapKeyRef:
@@ -144,5 +155,23 @@ spec:
             configMapKeyRef:
               name: {{ template "sysdig.fullname" . }}-image-analyzer
               key: debug
+              optional: true
+        - name: HTTP_PROXY
+          valueFrom:
+            configMapKeyRef:
+              name: {{ template "sysdig.fullname" . }}-image-analyzer
+              key: http_proxy
+              optional: true
+        - name: HTTPS_PROXY
+          valueFrom:
+            configMapKeyRef:
+              name: {{ template "sysdig.fullname" . }}-image-analyzer
+              key: https_proxy
+              optional: true
+        - name: NO_PROXY
+          valueFrom:
+            configMapKeyRef:
+              name: {{ template "sysdig.fullname" . }}-image-analyzer
+              key: no_proxy
               optional: true
 {{- end }}

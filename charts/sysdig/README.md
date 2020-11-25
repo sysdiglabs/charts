@@ -80,6 +80,11 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `auditLog.auditServerPort`                        | Port where Sysdig Agent listens for K8s audit log events                                 | `7765`                                      |
 | `auditLog.dynamicBackend.enabled`                 | Deploy the Audit Sink where Sysdig listens for K8s audit log events                      | `false`                                     |
 | `customAppChecks`                                 | The custom app checks deployed with your agent                                           | `{}`                                        |
+| `tolerations`                                     | The tolerations for scheduling                                                           | `node-role.kubernetes.io/master:NoSchedule` |
+| `prometheus.file`                                 | Use file to configure promscrape                                                         | `false`                                     |
+| `prometheus.yaml`                                 | prometheus.yaml content to configure metric collection: relabelling and filtering        | ` `                                         |
+| `extraVolume.volumes`                             | Additional volumes to mount in the sysdig agent to pass new secrets or configmaps        | `[]`                                        |
+| `extraVolume.mounts`                              | Mount points for additional volumes                                                      | `[]`                                        |
 | `nodeImageAnalyzer.deploy`                        | Deploy the Node Image Analyzer (See https://docs.sysdig.com/en/scan-running-images.html) | `true`                                      |
 | `nodeImageAnalyzer.settings.dockerSocketPath`     | The Docker socket path                                                                   |                                             |
 | `nodeImageAnalyzer.settings.criSocketPath`        | The socket path to a CRI compatible runtime, such as CRI-O                               |                                             |
@@ -98,11 +103,8 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `nodeImageAnalyzer.resources.requests.memory`     | Node Image Analyzer Memory requests per node                                             | `512Mi`                                     |
 | `nodeImageAnalyzer.resources.limits.cpu`          | Node Image Analyzer CPU limit per node                                                   | `500m`                                      |
 | `nodeImageAnalyzer.resources.limits.memory`       | Node Image Analyzer Memory limit per node                                                | `1024Mi`                                    |
-| `tolerations`                                     | The tolerations for scheduling                                                           | `node-role.kubernetes.io/master:NoSchedule` |
-| `prometheus.file`                                 | Use file to configure promscrape                                                         | `false`                                     |
-| `prometheus.yaml`                                 | prometheus.yaml content to configure metric collection: relabelling and filtering        | ` `                                         |
-| `extraVolume.volumes`                             | Additional volumes to mount in the sysdig agent to pass new secrets or configmaps        | `[]`                                        |
-| `extraVolume.mounts`                              | Mount points for additional volumes                                                      | `[]`                                        |
+| `nodeImageAnalyzer.extraVolume.volumes`           | Additional volumes to mount in the Node Image Analyzer (i.e. for docker socket)          | `[]`                                        |
+| `nodeImageAnalyzer.extraVolume.mounts`            | Mount points for additional volumes                                                      | `[]`                                        |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
