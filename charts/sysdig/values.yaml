@@ -179,6 +179,41 @@ nodeImageAnalyzer:
     pullPolicy: IfNotPresent
     # pullSecrets:
     #   - name: myRegistrKeySecretName
+
+  settings:
+    # The Docker socket path.
+    # If a custom path is specified, ensure it is correctly mounted from the host inside the container.
+    #dockerSocketPath: unix:///var/run/docker/docker.sock
+
+    # The socket path to a CRI compatible runtime, such as CRI-O.
+    # If a custom path is specified, ensure it is correctly mounted from the host inside the container.
+    #criSocketPath: unix:///var/run/crio/crio.sock
+
+    # The socket path to a CRI-Containerd daemon.
+    # If a custom path is specified, ensure it is correctly mounted from the host inside the container.
+    #containerdSocketPath: unix:///var/run/containerd/containerd.sock
+
+    # The endpoint to the Scanning Analysis collector, specified in the following format:
+    # https://<API_ENDPOINT>/internal/scanning/scanning-analysis-collector
+    # * SaaS default region (US East): leave empty
+    # * SaaS US Web: https://us2.app.sysdig.com/internal/scanning/scanning-analysis-collector
+    # * SaaS European Union: https://eu1.app.sysdig.com/internal/scanning/scanning-analysis-collector
+    # * On-Prem: https://sysdig.my.company.com/internal/scanning/scanning-analysis-collector
+    #collectorEndpoint: https://sysdig.my.company.com/internal/scanning/scanning-analysis-collector
+
+    # Can be set to false to allow insecure connections to the Sysdig backend,
+    # such as for on-premise installs that use self-signed certificates.
+    # By default, certificates are always verified.
+    #sslVerifyCertificate: false
+
+    # Can be set to true to show debug logging, useful for troubleshooting.
+    #debug: false
+
+    # Proxy configuration variables. See also: [Running Node Image Analyzer Behind a Proxy](https://docs.sysdig.com/en/scan-running-images.html#UUID-b3b07aa6-db02-eb58-050f-15c9e053bb64_section-idm232105909710949)
+    #httpProxy:
+    #httpsProxy:
+    #noProxy:
+
   resources:
     requests:
       cpu: 250m
@@ -186,9 +221,6 @@ nodeImageAnalyzer:
     limits:
       cpu: 500m
       memory: 1024Mi
-
-  # Additional advanced settings
-  settings: {}
 
 customAppChecks: {}
   # Allow passing custom app checks for Sysdig Agent.

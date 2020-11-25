@@ -6,7 +6,24 @@ metadata:
   labels:
 {{ include "sysdig.labels" . | indent 4 }}
 data:
+  {{- if .Values.nodeImageAnalyzer.settings.dockerSocketPath }}
+  docker_socket_path: {{ .Values.nodeImageAnalyzer.settings.dockerSocketPath }}
+  {{- end }}
+  {{- if .Values.nodeImageAnalyzer.settings.criSocketPath }}
+  cri_socket_path: {{ .Values.nodeImageAnalyzer.settings.criSocketPath }}
+  {{- end }}
+  {{- if .Values.nodeImageAnalyzer.settings.containerdSocketPath }}
+  containerd_socket_path: {{ .Values.nodeImageAnalyzer.settings.containerdSocketPath }}
+  {{- end }}
+  {{- if .Values.nodeImageAnalyzer.settings.collectorEndpoint }}
+  collector_endpoint: {{ .Values.nodeImageAnalyzer.settings.collectorEndpoint }}
+  {{- end }}
+  {{- if .Values.nodeImageAnalyzer.settings.sslVerifyCertificate }}
+  ssl_verify_certificate: {{ .Values.nodeImageAnalyzer.settings.sslVerifyCertificate }}
+  {{- end }}
+
   debug: "{{ .Values.nodeImageAnalyzer.settings.debug | default false }}"
+
   {{- if .Values.nodeImageAnalyzer.settings.imagePeriod }}
   image_period: {{ .Values.nodeImageAnalyzer.settings.imagePeriod }}
   {{- end }}
@@ -16,19 +33,16 @@ data:
   {{- if .Values.nodeImageAnalyzer.settings.reportPeriod }}
   report_period: {{ .Values.nodeImageAnalyzer.settings.reportPeriod }}
   {{- end }}
-  {{- if .Values.nodeImageAnalyzer.settings.dockerSocketPath }}
-  docker_socket_path: {{ .Values.nodeImageAnalyzer.settings.dockerSocketPath }}
-  {{- end }}
-  {{- if .Values.nodeImageAnalyzer.settings.criSocketPath }}
-  cri_socket_path: {{ .Values.nodeImageAnalyzer.settings.criSocketPath }}
-  {{- end }}
-  {{- if .Values.nodeImageAnalyzer.settings.collectorEndpoint }}
-  collector_endpoint: {{ .Values.nodeImageAnalyzer.settings.collectorEndpoint }}
-  {{- end }}
-  {{- if .Values.nodeImageAnalyzer.settings.checkCertificate }}
-  check_certificate: {{ .Values.nodeImageAnalyzer.settings.checkCertificate }}
-  {{- end }}
   {{- if .Values.nodeImageAnalyzer.settings.collectorTimeout }}
   collector_timeout: {{ .Values.nodeImageAnalyzer.settings.collectorTimeout }}
   {{- end }}
+  {{- if .Values.nodeImageAnalyzer.settings.httpProxy }}
+  http_proxy: {{ .Values.nodeImageAnalyzer.settings.httpProxy }}
+  {{- end -}}
+  {{- if .Values.nodeImageAnalyzer.settings.httpsProxy }}
+  https_proxy: {{ .Values.nodeImageAnalyzer.settings.httpsProxy }}
+  {{- end -}}
+  {{- if .Values.nodeImageAnalyzer.settings.noProxy }}
+  no_proxy: {{ .Values.nodeImageAnalyzer.settings.noProxy }}
+  {{- end -}}
 {{- end }}
