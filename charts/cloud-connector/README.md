@@ -1,4 +1,4 @@
-# Chart: Cloud Connector
+# Cloud Connector
 
 This chart deploys the Sysdig Cloud connector on your Kubernetes cluster.
 
