@@ -7,8 +7,8 @@ metadata:
 data:
   cloud-connector.yaml: |
     rules:
-{{ toYaml .Values.rules | indent 4 }}
+{{ toYaml .Values.rules | indent 6 }}
     ingestors:
-{{ toYaml .Values.ingestors | indent 4 }}
+{{ toYaml .Values.ingestors | indent 6 }}
     notifiers:
-{{ toYaml .Values.notifiers | indent 4 }}
+{{ toYaml .Values.notifiers | indent 6 }}
