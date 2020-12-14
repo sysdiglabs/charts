@@ -51,7 +51,7 @@ Sysdig Secure chart and their default values:
 | `aws.region`                 | AWS Region                             | ` `                                       |
 | `sysdig.secureApiToken`      | API Token to access Sysdig Secure      | ` `                                       |
 | `sysdig.agentKey`            | Agent Key for Sysdig                   | ` `                                       |
-| `rules`                      | Rules Section for Cloud Connector      | `{}`                                      |
+| `rules`                      | Rules Section for Cloud Connector      | `{ - directory: path: /rules }`           |
 | `ingestors`                  | Ingestors Section for Cloud Connector  | `{}`                                      |
 | `notifiers`                  | Notifiers Section for Cloud Connector  | `{ - console: {}, - metrics: {}}`         |
 

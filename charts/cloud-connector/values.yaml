@@ -70,7 +70,9 @@ sysdig:
   agentKey: ""
   secureApiToken: ""
 
-rules: {}
+rules:
+  - directory:
+      path: /rules
 
 ingestors: {}
 
