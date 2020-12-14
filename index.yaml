@@ -18,6 +18,21 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/admission-controller-0.1.0/admission-controller-0.1.0.tgz
     version: 0.1.0
+  cloud-connector:
+  - apiVersion: v2
+    appVersion: 0.4.0
+    created: "2020-12-14T15:05:33.505907041Z"
+    description: Sysdig Cloud Connector
+    digest: a7b7b7b1b1fd3265f7c3760693f6ae8db6e540078f7a7875d4d045f4dc8fcc3b
+    home: https://sysdiglabs.github.io/cloud-connector
+    maintainers:
+    - email: nestor.salceda@sysdig.com
+      name: nestorsalceda
+    name: cloud-connector
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/cloud-connector-0.1.0/cloud-connector-0.1.0.tgz
+    version: 0.1.0
   harbor-scanner-sysdig-secure:
   - apiVersion: v2
     appVersion: 0.2.1
