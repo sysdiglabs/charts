@@ -1,0 +1,89 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "admission-controller.webhook.fullname" . }}
+  labels:
+    {{- include "admission-controller.webhook.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "admission-controller.webhook.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+      {{- with .Values.webhook.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+        checksum/configmap: {{ include (print $.Template.BasePath "/webhook/configmap.yaml") . | sha256sum }}
+        checksum/secret: {{ include (print $.Template.BasePath "/webhook/secret.yaml") . | sha256sum }}
+        checksum/certs: {{ include (print $.Template.BasePath "/webhook/admissionregistration.yaml") . | sha256sum }}
+      labels:
+        {{- include "admission-controller.webhook.labels" . | nindent 8 }}
+    spec:
+      {{- with .Values.webhook.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "admission-controller.webhook.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.webhook.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ include "admission-controller.name" . }}
+          image: "{{ include "admission-controller.webhook.image" . }}"
+          args:
+            - --tls_cert_file
+            - /cert/tls.crt
+            - --tls_private_key_file
+            - /cert/tls.key
+          securityContext:
+            {{- toYaml .Values.webhook.securityContext | nindent 12 }}
+          imagePullPolicy: {{ .Values.webhook.image.pullPolicy }}
+          {{- if .Values.webhook.httpProxy }}
+          env:
+            - name: HTTP_PROXY
+              value: {{ .Values.webhook.httpProxy }}
+            - name: NO_PROXY
+              value: {{ .Values.webhook.noProxy }}
+          {{- end }}
+          ports:
+            - name: http
+              containerPort: 5000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+              scheme: HTTPS
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+              scheme: HTTPS
+          envFrom:
+            - secretRef:
+                name: {{ include "admission-controller.webhook.fullname" . }}
+            - configMapRef:
+                name: {{ include "admission-controller.webhook.fullname" . }}
+          volumeMounts:
+            - name: cert
+              mountPath: /cert
+              readOnly: true
+          resources:
+            {{- toYaml .Values.webhook.resources | nindent 12 }}
+      volumes:
+      - name: cert
+        secret:
+          secretName: {{ include "admission-controller.webhook.fullname" . }}-tls
+    {{- with .Values.webhook.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.webhook.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.webhook.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

@@ -1,0 +1,93 @@
+# Default values for admission-controller.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+sysdigSecureToken: ""
+sysdigSecureUrl: "https://secure.sysdig.com"
+
+serviceAccounts:
+  webhook:
+    create: true
+    annotations: {}
+    name: ""
+  scanner:
+    create: true
+    annotations: {}
+    name: ""
+
+nameOverride: ""
+fullnameOverride: ""
+
+webhook:
+  name: webhook
+  replicaCount: 1
+
+  image:
+    repository: sysdiglabs/admission-controller
+    pullPolicy: Always
+    # Override the default image tag. If not specified, it defaults to appVersion in Chart.yaml
+    tag: master
+
+  service:
+    type: ClusterIP
+    port: 443
+
+  # Set to http://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy
+  httpProxy: ""
+  # List of hosts, IPs, or IPs in CIDR format that should not go through the proxy. We include "kubernetes" service and typical 10.0.0.0/8 services
+  noProxy: kubernetes,10.0.0.0/8
+
+  podAnnotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/path: "/metrics"
+    prometheus.io/port: "5000"
+
+  podSecurityContext:
+    fsGroup: 1000
+
+  securityContext:
+    capabilities:
+      drop:
+      - ALL
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    runAsUser: 1000
+
+  imagePullSecrets: []
+  resources: {}
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+  nodeSelector: {}
+
+  tolerations: []
+
+  affinity: {}
+
+# inline scanner configuration
+scanner:
+  enabled: true
+  name: scanner
+  replicaCount: 1
+
+  image:
+    repository: sysdiglabs/inline-scan-service
+    pullPolicy: Always
+    # Override the default image tag. If not specified, it defaults to appVersion in Chart.yaml
+    tag: local
+
+  service:
+    port: 8443
+
+  authWithSecureToken: true
+
+  sysdigSecureOnPrem: false
+  # Put your <Sysdig-Secure-Secret-Token> in this value
+  # Set to http://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy
+  httpProxy: ""
+  # List of hosts, IPs, or IPs in CIDR format that should not go through the proxy. We include "kubernetes" service and typical 10.0.0.0/8 services
+  noProxy: kubernetes,10.0.0.0/8
