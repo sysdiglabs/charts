@@ -1,0 +1,18 @@
+{{- if .Values.scanner.enabled -}}
+{{/*
+   We need to put all resources that need certificate or CA Bundle together,
+   so the template is executed just once
+*/}}
+{{- $certString := include "admission-controller.scanner.gen-certs" . -}}
+{{- $certList := split "$" $certString -}}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ include "admission-controller.scanner.fullname" . }}-tls
+  labels:
+    {{ include "admission-controller.scanner.labels" . | nindent 4 }}
+data:
+  cert.pem: {{ $certList._0 }}
+  cert.key: {{ $certList._1 }}
+{{- end -}}

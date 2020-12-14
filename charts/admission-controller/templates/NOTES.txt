@@ -1,0 +1,1 @@
+Sysdig Admission Controller is now installed!

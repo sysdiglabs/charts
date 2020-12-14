@@ -1,0 +1,41 @@
+{{/*
+We need to put all resources that need certificate or CA Bundle together,
+so the template is executed just once
+ */}}
+{{- $certString := include "admission-controller.webhook.gen-certs" . -}}
+{{- $certList := split "$" $certString -}}
+---
+apiVersion: admissionregistration.k8s.io/v1
+kind: MutatingWebhookConfiguration
+metadata:
+  name: {{ include "admission-controller.webhook.fullname" . }}
+webhooks:
+- name: secure.sysdig.com
+  matchPolicy: Equivalent
+  reinvocationPolicy: IfNeeded
+  rules:
+  - apiGroups: [""]
+    apiVersions: ["v1"]
+    operations: ["CREATE", "UPDATE"]
+    resources: ["pods"]
+    scope: "*"
+  clientConfig:
+    service:
+      namespace: {{ .Release.Namespace }}
+      name: {{ include "admission-controller.webhook.fullname" . }}
+      path: /admit
+    caBundle: {{ $certList._2 }}
+  admissionReviewVersions: ["v1", "v1beta1"]
+  sideEffects: None
+  timeoutSeconds: 15
+  failurePolicy: Ignore
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ include "admission-controller.webhook.fullname" . }}-tls
+  labels:
+    {{ include "admission-controller.webhook.labels" . | nindent 4 }}
+data:
+  tls.crt: {{ $certList._0 }}
+  tls.key: {{ $certList._1 }}

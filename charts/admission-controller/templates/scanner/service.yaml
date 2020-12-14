@@ -1,0 +1,22 @@
+{{- if .Values.scanner.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "admission-controller.scanner.fullname" . }}
+  labels:
+    {{- include "admission-controller.scanner.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.scanner.service.type }}
+  ports:
+    - name: https
+      {{- if or (gt  (.Capabilities.KubeVersion.Major | atoi) 1 ) (gt (.Capabilities.KubeVersion.Minor | atoi) 14) }}
+      port: {{ .Values.scanner.service.port }}
+      {{ else }}
+      port: 443
+      {{- end }}
+      targetPort: {{ .Values.scanner.service.port }}
+      protocol: TCP
+
+  selector:
+    {{- include "admission-controller.scanner.selectorLabels" . | nindent 4 }}
+{{- end -}}
