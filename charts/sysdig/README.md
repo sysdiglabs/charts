@@ -47,7 +47,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | ---                                               | ---                                                                                      | ---                                         |
 | `image.registry`                                  | Sysdig Agent image registry                                                              | `docker.io`                                 |
 | `image.repository`                                | The image repository to pull from                                                        | `sysdig/agent`                              |
-| `image.tag`                                       | The image tag to pull                                                                    | `10.7.0`                                    |
+| `image.tag`                                       | The image tag to pull                                                                    | `10.8.0`                                    |
 | `image.pullPolicy`                                | The Image pull policy                                                                    | `IfNotPresent`                              |
 | `image.pullSecrets`                               | Image pull secrets                                                                       | `nil`                                       |
 | `resources.requests.cpu`                          | CPU requested for being run in a node                                                    | `600m`                                      |
@@ -96,7 +96,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `nodeImageAnalyzer.settings.httpsProxy`           | Proxy configuration variables                                                            |                                             |
 | `nodeImageAnalyzer.settings.noProxy`              | Proxy configuration variables                                                            |                                             |
 | `nodeImageAnalyzer.image.repository`              | The image repository to pull the Node Image Analyzer from                                | `sysdig/node-image-analyzer`                |
-| `nodeImageAnalyzer.image.tag`                     | The image tag to pull the Node Image Analyzer                                            | `0.1.6`                                     |
+| `nodeImageAnalyzer.image.tag`                     | The image tag to pull the Node Image Analyzer                                            | `0.1.7`                                     |
 | `nodeImageAnalyzer.image.pullPolicy`              | The Image pull policy for the Node Image Analyzer                                        | `IfNotPresent`                              |
 | `nodeImageAnalyzer.image.pullSecrets`             | Image pull secrets for the Node Image Analyzer                                           | `nil`                                       |
 | `nodeImageAnalyzer.resources.requests.cpu`        | Node Image Analyzer CPU requests per node                                                | `250m`                                      |
