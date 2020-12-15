@@ -78,14 +78,14 @@ scanner:
     repository: sysdiglabs/inline-scan-service
     pullPolicy: Always
     # Override the default image tag. If not specified, it defaults to appVersion in Chart.yaml
-    tag: local
+    tag: master
 
   service:
     port: 8443
 
-  authWithSecureToken: true
-
+  authWithSecureToken: false
   sysdigSecureOnPrem: false
+
   # Put your <Sysdig-Secure-Secret-Token> in this value
   # Set to http://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy
   httpProxy: ""
