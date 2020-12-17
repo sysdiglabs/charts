@@ -66,6 +66,8 @@ aws:
   secretAccessKey: ""
   region: ""
 
+gcpCredentials: ""
+
 sysdig:
   agentKey: ""
   secureApiToken: ""
