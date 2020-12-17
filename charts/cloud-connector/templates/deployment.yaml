@@ -68,14 +68,23 @@ spec:
                 secretKeyRef:
                   name: {{ include "cloud-connector.fullname" . }}
                   key: sysdig_agent_key
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "cloud-connector.fullname" . }}
+                  key: sysdig_agent_key
             - name: SECURE_API_TOKEN
               valueFrom:
                 secretKeyRef:
                   name: {{ include "cloud-connector.fullname" . }}
                   key: secure_api_token
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: /var/secrets/gcp/gcp_credentials
           volumeMounts:
             - mountPath: /etc/cloud-connector
               name: cloud-connector-config
+            - mountPath: /var/secrets/gcp
+              name: google-application-credentials
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -92,3 +101,9 @@ spec:
         - name: cloud-connector-config
           configMap:
             name: {{ include "cloud-connector.fullname" . }}
+        - name: google-application-credentials
+          secret:
+            secretName: {{ include "cloud-connector.fullname" . }}
+            items:
+              - key: gcp_credentials
+                path: gcp_credentials
