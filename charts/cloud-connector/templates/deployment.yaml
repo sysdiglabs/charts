@@ -68,11 +68,6 @@ spec:
                 secretKeyRef:
                   name: {{ include "cloud-connector.fullname" . }}
                   key: sysdig_agent_key
-            - name: GOOGLE_APPLICATION_CREDENTIALS
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "cloud-connector.fullname" . }}
-                  key: sysdig_agent_key
             - name: SECURE_API_TOKEN
               valueFrom:
                 secretKeyRef:
