@@ -4,6 +4,8 @@
 
 sysdigSecureToken: ""
 sysdigSecureUrl: "https://secure.sysdig.com"
+clusterName: ""
+clusterId: ""
 
 serviceAccounts:
   webhook:
@@ -67,6 +69,22 @@ webhook:
   tolerations: []
 
   affinity: {}
+
+  policies:
+    - id: "only-scanned"
+      name: "Allow only Scanned Images"
+      description: "Allow only pods which have been scanned"
+      rejectIfEvaluationFailed: true
+      rejectIfUnscanned: true
+      scanIfUnscanned: true
+
+  assignments:
+    enabled: true
+    defaultBehaviour: allowall
+    assignments:
+      - namespace: scanned
+        prefix: ""
+        policyID: only-scanned
 
 # inline scanner configuration
 scanner:
