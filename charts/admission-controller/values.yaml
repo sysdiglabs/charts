@@ -3,7 +3,8 @@
 # Declare variables to be passed into your templates.
 
 sysdigSecureToken: ""
-sysdigSecureUrl: "https://secure.sysdig.com"
+sysdigSecureUrl: "https://app.sysdigcloud.com"
+sysdigAgentKey: ""
 clusterName: ""
 clusterId: ""
 
