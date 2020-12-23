@@ -43,6 +43,7 @@ webhook:
     prometheus.io/scrape: "true"
     prometheus.io/path: "/metrics"
     prometheus.io/port: "5000"
+    prometheus.io/scheme: "https"
 
   podSecurityContext:
     fsGroup: 1000
