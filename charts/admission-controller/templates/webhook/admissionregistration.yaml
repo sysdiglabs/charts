@@ -6,13 +6,12 @@ so the template is executed just once
 {{- $certList := split "$" $certString -}}
 ---
 apiVersion: admissionregistration.k8s.io/v1
-kind: MutatingWebhookConfiguration
+kind: ValidatingWebhookConfiguration
 metadata:
   name: {{ include "admission-controller.webhook.fullname" . }}
 webhooks:
 - name: scanning.secure.sysdig.com
   matchPolicy: Equivalent
-  reinvocationPolicy: IfNeeded
   rules:
   - apiGroups: [""]
     apiVersions: ["v1"]
