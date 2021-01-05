@@ -121,11 +121,11 @@ spec:
           readinessProbe:
             exec:
               command: [ "test", "-e", "/opt/draios/logs/running" ]
-            initialDelaySeconds: 10
+            initialDelaySeconds: {{ .Values.daemonset.probes.initialDelay }}
           livenessProbe:
             exec:
               command: [ "test", "-e", "/opt/draios/logs/running" ]
-            initialDelaySeconds: 10
+            initialDelaySeconds: {{ .Values.daemonset.probes.initialDelay }}
           volumeMounts:
             {{- if not .Values.slim.enabled }}
             - mountPath: /etc/modprobe.d

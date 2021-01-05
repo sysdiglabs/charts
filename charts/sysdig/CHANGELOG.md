@@ -5,6 +5,12 @@
 This file documents all notable changes to Sysdig Helm Chart. The release
 numbering uses [semantic versioning](http://semver.org).
 
+## v1.11.2
+
+### Minor changes
+
+* Allow for customization of liveness and readiness probes initial delay
+
 ## v1.11.1
 
 ### Minor Changes
