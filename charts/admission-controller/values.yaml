@@ -3,7 +3,10 @@
 # Declare variables to be passed into your templates.
 
 sysdigSecureToken: ""
-sysdigSecureUrl: "https://secure.sysdig.com"
+sysdigSecureUrl: "https://app.sysdigcloud.com"
+sysdigAgentKey: ""
+clusterName: ""
+clusterId: ""
 
 serviceAccounts:
   webhook:
@@ -41,6 +44,7 @@ webhook:
     prometheus.io/scrape: "true"
     prometheus.io/path: "/metrics"
     prometheus.io/port: "5000"
+    prometheus.io/scheme: "https"
 
   podSecurityContext:
     fsGroup: 1000
@@ -68,6 +72,22 @@ webhook:
 
   affinity: {}
 
+  policies:
+    - id: 1
+      name: "Allow only Scanned Images"
+      description: "Allow only pods which have been scanned"
+      rejectIfEvaluationFailed: true
+      rejectIfUnscanned: true
+      scanIfUnscanned: true
+
+  assignments:
+    enabled: true
+    defaultBehaviour: allowall
+    assignments:
+      - namespace: scanned
+        prefix: ""
+        policyID: 1
+
 # inline scanner configuration
 scanner:
   enabled: true
@@ -78,14 +98,14 @@ scanner:
     repository: sysdiglabs/inline-scan-service
     pullPolicy: Always
     # Override the default image tag. If not specified, it defaults to appVersion in Chart.yaml
-    tag: local
+    tag: master
 
   service:
     port: 8443
 
-  authWithSecureToken: true
-
+  authWithSecureToken: false
   sysdigSecureOnPrem: false
+
   # Put your <Sysdig-Secure-Secret-Token> in this value
   # Set to http://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy
   httpProxy: ""
