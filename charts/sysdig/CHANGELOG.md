@@ -5,11 +5,18 @@
 This file documents all notable changes to Sysdig Helm Chart. The release
 numbering uses [semantic versioning](http://semver.org).
 
-## v1.11.1
+## v1.11.2
 
 ### Minor changes
 
-* Allow for customisation of liveness and readiness probes initial delay
+* Allow for customization of liveness and readiness probes initial delay
+
+## v1.11.1
+
+### Minor Changes
+
+* Use the latest image from Agent (10.8.0)
+* Use the latest image from Node Image Analyzer (0.1.7)
 
 ## v1.11.0
 
