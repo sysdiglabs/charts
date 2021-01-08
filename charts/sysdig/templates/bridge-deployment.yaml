@@ -1,0 +1,38 @@
+{{- if .Values.bridge.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "sysdig.fullname" . }}-sd-bridge
+  labels:
+    app.kubernetes.io/name: {{ include "sysdig.name" . }}-sd-bridge
+{{ include "sysdig.labels" . | indent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ include "sysdig.name" . }}-sd-bridge
+  template:
+    metadata:
+      labels:
+        app: {{ include "sysdig.name" . }}-sd-bridge
+    spec:
+      containers:
+        - name: stackdriver-webhook-bridge
+          image: {{ .Values.bridge.image }}
+          env:
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: '/var/secrets/google/key.json'
+          volumeMounts:
+            - name: google-cloud-key
+              mountPath: '/var/secrets/google'
+            - name: swb-config
+              mountPath: '/opt/swb/config'
+      volumes:
+        - name: google-cloud-key
+          secret:
+            secretName: {{ .Values.bridge.secretName }}
+        - name: swb-config
+          configMap:
+            name: {{ template "sysdig.fullname" . }}-sd-bridge
+            optional: true
+{{- end -}}

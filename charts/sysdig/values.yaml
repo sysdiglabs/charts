@@ -283,3 +283,21 @@ extraVolumes:
 tolerations:
   - effect: NoSchedule
     key: node-role.kubernetes.io/master
+
+# Create Stackdriver Bridge application.
+bridge:
+  enabled: false
+  image: sysdiglabs/stackdriver-webhook-bridge
+
+  # Secret name that contains GCP SA creds for the stackdriver Service Account
+  secretName: stackdriver-webhook-bridge
+
+  # Settings for ConfigMap
+  forwardURL: http://sysdig-agent.sysdig-agent.svc.cluster.local:7765/k8s_audit
+  projectID:
+  clusterID:
+  logFile:
+  outFile:
+  pollInterval: 5s
+  lagInterval: 30s
+  logLevel: info
