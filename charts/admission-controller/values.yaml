@@ -6,6 +6,8 @@ sysdigSecureToken: ""
 sysdigSecureUrl: "https://app.sysdigcloud.com"
 sysdigAgentKey: ""
 clusterName: ""
+
+# Set to override the clusterID, auto detected as the the kube-system namespace UID
 clusterId: ""
 
 serviceAccounts:
