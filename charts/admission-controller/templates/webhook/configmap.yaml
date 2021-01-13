@@ -8,6 +8,3 @@ data:
   SECURE_URL: "{{ .Values.sysdigSecureUrl }}"
   SCANNER_URL: https://{{ include "admission-controller.scanner.fullname" . }}:{{ .Values.scanner.service.port }}
   CLUSTER_NAME: {{ required "value 'clusterName' is required, but is not set"  .Values.clusterName }}
-  {{- if .Values.clusterId }}
-  CLUSTER_ID: {{ .Values.clusterId }}
-  {{- end }}
