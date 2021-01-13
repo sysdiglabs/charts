@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "sysdig-stackdriver-bridge.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "sysdig-stackdriver-bridge.name" . }}
+{{ include "sysdig-stackdriver-bridge.labels" . | indent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ include "sysdig-stackdriver-bridge.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "sysdig-stackdriver-bridge.name" . }}
+    spec:
+      containers:
+        - name: stackdriver-webhook-bridge
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: '/var/secrets/google/key.json'
+          volumeMounts:
+            - name: google-cloud-key
+              mountPath: '/var/secrets/google'
+            - name: swb-config
+              mountPath: '/opt/swb/config'
+      volumes:
+        - name: google-cloud-key
+          secret:
+            secretName: {{ .Values.secret.name }}
+        - name: swb-config
+          configMap:
+            name: {{ template "sysdig-stackdriver-bridge.fullname" . }}
+            optional: true
