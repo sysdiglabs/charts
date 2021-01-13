@@ -1,4 +1,3 @@
 sysdigSecureToken: xxxxx
 sysdigAgentKey: yyyyy
 clusterName: CI-Cluster
-clusterId: foobar

@@ -6,7 +6,6 @@ sysdigSecureToken: ""
 sysdigSecureUrl: "https://app.sysdigcloud.com"
 sysdigAgentKey: ""
 clusterName: ""
-clusterId: ""
 
 serviceAccounts:
   webhook:
