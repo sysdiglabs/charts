@@ -6,5 +6,9 @@ metadata:
     {{ include "admission-controller.webhook.labels" . | nindent 4 }}
 data:
   SECURE_URL: "{{ .Values.sysdigSecureUrl }}"
+  {{- if .Values.scanner.enabled }}
   SCANNER_URL: https://{{ include "admission-controller.scanner.fullname" . }}:{{ .Values.scanner.service.port }}
+  {{- else }}
+  SCANNER_URL: "{{ .Values.sysdigSecureUrl }}"
+  {{- end }}
   CLUSTER_NAME: {{ required "value 'clusterName' is required, but is not set"  .Values.clusterName }}
