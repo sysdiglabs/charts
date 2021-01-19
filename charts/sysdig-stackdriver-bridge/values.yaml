@@ -3,7 +3,7 @@
 image:
   repository: sysdiglabs/stackdriver-webhook-bridge
   pullPolicy: IfNotPresent
-  tag: latest
+  tag: 
 
 secret:
   # If this is true, the chart will create the Secret and pass in secret.data as key.json.
