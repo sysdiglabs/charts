@@ -1,0 +1,3 @@
+secret:
+  create: true
+  data: foobar

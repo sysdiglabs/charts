@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "sysdig-stackdriver-bridge.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "sysdig-stackdriver-bridge.name" . }}
+{{ include "sysdig-stackdriver-bridge.labels" . | indent 4 }}
+data:
+  swb-config.yaml: |
+    # Forward converted k8s audit events to this url.
+    url: {{ .Values.settings.forwardURL }}
+    # Read stackdriver logs from this project id. If blank, the bridge
+    # will use the metadata service to find the project id.
+    project: {{ .Values.settings.projectID }}
+    # Read stackdriver logs for this k8s cluster. If blank, the bridge
+    # will use the metadata service to find the cluster name.
+    cluster: {{ .Values.settings.clusterID }}
+    # If provided, also write all log entries to this file. (Mostly
+    # used for low-level debugging of conversion. Shouldn't be needed
+    # in normal operation)
+    logfile: {{ .Values.settings.logFile }}
+    # If provided, write all converted k8s audit events to this
+    # file. (Mostly used for low-level debugging, not needed for
+    # normal operation).
+    outfile: {{ .Values.settings.outFile }}
+    # Poll interval for new stackdriver log messages.
+    poll_interval: {{ .Values.settings.pollInterval }}
+    # When reading stackdriver log messages, read this many seconds
+    # behind "now" when reading. A small lag allows for the time it
+    # takes for log messages to be sent by the api server and
+    # available in stackdriver.
+    lag_interval: {{ .Values.settings.lagInterval }}
+    # Log Level
+    log_level: {{ .Values.settings.logLevel }}
