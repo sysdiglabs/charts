@@ -1406,4 +1406,33 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-mcm-navmenu-1.0.0/sysdig-mcm-navmenu-1.0.0.tgz
     version: 1.0.0
+  sysdig-stackdriver-bridge:
+  - apiVersion: v1
+    appVersion: 0.0.5
+    created: "2021-01-21T14:15:37.0938344Z"
+    description: Sysdig Monitor and Secure agent
+    digest: 5ade2676f4af7f486f13154dc031f828ccc8400f54e9892bf11e1eeb7b53afdb
+    home: https://www.sysdig.com/
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: jorge.salamero@sysdig.com
+      name: bencer
+    - email: nestor.salceda@sysdig.com
+      name: nestorsalceda
+    - email: scott@echoboomer.net
+      name: echoboomer
+    name: sysdig-stackdriver-bridge
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
+    version: 1.0.0
 generated: "2020-05-12T17:19:48.253395+02:00"
