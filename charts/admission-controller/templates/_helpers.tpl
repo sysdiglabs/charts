@@ -77,14 +77,15 @@ If release name contains chart name it will be used as a full name.
 Common labels
 */}}
 {{- define "admission-controller.webhook.labels" -}}
-{{ include "admission-controller.webhook.selectorLabels" . }}
+{{ include "admission-controller.labels" . }}
+{{- define "admission-controller.webhook.selectorLabels" -}}
 {{- end -}}
 
 {{/*
 Selector labels
 */}}
 {{- define "admission-controller.webhook.selectorLabels" -}}
-{{ include "admission-controller.labels" . }}
+{{ include "admission-controller.selectorLabels" . }}
 app.kubernetes.io/component: webhook
 {{- end -}}
 
@@ -151,6 +152,7 @@ If release name contains chart name it will be used as a full name.
 Common labels
 */}}
 {{- define "admission-controller.scanner.labels" -}}
+{{ include "admission-controller.labels" . }}
 {{ include "admission-controller.scanner.selectorLabels" . }}
 {{- end -}}
 
@@ -158,7 +160,7 @@ Common labels
 Selector labels
 */}}
 {{- define "admission-controller.scanner.selectorLabels" -}}
-{{ include "admission-controller.labels" . }}
+{{ include "admission-controller.selectorLabels" . }}
 app.kubernetes.io/component: scanner
 {{- end -}}
 
