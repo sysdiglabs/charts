@@ -36,10 +36,6 @@ spec:
             - /cert/tls.crt
             - --tls_private_key_file
             - /cert/tls.key
-            - --policies_file
-            - /rules/policies.json
-            - --assignments_file
-            - /rules/assignments.json
           securityContext:
             {{- toYaml .Values.webhook.securityContext | nindent 12 }}
           imagePullPolicy: {{ .Values.webhook.image.pullPolicy }}
@@ -73,18 +69,12 @@ spec:
             - name: cert
               mountPath: /cert
               readOnly: true
-            - name: rules
-              mountPath: /rules
-              readOnly: true
           resources:
             {{- toYaml .Values.webhook.resources | nindent 12 }}
       volumes:
       - name: cert
         secret:
           secretName: {{ include "admission-controller.webhook.fullname" . }}-tls
-      - name: rules
-        configMap:
-          name: {{ include "admission-controller.webhook.fullname" . }}-rules
     {{- with .Values.webhook.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
