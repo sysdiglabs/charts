@@ -71,22 +71,6 @@ webhook:
 
   affinity: {}
 
-  policies:
-    - id: 1
-      name: "Allow only Scanned Images"
-      description: "Allow only pods which have been scanned"
-      rejectIfEvaluationFailed: true
-      rejectIfUnscanned: true
-      scanIfUnscanned: true
-
-  assignments:
-    enabled: true
-    defaultBehaviour: allowall
-    assignments:
-      - namespace: scanned
-        prefix: ""
-        policyID: 1
-
 # inline scanner configuration
 scanner:
   enabled: true
