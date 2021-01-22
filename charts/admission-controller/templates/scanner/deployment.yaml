@@ -20,7 +20,7 @@ spec:
         checksum/secret: {{ include (print $.Template.BasePath "/scanner/secret.yaml") . | sha256sum }}
         checksum/certs: {{ include (print $.Template.BasePath "/scanner/certs.yaml") . | sha256sum }}
       labels:
-        {{- include "admission-controller.scanner.selectorLabels" . | nindent 8 }}
+        {{- include "admission-controller.scanner.labels" . | nindent 8 }}
     spec:
       {{- with .Values.scanner.imagePullSecrets }}
       imagePullSecrets:
