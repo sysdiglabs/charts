@@ -78,7 +78,7 @@ Common labels
 */}}
 {{- define "admission-controller.webhook.labels" -}}
 {{ include "admission-controller.labels" . }}
-{{- define "admission-controller.webhook.selectorLabels" -}}
+{{ include "admission-controller.webhook.selectorLabels" . }}
 {{- end -}}
 
 {{/*
