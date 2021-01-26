@@ -2,10 +2,15 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-sysdigSecureToken: ""
-sysdigSecureUrl: "https://app.sysdigcloud.com"
-sysdigAgentKey: ""
+sysdig:
+  url: "https://app.sysdigcloud.com"
+  secureAPIToken: ""
+  agentKey: ""
+
 clusterName: ""
+
+nameOverride: ""
+fullnameOverride: ""
 
 serviceAccounts:
   webhook:
@@ -16,9 +21,6 @@ serviceAccounts:
     create: true
     annotations: {}
     name: ""
-
-nameOverride: ""
-fullnameOverride: ""
 
 webhook:
   name: webhook

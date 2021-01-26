@@ -1,3 +1,4 @@
-sysdigSecureToken: xxxxx
-sysdigAgentKey: yyyyy
+sysdig:
+  secureAPIToken: xxxxx
+  agentKey: yyyyy
 clusterName: CI-Cluster
