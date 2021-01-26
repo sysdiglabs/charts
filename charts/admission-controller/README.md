@@ -84,5 +84,3 @@ Alternatively, a YAML file that specifies the values for the parameters can be p
 ```bash
 $ helm install --name my-release -f values.yaml sysdig/admission-controller
 ```
-
-You have more details about Rules, Ingestors and Notifiers on [Cloud Connector documentation](https://sysdiglabs.github.io/admission-controller/config-file.html)
