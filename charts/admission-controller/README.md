@@ -67,7 +67,6 @@ Controller chart and their default values:
 | `scanner.service.port`                | Configure port for the webhook service             | `8443`                                                                                                                              |
 | `scanner.authWithSecureToken`         | Authenticate with Secure token                     | `false`                                                                                                                             |
 | `scanner.sysdigSecureOnPrem`          | Configure scanner to work in an OnPrem environment | `false`                                                                                                                             |
-
 | `scanner.httpProxy`                   | HTTP Proxy settings for scanner                    | ``                                                                                                                                  |
 | `scanner.noProxy`                     | No proxy these URL's for scanner                   | `kubernetes,10.0.0.0/8`                                                                                                             |
 | `scanner.podAnnotations`              | Scanner pod annotations                            | `{"prometheus.io/scrape": "true", "prometheus.io/path": "/metrics", "prometheus.io/port": "5000", "prometheus.io/scheme": "https"}` |
@@ -85,5 +84,3 @@ Alternatively, a YAML file that specifies the values for the parameters can be p
 ```bash
 $ helm install --name my-release -f values.yaml sysdig/admission-controller
 ```
-
-You have more details about Rules, Ingestors and Notifiers on [Cloud Connector documentation](https://sysdiglabs.github.io/admission-controller/config-file.html)
