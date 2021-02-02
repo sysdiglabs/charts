@@ -63,5 +63,13 @@ sysdig:
     url: "https://secure.sysdig.com"
     verifySSL: true
 
+proxy:
+  httpProxy:
+  httpsProxy:
+  # Comma-separated list of domain extensions proxy should not be used for. 
+  # Include in noProxy the internal IP of the kubeapi server,
+  # and you probably need to add your registry if it is inside the cluster
+  noProxy:
+
 inlineScanning:
-  enabled: false
+  enabled: true
