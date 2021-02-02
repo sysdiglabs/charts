@@ -38,6 +38,18 @@ spec:
                 secretKeyRef:
                   name: {{ include "harbor-scanner-sysdig-secure.fullname" . }}
                   key: sysdig_secure_api_token
+            {{- if .Values.proxy.httpProxy }}
+            - name: http_proxy
+              value: {{ .Values.proxy.httpProxy }}
+            {{- end }}
+            {{- if .Values.proxy.httpsProxy }}
+            - name: https_proxy
+              value: {{ .Values.proxy.httpsProxy }}
+            {{- end }}
+            {{- if .Values.proxy.noProxy }}
+            - name: no_proxy
+              value: {{ .Values.proxy.noProxy }}
+            {{- end }}
             - name: VERIFY_SSL
               value: "{{ .Values.sysdig.secure.verifySSL }}"
             {{- if .Values.inlineScanning.enabled }}
