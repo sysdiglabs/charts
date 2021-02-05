@@ -9,14 +9,9 @@ spec:
   type: {{ .Values.scanner.service.type }}
   ports:
     - name: https
-      {{- if or (gt  (.Capabilities.KubeVersion.Major | atoi) 1 ) (gt (.Capabilities.KubeVersion.Minor | atoi) 14) }}
       port: {{ .Values.scanner.service.port }}
-      {{ else }}
-      port: 443
-      {{- end }}
-      targetPort: {{ .Values.scanner.service.port }}
+      targetPort: http
       protocol: TCP
-
   selector:
     {{- include "admission-controller.scanner.selectorLabels" . | nindent 4 }}
 {{- end -}}
