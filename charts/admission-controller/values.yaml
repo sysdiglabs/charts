@@ -9,6 +9,9 @@ sysdig:
 
 clusterName: ""
 
+features:
+  publishOnSecureEventFeed: false
+
 nameOverride: ""
 fullnameOverride: ""
 

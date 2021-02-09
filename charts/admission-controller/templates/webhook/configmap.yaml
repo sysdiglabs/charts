@@ -12,3 +12,4 @@ data:
   SCANNER_URL: "{{ .Values.sysdig.url }}"
   {{- end }}
   CLUSTER_NAME: {{ required "value 'clusterName' is required, but is not set"  .Values.clusterName }}
+  PUBLISH_ON_EVENT_FEED: "{{ .Values.features.publishOnSecureEventFeed }}"
