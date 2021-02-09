@@ -9,7 +9,7 @@ spec:
   ports:
   - name: http
     port: {{ .Values.webhook.service.port }}
-    targetPort: 5000
+    targetPort: http
     protocol: TCP
   selector:
     {{- include "admission-controller.webhook.selectorLabels" . | nindent 4 }}
