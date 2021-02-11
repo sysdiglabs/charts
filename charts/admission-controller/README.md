@@ -4,22 +4,16 @@ This chart deploys the Sysdig Admission Controller in your Kubernetes cluster.
 
 ## Installing the Chart
 
-1. Create a namespace for the deployment:
-
-```
-$ kubectl create ns admission-controller
-```
-
-2. Add Sysdig Helm charts repository:
+Add Sysdig Helm charts repository:
 
 ```
 $ helm repo add sysdig https://charts.sysdig.com
 ```
 
-3. Deploy the scanner adapter
+Deploy the scanner adapter
 
 ```
-$ helm install -n admission-controller admission-controller -f values.yaml sysdig/admission-controller
+$ helm install --create-namespace -n admission-controller admission-controller -f values.yaml sysdig/admission-controller
 ```
 
 ## Configuration
@@ -68,7 +62,6 @@ Controller chart and their default values:
 | `scanner.image.tag`                   | Scanner image tag                                            | `master`                                                                                                                            |
 | `scanner.service.port`                | Configure port for the webhook service                       | `8443`                                                                                                                              |
 | `scanner.authWithSecureToken`         | Authenticate with Secure token                               | `false`                                                                                                                             |
-| `scanner.sysdigSecureOnPrem`          | Configure scanner to work in an OnPrem environment           | `false`                                                                                                                             |
 | `scanner.httpProxy`                   | HTTP Proxy settings for scanner                              | ``                                                                                                                                  |
 | `scanner.noProxy`                     | No proxy these URL's for scanner                             | `kubernetes,10.0.0.0/8`                                                                                                             |
 | `scanner.podAnnotations`              | Scanner pod annotations                                      | `{"prometheus.io/scrape": "true", "prometheus.io/path": "/metrics", "prometheus.io/port": "5000", "prometheus.io/scheme": "https"}` |
@@ -86,3 +79,19 @@ Alternatively, a YAML file that specifies the values for the parameters can be p
 ```bash
 $ helm install --name my-release -f values.yaml sysdig/admission-controller
 ```
+
+### On Prem deployment
+
+Use the following command to deploy in an on-prem:
+
+```
+$ helm install  --create-namespace -n sysdig-admission-controller sysdig-admission-controller \
+                --set sysdig.url=SECURE_URL \
+                --set sysdig.secureAPIToken=SECURE_API_TOKEN \
+                --set sysdig.agentKey=AGENT_KEY \
+                --set clusterName=CLUSTER_NAME \
+                --set verifySSL=false \
+                sysdig/admission-controller
+```
+
+Use `verifySLL=false` if you are using self signed certificates.

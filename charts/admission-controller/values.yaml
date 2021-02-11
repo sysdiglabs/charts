@@ -94,7 +94,6 @@ scanner:
     port: 8443
 
   authWithSecureToken: false
-  sysdigSecureOnPrem: false
 
   # Put your <Sysdig-Secure-Secret-Token> in this value
   # Set to http://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy
