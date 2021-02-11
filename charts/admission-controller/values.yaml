@@ -12,6 +12,8 @@ clusterName: ""
 features:
   publishOnSecureEventFeed: false
 
+verifySSL: true
+
 nameOverride: ""
 fullnameOverride: ""
 

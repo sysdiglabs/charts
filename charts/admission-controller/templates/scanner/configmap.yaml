@@ -8,5 +8,5 @@ metadata:
 data:
   SECURE_BASE_URL: "{{ .Values.sysdig.url }}"
   SECURE_ON_PREM: "{{ .Values.scanner.sysdigSecureOnPrem }}"
-  SECURE_SKIP_TLS: "{{ .Values.scanner.sysdigSecureSkipTLS }}"
+  SECURE_SKIP_TLS: "{{ not .Values.verifySSL }}"
 {{- end -}}
