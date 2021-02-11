@@ -62,7 +62,6 @@ Controller chart and their default values:
 | `scanner.image.tag`                   | Scanner image tag                                            | `master`                                                                                                                            |
 | `scanner.service.port`                | Configure port for the webhook service                       | `8443`                                                                                                                              |
 | `scanner.authWithSecureToken`         | Authenticate with Secure token                               | `false`                                                                                                                             |
-| `scanner.sysdigSecureOnPrem`          | Configure scanner to work in an OnPrem environment           | `false`                                                                                                                             |
 | `scanner.httpProxy`                   | HTTP Proxy settings for scanner                              | ``                                                                                                                                  |
 | `scanner.noProxy`                     | No proxy these URL's for scanner                             | `kubernetes,10.0.0.0/8`                                                                                                             |
 | `scanner.podAnnotations`              | Scanner pod annotations                                      | `{"prometheus.io/scrape": "true", "prometheus.io/path": "/metrics", "prometheus.io/port": "5000", "prometheus.io/scheme": "https"}` |
@@ -92,11 +91,7 @@ $ helm install  --create-namespace -n sysdig-admission-controller sysdig-admissi
                 --set sysdig.agentKey=AGENT_KEY \
                 --set clusterName=CLUSTER_NAME \
                 --set verifySSL=false \
-                --set scanner.sysdigSecureOnPrem=true \
                 sysdig/admission-controller
 ```
 
-Make sure you include the following parameters:
-
-* verifySSL=false if you are using self signed certificates
-* scanner.sysdigSecureOnPrem=true
+Use `verifySLL=false` if you are using self signed certificates.
