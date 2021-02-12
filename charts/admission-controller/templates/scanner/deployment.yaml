@@ -18,7 +18,6 @@ spec:
       {{- end }}
         checksum/configmap: {{ include (print $.Template.BasePath "/scanner/configmap.yaml") . | sha256sum }}
         checksum/secret: {{ include (print $.Template.BasePath "/scanner/secret.yaml") . | sha256sum }}
-        checksum/certs: {{ include (print $.Template.BasePath "/scanner/certs.yaml") . | sha256sum }}
       labels:
         {{- include "admission-controller.scanner.labels" . | nindent 8 }}
     spec:
@@ -36,8 +35,6 @@ spec:
           image: "{{ include "admission-controller.scanner.image" . }}"
           args:
             - --server_port={{ .Values.scanner.service.port }}
-            - --cert_pem_file=/cert/cert.pem
-            - --cert_key_file=/cert/cert.key
             {{- if .Values.scanner.authWithSecureToken }}
             - --auth_secure_token
             {{- end}}
@@ -56,20 +53,12 @@ spec:
                 name: {{ include "admission-controller.scanner.fullname" . }}-api-token
             - secretRef:
                 name: {{ include "admission-controller.scanner.fullname" . }}-auth
-          volumeMounts:
-            - name: cert
-              mountPath: /cert
-              readOnly: true
           ports:
             - name: http
               containerPort: {{ .Values.scanner.service.port }}
               protocol: TCP
           resources:
             {{- toYaml .Values.scanner.resources | nindent 12 }}
-      volumes:
-        - name: cert
-          secret:
-            secretName: {{ include "admission-controller.scanner.fullname" . }}-tls
       {{- with .Values.scanner.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
