@@ -88,10 +88,10 @@ scanner:
     repository: sysdiglabs/inline-scan-service
     pullPolicy: Always
     # Override the default image tag. If not specified, it defaults to appVersion in Chart.yaml
-    tag: master
+    tag: 0.0.2
 
   service:
-    port: 8443
+    port: 8080
 
   authWithSecureToken: false
 
@@ -104,5 +104,5 @@ scanner:
   podAnnotations:
     prometheus.io/scrape: "true"
     prometheus.io/path: "/metrics"
-    prometheus.io/port: "8443"
+    prometheus.io/port: "8080"
     prometheus.io/scheme: "https"
