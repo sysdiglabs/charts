@@ -5,7 +5,6 @@
 sysdig:
   url: "https://app.sysdigcloud.com"
   secureAPIToken: ""
-  agentKey: ""
 
 clusterName: ""
 

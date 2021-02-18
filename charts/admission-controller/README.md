@@ -25,7 +25,6 @@ Controller chart and their default values:
 | ---                                   | ---                                                          | ---                                                                                                                                 |
 | `sysdig.url`                          | The Sysdig URL prefix                                        | `https://app.sysdigcloud.com`                                                                                                       |
 | `sysdig.secureAPIToken`               | API Token to access Sysdig Secure                            | ``                                                                                                                                  |
-| `sysdig.agentKey`                     | Agent Key for Sysdig                                         | ``                                                                                                                                  |
 | `clusterName`                         | Cluster Name which appear on Secure UI                       | ``                                                                                                                                  |
 | `features.publishOnSecureEventFeed`   | Publish admission events on Secure Event feed (Experimental) | `false`                                                                                                                             |
 | `verifySSL`                           | Verify SSL on HTTPS connections to Sysdig Secure             | `true`                                                                                                                              |
@@ -88,7 +87,6 @@ Use the following command to deploy in an on-prem:
 $ helm install  --create-namespace -n sysdig-admission-controller sysdig-admission-controller \
                 --set sysdig.url=SECURE_URL \
                 --set sysdig.secureAPIToken=SECURE_API_TOKEN \
-                --set sysdig.agentKey=AGENT_KEY \
                 --set clusterName=CLUSTER_NAME \
                 --set verifySSL=false \
                 sysdig/admission-controller

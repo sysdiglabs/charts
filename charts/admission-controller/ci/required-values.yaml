@@ -1,4 +1,3 @@
 sysdig:
   secureAPIToken: xxxxx
-  agentKey: yyyyy
 clusterName: CI-Cluster
