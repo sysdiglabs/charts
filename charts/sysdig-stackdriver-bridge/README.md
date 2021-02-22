@@ -63,6 +63,10 @@ The following table lists the configurable parameters of the Sysdig Stackdriver 
 | `secret.create`         | If set to `true`, the chart will generate a `Secret` that matches the value of `bridge.secretName`.                                                    | `false`                                                             |
 | `secret.data`           | This will set the value `key.json` in the created `Secret`. Contents of the GCP IAM Service Account that was created for Sysdig to access Stackbridge. | `nil`                                                               |
 | `secret.name`           | Name of the `Secret` that contains the `json` data for the GCP IAM account for use with the Stackdriver bridge application.                            | `stackdriver-webhook-bridge`                                        |
+| `nodeSelector`          | Node labels for pod assignment                              | `{}`                                        |
+| `affinity`              | Affinity settings for pod assignment                        | `{}`                                        |
+| `annotations`           | Pod annotations                                             | `{}`                                        |
+| `tolerations`           | Toleration labels for pod assignment                        | `[]`                                        |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 

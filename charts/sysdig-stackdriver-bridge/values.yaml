@@ -22,3 +22,11 @@ settings:
   pollInterval: 5s
   lagInterval: 30s
   logLevel: info
+
+nodeSelector: {}
+
+affinity: {}
+
+annotations: {}
+
+tolerations: []
