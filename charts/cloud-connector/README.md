@@ -30,7 +30,7 @@ Sysdig Secure chart and their default values:
 | Parameter                    | Description                            | Default                                   |
 | ---                          | ---                                    | ---                                       |
 | `replicaCount`               | Amount of replicas for Cloud Connector | `1`                                       |
-| `image.repository`           | The image repository to pull from      | `sysdiglabs/harbor-scanner-sysdig-secure` |
+| `image.repository`           | The image repository to pull from      | `sysdiglabs/cloud-connector`              |
 | `image.pullPolicy`           | The image pull policy                  | `IfNotPresent`                            |
 | `imagePullSecrets`           | The image pull secrets                 | `[]`                                      |
 | `nameOverride`               | Chart name override                    | ` `                                       |
@@ -51,7 +51,6 @@ Sysdig Secure chart and their default values:
 | `aws.region`                 | AWS Region                             | ` `                                       |
 | `gcp.credentials`            | GCP Credentials JSON                   | ` `                                       |
 | `sysdig.secureApiToken`      | API Token to access Sysdig Secure      | ` `                                       |
-| `sysdig.agentKey`            | Agent Key for Sysdig                   | ` `                                       |
 | `rules`                      | Rules Section for Cloud Connector      | `{ - directory: path: /rules }`           |
 | `ingestors`                  | Ingestors Section for Cloud Connector  | `{}`                                      |
 | `notifiers`                  | Notifiers Section for Cloud Connector  | `{ - console: {}, - metrics: {}}`         |
