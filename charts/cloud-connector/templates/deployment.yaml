@@ -63,11 +63,6 @@ spec:
                 secretKeyRef:
                   name: {{ include "cloud-connector.fullname" . }}
                   key: aws_region
-            - name: AGENT_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "cloud-connector.fullname" . }}
-                  key: sysdig_agent_key
             - name: SECURE_API_TOKEN
               valueFrom:
                 secretKeyRef:
