@@ -70,6 +70,14 @@ spec:
                   key: secure_api_token
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: /var/secrets/gcp/gcp_credentials
+            - name: TELEMETRY_DEPLOYMENT_METHOD
+              value: helm
+            - name: TELEMETRY_CLOUDVISION_CLOUDBENCH_DEPLOYED
+              value: "false"
+            - name: TELEMETRY_CLOUDVISION_ECR_DEPLOYED
+              value: "false"
+            - name: TELEMETRY_CLOUDVISION_ECS_DEPLOYED
+              value: "false"
           volumeMounts:
             - mountPath: /etc/cloud-connector
               name: cloud-connector-config
