@@ -40,7 +40,7 @@ Sysdig Secure chart and their default values:
 | `aws.secretAccessKey`        | AWS Credentials: SecretAccessKey       | ` `                                       |
 | `aws.region`                 | AWS Region                             | ` `                                       |
 | `gcp.credentials`            | GCP Credentials JSON                   | ` `                                       |
-| `sysdig.secureUrl`           | Sysdig Secure URL                      | `https://secure.sysdig.com`               |
+| `sysdig.url`                 | Sysdig Secure URL                      | `https://secure.sysdig.com`               |
 | `sysdig.secureAPIToken`      | API Token to access Sysdig Secure      | ` `                                       |
 | `sysdig.verifySSL`           | Verify SSL certificate                 | `true`                                    |
 | `rules`                      | Rules Section for Cloud Connector      | `{ - directory: path: /rules }`           |
