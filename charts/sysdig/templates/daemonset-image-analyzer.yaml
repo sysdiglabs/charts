@@ -47,8 +47,7 @@ spec:
 {{ toYaml .Values.nodeImageAnalyzer.extraVolumesvolumes | indent 8 }}
         {{- end }}
       tolerations:
-        - effect: NoSchedule
-          key: node-role.kubernetes.io/master
+{{ toYaml .Values.nodeImageAnalyzer.tolerations | indent 8 }}
       # The following line is necessary for RBAC
       serviceAccount: {{ template "sysdig.serviceAccountName" .}}
       {{- if .Values.nodeImageAnalyzer.image.pullSecrets }}

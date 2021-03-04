@@ -217,6 +217,10 @@ nodeImageAnalyzer:
     httpsProxy:
     noProxy:
 
+  # Allow sysdig Node Image Analyzer to run on Kubernetes 1.6 masters
+  tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
 
   # Allow passing extra volumes to the Node Image Analyzer to mount docker socket, cri-o socket, etc.
   extraVolumes:
