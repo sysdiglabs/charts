@@ -4,22 +4,12 @@ This chart deploys the Sysdig Cloud connector on your Kubernetes cluster.
 
 ## Installing the Chart
 
-1. Create a namespace for the deployment:
-
-```
-$ kubectl create ns cloud-connector
-```
-
-2. Add Sysdig Helm charts repository:
+Add Sysdig Helm charts repository and deploy the chart:
 
 ```
 $ helm repo add sysdig https://charts.sysdig.com
-```
 
-3. Deploy the scanner adapter
-
-```
-$ helm install -n cloud-connector cloud-connector -f values.yaml sysdig/cloud-connector
+$ helm install --create-namespace -n cloud-connector cloud-connector -f values.yaml sysdig/cloud-connector
 ```
 
 ## Configuration
@@ -50,17 +40,19 @@ Sysdig Secure chart and their default values:
 | `aws.secretAccessKey`        | AWS Credentials: SecretAccessKey       | ` `                                       |
 | `aws.region`                 | AWS Region                             | ` `                                       |
 | `gcp.credentials`            | GCP Credentials JSON                   | ` `                                       |
-| `sysdig.secureApiToken`      | API Token to access Sysdig Secure      | ` `                                       |
+| `sysdig.secureUrl`           | Sysdig Secure URL                      | `https://secure.sysdig.com`               |
+| `sysdig.secureAPIToken`      | API Token to access Sysdig Secure      | ` `                                       |
+| `sysdig.verifySSL`           | Verify SSL certificate                 | `true`                                    |
 | `rules`                      | Rules Section for Cloud Connector      | `{ - directory: path: /rules }`           |
 | `ingestors`                  | Ingestors Section for Cloud Connector  | `{}`                                      |
-| `notifiers`                  | Notifiers Section for Cloud Connector  | `{ - console: {}, - metrics: {}}`         |
+| `notifiers`                  | Notifiers Section for Cloud Connector  | `{}`                                      |
 
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
 ```bash
 $ helm install --name my-release \
-    --set sysdig.secureApiToken=YOUR-KEY-HERE \
+    --set sysdig.secureAPIToken=YOUR-KEY-HERE \
     sysdig/cloud-connector
 ```
 
