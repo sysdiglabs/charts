@@ -64,7 +64,7 @@ spec:
                   name: {{ include "cloud-connector.fullname" . }}
                   key: aws_region
             - name: SECURE_URL
-              value: {{ .Values.sysdig.secureUrl }}
+              value: {{ .Values.sysdig.url }}
             - name: SECURE_API_TOKEN
               valueFrom:
                 secretKeyRef:

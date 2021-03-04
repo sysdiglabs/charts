@@ -41,7 +41,7 @@ Sysdig Secure chart and their default values:
 | `aws.region`                 | AWS Region                             | ` `                                       |
 | `gcp.credentials`            | GCP Credentials JSON                   | ` `                                       |
 | `sysdig.secureUrl`           | Sysdig Secure URL                      | `https://secure.sysdig.com`               |
-| `sysdig.secureApiToken`      | API Token to access Sysdig Secure      | ` `                                       |
+| `sysdig.secureAPIToken`      | API Token to access Sysdig Secure      | ` `                                       |
 | `sysdig.verifySSL`           | Verify SSL certificate                 | `true`                                    |
 | `rules`                      | Rules Section for Cloud Connector      | `{ - directory: path: /rules }`           |
 | `ingestors`                  | Ingestors Section for Cloud Connector  | `{}`                                      |
@@ -52,7 +52,7 @@ Specify each parameter using the `--set key=value[,key=value]` argument to `helm
 
 ```bash
 $ helm install --name my-release \
-    --set sysdig.secureApiToken=YOUR-KEY-HERE \
+    --set sysdig.secureAPIToken=YOUR-KEY-HERE \
     sysdig/cloud-connector
 ```
 

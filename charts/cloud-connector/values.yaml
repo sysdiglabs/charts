@@ -69,8 +69,8 @@ aws:
 gcpCredentials: ""
 
 sysdig:
-  secureUrl: "https://secure.sysdig.com"
-  secureApiToken: ""
+  url: "https://secure.sysdig.com"
+  secureAPIToken: ""
   verifySSL: true
 
 rules:
