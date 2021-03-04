@@ -63,11 +63,15 @@ spec:
                 secretKeyRef:
                   name: {{ include "cloud-connector.fullname" . }}
                   key: aws_region
+            - name: SECURE_URL
+              value: {{ .Values.sysdig.secureUrl }}
             - name: SECURE_API_TOKEN
               valueFrom:
                 secretKeyRef:
                   name: {{ include "cloud-connector.fullname" . }}
                   key: secure_api_token
+            - name: VERIFY_SSL
+              value: {{ .Values.sysdig.verifySSL | quote }}
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: /var/secrets/gcp/gcp_credentials
             - name: TELEMETRY_DEPLOYMENT_METHOD

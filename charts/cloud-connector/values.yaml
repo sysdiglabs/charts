@@ -69,7 +69,9 @@ aws:
 gcpCredentials: ""
 
 sysdig:
+  secureUrl: "https://secure.sysdig.com"
   secureApiToken: ""
+  verifySSL: true
 
 rules:
   - directory:
@@ -77,6 +79,4 @@ rules:
 
 ingestors: {}
 
-notifiers:
-  - console: {}
-  - metrics: {}
+notifiers: {}
