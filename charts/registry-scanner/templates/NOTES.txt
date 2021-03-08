@@ -1,0 +1,5 @@
+A cronjob '{{ include "registry-scanner.fullname" . }}' has been created. The cronjob will execute the registry scan on the following schedule:
+
+Schedule: {{ .Values.cronjob.schedule | quote }}
+
+For troubleshooting, check the status of the jobs and logs of the '{{ include "registry-scanner.fullname" . }}' pods that are created on every execution.

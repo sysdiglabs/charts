@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "registry-scanner.fullname" . }}
+  labels:
+{{ include "registry-scanner.labels" . | indent 4 }}
+data:
+  config.yaml: |
+    # Registry configuration
+    registry:
+      url: {{ .Values.config.registryURL }}
+      user: from-secret
+      pass: from-secret
+      skipTLS: {{ .Values.config.registrySkipTLS }}
+
+    secure:
+      baseUrl: {{ default "https://secure.sysdig.com" .Values.config.secureBaseURL }}
+      apiToken: from-secret
+      onPrem: {{ default false .Values.config.secureOnPrem }}
+      skipTLS: {{ default false .Values.config.secureSkipTLS }}
+
+    scan:
+      runner: k8sjob
+      k8sInCluster: true
+      namespace: {{ .Release.Namespace }}
+      workers: {{ default 1 .Values.config.maxWorkers }}
+
+    filter:
+      {{- if .Values.config.filter.include }}
+      include:
+        {{- toYaml .Values.config.filter.include | nindent 8 }}
+      {{- end }}
+      {{- if .Values.config.filter.exclude }}
+      exclude:
+        {{- toYaml .Values.config.filter.exclude | nindent 8 }}
+      {{- end }}
+      maxAgeDays: {{ default 0 .Values.config.filter.maxAgeDays }}
+      maxTagsPerRepository: {{ default 0 .Values.config.filter.maxTagsPerRepository }}

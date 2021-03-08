@@ -1,0 +1,78 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ include "registry-scanner.fullname" . }}
+  labels:
+{{ include "registry-scanner.labels" . | indent 4 }}
+spec:
+  schedule: {{ .Values.cronjob.schedule | quote }}
+  failedJobsHistoryLimit: {{ .Values.cronjob.failedJobsHistoryLimit }}
+  successfulJobsHistoryLimit: {{ .Values.cronjob.successfulJobsHistoryLimit }}
+  concurrencyPolicy:  Forbid
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          name: {{ include "registry-scanner.fullname" . }}
+          labels:
+            app.kubernetes.io/name: {{ include "registry-scanner.name" . }}
+            app.kubernetes.io/instance: {{ .Release.Name }}
+            {{- include "registry-scanner.selectorLabels" . | nindent 12 }}
+          {{- with .Values.podAnnotations }}
+          annotations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+        spec:
+          {{- with .Values.imagePullSecrets }}
+          imagePullSecrets:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          serviceAccountName: {{ include "registry-scanner.fullname" . }}
+          securityContext:
+            {{- toYaml .Values.podSecurityContext | nindent 12 }}
+          containers:
+          - name: {{ .Chart.Name }}
+            securityContext:
+              {{- toYaml .Values.securityContext | nindent 14 }}
+            image: {{ include "registry-scanner.image" . }}
+            args: [ "--scan_runner=k8sjob" ]
+            imagePullPolicy: {{ .Values.image.pullPolicy }}
+            resources:
+              {{- toYaml .Values.resources | nindent 14 }}
+            volumeMounts:
+            - name: config-volume
+              mountPath: /config.yaml
+              subPath: config.yaml
+            env:
+              - name: SECURE_API_TOKEN
+                valueFrom:
+                  secretKeyRef:
+                    name: {{ include "registry-scanner.fullname" . }}
+                    key: secureAPIToken
+              - name: REGISTRYSCANNER_REGISTRY_USER
+                valueFrom:
+                  secretKeyRef:
+                    name: {{ include "registry-scanner.fullname" . }}
+                    key: registryUser
+              - name: REGISTRYSCANNER_REGISTRY_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: {{ include "registry-scanner.fullname" . }}
+                    key: registryPassword
+          restartPolicy: {{ .Values.cronjob.restartPolicy }}
+          {{- with .Values.nodeSelector }}
+          nodeSelector:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.affinity }}
+          affinity:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.tolerations }}
+          tolerations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumes:
+          - name: config-volume
+            configMap:
+              name: {{ include "registry-scanner.fullname" . }}
