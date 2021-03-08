@@ -1,4 +1,3 @@
-
 cronjob:
   schedule: "0 6 * * *"
   failedJobsHistoryLimit: 5
@@ -7,11 +6,11 @@ cronjob:
 
 config:
   registryURL: http://my-docker-registry.com
-  registryUser: foo
-  registryPassword: bar
+  registryUser:
+  registryPassword:
   registrySkipTLS: false
   secureBaseURL: https://secure.sysdig.com
-  secureAPIToken: xxxx-xxx-xxx
+  secureAPIToken:
   secureOnPrem: false
   secureSkipTLS: false
   maxWorkers: 1
@@ -51,7 +50,6 @@ securityContext: {}
   # readOnlyRootFilesystem: true
   # runAsNonRoot: true
   # runAsUser: 1000
-
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
