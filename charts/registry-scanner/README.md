@@ -30,7 +30,7 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | `config.registryUser`                 | Username for registry authentication                                                                       | ` `                                           |
 | `config.registryPassword`             | Password for registry authentication                                                                       | ` `                                           |
 | `config.registrySkipTLS`              | Ignore registry TLS certificate errors (self-signed, etc.)                                                 | `false`                                       |
-| `config.secureBaseURL`                | Sysdig Secure Base URL                                                                                     | `[false](https://secure.sysdig.com)`          |
+| `config.secureBaseURL`                | Sysdig Secure Base URL                                                                                     | `https://secure.sysdig.com`                   |
 | `config.secureAPIToken`               | API Token to access Sysdig Secure                                                                          | ` `                                           |
 | `config.secureOnPrem`                 | Sysdig Secure is on-prem installation (vs SaaS)                                                            | `false`                                       |
 | `config.secureSkipTLS`                | Ignore Sysdig Secure TLS certificate errors                                                                | `false`                                       |
