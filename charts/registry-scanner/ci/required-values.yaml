@@ -1,0 +1,4 @@
+config:
+  secureAPIToken: foo
+  registryUser: foo
+  registryPassword: bar
