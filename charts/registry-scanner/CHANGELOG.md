@@ -1,0 +1,23 @@
+# Chart: Sysdig Registry Scanner
+
+## Change Log
+
+This file documents all notable changes to Sysdig Registry Scanner. The release
+numbering uses [semantic versioning](http://semver.org).
+
+## v0.0.3
+
+### Minor changes
+
+* Add `config.reEvaluate` option
+* Add proxy settings in values.yaml
+
+## v0.0.2
+
+### Minor changes
+
+* Fixes in README
+
+## v0.0.1
+
+Initial release
