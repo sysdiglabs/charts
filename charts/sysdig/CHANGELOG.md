@@ -3,7 +3,14 @@
 ## Change Log
 
 This file documents all notable changes to Sysdig Helm Chart. The release
+
 numbering uses [semantic versioning](http://semver.org).
+
+## v1.11.8
+
+### Minor changes
+
+* Improvements and fixes in README for installation instructions (use sysdig-agent namespace by default)
 
 ## v1.11.7
 
