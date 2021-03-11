@@ -1,3 +1,0 @@
-sysdig:
-  secureAPIToken: xxxxx
-clusterName: CI-Cluster
