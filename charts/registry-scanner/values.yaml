@@ -14,11 +14,20 @@ config:
   secureOnPrem: false
   secureSkipTLS: false
   maxWorkers: 1
+  reEvaluate: false
   filter:
     include: []
     exclude: []
     maxAgeDays:
     maxTagsPerRepository:
+
+proxy:
+  httpProxy:
+  httpsProxy:
+  # Comma-separated list of domain extensions proxy should not be used for.
+  # Include in noProxy the internal IP of the kubeapi server,
+  # and you probably need to add your registry if it is inside the cluster
+  noProxy:
 
 image:
   repository: sysdiglabs/registry-scanner

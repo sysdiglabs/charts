@@ -49,6 +49,18 @@ spec:
                   secretKeyRef:
                     name: {{ include "registry-scanner.fullname" . }}
                     key: secureAPIToken
+              {{- if .Values.proxy.httpProxy }}
+              - name: http_proxy
+                value: {{ .Values.proxy.httpProxy }}
+              {{- end }}
+              {{- if .Values.proxy.httpsProxy }}
+              - name: https_proxy
+                value: {{ .Values.proxy.httpsProxy }}
+              {{- end }}
+              {{- if .Values.proxy.noProxy }}
+              - name: no_proxy
+                value: {{ .Values.proxy.noProxy }}
+              {{- end }}
               - name: REGISTRYSCANNER_REGISTRY_USER
                 valueFrom:
                   secretKeyRef:

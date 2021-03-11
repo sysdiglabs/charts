@@ -18,8 +18,8 @@ data:
   {{- if .Values.nodeImageAnalyzer.settings.collectorEndpoint }}
   collector_endpoint: {{ .Values.nodeImageAnalyzer.settings.collectorEndpoint }}
   {{- end }}
-  {{- if .Values.nodeImageAnalyzer.settings.sslVerifyCertificate }}
-  ssl_verify_certificate: {{ .Values.nodeImageAnalyzer.settings.sslVerifyCertificate }}
+  {{- if hasKey .Values.nodeImageAnalyzer.settings "sslVerifyCertificate" }}
+  ssl_verify_certificate: "{{ .Values.nodeImageAnalyzer.settings.sslVerifyCertificate }}"
   {{- end }}
 
   debug: "{{ .Values.nodeImageAnalyzer.settings.debug | default false }}"

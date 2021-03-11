@@ -5,6 +5,19 @@
 This file documents all notable changes to Sysdig Helm Chart. The release
 numbering uses [semantic versioning](http://semver.org).
 
+## v1.11.7
+
+### Minor changes
+
+* Update Node Image Analyzer to 0.1.10 by default
+* Fix VERIFY_CERTIFICATE setting for Node Image Analyzer
+
+## v1.11.6
+
+### Minor changes
+
+* Add tolerations configuration item to Node Image Analyzer
+
 ## v1.11.5
 
 ### Minor Changes
