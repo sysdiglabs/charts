@@ -24,6 +24,7 @@ data:
       k8sInCluster: true
       namespace: {{ .Release.Namespace }}
       workers: {{ default 1 .Values.config.maxWorkers }}
+      reevaluate: {{ .Values.config.reEvaluate }}
 
     filter:
       {{- if .Values.config.filter.include }}
