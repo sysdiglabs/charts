@@ -23,6 +23,9 @@ jobs:
       - name: Set up chart-testing
         uses: helm/chart-testing-action@v2.0.1
 
+      - name: Run chart-testing (lint)
+        run: ct lint
+
       - name: Expand templates for CI
         run: |
           find -iname "*.yaml.template" | xargs -L1 -- bash -c 'envsubst < $0 > ${0%.template}'
@@ -30,9 +33,6 @@ jobs:
         env:
           SECURE_API_TOKEN: ${{ secrets.KUBELAB_SECURE_API_TOKEN }}
           SECURE_AGENT_TOKEN: ${{ secrets.KUBELAB_AGENT_KEY }}
-
-      - name: Run chart-testing (lint)
-        run: ct lint
 
       - name: Run chart-testing (list-changed)
         id: list-changed
