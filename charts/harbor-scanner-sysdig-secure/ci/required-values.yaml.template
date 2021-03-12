@@ -1,0 +1,3 @@
+sysdig:
+  secure:
+    apiToken: ${SECURE_API_TOKEN}
