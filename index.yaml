@@ -3,6 +3,23 @@ entries:
   admission-controller:
   - apiVersion: v2
     appVersion: 0.1.0
+    created: "2021-03-12T12:27:42.994751022Z"
+    description: Sysdig Admission Controller using Sysdig Secure inline image scanner
+    digest: 0283688ee20e5e0272d7646e3d95029eaff43c04077f70540bb4e47a6e7b14d6
+    home: https://sysdiglabs.github.io/admission-controller/
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    maintainers:
+    - email: alvaro.iradier@sysdig.com
+      name: airadier
+    - email: nestor.salceda@sysdig.com
+      name: nestorsalceda
+    name: admission-controller
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/admission-controller-0.1.23/admission-controller-0.1.23.tgz
+    version: 0.1.23
+  - apiVersion: v2
+    appVersion: 0.1.0
     created: "2021-02-18T16:44:35.067525449Z"
     description: Sysdig Admission Controller using Sysdig Secure inline image scanner
     digest: 326ed513363e2e2963ed6198504922fd251fcf0b68df2381be22fa9388904308
@@ -395,6 +412,20 @@ entries:
   cloud-connector:
   - apiVersion: v2
     appVersion: 0.5.1
+    created: "2021-03-12T12:27:43.248379568Z"
+    description: Sysdig Cloud Connector
+    digest: 39d65e620bdb91a9913ed177b9eafb48dad14217e47802d84d77d6c2c8a1e66e
+    home: https://sysdiglabs.github.io/cloud-connector
+    maintainers:
+    - email: nestor.salceda@sysdig.com
+      name: nestorsalceda
+    name: cloud-connector
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/cloud-connector-0.2.3/cloud-connector-0.2.3.tgz
+    version: 0.2.3
+  - apiVersion: v2
+    appVersion: 0.5.1
     created: "2021-03-09T21:21:16.915947379Z"
     description: Sysdig Cloud Connector
     digest: 543ac140d2f5bb23e4bad83e2be2439306608ba45d54a4ad92cc5afcb587cf1e
@@ -534,6 +565,21 @@ entries:
     - https://github.com/sysdiglabs/charts/releases/download/cloud-connector-0.1.0/cloud-connector-0.1.0.tgz
     version: 0.1.0
   harbor-scanner-sysdig-secure:
+  - apiVersion: v2
+    appVersion: 0.3.1
+    created: "2021-03-12T12:27:43.483733672Z"
+    description: Harbor Scanner for Sysdig Secure
+    digest: 508a4647fb0a9a6b6d05cf63446fabb83d09932d03ff77b13eaf277f064af4eb
+    home: https://github.com/sysdiglabs/harbor-scanner-sysdig-secure
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    maintainers:
+    - email: nestor.salceda@sysdig.com
+      name: nestorsalceda
+    name: harbor-scanner-sysdig-secure
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/harbor-scanner-sysdig-secure-0.2.2/harbor-scanner-sysdig-secure-0.2.2.tgz
+    version: 0.2.2
   - apiVersion: v2
     appVersion: 0.3.1
     created: "2021-02-02T12:46:55.827725883Z"
@@ -702,6 +748,21 @@ entries:
   registry-scanner:
   - apiVersion: v2
     appVersion: 0.0.1
+    created: "2021-03-12T12:27:43.71473878Z"
+    description: Sysdig Registry Scanner
+    digest: c63e9bd662993e827fc862fad4250763972cb59a9e83356689d2c1e1caa32506
+    home: https://sysdiglabs.github.io/registry-scanner/
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    maintainers:
+    - email: alvaro.iradier@sysdig.com
+      name: airadier
+    name: registry-scanner
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/registry-scanner-0.0.4/registry-scanner-0.0.4.tgz
+    version: 0.0.4
+  - apiVersion: v2
+    appVersion: 0.0.1
     created: "2021-03-11T17:05:05.866091988Z"
     description: Sysdig Registry Scanner
     digest: a9b982ddcd58b933b59603220e7ee3e7835f0417b01d2fab494bc3abda5a8708
@@ -731,6 +792,38 @@ entries:
     - https://github.com/sysdiglabs/charts/releases/download/registry-scanner-0.0.1/registry-scanner-0.0.1.tgz
     version: 0.0.1
   sysdig:
+  - apiVersion: v1
+    appVersion: 11.0.0
+    created: "2021-03-12T12:27:43.968758353Z"
+    description: Sysdig Monitor and Secure agent
+    digest: ab6487381464890d3430d57e3f39e8abe7f3bf44aab9814de7dd5c00569bfafb
+    home: https://www.sysdig.com/
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: lachlan@deis.com
+      name: lachie83
+    - email: jorge.salamero@sysdig.com
+      name: bencer
+    - email: nestor.salceda@sysdig.com
+      name: nestorsalceda
+    - email: alvaro.iradier@sysdig.com
+      name: airadier
+    - email: carlos.arilla@sysdig.com
+      name: carillan81
+    name: sysdig
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/sysdig-1.11.8/sysdig-1.11.8.tgz
+    version: 1.11.8
   - apiVersion: v1
     appVersion: 11.0.0
     created: "2021-03-11T09:42:00.677546609Z"
