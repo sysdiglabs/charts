@@ -6,11 +6,11 @@ cronjob:
 
 config:
   registryURL: http://my-docker-registry.com
-  registryUser:
-  registryPassword:
+  registryUser: ""
+  registryPassword: ""
   registrySkipTLS: false
   secureBaseURL: https://secure.sysdig.com
-  secureAPIToken:
+  secureAPIToken: ""
   secureOnPrem: false
   secureSkipTLS: false
   maxWorkers: 1
