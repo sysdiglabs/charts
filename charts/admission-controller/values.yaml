@@ -112,9 +112,9 @@ scanner:
     readOnlyRootFilesystem: true
     runAsNonRoot: true
 
-  imagePullSecrets: [ ]
+  imagePullSecrets: []
 
-  resources: { }
+  resources: {}
     # limits:
     #   cpu: 100m
     #   memory: 128Mi
@@ -122,8 +122,8 @@ scanner:
     #   cpu: 100m
     #   memory: 128Mi
 
-  nodeSelector: { }
+  nodeSelector: {}
 
-  tolerations: [ ]
+  tolerations: []
 
-  affinity: { }
+  affinity: {}
