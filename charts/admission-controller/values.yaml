@@ -51,8 +51,7 @@ webhook:
     prometheus.io/port: "5000"
     prometheus.io/scheme: "https"
 
-  podSecurityContext:
-    fsGroup: 1000
+  podSecurityContext: {}
 
   securityContext:
     capabilities:
@@ -60,7 +59,6 @@ webhook:
       - ALL
     readOnlyRootFilesystem: true
     runAsNonRoot: true
-    runAsUser: 1000
 
   imagePullSecrets: []
   resources: {}
@@ -87,7 +85,7 @@ scanner:
     repository: sysdiglabs/inline-scan-service
     pullPolicy: Always
     # Override the default image tag. If not specified, it defaults to appVersion in Chart.yaml
-    tag: 0.0.4
+    tag: 0.0.6
 
   service:
     port: 8080
@@ -104,3 +102,28 @@ scanner:
     prometheus.io/scrape: "true"
     prometheus.io/path: "/metrics"
     prometheus.io/port: "8080"
+
+  podSecurityContext: {}
+
+  securityContext:
+    capabilities:
+      drop:
+        - ALL
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+
+  imagePullSecrets: []
+
+  resources: {}
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+  nodeSelector: {}
+
+  tolerations: []
+
+  affinity: {}
