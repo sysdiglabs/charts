@@ -76,6 +76,20 @@ spec:
               value: /var/secrets/gcp/gcp_credentials
             - name: TELEMETRY_DEPLOYMENT_METHOD
               value: helm
+          {{- if .Values.extraEnvVars }}
+          {{- toYaml .Values.extraEnvVars | nindent 12}}
+          {{- end }}
+          {{- if or .Values.extraEnvVarsCM .Values.extraEnvVarsSecret }}
+          envFrom:
+            {{- if .Values.extraEnvVarsCM }}
+            - configMapRef:
+                name: {{ .Values.extraEnvVarsCM }}
+            {{- end }}
+            {{- if .Values.extraEnvVarsSecret }}
+            - secretRef:
+                name: {{ .Values.extraEnvVarsSecret }}
+            {{- end }}
+          {{- end }}
           volumeMounts:
             - mountPath: /etc/cloud-connector
               name: cloud-connector-config
