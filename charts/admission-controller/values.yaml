@@ -85,7 +85,7 @@ scanner:
     repository: sysdiglabs/inline-scan-service
     pullPolicy: Always
     # Override the default image tag. If not specified, it defaults to appVersion in Chart.yaml
-    tag: 0.0.6
+    tag: master
 
   service:
     port: 8080
