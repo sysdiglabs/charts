@@ -109,7 +109,6 @@ scanner:
     capabilities:
       drop:
         - ALL
-    readOnlyRootFilesystem: true
     runAsNonRoot: true
 
   imagePullSecrets: []
