@@ -59,6 +59,18 @@ tolerations: []
 
 affinity: {}
 
+## Additional environment variables to set
+## Example:
+## extraEnvVars:
+##   - name: HTTP_PROXY
+##     value: http://user:password@host:port/
+##   - name: HTTPS_PROXY
+##     value: https://user:password@host:port/
+##   - name: NO_PROXY
+##     value: foo.com,bar.net:4000
+##
+extraEnvVars: []
+
 aws:
   accessKeyId: ""
   secretAccessKey: ""
