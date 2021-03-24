@@ -37,8 +37,6 @@ Sysdig Secure chart and their default values:
 | `tolerations`                | Tolerations for scheduling                           | `[]`                                                                            |
 | `affinity`                   | Configure affinity rules                             | `{}`                                                                            |
 | `extraEnvVars`               | Extra environment variables to be set                | `[]`                                                                            |
-| `extraEnvVarsCM`             | Name of existing ConfigMap containing extra env vars | `nil`                                                                           |
-| `extraEnvVarsSecret`         | Name of existing Secret containing extra env vars    | `nil`                                                                           |
 | `aws.accessKeyId`            | AWS Credentials AccessKeyID                          | ` `                                                                             |
 | `aws.secretAccessKey`        | AWS Credentials: SecretAccessKey                     | ` `                                                                             |
 | `aws.region`                 | AWS Region                                           | ` `                                                                             |

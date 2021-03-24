@@ -71,14 +71,6 @@ affinity: {}
 ##
 extraEnvVars: []
 
-## ConfigMap with extra environment variables
-##
-extraEnvVarsCM:
-
-## Secret with extra environment variables
-##
-extraEnvVarsSecret:
-
 aws:
   accessKeyId: ""
   secretAccessKey: ""
