@@ -5,6 +5,18 @@
 This file documents all notable changes to Sysdig Registry Scanner. The release
 numbering uses [semantic versioning](http://semver.org).
 
+## v0.0.5
+
+### Minor changes
+
+* Remove `config.reEvaluate` option
+
+## v0.0.4
+
+### Minor changes
+
+Internal CI changes
+
 ## v0.0.3
 
 ### Minor changes

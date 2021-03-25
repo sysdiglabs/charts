@@ -35,7 +35,6 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | `config.secureOnPrem`                 | Sysdig Secure is on-prem installation (vs SaaS)                                                                        | `false`                                       |
 | `config.secureSkipTLS`                | Ignore Sysdig Secure TLS certificate errors                                                                            | `false`                                       |
 | `config.maxWorkers`                   | Max number of parallel inline scanner workers to spawn in cluster                                                      | `1`                                           |
-| `config.reEvaluate`                   | Force re-evaluation of the policy when checking status in the backend                                                  | `false`                                       |
 | `config.filter.include`               | List of regular expressions. Images matching any of these expressions are *always* included when scanning.             | `[]`                                          |
 | `config.filter.exclude`               | List of regular expressions. Images matching any of these expressions are excluded when scanning.                      | `[]`                                          |
 | `config.filter.maxAgeDays`            | Exclude images with creation date older than specified number of days.                                                 | ``                                            |
