@@ -9,12 +9,18 @@ data:
 {{- if .Values.rules }}
     rules:
 {{ toYaml .Values.rules | indent 6 }}
+{{- else }}
+    rules: []
 {{- end }}
 {{- if .Values.ingestors }}
     ingestors:
 {{ toYaml .Values.ingestors | indent 6 }}
+{{- else }}
+    ingestors: []
 {{- end }}
 {{- if .Values.notifiers }}
     notifiers:
 {{ toYaml .Values.notifiers | indent 6 }}
+{{- else }}
+    notifiers: []
 {{- end }}

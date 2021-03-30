@@ -83,8 +83,8 @@ sysdig:
   secureAPIToken: ""
   verifySSL: true
 
-rules: {}
+rules: []
 
-ingestors: {}
+ingestors: []
 
-notifiers: {}
+notifiers: []
