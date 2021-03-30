@@ -6,6 +6,7 @@ metadata:
     {{- include "cloud-connector.labels" . | nindent 4 }}
 data:
   cloud-connector.yaml: |
+    logging: info
 {{- if .Values.rules }}
     rules:
 {{ toYaml .Values.rules | indent 6 }}
