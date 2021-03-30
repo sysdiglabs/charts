@@ -28,11 +28,17 @@ spec:
       serviceAccountName: {{ include "admission-controller.scanner.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.scanner.podSecurityContext | nindent 8 }}
+      volumes:
+        - name: tmp-dir
+          emptyDir: {}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.scanner.securityContext | nindent 12 }}
           image: "{{ include "admission-controller.scanner.image" . }}"
+          volumeMounts:
+            - mountPath: /tmp
+              name: tmp-dir
           args:
             - --server_port={{ .Values.scanner.service.port }}
             {{- if .Values.scanner.authWithSecureToken }}
