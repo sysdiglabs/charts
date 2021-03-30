@@ -44,9 +44,9 @@ Sysdig Secure chart and their default values:
 | `sysdig.url`                 | Sysdig Secure URL                                    | `https://secure.sysdig.com`                                                     |
 | `sysdig.secureAPIToken`      | API Token to access Sysdig Secure                    | ` `                                                                             |
 | `sysdig.verifySSL`           | Verify SSL certificate                               | `true`                                                                          |
-| `rules`                      | Rules Section for Cloud Connector                    | `{ - directory: path: /rules }`                                                 |
-| `ingestors`                  | Ingestors Section for Cloud Connector                | `{}`                                                                            |
-| `notifiers`                  | Notifiers Section for Cloud Connector                | `{}`                                                                            |
+| `rules`                      | Rules Section for Cloud Connector                    | `[]`                                                                            |
+| `ingestors`                  | Ingestors Section for Cloud Connector                | `[]`                                                                            |
+| `notifiers`                  | Notifiers Section for Cloud Connector                | `[]`                                                                            |
 
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
