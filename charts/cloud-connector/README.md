@@ -44,7 +44,7 @@ Sysdig Secure chart and their default values:
 | `sysdig.url`                 | Sysdig Secure URL                                    | `https://secure.sysdig.com`                                                     |
 | `sysdig.secureAPIToken`      | API Token to access Sysdig Secure                    | ` `                                                                             |
 | `sysdig.verifySSL`           | Verify SSL certificate                               | `true`                                                                          |
-| `rules`                      | Rules Section for Cloud Connector                    | `{ - directory: path: /rules }`                                                 |
+| `rules`                      | Rules Section for Cloud Connector                    | `{}`                                                                            |
 | `ingestors`                  | Ingestors Section for Cloud Connector                | `{}`                                                                            |
 | `notifiers`                  | Notifiers Section for Cloud Connector                | `{}`                                                                            |
 
