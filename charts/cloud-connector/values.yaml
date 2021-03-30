@@ -83,10 +83,8 @@ sysdig:
   secureAPIToken: ""
   verifySSL: true
 
-rules:
-  - directory:
-      path: /rules
+rules: []
 
-ingestors: {}
+ingestors: []
 
-notifiers: {}
+notifiers: []
