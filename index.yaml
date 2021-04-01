@@ -691,6 +691,21 @@ entries:
   harbor-scanner-sysdig-secure:
   - apiVersion: v2
     appVersion: 0.3.1
+    created: "2021-04-01T06:45:23.237371281Z"
+    description: Harbor Scanner for Sysdig Secure
+    digest: 7ac5e4e112ce26a2a1a8ac61afa5acc8e23a3770c72e66f2074109e86f87572a
+    home: https://github.com/sysdiglabs/harbor-scanner-sysdig-secure
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    maintainers:
+    - email: nestor.salceda@sysdig.com
+      name: nestorsalceda
+    name: harbor-scanner-sysdig-secure
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/harbor-scanner-sysdig-secure-0.2.4/harbor-scanner-sysdig-secure-0.2.4.tgz
+    version: 0.2.4
+  - apiVersion: v2
+    appVersion: 0.3.1
     created: "2021-03-12T12:27:43.483733672Z"
     description: Harbor Scanner for Sysdig Secure
     digest: 508a4647fb0a9a6b6d05cf63446fabb83d09932d03ff77b13eaf277f064af4eb
