@@ -36,40 +36,28 @@ Sysdig Secure chart and their default values:
 | `service.port`               | Configure port for the service                       | `80`                                                                            |
 | `tolerations`                | Tolerations for scheduling                           | `[]`                                                                            |
 | `affinity`                   | Configure affinity rules                             | `{}`                                                                            |
-
 | `aws.access_key_id`          | AWS Credentials AccessKeyID                          | ` `                                                                             |
 | `aws.secret_access_key`      | AWS Credentials: SecretAccessKey                     | ` `                                                                             |
 | `aws.region`                 | AWS Region                                           | ` `                                                                             |
 | `sysdig.secureApiToken`      | API Token to access Sysdig Secure                    | ` `                                                                             |
 | `secureURL`                  | Sysdig Secure URL                                    | `https://secure.sysdig.com`                                                     |
+| `logLevel`                   | Log Level                                            | `debug`                                                                         |
+| `schedule`                   | Schedule                                             | `24h`                                                                           |
+| `bechmarkType`               | Benchmark Type                                       | `aws`                                                                           |
+| `outputDir`                  | Output dir                                           | `/tmp/cloud-custodian`                                                          |
+| `policyFile`                 | Policy fil                                           | `/home/custodian/aws-benchmarks.yml`                                            |
 
-```
-logLevel: "debug"
-schedule: "24h"
-bechmarkType: "aws"
-outputDir: "/tmp/cloud-custodian"
-policyFile: "/home/custodian/aws-benchmarks.yml"
-agent_key: ""
-aws:
-  access_key_id:
-  region:
-  secret_access_key:
-```
-
-TODO
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
 ```bash
 $ helm install --name my-release \
-    --set sysdig.secureAPIToken=YOUR-KEY-HERE \
-    sysdig/cloud-connector
+    --set sysdig.secureApiToken=YOUR-KEY-HERE \
+    sysdig/cloud-bench
 ```
 
 Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
 
 ```bash
-$ helm install --name my-release -f values.yaml sysdig/cloud-connector
+$ helm install --name my-release -f values.yaml sysdig/cloud-bench
 ```
-
-You have more details about Rules, Ingestors and Notifiers on [Cloud Connector documentation](https://sysdiglabs.github.io/cloud-connector/config-file.html)

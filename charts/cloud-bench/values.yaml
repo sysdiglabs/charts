@@ -89,14 +89,9 @@ aws:
 sysdig:
   secureApiToken: ""
 
-secureURL: "https://secure-staging3.sysdig.com"
+secureURL: "https://secure.sysdig.com"
 logLevel: "debug"
 schedule: "24h"
 bechmarkType: "aws"
 outputDir: "/tmp/cloud-custodian"
 policyFile: "/home/custodian/aws-benchmarks.yml"
-agent_key: ""
-aws:
-  access_key_id:
-  region:
-  secret_access_key:

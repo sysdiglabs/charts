@@ -1,0 +1,6 @@
+aws:
+  access_key_id: foo
+  secret_access_key: bar
+  region: us-east-1
+sysdig:
+  secureApiToken: ${SECURE_API_TOKEN}
