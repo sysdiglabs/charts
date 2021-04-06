@@ -4,6 +4,18 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.11.11
+
+### Minor changes
+
+* Update agent to 11.1.2
+
+## v1.11.10
+
+### Minor changes
+
+* Fix the if in the imageanalyzer extravolumes
+
 ## v1.11.9
 
 ### Minor changes
