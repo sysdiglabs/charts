@@ -74,7 +74,7 @@ spec:
           - mountPath: /var/lib/containers
             name: var-lib-containers-vol
           # Custom volume mount here
-          {{- if .Values.extraVolumes.mounts }}
+          {{- if .Values.nodeImageAnalyzer.extraVolumes.mounts }}
 {{ toYaml .Values.nodeImageAnalyzer.extraVolumes.mounts | indent 10 }}
           {{- end }}
         env:
