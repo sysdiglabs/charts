@@ -4,6 +4,12 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.11.12
+
+### Minor changes
+
+* Fix in probes initialDelay
+
 ## v1.11.11
 
 ### Minor changes
