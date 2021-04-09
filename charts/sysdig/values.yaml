@@ -88,7 +88,7 @@ daemonset:
   annotations: {}
   # Liveness and readiness probes initial delay (in seconds)
   probes:
-    initialDelay: 10
+    initialDelay: 90
 
 # If is behind a proxy you can set the proxy server
 # This proxy settings apply for the App-Checks.
