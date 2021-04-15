@@ -62,8 +62,8 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
 ```bash
-$ helm install --name my-release \
-    --set config.secureApiToken=YOUR-KEY-HERE \
+$ helm install my-release-name \
+    --set config.secureAPIToken=YOUR-KEY-HERE \
     --set config.registryUser=admin \
     --set config.registryPassword=REGISTRY-PASSWORD-HERE \
     sysdig/registry-scanner
@@ -72,7 +72,7 @@ $ helm install --name my-release \
 Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
 
 ```bash
-$ helm install --name my-release -f values.yaml sysdig/registry-scanner
+$ helm install my-release-name -f values.yaml sysdig/registry-scanner
 ```
 
 ### On-Prem deployment
@@ -80,8 +80,8 @@ $ helm install --name my-release -f values.yaml sysdig/registry-scanner
 Use the following command to deploy in an on-prem:
 
 ```
-$ helm install --name my-release \
-    --set config.secureApiToken=YOUR-KEY-HERE \
+$ helm install my-release-name \
+    --set config.secureAPIToken=YOUR-KEY-HERE \
     --set config.registryUser=admin \
     --set config.registryPassword=REGISTRY-PASSWORD-HERE \
     --set config.secureBaseURL=SECURE_URL \
