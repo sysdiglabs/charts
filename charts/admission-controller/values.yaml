@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 
 sysdig:
-  url: "https://app.sysdigcloud.com"
+  url: "https://secure.sysdig.com"
   secureAPIToken: ""
 
 clusterName: ""
@@ -32,9 +32,9 @@ webhook:
 
   image:
     repository: sysdiglabs/admission-controller
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
     # Override the default image tag. If not specified, it defaults to appVersion in Chart.yaml
-    tag: master
+    tag:
 
   service:
     type: ClusterIP
@@ -83,9 +83,9 @@ scanner:
 
   image:
     repository: sysdiglabs/inline-scan-service
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
     # Override the default image tag. If not specified, it defaults to appVersion in Chart.yaml
-    tag: master
+    tag: 0.0.7
 
   service:
     port: 8080
