@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "admission-controller.webhook.fullname" . }}-rules
+  labels:
+    {{ include "admission-controller.webhook.labels" . | nindent 4 }}
+data:
+  rules.yaml: |
+    - macro: configmap_contains_private_credentials
+      condition: >
+        (kac.obj contains "aws_access_key_id" or
+         kac.obj contains "aws-access-key-id" or
+         kac.obj contains "aws_s3_access_key_id" or
+         kac.obj contains "aws-s3-access-key-id" or
+         kac.obj contains "password" or
+         kac.obj contains "passphrase")
+
+    - rule: Admission Controller - Create/Modify Configmap With Private Credentials
+      desc: >
+         Detect creating/modifying a configmap containing a private credential (aws key, password, etc.)
+      condition: jevt.value[/resource/resource]=configmaps and jevt.value[/operation] in ("CREATE", "UPDATE") and configmap_contains_private_credentials
+      output: ConfigMap with private credentials (user=%jevt.value[/userInfo/username] ns=%jevt.value[/namespace] configmap=%jevt.value[/name])
+      priority: WARNING
+      source: k8s_admissioncontroller
+      tags: [k8s, k8s_admissioncontroller]
+
+    - rule: Admission Controller - Attach/Exec Pod
+      desc: >
+        Detect any attempt to attach/exec to a pod
+      condition: jevt.value[/resource/resource]=pods and jevt.value[/operation]=CONNECT and jevt.value[/subResource] in (exec,attach)
+      output: Attach/Exec to pod (user=%jevt.value[/userInfo/username] pod=%jevt.value[/name] ns=%jevt.value[/namespace] action=%jevt.value[/requestSubResource] command=%jevt.value[/object/command[0]])
+      priority: NOTICE
+      source: k8s_admissioncontroller
+      tags: [k8s, k8s_admissioncontroller]

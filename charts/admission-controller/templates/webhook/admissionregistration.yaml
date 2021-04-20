@@ -28,6 +28,24 @@ webhooks:
   sideEffects: None
   timeoutSeconds: 15
   failurePolicy: Ignore
+- name: runtime.secure.sysdig.com
+  matchPolicy: Equivalent
+  rules:
+  - apiGroups: [""]
+    apiVersions: ["*"]
+    operations: ["*"]
+    resources: ["*/*"]
+    scope: "*"
+  clientConfig:
+    service:
+      namespace: {{ .Release.Namespace }}
+      name: {{ include "admission-controller.webhook.fullname" . }}
+      path: /allow
+    caBundle: {{ $certList._2 }}
+  admissionReviewVersions: ["v1", "v1beta1"]
+  sideEffects: None
+  timeoutSeconds: 15
+  failurePolicy: Ignore
 ---
 apiVersion: v1
 kind: Secret
