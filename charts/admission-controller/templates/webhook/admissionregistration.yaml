@@ -40,7 +40,7 @@ webhooks:
     service:
       namespace: {{ .Release.Namespace }}
       name: {{ include "admission-controller.webhook.fullname" . }}
-      path: /k8s_audit
+      path: /k8s-audit
     caBundle: {{ $certList._2 }}
   admissionReviewVersions: ["v1", "v1beta1"]
   sideEffects: None
