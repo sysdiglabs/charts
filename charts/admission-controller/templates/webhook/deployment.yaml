@@ -60,9 +60,6 @@ spec:
               path: /health
               port: http
               scheme: HTTPS
-          env:
-            - name: RULES_PATH
-              value: /rules
           envFrom:
             - secretRef:
                 name: {{ include "admission-controller.webhook.fullname" . }}
@@ -72,18 +69,12 @@ spec:
             - name: cert
               mountPath: /cert
               readOnly: true
-            - name: rules
-              mountPath: /rules
-              readOnly: true
           resources:
             {{- toYaml .Values.webhook.resources | nindent 12 }}
       volumes:
       - name: cert
         secret:
           secretName: {{ include "admission-controller.webhook.fullname" . }}-tls
-      - name: rules
-        configMap:
-          name: {{ include "admission-controller.webhook.fullname" . }}-rules
     {{- with .Values.webhook.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
