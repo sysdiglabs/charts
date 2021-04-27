@@ -21,7 +21,7 @@ $ helm repo add sysdig https://charts.sysdig.com/
 to add the `sysdig` Helm chart repository. Then run:
 
 ```bash
-$ helm install --namespace sysdig-agent --name sysdig-agent --set sysdig.accessKey=YOUR-KEY-HERE sysdig/sysdig
+$ helm install --namespace sysdig-agent sysdig-agent --set sysdig.accessKey=YOUR-KEY-HERE sysdig/sysdig
 ```
 
 After a few seconds, you should see hosts and containers appearing in Sysdig Monitor and Sysdig Secure.
@@ -110,7 +110,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
 ```bash
-$ helm install --namespace sysdig-agent --name sysdig-agent \
+$ helm install --namespace sysdig-agent sysdig-agent \
     --set sysdig.accessKey=YOUR-KEY-HERE,sysdig.settings.tags="role:webserver\,location:europe" \
     sysdig/sysdig
 ```
@@ -118,7 +118,7 @@ $ helm install --namespace sysdig-agent --name sysdig-agent \
 Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
 
 ```bash
-$ helm install --namespace sysdig-agent --name sysdig-agent -f values.yaml sysdig/sysdig
+$ helm install --namespace sysdig-agent sysdig-agent -f values.yaml sysdig/sysdig
 ```
 
 > **Tip**: You can use the default [values.yaml](values.yaml)
@@ -150,7 +150,7 @@ Installing the agent using the Helm chart is also possible in this scenario, and
 For example:
 
 ```bash
-$ helm install --namespace sysdig-agent --name sysdig-agent \
+$ helm install --namespace sysdig-agent sysdig-agent \
     --set sysdig.accessKey=YOUR-KEY-HERE \
     --set collectorSettings.collectorHost=42.32.196.18 \
     --set collectorSettings.collectorPort=6443 \
@@ -189,7 +189,7 @@ Finally, set the accessKey value and you are ready to deploy the Sysdig agent
 using the Helm chart:
 
 ```bash
-$ helm install --namespace sysdig-agent --name sysdig-agent -f values.yaml sysdig/sysdig
+$ helm install --namespace sysdig-agent sysdig-agent -f values.yaml sysdig/sysdig
 ```
 
 You can read more details about this in [Kubernetes Documentation](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/).
@@ -210,7 +210,7 @@ sysdig:
 ```
 
 ```bash
-$ helm install --namespace sysdig-agent --name sysdig-agent -f values.yaml sysdig/sysdig
+$ helm install --namespace sysdig-agent sysdig-agent -f values.yaml sysdig/sysdig
 ```
 
 ## Upgrading Sysdig agent configuration
@@ -245,7 +245,7 @@ $ helm repo update
 In case you deployed the chart with a values.yaml file, you just need to modify (or add if it's missing) the `image.tag` field and execute:
 
 ```bash
-$ helm install --namespace sysdig-agent --name sysdig-agent -f values.yaml sysdig/sysdig
+$ helm install --namespace sysdig-agent sysdig-agent -f values.yaml sysdig/sysdig
 ```
 
 If you deployed the chart setting the values as CLI parameters, like for example:
@@ -253,7 +253,7 @@ If you deployed the chart setting the values as CLI parameters, like for example
 ```bash
 $ helm install \
     --namespace sysdig-agent \
-    --name sysdig-agent \
+    sysdig-agent \
     --set sysdig.accessKey=xxxx \
     --set ebpf.enabled=true \
     sysdig/sysdig
@@ -332,7 +332,7 @@ $ ./scripts/appchecks2helm appChecks/solr.py appChecks/traefik.py appChecks/nats
 And deploy the Chart with both of them:
 
 ```bash
-$ helm install --namespace sysdig-agent --name sysdig-agent -f custom-app-checks.yaml -f values.yaml sysdig/sysdig
+$ helm install --namespace sysdig-agent sysdig-agent -f custom-app-checks.yaml -f values.yaml sysdig/sysdig
 ```
 
 ### Adding prometheus.yaml to configure promscrape
