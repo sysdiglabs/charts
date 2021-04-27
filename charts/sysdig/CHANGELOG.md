@@ -4,6 +4,13 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.11.14
+
+### Minor changes
+
+* Update agent to 11.2.0
+* Remove --name installation parameter for `helm install` in README, unsupported in Helm 3.x
+
 ## v1.11.13
 
 ### Minor changes
