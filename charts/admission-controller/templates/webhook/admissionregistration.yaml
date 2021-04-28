@@ -28,10 +28,11 @@ webhooks:
   sideEffects: None
   timeoutSeconds: 15
   failurePolicy: Ignore
+{{- if .Values.features.k8sAuditDetections }}
 - name: audit.secure.sysdig.com
   matchPolicy: Equivalent
   rules:
-  - apiGroups: [""]
+  - apiGroups: ["*"]
     apiVersions: ["*"]
     operations: ["*"]
     resources: ["*/*"]
@@ -46,6 +47,7 @@ webhooks:
   sideEffects: None
   timeoutSeconds: 15
   failurePolicy: Ignore
+{{- end }}
 ---
 apiVersion: v1
 kind: Secret
