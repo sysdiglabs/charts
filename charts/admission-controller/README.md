@@ -69,7 +69,7 @@ Controller chart and their default values:
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
 ```bash
-$ helm install --name my-release \
+$ helm install my-release \
     --set sysdig.secureApiToken=YOUR-KEY-HERE \
     sysdig/admission-controller
 ```
@@ -77,7 +77,7 @@ $ helm install --name my-release \
 Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
 
 ```bash
-$ helm install --name my-release -f values.yaml sysdig/admission-controller
+$ helm install my-release -f values.yaml sysdig/admission-controller
 ```
 
 ### On Prem deployment
