@@ -52,7 +52,7 @@ Sysdig Secure chart and their default values:
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
 ```bash
-$ helm install --name my-release \
+$ helm install my-release \
     --set sysdig.secureAPIToken=YOUR-KEY-HERE \
     sysdig/cloud-connector
 ```
@@ -60,7 +60,7 @@ $ helm install --name my-release \
 Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
 
 ```bash
-$ helm install --name my-release -f values.yaml sysdig/cloud-connector
+$ helm install my-release -f values.yaml sysdig/cloud-connector
 ```
 
 You have more details about Rules, Ingestors and Notifiers on [Cloud Connector documentation](https://sysdiglabs.github.io/cloud-connector/config-file.html)

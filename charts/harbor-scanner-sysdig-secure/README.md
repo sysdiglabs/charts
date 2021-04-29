@@ -60,7 +60,7 @@ Sysdig Secure chart and their default values:
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
 ```bash
-$ helm install --name my-release \
+$ helm install my-release \
     --set sysdig.secure.apiToken=YOUR-KEY-HERE \
     sysdig/harbor-scanner-sysdig-secure
 ```
@@ -68,7 +68,7 @@ $ helm install --name my-release \
 Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
 
 ```bash
-$ helm install --name my-release -f values.yaml sysdig/harbor-scanner-sysdig-secure
+$ helm install my-release -f values.yaml sysdig/harbor-scanner-sysdig-secure
 ```
 
 > **Tip**: You can use the default [values.yaml](https://raw.githubusercontent.com/sysdiglabs/charts/master/charts/harbor-scanner-sysdig-secure/values.yaml)
