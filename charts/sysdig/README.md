@@ -297,7 +297,7 @@ The first section dumps the AppCheck in a Kubernetes configmap and makes it avai
 Once the values YAML file is ready, we will deploy the Chart like before:
 
 ```bash
-$ helm install --namespace sysdig-agent --name sysdig-agent -f values.yaml sysdig/sysdig
+$ helm install --namespace sysdig-agent sysdig-agent -f values.yaml sysdig/sysdig
 ```
 
 ### Automating the generation of custom-app-checks.yaml file

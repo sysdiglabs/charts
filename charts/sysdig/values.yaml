@@ -143,6 +143,8 @@ collectorSettings:
 clusterName: ""
 
 sysdig:
+  secrets:
+    sealedSecretEnabled: false
   # Required: You need your Sysdig Agent access key before running agents.
   accessKey: ""
 

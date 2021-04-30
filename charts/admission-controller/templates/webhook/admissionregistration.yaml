@@ -28,6 +28,26 @@ webhooks:
   sideEffects: None
   timeoutSeconds: 15
   failurePolicy: Ignore
+{{- if .Values.features.k8sAuditDetections }}
+- name: audit.secure.sysdig.com
+  matchPolicy: Equivalent
+  rules:
+  - apiGroups: ["*"]
+    apiVersions: ["*"]
+    operations: ["*"]
+    resources: ["*/*"]
+    scope: "*"
+  clientConfig:
+    service:
+      namespace: {{ .Release.Namespace }}
+      name: {{ include "admission-controller.webhook.fullname" . }}
+      path: /k8s-audit
+    caBundle: {{ $certList._2 }}
+  admissionReviewVersions: ["v1", "v1beta1"]
+  sideEffects: None
+  timeoutSeconds: 15
+  failurePolicy: Ignore
+{{- end }}
 ---
 apiVersion: v1
 kind: Secret
