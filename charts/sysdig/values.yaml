@@ -18,8 +18,8 @@ image:
   # Secrets must be manually created in the namespace.
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
   #
-  # pullSecrets:
-  #   - name: myRegistrKeySecretName
+  pullSecrets:
+    - name: myRegistrKeySecretName
 
 resources:
   # Although resources needed are subjective on the actual workload we provide
@@ -144,6 +144,7 @@ clusterName: ""
 
 sysdig:
   secrets:
+    # Settings controlling weather SealedSecret will be created instead of Secret
     sealedSecretEnabled: false
   # Required: You need your Sysdig Agent access key before running agents.
   accessKey: ""
@@ -182,8 +183,8 @@ nodeImageAnalyzer:
     repository: sysdig/node-image-analyzer
     tag: 0.1.10
     pullPolicy: IfNotPresent
-    # pullSecrets:
-    #   - name: myRegistrKeySecretName
+    pullSecrets:
+      - name: myRegistrKeySecretName
 
   settings:
     # The Docker socket path.

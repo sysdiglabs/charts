@@ -74,6 +74,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `clusterName`                                     | Set a cluster name to identify events using *kubernetes.cluster.name* tag                | ` `                                         |
 | `sysdig.accessKey`                                | Your Sysdig Monitor Access Key                                                           | `Nil` You must provide your own key         |
 | `sysdig.disableCaptures`                          | Disable capture functionality (see https://docs.sysdig.com/en/disable-captures.html)     | `false`                                     |
+| `sealedSecretEnabled`                             | Settings controlling weather SealedSecret will be created instead of Secret
 | `sysdig.settings`                                 | Additional settings, directly included in the agent's configuration file `dragent.yaml`  | `{}`                                        |
 | `secure.enabled`                                  | Enable Sysdig Secure                                                                     | `true`                                      |
 | `auditLog.enabled`                                | Enable K8s audit log support for Sysdig Secure                                           | `false`                                     |
