@@ -80,6 +80,8 @@ spec:
           {{- toYaml .Values.extraEnvVars | nindent 12}}
           {{- end }}
           volumeMounts:
+            - mountPath: /home/sysdig
+              name: home-dir
             - mountPath: /etc/cloud-connector
               name: cloud-connector-config
             - mountPath: /var/secrets/gcp
@@ -97,6 +99,8 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
+        - name: home-dir
+          emptyDir: {}
         - name: cloud-connector-config
           configMap:
             name: {{ include "cloud-connector.fullname" . }}
