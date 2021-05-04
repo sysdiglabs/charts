@@ -63,7 +63,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `daemonset.nodeSelector`                          | Node Selector                                                                            | `{}`                                        |
 | `daemonset.affinity`                              | Node affinities                                                                          | `schedule on amd64 and linux`               |
 | `daemonset.annotations`                           | Custom annotations for daemonset                                                         | `{}`                                        |
-| `daemonset.probes.initialDelay`                   | Initial delay for liveness and readiness probes. daemonset                                                         | `{}`                                        |
+| `daemonset.probes.initialDelay`                   | Initial delay for liveness and readiness probes. daemonset                               | `{}`                                        |
 | `slim.enabled`                                    | Use the slim based Sysdig Agent image                                                    | `false`                                     |
 | `slim.kmoduleImage.repository`                    | The kernel module image builder repository to pull from                                  | `sysdig/agent-kmodule`                      |
 | `slim.resources.requests.cpu`                     | CPU requested for building the kernel module                                             | `1000m`                                     |
@@ -72,7 +72,8 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `ebpf.enabled`                                    | Enable eBPF support for Sysdig instead of `sysdig-probe` kernel module                   | `false`                                     |
 | `ebpf.settings.mountEtcVolume`                    | Needed to detect which kernel version are running in Google COS                          | `true`                                      |
 | `clusterName`                                     | Set a cluster name to identify events using *kubernetes.cluster.name* tag                | ` `                                         |
-| `sysdig.accessKey`                                | Your Sysdig Monitor Access Key                                                           | `Nil` You must provide your own key         |
+| `sysdig.accessKey`                                | Your Sysdig Monitor Access Key                                                           | `` Either accessKey or existingAccessKeySecret is required |
+| `sysdig.existingAccessKeySecret`                  | Alternatively, specify the name of a Kubernetes secret containing an 'access-key' entry  | `` Either accessKey or existingAccessKeySecret is required |
 | `sysdig.disableCaptures`                          | Disable capture functionality (see https://docs.sysdig.com/en/disable-captures.html)     | `false`                                     |
 | `sysdig.settings`                                 | Additional settings, directly included in the agent's configuration file `dragent.yaml`  | `{}`                                        |
 | `secure.enabled`                                  | Enable Sysdig Secure                                                                     | `true`                                      |
