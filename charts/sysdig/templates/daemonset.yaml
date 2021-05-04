@@ -1,4 +1,3 @@
-{{- if .Values.sysdig.accessKey }}
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
@@ -217,7 +216,11 @@ spec:
             optional: true
         - name: sysdig-agent-secrets
           secret:
+            {{- if not .Values.sysdig.existingAccessKeySecret }}
             secretName: {{ template "sysdig.fullname" . }}
+            {{- else }}
+            secretName: {{ .Values.sysdig.existingAccessKeySecret }}
+            {{- end -}}
         {{- if .Values.customAppChecks }}
         - name: custom-app-checks-volume
           configMap:
@@ -228,4 +231,3 @@ spec:
         {{- end }}
   updateStrategy:
 {{ toYaml .Values.daemonset.updateStrategy | indent 4 }}
-{{- end }}
