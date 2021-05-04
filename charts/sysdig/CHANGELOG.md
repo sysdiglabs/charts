@@ -4,6 +4,12 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.11.16
+
+### Minor changes
+
+* New option `sysdig.existingAccessKeySecret` to use existing or external secrets
+
 ## v1.11.15
 
 ### Minor changes

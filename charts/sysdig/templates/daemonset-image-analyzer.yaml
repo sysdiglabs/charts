@@ -81,7 +81,11 @@ spec:
         - name: ACCESS_KEY
           valueFrom:
             secretKeyRef:
+              {{- if not .Values.sysdig.existingAccessKeySecret }}
               name: {{ template "sysdig.fullname" . }}
+              {{- else }}
+              name: {{ .Values.sysdig.existingAccessKeySecret }}
+              {{- end }}
               key: access-key
         - name: IMAGE_PERIOD
           valueFrom:
