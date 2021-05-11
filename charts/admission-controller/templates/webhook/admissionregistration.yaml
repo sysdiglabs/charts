@@ -27,7 +27,11 @@ webhooks:
   admissionReviewVersions: ["v1", "v1beta1"]
   sideEffects: None
   timeoutSeconds: 15
+  {{- if .Values.webhook.denyOnError }}
+  failurePolicy: Fail
+  {{- else }}
   failurePolicy: Ignore
+  {{- end }}
 {{- if .Values.features.k8sAuditDetections }}
 - name: audit.secure.sysdig.com
   matchPolicy: Equivalent

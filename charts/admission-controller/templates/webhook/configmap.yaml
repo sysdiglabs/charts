@@ -15,3 +15,4 @@ data:
   PUBLISH_ON_EVENT_FEED: "{{ .Values.features.publishOnSecureEventFeed }}"
   VERIFY_SSL: "{{ .Values.verifySSL }}"
   K8S_AUDIT_DETECTIONS: "{{ .Values.features.k8sAuditDetections }}"
+  DENY_ON_ERROR: "{{ .Values.webhook.denyOnError }}"
