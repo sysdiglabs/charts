@@ -43,11 +43,11 @@ service:
 
 resources:
   limits:
-    cpu: 256m
-    memory: 512Mi
+    cpu: 250m
+    memory: 256Mi
   requests:
-    cpu: 256m
-    memory: 512Mi
+    cpu: 250m
+    memory: 256Mi
 
 nodeSelector: {}
 
