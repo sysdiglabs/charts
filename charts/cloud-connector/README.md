@@ -33,6 +33,11 @@ Sysdig Secure chart and their default values:
 | `securityContext`            | Configure securityContext                            | `{}`                                                                            |
 | `service.type`               | Use this type as service                             | `ClusterIP`                                                                     |
 | `service.port`               | Configure port for the service                       | `5000`                                                                          |
+| `resources.limits.cpu`       | Configure resource limits for cpu                    | `256m`                                                                          |
+| `resources.limits.memory`    | Configure resource limits for memory                 | `512Mi`                                                                         |
+| `resources.requests.cpu`     | Configure resource requests for cpu                  | `256m`                                                                          |
+| `resources.requests.memory`  | Configure resource requests for memory               | `512Mi`                                                                         |
+| `nodeSelector`               | Configure nodeSelector for scheduling                | `{}`                                                                            |
 | `nodeSelector`               | Configure nodeSelector for scheduling                | `{}`                                                                            |
 | `tolerations`                | Tolerations for scheduling                           | `[]`                                                                            |
 | `affinity`                   | Configure affinity rules                             | `{}`                                                                            |
