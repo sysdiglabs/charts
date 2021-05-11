@@ -50,7 +50,11 @@ Controller chart and their default values:
 | `webhook.podSecurityContext`          | PSP's for webhook                                            | `{"fsgroup": 1000}`                                                                                                                 |
 | `webhook.securityContext`             | Configure securityContext for webhook                        | `{"capabilities": {"drop": ["ALL"]}, "readOnlyRootFilesystem": true, "runAsNonRoot": true, "runAsUser": 1000 }`                     |
 | `webhook.imagePullSecrets`            | The image pull secrets for webhook                           | `[]`                                                                                                                                |
-| `webhook.resources`                   | Resource limits for webhook                                  | `{}`                                                                                                                                |
+| `webhook.resources.limits.cpu`        | Resource cpu limits for webhook                              | `250m`                                                                                                                              |
+| `webhook.resources.limits.memory`     | Resource memory limits for webhook                           | `256Mi`                                                                                                                             |
+| `webhook.resources.requests.cpu`      | Resource cpu requests for webhook                            | `250m`                                                                                                                              |
+| `webhook.resources.requests.memory`   | Resource limits requests for webhook                         | `256Mi`                                                                                                                             |
+| `webhook.nodeSelector`                | Configure nodeSelector for scheduling for webhook            | `{}`                                                                                                                                |
 | `webhook.nodeSelector`                | Configure nodeSelector for scheduling for webhook            | `{}`                                                                                                                                |
 | `webhook.tolerations`                 | Tolerations for scheduling for webhook                       | `[]`                                                                                                                                |
 | `webhook.affinity`                    | Configure affinity rules for webhook                         | `{}`                                                                                                                                |
@@ -65,6 +69,10 @@ Controller chart and their default values:
 | `scanner.httpProxy`                   | HTTP Proxy settings for scanner                              | ``                                                                                                                                  |
 | `scanner.noProxy`                     | No proxy these URL's for scanner                             | `kubernetes,10.0.0.0/8`                                                                                                             |
 | `scanner.podAnnotations`              | Scanner pod annotations                                      | `{"prometheus.io/scrape": "true", "prometheus.io/path": "/metrics", "prometheus.io/port": "5000", "prometheus.io/scheme": "https"}` |
+| `scanner.resources.limits.cpu`        | Resource cpu limits for scanner                              | `250m`                                                                                                                              |
+| `scanner.resources.limits.memory`     | Resource memory limits for scanner                           | `256Mi`                                                                                                                             |
+| `scanner.resources.requests.cpu`      | Resource cpu requests for scanner                            | `250m`                                                                                                                              |
+| `scanner.resources.requests.memory`   | Resource limits requests for scanner                         | `256Mi`                                                                                                                             |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
