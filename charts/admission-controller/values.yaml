@@ -76,6 +76,8 @@ webhook:
 
   affinity: {}
 
+  denyOnError: false
+
 # inline scanner configuration
 scanner:
   enabled: true
