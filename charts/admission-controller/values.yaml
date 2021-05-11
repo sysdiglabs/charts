@@ -62,19 +62,21 @@ webhook:
     runAsNonRoot: true
 
   imagePullSecrets: []
-  resources: {}
-    # limits:
-    #   cpu: 100m
-    #   memory: 128Mi
-    # requests:
-    #   cpu: 100m
-    #   memory: 128Mi
+  resources:
+    limits:
+      cpu: 250m
+      memory: 256Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
 
   nodeSelector: {}
 
   tolerations: []
 
   affinity: {}
+
+  denyOnError: false
 
 # inline scanner configuration
 scanner:
@@ -115,13 +117,13 @@ scanner:
 
   imagePullSecrets: []
 
-  resources: {}
-    # limits:
-    #   cpu: 100m
-    #   memory: 128Mi
-    # requests:
-    #   cpu: 100m
-    #   memory: 128Mi
+  resources:
+    limits:
+      cpu: 250m
+      memory: 256Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
 
   nodeSelector: {}
 
