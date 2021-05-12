@@ -44,7 +44,7 @@ spec:
             name: {{ template "sysdig.fullname" . }}-image-analyzer
             optional: true
         {{- if .Values.nodeImageAnalyzer.extraVolumes.volumes }}
-{{ toYaml .Values.nodeImageAnalyzer.extraVolumesvolumes | indent 8 }}
+{{ toYaml .Values.nodeImageAnalyzer.extraVolumes.volumes | indent 8 }}
         {{- end }}
       tolerations:
 {{ toYaml .Values.nodeImageAnalyzer.tolerations | indent 8 }}
