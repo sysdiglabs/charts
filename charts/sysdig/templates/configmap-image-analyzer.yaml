@@ -45,4 +45,53 @@ data:
   {{- if .Values.nodeImageAnalyzer.settings.noProxy }}
   no_proxy: {{ .Values.nodeImageAnalyzer.settings.noProxy }}
   {{- end -}}
-{{- end }}
+  {{- end }}
+  {{- if and (not .Values.nodeImageAnalyzer.deploy) .Values.nodeAnalyzer.deploy}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "sysdig.fullname" . }}-node-analyzer
+  labels:
+  {{ include "sysdig.labels" . | indent 4 }}
+data:
+  {{- if .Values.nodeAnalyzer.collectorEndpoint }}
+  collector_endpoint: {{ .Values.nodeAnalyzer.collectorEndpoint }}
+  {{- end }}
+  {{- if hasKey .Values.nodeAnalyzer "sslVerifyCertificate" }}
+  ssl_verify_certificate: "{{ .Values.nodeAnalyzer.sslVerifyCertificate }}"
+  {{- end }}
+
+  debug: "{{ .Values.nodeAnalyzer.debug | default false }}"
+
+  {{- if .Values.nodeAnalyzer.imageAnalyzer.settings.dockerSocketPath }}
+  docker_socket_path: {{ .Values.nodeAnalyzer.imageAnalyzer.settings.dockerSocketPath }}
+  {{- end }}
+  {{- if .Values.nodeAnalyzer.imageAnalyzer.settings.criSocketPath }}
+  cri_socket_path: {{ .Values.nodeAnalyzer.imageAnalyzer.settings.criSocketPath }}
+  {{- end }}
+  {{- if .Values.nodeAnalyzer.imageAnalyzer.settings.containerdSocketPath }}
+  containerd_socket_path: {{ .Values.nodeAnalyzer.imageAnalyzer.settings.containerdSocketPath }}
+  {{- end }}
+  {{- if .Values.nodeAnalyzer.imageAnalyzer.settings.imagePeriod }}
+  image_period: {{ .Values.nodeAnalyzer.imageAnalyzer.settings.imagePeriod }}
+  {{- end }}
+  {{- if .Values.nodeAnalyzer.imageAnalyzer.settings.imageCacheTTL }}
+  image_cache_ttl: {{ .Values.nodeAnalyzer.imageAnalyzer.settings.imageCacheTTL }}
+  {{- end }}
+  {{- if .Values.nodeAnalyzer.imageAnalyzer.settings.reportPeriod }}
+  report_period: {{ .Values.nodeAnalyzer.imageAnalyzer.settings.reportPeriod }}
+  {{- end }}
+  {{- if .Values.nodeAnalyzer.imageAnalyzer.settings.collectorTimeout }}
+  collector_timeout: {{ .Values.nodeAnalyzer.imageAnalyzer.settings.collectorTimeout }}
+  {{- end }}
+
+  {{- if .Values.nodeAnalyzer.httpProxy }}
+  http_proxy: {{ .Values.nodeAnalyzer.httpProxy }}
+  {{- end -}}
+  {{- if .Values.nodeAnalyzer.httpsProxy }}
+  https_proxy: {{ .Values.nodeAnalyzer.httpsProxy }}
+  {{- end -}}
+  {{- if .Values.nodeAnalyzer.noProxy }}
+  no_proxy: {{ .Values.nodeAnalyzer.noProxy }}
+  {{- end -}}
+  {{- end }}
