@@ -4,6 +4,13 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.12.0
+
+### Major changes
+
+* Add Node Analyzer (`nodeAnalyzer.deploy` set to `false` by default)
+* Explain all Node Analyzer settings in values.yaml and README, and link to official Sysdig docs
+
 ## v1.11.18
 
 ### Minor changes
