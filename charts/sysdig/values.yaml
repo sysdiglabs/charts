@@ -177,7 +177,7 @@ auditLog:
     enabled: false
 
 nodeImageAnalyzer:
-  deploy: true
+  deploy: false
   image:
     repository: sysdig/node-image-analyzer
     tag: 0.1.10
@@ -248,7 +248,7 @@ nodeImageAnalyzer:
       memory: 1024Mi
 
 nodeAnalyzer:
-  deploy: false
+  deploy: true
 
   # The API endpoint for Sysdig Secure, specified with no protocol:
   # * SaaS default region (US East): leave empty
@@ -322,7 +322,7 @@ nodeAnalyzer:
   hostAnalyzer:
     image:
       repository: sysdig/host-analyzer
-      tag: 0.1.10 # TODO pinned or latest?
+      tag: 0.1.0
       pullPolicy: IfNotPresent
 
     settings:

@@ -8,8 +8,9 @@ This file documents all notable changes to Sysdig Helm Chart. The release number
 
 ### Major changes
 
-* Add Node Analyzer (`nodeAnalyzer.deploy` set to `false` by default)
+* Add Node Analyzer (`nodeAnalyzer.deploy` set to `true` by default)
 * Explain all Node Analyzer settings in values.yaml and README, and link to official Sysdig docs
+* Disable Node Image Analyzer deployment (`nodeImageAnalyzer.deploy` set to `false` by default)
 
 ## v1.11.18
 

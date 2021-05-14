@@ -87,7 +87,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `prometheus.yaml`                                          | prometheus.yaml content to configure metric collection: relabelling and filtering        | ` `                                                                           |
 | `extraVolumes.volumes`                                     | Additional volumes to mount in the sysdig agent to pass new secrets or configmaps        | `[]`                                                                          |
 | `extraVolumes.mounts`                                      | Mount points for additional volumes                                                      | `[]`                                                                          |
-| `nodeImageAnalyzer.deploy`                                 | Deploy the Node Image Analyzer (See https://docs.sysdig.com/en/scan-running-images.html) | `true`                                                                        |
+| `nodeImageAnalyzer.deploy`                                 | Deploy the Node Image Analyzer (See https://docs.sysdig.com/en/scan-running-images.html) | `false`                                                                        |
 | `nodeImageAnalyzer.settings.dockerSocketPath`              | The Docker socket path                                                                   |                                                                               |
 | `nodeImageAnalyzer.settings.criSocketPath`                 | The socket path to a CRI compatible runtime, such as CRI-O                               |                                                                               |
 | `nodeImageAnalyzer.settings.containerdSocketPath`          | The socket path to a CRI-Containerd daemon                                               |                                                                               |
@@ -107,7 +107,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `nodeImageAnalyzer.resources.limits.memory`                | Node Image Analyzer Memory limit per node                                                | `1024Mi`                                                                      |
 | `nodeImageAnalyzer.extraVolumes.volumes`                   | Additional volumes to mount in the Node Image Analyzer (i.e. for docker socket)          | `[]`                                                                          |
 | `nodeImageAnalyzer.extraVolumes.mounts`                    | Mount points for additional volumes                                                      | `[]`                                                                          |
-| `nodeAnalyzer.deploy`                                      | Deploy the Node Analyzer                                                                 | `false`                                                                       |
+| `nodeAnalyzer.deploy`                                      | Deploy the Node Analyzer                                                                 | `true`                                                                       |
 | `nodeAnalyzer.collectorEndpoint`                           | The endpoint to the Scanning Analysis collector                                          |                                                                               |
 | `nodeAnalyzer.sslVerifyCertificate`                        | Can be set to false to allow insecure connections to the Sysdig backend, such as On-Prem |                                                                               |
 | `nodeAnalyzer.debug`                                       | Can be set to true to show debug logging, useful for troubleshooting                     |                                                                               |
@@ -128,7 +128,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `nodeAnalyzer.imageAnalyzer.resources.limits.cpu`          | Node Image Analyzer CPU limit per node                                                   | `500m`                                                                        |
 | `nodeAnalyzer.imageAnalyzer.resources.limits.memory`       | Node Image Analyzer Memory limit per node                                                | `1536Mi`                                                                      |
 | `nodeAnalyzer.hostAnalyzer.image.repository`               | The image repository to pull the Host Analyzer from                                      | `sysdig/host-analyzer`                                                        |
-| `nodeAnalyzer.hostAnalyzer.image.tag`                      | The image tag to pull the Host Analyzer                                                  | `TODO 0.1.7`                                                                  |
+| `nodeAnalyzer.hostAnalyzer.image.tag`                      | The image tag to pull the Host Analyzer                                                  | `0.1.0`                                                                       |
 | `nodeAnalyzer.hostAnalyzer.image.pullPolicy`               | The Image pull policy for the Host Analyzer                                              | `IfNotPresent`                                                                |
 | `nodeAnalyzer.hostAnalyzer.settings.schedule`              | The scanning schedule specification for the host analyzer expressed as a crontab         | `@dailydefault`                                                               |
 | `nodeAnalyzer.hostAnalyzer.settings.dirsToScan`            | The list of directories to inspect during the scan                                       | `/etc,/var/lib/dpkg,/usr/local,/usr/lib/sysimage/rpm,/var/lib/rpm,/lib/apk/db`|
@@ -161,16 +161,27 @@ $ helm install --namespace sysdig-agent sysdig-agent -f values.yaml sysdig/sysdi
 
 > **Tip**: You can use the default [values.yaml](values.yaml)
 
-## Node Image Analyzer
- TODO Update
-The Node Image Analyzer is now deployed by default unless you set the value `nodeImageAnalyzer.deploy` to `false`.
+## Node Analyzer
+The Node Analyzer is deployed by default unless you set the value `nodeAnalyzer.deploy` to `false`.
 
+The Node Analyzer daemonset contains three containers, each providing a specific functionality. This daemonset replaces
+the (deprecated) Node Image Analyzer daemonset.
+
+### Node Image Analyzer
 See the [Node Image Analyzer documentation](https://docs.sysdig.com/en/scan-running-images.html) for details about the available options, and
 [Running Node Image Analyzer Behind a Proxy](https://docs.sysdig.com/en/scan-running-images.html#UUID-b3b07aa6-db02-eb58-050f-15c9e053bb64_section-idm232105909710949) for proxy settings.
 
 The node image analyzer (NIA) provides the capability to scan images as soon as they start running on hosts where the analyzer is installed. It is typically installed alongside the Sysdig agent container.
 
 On container start-up, the analyzer scans all pre-existing running images present in the node. Additionally, it will scan any new image that enters a running state in the node. It will scan each image once, then forward the results to the Sysdig Secure scanning backend. Image metadata and the full scan report is then available in the Sysdig Secure UI.
+
+### Host Analyzer
+TODO add docs links
+TODO Basic description
+
+### Benchmark Runner
+TODO add docs links
+The Benchmark Runner provides the capability to run CIS inspired benchmarks against your infrastructure. Benchmark tasks are configured in the UI, and the runner automatically runs these benchmarks on the configured scope and schedule.
 
 ## On-Premise backend deployment settings
 
