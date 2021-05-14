@@ -47,7 +47,11 @@ spec:
               - name: SECURE_API_TOKEN
                 valueFrom:
                   secretKeyRef:
+                    {{- if not .Values.existingSecretName }}
                     name: {{ include "registry-scanner.fullname" . }}
+                    {{- else }}
+                    name: {{ .Values.existingSecretName }}
+                    {{- end }}
                     key: secureAPIToken
               {{- if .Values.proxy.httpProxy }}
               - name: http_proxy
@@ -64,12 +68,20 @@ spec:
               - name: REGISTRYSCANNER_REGISTRY_USER
                 valueFrom:
                   secretKeyRef:
+                    {{- if not .Values.existingSecretName }}
                     name: {{ include "registry-scanner.fullname" . }}
+                    {{- else }}
+                    name: {{ .Values.existingSecretName }}
+                    {{- end }}
                     key: registryUser
               - name: REGISTRYSCANNER_REGISTRY_PASSWORD
                 valueFrom:
                   secretKeyRef:
+                    {{- if not .Values.existingSecretName }}
                     name: {{ include "registry-scanner.fullname" . }}
+                    {{- else }}
+                    name: {{ .Values.existingSecretName }}
+                    {{- end }}
                     key: registryPassword
           restartPolicy: {{ .Values.cronjob.restartPolicy }}
           {{- with .Values.nodeSelector }}

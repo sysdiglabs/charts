@@ -46,6 +46,9 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+# Specify the name of a Kubernetes secret containing an 'secureAPIToken', 'registryUser', and 'registryPassword' entries
+existingSecretName: ""
+
 podAnnotations: {}
 
 podSecurityContext: {}
