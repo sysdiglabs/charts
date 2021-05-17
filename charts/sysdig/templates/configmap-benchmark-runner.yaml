@@ -4,7 +4,7 @@ kind: ConfigMap
 metadata:
   name: {{ template "sysdig.fullname" . }}-benchmark-runner
   labels:
-  {{ include "sysdig.labels" . | indent 4 }}
+{{ include "sysdig.labels" . | indent 4 }}
 data:
   {{- if .Values.nodeAnalyzer.collectorEndpoint }}
   collector_endpoint: https://{{ .Values.nodeAnalyzer.collectorEndpoint }}

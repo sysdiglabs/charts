@@ -205,7 +205,7 @@ spec:
           privileged: true
         imagePullPolicy: {{ .Values.nodeAnalyzer.hostAnalyzer.image.pullPolicy }}
         resources:
-  {{ toYaml .Values.nodeAnalyzer.hostAnalyzer.resources | indent 10 }}
+{{ toYaml .Values.nodeAnalyzer.hostAnalyzer.resources | indent 10 }}
         volumeMounts:
           - mountPath: /host
             name: root-vol
@@ -295,7 +295,7 @@ spec:
           # running containers by default regardless of volume mounts. In those cases, the benchmark process would fail.
           privileged: true
         resources:
-  {{ toYaml .Values.nodeAnalyzer.benchmarkRunner.resources | indent 10 }}
+{{ toYaml .Values.nodeAnalyzer.benchmarkRunner.resources | indent 10 }}
         volumeMounts:
           - mountPath: /opt/draios/etc/kubernetes/config
             name: sysdig-agent-config

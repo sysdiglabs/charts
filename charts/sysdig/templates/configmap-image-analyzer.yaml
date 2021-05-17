@@ -52,7 +52,7 @@ kind: ConfigMap
 metadata:
   name: {{ template "sysdig.fullname" . }}-node-analyzer
   labels:
-  {{ include "sysdig.labels" . | indent 4 }}
+{{ include "sysdig.labels" . | indent 4 }}
 data:
   {{- if .Values.nodeAnalyzer.collectorEndpoint }}
   collector_endpoint: {{ .Values.nodeAnalyzer.collectorEndpoint }}
