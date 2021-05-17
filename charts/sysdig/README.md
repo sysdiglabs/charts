@@ -177,7 +177,9 @@ On container start-up, the analyzer scans all pre-existing running images presen
 
 ### Host Analyzer
 TODO add docs links
-TODO Basic description
+The host analyzer provides the capability to scan packages installed on the host operating system to identify potential vulnerabilities. It is typically installed as part of the Node Analyzer which in turn is installed alongside the Sysdig Agent.
+
+The host analyzer works by inspecting the files on the host root filesystem looking for installed packages and sending them to the Sysdig backend. It performs this operation by default once a day and its schedule can be configured as described below. Likewise, the list of directories to be examined during each scan can be configured.
 
 ### Benchmark Runner
 TODO add docs links

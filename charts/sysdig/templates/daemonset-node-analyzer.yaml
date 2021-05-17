@@ -196,7 +196,6 @@ spec:
               name: {{ template "sysdig.fullname" . }}-image-analyzer
               key: no_proxy
               optional: true
-
       - name: sysdig-host-analyzer
         image: {{ template "sysdig.image.hostAnalyzer" . }}
         securityContext:

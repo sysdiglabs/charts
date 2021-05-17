@@ -15,9 +15,7 @@ data:
   {{- if hasKey .Values.nodeAnalyzer "sslVerifyCertificate" }}
   ssl_verify_certificate: "{{ .Values.nodeAnalyzer.sslVerifyCertificate }}"
   {{- end }}
-
   debug: "{{ .Values.nodeAnalyzer.debug | default false }}"
-
   {{- if .Values.nodeAnalyzer.hostAnalyzer.settings.schedule }}
   schedule: {{ .Values.nodeAnalyzer.hostAnalyzer.settings.schedule }}
   {{- end }}
@@ -33,7 +31,6 @@ data:
   {{- if .Values.nodeAnalyzer.hostAnalyzer.settings.maxSendAttempts }}
   max_send_attempts: {{ .Values.nodeAnalyzer.hostAnalyzer.settings.maxSendAttempts }}
   {{- end }}
-
   {{- if .Values.nodeAnalyzer.httpProxy }}
   http_proxy: {{ .Values.nodeAnalyzer.httpProxy }}
   {{- end -}}
