@@ -51,6 +51,7 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | `imagePullSecrets`                    | The image pull secrets                                                                                                 | `[]`                                          |
 | `nameOverride`                        | Chart name override                                                                                                    | ` `                                           |
 | `fullnameOverride`                    | Chart full name override                                                                                               | ` `                                           |
+| `existingSecretName`                  | Name of a Kubernetes secret containing an 'secureAPIToken', 'registryUser', and 'registryPassword' entries             | ` `                                           |
 | `podAnnotations`                      | Registry scanner pod annotations                                                                                       | `{}`                                          |
 | `podSecurityContext`                  | Security context for Registry Scanner pod                                                                              | `{}`                                          |
 | `securityContext`                     | Security context for Registry Scanner container                                                                        | `{}`                                          |
