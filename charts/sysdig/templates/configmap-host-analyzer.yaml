@@ -17,7 +17,7 @@ data:
   {{- end }}
   debug: "{{ .Values.nodeAnalyzer.debug | default false }}"
   {{- if .Values.nodeAnalyzer.hostAnalyzer.schedule }}
-  schedule: {{ .Values.nodeAnalyzer.hostAnalyzer.schedule }}
+  schedule: {{ .Values.nodeAnalyzer.hostAnalyzer.schedule | quote }}
   {{- end }}
   {{- if .Values.nodeAnalyzer.hostAnalyzer.analyzeAtStartup }}
   analyze_at_startup: {{ .Values.nodeAnalyzer.hostAnalyzer.analyzeAtStartup }}

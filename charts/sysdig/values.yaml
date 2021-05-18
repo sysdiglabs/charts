@@ -7,7 +7,7 @@ image:
   # As long as I don't want to people to use this, I will keep it undocumented
   overrideValue:
 
-  registry: docker.io
+  registry: quay.io
   repository: sysdig/agent
   tag: 11.2.1
   # Specify a imagePullPolicy
@@ -327,7 +327,7 @@ nodeAnalyzer:
     # The scanning schedule specification for the host analyzer expressed as a crontab string such as “5 4 * * *”.
     # The default value of @dailydefault instructs the analyzer to automatically pick a schedule that will start
     # shortly after it is deployed and will perform a scan every 24 hours.
-    # schedule: “5 4 * * *”
+    schedule: "@dailydefault"
 
     # The list of directories to inspect during the scan, expressed as a comma separated list.
     # dirsToScan: "/etc,/var/lib/dpkg,/usr/local,/usr/lib/sysimage/rpm,/var/lib/rpm,/lib/apk/db"
@@ -345,7 +345,7 @@ nodeAnalyzer:
   benchmarkRunner:
     image:
       repository: sysdig/compliance-benchmark-runner
-      tag: 1.0.4.0
+      tag: 1.0.6.0
       pullPolicy: IfNotPresent
 
     resources:
