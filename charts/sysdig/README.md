@@ -43,70 +43,107 @@ The command removes all the Kubernetes components associated with the chart and 
 
 The following table lists the configurable parameters of the Sysdig chart and their default values.
 
-| Parameter                                         | Description                                                                              | Default                                                     |
-| ------------------------------------------------- | ---------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
-| `image.registry`                                  | Sysdig Agent image registry                                                              | `docker.io`                                                 |
-| `image.repository`                                | The image repository to pull from                                                        | `sysdig/agent`                                              |
-| `image.tag`                                       | The image tag to pull                                                                    | `11.2.1`                                                    |
-| `image.pullPolicy`                                | The Image pull policy                                                                    | `IfNotPresent`                                              |
-| `image.pullSecrets`                               | Image pull secrets                                                                       | `nil`                                                       |
-| `resources.requests.cpu`                          | CPU requested for being run in a node                                                    | `600m`                                                      |
-| `resources.requests.memory`                       | Memory requested for being run in a node                                                 | `512Mi`                                                     |
-| `resources.limits.cpu`                            | CPU limit                                                                                | `2000m`                                                     |
-| `resources.limits.memory`                         | Memory limit                                                                             | `1536Mi`                                                    |
-| `rbac.create`                                     | If true, create & use RBAC resources                                                     | `true`                                                      |
-| `scc.create`                                      | Create OpenShift's Security Context Constraint                                           | `true`                                                      |
-| `psp.create`                                      | Create Pod Security Policy to allow the agent running in clusters with PSP enabled       | `true`                                                      |
-| `serviceAccount.create`                           | Create serviceAccount                                                                    | `true`                                                      |
-| `serviceAccount.name`                             | Use this value as serviceAccountName                                                     | ` `                                                         |
-| `daemonset.updateStrategy.type`                   | The updateStrategy for updating the daemonset                                            | `RollingUpdate`                                             |
-| `daemonset.nodeSelector`                          | Node Selector                                                                            | `{}`                                                        |
-| `daemonset.affinity`                              | Node affinities                                                                          | `schedule on amd64 and linux`                               |
-| `daemonset.annotations`                           | Custom annotations for daemonset                                                         | `{}`                                                        |
-| `daemonset.probes.initialDelay`                   | Initial delay for liveness and readiness probes. daemonset                               | `{}`                                                        |
-| `slim.enabled`                                    | Use the slim based Sysdig Agent image                                                    | `false`                                                     |
-| `slim.kmoduleImage.repository`                    | The kernel module image builder repository to pull from                                  | `sysdig/agent-kmodule`                                      |
-| `slim.resources.requests.cpu`                     | CPU requested for building the kernel module                                             | `1000m`                                                     |
-| `slim.resources.requests.memory`                  | Memory requested for building the kernel module                                          | `348Mi`                                                     |
-| `slim.resources.limits.memory`                    | Memory limit for building the kernel module                                              | `512Mi`                                                     |
-| `ebpf.enabled`                                    | Enable eBPF support for Sysdig instead of `sysdig-probe` kernel module                   | `false`                                                     |
-| `ebpf.settings.mountEtcVolume`                    | Needed to detect which kernel version are running in Google COS                          | `true`                                                      |
-| `clusterName`                                     | Set a cluster name to identify events using *kubernetes.cluster.name* tag                | ` `                                                         |
-| `sysdig.accessKey`                                | Your Sysdig Monitor Access Key                                                           | ` ` Either accessKey or existingAccessKeySecret is required |
-| `sysdig.existingAccessKeySecret`                  | Alternatively, specify the name of a Kubernetes secret containing an 'access-key' entry  | ` ` Either accessKey or existingAccessKeySecret is required |
-| `sysdig.disableCaptures`                          | Disable capture functionality (see https://docs.sysdig.com/en/disable-captures.html)     | `false`                                                     |
-| `sysdig.settings`                                 | Additional settings, directly included in the agent's configuration file `dragent.yaml`  | `{}`                                                        |
-| `secure.enabled`                                  | Enable Sysdig Secure                                                                     | `true`                                                      |
-| `auditLog.enabled`                                | Enable K8s audit log support for Sysdig Secure                                           | `false`                                                     |
-| `auditLog.auditServerUrl`                         | The URL where Sysdig Agent listens for K8s audit log events                              | `0.0.0.0`                                                   |
-| `auditLog.auditServerPort`                        | Port where Sysdig Agent listens for K8s audit log events                                 | `7765`                                                      |
-| `auditLog.dynamicBackend.enabled`                 | Deploy the Audit Sink where Sysdig listens for K8s audit log events                      | `false`                                                     |
-| `customAppChecks`                                 | The custom app checks deployed with your agent                                           | `{}`                                                        |
-| `tolerations`                                     | The tolerations for scheduling                                                           | `node-role.kubernetes.io/master:NoSchedule`                 |
-| `prometheus.file`                                 | Use file to configure promscrape                                                         | `false`                                                     |
-| `prometheus.yaml`                                 | prometheus.yaml content to configure metric collection: relabelling and filtering        | ` `                                                         |
-| `extraVolumes.volumes`                            | Additional volumes to mount in the sysdig agent to pass new secrets or configmaps        | `[]`                                                        |
-| `extraVolumes.mounts`                             | Mount points for additional volumes                                                      | `[]`                                                        |
-| `nodeImageAnalyzer.deploy`                        | Deploy the Node Image Analyzer (See https://docs.sysdig.com/en/scan-running-images.html) | `true`                                                      |
-| `nodeImageAnalyzer.settings.dockerSocketPath`     | The Docker socket path                                                                   |                                                             |
-| `nodeImageAnalyzer.settings.criSocketPath`        | The socket path to a CRI compatible runtime, such as CRI-O                               |                                                             |
-| `nodeImageAnalyzer.settings.containerdSocketPath` | The socket path to a CRI-Containerd daemon                                               |                                                             |
-| `nodeImageAnalyzer.settings.collectorEndpoint`    | The endpoint to the Scanning Analysis collector                                          |                                                             |
-| `nodeImageAnalyzer.settings.sslVerifyCertificate` | Can be set to false to allow insecure connections to the Sysdig backend, such as On-Prem |                                                             |
-| `nodeImageAnalyzer.settings.debug`                | Can be set to true to show debug logging, useful for troubleshooting                     |                                                             |
-| `nodeImageAnalyzer.settings.httpProxy`            | Proxy configuration variables                                                            |                                                             |
-| `nodeImageAnalyzer.settings.httpsProxy`           | Proxy configuration variables                                                            |                                                             |
-| `nodeImageAnalyzer.settings.noProxy`              | Proxy configuration variables                                                            |                                                             |
-| `nodeImageAnalyzer.image.repository`              | The image repository to pull the Node Image Analyzer from                                | `sysdig/node-image-analyzer`                                |
-| `nodeImageAnalyzer.image.tag`                     | The image tag to pull the Node Image Analyzer                                            | `0.1.7`                                                     |
-| `nodeImageAnalyzer.image.pullPolicy`              | The Image pull policy for the Node Image Analyzer                                        | `IfNotPresent`                                              |
-| `nodeImageAnalyzer.image.pullSecrets`             | Image pull secrets for the Node Image Analyzer                                           | `nil`                                                       |
-| `nodeImageAnalyzer.resources.requests.cpu`        | Node Image Analyzer CPU requests per node                                                | `250m`                                                      |
-| `nodeImageAnalyzer.resources.requests.memory`     | Node Image Analyzer Memory requests per node                                             | `512Mi`                                                     |
-| `nodeImageAnalyzer.resources.limits.cpu`          | Node Image Analyzer CPU limit per node                                                   | `500m`                                                      |
-| `nodeImageAnalyzer.resources.limits.memory`       | Node Image Analyzer Memory limit per node                                                | `1024Mi`                                                    |
-| `nodeImageAnalyzer.extraVolumes.volumes`          | Additional volumes to mount in the Node Image Analyzer (i.e. for docker socket)          | `[]`                                                        |
-| `nodeImageAnalyzer.extraVolumes.mounts`           | Mount points for additional volumes                                                      | `[]`                                                        |
+| Parameter                                                  | Description                                                                              | Default                                                                       |
+| ---------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| `image.registry`                                           | Sysdig Agent image registry                                                              | `docker.io`                                                                   |
+| `image.repository`                                         | The image repository to pull from                                                        | `sysdig/agent`                                                                |
+| `image.tag`                                                | The image tag to pull                                                                    | `11.2.0`                                                                      |
+| `image.pullPolicy`                                         | The Image pull policy                                                                    | `IfNotPresent`                                                                |
+| `image.pullSecrets`                                        | Image pull secrets                                                                       | `nil`                                                                         |
+| `resources.requests.cpu`                                   | CPU requested for being run in a node                                                    | `600m`                                                                        |
+| `resources.requests.memory`                                | Memory requested for being run in a node                                                 | `512Mi`                                                                       |
+| `resources.limits.cpu`                                     | CPU limit                                                                                | `2000m`                                                                       |
+| `resources.limits.memory`                                  | Memory limit                                                                             | `1536Mi`                                                                      |
+| `rbac.create`                                              | If true, create & use RBAC resources                                                     | `true`                                                                        |
+| `scc.create`                                               | Create OpenShift's Security Context Constraint                                           | `true`                                                                        |
+| `psp.create`                                               | Create Pod Security Policy to allow the agent running in clusters with PSP enabled       | `true`                                                                        |
+| `serviceAccount.create`                                    | Create serviceAccount                                                                    | `true`                                                                        |
+| `serviceAccount.name`                                      | Use this value as serviceAccountName                                                     | ` `                                                                           |
+| `daemonset.updateStrategy.type`                            | The updateStrategy for updating the daemonset                                            | `RollingUpdate`                                                               |
+| `daemonset.nodeSelector`                                   | Node Selector                                                                            | `{}`                                                                          |
+| `daemonset.affinity`                                       | Node affinities                                                                          | `schedule on amd64 and linux`                                                 |
+| `daemonset.annotations`                                    | Custom annotations for daemonset                                                         | `{}`                                                                          |
+| `daemonset.probes.initialDelay`                            | Initial delay for liveness and readiness probes. daemonset                               | `{}`                                                                          |
+| `slim.enabled`                                             | Use the slim based Sysdig Agent image                                                    | `false`                                                                       |
+| `slim.kmoduleImage.repository`                             | The kernel module image builder repository to pull from                                  | `sysdig/agent-kmodule`                                                        |
+| `slim.resources.requests.cpu`                              | CPU requested for building the kernel module                                             | `1000m`                                                                       |
+| `slim.resources.requests.memory`                           | Memory requested for building the kernel module                                          | `348Mi`                                                                       |
+| `slim.resources.limits.memory`                             | Memory limit for building the kernel module                                              | `512Mi`                                                                       |
+| `ebpf.enabled`                                             | Enable eBPF support for Sysdig instead of `sysdig-probe` kernel module                   | `false`                                                                       |
+| `ebpf.settings.mountEtcVolume`                             | Needed to detect which kernel version are running in Google COS                          | `true`                                                                        |
+| `clusterName`                                              | Set a cluster name to identify events using *kubernetes.cluster.name* tag                | ` `                                                                           |
+| `sysdig.accessKey`                                         | Your Sysdig Monitor Access Key                                                           | ` ` Either accessKey or existingAccessKeySecret is required                   |
+| `sysdig.existingAccessKeySecret`                           | Alternatively, specify the name of a Kubernetes secret containing an 'access-key' entry  | ` ` Either accessKey or existingAccessKeySecret is required                   |
+| `sysdig.disableCaptures`                                   | Disable capture functionality (see https://docs.sysdig.com/en/disable-captures.html)     | `false`                                                                       |
+| `sysdig.settings`                                          | Additional settings, directly included in the agent's configuration file `dragent.yaml`  | `{}`                                                                          |
+| `secure.enabled`                                           | Enable Sysdig Secure                                                                     | `true`                                                                        |
+| `auditLog.enabled`                                         | Enable K8s audit log support for Sysdig Secure                                           | `false`                                                                       |
+| `auditLog.auditServerUrl`                                  | The URL where Sysdig Agent listens for K8s audit log events                              | `0.0.0.0`                                                                     |
+| `auditLog.auditServerPort`                                 | Port where Sysdig Agent listens for K8s audit log events                                 | `7765`                                                                        |
+| `auditLog.dynamicBackend.enabled`                          | Deploy the Audit Sink where Sysdig listens for K8s audit log events                      | `false`                                                                       |
+| `customAppChecks`                                          | The custom app checks deployed with your agent                                           | `{}`                                                                          |
+| `tolerations`                                              | The tolerations for scheduling                                                           | `node-role.kubernetes.io/master:NoSchedule`                                   |
+| `prometheus.file`                                          | Use file to configure promscrape                                                         | `false`                                                                       |
+| `prometheus.yaml`                                          | prometheus.yaml content to configure metric collection: relabelling and filtering        | ` `                                                                           |
+| `extraVolumes.volumes`                                     | Additional volumes to mount in the sysdig agent to pass new secrets or configmaps        | `[]`                                                                          |
+| `extraVolumes.mounts`                                      | Mount points for additional volumes                                                      | `[]`                                                                          |
+| `nodeImageAnalyzer.deploy`                                 | Deploy the Node Image Analyzer (See https://docs.sysdig.com/en/scan-running-images.html) | `false`                                                                        |
+| `nodeImageAnalyzer.settings.dockerSocketPath`              | The Docker socket path                                                                   |                                                                               |
+| `nodeImageAnalyzer.settings.criSocketPath`                 | The socket path to a CRI compatible runtime, such as CRI-O                               |                                                                               |
+| `nodeImageAnalyzer.settings.containerdSocketPath`          | The socket path to a CRI-Containerd daemon                                               |                                                                               |
+| `nodeImageAnalyzer.settings.collectorEndpoint`             | The endpoint to the Scanning Analysis collector                                          |                                                                               |
+| `nodeImageAnalyzer.settings.sslVerifyCertificate`          | Can be set to false to allow insecure connections to the Sysdig backend, such as On-Prem |                                                                               |
+| `nodeImageAnalyzer.settings.debug`                         | Can be set to true to show debug logging, useful for troubleshooting                     |                                                                               |
+| `nodeImageAnalyzer.settings.httpProxy`                     | Proxy configuration variables                                                            |                                                                               |
+| `nodeImageAnalyzer.settings.httpsProxy`                    | Proxy configuration variables                                                            |                                                                               |
+| `nodeImageAnalyzer.settings.noProxy`                       | Proxy configuration variables                                                            |                                                                               |
+| `nodeImageAnalyzer.image.repository`                       | The image repository to pull the Node Image Analyzer from                                | `sysdig/node-image-analyzer`                                                  |
+| `nodeImageAnalyzer.image.tag`                              | The image tag to pull the Node Image Analyzer                                            | `0.1.7`                                                                       |
+| `nodeImageAnalyzer.image.pullPolicy`                       | The Image pull policy for the Node Image Analyzer                                        | `IfNotPresent`                                                                |
+| `nodeImageAnalyzer.image.pullSecrets`                      | Image pull secrets for the Node Image Analyzer                                           | `nil`                                                                         |
+| `nodeImageAnalyzer.resources.requests.cpu`                 | Node Image Analyzer CPU requests per node                                                | `250m`                                                                        |
+| `nodeImageAnalyzer.resources.requests.memory`              | Node Image Analyzer Memory requests per node                                             | `512Mi`                                                                       |
+| `nodeImageAnalyzer.resources.limits.cpu`                   | Node Image Analyzer CPU limit per node                                                   | `500m`                                                                        |
+| `nodeImageAnalyzer.resources.limits.memory`                | Node Image Analyzer Memory limit per node                                                | `1024Mi`                                                                      |
+| `nodeImageAnalyzer.extraVolumes.volumes`                   | Additional volumes to mount in the Node Image Analyzer (i.e. for docker socket)          | `[]`                                                                          |
+| `nodeImageAnalyzer.extraVolumes.mounts`                    | Mount points for additional volumes                                                      | `[]`                                                                          |
+| `nodeAnalyzer.deploy`                                      | Deploy the Node Analyzer                                                                 | `true`                                                                       |
+| `nodeAnalyzer.collectorEndpoint`                           | The endpoint to the Scanning Analysis collector                                          |                                                                               |
+| `nodeAnalyzer.sslVerifyCertificate`                        | Can be set to false to allow insecure connections to the Sysdig backend, such as On-Prem |                                                                               |
+| `nodeAnalyzer.debug`                                       | Can be set to true to show debug logging, useful for troubleshooting                     |                                                                               |
+| `nodeAnalyzer.httpProxy`                                   | Proxy configuration variables                                                            |                                                                               |
+| `nodeAnalyzer.httpsProxy`                                  | Proxy configuration variables                                                            |                                                                               |
+| `nodeAnalyzer.noProxy`                                     | Proxy configuration variables                                                            |                                                                               |
+| `nodeAnalyzer.pullSecrets`                                 | Image pull secrets for the Node Analyzer containers                                      | `nil`                                                                         |
+| `nodeAnalyzer.imageAnalyzer.image.repository`              | The image repository to pull the Node Image Analyzer from                                | `sysdig/node-image-analyzer`                                                  |
+| `nodeAnalyzer.imageAnalyzer.image.tag`                     | The image tag to pull the Node Image Analyzer                                            | `0.1.7`                                                                       |
+| `nodeAnalyzer.imageAnalyzer.image.pullPolicy`              | The Image pull policy for the Node Image Analyzer                                        | `IfNotPresent`                                                                |
+| `nodeAnalyzer.imageAnalyzer.dockerSocketPath`              | The Docker socket path                                                                   |                                                                               |
+| `nodeAnalyzer.imageAnalyzer.criSocketPath`                 | The socket path to a CRI compatible runtime, such as CRI-O                               |                                                                               |
+| `nodeAnalyzer.imageAnalyzer.containerdSocketPath`          | The socket path to a CRI-Containerd daemon                                               |                                                                               |
+| `nodeAnalyzer.imageAnalyzer.extraVolumes.volumes`          | Additional volumes to mount in the Node Image Analyzer (i.e. for docker socket)          | `[]`                                                                          |
+| `nodeAnalyzer.imageAnalyzer.extraVolumes.mounts`           | Mount points for additional volumes                                                      | `[]`                                                                          |
+| `nodeAnalyzer.imageAnalyzer.resources.requests.cpu`        | Node Image Analyzer CPU requests per node                                                | `150m`                                                                        |
+| `nodeAnalyzer.imageAnalyzer.resources.requests.memory`     | Node Image Analyzer Memory requests per node                                             | `512Mi`                                                                       |
+| `nodeAnalyzer.imageAnalyzer.resources.limits.cpu`          | Node Image Analyzer CPU limit per node                                                   | `500m`                                                                        |
+| `nodeAnalyzer.imageAnalyzer.resources.limits.memory`       | Node Image Analyzer Memory limit per node                                                | `1536Mi`                                                                      |
+| `nodeAnalyzer.hostAnalyzer.image.repository`               | The image repository to pull the Host Analyzer from                                      | `sysdig/host-analyzer`                                                        |
+| `nodeAnalyzer.hostAnalyzer.image.tag`                      | The image tag to pull the Host Analyzer                                                  | `0.1.0`                                                                       |
+| `nodeAnalyzer.hostAnalyzer.image.pullPolicy`               | The Image pull policy for the Host Analyzer                                              | `IfNotPresent`                                                                |
+| `nodeAnalyzer.hostAnalyzer.schedule`                       | The scanning schedule specification for the host analyzer expressed as a crontab         | `@dailydefault`                                                               |
+| `nodeAnalyzer.hostAnalyzer.dirsToScan`                     | The list of directories to inspect during the scan                                       | `/etc,/var/lib/dpkg,/usr/local,/usr/lib/sysimage/rpm,/var/lib/rpm,/lib/apk/db`|
+| `nodeAnalyzer.hostAnalyzer.maxSendAttempts`                | The number of times the analysis collector is allowed to retry sending results           | `3`                                                                           |
+| `nodeAnalyzer.hostAnalyzer.resources.requests.cpu`         | Host Analyzer CPU requests per node                                                      | `150m`                                                                        |
+| `nodeAnalyzer.hostAnalyzer.resources.requests.memory`      | Host Analyzer Memory requests per node                                                   | `512Mi`                                                                       |
+| `nodeAnalyzer.hostAnalyzer.resources.limits.cpu`           | Host Analyzer CPU limit per node                                                         | `500m`                                                                        |
+| `nodeAnalyzer.hostAnalyzer.resources.limits.memory`        | Host Analyzer Memory limit per node                                                      | `1536Mi`                                                                      |
+| `nodeAnalyzer.benchmarkRunner.image.repository`            | The image repository to pull the Benchmark Runner from                                   | `sysdig/compliance-benchmark-runner`                                          |
+| `nodeAnalyzer.benchmarkRunner.image.tag`                   | The image tag to pull the Benchmark Runner                                               | `latest`                                                                      |
+| `nodeAnalyzer.benchmarkRunner.image.pullPolicy`            | The Image pull policy for the Benchmark Runner                                           | `Always`                                                                      |
+| `nodeAnalyzer.benchmarkRunner.resources.requests.cpu`      | Benchmark Runner CPU requests per node                                                   | `150m`                                                                        |
+| `nodeAnalyzer.benchmarkRunner.resources.requests.memory`   | Benchmark Runner Memory requests per node                                                | `128Mi`                                                                       |
+| `nodeAnalyzer.benchmarkRunner.resources.limits.cpu`        | Benchmark Runner CPU limit per node                                                      | `500m`                                                                        |
+| `nodeAnalyzer.benchmarkRunner.resources.limits.memory`     | Benchmark Runnerr Memory limit per node                                                  | `256Mi`                                                                       |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
@@ -124,16 +161,29 @@ $ helm install --namespace sysdig-agent sysdig-agent -f values.yaml sysdig/sysdi
 
 > **Tip**: You can use the default [values.yaml](values.yaml)
 
-## Node Image Analyzer
+## Node Analyzer
+The Node Analyzer is deployed by default unless you set the value `nodeAnalyzer.deploy` to `false`.
 
-The Node Image Analyzer is now deployed by default unless you set the value `nodeImageAnalyzer.deploy` to `false`.
+The Node Analyzer daemonset contains three containers, each providing a specific functionality. This daemonset replaces
+the (deprecated) Node Image Analyzer daemonset.
 
+### Node Image Analyzer
 See the [Node Image Analyzer documentation](https://docs.sysdig.com/en/scan-running-images.html) for details about the available options, and
 [Running Node Image Analyzer Behind a Proxy](https://docs.sysdig.com/en/scan-running-images.html#UUID-b3b07aa6-db02-eb58-050f-15c9e053bb64_section-idm232105909710949) for proxy settings.
 
 The node image analyzer (NIA) provides the capability to scan images as soon as they start running on hosts where the analyzer is installed. It is typically installed alongside the Sysdig agent container.
 
 On container start-up, the analyzer scans all pre-existing running images present in the node. Additionally, it will scan any new image that enters a running state in the node. It will scan each image once, then forward the results to the Sysdig Secure scanning backend. Image metadata and the full scan report is then available in the Sysdig Secure UI.
+
+### Host Analyzer
+TODO add docs links
+The host analyzer provides the capability to scan packages installed on the host operating system to identify potential vulnerabilities. It is typically installed as part of the Node Analyzer which in turn is installed alongside the Sysdig Agent.
+
+The host analyzer works by inspecting the files on the host root filesystem looking for installed packages and sending them to the Sysdig backend. It performs this operation by default once a day and its schedule can be configured as described below. Likewise, the list of directories to be examined during each scan can be configured.
+
+### Benchmark Runner
+TODO add docs links
+The Benchmark Runner provides the capability to run CIS inspired benchmarks against your infrastructure. Benchmark tasks are configured in the UI, and the runner automatically runs these benchmarks on the configured scope and schedule.
 
 ## On-Premise backend deployment settings
 
