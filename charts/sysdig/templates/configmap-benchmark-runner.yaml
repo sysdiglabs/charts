@@ -22,4 +22,4 @@ data:
   {{- if .Values.nodeAnalyzer.noProxy }}
   no_proxy: {{ .Values.nodeAnalyzer.noProxy }}
   {{- end -}}
-  {{- end }}
+{{- end }}
