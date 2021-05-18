@@ -177,7 +177,7 @@ auditLog:
     enabled: false
 
 nodeImageAnalyzer:
-  deploy: true
+  deploy: false
   image:
     repository: sysdig/node-image-analyzer
     tag: 0.1.10
@@ -246,6 +246,115 @@ nodeImageAnalyzer:
     limits:
       cpu: 500m
       memory: 1024Mi
+
+nodeAnalyzer:
+  deploy: true
+
+  # The API endpoint for Sysdig Secure, specified with no protocol:
+  # * SaaS default region (US East): leave empty
+  # * SaaS US Web: us2.app.sysdig.com
+  # * SaaS European Union: eu1.app.sysdig.com
+  # * On-Prem: sysdig.my.company.com
+  # collectorEndpoint: sysdig.my.company.com
+
+  # Can be set to false to allow insecure connections to the Sysdig backend,
+  # such as for on-premise installs that use self-signed certificates.
+  # By default, certificates are always verified.
+  # sslVerifyCertificate: false
+
+  # Can be set to true to show debug logging, useful for troubleshooting.
+  debug: false
+
+  # Proxy configuration variables. See also: [Running Node Analyzer Behind a Proxy](https://docs.sysdig.com/en/scan-running-images.html#UUID-b3b07aa6-db02-eb58-050f-15c9e053bb64_section-idm232105909710949)
+  httpProxy:
+  httpsProxy:
+  noProxy:
+
+  # Allow sysdig Node Image Analyzer to run on Kubernetes 1.6 masters
+  tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+
+  # Use this pullSecret to pull images from a private registry
+  # pullSecrets:
+  #   - name: myRegistryKeySecretName
+
+  imageAnalyzer:
+    image:
+      repository: sysdig/node-image-analyzer
+      tag: 0.1.12
+      pullPolicy: IfNotPresent
+
+    # The Docker socket path.
+    # If a custom path is specified, ensure it is correctly mounted from the host inside the container.
+    # dockerSocketPath: unix:///var/run/docker.sock
+
+    # The socket path to a CRI compatible runtime, such as CRI-O.
+    # If a custom path is specified, ensure it is correctly mounted from the host inside the container.
+    # criSocketPath: unix:///var/run/crio/crio.sock
+
+    # The socket path to a CRI-Containerd daemon.
+    # If a custom path is specified, ensure it is correctly mounted from the host inside the container.
+    # containerdSocketPath: unix:///var/run/containerd/containerd.sock
+
+    # Allow passing extra volumes to the Node Image Analyzer to mount docker socket, cri-o socket, etc.
+    extraVolumes:
+      volumes: []
+      mounts: []
+
+      # Example:
+
+      # volumes:
+      # - name: docker-sock
+      #   hostPath:
+      #     path: /var/run/docker.sock
+      # mounts:
+      # - mountPath: /var/run/docker.sock
+      #   name: docker-sock
+    resources:
+      requests:
+        cpu: 150m
+        memory: 512Mi
+      limits:
+        cpu: 500m
+        memory: 1536Mi
+  hostAnalyzer:
+    image:
+      repository: sysdig/host-analyzer
+      tag: 0.1.0
+      pullPolicy: IfNotPresent
+
+    # The scanning schedule specification for the host analyzer expressed as a crontab string such as “5 4 * * *”.
+    # The default value of @dailydefault instructs the analyzer to automatically pick a schedule that will start
+    # shortly after it is deployed and will perform a scan every 24 hours.
+    # schedule: “5 4 * * *”
+
+    # The list of directories to inspect during the scan, expressed as a comma separated list.
+    # dirsToScan: "/etc,/var/lib/dpkg,/usr/local,/usr/lib/sysimage/rpm,/var/lib/rpm,/lib/apk/db"
+
+    # The number of times the analysis collector is allowed to retry sending results if backend communication fails.
+    # maxSendAttempts: 3
+
+    resources:
+      requests:
+        cpu: 150m
+        memory: 512Mi
+      limits:
+        cpu: 500m
+        memory: 1536Mi
+  benchmarkRunner:
+    image:
+      repository: sysdig/compliance-benchmark-runner
+      tag: 1.0.4.0
+      pullPolicy: IfNotPresent
+
+    resources:
+      requests:
+        cpu: 150m
+        memory: 128Mi
+      limits:
+        cpu: 500m
+        memory: 256Mi
 
 customAppChecks: {}
   # Allow passing custom app checks for Sysdig Agent.
