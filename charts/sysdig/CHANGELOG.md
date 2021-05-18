@@ -4,6 +4,14 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.12.1
+
+### Minor changes
+
+* Switch default registry from `docker.io` to `quay.io`
+* Update Benchmark Runner to 1.0.6.0
+* Correct error in Host Analyzer Configmap
+
 ## v1.12.0
 
 ### Major changes
