@@ -63,6 +63,11 @@ spec:
             allowPrivilegeEscalation: true
           resources:
 {{ toYaml .Values.slim.resources | indent 12 }}
+          {{- if .Values.ebpf.enabled }}
+          env:
+            - name: SYSDIG_BPF_PROBE
+              value:
+          {{- end }}
           volumeMounts:
             - mountPath: /etc/modprobe.d
               name: modprobe-d
@@ -76,6 +81,10 @@ spec:
             - mountPath: /host/usr
               name: usr-vol
               readOnly: true
+            {{- if .Values.ebpf.enabled }}
+            - mountPath: /root/.sysdig
+              name: bpf-probes
+            {{- end }}
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}
@@ -163,6 +172,10 @@ spec:
               name: etc-fs
               readOnly: true
             {{- end }}
+            {{- if (and .Values.ebpf.enabled .Values.slim.enabled) }}
+            - mountPath: /root/.sysdig
+              name: bpf-probes
+            {{- end }}
             {{- if .Values.customAppChecks }}
             - mountPath: /opt/draios/lib/python/checks.custom.d
               name: custom-app-checks-volume
@@ -209,6 +222,10 @@ spec:
         - name: etc-fs
           hostPath:
             path: /etc
+        {{- end }}
+        {{- if (and .Values.ebpf.enabled .Values.slim.enabled) }}
+        - name: bpf-probes
+          emptyDir: {}
         {{- end }}
         - name: sysdig-agent-config
           configMap:
