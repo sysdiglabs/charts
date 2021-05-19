@@ -5,6 +5,12 @@
 This file documents all notable changes to Sysdig Registry Scanner. The release
 numbering uses [semantic versioning](http://semver.org).
 
+## v0.0.8
+
+### Minor changes
+
+* New option `config.registryApiUrl` to define the Artifactory docker API as it is exposed at a different endpoint
+
 ## v0.0.7
 
 ### Minor changes

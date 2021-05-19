@@ -27,6 +27,7 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | `cronjob.successfulJobsHistoryLimit`  | Number of successful job history to keep on the cluster                                                                | `2`                                           |
 | `cronjob.restartPolicy`               | Restart policy for a failed registry-scan execution                                                                    | `Never`                                       |
 | `config.registryURL`                  | URL of the registry to scan                                                                                            | `http://my-docker-registry.com`               |
+| `config.registryApiUrl`               | API URL of the registry to scan. This is required if your registry type is Artifactory                                 |                                               |
 | `config.registryUser`                 | Username for registry authentication                                                                                   | ` `                                           |
 | `config.registryPassword`             | Password for registry authentication                                                                                   | ` `                                           |
 | `config.registrySkipTLS`              | Ignore registry TLS certificate errors (self-signed, etc.)                                                             | `false`                                       |

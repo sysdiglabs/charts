@@ -6,6 +6,7 @@ cronjob:
 
 config:
   registryURL: http://my-docker-registry.com
+  registryApiUrl:
   registryUser:
   registryPassword:
   registrySkipTLS: false

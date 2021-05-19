@@ -12,6 +12,9 @@ data:
       user: from-secret
       pass: from-secret
       skipTLS: {{ .Values.config.registrySkipTLS }}
+      {{- if .Values.config.registryApiUrl }}
+      api: {{ .Values.config.registryApiUrl }}
+      {{- end }}
 
     secure:
       baseUrl: {{ default "https://secure.sysdig.com" .Values.config.secureBaseURL }}
