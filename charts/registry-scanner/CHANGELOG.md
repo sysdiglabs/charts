@@ -9,7 +9,7 @@ numbering uses [semantic versioning](http://semver.org).
 
 ### Minor changes
 
-* New option `config.registryApiUrl` to define the Artifactory API URL as the docker API is exposed at a different point
+* New option `config.registryApiUrl` to define the Artifactory docker API as it is exposed at a different endpoint
 
 ## v0.0.7
 
