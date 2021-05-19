@@ -4,6 +4,19 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.12.3
+
+### Minor changes
+
+* Fix: Respect existingAccessKeySecret in `daemonset-node-analyzer.yaml`
+* Update documentation links
+
+## v1.12.2
+
+### Minor changes
+
+* Support eBPF with Agent slim image
+
 ## v1.12.1
 
 ### Minor changes
