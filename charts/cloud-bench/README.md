@@ -14,8 +14,8 @@ $ helm install --create-namespace -n cloud-bench cloud-bench -f values.yaml sysd
 
 ## Configuration
 
-The following table lists the configurable parameters of the Harbor Scanner
-Sysdig Secure chart and their default values:
+The following table lists the configurable parameters of the Sysdig Cloud Bench
+chart and their default values:
 
 | Parameter                    | Description                                                                                                     | Default                                                                                      |
 | ---------------------------- | --------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
