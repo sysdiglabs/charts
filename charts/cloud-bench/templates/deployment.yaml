@@ -51,22 +51,22 @@ spec:
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "cloud-bench.fullname" . }}
+                  name: {{ include "cloud-bench.secretname" . }}
                   key: aws_access_key_id
             - name: AWS_SECRET_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "cloud-bench.fullname" . }}
+                  name: {{ include "cloud-bench.secretname" . }}
                   key: aws_secret_access_key
             - name: AWS_DEFAULT_REGION
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "cloud-bench.fullname" . }}
+                  name: {{ include "cloud-bench.secretname" . }}
                   key: aws_region
             - name: SECURE_API_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "cloud-bench.fullname" . }}
+                  name: {{ include "cloud-bench.secretname" . }}
                   key: secure_api_token
           volumeMounts:
             - mountPath: /etc/cloud-bench
