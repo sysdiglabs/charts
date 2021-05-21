@@ -14,8 +14,8 @@ $ helm install --create-namespace -n cloud-connector cloud-connector -f values.y
 
 ## Configuration
 
-The following table lists the configurable parameters of the Harbor Scanner
-Sysdig Secure chart and their default values:
+The following table lists the configurable parameters of the Sysdig Cloud connector
+chart and their default values:
 
 | Parameter                    | Description                                                                                                     | Default                                                                         |
 | ---------------------------- | --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
