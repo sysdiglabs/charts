@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "cloud-scanning.fullname" . }}-test-connection"
+  labels:
+    {{- include "cloud-scanning.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "cloud-scanning.fullname" . }}:{{ .Values.service.port }}/health']
+  restartPolicy: Never
