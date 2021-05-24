@@ -104,7 +104,11 @@ spec:
         - name: ACCESS_KEY
           valueFrom:
             secretKeyRef:
+              {{- if not .Values.sysdig.existingAccessKeySecret }}
               name: {{ template "sysdig.fullname" . }}
+              {{- else }}
+              name: {{ .Values.sysdig.existingAccessKeySecret }}
+              {{- end }}
               key: access-key
         - name: IMAGE_PERIOD
           valueFrom:
@@ -214,7 +218,11 @@ spec:
         - name: ACCESS_KEY
           valueFrom:
             secretKeyRef:
+              {{- if not .Values.sysdig.existingAccessKeySecret }}
               name: {{ template "sysdig.fullname" . }}
+              {{- else }}
+              name: {{ .Values.sysdig.existingAccessKeySecret }}
+              {{- end }}
               key: access-key
         - name: AM_COLLECTOR_ENDPOINT
           valueFrom:
@@ -308,7 +316,11 @@ spec:
         - name: ACCESS_KEY
           valueFrom:
             secretKeyRef:
+              {{- if not .Values.sysdig.existingAccessKeySecret }}
               name: {{ template "sysdig.fullname" . }}
+              {{- else }}
+              name: {{ .Values.sysdig.existingAccessKeySecret }}
+              {{- end }}
               key: access-key
         - name: BACKEND_ENDPOINT
           valueFrom:
