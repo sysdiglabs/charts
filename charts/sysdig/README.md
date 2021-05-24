@@ -167,22 +167,27 @@ The Node Analyzer is deployed by default unless you set the value `nodeAnalyzer.
 The Node Analyzer daemonset contains three containers, each providing a specific functionality. This daemonset replaces
 the (deprecated) Node Image Analyzer daemonset.
 
+See the [Node Analyzer installation documentation](https://docs.sysdig.com/en/node-analyzer--multi-feature-installation.html) for details about installation, and 
+[Running Node Analyzer Behind a Proxy](https://docs.sysdig.com/en/node-analyzer--multi-feature-installation.html#UUID-35c14c46-b327-c2a8-ed9c-82a2af995218_section-idm51621039128136) for proxy settings.
+
 ### Node Image Analyzer
-See the [Node Image Analyzer documentation](https://docs.sysdig.com/en/scan-running-images.html) for details about the available options, and
-[Running Node Image Analyzer Behind a Proxy](https://docs.sysdig.com/en/scan-running-images.html#UUID-b3b07aa6-db02-eb58-050f-15c9e053bb64_section-idm232105909710949) for proxy settings.
+See the [Image Analyzer Configmap Options](https://docs.sysdig.com/en/node-analyzer--multi-feature-installation.html#UUID-35c14c46-b327-c2a8-ed9c-82a2af995218_section-idm514589352153208) for details about the available options, and
+the [Node Image Analyzer documentation](https://docs.sysdig.com/en/scan-running-images.html) for details about the Node Image Analyzer feature.
 
 The node image analyzer (NIA) provides the capability to scan images as soon as they start running on hosts where the analyzer is installed. It is typically installed alongside the Sysdig agent container.
 
 On container start-up, the analyzer scans all pre-existing running images present in the node. Additionally, it will scan any new image that enters a running state in the node. It will scan each image once, then forward the results to the Sysdig Secure scanning backend. Image metadata and the full scan report is then available in the Sysdig Secure UI.
 
 ### Host Analyzer
-TODO add docs links
+See the [Host Scanning Configuration Options](https://docs.sysdig.com/en/node-analyzer--multi-feature-installation.html#UUID-35c14c46-b327-c2a8-ed9c-82a2af995218_UUID-6666385b-c550-0660-f563-956f3a4fe093) for details about installation options, and
+the [Host Scanning documentation](https://docs.sysdig.com/en/host-scanning.html) for details about the Host Scanning feature. 
+
 The host analyzer provides the capability to scan packages installed on the host operating system to identify potential vulnerabilities. It is typically installed as part of the Node Analyzer which in turn is installed alongside the Sysdig Agent.
 
 The host analyzer works by inspecting the files on the host root filesystem looking for installed packages and sending them to the Sysdig backend. It performs this operation by default once a day and its schedule can be configured as described below. Likewise, the list of directories to be examined during each scan can be configured.
 
 ### Benchmark Runner
-TODO add docs links
+See the [Benchmarks documentation](https://docs.sysdig.com/en/benchmarks.html) for details on the Benchmark feature.
 The Benchmark Runner provides the capability to run CIS inspired benchmarks against your infrastructure. Benchmark tasks are configured in the UI, and the runner automatically runs these benchmarks on the configured scope and schedule.
 
 ## On-Premise backend deployment settings
