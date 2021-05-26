@@ -617,6 +617,20 @@ entries:
   cloud-connector:
   - apiVersion: v2
     appVersion: 0.7.0
+    created: "2021-05-26T13:30:18.261706343Z"
+    description: Sysdig Cloud Connector
+    digest: 5003b7f1797339ea4f026d9c8ef90dfda284fcb91bdd48743b53a72a6aa4d3e1
+    home: https://sysdiglabs.github.io/cloud-connector
+    maintainers:
+    - email: nestor.salceda@sysdig.com
+      name: nestorsalceda
+    name: cloud-connector
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/cloud-connector-0.3.2/cloud-connector-0.3.2.tgz
+    version: 0.3.2
+  - apiVersion: v2
+    appVersion: 0.7.0
     created: "2021-05-11T07:27:44.681960454Z"
     description: Sysdig Cloud Connector
     digest: 1c19cafe031cf3b411b70b4714a2afaad4a08de3ad80b521cedc91aac66d5620
