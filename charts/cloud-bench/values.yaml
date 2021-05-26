@@ -81,6 +81,8 @@ tolerations: []
 
 affinity: {}
 
+## Secret values
+
 aws:
   access_key_id: ""
   secret_access_key: ""
@@ -88,6 +90,17 @@ aws:
 
 sysdig:
   secureApiToken: ""
+
+# Alternatively, you can provide the name of an existing secret. It will be used
+# See example secret in 'templates/secret.yaml'
+# The existing secret must provide the following entries:
+#  aws_access_key_id
+#  aws_secret_access_key
+#  aws_region
+#  secure_api_token
+existingSecretName: ""
+
+## Cloud Bench configuration
 
 secureURL: "https://secure.sysdig.com"
 logLevel: "debug"
