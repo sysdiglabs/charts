@@ -331,7 +331,7 @@ nodeAnalyzer:
 
     # The list of directories to inspect during the scan, expressed as a comma separated list.
     # dirsToScan: "/etc,/var/lib/dpkg,/usr/local,/usr/lib/sysimage/rpm,/var/lib/rpm,/lib/apk/db"
-    
+
     hostBase: "/host"
 
     # The number of times the analysis collector is allowed to retry sending results if backend communication fails.
