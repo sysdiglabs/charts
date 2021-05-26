@@ -954,6 +954,21 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/cloud-connector-0.1.0/cloud-connector-0.1.0.tgz
     version: 0.1.0
+  cloud-scanning:
+  - apiVersion: v2
+    appVersion: 0.7.0
+    created: "2021-05-26T14:50:02.601679527Z"
+    description: Sysdig Cloud Scanning
+    digest: 6bbca30c9810fe69cb8ecc666d00dfebdd9b4ceb86b355b673afb1fe6e88695f
+    home: https://sysdiglabs.github.io/cloud-connector
+    maintainers:
+    - email: alvaro.iradier@sysdig.com
+      name: airadier
+    name: cloud-scanning
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/cloud-scanning-0.0.1/cloud-scanning-0.0.1.tgz
+    version: 0.0.1
   harbor-scanner-sysdig-secure:
   - apiVersion: v2
     appVersion: 0.3.1
