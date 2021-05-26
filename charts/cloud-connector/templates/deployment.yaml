@@ -51,24 +51,24 @@ spec:
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "cloud-connector.fullname" . }}
+                  name: {{ include "cloud-connector.secretname" . }}
                   key: aws_access_key_id
             - name: AWS_SECRET_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "cloud-connector.fullname" . }}
+                  name: {{ include "cloud-connector.secretname" . }}
                   key: aws_secret_access_key
             - name: AWS_REGION
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "cloud-connector.fullname" . }}
+                  name: {{ include "cloud-connector.secretname" . }}
                   key: aws_region
             - name: SECURE_URL
               value: {{ .Values.sysdig.url }}
             - name: SECURE_API_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "cloud-connector.fullname" . }}
+                  name: {{ include "cloud-connector.secretname" . }}
                   key: secure_api_token
             - name: VERIFY_SSL
               value: {{ .Values.sysdig.verifySSL | quote }}
@@ -106,7 +106,7 @@ spec:
             name: {{ include "cloud-connector.fullname" . }}
         - name: google-application-credentials
           secret:
-            secretName: {{ include "cloud-connector.fullname" . }}
+            secretName: {{ include "cloud-connector.secretname" . }}
             items:
               - key: gcp_credentials
                 path: gcp_credentials
