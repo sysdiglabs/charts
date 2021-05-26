@@ -1,0 +1,114 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "cloud-scanning.fullname" . }}
+  labels:
+    {{- include "cloud-scanning.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "cloud-scanning.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+      {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+        checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
+      labels:
+        {{- include "cloud-scanning.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "cloud-scanning.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 5000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "cloud-scanning.secretname" . }}
+                  key: aws_access_key_id
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "cloud-scanning.secretname" . }}
+                  key: aws_secret_access_key
+            - name: AWS_REGION
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "cloud-scanning.secretname" . }}
+                  key: aws_region
+            - name: SECURE_URL
+              value: {{ .Values.sysdig.url }}
+            - name: SECURE_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "cloud-scanning.secretname" . }}
+                  key: secure_api_token
+            - name: VERIFY_SSL
+              value: {{ .Values.sysdig.verifySSL | quote }}
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: /var/secrets/gcp/gcp_credentials
+            - name: TELEMETRY_DEPLOYMENT_METHOD
+              value: helm
+            - name: CODEBUILD_PROJECT
+              value: {{ .Values.codeBuildProject }}
+            - name: ECR_DEPLOYED
+              value: {{ .Values.ecrScanning | quote }}
+            - name: ECS_DEPLOYED
+              value: {{ .Values.ecsScanning | quote }}
+            - name: SQS_QUEUE_URL
+              value: {{ .Values.sqsQueueUrl }}
+          {{- if .Values.extraEnvVars }}
+          {{- toYaml .Values.extraEnvVars | nindent 12}}
+          {{- end }}
+          volumeMounts:
+            - mountPath: /home/sysdig
+              name: home-dir
+            - mountPath: /var/secrets/gcp
+              name: google-application-credentials
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: home-dir
+          emptyDir: {}
+        - name: google-application-credentials
+          secret:
+            secretName: {{ include "cloud-scanning.secretname" . }}
+            items:
+              - key: gcp_credentials
+                path: gcp_credentials

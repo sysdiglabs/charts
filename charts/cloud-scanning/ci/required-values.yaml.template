@@ -1,0 +1,5 @@
+sysdig:
+  secureAPIToken: ${SECURE_API_TOKEN}
+
+image:
+  tag: master
