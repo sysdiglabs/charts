@@ -582,6 +582,23 @@ entries:
   cloud-bench:
   - apiVersion: v2
     appVersion: 0.1.0
+    created: "2021-05-26T14:11:04.360650519Z"
+    description: Sysdig Cloud Bench
+    digest: f4964254e25b2c90054adc6b0ea1b5830077f2740039e3b4a5b52524dcc64983
+    home: https://sysdig.com
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    maintainers:
+    - email: yathindra.naik@sysdig.com
+      name: yathi-sysdig
+    - email: alvaro.iradier@sysdig.com
+      name: airadier
+    name: cloud-bench
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/cloud-bench-0.1.2/cloud-bench-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: 0.1.0
     created: "2021-04-29T13:47:34.316416999Z"
     description: Sysdig Cloud Bench
     digest: 1c1709c7a762dd6c80033b71ac5999236dc53c15016f25805ed4bbe0c2e41114
