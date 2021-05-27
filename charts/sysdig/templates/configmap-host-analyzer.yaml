@@ -22,9 +22,6 @@ data:
   {{- if .Values.nodeAnalyzer.hostAnalyzer.analyzeAtStartup }}
   analyze_at_startup: {{ .Values.nodeAnalyzer.hostAnalyzer.analyzeAtStartup }}
   {{- end }}
-  {{- if .Values.nodeAnalyzer.hostAnalyzer.hostBase }}
-  host_base: {{ .Values.nodeAnalyzer.hostAnalyzer.hostBase }}
-  {{- end }}
   {{- if .Values.nodeAnalyzer.hostAnalyzer.dirsToScan }}
   dirs_to_scan: {{ .Values.nodeAnalyzer.hostAnalyzer.dirsToScan }}
   {{- end }}
