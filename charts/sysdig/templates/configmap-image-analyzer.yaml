@@ -50,7 +50,7 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "sysdig.fullname" . }}-node-analyzer
+  name: {{ template "sysdig.fullname" . }}-image-analyzer
   labels:
 {{ include "sysdig.labels" . | indent 4 }}
 data:
@@ -91,4 +91,4 @@ data:
   {{- if .Values.nodeAnalyzer.noProxy }}
   no_proxy: {{ .Values.nodeAnalyzer.noProxy }}
   {{- end -}}
-{{- end }}
+  {{- end }}

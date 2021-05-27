@@ -47,9 +47,9 @@ spec:
           hostPath:
             path: /var/run
         # Add custom volume here
-        - name: sysdig-image-analyzer-config #Unused??
+        - name: sysdig-image-analyzer-config
           configMap:
-            name: {{ template "sysdig.fullname" . }}-node-analyzer
+            name: {{ template "sysdig.fullname" . }}-image-analyzer
             optional: true
         # Needed to run Benchmarks. This mount is read-only.
         # Benchmarks include numerous checks that run tests against config files in the host filesystem. There are also
@@ -113,55 +113,55 @@ spec:
         - name: IMAGE_PERIOD
           valueFrom:
             configMapKeyRef:
-              name: {{ template "sysdig.fullname" . }}-node-analyzer
+              name: {{ template "sysdig.fullname" . }}-image-analyzer
               key: image_period
               optional: true
         - name: IMAGE_CACHE_TTL
           valueFrom:
             configMapKeyRef:
-              name: {{ template "sysdig.fullname" . }}-node-analyzer
+              name: {{ template "sysdig.fullname" . }}-image-analyzer
               key: image_cache_ttl
               optional: true
         - name: REPORT_PERIOD
           valueFrom:
             configMapKeyRef:
-              name: {{ template "sysdig.fullname" . }}-node-analyzer
+              name: {{ template "sysdig.fullname" . }}-image-analyzer
               key: report_period
               optional: true
         - name: DOCKER_SOCKET_PATH
           valueFrom:
             configMapKeyRef:
-              name: {{ template "sysdig.fullname" . }}-node-analyzer
+              name: {{ template "sysdig.fullname" . }}-image-analyzer
               key: docker_socket_path
               optional: true
         - name: CRI_SOCKET_PATH
           valueFrom:
             configMapKeyRef:
-              name: {{ template "sysdig.fullname" . }}-node-analyzer
+              name: {{ template "sysdig.fullname" . }}-image-analyzer
               key: cri_socket_path
               optional: true
         - name: CONTAINERD_SOCKET_PATH
           valueFrom:
             configMapKeyRef:
-              name: {{ template "sysdig.fullname" . }}-node-analyzer
+              name: {{ template "sysdig.fullname" . }}-image-analyzer
               key: containerd_socket_path
               optional: true
         - name: AM_COLLECTOR_ENDPOINT
           valueFrom:
             configMapKeyRef:
-              name: {{ template "sysdig.fullname" . }}-node-analyzer
+              name: {{ template "sysdig.fullname" . }}-image-analyzer
               key: collector_endpoint
               optional: true
         - name: AM_COLLECTOR_TIMEOUT
           valueFrom:
             configMapKeyRef:
-              name: {{ template "sysdig.fullname" . }}-node-analyzer
+              name: {{ template "sysdig.fullname" . }}-image-analyzer
               key: collector_timeout
               optional: true
         - name: VERIFY_CERTIFICATE
           valueFrom:
             configMapKeyRef:
-              name: {{ template "sysdig.fullname" . }}-node-analyzer
+              name: {{ template "sysdig.fullname" . }}-image-analyzer
               key: ssl_verify_certificate
               optional: true
         - name: K8S_NODE_NAME
@@ -179,25 +179,25 @@ spec:
         - name: DEBUG
           valueFrom:
             configMapKeyRef:
-              name: {{ template "sysdig.fullname" . }}-node-analyzer
+              name: {{ template "sysdig.fullname" . }}-image-analyzer
               key: debug
               optional: true
         - name: HTTP_PROXY
           valueFrom:
             configMapKeyRef:
-              name: {{ template "sysdig.fullname" . }}-node-analyzer
+              name: {{ template "sysdig.fullname" . }}-image-analyzer
               key: http_proxy
               optional: true
         - name: HTTPS_PROXY
           valueFrom:
             configMapKeyRef:
-              name: {{ template "sysdig.fullname" . }}-node-analyzer
+              name: {{ template "sysdig.fullname" . }}-image-analyzer
               key: https_proxy
               optional: true
         - name: NO_PROXY
           valueFrom:
             configMapKeyRef:
-              name: {{ template "sysdig.fullname" . }}-node-analyzer
+              name: {{ template "sysdig.fullname" . }}-image-analyzer
               key: no_proxy
               optional: true
       - name: sysdig-host-analyzer
