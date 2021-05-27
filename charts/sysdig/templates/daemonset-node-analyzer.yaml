@@ -248,11 +248,7 @@ spec:
               key: analyze_at_startup
               optional: true
         - name: HOST_BASE
-          valueFrom:
-            configMapKeyRef:
-              name: {{ template "sysdig.fullname" . }}-host-analyzer
-              key: host_base
-              optional: true
+          value: /host
         - name: DIRS_TO_SCAN
           valueFrom:
             configMapKeyRef:

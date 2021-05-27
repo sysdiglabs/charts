@@ -45,12 +45,12 @@ data:
   {{- if .Values.nodeImageAnalyzer.settings.noProxy }}
   no_proxy: {{ .Values.nodeImageAnalyzer.settings.noProxy }}
   {{- end -}}
-  {{- end }}
-  {{- if and (not .Values.nodeImageAnalyzer.deploy) .Values.nodeAnalyzer.deploy}}
+{{- end }}
+{{- if and (not .Values.nodeImageAnalyzer.deploy) .Values.nodeAnalyzer.deploy}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "sysdig.fullname" . }}-node-analyzer
+  name: {{ template "sysdig.fullname" . }}-image-analyzer
   labels:
 {{ include "sysdig.labels" . | indent 4 }}
 data:
