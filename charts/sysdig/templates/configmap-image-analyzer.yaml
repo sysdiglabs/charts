@@ -45,8 +45,8 @@ data:
   {{- if .Values.nodeImageAnalyzer.settings.noProxy }}
   no_proxy: {{ .Values.nodeImageAnalyzer.settings.noProxy }}
   {{- end -}}
-  {{- end }}
-  {{- if and (not .Values.nodeImageAnalyzer.deploy) .Values.nodeAnalyzer.deploy}}
+{{- end }}
+{{- if and (not .Values.nodeImageAnalyzer.deploy) .Values.nodeAnalyzer.deploy}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -91,4 +91,4 @@ data:
   {{- if .Values.nodeAnalyzer.noProxy }}
   no_proxy: {{ .Values.nodeAnalyzer.noProxy }}
   {{- end -}}
-  {{- end }}
+{{- end }}
