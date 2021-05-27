@@ -9,6 +9,7 @@ This file documents all notable changes to Sysdig Helm Chart. The release number
 ### Bugfixes
 
 * Node analyzer configuration options not being honored due to invalid Configmap name
+* Fix `hostBase` for Host Analyzer
 
 ## v1.12.3
 
