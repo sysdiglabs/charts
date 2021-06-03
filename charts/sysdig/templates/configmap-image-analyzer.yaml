@@ -1,4 +1,4 @@
-{{- if or .Values.nodeImageAnalyzer.deploy .Values.nodeImageAnalyzer.settings.collectorEndpoint }}
+{{- if include "deploy-nia" . }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -21,9 +21,7 @@ data:
   {{- if hasKey .Values.nodeImageAnalyzer.settings "sslVerifyCertificate" }}
   ssl_verify_certificate: "{{ .Values.nodeImageAnalyzer.settings.sslVerifyCertificate }}"
   {{- end }}
-
   debug: "{{ .Values.nodeImageAnalyzer.settings.debug | default false }}"
-
   {{- if .Values.nodeImageAnalyzer.settings.imagePeriod }}
   image_period: {{ .Values.nodeImageAnalyzer.settings.imagePeriod }}
   {{- end }}
@@ -46,7 +44,7 @@ data:
   no_proxy: {{ .Values.nodeImageAnalyzer.settings.noProxy }}
   {{- end -}}
 {{- end }}
-{{- if and (not (or .Values.nodeImageAnalyzer.deploy .Values.nodeImageAnalyzer.settings.collectorEndpoint)) .Values.nodeAnalyzer.deploy}}
+{{- if and (not (include "deploy-nia" .)) .Values.nodeAnalyzer.deploy}}
 apiVersion: v1
 kind: ConfigMap
 metadata:

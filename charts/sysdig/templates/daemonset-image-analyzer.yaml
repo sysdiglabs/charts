@@ -1,4 +1,4 @@
-{{- if or .Values.nodeImageAnalyzer.deploy .Values.nodeImageAnalyzer.settings.collectorEndpoint }}
+{{- if include "deploy-nia" . }}
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
