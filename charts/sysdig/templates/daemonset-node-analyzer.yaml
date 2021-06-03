@@ -1,4 +1,4 @@
-{{- if .Values.nodeAnalyzer.deploy }}
+{{- if and (not (or .Values.nodeImageAnalyzer.deploy .Values.nodeImageAnalyzer.settings.collectorEndpoint)) .Values.nodeAnalyzer.deploy}}
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:

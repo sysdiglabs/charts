@@ -255,7 +255,7 @@ nodeAnalyzer:
   # * SaaS US Web: us2.app.sysdig.com
   # * SaaS European Union: eu1.app.sysdig.com
   # * On-Prem: sysdig.my.company.com
-  # collectorEndpoint: sysdig.my.company.com
+  # apiEndpoint: sysdig.my.company.com
 
   # Can be set to false to allow insecure connections to the Sysdig backend,
   # such as for on-premise installs that use self-signed certificates.

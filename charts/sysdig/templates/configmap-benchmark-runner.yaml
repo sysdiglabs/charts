@@ -1,4 +1,4 @@
-{{- if .Values.nodeAnalyzer.deploy }}
+{{- if and (not (or .Values.nodeImageAnalyzer.deploy .Values.nodeImageAnalyzer.settings.collectorEndpoint)) .Values.nodeAnalyzer.deploy}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -6,9 +6,7 @@ metadata:
   labels:
 {{ include "sysdig.labels" . | indent 4 }}
 data:
-  {{- if .Values.nodeAnalyzer.collectorEndpoint }}
-  collector_endpoint: https://{{ .Values.nodeAnalyzer.collectorEndpoint }}
-  {{- end }}
+  collector_endpoint: https://{{ .Values.nodeAnalyzer.apiEndpoint | default .Values.nodeAnalyzer.collectorEndpoint }}
   {{- if hasKey .Values.nodeAnalyzer "sslVerifyCertificate" }}
   ssl_verify_certificate: "{{ .Values.nodeAnalyzer.sslVerifyCertificate }}"
   {{- end }}

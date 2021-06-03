@@ -1,4 +1,4 @@
-{{- if .Values.nodeImageAnalyzer.deploy }}
+{{- if or .Values.nodeImageAnalyzer.deploy .Values.nodeImageAnalyzer.settings.collectorEndpoint }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -46,7 +46,7 @@ data:
   no_proxy: {{ .Values.nodeImageAnalyzer.settings.noProxy }}
   {{- end -}}
 {{- end }}
-{{- if and (not .Values.nodeImageAnalyzer.deploy) .Values.nodeAnalyzer.deploy}}
+{{- if and (not (or .Values.nodeImageAnalyzer.deploy .Values.nodeImageAnalyzer.settings.collectorEndpoint)) .Values.nodeAnalyzer.deploy}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -54,9 +54,7 @@ metadata:
   labels:
 {{ include "sysdig.labels" . | indent 4 }}
 data:
-  {{- if .Values.nodeAnalyzer.collectorEndpoint }}
-  collector_endpoint: "https://{{ .Values.nodeAnalyzer.collectorEndpoint }}/internal/scanning/scanning-analysis-collector"
-  {{- end }}
+  collector_endpoint: "https://{{ required "A valid .Values.nodeAnalyzer.apiEndpoint is required" (.Values.nodeAnalyzer.apiEndpoint | default .Values.nodeAnalyzer.collectorEndpoint) }}/internal/scanning/scanning-analysis-collector"
   {{- if hasKey .Values.nodeAnalyzer "sslVerifyCertificate" }}
   ssl_verify_certificate: "{{ .Values.nodeAnalyzer.sslVerifyCertificate }}"
   {{- end }}
