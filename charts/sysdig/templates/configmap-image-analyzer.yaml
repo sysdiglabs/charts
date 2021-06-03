@@ -55,7 +55,7 @@ metadata:
 {{ include "sysdig.labels" . | indent 4 }}
 data:
   {{- if .Values.nodeAnalyzer.collectorEndpoint }}
-  collector_endpoint: {{ .Values.nodeAnalyzer.collectorEndpoint }}
+  collector_endpoint: "https://{{ .Values.nodeAnalyzer.collectorEndpoint }}/internal/scanning/scanning-analysis-collector"
   {{- end }}
   {{- if hasKey .Values.nodeAnalyzer "sslVerifyCertificate" }}
   ssl_verify_certificate: "{{ .Values.nodeAnalyzer.sslVerifyCertificate }}"
