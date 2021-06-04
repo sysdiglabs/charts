@@ -5,8 +5,9 @@ cronjob:
   restartPolicy: Never
 
 config:
-  registryURL: http://my-docker-registry.com
-  registryApiUrl:
+  registryURL: https://my-docker-registry.com
+  # In case API URL differs from registry base URL, like in Artifactory, uncomment and set registryApiUrl
+  # registryApiUrl: https://my-docker-registry.com/artifactory/api/docker/
   registryUser:
   registryPassword:
   registrySkipTLS: false
