@@ -4,6 +4,12 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.12.5
+
+### Bugfixes
+
+* eBPF with Agent slim image did not work on GKE (Google COS)
+
 ## v1.12.4
 
 ### Bugfixes
