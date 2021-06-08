@@ -31,8 +31,8 @@ proxy:
   noProxy:
 
 image:
-  repository: sysdiglabs/registry-scanner
-  tag: master
+  repository: quay.io/sysdig/registry-scanner
+  tag: latest
   pullPolicy: Always
 
 serviceAccount:
