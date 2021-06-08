@@ -85,6 +85,9 @@ spec:
             - mountPath: /root/.sysdig
               name: bpf-probes
             {{- end }}
+            - mountPath: /host/etc/os-release
+              name: osrel
+              readOnly: true
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}

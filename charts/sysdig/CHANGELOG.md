@@ -4,7 +4,7 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
-## v1.12.5
+## v.1.12.6
 
 ### Cleanup
 
@@ -15,6 +15,12 @@ This file documents all notable changes to Sysdig Helm Chart. The release number
 
 * Fix `collector_endpoint` in configmap for image-analyzer
 * If `nodeImageAnalyzer.settings.collectorEndpoint` is set, deploy old NIA to prevent onboarding instructions from older Sysdig Secure versions from failing.
+
+## v1.12.5
+
+### Bugfixes
+
+* eBPF with Agent slim image did not work on GKE (Google COS)
 
 ## v1.12.4
 

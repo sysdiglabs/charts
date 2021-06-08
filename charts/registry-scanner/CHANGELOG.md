@@ -5,6 +5,13 @@
 This file documents all notable changes to Sysdig Registry Scanner. The release
 numbering uses [semantic versioning](http://semver.org).
 
+
+## v0.0.11
+
+### Minor changes
+
+* Use image from quay.io/sysdig/registry-scanner and tag `latest` instead of `master`
+
 ## v0.0.10
 
 ### Minor changes
