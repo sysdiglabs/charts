@@ -45,7 +45,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 
 | Parameter                                                  | Description                                                                              | Default                                                                       |
 | ---------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| `image.registry`                                           | Sysdig Agent image registry                                                              | `docker.io`                                                                   |
+| `image.registry`                                           | Sysdig Agent image registry                                                              | `quay.io`                                                                     |
 | `image.repository`                                         | The image repository to pull from                                                        | `sysdig/agent`                                                                |
 | `image.tag`                                                | The image tag to pull                                                                    | `11.2.0`                                                                      |
 | `image.pullPolicy`                                         | The Image pull policy                                                                    | `IfNotPresent`                                                                |
