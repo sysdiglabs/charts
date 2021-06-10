@@ -4,6 +4,18 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v.1.12.6
+
+### Cleanup
+
+* Rename `nodeAnalyzer.collectorEndpoint` to `nodeAnalyzer.apiEndpoint` to prevent confusion with the Agent collector.
+* Update README to reflect deprecation of Node Image Analyzer
+
+### Bugfixes
+
+* Fix `collector_endpoint` in configmap for image-analyzer
+* If `nodeImageAnalyzer.settings.collectorEndpoint` is set, deploy old NIA to prevent onboarding instructions from older Sysdig Secure versions from failing.
+
 ## v1.12.5
 
 ### Bugfixes

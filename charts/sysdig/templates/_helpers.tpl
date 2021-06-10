@@ -128,3 +128,9 @@ NOTE: I don't like the error message! Too much information.
     {{- $keyValue -}}
 {{- end -}}
 {{- end -}}
+
+{{- define "deploy-nia" -}}
+{{- if or .Values.nodeImageAnalyzer.deploy .Values.nodeImageAnalyzer.settings.collectorEndpoint -}}
+true
+{{- end -}}
+{{- end -}}

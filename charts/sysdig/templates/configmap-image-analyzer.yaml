@@ -1,4 +1,4 @@
-{{- if .Values.nodeImageAnalyzer.deploy }}
+{{- if include "deploy-nia" . }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -21,9 +21,7 @@ data:
   {{- if hasKey .Values.nodeImageAnalyzer.settings "sslVerifyCertificate" }}
   ssl_verify_certificate: "{{ .Values.nodeImageAnalyzer.settings.sslVerifyCertificate }}"
   {{- end }}
-
   debug: "{{ .Values.nodeImageAnalyzer.settings.debug | default false }}"
-
   {{- if .Values.nodeImageAnalyzer.settings.imagePeriod }}
   image_period: {{ .Values.nodeImageAnalyzer.settings.imagePeriod }}
   {{- end }}
@@ -46,7 +44,7 @@ data:
   no_proxy: {{ .Values.nodeImageAnalyzer.settings.noProxy }}
   {{- end -}}
 {{- end }}
-{{- if and (not .Values.nodeImageAnalyzer.deploy) .Values.nodeAnalyzer.deploy}}
+{{- if and (not (include "deploy-nia" .)) .Values.nodeAnalyzer.deploy}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -54,9 +52,7 @@ metadata:
   labels:
 {{ include "sysdig.labels" . | indent 4 }}
 data:
-  {{- if .Values.nodeAnalyzer.collectorEndpoint }}
-  collector_endpoint: {{ .Values.nodeAnalyzer.collectorEndpoint }}
-  {{- end }}
+  collector_endpoint: "https://{{ required "A valid .Values.nodeAnalyzer.apiEndpoint is required" (.Values.nodeAnalyzer.apiEndpoint | default .Values.nodeAnalyzer.collectorEndpoint) }}/internal/scanning/scanning-analysis-collector"
   {{- if hasKey .Values.nodeAnalyzer "sslVerifyCertificate" }}
   ssl_verify_certificate: "{{ .Values.nodeAnalyzer.sslVerifyCertificate }}"
   {{- end }}
