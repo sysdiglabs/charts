@@ -4,6 +4,12 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.12.7
+
+### Minor changes
+
+- Update agent to 11.3.0
+- Include get/list/create/update/watch leases in agent clusterrole permissions.
 ## v.1.12.6
 
 ### Cleanup
