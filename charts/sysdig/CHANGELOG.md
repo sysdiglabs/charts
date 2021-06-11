@@ -9,7 +9,7 @@ This file documents all notable changes to Sysdig Helm Chart. The release number
 ### Minor changes
 
 - Update agent to 11.3.0
-- Include get/list/creae/update/watch leases in agent clusterrole permissions.
+- Include get/list/create/update/watch leases in agent clusterrole permissions.
 ## v.1.12.6
 
 ### Cleanup
