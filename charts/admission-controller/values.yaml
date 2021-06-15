@@ -32,7 +32,7 @@ webhook:
   replicaCount: 1
 
   image:
-    repository: sysdiglabs/admission-controller
+    repository: quay.io/sysdig/admission-controller
     pullPolicy: IfNotPresent
     # Override the default image tag. If not specified, it defaults to appVersion in Chart.yaml
     tag:
@@ -85,7 +85,7 @@ scanner:
   replicaCount: 1
 
   image:
-    repository: sysdiglabs/inline-scan-service
+    repository: quay.io/sysdig/inline-scan-service
     pullPolicy: IfNotPresent
     # Override the default image tag. If not specified, it defaults to appVersion in Chart.yaml
     tag: 0.0.7
