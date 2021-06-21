@@ -1,0 +1,14 @@
+{{- if .Values.scanner.psp.create  }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ include "admission-controller.scanner.fullname" . }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ include "admission-controller.scanner.fullname" . }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "admission-controller.scanner.serviceAccountName" . }}
+    namespace: {{ .Release.Namespace }}
+{{- end }}

@@ -1,0 +1,27 @@
+{{- if .Values.scanner.psp.create  }}
+apiVersion: policy/v1beta1
+kind: PodSecurityPolicy
+metadata:
+  name: {{ include "admission-controller.scanner.fullname" . }}
+spec:
+  allowPrivilegeEscalation: true
+  allowedCapabilities:
+    - '*'
+  fsGroup:
+    rule: RunAsAny
+  hostIPC: true
+  hostNetwork: true
+  hostPID: true
+  hostPorts:
+    - max: 65536
+      min: 1
+  privileged: true
+  runAsUser:
+    rule: RunAsAny
+  seLinux:
+    rule: RunAsAny
+  supplementalGroups:
+    rule: RunAsAny
+  volumes:
+    - '*'
+{{- end }}
