@@ -4,24 +4,28 @@ kind: PodSecurityPolicy
 metadata:
   name: {{ include "admission-controller.scanner.fullname" . }}
 spec:
-  allowPrivilegeEscalation: true
-  allowedCapabilities:
-    - '*'
+  allowPrivilegeEscalation: false
   fsGroup:
-    rule: RunAsAny
-  hostIPC: true
-  hostNetwork: true
-  hostPID: true
-  hostPorts:
-    - max: 65536
+    ranges:
+    - max: 65535
       min: 1
-  privileged: true
+    rule: MustRunAs
+  readOnlyRootFilesystem: true
+  requiredDropCapabilities:
+  - ALL
   runAsUser:
-    rule: RunAsAny
+    rule: MustRunAsNonRoot
   seLinux:
     rule: RunAsAny
   supplementalGroups:
-    rule: RunAsAny
+    ranges:
+    - max: 65535
+      min: 1
+    rule: MustRunAs
   volumes:
-    - '*'
+  - configMap
+  - downwardAPI
+  - emptyDir
+  - secret
+  - projected
 {{- end }}
