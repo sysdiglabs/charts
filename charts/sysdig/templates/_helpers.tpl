@@ -64,7 +64,7 @@ Return the proper Sysdig Agent image name
 {{- if .Values.image.overrideValue }}
     {{- printf .Values.image.overrideValue -}}
 {{- else -}}
-    {{- include "sysdig.imageRegistry" . -}} / {{- include "sysdig.repositoryName" . -}} : {{- .Values.image.tag -}}
+    {{- include "sysdig.imageRegistry" . -}} / {{- include "sysdig.repositoryName" . -}} : {{- default .Chart.AppVersion .Values.image.tag -}}
 {{- end -}}
 {{- end -}}
 
@@ -72,7 +72,7 @@ Return the proper Sysdig Agent image name
 Return the proper Sysdig Agent image name for module building
 */}}
 {{- define "sysdig.image.kmodule" -}}
-    {{- include "sysdig.imageRegistry" . -}} / {{- .Values.slim.kmoduleImage.repository -}} : {{- .Values.image.tag -}}
+    {{- include "sysdig.imageRegistry" . -}} / {{- .Values.slim.kmoduleImage.repository -}} : {{- default .Chart.AppVersion .Values.image.tag -}}
 {{- end -}}
 
 {{/*
