@@ -78,6 +78,11 @@ spec:
               value: /var/secrets/gcp/gcp_credentials
             - name: TELEMETRY_DEPLOYMENT_METHOD
               value: helm
+            - name: AZURE_EVENT_HUB_CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "cloud-connector.secretname" . }}
+                  key: azure_event_hub_connection_string
           {{- if .Values.extraEnvVars }}
           {{- toYaml .Values.extraEnvVars | nindent 12}}
           {{- end }}
