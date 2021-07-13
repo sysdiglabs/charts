@@ -2,8 +2,8 @@ apiVersion: v2
 name: admission-controller
 description: Sysdig Admission Controller using Sysdig Secure inline image scanner
 type: application
-version: 0.4.8
-appVersion: 3.3.1
+version: 0.4.9
+appVersion: 3.4.0
 home: https://sysdiglabs.github.io/admission-controller/
 icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
 maintainers:
