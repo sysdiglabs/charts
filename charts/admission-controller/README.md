@@ -10,6 +10,12 @@ Add Sysdig Helm charts repository:
 $ helm repo add sysdig https://charts.sysdig.com
 ```
 
+Download and Edit values.yaml like `secureAPIToken` and `cluster_name`.
+
+```
+$ curl https://raw.githubusercontent.com/sysdiglabs/charts/master/charts/admission-controller/values.yaml --output values.yaml
+```
+
 Deploy the scanner adapter
 
 ```
@@ -89,6 +95,8 @@ Alternatively, a YAML file that specifies the values for the parameters can be p
 ```bash
 $ helm install my-release -f values.yaml sysdig/admission-controller
 ```
+
+Here is an example [values.yaml](https://raw.githubusercontent.com/sysdiglabs/charts/master/charts/admission-controller/values.yaml).
 
 ### On Prem deployment
 
