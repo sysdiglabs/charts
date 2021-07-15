@@ -76,6 +76,9 @@ aws:
 
 gcpCredentials: ""
 
+azure:
+  eventHubConnectionString: ""
+
 sysdig:
   url: "https://secure.sysdig.com"
   secureAPIToken: ""

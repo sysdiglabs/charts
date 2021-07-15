@@ -251,11 +251,11 @@ nodeAnalyzer:
   deploy: true
 
   # The API endpoint for Sysdig Secure, specified with no protocol:
-  # * SaaS default region (US East): leave empty
+  # * SaaS default region (US East): secure.sysdig.com
   # * SaaS US Web: us2.app.sysdig.com
   # * SaaS European Union: eu1.app.sysdig.com
   # * On-Prem: sysdig.my.company.com
-  # apiEndpoint: sysdig.my.company.com
+  apiEndpoint: ""
 
   # Can be set to false to allow insecure connections to the Sysdig backend,
   # such as for on-premise installs that use self-signed certificates.

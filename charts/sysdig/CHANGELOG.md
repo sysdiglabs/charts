@@ -4,12 +4,19 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.12.8
+
+### Minor changes
+
+- Update values.yaml and README.md to reflect no default value for `nodeAnalyzer.apiEndpoint`
+
 ## v1.12.7
 
 ### Minor changes
 
 - Update agent to 11.3.0
 - Include get/list/create/update/watch leases in agent clusterrole permissions.
+
 ## v.1.12.6
 
 ### Cleanup
