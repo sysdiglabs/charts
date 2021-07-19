@@ -9,6 +9,8 @@ apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
 metadata:
   name: {{ include "admission-controller.webhook.fullname" . }}
+  annotations:
+    "helm.sh/hook": "post-install"
 webhooks:
 - name: scanning.secure.sysdig.com
   matchPolicy: Equivalent
@@ -53,12 +55,15 @@ webhooks:
   failurePolicy: Ignore
 {{- end }}
 ---
-apiVersion: v1
+apiVersion: v1        
 kind: Secret
 metadata:
   name: {{ include "admission-controller.webhook.fullname" . }}-tls
   labels:
     {{ include "admission-controller.webhook.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": "pre-install"
+    "helm.sh/hook-delete-policy": "before-hook-creation"
 data:
   tls.crt: {{ $certList._0 }}
   tls.key: {{ $certList._1 }}

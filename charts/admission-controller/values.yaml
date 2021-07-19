@@ -3,10 +3,10 @@
 # Declare variables to be passed into your templates.
 
 sysdig:
-  url: "https://secure.sysdig.com"
-  secureAPIToken: ""
+  url: "https://secure-staging.sysdig.com"
+  secureAPIToken: "788b657a-e19c-4c03-a35b-d2c8e2fdf3ee"
 
-clusterName: ""
+clusterName: "hayksCluster"
 
 features:
   publishOnSecureEventFeed: false
