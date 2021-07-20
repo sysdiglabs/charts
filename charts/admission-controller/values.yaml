@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 
 sysdig:
-  url: "https://secure-staging.sysdig.com"
+  url: "https://secure.sysdig.com"
   secureAPIToken: ""
 
 clusterName: ""
