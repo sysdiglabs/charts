@@ -48,6 +48,13 @@ data:
 {{- if .Values.sysdig.settings }}
 {{ toYaml .Values.sysdig.settings | indent 4 }}
 {{- end }}
+{{- if .Values.leaderelection.enable }}
+    k8s_delegation_election: true
+    k8s_coldstart:
+      enabled: true
+      enforce_leader_election: true
+      namespace: {{ .Release.Namespace}}
+{{- end }}
 {{- if .Values.prometheus.file }}
   prometheus.yaml: |
 {{ toYaml .Values.prometheus.yaml | indent 4 }}

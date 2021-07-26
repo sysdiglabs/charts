@@ -398,3 +398,6 @@ extraVolumes:
 tolerations:
   - effect: NoSchedule
     key: node-role.kubernetes.io/master
+
+leaderelection:
+  enable: false
