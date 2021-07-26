@@ -41,13 +41,6 @@ webhooks:
     operations: ["*"]
     resources: ["*/*"]
     scope: "*"
-  {{- if .Capabilities.APIVersions.Has "config.openshift.io/v1" }}
-  - apiGroups: ["authorization.openshift.io", "config.openshift.io"]
-    apiVersions: ["*"]
-    operations: ["*"]
-    resources: ["*"]
-    scope: "*"
-  {{- end }}
   clientConfig:
     service:
       namespace: {{ .Release.Namespace }}
