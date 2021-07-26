@@ -68,9 +68,6 @@ metadata:
   name: {{ include "admission-controller.webhook.fullname" . }}-tls
   labels:
     {{ include "admission-controller.webhook.labels" . | nindent 4 }}
-  annotations:
-    "helm.sh/hook": "pre-install"
-    "helm.sh/hook-delete-policy": "before-hook-creation"
 data:
   tls.crt: {{ $certList._0 }}
   tls.key: {{ $certList._1 }}
