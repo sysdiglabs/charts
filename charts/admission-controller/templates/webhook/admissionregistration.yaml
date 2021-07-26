@@ -26,7 +26,7 @@ webhooks:
     caBundle: {{ $certList._2 }}
   admissionReviewVersions: ["v1", "v1beta1"]
   sideEffects: None
-  timeoutSeconds: 15
+  timeoutSeconds: {{ .Values.webhook.timeoutSeconds }}
   {{- if .Values.webhook.denyOnError }}
   failurePolicy: Fail
   {{- else }}
@@ -36,11 +36,18 @@ webhooks:
 - name: audit.secure.sysdig.com
   matchPolicy: Equivalent
   rules:
-  - apiGroups: ["*"]
+  - apiGroups: ["", "apps", "autoscaling", "batch", "networking.k8s.io", "rbac.authorization.k8s.io"]
     apiVersions: ["*"]
     operations: ["*"]
     resources: ["*/*"]
     scope: "*"
+  {{- if .Capabilities.APIVersions.Has "config.openshift.io/v1" }}
+  - apiGroups: ["authorization.openshift.io", "config.openshift.io"]
+    apiVersions: ["*"]
+    operations: ["*"]
+    resources: ["*"]
+    scope: "*"
+  {{- end }}
   clientConfig:
     service:
       namespace: {{ .Release.Namespace }}
@@ -49,7 +56,7 @@ webhooks:
     caBundle: {{ $certList._2 }}
   admissionReviewVersions: ["v1", "v1beta1"]
   sideEffects: None
-  timeoutSeconds: 15
+  timeoutSeconds: {{ .Values.webhook.timeoutSeconds }}
   failurePolicy: Ignore
 {{- end }}
 ---

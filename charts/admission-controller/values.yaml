@@ -71,6 +71,8 @@ webhook:
       cpu: 250m
       memory: 256Mi
 
+  timeoutSeconds: 10
+
   nodeSelector: {}
 
   tolerations: []
