@@ -63,13 +63,15 @@ webhook:
     runAsNonRoot: true
 
   imagePullSecrets: []
-  resources:
-    limits:
-      cpu: 250m
-      memory: 256Mi
-    requests:
-      cpu: 250m
-      memory: 256Mi
+  resources: {}
+#    limits:
+#      cpu: 250m
+#      memory: 256Mi
+#    requests:
+#      cpu: 250m
+#      memory: 256Mi
+
+  timeoutSeconds: 10
 
   nodeSelector: {}
 
@@ -122,13 +124,13 @@ scanner:
 
   imagePullSecrets: []
 
-  resources:
-    limits:
-      cpu: 250m
-      memory: 256Mi
-    requests:
-      cpu: 250m
-      memory: 256Mi
+  resources: {}
+#    limits:
+#      cpu: 250m
+#      memory: 256Mi
+#    requests:
+#      cpu: 250m
+#      memory: 256Mi
 
   nodeSelector: {}
 
