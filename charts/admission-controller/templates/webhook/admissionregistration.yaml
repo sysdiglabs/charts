@@ -9,8 +9,6 @@ apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
 metadata:
   name: {{ include "admission-controller.webhook.fullname" . }}
-  annotations:
-    "helm.sh/hook": "post-install"
 webhooks:
 - name: scanning.secure.sysdig.com
   matchPolicy: Equivalent
