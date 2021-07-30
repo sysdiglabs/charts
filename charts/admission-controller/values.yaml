@@ -115,7 +115,7 @@ scanner:
 
   podSecurityContext: {}
 
-  verifyRegistrySSL: true
+  verifyRegistryTLS: true
 
   securityContext:
     capabilities:
