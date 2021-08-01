@@ -5,6 +5,15 @@
 This file documents all notable changes to Sysdig Registry Scanner. The release
 numbering uses [semantic versioning](http://semver.org).
 
+## v0.0.12
+
+### Fixes
+
+* Fix docker.io always preprended to inage name
+
+### Minor changes
+
+* Report required values with an error message using `required`
 
 ## v0.0.11
 
