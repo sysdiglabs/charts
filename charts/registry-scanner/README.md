@@ -43,8 +43,9 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | `proxy.httpProxy`                    | URL of the proxy for HTTP connections, or empty if not using proxy (sets the http_proxy environment variable)          | ` `                               |
 | `proxy.httpsProxy`                   | URL of the proxy for HTTPS connections, or empty if not using proxy (sets the https_proxy environment variable)        | ` `                               |
 | `proxy.noProxy`                      | Comma-separated list of domain extensions proxy should not be used for. Include the internal IP of the kubeapi server. | ` `                               |
-| `image.repository`                   | Registry Scanner image repository                                                                                      | `quay.io/sysdig/registry-scanner` |
-| `image.tag`                          | Registry Scanner image tag                                                                                             | `master`                          |
+| `image.registry`                     | Registry Scanner image registry                                                                                        | `quay.io`                         |
+| `image.repository`                   | Registry Scanner image repository                                                                                      | `sysdig/registry-scanner`         |
+| `image.tag`                          | Registry Scanner image tag                                                                                             | `latest`                          |
 | `image.pullPolicy`                   | PullPolicy for Registry Scanner image                                                                                  | `Always`                          |
 | `serviceAccount.scanner.create`      | Create the service account                                                                                             | `true`                            |
 | `serviceAccount.scanner.annotations` | Extra annotations for serviceAccount                                                                                   | `{}`                              |

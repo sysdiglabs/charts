@@ -31,7 +31,8 @@ proxy:
   noProxy:
 
 image:
-  repository: quay.io/sysdig/registry-scanner
+  registry: quay.io
+  repository: sysdig/registry-scanner
   tag: latest
   pullPolicy: Always
 

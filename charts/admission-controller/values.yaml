@@ -92,7 +92,7 @@ scanner:
     repository: sysdig/inline-scan-service
     pullPolicy: IfNotPresent
     # Override the default image tag. If not specified, it defaults to appVersion in Chart.yaml
-    tag: 0.0.7
+    tag: 0.0.8
 
   service:
     port: 8080
@@ -114,6 +114,8 @@ scanner:
     create: false
 
   podSecurityContext: {}
+
+  verifyRegistryTLS: true
 
   securityContext:
     capabilities:

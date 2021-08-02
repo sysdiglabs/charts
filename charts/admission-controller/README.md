@@ -70,6 +70,7 @@ Controller chart and their default values:
 | `scanner.podAnnotations`              | Scanner pod annotations                                      | `{"prometheus.io/scrape": "true", "prometheus.io/path": "/metrics", "prometheus.io/port": "5000", "prometheus.io/scheme": "https"}` |
 | `scanner.psp.create`                  | Whether to create a psp policy and role / role-binding       | `false`                                                                                                                             |
 | `scanner.resources`                   | Resource requests and limits for scanner                     | `{}`                                                                                                                                |
+| `scanner.verifyRegistryTLS`           | Verify TLS on image pull from registries                     | `true`                                                                                                                              |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
