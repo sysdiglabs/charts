@@ -91,8 +91,8 @@ scanner:
     registry: quay.io
     repository: sysdig/inline-scan-service
     pullPolicy: IfNotPresent
-    # Override the default image tag. If not specified, it defaults to appVersion in Chart.yaml
-    tag: 0.0.8
+    # Default image tag
+    tag: 0.0.9
 
   service:
     port: 8080
@@ -116,6 +116,9 @@ scanner:
   podSecurityContext: {}
 
   verifyRegistryTLS: true
+
+  # Use a provided secret containing a .dockercfg for registry authentication (i.e. Openshift internal registry)
+  dockerCfgSecretName: ""
 
   securityContext:
     capabilities:

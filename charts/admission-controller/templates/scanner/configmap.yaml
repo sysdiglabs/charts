@@ -9,4 +9,7 @@ data:
   SECURE_BASE_URL: "{{ .Values.sysdig.url }}"
   SECURE_SKIP_TLS: "{{ not .Values.verifySSL }}"
   REGISTRY_SKIP_TLS: "{{ not .Values.scanner.verifyRegistryTLS }}"
+  {{- if .Values.scanner.dockerCfgSecretName }}
+  REGISTRY_DOCKERCFG_PATH: /dockerauth/.dockercfg
+  {{- end }}
 {{- end -}}

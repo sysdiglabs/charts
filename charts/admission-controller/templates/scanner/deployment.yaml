@@ -31,6 +31,12 @@ spec:
       volumes:
         - name: tmp-dir
           emptyDir: {}
+        {{- if .Values.scanner.dockerCfgSecretName }}
+        - name: dockercfg
+          secret:
+            defaultMode: 420
+            secretName: {{ .Values.scanner.dockerCfgSecretName }}
+        {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -39,6 +45,11 @@ spec:
           volumeMounts:
             - mountPath: /tmp
               name: tmp-dir
+            {{- if .Values.scanner.dockerCfgSecretName }}
+            - mountPath: /dockerauth
+              name: dockercfg
+              readOnly: true
+            {{- end }}
           args:
             - --server_port={{ .Values.scanner.service.port }}
             {{- if .Values.scanner.authWithSecureToken }}
