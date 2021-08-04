@@ -23,7 +23,7 @@ Controller chart and their default values:
 
 | Parameter                             | Description                                                  | Default                                                                                                                             |
 | ---                                   | ---                                                          | ---                                                                                                                                 |
-| `sysdig.url`                          | The Sysdig URL prefix                                        | `https://secure.sysdig.com`                                                                                                       |
+| `sysdig.url`                          | The Sysdig URL prefix                                        | `https://secure.sysdig.com`                                                                                                         |
 | `sysdig.secureAPIToken`               | API Token to access Sysdig Secure                            | ``                                                                                                                                  |
 | `clusterName`                         | Cluster Name which appear on Secure UI                       | ``                                                                                                                                  |
 | `features.publishOnSecureEventFeed`   | Publish admission events on Secure Event feed (Experimental) | `false`                                                                                                                             |
@@ -71,6 +71,8 @@ Controller chart and their default values:
 | `scanner.psp.create`                  | Whether to create a psp policy and role / role-binding       | `false`                                                                                                                             |
 | `scanner.resources`                   | Resource requests and limits for scanner                     | `{}`                                                                                                                                |
 | `scanner.verifyRegistryTLS`           | Verify TLS on image pull from registries                     | `true`                                                                                                                              |
+| `scanner.dockerCfgSecretName`         | Use a provided secret containing a .dockercfg for registry authentication (i.e. Openshift internal registry)   | ` `                                                                               |
+
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
