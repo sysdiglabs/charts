@@ -15,10 +15,20 @@ webhooks:
 - name: scanning.secure.sysdig.com
   matchPolicy: Equivalent
   rules:
-  - apiGroups: [""]
+  - apiGroups:
+    - ""
+    - apps
+    - batch
     apiVersions: ["v1"]
     operations: ["CREATE", "UPDATE"]
-    resources: ["pods"]
+    resources:
+    - "pods"
+    - "deployments"
+    - "replicasets"
+    - "statefulsets"
+    - "daemonsets"
+    - "jobs"
+    - "cronjobs"
     scope: "*"
   clientConfig:
     service:
