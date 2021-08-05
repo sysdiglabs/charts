@@ -4,6 +4,18 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.12.10
+
+### Minor changes
+
+- Update agent to 11.4.1
+
+## v1.12.9
+
+### Minor changes
+
+- Introduce `leaderelection.enable` for the agent leader election algorithm
+
 ## v1.12.8
 
 ### Minor changes
