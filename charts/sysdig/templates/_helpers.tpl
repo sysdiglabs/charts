@@ -69,6 +69,13 @@ Return the proper Sysdig Agent image name
 {{- end -}}
 
 {{/*
+Sysdig Agent resources
+*/}}
+{{- define "sysdig.resources" -}}
+{{- toYaml .Values.resources -}}
+{{- end -}}
+
+{{/*
 Return the proper Sysdig Agent image name for module building
 */}}
 {{- define "sysdig.image.kmodule" -}}

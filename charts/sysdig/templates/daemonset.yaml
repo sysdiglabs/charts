@@ -97,7 +97,7 @@ spec:
           image: {{ template "sysdig.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           resources:
-{{ toYaml .Values.resources | indent 12 }}
+{{ include "sysdig.resources" . | indent 12 }}
           securityContext:
             capabilities:
               drop:
