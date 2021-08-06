@@ -72,7 +72,22 @@ Return the proper Sysdig Agent image name
 Sysdig Agent resources
 */}}
 {{- define "sysdig.resources" -}}
+{{/* we have same values for both requests and limits */}}
+{{- $smallCpu := "1000m" -}}
+{{- $smallMemory := "1024Mi" -}}
+{{- $mediumCpu := "3000m" -}}
+{{- $mediumMemory := "3072Mi" -}}
+{{- $largeCpu := "5000m" -}}
+{{- $largeMemory := "6144Mi" -}}
+{{- if eq .Values.resourceProfile "small" -}}
+{{- printf "requests:\n  cpu: %s\n  memory: %s\nlimits:\n  cpu: %s\n  memory: %s" $smallCpu $smallMemory $smallCpu $smallMemory -}}
+{{- else if eq .Values.resourceProfile "medium" -}}
+{{- printf "requests:\n  cpu: %s\n  memory: %s\nlimits:\n  cpu: %s\n  memory: %s" $mediumCpu $mediumMemory $mediumCpu $mediumMemory -}}
+{{- else if eq .Values.resourceProfile "large" -}}
+{{- printf "requests:\n  cpu: %s\n  memory: %s\nlimits:\n  cpu: %s\n  memory: %s" $largeCpu $largeMemory $largeCpu $largeMemory -}}
+{{- else -}}{{/* "custom" or anything else falls here */}}
 {{- toYaml .Values.resources -}}
+{{- end -}}
 {{- end -}}
 
 {{/*

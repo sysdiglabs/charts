@@ -33,6 +33,38 @@ resources:
     cpu: 1000m
     memory: 1024Mi
 
+# Specify a resource profile.
+#
+# Available options are:
+# * small
+#   requests:
+#     cpu: 1000m
+#     memory: 1024Mi
+#   limits:
+#     cpu: 1000m
+#     memory: 1024Mi
+#
+# * medium
+#   requests:
+#     cpu: 3000m
+#     memory: 3072Mi
+#   limits:
+#     cpu: 3000m
+#     memory: 3072Mi
+#
+# * large
+#   requests:
+#     cpu: 5000m
+#     memory: 6144Mi
+#   limits:
+#     cpu: 5000m
+#     memory: 6144Mi
+#
+# * custom
+#   Use "resources" key.
+#   Note that any value other than the ones defined above will still fallback using "resources".
+resourceProfile: small
+
 rbac:
   # true here enables creation of rbac resources
   create: true
