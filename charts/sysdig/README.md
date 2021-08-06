@@ -50,6 +50,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `image.tag`                                                | The image tag to pull                                                                    | `11.4.1`                                                                      |
 | `image.pullPolicy`                                         | The Image pull policy                                                                    | `IfNotPresent`                                                                |
 | `image.pullSecrets`                                        | Image pull secrets                                                                       | `nil`                                                                         |
+| `resourceProfile`                                          | Sysdig Agent resource profile (see [Resource profiles](#resource-profiles))              | `medium`                                                                      |
 | `resources.requests.cpu`                                   | CPU requested for being run in a node                                                    | `3000m`                                                                       |
 | `resources.requests.memory`                                | Memory requested for being run in a node                                                 | `3072Mi`                                                                      |
 | `resources.limits.cpu`                                     | CPU limit                                                                                | `3000m`                                                                       |
@@ -166,6 +167,38 @@ $ helm install --namespace sysdig-agent sysdig-agent -f values.yaml sysdig/sysdi
 ```
 
 > **Tip**: You can use the default [values.yaml](values.yaml)
+
+## Resource profiles
+For ease of use, three predefined resource profiles are available:
+* small
+```yaml
+requests:
+  cpu: 1000m
+  memory: 1024Mi
+limits:
+  cpu: 1000m
+  memory: 1024Mi
+```
+* medium
+```yaml
+requests:
+  cpu: 3000m
+  memory: 3072Mi
+limits:
+  cpu: 3000m
+  memory: 3072Mi
+```
+* large
+```yaml
+requests:
+  cpu: 5000m
+  memory: 6144Mi
+limits:
+  cpu: 5000m
+  memory: 6144Mi
+```
+* custom
+  By setting "custom" or any value other than the ones defined above, you will be able to set custom values using `resources` object.
 
 ## Node Analyzer
 The Node Analyzer is deployed by default unless you set the value `nodeAnalyzer.deploy` to `false`.
