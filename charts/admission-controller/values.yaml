@@ -9,7 +9,6 @@ sysdig:
 clusterName: ""
 
 features:
-  publishOnSecureEventFeed: false
   k8sAuditDetections: false
 
 verifySSL: true
