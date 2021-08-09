@@ -5,6 +5,12 @@
 This file documents all notable changes to Sysdig Registry Scanner. The release
 numbering uses [semantic versioning](http://semver.org).
 
+## v0.0.13
+
+### Minor changes
+
+* Use a fixed registry-scanner version (appVersion in chart.yaml) instead of latest
+
 ## v0.0.12
 
 ### Fixes

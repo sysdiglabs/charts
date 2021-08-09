@@ -33,7 +33,8 @@ proxy:
 image:
   registry: quay.io
   repository: sysdig/registry-scanner
-  tag: latest
+  # Empty to defaul to the chart.yaml appVersion
+  tag:
   pullPolicy: Always
 
 serviceAccount:
