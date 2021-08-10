@@ -40,6 +40,7 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | `config.filter.exclude`              | List of regular expressions. Images matching any of these expressions are excluded when scanning.                      | `[]`                              |
 | `config.filter.maxAgeDays`           | Exclude images with creation date older than specified number of days.                                                 | ` `                               |
 | `config.filter.maxTagsPerRepository` | Only scan a maximum number of tags per repository, excluding older images by creation date                             | ` `                               |
+| `config.scan.inlineScanImage`        | Override the default (if not specified) `quay.io/sysdig/secure-inline-scan:2` image for the inline scanner job         | ` `                               |
 | `proxy.httpProxy`                    | URL of the proxy for HTTP connections, or empty if not using proxy (sets the http_proxy environment variable)          | ` `                               |
 | `proxy.httpsProxy`                   | URL of the proxy for HTTPS connections, or empty if not using proxy (sets the https_proxy environment variable)        | ` `                               |
 | `proxy.noProxy`                      | Comma-separated list of domain extensions proxy should not be used for. Include the internal IP of the kubeapi server. | ` `                               |
