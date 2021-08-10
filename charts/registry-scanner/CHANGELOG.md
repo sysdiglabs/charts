@@ -5,6 +5,12 @@
 This file documents all notable changes to Sysdig Registry Scanner. The release
 numbering uses [semantic versioning](http://semver.org).
 
+## v0.0.15
+
+### Minor changes
+
+* New option `reportToPersistentVolumeClaim` to write the JSON report to a persistent volume claim.
+
 ## v0.0.14
 
 ### Minor changes
