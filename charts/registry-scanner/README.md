@@ -26,6 +26,7 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | `cronjob.failedJobsHistoryLimit`     | Number of failed job history to keep on the cluster                                                                    | `5`                               |
 | `cronjob.successfulJobsHistoryLimit` | Number of successful job history to keep on the cluster                                                                | `2`                               |
 | `cronjob.restartPolicy`              | Restart policy for a failed registry-scan execution                                                                    | `Never`                           |
+| `reportToPersistentVolumeClaim`      | Write the report JSON to the root of the specified persistentVolumeClaim                                               | ` `                               |
 | `config.registryURL`                 | URL of the registry to scan                                                                                            | `http://my-docker-registry.com`   |
 | `config.registryApiUrl`              | API URL of the registry to scan. This is required if your registry type is Artifactory                                 | ` `                               |
 | `config.registryUser`                | Username for registry authentication                                                                                   | ` `                               |
