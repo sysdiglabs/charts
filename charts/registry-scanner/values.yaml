@@ -4,6 +4,9 @@ cronjob:
   successfulJobsHistoryLimit: 2
   restartPolicy: Never
 
+# Specify a volume claim to write the final JSON report there instead of standard output
+reportToPersistentVolumeClaim: ""
+
 config:
   registryURL: https://my-docker-registry.com
   # In case API URL differs from registry base URL, like in Artifactory, uncomment and set registryApiUrl

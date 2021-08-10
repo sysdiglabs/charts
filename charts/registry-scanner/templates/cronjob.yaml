@@ -47,6 +47,10 @@ spec:
             - name: config-volume
               mountPath: /config.yaml
               subPath: config.yaml
+            {{- if .Values.reportToPersistentVolumeClaim }}
+            - name: report-storage
+              mountPath: "/output"
+            {{- end }}
             env:
               - name: SECURE_API_TOKEN
                 valueFrom:
@@ -104,3 +108,8 @@ spec:
           - name: config-volume
             configMap:
               name: {{ include "registry-scanner.fullname" . }}
+          {{- if .Values.reportToPersistentVolumeClaim }}
+          - name: report-storage
+            persistentVolumeClaim:
+              claimName: {{ .Values.reportToPersistentVolumeClaim }}
+          {{- end }}

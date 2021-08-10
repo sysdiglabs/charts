@@ -42,3 +42,7 @@ data:
       {{- end }}
       maxAgeDays: {{ default 0 .Values.config.filter.maxAgeDays }}
       maxTagsPerRepository: {{ default 0 .Values.config.filter.maxTagsPerRepository }}
+
+    {{- if .Values.reportToPersistentVolumeClaim }}
+    reportPath: /output/registry-scanner-{DATE}.json
+    {{- end }}
