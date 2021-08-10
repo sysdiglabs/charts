@@ -45,7 +45,7 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | `proxy.noProxy`                      | Comma-separated list of domain extensions proxy should not be used for. Include the internal IP of the kubeapi server. | ` `                               |
 | `image.registry`                     | Registry Scanner image registry                                                                                        | `quay.io`                         |
 | `image.repository`                   | Registry Scanner image repository                                                                                      | `sysdig/registry-scanner`         |
-| `image.tag`                          | Registry Scanner image tag                                                                                             | `latest`                          |
+| `image.tag`                          | Registry Scanner image tag. If empty, default to appVersion in Chart.yaml                                              | ``                                |
 | `image.pullPolicy`                   | PullPolicy for Registry Scanner image                                                                                  | `Always`                          |
 | `serviceAccount.scanner.create`      | Create the service account                                                                                             | `true`                            |
 | `serviceAccount.scanner.annotations` | Extra annotations for serviceAccount                                                                                   | `{}`                              |

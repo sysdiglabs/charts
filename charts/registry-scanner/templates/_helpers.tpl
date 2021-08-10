@@ -70,7 +70,7 @@ Allow overriding registry and repository for air-gapped environments
 {{- else -}}
     {{- $imageRegistry := .Values.image.registry -}}
     {{- $imageRepository := .Values.image.repository -}}
-    {{- $imageTag := .Values.image.tag -}}
+    {{- $imageTag := ( .Values.image.tag | default .Chart.AppVersion) -}}
     {{- $globalRegistry := (default .Values.global dict).imageRegistry -}}
     {{- $globalRegistry | default $imageRegistry | default "quay.io" -}} / {{- $imageRepository -}} : {{- $imageTag -}}
 {{- end -}}
