@@ -26,6 +26,7 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | `cronjob.failedJobsHistoryLimit`     | Number of failed job history to keep on the cluster                                                                    | `5`                               |
 | `cronjob.successfulJobsHistoryLimit` | Number of successful job history to keep on the cluster                                                                | `2`                               |
 | `cronjob.restartPolicy`              | Restart policy for a failed registry-scan execution                                                                    | `Never`                           |
+| `reportToPersistentVolumeClaim`      | Write the report JSON to the root of the specified persistentVolumeClaim                                               | ` `                               |
 | `config.registryURL`                 | URL of the registry to scan                                                                                            | `http://my-docker-registry.com`   |
 | `config.registryApiUrl`              | API URL of the registry to scan. This is required if your registry type is Artifactory                                 | ` `                               |
 | `config.registryUser`                | Username for registry authentication                                                                                   | ` `                               |
@@ -40,12 +41,13 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | `config.filter.exclude`              | List of regular expressions. Images matching any of these expressions are excluded when scanning.                      | `[]`                              |
 | `config.filter.maxAgeDays`           | Exclude images with creation date older than specified number of days.                                                 | ` `                               |
 | `config.filter.maxTagsPerRepository` | Only scan a maximum number of tags per repository, excluding older images by creation date                             | ` `                               |
+| `config.scan.inlineScanImage`        | Override the default (if not specified) `quay.io/sysdig/secure-inline-scan:2` image for the inline scanner job         | ` `                               |
 | `proxy.httpProxy`                    | URL of the proxy for HTTP connections, or empty if not using proxy (sets the http_proxy environment variable)          | ` `                               |
 | `proxy.httpsProxy`                   | URL of the proxy for HTTPS connections, or empty if not using proxy (sets the https_proxy environment variable)        | ` `                               |
 | `proxy.noProxy`                      | Comma-separated list of domain extensions proxy should not be used for. Include the internal IP of the kubeapi server. | ` `                               |
 | `image.registry`                     | Registry Scanner image registry                                                                                        | `quay.io`                         |
 | `image.repository`                   | Registry Scanner image repository                                                                                      | `sysdig/registry-scanner`         |
-| `image.tag`                          | Registry Scanner image tag                                                                                             | `latest`                          |
+| `image.tag`                          | Registry Scanner image tag. If empty, default to appVersion in Chart.yaml                                              | ``                                |
 | `image.pullPolicy`                   | PullPolicy for Registry Scanner image                                                                                  | `Always`                          |
 | `serviceAccount.scanner.create`      | Create the service account                                                                                             | `true`                            |
 | `serviceAccount.scanner.annotations` | Extra annotations for serviceAccount                                                                                   | `{}`                              |

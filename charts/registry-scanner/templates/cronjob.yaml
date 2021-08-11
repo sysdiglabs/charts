@@ -1,4 +1,8 @@
+{{- if or (gt  (.Capabilities.KubeVersion.Major | atoi) 1 ) (gt (.Capabilities.KubeVersion.Minor | atoi) 21) }}
 apiVersion: batch/v1beta1
+{{- else }}
+apiVersion: batch/v1
+{{- end }}
 kind: CronJob
 metadata:
   name: {{ include "registry-scanner.fullname" . }}
@@ -43,6 +47,10 @@ spec:
             - name: config-volume
               mountPath: /config.yaml
               subPath: config.yaml
+            {{- if .Values.reportToPersistentVolumeClaim }}
+            - name: report-storage
+              mountPath: "/output"
+            {{- end }}
             env:
               - name: SECURE_API_TOKEN
                 valueFrom:
@@ -100,3 +108,8 @@ spec:
           - name: config-volume
             configMap:
               name: {{ include "registry-scanner.fullname" . }}
+          {{- if .Values.reportToPersistentVolumeClaim }}
+          - name: report-storage
+            persistentVolumeClaim:
+              claimName: {{ .Values.reportToPersistentVolumeClaim }}
+          {{- end }}

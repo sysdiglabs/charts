@@ -5,6 +5,27 @@
 This file documents all notable changes to Sysdig Registry Scanner. The release
 numbering uses [semantic versioning](http://semver.org).
 
+## v0.0.15
+
+### Minor changes
+
+* New option `reportToPersistentVolumeClaim` to write the JSON report to a persistent volume claim.
+
+## v0.0.14
+
+### Minor changes
+
+* Option `config.scan.inlineScanImage` to override inline scanner image (i.e. air gap environments)
+* Bump registry-scanner version to 0.0.2
+* Use Kubernetes Job smaller registry-scanner image
+* Use batch/v1 instead of batch/v1beta1 for Kubernetes 1.21+
+
+## v0.0.13
+
+### Minor changes
+
+* Use a fixed registry-scanner version (appVersion in chart.yaml) instead of latest
+
 ## v0.0.12
 
 ### Fixes
