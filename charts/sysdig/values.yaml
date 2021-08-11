@@ -26,11 +26,11 @@ resources:
   # a sane defaults ones. If you have more questions or concerns, please refer
   # to Sysdig Support for more info about it
   requests:
-    cpu: 600m
-    memory: 512Mi
+    cpu: 3000m
+    memory: 3072Mi
   limits:
-    cpu: 2000m
-    memory: 1536Mi
+    cpu: 3000m
+    memory: 3072Mi
 
 rbac:
   # true here enables creation of rbac resources
