@@ -71,7 +71,10 @@ Allow overriding registry and repository for air-gapped environments
     {{- $imageRegistry := .Values.image.registry -}}
     {{- $imageRepository := .Values.image.repository -}}
     {{- $imageTag := .Values.image.tag -}}
+    {{- if not .Values.image.tag -}}
+    {{- $imageTag = (printf "job-%s" .Chart.AppVersion) -}}
+    {{- end -}}
     {{- $globalRegistry := (default .Values.global dict).imageRegistry -}}
-    {{- $globalRegistry | default $imageRegistry | default "docker.io" -}} / {{- $imageRepository -}} : {{- $imageTag -}}
+    {{- $globalRegistry | default $imageRegistry | default "quay.io" -}} / {{- $imageRepository -}} : {{- $imageTag -}}
 {{- end -}}
 {{- end -}}

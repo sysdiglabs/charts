@@ -9,7 +9,6 @@ sysdig:
 clusterName: ""
 
 features:
-  publishOnSecureEventFeed: false
   k8sAuditDetections: false
 
 verifySSL: true
@@ -63,13 +62,15 @@ webhook:
     runAsNonRoot: true
 
   imagePullSecrets: []
-  resources:
-    limits:
-      cpu: 250m
-      memory: 256Mi
-    requests:
-      cpu: 250m
-      memory: 256Mi
+  resources: {}
+#    limits:
+#      cpu: 250m
+#      memory: 256Mi
+#    requests:
+#      cpu: 250m
+#      memory: 256Mi
+
+  timeoutSeconds: 10
 
   nodeSelector: {}
 
@@ -89,8 +90,8 @@ scanner:
     registry: quay.io
     repository: sysdig/inline-scan-service
     pullPolicy: IfNotPresent
-    # Override the default image tag. If not specified, it defaults to appVersion in Chart.yaml
-    tag: 0.0.7
+    # Default image tag
+    tag: 0.0.9
 
   service:
     port: 8080
@@ -113,6 +114,11 @@ scanner:
 
   podSecurityContext: {}
 
+  verifyRegistryTLS: true
+
+  # Use a provided secret containing a .dockercfg for registry authentication (i.e. Openshift internal registry)
+  dockerCfgSecretName: ""
+
   securityContext:
     capabilities:
       drop:
@@ -122,13 +128,13 @@ scanner:
 
   imagePullSecrets: []
 
-  resources:
-    limits:
-      cpu: 250m
-      memory: 256Mi
-    requests:
-      cpu: 250m
-      memory: 256Mi
+  resources: {}
+#    limits:
+#      cpu: 250m
+#      memory: 256Mi
+#    requests:
+#      cpu: 250m
+#      memory: 256Mi
 
   nodeSelector: {}
 

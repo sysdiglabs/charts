@@ -9,14 +9,26 @@ apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
 metadata:
   name: {{ include "admission-controller.webhook.fullname" . }}
+  annotations:
+    "helm.sh/hook": "post-install, post-upgrade"
 webhooks:
 - name: scanning.secure.sysdig.com
   matchPolicy: Equivalent
   rules:
-  - apiGroups: [""]
+  - apiGroups:
+    - ""
+    - apps
+    - batch
     apiVersions: ["v1"]
     operations: ["CREATE", "UPDATE"]
-    resources: ["pods"]
+    resources:
+    - "pods"
+    - "deployments"
+    - "replicasets"
+    - "statefulsets"
+    - "daemonsets"
+    - "jobs"
+    - "cronjobs"
     scope: "*"
   clientConfig:
     service:
@@ -26,7 +38,7 @@ webhooks:
     caBundle: {{ $certList._2 }}
   admissionReviewVersions: ["v1", "v1beta1"]
   sideEffects: None
-  timeoutSeconds: 15
+  timeoutSeconds: {{ .Values.webhook.timeoutSeconds }}
   {{- if .Values.webhook.denyOnError }}
   failurePolicy: Fail
   {{- else }}
@@ -36,7 +48,14 @@ webhooks:
 - name: audit.secure.sysdig.com
   matchPolicy: Equivalent
   rules:
-  - apiGroups: ["*"]
+  - apiGroups:
+    - ""
+    - apps
+    - autoscaling
+    - batch
+    - networking.k8s.io
+    - rbac.authorization.k8s.io
+    - extensions
     apiVersions: ["*"]
     operations: ["*"]
     resources: ["*/*"]
@@ -49,7 +68,7 @@ webhooks:
     caBundle: {{ $certList._2 }}
   admissionReviewVersions: ["v1", "v1beta1"]
   sideEffects: None
-  timeoutSeconds: 15
+  timeoutSeconds: {{ .Values.webhook.timeoutSeconds }}
   failurePolicy: Ignore
 {{- end }}
 ---

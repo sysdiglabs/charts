@@ -4,6 +4,9 @@ cronjob:
   successfulJobsHistoryLimit: 2
   restartPolicy: Never
 
+# Specify a volume claim to write the final JSON report there instead of standard output
+reportToPersistentVolumeClaim: ""
+
 config:
   registryURL: https://my-docker-registry.com
   # In case API URL differs from registry base URL, like in Artifactory, uncomment and set registryApiUrl
@@ -21,6 +24,9 @@ config:
     exclude: []
     maxAgeDays:
     maxTagsPerRepository:
+  scan:
+    # Override the default quay.io/sysdig/secure-inline-scan:2 image for the inline scanner job
+    inlineScanImage: ""
 
 proxy:
   httpProxy:
@@ -31,8 +37,10 @@ proxy:
   noProxy:
 
 image:
-  repository: quay.io/sysdig/registry-scanner
-  tag: latest
+  registry: quay.io
+  repository: sysdig/registry-scanner
+  # Empty to defaul to the chart.yaml appVersion
+  tag:
   pullPolicy: Always
 
 serviceAccount:
