@@ -46,7 +46,7 @@ webhook:
   # Set to http://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy
   httpsProxy: ""
   # List of hosts, IPs, or IPs in CIDR format that should not go through the proxy. We include "kubernetes" service and typical 10.0.0.0/8 services
-  noProxy: kubernetes,10.0.0.0/8,100.64.0.0/16,*.svc.cluster.local
+  noProxy: kubernetes,10.0.0.0/8
 
   podAnnotations:
     prometheus.io/scrape: "true"
@@ -106,7 +106,7 @@ scanner:
   # Set to http://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy
   httpsProxy: ""
   # List of hosts, IPs, or IPs in CIDR format that should not go through the proxy. We include "kubernetes" service and typical 10.0.0.0/8 services
-  noProxy: kubernetes,10.0.0.0/8,100.64.0.0/16,*.svc.cluster.local
+  noProxy: kubernetes,10.0.0.0/8
 
   podAnnotations:
     prometheus.io/scrape: "true"
