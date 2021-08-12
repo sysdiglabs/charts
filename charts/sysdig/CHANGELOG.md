@@ -4,6 +4,18 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.12.12
+
+### Bugfixes
+
+* Add mountPath /sys/kernel/debug for eBPF
+
+## v1.12.11
+
+### Minor changes
+
+- Change the default agent container resources
+
 ## v1.12.10
 
 ### Minor changes
