@@ -43,6 +43,8 @@ webhook:
 
   # Set to http://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy
   httpProxy: ""
+  # Set to http://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy
+  httpsProxy: ""
   # List of hosts, IPs, or IPs in CIDR format that should not go through the proxy. We include "kubernetes" service and typical 10.0.0.0/8 services
   noProxy: kubernetes,10.0.0.0/8
 
@@ -101,6 +103,8 @@ scanner:
   # Put your <Sysdig-Secure-Secret-Token> in this value
   # Set to http://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy
   httpProxy: ""
+  # Set to http://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy
+  httpsProxy: ""
   # List of hosts, IPs, or IPs in CIDR format that should not go through the proxy. We include "kubernetes" service and typical 10.0.0.0/8 services
   noProxy: kubernetes,10.0.0.0/8
 

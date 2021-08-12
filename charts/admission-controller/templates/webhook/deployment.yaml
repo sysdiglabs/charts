@@ -46,6 +46,11 @@ spec:
             - name: NO_PROXY
               value: {{ .Values.webhook.noProxy }}
           {{- end }}
+          {{- if .Values.webhook.httpsProxy }}
+          env:
+            - name: HTTPS_PROXY
+              value: {{ .Values.webhook.httpsProxy }}
+          {{- end }}
           ports:
             - name: http
               containerPort: 5000
