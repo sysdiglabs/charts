@@ -67,6 +67,8 @@ spec:
           env:
             - name: HTTPS_PROXY
               value: {{ .Values.scanner.httpsProxy }}
+            - name: NO_PROXY
+              value: {{ .Values.scanner.noProxy }}
           {{- end }}
           envFrom:
             - configMapRef:
