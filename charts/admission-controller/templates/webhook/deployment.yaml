@@ -39,19 +39,14 @@ spec:
           securityContext:
             {{- toYaml .Values.webhook.securityContext | nindent 12 }}
           imagePullPolicy: {{ .Values.webhook.image.pullPolicy }}
-          {{- if .Values.webhook.httpProxy }}
+          {{- if (or .Values.webhook.httpProxy .Values.webhook.httpsProxy) }}
           env:
             - name: HTTP_PROXY
               value: {{ .Values.webhook.httpProxy }}
-            - name: NO_PROXY
-              value: {{ .Values.webhook.noProxy }}
-          {{- end }}
-          {{- if .Values.webhook.httpsProxy }}
-          env:
             - name: HTTPS_PROXY
               value: {{ .Values.webhook.httpsProxy }}
             - name: NO_PROXY
-              value: {{ .Values.webhook.noProxy }}
+              value: {{ .Values.webhook.noProxy }},{{ include "admission-controller.scanner.fullname" . }}
           {{- end }}
           ports:
             - name: http

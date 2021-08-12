@@ -56,15 +56,10 @@ spec:
             - --auth_secure_token
             {{- end}}
           imagePullPolicy: {{ .Values.scanner.image.pullPolicy }}
-          {{- if .Values.scanner.httpProxy }}
+          {{- if (or .Values.scanner.httpProxy .Values.scanner.httpsProxy) }}
           env:
             - name: HTTP_PROXY
               value: {{ .Values.scanner.httpProxy }}
-            - name: NO_PROXY
-              value: {{ .Values.scanner.noProxy }}
-          {{- end }}
-          {{- if .Values.scanner.httpsProxy }}
-          env:
             - name: HTTPS_PROXY
               value: {{ .Values.scanner.httpsProxy }}
             - name: NO_PROXY
