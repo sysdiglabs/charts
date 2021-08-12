@@ -84,6 +84,9 @@ spec:
             {{- if .Values.ebpf.enabled }}
             - mountPath: /root/.sysdig
               name: bpf-probes
+            - mountPath: /sys/kernel/debug
+              name: sys-tracing
+              readOnly: true
             {{- end }}
             - mountPath: /host/etc/os-release
               name: osrel
@@ -178,6 +181,9 @@ spec:
             {{- if (and .Values.ebpf.enabled .Values.slim.enabled) }}
             - mountPath: /root/.sysdig
               name: bpf-probes
+            - mountPath: /sys/kernel/debug
+              name: sys-tracing
+              readOnly: true
             {{- end }}
             {{- if .Values.customAppChecks }}
             - mountPath: /opt/draios/lib/python/checks.custom.d
@@ -229,6 +235,9 @@ spec:
         {{- if (and .Values.ebpf.enabled .Values.slim.enabled) }}
         - name: bpf-probes
           emptyDir: {}
+        - name: sys-tracing
+          hostPath:
+            path: /sys/kernel/debug
         {{- end }}
         - name: sysdig-agent-config
           configMap:
