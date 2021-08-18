@@ -64,7 +64,11 @@ spec:
               scheme: HTTPS
           envFrom:
             - secretRef:
+                {{- if not .Values.sysdig.existingSecureAPITokenSecret }}
                 name: {{ include "admission-controller.webhook.fullname" . }}
+                {{- else }}
+                name: {{ .Values.sysdig.existingSecureAPITokenSecret }}
+                {{- end }}
             - configMapRef:
                 name: {{ include "admission-controller.webhook.fullname" . }}
           volumeMounts:
