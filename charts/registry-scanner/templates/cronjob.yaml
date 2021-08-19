@@ -1,4 +1,4 @@
-{{- if or (gt  (.Capabilities.KubeVersion.Major | atoi) 1 ) (gt (.Capabilities.KubeVersion.Minor | atoi) 21) }}
+{{- if or (gt  (.Capabilities.KubeVersion.Major | atoi) 1 ) (ge (.Capabilities.KubeVersion.Minor | atoi) 21) }}
 apiVersion: batch/v1
 {{- else }}
 apiVersion: batch/v1beta1
