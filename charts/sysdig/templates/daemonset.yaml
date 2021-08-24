@@ -195,6 +195,8 @@ spec:
             {{- if .Values.extraVolumes.mounts }}
 {{ toYaml .Values.extraVolumes.mounts | indent 12 }}
             {{- end }}
+            - mountPath: /etc/podinfo
+              name: podinfo
       volumes:
         - name: modprobe-d
           hostPath:
@@ -258,5 +260,17 @@ spec:
         {{- if .Values.extraVolumes.volumes }}
 {{ toYaml .Values.extraVolumes.volumes | indent 8 }}
         {{- end }}
+        - name: podinfo
+          downwardAPI:
+            defaultMode: 420
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.name
+              path: name
   updateStrategy:
 {{ toYaml .Values.daemonset.updateStrategy | indent 4 }}
