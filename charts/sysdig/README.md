@@ -21,7 +21,7 @@ $ helm repo add sysdig https://charts.sysdig.com/
 to add the `sysdig` Helm chart repository. Then run:
 
 ```bash
-$ helm install --namespace sysdig-agent sysdig-agent --set sysdig.accessKey=YOUR-KEY-HERE sysdig/sysdig
+$ helm install --namespace sysdig-agent sysdig-agent --set sysdig.accessKey=YOUR-KEY-HERE --set sysdig.settings.collector=COLLECTOR_URL sysdig/sysdig --set nodeAnalyzer.apiEndpoint=API_ENDPOINT
 ```
 
 After a few seconds, you should see hosts and containers appearing in Sysdig Monitor and Sysdig Secure.
