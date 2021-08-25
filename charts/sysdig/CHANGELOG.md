@@ -5,6 +5,12 @@
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
 
+## v1.12.14
+
+### Minor changes
+
+- Introduce resource profiles
+
 ## v1.12.13
 
 ### Minor changes
