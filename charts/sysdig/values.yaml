@@ -24,13 +24,14 @@ image:
 resources:
   # Although resources needed are subjective on the actual workload we provide
   # a sane defaults ones. If you have more questions or concerns, please refer
-  # to Sysdig Support for more info about it
+  # to Sysdig Support for more info about it.
+  # See also: https://docs.sysdig.com/en/tuning-sysdig-agent.html
   requests:
-    cpu: 3000m
-    memory: 3072Mi
+    cpu: 1000m
+    memory: 1024Mi
   limits:
-    cpu: 3000m
-    memory: 3072Mi
+    cpu: 1000m
+    memory: 1024Mi
 
 rbac:
   # true here enables creation of rbac resources
