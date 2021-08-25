@@ -12,7 +12,7 @@ This chart adds the Sysdig agent for [Sysdig Monitor](https://sysdig.com/product
 
 ## Installing the Chart
 
-To install the chart with the release name `sysdig-agent`, retrieve your Sysdig Monitor Access Key from your [Account Settings](https://app.sysdigcloud.com/#/settings/agentInstallation) and run:
+To install the chart with the release name `sysdig-agent`, retrieve your Sysdig Agent Access Key from your [Account Settings](https://app.sysdigcloud.com/#/settings/agentInstallation) and run:
 
 ```bash
 $ helm repo add sysdig https://charts.sysdig.com/
@@ -73,7 +73,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `ebpf.enabled`                                             | Enable eBPF support for Sysdig instead of `sysdig-probe` kernel module                   | `false`                                                                       |
 | `ebpf.settings.mountEtcVolume`                             | Needed to detect which kernel version are running in Google COS                          | `true`                                                                        |
 | `clusterName`                                              | Set a cluster name to identify events using *kubernetes.cluster.name* tag                | ` `                                                                           |
-| `sysdig.accessKey`                                         | Your Sysdig Monitor Access Key                                                           | ` ` Either accessKey or existingAccessKeySecret is required                   |
+| `sysdig.accessKey`                                         | Your Sysdig Agent Access Key                                                             | ` ` Either accessKey or existingAccessKeySecret is required                   |
 | `sysdig.existingAccessKeySecret`                           | Alternatively, specify the name of a Kubernetes secret containing an 'access-key' entry  | ` ` Either accessKey or existingAccessKeySecret is required                   |
 | `sysdig.disableCaptures`                                   | Disable capture functionality (see https://docs.sysdig.com/en/disable-captures.html)     | `false`                                                                       |
 | `sysdig.settings`                                          | Additional settings, directly included in the agent's configuration file `dragent.yaml`  | `{}`                                                                          |
