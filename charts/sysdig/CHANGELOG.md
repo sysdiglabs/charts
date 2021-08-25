@@ -4,11 +4,29 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
-## v1.12.11
+## v1.12.14
 
 ### Minor changes
 
 - Add new resources to ClusterRole to support collection of Kubelet metrics.
+
+## v1.12.13
+
+### Minor changes
+
+- Change the default agent container resources to [the ones for small clusters](https://docs.sysdig.com/en/tuning-sysdig-agent.html)
+
+## v1.12.12
+
+### Bugfixes
+
+* Add mountPath /sys/kernel/debug for eBPF
+
+## v1.12.11
+
+### Minor changes
+
+- Change the default agent container resources
 
 ## v1.12.10
 
