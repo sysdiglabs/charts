@@ -169,7 +169,25 @@ $ helm install --namespace sysdig-agent sysdig-agent -f values.yaml sysdig/sysdi
 > **Tip**: You can use the default [values.yaml](values.yaml)
 
 ## Resource profiles
-For ease of use, three predefined resource profiles are available:
+For ease of use, some predefined resource profiles are available:
+* mini
+```yaml
+requests:
+  cpu: 250m
+  memory: 1024Mi
+limits:
+  cpu: 250m
+  memory: 1024Mi
+```
+* tiny
+```yaml
+requests:
+  cpu: 500m
+  memory: 1024Mi
+limits:
+  cpu: 500m
+  memory: 1024Mi
+```
 * small
 ```yaml
 requests:
@@ -198,7 +216,10 @@ limits:
   memory: 6144Mi
 ```
 * custom
+
   By setting "custom" or any value other than the ones defined above, you will be able to set custom values using `resources` object.
+
+See [Tuning Sysdig Agent](https://docs.sysdig.com/en/tuning-sysdig-agent.html) for more info.
 
 ## Node Analyzer
 The Node Analyzer is deployed by default unless you set the value `nodeAnalyzer.deploy` to `false`.
