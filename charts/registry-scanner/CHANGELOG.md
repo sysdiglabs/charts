@@ -5,6 +5,12 @@
 This file documents all notable changes to Sysdig Registry Scanner. The release
 numbering uses [semantic versioning](http://semver.org).
 
+## v0.0.17
+
+### Minor changes
+
+* Use batch/v1 API for kubernetes 1.21 or higher
+
 ## v0.0.16
 
 ### Minor changes
