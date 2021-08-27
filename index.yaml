@@ -3,6 +3,25 @@ entries:
   admission-controller:
   - apiVersion: v2
     appVersion: 3.5.2
+    created: "2021-08-27T16:26:57.555719719Z"
+    description: Sysdig Admission Controller using Sysdig Secure inline image scanner
+    digest: 951ba028bd837dbc4161b557fc2b5663a21a8225a8fb8b080b33af1b0827f496
+    home: https://sysdiglabs.github.io/admission-controller/
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    maintainers:
+    - email: alvaro.iradier@sysdig.com
+      name: airadier
+    - email: nestor.salceda@sysdig.com
+      name: nestorsalceda
+    - email: fede.barcelona@sysdig.com
+      name: tembleking
+    name: admission-controller
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/admission-controller-0.4.22/admission-controller-0.4.22.tgz
+    version: 0.4.22
+  - apiVersion: v2
+    appVersion: 3.5.2
     created: "2021-08-24T16:01:26.842260207Z"
     description: Sysdig Admission Controller using Sysdig Secure inline image scanner
     digest: ab38d7359f278b67e94abb6898a0d3cf44e86a1ab939510a800ea58d0e0c095a
