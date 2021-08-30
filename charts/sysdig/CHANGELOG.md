@@ -8,7 +8,7 @@ This file documents all notable changes to Sysdig Helm Chart. The release number
 
 ### Minor changes
 
-- Bump host-analyzer version to 0.1.2
+- Bump host-analyzer version to 0.1.3
 
 ## v1.12.13
 
