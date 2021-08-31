@@ -64,7 +64,7 @@ spec:
               scheme: HTTPS
           envFrom:
             - secretRef:
-                {{- if not .Values.sysdig.existingSecureAPITokenSecret }}
+                {{- if .Values.sysdig.secureAPIToken }}
                 name: {{ include "admission-controller.webhook.fullname" . }}
                 {{- else }}
                 name: {{ .Values.sysdig.existingSecureAPITokenSecret }}

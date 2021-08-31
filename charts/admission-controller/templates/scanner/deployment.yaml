@@ -69,13 +69,13 @@ spec:
             - configMapRef:
                 name: {{ include "admission-controller.scanner.fullname" . }}
             - secretRef:
-                {{- if not .Values.sysdig.existingSecureAPITokenSecret }}
+                {{- if .Values.sysdig.secureAPIToken }}
                 name: {{ include "admission-controller.scanner.fullname" . }}-api-token
                 {{- else }}
                 name: {{ .Values.sysdig.existingSecureAPITokenSecret }}
                 {{- end }}
             - secretRef:
-                {{- if not .Values.sysdig.existingSecureAPITokenSecret }}
+                {{- if .Values.sysdig.secureAPIToken }}
                 name: {{ include "admission-controller.scanner.fullname" . }}-auth
                 {{- else }}
                 name: {{ .Values.sysdig.existingSecureAPITokenSecret }}
