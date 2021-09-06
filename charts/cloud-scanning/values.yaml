@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: sysdiglabs/cloud-scanning
+  repository: quay.io/sysdig/cloud-scanning
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag:
