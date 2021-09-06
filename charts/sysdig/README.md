@@ -170,24 +170,6 @@ $ helm install --namespace sysdig-agent sysdig-agent -f values.yaml sysdig/sysdi
 
 ## Resource profiles
 For ease of use, some predefined resource profiles are available:
-* mini
-```yaml
-requests:
-  cpu: 250m
-  memory: 1024Mi
-limits:
-  cpu: 250m
-  memory: 1024Mi
-```
-* tiny
-```yaml
-requests:
-  cpu: 500m
-  memory: 1024Mi
-limits:
-  cpu: 500m
-  memory: 1024Mi
-```
 * small
 ```yaml
 requests:

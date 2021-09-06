@@ -24,24 +24,6 @@ image:
 # Specify a predefined resource profile.
 #
 # Available options are:
-# * mini
-#   Defined as:
-#   requests:
-#     cpu: 250m
-#     memory: 1024Mi
-#   limits:
-#     cpu: 250m
-#     memory: 1024Mi
-#
-# * tiny
-#   Defined as:
-#   requests:
-#     cpu: 500m
-#     memory: 1024Mi
-#   limits:
-#     cpu: 500m
-#     memory: 1024Mi
-#
 # * small
 #   Defined as:
 #   requests:

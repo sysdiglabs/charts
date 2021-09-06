@@ -73,21 +73,13 @@ Sysdig Agent resources
 */}}
 {{- define "sysdig.resources" -}}
 {{/* we have same values for both requests and limits */}}
-{{- $miniCpu := "250m" -}}
-{{- $miniMemory := "1024Mi" -}}
-{{- $tinyCpu := "500m" -}}
-{{- $tinyMemory := "1024Mi" -}}
 {{- $smallCpu := "1000m" -}}
 {{- $smallMemory := "1024Mi" -}}
 {{- $mediumCpu := "3000m" -}}
 {{- $mediumMemory := "3072Mi" -}}
 {{- $largeCpu := "5000m" -}}
 {{- $largeMemory := "6144Mi" -}}
-{{- if eq .Values.resourceProfile "mini" -}}
-{{- printf "requests:\n  cpu: %s\n  memory: %s\nlimits:\n  cpu: %s\n  memory: %s" $miniCpu $miniMemory $miniCpu $miniMemory -}}
-{{- else if eq .Values.resourceProfile "tiny" -}}
-{{- printf "requests:\n  cpu: %s\n  memory: %s\nlimits:\n  cpu: %s\n  memory: %s" $tinyCpu $tinyMemory $tinyCpu $tinyMemory -}}
-{{- else if eq .Values.resourceProfile "small" -}}
+{{- if eq .Values.resourceProfile "small" -}}
 {{- printf "requests:\n  cpu: %s\n  memory: %s\nlimits:\n  cpu: %s\n  memory: %s" $smallCpu $smallMemory $smallCpu $smallMemory -}}
 {{- else if eq .Values.resourceProfile "medium" -}}
 {{- printf "requests:\n  cpu: %s\n  memory: %s\nlimits:\n  cpu: %s\n  memory: %s" $mediumCpu $mediumMemory $mediumCpu $mediumMemory -}}
