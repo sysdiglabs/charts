@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: sysdiglabs/cloud-connector
+  repository: quay.io/sysdig/cloud-connector
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag:
@@ -41,13 +41,7 @@ service:
   type: ClusterIP
   port: 80
 
-resources:
-  limits:
-    cpu: 250m
-    memory: 256Mi
-  requests:
-    cpu: 250m
-    memory: 256Mi
+resources: {}
 
 nodeSelector: {}
 

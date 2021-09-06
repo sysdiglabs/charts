@@ -53,6 +53,7 @@ webhook:
     prometheus.io/path: "/metrics"
     prometheus.io/port: "5000"
     prometheus.io/scheme: "https"
+    sidecar.istio.io/inject: "false"
 
   podSecurityContext: {}
 
