@@ -4,17 +4,17 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.12.15
+
+### Minor changes
+
+- Introduce resource profiles
+
 ## v1.12.14
 
 ### Minor changes
 
 - Bump host-analyzer version to 0.1.3
-
-## v1.12.14
-
-### Minor changes
-
-- Introduce resource profiles
 
 ## v1.12.13
 
