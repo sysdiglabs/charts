@@ -50,10 +50,11 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `image.tag`                                                | The image tag to pull                                                                    | `11.4.1`                                                                      |
 | `image.pullPolicy`                                         | The Image pull policy                                                                    | `IfNotPresent`                                                                |
 | `image.pullSecrets`                                        | Image pull secrets                                                                       | `nil`                                                                         |
-| `resources.requests.cpu`                                   | CPU requested for being run in a node                                                    | `3000m`                                                                       |
-| `resources.requests.memory`                                | Memory requested for being run in a node                                                 | `3072Mi`                                                                      |
-| `resources.limits.cpu`                                     | CPU limit                                                                                | `3000m`                                                                       |
-| `resources.limits.memory`                                  | Memory limit                                                                             | `3072Mi`                                                                      |
+| `resourceProfile`                                          | Sysdig Agent resource profile (see [Resource profiles](#resource-profiles))              | `small`                                                                       |
+| `resources.requests.cpu`                                   | CPU requested for being run in a node                                                    | ` `                                                                           |
+| `resources.requests.memory`                                | Memory requested for being run in a node                                                 | ` `                                                                           |
+| `resources.limits.cpu`                                     | CPU limit                                                                                | ` `                                                                           |
+| `resources.limits.memory`                                  | Memory limit                                                                             | ` `                                                                           |
 | `rbac.create`                                              | If true, create & use RBAC resources                                                     | `true`                                                                        |
 | `scc.create`                                               | Create OpenShift's Security Context Constraint                                           | `true`                                                                        |
 | `psp.create`                                               | Create Pod Security Policy to allow the agent running in clusters with PSP enabled       | `true`                                                                        |
@@ -166,6 +167,41 @@ $ helm install --namespace sysdig-agent sysdig-agent -f values.yaml sysdig/sysdi
 ```
 
 > **Tip**: You can use the default [values.yaml](values.yaml)
+
+## Resource profiles
+For ease of use, some predefined resource profiles are available:
+* small
+```yaml
+requests:
+  cpu: 1000m
+  memory: 1024Mi
+limits:
+  cpu: 1000m
+  memory: 1024Mi
+```
+* medium
+```yaml
+requests:
+  cpu: 3000m
+  memory: 3072Mi
+limits:
+  cpu: 3000m
+  memory: 3072Mi
+```
+* large
+```yaml
+requests:
+  cpu: 5000m
+  memory: 6144Mi
+limits:
+  cpu: 5000m
+  memory: 6144Mi
+```
+* custom
+
+By setting "custom" or any value other than the ones defined above, you can create your own custom profile to match your requirements by setting the appropriate values in `resources` object.
+
+See [Tuning Sysdig Agent](https://docs.sysdig.com/en/tuning-sysdig-agent.html) for more info.
 
 ## Node Analyzer
 The Node Analyzer is deployed by default unless you set the value `nodeAnalyzer.deploy` to `false`.
