@@ -4,6 +4,12 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.12.15
+
+### Minor changes
+
+- Add new resources to ClusterRole to support collection of Kubelet metrics.
+
 ## v1.12.14
 
 ### Minor changes
