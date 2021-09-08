@@ -22,9 +22,6 @@ Once you have added this _charts repository_ to your local `helm`, you can start
 ```bash
 # List all charts:
 $ helm search repo sysdig
-
-# Install Sysdig agent from the online charts repository with default settings using:
-$ helm install sysdig-agent --set sysdig.accessKey=YOUR-KEY-HERE sysdig/sysdig
 ```
 
 ## Hosted charts in this repository
