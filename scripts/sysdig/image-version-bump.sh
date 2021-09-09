@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 set -e
 
@@ -39,5 +39,20 @@ BEGIN {
     print
 }
 ' values.yaml > values.yaml.2
-
 mv values.yaml.2 values.yaml
+
+
+awk $@ '
+BEGIN {
+    if (!AGENT_VERSION)
+        exit 1
+}
+
+{
+    if ($1 ~ /^appVersion:/)
+        sub(/:.*/, ": "AGENT_VERSION)
+
+    print
+}
+' Chart.yaml > Chart.yaml.2
+mv Chart.yaml.2 Chart.yaml
