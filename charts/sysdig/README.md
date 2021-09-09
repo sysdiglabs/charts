@@ -12,17 +12,19 @@ This chart adds the Sysdig agent for [Sysdig Monitor](https://sysdig.com/product
 
 ## Installing the Chart
 
-To install the chart with the release name `sysdig-agent`, retrieve your Sysdig Monitor Access Key from your [Account Settings](https://app.sysdigcloud.com/#/settings/agentInstallation) and run:
-
+First of all you need to add the Sysdig Helm Charts repository:
 ```bash
 $ helm repo add sysdig https://charts.sysdig.com/
 ```
 
-to add the `sysdig` Helm chart repository. Then run:
-
+To install the chart with the release name `sysdig-agent`, run:
 ```bash
-$ helm install --namespace sysdig-agent sysdig-agent --set sysdig.accessKey=YOUR-KEY-HERE sysdig/sysdig
+$ helm install --namespace sysdig-agent sysdig-agent --set sysdig.accessKey=YOUR-KEY-HERE --set sysdig.settings.collector=COLLECTOR_URL sysdig/sysdig --set nodeAnalyzer.apiEndpoint=API_ENDPOINT
 ```
+To find the values:
+- YOUR-KEY-HERE: This is the agent access key. You can retrieve this from Settings > Agent Installation in the Sysdig UI.
+- COLLECTOR_URL: This value is region-dependent in SaaS and is auto-completed on the Get Started page in the UI. (It is a custom value in on-prem installations.)
+- API_ENDPOINT: This is the base URL (region-dependent) for Sysdig Secure and is auto-completed on the Get Started page. E.g. secure.sysdig.com, us2.app.sysdig.com, eu1.app.sysdig.com.
 
 After a few seconds, you should see hosts and containers appearing in Sysdig Monitor and Sysdig Secure.
 
@@ -73,7 +75,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `ebpf.enabled`                                             | Enable eBPF support for Sysdig instead of `sysdig-probe` kernel module                   | `false`                                                                       |
 | `ebpf.settings.mountEtcVolume`                             | Needed to detect which kernel version are running in Google COS                          | `true`                                                                        |
 | `clusterName`                                              | Set a cluster name to identify events using *kubernetes.cluster.name* tag                | ` `                                                                           |
-| `sysdig.accessKey`                                         | Your Sysdig Monitor Access Key                                                           | ` ` Either accessKey or existingAccessKeySecret is required                   |
+| `sysdig.accessKey`                                         | Your Sysdig Agent Access Key                                                             | ` ` Either accessKey or existingAccessKeySecret is required                   |
 | `sysdig.existingAccessKeySecret`                           | Alternatively, specify the name of a Kubernetes secret containing an 'access-key' entry  | ` ` Either accessKey or existingAccessKeySecret is required                   |
 | `sysdig.disableCaptures`                                   | Disable capture functionality (see https://docs.sysdig.com/en/disable-captures.html)     | `false`                                                                       |
 | `sysdig.settings`                                          | Additional settings, directly included in the agent's configuration file `dragent.yaml`  | `{}`                                                                          |
