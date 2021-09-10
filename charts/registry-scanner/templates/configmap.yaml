@@ -27,6 +27,9 @@ data:
       k8sInCluster: true
       namespace: {{ .Release.Namespace }}
       workers: {{ default 1 .Values.config.maxWorkers }}
+      {{- if .Values.config.scan.inlineScanImage }}
+      inlineScanImage: {{ .Values.config.scan.inlineScanImage }}
+      {{- end }}
 
     filter:
       {{- if .Values.config.filter.include }}
@@ -39,3 +42,7 @@ data:
       {{- end }}
       maxAgeDays: {{ default 0 .Values.config.filter.maxAgeDays }}
       maxTagsPerRepository: {{ default 0 .Values.config.filter.maxTagsPerRepository }}
+
+    {{- if .Values.reportToPersistentVolumeClaim }}
+    reportPath: /output/registry-scanner-{DATE}.json
+    {{- end }}

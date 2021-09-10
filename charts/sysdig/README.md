@@ -12,17 +12,19 @@ This chart adds the Sysdig agent for [Sysdig Monitor](https://sysdig.com/product
 
 ## Installing the Chart
 
-To install the chart with the release name `sysdig-agent`, retrieve your Sysdig Monitor Access Key from your [Account Settings](https://app.sysdigcloud.com/#/settings/agentInstallation) and run:
-
+First of all you need to add the Sysdig Helm Charts repository:
 ```bash
 $ helm repo add sysdig https://charts.sysdig.com/
 ```
 
-to add the `sysdig` Helm chart repository. Then run:
-
+To install the chart with the release name `sysdig-agent`, run:
 ```bash
-$ helm install --namespace sysdig-agent sysdig-agent --set sysdig.accessKey=YOUR-KEY-HERE sysdig/sysdig
+$ helm install --namespace sysdig-agent sysdig-agent --set sysdig.accessKey=YOUR-KEY-HERE --set sysdig.settings.collector=COLLECTOR_URL sysdig/sysdig --set nodeAnalyzer.apiEndpoint=API_ENDPOINT
 ```
+To find the values:
+- YOUR-KEY-HERE: This is the agent access key. You can retrieve this from Settings > Agent Installation in the Sysdig UI.
+- COLLECTOR_URL: This value is region-dependent in SaaS and is auto-completed on the Get Started page in the UI. (It is a custom value in on-prem installations.)
+- API_ENDPOINT: This is the base URL (region-dependent) for Sysdig Secure and is auto-completed on the Get Started page. E.g. secure.sysdig.com, us2.app.sysdig.com, eu1.app.sysdig.com.
 
 After a few seconds, you should see hosts and containers appearing in Sysdig Monitor and Sysdig Secure.
 
@@ -47,13 +49,14 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | ---------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
 | `image.registry`                                           | Sysdig Agent image registry                                                              | `quay.io`                                                                     |
 | `image.repository`                                         | The image repository to pull from                                                        | `sysdig/agent`                                                                |
-| `image.tag`                                                | The image tag to pull                                                                    | `11.3.0`                                                                      |
+| `image.tag`                                                | The image tag to pull                                                                    | `11.4.1`                                                                      |
 | `image.pullPolicy`                                         | The Image pull policy                                                                    | `IfNotPresent`                                                                |
 | `image.pullSecrets`                                        | Image pull secrets                                                                       | `nil`                                                                         |
-| `resources.requests.cpu`                                   | CPU requested for being run in a node                                                    | `600m`                                                                        |
-| `resources.requests.memory`                                | Memory requested for being run in a node                                                 | `512Mi`                                                                       |
-| `resources.limits.cpu`                                     | CPU limit                                                                                | `2000m`                                                                       |
-| `resources.limits.memory`                                  | Memory limit                                                                             | `1536Mi`                                                                      |
+| `resourceProfile`                                          | Sysdig Agent resource profile (see [Resource profiles](#resource-profiles))              | `small`                                                                       |
+| `resources.requests.cpu`                                   | CPU requested for being run in a node                                                    | ` `                                                                           |
+| `resources.requests.memory`                                | Memory requested for being run in a node                                                 | ` `                                                                           |
+| `resources.limits.cpu`                                     | CPU limit                                                                                | ` `                                                                           |
+| `resources.limits.memory`                                  | Memory limit                                                                             | ` `                                                                           |
 | `rbac.create`                                              | If true, create & use RBAC resources                                                     | `true`                                                                        |
 | `scc.create`                                               | Create OpenShift's Security Context Constraint                                           | `true`                                                                        |
 | `psp.create`                                               | Create Pod Security Policy to allow the agent running in clusters with PSP enabled       | `true`                                                                        |
@@ -72,7 +75,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `ebpf.enabled`                                             | Enable eBPF support for Sysdig instead of `sysdig-probe` kernel module                   | `false`                                                                       |
 | `ebpf.settings.mountEtcVolume`                             | Needed to detect which kernel version are running in Google COS                          | `true`                                                                        |
 | `clusterName`                                              | Set a cluster name to identify events using *kubernetes.cluster.name* tag                | ` `                                                                           |
-| `sysdig.accessKey`                                         | Your Sysdig Monitor Access Key                                                           | ` ` Either accessKey or existingAccessKeySecret is required                   |
+| `sysdig.accessKey`                                         | Your Sysdig Agent Access Key                                                             | ` ` Either accessKey or existingAccessKeySecret is required                   |
 | `sysdig.existingAccessKeySecret`                           | Alternatively, specify the name of a Kubernetes secret containing an 'access-key' entry  | ` ` Either accessKey or existingAccessKeySecret is required                   |
 | `sysdig.disableCaptures`                                   | Disable capture functionality (see https://docs.sysdig.com/en/disable-captures.html)     | `false`                                                                       |
 | `sysdig.settings`                                          | Additional settings, directly included in the agent's configuration file `dragent.yaml`  | `{}`                                                                          |
@@ -83,12 +86,13 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `auditLog.dynamicBackend.enabled`                          | Deploy the Audit Sink where Sysdig listens for K8s audit log events                      | `false`                                                                       |
 | `customAppChecks`                                          | The custom app checks deployed with your agent                                           | `{}`                                                                          |
 | `tolerations`                                              | The tolerations for scheduling                                                           | `node-role.kubernetes.io/master:NoSchedule`                                   |
+| `leaderelection.enable`                                    | Use the agent leader election algorithm                                                  | `false`                                                                       |
 | `prometheus.file`                                          | Use file to configure promscrape                                                         | `false`                                                                       |
 | `prometheus.yaml`                                          | prometheus.yaml content to configure metric collection: relabelling and filtering        | ` `                                                                           |
 | `extraVolumes.volumes`                                     | Additional volumes to mount in the sysdig agent to pass new secrets or configmaps        | `[]`                                                                          |
 | `extraVolumes.mounts`                                      | Mount points for additional volumes                                                      | `[]`                                                                          |
 | `nodeAnalyzer.deploy`                                      | Deploy the Node Analyzer                                                                 | `true`                                                                        |
-| `nodeAnalyzer.apiEndpoint`                                 | Sysdig secure API endpoint, without protocol (i.e. `secure.sysdig.com`)                  |                                                                               |
+| `nodeAnalyzer.apiEndpoint`                                 | Sysdig secure API endpoint, without protocol (i.e. `secure.sysdig.com`)                  | ` `                                                                           |
 | `nodeAnalyzer.sslVerifyCertificate`                        | Can be set to false to allow insecure connections to the Sysdig backend, such as On-Prem |                                                                               |
 | `nodeAnalyzer.debug`                                       | Can be set to true to show debug logging, useful for troubleshooting                     |                                                                               |
 | `nodeAnalyzer.httpProxy`                                   | Proxy configuration variables                                                            |                                                                               |
@@ -108,7 +112,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `nodeAnalyzer.imageAnalyzer.resources.limits.cpu`          | Node Image Analyzer CPU limit per node                                                   | `500m`                                                                        |
 | `nodeAnalyzer.imageAnalyzer.resources.limits.memory`       | Node Image Analyzer Memory limit per node                                                | `1536Mi`                                                                      |
 | `nodeAnalyzer.hostAnalyzer.image.repository`               | The image repository to pull the Host Analyzer from                                      | `sysdig/host-analyzer`                                                        |
-| `nodeAnalyzer.hostAnalyzer.image.tag`                      | The image tag to pull the Host Analyzer                                                  | `0.1.0`                                                                       |
+| `nodeAnalyzer.hostAnalyzer.image.tag`                      | The image tag to pull the Host Analyzer                                                  | `0.1.3`                                                                       |
 | `nodeAnalyzer.hostAnalyzer.image.pullPolicy`               | The Image pull policy for the Host Analyzer                                              | `IfNotPresent`                                                                |
 | `nodeAnalyzer.hostAnalyzer.schedule`                       | The scanning schedule specification for the host analyzer expressed as a crontab         | `@dailydefault`                                                               |
 | `nodeAnalyzer.hostAnalyzer.dirsToScan`                     | The list of directories to inspect during the scan                                       | `/etc,/var/lib/dpkg,/usr/local,/usr/lib/sysimage/rpm,/var/lib/rpm,/lib/apk/db`|
@@ -165,6 +169,41 @@ $ helm install --namespace sysdig-agent sysdig-agent -f values.yaml sysdig/sysdi
 ```
 
 > **Tip**: You can use the default [values.yaml](values.yaml)
+
+## Resource profiles
+For ease of use, some predefined resource profiles are available:
+* small
+```yaml
+requests:
+  cpu: 1000m
+  memory: 1024Mi
+limits:
+  cpu: 1000m
+  memory: 1024Mi
+```
+* medium
+```yaml
+requests:
+  cpu: 3000m
+  memory: 3072Mi
+limits:
+  cpu: 3000m
+  memory: 3072Mi
+```
+* large
+```yaml
+requests:
+  cpu: 5000m
+  memory: 6144Mi
+limits:
+  cpu: 5000m
+  memory: 6144Mi
+```
+* custom
+
+By setting "custom" or any value other than the ones defined above, you can create your own custom profile to match your requirements by setting the appropriate values in `resources` object.
+
+See [Tuning Sysdig Agent](https://docs.sysdig.com/en/tuning-sysdig-agent.html) for more info.
 
 ## Node Analyzer
 The Node Analyzer is deployed by default unless you set the value `nodeAnalyzer.deploy` to `false`.

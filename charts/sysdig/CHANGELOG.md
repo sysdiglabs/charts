@@ -4,12 +4,67 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.12.16
+
+### Minor changes
+
+- Introduce resource profiles
+
+## v1.12.15
+
+### Minor changes
+
+- Add new resources to ClusterRole to support collection of Kubelet metrics.
+
+## v1.12.14
+
+### Minor changes
+
+- Bump host-analyzer version to 0.1.3
+
+## v1.12.13
+
+### Minor changes
+
+- Change the default agent container resources to [the ones for small clusters](https://docs.sysdig.com/en/tuning-sysdig-agent.html)
+
+## v1.12.12
+
+### Bugfixes
+
+* Add mountPath /sys/kernel/debug for eBPF
+
+## v1.12.11
+
+### Minor changes
+
+- Change the default agent container resources
+
+## v1.12.10
+
+### Minor changes
+
+- Update agent to 11.4.1
+
+## v1.12.9
+
+### Minor changes
+
+- Introduce `leaderelection.enable` for the agent leader election algorithm
+
+## v1.12.8
+
+### Minor changes
+
+- Update values.yaml and README.md to reflect no default value for `nodeAnalyzer.apiEndpoint`
+
 ## v1.12.7
 
 ### Minor changes
 
 - Update agent to 11.3.0
 - Include get/list/create/update/watch leases in agent clusterrole permissions.
+
 ## v.1.12.6
 
 ### Cleanup

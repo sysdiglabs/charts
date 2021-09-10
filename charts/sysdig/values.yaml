@@ -21,16 +21,51 @@ image:
   # pullSecrets:
   #   - name: myRegistrKeySecretName
 
-resources:
-  # Although resources needed are subjective on the actual workload we provide
-  # a sane defaults ones. If you have more questions or concerns, please refer
-  # to Sysdig Support for more info about it
-  requests:
-    cpu: 600m
-    memory: 512Mi
-  limits:
-    cpu: 2000m
-    memory: 1536Mi
+# Specify a predefined resource profile.
+#
+# Available options are:
+# * small
+#   Defined as:
+#   requests:
+#     cpu: 1000m
+#     memory: 1024Mi
+#   limits:
+#     cpu: 1000m
+#     memory: 1024Mi
+#
+# * medium
+#   Defined as:
+#   requests:
+#     cpu: 3000m
+#     memory: 3072Mi
+#   limits:
+#     cpu: 3000m
+#     memory: 3072Mi
+#
+# * large
+#   Defined as:
+#   requests:
+#     cpu: 5000m
+#     memory: 6144Mi
+#   limits:
+#     cpu: 5000m
+#     memory: 6144Mi
+#
+# * custom
+#   If you want to define your own resource profile, just comment the resourceProfile line,
+#   uncomment the section below, and fill in the appropriate values.
+#   You may want to check https://docs.sysdig.com/en/tuning-sysdig-agent.html
+#   If you have more questions or concerns, please refer to Sysdig Support.
+resourceProfile: small
+# resourceProfile: custom
+# resources:
+#   requests:
+#     cpu: <cpu requests>m
+#     memory: <memory requests>Mi
+#   limits:
+#     cpu: <cpu limits>m
+#     memory: <memory limits>Mi
+
 
 rbac:
   # true here enables creation of rbac resources
@@ -251,11 +286,11 @@ nodeAnalyzer:
   deploy: true
 
   # The API endpoint for Sysdig Secure, specified with no protocol:
-  # * SaaS default region (US East): leave empty
+  # * SaaS default region (US East): secure.sysdig.com
   # * SaaS US Web: us2.app.sysdig.com
   # * SaaS European Union: eu1.app.sysdig.com
   # * On-Prem: sysdig.my.company.com
-  # apiEndpoint: sysdig.my.company.com
+  apiEndpoint: ""
 
   # Can be set to false to allow insecure connections to the Sysdig backend,
   # such as for on-premise installs that use self-signed certificates.
@@ -321,7 +356,7 @@ nodeAnalyzer:
   hostAnalyzer:
     image:
       repository: sysdig/host-analyzer
-      tag: 0.1.0
+      tag: 0.1.3
       pullPolicy: IfNotPresent
 
     # The scanning schedule specification for the host analyzer expressed as a crontab string such as “5 4 * * *”.
@@ -398,3 +433,6 @@ extraVolumes:
 tolerations:
   - effect: NoSchedule
     key: node-role.kubernetes.io/master
+
+leaderelection:
+  enable: false

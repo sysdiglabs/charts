@@ -2,8 +2,8 @@ apiVersion: v2
 name: harbor-scanner-sysdig-secure
 description: Harbor Scanner for Sysdig Secure
 type: application
-version: 0.2.5
-appVersion: 0.3.1
+version: 0.2.7
+appVersion: 0.4.1
 home: https://github.com/sysdiglabs/harbor-scanner-sysdig-secure
 icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
 maintainers:
