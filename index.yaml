@@ -1775,6 +1775,21 @@ entries:
     version: 0.1.0
   registry-scanner:
   - apiVersion: v2
+    appVersion: 0.0.6
+    created: "2021-09-13T13:29:25.660745354Z"
+    description: Sysdig Registry Scanner
+    digest: 9c7f97d36a96bbf6e62eb181ccc5fb0667e071b341edd908878474f69af17890
+    home: https://sysdiglabs.github.io/registry-scanner/
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    maintainers:
+    - email: alvaro.iradier@sysdig.com
+      name: airadier
+    name: registry-scanner
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/registry-scanner-0.0.20/registry-scanner-0.0.20.tgz
+    version: 0.0.20
+  - apiVersion: v2
     appVersion: 0.0.5
     created: "2021-09-01T17:12:24.581273794Z"
     description: Sysdig Registry Scanner
