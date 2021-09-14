@@ -8,7 +8,6 @@ This file documents all notable changes to Sysdig Helm Chart. The release number
 
 ### Minor changes
 
-- Update agent to 12.0.0
 - Add downward API volume to autodetect agent namespace
 
 ## v1.12.14
