@@ -97,7 +97,7 @@ spec:
           image: {{ template "sysdig.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           resources:
-{{ toYaml .Values.resources | indent 12 }}
+{{ include "sysdig.resources" . | indent 12 }}
           securityContext:
             capabilities:
               drop:
@@ -133,10 +133,6 @@ spec:
               value: "{{ $value }}"
             {{- end }}
           readinessProbe:
-            exec:
-              command: [ "test", "-e", "/opt/draios/logs/running" ]
-            initialDelaySeconds: {{ .Values.daemonset.probes.initialDelay }}
-          livenessProbe:
             exec:
               command: [ "test", "-e", "/opt/draios/logs/running" ]
             initialDelaySeconds: {{ .Values.daemonset.probes.initialDelay }}

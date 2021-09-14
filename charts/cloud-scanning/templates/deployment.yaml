@@ -83,6 +83,8 @@ spec:
               value: {{ .Values.ecsScanning | quote }}
             - name: SQS_QUEUE_URL
               value: {{ .Values.sqsQueueUrl }}
+            - name: SECURE_API_TOKEN_SECRET
+              value: {{ .Values.secureAPITokenSecret }}
           {{- if .Values.extraEnvVars }}
           {{- toYaml .Values.extraEnvVars | nindent 12}}
           {{- end }}

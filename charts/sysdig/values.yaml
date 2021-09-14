@@ -21,17 +21,51 @@ image:
   # pullSecrets:
   #   - name: myRegistrKeySecretName
 
-resources:
-  # Although resources needed are subjective on the actual workload we provide
-  # a sane defaults ones. If you have more questions or concerns, please refer
-  # to Sysdig Support for more info about it.
-  # See also: https://docs.sysdig.com/en/tuning-sysdig-agent.html
-  requests:
-    cpu: 1000m
-    memory: 1024Mi
-  limits:
-    cpu: 1000m
-    memory: 1024Mi
+# Specify a predefined resource profile.
+#
+# Available options are:
+# * small
+#   Defined as:
+#   requests:
+#     cpu: 1000m
+#     memory: 1024Mi
+#   limits:
+#     cpu: 1000m
+#     memory: 1024Mi
+#
+# * medium
+#   Defined as:
+#   requests:
+#     cpu: 3000m
+#     memory: 3072Mi
+#   limits:
+#     cpu: 3000m
+#     memory: 3072Mi
+#
+# * large
+#   Defined as:
+#   requests:
+#     cpu: 5000m
+#     memory: 6144Mi
+#   limits:
+#     cpu: 5000m
+#     memory: 6144Mi
+#
+# * custom
+#   If you want to define your own resource profile, just comment the resourceProfile line,
+#   uncomment the section below, and fill in the appropriate values.
+#   You may want to check https://docs.sysdig.com/en/tuning-sysdig-agent.html
+#   If you have more questions or concerns, please refer to Sysdig Support.
+resourceProfile: small
+# resourceProfile: custom
+# resources:
+#   requests:
+#     cpu: <cpu requests>m
+#     memory: <memory requests>Mi
+#   limits:
+#     cpu: <cpu limits>m
+#     memory: <memory limits>Mi
+
 
 rbac:
   # true here enables creation of rbac resources

@@ -54,6 +54,7 @@ chart and their default values:
 | `ecsScanning`                | Enable scanning for images of tasks or services running in ECS                                                  | `true`                                                                          |
 | `codeBuildProject`           | Name of the CodeBuild exeuting the scanner                                                                      | ` `                                                                             |
 | `sqsQueueUrl`                | URL of the SQS queue for CloudTrail events                                                                      | ` `                                                                             |
+| `secureAPITokenSecret`       | Secret name that contains the API Token for Secure (required to inline-scan without leaking the secret)         | ` `                                                                             |
 
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,

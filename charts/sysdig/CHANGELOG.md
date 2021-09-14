@@ -4,11 +4,23 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
-## v1.12.15
+## v1.12.20
 
 ### Minor changes
 
 - Add downward API volume to autodetect agent namespace
+
+## v1.12.16
+
+### Minor changes
+
+- Introduce resource profiles
+
+## v1.12.15
+
+### Minor changes
+
+- Add new resources to ClusterRole to support collection of Kubelet metrics.
 
 ## v1.12.14
 
