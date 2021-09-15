@@ -4,6 +4,12 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.12.20
+
+### Minor changes
+
+- Add downward API volume to autodetect agent namespace
+
 ## v1.12.16
 
 ### Minor changes
