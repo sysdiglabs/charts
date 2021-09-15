@@ -1525,6 +1525,22 @@ entries:
     version: 0.1.0
   cloud-scanning:
   - apiVersion: v2
+    appVersion: 0.8.6
+    created: "2021-09-15T10:41:55.124281902Z"
+    description: Sysdig Cloud Scanning
+    digest: 697dec678f88c7d9633fcefeb47ad43db68693b0adc39a8d61c753d59d733ed5
+    home: https://sysdiglabs.github.io/cloud-connector
+    maintainers:
+    - email: alvaro.iradier@sysdig.com
+      name: airadier
+    - email: nestor.salceda@sysdig.com
+      name: nestorsalceda
+    name: cloud-scanning
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/cloud-scanning-0.2.2/cloud-scanning-0.2.2.tgz
+    version: 0.2.2
+  - apiVersion: v2
     appVersion: 0.8.5
     created: "2021-09-10T10:47:39.21965281Z"
     description: Sysdig Cloud Scanning
