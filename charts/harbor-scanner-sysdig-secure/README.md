@@ -55,7 +55,7 @@ Sysdig Secure chart and their default values:
 | `proxy.httpProxy`                             | URL of the proxy for HTTP connections, or empty if not using proxy (sets the http_proxy environment variable)               | ` `                                       |
 | `proxy.httpsProxy`                            | URL of the proxy for HTTPS connections, or empty if not using proxy (sets the https_proxy environment variable)             | ` `                                       |
 | `proxy.noProxy`                               | Comma-separated list of domain extensions proxy should not be used for. Include the internal IP of the kubeapi server.      | ` `                                       |
-| `inlineScanning.enabled`                      | Enable Inline Scanning feature                                                                                              | `false`                                   |
+| `inlineScanning.enabled`                      | Enable Inline Scanning feature                                                                                              | `true`                                   |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
