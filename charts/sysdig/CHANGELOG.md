@@ -4,6 +4,12 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.12.24
+
+### Minor changes
+
+- Fix Openshift SCC to allow downward API volumes
+
 ## v1.12.23
 
 ### Breaking change notification
