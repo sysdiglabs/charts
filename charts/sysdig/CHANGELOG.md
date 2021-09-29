@@ -4,6 +4,30 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.12.23
+
+### Breaking change notification
+
+- In chart version 1.12.13, the default agent container resources was set to [small](https://docs.sysdig.com/en/tuning-sysdig-agent.html). This was a breaking change (and not minor as originally stated) because upgrading the agent using this chart from an earlier chart where the default was [medium](https://docs.sysdig.com/en/tuning-sysdig-agent.html) could result in less resources configured for it than required.
+
+## v1.12.20
+
+### Minor changes
+
+- Add downward API volume to autodetect agent namespace
+
+## v1.12.16
+
+### Minor changes
+
+- Introduce resource profiles
+
+## v1.12.15
+
+### Minor changes
+
+- Add new resources to ClusterRole to support collection of Kubelet metrics.
+
 ## v1.12.14
 
 ### Minor changes

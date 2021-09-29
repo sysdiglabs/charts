@@ -86,6 +86,7 @@ webhook:
   affinity: {}
 
   denyOnError: false
+  dryRun: false
 
 # inline scanner configuration
 scanner:
