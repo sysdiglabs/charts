@@ -4,11 +4,17 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
-## v1.12.24
+## v1.12.25
 
 ### Minor changes
 
 - Add priorityclass option for image-analyzer daemonset
+
+## v1.12.24
+
+### Minor changes
+
+- Update agent to 12.0.2
 
 ## v1.12.23
 
