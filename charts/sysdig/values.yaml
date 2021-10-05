@@ -282,6 +282,9 @@ nodeImageAnalyzer:
       cpu: 500m
       memory: 1024Mi
 
+  # Set daemonset priorityClassName
+  priorityClassName:
+
 nodeAnalyzer:
   deploy: true
 
