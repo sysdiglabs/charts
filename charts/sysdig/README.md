@@ -49,7 +49,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | ---------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
 | `image.registry`                                           | Sysdig Agent image registry                                                              | `quay.io`                                                                     |
 | `image.repository`                                         | The image repository to pull from                                                        | `sysdig/agent`                                                                |
-| `image.tag`                                                | The image tag to pull                                                                    | `12.0.1`                                                                      |
+| `image.tag`                                                | The image tag to pull                                                                    | `12.0.2`                                                                      |
 | `image.pullPolicy`                                         | The Image pull policy                                                                    | `IfNotPresent`                                                                |
 | `image.pullSecrets`                                        | Image pull secrets                                                                       | `nil`                                                                         |
 | `resourceProfile`                                          | Sysdig Agent resource profile (see [Resource profiles](#resource-profiles))              | `small`                                                                       |
@@ -153,6 +153,7 @@ Node Image Analyzer parameters (deprecated by nodeAnalyzer)
 | `nodeImageAnalyzer.resources.limits.memory`                | Node Image Analyzer Memory limit per node                                                | `1024Mi`                                                                      |
 | `nodeImageAnalyzer.extraVolumes.volumes`                   | Additional volumes to mount in the Node Image Analyzer (i.e. for docker socket)          | `[]`                                                                          |
 | `nodeImageAnalyzer.extraVolumes.mounts`                    | Mount points for additional volumes                                                      | `[]`                                                                          |
+| `nodeImageAnalyzer.priorityClassName`                      | Priority class name variable                                                             |                                                                               |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 

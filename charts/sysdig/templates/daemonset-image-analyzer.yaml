@@ -50,6 +50,9 @@ spec:
 {{ toYaml .Values.nodeImageAnalyzer.tolerations | indent 8 }}
       # The following line is necessary for RBAC
       serviceAccountName: {{ template "sysdig.serviceAccountName" .}}
+{{- if .Values.nodeImageAnalyzer.priorityClassName }}
+      priorityClassName: "{{ .Values.nodeImageAnalyzer.priorityClassName }}"
+{{- end }}
       {{- if .Values.nodeImageAnalyzer.image.pullSecrets }}
       imagePullSecrets:
 {{ toYaml .Values.nodeImageAnalyzer.image.pullSecrets | indent 8 }}
