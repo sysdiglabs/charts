@@ -39,4 +39,5 @@ volumes:
 - emptyDir
 - secret
 - configMap
+- downwardAPI
 {{- end }}
