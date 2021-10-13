@@ -156,3 +156,9 @@ NOTE: I don't like the error message! Too much information.
 true
 {{- end -}}
 {{- end -}}
+
+{{- define "deploy-br" -}}
+{{- if .Values.nodeAnalyzer.benchmarkRunner.deploy -}}
+true
+{{- end -}}
+{{- end -}}

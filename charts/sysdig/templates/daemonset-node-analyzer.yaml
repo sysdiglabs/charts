@@ -291,6 +291,7 @@ spec:
               key: no_proxy
               name: {{ template "sysdig.fullname" . }}-host-analyzer
               optional: true
+  {{- if (include "deploy-br" .) }}
       - name: sysdig-benchmark-runner
         image: {{ template "sysdig.image.benchmarkRunner" . }}
         imagePullPolicy: {{ .Values.nodeAnalyzer.benchmarkRunner.image.pullPolicy }}
@@ -357,4 +358,5 @@ spec:
               key: no_proxy
               name: {{ template "sysdig.fullname" . }}-benchmark-runner
               optional: true
+  {{- end }}
   {{- end }}

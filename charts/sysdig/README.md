@@ -121,6 +121,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `nodeAnalyzer.hostAnalyzer.resources.requests.memory`      | Host Analyzer Memory requests per node                                                   | `512Mi`                                                                       |
 | `nodeAnalyzer.hostAnalyzer.resources.limits.cpu`           | Host Analyzer CPU limit per node                                                         | `500m`                                                                        |
 | `nodeAnalyzer.hostAnalyzer.resources.limits.memory`        | Host Analyzer Memory limit per node                                                      | `1536Mi`                                                                      |
+| `nodeAnalyzer.benchmarkRunner.deploy`                      | Deploy the Benchmark Runner                                                              | `true`                                                                        |
 | `nodeAnalyzer.benchmarkRunner.image.repository`            | The image repository to pull the Benchmark Runner from                                   | `sysdig/compliance-benchmark-runner`                                          |
 | `nodeAnalyzer.benchmarkRunner.image.tag`                   | The image tag to pull the Benchmark Runner                                               | `1.0.6.0`                                                                     |
 | `nodeAnalyzer.benchmarkRunner.image.pullPolicy`            | The Image pull policy for the Benchmark Runner                                           | `IfNotPresent`                                                                |
@@ -234,7 +235,7 @@ The host analyzer works by inspecting the files on the host root filesystem look
 
 ### Benchmark Runner
 See the [Benchmarks documentation](https://docs.sysdig.com/en/benchmarks.html) for details on the Benchmark feature.
-The Benchmark Runner provides the capability to run CIS inspired benchmarks against your infrastructure. Benchmark tasks are configured in the UI, and the runner automatically runs these benchmarks on the configured scope and schedule.
+The Benchmark Runner provides the capability to run CIS inspired benchmarks against your infrastructure. Benchmark tasks are configured in the UI, and the runner automatically runs these benchmarks on the configured scope and schedule. The Benchmarks portion of the Node Analyzer install is currently available on Sysdig Secure SaaS only.
 
 ## On-Premise backend deployment settings
 
