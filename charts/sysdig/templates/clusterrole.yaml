@@ -90,11 +90,11 @@ rules:
 {{- if .Values.psp.create  }}
   - apiGroups:
       - "policy"
-    resources: 
+    resources:
       - "podsecuritypolicies"
     resourceNames:
       - "{{ template "sysdig.fullname" . }}"
-    verbs: 
+    verbs:
       - "use"
 {{- end }}
 {{- end }}
