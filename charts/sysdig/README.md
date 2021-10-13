@@ -154,6 +154,7 @@ Node Image Analyzer parameters (deprecated by nodeAnalyzer)
 | `nodeImageAnalyzer.extraVolumes.volumes`                   | Additional volumes to mount in the Node Image Analyzer (i.e. for docker socket)          | `[]`                                                                          |
 | `nodeImageAnalyzer.extraVolumes.mounts`                    | Mount points for additional volumes                                                      | `[]`                                                                          |
 | `nodeImageAnalyzer.priorityClassName`                      | Priority class name variable                                                             |                                                                               |
+| `nodeImageAnalyzer.affinity`                               | Node affinities                                                                          | `schedule on amd64 and linux`                                                 |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
