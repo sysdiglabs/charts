@@ -152,6 +152,9 @@ ebpf:
 slim:
   # Uses a slim version of the Sysdig Agent
   enabled: false
+  # The image repo to be used for slim Agents
+  image:
+    repository: sysdig/agent-slim
   # When using slim the kernel module is built in other container, which
   # contains the toolchain required to build the kernel module.
   kmoduleImage:
