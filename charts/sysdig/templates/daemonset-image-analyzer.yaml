@@ -57,6 +57,10 @@ spec:
       imagePullSecrets:
 {{ toYaml .Values.nodeImageAnalyzer.image.pullSecrets | indent 8 }}
       {{- end }}
+      {{- if .Values.nodeImageAnalyzer.affinity }}
+      affinity:
+{{ toYaml .Values.nodeImageAnalyzer.affinity | indent 8 }}
+      {{- end }}
       terminationGracePeriodSeconds: 5
       containers:
       - name: sysdig-image-analyzer
