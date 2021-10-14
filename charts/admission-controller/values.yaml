@@ -6,6 +6,10 @@ sysdig:
   url: "https://secure.sysdig.com"
   secureAPIToken: ""
 
+  # Alternatively, specify the name of a Kubernetes secret containing 'SECURE_API_TOKEN' and
+  # 'AUTH_BEARER_TOKEN' entry if you're also enabling scanner
+  existingSecureAPITokenSecret: ""
+
 clusterName: ""
 
 features:
