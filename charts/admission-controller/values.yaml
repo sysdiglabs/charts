@@ -11,9 +11,21 @@ sysdig:
   existingSecureAPITokenSecret: ""
 
 clusterName: ""
-
 features:
   k8sAuditDetections: false
+  k8sAuditDetectionsRules:
+    - apiGroups:
+      - ""
+      - apps
+      - autoscaling
+      - batch
+      - networking.k8s.io
+      - rbac.authorization.k8s.io
+      - extensions
+      apiVersions: [ "*" ]
+      operations: [ "*" ]
+      resources: [ "*/*" ]
+      scope: "*"
 
 verifySSL: true
 

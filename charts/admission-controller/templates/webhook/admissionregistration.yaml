@@ -48,74 +48,9 @@ webhooks:
 - name: audit.secure.sysdig.com
   matchPolicy: Equivalent
   rules:
-  - apiGroups:
-    - ""
-    - apps
-    - autoscaling
-    - batch
-    - networking.k8s.io
-    - rbac.authorization.k8s.io
-    - extensions
-    apiVersions: ["*"]
-    operations: ["*"]
-    resources:
-      - "bindings"
-      - "componentstatuses"
-      - "configmaps"
-      - "endpoints"
-      - "events"
-      - "limitranges"
-      - "namespaces"
-      - "nodes"
-      - "persistentvolumeclaims"
-      - "persistentvolumes"
-      - "pods"
-      - "podtemplates"
-      - "replicationcontrollers"
-      - "resourcequotas"
-      - "serviceaccounts"
-      - "services"
-      - "mutatingwebhookconfigurations"
-      - "validatingwebhookconfigurations"
-      - "customresourcedefinitions"
-      - "apiservices"
-      - "controllerrevisions"
-      - "daemonsets"
-      - "deployments"
-      - "replicasets"
-      - "statefulsets"
-      - "tokenreviews"
-      - "localsubjectaccessreviews"
-      - "selfsubjectaccessreviews"
-      - "selfsubjectrulesreviews"
-      - "subjectaccessreviews"
-      - "horizontalpodautoscalers"
-      - "cronjobs"
-      - "jobs"
-      - "certificatesigningrequests"
-      - "leases"
-      - "endpointslices"
-      - "events"
-      - "ingresses"
-      - "flowschemas"
-      - "prioritylevelconfigurations"
-      - "ingressclasses"
-      - "ingresses"
-      - "networkpolicies"
-      - "runtimeclasses"
-      - "poddisruptionbudgets"
-      - "podsecuritypolicies"
-      - "clusterrolebindings"
-      - "clusterroles"
-      - "rolebindings"
-      - "roles"
-      - "priorityclasses"
-      - "csidrivers"
-      - "csinodes"
-      - "csistoragecapacities"
-      - "storageclasses"
-      - "volumeattachments"
-    scope: "*"
+  {{- with .Values.features.k8sAuditDetectionsRules }}
+    {{- toYaml . | nindent 2 }}
+  {{- end }}
   clientConfig:
     service:
       namespace: {{ .Release.Namespace }}
