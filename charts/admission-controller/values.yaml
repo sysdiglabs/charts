@@ -22,9 +22,9 @@ features:
       - networking.k8s.io
       - rbac.authorization.k8s.io
       - extensions
-      apiVersions: [ "*" ]
-      operations: [ "*" ]
-      resources: [ "*/*" ]
+      apiVersions: ["*"]
+      operations: ["*"]
+      resources: ["*/*"]
       scope: "*"
 
 verifySSL: true
