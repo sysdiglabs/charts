@@ -15,7 +15,7 @@ When a commit to master includes a new version of a _chart_, a GitHub action wil
 
 ### Detailed explanation of publish procedure
 
-With each commit to _master_, a GitHub action will compare all charts versions at the `charts` folder on _master_ branch with published versions at the `index.yaml` chart list on _gh-pages_ branch. 
+With each commit to _master_, a GitHub action will compare all charts versions at the `charts` folder on _master_ branch with published versions at the `index.yaml` chart list on _gh-pages_ branch.
 
 When it detects that the version in the folder doesn't exist in  `index.yaml`, it will create a release with the packaged chart content on the _GitHub repository_, and update `index.yaml` to include it on the `charts repository`.
 
@@ -35,7 +35,7 @@ and the list of all charts at `index.yaml` on _gh-pages_ branch will be updated 
 ## More information
 
 You can find more information at:
-* [charts.sysdig.com/](https://charts.sysdig.com/) / [sysdiglabs.github.io/charts](https://sysdiglabs.github.io/charts) 
+* [charts.sysdig.com/](https://charts.sysdig.com/) / [sysdiglabs.github.io/charts](https://sysdiglabs.github.io/charts)
 * [The Helm package manager](https://helm.sh/)
 * [Chart Releaser](https://github.com/helm/chart-releaser)
 * [Chart Releaser GitHub Action](https://github.com/helm/chart-releaser-action)
