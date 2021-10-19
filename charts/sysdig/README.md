@@ -213,7 +213,7 @@ The Node Analyzer is deployed by default unless you set the value `nodeAnalyzer.
 The Node Analyzer daemonset contains three containers, each providing a specific functionality. This daemonset replaces
 the (deprecated) Node Image Analyzer daemonset.
 
-See the [Node Analyzer installation documentation](https://docs.sysdig.com/en/node-analyzer--multi-feature-installation.html) for details about installation, and 
+See the [Node Analyzer installation documentation](https://docs.sysdig.com/en/node-analyzer--multi-feature-installation.html) for details about installation, and
 [Running Node Analyzer Behind a Proxy](https://docs.sysdig.com/en/node-analyzer--multi-feature-installation.html#UUID-35c14c46-b327-c2a8-ed9c-82a2af995218_section-idm51621039128136) for proxy settings.
 
 ### Node Image Analyzer
@@ -226,7 +226,7 @@ On container start-up, the analyzer scans all pre-existing running images presen
 
 ### Host Analyzer
 See the [Host Scanning Configuration Options](https://docs.sysdig.com/en/node-analyzer--multi-feature-installation.html#UUID-35c14c46-b327-c2a8-ed9c-82a2af995218_UUID-6666385b-c550-0660-f563-956f3a4fe093) for details about installation options, and
-the [Host Scanning documentation](https://docs.sysdig.com/en/host-scanning.html) for details about the Host Scanning feature. 
+the [Host Scanning documentation](https://docs.sysdig.com/en/host-scanning.html) for details about the Host Scanning feature.
 
 The host analyzer provides the capability to scan packages installed on the host operating system to identify potential vulnerabilities. It is typically installed as part of the Node Analyzer which in turn is installed alongside the Sysdig Agent.
 
