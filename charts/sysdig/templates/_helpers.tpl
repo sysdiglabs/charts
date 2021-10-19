@@ -50,7 +50,7 @@ Define the proper imageRegistry to use for agent and kmodule image
     {{- .Values.global.imageRegistry -}}
 {{- else -}}
     {{- .Values.image.registry -}}
-{{- end -}} 
+{{- end -}}
 {{- end -}}
 
 {{/*
@@ -138,10 +138,10 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end -}}
 
 
-{{/* 
+{{/*
 Use like: {{ include "get_or_fail_if_in_settings" (dict "root" . "key" "<mypath.key>" "setting" "<agent_setting>") }}
 Return the value of key "<mypath.key>" and if "<agent_setting>" is also defined in sysdig.settings.<agent_setting>, and error is thrown
-NOTE: I don't like the error message! Too much information. 
+NOTE: I don't like the error message! Too much information.
 */}}
 {{- define "get_or_fail_if_in_settings" -}}
 {{- $keyValue := tpl (printf "{{- .Values.%s -}}" .key) .root }}
