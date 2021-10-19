@@ -111,7 +111,7 @@ For example, if you want to filter out secrets from the AC you can try with thes
   - nodes
   - persistentvolumeclaims
   - persistentvolumes
-  - pods
+  - pods/*
   - podtemplates
   - replicationcontrollers
   - resourcequotas
