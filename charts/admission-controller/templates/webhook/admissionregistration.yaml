@@ -48,18 +48,9 @@ webhooks:
 - name: audit.secure.sysdig.com
   matchPolicy: Equivalent
   rules:
-  - apiGroups:
-    - ""
-    - apps
-    - autoscaling
-    - batch
-    - networking.k8s.io
-    - rbac.authorization.k8s.io
-    - extensions
-    apiVersions: ["*"]
-    operations: ["*"]
-    resources: ["*/*"]
-    scope: "*"
+  {{- with .Values.features.k8sAuditDetectionsRules }}
+    {{- toYaml . | nindent 2 }}
+  {{- end }}
   clientConfig:
     service:
       namespace: {{ .Release.Namespace }}
