@@ -13,6 +13,10 @@ config:
   # registryApiUrl: https://my-docker-registry.com/artifactory/api/docker/
   registryUser:
   registryPassword:
+  # Defaults to "dockerv2" if not specified. Available options: dockerv2, icr
+  registryType:
+  # AccountID - Only for ICR registry type
+  registryAccountId:
   registrySkipTLS: false
   secureBaseURL: https://secure.sysdig.com
   secureAPIToken:
