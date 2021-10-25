@@ -31,6 +31,8 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | `config.registryApiUrl`              | API URL of the registry to scan. This is required if your registry type is Artifactory                                 | ` `                               |
 | `config.registryUser`                | Username for registry authentication                                                                                   | ` `                               |
 | `config.registryPassword`            | Password for registry authentication                                                                                   | ` `                               |
+| `config.registryType`                | Registry Type. Optional. dockerv2 (default if not specified), icr                                                      | ` `                               |
+| `config.registryAccountId`           | AccountID - Only for ICR registry type                                                                                 | ` `                               |
 | `config.registrySkipTLS`             | Ignore registry TLS certificate errors (self-signed, etc.)                                                             | `false`                           |
 | `config.secureBaseURL`               | Sysdig Secure Base URL                                                                                                 | `https://secure.sysdig.com`       |
 | `config.secureAPIToken`              | API Token to access Sysdig Secure                                                                                      | ` `                               |
