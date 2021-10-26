@@ -1629,6 +1629,22 @@ entries:
     version: 0.1.0
   cloud-scanning:
   - apiVersion: v2
+    appVersion: 0.11.1
+    created: "2021-10-26T14:58:53.881895019Z"
+    description: Sysdig Cloud Scanning
+    digest: 847c8d26e4ace353cfacd91bbdecea2a61adfa7bedd872e9c3aa37ab4e1ca3cb
+    home: https://sysdiglabs.github.io/cloud-connector
+    maintainers:
+    - email: alvaro.iradier@sysdig.com
+      name: airadier
+    - email: nestor.salceda@sysdig.com
+      name: nestorsalceda
+    name: cloud-scanning
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/cloud-scanning-0.2.4/cloud-scanning-0.2.4.tgz
+    version: 0.2.4
+  - apiVersion: v2
     appVersion: 0.9.1
     created: "2021-10-01T16:22:35.571775281Z"
     description: Sysdig Cloud Scanning
@@ -4847,4 +4863,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2021-10-26T14:53:58.020823797Z"
+generated: "2021-10-26T14:58:53.883390053Z"
