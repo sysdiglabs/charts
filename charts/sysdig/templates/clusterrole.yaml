@@ -87,6 +87,14 @@ rules:
     - /metrics
     verbs:
     - get
+  - apiGroups:
+    - storage.k8s.io
+    resources:
+    - storageclasses
+    verbs:
+    - get
+    - list
+    - watch
 {{- if .Values.psp.create  }}
   - apiGroups:
       - "policy"
