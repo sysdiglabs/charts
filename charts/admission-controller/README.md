@@ -25,6 +25,7 @@ Controller chart and their default values:
 | ---                                   | ---                                                          | ---                                                                                                                                 |
 | `sysdig.url`                          | The Sysdig URL prefix                                        | `https://secure.sysdig.com`                                                                                                         |
 | `sysdig.secureAPIToken`               | API Token to access Sysdig Secure                            | ``                                                                                                                                  |
+| `sysdig.existingSecureAPITokenSecret` | Existing secret with API Token to access Sysdig Secure       | ``                                                                                                                                  |
 | `clusterName`                         | Cluster Name which appear on Secure UI                       | ``                                                                                                                                  |
 | `features.k8sAuditDetections`         | Enable K8s Audit detections with Falco rules                 | `false`                                                                                                                             |
 | `verifySSL`                           | Verify SSL on HTTPS connections to Sysdig Secure             | `true`                                                                                                                              |
@@ -90,6 +91,45 @@ Alternatively, a YAML file that specifies the values for the parameters can be p
 $ helm install my-release -f values.yaml sysdig/admission-controller
 ```
 
+### Custom Admission Controller Rules to be detected
+In case you don't want to detect some resources you can create your custom rules. To achieve this, you can change **k8sAuditDetectionsRules**
+riable in _values.yaml_ file.   
+For example, if you want to filter out secrets from the AC you can try with these rules:]
+```
+- apiGroups:
+  - ""
+  apiVersions: [ "*" ]
+  operations: [ "*" ]
+  resources:
+  - bindings
+  - componentstatuses
+  - configmaps
+  - endpoints
+  - events
+  - limitranges
+  - namespaces
+  - nodes
+  - persistentvolumeclaims
+  - persistentvolumes
+  - pods/*
+  - podtemplates
+  - replicationcontrollers
+  - resourcequotas
+  - serviceaccounts
+  - services
+  scope: "*"
+- apiGroups:
+  - apps
+  - autoscaling
+  - batch
+  - networking.k8s.io
+  - rbac.authorization.k8s.io
+  - extensions
+  apiVersions: [ "*" ]
+  operations: [ "*" ]
+  resources: [ "*/*" ]
+  scope: "*"
+```
 ### On Prem deployment
 
 Use the following command to deploy in an on-prem:
