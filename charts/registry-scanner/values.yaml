@@ -16,7 +16,11 @@ config:
   # Defaults to "dockerv2" if not specified. Available options: dockerv2, icr
   registryType:
   # AccountID - Only for ICR registry type
-  registryAccountId:
+  # registryAccountId:
+  # ICR IAM API - Only for ICR registry type
+  # icrIamApi:
+  # ICR IAM API Skip TLS - Only for ICR registry type
+  # icrIamApiSkipTLS:
   registrySkipTLS: false
   secureBaseURL: https://secure.sysdig.com
   secureAPIToken:

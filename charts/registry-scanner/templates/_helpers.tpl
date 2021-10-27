@@ -78,3 +78,10 @@ Allow overriding registry and repository for air-gapped environments
     {{- $globalRegistry | default $imageRegistry | default "quay.io" -}} / {{- $imageRepository -}} : {{- $imageTag -}}
 {{- end -}}
 {{- end -}}
+
+{{- define "registry-scanner.rawPullSecretList" -}}
+{{- range .Values.imagePullSecrets }}{{- if . }}{{- .name}},{{- end}}{{- end}}
+{{- end -}}
+{{- define "registry-scanner.pullSecretList" -}}
+{{ trimSuffix "," (include "registry-scanner.rawPullSecretList" .) }}
+{{- end -}}

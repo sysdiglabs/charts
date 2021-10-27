@@ -5,6 +5,13 @@
 This file documents all notable changes to Sysdig Registry Scanner. The release
 numbering uses [semantic versioning](http://semver.org).
 
+## v0.0.23
+
+### Minor changes
+
+* Bump registry-scanner version to 0.0.9
+* Propagate imagePullSecrets to the scan.pullSecrets option for inline-scanner
+
 ## v0.0.22
 
 ### Minor changes
@@ -16,6 +23,7 @@ numbering uses [semantic versioning](http://semver.org).
 ### Minor changes
 
 * Bump registry-scanner version to 0.0.7
+* Add options `config.registryType` and `config.registryAccountId` for ICR
 
 ## v0.0.20
 

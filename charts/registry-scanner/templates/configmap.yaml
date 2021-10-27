@@ -17,6 +17,12 @@ data:
       {{- if .Values.config.registryAccountId }}
       accountId: {{ .Values.config.registryAccountId }}
       {{- end }}
+      {{- if .Values.config.icrIamApi }}
+      icrIamApi: {{ .Values.config.icrIamApi }}
+      {{- end }}
+      {{- if .Values.config.icrIamApiSkipTLS }}
+      icrIamApiSkipTLS: {{ .Values.config.icrIamApiSkipTLS }}
+      {{- end }}
       skipTLS: {{ .Values.config.registrySkipTLS }}
       {{- if .Values.config.registryApiUrl }}
       api: {{ .Values.config.registryApiUrl }}
@@ -35,6 +41,9 @@ data:
       workers: {{ default 1 .Values.config.maxWorkers }}
       {{- if .Values.config.scan.inlineScanImage }}
       inlineScanImage: {{ .Values.config.scan.inlineScanImage }}
+      {{- end }}
+      {{- if .Values.imagePullSecrets }}
+      pullSecrets: {{ include "registry-scanner.pullSecretList" . }}
       {{- end }}
 
     filter:
