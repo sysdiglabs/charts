@@ -57,7 +57,11 @@ Define the proper imageRegistry to use for agent and kmodule image
 Return the proper Sysdig Agent image name
 */}}
 {{- define "sysdig.repositoryName" -}}
-{{- .Values.image.repository -}} {{- if .Values.slim.enabled -}} -slim {{- end -}}
+{{- if .Values.slim.enabled -}}
+    {{- .Values.slim.image.repository -}}
+{{- else -}}
+    {{- .Values.image.repository -}}
+{{- end -}}
 {{- end -}}
 
 {{- define "sysdig.image" -}}
