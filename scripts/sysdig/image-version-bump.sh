@@ -45,7 +45,7 @@ mv values.yaml.2 values.yaml
 awk $@ '
 BEGIN {
     if (!AGENT_VERSION)
-        exit 1
+        exit 0
 }
 
 {
