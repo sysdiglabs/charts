@@ -28,6 +28,9 @@ spec:
       serviceAccountName: {{ include "admission-controller.webhook.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.webhook.podSecurityContext | nindent 8 }}
+      {{- if .Values.webhook.hostNetwork }}
+      hostNetwork: true
+      {{- end }}
       containers:
         - name: {{ include "admission-controller.name" . }}
           image: "{{ include "admission-controller.webhook.image" . }}"
