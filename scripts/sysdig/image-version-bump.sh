@@ -43,14 +43,8 @@ mv values.yaml.2 values.yaml
 
 
 awk $@ '
-BEGIN {
-    if (!AGENT_VERSION)
-        print
-        exit 0
-}
-
 {
-    if ($1 ~ /^appVersion:/)
+    if (AGENT_VERSION && $1 ~ /^appVersion:/)
         sub(/:.*/, ": "AGENT_VERSION)
 
     print
