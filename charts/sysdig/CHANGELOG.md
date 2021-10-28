@@ -4,6 +4,12 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.12.31
+
+### Minor changes
+
+- Add `slim.image.repository` value to allow full slim agent repo name to be configured
+
 ## v1.12.30
 ### Minor changes
 
