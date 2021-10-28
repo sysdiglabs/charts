@@ -21,6 +21,8 @@ chart and their default values:
 | -------------------------------- | --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
 | `replicaCount`                   | Amount of replicas for Cloud Connector                                                                          | `1`                                                                             |
 | `image.repository`               | The image repository to pull from                                                                               | `sysdiglabs/cloud-connector`                                                    |
+| `image.tag`               	    | The image tag	                                                                                               |                     |
+
 | `image.pullPolicy`               | The image pull policy                                                                                           | `IfNotPresent`                                                                  |
 | `imagePullSecrets`               | The image pull secrets                                                                                          | `[]`                                                                            |
 | `nameOverride`                   | Chart name override                                                                                             | ` `                                                                             |
