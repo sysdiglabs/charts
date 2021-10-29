@@ -80,6 +80,13 @@ webhook:
     readOnlyRootFilesystem: true
     runAsNonRoot: true
 
+  # Specifies if the webhook should be started in hostNetwork mode.
+  #
+  # This is required if using a custom CNI where the managed control plane nodes are unable to initiate
+  # network connections to the pods, for example using Calico CNI plugin on EKS. This is not required
+  # or recommended in most contexts.
+  hostNetwork: false
+  
   imagePullSecrets: []
   resources: {}
 #    limits:
