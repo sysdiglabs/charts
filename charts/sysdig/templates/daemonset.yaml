@@ -48,10 +48,6 @@ spec:
         - name: sysdig-agent-kmodule
           image: {{ template "sysdig.image.kmodule" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          {{- if .Values.image.pullSecrets }}
-          imagePullSecrets:
-{{ toYaml .Values.image.pullSecrets | indent 12 }}
-          {{- end }}
           securityContext:
             capabilities:
               drop:
