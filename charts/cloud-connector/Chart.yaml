@@ -3,8 +3,8 @@ name: cloud-connector
 description: Sysdig Cloud Connector
 
 type: application
-version: 0.4.6
-appVersion: 0.11.1
+version: 0.4.7
+appVersion: 0.11.3
 home: https://sysdiglabs.github.io/cloud-connector
 
 maintainers:
