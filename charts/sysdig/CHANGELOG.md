@@ -4,6 +4,11 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.12.35
+### Minor changes
+
+- Removed invalid imagePullSecrets from initContainers
+
 ## v1.12.31
 
 ### Minor changes
