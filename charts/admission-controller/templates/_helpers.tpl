@@ -36,7 +36,6 @@ Common labels
 */}}
 {{- define "admission-controller.labels" -}}
 helm.sh/chart: {{ include "admission-controller.chart" . }}
-{{ include "admission-controller.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
