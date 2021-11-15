@@ -19,7 +19,7 @@ features:
   # Enable K8s Audit detections with Falco rules
   k8sAuditDetections: false
   # [Admission Webhook Configuration rules](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#matching-requests-rules) for the Audit Detections
-  k8sAuditDetectionsRules: # +doc-gen:break
+  k8sAuditDetectionsRules:  # +doc-gen:break
     - apiGroups:
       - ""
       - apps
@@ -87,7 +87,7 @@ webhook:
   noProxy: kubernetes,10.0.0.0/8
 
   # Webhook pod annotations
-  podAnnotations: # +doc-gen:break
+  podAnnotations:  # +doc-gen:break
     prometheus.io/scrape: "true"
     prometheus.io/path: "/metrics"
     prometheus.io/port: "5000"
@@ -98,7 +98,7 @@ webhook:
   podSecurityContext: {}
 
   # Configure securityContext for webhook
-  securityContext: # +doc-gen:break
+  securityContext:  # +doc-gen:break
     capabilities:
       drop:
       - ALL
@@ -111,7 +111,7 @@ webhook:
   # network connections to the pods, for example using Calico CNI plugin on EKS. This is not required
   # or recommended in most contexts.
   hostNetwork: false
-  
+
   # The image pull secrets for webhook
   imagePullSecrets: []
   # Resource request and limits for webhook
@@ -173,7 +173,7 @@ scanner:
   noProxy: kubernetes,10.0.0.0/8
 
   # Scanner pod annotations
-  podAnnotations: # +doc-gen:break
+  podAnnotations:  # +doc-gen:break
     prometheus.io/scrape: "true"
     prometheus.io/path: "/metrics"
     prometheus.io/port: "8080"
@@ -192,7 +192,7 @@ scanner:
   dockerCfgSecretName: ""
 
   # Configure securityContext for scanner
-  securityContext: # +doc-gen:break
+  securityContext:  # +doc-gen:break
     capabilities:
       drop:
         - ALL
