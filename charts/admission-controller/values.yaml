@@ -3,17 +3,23 @@
 # Declare variables to be passed into your templates.
 
 sysdig:
+  # The Sysdig URL prefix
   url: "https://secure.sysdig.com"
+  # API Token to access Sysdig Secure
   secureAPIToken: ""
 
+  # Existing secret with API Token to access Sysdig Secure
   # Alternatively, specify the name of a Kubernetes secret containing 'SECURE_API_TOKEN' and
   # 'AUTH_BEARER_TOKEN' entry if you're also enabling scanner
   existingSecureAPITokenSecret: ""
 
+# Cluster Name which appear on Secure UI
 clusterName: ""
 features:
+  # Enable K8s Audit detections with Falco rules
   k8sAuditDetections: false
-  k8sAuditDetectionsRules:
+  # [Admission Webhook Configuration rules](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#matching-requests-rules) for the Audit Detections
+  k8sAuditDetectionsRules:  # +doc-gen:break
     - apiGroups:
       - ""
       - apps
@@ -27,53 +33,72 @@ features:
       resources: ["*/*"]
       scope: "*"
 
+# Verify SSL on HTTPS connections to Sysdig Secure
 verifySSL: true
 
+# Chart name override
 nameOverride: ""
+# Chart full name override
 fullnameOverride: ""
 
 serviceAccounts:
   webhook:
+    # Create the service account
     create: true
+    # Extra annotations for serviceAccount
     annotations: {}
+    # Use this value as serviceAccount Name
     name: ""
   scanner:
+    # Create the service account
     create: true
+    # Extra annotations for serviceAccount
     annotations: {}
+    # Use this value as serviceAccount Name
     name: ""
 
 webhook:
+  # Service name for Webhook deployment
   name: webhook
+  # Amount of replicas for webhook
   replicaCount: 1
 
   image:
+    # Webhook image registry
     registry: quay.io
+    # Webhook image registry
     repository: sysdig/admission-controller
+    # PullPolicy for Webhook image
     pullPolicy: IfNotPresent
     # Override the default image tag. If not specified, it defaults to appVersion in Chart.yaml
     tag:
 
   service:
+    # Use this type as webhook service
     type: ClusterIP
+    # Configure port for the webhook service
     port: 443
 
-  # Set to http://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy
+  # HTTP Proxy settings for webhook. Set to http://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy
   httpProxy: ""
-  # Set to http://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy
+  # HTTPS Proxy settings for webhook. Set to https://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy
   httpsProxy: ""
   # List of hosts, IPs, or IPs in CIDR format that should not go through the proxy. We include "kubernetes" service and typical 10.0.0.0/8 services
   noProxy: kubernetes,10.0.0.0/8
 
-  podAnnotations:
+  # Webhook pod annotations
+  podAnnotations:  # +doc-gen:break
     prometheus.io/scrape: "true"
     prometheus.io/path: "/metrics"
     prometheus.io/port: "5000"
     prometheus.io/scheme: "https"
     sidecar.istio.io/inject: "false"
 
+  # PSP's for webhook
   podSecurityContext: {}
 
-  securityContext:
+  # Configure securityContext for webhook
+  securityContext:  # +doc-gen:break
     capabilities:
       drop:
       - ALL
@@ -86,8 +111,10 @@ webhook:
   # network connections to the pods, for example using Calico CNI plugin on EKS. This is not required
   # or recommended in most contexts.
   hostNetwork: false
-  
+
+  # The image pull secrets for webhook
   imagePullSecrets: []
+  # Resource request and limits for webhook
   resources: {}
 #    limits:
 #      cpu: 250m
@@ -96,67 +123,86 @@ webhook:
 #      cpu: 250m
 #      memory: 256Mi
 
+  # Number of seconds for the request to time out
   timeoutSeconds: 10
 
+  # Configure nodeSelector for scheduling for webhook
   nodeSelector: {}
 
+  # Tolerations for scheduling for webhook
   tolerations: []
 
+  # Configure affinity rules for webhook
   affinity: {}
 
+  # Deny request when an error happened evaluating request
   denyOnError: false
+  # Dry Run request
   dryRun: false
 
-# inline scanner configuration
 scanner:
+  # Deploy the Inline Scanner Service
   enabled: true
+  # Service name for Scanner deployment
   name: scanner
+  # Amount of replicas for scanner
   replicaCount: 1
 
   image:
+    # Scanner image registry
     registry: quay.io
+    # Scanner image repository
     repository: sysdig/inline-scan-service
+    # PullPolicy for Scanner image
     pullPolicy: IfNotPresent
-    # Default image tag
+    # Scanner image tag
     tag: 0.0.9
 
   service:
+    # Configure port for the webhook service
     port: 8080
 
+  # Authenticate with Secure token
   authWithSecureToken: false
 
-  # Put your <Sysdig-Secure-Secret-Token> in this value
-  # Set to http://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy
+  # HTTP Proxy settings for scanner. Set to http://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy
   httpProxy: ""
-  # Set to http://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy
+  # HTTPS Proxy settings for scanner. Set to https://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy
   httpsProxy: ""
   # List of hosts, IPs, or IPs in CIDR format that should not go through the proxy. We include "kubernetes" service and typical 10.0.0.0/8 services
   noProxy: kubernetes,10.0.0.0/8
 
-  podAnnotations:
+  # Scanner pod annotations
+  podAnnotations:  # +doc-gen:break
     prometheus.io/scrape: "true"
     prometheus.io/path: "/metrics"
     prometheus.io/port: "8080"
 
   psp:
+    # Whether to create a psp policy and role / role-binding
     create: false
 
+  # PSP's for scanner
   podSecurityContext: {}
 
+  # Verify TLS on image pull from registries
   verifyRegistryTLS: true
 
-  # Use a provided secret containing a .dockercfg for registry authentication (i.e. Openshift internal registry)
+  # Docker config secret. Use a provided secret containing a .dockercfg for registry authentication (i.e. Openshift internal registry)
   dockerCfgSecretName: ""
 
-  securityContext:
+  # Configure securityContext for scanner
+  securityContext:  # +doc-gen:break
     capabilities:
       drop:
         - ALL
     readOnlyRootFilesystem: true
     runAsNonRoot: true
 
+  # The image pull secrets for scanner
   imagePullSecrets: []
 
+  # Resource requests and limits for scanner
   resources: {}
 #    limits:
 #      cpu: 250m
@@ -165,8 +211,11 @@ scanner:
 #      cpu: 250m
 #      memory: 256Mi
 
+  # Configure nodeSelector for scheduling for the scanner
   nodeSelector: {}
 
+  # Tolerations for scheduling for the scanner
   tolerations: []
 
+  # Configure affinity rules for the scanner
   affinity: {}
