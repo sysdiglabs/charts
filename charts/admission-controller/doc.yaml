@@ -1,0 +1,21 @@
+project:
+  name: Sysdig Admission Controller
+  shortName: Admission Controller
+  url: https://docs.sysdig.com/en/docs/sysdig-secure/scanning/admission-controller/
+  description: This chart deploys the Sysdig Admission Controller in your Kubernetes cluster.
+  app: the Sysdig Admission Controller
+repository:
+  url: https://charts.sysdig.com
+  name: sysdig
+chart:
+  name: admission-controller
+#  version: v0.9.0-rc.0
+#  values: "-- generate from values file --"
+  valuesExample: "sysdig.secureAPIToken=YOUR-KEY-HERE,clusterName=YOUR-CLUSTER-NAME"
+prerequisites:
+- "Kubernetes v1.16+"
+- "Sysdig Secure API Token"
+
+release:
+  name: admission-controller
+  namespace: admission-controller
