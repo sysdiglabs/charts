@@ -84,6 +84,8 @@ serviceAccount:
   create: true
   # Use this value as serviceAccountName
   name:
+  # Optional annotations
+  annotations:
 
 daemonset:
   # Perform rolling updates by default in the DaemonSet agent
