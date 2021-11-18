@@ -45,6 +45,10 @@ chart and their default values:
 | `aws.region`                     | AWS Region                                                                                                      | ` `                                                                             |
 | `gcp.credentials`                | GCP Credentials JSON                                                                                            | ` `                                                                             |
 | `azure.eventHubConnectionString` | Azure EventHub Connection String                                                                                | ` `                                                                             |
+| `azure.eventGridEventHubConnectionString` | Azure Eveng Grid EventHub Connection String                                                                                | ` `                                                                             |
+| `tenantId`                       | Azure service principal tenant id         |                                                                     |
+| `clientId`                       | Azure service principal client id         |                                                                     |
+| `clientSecret`                   | Azure service principal client secret     |                                                                     |
 | `sysdig.url`                     | Sysdig Secure URL                                                                                               | `https://secure.sysdig.com`                                                     |
 | `sysdig.secureAPIToken`          | API Token to access Sysdig Secure                                                                               | ` `                                                                             |
 | `sysdig.verifySSL`               | Verify SSL certificate                                                                                          | `true`                                                                          |
