@@ -1,0 +1,16 @@
+global:
+  clusterConfig:
+    name: cluster-name
+    namespace: sysdig
+  sysdig:
+    apiKey: aaaa-bbbb-cccc-dddd
+    collectorEndpoint: collector.sysdig-cloud.svc.cluster.local
+  image:
+    registry: quay.io
+    tag: latest
+
+sysdigAgent:
+  # sysdig:
+    # accessKey: eeee-ffff-gggg-hhhh
+  nodeAnalyzer:
+    apiEndpoint: http://adsfasdfa
