@@ -72,6 +72,11 @@ gcpCredentials: ""
 
 azure:
   eventHubConnectionString: ""
+  eventGridEventHubConnectionString: ""
+  tenantId: ""
+  clientId: ""
+  clientSecret: ""
+  region: ""
 
 sysdig:
   url: "https://secure.sysdig.com"
@@ -94,4 +99,4 @@ rules: []
 
 ingestors: []
 
-notifiers: []
+scanners: []

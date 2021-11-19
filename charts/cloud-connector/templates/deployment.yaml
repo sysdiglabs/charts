@@ -83,6 +83,31 @@ spec:
                 secretKeyRef:
                   name: {{ include "cloud-connector.secretname" . }}
                   key: azure_event_hub_connection_string
+            - name: AZURE_EVENTGRID_EVENT_HUB_CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "cloud-connector.secretname" . }}
+                  key: azure_event_grid_event_hub_connection_string
+            - name: AZURE_TENANT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "cloud-connector.secretname" . }}
+                  key: azure_tenantId
+            - name: AZURE_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "cloud-connector.secretname" . }}
+                  key: azure_clientId
+            - name: AZURE_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "cloud-connector.secretname" . }}
+                  key: azure_clientSecret
+            - name: AZURE_REGION
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "cloud-connector.secretname" . }}
+                  key: azure_region
           {{- if .Values.extraEnvVars }}
           {{- toYaml .Values.extraEnvVars | nindent 12}}
           {{- end }}
