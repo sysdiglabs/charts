@@ -72,4 +72,9 @@ Alternatively, a YAML file that specifies the values for the parameters can be p
 $ helm install my-release -f values.yaml sysdig/cloud-connector
 ```
 
-You have more details about Rules, Ingestors and Notifiers on [Cloud Connector documentation](https://sysdiglabs.github.io/cloud-connector/config-file.html)
+
+You have more details about configuration, you can check the live examples present in the different Terraform Modules:
+
+* [Single Account Deployment for AWS in K8s](https://github.com/sysdiglabs/terraform-aws-secure-for-cloud/blob/master/examples/single-account-k8s/cloud-connector.tf#L27)
+* [Single Project Deployment for GCP in K8s](https://github.com/sysdiglabs/terraform-google-secure-for-cloud/blob/master/examples/single-project-k8s/cloud-connector.tf#L32)
+* [Single Subscription Deployment for Azure in K8s](https://github.com/sysdiglabs/terraform-azurerm-secure-for-cloud/blob/master/examples/single-subscription-k8s/cloud-connector.tf#L1)
