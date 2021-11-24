@@ -59,8 +59,8 @@ spec:
             path: /
         - name: tmp-vol
           emptyDir: {}
-        {{- if .Values.nodeAnalyzer.imageAnalyzer.extraVolumes.volumes }}
-{{ toYaml .Values.nodeAnalyzer.imageAnalyzer.extraVolumesvolumes | indent 8 }}
+        {{- with .Values.nodeAnalyzer.imageAnalyzer.extraVolumes.volumes }}
+{{ toYaml . | indent 8 }}
         {{- end }}
       tolerations:
 {{ toYaml .Values.nodeAnalyzer.tolerations | indent 8 }}
