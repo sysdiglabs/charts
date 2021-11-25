@@ -11,5 +11,5 @@ spec:
     - name: wget
       image: busybox
       command: ['wget']
-      args: ['{{ include "harbor-scanner-sysdig-secure.fullname" . }}:{{ .Values.service.port }}/health']
+      args: ['{{ include "harbor-scanner-sysdig-secure.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.service.port }}/health']
   restartPolicy: Never
