@@ -218,7 +218,7 @@ nodeImageAnalyzer:
   deploy: false
   image:
     repository: sysdig/node-image-analyzer
-    tag: 0.1.10
+    tag: 0.1.15
     pullPolicy: IfNotPresent
     # pullSecrets:
     #   - name: myRegistrKeySecretName
@@ -351,7 +351,7 @@ nodeAnalyzer:
   imageAnalyzer:
     image:
       repository: sysdig/node-image-analyzer
-      tag: 0.1.12
+      tag: 0.1.15
       pullPolicy: IfNotPresent
 
     # The Docker socket path.
