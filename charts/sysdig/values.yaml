@@ -121,6 +121,8 @@ daemonset:
               - linux
   # Allow the DaemonSet to set annotations
   annotations: {}
+  # Allow the DaemonSet to set labels
+  labels: {}
   # Liveness and readiness probes initial delay (in seconds)
   probes:
     initialDelay: 90
@@ -344,6 +346,8 @@ nodeAnalyzer:
   # Set nodeAnalyzer daemonset priorityClassName
   priorityClassName:
 
+  # Allow the DaemonSet to set labels
+  labels: {}
   # Use this pullSecret to pull images from a private registry
   # pullSecrets:
   #   - name: myRegistryKeySecretName
