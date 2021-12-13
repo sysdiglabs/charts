@@ -45,6 +45,10 @@ chart and their default values:
 | `aws.region`                     | AWS Region                                                                                                      | ` `                                                                             |
 | `gcp.credentials`                | GCP Credentials JSON                                                                                            | ` `                                                                             |
 | `azure.eventHubConnectionString` | Azure EventHub Connection String                                                                                | ` `                                                                             |
+| `azure.eventGridEventHubConnectionString` | Azure Eveng Grid EventHub Connection String                                                                                | ` `                                                                             |
+| `tenantId`                       | Azure service principal tenant id         |                                                                     |
+| `clientId`                       | Azure service principal client id         |                                                                     |
+| `clientSecret`                   | Azure service principal client secret     |                                                                     |
 | `sysdig.url`                     | Sysdig Secure URL                                                                                               | `https://secure.sysdig.com`                                                     |
 | `sysdig.secureAPIToken`          | API Token to access Sysdig Secure                                                                               | ` `                                                                             |
 | `sysdig.verifySSL`               | Verify SSL certificate                                                                                          | `true`                                                                          |
@@ -68,4 +72,9 @@ Alternatively, a YAML file that specifies the values for the parameters can be p
 $ helm install my-release -f values.yaml sysdig/cloud-connector
 ```
 
-You have more details about Rules, Ingestors and Notifiers on [Cloud Connector documentation](https://sysdiglabs.github.io/cloud-connector/config-file.html)
+
+You have more details about configuration, you can check the live examples present in the different Terraform Modules:
+
+* [Single Account Deployment for AWS in K8s](https://github.com/sysdiglabs/terraform-aws-secure-for-cloud/blob/master/examples/single-account-k8s/cloud-connector.tf#L27)
+* [Single Project Deployment for GCP in K8s](https://github.com/sysdiglabs/terraform-google-secure-for-cloud/blob/master/examples/single-project-k8s/cloud-connector.tf#L32)
+* [Single Subscription Deployment for Azure in K8s](https://github.com/sysdiglabs/terraform-azurerm-secure-for-cloud/blob/master/examples/single-subscription-k8s/cloud-connector.tf#L1)
