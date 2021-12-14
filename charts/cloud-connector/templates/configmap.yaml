@@ -7,6 +7,9 @@ metadata:
 data:
   cloud-connector.yaml: |
     logging: info
+    bruteForceDetection:
+      duration: {{ .Values.bruteForceDetection.duration }}
+      maximumTries: {{ .Values.bruteForceDetection.maximumTries }}
     rules:
 {{ toYaml .Values.rules | indent 6 }}
     ingestors:
