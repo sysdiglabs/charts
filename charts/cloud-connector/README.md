@@ -56,7 +56,8 @@ chart and their default values:
 | `rules`                          | Rules Section for Cloud Connector                                                                               | `[]`                                                                            |
 | `ingestors`                      | Ingestors Section for Cloud Connector                                                                           | `[]`                                                                            |
 | `notifiers`                      | Notifiers Section for Cloud Connector                                                                           | `[]`                                                                            |
-
+| `bruteForceDetection.duration`   | Time window for a bruteforce attack try    | `24h` |
+| `bruteForceDetection.maximumTries`    | Maximum number of tries for given time window     | `10`    |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
