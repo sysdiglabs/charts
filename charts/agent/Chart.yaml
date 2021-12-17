@@ -1,0 +1,28 @@
+apiVersion: v2
+name: agent
+description: A Helm chart for Kubernetes
+
+type: application
+
+# currently matching sysdig 1.12.40
+version: 1.0.0
+
+appVersion: "12.1.1"
+
+keywords:
+  - monitoring
+  - security
+  - alerting
+  - metric
+  - troubleshooting
+  - run-time
+home: https://www.sysdig.com/
+icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+sources:
+  - https://app.sysdigcloud.com/#/settings/user
+  - https://github.com/draios/sysdig
+dependencies:
+- name: helper-lib
+  # repository: https://artifactory.internal.sysdig.com/artifactory/helm
+  repository: file://../helper-lib
+  version: 0.1.0
