@@ -4,6 +4,9 @@ metadata:
   name: {{ include "cloud-connector.fullname" . }}
   labels:
     {{- include "cloud-connector.labels" . | nindent 4 }}
+    {{- with .Values.service.labels }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
 spec:
   type: {{ .Values.service.type }}
   ports:
