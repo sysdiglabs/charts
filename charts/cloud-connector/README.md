@@ -34,6 +34,7 @@ chart and their default values:
 | `securityContext`                | Configure securityContext                                                                                       | `{}`                                                                            |
 | `service.type`                   | Use this type as service                                                                                        | `ClusterIP`                                                                     |
 | `service.port`                   | Configure port for the service                                                                                  | `5000`                                                                          |
+| `service.labels`                 | Additional labels to specify for the service                                                                    | `{}`                                                                            |
 | `resources`                      | Configure resource requests and limits                                                                          | `{}`                                                                            |
 | `nodeSelector`                   | Configure nodeSelector for scheduling                                                                           | `{}`                                                                            |
 | `nodeSelector`                   | Configure nodeSelector for scheduling                                                                           | `{}`                                                                            |
@@ -56,7 +57,8 @@ chart and their default values:
 | `rules`                          | Rules Section for Cloud Connector                                                                               | `[]`                                                                            |
 | `ingestors`                      | Ingestors Section for Cloud Connector                                                                           | `[]`                                                                            |
 | `notifiers`                      | Notifiers Section for Cloud Connector                                                                           | `[]`                                                                            |
-
+| `bruteForceDetection.duration`   | Time window for a bruteforce attack try    | `24h` |
+| `bruteForceDetection.maximumTries`    | Maximum number of tries for given time window     | `10`    |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 

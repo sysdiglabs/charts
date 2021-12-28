@@ -28,7 +28,7 @@ The packaged referenced in `index.yaml`, when it's updated using the GitHub acti
 
 To add a new chart, create a directory inside _charts_ with it contents at _master_ branch.
 
-Whe you commit it, it will be picked up by the GitHub action, and if it contains a chart and version that doesn't already exist in the _charts repository_, a new release with the package for the chart will be published on the _GitHub repository_,
+When you commit it, it will be picked up by the GitHub action, and if it contains a chart and version that doesn't already exist in the _charts repository_, a new release with the package for the chart will be published on the _GitHub repository_,
 and the list of all charts at `index.yaml` on _gh-pages_ branch will be updated on the _charts repository_.
 
 

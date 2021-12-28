@@ -40,6 +40,7 @@ securityContext:
 service:
   type: ClusterIP
   port: 80
+  labels: {}
 
 resources: {}
 
@@ -100,3 +101,7 @@ rules: []
 ingestors: []
 
 scanners: []
+
+bruteForceDetection:
+  duration: 24h
+  maximumTries: 10
