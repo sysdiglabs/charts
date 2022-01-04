@@ -1,5 +1,8 @@
 # Cloud Scanning
 
+>  ⚠️ **Deprecated Module** 
+> <br>Use Cloud-Connector `scanning` configuration instead of this module
+
 This chart deploys the Sysdig Cloud scanning on your Kubernetes cluster.
 
 ## Installing the Chart
