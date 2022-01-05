@@ -5,6 +5,7 @@ metadata:
   labels:
     app.kubernetes.io/name: {{ include "sysdig.name" . }}
 {{ include "sysdig.labels" . | indent 4 }}
+{{ include "daemonset.labels" . | indent 4 }}
 spec:
   selector:
     matchLabels:
@@ -16,6 +17,7 @@ spec:
       labels:
         app.kubernetes.io/name: {{ include "sysdig.name" . }}
 {{ include "sysdig.labels" . | indent 8 }}
+{{ include "daemonset.labels" . | indent 8 }}
       {{- if .Values.daemonset.annotations }}
       annotations:
 {{ toYaml .Values.daemonset.annotations | indent 8 }}

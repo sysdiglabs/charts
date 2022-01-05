@@ -4,6 +4,16 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.12.41
+### Minor changes
+
+- Add custom labels for Sysdig and NodeAnalyzer daemonsets
+
+## v1.12.40
+### Minor changes
+
+- Add priorityClassName for NodeAnalyzer
+
 ## v1.12.35
 ### Minor changes
 

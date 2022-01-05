@@ -6,6 +6,7 @@ metadata:
   labels:
     app.kubernetes.io/name: {{ include "sysdig.name" . }}-node-analyzer
 {{ include "sysdig.labels" . | indent 4 }}
+{{ include "nodeAnalyzer.labels" . | indent 4 }}
 spec:
   selector:
     matchLabels:
@@ -19,6 +20,7 @@ spec:
       labels:
         app.kubernetes.io/name: {{ include "sysdig.name" . }}-node-analyzer
 {{ include "sysdig.labels" . | indent 8 }}
+{{ include "nodeAnalyzer.labels" . | indent 8 }}
     spec:
       volumes:
         - name: sysdig-agent-config
