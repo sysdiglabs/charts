@@ -61,8 +61,12 @@ spec:
             allowPrivilegeEscalation: true
           resources:
 {{ toYaml .Values.slim.resources | indent 12 }}
-          {{- if .Values.ebpf.enabled }}
           env:
+            - name: K8S_NODE
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+          {{- if .Values.ebpf.enabled }}
             - name: SYSDIG_BPF_PROBE
               value:
           {{- end }}
