@@ -2,9 +2,8 @@
 
 This GitHub repository is the official source for Sysdig's Helm charts.
 
-> For instructions about how to install charts from this repository, visit the public website at
+ For instructions about how to install charts from this repository, visit the public website at
 **[https://charts.sysdig.com](https://charts.sysdig.com/)**
-
 
 ## Contribute
 
@@ -32,6 +31,13 @@ To add a new chart, create a directory inside _charts_ with it contents at _mast
 
 When you commit it, it will be picked up by the GitHub action, and if it contains a chart and version that doesn't already exist in the _charts repository_, a new release with the package for the chart will be published on the _GitHub repository_,
 and the list of all charts at `index.yaml` on _gh-pages_ branch will be updated on the _charts repository_.
+
+
+### - Modify GithubPages
+
+https://charts.sysdig.com is managed through GithubPages action.
+
+`.github/workflows/release.yml` will merge each `charts/*/README.md` into the `gh-pages` branch.
 
 
 ## More information
