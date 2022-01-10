@@ -1210,6 +1210,23 @@ entries:
   cloud-bench:
   - apiVersion: v2
     appVersion: 0.1.0
+    created: "2022-01-10T16:03:49.475132745Z"
+    description: Sysdig Cloud Bench
+    digest: cd87fd7c3dfb426b15333061cee9217543e97b8b197cc7f961fee80b7f1fdd4c
+    home: https://sysdig.com
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    maintainers:
+    - email: yathindra.naik@sysdig.com
+      name: yathi-sysdig
+    - email: alvaro.iradier@sysdig.com
+      name: airadier
+    name: cloud-bench
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/cloud-bench-0.2.1/cloud-bench-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
+    appVersion: 0.1.0
     created: "2022-01-10T12:17:32.035606321Z"
     description: Sysdig Cloud Bench
     digest: ff7a7d1fd2bc53463e105a2c56fd20a0b77192165ff8536ddcf239fffb92ff77
@@ -1866,6 +1883,22 @@ entries:
     - https://github.com/sysdiglabs/charts/releases/download/cloud-connector-0.1.0/cloud-connector-0.1.0.tgz
     version: 0.1.0
   cloud-scanning:
+  - apiVersion: v2
+    appVersion: 0.11.3
+    created: "2022-01-10T16:03:49.644439856Z"
+    description: Sysdig Cloud Scanning
+    digest: c04e528f0add0973f37e1bb38ae4a2c135466745a8c491fba52bfc1cd16fb139
+    home: https://sysdiglabs.github.io/cloud-connector
+    maintainers:
+    - email: alvaro.iradier@sysdig.com
+      name: airadier
+    - email: nestor.salceda@sysdig.com
+      name: nestorsalceda
+    name: cloud-scanning
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/cloud-scanning-0.3.1/cloud-scanning-0.3.1.tgz
+    version: 0.3.1
   - apiVersion: v2
     appVersion: 0.11.3
     created: "2022-01-10T12:17:32.296066836Z"
@@ -5607,4 +5640,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2022-01-10T12:17:32.298017335Z"
+generated: "2022-01-10T16:03:49.646921857Z"
