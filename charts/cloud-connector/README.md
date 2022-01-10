@@ -87,68 +87,68 @@ ingestors:
   #  - aws-cloudtrail-sns-sqs: # Receives CloudTrail events from an SQS queue using the SNS paylaod
   #      queueURL:
   #      assumeRole: # organizational usage, assumeRole to fetch S3 elements
-  #      bufferSize: 256 # number of events on the channel
+
   #
   #  - aws-cloudtrail-s3-sns-sqs: # Receives CloudTrail events using s3 events as triggers
   #      queueURL:
   #      assumeRole: # organizational usage, assumeRole to fetch S3 elements
-  #      bufferSize: 256
+
   #
   #  - eks: # Enables K8s audit log for EKS clusters
   #      cluster: # EKS cluster name to secure
   #      interval: 60s
   #      tags:
-  #      bufferSize: 256
+
   #
   #  - aws-cloudtrail-debug: # Debug endpoint for AWS CloudTrail events
   #      url: /debug/aws/cloudtrail
-  #     bufferSize: 256
+
   #
   #  - gcp-auditlog: # Polls for GCP auditlog events from StackDriver API
   #      project:
   #      interval: 90s
-  #      bufferSize: 256
+
   #
   #  - gcp-auditlog-pubsub: # Receives GCP AuditLog from a PubSub topic
   #      project:
   #      subscription:
-  #      bufferSize: 256
+
   #
   #  - gcp-auditlog-pubsub-http: # Receives GCP AuditLog from a PubSub topic streamed over an HTTP Endpoint
   #      url:
-  #      bufferSize: 256
+
   #
   #  - gcp-gcr-pubsub-http: # Receives GCR events from a PubSub topic streamed over an HTTP Endpoint
   #      url:
-  #      bufferSize: 256
+
   #
   #  - gcp-auditlog-debug: # Debug endpoint for GCP AuditLog events
   #      url: /debug/gcp/auditlog
-  #      bufferSize: 256
+
   #
   #  - azure-event-hub:
   #      subscriptionID: 00000000-1111-2222-3333-444444444444
-  #      bufferSize: 256
+
   #
   #  - azure-event-grid:
   #      subscriptionID: 00000000-1111-2222-3333-444444444444
-  #      bufferSize: 256
+
   #
   #  - azure-platformlogs-debug: # Debug endpoint for Azure PlatformLogs events
   #      url: /debug/azure/platformlogs
-  #      bufferSize: 256
+
   #
   #  - k8s-audit-debug: # Debug endpoint for Kubernetes Audit log events
   #     url: /debug/k8s/audit
   #     cluster: debug-cluster
   #     tags:
   #       debug: true
-  #     bufferSize: 256
+
   #
   #  - k8s-admission-debug: # Debug endpoint for Kubernetes Admission Review events
   #     url: /debug/k8s/admission
   #     cluster: debug-cluster
-  #     bufferSize: 256
+
 ```
 
 
