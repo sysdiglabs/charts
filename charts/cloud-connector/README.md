@@ -93,27 +93,7 @@ ingestors:
   #      queueURL:
   #      assumeRole: # organizational usage, assumeRole to fetch S3 elements
 
-  #
-  #  - eks: # Enables K8s audit log for EKS clusters
-  #      cluster: # EKS cluster name to secure
-  #      interval: 60s
-  #      tags:
 
-  #
-  #  - aws-cloudtrail-debug: # Debug endpoint for AWS CloudTrail events
-  #      url: /debug/aws/cloudtrail
-
-  #
-  #  - gcp-auditlog: # Polls for GCP auditlog events from StackDriver API
-  #      project:
-  #      interval: 90s
-
-  #
-  #  - gcp-auditlog-pubsub: # Receives GCP AuditLog from a PubSub topic
-  #      project:
-  #      subscription:
-
-  #
   #  - gcp-auditlog-pubsub-http: # Receives GCP AuditLog from a PubSub topic streamed over an HTTP Endpoint
   #      url:
 
@@ -122,33 +102,12 @@ ingestors:
   #      url:
 
   #
-  #  - gcp-auditlog-debug: # Debug endpoint for GCP AuditLog events
-  #      url: /debug/gcp/auditlog
-
-  #
   #  - azure-event-hub:
   #      subscriptionID: 00000000-1111-2222-3333-444444444444
 
   #
   #  - azure-event-grid:
   #      subscriptionID: 00000000-1111-2222-3333-444444444444
-
-  #
-  #  - azure-platformlogs-debug: # Debug endpoint for Azure PlatformLogs events
-  #      url: /debug/azure/platformlogs
-
-  #
-  #  - k8s-audit-debug: # Debug endpoint for Kubernetes Audit log events
-  #     url: /debug/k8s/audit
-  #     cluster: debug-cluster
-  #     tags:
-  #       debug: true
-
-  #
-  #  - k8s-admission-debug: # Debug endpoint for Kubernetes Admission Review events
-  #     url: /debug/k8s/admission
-  #     cluster: debug-cluster
-
 ```
 
 
@@ -163,18 +122,18 @@ scanners:
 #      secureAPITokenSecretName:
 #      masterOrganizationRole:
 #      organizationRolePerAccount:
-#
+
 #  - aws-ecs: # Scan images when a new image is detected in a ECS cluster
 #      codeBuildProject:
 #      secureAPITokenSecretName:
 #      masterOrganizationRole:
 #      organizationRolePerAccount:
-#
+
 #  - gcp-gcr: # Scan images when a new image is pushed to GCP GCR
 #      project:
 #      secureAPITokenSecretName:
 #      serviceAccount:
-#
+
 #  - gcp-cloud-run: # Scan images when a new image is detected from GCP CloudRun
 #      project:
 #      secureAPITokenSecretName:
@@ -182,6 +141,7 @@ scanners:
 #
 #
 #  - azure-acr: {} # Scan images when a new image is pushed to Azure container registry
+
 #  - azure-aci: # Scan images when a new image is detected in container instance group
 #      subscriptionID: 00000000-1111-2222-3333-444444444444
 #      resourceGroup: sfc-resourcegroup # resource group of azure container registry
