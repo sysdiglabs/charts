@@ -2,6 +2,10 @@
 
 This chart deploys the Sysdig Cloud Bench on your Kubernetes cluster.
 
+>  ⚠️ **Deprecated Module**<br/>
+> This agent-based version of cloud-bench has been deprecated in favour of an agentless implementation.
+> See for more instructions for its installation at [Sysdig Secure for cloud - CSPM/Compliance with CIS AWS Benchmarks](https://docs.sysdig.com/en/docs/installation/sysdig-secure-for-cloud/#cspmcompliance-with-cis-aws-benchmarks)
+
 ## Installing the Chart
 
 Add Sysdig Helm charts repository and deploy the chart:

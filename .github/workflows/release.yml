@@ -35,5 +35,5 @@ jobs:
           cp -r charts ${tmp_folder}/
           pushd ${tmp_folder}
           git add -A "charts/**/README.md"
-          git commit -m "Updating README.md files" && git push || true
+          git pull && git commit -m "Updating README.md files" && git push
           popd
