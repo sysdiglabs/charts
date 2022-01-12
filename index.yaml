@@ -1314,6 +1314,20 @@ entries:
     version: 0.1.0
   cloud-connector:
   - apiVersion: v2
+    appVersion: 0.14.1
+    created: "2022-01-12T12:51:39.515939997Z"
+    description: Sysdig Cloud Connector
+    digest: d71d8608d498ceda594c54f4e46ba9134aa5519cb063af3a1cd2ced5a48bb84e
+    home: https://sysdiglabs.github.io/cloud-connector
+    maintainers:
+    - email: nestor.salceda@sysdig.com
+      name: nestorsalceda
+    name: cloud-connector
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/cloud-connector-0.7.3/cloud-connector-0.7.3.tgz
+    version: 0.7.3
+  - apiVersion: v2
     appVersion: 0.13.1
     created: "2022-01-10T12:17:32.162782479Z"
     description: Sysdig Cloud Connector
@@ -5691,4 +5705,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2022-01-12T12:47:55.306672287Z"
+generated: "2022-01-12T12:51:39.517529705Z"
