@@ -1,6 +1,7 @@
 # Cloud Connector
 
-This chart deploys the Sysdig Cloud connector on your Kubernetes cluster.
+This chart deploys the Sysdig Cloud connector on your Kubernetes cluster to enable threat-detection and image scanning
+capabilities for the main three providers; AWS, GCP and Azure
 
 ## Installing the Chart
 
@@ -21,7 +22,7 @@ chart and their default values:
 | -------------------------------- | --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
 | `replicaCount`                   | Amount of replicas for Cloud Connector                                                                          | `1`                                                                             |
 | `image.repository`               | The image repository to pull from                                                                               | `sysdiglabs/cloud-connector`                                                    |
-| `image.tag`               	    | The image tag (immutable tags are recommended)                                                                 | `latest pinned version`                                                                    |
+| `image.tag`               	   | The image tag (immutable tags are recommended)                                                                 | `latest pinned version`                                                                    |
 | `image.pullPolicy`               | The image pull policy                                                                                           | `IfNotPresent`                                                                  |
 | `imagePullSecrets`               | The image pull secrets                                                                                          | `[]`                                                                            |
 | `nameOverride`                   | Chart name override                                                                                             | ` `                                                                             |
@@ -55,7 +56,8 @@ chart and their default values:
 | `sysdig.verifySSL`               | Verify SSL certificate                                                                                          | `true`                                                                          |
 | `existingSecretName`             | Provide an existing secret name (see details in values.yaml) instead of creating a new one from provided values | ` `                                                                             |
 | `rules`                          | Rules Section for Cloud Connector                                                                               | `[]`                                                                            |
-| `ingestors`                      | Ingestors Section for Cloud Connector                                                                           | `[]`                                                                            |
+| `ingestors`                      | Thread-Detection event ingestion configuration ([config](#ingestors))                                                             | `[]`                                                                            |
+| `scanners`                       | Scanning capabilities configuration ([config](#scanners))                                                                        | `[]`                                                                            |
 | `notifiers`                      | Notifiers Section for Cloud Connector                                                                           | `[]`                                                                            |
 | `bruteForceDetection.duration`   | Time window for a bruteforce attack try    | `24h` |
 | `bruteForceDetection.maximumTries`    | Maximum number of tries for given time window     | `10`    |
@@ -74,8 +76,81 @@ Alternatively, a YAML file that specifies the values for the parameters can be p
 $ helm install my-release -f values.yaml sysdig/cloud-connector
 ```
 
+## Configuration Detail
 
-You have more details about configuration, you can check the live examples present in the different Terraform Modules:
+### Ingestors
+
+Where to ingest events from
+
+```yaml
+ingestors:
+  #  - aws-cloudtrail-sns-sqs: # Receives CloudTrail events from an SQS queue using the SNS paylaod
+  #      queueURL:
+  #      assumeRole: # organizational usage, assumeRole to fetch S3 elements
+
+  #
+  #  - aws-cloudtrail-s3-sns-sqs: # Receives CloudTrail events using s3 events as triggers
+  #      queueURL:
+  #      assumeRole: # organizational usage, assumeRole to fetch S3 elements
+
+
+  #  - gcp-auditlog-pubsub-http: # Receives GCP AuditLog from a PubSub topic streamed over an HTTP Endpoint
+  #      url:
+
+  #
+  #  - gcp-gcr-pubsub-http: # Receives GCR events from a PubSub topic streamed over an HTTP Endpoint
+  #      url:
+
+  #
+  #  - azure-event-hub:
+  #      subscriptionID: 00000000-1111-2222-3333-444444444444
+
+  #
+  #  - azure-event-grid:
+  #      subscriptionID: 00000000-1111-2222-3333-444444444444
+```
+
+
+### Scanners
+
+Trigger scanners when a new image is detected
+
+```yaml
+scanners:
+#  - aws-ecr: # Scan images when a new image is pushed to AWS ECR
+#      codeBuildProject:
+#      secureAPITokenSecretName:
+#      masterOrganizationRole:
+#      organizationRolePerAccount:
+
+#  - aws-ecs: # Scan images when a new image is detected in a ECS cluster
+#      codeBuildProject:
+#      secureAPITokenSecretName:
+#      masterOrganizationRole:
+#      organizationRolePerAccount:
+
+#  - gcp-gcr: # Scan images when a new image is pushed to GCP GCR
+#      project:
+#      secureAPITokenSecretName:
+#      serviceAccount:
+
+#  - gcp-cloud-run: # Scan images when a new image is detected from GCP CloudRun
+#      project:
+#      secureAPITokenSecretName:
+#      serviceAccount:
+#
+#
+#  - azure-acr: {} # Scan images when a new image is pushed to Azure container registry
+
+#  - azure-aci: # Scan images when a new image is detected in container instance group
+#      subscriptionID: 00000000-1111-2222-3333-444444444444
+#      resourceGroup: sfc-resourcegroup # resource group of azure container registry
+#      containerRegistry: sfccontainerregistry # container registry name where to run the scan
+```
+
+### Usage examples
+
+Check live examples present in our different Terraform Modules:
 
 * [Single Account Deployment for AWS in K8s](https://github.com/sysdiglabs/terraform-aws-secure-for-cloud/blob/master/examples/single-account-k8s/cloud-connector.tf#L27)
 * [Single Project Deployment for GCP in K8s](https://github.com/sysdiglabs/terraform-google-secure-for-cloud/blob/master/examples/single-project-k8s/cloud-connector.tf#L32)

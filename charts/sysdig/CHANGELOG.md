@@ -4,6 +4,11 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.12.43
+### Minor changes
+
+- Add a flag to enable/disable Sysdig agent daemonset
+
 ## v1.12.41
 ### Minor changes
 
