@@ -67,6 +67,14 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: spec.nodeName
+          {{- if .Values.proxy.httpProxy }}
+            - name: http_proxy
+              value: {{ .Values.proxy.httpProxy }}
+          {{- end }}
+          {{- if .Values.proxy.httpsProxy }}
+            - name: https_proxy
+              value: {{ .Values.proxy.httpsProxy }}
+          {{- end }}
           {{- if .Values.ebpf.enabled }}
             - name: SYSDIG_BPF_PROBE
               value:
