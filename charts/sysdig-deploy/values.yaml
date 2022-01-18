@@ -10,7 +10,5 @@ global:
     tag: latest
 
 sysdigAgent:
-  # sysdig:
-    # accessKey: eeee-ffff-gggg-hhhh
-  nodeAnalyzer:
-    apiEndpoint: http://adsfasdfa
+  sysdig:
+    accessKey: eeee-ffff-gggg-hhhh

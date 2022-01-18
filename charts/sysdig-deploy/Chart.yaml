@@ -23,12 +23,8 @@ version: 0.1.0
 # It is recommended to use it with quotes.
 appVersion: "1.16.0"
 dependencies:
-- name: helper-lib
+- name: agent
   # repository: https://artifactory.internal.sysdig.com/artifactory/helm
-  repository: file://../helper-lib
-  version: 0.1.0
-- name: sysdig
-  # repository: https://artifactory.internal.sysdig.com/artifactory/helm
-  repository: file://../sysdig
-  version: 1.12.39
-  alias: sysdigAgent
+  repository: file://../agent
+  version: 2.0.0
+  alias: agent
