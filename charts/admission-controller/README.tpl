@@ -125,6 +125,7 @@ The following command will deploy the admission controller with a custom CA:
 $ helm install  --create-namespace -n {{ .Release.Namespace }} {{ .Release.Name }} \
                 --set sysdig.url=SECURE_URL \
                 --set sysdig.secureAPIToken=SECURE_API_TOKEN \
+                --set clusterName=CLUSTER_NAME \
                 --set webhook.ssl.ca.cert=YOUR_CA_CERT_AS_PEM_ENCODED \
                 --set webhook.ssl.ca.key=YOUR_CA_KEY_AS_PEM_ENCODED \
                 {{ .Repository.Name }}/{{ .Chart.Name }}
@@ -140,6 +141,7 @@ The following command will deploy the admission controller with a custom CA and 
 $ helm install  --create-namespace -n {{ .Release.Namespace }} {{ .Release.Name }} \
                 --set sysdig.url=SECURE_URL \
                 --set sysdig.secureAPIToken=SECURE_API_TOKEN \
+                --set clusterName=CLUSTER_NAME \
                 --set webhook.ssl.ca.cert=YOUR_CA_CERT_AS_PEM_ENCODED \
                 --set webhook.ssl.ca.key=YOUR_CA_KEY_AS_PEM_ENCODED \
                 --set webhook.ssl.cert=YOUR_CERT_AS_PEM_ENCODED \
