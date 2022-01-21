@@ -103,11 +103,20 @@ Generate certificates for aggregated api server
 {{- $cert := genCA ( printf "%s.%s.svc" (include "admission-controller.webhook.fullname" .) .Release.Namespace ) 3650 -}}
 
 {{- define "admission-controller.webhook.gen-certs" -}}
-{{- $ca := genCA (include "admission-controller.webhook.fullname" .) 3650 -}}
-{{- $cn := printf "%s.%s.svc" (include "admission-controller.webhook.fullname" .) .Release.Namespace -}}
-{{- $san := list $cn -}}
-{{- $cert := genSignedCert $cn nil $san 3650 $ca -}}
-{{- printf "%s$%s$%s" ($cert.Cert | b64enc) ($cert.Key | b64enc) ($ca.Cert | b64enc) -}}
+    {{- $ca := genCA (include "admission-controller.webhook.fullname" .) 3650 -}}
+    {{- if (and .Values.webhook.ssl.ca.cert .Values.webhook.ssl.ca.key) -}}
+        {{- $ca = buildCustomCert (.Values.webhook.ssl.ca.cert | b64enc) (.Values.webhook.ssl.ca.key | b64enc) -}}
+    {{- end -}}
+
+    {{- $cn := printf "%s.%s.svc" (include "admission-controller.webhook.fullname" .) .Release.Namespace -}}
+    {{- $san := list $cn -}}
+    {{- $cert := genSignedCert $cn nil $san 3650 $ca -}}
+
+    {{- if (and .Values.webhook.ssl.cert .Values.webhook.ssl.key) -}}
+        {{- printf "%s$%s$%s" (.Values.webhook.ssl.cert | b64enc) (.Values.webhook.ssl.key | b64enc) ($ca.Cert | b64enc) -}}
+    {{- else -}}
+        {{- printf "%s$%s$%s" ($cert.Cert | b64enc) ($cert.Key | b64enc) ($ca.Cert | b64enc) -}}
+    {{- end -}}
 {{- end -}}
 
 {{/*
@@ -199,4 +208,3 @@ Allow overriding registry and repository for air-gapped environments
     {{- $globalRegistry | default $imageRegistry | default "docker.io" -}} / {{- $imageRepository -}} : {{- $imageTag -}}
 {{- end -}}
 {{- end -}}
-
