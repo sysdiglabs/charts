@@ -1,7 +1,6 @@
 sysdig:
   secureAPIToken: ${SECURE_API_TOKEN}
 clusterName: CI-Cluster
-
 webhook:
   ssl:
     ca:

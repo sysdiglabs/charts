@@ -1,7 +1,6 @@
 sysdig:
   secureAPIToken: ${SECURE_API_TOKEN}
 clusterName: CI-Cluster
-
 webhook:
   ssl:
     ca:
@@ -101,4 +100,3 @@ webhook:
       NIs1ZDu6T8ZgD/eOFm+/gWrbNK/K6ykLyFrKld8luR9q8I2JMuP+iZRaDUIHyYSm
       W/ODsrxtCp/4n2herlzqLYufC4dFnrp5nFM8ekoAru53flNPvsCh
       -----END RSA PRIVATE KEY-----
-
