@@ -208,4 +208,3 @@ Allow overriding registry and repository for air-gapped environments
     {{- $globalRegistry | default $imageRegistry | default "docker.io" -}} / {{- $imageRepository -}} : {{- $imageTag -}}
 {{- end -}}
 {{- end -}}
-
