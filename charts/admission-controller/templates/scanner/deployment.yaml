@@ -37,6 +37,11 @@ spec:
             defaultMode: 420
             secretName: {{ .Values.scanner.dockerCfgSecretName }}
         {{- end }}
+        {{- if .Values.scanner.ssl.ca.cert }}
+        - name: ca-cert
+          secret:
+            secretName: {{ include "admission-controller.scanner.fullname" . }}-ca
+        {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -50,21 +55,30 @@ spec:
               name: dockercfg
               readOnly: true
             {{- end }}
+            {{- if .Values.scanner.ssl.ca.cert }}
+            - name: ca-cert
+              mountPath: /ca-cert
+              readOnly: true
+            {{- end }}
           args:
             - --server_port={{ .Values.scanner.service.port }}
             {{- if .Values.scanner.authWithSecureToken }}
             - --auth_secure_token
             {{- end}}
           imagePullPolicy: {{ .Values.scanner.image.pullPolicy }}
-          {{- if (or .Values.scanner.httpProxy .Values.scanner.httpsProxy) }}
           env:
+            {{- if (or .Values.scanner.httpProxy .Values.scanner.httpsProxy) }}
             - name: HTTP_PROXY
               value: {{ .Values.scanner.httpProxy }}
             - name: HTTPS_PROXY
               value: {{ .Values.scanner.httpsProxy }}
             - name: NO_PROXY
               value: {{ .Values.scanner.noProxy }}
-          {{- end }}
+            {{- end }}
+            {{- if .Values.scanner.ssl.ca.cert }}
+            - name: SSL_CERT_FILE
+              value: /ca-cert/root_ca_file.crt # mounted from the secret
+            {{- end }}
           envFrom:
             - configMapRef:
                 name: {{ include "admission-controller.scanner.fullname" . }}

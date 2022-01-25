@@ -42,15 +42,19 @@ spec:
           securityContext:
             {{- toYaml .Values.webhook.securityContext | nindent 12 }}
           imagePullPolicy: {{ .Values.webhook.image.pullPolicy }}
-          {{- if (or .Values.webhook.httpProxy .Values.webhook.httpsProxy) }}
           env:
+            {{- if (or .Values.webhook.httpProxy .Values.webhook.httpsProxy) }}
             - name: HTTP_PROXY
               value: {{ .Values.webhook.httpProxy }}
             - name: HTTPS_PROXY
               value: {{ .Values.webhook.httpsProxy }}
             - name: NO_PROXY
               value: {{ .Values.webhook.noProxy }},{{ include "admission-controller.scanner.fullname" . }}
-          {{- end }}
+            {{- end }}
+            {{- if .Values.webhook.ssl.ca.cert }}
+            - name: SSL_CERT_FILE
+              value: /ca-cert/root_ca_file.crt # mounted from the secret
+            {{- end }}
           ports:
             - name: http
               containerPort: 5000
@@ -78,12 +82,22 @@ spec:
             - name: cert
               mountPath: /cert
               readOnly: true
+            {{- if .Values.webhook.ssl.ca.cert }}
+            - name: ca-cert
+              mountPath: /ca-cert
+              readOnly: true
+            {{- end }}
           resources:
             {{- toYaml .Values.webhook.resources | nindent 12 }}
       volumes:
       - name: cert
         secret:
           secretName: {{ include "admission-controller.webhook.fullname" . }}-tls
+      {{- if .Values.webhook.ssl.ca.cert }}
+      - name: ca-cert
+        secret:
+          secretName: {{ include "admission-controller.webhook.fullname" . }}-ca
+      {{- end }}
     {{- with .Values.webhook.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
