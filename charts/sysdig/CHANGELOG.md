@@ -4,6 +4,11 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.12.45
+### Minor changes
+
+- Add ability to configure affinity and nodeSelector on imageAnalyzer daemonset
+
 ## v1.12.43
 ### Minor changes
 
