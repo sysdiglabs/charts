@@ -133,6 +133,8 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `nodeAnalyzer.benchmarkRunner.resources.requests.memory`   | Benchmark Runner Memory requests per node                                                | `128Mi`                                                                       |
 | `nodeAnalyzer.benchmarkRunner.resources.limits.cpu`        | Benchmark Runner CPU limit per node                                                      | `500m`                                                                        |
 | `nodeAnalyzer.benchmarkRunner.resources.limits.memory`     | Benchmark Runnerr Memory limit per node                                                  | `256Mi`                                                                       |
+| `nodeAnalyzer.nodeSelector`                                | Node Selector                                                                            | `{}`                                                                          |
+| `nodeAnalyzer.affinity`                                    | Node affinities                                                                          | `schedule on amd64 and linux`                                                 |
 
 Node Image Analyzer parameters (deprecated by nodeAnalyzer)
 
