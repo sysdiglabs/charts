@@ -2,29 +2,29 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: {{ template "sysdig.fullname" . }}
+  name: {{ template "agent.fullname" . }}
   labels:
-    app.kubernetes.io/name: {{ include "sysdig.name" . }}
-{{ include "sysdig.labels" . | indent 4 }}
+    app.kubernetes.io/name: {{ include "agent.name" . }}
+{{ include "agent.labels" . | indent 4 }}
 {{ include "daemonset.labels" . | indent 4 }}
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "sysdig.name" . }}
+      app.kubernetes.io/name: {{ include "agent.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
-      name: {{ template "sysdig.fullname" .}}
+      name: {{ template "agent.fullname" .}}
       labels:
-        app.kubernetes.io/name: {{ include "sysdig.name" . }}
-{{ include "sysdig.labels" . | indent 8 }}
+        app.kubernetes.io/name: {{ include "agent.name" . }}
+{{ include "agent.labels" . | indent 8 }}
 {{ include "daemonset.labels" . | indent 8 }}
       {{- if .Values.daemonset.annotations }}
       annotations:
 {{ toYaml .Values.daemonset.annotations | indent 8 }}
       {{- end }}
     spec:
-      serviceAccountName: {{ template "sysdig.serviceAccountName" .}}
+      serviceAccountName: {{ template "agent.serviceAccountName" .}}
 {{- if .Values.priorityClassName }}
       priorityClassName: "{{ .Values.priorityClassName }}"
 {{- end }}
@@ -49,7 +49,7 @@ spec:
       {{- if .Values.slim.enabled }}
       initContainers:
         - name: sysdig-agent-kmodule
-          image: {{ template "sysdig.image.kmodule" . }}
+          image: {{ template "agent.image.kmodule" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           securityContext:
             capabilities:
@@ -67,7 +67,7 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: spec.nodeName
-          {{- if (include "helper-lib.ebpfEnabled" .) }}
+          {{- if (include "agent.ebpfEnabled" .) }}
             - name: SYSDIG_BPF_PROBE
               value:
           {{- end }}
@@ -84,7 +84,7 @@ spec:
             - mountPath: /host/usr
               name: usr-vol
               readOnly: true
-            {{- if (include "helper-lib.ebpfEnabled" .) }}
+            {{- if (include "agent.ebpfEnabled" .) }}
             - mountPath: /root/.sysdig
               name: bpf-probes
             - mountPath: /sys/kernel/debug
@@ -97,10 +97,10 @@ spec:
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}
-          image: {{ template "sysdig.image" . }}
+          image: {{ template "agent.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           resources:
-{{ include "sysdig.resources" . | indent 12 }}
+{{ include "agent.resources" . | indent 12 }}
           securityContext:
             capabilities:
               drop:
@@ -111,7 +111,7 @@ spec:
             readOnlyRootFilesystem: false
             allowPrivilegeEscalation: true
           env:
-            {{- if (include "helper-lib.ebpfEnabled" .) }}
+            {{- if (include "agent.ebpfEnabled" .) }}
             - name: SYSDIG_BPF_PROBE
               value:
             {{- end }}
@@ -172,12 +172,12 @@ spec:
               name: sysdig-agent-config
             - mountPath: /opt/draios/etc/kubernetes/secrets
               name: sysdig-agent-secrets
-            {{- if (and (include "helper-lib.ebpfEnabled" .) .Values.ebpf.settings.mountEtcVolume) }}
+            {{- if (and (include "agent.ebpfEnabled" .) .Values.ebpf.settings.mountEtcVolume) }}
             - mountPath: /host/etc
               name: etc-fs
               readOnly: true
             {{- end }}
-            {{- if (and (include "helper-lib.ebpfEnabled" .) .Values.slim.enabled) }}
+            {{- if (and (include "agent.ebpfEnabled" .) .Values.slim.enabled) }}
             - mountPath: /root/.sysdig
               name: bpf-probes
             - mountPath: /sys/kernel/debug
@@ -228,12 +228,12 @@ spec:
         - name: varrun-vol
           hostPath:
             path: /var/run
-        {{- if (and (include "helper-lib.ebpfEnabled" .) .Values.ebpf.settings.mountEtcVolume) }}
+        {{- if (and (include "agent.ebpfEnabled" .) .Values.ebpf.settings.mountEtcVolume) }}
         - name: etc-fs
           hostPath:
             path: /etc
         {{- end }}
-        {{- if (and (include "helper-lib.ebpfEnabled" .) .Values.slim.enabled) }}
+        {{- if (and (include "agent.ebpfEnabled" .) .Values.slim.enabled) }}
         - name: bpf-probes
           emptyDir: {}
         - name: sys-tracing
@@ -242,19 +242,19 @@ spec:
         {{- end }}
         - name: sysdig-agent-config
           configMap:
-            name: {{ template "sysdig.fullname" . }}
+            name: {{ template "agent.fullname" . }}
             optional: true
         - name: sysdig-agent-secrets
           secret:
-            {{- if not ( include "helper-lib.accessKeySecret" . ) }}
-            secretName: {{ template "sysdig.fullname" . }}
+            {{- if not ( include "agent.accessKeySecret" . ) }}
+            secretName: {{ template "agent.fullname" . }}
             {{- else }}
-            secretName: {{ include "helper-lib.accessKeySecret" . }}
+            secretName: {{ include "agent.accessKeySecret" . }}
             {{- end -}}
         {{- if .Values.customAppChecks }}
         - name: custom-app-checks-volume
           configMap:
-            name: {{ template "sysdig.fullname" . }}-custom-app-checks
+            name: {{ template "agent.fullname" . }}-custom-app-checks
         {{- end }}
         {{- if .Values.extraVolumes.volumes }}
 {{ toYaml .Values.extraVolumes.volumes | indent 8 }}

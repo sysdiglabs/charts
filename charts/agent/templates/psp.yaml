@@ -2,7 +2,7 @@
 apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:
-  name: {{ template "sysdig.fullname" . }}
+  name: {{ template "agent.fullname" . }}
 spec:
   allowedCapabilities:
   - '*'

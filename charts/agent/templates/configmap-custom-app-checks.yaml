@@ -2,9 +2,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "sysdig.fullname" . }}-custom-app-checks
+  name: {{ template "agent.fullname" . }}-custom-app-checks
   labels:
-{{ include "sysdig.labels" . | indent 4 }}
+{{ include "agent.labels" . | indent 4 }}
 data:
 {{- range $file, $content :=  .Values.customAppChecks }}
   {{ $file }}: |-

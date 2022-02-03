@@ -2,13 +2,13 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "sysdig.fullname" . }}
+  name: {{ template "agent.fullname" . }}
   labels:
-{{ include "sysdig.labels" . | indent 4 }}
+{{ include "agent.labels" . | indent 4 }}
 data:
   dragent.yaml: |
     new_k8s: true
-{{- $clusterName := include "helper-lib.clusterName" . }}
+{{- $clusterName := include "agent.clusterName" . }}
 {{- if $clusterName }}
     k8s_cluster_name: {{ $clusterName }}
 {{- end }}

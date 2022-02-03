@@ -34,8 +34,4 @@ maintainers:
     email: carlos.arilla@sysdig.com
   - name: achandras
     email: ashwin.chandrasekar@sysdig.com
-dependencies:
-- name: helper-lib
-  # repository: https://artifactory.internal.sysdig.com/artifactory/helm
-  repository: file://../helper-lib
-  version: 0.1.0
+dependencies: []

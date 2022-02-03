@@ -2,9 +2,9 @@
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: {{ template "sysdig.fullname" .}}
+  name: {{ template "agent.fullname" .}}
   labels:
-{{ include "sysdig.labels" . | indent 4 }}
+{{ include "agent.labels" . | indent 4 }}
 rules:
   - apiGroups:
       - ""
@@ -101,7 +101,7 @@ rules:
     resources:
       - "podsecuritypolicies"
     resourceNames:
-      - "{{ template "sysdig.fullname" . }}"
+      - "{{ template "agent.fullname" . }}"
     verbs:
       - "use"
 {{- end }}

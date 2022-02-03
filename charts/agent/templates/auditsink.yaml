@@ -2,9 +2,9 @@
 apiVersion: auditregistration.k8s.io/v1alpha1
 kind: AuditSink
 metadata:
-  name: {{ template "sysdig.fullname" . }}
+  name: {{ template "agent.fullname" . }}
   labels:
-{{ include "sysdig.labels" . | indent 4 }}
+{{ include "agent.labels" . | indent 4 }}
 spec:
   policy:
     level: RequestResponse
@@ -18,7 +18,7 @@ spec:
     clientConfig:
       service:
         namespace: {{ .Release.Namespace }}
-        name: {{ template "sysdig.fullname" . }}
+        name: {{ template "agent.fullname" . }}
         port: {{ .Values.auditLog.auditServerPort }}
         path: /k8s_audit
 {{- end }}
