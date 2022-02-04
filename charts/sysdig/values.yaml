@@ -82,11 +82,6 @@ psp:
 serviceAccount:
   # Create and use serviceAccount resources
   create: true
-  # Create node analyzer specific serviceAccount resource
-  nodeAnalyzer:
-    create: true
-    # Use this value as nodeAnalyzerServiceAccountName
-    name:
   # Use this value as serviceAccountName
   name:
 
@@ -327,6 +322,12 @@ nodeImageAnalyzer:
                   - linux
 
 nodeAnalyzer:
+  # Create node analyzer specific serviceAccount resource
+  serviceAccount:
+    create: true
+    # Use this value as nodeAnalyzerServiceAccountName
+    name: "nodeAnalyzer"
+
   deploy: true
 
   # The API endpoint for Sysdig Secure, specified with no protocol:

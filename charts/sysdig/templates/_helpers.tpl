@@ -45,11 +45,11 @@ Create the name of the service account to use
 {{/*
 Create the name of the node analyzer specific service account to use
 */}}
-{{- define "sysdig.nodeAnalyzerServiceAccountName" -}}
-{{- if .Values.serviceAccount.nodeAnalyzer.create -}}
-    {{ default (include "sysdig.fullname" .) .Values.serviceAccount.nodeAnalyzer.name }}
+{{- define "sysdig.nodeAnalyzer.serviceAccountName" -}}
+{{- if .Values.nodeAnalyzer.serviceAccount.create -}}
+    {{ default (include "sysdig.fullname" .) .Values.nodeAnalyzer.serviceAccount.name }}
 {{- else -}}
-    {{ default "default" .Values.serviceAccount.nodeAnalyzer.name }}
+    {{ default "default" .Values.nodeAnalyzer.serviceAccount.name }}
 {{- end -}}
 {{- end -}}
 
