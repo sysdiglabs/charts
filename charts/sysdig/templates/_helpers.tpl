@@ -68,7 +68,7 @@ Return the proper Sysdig Agent image name
 {{- if .Values.image.overrideValue }}
     {{- printf .Values.image.overrideValue -}}
 {{- else -}}
-    {{- include "sysdig.imageRegistry" . -}} / {{- include "sysdig.repositoryName" . -}} : {{- .Values.image.tag -}}
+    {{- include "sysdig.imageRegistry" . -}} / {{- include "sysdig.repositoryName" . -}} {{- if .Values.image.digest -}} @ {{- .Values.image.digest -}} {{ else }} : {{- .Values.image.tag -}} {{- end -}}
 {{- end -}}
 {{- end -}}
 
@@ -98,35 +98,35 @@ Sysdig Agent resources
 Return the proper Sysdig Agent image name for module building
 */}}
 {{- define "sysdig.image.kmodule" -}}
-    {{- include "sysdig.imageRegistry" . -}} / {{- .Values.slim.kmoduleImage.repository -}} : {{- .Values.image.tag -}}
+    {{- include "sysdig.imageRegistry" . -}} / {{- .Values.slim.kmoduleImage.repository -}} {{- if .Values.slim.kmoduleImage.digest -}} @ {{- .Values.slim.kmoduleImage.digest -}} {{ else }} : {{- .Values.image.tag -}} {{- end -}}
 {{- end -}}
 
 {{/*
 Return the proper Sysdig Agent image name for the Node Image Analyzer
 */}}
 {{- define "sysdig.image.nodeImageAnalyzer" -}}
-    {{- include "sysdig.imageRegistry" . -}} / {{- .Values.nodeImageAnalyzer.image.repository -}} : {{- .Values.nodeImageAnalyzer.image.tag -}}
+    {{- include "sysdig.imageRegistry" . -}} / {{- .Values.nodeImageAnalyzer.image.repository -}} {{- if .Values.nodeImageAnalyzer.image.digest -}} @ {{- .Values.nodeImageAnalyzer.image.digest -}} {{ else }} : {{- .Values.nodeImageAnalyzer.image.tag -}} {{- end -}}
 {{- end -}}
 
 {{/*
 Return the proper image name for the Image Analyzer
 */}}
 {{- define "sysdig.image.imageAnalyzer" -}}
-    {{- include "sysdig.imageRegistry" . -}} / {{- .Values.nodeAnalyzer.imageAnalyzer.image.repository -}} : {{- .Values.nodeAnalyzer.imageAnalyzer.image.tag -}}
+    {{- include "sysdig.imageRegistry" . -}} / {{- .Values.nodeAnalyzer.imageAnalyzer.image.repository -}} {{- if .Values.nodeAnalyzer.imageAnalyzer.image.digest -}} @ {{- .Values.nodeAnalyzer.imageAnalyzer.image.digest -}} {{ else }} : {{- .Values.nodeAnalyzer.imageAnalyzer.image.tag -}} {{- end -}}
 {{- end -}}
 
 {{/*
 Return the proper image name for the Host Analyzer
 */}}
 {{- define "sysdig.image.hostAnalyzer" -}}
-    {{- include "sysdig.imageRegistry" . -}} / {{- .Values.nodeAnalyzer.hostAnalyzer.image.repository -}} : {{- .Values.nodeAnalyzer.hostAnalyzer.image.tag -}}
+    {{- include "sysdig.imageRegistry" . -}} / {{- .Values.nodeAnalyzer.hostAnalyzer.image.repository -}} {{- if .Values.nodeAnalyzer.hostAnalyzer.image.digest -}} @ {{- .Values.nodeAnalyzer.hostAnalyzer.image.digest -}} {{ else }} : {{- .Values.nodeAnalyzer.hostAnalyzer.image.tag -}} {{- end -}}
 {{- end -}}
 
 {{/*
 Return the proper image name for the Benchmark Runner
 */}}
 {{- define "sysdig.image.benchmarkRunner" -}}
-    {{- include "sysdig.imageRegistry" . -}} / {{- .Values.nodeAnalyzer.benchmarkRunner.image.repository -}} : {{- .Values.nodeAnalyzer.benchmarkRunner.image.tag -}}
+    {{- include "sysdig.imageRegistry" . -}} / {{- .Values.nodeAnalyzer.benchmarkRunner.image.repository -}} {{- if .Values.nodeAnalyzer.benchmarkRunner.image.digest -}} @ {{- .Values.nodeAnalyzer.benchmarkRunner.image.digest -}} {{ else }} : {{- .Values.nodeAnalyzer.benchmarkRunner.image.tag -}} {{- end -}}
 {{- end -}}
 
 {{/*
