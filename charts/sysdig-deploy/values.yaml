@@ -1,14 +1,11 @@
 global:
   clusterConfig:
-    name: cluster-name
-    namespace: sysdig
+    name: ""  # name to identify this cluster for events and metrics
+    namespace: ""  # namespace to install all components; can be overridden by components
   sysdig:
-    apiKey: aaaa-bbbb-cccc-dddd
-    collectorEndpoint: collector.sysdig-cloud.svc.cluster.local
+    accessKey: ""
+    accessKeySecret: ""
   image:
     registry: quay.io
-    tag: latest
 
-sysdigAgent:
-  sysdig:
-    accessKey: eeee-ffff-gggg-hhhh
+agent: {}
