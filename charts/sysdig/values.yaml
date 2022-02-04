@@ -82,6 +82,11 @@ psp:
 serviceAccount:
   # Create and use serviceAccount resources
   create: true
+  # Create node analyzer specific serviceAccount resource
+  nodeAnalyzer:
+    create: true
+    # Use this value as nodeAnalyzerServiceAccountName
+    name:
   # Use this value as serviceAccountName
   name:
 
