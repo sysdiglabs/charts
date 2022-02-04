@@ -71,13 +71,13 @@ rules:
     - create
     - delete
 {{- if .Values.psp.create  }}
-  - apiGroups:
-      - "policy"
-    resources:
-      - "podsecuritypolicies"
-    resourceNames:
-      - "{{ template "sysdig.fullname" . }}-node-analyzer"
-    verbs:
-      - "use"
+- apiGroups:
+    - "policy"
+  resources:
+    - "podsecuritypolicies"
+  resourceNames:
+    - "{{ template "sysdig.fullname" . }}-node-analyzer"
+  verbs:
+    - "use"
 {{- end }}
 {{- end }}
