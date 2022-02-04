@@ -135,6 +135,19 @@ Daemonset labels
 {{- end -}}
 
 {{/*
+Use like: {{ include "get_or_fail_if_in_settings" (dict "root" . "key" "<mypath.key>" "setting" "<agent_setting>") }}
+Return the value of key "<mypath.key>" and if "<agent_setting>" is also defined in sysdig.settings.<agent_setting>, and error is thrown
+NOTE: I don't like the error message! Too much information.
+*/}}
+{{- define "get_or_fail_if_in_settings" -}}
+{{- $keyValue := tpl (printf "{{- .Values.%s -}}" .key) .root }}
+{{- if $keyValue -}}
+    {{- if hasKey .root.Values.sysdig.settings .setting }}{{ fail (printf "Value '%s' is also set via .sysdig.settings.%s'." .key .setting) }}{{- end -}}
+    {{- $keyValue -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
 The following helper functions are all designed to use global values where
 possible, but accept overrides from the chart values.
 */}}
@@ -152,7 +165,8 @@ possible, but accept overrides from the chart values.
 {{- end -}}
 
 {{- define "agent.clusterName" -}}
-    {{- .Values.clusterName | default .Values.global.clusterConfig.name | default "" -}}
+    {{- $clusterName := include "get_or_fail_if_in_settings" (dict "root" . "key" "clusterName" "setting" "k8s_cluster_name") }}
+    {{- $clusterName | default .Values.global.clusterConfig.name | default "" -}}
 {{- end -}}
 
 {{/*
