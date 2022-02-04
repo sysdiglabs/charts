@@ -1,5 +1,6 @@
 # Default values for Sysdig Monitor and Secure Helm package.
 global:
+  clusterConfig: {}
   sysdig: {}
 
 image:
@@ -11,7 +12,7 @@ image:
 
   registry: quay.io
   repository: sysdig/agent
-  tag: 12.1.1
+  tag: 12.2.0
   # Specify a imagePullPolicy
   # Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
   # ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -88,6 +89,8 @@ serviceAccount:
   name:
 
 daemonset:
+  deploy: true
+
   # Perform rolling updates by default in the DaemonSet agent
   # ref: https://kubernetes.io/docs/tasks/manage-daemon/update-daemon-set/
   updateStrategy:
@@ -123,6 +126,8 @@ daemonset:
               - linux
   # Allow the DaemonSet to set annotations
   annotations: {}
+  # Allow the DaemonSet to set labels
+  labels: {}
   # Liveness and readiness probes initial delay (in seconds)
   probes:
     initialDelay: 90

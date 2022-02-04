@@ -141,6 +141,33 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end -}}
 
+{{/*
+Daemonset labels
+*/}}
+{{- define "daemonset.labels" -}}
+  {{- if .Values.daemonset.labels }}
+    {{- $tp := typeOf .Values.daemonset.labels }}
+    {{- if eq $tp "string" }}
+      {{- tpl .Values.daemonset.labels . }}
+    {{- else }}
+      {{- toYaml .Values.daemonset.labels }}
+    {{- end }}
+  {{- end }}
+{{- end -}}
+
+{{/*
+Node Analyzer labels
+*/}}
+{{- define "nodeAnalyzer.labels" -}}
+  {{- if .Values.nodeAnalyzer.labels }}
+    {{- $tp := typeOf .Values.nodeAnalyzer.labels }}
+    {{- if eq $tp "string" }}
+      {{- tpl .Values.nodeAnalyzer.labels . }}
+    {{- else }}
+      {{- toYaml .Values.nodeAnalyzer.labels }}
+    {{- end }}
+  {{- end }}
+{{- end -}}
 
 {{/*
 Use like: {{ include "get_or_fail_if_in_settings" (dict "root" . "key" "<mypath.key>" "setting" "<agent_setting>") }}

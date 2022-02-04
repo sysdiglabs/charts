@@ -4,10 +4,10 @@ description: A Helm chart for Kubernetes
 
 type: application
 
-# currently matching sysdig 1.12.40
+# currently matching sysdig 1.12.45
 version: 1.0.0
 
-appVersion: "12.1.1"
+appVersion: "12.2.0"
 
 keywords:
   - monitoring

@@ -1,3 +1,4 @@
+{{- if .Values.daemonset.deploy }}
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
@@ -5,6 +6,7 @@ metadata:
   labels:
     app.kubernetes.io/name: {{ include "sysdig.name" . }}
 {{ include "sysdig.labels" . | indent 4 }}
+{{ include "daemonset.labels" . | indent 4 }}
 spec:
   selector:
     matchLabels:
@@ -16,6 +18,7 @@ spec:
       labels:
         app.kubernetes.io/name: {{ include "sysdig.name" . }}
 {{ include "sysdig.labels" . | indent 8 }}
+{{ include "daemonset.labels" . | indent 8 }}
       {{- if .Values.daemonset.annotations }}
       annotations:
 {{ toYaml .Values.daemonset.annotations | indent 8 }}
@@ -59,8 +62,12 @@ spec:
             allowPrivilegeEscalation: true
           resources:
 {{ toYaml .Values.slim.resources | indent 12 }}
-          {{- if .Values.ebpf.enabled }}
           env:
+            - name: K8S_NODE
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+          {{- if .Values.ebpf.enabled }}
             - name: SYSDIG_BPF_PROBE
               value:
           {{- end }}
@@ -266,3 +273,4 @@ spec:
               path: name
   updateStrategy:
 {{ toYaml .Values.daemonset.updateStrategy | indent 4 }}
+{{- end }}
