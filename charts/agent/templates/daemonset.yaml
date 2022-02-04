@@ -67,7 +67,7 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: spec.nodeName
-          {{- if .Values.ebpf.enabled }}
+          {{- if (include "helper-lib.ebpfEnabled" .) }}
             - name: SYSDIG_BPF_PROBE
               value:
           {{- end }}
@@ -84,7 +84,7 @@ spec:
             - mountPath: /host/usr
               name: usr-vol
               readOnly: true
-            {{- if .Values.ebpf.enabled }}
+            {{- if (include "helper-lib.ebpfEnabled" .) }}
             - mountPath: /root/.sysdig
               name: bpf-probes
             - mountPath: /sys/kernel/debug
@@ -111,7 +111,7 @@ spec:
             readOnlyRootFilesystem: false
             allowPrivilegeEscalation: true
           env:
-            {{- if .Values.ebpf.enabled }}
+            {{- if (include "helper-lib.ebpfEnabled" .) }}
             - name: SYSDIG_BPF_PROBE
               value:
             {{- end }}
@@ -172,12 +172,12 @@ spec:
               name: sysdig-agent-config
             - mountPath: /opt/draios/etc/kubernetes/secrets
               name: sysdig-agent-secrets
-            {{- if (and .Values.ebpf.enabled .Values.ebpf.settings.mountEtcVolume) }}
+            {{- if (and (include "helper-lib.ebpfEnabled" .) .Values.ebpf.settings.mountEtcVolume) }}
             - mountPath: /host/etc
               name: etc-fs
               readOnly: true
             {{- end }}
-            {{- if (and .Values.ebpf.enabled .Values.slim.enabled) }}
+            {{- if (and (include "helper-lib.ebpfEnabled" .) .Values.slim.enabled) }}
             - mountPath: /root/.sysdig
               name: bpf-probes
             - mountPath: /sys/kernel/debug
@@ -228,12 +228,12 @@ spec:
         - name: varrun-vol
           hostPath:
             path: /var/run
-        {{- if (and .Values.ebpf.enabled .Values.ebpf.settings.mountEtcVolume) }}
+        {{- if (and (include "helper-lib.ebpfEnabled" .) .Values.ebpf.settings.mountEtcVolume) }}
         - name: etc-fs
           hostPath:
             path: /etc
         {{- end }}
-        {{- if (and .Values.ebpf.enabled .Values.slim.enabled) }}
+        {{- if (and (include "helper-lib.ebpfEnabled" .) .Values.slim.enabled) }}
         - name: bpf-probes
           emptyDir: {}
         - name: sys-tracing
@@ -246,10 +246,10 @@ spec:
             optional: true
         - name: sysdig-agent-secrets
           secret:
-            {{- if not .Values.sysdig.existingAccessKeySecret }}
+            {{- if not ( include "helper-lib.accessKeySecret" . ) }}
             secretName: {{ template "sysdig.fullname" . }}
             {{- else }}
-            secretName: {{ .Values.sysdig.existingAccessKeySecret }}
+            secretName: {{ include "helper-lib.accessKeySecret" . }}
             {{- end -}}
         {{- if .Values.customAppChecks }}
         - name: custom-app-checks-volume
