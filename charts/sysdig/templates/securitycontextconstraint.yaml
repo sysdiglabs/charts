@@ -34,6 +34,7 @@ supplementalGroups:
   type: RunAsAny
 users:
 - system:serviceaccount:{{ .Release.Namespace }}:{{ template "sysdig.serviceAccountName" .}}
+- system:serviceaccount:{{ .Release.Namespace }}:{{ template "sysdig.nodeAnalyzer.serviceAccountName" .}}
 volumes:
 - hostPath
 - emptyDir
