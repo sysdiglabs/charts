@@ -21,6 +21,19 @@ icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/upload
 sources:
   - https://app.sysdigcloud.com/#/settings/user
   - https://github.com/draios/sysdig
+maintainers:
+  - name: lachie83
+    email: lachlan@deis.com
+  - name: bencer
+    email: jorge.salamero@sysdig.com
+  - name: nestorsalceda
+    email: nestor.salceda@sysdig.com
+  - name: airadier
+    email: alvaro.iradier@sysdig.com
+  - name: carillan81
+    email: carlos.arilla@sysdig.com
+  - name: achandras
+    email: ashwin.chandrasekar@sysdig.com
 dependencies:
 - name: helper-lib
   # repository: https://artifactory.internal.sysdig.com/artifactory/helm
