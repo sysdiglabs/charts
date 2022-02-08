@@ -463,6 +463,59 @@ nodeAnalyzer:
         cpu: 500m
         memory: 256Mi
 
+  runtimeScanner:
+    deploy: false
+    image:
+      repository: vuln-runtime-scanner
+      tag: 0.1.0
+      digest:
+      pullPolicy: IfNotPresent
+
+    resources:
+      requests:
+        cpu: 250m
+        memory: 4096Mi
+        ephemeral-storage: "2Gi"
+      limits:
+        cpu: 500m
+        memory: 6144Mi
+        ephemeral-storage: "4Gi"
+
+    settings:
+      eveEnabled: false
+
+    extraVolumes:
+      volumes: []
+      mounts: []
+
+      # Example:
+      # volumes:
+      # - name: docker-sock
+      #   hostPath:
+      #     path: /var/run/docker.sock
+      # mounts:
+      # - mountPath: /var/run/docker.sock
+      #   name: docker-sock
+
+    eveConnector:
+      deploy: false
+      image:
+        repository: sysdig/eveclient-api
+        tag: 7ba86b0
+        digest:
+        pullPolicy: IfNotPresent
+
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          cpu: 1000m
+          memory: 512Mi
+
+      settings:
+        replicas: 1
+
 customAppChecks: {}
   # Allow passing custom app checks for Sysdig Agent.
   # Example:
