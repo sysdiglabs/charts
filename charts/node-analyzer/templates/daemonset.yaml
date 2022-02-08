@@ -1,0 +1,268 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: {{ template "sysdig.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "sysdig.name" . }}
+{{ include "sysdig.labels" . | indent 4 }}
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "sysdig.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      name: {{ template "sysdig.fullname" .}}
+      labels:
+        app.kubernetes.io/name: {{ include "sysdig.name" . }}
+{{ include "sysdig.labels" . | indent 8 }}
+      {{- if .Values.daemonset.annotations }}
+      annotations:
+{{ toYaml .Values.daemonset.annotations | indent 8 }}
+      {{- end }}
+    spec:
+      serviceAccountName: {{ template "sysdig.serviceAccountName" .}}
+{{- if .Values.priorityClassName }}
+      priorityClassName: "{{ .Values.priorityClassName }}"
+{{- end }}
+      tolerations:
+{{ toYaml .Values.tolerations | indent 8 }}
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      hostPID: true
+      terminationGracePeriodSeconds: 5
+      {{- if .Values.daemonset.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.daemonset.nodeSelector | indent 8 }}
+      {{- end }}
+      {{- if .Values.daemonset.affinity }}
+      affinity:
+{{ toYaml .Values.daemonset.affinity | indent 8 }}
+      {{- end }}
+      {{- if .Values.image.pullSecrets }}
+      imagePullSecrets:
+{{ toYaml .Values.image.pullSecrets | indent 8 }}
+      {{- end }}
+      {{- if .Values.slim.enabled }}
+      initContainers:
+        - name: sysdig-agent-kmodule
+          image: {{ template "sysdig.image.kmodule" . }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          securityContext:
+            capabilities:
+              drop:
+                - ALL
+            privileged: true
+            runAsNonRoot: false
+            runAsUser: 0
+            readOnlyRootFilesystem: false
+            allowPrivilegeEscalation: true
+          resources:
+{{ toYaml .Values.slim.resources | indent 12 }}
+          {{- if .Values.ebpf.enabled }}
+          env:
+            - name: SYSDIG_BPF_PROBE
+              value:
+          {{- end }}
+          volumeMounts:
+            - mountPath: /etc/modprobe.d
+              name: modprobe-d
+              readOnly: true
+            - mountPath: /host/boot
+              name: boot-vol
+              readOnly: true
+            - mountPath: /host/lib/modules
+              name: modules-vol
+              readOnly: true
+            - mountPath: /host/usr
+              name: usr-vol
+              readOnly: true
+            {{- if .Values.ebpf.enabled }}
+            - mountPath: /root/.sysdig
+              name: bpf-probes
+            - mountPath: /sys/kernel/debug
+              name: sys-tracing
+              readOnly: true
+            {{- end }}
+            - mountPath: /host/etc/os-release
+              name: osrel
+              readOnly: true
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ template "sysdig.image" . }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          resources:
+{{ include "sysdig.resources" . | indent 12 }}
+          securityContext:
+            capabilities:
+              drop:
+                - ALL
+            privileged: true
+            runAsNonRoot: false
+            runAsUser: 0
+            readOnlyRootFilesystem: false
+            allowPrivilegeEscalation: true
+          env:
+            {{- if .Values.ebpf.enabled }}
+            - name: SYSDIG_BPF_PROBE
+              value:
+            {{- end }}
+            {{- if .Values.proxy.httpProxy }}
+            - name: http_proxy
+              value: {{ .Values.proxy.httpProxy }}
+            {{- end }}
+            {{- if .Values.proxy.httpsProxy }}
+            - name: https_proxy
+              value: {{ .Values.proxy.httpsProxy }}
+            {{- end }}
+            {{- if .Values.proxy.noProxy }}
+            - name: no_proxy
+              value: {{ .Values.proxy.noProxy }}
+            {{- end }}
+            {{- if .Values.timezone }}
+            - name: TZ
+              value: {{ .Values.timezone }}
+            {{- end }}
+            {{- range $key, $value := .Values.daemonset.env }}
+            - name: "{{ $key }}"
+              value: "{{ $value }}"
+            {{- end }}
+          readinessProbe:
+            exec:
+              command: [ "test", "-e", "/opt/draios/logs/running" ]
+            initialDelaySeconds: {{ .Values.daemonset.probes.initialDelay }}
+          volumeMounts:
+            {{- if not .Values.slim.enabled }}
+            - mountPath: /etc/modprobe.d
+              name: modprobe-d
+              readOnly: true
+            {{- end }}
+            - mountPath: /host/dev
+              name: dev-vol
+              readOnly: false
+            - mountPath: /host/proc
+              name: proc-vol
+              readOnly: true
+            {{- if not .Values.slim.enabled }}
+            - mountPath: /host/boot
+              name: boot-vol
+              readOnly: true
+            - mountPath: /host/lib/modules
+              name: modules-vol
+              readOnly: true
+            - mountPath: /host/usr
+              name: usr-vol
+              readOnly: true
+            {{- end }}
+            - mountPath: /host/run
+              name: run-vol
+            - mountPath: /host/var/run
+              name: varrun-vol
+            - mountPath: /dev/shm
+              name: dshm
+            - mountPath: /opt/draios/etc/kubernetes/config
+              name: sysdig-agent-config
+            - mountPath: /opt/draios/etc/kubernetes/secrets
+              name: sysdig-agent-secrets
+            {{- if (and .Values.ebpf.enabled .Values.ebpf.settings.mountEtcVolume) }}
+            - mountPath: /host/etc
+              name: etc-fs
+              readOnly: true
+            {{- end }}
+            {{- if (and .Values.ebpf.enabled .Values.slim.enabled) }}
+            - mountPath: /root/.sysdig
+              name: bpf-probes
+            - mountPath: /sys/kernel/debug
+              name: sys-tracing
+              readOnly: true
+            {{- end }}
+            {{- if .Values.customAppChecks }}
+            - mountPath: /opt/draios/lib/python/checks.custom.d
+              name: custom-app-checks-volume
+            {{- end }}
+            - mountPath: /host/etc/os-release
+              name: osrel
+              readOnly: true
+            {{- if .Values.extraVolumes.mounts }}
+{{ toYaml .Values.extraVolumes.mounts | indent 12 }}
+            {{- end }}
+            - mountPath: /etc/podinfo
+              name: podinfo
+      volumes:
+        - name: modprobe-d
+          hostPath:
+            path: /etc/modprobe.d
+        - name: osrel
+          hostPath:
+            path: /etc/os-release
+            type: FileOrCreate
+        - name: dshm
+          emptyDir:
+            medium: Memory
+        - name: dev-vol
+          hostPath:
+            path: /dev
+        - name: proc-vol
+          hostPath:
+            path: /proc
+        - name: boot-vol
+          hostPath:
+            path: /boot
+        - name: modules-vol
+          hostPath:
+            path: /lib/modules
+        - name: usr-vol
+          hostPath:
+            path: /usr
+        - name: run-vol
+          hostPath:
+            path: /run
+        - name: varrun-vol
+          hostPath:
+            path: /var/run
+        {{- if (and .Values.ebpf.enabled .Values.ebpf.settings.mountEtcVolume) }}
+        - name: etc-fs
+          hostPath:
+            path: /etc
+        {{- end }}
+        {{- if (and .Values.ebpf.enabled .Values.slim.enabled) }}
+        - name: bpf-probes
+          emptyDir: {}
+        - name: sys-tracing
+          hostPath:
+            path: /sys/kernel/debug
+        {{- end }}
+        - name: sysdig-agent-config
+          configMap:
+            name: {{ template "sysdig.fullname" . }}
+            optional: true
+        - name: sysdig-agent-secrets
+          secret:
+            {{- if not .Values.sysdig.existingAccessKeySecret }}
+            secretName: {{ template "sysdig.fullname" . }}
+            {{- else }}
+            secretName: {{ .Values.sysdig.existingAccessKeySecret }}
+            {{- end -}}
+        {{- if .Values.customAppChecks }}
+        - name: custom-app-checks-volume
+          configMap:
+            name: {{ template "sysdig.fullname" . }}-custom-app-checks
+        {{- end }}
+        {{- if .Values.extraVolumes.volumes }}
+{{ toYaml .Values.extraVolumes.volumes | indent 8 }}
+        {{- end }}
+        - name: podinfo
+          downwardAPI:
+            defaultMode: 420
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.name
+              path: name
+  updateStrategy:
+{{ toYaml .Values.daemonset.updateStrategy | indent 4 }}
