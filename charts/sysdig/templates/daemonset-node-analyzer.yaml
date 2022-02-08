@@ -73,7 +73,7 @@ spec:
       serviceAccountName: {{ template "sysdig.nodeAnalyzer.serviceAccountName" .}}
       {{- if .Values.nodeAnalyzer.pullSecrets }}
       imagePullSecrets:
-        - name: sysdigcloud-pull-secret
+{{ toYaml .Values.nodeAnalyzer.pullSecrets | indent 8 }}
       {{- end }}
       terminationGracePeriodSeconds: 5
       # Use the Host Network Namespace.
@@ -299,7 +299,7 @@ spec:
               optional: true
 {{- end }}
       - name: sysdig-benchmark-runner
-        image: "quay.io/sysdig/dev:nkraemer-runner"
+        image: {{ template "sysdig.image.benchmarkRunner" . }}
         imagePullPolicy: {{ .Values.nodeAnalyzer.benchmarkRunner.image.pullPolicy }}
         securityContext:
           # The privileged flag is necessary for OCP 4.x and other Kubernetes setups that deny host filesystem access to

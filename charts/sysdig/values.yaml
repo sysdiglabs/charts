@@ -1,5 +1,4 @@
 # Default values for Sysdig Monitor and Secure Helm package.
-fullnameOverride: "sysdigtest"
 image:
   # This is a hack to support RELATED_IMAGE_<identifier> feature in Helm based
   # Operators
@@ -187,7 +186,7 @@ clusterName: ""
 
 sysdig:
   # Required: You need your Sysdig Agent access key before running agents, either specifying 'accessKey' here, or using 'existingAccessKeySecret'
-  accessKey: "07a8d7c2-1fb1-475d-877c-cb53b8fb8586"
+  accessKey: ""
   # Alternatively, specify the name of a Kubernetes secret containing an 'access-key' entry
   existingAccessKeySecret: ""
 
@@ -335,7 +334,7 @@ nodeAnalyzer:
   # * SaaS US Web: us2.app.sysdig.com
   # * SaaS European Union: eu1.app.sysdig.com
   # * On-Prem: sysdig.my.company.com
-  apiEndpoint: "sysdig.apps.noah-kraemer-esc-1637-osc-6787.dev.draios.com"
+  apiEndpoint: ""
 
   # Can be set to false to allow insecure connections to the Sysdig backend,
   # such as for on-premise installs that use self-signed certificates.
