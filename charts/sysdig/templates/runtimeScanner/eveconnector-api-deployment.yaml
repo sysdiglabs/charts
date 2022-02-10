@@ -21,12 +21,15 @@ spec:
       app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/runtimeScanner/eveconnector-api-configmap.yaml") . | sha256sum }}
+        checksum/secret: {{ include (print $.Template.BasePath "/runtimeScanner/sysdig-eve-secret.yaml") . | sha256sum }}
       labels:
         app.kubernetes.io/name: {{ include "sysdig.name" . }}-eveconnector
         app.kubernetes.io/instance: {{ .Release.Name }}
-{{ include "sysdig.labels" . | indent 4 }}
+{{ include "sysdig.labels" . | indent 8 }}
     spec:
-      serviceAccountName: sysdig
+      serviceAccountName: {{ template "sysdig.serviceAccountName" .}}
       containers:
       - name: {{ include "sysdig.name" . }}-eveconnector-api
         image: {{ template "sysdig.image.eveConnector" . }}
@@ -42,7 +45,7 @@ spec:
           - name: CLIENT_AUTH_TOKEN
             valueFrom:
               secretKeyRef:
-                name: sysdig-eve-token
+                name: sysdig-eve-secret
                 key: token
           # DNS name used in self-signed certificate
           - name: CERT_DNS_NAME

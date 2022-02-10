@@ -203,6 +203,13 @@ true
 {{- end -}}
 
 {{/*
+Sysdig Eve Connector service URL
+*/}}
+{{- define "eveconnector.host" -}}
+{{ include "sysdig.fullname" .}}-eveconnector.{{ .Release.Namespace }}
+{{- end -}}
+
+{{/*
 Sysdig Eve Connector Secret generation (if not exists)
 */}}
 {{- define "eveconnector.token" -}}
@@ -210,6 +217,6 @@ Sysdig Eve Connector Secret generation (if not exists)
 {{- if $secret -}}
 {{ $secret.data.token }}
 {{- else -}}
-{{ randAlphaNum 32 | b64enc }}
+{{ randAlphaNum 32 | b64enc | quote }}
 {{- end -}}
 {{- end -}}

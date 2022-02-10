@@ -454,21 +454,8 @@ spec:
           - mountPath: /var/run
             name: varrun-vol
           - mountPath: /tmp
-            name: tmp-emptydir
-{{- if .Values.nodeAnalyzer.runtimeScanner.extraVolumes.mounts }}
-{{ toYaml .Values.nodeAnalyzer.runtimeScanner.extraVolumes.mounts | indent 10 }}
-{{- end }}
-      volumes:
-          # Needed for socket access
-          - name: varrun-vol
-            hostPath:
-              path: /var/run
-          - name: tmp-emptydir
-            emptyDir: {}
-{{- if .Values.nodeAnalyzer.runtimeScanner.extraVolumes.volumes }}
-{{ toYaml .Values.nodeAnalyzer.runtimeScanner.extraVolumes.volumes | indent 8 }}
+            name: tmp-vol
 # Runtime Scanner #
-{{- end -}}
 {{- end }}
       {{- with .Values.nodeAnalyzer.nodeSelector }}
       nodeSelector: {{ toYaml . | nindent 8 }}
