@@ -374,7 +374,7 @@ spec:
         # Custom volume mount here
         env:
           - name: TMPDIR
-            value: "/tmp"
+            value: "/tmp/runtimescanner"
           - name: MAX_FILE_SIZE_ALLOWED
             valueFrom:
               configMapKeyRef:
