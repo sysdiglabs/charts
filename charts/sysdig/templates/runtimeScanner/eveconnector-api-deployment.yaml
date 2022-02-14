@@ -70,13 +70,13 @@ spec:
                 {{- end }}
                 key: access-key
           # base URL for Sysdig Secure
-          - name: SYSDIG_SECURE_ENDPOINT
+          - name: SYSDIG_API_URL
             valueFrom:
               configMapKeyRef:
                 name: {{ template "sysdig.fullname" . }}-eveconnector
-                key: secure_url
+                key: api_endpoint
           # whether to check SSL certificate of Sysdig
-          - name: SYSDIG_SECURE_VERIFY_CERTIFICATE
+          - name: SYSDIG_API_VERIFY_CERTIFICATE
             valueFrom:
               configMapKeyRef:
                 name: {{ template "sysdig.fullname" . }}-eveconnector

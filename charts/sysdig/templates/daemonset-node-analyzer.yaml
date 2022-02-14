@@ -381,11 +381,11 @@ spec:
                 name: {{ template "sysdig.fullname" . }}-runtime-scanner
                 key: analyzer.maxFileSizeAllowed
                 optional: true
-          - name: SYSDIG_SECURE_ENDPOINT
+          - name: SYSDIG_API_URL
             valueFrom:
               configMapKeyRef:
                 name: {{ template "sysdig.fullname" . }}-runtime-scanner
-                key: secure_url
+                key: api_endpoint
           - name: SYSDIG_ACCESS_KEY
             valueFrom:
               secretKeyRef:
@@ -395,7 +395,7 @@ spec:
                 name: {{ .Values.sysdig.existingAccessKeySecret }}
                 {{- end }}
                 key: access-key
-          - name: SYSDIG_SECURE_VERIFY_CERTIFICATE
+          - name: SYSDIG_API_VERIFY_CERTIFICATE
             valueFrom:
               configMapKeyRef:
                 name: {{ template "sysdig.fullname" . }}-runtime-scanner
