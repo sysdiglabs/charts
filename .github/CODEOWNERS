@@ -1,0 +1,4 @@
+# request review from agent team members for changes to sysdig chart
+/charts/sysdig/         @achandras @yashgiri @lilx1ao
+/charts/agent/          @achandras @yashgiri @lilx1ao
+/charts/sysdig-deploy/  @achandras @yashgiri @lilx1ao
