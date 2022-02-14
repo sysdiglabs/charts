@@ -144,7 +144,7 @@ limits:
 ```
 * custom
 
-By setting "custom" or any value other than the ones defined above, you can create your own custom profile to match your requirements by setting the appropriate values in `resources` object.
+If anything is set for your `resources`, that will be used instead of the resource profile.
 
 See [Tuning Sysdig Agent](https://docs.sysdig.com/en/tuning-sysdig-agent.html) for more info.
 

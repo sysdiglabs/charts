@@ -82,14 +82,14 @@ Sysdig Agent resources
 {{- $mediumMemory := "3072Mi" -}}
 {{- $largeCpu := "5000m" -}}
 {{- $largeMemory := "6144Mi" -}}
-{{- if eq .Values.resourceProfile "small" -}}
+{{- if .Values.resources and (.Values.resources.requests or .Values.resources.limits) }} # custom resource values are always first-class
+{{- toYaml .Values.resources -}}
+{{- else if eq .Values.resourceProfile "small" -}}
 {{- printf "requests:\n  cpu: %s\n  memory: %s\nlimits:\n  cpu: %s\n  memory: %s" $smallCpu $smallMemory $smallCpu $smallMemory -}}
 {{- else if eq .Values.resourceProfile "medium" -}}
 {{- printf "requests:\n  cpu: %s\n  memory: %s\nlimits:\n  cpu: %s\n  memory: %s" $mediumCpu $mediumMemory $mediumCpu $mediumMemory -}}
 {{- else if eq .Values.resourceProfile "large" -}}
 {{- printf "requests:\n  cpu: %s\n  memory: %s\nlimits:\n  cpu: %s\n  memory: %s" $largeCpu $largeMemory $largeCpu $largeMemory -}}
-{{- else -}}{{/* "custom" or anything else falls here */}}
-{{- toYaml .Values.resources -}}
 {{- end -}}
 {{- end -}}
 
