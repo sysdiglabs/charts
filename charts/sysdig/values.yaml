@@ -467,7 +467,7 @@ nodeAnalyzer:
     deploy: false
     image:
       repository: sysdig/vuln-runtime-scanner
-      tag: 0.1.0-unstable-vcd29028
+      tag: 0.1.0
       digest:
       pullPolicy: IfNotPresent
 
@@ -477,7 +477,7 @@ nodeAnalyzer:
         memory: 512Mi
         ephemeral-storage: "2Gi"
       limits:
-        cpu: 500m
+        cpu: 1000m
         memory: 1536Mi
         ephemeral-storage: "4Gi"
 
@@ -488,7 +488,7 @@ nodeAnalyzer:
       deploy: false
       image:
         repository: sysdig/eveclient-api
-        tag: 7ba86b0
+        tag: 1.0.0
         digest:
         pullPolicy: IfNotPresent
 
