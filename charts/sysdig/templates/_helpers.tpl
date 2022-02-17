@@ -102,6 +102,20 @@ Return the proper Sysdig Agent image name for module building
 {{- end -}}
 
 {{/*
+Return the proper Sysdig Agent image name for the Runtime Scanner
+*/}}
+{{- define "sysdig.image.runtimeScanner" -}}
+    {{- include "sysdig.imageRegistry" . -}} / {{- .Values.nodeAnalyzer.runtimeScanner.image.repository -}} {{- if .Values.nodeAnalyzer.runtimeScanner.image.digest -}} @ {{- .Values.nodeAnalyzer.runtimeScanner.image.digest -}} {{- else -}} : {{- .Values.nodeAnalyzer.runtimeScanner.image.tag -}} {{- end -}}
+{{- end -}}
+
+{{/*
+Return the proper Sysdig Agent image name for the Eve Connector
+*/}}
+{{- define "sysdig.image.eveConnector" -}}
+    {{- include "sysdig.imageRegistry" . -}} / {{- .Values.nodeAnalyzer.runtimeScanner.eveConnector.image.repository -}} {{- if .Values.nodeAnalyzer.runtimeScanner.eveConnector.image.digest -}} @ {{- .Values.nodeAnalyzer.runtimeScanner.eveConnector.image.digest -}} {{- else -}} : {{- .Values.nodeAnalyzer.runtimeScanner.eveConnector.image.tag -}} {{- end -}}
+{{- end -}}
+
+{{/*
 Return the proper Sysdig Agent image name for the Node Image Analyzer
 */}}
 {{- define "sysdig.image.nodeImageAnalyzer" -}}
@@ -185,5 +199,24 @@ NOTE: I don't like the error message! Too much information.
 {{- define "deploy-nia" -}}
 {{- if or .Values.nodeImageAnalyzer.deploy .Values.nodeImageAnalyzer.settings.collectorEndpoint -}}
 true
+{{- end -}}
+{{- end -}}
+
+{{/*
+Sysdig Eve Connector service URL
+*/}}
+{{- define "eveconnector.host" -}}
+{{ include "sysdig.fullname" .}}-eveconnector.{{ .Release.Namespace }}
+{{- end -}}
+
+{{/*
+Sysdig Eve Connector Secret generation (if not exists)
+*/}}
+{{- define "eveconnector.token" -}}
+{{- $secret := lookup "v1" "Secret" .Release.Namespace "sysdig-eve-secret" -}}
+{{- if $secret -}}
+{{ $secret.data.token }}
+{{- else -}}
+{{ randAlphaNum 32 | b64enc | quote }}
 {{- end -}}
 {{- end -}}
