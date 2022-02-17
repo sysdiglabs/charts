@@ -375,6 +375,12 @@ spec:
         env:
           - name: TMPDIR
             value: "/tmp/runtimescanner"
+          - name: PROM_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "sysdig.fullname" . }}-runtime-scanner
+                key: prom_port
+                optional: true
           - name: MAX_FILE_SIZE_ALLOWED
             valueFrom:
               configMapKeyRef:

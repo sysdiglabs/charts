@@ -27,4 +27,7 @@ data:
   {{- if hasKey .Values.nodeAnalyzer.runtimeScanner "eveConnector" }}
   eve_integration_enabled: "true"
   {{- end -}}
+  {{- if hasKey .Values.nodeAnalyzer.runtimeScanner "settings" }}
+  prom_port: {{ .Values.nodeAnalyzer.runtimeScanner.settings.prometheusPort | default 25001 | quote }}
+  {{- end -}}
 {{- end }}
