@@ -34,11 +34,15 @@ spec:
       containers:
         - name: {{ include "admission-controller.name" . }}
           image: "{{ include "admission-controller.webhook.image" . }}"
+          {{- if .Values.webhook.customEntryPoint }}
+          command: {{ .Values.webhook.customEntryPoint | toYaml | nindent 10 }}
+          {{- else }}
           args:
             - --tls_cert_file
             - /cert/tls.crt
             - --tls_private_key_file
             - /cert/tls.key
+          {{- end }}
           securityContext:
             {{- toYaml .Values.webhook.securityContext | nindent 12 }}
           imagePullPolicy: {{ .Values.webhook.image.pullPolicy }}
@@ -70,12 +74,14 @@ spec:
               port: http
               scheme: HTTPS
           envFrom:
+            {{- if or .Values.sysdig.secureAPIToken .Values.sysdig.existingSecureAPITokenSecret }}
             - secretRef:
-                {{- if not .Values.sysdig.existingSecureAPITokenSecret }}
+                {{- if .Values.sysdig.secureAPIToken }}
                 name: {{ include "admission-controller.webhook.fullname" . }}
                 {{- else }}
                 name: {{ .Values.sysdig.existingSecureAPITokenSecret }}
                 {{- end }}
+            {{- end }}
             - configMapRef:
                 name: {{ include "admission-controller.webhook.fullname" . }}
           volumeMounts:
