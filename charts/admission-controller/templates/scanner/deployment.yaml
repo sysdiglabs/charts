@@ -60,11 +60,15 @@ spec:
               mountPath: /ca-cert
               readOnly: true
             {{- end }}
+          {{- if .Values.scanner.customEntryPoint }}
+          command: {{ .Values.scanner.customEntryPoint | toYaml | nindent 10 }}
+          {{- else }}
           args:
             - --server_port={{ .Values.scanner.service.port }}
             {{- if .Values.scanner.authWithSecureToken }}
             - --auth_secure_token
-            {{- end}}
+            {{- end }}
+          {{- end }}
           imagePullPolicy: {{ .Values.scanner.image.pullPolicy }}
           env:
             {{- if (or .Values.scanner.httpProxy .Values.scanner.httpsProxy) }}
@@ -82,18 +86,20 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ include "admission-controller.scanner.fullname" . }}
+            {{- if or .Values.sysdig.secureAPIToken .Values.sysdig.existingSecureAPITokenSecret }}
             - secretRef:
-                {{- if not .Values.sysdig.existingSecureAPITokenSecret }}
+                {{- if .Values.sysdig.secureAPIToken }}
                 name: {{ include "admission-controller.scanner.fullname" . }}-api-token
                 {{- else }}
                 name: {{ .Values.sysdig.existingSecureAPITokenSecret }}
                 {{- end }}
             - secretRef:
-                {{- if not .Values.sysdig.existingSecureAPITokenSecret }}
+                {{- if .Values.sysdig.secureAPIToken }}
                 name: {{ include "admission-controller.scanner.fullname" . }}-auth
                 {{- else }}
                 name: {{ .Values.sysdig.existingSecureAPITokenSecret }}
                 {{- end }}
+            {{- end }}
           ports:
             - name: http
               containerPort: {{ .Values.scanner.service.port }}
