@@ -2,28 +2,36 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+
+# **required**
+# <br/>Cluster Name which appear on Secure UI
+clusterName: ""
+
 sysdig:
-  # The Sysdig URL prefix
-  url: "https://secure.sysdig.com"
-  # API Token to access Sysdig Secure.
-  # If neither this value nor `sysdig.existingSecureAPITokenSecret` are configured, the
+
+  # **required**
+  # <br/> API Token to access Sysdig Secure.
+  # <br/><br/>If neither this value nor `sysdig.existingSecureAPITokenSecret` are configured, the
   # user will be required to provide the deployment the `SECURE_API_TOKEN`
   # (and `AUTH_BEARER_TOKEN` if the scanner is enabled) environment variables.
   secureAPIToken: ""
 
-  # Existing secret with API Token to access Sysdig Secure
-  # Alternatively, specify the name of a Kubernetes secret containing 'SECURE_API_TOKEN' and
-  # 'AUTH_BEARER_TOKEN' entry if you're also enabling scanner.
-  # If neither this value nor `sysdig.secureAPIToken` are configured, the
+  # **required**
+  # <br/>Existing secret with API Token to access Sysdig Secure
+  # <br/>Alternatively, specify the name of a Kubernetes secret containing `SECURE_API_TOKEN` and
+  # `AUTH_BEARER_TOKEN` entry if you're also enabling scanner.
+  # <br/><br/>If neither this value nor `sysdig.secureAPIToken` are configured, the
   # user will be required to provide the deployment the `SECURE_API_TOKEN`
   # (and `AUTH_BEARER_TOKEN` if the scanner is enabled) environment variables.
   existingSecureAPITokenSecret: ""
 
-# Cluster Name which appear on Secure UI
-clusterName: ""
+  # The Sysdig URL prefix
+  url: "https://secure.sysdig.com"
+
 features:
   # Enable K8s Audit detections with Falco rules
   k8sAuditDetections: false
+
   # [Admission Webhook Configuration rules](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#matching-requests-rules) for the Audit Detections
   k8sAuditDetectionsRules:  # +doc-gen:break
     - apiGroups:
@@ -85,9 +93,11 @@ webhook:
     # Configure port for the webhook service
     port: 443
 
-  # HTTP Proxy settings for webhook. Set to http://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy
+  # HTTP Proxy settings for webhook.
+  # <br/>Set to http://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy
   httpProxy: ""
-  # HTTPS Proxy settings for webhook. Set to https://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy
+  # HTTPS Proxy settings for webhook.
+  # <br/>Set to https://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy
   httpsProxy: ""
   # List of hosts, IPs, or IPs in CIDR format that should not go through the proxy. We include "kubernetes" service and typical 10.0.0.0/8 services
   noProxy: kubernetes,10.0.0.0/8
@@ -112,10 +122,9 @@ webhook:
     runAsNonRoot: true
 
   # Specifies if the webhook should be started in hostNetwork mode.
-  #
-  # This is required if using a custom CNI where the managed control plane nodes are unable to initiate
-  # network connections to the pods, for example using Calico CNI plugin on EKS. This is not required
-  # or recommended in most contexts.
+  # <br/>This is required if using a custom CNI where the managed control plane nodes are unable to initiate
+  # network connections to the pods, for example using Calico CNI plugin on EKS.
+  # <br/>This is not required or recommended in most contexts.
   hostNetwork: false
 
   # The image pull secrets for webhook
@@ -185,9 +194,11 @@ scanner:
   # Authenticate with Secure token
   authWithSecureToken: false
 
-  # HTTP Proxy settings for scanner. Set to http://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy
+  # HTTP Proxy settings for scanner.
+  # <br/>Set to http://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy
   httpProxy: ""
-  # HTTPS Proxy settings for scanner. Set to https://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy
+  # HTTPS Proxy settings for scanner.
+  # <br/>Set to https://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy
   httpsProxy: ""
   # List of hosts, IPs, or IPs in CIDR format that should not go through the proxy. We include "kubernetes" service and typical 10.0.0.0/8 services
   noProxy: kubernetes,10.0.0.0/8

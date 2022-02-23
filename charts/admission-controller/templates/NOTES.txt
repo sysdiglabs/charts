@@ -1,5 +1,5 @@
 Sysdig Admission Controller is now installed!
-{{- if not (and .Values.sysdig.existingSecureAPITokenSecret .Values.sysdig.secureAPIToken) }}
+{{- if not (or .Values.sysdig.existingSecureAPITokenSecret .Values.sysdig.secureAPIToken) }}
 ================================================================================================
 Warning: the Sysdig Secure API Token was not provided with either the `sysdig.secureAPIToken` or
 `sysdig.existingSecureAPITokenSecret` values.
