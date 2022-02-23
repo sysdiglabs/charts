@@ -208,6 +208,8 @@ sysdig:
 secure:
   # true here enables Sysdig Secure: container run-time security & forensics
   enabled: true
+  vulnerabilityManagement:
+    newEngineOnly: false
 
 auditLog:
   # true here activates the K8s Audit Log feature for Sysdig Secure
@@ -474,11 +476,11 @@ nodeAnalyzer:
     resources:
       requests:
         cpu: 150m
-        memory: 512Mi
+        memory: 1024Mi
         ephemeral-storage: "2Gi"
       limits:
         cpu: 1000m
-        memory: 1536Mi
+        memory: 2Gi
         ephemeral-storage: "4Gi"
 
     settings:

@@ -84,6 +84,7 @@ spec:
       # the host
       hostPID: true
       containers:
+{{ if not .Values.secure.vulnerabilityManagement.newEngineOnly }}
       - name: sysdig-image-analyzer
         image: {{ template "sysdig.image.imageAnalyzer" . }}
         securityContext:
@@ -296,6 +297,8 @@ spec:
               key: no_proxy
               name: {{ template "sysdig.fullname" . }}-host-analyzer
               optional: true
+# end of "if not .Values.secure.vulnerabilityManagement.newEngineOnly"
+{{- end }}
       - name: sysdig-benchmark-runner
         image: {{ template "sysdig.image.benchmarkRunner" . }}
         imagePullPolicy: {{ .Values.nodeAnalyzer.benchmarkRunner.image.pullPolicy }}
@@ -362,7 +365,7 @@ spec:
               key: no_proxy
               name: {{ template "sysdig.fullname" . }}-benchmark-runner
               optional: true
-{{ if  .Values.nodeAnalyzer.runtimeScanner.deploy }}
+{{ if or  .Values.nodeAnalyzer.runtimeScanner.deploy .Values.secure.vulnerabilityManagement.newEngineOnly }}
       # Runtime Scanner #
       - name: sysdig-runtime-scanner
         image: {{ template "sysdig.image.runtimeScanner" . }}
