@@ -13,6 +13,7 @@ chart:
 #  values: "-- generate from values file --"
   valuesExample: "sysdig.secureAPIToken=YOUR-KEY-HERE,clusterName=YOUR-CLUSTER-NAME"
 prerequisites:
+- "Helm 3"
 - "Kubernetes v1.16+"
 - "Cluster Name (pick one to identify your Kubernetes Cluster)"
 - "Sysdig Secure API Token"
