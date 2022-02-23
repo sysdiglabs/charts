@@ -27,8 +27,10 @@ $ helm install admission-controller sysdig/admission-controller \
       --set sysdig.secureAPIToken=SECURE_API_TOKEN
 ```
 
-See other [usages](#usages)
-
+- [Configuration](#configuration)
+- [Usages](#usages)
+- [Confirm Working Status](#confirm-working-status)
+- [Troubleshooting](#troubleshooting)
 
 
 ## Introduction
@@ -39,6 +41,7 @@ This chart deploys the Sysdig Admission Controller on a [Kubernetes](http://kube
 
 ### Prerequisites
 
+- Helm 3
 - Kubernetes v1.16+
 - Cluster Name (pick one to identify your Kubernetes Cluster)
 - Sysdig Secure API Token
@@ -98,8 +101,8 @@ The following table lists the configurable parameters of the `admission-controll
 | webhook.image.tag                   | Override the default image tag. If not specified, it defaults to appVersion in Chart.yaml                                                                                                                                                                                                                                                                                                                                                                           | <code></code>                                                                                                                                                                                      |
 | webhook.service.type                | Use this type as webhook service                                                                                                                                                                                                                                                                                                                                                                                                                                    | <code>ClusterIP</code>                                                                                                                                                                             |
 | webhook.service.port                | Configure port for the webhook service                                                                                                                                                                                                                                                                                                                                                                                                                              | <code>443</code>                                                                                                                                                                                   |
-| webhook.httpProxy                   | HTTP Proxy settings for webhook. <br/>Set to http://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy                                                                                                                                                                                                                                                                                                                                          | <code>""</code>                                                                                                                                                                                    |
-| webhook.httpsProxy                  | HTTPS Proxy settings for webhook. <br/>Set to https://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy                                                                                                                                                                                                                                                                                                                                        | <code>""</code>                                                                                                                                                                                    |
+| webhook.httpProxy                   | HTTP Proxy settings for webhook. <br/>Set to http(s)://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy                                                                                                                                                                                                                                                                                                                                       | <code>""</code>                                                                                                                                                                                    |
+| webhook.httpsProxy                  | HTTPS Proxy settings for webhook. <br/>Set to http(s)://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy                                                                                                                                                                                                                                                                                                                                      | <code>""</code>                                                                                                                                                                                    |
 | webhook.noProxy                     | List of hosts, IPs, or IPs in CIDR format that should not go through the proxy. We include "kubernetes" service and typical 10.0.0.0/8 services                                                                                                                                                                                                                                                                                                                     | <code>kubernetes,10.0.0.0/8</code>                                                                                                                                                                 |
 | webhook.podAnnotations              | Webhook pod annotations                                                                                                                                                                                                                                                                                                                                                                                                                                             | <code>{"prometheus.io/path":"/metrics","prometheus.io/port":"5000","prometheus.io/scheme":"https","prometheus.io/scrape":"true","sidecar.istio.io/inject":"false"}</code>                          |
 | webhook.podSecurityContext          | PSP's for webhook                                                                                                                                                                                                                                                                                                                                                                                                                                                   | <code>{}</code>                                                                                                                                                                                    |
@@ -113,10 +116,10 @@ The following table lists the configurable parameters of the `admission-controll
 | webhook.affinity                    | Configure affinity rules for webhook                                                                                                                                                                                                                                                                                                                                                                                                                                | <code>{}</code>                                                                                                                                                                                    |
 | webhook.denyOnError                 | Deny request when an error happened evaluating request                                                                                                                                                                                                                                                                                                                                                                                                              | <code>false</code>                                                                                                                                                                                 |
 | webhook.dryRun                      | Dry Run request                                                                                                                                                                                                                                                                                                                                                                                                                                                     | <code>false</code>                                                                                                                                                                                 |
-| webhook.ssl.ca.cert                 | A PEM-encoded x509 certificate authority to use in the certificate generation and to contact the Secure backend. If empty, a new CA will be autogenerated.                                                                                                                                                                                                                                                                                                          | <code>""</code>                                                                                                                                                                                    |
-| webhook.ssl.ca.key                  | A PEM-encoded private key of the certificate authority to use in the certificate generation. If empty, a new CA will be autogenerated.                                                                                                                                                                                                                                                                                                                              | <code>""</code>                                                                                                                                                                                    |
-| webhook.ssl.cert                    | A PEM-encoded x509 certificate signed by the CA. If empty, a new cert will be generated. If provided, it must be valid with the `webhook.ssl.ca`. If this is set, the key must also be provided.                                                                                                                                                                                                                                                                    | <code>""</code>                                                                                                                                                                                    |
-| webhook.ssl.key                     | A PEM-encoded private key signed by the CA. If empty, a new key will be generated. If provided, it must be valid with the `webhook.ssl.ca`. If this is set, the cert must also be provided.                                                                                                                                                                                                                                                                         | <code>""</code>                                                                                                                                                                                    |
+| webhook.ssl.ca.cert                 | For outbound connections (secure backend, proxy,...) <br/>And inbound connections to serve HttpRequests as Kubernetes Webhook. <br/>A PEM-encoded x509 certificate authority. <br/>If empty, a new CA will be autogenerated.                                                                                                                                                                                                                                        | <code>""</code>                                                                                                                                                                                    |
+| webhook.ssl.ca.key                  | For outbound connections (secure backend, proxy,...) <br/>A PEM-encoded private key of the certificate authority to use in the certificate generation. <br/>If empty, a new CA will be autogenerated.                                                                                                                                                                                                                                                               | <code>""</code>                                                                                                                                                                                    |
+| webhook.ssl.cert                    | For inbound connections to serve HttpRequests as Kubernetes Webhook. <br/>A PEM-encoded x509 certificate signed by the CA. <br/>If empty, a new cert will be generated. <br/>If provided, it must be valid with the `webhook.ssl.ca`. <br/>If this is set, the key must also be provided.                                                                                                                                                                           | <code>""</code>                                                                                                                                                                                    |
+| webhook.ssl.key                     | For inbound connections to serve HttpRequests as Kubernetes Webhook. <br/>A PEM-encoded private key signed by the CA. <br/>If empty, a new key will be generated. <br/>If provided, it must be valid with the `webhook.ssl.ca`. <br/>If this is set, the cert must also be provided.                                                                                                                                                                                | <code>""</code>                                                                                                                                                                                    |
 | webhook.customEntryPoint            | Custom entrypoint for the webhook. If configured, remember to provide the webhook valid arguments with `--tls_cert_file` and `--tls_private_key_file`.                                                                                                                                                                                                                                                                                                              | <code>[]</code>                                                                                                                                                                                    |
 | scanner.enabled                     | Deploy the Inline Scanner Service                                                                                                                                                                                                                                                                                                                                                                                                                                   | <code>true</code>                                                                                                                                                                                  |
 | scanner.name                        | Service name for Scanner deployment                                                                                                                                                                                                                                                                                                                                                                                                                                 | <code>scanner</code>                                                                                                                                                                               |
@@ -127,8 +130,8 @@ The following table lists the configurable parameters of the `admission-controll
 | scanner.image.tag                   | Scanner image tag                                                                                                                                                                                                                                                                                                                                                                                                                                                   | <code>0.0.9</code>                                                                                                                                                                                 |
 | scanner.service.port                | Configure port for the webhook service                                                                                                                                                                                                                                                                                                                                                                                                                              | <code>8080</code>                                                                                                                                                                                  |
 | scanner.authWithSecureToken         | Authenticate with Secure token                                                                                                                                                                                                                                                                                                                                                                                                                                      | <code>false</code>                                                                                                                                                                                 |
-| scanner.httpProxy                   | HTTP Proxy settings for scanner. <br/>Set to http://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy                                                                                                                                                                                                                                                                                                                                          | <code>""</code>                                                                                                                                                                                    |
-| scanner.httpsProxy                  | HTTPS Proxy settings for scanner. <br/>Set to https://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy                                                                                                                                                                                                                                                                                                                                        | <code>""</code>                                                                                                                                                                                    |
+| scanner.httpProxy                   | HTTP Proxy settings for scanner. <br/>Set to http(s)://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy                                                                                                                                                                                                                                                                                                                                       | <code>""</code>                                                                                                                                                                                    |
+| scanner.httpsProxy                  | HTTPS Proxy settings for scanner. <br/>Set to http(s)://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy                                                                                                                                                                                                                                                                                                                                      | <code>""</code>                                                                                                                                                                                    |
 | scanner.noProxy                     | List of hosts, IPs, or IPs in CIDR format that should not go through the proxy. We include "kubernetes" service and typical 10.0.0.0/8 services                                                                                                                                                                                                                                                                                                                     | <code>kubernetes,10.0.0.0/8</code>                                                                                                                                                                 |
 | scanner.podAnnotations              | Scanner pod annotations                                                                                                                                                                                                                                                                                                                                                                                                                                             | <code>{"prometheus.io/path":"/metrics","prometheus.io/port":"8080","prometheus.io/scrape":"true"}</code>                                                                                           |
 | scanner.psp.create                  | Whether to create a psp policy and role / role-binding                                                                                                                                                                                                                                                                                                                                                                                                              | <code>false</code>                                                                                                                                                                                 |
@@ -141,7 +144,7 @@ The following table lists the configurable parameters of the `admission-controll
 | scanner.nodeSelector                | Configure nodeSelector for scheduling for the scanner                                                                                                                                                                                                                                                                                                                                                                                                               | <code>{}</code>                                                                                                                                                                                    |
 | scanner.tolerations                 | Tolerations for scheduling for the scanner                                                                                                                                                                                                                                                                                                                                                                                                                          | <code>[]</code>                                                                                                                                                                                    |
 | scanner.affinity                    | Configure affinity rules for the scanner                                                                                                                                                                                                                                                                                                                                                                                                                            | <code>{}</code>                                                                                                                                                                                    |
-| scanner.ssl.ca.cert                 | A PEM-encoded x509 certificate authority to use when contacting the secure backend.                                                                                                                                                                                                                                                                                                                                                                                 | <code>""</code>                                                                                                                                                                                    |
+| scanner.ssl.ca.cert                 | For outbound connections (secure backend, proxy,...). <br/>A PEM-encoded x509 certificate authority. <br/>If empty, a new CA will be autogenerated.                                                                                                                                                                                                                                                                                                                 | <code>""</code>                                                                                                                                                                                    |
 | scanner.customEntryPoint            | Custom entrypoint for the scanner. If configured, remember to provide the scanner valid arguments with `--server_port` and `--auth_secure_token`                                                                                                                                                                                                                                                                                                                    | <code>[]</code>                                                                                                                                                                                    |
 
 
@@ -149,7 +152,9 @@ The following table lists the configurable parameters of the `admission-controll
 Specify each parameter using the **`--set key=value[,key=value]`** argument to `helm install`. For example:
 
 ```console
-$ helm install admission-controller sysdig/admission-controller --create-namespace -n admission-controller  --set sysdig.secureAPIToken=YOUR-KEY-HERE,clusterName=YOUR-CLUSTER-NAME
+$ helm install admission-controller sysdig/admission-controller \
+    --create-namespace -n admission-controller  \
+    --set sysdig.secureAPIToken=YOUR-KEY-HERE,clusterName=YOUR-CLUSTER-NAME
 ```
 
 
@@ -158,7 +163,9 @@ $ helm install admission-controller sysdig/admission-controller --create-namespa
 installing the chart. For example:
 
 ```console
-$ helm install admission-controller sysdig/admission-controller --create-namespace -n admission-controller --values values.yaml
+$ helm install admission-controller sysdig/admission-controller \
+    --create-namespace -n admission-controller \
+    --values values.yaml
 ```
 
 
@@ -205,6 +212,21 @@ For example, if you want to filter out secrets from the AC you can try with thes
   scope: "*"
 ```
 
+### Proxy Usage
+
+There are several configuration parameters for the proxy usage
+
+- Two involved components `webhook.*` and `scanner.*`; reference to the first for communications to the Sysdig backend, while
+second communicates with the registry from where to pull the image to be scanned.
+- configuration values `*.httpProxy`, `*.httpsProxy` and `*.noProxy`. Make sure to use at least `https` version for Sysdig Secure Backend.
+
+If your Proxy is served with TLS
+- The url for those `*.httpProxy` and `*.httpsProxy` must be `https://`
+- If using a self-signed certificate you will need to also configure one of the following two options
+    1. Set the `verifySSL=false` parameter
+    2. Or set `*.ssl.ca.cert` for both components `webhook` and `scanner`
+
+
 
 ## Usages
 
@@ -240,6 +262,7 @@ Use `verifySSL=false` if you are using self signed certificates.
 ### CA Provided
 
 The following command will deploy the admission controller with a custom CA:
+Note: Since the certificates are not provided, they will be autogenerated with the provided CA.
 
 ```
 $ helm install  admission-controller sysdig/admission-controller \
@@ -250,9 +273,6 @@ $ helm install  admission-controller sysdig/admission-controller \
       --set webhook.ssl.ca.cert=YOUR_CA_CERT_AS_PEM_ENCODED \
       --set webhook.ssl.ca.key=YOUR_CA_KEY_AS_PEM_ENCODED
 ```
-
-Since the certificates are not provided, they will be autogenerated with the provided CA.
-
 
 
 ### CA and Certificates Provided
@@ -270,3 +290,45 @@ $ helm install  admission-controller sysdig/admission-controller \
       --set webhook.ssl.cert=YOUR_CERT_AS_PEM_ENCODED \
       --set webhook.ssl.key=YOUR_KEY_AS_PEM_ENCODED
 ```
+
+## Confirm Working Status
+
+### Image Scanning
+
+1. Install Admission Controller on your Kubernetes Cluster following one of the (use-cases)(#usage) described
+2. Enable Admission-Controller on your Sysdig Secure > Image Scanning > Admission Controller > Policy Assignments
+This section can only be accessed by a user with Administrator permissions
+3. Add some an assignment to Allow or Deny images within a namespace
+4. Tail to the logs from the Admission Controller
+    ```
+    $ kubectl logs -f -n  <ADMISSION_NAMESPACE> -l app.kubernetes.io/component=webhook
+    ```
+5. Push some deployment into your Kubernetes Cluster to watch the result, for example an nginx image
+    ```
+    $ kubectl run nginx --image=nginx
+    ```
+
+If policy is set to allow, the deployment will be successful.
+
+Either way, you should see some logs in Admission Controller tail
+
+    -- allow assignment result
+    {"level":"info","component":"scanning-evaluator","message":"checking pod=nginx in namespace=default"}
+    {"level":"info","component":"scanning-evaluator","message":"evaluating container with name=nginx and image=nginx"}
+    {"level":"info","component":"scanning-evaluator","time":"","message":"matched policy=Allow always for namespace=default and image=nginx"}
+    {"level":"info","component":"scanning-evaluator","message":"allowing container with name=nginx and image=nginx"}
+
+    -- reject assignment result
+    {"level":"info","component":"scanning-evaluator","message":"checking pod=nginx in namespace=default"}
+    {"level":"info","component":"scanning-evaluator","message":"evaluating container with name=nginx and image=nginx"}
+    {"level":"info","component":"scanning-evaluator","message":"matched policy=Reject Allways for namespace=default and image=nginx"}
+    {"level":"info","component":"scanning-evaluator","message":"denying container with name=nginx and image=nginx reason=\"Reject Always\""}
+
+
+## Troubleshooting
+
+### Q: I don't see changes on `Policy Assignments` honored
+A: Admission Controller pull changes from the server every 5 minutes
+S: You can wait those five minutes, or force the admission controller webhook respawn
+
+    $ kubectl delete pod -n <ADMISSION_NAMESPACE> -l app.kubernetes.io/component=webhook
