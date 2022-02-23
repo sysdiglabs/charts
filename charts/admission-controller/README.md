@@ -18,7 +18,7 @@ $ pre-commit run -a
 
 ## TL;DR;
 
-```console
+```
 $ helm repo add sysdig https://charts.sysdig.com
 $ helm repo update
 $ helm install admission-controller sysdig/admission-controller \
