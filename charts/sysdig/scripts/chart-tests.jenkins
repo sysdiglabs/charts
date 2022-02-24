@@ -19,6 +19,9 @@ pipeline {
     }
     stages {
         stage('Chart install test') {
+            when {
+                changeset "charts/sysdig/**"
+            }
             steps {
                 echo 'test'
                 /* build job: "QA-agent/kubernetes-installation", */
