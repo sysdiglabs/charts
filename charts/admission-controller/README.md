@@ -148,7 +148,6 @@ The following table lists the configurable parameters of the `admission-controll
 | scanner.customEntryPoint            | Custom entrypoint for the scanner. If configured, remember to provide the scanner valid arguments with `--server_port` and `--auth_secure_token`                                                                                                                                                                                                                                                                                                                    | <code>[]</code>                                                                                                                                                                                    |
 
 
-
 Specify each parameter using the **`--set key=value[,key=value]`** argument to `helm install`. For example:
 
 ```console
@@ -156,8 +155,6 @@ $ helm install admission-controller sysdig/admission-controller \
     --create-namespace -n admission-controller  \
     --set sysdig.secureAPIToken=YOUR-KEY-HERE,clusterName=YOUR-CLUSTER-NAME
 ```
-
-
 
 **Alternatively, a YAML file** that specifies the values for the parameters can be provided while
 installing the chart. For example:
@@ -167,6 +164,8 @@ $ helm install admission-controller sysdig/admission-controller \
     --create-namespace -n admission-controller \
     --values values.yaml
 ```
+
+Find some [examples of these values](https://github.com/sysdiglabs/charts/tree/master/charts/admission-controller/ci)
 
 
 ### Custom Admission Controller Rules to be detected
