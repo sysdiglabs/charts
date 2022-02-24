@@ -14,7 +14,7 @@ pipeline {
         timeout(time: 180, unit: 'MINUTES')
     }
     parameters {
-        string(name: 'AUTOMATION_BRANCH', defaultValue: "staging")
+        string(name: 'AUTOMATION_BRANCH', defaultValue: "test_chart_from_branch")
         string(name: 'K8S_VERSION', defaultValue: "v1.22.0")
     }
     stages {
