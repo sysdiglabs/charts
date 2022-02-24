@@ -309,9 +309,9 @@ described below. Likewise, the list of directories to be examined during each sc
 
 See the [Benchmarks documentation](https://docs.sysdig.com/en/benchmarks.html) for details on the Benchmark feature. The
 Benchmark Runner provides the capability to run CIS inspired benchmarks against your infrastructure. Benchmark tasks are
-configured in the UI, and the runner automatically runs these benchmarks on the configured scope and schedule.
-Note: if `nodeAnalyzer.benchmarkRunner.includeSensitivePermissions` is set to `false`, the service account will not have
-the full set of permissions needed to execute `oc` commands, which most checks in `CIS Benchmark for OS4` require.
+configured in the UI, and the runner automatically runs these benchmarks on the configured scope and schedule. Note:
+if `nodeAnalyzer.benchmarkRunner.includeSensitivePermissions` is set to `false`, the service account will not have the
+full set of permissions needed to execute `oc` commands, which most checks in `CIS Benchmark for OS4` require.
 
 ## On-Premise backend deployment settings
 
