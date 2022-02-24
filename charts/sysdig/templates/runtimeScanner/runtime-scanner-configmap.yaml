@@ -1,4 +1,4 @@
-{{- if and (not (include "deploy-nia" .)) .Values.nodeAnalyzer.deploy .Values.nodeAnalyzer.runtimeScanner.deploy }}
+{{- if or (and (not (include "deploy-nia" .)) .Values.nodeAnalyzer.deploy .Values.nodeAnalyzer.runtimeScanner.deploy) .Values.secure.vulnerabilityManagement.newEngineOnly }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
