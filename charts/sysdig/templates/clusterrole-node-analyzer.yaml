@@ -57,6 +57,7 @@ rules:
   verbs:
     - get
     - list
+{{- if .Values.nodeAnalyzer.benchmarkRunner.includeSensitivePermissions  }}
 - apiGroups:
     - ""
   resources:
@@ -70,6 +71,7 @@ rules:
   verbs:
     - create
     - delete
+{{- end }}
 {{- if .Values.psp.create  }}
 - apiGroups:
     - "policy"
