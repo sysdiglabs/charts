@@ -12,7 +12,7 @@ image:
 
   registry: quay.io
   repository: sysdig/agent
-  tag: 12.2.0
+  tag: 12.3.0
   # Specify a imagePullPolicy
   # Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
   # ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -89,6 +89,8 @@ serviceAccount:
   name:
 
 daemonset:
+  deploy: true
+
   # Perform rolling updates by default in the DaemonSet agent
   # ref: https://kubernetes.io/docs/tasks/manage-daemon/update-daemon-set/
   updateStrategy:
@@ -164,6 +166,7 @@ slim:
   # contains the toolchain required to build the kernel module.
   kmoduleImage:
     repository: sysdig/agent-kmodule
+    digest:
 
   resources:
     # Resources required by the kernel module builder image. These are some

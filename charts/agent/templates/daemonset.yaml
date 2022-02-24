@@ -1,3 +1,4 @@
+{{- if .Values.daemonset.deploy }}
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
@@ -272,3 +273,4 @@ spec:
               path: name
   updateStrategy:
 {{ toYaml .Values.daemonset.updateStrategy | indent 4 }}
+{{- end }}
