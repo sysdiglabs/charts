@@ -1,0 +1,36 @@
+/* vim:expandtab:sw=4:ts=4:sts=4
+ */
+pipeline {
+    agent {
+        docker {
+            image 'docker.internal.sysdig.com/qa-tools:latest'
+            label 'qa_onprem_terminating_j8'
+            alwaysPull true
+            registryUrl 'https://docker.internal.sysdig.com'
+            registryCredentialsId 'jenkins-artifactory'
+        }
+    }
+    options {
+        timeout(time: 180, unit: 'MINUTES')
+    }
+    parameters {
+        string(name: 'AUTOMATION_BRANCH', defaultValue: "staging")
+        string(name: 'K8S_VERSION', defaultValue: "v1.22.0")
+    }
+    stages {
+        stage('Chart install test') {
+            steps {
+                echo 'test'
+                /* build job: "QA-agent/kubernetes-installation", */
+                /*            parameters: [string(name: 'AUTOMATION_BRANCH', value: "${AUTOMATION_BRANCH}"), */
+                /*                         string(name: 'DEPLOYMENT_TYPE', value: "k8s"), */
+                /*                         string(name: 'K8S_VERSION', value: "${K8S_VERSION}"), */
+                /*                         string(name: 'RUN_1_INSTALL_AGENT', value: "false"), */
+                /*                         string(name: 'RUN_2_INSTALL_AGENT_SLIM', value: "false"), */
+                /*                         string(name: 'RUN_3_INSTALL_AGENT_WITH_HELM', value: "true"), */
+                /*                         string(name: 'RUN_4_INSTALL_AGENT_SLIM_WITH_HELM', value: "true")] */
+            }
+        }
+    }
+}
+
