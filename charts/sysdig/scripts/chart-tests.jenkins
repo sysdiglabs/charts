@@ -28,10 +28,12 @@ pipeline {
                            parameters: [string(name: 'AUTOMATION_BRANCH', value: "${AUTOMATION_BRANCH}"),
                                         string(name: 'DEPLOYMENT_TYPE', value: "k8s"),
                                         string(name: 'K8S_VERSION', value: "${K8S_VERSION}"),
-                                        string(name: 'RUN_1_INSTALL_AGENT', value: "false"),
-                                        string(name: 'RUN_2_INSTALL_AGENT_SLIM', value: "false"),
-                                        string(name: 'RUN_3_INSTALL_AGENT_WITH_HELM', value: "true"),
-                                        string(name: 'RUN_4_INSTALL_AGENT_SLIM_WITH_HELM', value: "true")]
+                                        string(name: 'RUN_1_INSTALL_AGENT', value: "False"),
+                                        string(name: 'RUN_2_INSTALL_AGENT_SLIM', value: "False"),
+                                        string(name: 'RUN_3_INSTALL_AGENT_WITH_HELM', value: "True"),
+                                        string(name: 'RUN_4_INSTALL_AGENT_SLIM_WITH_HELM', value: "True"),
+                                        string(name: 'HELM_USE_GIT', value: "True"),
+                                        string(name: 'HELM_CHART_BRANCH', value: "${env.BRANCH_NAME}")]
             }
         }
     }
