@@ -47,7 +47,9 @@ features:
       resources: ["*/*"]
       scope: "*"
 
-# Verify SSL on HTTPS connections to Sysdig Secure
+
+# For outbound connections (secure backend, proxy,...)
+# <br/>Whether to verify SSL on HTTPS connections
 verifySSL: true
 
 # Chart name override

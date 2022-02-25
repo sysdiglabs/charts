@@ -262,3 +262,11 @@ A: Admission Controller pull changes from the server every 5 minutes
 S: You can wait those five minutes, or force the admission controller webhook respawn
 
     $ kubectl delete pod -n <ADMISSION_NAMESPACE> -l app.kubernetes.io/component=webhook
+
+<!--
+Q: Helm v2 usage
+should work with minor changes
+1. Removed the option "--create-namespace" since not supported in v2. I don't see particular problem in creating the namespace manually before the execution of the chart
+2. Added "--name" since required by v2 to specify the chart name
+3. Changed Chart.yaml apiVersion: from v2 to v1. It seems that the difference is only related to dependencies and types, and I didn't find any of those in the chart (by default chats are considered as apps)
+-->
