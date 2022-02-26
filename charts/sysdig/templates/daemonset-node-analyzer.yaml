@@ -297,7 +297,6 @@ spec:
               key: no_proxy
               name: {{ template "sysdig.fullname" . }}-host-analyzer
               optional: true
-# end of "if not .Values.secure.vulnerabilityManagement.newEngineOnly"
 {{- end }}
       - name: sysdig-benchmark-runner
         image: {{ template "sysdig.image.benchmarkRunner" . }}

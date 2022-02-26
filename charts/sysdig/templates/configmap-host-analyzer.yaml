@@ -1,3 +1,4 @@
+{{ if not .Values.secure.vulnerabilityManagement.newEngineOnly }}
 {{- if and (not (include "deploy-nia" .)) .Values.nodeAnalyzer.deploy}}
 apiVersion: v1
 kind: ConfigMap
@@ -35,4 +36,5 @@ data:
   {{- if .Values.nodeAnalyzer.noProxy }}
   no_proxy: {{ .Values.nodeAnalyzer.noProxy }}
   {{- end -}}
+{{- end }}
 {{- end }}
