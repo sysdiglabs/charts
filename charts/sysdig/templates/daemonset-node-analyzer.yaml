@@ -376,7 +376,7 @@ spec:
         # Custom volume mount here
         env:
           - name: TMPDIR
-            value: "/tmp/runtimescanner"
+            value: "/tmp"
           - name: PROM_PORT
             valueFrom:
               configMapKeyRef:
