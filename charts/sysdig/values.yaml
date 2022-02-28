@@ -476,7 +476,7 @@ nodeAnalyzer:
     resources:
       requests:
         cpu: 150m
-        memory: 1024Mi
+        memory: 512Mi
         ephemeral-storage: "2Gi"
       limits:
         cpu: 1000m
