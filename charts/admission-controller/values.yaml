@@ -276,6 +276,6 @@ scanner:
       cert: ""
 
   # Custom entrypoint for the scanner.
-  # <br/>Remember to provide the scanner valid arguments with `--server_port` and `--auth_secure_token`
+  # <br/>Remember to provide the scanner valid arguments with `--server_port` and optionally `--auth_secure_token`
   # <br/>default: /inline-scan-service --server_port=8080
   customEntryPoint: []
