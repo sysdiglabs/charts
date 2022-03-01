@@ -257,7 +257,14 @@ Either way, you should see some logs in Admission Controller tail
 
 ## Troubleshooting
 
-### Q: I don't see changes on `Policy Assignments` honored
+### Q: I don't see `Policy Rules` honored
+S: Review the [Admission Controller - Understanding:How Policy Conditions are applied]({{ .Project.URL }}/#understanding-how-policy-conditions-are-applied)
+
+### Q: I don't see `Policy Assignments` order honored
+A: It may be that you're using same namespace and image prefix on more than one assignment
+S: Review the [Admission Controller - Understanding:Evaluation Order]({{ .Project.URL }}/#understanding-evaluation-order)
+
+### Q: I don't see changes on `Policy Assignments` being applied on my cluster
 A: Admission Controller pull changes from the server every 5 minutes
 S: You can wait those five minutes, or force the admission controller webhook respawn
 
