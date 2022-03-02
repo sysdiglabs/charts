@@ -225,7 +225,7 @@ nodeImageAnalyzer:
   deploy: false
   image:
     repository: sysdig/node-image-analyzer
-    tag: 0.1.15
+    tag: 0.1.16
     digest:
     pullPolicy: IfNotPresent
     # pullSecrets:
