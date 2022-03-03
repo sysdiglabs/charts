@@ -4,6 +4,31 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.12.52
+### Minor changes
+
+* Fix errors in README.md
+
+## v1.12.51
+### Minor changes
+
+* Tech preview release of Runtime Scanner
+
+## v1.12.50
+### Minor changes
+
+* Add Runtime Scanner to Daemonset and Eve Connector Deployment 
+
+## v1.12.49
+### Minor changes
+
+* Bump agent to 12.3.0
+
+## v1.12.48
+### Minor changes
+
+* Bump agent to 12.2.1
+
 ## v1.12.47
 ### Bugfixes
 
