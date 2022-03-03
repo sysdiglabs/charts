@@ -5,6 +5,14 @@
 This file documents all notable changes to Sysdig Registry Scanner. The release
 numbering uses [semantic versioning](http://semver.org).
 
+## v0.0.27
+
+### Minor changes
+
+* Bump registry-scanner version to 0.1.4
+* Add custom labels option to provide labels that will be add to k8s manifests
+* Add securityContext option to configure security context for inline scanner container
+
 ## v0.0.26
 
 ### Minor changes
