@@ -8,12 +8,16 @@ metadata:
   name: {{ include "registry-scanner.fullname" . }}
   labels:
 {{ include "registry-scanner.labels" . | indent 4 }}
+{{- include "registry-scanner.customLabels" . | nindent 4 }}
 spec:
   schedule: {{ .Values.cronjob.schedule | quote }}
   failedJobsHistoryLimit: {{ .Values.cronjob.failedJobsHistoryLimit }}
   successfulJobsHistoryLimit: {{ .Values.cronjob.successfulJobsHistoryLimit }}
   concurrencyPolicy:  Forbid
   jobTemplate:
+    metadata:
+      labels:
+        {{- include "registry-scanner.customLabels" . | nindent 8 }} 
     spec:
       template:
         metadata:
@@ -22,6 +26,7 @@ spec:
             app.kubernetes.io/name: {{ include "registry-scanner.name" . }}
             app.kubernetes.io/instance: {{ .Release.Name }}
             {{- include "registry-scanner.selectorLabels" . | nindent 12 }}
+            {{- include "registry-scanner.customLabels" . | nindent 12 }}
           {{- with .Values.podAnnotations }}
           annotations:
             {{- toYaml . | nindent 12 }}

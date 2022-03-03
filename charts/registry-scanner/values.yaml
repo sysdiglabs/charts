@@ -35,6 +35,17 @@ config:
   scan:
     # Override the default quay.io/sysdig/secure-inline-scan:2 image for the inline scanner job
     inlineScanImage: ""
+    # Change container securityContext
+    securityContext: {}
+      # capabilities:
+      #   drop:
+      #   - ALL
+      # readOnlyRootFilesystem: true
+      # runAsNonRoot: true
+      # runAsUser: 1000
+
+# Additional labels to add to CronJob and Scanning Jobs.
+customLabels: {}
 
 proxy:
   httpProxy:

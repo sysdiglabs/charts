@@ -9,7 +9,7 @@ image:
 
   registry: quay.io
   repository: sysdig/agent
-  tag: 12.3.0
+  tag: 12.3.1
   # Specify a imagePullPolicy
   # Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
   # ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -225,7 +225,7 @@ nodeImageAnalyzer:
   deploy: false
   image:
     repository: sysdig/node-image-analyzer
-    tag: 0.1.15
+    tag: 0.1.16
     digest:
     pullPolicy: IfNotPresent
     # pullSecrets:
@@ -388,7 +388,7 @@ nodeAnalyzer:
   imageAnalyzer:
     image:
       repository: sysdig/node-image-analyzer
-      tag: 0.1.15
+      tag: 0.1.16
       digest:
       pullPolicy: IfNotPresent
 
@@ -428,7 +428,7 @@ nodeAnalyzer:
   hostAnalyzer:
     image:
       repository: sysdig/host-analyzer
-      tag: 0.1.3
+      tag: 0.1.6
       digest:
       pullPolicy: IfNotPresent
 
