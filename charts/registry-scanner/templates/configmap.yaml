@@ -45,6 +45,15 @@ data:
       {{- if .Values.imagePullSecrets }}
       pullSecrets: {{ include "registry-scanner.pullSecretList" . }}
       {{- end }}
+      {{- if .Values.customLabels }}
+      labels:
+        {{- include "registry-scanner.customLabels" . | nindent 8}}
+      {{- end }}  
+      {{- if .Values.config.scan.securityContext }}
+      securityContext:
+        {{- include "registry-scanner.scan.securityContext" . | nindent 8}}
+      {{- end }}  
+
 
     filter:
       {{- if .Values.config.filter.include }}
@@ -61,3 +70,5 @@ data:
     {{- if .Values.reportToPersistentVolumeClaim }}
     reportPath: /output/registry-scanner-{DATE}.json
     {{- end }}
+
+    

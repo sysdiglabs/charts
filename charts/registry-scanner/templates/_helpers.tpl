@@ -51,6 +51,36 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
+Custom labels
+*/}}
+{{- define "registry-scanner.customLabels" -}}
+  {{- if .Values.customLabels }}
+    {{- $tp := typeOf .Values.customLabels }}
+    {{- if eq $tp "string" }}
+      {{- tpl .Values.customLabels . }}
+    {{- else }}
+      {{- toYaml .Values.customLabels }}
+    {{- end }}
+  {{- end }}
+{{- end -}}
+
+{{/*
+Scan Security Context
+*/}}
+{{- define "registry-scanner.scan.securityContext" -}}
+  {{- if .Values.config.scan.securityContext }}
+    {{- $tp := typeOf .Values.config.scan.securityContext }}
+    {{- if eq $tp "string" }}
+      {{- tpl .Values.config.scan.securityContext . }}
+    {{- else }}
+      {{- toYaml .Values.config.scan.securityContext }}
+    {{- end }}
+  {{- end }}
+{{- end -}}
+
+
+
+{{/*
 Create the name of the service account to use
 */}}
 {{- define "registry-scanner.serviceAccountName" -}}
