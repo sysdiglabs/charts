@@ -1,0 +1,62 @@
+# Default values for rapid-response.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+sysdig:
+  # The API endpoint for Sysdig Secure, specified with no protocol:
+  # * SaaS default region (US East): secure.sysdig.com
+  # * SaaS US Web: us2.app.sysdig.com
+  # * SaaS European Union: eu1.app.sysdig.com
+  # * On-Prem: sysdig.my.company.com
+  apiEndpoint: secure.sysdig.com
+
+  # Can be set to false to allow insecure connections to the Sysdig backend,
+  # such as for on-premise installs that use self-signed certificates.
+  sslVerifyCertificate: true
+
+  # Required: You need your Sysdig Agent access key before running agents, either specifying 'accessKey' here, or using 'existingAccessKeySecret'
+  accessKey: "00000000-1111-2222-3333-444444444444"
+
+  # Required: A passphrase used to encrypt all traffic between the user and host.
+  passphrase: "passphrase"
+
+rapidResponse:
+  name: rapid-response
+
+  image:
+    overrideValue:
+
+    registry: quay.io
+    repository: sysdig/rapid-response-host-component
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: 0.3.2
+
+    pullPolicy: IfNotPresent
+
+  # Optionally specify an array of imagePullSecrets.
+  imagePullSecrets: []
+
+  resources:
+    limits:
+      cpu: 500m
+      memory: 500Mi
+    requests:
+      cpu: 250m
+      memory: 250Mi
+
+  # privileged: false
+
+  tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+
+  labels: {}
+
+  serviceAccount:
+    # Specifies whether a service account should be created
+    create: true
+    # Annotations to add to the service account
+    annotations: {}
+    # The name of the service account to use.
+    # If not set and create is true, a name is generated using the fullname template
+    name: ""
