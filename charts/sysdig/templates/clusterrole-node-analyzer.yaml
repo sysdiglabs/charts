@@ -23,7 +23,6 @@ rules:
     - configmaps
     - endpoints
     - nodes
-    - pods
     - pods/log
     - secrets
     - serviceaccounts
