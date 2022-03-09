@@ -33,6 +33,7 @@ pipeline {
                                         string(name: 'RUN_3_INSTALL_AGENT_WITH_HELM', value: "True"),
                                         string(name: 'RUN_4_INSTALL_AGENT_SLIM_WITH_HELM', value: "True"),
                                         string(name: 'HELM_USE_GIT', value: "True"),
+                                        string(name: 'HELM_CHART_REPO', value: "https://github.com/sysdiglabs/charts.git"),
                                         string(name: 'HELM_CHART_BRANCH', value: "${env.BRANCH_NAME}")]
             }
         }
