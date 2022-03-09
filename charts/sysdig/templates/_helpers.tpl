@@ -68,7 +68,7 @@ Return the proper Sysdig Agent image name
 {{- if .Values.image.overrideValue }}
     {{- printf .Values.image.overrideValue -}}
 {{- else -}}
-    {{- include "sysdig.imageRegistry" . -}} / {{- include "sysdig.repositoryName" . -}} {{- if .Values.image.digest -}} @ {{- .Values.image.digest -}} {{- else -}} : {{- .Values.image.tag -}} {{- end -}}
+    {{- include "sysdig.imageRegistry" . -}} / {{- include "sysdig.repositoryName" . -}} {{- if .Values.image.digest -}} @ {{- .Values.image.digest -}} {{ else }} : {{- .Values.image.tag -}} {{- end -}}
 {{- end -}}
 {{- end -}}
 
