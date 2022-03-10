@@ -6,7 +6,11 @@ metadata:
   labels:
 {{ include "sysdig.labels" . | indent 4 }}
 rules:
-- apiGroups: ["", "apps", "batch", "extensions"]
+- apiGroups:
+    - ""
+    - apps
+    - batch
+    - extensions
   resources:
     - "namespaces"
     - "deployments"
