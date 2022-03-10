@@ -2871,6 +2871,38 @@ entries:
   sysdig:
   - apiVersion: v1
     appVersion: 12.3.1
+    created: "2022-03-10T18:01:12.197069202Z"
+    description: Sysdig Monitor and Secure agent
+    digest: d3c5f5300a91737d2c3a788e9fbb15a6362a6f449ed3350c4dcb278e6957aede
+    home: https://www.sysdig.com/
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: lachlan@deis.com
+      name: lachie83
+    - email: jorge.salamero@sysdig.com
+      name: bencer
+    - email: nestor.salceda@sysdig.com
+      name: nestorsalceda
+    - email: alvaro.iradier@sysdig.com
+      name: airadier
+    - email: carlos.arilla@sysdig.com
+      name: carillan81
+    name: sysdig
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/sysdig-1.12.56/sysdig-1.12.56.tgz
+    version: 1.12.56
+  - apiVersion: v1
+    appVersion: 12.3.1
     created: "2022-03-10T17:12:37.046657525Z"
     description: Sysdig Monitor and Secure agent
     digest: 648421ea9a8541817f88fb0a344f325c6678d989f3c35a7f9b5e0f2f868d0730
@@ -6249,4 +6281,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2022-03-10T17:12:37.048797219Z"
+generated: "2022-03-10T18:01:12.200877276Z"
