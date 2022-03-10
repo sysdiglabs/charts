@@ -20,7 +20,10 @@ rules:
     - "pods"
     - "cronjobs"
     - "jobs"
-  verbs: ["get", "list", "watch"]
+  verbs:
+    - get
+    - list
+    - watch
 - apiGroups:
     - ""
   resources:
