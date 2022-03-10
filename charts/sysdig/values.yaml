@@ -1,5 +1,4 @@
 # Default values for Sysdig Monitor and Secure Helm package.
-
 image:
   # This is a hack to support RELATED_IMAGE_<identifier> feature in Helm based
   # Operators
@@ -322,6 +321,12 @@ nodeImageAnalyzer:
                   - linux
 
 nodeAnalyzer:
+  # Create node analyzer specific serviceAccount resource
+  serviceAccount:
+    create: true
+    # Use this value as nodeAnalyzerServiceAccountName
+    name: "node-analyzer"
+
   deploy: true
 
   # The API endpoint for Sysdig Secure, specified with no protocol:
@@ -451,6 +456,8 @@ nodeAnalyzer:
         cpu: 500m
         memory: 1536Mi
   benchmarkRunner:
+    includeSensitivePermissions: false
+
     image:
       repository: sysdig/compliance-benchmark-runner
       tag: 1.0.6.0

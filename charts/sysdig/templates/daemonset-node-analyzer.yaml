@@ -70,7 +70,7 @@ spec:
       tolerations:
 {{ toYaml .Values.nodeAnalyzer.tolerations | indent 8 }}
       # The following line is necessary for RBAC
-      serviceAccountName: {{ template "sysdig.serviceAccountName" .}}
+      serviceAccountName: {{ template "sysdig.nodeAnalyzer.serviceAccountName" .}}
       {{- if .Values.nodeAnalyzer.pullSecrets }}
       imagePullSecrets:
 {{ toYaml .Values.nodeAnalyzer.pullSecrets | indent 8 }}
