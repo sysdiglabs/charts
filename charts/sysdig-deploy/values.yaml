@@ -1,0 +1,12 @@
+global:
+  clusterConfig:
+    name: ""  # name to identify this cluster for events and metrics
+    namespace: ""  # namespace to install all components; can be overridden by components
+  sysdig:
+    accessKey: ""
+    accessKeySecret: ""
+  image:
+    registry: quay.io
+
+agent:
+  enabled: true
