@@ -1,13 +1,13 @@
 apiVersion: v2
 name: agent
-description: A Helm chart for Kubernetes
+description: Sysdig Monitor and Secure agent
 
 type: application
 
-# currently matching sysdig 1.12.45
+# currently matching sysdig 1.12.56
 version: 1.0.0
 
-appVersion: "12.2.0"
+appVersion: "12.3.1"
 
 keywords:
   - monitoring
