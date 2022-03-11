@@ -141,7 +141,7 @@ webhook:
 #      memory: 256Mi
 
   # Number of seconds for the request to time out
-  timeoutSeconds: 10
+  timeoutSeconds: 5
 
   # Configure nodeSelector for scheduling for webhook
   nodeSelector: {}
