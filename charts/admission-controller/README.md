@@ -22,7 +22,7 @@ $ pre-commit run -a
 $ helm repo add sysdig https://charts.sysdig.com
 $ helm repo update
 $ helm install sysdig-admission-controller sysdig/admission-controller \
-      --create-namespace -n sysdig-admission-controller \
+      --create-namespace -n sysdig-admission-controller --version=0.5.19  \
       --set clusterName=CLUSTER_NAME \
       --set sysdig.secureAPIToken=SECURE_API_TOKEN
 ```
@@ -53,7 +53,7 @@ This chart deploys the Sysdig Admission Controller on a [Kubernetes](http://kube
 To install the chart with the release name `admission-controller`:
 
 ```console
-$ helm install sysdig-admission-controller sysdig/admission-controller -n sysdig-admission-controller
+$ helm install sysdig-admission-controller sysdig/admission-controller -n sysdig-admission-controller --version=0.5.19
 ```
 
 The command deploys the Sysdig Admission Controller on the Kubernetes cluster in the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.
@@ -127,7 +127,7 @@ The following table lists the configurable parameters of the `admission-controll
 | scanner.image.registry              | Scanner image registry                                                                                                                                                                                                                                                                                                                                                                                                                                              | <code>quay.io</code>                                                                                                                                                                               |
 | scanner.image.repository            | Scanner image repository                                                                                                                                                                                                                                                                                                                                                                                                                                            | <code>sysdig/inline-scan-service</code>                                                                                                                                                            |
 | scanner.image.pullPolicy            | PullPolicy for Scanner image                                                                                                                                                                                                                                                                                                                                                                                                                                        | <code>IfNotPresent</code>                                                                                                                                                                          |
-| scanner.image.tag                   | Scanner image tag                                                                                                                                                                                                                                                                                                                                                                                                                                                   | <code>0.0.9</code>                                                                                                                                                                                 |
+| scanner.image.tag                   | Scanner image tag                                                                                                                                                                                                                                                                                                                                                                                                                                                   | <code>0.0.10</code>                                                                                                                                                                                |
 | scanner.service.port                | Configure port for the webhook service                                                                                                                                                                                                                                                                                                                                                                                                                              | <code>8080</code>                                                                                                                                                                                  |
 | scanner.authWithSecureToken         | Authenticate with Secure token                                                                                                                                                                                                                                                                                                                                                                                                                                      | <code>false</code>                                                                                                                                                                                 |
 | scanner.httpProxy                   | HTTP Proxy settings for scanner. <br/>Set to http(s)://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy                                                                                                                                                                                                                                                                                                                                       | <code>""</code>                                                                                                                                                                                    |
@@ -152,7 +152,7 @@ Specify each parameter using the **`--set key=value[,key=value]`** argument to `
 
 ```console
 $ helm install sysdig-admission-controller sysdig/admission-controller \
-    --create-namespace -n admission-controller  \
+    --create-namespace -n admission-controller  --version=0.5.19 \
     --set sysdig.secureAPIToken=YOUR-KEY-HERE,clusterName=YOUR-CLUSTER-NAME
 ```
 
@@ -161,7 +161,7 @@ installing the chart. For example:
 
 ```console
 $ helm install sysdig-admission-controller sysdig/admission-controller \
-    --create-namespace -n sysdig-admission-controller \
+    --create-namespace -n sysdig-admission-controller --version=0.5.19 \
     --values values.yaml
 ```
 
