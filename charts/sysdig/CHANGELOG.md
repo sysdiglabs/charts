@@ -4,6 +4,11 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.12.58
+### Minor changes
+
+Add the flag `gke.autopilot` to support the deployment on GKE Autopilot clusters.
+
 ## v1.12.57
 ### Minor changes
 
