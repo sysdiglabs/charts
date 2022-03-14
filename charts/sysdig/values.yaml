@@ -65,6 +65,9 @@ resourceProfile: small
 #     cpu: <cpu limits>m
 #     memory: <memory limits>Mi
 
+gke:
+  # true here enables the deployment on gke autopilot clusters
+  autopilot: false
 
 rbac:
   # true here enables creation of rbac resources
