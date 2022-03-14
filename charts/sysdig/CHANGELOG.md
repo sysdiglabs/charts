@@ -4,6 +4,11 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.12.57
+### Minor changes
+
+The values for the default affinity settings now come from `daemonset.os` and `daemonset.arch`
+
 ## v1.12.55
 ### Minor changes
 

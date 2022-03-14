@@ -38,9 +38,27 @@ spec:
       nodeSelector:
 {{ toYaml .Values.daemonset.nodeSelector | indent 8 }}
       {{- end }}
-      {{- if .Values.daemonset.affinity }}
       affinity:
+      {{- if .Values.daemonset.affinity }}
 {{ toYaml .Values.daemonset.affinity | indent 8 }}
+      {{- else }}
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/arch
+                operator: In
+                values: {{- toYaml .Values.daemonset.arch | nindent 18 }}
+              - key: kubernetes.io/os
+                operator: In
+                values: {{- toYaml .Values.daemonset.os | nindent 18 }}
+            - matchExpressions:
+              - key: beta.kubernetes.io/arch
+                operator: In
+                values: {{- toYaml .Values.daemonset.arch | nindent 18 }}
+              - key: beta.kubernetes.io/os
+                operator: In
+                values: {{- toYaml .Values.daemonset.os | nindent 18 }}
       {{- end }}
       {{- if .Values.image.pullSecrets }}
       imagePullSecrets:
