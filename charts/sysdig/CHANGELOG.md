@@ -4,6 +4,11 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.12.67
+### Minor changes
+
+* Add s390x as one of the default architectures for Sysdig Agent node affinity
+
 ## v1.12.66
 ### Minor changes
 
