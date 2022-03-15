@@ -4,6 +4,24 @@
 security and forensics. Sysdig platform has been built on top of [Sysdig tool](https://sysdig.com/opensource/sysdig/)
 and [Sysdig Inspect](https://sysdig.com/blog/sysdig-inspect/) open-source technologies.
 
+
+## Table of Contents
+- [Introduction](#introduction)
+- [Prerequisites](#prerequisites)
+- [Installing the Chart](#installing-the-chart)
+- [Uninstalling the Chart](#uninstalling-the-chart)
+- [Configuration](#configuration)
+- [Resource profiles](#resource-profiles)
+- [Node Analyzer](#node-analyzer)
+- [GKE Autopilot](#gke-autopilot)
+- [On-Premise backend deployment settings](#on-premise-backend-deployment-settings)
+- [Using private Docker image registry](#using-private-docker-image-registry)
+- [Modifying Sysdig agent configuration](#modifying-sysdig-agent-configuration)
+- [Upgrading Sysdig agent configuration](#upgrading-sysdig-agent-configuration)
+- [How to upgrade to the latest version](#how-to-upgrade-to-the-last-version)
+- [Adding custom AppChecks](#adding-custom-appchecks)
+- [Support](#support)
+
 ## Introduction
 
 This chart adds the Sysdig agent for [Sysdig Monitor](https://sysdig.com/product/monitor/)
@@ -57,7 +75,7 @@ The command removes all the Kubernetes components associated with the chart and 
 The following table lists the configurable parameters of the Sysdig chart and their default values.
 
 | Parameter                                                            | Description                                                                              | Default                                                                        |
-| -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+|----------------------------------------------------------------------|------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------|
 | `image.registry`                                                     | Sysdig Agent image registry                                                              | `quay.io`                                                                      |
 | `image.repository`                                                   | The image repository to pull from                                                        | `sysdig/agent`                                                                 |
 | `image.tag`                                                          | The image tag to pull                                                                    | `12.3.1`                                                                       |
@@ -69,6 +87,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `resources.requests.memory`                                          | Memory requested for being run in a node                                                 | ` `                                                                            |
 | `resources.limits.cpu`                                               | CPU limit                                                                                | ` `                                                                            |
 | `resources.limits.memory`                                            | Memory limit                                                                             | ` `                                                                            |
+| `gke.autopilot`                                                      | If true, overrides the agent configuration to run on GKE Autopilot clusters              | `false`                                                                        |
 | `rbac.create`                                                        | If true, create & use RBAC resources                                                     | `true`                                                                         |
 | `scc.create`                                                         | Create OpenShift's Security Context Constraint                                           | `true`                                                                         |
 | `psp.create`                                                         | Create Pod Security Policy to allow the agent running in clusters with PSP enabled       | `true`                                                                         |
@@ -77,7 +96,9 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `daemonset.deploy`                                                   | Deploy the agent daemonset                                                               | `true`                                                                         |
 | `daemonset.updateStrategy.type`                                      | The updateStrategy for updating the daemonset                                            | `RollingUpdate`                                                                |
 | `daemonset.nodeSelector`                                             | Node Selector                                                                            | `{}`                                                                           |
-| `daemonset.affinity`                                                 | Node affinities                                                                          | `schedule on amd64 and linux`                                                  |
+| `daemonset.arch`                                                     | Allowed architectures for scheduling                                                     | `[ amd64 ]`                                                                    |
+| `daemonset.os`                                                       | Allowed OSes for scheduling                                                              | `[ linux ]`                                                                    |
+| `daemonset.affinity`                                                 | Node affinities. Overrides `daemonset.arch` and `daemonset.os` values                    | `{}`                                                                           |
 | `daemonset.annotations`                                              | Custom annotations for daemonset                                                         | `{}`                                                                           |
 | `daemonset.labels`                                                   | Custom labels for daemonset (as a multi-line templated string map or as YAML)            |                                                                                |
 | `daemonset.probes.initialDelay`                                      | Initial delay for liveness and readiness probes. daemonset                               | `{}`                                                                           |
@@ -142,24 +163,24 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `nodeAnalyzer.hostAnalyzer.resources.limits.cpu`                     | Host Analyzer CPU limit per node                                                         | `500m`                                                                         |
 | `nodeAnalyzer.hostAnalyzer.resources.limits.memory`                  | Host Analyzer Memory limit per node                                                      | `1536Mi`                                                                       |
 | `nodeAnalyzer.benchmarkRunner.image.repository`                      | The image repository to pull the Benchmark Runner from                                   | `sysdig/compliance-benchmark-runner`                                           |
-| `nodeAnalyzer.benchmarkRunner.image.tag`                             | The image tag to pull the Benchmark Runner                                               | `1.0.17.0`                                                                      |
+| `nodeAnalyzer.benchmarkRunner.image.tag`                             | The image tag to pull the Benchmark Runner                                               | `1.0.17.0`                                                                     |
 | `nodeAnalyzer.benchmarkRunner.image.digest`                          | The image digest to pull                                                                 | ` `                                                                            |
 | `nodeAnalyzer.benchmarkRunner.image.pullPolicy`                      | The Image pull policy for the Benchmark Runner                                           | `IfNotPresent`                                                                 |
-| `nodeAnalyzer.benchmarkRunner.includeSensitivePermissions`           | Grant the service account elevated permissions to run CIS Benchmark for OS4              | `false`                                                                 |
+| `nodeAnalyzer.benchmarkRunner.includeSensitivePermissions`           | Grant the service account elevated permissions to run CIS Benchmark for OS4              | `false`                                                                        |
 | `nodeAnalyzer.benchmarkRunner.resources.requests.cpu`                | Benchmark Runner CPU requests per node                                                   | `150m`                                                                         |
 | `nodeAnalyzer.benchmarkRunner.resources.requests.memory`             | Benchmark Runner Memory requests per node                                                | `128Mi`                                                                        |
 | `nodeAnalyzer.benchmarkRunner.resources.limits.cpu`                  | Benchmark Runner CPU limit per node                                                      | `500m`                                                                         |
 | `nodeAnalyzer.benchmarkRunner.resources.limits.memory`               | Benchmark Runner Memory limit per node                                                   | `256Mi`                                                                        |
-| `nodeAnalyzer.runtimeScanner.deploy`                                 | Deploy the Runtime Scanner                                                               | `false`                                                         |
+| `nodeAnalyzer.runtimeScanner.deploy`                                 | Deploy the Runtime Scanner                                                               | `false`                                                                        |
 | `nodeAnalyzer.runtimeScanner.image.repository`                       | The image repository to pull the Runtime Scanner from                                    | `sysdig/eveclient-api`                                                         |
 | `nodeAnalyzer.runtimeScanner.image.tag`                              | The image tag to pull the Runtime Scanner                                                | `0.1.0`                                                                        |
 | `nodeAnalyzer.runtimeScanner.image.digest`                           | The image digest to pull                                                                 | ` `                                                                            |
 | `nodeAnalyzer.runtimeScanner.image.pullPolicy`                       | The image pull policy for the Runtime Scanner                                            | `IfNotPresent`                                                                 |
 | `nodeAnalyzer.runtimeScanner.resources.requests.cpu`                 | Runtime Scanner CPU requests per node                                                    | `250m`                                                                         |
-| `nodeAnalyzer.runtimeScanner.resources.requests.memory`              | Runtime Scanner Memory requests per node                                                 | `512Mi`                                                                  |
+| `nodeAnalyzer.runtimeScanner.resources.requests.memory`              | Runtime Scanner Memory requests per node                                                 | `512Mi`                                                                        |
 | `nodeAnalyzer.runtimeScanner.resources.requests.ephemeral-storage`   | Runtime Scanner Storage requests per node                                                | `2Gi`                                                                          |
 | `nodeAnalyzer.runtimeScanner.resources.limits.cpu`                   | Runtime Scanner CPU limit per node                                                       | `500m`                                                                         |
-| `nodeAnalyzer.runtimeScanner.resources.limits.memory`                | Runtime Scanner Memory limit per node                                                    | `1536Mi`                                                                 |
+| `nodeAnalyzer.runtimeScanner.resources.limits.memory`                | Runtime Scanner Memory limit per node                                                    | `1536Mi`                                                                       |
 | `nodeAnalyzer.runtimeScanner.resources.limits.ephemeral-storage`     | Runtime Scanner Storage limit per node                                                   | `4Gi`                                                                          |
 | `nodeAnalyzer.runtimeScanner.settings.eveEnabled`                    | Enables Sysdig Eve                                                                       | `false`                                                                        |
 | `nodeAnalyzer.runtimeScanner.eveConnector.deploy`                    | Enables Sysdig Eve Connector for third-party integrations                                | `false`                                                                        |
@@ -214,7 +235,7 @@ example,
 $ helm install --namespace sysdig-agent sysdig-agent -f values.yaml sysdig/sysdig
 ```
 
-> **Tip**: You can use the default [values.yaml](values.yaml)
+> **Tip**: You can use the default [values.yaml](../../../../Desktop/sysdig/values.yaml)
 
 ## Resource profiles
 
@@ -311,6 +332,30 @@ Benchmark Runner provides the capability to run CIS inspired benchmarks against 
 configured in the UI, and the runner automatically runs these benchmarks on the configured scope and schedule.
 Note: if `nodeAnalyzer.benchmarkRunner.includeSensitivePermissions` is set to `false`, the service account will not have
 the full set of permissions needed to execute `oc` commands, which most checks in `CIS Benchmark for OS4` require.
+
+## GKE Autopilot
+Autopilot is an operation mode for creating and managing clusters in GKE. 
+With Autopilot, Google configures and manages the underlying node infrastructure for you.
+
+To deploy the Sysdig agent in GKE clusters running in Autopilot mode, run:
+
+```bash
+$ helm install --namespace sysdig-agent sysdig-agent --set sysdig.accessKey=YOUR-KEY-HERE --set sysdig.settings.collector=COLLECTOR_URL sysdig/sysdig --set gke.autopilot=true
+```
+
+When the flag `gke.autopilot=true` gets `true`, the chart configuration is overridden as follows: 
+ - `nodeAnalyzer.deploy=false`
+ - `ebpf.enabled=true`
+ - `ebpf.settings.mountEtcVolume=false`
+ - `daemonset.annotations='autopilot\.gke\.io/no-connect="true"'`
+ - `daemonset.affinity=null'`
+
+So, on GKE Autopilot clusters:
+ - The NodeAnalyzed is not deployed,
+ - The ebpf is enabled and the etcVolume is not mounted,
+ - The daemonset affinity is set to `null`,
+ - The daemonset annotation is set to enable the Agent to run on autopilot (required from GKE).
+
 
 ## On-Premise backend deployment settings
 
