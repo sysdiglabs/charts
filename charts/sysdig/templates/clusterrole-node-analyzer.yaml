@@ -20,6 +20,7 @@ rules:
     - "pods"
     - "cronjobs"
     - "jobs"
+    - "nodes"
   verbs:
     - get
     - list

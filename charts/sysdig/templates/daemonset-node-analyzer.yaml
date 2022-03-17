@@ -462,6 +462,11 @@ spec:
         volumeMounts:
           - mountPath: /var/run
             name: varrun-vol
+          - mountPath: /etc/containers/storage.conf
+            name: etc-containers-storage-vol
+            readOnly: true
+          - mountPath: /var/lib/containers
+            name: var-lib-containers-vol
           - mountPath: /tmp
             name: tmp-vol
 # Runtime Scanner #
