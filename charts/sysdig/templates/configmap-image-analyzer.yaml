@@ -45,7 +45,8 @@ data:
   no_proxy: {{ .Values.nodeImageAnalyzer.settings.noProxy }}
   {{- end -}}
 {{- end }}
-{{- if and (not (include "deploy-nia" .)) .Values.nodeAnalyzer.deploy}}
+{{- if not .Values.gke.autopilot }}
+{{- if and (not (include "deploy-nia" .)) .Values.nodeAnalyzer.deploy }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -89,4 +90,5 @@ data:
   no_proxy: {{ .Values.nodeAnalyzer.noProxy }}
   {{- end -}}
   {{- end }}
+{{- end }}
 {{- end }}

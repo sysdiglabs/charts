@@ -1,35 +1,29 @@
-{{- if .Values.daemonset.deploy }}
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: {{ template "sysdig.fullname" . }}
+  name: {{ template "agent.fullname" . }}
   labels:
-    app.kubernetes.io/name: {{ include "sysdig.name" . }}
-{{ include "sysdig.labels" . | indent 4 }}
+    app.kubernetes.io/name: {{ include "agent.name" . }}
+{{ include "agent.labels" . | indent 4 }}
 {{ include "daemonset.labels" . | indent 4 }}
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "sysdig.name" . }}
+      app.kubernetes.io/name: {{ include "agent.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
-      name: {{ template "sysdig.fullname" .}}
+      name: {{ template "agent.fullname" .}}
       labels:
-        app.kubernetes.io/name: {{ include "sysdig.name" . }}
-{{ include "sysdig.labels" . | indent 8 }}
+        app.kubernetes.io/name: {{ include "agent.name" . }}
+{{ include "agent.labels" . | indent 8 }}
 {{ include "daemonset.labels" . | indent 8 }}
-      {{- if .Values.gke.autopilot }}
-      annotations:
-        autopilot.gke.io/no-connect: "true"
-      {{- else }}
       {{- if .Values.daemonset.annotations }}
       annotations:
 {{ toYaml .Values.daemonset.annotations | indent 8 }}
       {{- end }}
-      {{- end }}
     spec:
-      serviceAccountName: {{ template "sysdig.serviceAccountName" .}}
+      serviceAccountName: {{ template "agent.serviceAccountName" .}}
 {{- if .Values.priorityClassName }}
       priorityClassName: "{{ .Values.priorityClassName }}"
 {{- end }}
@@ -43,31 +37,9 @@ spec:
       nodeSelector:
 {{ toYaml .Values.daemonset.nodeSelector | indent 8 }}
       {{- end }}
-      {{- if .Values.gke.autopilot }}
-      affinity: null
-      {{- else }}
-      affinity:
       {{- if .Values.daemonset.affinity }}
+      affinity:
 {{ toYaml .Values.daemonset.affinity | indent 8 }}
-      {{- else }}
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: kubernetes.io/arch
-                operator: In
-                values: {{- toYaml .Values.daemonset.arch | nindent 18 }}
-              - key: kubernetes.io/os
-                operator: In
-                values: {{- toYaml .Values.daemonset.os | nindent 18 }}
-            - matchExpressions:
-              - key: beta.kubernetes.io/arch
-                operator: In
-                values: {{- toYaml .Values.daemonset.arch | nindent 18 }}
-              - key: beta.kubernetes.io/os
-                operator: In
-                values: {{- toYaml .Values.daemonset.os | nindent 18 }}
-      {{- end }}
       {{- end }}
       {{- if .Values.image.pullSecrets }}
       imagePullSecrets:
@@ -76,7 +48,7 @@ spec:
       {{- if .Values.slim.enabled }}
       initContainers:
         - name: sysdig-agent-kmodule
-          image: {{ template "sysdig.image.kmodule" . }}
+          image: {{ template "agent.image.kmodule" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           securityContext:
             capabilities:
@@ -94,7 +66,7 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: spec.nodeName
-          {{- if or .Values.ebpf.enabled .Values.gke.autopilot }}
+          {{- if (include "agent.ebpfEnabled" .) }}
             - name: SYSDIG_BPF_PROBE
               value:
           {{- end }}
@@ -111,7 +83,7 @@ spec:
             - mountPath: /host/usr
               name: usr-vol
               readOnly: true
-            {{- if or .Values.ebpf.enabled .Values.gke.autopilot }}
+            {{- if (include "agent.ebpfEnabled" .) }}
             - mountPath: /root/.sysdig
               name: bpf-probes
             - mountPath: /sys/kernel/debug
@@ -124,10 +96,10 @@ spec:
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}
-          image: {{ template "sysdig.image" . }}
+          image: {{ template "agent.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           resources:
-{{ include "sysdig.resources" . | indent 12 }}
+{{ include "agent.resources" . | indent 12 }}
           securityContext:
             capabilities:
               drop:
@@ -138,7 +110,7 @@ spec:
             readOnlyRootFilesystem: false
             allowPrivilegeEscalation: true
           env:
-            {{- if or .Values.ebpf.enabled .Values.gke.autopilot }}
+            {{- if (include "agent.ebpfEnabled" .) }}
             - name: SYSDIG_BPF_PROBE
               value:
             {{- end }}
@@ -199,12 +171,12 @@ spec:
               name: sysdig-agent-config
             - mountPath: /opt/draios/etc/kubernetes/secrets
               name: sysdig-agent-secrets
-            {{- if (and .Values.ebpf.enabled .Values.ebpf.settings.mountEtcVolume (not .Values.gke.autopilot)) }}
+            {{- if (and (include "agent.ebpfEnabled" .) .Values.ebpf.settings.mountEtcVolume) }}
             - mountPath: /host/etc
               name: etc-fs
               readOnly: true
             {{- end }}
-            {{- if (and (or .Values.ebpf.enabled .Values.gke.autopilot) .Values.slim.enabled) }}
+            {{- if (and (include "agent.ebpfEnabled" .) .Values.slim.enabled) }}
             - mountPath: /root/.sysdig
               name: bpf-probes
             - mountPath: /sys/kernel/debug
@@ -255,12 +227,12 @@ spec:
         - name: varrun-vol
           hostPath:
             path: /var/run
-        {{- if (and .Values.ebpf.enabled .Values.ebpf.settings.mountEtcVolume (not .Values.gke.autopilot)) }}
+        {{- if (and (include "agent.ebpfEnabled" .) .Values.ebpf.settings.mountEtcVolume) }}
         - name: etc-fs
           hostPath:
             path: /etc
         {{- end }}
-        {{- if (and (or .Values.ebpf.enabled .Values.gke.autopilot) .Values.slim.enabled) }}
+        {{- if (and (include "agent.ebpfEnabled" .) .Values.slim.enabled) }}
         - name: bpf-probes
           emptyDir: {}
         - name: sys-tracing
@@ -269,19 +241,19 @@ spec:
         {{- end }}
         - name: sysdig-agent-config
           configMap:
-            name: {{ template "sysdig.fullname" . }}
+            name: {{ template "agent.fullname" . }}
             optional: true
         - name: sysdig-agent-secrets
           secret:
-            {{- if not .Values.sysdig.existingAccessKeySecret }}
-            secretName: {{ template "sysdig.fullname" . }}
+            {{- if not ( include "agent.accessKeySecret" . ) }}
+            secretName: {{ template "agent.fullname" . }}
             {{- else }}
-            secretName: {{ .Values.sysdig.existingAccessKeySecret }}
+            secretName: {{ include "agent.accessKeySecret" . }}
             {{- end -}}
         {{- if .Values.customAppChecks }}
         - name: custom-app-checks-volume
           configMap:
-            name: {{ template "sysdig.fullname" . }}-custom-app-checks
+            name: {{ template "agent.fullname" . }}-custom-app-checks
         {{- end }}
         {{- if .Values.extraVolumes.volumes }}
 {{ toYaml .Values.extraVolumes.volumes | indent 8 }}
@@ -300,4 +272,3 @@ spec:
               path: name
   updateStrategy:
 {{ toYaml .Values.daemonset.updateStrategy | indent 4 }}
-{{- end }}

@@ -1,8 +1,14 @@
-apiVersion: v1
-name: sysdig
-version: 1.12.58
-appVersion: 12.3.1
+apiVersion: v2
+name: agent
 description: Sysdig Monitor and Secure agent
+
+type: application
+
+# currently matching sysdig 1.12.56
+version: 1.0.0
+
+appVersion: "12.3.1"
+
 keywords:
   - monitoring
   - security
@@ -26,3 +32,6 @@ maintainers:
     email: alvaro.iradier@sysdig.com
   - name: carillan81
     email: carlos.arilla@sysdig.com
+  - name: achandras
+    email: ashwin.chandrasekar@sysdig.com
+dependencies: []
