@@ -4,6 +4,12 @@
 
 This file documents all notable changes to Sysdig Registry Scanner. The release
 numbering uses [semantic versioning](http://semver.org).
+## v0.0.28
+
+### Minor changes
+
+* Bump registry-scanner version to 0.1.5
+* Add ssl.ca.certs option to provide custom rootCA's to be trusted
 
 ## v0.0.27
 
