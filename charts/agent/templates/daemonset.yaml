@@ -3,7 +3,6 @@ kind: DaemonSet
 metadata:
   name: {{ template "agent.fullname" . }}
   labels:
-    app.kubernetes.io/name: {{ include "agent.name" . }}
 {{ include "agent.labels" . | indent 4 }}
 {{ include "daemonset.labels" . | indent 4 }}
 spec:
@@ -15,7 +14,6 @@ spec:
     metadata:
       name: {{ template "agent.fullname" .}}
       labels:
-        app.kubernetes.io/name: {{ include "agent.name" . }}
 {{ include "agent.labels" . | indent 8 }}
 {{ include "daemonset.labels" . | indent 8 }}
       {{- if .Values.daemonset.annotations }}
