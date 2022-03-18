@@ -43,14 +43,12 @@ config:
       # readOnlyRootFilesystem: true
       # runAsNonRoot: true
       # runAsUser: 1000
-    
 ssl:
   ca:
-    # For outbound connections 
+    # For outbound connections
     # <br/>List of PEM-encoded x509 certificate authority.
-    certs: {}  
-      #- "test"  
-
+    certs: {}
+    # - "test"
 
 # Additional labels to add to CronJob and Scanning Jobs.
 customLabels: {}
