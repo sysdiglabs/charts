@@ -1,0 +1,3 @@
+agent:
+  sysdig:
+    accessKey: ${SECURE_AGENT_TOKEN}
