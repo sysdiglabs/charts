@@ -49,7 +49,7 @@ ssl:
     # <br/>List of PEM-encoded x509 certificate authority.
     certs: {}
       # Example of certificate
-      # - | 
+      # - |
       #     -----BEGIN CERTIFICATE-----
       #     MIIDEzCCAfugAwIBAgIQKiv9U+KxPJzu1adXwC06RzANBgkqhkiG9w0BAQsFADAU
       #     MRIwEAYDVQQDEwloYXJib3ItY2EwHhcNMjIwMjIzMDY1NjExWhcNMjMwMjIzMDY1
