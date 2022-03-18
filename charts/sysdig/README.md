@@ -235,7 +235,7 @@ example,
 $ helm install --namespace sysdig-agent sysdig-agent -f values.yaml sysdig/sysdig
 ```
 
-> **Tip**: You can use the default [values.yaml](../../../../Desktop/sysdig/values.yaml)
+> **Tip**: You can use the default [values.yaml](values.yaml)
 
 ## Resource profiles
 
