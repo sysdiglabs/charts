@@ -95,7 +95,7 @@ daemonset:
     # need it
     type: RollingUpdate
     rollingUpdate:
-      maxUnavailable: 10
+      maxUnavailable: 1   
   ## Extra environment variables that will be pass onto deployment pods
   env: {}
   nodeSelector: {}
@@ -207,7 +207,7 @@ sysdig:
     #   proxy_port: 3128
     #   ssl: false
     k8s_coldstart:
-      max_parallel_cold_starts: 10
+      max_parallel_cold_starts: 1
 
 secure:
   # true here enables Sysdig Secure: container run-time security & forensics
