@@ -162,6 +162,8 @@ slim:
     limits:
       memory: 512Mi
 
+  env: {}
+
 # For Sysdig On-Prem installations or for custom collector settings, set the following fields
 collectorSettings:
   collectorHost:
