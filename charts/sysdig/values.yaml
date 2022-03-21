@@ -94,6 +94,8 @@ daemonset:
     # You can also customize maxUnavailable, maxSurge or minReadySeconds if you
     # need it
     type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 10
   ## Extra environment variables that will be pass onto deployment pods
   env: {}
   nodeSelector: {}
@@ -195,7 +197,7 @@ sysdig:
   disableCaptures: false
 
   # Advanced settings. Any option in here will be directly translated into dragent.yaml in the Configmap
-  settings: {}
+  settings: 
     ### Example: Agent tags
     # tags: linux:ubuntu,dept:dev,local:nyc
     ### Example: Proxy configuration (see https://docs.sysdig.com/en/enable-http-proxy-for-agents.html)
@@ -204,6 +206,8 @@ sysdig:
     #   proxy_host: squid.yourdomain.com
     #   proxy_port: 3128
     #   ssl: false
+    k8s_coldstart:
+      max_parallel_cold_starts: 10
 
 secure:
   # true here enables Sysdig Secure: container run-time security & forensics
@@ -322,7 +326,7 @@ nodeImageAnalyzer:
                   - linux
 
 nodeAnalyzer:
-  deploy: true
+  deploy: false
 
   # The API endpoint for Sysdig Secure, specified with no protocol:
   # * SaaS default region (US East): secure.sysdig.com
