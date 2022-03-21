@@ -20,13 +20,16 @@ Currently included components:
 
 ## Configuration
 
-| Parameter                       | Description                                                       | Default   |
-|---------------------------------|-------------------------------------------------------------------|-----------|
-| `global.clusterConfig.name`     | Identifier for this cluster                                       | `""`      |
-| `global.sysdig.accessKey`       | Sysdig Agent Access Key                                           | `""`      |
-| `global.sysdig.accessKeySecret` | The name of a Kubernetes secret containing an 'access-key' entry. | `""`      |
-| `global.image.registry`         | Container image registry                                          | `quay.io` |
-| `agent`                         | Config specific to the Sysdig Agent                               | ``        |
-| `agent.enabled`                 | Enable the agent component in this chart                          | `true`    |
+| Parameter                        | Description                                                       | Default        |
+| -------------------------------- | ----------------------------------------------------------------- | -------------- |
+| `global.clusterConfig.name`      | Identifier for this cluster                                       | `""`           |
+| `global.clusterConfig.namespace` | Default namespace for all components                              | `sysdig-agent` |
+| `global.sysdig.accessKey`        | Sysdig Agent Access Key                                           | `""`           |
+| `global.sysdig.accessKeySecret`  | The name of a Kubernetes secret containing an 'access-key' entry. | `""`           |
+| `global.image.registry`          | Container image registry                                          | `quay.io`      |
+| `agent`                          | Config specific to the [Sysdig Agent](#agent)                     | ``             |
+| `agent.enabled`                  | Enable the agent component in this chart                          | `true`         |
+
+## Agent
 
 For possible configuration values of the Agent, please refer to the Agent chart [README](https://github.com/sysdiglabs/charts/tree/master/charts/agent/README.md)
