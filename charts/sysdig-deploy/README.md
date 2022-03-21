@@ -1,5 +1,12 @@
 # Sysdig
 
+---
+**WARNING**
+
+This chart is still experimental and may have issues! Please use the [supported chart](https://github.com/sysdiglabs/charts/tree/master/charts/sysdig) for production deployments.
+
+---
+
 [Sysdig](https://sysdig.com/) is a unified platform for container and microservices monitoring, troubleshooting,
 security and forensics. Sysdig platform has been built on top of [Sysdig tool](https://sysdig.com/opensource/sysdig/)
 and [Sysdig Inspect](https://sysdig.com/blog/sysdig-inspect/) open-source technologies.
