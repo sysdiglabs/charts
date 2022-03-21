@@ -98,7 +98,7 @@ spec:
             - name: SYSDIG_BPF_PROBE
               value:
           {{- end }}
-          {{- range $key, $value := .Values.slim.env }}
+          {{- range $key, $value := .Values.daemonset.kmodule.env }}
             - name: "{{ $key }}"
               value: "{{ $value }}"
           {{- end }}
