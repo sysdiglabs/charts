@@ -98,6 +98,10 @@ spec:
             - name: SYSDIG_BPF_PROBE
               value:
           {{- end }}
+          {{- range $key, $value := .Values.daemonset.kmodule.env }}
+            - name: "{{ $key }}"
+              value: "{{ $value }}"
+          {{- end }}
           volumeMounts:
             - mountPath: /etc/modprobe.d
               name: modprobe-d
