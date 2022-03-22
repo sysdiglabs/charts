@@ -1,0 +1,15 @@
+{{- if .Values.auditLog.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "agent.fullname" . }}
+  labels:
+{{ include "agent.labels" . | indent 4 }}
+spec:
+  selector:
+    app.kubernetes.io/name: {{ include "agent.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+  ports:
+  - protocol: TCP
+    port: {{ .Values.auditLog.auditServerPort }}
+{{- end }}

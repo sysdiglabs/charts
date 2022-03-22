@@ -43,6 +43,17 @@ Create the name of the service account to use
 {{- end -}}
 
 {{/*
+Create the name of the node analyzer specific service account to use
+*/}}
+{{- define "sysdig.nodeAnalyzer.serviceAccountName" -}}
+{{- if .Values.nodeAnalyzer.serviceAccount.create -}}
+    {{ default (include "sysdig.fullname" .) .Values.nodeAnalyzer.serviceAccount.name }}
+{{- else -}}
+    {{ default "default" .Values.nodeAnalyzer.serviceAccount.name }}
+{{- end -}}
+{{- end -}}
+
+{{/*
 Define the proper imageRegistry to use for agent and kmodule image
 */}}
 {{- define "sysdig.imageRegistry" -}}

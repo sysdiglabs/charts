@@ -56,6 +56,10 @@ spec:
             - name: report-storage
               mountPath: "/output"
             {{- end }}
+            {{- if .Values.ssl.ca.certs }}
+            - name: ca-certs
+              mountPath: "/ca-certs"
+            {{- end }}
             env:
               - name: SECURE_API_TOKEN
                 valueFrom:
@@ -77,6 +81,10 @@ spec:
               {{- if .Values.proxy.noProxy }}
               - name: no_proxy
                 value: {{ .Values.proxy.noProxy }}
+              {{- end }}
+              {{- if .Values.ssl.ca.certs }}
+              - name: SSL_CERT_DIR
+                value: "/ca-certs"
               {{- end }}
               - name: REGISTRYSCANNER_REGISTRY_USER
                 valueFrom:
@@ -113,6 +121,15 @@ spec:
           - name: config-volume
             configMap:
               name: {{ include "registry-scanner.fullname" . }}
+          {{- if .Values.ssl.ca.certs }}
+          - name: ca-certs
+            projected:
+              sources:
+                {{- range $index, $cert := .Values.ssl.ca.certs }}
+                - secret:
+                    name: {{ include "registry-scanner.fullname" $ }}-ca-{{$index}}
+                {{- end }}
+          {{- end }}
           {{- if .Values.reportToPersistentVolumeClaim }}
           - name: report-storage
             persistentVolumeClaim:

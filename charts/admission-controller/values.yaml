@@ -141,7 +141,7 @@ webhook:
 #      memory: 256Mi
 
   # Number of seconds for the request to time out
-  timeoutSeconds: 10
+  timeoutSeconds: 5
 
   # Configure nodeSelector for scheduling for webhook
   nodeSelector: {}
@@ -202,7 +202,7 @@ scanner:
     # PullPolicy for Scanner image
     pullPolicy: IfNotPresent
     # Scanner image tag
-    tag: 0.0.9
+    tag: 0.0.10
 
   service:
     # Configure port for the webhook service

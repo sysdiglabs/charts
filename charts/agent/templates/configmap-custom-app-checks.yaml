@@ -1,0 +1,13 @@
+{{- if .Values.customAppChecks }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "agent.fullname" . }}-custom-app-checks
+  labels:
+{{ include "agent.labels" . | indent 4 }}
+data:
+{{- range $file, $content :=  .Values.customAppChecks }}
+  {{ $file }}: |-
+{{ $content | indent 4}}
+{{- end }}
+{{- end }}

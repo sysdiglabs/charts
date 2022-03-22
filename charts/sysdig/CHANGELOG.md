@@ -4,6 +4,26 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.12.59
+### Minor changes
+
+ * Fix link in README.md
+
+## v1.12.58
+### Minor changes
+
+* Add the flag `gke.autopilot` to support the deployment on GKE Autopilot clusters.
+
+## v1.12.57
+### Minor changes
+
+* The values for the default affinity settings now come from `daemonset.os` and `daemonset.arch`
+
+## v1.12.55
+### Minor changes
+
+* Add dedicated service account for node analyzer
+
 ## v1.12.52
 ### Minor changes
 
