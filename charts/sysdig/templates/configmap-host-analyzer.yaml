@@ -1,5 +1,6 @@
+{{- if not .Values.gke.autopilot }}
 {{ if not .Values.secure.vulnerabilityManagement.newEngineOnly }}
-{{- if and (not (include "deploy-nia" .)) .Values.nodeAnalyzer.deploy}}
+{{- if and (not (include "deploy-nia" .)) .Values.nodeAnalyzer.deploy }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -36,5 +37,6 @@ data:
   {{- if .Values.nodeAnalyzer.noProxy }}
   no_proxy: {{ .Values.nodeAnalyzer.noProxy }}
   {{- end -}}
+{{- end }}
 {{- end }}
 {{- end }}
