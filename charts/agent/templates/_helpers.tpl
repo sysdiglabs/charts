@@ -137,17 +137,15 @@ Daemonset labels
 {{- end -}}
 
 {{/*
-Use like: {{ include "get_or_fail_if_in_settings" (dict "root" . "key" "<mypath.key>" "setting" "<agent_setting>") }}
-Return the value of key "<mypath.key>" and if "<agent_setting>" is also defined in sysdig.settings.<agent_setting>, and error is thrown
-NOTE: I don't like the error message! Too much information.
+Use like: {{ include "get_if_not_in_settings" (dict "root" . "default" "<coalesced value>" "setting" "<agent_setting>") }}
+Return the default only if the value is not defined in sysdig.settings.<agent_setting>.
 */}}
-{{- define "get_or_fail_if_in_settings" -}}
-{{- $keyValue := tpl (printf "{{- .Values.%s -}}" .key) .root }}
-{{- if $keyValue -}}
-    {{- if hasKey .root.Values.sysdig.settings .setting }}{{ fail (printf "Value '%s' is also set via .sysdig.settings.%s'." .key .setting) }}{{- end -}}
-    {{- $keyValue -}}
+{{- define "get_if_not_in_settings" -}}
+{{- if not (hasKey .root.Values.sysdig.settings .setting) -}}
+    {{- .default -}}
 {{- end -}}
 {{- end -}}
+
 
 {{/*
 The following helper functions are all designed to use global values where
@@ -164,11 +162,6 @@ possible, but accept overrides from the chart values.
     returned empty string does not evaluate to empty on Helm Version:"v3.8.0"
     */}}
     {{- .Values.sysdig.existingAccessKeySecret | default .Values.global.sysdig.accessKeySecret | default "" -}}
-{{- end -}}
-
-{{- define "agent.clusterName" -}}
-    {{- $clusterName := include "get_or_fail_if_in_settings" (dict "root" . "key" "clusterName" "setting" "k8s_cluster_name") }}
-    {{- $clusterName | default .Values.global.clusterConfig.name | default "" -}}
 {{- end -}}
 
 {{/*
