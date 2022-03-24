@@ -2,6 +2,7 @@
 global:
   clusterConfig: {}
   sysdig: {}
+  proxy: {}
 
 image:
   # This is a hack to support RELATED_IMAGE_<identifier> feature in Helm based
