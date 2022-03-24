@@ -5,6 +5,7 @@ global:
   sysdig:
     accessKey: ""
     accessKeySecret: ""
+    region: "us1"
   image:
     registry: quay.io
 

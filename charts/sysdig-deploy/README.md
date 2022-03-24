@@ -26,6 +26,7 @@ Currently included components:
 | `global.clusterConfig.namespace` | Default namespace for all components                              | `sysdig-agent` |
 | `global.sysdig.accessKey`        | Sysdig Agent Access Key                                           | `""`           |
 | `global.sysdig.accessKeySecret`  | The name of a Kubernetes secret containing an 'access-key' entry. | `""`           |
+| `global.sysdig.region`           | The SaaS region for these agents                                  | `"us1"`        |
 | `global.image.registry`          | Container image registry                                          | `quay.io`      |
 | `agent`                          | Config specific to the [Sysdig Agent](#agent)                     | ``             |
 | `agent.enabled`                  | Enable the agent component in this chart                          | `true`         |
