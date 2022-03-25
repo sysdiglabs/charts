@@ -308,6 +308,6 @@ spec:
       rollingUpdate:
         maxUnavailable: 50%
     {{- else }}
-    {{ toYaml .Values.daemonset.updateStrategy | indent 4 }}
+    {{ toYaml .Values.daemonset.updateStrategy }}
     {{- end }}
 {{- end }}
