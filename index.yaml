@@ -6467,6 +6467,27 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-admission-controller-1.0.2/sysdig-admission-controller-1.0.2.tgz
     version: 1.0.2
+  sysdig-deploy:
+  - apiVersion: v2
+    created: "2022-03-25T14:49:40.373410361Z"
+    dependencies:
+    - alias: agent
+      condition: agent.enabled
+      name: agent
+      repository: file://../agent
+      version: ~1.0.0
+    description: A chart with various Sysdig components for Kubernetes
+    digest: 125e86b6ca924cc35e5a13ff2cdfd006c0d4fc151ae414135d58b4fff5b5c41f
+    home: https://www.sysdig.com/
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    maintainers:
+    - email: ashwin.chandrasekar@sysdig.com
+      name: achandras
+    name: sysdig-deploy
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/sysdig-deploy-0.1.0/sysdig-deploy-0.1.0.tgz
+    version: 0.1.0
   sysdig-mcm-navmenu:
   - apiVersion: v1
     appVersion: 1.0.0
@@ -6589,4 +6610,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2022-03-22T12:43:09.367411775Z"
+generated: "2022-03-25T14:49:40.376098957Z"
