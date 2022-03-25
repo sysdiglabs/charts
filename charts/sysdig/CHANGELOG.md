@@ -4,6 +4,11 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.12.61
+### Minor changes
+
+ * Fix runtime-scanner `eve_enabled` check in configmap
+
 ## v1.12.59
 ### Minor changes
 
@@ -37,7 +42,7 @@ This file documents all notable changes to Sysdig Helm Chart. The release number
 ## v1.12.50
 ### Minor changes
 
-* Add Runtime Scanner to Daemonset and Eve Connector Deployment 
+* Add Runtime Scanner to Daemonset and Eve Connector Deployment
 
 ## v1.12.49
 ### Minor changes
