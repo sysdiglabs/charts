@@ -207,3 +207,10 @@ to help the maxUnavailable and max_parallel_cold_starts pick a reasonable value 
     {{- 1 -}}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Returns the namespace for installing components
+*/}}
+{{- define "agent.namespace" -}}
+    {{- coalesce .Values.namespace .Values.global.clusterConfig.namespace .Release.Namespace -}}
+{{- end -}}

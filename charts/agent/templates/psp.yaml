@@ -3,6 +3,7 @@ apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:
   name: {{ template "agent.fullname" . }}
+  namespace: {{ include "agent.namespace" . }}
 spec:
   allowedCapabilities:
   - '*'

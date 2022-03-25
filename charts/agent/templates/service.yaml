@@ -3,6 +3,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ template "agent.fullname" . }}
+  namespace: {{ include "agent.namespace" . }}
   labels:
 {{ include "agent.labels" . | indent 4 }}
 spec:

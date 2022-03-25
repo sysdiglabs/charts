@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: {{ template "agent.fullname" . }}
+  namespace: {{ include "agent.namespace" . }}
   labels:
 {{ include "agent.labels" . | indent 4 }}
 {{ include "daemonset.labels" . | indent 4 }}

@@ -3,6 +3,7 @@ apiVersion: auditregistration.k8s.io/v1alpha1
 kind: AuditSink
 metadata:
   name: {{ template "agent.fullname" . }}
+  namespace: {{ include "agent.namespace" . }}
   labels:
 {{ include "agent.labels" . | indent 4 }}
 spec:
@@ -17,7 +18,7 @@ spec:
       burst: 15
     clientConfig:
       service:
-        namespace: {{ .Release.Namespace }}
+        namespace: {{ include "agent.namespace" . }}
         name: {{ template "agent.fullname" . }}
         port: {{ .Values.auditLog.auditServerPort }}
         path: /k8s_audit
