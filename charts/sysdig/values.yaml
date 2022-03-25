@@ -177,7 +177,7 @@ clusterName: ""
 
 sysdig:
   # Required: You need your Sysdig Agent access key before running agents, either specifying 'accessKey' here, or using 'existingAccessKeySecret'
-  accessKey: ""
+  accessKey: "dummy-key"
   # Alternatively, specify the name of a Kubernetes secret containing an 'access-key' entry
   existingAccessKeySecret: ""
 

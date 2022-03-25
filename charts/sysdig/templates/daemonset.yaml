@@ -303,7 +303,7 @@ spec:
                 fieldPath: metadata.name
               path: name
   updateStrategy:
-    {{- if gt (len (lookup "v1" "Pod" .Release.Namespace "").items) 5}} 
+    {{- if gt (len (lookup "v1" "Pod" .Release.Namespace "")) 5}} 
     type: RollingUpdate
       rollingUpdate:
         maxUnavailable: 50%
