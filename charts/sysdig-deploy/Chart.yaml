@@ -13,6 +13,6 @@ dependencies:
 - name: agent
   # repository: https://artifactory.internal.sysdig.com/artifactory/helm
   repository: file://../agent
-  version: 1.0.0
+  version: ~1.0.0
   alias: agent
   condition: agent.enabled
