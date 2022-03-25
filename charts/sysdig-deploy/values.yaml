@@ -1,0 +1,13 @@
+global:
+  clusterConfig:
+    name: ""  # name to identify this cluster for events and metrics
+    namespace: "sysdig-agent"  # namespace to install all components; can be overridden by components
+  sysdig:
+    accessKey: ""
+    accessKeySecret: ""
+    region: "us1"
+  image:
+    registry: quay.io
+
+agent:
+  enabled: true
