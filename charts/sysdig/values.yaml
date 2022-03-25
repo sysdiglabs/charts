@@ -92,10 +92,10 @@ daemonset:
 
   # Perform rolling updates by default in the DaemonSet agent
   # ref: https://kubernetes.io/docs/tasks/manage-daemon/update-daemon-set/
-  updateStrategy: 
+  updateStrategy:
     # You can also customize maxUnavailable, maxSurge or minReadySeconds if you
     # need it
-    type: RollingUpdate  
+    type: RollingUpdate
   ## Extra environment variables that will be pass onto deployment pods
   env: {}
   nodeSelector: {}
@@ -177,7 +177,7 @@ clusterName: ""
 
 sysdig:
   # Required: You need your Sysdig Agent access key before running agents, either specifying 'accessKey' here, or using 'existingAccessKeySecret'
-  accessKey: "dummy-key"
+  accessKey: ""
   # Alternatively, specify the name of a Kubernetes secret containing an 'access-key' entry
   existingAccessKeySecret: ""
 
@@ -320,7 +320,7 @@ nodeAnalyzer:
     # Use this value as nodeAnalyzerServiceAccountName
     name: "node-analyzer"
 
-  deploy: false
+  deploy: true
 
   # The API endpoint for Sysdig Secure, specified with no protocol:
   # * SaaS default region (US East): secure.sysdig.com
