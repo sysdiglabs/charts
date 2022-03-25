@@ -303,5 +303,11 @@ spec:
                 fieldPath: metadata.name
               path: name
   updateStrategy:
-{{ toYaml .Values.daemonset.updateStrategy | indent 4 }}
+    {{- if gt (len (lookup "v1" "Pod" .Release.Namespace "").items) 5}} 
+    type: RollingUpdate
+      rollingUpdate:
+        maxUnavailable: 50%
+    {{- else }}
+    {{ toYaml .Values.daemonset.updateStrategy | indent 4 }}
+    {{- end }}
 {{- end }}

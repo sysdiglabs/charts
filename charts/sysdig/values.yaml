@@ -92,12 +92,10 @@ daemonset:
 
   # Perform rolling updates by default in the DaemonSet agent
   # ref: https://kubernetes.io/docs/tasks/manage-daemon/update-daemon-set/
-  updateStrategy:
+  updateStrategy: 
     # You can also customize maxUnavailable, maxSurge or minReadySeconds if you
     # need it
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 1   
+    type: RollingUpdate  
   ## Extra environment variables that will be pass onto deployment pods
   env: {}
   nodeSelector: {}
@@ -197,7 +195,7 @@ sysdig:
     #   proxy_port: 3128
     #   ssl: false
     k8s_coldstart:
-      max_parallel_cold_starts: 1
+      max_parallel_cold_starts: 20
 
 secure:
   # true here enables Sysdig Secure: container run-time security & forensics
@@ -316,14 +314,13 @@ nodeImageAnalyzer:
                   - linux
 
 nodeAnalyzer:
-
   # Create node analyzer specific serviceAccount resource
   serviceAccount:
     create: true
     # Use this value as nodeAnalyzerServiceAccountName
     name: "node-analyzer"
 
-  deploy: true
+  deploy: false
 
   # The API endpoint for Sysdig Secure, specified with no protocol:
   # * SaaS default region (US East): secure.sysdig.com
