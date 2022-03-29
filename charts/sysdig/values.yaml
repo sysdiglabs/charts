@@ -185,7 +185,7 @@ sysdig:
   disableCaptures: false
 
   # Advanced settings. Any option in here will be directly translated into dragent.yaml in the Configmap
-  settings:
+  settings: {}
     ### Example: Agent tags
     # tags: linux:ubuntu,dept:dev,local:nyc
     ### Example: Proxy configuration (see https://docs.sysdig.com/en/enable-http-proxy-for-agents.html)
@@ -194,8 +194,6 @@ sysdig:
     #   proxy_host: squid.yourdomain.com
     #   proxy_port: 3128
     #   ssl: false
-    k8s_coldstart:
-      max_parallel_cold_starts: 20
 
 secure:
   # true here enables Sysdig Secure: container run-time security & forensics
