@@ -129,8 +129,9 @@ Allow overriding registry and repository for air-gapped environments
     {{- $imageRegistry := .Values.webhook.image.registry -}}
     {{- $imageRepository := .Values.webhook.image.repository -}}
     {{- $imageTag := .Values.webhook.image.tag | default .Chart.AppVersion -}}
+    {{- $imageDigest := .Values.webhook.image.digest -}}
     {{- $globalRegistry := (default .Values.global dict).imageRegistry -}}
-    {{- $globalRegistry | default $imageRegistry | default "docker.io" -}} / {{- $imageRepository -}} : {{- $imageTag -}}
+    {{- $globalRegistry | default $imageRegistry | default "docker.io" -}} / {{- $imageRepository -}} {{- if $imageDigest -}} @ {{- $imageDigest -}} {{- else -}} : {{- $imageTag -}} {{- end -}}
 {{- end -}}
 {{- end -}}
 
@@ -204,7 +205,8 @@ Allow overriding registry and repository for air-gapped environments
     {{- $imageRegistry := .Values.scanner.image.registry -}}
     {{- $imageRepository := .Values.scanner.image.repository -}}
     {{- $imageTag := .Values.scanner.image.tag | default .Chart.AppVersion -}}
+    {{- $imageDigest := .Values.scanner.image.digest -}}
     {{- $globalRegistry := (default .Values.global dict).imageRegistry -}}
-    {{- $globalRegistry | default $imageRegistry | default "docker.io" -}} / {{- $imageRepository -}} : {{- $imageTag -}}
+    {{- $globalRegistry | default $imageRegistry | default "docker.io" -}} / {{- $imageRepository -}} {{- if $imageDigest -}} @ {{- $imageDigest -}} {{- else -}} : {{- $imageTag -}} {{- end -}}
 {{- end -}}
 {{- end -}}
