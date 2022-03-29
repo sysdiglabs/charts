@@ -140,6 +140,3 @@ Temporary Items
 
 # End of https://www.toptal.com/developers/gitignore/api/jetbrains+all,linux,macos
 
-
-# test template stuff
-charts/sysdig/values_test.yaml
