@@ -3,6 +3,25 @@ entries:
   admission-controller:
   - apiVersion: v2
     appVersion: 3.8.7
+    created: "2022-03-29T15:15:22.601129906Z"
+    description: Sysdig Admission Controller using Sysdig Secure inline image scanner
+    digest: 070f4ced6364c9a87a4cc8c7fd79ce363a557381e8bcef6683d94b7f10dc54c5
+    home: https://sysdiglabs.github.io/admission-controller/
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    maintainers:
+    - email: alvaro.iradier@sysdig.com
+      name: airadier
+    - email: nestor.salceda@sysdig.com
+      name: nestorsalceda
+    - email: fede.barcelona@sysdig.com
+      name: tembleking
+    name: admission-controller
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/admission-controller-0.5.21/admission-controller-0.5.21.tgz
+    version: 0.5.21
+  - apiVersion: v2
+    appVersion: 3.8.7
     created: "2022-03-11T12:55:18.431340108Z"
     description: Sysdig Admission Controller using Sysdig Secure inline image scanner
     digest: 7fa778662e7e18d26f9ba894f58beb46c85aa9834510ddfc202aef80775478d7
@@ -6642,4 +6661,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2022-03-25T17:58:43.432848658Z"
+generated: "2022-03-29T15:15:22.603347133Z"
