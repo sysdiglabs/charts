@@ -46,8 +46,12 @@ data:
 {{- if $sslVerifyCertificate }}
     ssl_verify_certificate: {{ $sslVerifyCertificate }}
 {{- end }}
+{{- if .Values.sysdig.settings}}
+  {{- if .Values.sysdig.settings.k8s_coldstart}}
     k8s_coldstart:
       max_parallel_cold_starts: {{ include "sysdig.parallelStarts" .}}
+  {{- end }}
+{{- end }}
 {{- if .Values.sysdig.settings }}
 {{ toYaml .Values.sysdig.settings | indent 4 }}
 {{- end }}

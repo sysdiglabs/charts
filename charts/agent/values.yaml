@@ -59,7 +59,7 @@ image:
 #   uncomment the section below, and fill in the appropriate values.
 #   You may want to check https://docs.sysdig.com/en/tuning-sysdig-agent.html
 #   If you have more questions or concerns, please refer to Sysdig Support.
-resourceProfile: small
+resourceProfile: large
 # resourceProfile: custom
 # resources:
 #   requests:
