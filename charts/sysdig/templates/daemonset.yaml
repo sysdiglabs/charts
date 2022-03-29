@@ -303,7 +303,7 @@ spec:
                 fieldPath: metadata.name
               path: name
   updateStrategy:
-    type: RollingUpdate
+    type: {{ .Values.daemonset.updateStrategy.type }}
     rollingUpdate: 
       maxUnavailable: {{include "sysdig.parallelStarts" .}}
 {{- end }}
