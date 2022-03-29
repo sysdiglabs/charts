@@ -21,7 +21,7 @@ data:
   {{- if .Values.nodeAnalyzer.noProxy }}
   no_proxy: {{ .Values.nodeAnalyzer.noProxy }}
   {{- end -}}
-  {{- if .Values.nodeAnalyzer.eveEnabled }}
+  {{- if .Values.nodeAnalyzer.runtimeScanner.settings.eveEnabled }}
   eve_enabled: "true"
   {{- end -}}
   {{- if hasKey .Values.nodeAnalyzer.runtimeScanner "eveConnector" }}
