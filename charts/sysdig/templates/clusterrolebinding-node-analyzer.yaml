@@ -1,4 +1,4 @@
-{{- if and (include "deploy-nia" .) .Values.rbac.create }}
+{{- if and (include "deploy-na" .) .Values.rbac.create }}
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
