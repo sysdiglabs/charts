@@ -451,7 +451,7 @@ nodeAnalyzer:
 
     image:
       repository: sysdig/compliance-benchmark-runner
-      tag: 1.0.6.0
+      tag: 1.0.17.1
       digest:
       pullPolicy: IfNotPresent
 
