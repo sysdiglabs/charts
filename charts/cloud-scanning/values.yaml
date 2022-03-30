@@ -55,8 +55,6 @@ tolerations: []
 
 affinity: {}
 
-telemetryDeploymentMethod: ""
-
 ## Additional environment variables to set
 ## Example:
 ## extraEnvVars:
