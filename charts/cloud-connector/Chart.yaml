@@ -3,10 +3,10 @@ name: cloud-connector
 description: Sysdig Cloud Connector
 
 type: application
-version: 0.7.4
+version: 0.7.5
 appVersion: 0.16.0
 home: https://sysdiglabs.github.io/cloud-connector
 
 maintainers:
-  - name: nestorsalceda
-    email: nestor.salceda@sysdig.com
+  - name: Team CloudNative
+    email: team-cloud-native@sysdig.com
