@@ -236,10 +236,8 @@ Sysdig Eve Connector Secret generation (if not exists)
 to help the maxUnavailable and max_parallel_cold_starts pick a reasonable value based on the cluster size
 */}}
 {{- define "sysdig.parallelStarts" -}}
-{{- if .Values.daemonset.updateStrategy.rollingUpdate -}}
-    {{- if .Values.daemonset.updateStrategy.rollingUpdate.maxUnavailable -}}
+{{- if .Values.daemonset.updateStrategy.rollingUpdate.maxUnavailable -}}
     {{- .Values.daemonset.updateStrategy.rollingUpdate.maxUnavailable -}}
-    {{- end -}}
 {{- else if eq .Values.resourceProfile "small" -}}
     {{- 1 -}}
 {{- else if eq .Values.resourceProfile "medium" -}}

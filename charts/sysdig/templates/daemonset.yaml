@@ -304,9 +304,7 @@ spec:
               path: name
   updateStrategy:
     type: {{ .Values.daemonset.updateStrategy.type }}
-    rollingUpdate: 
-      {{- if .Values.daemonset.updateStrategy.rollingUpdate }}
+    rollingUpdate:
       maxSurge: {{.Values.daemonset.updateStrategy.rollingUpdate.maxSurge | default 0}}
-      {{- end }}
       maxUnavailable: {{include "sysdig.parallelStarts" .}}
 {{- end }}
