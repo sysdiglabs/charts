@@ -238,7 +238,7 @@ to help the maxUnavailable and max_parallel_cold_starts pick a reasonable value 
 {{- define "sysdig.parallelStarts" -}}
 {{- if .Values.daemonset.updateStrategy.rollingUpdate -}}
     {{- if .Values.daemonset.updateStrategy.rollingUpdate.maxUnavailable -}}
-    {{- .Values.daemonset.updateStrategy.type.rollingUpdate.maxUnavailable -}}
+    {{- .Values.daemonset.updateStrategy.rollingUpdate.maxUnavailable -}}
     {{- end -}}
 {{- else if eq .Values.resourceProfile "small" -}}
     {{- 1 -}}
