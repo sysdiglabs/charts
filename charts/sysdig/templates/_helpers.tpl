@@ -244,5 +244,7 @@ to help the maxUnavailable and max_parallel_cold_starts pick a reasonable value 
     {{- 10 -}}
 {{- else if eq .Values.resourceProfile "large" -}}
     {{- 20 -}}
+{{- else -}}
+    {{- 1 -}}
 {{- end -}}
 {{- end -}}
