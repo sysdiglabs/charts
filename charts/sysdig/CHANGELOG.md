@@ -4,7 +4,7 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
-## v1.12.62
+## v1.12.63
 ### Minor changes
 
 * Added CRI-O support for runtime-scanner
