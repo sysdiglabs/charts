@@ -213,6 +213,12 @@ true
 {{- end -}}
 {{- end -}}
 
+{{- define "deploy-na" -}}
+{{- if and (not (include "deploy-nia" .)) .Values.nodeAnalyzer.deploy -}}
+true
+{{- end -}}
+{{- end -}}
+
 {{/*
 Sysdig Eve Connector service URL
 */}}

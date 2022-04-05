@@ -21,6 +21,15 @@ spec:
       labels:
         {{- include "admission-controller.webhook.labels" . | nindent 8 }}
     spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                topologyKey: kubernetes.io/hostname
+                labelSelector:
+                  matchLabels:
+                    {{- include "admission-controller.webhook.selectorLabels" . | nindent 20 }}
+              weight: 10
       {{- with .Values.webhook.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
