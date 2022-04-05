@@ -303,5 +303,8 @@ spec:
                 fieldPath: metadata.name
               path: name
   updateStrategy:
-{{ toYaml .Values.daemonset.updateStrategy | indent 4 }}
+    type: {{ .Values.daemonset.updateStrategy.type }}
+    rollingUpdate:
+      maxSurge: {{.Values.daemonset.updateStrategy.rollingUpdate.maxSurge | default 0}}
+      maxUnavailable: {{include "sysdig.parallelStarts" .}}
 {{- end }}
