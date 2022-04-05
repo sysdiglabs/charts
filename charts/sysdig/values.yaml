@@ -103,6 +103,7 @@ daemonset:
   # defined, these fields will be ignored
   arch:
     - amd64
+    - arm64
   os:
     - linux
   # Allow the DaemonSet to schedule using affinity rules
