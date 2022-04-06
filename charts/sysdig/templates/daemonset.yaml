@@ -305,9 +305,5 @@ spec:
   updateStrategy:
     type: {{ .Values.daemonset.updateStrategy.type }}
     rollingUpdate:
-<<<<<<< HEAD
-=======
-      maxSurge: {{.Values.daemonset.updateStrategy.rollingUpdate.maxSurge | default 0}}
->>>>>>> master
       maxUnavailable: {{include "sysdig.parallelStarts" .}}
 {{- end }}
