@@ -51,7 +51,7 @@ spec:
           args:
             {{- with .Values.webhook.http.port }}
             - --http_port
-            - {{ . }}
+            - {{ . | quote }}
             {{- end }}
             - --tls_cert_file
             - /cert/tls.crt
