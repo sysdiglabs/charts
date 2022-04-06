@@ -4,6 +4,12 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.12.69
+### Minor changes
+
+* RuntimeScanner: reduced and better disk usage for temporary files
+* RuntimeScanner: added support for Runtime policies
+
 ## v1.12.67
 ### Minor changes
 
