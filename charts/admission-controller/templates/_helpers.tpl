@@ -72,6 +72,27 @@ If release name contains chart name it will be used as a full name.
 {{- end -}}
 {{- end -}}
 
+{{- define "admission-controller.webhook.defaultPodAnnotations" -}}
+{{- toYaml (dict "prometheus.io/path" "/metrics" "prometheus.io/port" (quote .Values.webhook.http.port) "prometheus.io/scheme" "https" "prometheus.io/scrape" "true" "sidecar.istio.io/inject" "false") -}}
+{{- end -}}
+
+{{- define "admission-controller.webhook.podAnnotations" -}}
+{{- if .Values.webhook.podAnnotations }}
+{{- .Values.webhook.podAnnotations | toYaml -}}
+{{- else -}}
+{{- include "admission-controller.webhook.defaultPodAnnotations" . -}}
+{{- end -}}
+{{- end -}}
+
+{{- define "admission-controller.webhook.defaultSecurityContext" -}}
+ {{- if (lt (int .Values.webhook.http.port) 1024) -}}
+        {{- toYaml (dict "runAsUser" 0 "runAsNonRoot" false) -}}
+    {{- else -}}
+        {{- toYaml (dict "runAsUser" 1000 "runAsNonRoot" true) -}}
+    {{- end -}}
+{{- end -}}
+
+
 {{/*
 Common labels
 */}}
