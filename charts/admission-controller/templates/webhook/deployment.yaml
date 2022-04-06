@@ -12,9 +12,7 @@ spec:
   template:
     metadata:
       annotations:
-      {{- with .Values.webhook.podAnnotations }}
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- include "admission-controller.webhook.podAnnotations" . | nindent 8 }}
         checksum/configmap: {{ include (print $.Template.BasePath "/webhook/configmap.yaml") . | sha256sum }}
         checksum/secret: {{ include (print $.Template.BasePath "/webhook/secret.yaml") . | sha256sum }}
         checksum/certs: {{ include (print $.Template.BasePath "/webhook/admissionregistration.yaml") . | sha256sum }}
@@ -36,7 +34,11 @@ spec:
       {{- end }}
       serviceAccountName: {{ include "admission-controller.webhook.serviceAccountName" . }}
       securityContext:
+        {{- if .Values.webhook.podSecurityContext }}
         {{- toYaml .Values.webhook.podSecurityContext | nindent 8 }}
+        {{- else }}
+        {{- include "admission-controller.webhook.defaultSecurityContext" . | nindent 8 }}
+        {{- end }}
       {{- if .Values.webhook.hostNetwork }}
       hostNetwork: true
       {{- end }}
@@ -47,13 +49,25 @@ spec:
           command: {{ .Values.webhook.customEntryPoint | toYaml | nindent 10 }}
           {{- else }}
           args:
+            {{- with .Values.webhook.http.port }}
+            - --http_port
+            - {{ . }}
+            {{- end }}
             - --tls_cert_file
             - /cert/tls.crt
             - --tls_private_key_file
             - /cert/tls.key
           {{- end }}
           securityContext:
+            {{- if .Values.webhook.securityContext }}
             {{- toYaml .Values.webhook.securityContext | nindent 12 }}
+            {{- else }}
+            {{- include "admission-controller.webhook.defaultSecurityContext" . | nindent 12}}
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+            {{- end }}
           imagePullPolicy: {{ .Values.webhook.image.pullPolicy }}
           env:
             {{- if (or .Values.webhook.httpProxy .Values.webhook.httpsProxy) }}
@@ -70,7 +84,7 @@ spec:
             {{- end }}
           ports:
             - name: http
-              containerPort: 5000
+              containerPort: {{ quote .Values.webhook.http.port }}
               protocol: TCP
           livenessProbe:
             httpGet:
@@ -105,13 +119,13 @@ spec:
           resources:
             {{- toYaml .Values.webhook.resources | nindent 12 }}
       volumes:
-      - name: cert
-        secret:
-          secretName: {{ include "admission-controller.webhook.fullname" . }}-tls
+        - name: cert
+          secret:
+            secretName: {{ include "admission-controller.webhook.fullname" . }}-tls
       {{- if .Values.webhook.ssl.ca.cert }}
-      - name: ca-cert
-        secret:
-          secretName: {{ include "admission-controller.webhook.fullname" . }}-ca
+        - name: ca-cert
+          secret:
+            secretName: {{ include "admission-controller.webhook.fullname" . }}-ca
       {{- end }}
     {{- with .Values.webhook.nodeSelector }}
       nodeSelector:

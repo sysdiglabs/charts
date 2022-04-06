@@ -106,24 +106,14 @@ webhook:
   # List of hosts, IPs, or IPs in CIDR format that should not go through the proxy. We include "kubernetes" service and typical 10.0.0.0/8 services
   noProxy: kubernetes,10.0.0.0/8
 
-  # Webhook pod annotations
-  podAnnotations:  # +doc-gen:break
-    prometheus.io/scrape: "true"
-    prometheus.io/path: "/metrics"
-    prometheus.io/port: "5000"
-    prometheus.io/scheme: "https"
-    sidecar.istio.io/inject: "false"
+  # Webhook pod annotations. If empty, some annotations are automatically generated for prometheus scraping.
+  podAnnotations: {}
 
-  # PSP's for webhook
+  # Pod Security context for webhook.If empty, some security context are automatically generated.
   podSecurityContext: {}
 
-  # Configure securityContext for webhook
-  securityContext:  # +doc-gen:break
-    capabilities:
-      drop:
-      - ALL
-    readOnlyRootFilesystem: true
-    runAsNonRoot: true
+  # Configure securityContext for webhook. If empty, some security context are automatically generated.
+  securityContext: {}
 
   # Specifies if the webhook should be started in hostNetwork mode.
   # <br/>This is required if using a custom CNI where the managed control plane nodes are unable to initiate
@@ -195,6 +185,10 @@ webhook:
   # <br/>Remember to provide the webhook valid arguments with `--tls_cert_file` and `--tls_private_key_file`.
   # <br/>default: /bin/webhook --tls_cert_file /cert/tls.crt --tls_private_key_file /cert/tls.key
   customEntryPoint: []
+
+  http:
+    # HTTP serve port where the requests will be served from
+    port: 5000
 
 scanner:
   # Deploy the Inline Scanner Service
