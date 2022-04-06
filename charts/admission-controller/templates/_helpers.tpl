@@ -85,7 +85,7 @@ If release name contains chart name it will be used as a full name.
 {{- end -}}
 
 {{- define "admission-controller.webhook.defaultSecurityContext" -}}
- {{- if (lt .Values.webhook.http.port 1024) -}}
+ {{- if (lt (int .Values.webhook.http.port) 1024) -}}
         {{- toYaml (dict "runAsUser" 0 "runAsNonRoot" false) -}}
     {{- else -}}
         {{- toYaml (dict "runAsUser" 1000 "runAsNonRoot" true) -}}
