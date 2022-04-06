@@ -4,6 +4,11 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.12.70
+### Bugfixes
+
+* Remove the maxSurge field from the rollingUpdate field because not all envs have the new k8s versions
+
 ## v1.12.69
 ### Minor changes
 
