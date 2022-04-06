@@ -76,7 +76,7 @@ serviceAccounts:
 webhook:
   # Service name for Webhook deployment
   name: webhook
-  # Amount of replicas for webhook
+  # Amount of replicas for webhook. **Deprecated**, use `webhook.autoscaling.minReplicas` and `webhook.autoscaling.maxReplicas` instead.
   replicaCount: 1
 
   image:
@@ -88,6 +88,8 @@ webhook:
     pullPolicy: IfNotPresent
     # Override the default image tag. If not specified, it defaults to appVersion in Chart.yaml
     tag:
+    # Specify the image digest value.  If set, this value is used instead of the tag value.
+    digest:
 
   service:
     # Use this type as webhook service
@@ -132,13 +134,21 @@ webhook:
   # The image pull secrets for webhook
   imagePullSecrets: []
   # Resource request and limits for webhook
-  resources: {}
-#    limits:
-#      cpu: 250m
-#      memory: 256Mi
-#    requests:
-#      cpu: 250m
-#      memory: 256Mi
+  resources:  # +doc-gen:break
+    limits:
+      cpu: 250m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 256Mi
+
+  autoscaling:
+    # Min replicas to use while autoscaling the webhook
+    minReplicas: 2
+    # Max replicas to use while autoscaling the webhook
+    maxReplicas: 5
+    # Target CPU to use when the number of replicas must be increased
+    targetCPUUtilizationPercentage: 80
 
   # Number of seconds for the request to time out
   timeoutSeconds: 5
@@ -203,6 +213,8 @@ scanner:
     pullPolicy: IfNotPresent
     # Scanner image tag
     tag: 0.0.10
+    # Specify the image digest value.  If set, this value is used instead of the tag value.
+    digest:
 
   service:
     # Configure port for the webhook service

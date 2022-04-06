@@ -4,6 +4,35 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.12.69
+### Minor changes
+
+* RuntimeScanner: reduced and better disk usage for temporary files
+* RuntimeScanner: added support for Runtime policies
+
+## v1.12.67
+### Minor changes
+
+* Add s390x as one of the default architectures for Sysdig Agent node affinity
+
+## v1.12.66
+### Minor changes
+
+* Add arm64 as one of the default architectures for Sysdig Agent node affinity
+
+## v1.12.64
+### Bugfixes
+
+* RuntimeScanner provides correct image name in containerd environments
+* RuntimeScanner provides correct image digest in dockerd environments
+
+## v1.12.63
+### Minor changes
+
+* Added CRI-O support for runtime-scanner
+* Improved runtime-scanner memory usage
+* Updated runtime-scanner to the latest version
+
 ## v1.12.61
 ### Minor changes
 

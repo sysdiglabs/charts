@@ -77,7 +77,7 @@ spec:
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: /var/secrets/gcp/gcp_credentials
             - name: TELEMETRY_DEPLOYMENT_METHOD
-              value: helm
+              value: {{ .Values.telemetryDeploymentMethod | quote }}
             - name: AZURE_EVENT_HUB_CONNECTION_STRING
               valueFrom:
                 secretKeyRef:

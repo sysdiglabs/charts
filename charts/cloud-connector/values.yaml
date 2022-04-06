@@ -50,6 +50,7 @@ tolerations: []
 
 affinity: {}
 
+telemetryDeploymentMethod: "helm"
 ## Additional environment variables to set
 ## Example:
 ## extraEnvVars:
