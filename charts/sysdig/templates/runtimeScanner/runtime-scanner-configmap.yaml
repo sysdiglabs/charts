@@ -1,4 +1,4 @@
-{{- if or (and (not (include "deploy-nia" .)) .Values.nodeAnalyzer.deploy (not .Values.gke.autopilot) .Values.nodeAnalyzer.runtimeScanner.deploy) (or (eq .Values.secure.vulnerabilityManagement.wmEngine "both") (eq .Values.secure.vulnerabilityManagement.wmEngine "new")) }}
+{{- if or (and (not (include "deploy-nia" .)) .Values.nodeAnalyzer.deploy (not .Values.gke.autopilot) .Values.nodeAnalyzer.runtimeScanner.deploy) (or (eq .Values.secure.vulnerabilityManagement.vmEngine "both") (eq .Values.secure.vulnerabilityManagement.vmEngine "new")) }}
 apiVersion: v1
 kind: ConfigMap
 metadata:

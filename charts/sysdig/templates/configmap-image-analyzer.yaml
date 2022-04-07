@@ -1,4 +1,4 @@
-{{- if not (eq .Values.secure.vulnerabilityManagement.wmEngine "new") }}
+{{- if not (eq .Values.secure.vulnerabilityManagement.vmEngine "new") }}
 {{- if include "deploy-nia" . }}
 apiVersion: v1
 kind: ConfigMap
