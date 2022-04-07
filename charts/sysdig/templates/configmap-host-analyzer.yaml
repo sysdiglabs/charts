@@ -1,5 +1,5 @@
 {{- if not .Values.gke.autopilot }}
-{{ if not .Values.secure.vulnerabilityManagement.newEngineOnly }}
+{{- if not (eq .Values.secure.vulnerabilityManagement.wmEngine "new") }}
 {{- if and (not (include "deploy-nia" .)) .Values.nodeAnalyzer.deploy }}
 apiVersion: v1
 kind: ConfigMap

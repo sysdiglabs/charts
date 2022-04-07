@@ -176,7 +176,7 @@ collectorSettings:
   sslVerifyCertificate:
 
 # Setting a cluster name allows you to filter events from this cluster using kubernetes.cluster.name
-clusterName: ""
+clusterName: "myClusterName"
 
 sysdig:
   # Required: You need your Sysdig Agent access key before running agents, either specifying 'accessKey' here, or using 'existingAccessKeySecret'
@@ -202,7 +202,7 @@ secure:
   # true here enables Sysdig Secure: container run-time security & forensics
   enabled: true
   vulnerabilityManagement:
-    newEngineOnly: false
+    wmEngine: "both" # it can take value "new", "both" or whatever else value
 
 auditLog:
   # true here activates the K8s Audit Log feature for Sysdig Secure
