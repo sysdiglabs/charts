@@ -4,7 +4,7 @@ description: Sysdig Cloud Connector
 
 type: application
 version: 0.7.5
-appVersion: 0.16.0
+appVersion: 0.16.5
 home: https://sysdiglabs.github.io/cloud-connector
 
 maintainers:
@@ -12,3 +12,11 @@ maintainers:
     email: hayk.kocharyan@sysdig.com
   - name: tembleking
     email: fede.barcelona@sysdig.com
+  - name: wideawakening
+    email: irune.prado@sysdig.com
+  - name: regiluze
+    email: ruben.eguiluz@sysdig.com
+  - name: penguinjournals
+    email: david.gonzalez@sysdig.com
+  - name: miketnt
+    email: miguel.baztan@sysdig.com
