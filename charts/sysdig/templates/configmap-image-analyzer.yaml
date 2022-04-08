@@ -1,4 +1,4 @@
-{{- if not (eq .Values.secure.vulnerabilityManagement.vmEngine "new") }}
+{{- if (has (include "sysdig.secure.vulnerabilityManagement.vmEngine" .) (list "old" "both")) }}
 {{- if include "deploy-nia" . }}
 apiVersion: v1
 kind: ConfigMap

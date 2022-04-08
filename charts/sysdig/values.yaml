@@ -202,7 +202,8 @@ secure:
   # true here enables Sysdig Secure: container run-time security & forensics
   enabled: true
   vulnerabilityManagement:
-    vmEngine: "both" # it can take value "new", "both" or whatever else value
+    # it must take a value in list "new" "old" "none" "both"
+    vmEngine: "both"
 
 auditLog:
   # true here activates the K8s Audit Log feature for Sysdig Secure

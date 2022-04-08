@@ -239,7 +239,7 @@ Sysdig Eve Connector Secret generation (if not exists)
 {{- end -}}
 
 {{/*
-to help the maxUnavailable and max_parallel_cold_starts pick a reasonable value depending on the cluster size
+Help the maxUnavailable and max_parallel_cold_starts pick a reasonable value depending on the cluster size
 */}}
 {{- define "sysdig.parallelStarts" -}}
 {{- if .Values.daemonset.updateStrategy.rollingUpdate.maxUnavailable -}}
@@ -250,5 +250,17 @@ to help the maxUnavailable and max_parallel_cold_starts pick a reasonable value 
     {{- 10 -}}
 {{- else -}}
     {{- 1 -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Validate .Values.secure.vulnerabilityManagement.vmEngine and explicitly fail if does not take an expected value
+*/}}
+{{- define "sysdig.secure.vulnerabilityManagement.vmEngine" -}}
+    {{- $allowedVMEngineValues := list "new" "old" "none" "both" -}}
+{{- if not (has .Values.secure.vulnerabilityManagement.vmEngine $allowedVMEngineValues) -}}
+    {{- fail (printf "Value of vmEngine must belong to %v but it was set to %s" $allowedVMEngineValues .Values.secure.vulnerabilityManagement.vmEngine) -}}
+{{- else -}}
+    {{- .Values.secure.vulnerabilityManagement.vmEngine }}
 {{- end -}}
 {{- end -}}

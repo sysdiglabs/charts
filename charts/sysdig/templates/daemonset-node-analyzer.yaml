@@ -85,7 +85,7 @@ spec:
       # the host
       hostPID: true
       containers:
-{{- if not (eq .Values.secure.vulnerabilityManagement.vmEngine "new") }}
+{{- if (has (include "sysdig.secure.vulnerabilityManagement.vmEngine" .) (list "old" "both")) }}
       - name: sysdig-image-analyzer
         image: {{ template "sysdig.image.imageAnalyzer" . }}
         securityContext:

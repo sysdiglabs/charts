@@ -1,5 +1,5 @@
 {{- if not .Values.gke.autopilot }}
-{{- if not (eq .Values.secure.vulnerabilityManagement.vmEngine "new") }}
+{{- if (has (include "sysdig.secure.vulnerabilityManagement.vmEngine" .) (list "old" "both")) }}
 {{- if and (not (include "deploy-nia" .)) .Values.nodeAnalyzer.deploy }}
 apiVersion: v1
 kind: ConfigMap
