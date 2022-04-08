@@ -1,4 +1,4 @@
-{{- if and (not (include "deploy-nia" .)) .Values.nodeAnalyzer.deploy (not .Values.gke.autopilot) (include "sysdig.secure.vulnerabilityManagement.newEngineEnabled" .) .Values.nodeAnalyzer.runtimeScanner.eveConnector.deploy }}
+{{- if and (not (include "deploy-nia" .)) .Values.nodeAnalyzer.deploy (not .Values.gke.autopilot) (eq (include "sysdig.secure.vulnerabilityManagement.newEngineEnabled" .) "true") .Values.nodeAnalyzer.runtimeScanner.eveConnector.deploy }}
 apiVersion: v1
 kind: Service
 metadata:

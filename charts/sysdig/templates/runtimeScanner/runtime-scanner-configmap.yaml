@@ -1,4 +1,4 @@
-{{- if or (and (not (include "deploy-nia" .)) .Values.nodeAnalyzer.deploy (not .Values.gke.autopilot) (include "sysdig.secure.vulnerabilityManagement.newEngineEnabled" .)) }}
+{{- if or (and (not (include "deploy-nia" .)) .Values.nodeAnalyzer.deploy (not .Values.gke.autopilot)) (eq (include "sysdig.secure.vulnerabilityManagement.newEngineEnabled" .) "true") }}
 apiVersion: v1
 kind: ConfigMap
 metadata:

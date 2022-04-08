@@ -266,15 +266,15 @@ Validate .Values.secure.vulnerabilityManagement.vmEngine and explicitly fail if 
 {{- end -}}
 
 {{/*
-Return true if the new vulnerability management engine must be enabled
+Return "true" if the new vulnerability management engine must be enabled
 */}}
 {{- define "sysdig.secure.vulnerabilityManagement.newEngineEnabled" -}}
     {{- has (include "sysdig.secure.vulnerabilityManagement.vmEngine" .) (list "new" "both") }}
 {{- end -}}
 
 {{/*
-Return true if the old vulnerability management engine must be enabled
+Return "true" if the legacy vulnerability management engine must be enabled
 */}}
-{{- define "sysdig.secure.vulnerabilityManagement.oldEngineEnabled" -}}
+{{- define "sysdig.secure.vulnerabilityManagement.legacyEngineEnabled" -}}
     {{- has (include "sysdig.secure.vulnerabilityManagement.vmEngine" .) (list "old" "both") }}
 {{- end -}}

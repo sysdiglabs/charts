@@ -1,4 +1,4 @@
-{{- if (include "sysdig.secure.vulnerabilityManagement.oldEngineEnabled" .) }}
+{{- if (eq (include "sysdig.secure.vulnerabilityManagement.legacyEngineEnabled" .) "true") }}
 {{- if include "deploy-nia" . }}
 apiVersion: v1
 kind: ConfigMap

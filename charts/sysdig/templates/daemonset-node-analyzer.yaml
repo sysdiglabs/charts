@@ -85,7 +85,7 @@ spec:
       # the host
       hostPID: true
       containers:
-{{- if (include "sysdig.secure.vulnerabilityManagement.oldEngineEnabled" .) }}
+{{- if (eq (include "sysdig.secure.vulnerabilityManagement.legacyEngineEnabled" .) "true") }}
       - name: sysdig-image-analyzer
         image: {{ template "sysdig.image.imageAnalyzer" . }}
         securityContext:
@@ -365,7 +365,7 @@ spec:
               key: no_proxy
               name: {{ template "sysdig.fullname" . }}-benchmark-runner
               optional: true
-{{- if or (.Values.nodeAnalyzer.runtimeScanner.deploy) (or (eq .Values.secure.vulnerabilityManagement.wmEngine "both") (eq .Values.secure.vulnerabilityManagement.wmEngine "new")) }}
+{{- if eq (include "sysdig.secure.vulnerabilityManagement.newEngineEnabled" .) "true" }}
       # Runtime Scanner #
       - name: sysdig-runtime-scanner
         image: {{ template "sysdig.image.runtimeScanner" . }}
