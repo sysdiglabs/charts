@@ -203,7 +203,7 @@ secure:
   enabled: true
   vulnerabilityManagement:
     # it must take a value in list "new" "old" "none" "both"
-    vmEngine: "both"
+    vmEngine: "old"
 
 auditLog:
   # true here activates the K8s Audit Log feature for Sysdig Secure
