@@ -176,7 +176,7 @@ collectorSettings:
   sslVerifyCertificate:
 
 # Setting a cluster name allows you to filter events from this cluster using kubernetes.cluster.name
-clusterName: "myClusterName"
+clusterName: ""
 
 sysdig:
   # Required: You need your Sysdig Agent access key before running agents, either specifying 'accessKey' here, or using 'existingAccessKeySecret'
