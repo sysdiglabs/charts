@@ -71,7 +71,7 @@ resourceProfile: small
 
 gke:
    # true here enables the deployment on gke autopilot clusters
-   autopilot: false
+  autopilot: false
 
 rbac:
   # true here enables creation of rbac resources
@@ -120,7 +120,6 @@ daemonset:
   # Liveness and readiness probes initial delay (in seconds)
   probes:
     initialDelay: 90
-  
   kmodule:
     env: {}
 
