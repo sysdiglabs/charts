@@ -67,7 +67,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
 | `image.registry`                                                     | Sysdig Agent image registry                                                              | `quay.io`                                                                      |
 | `image.repository`                                                   | The image repository to pull from                                                        | `sysdig/agent`                                                                 |
-| `image.tag`                                                          | The image tag to pull                                                                    | `12.3.1`                                                                       |
+| `image.tag`                                                          | The image tag to pull                                                                    | `12.4.0`                                                                       |
 | `image.digest`                                                       | The image digest to pull                                                                 | ` `                                                                            |
 | `image.pullPolicy`                                                   | The Image pull policy                                                                    | `IfNotPresent`                                                                 |
 | `image.pullSecrets`                                                  | Image pull secrets                                                                       | `nil`                                                                          |
@@ -83,11 +83,15 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `serviceAccount.name`                                                | Use this value as serviceAccountName                                                     | ` `                                                                            |
 | `daemonset.deploy`                                                   | Deploy the agent daemonset                                                               | `true`                                                                         |
 | `daemonset.updateStrategy.type`                                      | The updateStrategy for updating the daemonset                                            | `RollingUpdate`                                                                |
+| `daemonset.updateStrategy.type.maxUnavailable`                       | The maximum number of pods that can be unavailable during the update process             |                                                                      |
 | `daemonset.nodeSelector`                                             | Node Selector                                                                            | `{}`                                                                           |
-| `daemonset.affinity`                                                 | Node affinities                                                                          | `schedule on amd64 and linux`                                                  |
+| `daemonset.arch`                                                     | Allowed architectures for scheduling                                                     | `[ amd64, arm64, s390x ]`                                                                    |
+| `daemonset.os`                                                       | Allowed OSes for scheduling                                                              | `[ linux ]`                                                                    |
+| `daemonset.affinity`                                                 | Node affinities. Overrides `daemonset.arch` and `daemonset.os` values                    | `{}`                                                                           |
 | `daemonset.annotations`                                              | Custom annotations for daemonset                                                         | `{}`                                                                           |
 | `daemonset.labels`                                                   | Custom labels for daemonset (as a multi-line templated string map or as YAML)            |                                                                                |
 | `daemonset.probes.initialDelay`                                      | Initial delay for liveness and readiness probes. daemonset                               | `{}`                                                                           |
+| `daemonset.kmodule.env`                                              | Environment variables for the kernel module image builder. Provide as map of `VAR: val`  | `{}`                                                                           |
 | `slim.enabled`                                                       | Use the slim based Sysdig Agent image                                                    | `false`                                                                        |
 | `slim.image.repository`                                              | The slim Agent image repository                                                          | `sysdig/agent-slim`                                                            |
 | `slim.kmoduleImage.repository`                                       | The kernel module image builder repository to pull from                                  | `sysdig/agent-kmodule`                                                         |
@@ -174,6 +178,27 @@ limits:
 If anything is set for your `resources`, that will be used instead of the resource profile.
 
 See [Tuning Sysdig Agent](https://docs.sysdig.com/en/tuning-sysdig-agent.html) for more info.
+
+## GKE Autopilot
+ Autopilot is an operation mode for creating and managing clusters in GKE. 
+ With Autopilot, Google configures and manages the underlying node infrastructure for you.
+
+ To deploy the Sysdig agent in GKE clusters running in Autopilot mode, run:
+
+ ```bash
+ $ helm install --namespace sysdig-agent sysdig-agent --set sysdig.accessKey=YOUR-KEY-HERE --set sysdig.settings.collector=COLLECTOR_URL sysdig/sysdig --set gke.autopilot=true
+ ```
+
+ When the flag `gke.autopilot=true` gets `true`, the chart configuration is overridden as follows: 
+  - `ebpf.enabled=true`
+  - `ebpf.settings.mountEtcVolume=false`
+  - `daemonset.annotations='autopilot\.gke\.io/no-connect="true"'`
+  - `daemonset.affinity=null'`
+
+ So, on GKE Autopilot clusters:
+  - The ebpf is enabled and the etcVolume is not mounted,
+  - The daemonset affinity is set to `null`,
+  - The daemonset annotation is set to enable the Agent to run on autopilot (required from GKE).
 
 ## On-Premise backend deployment settings
 
