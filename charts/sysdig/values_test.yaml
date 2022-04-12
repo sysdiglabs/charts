@@ -1,0 +1,7 @@
+sysdig:
+  # Required: You need your Sysdig Agent access key before running agents, either specifying 'accessKey' here, or using 'existingAccessKeySecret'
+  accessKey: "dummy-key"
+
+
+nodeAnalyzer:
+  deploy: false
