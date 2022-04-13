@@ -302,4 +302,4 @@ spec:
   updateStrategy:
     type: {{ .Values.daemonset.updateStrategy.type }}
     rollingUpdate:
-      maxUnavailable: {{include "sysdig.parallelStarts" .}}
+      maxUnavailable: {{include "agent.parallelStarts" .}}

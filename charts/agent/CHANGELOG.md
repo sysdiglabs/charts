@@ -4,9 +4,9 @@
 
 This file documents all notable changes to the Sysdig Agent Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
-## v1.0.3
+## v1.1.0
 
-### Medium Changes
+### Minor Changes
 
 * Match the sysdig charts where the agent portion was updated up to version 1.12.70 from 1.12.56
 

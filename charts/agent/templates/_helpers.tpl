@@ -196,7 +196,7 @@ Check for all COS nodes or a flag to enable eBPF.
 {{/*
 to help the maxUnavailable and max_parallel_cold_starts pick a reasonable value depending on the cluster size
 */}}
-{{- define "sysdig.parallelStarts" -}}
+{{- define "agent.parallelStarts" -}}
 {{- if .Values.daemonset.updateStrategy.rollingUpdate.maxUnavailable -}}
     {{- .Values.daemonset.updateStrategy.rollingUpdate.maxUnavailable -}}
 {{- else if eq .Values.resourceProfile "small" -}}
