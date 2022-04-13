@@ -186,7 +186,7 @@ See [Tuning Sysdig Agent](https://docs.sysdig.com/en/tuning-sysdig-agent.html) f
  To deploy the Sysdig agent in GKE clusters running in Autopilot mode, run:
 
  ```bash
- $ helm install --namespace sysdig-agent sysdig-agent --set sysdig.accessKey=YOUR-KEY-HERE --set sysdig.settings.collector=COLLECTOR_URL sysdig/sysdig --set gke.autopilot=true
+ $ helm install --namespace sysdig-agent sysdig-agent --set sysdig.accessKey=YOUR-KEY-HERE --set sysdig.settings.collector=COLLECTOR_URL sysdig/agent --set gke.autopilot=true
  ```
 
  When the flag `gke.autopilot=true` gets `true`, the chart configuration is overridden as follows: 
