@@ -1,0 +1,46 @@
+{{- if not .Values.gke.autopilot }}
+{{- if .Values.nodeAnalyzer.deploy }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "nodeAnalyzer.fullname" . }}-image-analyzer
+  labels:
+{{ include "nodeAnalyzer.labels" . | indent 4 }}
+data:
+  collector_endpoint: "https://{{ required "A valid .Values.nodeAnalyzer.apiEndpoint is required" (.Values.nodeAnalyzer.apiEndpoint | default .Values.nodeAnalyzer.collectorEndpoint) }}/internal/scanning/scanning-analysis-collector"
+  {{- if hasKey .Values.nodeAnalyzer "sslVerifyCertificate" }}
+  ssl_verify_certificate: "{{ .Values.nodeAnalyzer.sslVerifyCertificate }}"
+  {{- end }}
+  debug: "{{ .Values.nodeAnalyzer.debug | default false }}"
+  {{- if .Values.nodeAnalyzer.imageAnalyzer.dockerSocketPath }}
+  docker_socket_path: {{ .Values.nodeAnalyzer.imageAnalyzer.dockerSocketPath }}
+  {{- end }}
+  {{- if .Values.nodeAnalyzer.imageAnalyzer.criSocketPath }}
+  cri_socket_path: {{ .Values.nodeAnalyzer.imageAnalyzer.criSocketPath }}
+  {{- end }}
+  {{- if .Values.nodeAnalyzer.imageAnalyzer.containerdSocketPath }}
+  containerd_socket_path: {{ .Values.nodeAnalyzer.imageAnalyzer.containerdSocketPath }}
+  {{- end }}
+  {{- if .Values.nodeAnalyzer.imageAnalyzer.imagePeriod }}
+  image_period: {{ .Values.nodeAnalyzer.imageAnalyzer.imagePeriod }}
+  {{- end }}
+  {{- if .Values.nodeAnalyzer.imageAnalyzer.imageCacheTTL }}
+  image_cache_ttl: {{ .Values.nodeAnalyzer.imageAnalyzer.imageCacheTTL }}
+  {{- end }}
+  {{- if .Values.nodeAnalyzer.imageAnalyzer.reportPeriod }}
+  report_period: {{ .Values.nodeAnalyzer.imageAnalyzer.reportPeriod }}
+  {{- end }}
+  {{- if .Values.nodeAnalyzer.imageAnalyzer.collectorTimeout }}
+  collector_timeout: {{ .Values.nodeAnalyzer.imageAnalyzer.collectorTimeout }}
+  {{- end }}
+  {{- if .Values.nodeAnalyzer.httpProxy }}
+  http_proxy: {{ .Values.nodeAnalyzer.httpProxy }}
+  {{- end -}}
+  {{- if .Values.nodeAnalyzer.httpsProxy }}
+  https_proxy: {{ .Values.nodeAnalyzer.httpsProxy }}
+  {{- end -}}
+  {{- if .Values.nodeAnalyzer.noProxy }}
+  no_proxy: {{ .Values.nodeAnalyzer.noProxy }}
+  {{- end -}}
+{{- end }}
+{{- end }}
