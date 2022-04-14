@@ -143,17 +143,17 @@ spec:
             - name: SYSDIG_BPF_PROBE
               value:
             {{- end }}
-            {{- if .Values.proxy.httpProxy }}
+            {{- if (.Values.proxy.httpProxy | default .Values.global.proxy.httpProxy) }}
             - name: http_proxy
-              value: {{ .Values.proxy.httpProxy }}
+              value: {{ .Values.proxy.httpProxy | default .Values.global.proxy.httpProxy }}
             {{- end }}
-            {{- if .Values.proxy.httpsProxy }}
+            {{- if (.Values.proxy.httpsProxy | default .Values.global.proxy.httpsProxy) }}
             - name: https_proxy
-              value: {{ .Values.proxy.httpsProxy }}
+              value: {{ .Values.proxy.httpsProxy | default .Values.global.proxy.httpsProxy }}
             {{- end }}
-            {{- if .Values.proxy.noProxy }}
+            {{- if (.Values.proxy.noProxy | default .Values.global.proxy.noProxy) }}
             - name: no_proxy
-              value: {{ .Values.proxy.noProxy }}
+              value: {{ .Values.proxy.noProxy | default .Values.global.proxy.noProxy }}
             {{- end }}
             {{- if .Values.timezone }}
             - name: TZ
