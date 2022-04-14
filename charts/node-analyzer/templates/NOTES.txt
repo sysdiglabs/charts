@@ -1,0 +1,22 @@
+The node analyzer for Sysdig Secure DevOps Platform is spinning up on each node in your
+cluster.
+
+Each node analyzer pod consists of image analyzer, benchmark runner and host analyzer.
+
+After successful installation you can access the Node analyzer features as follows:
+
+Log in to Sysdig Secure and check that the features are working as expected.
+
+Confirm Image analyzer
+  1. Select Scanning > Image Results.
+  2. Check for scanned container image results that originate with the Sysdig Node Image Analyzer.
+
+Use Host Scanning
+  Check vulnerabilities in hosts or nodes, both for operation system packages (e.g. rpm, dpkg) and non-operating system packages (e.g. Java packages, Ruby gems).
+    1. Select Scanning > Hosts.
+    2. Review the Host vulnerabilities listed.
+  Your active team scope is applied when loading host scanning results. Log in with the broadest team and user credentials to see the full report.
+
+  Use Benchmarks (Legacy Feature)
+    3. Select Benchmarks, Tasks.
+    4. Either configure a new task or review your upgraded tasks. Click a line item to see the associated benchmark report.
