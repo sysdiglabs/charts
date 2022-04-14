@@ -7,7 +7,7 @@ type: application
 # currently matching sysdig 1.12.70
 version: 1.1.0
 
-appVersion: "12.3.1"
+appVersion: "12.4.0"
 
 keywords:
   - monitoring
