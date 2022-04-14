@@ -1,0 +1,33 @@
+apiVersion: v2
+name: node-analyzer
+description: Sysdig Node Analyzer
+
+# currently matching Sysdig's appVersion 1.12.59
+version: 1.0.0
+appVersion: 12.3.1
+keywords:
+  - monitoring
+  - security
+  - alerting
+  - metric
+  - troubleshooting
+  - run-time
+home: https://www.sysdig.com/
+icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+sources:
+  - https://app.sysdigcloud.com/#/settings/user
+  - https://github.com/draios/sysdig
+maintainers:
+  - name: lachie83
+    email: lachlan@deis.com
+  - name: bencer
+    email: jorge.salamero@sysdig.com
+  - name: nestorsalceda
+    email: nestor.salceda@sysdig.com
+  - name: airadier
+    email: alvaro.iradier@sysdig.com
+  - name: carillan81
+    email: carlos.arilla@sysdig.com
+  - name: yashgiri
+    email: yashgiri.goswami@sysdig.com
+dependencies: []
