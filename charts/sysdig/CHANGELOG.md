@@ -4,6 +4,11 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.13.0
+### Major change
+
+* The slim agent is enabled by default
+
 ## 1.12.73
 ### Bugfixes
 * RuntimeScanner: fixed usage of TLS settings when downloading vulnerabilities database
