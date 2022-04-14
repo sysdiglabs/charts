@@ -192,3 +192,18 @@ Check for all COS nodes or a flag to enable eBPF.
 {{- define "agent.ebpfEnabled" -}}
   {{- or (include "agent.isAllCos" .) .Values.ebpf.enabled -}}
 {{- end -}}
+
+{{/*
+to help the maxUnavailable and max_parallel_cold_starts pick a reasonable value depending on the cluster size
+*/}}
+{{- define "agent.parallelStarts" -}}
+{{- if .Values.daemonset.updateStrategy.rollingUpdate.maxUnavailable -}}
+    {{- .Values.daemonset.updateStrategy.rollingUpdate.maxUnavailable -}}
+{{- else if eq .Values.resourceProfile "small" -}}
+    {{- 1 -}}
+{{- else if or (eq .Values.resourceProfile "medium") (eq .Values.resourceProfile "large") -}}
+    {{- 10 -}}
+{{- else -}}
+    {{- 1 -}}
+{{- end -}}
+{{- end -}}

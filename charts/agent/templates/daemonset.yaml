@@ -16,9 +16,14 @@ spec:
       labels:
 {{ include "agent.labels" . | indent 8 }}
 {{ include "daemonset.labels" . | indent 8 }}
+      {{- if .Values.gke.autopilot }}
+      annotations:
+        autopilot.gke.io/no-connect: "true"
+      {{- else }}
       {{- if .Values.daemonset.annotations }}
       annotations:
 {{ toYaml .Values.daemonset.annotations | indent 8 }}
+      {{- end }}
       {{- end }}
     spec:
       serviceAccountName: {{ template "agent.serviceAccountName" .}}
@@ -35,9 +40,31 @@ spec:
       nodeSelector:
 {{ toYaml .Values.daemonset.nodeSelector | indent 8 }}
       {{- end }}
-      {{- if .Values.daemonset.affinity }}
+      {{- if .Values.gke.autopilot }}
+      affinity: null
+      {{- else }}
       affinity:
+      {{- if .Values.daemonset.affinity }}
 {{ toYaml .Values.daemonset.affinity | indent 8 }}
+      {{- else }}
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/arch
+                operator: In
+                values: {{- toYaml .Values.daemonset.arch | nindent 18 }}
+              - key: kubernetes.io/os
+                operator: In
+                values: {{- toYaml .Values.daemonset.os | nindent 18 }}
+            - matchExpressions:
+              - key: beta.kubernetes.io/arch
+                operator: In
+                values: {{- toYaml .Values.daemonset.arch | nindent 18 }}
+              - key: beta.kubernetes.io/os
+                operator: In
+                values: {{- toYaml .Values.daemonset.os | nindent 18 }}
+      {{- end }}
       {{- end }}
       {{- if .Values.image.pullSecrets }}
       imagePullSecrets:
@@ -64,9 +91,13 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: spec.nodeName
-          {{- if (include "agent.ebpfEnabled" .) }}
+          {{- if or (include "agent.ebpfEnabled" .) .Values.gke.autopilot }}
             - name: SYSDIG_BPF_PROBE
               value:
+          {{- end }}
+          {{- range $key, $value := .Values.daemonset.kmodule.env }}
+            - name: "{{ $key }}"
+              value: "{{ $value }}"
           {{- end }}
           volumeMounts:
             - mountPath: /etc/modprobe.d
@@ -81,7 +112,7 @@ spec:
             - mountPath: /host/usr
               name: usr-vol
               readOnly: true
-            {{- if (include "agent.ebpfEnabled" .) }}
+            {{- if or (include "agent.ebpfEnabled" .) .Values.gke.autopilot}}
             - mountPath: /root/.sysdig
               name: bpf-probes
             - mountPath: /sys/kernel/debug
@@ -108,7 +139,7 @@ spec:
             readOnlyRootFilesystem: false
             allowPrivilegeEscalation: true
           env:
-            {{- if (include "agent.ebpfEnabled" .) }}
+            {{- if or (include "agent.ebpfEnabled" .)  .Values.gke.autopilot}}
             - name: SYSDIG_BPF_PROBE
               value:
             {{- end }}
@@ -169,12 +200,12 @@ spec:
               name: sysdig-agent-config
             - mountPath: /opt/draios/etc/kubernetes/secrets
               name: sysdig-agent-secrets
-            {{- if (and (include "agent.ebpfEnabled" .) .Values.ebpf.settings.mountEtcVolume) }}
+            {{- if (and (include "agent.ebpfEnabled" .) .Values.ebpf.settings.mountEtcVolume (not .Values.gke.autopilot)) }}
             - mountPath: /host/etc
               name: etc-fs
               readOnly: true
             {{- end }}
-            {{- if (and (include "agent.ebpfEnabled" .) .Values.slim.enabled) }}
+            {{- if (and (or (include "agent.ebpfEnabled" .) .Values.gke.autopilot) .Values.slim.enabled) }}
             - mountPath: /root/.sysdig
               name: bpf-probes
             - mountPath: /sys/kernel/debug
@@ -225,12 +256,12 @@ spec:
         - name: varrun-vol
           hostPath:
             path: /var/run
-        {{- if (and (include "agent.ebpfEnabled" .) .Values.ebpf.settings.mountEtcVolume) }}
+        {{- if (and (include "agent.ebpfEnabled" .) .Values.ebpf.settings.mountEtcVolume (not .Values.gke.autopilot)) }}
         - name: etc-fs
           hostPath:
             path: /etc
         {{- end }}
-        {{- if (and (include "agent.ebpfEnabled" .) .Values.slim.enabled) }}
+        {{- if (and (or (include "agent.ebpfEnabled" .) .Values.gke.autopilot) .Values.slim.enabled) }}
         - name: bpf-probes
           emptyDir: {}
         - name: sys-tracing
@@ -269,4 +300,6 @@ spec:
                 fieldPath: metadata.name
               path: name
   updateStrategy:
-{{ toYaml .Values.daemonset.updateStrategy | indent 4 }}
+    type: {{ .Values.daemonset.updateStrategy.type }}
+    rollingUpdate:
+      maxUnavailable: {{include "agent.parallelStarts" .}}
