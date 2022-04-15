@@ -1,8 +1,9 @@
-# Default values for Sysdig Monitor and Secure Helm package.
+# Default values for Sysdig Node Analyzer
 global:
+  clusterConfig: {}
   sysdig: {}
+  proxy: {}
 
-# Default values for Sysdig Monitor and Secure Helm package.
 image:
   # This is a hack to support RELATED_IMAGE_<identifier> feature in Helm based
   # Operators
