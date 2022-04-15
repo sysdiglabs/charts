@@ -28,14 +28,14 @@ data:
   {{- if .Values.nodeAnalyzer.hostAnalyzer.maxSendAttempts }}
   max_send_attempts: {{ .Values.nodeAnalyzer.hostAnalyzer.maxSendAttempts }}
   {{- end }}
-  {{- if .Values.nodeAnalyzer.httpProxy }}
-  http_proxy: {{ .Values.nodeAnalyzer.httpProxy }}
+  {{- if (.Values.nodeAnalyzer.httpProxy | default .Values.global.proxy.httpProxy) }}
+  http_proxy: {{ .Values.nodeAnalyzer.httpProxy | default .Values.global.proxy.httpProxy }}
   {{- end -}}
-  {{- if .Values.nodeAnalyzer.httpsProxy }}
-  https_proxy: {{ .Values.nodeAnalyzer.httpsProxy }}
+  {{- if (.Values.nodeAnalyzer.httpsProxy | default .Values.global.proxy.httpsProxy) }}
+  https_proxy: {{ .Values.nodeAnalyzer.httpsProxy | default .Values.global.proxy.httpsProxy }}
   {{- end -}}
-  {{- if .Values.nodeAnalyzer.noProxy }}
-  no_proxy: {{ .Values.nodeAnalyzer.noProxy }}
+  {{- if (.Values.nodeAnalyzer.noProxy | default .Values.global.proxy.noProxy) }}
+  no_proxy: {{ .Values.nodeAnalyzer.noProxy | default .Values.global.proxy.noProxy }}
   {{- end -}}
 {{- end }}
 {{- end }}
