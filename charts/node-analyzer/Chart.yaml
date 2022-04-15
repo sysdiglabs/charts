@@ -3,7 +3,7 @@ name: node-analyzer
 description: Sysdig Node Analyzer
 
 # currently matching Sysdig's appVersion 1.12.59
-version: 1.1.0
+version: 1.2.0
 appVersion: 12.3.1
 keywords:
   - monitoring
