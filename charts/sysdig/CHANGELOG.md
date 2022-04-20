@@ -4,6 +4,13 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## 1.12.72
+### Bugfixes
+* Bugfixes on the runtime scanner
+
+### Minor changes
+* Release of runtime scanner 1.0.0
+
 ## v1.12.70
 ### Bugfixes
 
