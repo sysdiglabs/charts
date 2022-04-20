@@ -33,7 +33,7 @@ seccompProfiles:
 supplementalGroups:
   type: RunAsAny
 users:
-- system:serviceaccount:{{ .Release.Namespace }}:{{ template "agent.serviceAccountName" .}}
+- system:serviceaccount:{{ include "agent.namespace" . }}:{{ template "agent.serviceAccountName" .}}
 volumes:
 - hostPath
 - emptyDir

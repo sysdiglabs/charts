@@ -68,6 +68,8 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `global.proxy.httpProxy`                       | Sets `http_proxy` on the Agent container                                                   | `""`                                                        |
 | `global.proxy.httpsProxy`                      | Sets `https_proxy` on the Agent container                                                  | `""`                                                        |
 | `global.proxy.noProxy`                         | Sets `no_proxy` on the Agent container                                                     | `""`                                                        |
+| `global.clusterConfig.namespace`               | Overrides the release namespace                                                            | `""`                                                        |
+| `namespace`                                    | Overrides the global namespace setting and release namespace for components.               | `""`                                                        |
 | `image.registry`                               | Sysdig Agent image registry                                                                | `quay.io`                                                   |
 | `image.repository`                             | The image repository to pull from                                                          | `sysdig/agent`                                              |
 | `image.tag`                                    | The image tag to pull                                                                      | `12.4.0`                                                    |
