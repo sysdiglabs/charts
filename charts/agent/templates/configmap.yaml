@@ -8,7 +8,7 @@ metadata:
 data:
   dragent.yaml: |
     new_k8s: true
-{{- $clusterName := include "agent.clusterName" . }}
+{{- $clusterName := include "get_if_not_in_settings" (dict "root" . "default" (coalesce .Values.sysdig.disableCaptures .Values.global.clusterConfig.name) "setting" "k8s_cluster_name") }}
 {{- if $clusterName }}
     k8s_cluster_name: {{ $clusterName }}
 {{- end }}
@@ -26,23 +26,24 @@ data:
       enabled: true
   {{- end }}
 {{- end }}
-{{- $disableCaptures := include "get_or_fail_if_in_settings" (dict "root" . "key" "sysdig.disableCaptures" "setting" "sysdig_capture_enabled")}}
+{{/* skip values already set in sysdig.settings */}}
+{{- $disableCaptures := include "get_if_not_in_settings" (dict "root" . "default" .Values.sysdig.disableCaptures "setting" "sysdig_capture_enabled") }}
 {{- if eq $disableCaptures "true" }}
     sysdig_capture_enabled: false
 {{- end }}
-{{- $collectorHost := include "get_or_fail_if_in_settings" (dict "root" . "key" "collectorSettings.collectorHost" "setting" "collector")}}
+{{- $collectorHost := include "get_if_not_in_settings" (dict "root" . "default" (coalesce .Values.collectorSettings.collectorHost (include "agent.collectorEndpoint" .)) "setting" "collector") }}
 {{- if $collectorHost }}
     collector: {{ $collectorHost }}
 {{- end }}
-{{- $collectorPort := include "get_or_fail_if_in_settings" (dict "root" . "key" "collectorSettings.collectorPort" "setting" "collector_port")}}
+{{- $collectorPort := include "get_if_not_in_settings" (dict "root" . "default" .Values.collectorSettings.collectorPort "setting" "collector_port")}}
 {{- if $collectorPort }}
     collector_port: {{ $collectorPort }}
 {{- end }}
-{{- $ssl := include "get_or_fail_if_in_settings" (dict "root" . "key" "collectorSettings.ssl" "setting" "ssl")}}
+{{- $ssl := include "get_if_not_in_settings" (dict "root" . "default" .Values.collectorSettings.ssl "setting" "ssl")}}
 {{- if $ssl }}
     ssl: {{ $ssl }}
 {{- end }}
-{{- $sslVerifyCertificate := include "get_or_fail_if_in_settings" (dict "root" . "key" "collectorSettings.sslVerifyCertificate" "setting" "ssl_verify_certificate")}}
+{{- $sslVerifyCertificate := include "get_if_not_in_settings" (dict "root" . "default" .Values.collectorSettings.sslVerifyCertificate "setting" "ssl_verify_certificate")}}
 {{- if $sslVerifyCertificate }}
     ssl_verify_certificate: {{ $sslVerifyCertificate }}
 {{- end }}
@@ -50,6 +51,7 @@ data:
     k8s_coldstart:
       max_parallel_cold_starts: {{ include "agent.parallelStarts" .}}
 {{- end }}
+{{/* add in the remaining items from sysdig.settings */}}
 {{- if .Values.sysdig.settings }}
 {{ toYaml .Values.sysdig.settings | indent 4 }}
 {{- end }}
