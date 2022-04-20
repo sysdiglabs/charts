@@ -1,3 +1,7 @@
+global:
+  clusterConfig:
+    namespace: ""
+
 agent:
   sysdig:
     accessKey: ${SECURE_AGENT_TOKEN}
