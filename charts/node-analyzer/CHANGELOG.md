@@ -4,6 +4,12 @@
 
 This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.2.0
+
+### Minor Changes
+
+* Add `global.sysdig.region` variable for automatically determining collector endpoint
+
 ## v1.1.0
 
 ### Minor Changes

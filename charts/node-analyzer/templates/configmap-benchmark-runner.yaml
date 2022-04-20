@@ -7,7 +7,7 @@ metadata:
   labels:
 {{ include "nodeAnalyzer.labels" . | indent 4 }}
 data:
-  collector_endpoint: https://{{ .Values.nodeAnalyzer.apiEndpoint | default .Values.nodeAnalyzer.collectorEndpoint }}
+  collector_endpoint: "https://{{ include "nodeAnalyzer.apiEndpoint" . }}"
   {{- if hasKey .Values.nodeAnalyzer "sslVerifyCertificate" }}
   ssl_verify_certificate: "{{ .Values.nodeAnalyzer.sslVerifyCertificate }}"
   {{- end }}

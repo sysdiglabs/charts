@@ -158,3 +158,24 @@ possible, but accept overrides from the chart values.
 {{- define "nodeAnalyzer.clusterName" -}}
     {{- .Values.clusterName | default .Values.global.clusterConfig.name | default "" -}}
 {{- end -}}
+
+{{/*
+Determine collector endpoint based on provided region or .Values.nodeAnalyzer.apiEndpoint
+*/}}
+{{- define "nodeAnalyzer.apiEndpoint" -}}
+    {{- if .Values.nodeAnalyzer.apiEndpoint -}}
+        {{- .Values.nodeAnalyzer.apiEndpoint -}}
+    {{- else if (eq .Values.global.sysdig.region "us1") -}}
+        {{- "secure.sysdig.com" -}}
+    {{- else if (eq .Values.global.sysdig.region "us2") -}}
+        {{- "us2.app.sysdig.com" -}}
+    {{- else if (eq .Values.global.sysdig.region "us3") -}}
+        {{- "app.us3.sysdig.com" -}}
+    {{- else if (eq .Values.global.sysdig.region "us4") -}}
+        {{- "app.us4.sysdig.com" -}}
+    {{- else if (eq .Values.global.sysdig.region "eu1") -}}
+        {{- "eu1.app.sysdig.com" -}}
+    {{- else if (eq .Values.global.sysdig.region "au1") -}}
+        {{- "app.au1.sysdig.com" -}}
+    {{- end -}}
+{{- end -}}

@@ -6,7 +6,7 @@ metadata:
   labels:
 {{ include "nodeAnalyzer.labels" . | indent 4 }}
 data:
-  api_endpoint: https://{{ required "A valid .Values.nodeAnalyzer.apiEndpoint is required" .Values.nodeAnalyzer.apiEndpoint }}
+  api_endpoint: https://{{ required "A valid apiEndpoint is required" (include "nodeAnalyzer.apiEndpoint" .) }}
   cluster_name: {{ required "A valid .Values.clusterName is required" (include "nodeAnalyzer.clustername" . ) }}
   {{- if hasKey .Values.nodeAnalyzer "sslVerifyCertificate" }}
   ssl_verify_certificate: "{{ .Values.nodeAnalyzer.sslVerifyCertificate }}"

@@ -8,7 +8,7 @@ metadata:
   labels:
 {{ include "nodeAnalyzer.labels" . | indent 4 }}
 data:
-  collector_endpoint: "https://{{ .Values.nodeAnalyzer.apiEndpoint | default .Values.nodeAnalyzer.collectorEndpoint }}/internal/scanning/scanning-analysis-collector"
+  collector_endpoint: "https://{{ include "nodeAnalyzer.apiEndpoint" . }}/internal/scanning/scanning-analysis-collector"
   {{- if .Values.nodeAnalyzer.collectorTimeout }}
   collector_timeout: {{ .Values.nodeAnalyzer.collectorTimeout }}
   {{- end }}

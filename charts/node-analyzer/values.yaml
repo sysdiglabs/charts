@@ -1,7 +1,8 @@
 # Default values for Sysdig Node Analyzer
 global:
   clusterConfig: {}
-  sysdig: {}
+  sysdig:
+    region: "us1"
   proxy: {}
 
 image:
