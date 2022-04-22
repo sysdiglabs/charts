@@ -9,7 +9,7 @@ data:
   {{- if .Values.scanner.enabled }}
   SCANNER_URL: http://{{ include "admission-controller.scanner.fullname" . }}:{{ .Values.scanner.service.port }}
   {{- else }}
-  SCANNER_URL: "{{ .Values.sysdig.url }}"
+  SCANNER_URL: ""
   {{- end }}
   CLUSTER_NAME: {{ required "value 'clusterName' is required, but is not set"  .Values.clusterName }}
   VERIFY_SSL: "{{ .Values.verifySSL }}"
