@@ -191,7 +191,7 @@ webhook:
     port: 5000
 
 scanner:
-  # Deploy the Inline Scanner Service
+  # Deploy the Scanner Service
   enabled: true
   # Service name for Scanner deployment
   name: scanner
