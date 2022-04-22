@@ -80,7 +80,9 @@ Further configuration information can be found below.
 | `global.proxy.noProxy`           | Sets `no_proxy` on the Agent container                            | `""`           |
 | `agent`                          | Config specific to the [Sysdig Agent](#agent)                     | `{}`           |
 | `agent.enabled`                  | Enable the agent component in this chart                          | `true`         |
-
+| `nodeAnalyzer`                   | Config specific to the [Sysdig nodeAnalyzer](#nodeAnalyzer)       | `{}`           |
+| `nodeAnalyzer.enabled`           | Enable the nodeAnalyzer component in this chart                   | `true`         |
+| `nodeAnalyzer.nodeAnalyzer.apiEndpoint`           | nodeAnalyzer apiEndpoint                         | `""`           |
 ## Agent
 
 For possible configuration values of the Agent, please refer to the Agent subchart [README](https://github.com/sysdiglabs/charts/tree/master/charts/agent/README.md). All agent-specific configuration can be prefixed with `agent.` to apply them to this chart.
@@ -112,4 +114,32 @@ global:
 agent:
   proxy:
     httpProxy: OVERRIDE_PROXY_URL
+```
+
+## NodeAnalyzer
+
+For possible configuration values of the node-analyzer, please refer to the node-analyzer subchart [README](https://github.com/sysdiglabs/charts/blob/master/charts/node-analyzer/README.md). All agent-specific configuration can be prefixed with `nodeAnalyzer.` to apply them to this chart.
+
+Example: override apiEndpoint variable for nodeAnalyzer chart
+
+As a command line parameter:
+```bash
+helm install sysdig sysdig/sysdig-deploy \
+    --set global.sysdig.accessKey=ACCESS_KEY \
+    --set agent.sysdig.settings.collector=COLLECTOR_ENDPOINT \
+    --set nodeAnalyzer.nodeAnalyzer.apiEndpoint=API_ENDPOINT
+```
+
+As a values file:
+```yaml
+global:
+  sysdig:
+    accessKey: ACCESS_KEY
+
+agent:
+  enabled: false
+
+nodeAnalyzer:
+  nodeAnalyzer:
+    apiEndpoint: API_ENDPOINT
 ```
