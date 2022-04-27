@@ -4,6 +4,14 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## 1.12.73
+### Bugfixes
+* RuntimeScanner: fixed usage of TLS settings when downloading vulnerabilities database
+* RuntimeScanner: minor fixes
+
+### Minor changes
+* Release of runtime scanner 1.0.1
+
 ## 1.12.72
 ### Bugfixes
 * Bugfixes on the runtime scanner
