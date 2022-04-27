@@ -3,7 +3,6 @@ kind: ConfigMap
 metadata:
   name: {{ template "sysdig-stackdriver-bridge.fullname" . }}
   labels:
-    app.kubernetes.io/name: {{ include "sysdig-stackdriver-bridge.name" . }}
 {{ include "sysdig-stackdriver-bridge.labels" . | indent 4 }}
 data:
   swb-config.yaml: |
