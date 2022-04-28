@@ -1,4 +1,4 @@
-{{- if or (and .Values.nodeAnalyzer.deploy (not .Values.gke.autopilot) .Values.nodeAnalyzer.runtimeScanner.deploy) .Values.secure.vulnerabilityManagement.newEngineOnly }}
+{{- if and .Values.nodeAnalyzer.deploy (not .Values.gke.autopilot) (or .Values.nodeAnalyzer.runtimeScanner.deploy .Values.secure.vulnerabilityManagement.newEngineOnly) }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -21,7 +21,7 @@ data:
   {{- if .Values.nodeAnalyzer.noProxy }}
   no_proxy: {{ .Values.nodeAnalyzer.noProxy }}
   {{- end -}}
-  {{- if .Values.nodeAnalyzer.eveEnabled }}
+  {{- if .Values.nodeAnalyzer.runtimeScanner.settings.eveEnabled }}
   eve_enabled: "true"
   {{- end -}}
   {{- if hasKey .Values.nodeAnalyzer.runtimeScanner "eveConnector" }}
