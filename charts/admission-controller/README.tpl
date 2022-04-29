@@ -261,6 +261,7 @@ Either way, you should see some logs in Admission Controller tail
 
 ### Q: I need to troubleshoot, any way to switch to `debug verbose`?
 S: Add the `LOG_LEVEL=debug` key-value to the admission configmap and respawn webhook
+
     $ kubectl edit configmaps -n admission-controller admission-controller-webhook
     $ kubectl delete pod -n <ADMISSION_NAMESPACE> -l app.kubernetes.io/component=webhook
 
