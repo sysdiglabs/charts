@@ -49,7 +49,7 @@ This chart deploys the Sysdig Admission Controller on a [Kubernetes](http://kube
 
 
 ###  Installing the Chart
-f values.yaml
+
 To install the chart with the release name `admission-controller`:
 
 ```console
@@ -172,7 +172,7 @@ $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller
 ```
 
 ## Examples
-- [Default `values.yaml`](https://raw.githubusercontent.com/sysdiglabs/charts/master/charts/admission-controller/values.yaml)
+- [Default `values.yaml`](https://github.com/sysdiglabs/charts/blob/master/charts/admission-controller/values.yaml)
 - Find some [examples of these values](https://github.com/sysdiglabs/charts/tree/master/charts/admission-controller/ci)
 
 ### Custom Admission Controller Rules to be detected
