@@ -3,7 +3,7 @@
 
 DO NOT MODIFY THIS FILE MANUALLY!!
 
-IT'S AUTO-GENERATED vía README.TPL with pre-comit plugin
+IT'S AUTO-GENERATED vía README.tpl with pre-comit plugin
 this is under construction so it must be launched manually
 
 in the project root, run: 
@@ -21,8 +21,8 @@ $ pre-commit run -a
 ```
 $ helm repo add sysdig https://charts.sysdig.com
 $ helm repo update
-$ helm install sysdig-admission-controller sysdig/admission-controller \
-      --create-namespace -n sysdig-admission-controller --version=0.5.23  \
+$ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
+      --create-namespace -n sysdig-admission-controller --version=0.6.0  \
       --set clusterName=CLUSTER_NAME \
       --set sysdig.secureAPIToken=SECURE_API_TOKEN
 ```
@@ -53,7 +53,7 @@ This chart deploys the Sysdig Admission Controller on a [Kubernetes](http://kube
 To install the chart with the release name `admission-controller`:
 
 ```console
-$ helm install sysdig-admission-controller sysdig/admission-controller -n sysdig-admission-controller --version=0.5.23
+$ helm upgrade --install sysdig-admission-controller sysdig/admission-controller -n sysdig-admission-controller --version=0.6.0
 ```
 
 The command deploys the Sysdig Admission Controller on the Kubernetes cluster in the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.
@@ -126,7 +126,7 @@ The following table lists the configurable parameters of the `admission-controll
 | webhook.ssl.key                                    | For inbound connections to serve HttpRequests as Kubernetes Webhook. <br/>A PEM-encoded private key signed by the CA. <br/>If empty, a new key will be generated. <br/>If provided, it must be valid with the `webhook.ssl.ca`. <br/>If this is set, the cert must also be provided.                                                                                                                                                                                | <code>""</code>                                                                                                                                                                                    |
 | webhook.customEntryPoint                           | Custom entrypoint for the webhook <br/>Remember to provide the webhook valid arguments with `--tls_cert_file` and `--tls_private_key_file`. <br/>default: /bin/webhook --tls_cert_file /cert/tls.crt --tls_private_key_file /cert/tls.key                                                                                                                                                                                                                           | <code>[]</code>                                                                                                                                                                                    |
 | webhook.http.port                                  | HTTP serve port where the requests will be served from                                                                                                                                                                                                                                                                                                                                                                                                              | <code>5000</code>                                                                                                                                                                                  |
-| scanner.enabled                                    | Deploy the Scanner Service                                                                                                                                                                                                                                                                                                                                                                                                                                   | <code>true</code>                                                                                                                                                                                  |
+| scanner.enabled                                    | Deploy the Scanner Service                                                                                                                                                                                                                                                                                                                                                                                                                                          | <code>true</code>                                                                                                                                                                                  |
 | scanner.name                                       | Service name for Scanner deployment                                                                                                                                                                                                                                                                                                                                                                                                                                 | <code>scanner</code>                                                                                                                                                                               |
 | scanner.replicaCount                               | Amount of replicas for scanner                                                                                                                                                                                                                                                                                                                                                                                                                                      | <code>1</code>                                                                                                                                                                                     |
 | scanner.image.registry                             | Scanner image registry                                                                                                                                                                                                                                                                                                                                                                                                                                              | <code>quay.io</code>                                                                                                                                                                               |
@@ -154,11 +154,11 @@ The following table lists the configurable parameters of the `admission-controll
 | scanner.customEntryPoint                           | Custom entrypoint for the scanner. <br/>Remember to provide the scanner valid arguments with `--server_port` and optionally `--auth_secure_token` <br/>default: /inline-scan-service --server_port=8080                                                                                                                                                                                                                                                             | <code>[]</code>                                                                                                                                                                                    |
 
 
-Specify each parameter using the **`--set key=value[,key=value]`** argument to `helm install`. For example:
+Specify each parameter using the **`--set key=value[,key=value]`** argument to `helm upgrade --install`. For example:
 
 ```console
-$ helm install sysdig-admission-controller sysdig/admission-controller \
-    --create-namespace -n admission-controller  --version=0.5.23 \
+$ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
+    --create-namespace -n admission-controller  --version=0.6.0 \
     --set sysdig.secureAPIToken=YOUR-KEY-HERE,clusterName=YOUR-CLUSTER-NAME
 ```
 
@@ -166,8 +166,8 @@ $ helm install sysdig-admission-controller sysdig/admission-controller \
 installing the chart. For example:
 
 ```console
-$ helm install sysdig-admission-controller sysdig/admission-controller \
-    --create-namespace -n sysdig-admission-controller --version=0.5.23 \
+$ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
+    --create-namespace -n sysdig-admission-controller --version=0.6.0 \
     --values values.yaml
 ```
 
@@ -239,7 +239,7 @@ If your Proxy is served with TLS
 ### Basic
 
 ```
-$ helm install  sysdig-admission-controller sysdig/admission-controller \
+$ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
       --create-namespace -n admission-controller \
       --set clusterName=CLUSTER_NAME \
       --set sysdig.secureAPIToken=SECURE_API_TOKEN
@@ -252,7 +252,7 @@ $ helm install  sysdig-admission-controller sysdig/admission-controller \
 Use the following command to deploy in an on-prem:
 
 ```
-$ helm install  sysdig-admission-controller sysdig/admission-controller \
+$ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
       --create-namespace -n admission-controller \
       --set clusterName=CLUSTER_NAME \
       --set sysdig.url=SECURE_URL \
@@ -270,7 +270,7 @@ The following command will deploy the admission controller with a custom CA:
 Note: Since the certificates are not provided, they will be autogenerated with the provided CA.
 
 ```
-$ helm install  sysdig-admission-controller sysdig/admission-controller \
+$ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
       --create-namespace -n admission-controller \
       --set clusterName=CLUSTER_NAME \
       --set sysdig.url=SECURE_URL \
@@ -285,7 +285,7 @@ $ helm install  sysdig-admission-controller sysdig/admission-controller \
 The following command will deploy the admission controller with a custom CA and valid certificates signed with this CA:
 
 ```
-$ helm install  sysdig-admission-controller sysdig/admission-controller \
+$ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
       --create-namespace -n admission-controller \
       --set clusterName=CLUSTER_NAME \
       --set sysdig.url=SECURE_URL \
@@ -332,15 +332,20 @@ Either way, you should see some logs in Admission Controller tail
 
 ## Troubleshooting
 
+### Q: I need to troubleshoot, any way to switch to `debug verbose`?
+S: Add the `LOG_LEVEL=debug` key-value to the admission configmap and respawn webhook
+    $ kubectl edit configmaps -n admission-controller admission-controller-webhook
+    $ kubectl delete pod -n <ADMISSION_NAMESPACE> -l app.kubernetes.io/component=webhook
+
 ### Q: I don't see `Policy Rules` honored
 S: Review the [Admission Controller - Understanding:How Policy Conditions are applied](https://docs.sysdig.com/en/docs/sysdig-secure/scanning/admission-controller//#understanding-how-policy-conditions-are-applied)
 
 ### Q: I don't see `Policy Assignments` order honored
-A: It may be that you're using same namespace and image prefix on more than one assignment
+A: It may be that you're using same namespace and image prefix on more than one assignment<br/>
 S: Review the [Admission Controller - Understanding:Evaluation Order](https://docs.sysdig.com/en/docs/sysdig-secure/scanning/admission-controller//#understanding-evaluation-order)
 
 ### Q: I don't see changes on `Policy Assignments` being applied on my cluster
-A: Admission Controller pull changes from the server every 5 minutes
+A: Admission Controller pull changes from the Sysdig Secure platform every 5 minutes<br/>
 S: You can wait those five minutes, or force the admission controller webhook respawn
 
     $ kubectl delete pod -n <ADMISSION_NAMESPACE> -l app.kubernetes.io/component=webhook
