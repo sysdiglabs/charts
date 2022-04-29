@@ -337,7 +337,7 @@ Either way, you should see some logs in Admission Controller tail
 S: Add the `LOG_LEVEL=debug` key-value to the admission configmap and respawn webhook
 
     $ kubectl edit configmaps -n admission-controller admission-controller-webhook
-    $ kubectl delete pod -n <ADMISSION_NAMESPACE> -l app.kubernetes.io/component=webhook
+    $ kubectl delete pod -n admission-controller -l app.kubernetes.io/component=webhook
 
 ### Q: I don't see `Policy Rules` honored
 S: Review the [Admission Controller - Understanding:How Policy Conditions are applied](https://docs.sysdig.com/en/docs/sysdig-secure/scanning/admission-controller//#understanding-how-policy-conditions-are-applied)
@@ -350,7 +350,7 @@ S: Review the [Admission Controller - Understanding:Evaluation Order](https://do
 A: Admission Controller pull changes from the Sysdig Secure platform every 5 minutes<br/>
 S: You can wait those five minutes, or force the admission controller webhook respawn
 
-    $ kubectl delete pod -n <ADMISSION_NAMESPACE> -l app.kubernetes.io/component=webhook
+    $ kubectl delete pod -n admission-controller -l app.kubernetes.io/component=webhook
 
 <!--
 Q: Helm v2 usage
