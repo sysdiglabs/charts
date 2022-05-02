@@ -148,7 +148,7 @@ ebpf:
 
 slim:
   # Uses a slim version of the Sysdig Agent
-  enabled: false
+  enabled: true
   # The image repo to be used for slim Agents
   image:
     repository: sysdig/agent-slim
