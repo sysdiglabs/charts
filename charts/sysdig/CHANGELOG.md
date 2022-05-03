@@ -4,6 +4,24 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.13.1
+### Minor change
+
+* Security updates (April 2022) for NodeImageAnalyzer and HostAnalyzer component
+
+## v1.13.0
+### Major change
+
+* The slim agent is enabled by default
+
+## 1.12.73
+### Bugfixes
+* RuntimeScanner: fixed usage of TLS settings when downloading vulnerabilities database
+* RuntimeScanner: minor fixes
+
+### Minor changes
+* Release of runtime scanner 1.0.1
+
 ## 1.12.72
 ### Bugfixes
 * Bugfixes on the runtime scanner

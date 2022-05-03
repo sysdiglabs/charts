@@ -179,3 +179,9 @@ Determine collector endpoint based on provided region or .Values.nodeAnalyzer.ap
         {{- "app.au1.sysdig.com" -}}
     {{- end -}}
 {{- end -}}
+
+{{- define "deploy-na" -}}
+{{- if .Values.nodeAnalyzer.deploy -}}
+true 
+{{- end -}}
+{{- end -}}

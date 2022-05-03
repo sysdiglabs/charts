@@ -8,7 +8,7 @@ image:
 
   registry: quay.io
   repository: sysdig/agent
-  tag: 12.4.0
+  tag: 12.5.0
   # Specify a imagePullPolicy
   # Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
   # ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -148,7 +148,7 @@ ebpf:
 
 slim:
   # Uses a slim version of the Sysdig Agent
-  enabled: false
+  enabled: true
   # The image repo to be used for slim Agents
   image:
     repository: sysdig/agent-slim
@@ -387,7 +387,7 @@ nodeAnalyzer:
   imageAnalyzer:
     image:
       repository: sysdig/node-image-analyzer
-      tag: 0.1.16
+      tag: 0.1.17
       digest:
       pullPolicy: IfNotPresent
 
@@ -427,7 +427,7 @@ nodeAnalyzer:
   hostAnalyzer:
     image:
       repository: sysdig/host-analyzer
-      tag: 0.1.6
+      tag: 0.1.7
       digest:
       pullPolicy: IfNotPresent
 
@@ -470,7 +470,7 @@ nodeAnalyzer:
     deploy: false
     image:
       repository: sysdig/vuln-runtime-scanner
-      tag: 1.0.0
+      tag: 1.0.1
       digest:
       pullPolicy: IfNotPresent
 
