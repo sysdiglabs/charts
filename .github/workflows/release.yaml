@@ -38,14 +38,3 @@ jobs:
           git add -A "charts/**/values.yaml"
           git pull && git commit -m "Updating README.md and values files" && git push
           popd
-
-  dispatch:
-    runs-on: ubuntu-latest
-    steps:
-      - name: update sysdig-operator
-        uses: peter-evans/repository-dispatch@v2
-        with:
-          token: ${{ secrets.SYSDIG_OPERATOR_ACCESS_TOKEN }}
-          repository: lilx1ao/sysdig-operator
-          event-type: sysdig-release
-          client-payload: '{"tag": "sysdig-1.12.70"}'
