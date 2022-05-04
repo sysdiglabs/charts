@@ -171,6 +171,7 @@ slim:
       cpu: 1000m
       memory: 348Mi
     limits:
+      cpu: 1000m
       memory: 512Mi
 
 # For Sysdig On-Prem installations or for custom collector settings, set the following fields
