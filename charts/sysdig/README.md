@@ -477,7 +477,7 @@ In case you deployed the chart with a values.yaml file, you just need to modify 
 field and execute:
 
 ```bash
-$ helm install --namespace sysdig-agent sysdig-agent -f values.yaml sysdig/sysdig
+$ helm upgrade --namespace sysdig-agent sysdig-agent -f values.yaml sysdig/sysdig
 ```
 
 If you deployed the chart setting the values as CLI parameters, like for example:
@@ -494,7 +494,13 @@ $ helm install \
 You will need to execute:
 
 ```bash
-$ helm upgrade --namespace sysdig-agent --set image.tag=<last_version> --reuse-values sysdig-agent sysdig/sysdig
+$ helm upgrade \
+    --namespace sysdig-agent \
+    sysdig-agent \
+    --set sysdig.accessKey=xxxx \
+    --set ebpf.enabled=true \
+    --set image.tag=<last_version> \
+    sysdig/sysdig
 ```
 
 ## Adding custom AppChecks
