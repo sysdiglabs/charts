@@ -6,7 +6,7 @@ DO NOT MODIFY THIS FILE MANUALLY!!
 IT'S AUTO-GENERATED vía README.tpl with pre-comit plugin
 this is under construction so it must be launched manually
 
-in the project root, run: 
+in the project root, run:
 $ pre-commit install
 $ pre-commit run -a
 
@@ -22,7 +22,7 @@ $ pre-commit run -a
 $ helm repo add {{ .Repository.Name }} {{ .Repository.URL }}
 $ helm repo update
 $ helm upgrade --install sysdig-{{ .Release.Name }} {{ .Repository.Name }}/{{ .Chart.Name }} \
-      --create-namespace -n sysdig-{{ .Release.Namespace }}{{ with .Chart.Version }} --version={{.}} {{ end }} \
+      --create-namespace -n {{ .Release.Namespace }}{{ with .Chart.Version }} --version={{.}} {{ end }} \
       --set clusterName=CLUSTER_NAME \
       --set sysdig.secureAPIToken=SECURE_API_TOKEN
 ```
@@ -51,7 +51,7 @@ This chart deploys {{ .Project.App }} on a [Kubernetes](http://kubernetes.io) cl
 To install the chart with the release name `{{ .Release.Name }}`:
 
 ```console
-$ helm upgrade --install sysdig-{{ .Release.Name }} {{ .Repository.Name }}/{{ .Chart.Name }} -n sysdig-{{ .Release.Namespace }}{{ with .Chart.Version }} --version={{.}}{{ end }}
+$ helm upgrade --install sysdig-{{ .Release.Name }} {{ .Repository.Name }}/{{ .Chart.Name }} -n {{ .Release.Namespace }}{{ with .Chart.Version }} --version={{.}}{{ end }}
 ```
 
 The command deploys {{ .Project.App }} on the Kubernetes cluster in the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.
@@ -65,7 +65,7 @@ The command deploys {{ .Project.App }} on the Kubernetes cluster in the default 
 To uninstall/delete the `{{ .Release.Name }}`:
 
 ```console
-$ helm delete {{ .Release.Name }} -n {{ .Release.Namespace }}
+$ helm delete sysdig-{{ .Release.Name }} -n {{ .Release.Namespace }}
 ```
 
 The command removes all the Kubernetes components associated with the chart and deletes the release.
@@ -82,7 +82,7 @@ Specify each parameter using the **`--set key=value[,key=value]`** argument to `
 
 ```console
 $ helm upgrade --install sysdig-{{ .Release.Name }} {{ .Repository.Name }}/{{ .Chart.Name }} \
-    --create-namespace -n {{ .Release.Namespace }} {{ with .Chart.Version }} --version={{.}}{{ end }} \
+    --create-namespace -n {{ .Release.Namespace }}{{ with .Chart.Version }} --version={{.}}{{ end }} \
     --set {{ .Chart.ValuesExample }}
 ```
 
@@ -91,7 +91,7 @@ installing the chart. For example:
 
 ```console
 $ helm upgrade --install sysdig-{{ .Release.Name }} {{ .Repository.Name }}/{{ .Chart.Name }} \
-    --create-namespace -n sysdig-{{ .Release.Namespace }}{{ with .Chart.Version }} --version={{.}}{{ end }} \
+    --create-namespace -n {{ .Release.Namespace }}{{ with .Chart.Version }} --version={{.}}{{ end }} \
     --values values.yaml
 ```
 
@@ -233,7 +233,7 @@ This section can only be accessed by a user with Administrator permissions
 3. Add some an assignment to Allow or Deny images within a namespace
 4. Tail to the logs from the Admission Controller
     ```
-    $ kubectl logs -f -n  <ADMISSION_NAMESPACE> -l app.kubernetes.io/component=webhook
+    $ kubectl logs -f -n {{ .Release.Namespace }} -l app.kubernetes.io/component=webhook
     ```
 5. Push some deployment into your Kubernetes Cluster to watch the result, for example an nginx image
     ```
@@ -262,8 +262,8 @@ Either way, you should see some logs in Admission Controller tail
 ### Q: I need to troubleshoot, any way to switch to `debug verbose`?
 S: Add the `LOG_LEVEL=debug` key-value to the admission configmap and respawn webhook
 
-    $ kubectl edit configmaps -n admission-controller admission-controller-webhook
-    $ kubectl delete pod -n admission-controller -l app.kubernetes.io/component=webhook
+    $ kubectl edit configmaps -n {{ .Release.Namespace }} admission-controller-webhook
+    $ kubectl delete pod -n {{ .Release.Namespace }} -l app.kubernetes.io/component=webhook
 
 ### Q: I don't see `Policy Rules` honored
 S: Review the [Admission Controller - Understanding:How Policy Conditions are applied]({{ .Project.URL }}/#understanding-how-policy-conditions-are-applied)
@@ -276,7 +276,7 @@ S: Review the [Admission Controller - Understanding:Evaluation Order]({{ .Projec
 A: Admission Controller pull changes from the Sysdig Secure platform every 5 minutes<br/>
 S: You can wait those five minutes, or force the admission controller webhook respawn
 
-    $ kubectl delete pod -n admission-controller -l app.kubernetes.io/component=webhook
+    $ kubectl delete pod -n {{ .Release.Namespace }} -l app.kubernetes.io/component=webhook
 
 <!--
 Q: Helm v2 usage
