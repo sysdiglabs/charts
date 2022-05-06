@@ -120,7 +120,6 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `auditLog.auditServerUrl`                      | The URL where Sysdig Agent listens for K8s audit log events                                                                                | `0.0.0.0`                                                   |
 | `auditLog.auditServerPort`                     | Port where Sysdig Agent listens for K8s audit log events                                                                                   | `7765`                                                      |
 | `auditLog.dynamicBackend.enabled`              | Deploy the Audit Sink where Sysdig listens for K8s audit log events                                                                        | `false`                                                     |
-| `customAppChecks`                              | The custom app checks deployed with your agent                                                                                             | `{}`                                                        |
 | `tolerations`                                  | The tolerations for scheduling                                                                                                             | `node-role.kubernetes.io/master:NoSchedule`                 |
 | `leaderelection.enable`                        | Use the agent leader election algorithm                                                                                                    | `false`                                                     |
 | `prometheus.file`                              | Use file to configure promscrape                                                                                                           | `false`                                                     |
@@ -353,80 +352,6 @@ $ helm upgrade \
     --set ebpf.enabled=true \
     --set image.tag=<last_version> \
     sysdig/agent
-```
-
-## Adding custom AppChecks
-
-[Application checks](https://sysdigdocs.atlassian.net/wiki/spaces/Monitor/pages/204767363/) are integrations that allow
-the Sysdig agent to collect metrics exposed by specific services. Sysdig has several built-in AppChecks, but sometimes
-you might need to [create your own](https://sysdigdocs.atlassian.net/wiki/spaces/Monitor/pages/204767436/).
-
-Your own AppChecks can deployed with the Helm chart embedding them in the values YAML file:
-
-```yaml
-customAppChecks:
-  sample.py: |-
-    from checks import AgentCheck
-
-    class MyCustomCheck(AgentCheck):
-        def check(self, instance):
-            self.gauge("testhelm", 1)
-
-sysdig:
-  accessKey: YOUR-KEY-HERE
-  settings:
-    app_checks:
-      - name: sample
-        interval: 10
-        pattern: # pattern to match the application
-          comm: myprocess
-        conf:
-          mykey: myvalue
-```
-
-The first section dumps the AppCheck in a Kubernetes configmap and makes it available within the Sysdig agent container.
-The second one configures it on the `dragent.yaml` file.
-
-Once the values YAML file is ready, we will deploy the Chart like before:
-
-```bash
-$ helm install --namespace sysdig-agent sysdig-agent -f values.yaml sysdig/agent
-```
-
-### Automating the generation of custom-app-checks.yaml file
-
-Sometimes editing and maintaining YAML files can be a bit cumbersome and error-prone, so we have created a script for
-automating this process and make your life easier.
-
-Imagine that you have custom AppChecks for a number of services like Redis, MongoDB and Traefik.
-
-You have already a `values.yaml` with just your configuration:
-
-```yaml
-sysdig:
-  accessKey: YOUR-KEY-HERE
-  settings:
-    app_checks:
-      - name: myredis
-        [ ... ]
-      - name: mymongo
-        [ ... ]
-      - name: mytraefik
-        [ ... ]
-```
-
-You can generate an additional values YAML file with the custom AppChecks:
-
-```bash
-$ git clone https://github.com/sysdiglabs/charts.git
-$ cd charts/sysdig
-$ ./scripts/appchecks2helm appChecks/solr.py appChecks/traefik.py appChecks/nats.py > custom-app-checks.yaml
-```
-
-And deploy the Chart with both of them:
-
-```bash
-$ helm install --namespace sysdig-agent sysdig-agent -f custom-app-checks.yaml -f values.yaml sysdig/agent
 ```
 
 ### Adding prometheus.yaml to configure promscrape

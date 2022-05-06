@@ -213,10 +213,6 @@ spec:
               name: sys-tracing
               readOnly: true
             {{- end }}
-            {{- if .Values.customAppChecks }}
-            - mountPath: /opt/draios/lib/python/checks.custom.d
-              name: custom-app-checks-volume
-            {{- end }}
             - mountPath: /host/etc/os-release
               name: osrel
               readOnly: true
@@ -280,11 +276,6 @@ spec:
             {{- else }}
             secretName: {{ include "agent.accessKeySecret" . }}
             {{- end -}}
-        {{- if .Values.customAppChecks }}
-        - name: custom-app-checks-volume
-          configMap:
-            name: {{ template "agent.fullname" . }}-custom-app-checks
-        {{- end }}
         {{- if .Values.extraVolumes.volumes }}
 {{ toYaml .Values.extraVolumes.volumes | indent 8 }}
         {{- end }}

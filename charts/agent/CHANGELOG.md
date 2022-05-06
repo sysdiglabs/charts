@@ -4,6 +4,13 @@
 
 This file documents all notable changes to the Sysdig Agent Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.4.3
+
+### Minor Changes
+
+* Strip the custom appcheck stuff out of the agent chart
+
+
 ## v1.1.0
 
 ### Minor Changes

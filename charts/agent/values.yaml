@@ -218,17 +218,6 @@ auditLog:
     # true here configures an AuditSink who will receive the K8s audit logs
     enabled: false
 
-customAppChecks: {}
-  # Allow passing custom app checks for Sysdig Agent.
-  # Example:
-  #
-  # sample.py: |-
-  #   from checks import AgentCheck
-  #
-  #   class MyCustomCheck(AgentCheck):
-  #       def check(self, instance):
-  #           self.gauge("testhelm", 1)
-
 # Promscrape prometheus.yaml not configured by default
 prometheus:
   file: false
