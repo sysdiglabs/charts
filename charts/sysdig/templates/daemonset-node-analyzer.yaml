@@ -92,7 +92,7 @@ spec:
           runAsUser: 0
           privileged: true
           capabilities:
-            add: 
+            add:
               - NET_ADMIN
               - SYS_ADMIN
         env:

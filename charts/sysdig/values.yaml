@@ -510,7 +510,7 @@ nodeAnalyzer:
 
       settings:
         replicas: 1
-    
+
   cspmAnalyzer:
     deploy: false
     debug: false
