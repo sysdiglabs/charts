@@ -155,6 +155,13 @@ Return the proper image name for the Benchmark Runner
 {{- end -}}
 
 {{/*
+Return the proper image name for the CSPM Analyzer
+*/}}
+{{- define "sysdig.image.cspmAnalyzer" -}}
+    {{- include "sysdig.imageRegistry" . -}} / {{- .Values.nodeAnalyzer.cspmAnalyzer.image.repository -}} {{- if .Values.nodeAnalyzer.cspmAnalyzer.image.digest -}} @ {{- .Values.nodeAnalyzer.cspmAnalyzer.image.digest -}} {{- else -}} : {{- .Values.nodeAnalyzer.cspmAnalyzer.image.tag -}} {{- end -}}
+{{- end -}}
+
+{{/*
 Common labels
 */}}
 {{- define "sysdig.labels" -}}
@@ -250,5 +257,16 @@ to help the maxUnavailable and max_parallel_cold_starts pick a reasonable value 
     {{- 10 -}}
 {{- else -}}
     {{- 1 -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Sysdig NATS service URL
+*/}}
+{{- define "sysdig.nodeAnalyzer.natsUrl" -}}
+{{- if .Values.nodeAnalyzer.natsUrl -}}
+    {{- .Values.nodeAnalyzer.natsUrl -}}
+{{- else -}}
+    https://{{ .Values.nodeAnalyzer.apiEndpoint }}/cspm-agent
 {{- end -}}
 {{- end -}}

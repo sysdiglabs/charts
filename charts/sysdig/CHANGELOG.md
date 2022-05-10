@@ -4,6 +4,11 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.14.0
+### Major change
+
+* Add CSPM Analyzer to Daemonset and CSPM Collector Deployment
+
 ## v1.13.1
 ### Minor change
 
