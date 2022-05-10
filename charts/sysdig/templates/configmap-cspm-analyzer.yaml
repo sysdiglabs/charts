@@ -11,7 +11,7 @@ data:
   {{- $env = "DEVELOPMENT" -}}
 {{ end}}
   environment: {{ $env }}
-  external_nats_url: {{ include "sysdig.nodeAnalyzer.natsUrl" . }}
+  external_nats_url: {{ include "sysdig.natsUrl" . }}
   cluster_name: {{ required "A valid .Values.clusterName is required" .Values.clusterName }}
   agent_app_name: {{ include "sysdig.name" . }}-node-analyzer
 {{- end -}}

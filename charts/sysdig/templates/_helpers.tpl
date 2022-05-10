@@ -161,6 +161,12 @@ Return the proper image name for the CSPM Analyzer
     {{- include "sysdig.imageRegistry" . -}} / {{- .Values.nodeAnalyzer.cspmAnalyzer.image.repository -}} {{- if .Values.nodeAnalyzer.cspmAnalyzer.image.digest -}} @ {{- .Values.nodeAnalyzer.cspmAnalyzer.image.digest -}} {{- else -}} : {{- .Values.nodeAnalyzer.cspmAnalyzer.image.tag -}} {{- end -}}
 {{- end -}}
 
+Return the proper image name for the CSPM Collector
+*/}}
+{{- define "sysdig.image.cspmCollector" -}}
+    {{- include "sysdig.imageRegistry" . -}} / {{- .Values.cspmCollector.image.repository -}} {{- if .Values.cspmCollector.image.digest -}} @ {{- .Values.cspmCollector.image.digest -}} {{- else -}} : {{- .Values.cspmCollector.image.tag -}} {{- end -}}
+{{- end -}}
+
 {{/*
 Common labels
 */}}
@@ -263,9 +269,9 @@ to help the maxUnavailable and max_parallel_cold_starts pick a reasonable value 
 {{/*
 Sysdig NATS service URL
 */}}
-{{- define "sysdig.nodeAnalyzer.natsUrl" -}}
-{{- if .Values.nodeAnalyzer.natsUrl -}}
-    {{- .Values.nodeAnalyzer.natsUrl -}}
+{{- define "sysdig.natsUrl" -}}
+{{- if .Values.natsUrl -}}
+    {{- .Values.natsUrl -}}
 {{- else -}}
     https://{{ .Values.nodeAnalyzer.apiEndpoint }}/cspm-agent
 {{- end -}}

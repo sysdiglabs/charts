@@ -315,6 +315,9 @@ nodeImageAnalyzer:
                 values:
                   - linux
 
+# Override value for the NATS service endpoint
+natsUrl: ""
+
 nodeAnalyzer:
   # Create node analyzer specific serviceAccount resource
   serviceAccount:
@@ -331,8 +334,6 @@ nodeAnalyzer:
   # * On-Prem: sysdig.my.company.com
   apiEndpoint: ""
 
-  # Override value for the NATS service endpoint
-  natsUrl: ""
 
   # Can be set to false to allow insecure connections to the Sysdig backend,
   # such as for on-premise installs that use self-signed certificates.
@@ -510,22 +511,47 @@ nodeAnalyzer:
       settings:
         replicas: 1
     
-    cspmAnalyzer:
-      deploy: false
-      debug: false
-      image:
-        repository: sysdig/cspm-analyzer
-        tag: 1.0.0
-        digest:
-        pullPolicy: IfNotPresent
+  cspmAnalyzer:
+    deploy: false
+    debug: false
+    image:
+      repository: sysdig/cspm-analyzer
+      tag: 1.0.0
+      digest:
+      pullPolicy: IfNotPresent
 
-      resources:
-        requests:
-          cpu: 150m
-          memory: 256Mi
-        limits:
-          cpu: 500m
-          memory: 1536Mi
+    resources:
+      requests:
+        cpu: 150m
+        memory: 256Mi
+      limits:
+        cpu: 500m
+        memory: 1536Mi
+
+cspmCollector:
+  deploy: false
+  debug: false
+  image:
+    repository: sysdig/cspm-collector
+    tag: 1.0.0
+    digest:
+    pullPolicy: IfNotPresent
+  settings:
+    replicas: 1
+    namespaces:
+      included: ""
+      excluded: ""
+    workloads:
+      included: ""
+      excluded: ""
+    healthIntervalMin: 5
+  resources:
+    requests:
+      cpu: 150m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 1536Mi
 
 customAppChecks: {}
   # Allow passing custom app checks for Sysdig Agent.

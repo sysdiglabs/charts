@@ -87,7 +87,7 @@ spec:
       containers:
 {{ if .Values.nodeAnalyzer.cspmAnalyzer.deploy }}
       - name: sysdig-cspm-analyzer
-        image: {{ template "nodeAnalyzer.image.cspmAnalyzer" . }}
+        image: {{ template "sysdig.image.cspmAnalyzer" . }}
         securityContext:
           runAsUser: 0
           privileged: true
@@ -99,31 +99,31 @@ spec:
           - name: ACCESS_KEY
             valueFrom:
               secretKeyRef:
-                {{- if not .Values.nodeAnalyzer.existingAccessKeySecret }}
-                name: {{ template "nodeAnalyzer.fullname" . }}
+                {{- if not .Values.sysdig.existingAccessKeySecret }}
+                name: {{ template "sysdig.fullname" . }}
                 {{- else }}
-                name: {{ .Values.nodeAnalyzer.existingAccessKeySecret }}
+                name: {{ .Values.sysdig.existingAccessKeySecret }}
                 {{- end }}
                 key: access-key
           - name: ENVIRONMENT
             valueFrom:
               configMapKeyRef:
-                name: {{ template "nodeAnalyzer.fullname" . }}-cspm-analyzer
+                name: {{ template "sysdig.fullname" . }}-cspm-analyzer
                 key: environment
           - name: EXTERNAL_NATS_URL
             valueFrom:
               configMapKeyRef:
-                name: {{ template "nodeAnalyzer.fullname" . }}-cspm-analyzer
+                name: {{ template "sysdig.fullname" . }}-cspm-analyzer
                 key: external_nats_url
           - name: CLUSTER_NAME
             valueFrom:
               configMapKeyRef:
-                name: {{ template "nodeAnalyzer.fullname" . }}-cspm-analyzer
+                name: {{ template "sysdig.fullname" . }}-cspm-analyzer
                 key: cluster_name
           - name: AGENT_APP_NAME
             valueFrom:
               configMapKeyRef:
-                name: {{ template "nodeAnalyzer.fullname" . }}-cspm-analyzer
+                name: {{ template "sysdig.fullname" . }}-cspm-analyzer
                 key: agent_app_name
           - name: NODE_NAME
             valueFrom:
