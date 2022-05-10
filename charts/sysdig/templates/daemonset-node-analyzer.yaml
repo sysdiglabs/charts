@@ -94,7 +94,7 @@ spec:
           capabilities:
             add: 
               - NET_ADMIN
-              - SYS_ADMIN         
+              - SYS_ADMIN
         env:
           - name: ACCESS_KEY
             valueFrom:

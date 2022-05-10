@@ -273,6 +273,6 @@ Sysdig NATS service URL
 {{- if .Values.natsUrl -}}
     {{- .Values.natsUrl -}}
 {{- else -}}
-    https://{{ .Values.nodeAnalyzer.apiEndpoint }}/cspm-agent
+    wss://{{ .Values.nodeAnalyzer.apiEndpoint }}:443
 {{- end -}}
 {{- end -}}
