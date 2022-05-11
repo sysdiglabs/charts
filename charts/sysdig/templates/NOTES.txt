@@ -6,4 +6,11 @@ Sysdig Agent Health & Status Dashboard:
 
   https://secure.sysdig.com/#/events/l:600/*/*?viewAs=list
 
-No further action should be required.
+
+-------------------
+DEPRECATION WARNING
+-------------------
+
+This chart is being deprecated on 2023-01-01 and will no longer receive any
+updates. Please migrate to https://charts.sysdig.com/charts/sysdig-deploy as
+soon as possible for new features and continued support.
