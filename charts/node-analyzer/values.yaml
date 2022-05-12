@@ -248,7 +248,7 @@ nodeAnalyzer:
         replicas: 1
 
   cspmAnalyzer:
-    deploy: true
+    deploy: false
     debug: false
     image:
       repository: sysdig/cspm-analyzer
