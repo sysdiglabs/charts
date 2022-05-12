@@ -43,6 +43,9 @@ psp:
 # Setting a cluster name allows you to filter events from this cluster using kubernetes.cluster.name
 clusterName: ""
 
+# Override value for the NATS service endpoint
+natsUrl: ""
+
 secure:
   # true here enables Sysdig Secure: container run-time security & forensics
   enabled: true
@@ -243,3 +246,20 @@ nodeAnalyzer:
 
       settings:
         replicas: 1
+
+  cspmAnalyzer:
+    deploy: true
+    debug: false
+    image:
+      repository: sysdig/cspm-analyzer
+      tag: 1.0.0
+      digest:
+      pullPolicy: IfNotPresent
+
+    resources:
+      requests:
+        cpu: 150m
+        memory: 256Mi
+      limits:
+        cpu: 500m
+        memory: 1536Mi
