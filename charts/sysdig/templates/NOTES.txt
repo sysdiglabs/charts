@@ -11,6 +11,6 @@ Sysdig Agent Health & Status Dashboard:
 DEPRECATION WARNING
 -------------------
 
-This chart is being deprecated on 2023-01-01 and will no longer receive any
-updates. Please migrate to https://charts.sysdig.com/charts/sysdig-deploy as
-soon as possible for new features and continued support.
+This chart is being deprecated on 2023-01-01, at which point it will no longer
+receive any updates. Please migrate to https://charts.sysdig.com/charts/sysdig-deploy
+as soon as possible for new features, security updates, and continued support.
