@@ -7,7 +7,7 @@ This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The 
 ## v1.4.0
 ### Major change
 
-* Add CSPM Analyzer to Daemonset and CSPM Collector Deployment
+* Add CSPM Analyzer to Daemonset
 
 ## v1.3.0
 ### Bugfixes
