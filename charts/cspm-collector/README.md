@@ -40,15 +40,15 @@ The following table lists the configurable parameters of the Sysdig CSPM Collect
 | `workloads.included`                          | Workloads to include in the CSPM collector scans, when empty scans all                   | ``                                                                             |
 | `workloads.excluded`                          | Workloads to exclude in the CSPM collector scans, when empty scans all                   | ``                                                                             |
 | `healthIntervalMin`                           | Minutes interval for CSPM collector health status messages                               | `5`                                                                            |
-| `resources.requests.cpu`                               | CSPM collector CPU requests per node                                                     | `150m`                                                                        |
-| `resources.requests.memory`                            | CSPM collector Memory requests per node                                                  | `256Mi`                                                                        |
-| `resources.limits.cpu`                                 | CSPM collector CPU limits per node                                                       | `500m`                                                                         |
-| `resources.limits.memory`                              | CSPM collector Memory limits per node                                                    | `1536Mi`                                                                        |
+| `resources.requests.cpu`                               | CSPM collector CPU requests                                                     | `150m`                                                                        |
+| `resources.requests.memory`                            | CSPM collector Memory requests                                                  | `256Mi`                                                                        |
+| `resources.limits.cpu`                                 | CSPM collector CPU limits                                                       | `500m`                                                                         |
+| `resources.limits.memory`                              | CSPM collector Memory limits                                                    | `1536Mi`                                                                        |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
 ```bash
-$ helm install --namespace nodeanalyzer cspm-collector \
+$ helm install --namespace cspmcollector cspm-collector \
     --set sysdig.accessKey=YOUR-KEY-HERE, \
     sysdig/cspm-collector
 ```
@@ -57,7 +57,7 @@ Alternatively, a YAML file that specifies the values for the parameters can be p
 example,
 
 ```bash
-$ helm install --namespace nodeanalyzer cspm-collector -f values.yaml sysdig/cspm-collector
+$ helm install --namespace cspmcollector cspm-collector -f values.yaml sysdig/cspm-collector
 ```
 
 Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
