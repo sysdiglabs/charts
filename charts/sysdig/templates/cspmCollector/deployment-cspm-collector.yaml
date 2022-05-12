@@ -20,7 +20,7 @@ spec:
         app.kubernetes.io/instance: {{ .Release.Name }}
 {{ include "sysdig.labels" . | indent 8 }}
     spec:
-      serviceAccountName: {{ template "sysdig.serviceAccountName" .}}
+      serviceAccountName: {{ template "sysdig.serviceAccountName" .}}-cspm-collector
       containers:
       - name: {{ include "sysdig.name" . }}-cspm-collector
         image: {{ template "sysdig.image.cspmCollector" . }}

@@ -7,7 +7,7 @@ metadata:
 {{ include "sysdig.labels" . | indent 4 }}
 subjects:
   - kind: ServiceAccount
-    name: {{ template "sysdig.serviceAccountName" .}}
+    name: {{ template "sysdig.serviceAccountName" .}}-cspm-collector
     namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
