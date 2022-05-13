@@ -24,10 +24,12 @@ spec:
 {{ include "nodeAnalyzer.labels" . | indent 8 }}
     spec:
       volumes:
+{{ if .Values.nodeAnalyzer.benchmarkRunner.deploy }}
         - name: sysdig-agent-config
           configMap:
             name: {{ template "sysdig.fullname" . }}
             optional: true
+{{- end }}
         # Needed for cri-o image inspection.
         # cri-o and especially OCP 4.x by default use containers/storage to handle images, and this makes sure that the
         # analyzer has access to the configuration. This file is mounted read-only.
@@ -54,12 +56,14 @@ spec:
           configMap:
             name: {{ template "sysdig.fullname" . }}-image-analyzer
             optional: true
-        # Needed to run Benchmarks. This mount is read-only.
+{{ if or .Values.nodeAnalyzer.benchmarkRunner.deploy .Values.nodeAnalyzer.hostAnalyzer.deploy }}
+        # Needed to run Benchmarks and Host Analyzer. This mount is read-only.
         # Benchmarks include numerous checks that run tests against config files in the host filesystem. There are also
         # checks that test various host configurations such as loaded modules and enabled security features.
         - name: root-vol
           hostPath:
             path: /
+{{- end }}
         - name: tmp-vol
           emptyDir: {}
         {{- with .Values.nodeAnalyzer.imageAnalyzer.extraVolumes.volumes }}
@@ -77,6 +81,7 @@ spec:
 {{ toYaml .Values.nodeAnalyzer.pullSecrets | indent 8 }}
       {{- end }}
       terminationGracePeriodSeconds: 5
+{{ if .Values.nodeAnalyzer.benchmarkRunner.deploy }}
       # Use the Host Network Namespace.
       # This is required by the Benchmark container to determine the hostname and host mac address
       hostNetwork: true
@@ -84,6 +89,7 @@ spec:
       # This is required for Kubernetes benchmarks, as they contain tests that check Kubernetes processes running on
       # the host
       hostPID: true
+{{- end }}
       containers:
 {{ if not .Values.secure.vulnerabilityManagement.newEngineOnly }}
       - name: sysdig-image-analyzer
@@ -207,6 +213,7 @@ spec:
               name: {{ template "sysdig.fullname" . }}-image-analyzer
               key: no_proxy
               optional: true
+{{ if .Values.nodeAnalyzer.hostAnalyzer.deploy }}
       - name: sysdig-host-analyzer
         image: {{ template "sysdig.image.hostAnalyzer" . }}
         securityContext:
@@ -299,6 +306,8 @@ spec:
               name: {{ template "sysdig.fullname" . }}-host-analyzer
               optional: true
 {{- end }}
+{{- end }}
+{{ if .Values.nodeAnalyzer.benchmarkRunner.deploy }}
       - name: sysdig-benchmark-runner
         image: {{ template "sysdig.image.benchmarkRunner" . }}
         imagePullPolicy: {{ .Values.nodeAnalyzer.benchmarkRunner.image.pullPolicy }}
@@ -365,6 +374,7 @@ spec:
               key: no_proxy
               name: {{ template "sysdig.fullname" . }}-benchmark-runner
               optional: true
+{{- end }}
 {{ if or  .Values.nodeAnalyzer.runtimeScanner.deploy .Values.secure.vulnerabilityManagement.newEngineOnly }}
       # Runtime Scanner #
       - name: sysdig-runtime-scanner

@@ -426,6 +426,7 @@ nodeAnalyzer:
         cpu: 500m
         memory: 1536Mi
   hostAnalyzer:
+    deploy: true
     image:
       repository: sysdig/host-analyzer
       tag: 0.1.7
@@ -451,6 +452,7 @@ nodeAnalyzer:
         cpu: 500m
         memory: 1536Mi
   benchmarkRunner:
+    deploy: true
     includeSensitivePermissions: false
 
     image:
