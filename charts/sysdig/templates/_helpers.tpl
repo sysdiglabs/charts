@@ -220,6 +220,12 @@ true
 {{- end -}}
 
 {{/*
+Set default to true for deployment of the benchmarkRunner and the hostAnalyzer
+*/}}
+{{ default true .Values.nodeAnalyzer.benchmarkRunner.deploy }}
+{{ default true .Values.nodeAnalyzer.hostAnalyzer.deploy }}
+
+{{/*
 Sysdig Eve Connector service URL
 */}}
 {{- define "eveconnector.host" -}}
