@@ -7,11 +7,10 @@ metadata:
 {{ include "sysdig.labels" . | indent 4 }}
 data:
 {{- $env := "PRODUCTION" -}}
-{{ if .Values.cspmCollector.settings.debug }}
+{{ if .Values.cspmCollector.debug }}
   {{- $env = "DEVELOPMENT" -}}
 {{ end}}
   environment: {{ $env }}
-  k8s_host: {{ .Values.cspmCollector.settings.k8sHost | quote }}
   included_namespaces: {{ .Values.cspmCollector.settings.namespaces.included | quote}}
   excluded_namespaces: {{ .Values.cspmCollector.settings.namespaces.excluded | quote }}
   included_workloads: {{ .Values.cspmCollector.settings.workloads.included | quote }}

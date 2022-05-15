@@ -88,6 +88,7 @@ spec:
 {{ if .Values.nodeAnalyzer.cspmAnalyzer.deploy }}
       - name: sysdig-cspm-analyzer
         image: {{ template "sysdig.image.cspmAnalyzer" . }}
+        imagePullPolicy: {{ .Values.nodeAnalyzer.cspmAnalyzer.image.pullPolicy }}
         securityContext:
           runAsUser: 0
           privileged: true

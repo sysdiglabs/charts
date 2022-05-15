@@ -42,11 +42,6 @@ spec:
               configMapKeyRef:
                 name: {{ template "sysdig.fullname" . }}-cspm-collector
                 key: cluster_name
-          - name: K8S_HOST
-            valueFrom:
-              configMapKeyRef:
-                name: {{ template "sysdig.fullname" . }}-cspm-collector
-                key: k8s_host
           - name: INCLUDED_NAMESPACES
             valueFrom:
               configMapKeyRef:
