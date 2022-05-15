@@ -41,11 +41,6 @@ spec:
               configMapKeyRef:
                 name: {{ template "cspmCollector.fullname" . }}
                 key: cluster_name
-          - name: K8S_HOST
-            valueFrom:
-              configMapKeyRef:
-                name: {{ template "cspmCollector.fullname" . }}
-                key: k8s_host
           - name: INCLUDED_NAMESPACES
             valueFrom:
               configMapKeyRef:
