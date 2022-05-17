@@ -4,6 +4,11 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.14.0
+### Major change
+
+* Add CSPM Analyzer to Daemonset and CSPM Collector Deployment
+
 ## 1.13.4
 ### Bugfixes
 * RuntimeScanner: added jitter on startup to distribute requests to the k8s api over 15 minutes
