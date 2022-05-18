@@ -155,6 +155,19 @@ Return the proper image name for the Benchmark Runner
 {{- end -}}
 
 {{/*
+Return the proper image name for the CSPM Analyzer
+*/}}
+{{- define "sysdig.image.cspmAnalyzer" -}}
+    {{- include "sysdig.imageRegistry" . -}} / {{- .Values.nodeAnalyzer.cspmAnalyzer.image.repository -}} {{- if .Values.nodeAnalyzer.cspmAnalyzer.image.digest -}} @ {{- .Values.nodeAnalyzer.cspmAnalyzer.image.digest -}} {{- else -}} : {{- .Values.nodeAnalyzer.cspmAnalyzer.image.tag -}} {{- end -}}
+{{- end -}}
+
+Return the proper image name for the CSPM Collector
+*/}}
+{{- define "sysdig.image.cspmCollector" -}}
+    {{- include "sysdig.imageRegistry" . -}} / {{- .Values.cspmCollector.image.repository -}} {{- if .Values.cspmCollector.image.digest -}} @ {{- .Values.cspmCollector.image.digest -}} {{- else -}} : {{- .Values.cspmCollector.image.tag -}} {{- end -}}
+{{- end -}}
+
+{{/*
 Common labels
 */}}
 {{- define "sysdig.labels" -}}
@@ -250,5 +263,16 @@ to help the maxUnavailable and max_parallel_cold_starts pick a reasonable value 
     {{- 10 -}}
 {{- else -}}
     {{- 1 -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Sysdig NATS service URL
+*/}}
+{{- define "sysdig.natsUrl" -}}
+{{- if .Values.natsUrl -}}
+    {{- .Values.natsUrl -}}
+{{- else -}}
+    wss://{{ .Values.nodeAnalyzer.apiEndpoint }}:443
 {{- end -}}
 {{- end -}}
