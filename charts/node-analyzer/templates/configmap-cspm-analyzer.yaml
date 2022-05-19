@@ -12,6 +12,6 @@ data:
 {{ end}}
   environment: {{ $env }}
   external_nats_url: {{ include "nodeAnalyzer.natsUrl" . }}
-  cluster_name: {{ required "A valid .Values.clusterName is required" .Values.clusterName }}
+  cluster_name: {{ required "A valid clusterName is required" (include "nodeAnalyzer.clusterName" .) }}
   agent_app_name: {{ include "nodeAnalyzer.name" . }}-node-analyzer
 {{- end -}}
