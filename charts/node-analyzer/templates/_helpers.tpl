@@ -100,6 +100,13 @@ Return the proper image name for the Benchmark Runner
 {{- end -}}
 
 {{/*
+Return the proper image name for the CSPM Analyzer
+*/}}
+{{- define "nodeAnalyzer.image.cspmAnalyzer" -}}
+    {{- include "nodeAnalyzer.imageRegistry" . -}} / {{- .Values.nodeAnalyzer.cspmAnalyzer.image.repository -}} {{- if .Values.nodeAnalyzer.cspmAnalyzer.image.digest -}} @ {{- .Values.nodeAnalyzer.cspmAnalyzer.image.digest -}} {{- else -}} : {{- .Values.nodeAnalyzer.cspmAnalyzer.image.tag -}} {{- end -}}
+{{- end -}}
+
+{{/*
 Node Analyzer labels
 */}}
 {{- define "nodeAnalyzer.labels" -}}
@@ -183,5 +190,16 @@ Determine collector endpoint based on provided region or .Values.nodeAnalyzer.ap
 {{- define "deploy-na" -}}
 {{- if .Values.nodeAnalyzer.deploy -}}
 true 
+{{- end -}}
+{{- end -}}
+
+{{/*
+Sysdig NATS service URL
+*/}}
+{{- define "nodeAnalyzer.natsUrl" -}}
+{{- if .Values.nodeAnalyzer.natsUrl -}}
+    {{- .Values.nodeAnalyzer.natsUrl -}}
+{{- else -}}
+    wss://{{ .Values.nodeAnalyzer.apiEndpoint }}:443
 {{- end -}}
 {{- end -}}
