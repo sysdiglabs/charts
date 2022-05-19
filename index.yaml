@@ -2816,6 +2816,31 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/cloud-scanning-0.0.1/cloud-scanning-0.0.1.tgz
     version: 0.0.1
+  cspm-collector:
+  - apiVersion: v2
+    appVersion: 0.0.1
+    created: "2022-05-19T15:58:33.590071333Z"
+    description: Sysdig CSPM collector
+    digest: 2a731113b2f9f40b0a31f4d31057290b2c6a9c08b4426dcb50d8536e28973b3c
+    home: https://www.sysdig.com/
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: chen.shmilovich@sysdig.com
+      name: chen-shmilovich-sysdig
+    name: cspm-collector
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/cspm-collector-0.0.1/cspm-collector-0.0.1.tgz
+    version: 0.0.1
   harbor-scanner-sysdig-secure:
   - apiVersion: v2
     appVersion: 0.5.0
@@ -7985,4 +8010,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2022-05-19T15:01:24.941371995Z"
+generated: "2022-05-19T15:58:33.592420261Z"
