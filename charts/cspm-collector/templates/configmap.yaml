@@ -17,5 +17,5 @@ data:
   excluded_workloads: {{ .Values.workloads.excluded | quote }}
   health_interval_minutes: {{ .Values.healthIntervalMin | default 5 | quote }}
   external_nats_url: {{ include "cspmCollector.natsUrl" . }}
-  cluster_name: {{ required "A valid .Values.clusterName is required" .Values.clusterName }}
+  cluster_name: {{ required "A valid clusterName is required" (include "cspmCollector.clusterName" .) }}
 {{- end }}
