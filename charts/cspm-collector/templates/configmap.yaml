@@ -1,4 +1,3 @@
-{{- if .Values.deploy }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -18,4 +17,3 @@ data:
   health_interval_minutes: {{ .Values.healthIntervalMin | default 5 | quote }}
   external_nats_url: {{ include "cspmCollector.natsUrl" . }}
   cluster_name: {{ required "A valid clusterName is required" (include "cspmCollector.clusterName" .) }}
-{{- end }}

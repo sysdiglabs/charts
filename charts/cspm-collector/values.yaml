@@ -1,4 +1,3 @@
-deploy: true
 # Can be set to true to show debug logging, useful for troubleshooting.
 debug: false
 
