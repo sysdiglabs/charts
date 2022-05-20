@@ -63,9 +63,6 @@ spec:
         {{- with .Values.nodeAnalyzer.imageAnalyzer.extraVolumes.volumes }}
 {{ toYaml . | indent 8 }}
         {{- end }}
-        {{- with .Values.nodeAnalyzer.runtimeScanner.extraVolumes.volumes }}
-{{ toYaml . | indent 8 }}
-        {{- end }}
       {{- if .Values.nodeAnalyzer.priorityClassName }}
       priorityClassName: "{{ .Values.nodeAnalyzer.priorityClassName }}"
       {{- end }}
@@ -470,8 +467,8 @@ spec:
             name: var-lib-containers-vol
           - mountPath: /tmp
             name: tmp-vol
-          {{- if .Values.nodeAnalyzer.runtimeScanner.extraVolumes.mounts }}
-{{ toYaml .Values.nodeAnalyzer.runtimeScanner.extraVolumes.mounts | indent 10 }}
+          {{- if .Values.nodeAnalyzer.runtimeScanner.extraMounts }}
+{{ toYaml .Values.nodeAnalyzer.runtimeScanner.extraMounts | indent 10 }}
           {{- end }}
 # Runtime Scanner #
 {{- end }}
