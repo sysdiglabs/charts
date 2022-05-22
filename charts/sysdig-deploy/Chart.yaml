@@ -29,6 +29,6 @@ dependencies:
 - name: cspm-collector
   # repository: https://charts.sysdig.com
   repository: file://../cspm-collector
-  version: ~0.0.1
+  version: ~0.0.2
   alias: cspmCollector
   condition: cspmCollector.enabled
