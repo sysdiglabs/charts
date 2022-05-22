@@ -2819,6 +2819,30 @@ entries:
   cspm-collector:
   - apiVersion: v2
     appVersion: 0.0.1
+    created: "2022-05-22T06:57:36.208128583Z"
+    description: Sysdig CSPM collector
+    digest: 010486198c620e5ab15e25fe026c4e5d207c5e197ca0012f6f947e9415bf5196
+    home: https://www.sysdig.com/
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: chen.shmilovich@sysdig.com
+      name: chen-shmilovich-sysdig
+    name: cspm-collector
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/cspm-collector-0.0.2/cspm-collector-0.0.2.tgz
+    version: 0.0.2
+  - apiVersion: v2
+    appVersion: 0.0.1
     created: "2022-05-19T15:58:33.590071333Z"
     description: Sysdig CSPM collector
     digest: 2a731113b2f9f40b0a31f4d31057290b2c6a9c08b4426dcb50d8536e28973b3c
@@ -8010,4 +8034,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2022-05-19T15:58:33.592420261Z"
+generated: "2022-05-22T06:57:36.210634199Z"
