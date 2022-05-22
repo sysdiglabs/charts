@@ -130,6 +130,6 @@ Sysdig NATS service URL
 {{- if .Values.natsUrl -}}
     {{- .Values.natsUrl -}}
 {{- else -}}
-    wss://{{ .Values.apiEndpoint }}:443
+    wss://{{ (include "cspmCollector.apiEndpoint" .) }}:443
 {{- end -}}
 {{- end -}}
