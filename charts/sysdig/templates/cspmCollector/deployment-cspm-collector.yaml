@@ -77,4 +77,8 @@ spec:
               configMapKeyRef:
                 name: {{ template "sysdig.fullname" . }}-cspm-collector
                 key: external_nats_url
+          {{- range $key, $value := .Values.cspmCollector.env }}
+          - name: "{{ $key }}"
+            value: "{{ $value }}"
+          {{- end }}
 {{- end }}
