@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "cspmCollector.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "cspmCollector.name" . }}
+{{ include "cspmCollector.labels" . | indent 4 }}
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "cspmCollector.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "cspmCollector.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+{{ include "cspmCollector.labels" . | indent 8 }}
+    spec:
+      serviceAccountName: {{ template "cspmCollector.serviceAccountName" .}}
+      containers:
+      - name: {{ include "cspmCollector.name" . }}
+        image: {{ template "cspmCollector.image.cspmCollector" . }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        resources:
+{{ toYaml .Values.resources | indent 10 }}
+        env:
+          - name: ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                {{- if not .Values.existingAccessKeySecret }}
+                name: {{ template "cspmCollector.fullname" . }}
+                {{- else }}
+                name: {{ .Values.existingAccessKeySecret }}
+                {{- end }}
+                key: access-key
+          - name: CLUSTER_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "cspmCollector.fullname" . }}
+                key: cluster_name
+          - name: INCLUDED_NAMESPACES
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "cspmCollector.fullname" . }}
+                key: included_namespaces
+          - name: EXCLUDED_NAMESPACES
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "cspmCollector.fullname" . }}
+                key: excluded_namespaces
+          - name: INCLUDED_WORKLOADS
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "cspmCollector.fullname" . }}
+                key: included_workloads
+          - name: EXCLUDED_WORKLOADS
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "cspmCollector.fullname" . }}
+                key: excluded_workloads
+          - name: HEALTH_INTERVAL_MINUTES
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "cspmCollector.fullname" . }}
+                key: health_interval_minutes
+          - name: ENVIRONMENT
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "cspmCollector.fullname" . }}
+                key: environment
+          - name: EXTERNAL_NATS_URL
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "cspmCollector.fullname" . }}
+                key: external_nats_url

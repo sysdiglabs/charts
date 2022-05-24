@@ -1,0 +1,4 @@
+sysdig:
+  accessKey: ${SECURE_AGENT_TOKEN}
+apiEndpoint: secure.sysdig.com
+clusterName: test
