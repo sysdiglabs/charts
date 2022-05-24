@@ -83,6 +83,8 @@ Further configuration information can be found below.
 | `nodeAnalyzer`                   | Config specific to the [Sysdig nodeAnalyzer](#nodeAnalyzer)       | `{}`           |
 | `nodeAnalyzer.enabled`           | Enable the nodeAnalyzer component in this chart                   | `true`         |
 | `nodeAnalyzer.nodeAnalyzer.apiEndpoint`           | nodeAnalyzer apiEndpoint                         | `""`           |
+| `cspmCollector.enabled`          | Enable the cspmCollector component in this chart                  | `false`        |
+| `cspmCollector.apiEndpoint`      | cspmCollector apiEndpoint                                         | `""`           |
 ## Agent
 
 For possible configuration values of the Agent, please refer to the Agent subchart [README](https://github.com/sysdiglabs/charts/tree/master/charts/agent/README.md). All agent-specific configuration can be prefixed with `agent.` to apply them to this chart.
@@ -142,4 +144,27 @@ agent:
 nodeAnalyzer:
   nodeAnalyzer:
     apiEndpoint: API_ENDPOINT
+```
+
+## cspmCollector
+
+For possible configuration values of the cspm-collector, please refer to the cspm-collector subchart [README](https://github.com/sysdiglabs/charts/blob/master/charts/cspm-collector/README.md). All agent-specific configuration can be prefixed with `cspmCollector.` to apply them to this chart.
+
+Example: override apiEndpoint variable for cspmCollector chart
+
+As a command line parameter:
+```bash
+helm install sysdig sysdig/sysdig-deploy \
+    --set global.sysdig.accessKey=ACCESS_KEY \
+    --set cspmCollector.apiEndpoint=API_ENDPOINT
+```
+
+As a values file:
+```yaml
+global:
+  sysdig:
+    accessKey: ACCESS_KEY
+
+cspmCollector:
+  apiEndpoint: API_ENDPOINT
 ```
