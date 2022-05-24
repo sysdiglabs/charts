@@ -489,7 +489,7 @@ nodeAnalyzer:
 
     extraMounts: []
     # example for bottlerocket
-    # extraMounts: []
+    # extraMounts:
     #   - name: socketpath
     #     mountPath: /var/run/containerd/containerd.sock
 
