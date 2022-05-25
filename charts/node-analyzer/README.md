@@ -8,12 +8,18 @@ The Node Analyzer daemonset contains three containers, each providing a specific
 the (deprecated) Node Image Analyzer daemonset.
 
 ## Table of Contents
-- [Introduction](#introduction)
-- [Prerequisites](#prerequisites)
-- [Installing the Chart](#installing-the-chart)
-- [Uninstalling the Chart](#uninstalling-the-chart)
-- [Configuration](#configuration)
-- [Support](#support)
+- [Chart: Node Analyzer](#chart-node-analyzer)
+  - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
+  - [Prerequisites](#prerequisites)
+  - [Installing the Chart](#installing-the-chart)
+  - [Uninstalling the Chart](#uninstalling-the-chart)
+  - [Configuration](#configuration)
+  - [Chart Components](#chart-components)
+    - [Node Image Analyzer](#node-image-analyzer)
+    - [Host Analyzer](#host-analyzer)
+    - [Benchmark Runner](#benchmark-runner)
+  - [Support](#support)
 
 ## Introduction
 
@@ -153,7 +159,7 @@ The following table lists the configurable parameters of the Sysdig Node Analyze
 | `nodeAnalyzer.cspmAnalyzer.deploy`                                   | Enables Sysdig CSPM node analyzer                                                        | `false`                                                                        |
 | `nodeAnalyzer.cspmAnalyzer.debug`                                    | Can be set to true to show CSPM node analyzer debug logging, useful for troubleshooting  | `false`                                                                        |
 | `nodeAnalyzer.cspmAnalyzer.image.repository`                         | The image repository to pull the  CSPM node analyzer from                                | `sysdig/cspm-analyzer`                                                                      |
-| `nodeAnalyzer.cspmAnalyzer.image.tag`                                | The image tag to pull the  CSPM node analyzer                                            | `1.0.0`                                                                        |
+| `nodeAnalyzer.cspmAnalyzer.image.tag`                                | The image tag to pull the  CSPM node analyzer                                            | `1.1.0`                                                                        |
 | `nodeAnalyzer.cspmAnalyzer.image.digest`                             | The image digest to pull                                                                 | ` `                                                                              |
 | `nodeAnalyzer.cspmAnalyzer.image.pullPolicy`                         | The image pull policy for the  CSPM node analyzer                                        | `IfNotPresent`                                                                 |
 | `nodeAnalyzer.cspmAnalyzer.resources.requests.cpu`                   | CSPM node analyzer CPU requests per node                                                 | `150m`                                                                         |
