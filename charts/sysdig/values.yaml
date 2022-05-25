@@ -516,7 +516,7 @@ nodeAnalyzer:
     debug: false
     image:
       repository: sysdig/cspm-analyzer
-      tag: 1.0.0
+      tag: 1.1.0
       digest:
       pullPolicy: IfNotPresent
 
@@ -533,7 +533,7 @@ cspmCollector:
   debug: false
   image:
     repository: sysdig/cspm-collector
-    tag: 1.0.0
+    tag: 1.1.0
     digest:
     pullPolicy: IfNotPresent
   settings:
