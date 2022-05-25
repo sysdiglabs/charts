@@ -8,18 +8,12 @@ The Node Analyzer daemonset contains three containers, each providing a specific
 the (deprecated) Node Image Analyzer daemonset.
 
 ## Table of Contents
-- [Chart: Node Analyzer](#chart-node-analyzer)
-  - [Table of Contents](#table-of-contents)
-  - [Introduction](#introduction)
-  - [Prerequisites](#prerequisites)
-  - [Installing the Chart](#installing-the-chart)
-  - [Uninstalling the Chart](#uninstalling-the-chart)
-  - [Configuration](#configuration)
-  - [Chart Components](#chart-components)
-    - [Node Image Analyzer](#node-image-analyzer)
-    - [Host Analyzer](#host-analyzer)
-    - [Benchmark Runner](#benchmark-runner)
-  - [Support](#support)
+- [Introduction](#introduction)
+- [Prerequisites](#prerequisites)
+- [Installing the Chart](#installing-the-chart)
+- [Uninstalling the Chart](#uninstalling-the-chart)
+- [Configuration](#configuration)
+- [Support](#support)
 
 ## Introduction
 
@@ -238,3 +232,4 @@ In addition to this, you can browse the documentation for the different componen
 * [Platform Documentation](https://docs.sysdig.com/en/sysdig-platform.html)
 * [Monitor Documentation](https://docs.sysdig.com/en/sysdig-monitor.html)
 * [Secure Documentation](https://docs.sysdig.com/en/sysdig-secure.html)
+
