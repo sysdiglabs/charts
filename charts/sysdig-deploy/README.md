@@ -70,7 +70,6 @@ Further configuration information can be found below.
 | Parameter                        | Description                                                       | Default        |
 | -------------------------------- | ----------------------------------------------------------------- | -------------- |
 | `global.clusterConfig.name`      | Identifier for this cluster                                       | `""`           |
-| `global.clusterConfig.namespace` | Default namespace for all components                              | `sysdig-agent` |
 | `global.sysdig.accessKey`        | Sysdig Agent Access Key                                           | `""`           |
 | `global.sysdig.accessKeySecret`  | The name of a Kubernetes secret containing an 'access-key' entry. | `""`           |
 | `global.sysdig.region`           | The SaaS region for these agents                                  | `"us1"`        |
