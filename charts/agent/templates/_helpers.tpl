@@ -169,6 +169,8 @@ This helper uses the lookup function to check the osImage field of every node.
 If all of them match the string indicating COS, then this will return true. If
 the list is empty (ie, the lookup failed) or one or more don't match, this will
 be false.
+This doesn't return a true boolean, so anywhere it is used, it must be checked:
+    eq "true" (include "agent.isAllCos")
 */}}
 {{- define "agent.isAllCos" -}}
     {{- $nodes := (lookup "v1" "Node" "" "").items -}}
@@ -180,10 +182,13 @@ be false.
 {{- end -}}
 
 {{/*
-Check for all COS nodes or a flag to enable eBPF.
+Check for all COS nodes or a flag to enable eBPF. If false, return nothing so
+it can act like a boolean
 */}}
 {{- define "agent.ebpfEnabled" -}}
-  {{- or (include "agent.isAllCos" .) .Values.ebpf.enabled -}}
+  {{- if (or (eq "true" (include "agent.isAllCos" .)) .Values.ebpf.enabled) -}}
+    true
+  {{- end -}}
 {{- end -}}
 
 {{/*

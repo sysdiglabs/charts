@@ -4,6 +4,12 @@
 
 This file documents all notable changes to the Sysdig Agent Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.4.4
+
+### Bugfix
+
+* fix the `agent.ebpfEnabled` helper so it doesn't always evaluate to `true`
+
 ## v1.4.3
 
 ### Minor Changes
