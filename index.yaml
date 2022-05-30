@@ -3167,6 +3167,40 @@ entries:
   node-analyzer:
   - apiVersion: v2
     appVersion: 12.3.1
+    created: "2022-05-30T06:59:57.334053863Z"
+    description: Sysdig Node Analyzer
+    digest: 8413960fb9697b67ac82e7ec3b2618f892a0e4dd3d683dbc6fde9925503defbc
+    home: https://www.sysdig.com/
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: lachlan@deis.com
+      name: lachie83
+    - email: jorge.salamero@sysdig.com
+      name: bencer
+    - email: nestor.salceda@sysdig.com
+      name: nestorsalceda
+    - email: alvaro.iradier@sysdig.com
+      name: airadier
+    - email: carlos.arilla@sysdig.com
+      name: carillan81
+    - email: yashgiri.goswami@sysdig.com
+      name: yashgiri
+    name: node-analyzer
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/node-analyzer-1.4.1/node-analyzer-1.4.1.tgz
+    version: 1.4.1
+  - apiVersion: v2
+    appVersion: 12.3.1
     created: "2022-05-19T15:01:24.938634459Z"
     description: Sysdig Node Analyzer
     digest: aa632f066dc4f56f44c35d360f65aafb400a84d830266bcac0e711625c1fce5b
@@ -8182,4 +8216,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2022-05-26T18:47:59.709544607Z"
+generated: "2022-05-30T06:59:57.336543314Z"
