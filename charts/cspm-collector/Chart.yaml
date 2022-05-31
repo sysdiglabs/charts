@@ -2,8 +2,8 @@ apiVersion: v2
 name: cspm-collector
 description: Sysdig CSPM collector
 
-version: 0.0.3
-appVersion: 1.1.0
+version: 0.0.4
+appVersion: 1.1.1
 keywords:
   - monitoring
   - security
