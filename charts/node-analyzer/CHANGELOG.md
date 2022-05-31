@@ -4,9 +4,13 @@
 
 This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
-## v1.4.1
+## v1.4.2
 ### Minor change
 * RuntimeScanner: added nodeAnalyzer.runtimeScanner.extraMounts for handle non-standard socket paths
+
+## v1.4.1
+### Minor change
+* CSPM support AKS
 
 ## v1.4.0
 ### Major change

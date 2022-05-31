@@ -437,6 +437,8 @@ nodeAnalyzer:
       limits:
         cpu: 500m
         memory: 1536Mi
+
+    env: {}
   hostAnalyzer:
     image:
       repository: sysdig/host-analyzer
@@ -462,6 +464,8 @@ nodeAnalyzer:
       limits:
         cpu: 500m
         memory: 1536Mi
+
+    env: {}
   benchmarkRunner:
     includeSensitivePermissions: false
 
@@ -478,6 +482,8 @@ nodeAnalyzer:
       limits:
         cpu: 500m
         memory: 256Mi
+
+    env: {}
 
   runtimeScanner:
     deploy: false
@@ -502,6 +508,8 @@ nodeAnalyzer:
         cpu: 1000m
         memory: 2Gi
         ephemeral-storage: "4Gi"
+
+    env: {}
 
     settings:
       eveEnabled: false
@@ -542,6 +550,8 @@ nodeAnalyzer:
         cpu: 500m
         memory: 1536Mi
 
+    env: {}
+
 cspmCollector:
   deploy: false
   debug: false
@@ -550,6 +560,7 @@ cspmCollector:
     tag: 1.1.0
     digest:
     pullPolicy: IfNotPresent
+
   settings:
     replicas: 1
     namespaces:
@@ -559,6 +570,7 @@ cspmCollector:
       included: ""
       excluded: ""
     healthIntervalMin: 5
+
   resources:
     requests:
       cpu: 150m
@@ -566,6 +578,8 @@ cspmCollector:
     limits:
       cpu: 500m
       memory: 1536Mi
+
+  env: {}
 
 customAppChecks: {}
   # Allow passing custom app checks for Sysdig Agent.
