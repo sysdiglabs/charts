@@ -4,6 +4,12 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.14.3
+### Minor change
+
+* CSPMCollector: Handle failure on apis discovery
+* CSPMAnalyzer: Send runtime parameters
+
 ## v1.14.2
 ### Minor change
 * RuntimeScanner: added nodeAnalyzer.runtimeScanner.extraMounts for handle non-standard socket paths
