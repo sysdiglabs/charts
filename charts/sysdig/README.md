@@ -365,6 +365,18 @@ configured in the UI, and the runner automatically runs these benchmarks on the 
 Note: if `nodeAnalyzer.benchmarkRunner.includeSensitivePermissions` is set to `false`, the service account will not have
 the full set of permissions needed to execute `oc` commands, which most checks in `CIS Benchmark for OS4` require.
 
+### CSPM Analyzer (Preview)
+
+See the [Actionable Compliance documentation](https://docs.sysdig.com/en/docs/sysdig-secure/posture/compliance/actionable-compliance/) for details on the Actionable Compliance feature. The
+CSPM Analyzer analyzes your host's configuration and sends the output to be evaluated against compliance policies.
+The scan results are displayed in Sysdig Secure's Actionable Compliance screens.
+
+## CSPM Collector (Preview)
+
+See the [Actionable Compliance documentation](https://docs.sysdig.com/en/docs/sysdig-secure/posture/compliance/actionable-compliance/) for details on the Actionable Compliance feature. The
+CSPM Collector collects Kubernetes resource manifests and sends them to be evaluated against compliance policies.
+The scan results are displayed in Sysdig Secure's Actionable Compliance screens.
+
 ## GKE Autopilot
 Autopilot is an operation mode for creating and managing clusters in GKE. 
 With Autopilot, Google configures and manages the underlying node infrastructure for you.
