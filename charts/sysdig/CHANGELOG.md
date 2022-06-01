@@ -4,7 +4,7 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
-## v1.14.31
+## v1.14.4
 * Describe CSPM components in README and link to official Sysdig docs
 
 ## v1.14.3
