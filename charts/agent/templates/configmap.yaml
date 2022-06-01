@@ -1,3 +1,4 @@
+{{- if .Values.daemonset.deploy }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -65,4 +66,5 @@ data:
 {{- if .Values.prometheus.file }}
   prometheus.yaml: |
 {{ toYaml .Values.prometheus.yaml | indent 4 }}
+{{- end }}
 {{- end }}
