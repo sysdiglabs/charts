@@ -4,6 +4,13 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.14.32
+### Bugfixes
+* RuntimeScanner: enhanced detection of java packages
+
+### Minor changes
+* Release of runtime scanner 1.0.4
+
 ## v1.14.31
 * Describe CSPM components in README and link to official Sysdig docs
 
