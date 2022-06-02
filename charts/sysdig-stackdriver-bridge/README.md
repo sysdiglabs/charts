@@ -67,6 +67,7 @@ The following table lists the configurable parameters of the Sysdig Stackdriver 
 | `affinity`              | Affinity settings for pod assignment                        | `{}`                                        |
 | `annotations`           | Pod annotations                                             | `{}`                                        |
 | `tolerations`           | Toleration labels for pod assignment                        | `[]`                                        |
+| `additionalLabels`      | Labels to be added to every created resource                | `{}`                                        |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 

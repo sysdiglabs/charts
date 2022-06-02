@@ -5,6 +5,9 @@ metadata:
   labels:
     app.kubernetes.io/name: {{ include "sysdig-stackdriver-bridge.name" . }}
 {{ include "sysdig-stackdriver-bridge.labels" . | indent 4 }}
+  {{- if .Values.additionalLabels }}
+{{ toYaml .Values.additionalLabels | indent 4 }}
+  {{- end }}
 spec:
   replicas: 1
   selector:
@@ -14,6 +17,9 @@ spec:
     metadata:
       labels:
         app: {{ include "sysdig-stackdriver-bridge.name" . }}
+      {{- if .Values.additionalLabels }}
+{{ toYaml .Values.additionalLabels | indent 8 }}
+      {{- end }}
       {{- if .Values.annotations }}
       annotations:
 {{ toYaml .Values.annotations | indent 8 }}

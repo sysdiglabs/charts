@@ -5,6 +5,9 @@ metadata:
   labels:
     app.kubernetes.io/name: {{ include "sysdig-stackdriver-bridge.name" . }}
 {{ include "sysdig-stackdriver-bridge.labels" . | indent 4 }}
+  {{- if .Values.additionalLabels }}
+{{ toYaml .Values.additionalLabels | indent 4 }}
+  {{- end }}
 data:
   swb-config.yaml: |
     # Forward converted k8s audit events to this url.

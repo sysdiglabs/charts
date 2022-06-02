@@ -30,3 +30,5 @@ affinity: {}
 annotations: {}
 
 tolerations: []
+
+additionalLabels: {}
