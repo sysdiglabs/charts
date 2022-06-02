@@ -9,7 +9,7 @@ metadata:
 data:
   dragent.yaml: |
     new_k8s: true
-{{- $clusterName := include "get_if_not_in_settings" (dict "root" . "default" (coalesce .Values.sysdig.disableCaptures .Values.global.clusterConfig.name) "setting" "k8s_cluster_name") }}
+{{- $clusterName := include "get_if_not_in_settings" (dict "root" . "default" (coalesce .Values.clusterName .Values.global.clusterConfig.name) "setting" "k8s_cluster_name") }}
 {{- if $clusterName }}
     k8s_cluster_name: {{ $clusterName }}
 {{- end }}
