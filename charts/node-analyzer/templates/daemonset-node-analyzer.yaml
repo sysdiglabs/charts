@@ -522,6 +522,9 @@ spec:
             name: var-lib-containers-vol
           - mountPath: /tmp
             name: tmp-vol
+          {{- if .Values.nodeAnalyzer.runtimeScanner.extraMounts }}
+{{ toYaml .Values.nodeAnalyzer.runtimeScanner.extraMounts | indent 10 }}
+          {{- end }}
 # Runtime Scanner #
 {{- end }}
       {{- with .Values.nodeAnalyzer.nodeSelector }}

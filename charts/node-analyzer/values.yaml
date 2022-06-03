@@ -158,6 +158,14 @@ nodeAnalyzer:
       # mounts:
       # - mountPath: /var/run/docker.sock
       #   name: docker-sock
+
+      # example for bottlerocket
+      # volumes:
+      #  - name: socketpath
+      #    hostPath:
+      #      path: /run/dockershim.sock
+      #      type: ""
+
     resources:
       requests:
         cpu: 150m
@@ -214,6 +222,12 @@ nodeAnalyzer:
       tag: 1.0.0
       digest:
       pullPolicy: IfNotPresent
+
+    extraMounts: []
+    # example for bottlerocket
+    # extraMounts: []
+    #   - name: socketpath
+    #     mountPath: /var/run/containerd/containerd.sock
 
     resources:
       requests:

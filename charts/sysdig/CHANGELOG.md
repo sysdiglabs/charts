@@ -4,6 +4,11 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.14.34
+### Minor changes
+
+* RuntimeScanner: added nodeAnalyzer.runtimeScanner.extraMounts for handle non-standard socket paths
+
 ## v1.14.32
 ### Bugfixes
 * RuntimeScanner: enhanced detection of java packages
