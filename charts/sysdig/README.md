@@ -188,8 +188,6 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `nodeAnalyzer.runtimeScanner.resources.requests.memory`              | Runtime Scanner Memory requests per node                                                 | `512Mi`                                                                        |
 | `nodeAnalyzer.runtimeScanner.resources.requests.ephemeral-storage`   | Runtime Scanner Storage requests per node                                                | `2Gi`                                                                          |
 | `nodeAnalyzer.runtimeScanner.resources.limits.cpu`                   | Runtime Scanner CPU limit per node                                                       | `500m`                                                                         |
-| `nodeAnalyzer.runtimeScanner.resources.limits.memory`                | Runtime Scanner Memory limit per node                                                    | `1536Mi`                                                                       |
-| `nodeAnalyzer.runtimeScanner.resources.limits.ephemeral-storage`     | Runtime Scanner Storage limit per node                                                   | `4Gi`                                                                          |
 | `nodeAnalyzer.runtimeScanner.env`                                    | Extra environment variables that will be passed onto pods                                | `{}`                                                                           |
 | `nodeAnalyzer.runtimeScanner.settings.eveEnabled`                    | Enables Sysdig Eve                                                                       | `false`                                                                        |
 | `nodeAnalyzer.runtimeScanner.eveConnector.deploy`                    | Enables Sysdig Eve Connector for third-party integrations                                | `false`                                                                        |
@@ -311,8 +309,7 @@ limits:
 
 * custom
 
-By setting "custom" or any value other than the ones defined above, you can create your own custom profile to match your
-requirements by setting the appropriate values in `resources` object.
+To set your own resource requests and limits to any values other than the ones defined above, you need to set `resourceProfile == custom` and then add specific values for `resources.*` to match your requirements by setting the appropriate values in the `resources` object.
 
 See [Tuning Sysdig Agent](https://docs.sysdig.com/en/tuning-sysdig-agent.html) for more info.
 
