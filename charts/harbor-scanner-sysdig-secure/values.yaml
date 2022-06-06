@@ -60,6 +60,7 @@ affinity: {}
 sysdig:
   secure:
     apiToken: ""
+    existingSecureAPITokenSecret: ""
     url: "https://secure.sysdig.com"
     verifySSL: true
 
