@@ -59,7 +59,17 @@ affinity: {}
 
 sysdig:
   secure:
+
+    # **required**
+    # API Token to access Sysdig Secure.
+    # If neither this value nor `sysdig.secure.existingSecureAPITokenSecret` are configured, the
+    # user will be required to provide the deployment the `SECURE_API_TOKEN` environment variables.
     apiToken: ""
+
+    # Alternatively, specify the name of a Kubernetes secret containing an 'sysdig_secure_api_token' entry
+    existingSecureAPITokenSecret: ""
+
+    # Sysdig backend URL (SaaS Regions API endpoints are listed here: https://docs.sysdig.com/en/docs/administration/saas-regions-and-ip-ranges/)
     url: "https://secure.sysdig.com"
     verifySSL: true
 
