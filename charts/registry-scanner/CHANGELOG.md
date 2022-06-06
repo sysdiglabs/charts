@@ -4,6 +4,16 @@
 
 This file documents all notable changes to Sysdig Registry Scanner. The release
 numbering uses [semantic versioning](http://semver.org).
+
+## v0.0.29
+
+### Minor changes
+
+* Bump registry-scanner version to 0.1.6:
+  * Include break down of policies, stops and warns in report
+  * Do not stop the scanning if the retrieval of a single image tag fails
+  * Fix: artifactory auth if api are on a different subdomain
+
 ## v0.0.28
 
 ### Minor changes
