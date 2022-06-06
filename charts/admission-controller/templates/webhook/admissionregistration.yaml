@@ -12,7 +12,7 @@ metadata:
   annotations:
     "helm.sh/hook": "post-install, post-upgrade"
 webhooks:
-{{- if .Values.scanner.enabled -}}
+{{- if .Values.scanner.enabled }}
 - name: scanning.secure.sysdig.com
   matchPolicy: Equivalent
   rules:
