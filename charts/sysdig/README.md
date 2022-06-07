@@ -372,7 +372,7 @@ See the [Actionable Compliance documentation](https://docs.sysdig.com/en/docs/sy
 KSPM Analyzer analyzes your host's configuration and sends the output to be evaluated against compliance policies.
 The scan results are displayed in Sysdig Secure's Actionable Compliance screens.
 
-The agent listens to port 12000 by default. To override it you can set the AGENT_PORT environment variable.
+The agent listens to port 12000 by default. To override it, you can set the AGENT_PORT environment variable.
 
 For example:
 
