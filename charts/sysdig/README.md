@@ -372,6 +372,19 @@ See the [Actionable Compliance documentation](https://docs.sysdig.com/en/docs/sy
 CSPM Analyzer analyzes your host's configuration and sends the output to be evaluated against compliance policies.
 The scan results are displayed in Sysdig Secure's Actionable Compliance screens.
 
+The agent listens to port 12000 by default. To override it you can set the AGENT_PORT environment variable.
+
+For example:
+
+```bash
+$ helm install --namespace sysdig-agent sysdig-agent \
+    --set sysdig.accessKey=YOUR-KEY-HERE \
+    --set nodeAnalyzer.apiEndpoint=42.32.196.18 \
+    --set nodeAnalyzer.cspmAnalyzer.deploy=true \
+    --set nodeAnalyzer.cspmAnalyzer.env.AGENT_PORT=8888 \
+    sysdig/sysdig
+```
+
 ## CSPM Collector (Preview)
 
 See the [Actionable Compliance documentation](https://docs.sysdig.com/en/docs/sysdig-secure/posture/compliance/actionable-compliance/) for details on the Actionable Compliance feature. The
