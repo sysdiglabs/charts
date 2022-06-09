@@ -60,10 +60,30 @@ global:
 and install it with:
 
 ```bash
-helm install sysdig sysdig/sysdig-deploy -f values.sysdig.yaml
+helm install -n sysdig-agent sysdig sysdig/sysdig-deploy -f values.sysdig.yaml
 ```
 
 Further configuration information can be found below.
+
+## Upgrading
+
+Refresh the `sysdig` helm repo to get the latest chart.
+
+```bash
+helm repo update
+```
+
+Get the currently deployed values and save them to `values.sysdig.yaml`.
+
+```bash
+helm get values -n sysdig-agent sysdig -o yaml > values.sysdig.yaml
+```
+
+Upgrade to the latest version of the chart:
+
+```bash
+helm upgrade -n sysdig-agent sysdig sysdig/sysdig-deploy -f values.sysdig.yaml
+```
 
 ## Configuration
 
