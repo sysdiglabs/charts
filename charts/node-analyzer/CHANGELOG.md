@@ -4,6 +4,14 @@
 
 This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.15.0
+### Major change
+* KSPMAnalyzer: rename kspm-analyzer to kspm-analyzer
+
+### Minor changes
+* KSPMAnalyzer: add documentation on port configuration
+* KSPMAnalyzer: update image tag to 1.3.0
+
 ## v1.4.2
 ### Minor change
 

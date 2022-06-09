@@ -261,12 +261,12 @@ nodeAnalyzer:
       settings:
         replicas: 1
 
-  cspmAnalyzer:
+  kspmAnalyzer:
     deploy: false
     debug: false
     image:
-      repository: sysdig/cspm-analyzer
-      tag: 1.1.0
+      repository: sysdig/kspm-analyzer
+      tag: 1.3.0
       digest:
       pullPolicy: IfNotPresent
 

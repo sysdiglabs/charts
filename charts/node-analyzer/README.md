@@ -151,16 +151,16 @@ The following table lists the configurable parameters of the Sysdig Node Analyze
 | `nodeAnalyzer.runtimeScanner.eveConnector.resources.limits.cpu`      | Eve Connector CPU limits per node                                                        | `1000m`                                                                        |
 | `nodeAnalyzer.runtimeScanner.eveConnector.resources.limits.memory`   | Eve Connector Memory limits per node                                                     | `512Mi`                                                                        |
 | `nodeAnalyzer.runtimeScanner.eveConnector.settings.replicas`         | Eve Connector deployment replicas                                                        | `1`                                                                            |
-| `nodeAnalyzer.cspmAnalyzer.deploy`                                   | Enables Sysdig CSPM node analyzer                                                        | `false`                                                                        |
-| `nodeAnalyzer.cspmAnalyzer.debug`                                    | Can be set to true to show CSPM node analyzer debug logging, useful for troubleshooting  | `false`                                                                        |
-| `nodeAnalyzer.cspmAnalyzer.image.repository`                         | The image repository to pull the  CSPM node analyzer from                                | `sysdig/cspm-analyzer`                                                                      |
-| `nodeAnalyzer.cspmAnalyzer.image.tag`                                | The image tag to pull the  CSPM node analyzer                                            | `1.1.0`                                                                        |
-| `nodeAnalyzer.cspmAnalyzer.image.digest`                             | The image digest to pull                                                                 | ` `                                                                              |
-| `nodeAnalyzer.cspmAnalyzer.image.pullPolicy`                         | The image pull policy for the  CSPM node analyzer                                        | `IfNotPresent`                                                                 |
-| `nodeAnalyzer.cspmAnalyzer.resources.requests.cpu`                   | CSPM node analyzer CPU requests per node                                                 | `150m`                                                                         |
-| `nodeAnalyzer.cspmAnalyzer.resources.requests.memory`                | CSPM node analyzer Memory requests per node                                              | `256Mi`                                                                        |
-| `nodeAnalyzer.cspmAnalyzer.resources.limits.cpu`                     | CSPM node analyzer CPU limits per node                                                   | `500m`                                                                         |
-| `nodeAnalyzer.cspmAnalyzer.resources.limits.memory`                  | CSPM node analyzer Memory limits per node                                                | `1536Mi`                                                                       |
+| `nodeAnalyzer.kspmAnalyzer.deploy`                                   | Enables Sysdig KSPM node analyzer                                                        | `false`                                                                        |
+| `nodeAnalyzer.kspmAnalyzer.debug`                                    | Can be set to true to show KSPM node analyzer debug logging, useful for troubleshooting  | `false`                                                                        |
+| `nodeAnalyzer.kspmAnalyzer.image.repository`                         | The image repository to pull the  KSPM node analyzer from                                | `sysdig/kspm-analyzer`                                                                      |
+| `nodeAnalyzer.kspmAnalyzer.image.tag`                                | The image tag to pull the  KSPM node analyzer                                            | `1.1.0`                                                                        |
+| `nodeAnalyzer.kspmAnalyzer.image.digest`                             | The image digest to pull                                                                 | ` `                                                                              |
+| `nodeAnalyzer.kspmAnalyzer.image.pullPolicy`                         | The image pull policy for the  KSPM node analyzer                                        | `IfNotPresent`                                                                 |
+| `nodeAnalyzer.kspmAnalyzer.resources.requests.cpu`                   | KSPM node analyzer CPU requests per node                                                 | `150m`                                                                         |
+| `nodeAnalyzer.kspmAnalyzer.resources.requests.memory`                | KSPM node analyzer Memory requests per node                                              | `256Mi`                                                                        |
+| `nodeAnalyzer.kspmAnalyzer.resources.limits.cpu`                     | KSPM node analyzer CPU limits per node                                                   | `500m`                                                                         |
+| `nodeAnalyzer.kspmAnalyzer.resources.limits.memory`                  | KSPM node analyzer Memory limits per node                                                | `1536Mi`                                                                       |
 | `nodeAnalyzer.nodeSelector`                                          | Node Selector                                                                            | `{}`                                                                           |
 | `nodeAnalyzer.affinity`                                              | Node affinities                                                                          | `schedule on amd64 and linux`                                                  |
 
@@ -221,6 +221,25 @@ configured in the UI, and the runner automatically runs these benchmarks on the 
 Note: if `nodeAnalyzer.benchmarkRunner.includeSensitivePermissions` is set to `false`, the service account will not have
 the full set of permissions needed to execute `oc` commands, which most checks in `CIS Benchmark for OS4` require.
 
+### KSPM Analyzer (Preview)
+
+See the [Actionable Compliance documentation](https://docs.sysdig.com/en/docs/sysdig-secure/posture/compliance/actionable-compliance/) for details on the Actionable Compliance feature. The
+KSPM Analyzer analyzes your host's configuration and sends the output to be evaluated against compliance policies.
+The scan results are displayed in Sysdig Secure's Actionable Compliance screens.
+
+The agent listens to port 12000 by default. To override it, you can set the AGENT_PORT environment variable.
+
+For example:
+
+```bash
+$ helm install --namespace sysdig-agent sysdig-agent \
+    --set sysdig.accessKey=YOUR-KEY-HERE \
+    --set nodeAnalyzer.apiEndpoint=42.32.196.18 \
+    --set nodeAnalyzer.kspmAnalyzer.deploy=true \
+    --set nodeAnalyzer.kspmAnalyzer.env.AGENT_PORT=8888 \
+    sysdig/sysdig
+```
+
 ## Support
 
 For getting support from the Sysdig team, you should refer to the official
@@ -233,4 +252,5 @@ In addition to this, you can browse the documentation for the different componen
 * [Platform Documentation](https://docs.sysdig.com/en/sysdig-platform.html)
 * [Monitor Documentation](https://docs.sysdig.com/en/sysdig-monitor.html)
 * [Secure Documentation](https://docs.sysdig.com/en/sysdig-secure.html)
+
 
