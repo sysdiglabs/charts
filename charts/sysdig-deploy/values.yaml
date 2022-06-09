@@ -14,5 +14,5 @@ agent:
 nodeAnalyzer:
   enabled: true
 
-cspmCollector:
+kspmCollector:
   enabled: false

@@ -82,8 +82,8 @@ Further configuration information can be found below.
 | `nodeAnalyzer`                   | Config specific to the [Sysdig nodeAnalyzer](#nodeAnalyzer)       | `{}`           |
 | `nodeAnalyzer.enabled`           | Enable the nodeAnalyzer component in this chart                   | `true`         |
 | `nodeAnalyzer.nodeAnalyzer.apiEndpoint`           | nodeAnalyzer apiEndpoint                         | `""`           |
-| `cspmCollector.enabled`          | Enable the cspmCollector component in this chart                  | `false`        |
-| `cspmCollector.apiEndpoint`      | cspmCollector apiEndpoint                                         | `""`           |
+| `kspmCollector.enabled`          | Enable the kspmCollector component in this chart                  | `false`        |
+| `kspmCollector.apiEndpoint`      | kspmCollector apiEndpoint                                         | `""`           |
 ## Agent
 
 For possible configuration values of the Agent, please refer to the Agent subchart [README](https://github.com/sysdiglabs/charts/tree/master/charts/agent/README.md). All agent-specific configuration can be prefixed with `agent.` to apply them to this chart.
@@ -145,17 +145,17 @@ nodeAnalyzer:
     apiEndpoint: API_ENDPOINT
 ```
 
-## cspmCollector
+## KSPM Collector
 
-For possible configuration values of the cspm-collector, please refer to the cspm-collector subchart [README](https://github.com/sysdiglabs/charts/blob/master/charts/cspm-collector/README.md). All agent-specific configuration can be prefixed with `cspmCollector.` to apply them to this chart.
+For possible configuration values of the kspm-collector, please refer to the kspm-collector subchart [README](https://github.com/sysdiglabs/charts/blob/master/charts/kspm-collector/README.md). All agent-specific configuration can be prefixed with `kspmCollector.` to apply them to this chart.
 
-Example: override apiEndpoint variable for cspmCollector chart
+Example: override apiEndpoint variable for kspmCollector chart
 
 As a command line parameter:
 ```bash
 helm install sysdig sysdig/sysdig-deploy \
     --set global.sysdig.accessKey=ACCESS_KEY \
-    --set cspmCollector.apiEndpoint=API_ENDPOINT
+    --set kspmCollector.apiEndpoint=API_ENDPOINT
 ```
 
 As a values file:
@@ -164,6 +164,6 @@ global:
   sysdig:
     accessKey: ACCESS_KEY
 
-cspmCollector:
+kspmCollector:
   apiEndpoint: API_ENDPOINT
 ```

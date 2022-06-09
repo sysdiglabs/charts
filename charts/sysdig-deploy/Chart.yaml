@@ -23,12 +23,12 @@ dependencies:
 - name: node-analyzer
   # repository: https://charts.sysdig.com
   repository: file://../node-analyzer
-  version: ~1.4.0
+  version: ~1.15.0
   alias: nodeAnalyzer
   condition: nodeAnalyzer.enabled
-- name: cspm-collector
+- name: kspm-collector
   # repository: https://charts.sysdig.com
-  repository: file://../cspm-collector
-  version: ~0.0.2
-  alias: cspmCollector
-  condition: cspmCollector.enabled
+  repository: file://../kspm-collector
+  version: ~0.1.0
+  alias: kspmCollector
+  condition: kspmCollector.enabled
