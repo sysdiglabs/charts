@@ -3,9 +3,9 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: {{ template "cspmCollector.fullname" .}}
+  name: {{ template "kspmCollector.fullname" .}}
   labels:
-{{ include "cspmCollector.labels" . | indent 4 }}
+{{ include "kspmCollector.labels" . | indent 4 }}
 rules:
   - apiGroups:
       - ''

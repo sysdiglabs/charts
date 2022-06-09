@@ -1,7 +1,7 @@
 # Can be set to true to show debug logging, useful for troubleshooting.
 debug: false
 
-# Default values for Sysdig CSPM Collector
+# Default values for Sysdig KSPM Collector
 global:
   clusterConfig: {}
   sysdig:
@@ -28,8 +28,8 @@ natsUrl: ""
 clusterName: ""
 
 image:
-  repository: sysdig/cspm-collector
-  tag: 1.1.1
+  repository: sysdig/kspm-collector
+  tag: 1.3.0
   digest:
   registry: quay.io
   pullPolicy: Always
@@ -41,8 +41,8 @@ rbac:
 serviceAccount:
   # true here enables creation of service account
   create: true
-  # Use this value as cspmCollectorServiceAccountName
-  name: "cspm-collector"
+  # Use this value as kspmCollectorServiceAccountName
+  name: "kspm-collector"
 
 replicas: 1
 
