@@ -2,35 +2,44 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# Amount of replicas for Cloud Connector
 replicaCount: 1
 
 image:
+  # The image repository to pull from.
   repository: quay.io/sysdig/cloud-connector
+  # The image pull policy.
   pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
+  # The image tag (immutable tags are recommended). Overrides the image tag whose default is the chart appVersion.
   tag:
 
+# The image pull secrets
 imagePullSecrets: []
+# Chart name override
 nameOverride: ""
+# Chart full name override
 fullnameOverride: ""
 
 serviceAccount:
-  # Specifies whether a service account should be created
+  # Create the service account
   create: true
-  # Annotations to add to the service account
+  # Extra annotations for serviceAccount
   annotations: {}
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
-podAnnotations:
+# Pod annotations
+podAnnotations:  # +doc-gen:break
   prometheus.io/scrape: "true"
   prometheus.io/path: "/metrics"
   prometheus.io/port: "5000"
 
+# Configure deployment PSP's
 podSecurityContext: {}
 
-securityContext:
+# Configure securityContext
+securityContext:  # +doc-gen:break
   capabilities:
     drop:
     - ALL
@@ -38,71 +47,87 @@ securityContext:
   runAsNonRoot: true
 
 service:
+  # Use this type as service
   type: ClusterIP
+  # Configure port for the service
   port: 80
+  # Additional labels to specify for the service
   labels: {}
 
+# Configure resource requests and limits
 resources: {}
 
+# Configure nodeSelector for scheduling
 nodeSelector: {}
 
+# Tolerations for scheduling
 tolerations: []
 
+# Configure affinity rules
 affinity: {}
 
+# Configure deployment source for inner telemetry
 telemetryDeploymentMethod: "helm"
-## Additional environment variables to set
-## Example:
-## extraEnvVars:
-##   - name: HTTP_PROXY
-##     value: http://user:password@host:port/
-##   - name: HTTPS_PROXY
-##     value: https://user:password@host:port/
-##   - name: NO_PROXY
-##     value: foo.com,bar.net:4000
-##
+
+# Extra environment variables to be set
 extraEnvVars: []
+#   - name: HTTP_PROXY
+#     value: http://user:password@host:port/
+#   - name: HTTPS_PROXY
+#     value: https://user:password@host:port/
+#   - name: NO_PROXY
+#     value: foo.com,bar.net:4000
+#
 
 ## Secret values
 
 aws:
+  # AWS Credentials AccessKeyID
   accessKeyId: ""
+  # AWS Credentials: SecretAccessKey
   secretAccessKey: ""
+  # AWS Region
   region: ""
 
+# GCP Credentials JSON
 gcpCredentials: ""
 
 azure:
+  # Azure EventHub Connection String
   eventHubConnectionString: ""
+  # Azure Event Grid EventHub Connection String
   eventGridEventHubConnectionString: ""
+  # Azure service principal tenant id
   tenantId: ""
+  # Azure service principal client id
   clientId: ""
+  # Azure service principal client secret
   clientSecret: ""
+  # Azure region
   region: ""
 
 sysdig:
+  # Sysdig Secure URL
   url: "https://secure.sysdig.com"
+  # API Token to access Sysdig Secure
   secureAPIToken: ""
+  # Verify SSL certificate
   verifySSL: true
 
-# Alternatively, you can provide the name of an existing secret. It will be used
-# See example secret in 'templates/secret.yaml'
-# The existing secret must provide the following entries:
-#  aws_access_key_id
-#  aws_secret_access_key
-#  aws_region
-#  gcp_credentials
-#  secure_api_token
+# Provide an existing secret name (see details in 'templates/secret.yaml') for the entries it uses.
 existingSecretName: ""
 
-## Cloud Connector configuration
-
+# Rules Section for Cloud Connector
 rules: []
 
+# Thread-Detection event ingestion configuration ([config](#ingestors))
 ingestors: []
 
+# Scanning capabilities configuration ([config](#scanners))
 scanners: []
 
 bruteForceDetection:
+  # Time window for a bruteforce attack try
   duration: 24h
+  # Maximum number of tries for given time window
   maximumTries: 10
