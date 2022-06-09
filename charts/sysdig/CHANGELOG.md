@@ -4,6 +4,14 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.15.0
+### Major change
+* KSPMAnalyzer: rename cspm-analyzer to kspm-analyzer
+* KSPMCollector: rename cspm-collector to kspm-collector
+
+### Minor changes
+* KSPMAnalyzer: add documentation on port configuration
+
 ## v1.14.34
 ### Minor changes
 
