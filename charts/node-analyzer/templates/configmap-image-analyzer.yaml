@@ -1,5 +1,4 @@
-{{- if not .Values.gke.autopilot }}
-{{- if .Values.nodeAnalyzer.deploy }}
+{{ if and .Values.nodeAnalyzer.deploy (not .Values.secure.vulnerabilityManagement.newEngineOnly) (not .Values.gke.autopilot) }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -42,5 +41,4 @@ data:
   {{- if (.Values.nodeAnalyzer.noProxy | default .Values.global.proxy.noProxy) }}
   no_proxy: {{ .Values.nodeAnalyzer.noProxy | default .Values.global.proxy.noProxy }}
   {{- end -}}
-{{- end }}
 {{- end }}
