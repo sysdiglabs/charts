@@ -1,0 +1,12 @@
+dependencies:
+- name: agent
+  repository: file://../agent
+  version: 1.5.0
+- name: node-analyzer
+  repository: file://../node-analyzer
+  version: 1.4.2
+- name: cspm-collector
+  repository: file://../cspm-collector
+  version: 0.0.4
+digest: sha256:e54381d57e652423faa75c2cb0d7d58ff750c1435c85f057dcf92602a00b0211
+generated: "2022-06-10T08:49:29.782486776Z"
