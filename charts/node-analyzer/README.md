@@ -52,7 +52,7 @@ After a few seconds, you should see hosts and containers appearing in Sysdig Mon
 See
 the [Node Analyzer installation documentation](https://docs.sysdig.com/en/node-analyzer--multi-feature-installation.html)
 for details about installation, and
-[Running Node Analyzer Behind a Proxy](https://docs.sysdig.com/en/node-analyzer--multi-feature-installation.html#UUID-35c14c46-b327-c2a8-ed9c-82a2af995218_section-idm51621039128136)
+[Running Node Analyzer Behind a Proxy](https://docs.sysdig.com/en/docs/installation/node-analyzer-multi-feature-installation/#host-scanning-configuration-options)
 for proxy settings.
 
 ## Uninstalling the Chart
@@ -192,16 +192,14 @@ The Node Analyzer is deployed by default unless you set the value `nodeAnalyzer.
 The Node Analyzer daemonset contains three containers, each providing a specific functionality. This daemonset replaces
 the (deprecated) Node Image Analyzer daemonset.
 
-See
-the [Node Analyzer installation documentation](https://docs.sysdig.com/en/node-analyzer--multi-feature-installation.html)
+See the [Node Analyzer installation documentation](https://docs.sysdig.com/en/node-analyzer--multi-feature-installation.html)
 for details about installation, and
-[Running Node Analyzer Behind a Proxy](https://docs.sysdig.com/en/node-analyzer--multi-feature-installation.html#UUID-35c14c46-b327-c2a8-ed9c-82a2af995218_section-idm51621039128136)
+[Running Node Analyzer Behind a Proxy](https://docs.sysdig.com/en/docs/installation/node-analyzer-multi-feature-installation/#running-node-analyzer-behind-a-proxy)
 for proxy settings.
 
 ### Node Image Analyzer
 
-See
-the [Image Analyzer Configmap Options](https://docs.sysdig.com/en/node-analyzer--multi-feature-installation.html#UUID-35c14c46-b327-c2a8-ed9c-82a2af995218_section-idm514589352153208)
+See the [Image Analyzer Configmap Options](https://docs.sysdig.com/en/docs/installation/node-analyzer-multi-feature-installation/#image-analyzer-configmap-options)
 for details about the available options, and
 the [Node Image Analyzer documentation](https://docs.sysdig.com/en/scan-running-images.html) for details about the Node
 Image Analyzer feature.
@@ -215,8 +213,7 @@ the Sysdig Secure scanning backend. Image metadata and the full scan report is t
 
 ### Host Analyzer
 
-See
-the [Host Scanning Configuration Options](https://docs.sysdig.com/en/node-analyzer--multi-feature-installation.html#UUID-35c14c46-b327-c2a8-ed9c-82a2af995218_UUID-6666385b-c550-0660-f563-956f3a4fe093)
+See the [Host Scanning Configuration Options](https://docs.sysdig.com/en/docs/installation/node-analyzer-multi-feature-installation/#host-scanning-configuration-options)
 for details about installation options, and
 the [Host Scanning documentation](https://docs.sysdig.com/en/host-scanning.html) for details about the Host Scanning
 feature.
