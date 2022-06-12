@@ -4,6 +4,10 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.15.2
+### Minor changes
+* KSPM: add kspmCollector.deploy parameter to docs
+
 ## v1.15.1
 ### Minor changes
 * KSPM: bump tag to 1.3.0
