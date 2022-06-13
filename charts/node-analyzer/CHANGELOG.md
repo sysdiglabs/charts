@@ -4,6 +4,11 @@
 
 This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.4.3
+### Minor change
+
+Update chart to match `sysdig v1.14.34`
+
 ## v1.4.2
 ### Minor change
 
