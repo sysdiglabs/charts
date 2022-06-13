@@ -10,7 +10,7 @@ This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The 
 
 ### Minor changes
 * KSPMAnalyzer: add documentation on port configuration
-* KSPMAnalyzer: update image tag to 1.3.0
+* KSPMAnalyzer: update image tag to 1.4.0
 
 ## v1.4.3
 ### Minor change
