@@ -8,19 +8,12 @@ The Node Analyzer daemonset contains three containers, each providing a specific
 the (deprecated) Node Image Analyzer daemonset.
 
 ## Table of Contents
-- [Chart: Node Analyzer](#chart-node-analyzer)
-  - [Table of Contents](#table-of-contents)
-  - [Introduction](#introduction)
-  - [Prerequisites](#prerequisites)
-  - [Installing the Chart](#installing-the-chart)
-  - [Uninstalling the Chart](#uninstalling-the-chart)
-  - [Configuration](#configuration)
-  - [Node Analyzer](#node-analyzer)
-    - [Node Image Analyzer](#node-image-analyzer)
-    - [Host Analyzer](#host-analyzer)
-    - [Benchmark Runner](#benchmark-runner)
-    - [KSPM Analyzer (Preview)](#kspm-analyzer-preview)
-  - [Support](#support)
+- [Introduction](#introduction)
+- [Prerequisites](#prerequisites)
+- [Installing the Chart](#installing-the-chart)
+- [Uninstalling the Chart](#uninstalling-the-chart)
+- [Configuration](#configuration)
+- [Support](#support)
 
 ## Introduction
 
