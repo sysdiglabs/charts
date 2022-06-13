@@ -1,13 +1,13 @@
-{{ if .Values.nodeAnalyzer.cspmAnalyzer.deploy }}
+{{ if .Values.nodeAnalyzer.kspmAnalyzer.deploy }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "sysdig.fullname" . }}-cspm-analyzer
+  name: {{ template "sysdig.fullname" . }}-kspm-analyzer
   labels:
 {{ include "sysdig.labels" . | indent 4 }}
 data:
 {{- $env := "PRODUCTION" -}}
-{{ if .Values.nodeAnalyzer.cspmAnalyzer.debug }}
+{{ if .Values.nodeAnalyzer.kspmAnalyzer.debug }}
   {{- $env = "DEVELOPMENT" -}}
 {{ end}}
   environment: {{ $env }}

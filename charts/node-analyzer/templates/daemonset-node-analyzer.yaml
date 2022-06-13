@@ -16,7 +16,7 @@ spec:
     type: RollingUpdate
   template:
     metadata:
-      name: {{ template "nodeAnalyzer.name" . }}-node-analyzer
+      name: {{ template "nodeAnalyzer.fullname" . }}-node-analyzer
       labels:
         app.kubernetes.io/name: {{ include "nodeAnalyzer.name" . }}-node-analyzer
 {{ include "nodeAnalyzer.labels" . | indent 8 }}
@@ -86,6 +86,7 @@ spec:
 {{ if .Values.nodeAnalyzer.kspmAnalyzer.deploy }}
       - name: sysdig-kspm-analyzer
         image: {{ template "nodeAnalyzer.image.kspmAnalyzer" . }}
+        imagePullPolicy: {{ .Values.nodeAnalyzer.kspmAnalyzer.image.pullPolicy }}
         securityContext:
           runAsUser: 0
           privileged: true
@@ -131,6 +132,10 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.namespace
+          {{- range $key, $value := .Values.nodeAnalyzer.cspmAnalyzer.env }}
+          - name: "{{ $key }}"
+            value: "{{ $value }}"
+          {{- end }}
         volumeMounts:
           - name: root-vol
             mountPath: /host
@@ -260,6 +265,10 @@ spec:
               name: {{ template "nodeAnalyzer.fullname" . }}-image-analyzer
               key: no_proxy
               optional: true
+        {{- range $key, $value := .Values.nodeAnalyzer.imageAnalyzer.env }}
+        - name: "{{ $key }}"
+          value: "{{ $value }}"
+        {{- end }}
       - name: sysdig-host-analyzer
         image: {{ template "nodeAnalyzer.image.hostAnalyzer" . }}
         securityContext:
@@ -351,6 +360,10 @@ spec:
               key: no_proxy
               name: {{ template "nodeAnalyzer.fullname" . }}-host-analyzer
               optional: true
+        {{- range $key, $value := .Values.nodeAnalyzer.hostAnalyzer.env }}
+        - name: "{{ $key }}"
+          value: "{{ $value }}"
+        {{- end }}
 {{- end }}
       - name: sysdig-benchmark-runner
         image: {{ template "nodeAnalyzer.image.benchmarkRunner" . }}
@@ -418,6 +431,10 @@ spec:
               key: no_proxy
               name: {{ template "nodeAnalyzer.fullname" . }}-benchmark-runner
               optional: true
+        {{- range $key, $value := .Values.nodeAnalyzer.benchmarkRunner.env }}
+        - name: "{{ $key }}"
+          value: "{{ $value }}"
+        {{- end }}
 {{ if or  .Values.nodeAnalyzer.runtimeScanner.deploy .Values.secure.vulnerabilityManagement.newEngineOnly }}
       # Runtime Scanner #
       - name: sysdig-runtime-scanner
@@ -496,6 +513,10 @@ spec:
                 name: {{ template "nodeAnalyzer.fullname" . }}-runtime-scanner
                 key: no_proxy
                 optional: true
+          {{- range $key, $value := .Values.nodeAnalyzer.runtimeScanner.env }}
+          - name: "{{ $key }}"
+            value: "{{ $value }}"
+          {{- end }}
 {{- if .Values.nodeAnalyzer.runtimeScanner.settings.eveEnabled }}
           - name: EVE_ENABLED
             valueFrom:

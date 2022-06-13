@@ -8,12 +8,19 @@ The Node Analyzer daemonset contains three containers, each providing a specific
 the (deprecated) Node Image Analyzer daemonset.
 
 ## Table of Contents
-- [Introduction](#introduction)
-- [Prerequisites](#prerequisites)
-- [Installing the Chart](#installing-the-chart)
-- [Uninstalling the Chart](#uninstalling-the-chart)
-- [Configuration](#configuration)
-- [Support](#support)
+- [Chart: Node Analyzer](#chart-node-analyzer)
+  - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
+  - [Prerequisites](#prerequisites)
+  - [Installing the Chart](#installing-the-chart)
+  - [Uninstalling the Chart](#uninstalling-the-chart)
+  - [Configuration](#configuration)
+  - [Node Analyzer](#node-analyzer)
+    - [Node Image Analyzer](#node-image-analyzer)
+    - [Host Analyzer](#host-analyzer)
+    - [Benchmark Runner](#benchmark-runner)
+    - [KSPM Analyzer (Preview)](#kspm-analyzer-preview)
+  - [Support](#support)
 
 ## Introduction
 
@@ -52,7 +59,7 @@ After a few seconds, you should see hosts and containers appearing in Sysdig Mon
 See
 the [Node Analyzer installation documentation](https://docs.sysdig.com/en/node-analyzer--multi-feature-installation.html)
 for details about installation, and
-[Running Node Analyzer Behind a Proxy](https://docs.sysdig.com/en/node-analyzer--multi-feature-installation.html#UUID-35c14c46-b327-c2a8-ed9c-82a2af995218_section-idm51621039128136)
+[Running Node Analyzer Behind a Proxy](https://docs.sysdig.com/en/docs/installation/node-analyzer-multi-feature-installation/#host-scanning-configuration-options)
 for proxy settings.
 
 ## Uninstalling the Chart
@@ -112,6 +119,7 @@ The following table lists the configurable parameters of the Sysdig Node Analyze
 | `nodeAnalyzer.imageAnalyzer.resources.requests.memory`               | Node Image Analyzer Memory requests per node                                             | `512Mi`                                                                        |
 | `nodeAnalyzer.imageAnalyzer.resources.limits.cpu`                    | Node Image Analyzer CPU limit per node                                                   | `500m`                                                                         |
 | `nodeAnalyzer.imageAnalyzer.resources.limits.memory`                 | Node Image Analyzer Memory limit per node                                                | `1536Mi`                                                                       |
+| `nodeAnalyzer.imageAnalyzer.env`                                     | Extra environment variables that will be passed onto pods                                | `{}`                                                                           |
 | `nodeAnalyzer.hostAnalyzer.image.repository`                         | The image repository to pull the Host Analyzer from                                      | `sysdig/host-analyzer`                                                         |
 | `nodeAnalyzer.hostAnalyzer.image.tag`                                | The image tag to pull the Host Analyzer                                                  | `0.1.6`                                                                        |
 | `nodeAnalyzer.hostAnalyzer.image.digest`                             | The image digest to pull                                                                 | ` `                                                                            |
@@ -123,6 +131,7 @@ The following table lists the configurable parameters of the Sysdig Node Analyze
 | `nodeAnalyzer.hostAnalyzer.resources.requests.memory`                | Host Analyzer Memory requests per node                                                   | `512Mi`                                                                        |
 | `nodeAnalyzer.hostAnalyzer.resources.limits.cpu`                     | Host Analyzer CPU limit per node                                                         | `500m`                                                                         |
 | `nodeAnalyzer.hostAnalyzer.resources.limits.memory`                  | Host Analyzer Memory limit per node                                                      | `1536Mi`                                                                       |
+| `nodeAnalyzer.hostAnalyzer.env`                                      | Extra environment variables that will be passed onto pods                                | `{}`                                                                           |
 | `nodeAnalyzer.benchmarkRunner.image.repository`                      | The image repository to pull the Benchmark Runner from                                   | `sysdig/compliance-benchmark-runner`                                           |
 | `nodeAnalyzer.benchmarkRunner.image.tag`                             | The image tag to pull the Benchmark Runner                                               | `1.0.17.1`                                                                     |
 | `nodeAnalyzer.benchmarkRunner.image.digest`                          | The image digest to pull                                                                 | ` `                                                                            |
@@ -132,6 +141,7 @@ The following table lists the configurable parameters of the Sysdig Node Analyze
 | `nodeAnalyzer.benchmarkRunner.resources.requests.memory`             | Benchmark Runner Memory requests per node                                                | `128Mi`                                                                        |
 | `nodeAnalyzer.benchmarkRunner.resources.limits.cpu`                  | Benchmark Runner CPU limit per node                                                      | `500m`                                                                         |
 | `nodeAnalyzer.benchmarkRunner.resources.limits.memory`               | Benchmark Runner Memory limit per node                                                   | `256Mi`                                                                        |
+| `nodeAnalyzer.benchmarkRunner.env`                                   | Extra environment variables that will be passed onto pods                                | `{}`                                                                           |
 | `nodeAnalyzer.runtimeScanner.deploy`                                 | Deploy the Runtime Scanner                                                               | `false`                                                                        |
 | `nodeAnalyzer.runtimeScanner.extraMounts`                            | Specify a container engine custom socket path (docker, containerd, CRI-O)                |                                                                                |
 | `nodeAnalyzer.runtimeScanner.image.repository`                       | The image repository to pull the Runtime Scanner from                                    | `sysdig/eveclient-api`                                                         |
@@ -144,6 +154,7 @@ The following table lists the configurable parameters of the Sysdig Node Analyze
 | `nodeAnalyzer.runtimeScanner.resources.limits.cpu`                   | Runtime Scanner CPU limit per node                                                       | `500m`                                                                         |
 | `nodeAnalyzer.runtimeScanner.resources.limits.memory`                | Runtime Scanner Memory limit per node                                                    | `1536Mi`                                                                       |
 | `nodeAnalyzer.runtimeScanner.resources.limits.ephemeral-storage`     | Runtime Scanner Storage limit per node                                                   | `4Gi`                                                                          |
+| `nodeAnalyzer.runtimeScanner.env`                                    | Extra environment variables that will be passed onto pods                                | `{}`                                                                           |
 | `nodeAnalyzer.runtimeScanner.settings.eveEnabled`                    | Enables Sysdig Eve                                                                       | `false`                                                                        |
 | `nodeAnalyzer.runtimeScanner.eveConnector.deploy`                    | Enables Sysdig Eve Connector for third-party integrations                                | `false`                                                                        |
 | `nodeAnalyzer.runtimeScanner.eveConnector.resources.requests.cpu`    | Eve Connector CPU requests per node                                                      | `100m`                                                                         |
@@ -180,12 +191,21 @@ $ helm install --namespace nodeanalyzer node-analyzer -f values.yaml sysdig/node
 ```
 
 > **Tip**: You can use the default [values.yaml](values.yaml)
-## Chart Components
+## Node Analyzer
+
+The Node Analyzer is deployed by default unless you set the value `nodeAnalyzer.deploy` to `false`.
+
+The Node Analyzer daemonset contains three containers, each providing a specific functionality. This daemonset replaces
+the (deprecated) Node Image Analyzer daemonset.
+
+See the [Node Analyzer installation documentation](https://docs.sysdig.com/en/node-analyzer--multi-feature-installation.html)
+for details about installation, and
+[Running Node Analyzer Behind a Proxy](https://docs.sysdig.com/en/docs/installation/node-analyzer-multi-feature-installation/#running-node-analyzer-behind-a-proxy)
+for proxy settings.
 
 ### Node Image Analyzer
 
-See
-the [Image Analyzer Configmap Options](https://docs.sysdig.com/en/node-analyzer--multi-feature-installation.html#UUID-35c14c46-b327-c2a8-ed9c-82a2af995218_section-idm514589352153208)
+See the [Image Analyzer Configmap Options](https://docs.sysdig.com/en/docs/installation/node-analyzer-multi-feature-installation/#image-analyzer-configmap-options)
 for details about the available options, and
 the [Node Image Analyzer documentation](https://docs.sysdig.com/en/scan-running-images.html) for details about the Node
 Image Analyzer feature.
@@ -199,8 +219,7 @@ the Sysdig Secure scanning backend. Image metadata and the full scan report is t
 
 ### Host Analyzer
 
-See
-the [Host Scanning Configuration Options](https://docs.sysdig.com/en/node-analyzer--multi-feature-installation.html#UUID-35c14c46-b327-c2a8-ed9c-82a2af995218_UUID-6666385b-c550-0660-f563-956f3a4fe093)
+See the [Host Scanning Configuration Options](https://docs.sysdig.com/en/docs/installation/node-analyzer-multi-feature-installation/#host-scanning-configuration-options)
 for details about installation options, and
 the [Host Scanning documentation](https://docs.sysdig.com/en/host-scanning.html) for details about the Host Scanning
 feature.

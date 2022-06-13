@@ -189,7 +189,7 @@ Determine collector endpoint based on provided region or .Values.nodeAnalyzer.ap
 
 {{- define "deploy-na" -}}
 {{- if .Values.nodeAnalyzer.deploy -}}
-true 
+true
 {{- end -}}
 {{- end -}}
 
@@ -197,8 +197,8 @@ true
 Sysdig NATS service URL
 */}}
 {{- define "nodeAnalyzer.natsUrl" -}}
-{{- if .Values.nodeAnalyzer.natsUrl -}}
-    {{- .Values.nodeAnalyzer.natsUrl -}}
+{{- if .Values.natsUrl -}}
+    {{- .Values.natsUrl -}}
 {{- else -}}
     wss://{{ .Values.nodeAnalyzer.apiEndpoint }}:443
 {{- end -}}
