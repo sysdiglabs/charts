@@ -93,7 +93,9 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `psp.create`                                                         | Create Pod Security Policy to allow the agent running in clusters with PSP enabled       | `true`                                                                         |
 | `serviceAccount.create`                                              | Create serviceAccount                                                                    | `true`                                                                         |
 | `serviceAccount.name`                                                | Use this value as serviceAccountName                                                     | ` `                                                                            |
+| `priorityClassName`                                                  | Set the priority class for the agent daemonset                                           | `""`                                                                           |
 | `daemonset.deploy`                                                   | Deploy the agent daemonset                                                               | `true`                                                                         |
+| `daemonset.env`                                                      | Environment variables for the agent container. Provide as map of `VAR: val`              | `{}`                                                                           |
 | `daemonset.updateStrategy.type`                                      | The updateStrategy for updating the daemonset                                            | `RollingUpdate`                                                                |
 | `daemonset.updateStrategy.type.maxUnavailable`                       | The maximum number of pods that can be unavailable during the update process             |                                                                 |
 | `daemonset.nodeSelector`                                             | Node Selector                                                                            | `{}`                                                                           |
@@ -142,7 +144,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `nodeAnalyzer.noProxy`                                               | Proxy configuration variables                                                            |                                                                                |
 | `nodeAnalyzer.pullSecrets`                                           | Image pull secrets for the Node Analyzer containers                                      | `nil`                                                                          |
 | `nodeAnalyzer.imageAnalyzer.image.repository`                        | The image repository to pull the Node Image Analyzer from                                | `sysdig/node-image-analyzer`                                                   |
-| `nodeAnalyzer.imageAnalyzer.image.tag`                               | The image tag to pull the Node Image Analyzer                                            | `0.1.16`                                                                       |
+| `nodeAnalyzer.imageAnalyzer.image.tag`                               | The image tag to pull the Node Image Analyzer                                            | `0.1.17`                                                                       |
 | `nodeAnalyzer.imageAnalyzer.image.digest`                            | The image digest to pull                                                                 | ` `                                                                            |
 | `nodeAnalyzer.imageAnalyzer.image.pullPolicy`                        | The Image pull policy for the Node Image Analyzer                                        | `IfNotPresent`                                                                 |
 | `nodeAnalyzer.imageAnalyzer.dockerSocketPath`                        | The Docker socket path                                                                   |                                                                                |
@@ -156,7 +158,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `nodeAnalyzer.imageAnalyzer.resources.limits.memory`                 | Node Image Analyzer Memory limit per node                                                | `1536Mi`                                                                       |
 | `nodeAnalyzer.imageAnalyzer.env`                                     | Extra environment variables that will be passed onto pods                                | `{}`                                                                           |
 | `nodeAnalyzer.hostAnalyzer.image.repository`                         | The image repository to pull the Host Analyzer from                                      | `sysdig/host-analyzer`                                                         |
-| `nodeAnalyzer.hostAnalyzer.image.tag`                                | The image tag to pull the Host Analyzer                                                  | `0.1.6`                                                                        |
+| `nodeAnalyzer.hostAnalyzer.image.tag`                                | The image tag to pull the Host Analyzer                                                  | `0.1.7`                                                                        |
 | `nodeAnalyzer.hostAnalyzer.image.digest`                             | The image digest to pull                                                                 | ` `                                                                            |
 | `nodeAnalyzer.hostAnalyzer.image.pullPolicy`                         | The Image pull policy for the Host Analyzer                                              | `IfNotPresent`                                                                 |
 | `nodeAnalyzer.hostAnalyzer.schedule`                                 | The scanning schedule specification for the host analyzer expressed as a crontab         | `@dailydefault`                                                                |
@@ -180,7 +182,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `nodeAnalyzer.runtimeScanner.deploy`                                 | Deploy the Runtime Scanner                                                               | `false`                                                                        |
 | `nodeAnalyzer.runtimeScanner.extraMounts`                            | Specify a container engine custom socket path (docker, containerd, CRI-O)                |                                                                                |
 | `nodeAnalyzer.runtimeScanner.image.repository`                       | The image repository to pull the Runtime Scanner from                                    | `sysdig/eveclient-api`                                                         |
-| `nodeAnalyzer.runtimeScanner.image.tag`                              | The image tag to pull the Runtime Scanner                                                | `0.1.0`                                                                        |
+| `nodeAnalyzer.runtimeScanner.image.tag`                              | The image tag to pull the Runtime Scanner                                                | `1.0.4`                                                                        |
 | `nodeAnalyzer.runtimeScanner.image.digest`                           | The image digest to pull                                                                 | ` `                                                                            |
 | `nodeAnalyzer.runtimeScanner.image.pullPolicy`                       | The image pull policy for the Runtime Scanner                                            | `IfNotPresent`                                                                 |
 | `nodeAnalyzer.runtimeScanner.resources.requests.cpu`                 | Runtime Scanner CPU requests per node                                                    | `250m`                                                                         |
@@ -310,8 +312,7 @@ limits:
 
 * custom
 
-By setting "custom" or any value other than the ones defined above, you can create your own custom profile to match your
-requirements by setting the appropriate values in `resources` object.
+To set your own resource requests and limits to any values other than the ones defined above, you need to set `resourceProfile == custom` and then add specific values for `resources.*` to match your requirements by setting the appropriate values in the `resources` object.
 
 See [Tuning Sysdig Agent](https://docs.sysdig.com/en/tuning-sysdig-agent.html) for more info.
 
