@@ -3459,6 +3459,31 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/harbor-scanner-sysdig-secure-0.1.0/harbor-scanner-sysdig-secure-0.1.0.tgz
     version: 0.1.0
+  kspm-collector:
+  - apiVersion: v2
+    appVersion: 1.4.0
+    created: "2022-06-14T08:01:22.311770331Z"
+    description: Sysdig KSPM collector
+    digest: e908fa119036737067bd3cd0fbe2a7410ec6c1c3d40e35debf8ea50235a760f4
+    home: https://www.sysdig.com/
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: chen.shmilovich@sysdig.com
+      name: chen-shmilovich-sysdig
+    name: kspm-collector
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/kspm-collector-0.1.0/kspm-collector-0.1.0.tgz
+    version: 0.1.0
   node-analyzer:
   - apiVersion: v2
     appVersion: 12.6.0
@@ -8948,4 +8973,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2022-06-14T07:39:09.434775801Z"
+generated: "2022-06-14T08:01:22.314254665Z"
