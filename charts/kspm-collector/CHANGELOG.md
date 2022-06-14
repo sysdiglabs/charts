@@ -5,7 +5,7 @@
 * Rename cspm-collector to kspm-collector
 
 ### Minor change
-* Update image tag to 1.3.0
+* Update image tag to 1.4.0
 
 # v0.0.4
 
