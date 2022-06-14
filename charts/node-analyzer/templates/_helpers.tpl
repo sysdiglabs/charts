@@ -102,8 +102,8 @@ Return the proper image name for the Benchmark Runner
 {{/*
 Return the proper image name for the CSPM Analyzer
 */}}
-{{- define "nodeAnalyzer.image.cspmAnalyzer" -}}
-    {{- include "nodeAnalyzer.imageRegistry" . -}} / {{- .Values.nodeAnalyzer.cspmAnalyzer.image.repository -}} {{- if .Values.nodeAnalyzer.cspmAnalyzer.image.digest -}} @ {{- .Values.nodeAnalyzer.cspmAnalyzer.image.digest -}} {{- else -}} : {{- .Values.nodeAnalyzer.cspmAnalyzer.image.tag -}} {{- end -}}
+{{- define "nodeAnalyzer.image.kspmAnalyzer" -}}
+    {{- include "nodeAnalyzer.imageRegistry" . -}} / {{- .Values.nodeAnalyzer.kspmAnalyzer.image.repository -}} {{- if .Values.nodeAnalyzer.kspmAnalyzer.image.digest -}} @ {{- .Values.nodeAnalyzer.kspmAnalyzer.image.digest -}} {{- else -}} : {{- .Values.nodeAnalyzer.kspmAnalyzer.image.tag -}} {{- end -}}
 {{- end -}}
 
 {{/*

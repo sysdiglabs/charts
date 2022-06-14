@@ -83,10 +83,10 @@ spec:
       # the host
       hostPID: true
       containers:
-{{ if .Values.nodeAnalyzer.cspmAnalyzer.deploy }}
-      - name: sysdig-cspm-analyzer
-        image: {{ template "nodeAnalyzer.image.cspmAnalyzer" . }}
-        imagePullPolicy: {{ .Values.nodeAnalyzer.cspmAnalyzer.image.pullPolicy }}
+{{ if .Values.nodeAnalyzer.kspmAnalyzer.deploy }}
+      - name: sysdig-kspm-analyzer
+        image: {{ template "nodeAnalyzer.image.kspmAnalyzer" . }}
+        imagePullPolicy: {{ .Values.nodeAnalyzer.kspmAnalyzer.image.pullPolicy }}
         securityContext:
           runAsUser: 0
           privileged: true
@@ -107,22 +107,22 @@ spec:
           - name: ENVIRONMENT
             valueFrom:
               configMapKeyRef:
-                name: {{ template "nodeAnalyzer.fullname" . }}-cspm-analyzer
+                name: {{ template "nodeAnalyzer.fullname" . }}-kspm-analyzer
                 key: environment
           - name: EXTERNAL_NATS_URL
             valueFrom:
               configMapKeyRef:
-                name: {{ template "nodeAnalyzer.fullname" . }}-cspm-analyzer
+                name: {{ template "nodeAnalyzer.fullname" . }}-kspm-analyzer
                 key: external_nats_url
           - name: CLUSTER_NAME
             valueFrom:
               configMapKeyRef:
-                name: {{ template "nodeAnalyzer.fullname" . }}-cspm-analyzer
+                name: {{ template "nodeAnalyzer.fullname" . }}-kspm-analyzer
                 key: cluster_name
           - name: AGENT_APP_NAME
             valueFrom:
               configMapKeyRef:
-                name: {{ template "nodeAnalyzer.fullname" . }}-cspm-analyzer
+                name: {{ template "nodeAnalyzer.fullname" . }}-kspm-analyzer
                 key: agent_app_name
           - name: NODE_NAME
             valueFrom:
