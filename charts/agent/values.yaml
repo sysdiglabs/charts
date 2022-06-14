@@ -57,14 +57,9 @@ image:
 #   limits:
 #     cpu: 5000m
 #     memory: 6144Mi
-#
-# * custom
-#   If you want to define your own resource profile, just comment the resourceProfile line,
-#   uncomment the section below, and fill in the appropriate values.
-#   You may want to check https://docs.sysdig.com/en/tuning-sysdig-agent.html
-#   If you have more questions or concerns, please refer to Sysdig Support.
+
 resourceProfile: small
-# resourceProfile: custom
+
 # resources:
 #   requests:
 #     cpu: <cpu requests>m
