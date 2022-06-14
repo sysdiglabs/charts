@@ -65,6 +65,39 @@ helm install -n sysdig-agent sysdig sysdig/sysdig-deploy -f values.sysdig.yaml
 
 Further configuration information can be found below.
 
+## Migrating from `sysdig`
+
+To easily migrate from the previous `sysdig` chart to the new unified `sysdig-deploy` chart, use the migration helper script from this repo.
+
+Requirements:
+- Python 3.x
+- PyYAML
+
+Save the user-values from the currently deployed version of the `sysdig` chart:
+
+```bash
+helm get values -n sysdig-agent sysdig-agent -o yaml > values.old.yaml
+```
+
+Note: the migration script has a dependency on `pyyaml`, which can be installed with
+
+```bash
+pip install pyyaml
+```
+
+Run the migration script and redirect the output to a new file. For example, if the old values were saved to `values.old.yaml`:
+
+```bash
+python scripts/migrate_values.py values.old.yaml > values.new.yaml
+```
+
+Now the `sysdig` chart can be removed and replaced with the `sysdig-deploy` chart.
+
+```bash
+helm delete -n sysdig-agent sysdig-agent
+
+helm install -n sysdig-agent sysdig sysdig/sysdig-deploy -f values.new.yaml
+
 ## Upgrading
 
 Refresh the `sysdig` helm repo to get the latest chart.
