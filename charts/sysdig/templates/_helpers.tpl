@@ -155,16 +155,16 @@ Return the proper image name for the Benchmark Runner
 {{- end -}}
 
 {{/*
-Return the proper image name for the CSPM Analyzer
+Return the proper image name for the KSPM Analyzer
 */}}
-{{- define "sysdig.image.cspmAnalyzer" -}}
-    {{- include "sysdig.imageRegistry" . -}} / {{- .Values.nodeAnalyzer.cspmAnalyzer.image.repository -}} {{- if .Values.nodeAnalyzer.cspmAnalyzer.image.digest -}} @ {{- .Values.nodeAnalyzer.cspmAnalyzer.image.digest -}} {{- else -}} : {{- .Values.nodeAnalyzer.cspmAnalyzer.image.tag -}} {{- end -}}
+{{- define "sysdig.image.kspmAnalyzer" -}}
+    {{- include "sysdig.imageRegistry" . -}} / {{- .Values.nodeAnalyzer.kspmAnalyzer.image.repository -}} {{- if .Values.nodeAnalyzer.kspmAnalyzer.image.digest -}} @ {{- .Values.nodeAnalyzer.kspmAnalyzer.image.digest -}} {{- else -}} : {{- .Values.nodeAnalyzer.kspmAnalyzer.image.tag -}} {{- end -}}
 {{- end -}}
 
-Return the proper image name for the CSPM Collector
+Return the proper image name for the KSPM Collector
 */}}
-{{- define "sysdig.image.cspmCollector" -}}
-    {{- include "sysdig.imageRegistry" . -}} / {{- .Values.cspmCollector.image.repository -}} {{- if .Values.cspmCollector.image.digest -}} @ {{- .Values.cspmCollector.image.digest -}} {{- else -}} : {{- .Values.cspmCollector.image.tag -}} {{- end -}}
+{{- define "sysdig.image.kspmCollector" -}}
+    {{- include "sysdig.imageRegistry" . -}} / {{- .Values.kspmCollector.image.repository -}} {{- if .Values.kspmCollector.image.digest -}} @ {{- .Values.kspmCollector.image.digest -}} {{- else -}} : {{- .Values.kspmCollector.image.tag -}} {{- end -}}
 {{- end -}}
 
 {{/*

@@ -92,6 +92,9 @@ nodeAnalyzer:
     - effect: NoSchedule
       key: node-role.kubernetes.io/master
 
+  # Set nodeAnalyzer daemonset priorityClassName
+  priorityClassName:
+
   # Allow the DaemonSet to set labels
   labels: {}
   # Use this pullSecret to pull images from a private registry
@@ -128,7 +131,7 @@ nodeAnalyzer:
   imageAnalyzer:
     image:
       repository: sysdig/node-image-analyzer
-      tag: 0.1.16
+      tag: 0.1.17
       digest:
       pullPolicy: IfNotPresent
 
@@ -173,10 +176,12 @@ nodeAnalyzer:
       limits:
         cpu: 500m
         memory: 1536Mi
+
+    env: {}
   hostAnalyzer:
     image:
       repository: sysdig/host-analyzer
-      tag: 0.1.6
+      tag: 0.1.7
       digest:
       pullPolicy: IfNotPresent
 
@@ -198,6 +203,8 @@ nodeAnalyzer:
       limits:
         cpu: 500m
         memory: 1536Mi
+
+    env: {}
   benchmarkRunner:
     includeSensitivePermissions: false
 
@@ -215,17 +222,19 @@ nodeAnalyzer:
         cpu: 500m
         memory: 256Mi
 
+    env: {}
+
   runtimeScanner:
     deploy: false
     image:
       repository: sysdig/vuln-runtime-scanner
-      tag: 1.0.0
+      tag: 1.0.4
       digest:
       pullPolicy: IfNotPresent
 
     extraMounts: []
     # example for bottlerocket
-    # extraMounts: []
+    # extraMounts:
     #   - name: socketpath
     #     mountPath: /var/run/containerd/containerd.sock
 
@@ -238,6 +247,8 @@ nodeAnalyzer:
         cpu: 1000m
         memory: 2Gi
         ephemeral-storage: "4Gi"
+
+    env: {}
 
     settings:
       eveEnabled: false
@@ -261,12 +272,12 @@ nodeAnalyzer:
       settings:
         replicas: 1
 
-  cspmAnalyzer:
+  kspmAnalyzer:
     deploy: false
     debug: false
     image:
-      repository: sysdig/cspm-analyzer
-      tag: 1.1.0
+      repository: sysdig/kspm-analyzer
+      tag: 1.4.0
       digest:
       pullPolicy: IfNotPresent
 
@@ -277,3 +288,5 @@ nodeAnalyzer:
       limits:
         cpu: 500m
         memory: 1536Mi
+
+    env: {}

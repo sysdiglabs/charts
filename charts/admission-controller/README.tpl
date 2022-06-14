@@ -259,11 +259,17 @@ Either way, you should see some logs in Admission Controller tail
 
 ## Troubleshooting
 
+### Q: I get tons of "TLS handshake error"
+
+A: This happens when DEBUG is enabled but Admission Controller will behave as expected. Those calls are some non-Sysidg direct calls to the Admission Controller without TLS, which raises this informational log by Go internal library.
+
+
 ### Q: I need to troubleshoot, any way to switch to `debug verbose`?
 S: Add the `LOG_LEVEL=debug` key-value to the admission configmap and respawn webhook
 
-    $ kubectl edit configmaps -n {{ .Release.Namespace }} admission-controller-webhook
+    $ kubectl edit configmaps -n {{ .Release.Namespace }} sysdig-admission-controller-webhook
     $ kubectl delete pod -n {{ .Release.Namespace }} -l app.kubernetes.io/component=webhook
+    
 
 ### Q: I don't see `Policy Rules` honored
 S: Review the [Admission Controller - Understanding:How Policy Conditions are applied]({{ .Project.URL }}/#understanding-how-policy-conditions-are-applied)
