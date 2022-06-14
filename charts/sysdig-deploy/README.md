@@ -120,6 +120,8 @@ helm upgrade -n sysdig-agent sysdig sysdig/sysdig-deploy -f values.sysdig.yaml
 
 ## Configuration
 
+The following table lists the configurable parameters of this chart and their default values.
+
 | Parameter                        | Description                                                       | Default        |
 | -------------------------------- | ----------------------------------------------------------------- | -------------- |
 | `global.clusterConfig.name`      | Identifier for this cluster                                       | `""`           |
@@ -137,6 +139,7 @@ helm upgrade -n sysdig-agent sysdig sysdig/sysdig-deploy -f values.sysdig.yaml
 | `nodeAnalyzer.nodeAnalyzer.apiEndpoint`           | nodeAnalyzer apiEndpoint                         | `""`           |
 | `kspmCollector.enabled`          | Enable the kspmCollector component in this chart                  | `false`        |
 | `kspmCollector.apiEndpoint`      | kspmCollector apiEndpoint                                         | `""`           |
+
 ## Agent
 
 For possible configuration values of the Agent, please refer to the Agent subchart [README](https://github.com/sysdiglabs/charts/tree/master/charts/agent/README.md). All agent-specific configuration can be prefixed with `agent.` to apply them to this chart.
