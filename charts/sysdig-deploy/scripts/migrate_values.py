@@ -3,52 +3,47 @@ import sys
 import yaml
 
 
-## path mappings for values to be extracted to globals
-GLOBAL_VALUES = [
-    ("clusterName",                    "global.clusterConfig.name"),
-    ("sysdig.accessKey",               "global.sysdig.accessKey"),
-    ("sysdig.existingAccessKeySecret", "global.sysdig.accessKeySecret"),
-    ("image.registry",                 "global.image.registry"),
-]
-
-## The keys listed here will be copied over to their respective sections as-is
-AGENT_VALUES = [
-    "auditLog",
-    "collectorSettings",
-    "daemonset",
-    "ebpf",
-    "extraVolumes",
-    "gke",
-    "image.repository",
-    "image.tag",
-    "image.pullPolicy",
-    "leaderelection",
-    "namespace",
-    "priorityClassName",
-    "prometheus",
-    "proxy",
-    "psp",
-    "rbac",
-    "resourceProfile",
-    "scc",
-    "secure",
-    "serviceAccount",
-    "slim",
-    "sysdig.disableCaptures",
-    "sysdig.settings",
-    "timezone",
-    "tolerations",
-]
-
-NODE_ANALYZER_VALUES = [
-    "gke",
-    "image.pullPolicy",
-    "natsUrl",
-    "nodeAnalyzer",
-    "psp",
-    "rbac",
-    "scc",
-    "secure",
+## path mappings for values to be extracted to new paths
+VALUES_MAPPINGS = [
+    # globals
+    ("clusterName",                     "global.clusterConfig.name"),
+    ("sysdig.accessKey",                "global.sysdig.accessKey"),
+    ("sysdig.existingAccessKeySecret",  "global.sysdig.accessKeySecret"),
+    ("image.registry",                  "global.image.registry"),
+    # agent-only
+    ("auditLog",                        "agent.auditLog"),
+    ("collectorSettings",               "agent.collectorSettings"),
+    ("daemonset",                       "agent.daemonset"),
+    ("ebpf",                            "agent.ebpf"),
+    ("extraVolumes",                    "agent.extraVolumes"),
+    ("gke",                             "agent.gke"),
+    ("image.repository",                "agent.image.repository"),
+    ("image.tag",                       "agent.image.tag"),
+    ("image.pullPolicy",                "agent.image.pullPolicy"),
+    ("leaderelection",                  "agent.leaderelection"),
+    ("priorityClassName",               "agent.priorityClassName"),
+    ("prometheus",                      "agent.prometheus"),
+    ("proxy",                           "agent.proxy"),
+    ("psp",                             "agent.psp"),
+    ("rbac",                            "agent.rbac"),
+    ("resourceProfile",                 "agent.resourceProfile"),
+    ("scc",                             "agent.scc"),
+    ("secure",                          "agent.secure"),
+    ("serviceAccount",                  "agent.serviceAccount"),
+    ("slim",                            "agent.slim"),
+    ("sysdig.disableCaptures",          "agent.sysdig.disableCaptures"),
+    ("sysdig.settings",                 "agent.sysdig.settings"),
+    ("timezone",                        "agent.timezone"),
+    ("tolerations",                     "agent.tolerations"),
+    # node-analyzer-only
+    ("gke",                             "nodeAnalyzer.gke"),
+    ("image.pullPolicy",                "nodeAnalyzer.image.pullPolicy"),
+    ("natsUrl",                         "nodeAnalyzer.natsUrl"),
+    ("nodeAnalyzer",                    "nodeAnalyzer.nodeAnalyzer"),
+    ("psp",                             "nodeAnalyzer.psp"),
+    ("rbac",                            "nodeAnalyzer.rbac"),
+    ("scc",                             "nodeAnalyzer.scc"),
+    ("secure",                          "nodeAnalyzer.secure"),
 ]
 
 
@@ -82,33 +77,11 @@ def set_nested_key(key, value, values):
 
 
 # copy keys from old path to new
-def populate_globals(new_values, old_values):
-    for old_path, new_path in GLOBAL_VALUES:
+def populate_values(new_values, old_values):
+    for old_path, new_path in VALUES_MAPPINGS:
         value = get_nested_key(old_path, old_values)
         if value:
             set_nested_key(new_path, value, new_values)
-
-
-def populate_agent(new_values, old_values):
-    agent_values = {}
-
-    for key in AGENT_VALUES:
-        value = get_nested_key(key, old_values)
-        if value:
-            set_nested_key(key, value, agent_values)
-
-    new_values["agent"] = agent_values
-
-
-def populate_node_analyzer(new_values, old_values):
-    node_analyzer_values = {}
-
-    for key in NODE_ANALYZER_VALUES:
-        value = get_nested_key(key, old_values)
-        if value:
-            set_nested_key(key, value, node_analyzer_values)
-
-    new_values["nodeAnalyzer"] = node_analyzer_values
 
 
 def migrate_values(old_values_filename):
@@ -117,9 +90,7 @@ def migrate_values(old_values_filename):
         old_values = yaml.safe_load(f)
 
     new_values = {}
-    populate_globals(new_values, old_values)
-    populate_agent(new_values, old_values)
-    populate_node_analyzer(new_values, old_values)
+    populate_values(new_values, old_values)
 
     new_values_yaml = yaml.dump(new_values, sort_keys=False)
     print(new_values_yaml)
