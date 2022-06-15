@@ -3,44 +3,112 @@ import sys
 import yaml
 
 
+## path mappings for values to be extracted to globals
+GLOBAL_VALUES = [
+    ("clusterName",                    "global.clusterConfig.name"),
+    ("sysdig.accessKey",               "global.sysdig.accessKey"),
+    ("sysdig.existingAccessKeySecret", "global.sysdig.accessKeySecret"),
+    ("image.registry",                 "global.image.registry"),
+]
+
+## The keys listed here will be copied over to their respective sections as-is
+AGENT_VALUES = [
+    "auditLog",
+    "collectorSettings",
+    "daemonset",
+    "ebpf",
+    "extraVolumes",
+    "gke",
+    "image.repository",
+    "image.tag",
+    "image.pullPolicy",
+    "leaderelection",
+    "namespace",
+    "priorityClassName",
+    "prometheus",
+    "proxy",
+    "psp",
+    "rbac",
+    "resourceProfile",
+    "scc",
+    "secure",
+    "serviceAccount",
+    "slim",
+    "sysdig.disableCaptures",
+    "sysdig.settings",
+    "timezone",
+    "tolerations",
+]
+
+NODE_ANALYZER_VALUES = [
+    "gke",
+    "image.pullPolicy",
+    "natsUrl",
+    "nodeAnalyzer",
+    "psp",
+    "rbac",
+    "scc",
+    "secure",
+]
+
+
 ## helpers for migrating values
-def populate_globals(new_values, values):
-    globals = {
-        "clusterConfig": {},
-        "sysdig": {},
-        "image": {},
-    }
+## returns nested key if it exists, or None
+def get_nested_key(key, values):
+    nested_keys = key.split(".")
 
-    name = values.pop("clusterName", "")
-    if name:
-        globals["clusterConfig"]["name"] = name
+    value = values
+    for nested_key in nested_keys:
+        value = value.get(nested_key, None)
+        if value is None:
+            break
 
-    accessKey = values.get("sysdig", {}).pop("accessKey", "")
-    if accessKey:
-        globals["sysdig"]["accessKey"] = accessKey
-
-    accessKeySecret = values.get("sysdig", {}).pop("existingAccessKeySecret", "")
-    if accessKeySecret:
-        globals["sysdig"]["accessKeySecret"] = accessKeySecret
-
-    registry = values.get("image", {}).pop("registry", "")
-    if registry:
-        globals["image"]["registry"] = registry
-
-    new_values["global"] = globals
+    return copy.deepcopy(value)
 
 
-def populate_agent(new_values, values):
-    new_values["agent"] = copy.deepcopy(values)
-    new_values["agent"].pop("nodeAnalyzer", {})
-    new_values["agent"].pop("nodeImageAnalyzer", {})
+## set nested key, creating nested dicts if required
+def set_nested_key(key, value, values):
+    nested_keys = key.split(".")
+
+    path = values
+    for nested_key in nested_keys[:-1]:
+        if nested_key in path:
+            path = path.get(nested_key, None)
+        else:
+            path[nested_key] = {}
+            path = path[nested_key]
+
+    path[nested_keys[-1]] = value
 
 
-def populate_node_analyzer(new_values, values):
-    new_values["nodeAnalyzer"] = copy.deepcopy(values)
-    new_values["nodeAnalyzer"].pop("daemonset", {})
-    new_values["nodeAnalyzer"].pop("resourceProfile", {})
-    new_values["nodeAnalyzer"].get("sysdig", {}).pop("settings", {})
+# copy keys from old path to new
+def populate_globals(new_values, old_values):
+    for old_path, new_path in GLOBAL_VALUES:
+        value = get_nested_key(old_path, old_values)
+        if value:
+            set_nested_key(new_path, value, new_values)
+
+
+def populate_agent(new_values, old_values):
+    agent_values = {}
+
+    for key in AGENT_VALUES:
+        value = get_nested_key(key, old_values)
+        if value:
+            set_nested_key(key, value, agent_values)
+
+    new_values["agent"] = agent_values
+
+
+def populate_node_analyzer(new_values, old_values):
+    node_analyzer_values = {}
+
+    for key in NODE_ANALYZER_VALUES:
+        value = get_nested_key(key, old_values)
+        if value:
+            set_nested_key(key, value, node_analyzer_values)
+
+    new_values["nodeAnalyzer"] = node_analyzer_values
 
 
 def migrate_values(old_values_filename):
@@ -65,3 +133,4 @@ if __name__ == "__main__":
     old_values_filename = sys.argv[1]
 
     migrate_values(old_values_filename)
+
