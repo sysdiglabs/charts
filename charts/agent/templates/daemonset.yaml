@@ -89,10 +89,6 @@ spec:
           resources:
 {{ toYaml .Values.slim.resources | indent 12 }}
           env:
-            - name: K8S_NODE
-              valueFrom:
-                fieldRef:
-                  fieldPath: spec.nodeName
           {{- if or (include "agent.ebpfEnabled" .) .Values.gke.autopilot }}
             - name: SYSDIG_BPF_PROBE
               value:
@@ -141,6 +137,10 @@ spec:
             readOnlyRootFilesystem: false
             allowPrivilegeEscalation: true
           env:
+            - name: K8S_NODE
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
             {{- if or (include "agent.ebpfEnabled" .)  .Values.gke.autopilot}}
             - name: SYSDIG_BPF_PROBE
               value:
