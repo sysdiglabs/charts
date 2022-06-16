@@ -82,6 +82,8 @@ extraEnvVars: []
 ## Secret values
 
 aws:
+  # get the credentials from current role
+  roleBasedAccess: false
   # AWS Credentials AccessKeyID
   accessKeyId: ""
   # AWS Credentials: SecretAccessKey

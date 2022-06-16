@@ -50,6 +50,7 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
+            {{- if not .Values.aws.roleBasedAccess }}
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
@@ -65,6 +66,7 @@ spec:
                 secretKeyRef:
                   name: {{ include "cloud-connector.secretname" . }}
                   key: aws_region
+            {{- end }}
             - name: SECURE_URL
               value: {{ .Values.sysdig.url }}
             - name: SECURE_API_TOKEN

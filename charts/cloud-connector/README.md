@@ -23,7 +23,7 @@ $ pre-commit run -a
 $ helm repo add sysdig https://charts.sysdig.com
 $ helm repo update
 $ helm upgrade --install cloud-connector sysdig/cloud-connector \
-      --create-namespace -n cloud-connector --version=0.7.8  \
+      --create-namespace -n cloud-connector --version=0.7.9  \
       --set sysdig.secureAPIToken=SECURE_API_TOKEN
 ```
 
@@ -47,7 +47,7 @@ to enable threat-detection and image scanning capabilities for the main three pr
 To install the chart with the release name `cloud-connector`:
 
 ```console
-$ helm upgrade --install cloud-connector sysdig/cloud-connector -n cloud-connector --version=0.7.8
+$ helm upgrade --install cloud-connector sysdig/cloud-connector -n cloud-connector --version=0.7.9
 ```
 
 The command deploys the Sysdig Cloud Connector on the Kubernetes cluster in the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.
@@ -93,6 +93,7 @@ The following table lists the configurable parameters of the `cloud-connector` c
 | affinity                                | Configure affinity rules                                                                                               | <code>{}</code>                                                                                          |
 | telemetryDeploymentMethod               | Configure deployment source for inner telemetry                                                                        | <code>"helm"</code>                                                                                      |
 | extraEnvVars                            | Extra environment variables to be set                                                                                  | <code>[]</code>                                                                                          |
+| aws.roleBasedAccess                     | get the credentials from current role                                                                                  | <code>false</code>                                                                                       |
 | aws.accessKeyId                         | AWS Credentials AccessKeyID                                                                                            | <code>""</code>                                                                                          |
 | aws.secretAccessKey                     | AWS Credentials: SecretAccessKey                                                                                       | <code>""</code>                                                                                          |
 | aws.region                              | AWS Region                                                                                                             | <code>""</code>                                                                                          |
@@ -118,7 +119,7 @@ Specify each parameter using the **`--set key=value[,key=value]`** argument to `
 
 ```console
 $ helm upgrade --install cloud-connector sysdig/cloud-connector \
-    --create-namespace -n cloud-connector --version=0.7.8 \
+    --create-namespace -n cloud-connector --version=0.7.9 \
     --set sysdig.secureAPIToken=YOUR-KEY-HERE
 ```
 
@@ -127,7 +128,7 @@ installing the chart. For example:
 
 ```console
 $ helm upgrade --install cloud-connector sysdig/cloud-connector \
-    --create-namespace -n cloud-connector --version=0.7.8 \
+    --create-namespace -n cloud-connector --version=0.7.9 \
     --values values.yaml
 ```
 
