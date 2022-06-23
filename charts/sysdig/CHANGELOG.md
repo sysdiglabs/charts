@@ -4,6 +4,10 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.15.6
+### Minor changes
+* RuntimeScanner version 1.1.1 with Golang support
+
 ## v1.15.5
 ### Minor changes
 * Fix expose node name to the Sysdig Agent container through Downward API
