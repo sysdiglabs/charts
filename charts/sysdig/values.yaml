@@ -471,7 +471,7 @@ nodeAnalyzer:
 
     image:
       repository: sysdig/compliance-benchmark-runner
-      tag: 1.0.17.1
+      tag: 1.0.17.2
       digest:
       pullPolicy: IfNotPresent
 
@@ -489,7 +489,7 @@ nodeAnalyzer:
     deploy: false
     image:
       repository: sysdig/vuln-runtime-scanner
-      tag: 1.0.4
+      tag: 1.1.1
       digest:
       pullPolicy: IfNotPresent
 
