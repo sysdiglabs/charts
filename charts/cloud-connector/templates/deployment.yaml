@@ -118,6 +118,8 @@ spec:
               name: cloud-connector-config
             - mountPath: /var/secrets/gcp
               name: google-application-credentials
+            - mountPath: /tmp
+              name: tmp-dir
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -131,6 +133,8 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
+        - name: tmp-dir
+          emptyDir: {}
         - name: home-dir
           emptyDir: {}
         - name: cloud-connector-config
