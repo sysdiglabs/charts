@@ -182,7 +182,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `nodeAnalyzer.runtimeScanner.deploy`                                 | Deploy the Runtime Scanner                                                               | `false`                                                                        |
 | `nodeAnalyzer.runtimeScanner.extraMounts`                            | Specify a container engine custom socket path (docker, containerd, CRI-O)                |                                                                                |
 | `nodeAnalyzer.runtimeScanner.image.repository`                       | The image repository to pull the Runtime Scanner from                                    | `sysdig/eveclient-api`                                                         |
-| `nodeAnalyzer.runtimeScanner.image.tag`                              | The image tag to pull the Runtime Scanner                                                | `1.0.4`                                                                        |
+| `nodeAnalyzer.runtimeScanner.image.tag`                              | The image tag to pull the Runtime Scanner                                                | `1.1.1`                                                                        |
 | `nodeAnalyzer.runtimeScanner.image.digest`                           | The image digest to pull                                                                 | ` `                                                                            |
 | `nodeAnalyzer.runtimeScanner.image.pullPolicy`                       | The image pull policy for the Runtime Scanner                                            | `IfNotPresent`                                                                 |
 | `nodeAnalyzer.runtimeScanner.resources.requests.cpu`                 | Runtime Scanner CPU requests per node                                                    | `250m`                                                                         |
@@ -394,7 +394,7 @@ KSPM Collector collects Kubernetes resource manifests and sends them to be evalu
 The scan results are displayed in Sysdig Secure's Actionable Compliance screens.
 
 ## GKE Autopilot
-Autopilot is an operation mode for creating and managing clusters in GKE. 
+Autopilot is an operation mode for creating and managing clusters in GKE.
 With Autopilot, Google configures and manages the underlying node infrastructure for you.
 
 To deploy the Sysdig agent in GKE clusters running in Autopilot mode, run:
@@ -403,7 +403,7 @@ To deploy the Sysdig agent in GKE clusters running in Autopilot mode, run:
 $ helm install --namespace sysdig-agent sysdig-agent --set sysdig.accessKey=YOUR-KEY-HERE --set sysdig.settings.collector=COLLECTOR_URL sysdig/sysdig --set gke.autopilot=true
 ```
 
-When the flag `gke.autopilot=true` gets `true`, the chart configuration is overridden as follows: 
+When the flag `gke.autopilot=true` gets `true`, the chart configuration is overridden as follows:
  - `nodeAnalyzer.deploy=false`
  - `ebpf.enabled=true`
  - `ebpf.settings.mountEtcVolume=false`
