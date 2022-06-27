@@ -65,15 +65,17 @@ def get_nested_key(key, values):
 def set_nested_key(key, value, values):
     nested_keys = key.split(".")
 
-    path = values
+    # descend into the nested keys, where the value at the cuurently traversed
+    # path is nested_values
+    nested_values = values
     for nested_key in nested_keys[:-1]:
-        if nested_key in path:
-            path = path.get(nested_key, None)
+        if nested_key in nested_values:
+            nested_values = nested_values.get(nested_key, None)
         else:
-            path[nested_key] = {}
-            path = path[nested_key]
+            nested_values[nested_key] = {}
+            nested_values = nested_values[nested_key]
 
-    path[nested_keys[-1]] = value
+    nested_values[nested_keys[-1]] = value
 
 
 # copy keys from old path to new
