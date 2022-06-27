@@ -1,3 +1,4 @@
+{{- if .Values.daemonset.deploy }}
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
@@ -295,3 +296,4 @@ spec:
     type: {{ .Values.daemonset.updateStrategy.type }}
     rollingUpdate:
       maxUnavailable: {{include "agent.parallelStarts" .}}
+{{- end }}

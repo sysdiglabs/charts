@@ -1,9 +1,9 @@
-{{- if and .Values.rbac.create .Values.cspmCollector.deploy  }}
+{{- if and .Values.rbac.create .Values.kspmCollector.deploy  }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: {{ template "sysdig.fullname" .}}-cspm-collector
+  name: {{ template "sysdig.fullname" .}}-kspm-collector
   labels:
 {{ include "sysdig.labels" . | indent 4 }}
 rules:

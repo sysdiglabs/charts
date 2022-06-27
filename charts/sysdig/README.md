@@ -93,9 +93,11 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `psp.create`                                                         | Create Pod Security Policy to allow the agent running in clusters with PSP enabled       | `true`                                                                         |
 | `serviceAccount.create`                                              | Create serviceAccount                                                                    | `true`                                                                         |
 | `serviceAccount.name`                                                | Use this value as serviceAccountName                                                     | ` `                                                                            |
+| `priorityClassName`                                                  | Set the priority class for the agent daemonset                                           | `""`                                                                           |
 | `daemonset.deploy`                                                   | Deploy the agent daemonset                                                               | `true`                                                                         |
+| `daemonset.env`                                                      | Environment variables for the agent container. Provide as map of `VAR: val`              | `{}`                                                                           |
 | `daemonset.updateStrategy.type`                                      | The updateStrategy for updating the daemonset                                            | `RollingUpdate`                                                                |
-| `daemonset.updateStrategy.type.maxUnavailable`                       | The maximum number of pods that can be unavailable during the update process             |                                                                 |
+| `daemonset.updateStrategy.type.maxUnavailable`                       | The maximum number of pods that can be unavailable during the update process             |                                                                                |
 | `daemonset.nodeSelector`                                             | Node Selector                                                                            | `{}`                                                                           |
 | `daemonset.arch`                                                     | Allowed architectures for scheduling                                                     | `[ amd64, arm64, s390x ]`                                                      |
 | `daemonset.os`                                                       | Allowed OSes for scheduling                                                              | `[ linux ]`                                                                    |
@@ -104,7 +106,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `daemonset.labels`                                                   | Custom labels for daemonset (as a multi-line templated string map or as YAML)            |                                                                                |
 | `daemonset.probes.initialDelay`                                      | Initial delay for liveness and readiness probes. daemonset                               | `{}`                                                                           |
 | `daemonset.kmodule.env`     | Environment variables for the kernel module image builder. Provide as map of `VAR: val`  | `{}`                                                                           |
-| `slim.enabled`                                                       | Use the slim based Sysdig Agent image                                                    | `true`                                                                        |
+| `slim.enabled`                                                       | Use the slim based Sysdig Agent image                                                    | `true`                                                                         |
 | `slim.image.repository`                                              | The slim Agent image repository                                                          | `sysdig/agent-slim`                                                            |
 | `slim.kmoduleImage.repository`                                       | The kernel module image builder repository to pull from                                  | `sysdig/agent-kmodule`                                                         |
 | `slim.kmoduleImage.digest`                                           | The image digest to pull                                                                 | ` `                                                                            |
@@ -142,7 +144,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `nodeAnalyzer.noProxy`                                               | Proxy configuration variables                                                            |                                                                                |
 | `nodeAnalyzer.pullSecrets`                                           | Image pull secrets for the Node Analyzer containers                                      | `nil`                                                                          |
 | `nodeAnalyzer.imageAnalyzer.image.repository`                        | The image repository to pull the Node Image Analyzer from                                | `sysdig/node-image-analyzer`                                                   |
-| `nodeAnalyzer.imageAnalyzer.image.tag`                               | The image tag to pull the Node Image Analyzer                                            | `0.1.16`                                                                       |
+| `nodeAnalyzer.imageAnalyzer.image.tag`                               | The image tag to pull the Node Image Analyzer                                            | `0.1.17`                                                                       |
 | `nodeAnalyzer.imageAnalyzer.image.digest`                            | The image digest to pull                                                                 | ` `                                                                            |
 | `nodeAnalyzer.imageAnalyzer.image.pullPolicy`                        | The Image pull policy for the Node Image Analyzer                                        | `IfNotPresent`                                                                 |
 | `nodeAnalyzer.imageAnalyzer.dockerSocketPath`                        | The Docker socket path                                                                   |                                                                                |
@@ -156,7 +158,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `nodeAnalyzer.imageAnalyzer.resources.limits.memory`                 | Node Image Analyzer Memory limit per node                                                | `1536Mi`                                                                       |
 | `nodeAnalyzer.imageAnalyzer.env`                                     | Extra environment variables that will be passed onto pods                                | `{}`                                                                           |
 | `nodeAnalyzer.hostAnalyzer.image.repository`                         | The image repository to pull the Host Analyzer from                                      | `sysdig/host-analyzer`                                                         |
-| `nodeAnalyzer.hostAnalyzer.image.tag`                                | The image tag to pull the Host Analyzer                                                  | `0.1.6`                                                                        |
+| `nodeAnalyzer.hostAnalyzer.image.tag`                                | The image tag to pull the Host Analyzer                                                  | `0.1.7`                                                                        |
 | `nodeAnalyzer.hostAnalyzer.image.digest`                             | The image digest to pull                                                                 | ` `                                                                            |
 | `nodeAnalyzer.hostAnalyzer.image.pullPolicy`                         | The Image pull policy for the Host Analyzer                                              | `IfNotPresent`                                                                 |
 | `nodeAnalyzer.hostAnalyzer.schedule`                                 | The scanning schedule specification for the host analyzer expressed as a crontab         | `@dailydefault`                                                                |
@@ -168,7 +170,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `nodeAnalyzer.hostAnalyzer.resources.limits.memory`                  | Host Analyzer Memory limit per node                                                      | `1536Mi`                                                                       |
 | `nodeAnalyzer.hostAnalyzer.env`                                      | Extra environment variables that will be passed onto pods                                | `{}`                                                                           |
 | `nodeAnalyzer.benchmarkRunner.image.repository`                      | The image repository to pull the Benchmark Runner from                                   | `sysdig/compliance-benchmark-runner`                                           |
-| `nodeAnalyzer.benchmarkRunner.image.tag`                             | The image tag to pull the Benchmark Runner                                               | `1.0.17.1`                                                                     |
+| `nodeAnalyzer.benchmarkRunner.image.tag`                             | The image tag to pull the Benchmark Runner                                               | `1.0.17.2`                                                                     |
 | `nodeAnalyzer.benchmarkRunner.image.digest`                          | The image digest to pull                                                                 | ` `                                                                            |
 | `nodeAnalyzer.benchmarkRunner.image.pullPolicy`                      | The Image pull policy for the Benchmark Runner                                           | `IfNotPresent`                                                                 |
 | `nodeAnalyzer.benchmarkRunner.includeSensitivePermissions`           | Grant the service account elevated permissions to run CIS Benchmark for OS4              | `false`                                                                        |
@@ -178,8 +180,9 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `nodeAnalyzer.benchmarkRunner.resources.limits.memory`               | Benchmark Runner Memory limit per node                                                   | `256Mi`                                                                        |
 | `nodeAnalyzer.benchmarkRunner.env`                                   | Extra environment variables that will be passed onto pods                                | `{}`                                                                           |
 | `nodeAnalyzer.runtimeScanner.deploy`                                 | Deploy the Runtime Scanner                                                               | `false`                                                                        |
+| `nodeAnalyzer.runtimeScanner.extraMounts`                            | Specify a container engine custom socket path (docker, containerd, CRI-O)                |                                                                                |
 | `nodeAnalyzer.runtimeScanner.image.repository`                       | The image repository to pull the Runtime Scanner from                                    | `sysdig/eveclient-api`                                                         |
-| `nodeAnalyzer.runtimeScanner.image.tag`                              | The image tag to pull the Runtime Scanner                                                | `0.1.0`                                                                        |
+| `nodeAnalyzer.runtimeScanner.image.tag`                              | The image tag to pull the Runtime Scanner                                                | `1.0.4`                                                                        |
 | `nodeAnalyzer.runtimeScanner.image.digest`                           | The image digest to pull                                                                 | ` `                                                                            |
 | `nodeAnalyzer.runtimeScanner.image.pullPolicy`                       | The image pull policy for the Runtime Scanner                                            | `IfNotPresent`                                                                 |
 | `nodeAnalyzer.runtimeScanner.resources.requests.cpu`                 | Runtime Scanner CPU requests per node                                                    | `250m`                                                                         |
@@ -196,31 +199,32 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `nodeAnalyzer.runtimeScanner.eveConnector.resources.limits.cpu`      | Eve Connector CPU limits per node                                                        | `1000m`                                                                        |
 | `nodeAnalyzer.runtimeScanner.eveConnector.resources.limits.memory`   | Eve Connector Memory limits per node                                                     | `512Mi`                                                                        |
 | `nodeAnalyzer.runtimeScanner.eveConnector.settings.replicas`         | Eve Connector deployment replicas                                                        | `1`                                                                            |
-| `nodeAnalyzer.cspmAnalyzer.deploy`                                   | Enables Sysdig CSPM node analyzer                                                        | `false`                                                                        |
-| `nodeAnalyzer.cspmAnalyzer.debug`                                    | Can be set to true to show CSPM node analyzer debug logging, useful for troubleshooting  | `false`                                                                        |
-| `nodeAnalyzer.cspmAnalyzer.image.repository`                         | The image repository to pull the  CSPM node analyzer from                                | `sysdig/cspm-analyzer`                                                                      |
-| `nodeAnalyzer.cspmAnalyzer.image.tag`                                | The image tag to pull the  CSPM node analyzer                                            | `1.2.0`                                                                        |
-| `nodeAnalyzer.cspmAnalyzer.image.digest`                             | The image digest to pull                                                                 | ` `                                                                              |
-| `nodeAnalyzer.cspmAnalyzer.image.pullPolicy`                         | The image pull policy for the  CSPM node analyzer                                        | `IfNotPresent`                                                                 |
-| `nodeAnalyzer.cspmAnalyzer.resources.requests.cpu`                   | CSPM node analyzer CPU requests per node                                                 | `150m`                                                                         |
-| `nodeAnalyzer.cspmAnalyzer.resources.requests.memory`                | CSPM node analyzer Memory requests per node                                              | `256Mi`                                                                        |
-| `nodeAnalyzer.cspmAnalyzer.resources.limits.cpu`                     | CSPM node analyzer CPU limits per node                                                   | `500m`                                                                         |
-| `nodeAnalyzer.cspmAnalyzer.resources.limits.memory`                  | CSPM node analyzer Memory limits per node                                                | `1536Mi`                                                                       |
-| `nodeAnalyzer.cspmAnalyzer.env`                                      | Extra environment variables that will be passed onto pods                                | `{}`                                                                           |
-| `cspmCollector.image.tag`                                            | The image tag to pull the  CSPM collector                                                | `1.2.0`                                                                        |
-| `cspmCollector.image.digest`                                         | The image digest to pull                                                                 | ` `                                                                              |
-| `cspmCollector.image.pullPolicy`                                     | The image pull policy for the  CSPM collector                                            | `IfNotPresent`                                                                 |
-| `cspmCollector.settings.replicas`                                    | CSPM collector deployment replicas                                                       | `1`                                                                            |
-| `cspmCollector.settings.namespaces.included`                         | Namespaces to include in the CSPM collector scans, when empty scans all                  | ``                                                                             |
-| `cspmCollector.settings.namespaces.excluded`                         | Namespaces to exclude in the CSPM collector scans                                        | ``                                                                             |
-| `cspmCollector.settings.workloads.included`                          | Workloads to include in the CSPM collector scans, when empty scans all                   | ``                                                                             |
-| `cspmCollector.settings.workloads.excluded`                          | Workloads to exclude in the CSPM collector scans, when empty scans all                   | ``                                                                             |
-| `cspmCollector.settings.healthIntervalMin`                           | Minutes interval for CSPM collector health status messages                               | `5`                                                                            |
-| `cspmCollector.resources.requests.cpu`                               | CSPM collector CPU requests per node                                                     | `150m`                                                                        |
-| `cspmCollector.resources.requests.memory`                            | CSPM collector Memory requests per node                                                  | `256Mi`                                                                        |
-| `cspmCollector.resources.limits.cpu`                                 | CSPM collector CPU limits per node                                                       | `500m`                                                                         |
-| `cspmCollector.resources.limits.memory`                              | CSPM collector Memory limits per node                                                    | `1536Mi`                                                                       |
-| `cspmCollector.env`                                                  | Extra environment variables that will be passed onto pods                                | `{}`                                                                           |
+| `nodeAnalyzer.kspmAnalyzer.deploy`                                   | Enables Sysdig KSPM node analyzer                                                        | `false`                                                                        |
+| `nodeAnalyzer.kspmAnalyzer.debug`                                    | Can be set to true to show KSPM node analyzer debug logging, useful for troubleshooting  | `false`                                                                        |
+| `nodeAnalyzer.kspmAnalyzer.image.repository`                         | The image repository to pull the  KSPM node analyzer from                                | `sysdig/kspm-analyzer`                                                         |
+| `nodeAnalyzer.kspmAnalyzer.image.tag`                                | The image tag to pull the  KSPM node analyzer                                            | `1.2.0`                                                                        |
+| `nodeAnalyzer.kspmAnalyzer.image.digest`                             | The image digest to pull                                                                 | ` `                                                                            |
+| `nodeAnalyzer.kspmAnalyzer.image.pullPolicy`                         | The image pull policy for the  KSPM node analyzer                                        | `IfNotPresent`                                                                 |
+| `nodeAnalyzer.kspmAnalyzer.resources.requests.cpu`                   | KSPM node analyzer CPU requests per node                                                 | `150m`                                                                         |
+| `nodeAnalyzer.kspmAnalyzer.resources.requests.memory`                | KSPM node analyzer Memory requests per node                                              | `256Mi`                                                                        |
+| `nodeAnalyzer.kspmAnalyzer.resources.limits.cpu`                     | KSPM node analyzer CPU limits per node                                                   | `500m`                                                                         |
+| `nodeAnalyzer.kspmAnalyzer.resources.limits.memory`                  | KSPM node analyzer Memory limits per node                                                | `1536Mi`                                                                       |
+| `nodeAnalyzer.kspmAnalyzer.env`                                      | Extra environment variables that will be passed onto pods                                | `{}`                                                                           |
+| `kspmCollector.deploy`                                               | Enables Sysdig KSPM collector                                                            | `false`                                                                        |
+| `kspmCollector.image.tag`                                            | The image tag to pull the  KSPM collector                                                | `1.2.0`                                                                        |
+| `kspmCollector.image.digest`                                         | The image digest to pull                                                                 | ` `                                                                            |
+| `kspmCollector.image.pullPolicy`                                     | The image pull policy for the  KSPM collector                                            | `IfNotPresent`                                                                 |
+| `kspmCollector.settings.replicas`                                    | KSPM collector deployment replicas                                                       | `1`                                                                            |
+| `kspmCollector.settings.namespaces.included`                         | Namespaces to include in the KSPM collector scans, when empty scans all                  | ``                                                                             |
+| `kspmCollector.settings.namespaces.excluded`                         | Namespaces to exclude in the KSPM collector scans                                        | ``                                                                             |
+| `kspmCollector.settings.workloads.included`                          | Workloads to include in the KSPM collector scans, when empty scans all                   | ``                                                                             |
+| `kspmCollector.settings.workloads.excluded`                          | Workloads to exclude in the KSPM collector scans, when empty scans all                   | ``                                                                             |
+| `kspmCollector.settings.healthIntervalMin`                           | Minutes interval for KSPM collector health status messages                               | `5`                                                                            |
+| `kspmCollector.resources.requests.cpu`                               | KSPM collector CPU requests per node                                                     | `150m`                                                                         |
+| `kspmCollector.resources.requests.memory`                            | KSPM collector Memory requests per node                                                  | `256Mi`                                                                        |
+| `kspmCollector.resources.limits.cpu`                                 | KSPM collector CPU limits per node                                                       | `500m`                                                                         |
+| `kspmCollector.resources.limits.memory`                              | KSPM collector Memory limits per node                                                    | `1536Mi`                                                                       |
+| `kspmCollector.env`                                                  | Extra environment variables that will be passed onto pods                                | `{}`                                                                           |
 | `nodeAnalyzer.nodeSelector`                                          | Node Selector                                                                            | `{}`                                                                           |
 | `nodeAnalyzer.affinity`                                              | Node affinities                                                                          | `schedule on amd64 and linux`                                                  |
 
@@ -308,8 +312,7 @@ limits:
 
 * custom
 
-By setting "custom" or any value other than the ones defined above, you can create your own custom profile to match your
-requirements by setting the appropriate values in `resources` object.
+To set your own resource requests and limits to any values other than the ones defined above, you need to set `resourceProfile == custom` and then add specific values for `resources.*` to match your requirements by setting the appropriate values in the `resources` object.
 
 See [Tuning Sysdig Agent](https://docs.sysdig.com/en/tuning-sysdig-agent.html) for more info.
 
@@ -365,16 +368,29 @@ configured in the UI, and the runner automatically runs these benchmarks on the 
 Note: if `nodeAnalyzer.benchmarkRunner.includeSensitivePermissions` is set to `false`, the service account will not have
 the full set of permissions needed to execute `oc` commands, which most checks in `CIS Benchmark for OS4` require.
 
-### CSPM Analyzer (Preview)
+### KSPM Analyzer (Preview)
 
 See the [Actionable Compliance documentation](https://docs.sysdig.com/en/docs/sysdig-secure/posture/compliance/actionable-compliance/) for details on the Actionable Compliance feature. The
-CSPM Analyzer analyzes your host's configuration and sends the output to be evaluated against compliance policies.
+KSPM Analyzer analyzes your host's configuration and sends the output to be evaluated against compliance policies.
 The scan results are displayed in Sysdig Secure's Actionable Compliance screens.
 
-## CSPM Collector (Preview)
+The agent listens to port 12000 by default. To override it, you can set the AGENT_PORT environment variable.
+
+For example:
+
+```bash
+$ helm install --namespace sysdig-agent sysdig-agent \
+    --set sysdig.accessKey=YOUR-KEY-HERE \
+    --set nodeAnalyzer.apiEndpoint=42.32.196.18 \
+    --set nodeAnalyzer.kspmAnalyzer.deploy=true \
+    --set nodeAnalyzer.kspmAnalyzer.env.AGENT_PORT=8888 \
+    sysdig/sysdig
+```
+
+## KSPM Collector (Preview)
 
 See the [Actionable Compliance documentation](https://docs.sysdig.com/en/docs/sysdig-secure/posture/compliance/actionable-compliance/) for details on the Actionable Compliance feature. The
-CSPM Collector collects Kubernetes resource manifests and sends them to be evaluated against compliance policies.
+KSPM Collector collects Kubernetes resource manifests and sends them to be evaluated against compliance policies.
 The scan results are displayed in Sysdig Secure's Actionable Compliance screens.
 
 ## GKE Autopilot

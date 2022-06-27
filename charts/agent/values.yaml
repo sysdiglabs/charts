@@ -16,7 +16,7 @@ image:
 
   registry: quay.io
   repository: sysdig/agent
-  tag: 12.4.0
+  tag: 12.6.0
   # Specify a imagePullPolicy
   # Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
   # ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -57,14 +57,9 @@ image:
 #   limits:
 #     cpu: 5000m
 #     memory: 6144Mi
-#
-# * custom
-#   If you want to define your own resource profile, just comment the resourceProfile line,
-#   uncomment the section below, and fill in the appropriate values.
-#   You may want to check https://docs.sysdig.com/en/tuning-sysdig-agent.html
-#   If you have more questions or concerns, please refer to Sysdig Support.
+
 resourceProfile: small
-# resourceProfile: custom
+
 # resources:
 #   requests:
 #     cpu: <cpu requests>m
@@ -74,7 +69,7 @@ resourceProfile: small
 #     memory: <memory limits>Mi
 
 gke:
-   # true here enables the deployment on gke autopilot clusters
+  # true here enables the deployment on gke autopilot clusters
   autopilot: false
 
 rbac:
@@ -96,6 +91,8 @@ serviceAccount:
   name:
 
 daemonset:
+  deploy: true
+
   # Perform rolling updates by default in the DaemonSet agent
   # ref: https://kubernetes.io/docs/tasks/manage-daemon/update-daemon-set/
   updateStrategy:
@@ -124,6 +121,7 @@ daemonset:
   # Liveness and readiness probes initial delay (in seconds)
   probes:
     initialDelay: 90
+
   kmodule:
     env: {}
 
@@ -153,7 +151,7 @@ ebpf:
 
 slim:
   # Uses a slim version of the Sysdig Agent
-  enabled: false
+  enabled: true
   # The image repo to be used for slim Agents
   image:
     repository: sysdig/agent-slim

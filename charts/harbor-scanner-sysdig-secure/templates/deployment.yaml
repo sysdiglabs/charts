@@ -35,9 +35,16 @@ spec:
                   key: sysdig_secure_url
             - name: SECURE_API_TOKEN
               valueFrom:
+                {{- if or .Values.sysdig.secure.apiToken .Values.sysdig.secure.existingSecureAPITokenSecret }}
                 secretKeyRef:
+                  {{- if .Values.sysdig.secure.apiToken }}
                   name: {{ include "harbor-scanner-sysdig-secure.fullname" . }}
                   key: sysdig_secure_api_token
+                  {{- else }}
+                  name: {{ .Values.sysdig.secure.existingSecureAPITokenSecret }}
+                  key: sysdig_secure_api_token
+                  {{- end }}
+                {{- end }}
             {{- if .Values.proxy.httpProxy }}
             - name: http_proxy
               value: {{ .Values.proxy.httpProxy }}

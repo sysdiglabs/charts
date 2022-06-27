@@ -422,6 +422,14 @@ nodeAnalyzer:
       # mounts:
       # - mountPath: /var/run/docker.sock
       #   name: docker-sock
+
+      # example for bottlerocket
+      # volumes:
+      #  - name: socketpath
+      #    hostPath:
+      #      path: /run/dockershim.sock
+      #      type: ""
+
     resources:
       requests:
         cpu: 150m
@@ -463,7 +471,7 @@ nodeAnalyzer:
 
     image:
       repository: sysdig/compliance-benchmark-runner
-      tag: 1.0.17.1
+      tag: 1.0.17.2
       digest:
       pullPolicy: IfNotPresent
 
@@ -481,9 +489,15 @@ nodeAnalyzer:
     deploy: false
     image:
       repository: sysdig/vuln-runtime-scanner
-      tag: 1.0.4
+      tag: 1.1.1
       digest:
       pullPolicy: IfNotPresent
+
+    extraMounts: []
+    # example for bottlerocket
+    # extraMounts:
+    #   - name: socketpath
+    #     mountPath: /var/run/containerd/containerd.sock
 
     resources:
       requests:
@@ -519,12 +533,12 @@ nodeAnalyzer:
       settings:
         replicas: 1
 
-  cspmAnalyzer:
+  kspmAnalyzer:
     deploy: false
     debug: false
     image:
-      repository: sysdig/cspm-analyzer
-      tag: 1.2.0
+      repository: sysdig/kspm-analyzer
+      tag: 1.4.0
       digest:
       pullPolicy: IfNotPresent
 
@@ -538,12 +552,12 @@ nodeAnalyzer:
 
     env: {}
 
-cspmCollector:
+kspmCollector:
   deploy: false
   debug: false
   image:
-    repository: sysdig/cspm-collector
-    tag: 1.2.0
+    repository: sysdig/kspm-collector
+    tag: 1.4.0
     digest:
     pullPolicy: IfNotPresent
 
