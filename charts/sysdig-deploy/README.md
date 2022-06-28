@@ -99,6 +99,7 @@ Now the `sysdig` chart can be removed and replaced with the `sysdig-deploy` char
 helm delete -n sysdig-agent sysdig-agent
 
 helm install -n sysdig-agent sysdig sysdig/sysdig-deploy -f values.new.yaml
+```
 
 ## Upgrading
 
