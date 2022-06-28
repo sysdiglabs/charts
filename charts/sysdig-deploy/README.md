@@ -65,6 +65,42 @@ helm install -n sysdig-agent sysdig sysdig/sysdig-deploy -f values.sysdig.yaml
 
 Further configuration information can be found below.
 
+## Migrating from `sysdig`
+
+To easily migrate from the previous `sysdig` chart to the new unified `sysdig-deploy` chart, use the migration helper script from this repo. This script will help re-map your existing values from the `sysdig` chart, allowing you to deploy this chart with the exact same configuration.
+
+*Note*: unlike the previous chart, this chart only supports Helm 3. If you have not already done so, please upgrade your Helm version to 3.x to use this chart.
+
+Requirements:
+- Python 3.x
+- PyYAML
+
+Save the user-values from the currently deployed version of the `sysdig` chart:
+
+```bash
+helm get values -n sysdig-agent sysdig-agent -o yaml > values.old.yaml
+```
+
+Note: the migration script has a dependency on `pyyaml`, which can be installed with
+
+```bash
+pip install pyyaml
+```
+
+Run the migration script and redirect the output to a new file. For example, if the old values were saved to `values.old.yaml`:
+
+```bash
+python scripts/migrate_values.py values.old.yaml > values.new.yaml
+```
+
+Now the `sysdig` chart can be removed and replaced with the `sysdig-deploy` chart.
+
+```bash
+helm delete -n sysdig-agent sysdig-agent
+
+helm install -n sysdig-agent sysdig sysdig/sysdig-deploy -f values.new.yaml
+```
+
 ## Upgrading
 
 Refresh the `sysdig` helm repo to get the latest chart.
@@ -87,6 +123,8 @@ helm upgrade -n sysdig-agent sysdig sysdig/sysdig-deploy -f values.sysdig.yaml
 
 ## Configuration
 
+The following table lists the configurable parameters of this chart and their default values.
+
 | Parameter                        | Description                                                       | Default        |
 | -------------------------------- | ----------------------------------------------------------------- | -------------- |
 | `global.clusterConfig.name`      | Identifier for this cluster                                       | `""`           |
@@ -104,6 +142,7 @@ helm upgrade -n sysdig-agent sysdig sysdig/sysdig-deploy -f values.sysdig.yaml
 | `nodeAnalyzer.nodeAnalyzer.apiEndpoint`           | nodeAnalyzer apiEndpoint                         | `""`           |
 | `kspmCollector.enabled`          | Enable the kspmCollector component in this chart                  | `false`        |
 | `kspmCollector.apiEndpoint`      | kspmCollector apiEndpoint                                         | `""`           |
+
 ## Agent
 
 For possible configuration values of the Agent, please refer to the Agent subchart [README](https://github.com/sysdiglabs/charts/tree/master/charts/agent/README.md). All agent-specific configuration can be prefixed with `agent.` to apply them to this chart.
