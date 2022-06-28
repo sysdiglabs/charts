@@ -1,4 +1,4 @@
-# Chart: Sysdig
+# Chart: sysdig-deploy
 
 ## Change Log
 
