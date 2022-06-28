@@ -4,12 +4,15 @@ description: A chart with various Sysdig components for Kubernetes
 
 type: application
 
-version: 1.0.0
+version: 1.0.1
 
 maintainers:
   - name: achandras
     email: ashwin.chandrasekar@sysdig.com
-
+  - name: lilx1ao
+    email: zhongcheng.xiao@sysdig.com
+  - name: yashgiri
+    email: yashgiri.goswami@sysdig.com
 home: https://www.sysdig.com/
 icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
 
