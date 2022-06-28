@@ -4,7 +4,11 @@
 
 This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
-## v1.15.0
+## v1.5.1
+### Minor changes
+* BenchmarkRunner: bump tag to 1.0.17.2
+
+## v1.5.0
 ### Major change
 * KSPMAnalyzer: rename cspm-analyzer to kspm-analyzer
 

@@ -4,6 +4,19 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.15.7
+### Minor changes
+* BenchmarkRunner: bump tag to 1.0.17.2
+
+## v1.15.6
+### Minor changes
+* RuntimeScanner version 1.1.1 with Golang support
+
+## v1.15.5
+### Minor changes
+* Fix expose node name to the Sysdig Agent container through Downward API
+  through K8S_NODE environment variable.
+
 ## v1.15.2
 ### Minor changes
 * KSPM: add kspmCollector.deploy parameter to docs
