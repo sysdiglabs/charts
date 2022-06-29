@@ -1,4 +1,4 @@
-{{- if and .Values.rbac.create .Values.kspmCollector.deploy }}
+{{- if and .Values.rbac.create .Values.kspm.deploy }}
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:

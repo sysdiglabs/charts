@@ -1,4 +1,4 @@
-{{- if .Values.kspmCollector.deploy }}
+{{- if .Values.kspm.deploy }}
 apiVersion: v1
 kind: ConfigMap
 metadata:

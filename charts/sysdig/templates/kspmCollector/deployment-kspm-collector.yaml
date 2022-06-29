@@ -1,4 +1,4 @@
-{{- if .Values.kspmCollector.deploy }}
+{{- if .Values.kspm.deploy }}
 ---
 apiVersion: apps/v1
 kind: Deployment
