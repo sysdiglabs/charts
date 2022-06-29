@@ -143,7 +143,7 @@ Return the default only if the value is not defined in sysdig.settings.<agent_se
 */}}
 {{- define "get_if_not_in_settings" -}}
 {{- if not (hasKey .root.Values.sysdig.settings .setting) -}}
-  {{- if ne .default nil -}}
+  {{- if and (ne .default nil) (printf "%s" .default) -}}
     {{- .default -}}
   {{- end -}}
 {{- end -}}
