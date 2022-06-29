@@ -1,0 +1,10 @@
+apiVersion: v2
+name: rapid-response
+description: Sysdig Secure Rapid Response
+type: application
+version: 0.1.0
+appVersion: 0.3.2
+home: https://sysdiglabs.github.io/rapid-response/
+maintainers:
+  - name: sysdigdan
+    email: daniel.moloney@sysdig.com

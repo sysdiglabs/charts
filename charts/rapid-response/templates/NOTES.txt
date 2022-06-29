@@ -1,0 +1,5 @@
+Sysdig Rapid Response is starting up, you have will now be able to grant designated
+Advanced Users in Sysdig Secure the ability to remote connect into a host directly
+from the Event stream and execute desired commands there.
+
+No further action should be required.
