@@ -4,6 +4,10 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.15.11
+### Minor change
+* Security updates (July 2022) for NodeImageAnalyzer and HostAnalyzer component
+
 ## v1.15.10
 ### Minor changes
 * Notes section reflects proper links based on deployment region
