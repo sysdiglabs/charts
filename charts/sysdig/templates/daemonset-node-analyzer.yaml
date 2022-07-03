@@ -85,10 +85,12 @@ spec:
       # the host
       hostPID: true
       containers:
-{{ if .Values.nodeAnalyzer.kspmAnalyzer.deploy }}
+{{ if .Values.kspm.deploy }}
       - name: sysdig-kspm-analyzer
         image: {{ template "sysdig.image.kspmAnalyzer" . }}
         imagePullPolicy: {{ .Values.nodeAnalyzer.kspmAnalyzer.image.pullPolicy }}
+        resources:
+{{ toYaml .Values.nodeAnalyzer.kspmAnalyzer.resources | indent 10 }}
         securityContext:
           runAsUser: 0
           privileged: true
