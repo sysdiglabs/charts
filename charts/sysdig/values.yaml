@@ -395,7 +395,7 @@ nodeAnalyzer:
   imageAnalyzer:
     image:
       repository: sysdig/node-image-analyzer
-      tag: 0.1.17
+      tag: 0.1.18
       digest:
       pullPolicy: IfNotPresent
 
@@ -445,7 +445,7 @@ nodeAnalyzer:
   hostAnalyzer:
     image:
       repository: sysdig/host-analyzer
-      tag: 0.1.7
+      tag: 0.1.8
       digest:
       pullPolicy: IfNotPresent
 

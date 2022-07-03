@@ -4,11 +4,15 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
-## v1.15.11
+## v1.15.12
 ### Minor changes
 * KSPM Analyzer - fix container missing CPU\Memory limits & requests
 * KSPM components - Merge analyzer and collector deploy flags into 1
 * KSPM Chart components - fix KSPM serviceAccount that is created when KSPM not installed
+
+## v1.15.11
+### Minor change
+* Security updates (July 2022) for NodeImageAnalyzer and HostAnalyzer component
 
 ## v1.15.10
 ### Minor changes
