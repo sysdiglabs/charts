@@ -318,6 +318,9 @@ nodeImageAnalyzer:
 # Override value for the NATS service endpoint
 natsUrl: ""
 
+kspm:
+  deploy: false
+
 nodeAnalyzer:
   # Create node analyzer specific serviceAccount resource
   serviceAccount:
@@ -534,7 +537,6 @@ nodeAnalyzer:
         replicas: 1
 
   kspmAnalyzer:
-    deploy: false
     debug: false
     image:
       repository: sysdig/kspm-analyzer
@@ -553,7 +555,6 @@ nodeAnalyzer:
     env: {}
 
 kspmCollector:
-  deploy: false
   debug: false
   image:
     repository: sysdig/kspm-collector

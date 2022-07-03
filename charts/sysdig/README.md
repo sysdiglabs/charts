@@ -141,6 +141,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `prometheus.yaml`                                                    | prometheus.yaml content to configure metric collection: relabelling and filtering        | ` `                                                                            |
 | `extraVolumes.volumes`                                               | Additional volumes to mount in the sysdig agent to pass new secrets or configmaps        | `[]`                                                                           |
 | `extraVolumes.mounts`                                                | Mount points for additional volumes                                                      | `[]`                                                                           |
+| `kspm.deploy`                                                        | Enables Sysdig KSPM node analyzer & KSPM collector                                       | `false`                                                                        |
 | `nodeAnalyzer.deploy`                                                | Deploy the Node Analyzer                                                                 | `true`                                                                         |
 | `nodeAnalyzer.apiEndpoint`                                           | Sysdig secure API endpoint, without protocol (i.e. `secure.sysdig.com`)                  | ` `                                                                            |
 | `nodeAnalyzer.sslVerifyCertificate`                                  | Can be set to false to allow insecure connections to the Sysdig backend, such as On-Prem |                                                                                |
@@ -207,7 +208,6 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `nodeAnalyzer.runtimeScanner.eveConnector.resources.limits.cpu`      | Eve Connector CPU limits per node                                                        | `1000m`                                                                        |
 | `nodeAnalyzer.runtimeScanner.eveConnector.resources.limits.memory`   | Eve Connector Memory limits per node                                                     | `512Mi`                                                                        |
 | `nodeAnalyzer.runtimeScanner.eveConnector.settings.replicas`         | Eve Connector deployment replicas                                                        | `1`                                                                            |
-| `nodeAnalyzer.kspmAnalyzer.deploy`                                   | Enables Sysdig KSPM node analyzer                                                        | `false`                                                                        |
 | `nodeAnalyzer.kspmAnalyzer.debug`                                    | Can be set to true to show KSPM node analyzer debug logging, useful for troubleshooting  | `false`                                                                        |
 | `nodeAnalyzer.kspmAnalyzer.image.repository`                         | The image repository to pull the  KSPM node analyzer from                                | `sysdig/kspm-analyzer`                                                         |
 | `nodeAnalyzer.kspmAnalyzer.image.tag`                                | The image tag to pull the  KSPM node analyzer                                            | `1.2.0`                                                                        |
@@ -218,7 +218,6 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `nodeAnalyzer.kspmAnalyzer.resources.limits.cpu`                     | KSPM node analyzer CPU limits per node                                                   | `500m`                                                                         |
 | `nodeAnalyzer.kspmAnalyzer.resources.limits.memory`                  | KSPM node analyzer Memory limits per node                                                | `1536Mi`                                                                       |
 | `nodeAnalyzer.kspmAnalyzer.env`                                      | Extra environment variables that will be passed onto pods                                | `{}`                                                                           |
-| `kspmCollector.deploy`                                               | Enables Sysdig KSPM collector                                                            | `false`                                                                        |
 | `kspmCollector.image.tag`                                            | The image tag to pull the  KSPM collector                                                | `1.2.0`                                                                        |
 | `kspmCollector.image.digest`                                         | The image digest to pull                                                                 | ` `                                                                            |
 | `kspmCollector.image.pullPolicy`                                     | The image pull policy for the  KSPM collector                                            | `IfNotPresent`                                                                 |
@@ -390,7 +389,7 @@ For example:
 $ helm install --namespace sysdig-agent sysdig-agent \
     --set sysdig.accessKey=YOUR-KEY-HERE \
     --set nodeAnalyzer.apiEndpoint=42.32.196.18 \
-    --set nodeAnalyzer.kspmAnalyzer.deploy=true \
+    --set kspm.deploy=true \
     --set nodeAnalyzer.kspmAnalyzer.env.AGENT_PORT=8888 \
     sysdig/sysdig
 ```
