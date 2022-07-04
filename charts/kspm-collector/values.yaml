@@ -7,6 +7,8 @@ global:
   sysdig:
     region: "us1"
   proxy: {}
+  kspm:
+    deploy: true
 
 sysdig:
   # Required: You need your Sysdig access key before running agents, either specifying 'accessKey' here, or using 'existingAccessKeySecret'
