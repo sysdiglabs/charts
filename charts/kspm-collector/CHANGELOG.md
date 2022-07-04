@@ -1,3 +1,6 @@
+# v0.1.1
+### Minor change
+* KSPM Chart components - fix KSPM serviceAccount that is created when KSPM not installed
 
 # v0.1.0
 
