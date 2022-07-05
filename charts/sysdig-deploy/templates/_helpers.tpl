@@ -5,15 +5,15 @@ Determine sysdig monitor endpoint based on provided region
     {{- if (eq .Values.global.sysdig.region "us1") -}}
         {{- "app.sysdigcloud.com" -}}
     {{- else if (eq .Values.global.sysdig.region "us2") -}}
-        {{- "us2.app.sysdigcloud.com" -}}
+        {{- "us2.app.sysdig.com" -}}
     {{- else if (eq .Values.global.sysdig.region "us3") -}}
-        {{- "us3.app.sysdigcloud.com" -}}
+        {{- "us3.app.sysdig.com" -}}
     {{- else if (eq .Values.global.sysdig.region "us4") -}}
-        {{- "app.us4.sysdigcloud.com" -}}
+        {{- "app.us4.sysdig.com" -}}
     {{- else if (eq .Values.global.sysdig.region "eu1") -}}
-        {{- "eu1.app.sysdigcloud.com" -}}
+        {{- "eu1.app.sysdig.com" -}}
     {{- else if (eq .Values.global.sysdig.region "au1") -}}
-        {{- "app.au1.sysdigcloud.com" -}}
+        {{- "app.au1.sysdig.com" -}}
     {{- end -}}
 {{- end -}}
 
