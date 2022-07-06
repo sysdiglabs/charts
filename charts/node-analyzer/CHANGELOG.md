@@ -4,6 +4,12 @@
 
 This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.5.3
+### Bugfixes
+
+* Require apiEndpoint when region is custom
+* Fix typo in clusterName helper call
+
 ## v1.5.2
 ### Minor changes
 * KSPM Analyzer - fix container missing CPU\Memory limits & requests
