@@ -4,6 +4,8 @@ global:
   sysdig:
     region: "us1"
   proxy: {}
+  kspm:
+    deploy: false
 
 image:
   # This is a hack to support RELATED_IMAGE_<identifier> feature in Helm based
@@ -273,7 +275,6 @@ nodeAnalyzer:
         replicas: 1
 
   kspmAnalyzer:
-    deploy: false
     debug: false
     image:
       repository: sysdig/kspm-analyzer
