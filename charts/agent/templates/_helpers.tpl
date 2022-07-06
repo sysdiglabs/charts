@@ -220,7 +220,9 @@ Returns the namespace for installing components
 Determine collector endpoint based on provided region
 */}}
 {{- define "agent.collectorEndpoint" -}}
-    {{- if (eq .Values.global.sysdig.region "us1") -}}
+    {{- if (or .Values.collectorSettings.collectorHost (eq .Values.global.sysdig.region "custom")) -}}
+        {{- required "collectorSettings.collectorHost is required for custom regions" (.Values.collectorSettings.collectorHost) -}}
+    {{- else if (eq .Values.global.sysdig.region "us1") -}}
         {{- "collector.sysdigcloud.com" -}}
     {{- else if (eq .Values.global.sysdig.region "us2") -}}
         {{- "ingest-us2.app.sysdig.com" -}}
