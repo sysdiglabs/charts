@@ -381,6 +381,7 @@ See the [Actionable Compliance documentation](https://docs.sysdig.com/en/docs/sy
 KSPM Analyzer analyzes your host's configuration and sends the output to be evaluated against compliance policies.
 The scan results are displayed in Sysdig Secure's Actionable Compliance screens.
 
+The flag ```kspm.deploy``` enables KSPM node analyzer & KSPM collector.
 The agent listens to port 12000 by default. To override it, you can set the AGENT_PORT environment variable.
 
 For example:
@@ -399,6 +400,14 @@ $ helm install --namespace sysdig-agent sysdig-agent \
 See the [Actionable Compliance documentation](https://docs.sysdig.com/en/docs/sysdig-secure/posture/compliance/actionable-compliance/) for details on the Actionable Compliance feature. The
 KSPM Collector collects Kubernetes resource manifests and sends them to be evaluated against compliance policies.
 The scan results are displayed in Sysdig Secure's Actionable Compliance screens.
+
+To enable the KSPM Collector set the kspm.deploy flag to true:
+
+```bash
+--set kspm.deploy=true
+```
+
+Note that the flag ```kspm.deploy``` enables both KSPM node analyzer and KSPM collector.
 
 ## GKE Autopilot
 Autopilot is an operation mode for creating and managing clusters in GKE. 
