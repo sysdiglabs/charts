@@ -375,12 +375,14 @@ configured in the UI, and the runner automatically runs these benchmarks on the 
 Note: if `nodeAnalyzer.benchmarkRunner.includeSensitivePermissions` is set to `false`, the service account will not have
 the full set of permissions needed to execute `oc` commands, which most checks in `CIS Benchmark for OS4` require.
 
-### KSPM Analyzer (Preview)
+### KSPM Analyzer & KSPM Collector (Preview)
 
 See the [Actionable Compliance documentation](https://docs.sysdig.com/en/docs/sysdig-secure/posture/compliance/actionable-compliance/) for details on the Actionable Compliance feature. The
 KSPM Analyzer analyzes your host's configuration and sends the output to be evaluated against compliance policies.
+The KSPM Collector collects Kubernetes resource manifests and sends them to be evaluated against compliance policies.
 The scan results are displayed in Sysdig Secure's Actionable Compliance screens.
 
+The flag ```kspm.deploy``` enables KSPM node analyzer & KSPM collector. 
 The agent listens to port 12000 by default. To override it, you can set the AGENT_PORT environment variable.
 
 For example:
@@ -393,12 +395,6 @@ $ helm install --namespace sysdig-agent sysdig-agent \
     --set nodeAnalyzer.kspmAnalyzer.env.AGENT_PORT=8888 \
     sysdig/sysdig
 ```
-
-## KSPM Collector (Preview)
-
-See the [Actionable Compliance documentation](https://docs.sysdig.com/en/docs/sysdig-secure/posture/compliance/actionable-compliance/) for details on the Actionable Compliance feature. The
-KSPM Collector collects Kubernetes resource manifests and sends them to be evaluated against compliance policies.
-The scan results are displayed in Sysdig Secure's Actionable Compliance screens.
 
 ## GKE Autopilot
 Autopilot is an operation mode for creating and managing clusters in GKE. 
