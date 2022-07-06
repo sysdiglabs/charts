@@ -118,23 +118,24 @@ helm upgrade -n sysdig-agent sysdig sysdig/sysdig-deploy -f values.sysdig.yaml
 
 The following table lists the configurable parameters of this chart and their default values.
 
-| Parameter                        | Description                                                       | Default   |
-| -------------------------------- | ----------------------------------------------------------------- |-----------|
-| `global.clusterConfig.name`      | Identifier for this cluster                                       | `""`      |
-| `global.sysdig.accessKey`        | Sysdig Agent Access Key                                           | `""`      |
-| `global.sysdig.accessKeySecret`  | The name of a Kubernetes secret containing an 'access-key' entry. | `""`      |
-| `global.sysdig.region`           | The SaaS region for these agents                                  | `"us1"`   |
-| `global.image.registry`          | Container image registry                                          | `quay.io` |
-| `global.proxy.httpProxy`         | Sets `http_proxy` on the Agent container                          | `""`      |
-| `global.proxy.httpsProxy`        | Sets `https_proxy` on the Agent container                         | `""`      |
-| `global.proxy.noProxy`           | Sets `no_proxy` on the Agent container                            | `""`      |
-| `global.kspm.deploy`             | Enables Sysdig KSPM node analyzer & KSPM collector                | `false`   |
-| `agent`                          | Config specific to the [Sysdig Agent](#agent)                     | `{}`      |
-| `agent.enabled`                  | Enable the agent component in this chart                          | `true`    |
-| `nodeAnalyzer`                   | Config specific to the [Sysdig nodeAnalyzer](#nodeAnalyzer)       | `{}`      |
-| `nodeAnalyzer.enabled`           | Enable the nodeAnalyzer component in this chart                   | `true`    |
-| `nodeAnalyzer.nodeAnalyzer.apiEndpoint`           | nodeAnalyzer apiEndpoint                         | `""`      |
-| `kspmCollector.apiEndpoint`      | kspmCollector apiEndpoint                                         | `""`      |
+| Parameter                               | Description                                                                                                             | Default   |
+| --------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | --------- |
+| `global.clusterConfig.name`             | Identifier for this cluster                                                                                             | `""`      |
+| `global.sysdig.accessKey`               | Sysdig Agent Access Key                                                                                                 | `""`      |
+| `global.sysdig.accessKeySecret`         | The name of a Kubernetes secret containing an 'access-key' entry.                                                       | `""`      |
+| `global.sysdig.region`                  | The SaaS region for these agents                                                                                        | `"us1"`   |
+| `global.sysdig.region`                  | The SaaS region for these agents. Possible values: `"us1"`, `"us2"`, `"us3"`, `"us4"`, `"eu1"`, `"au1"`, and `"custom"` | `"us1"`   |
+| `global.image.registry`                 | Container image registry                                                                                                | `quay.io` |
+| `global.proxy.httpProxy`                | Sets `http_proxy` on the Agent container                                                                                | `""`      |
+| `global.proxy.httpsProxy`               | Sets `https_proxy` on the Agent container                                                                               | `""`      |
+| `global.proxy.noProxy`                  | Sets `no_proxy` on the Agent container                                                                                  | `""`      |
+| `global.kspm.deploy`                    | Enables Sysdig KSPM node analyzer & KSPM collector                                                                      | `false`   |
+| `agent`                                 | Config specific to the [Sysdig Agent](#agent)                                                                           | `{}`      |
+| `agent.enabled`                         | Enable the agent component in this chart                                                                                | `true`    |
+| `nodeAnalyzer`                          | Config specific to the [Sysdig nodeAnalyzer](#nodeAnalyzer)                                                             | `{}`      |
+| `nodeAnalyzer.enabled`                  | Enable the nodeAnalyzer component in this chart                                                                         | `true`    |
+| `nodeAnalyzer.nodeAnalyzer.apiEndpoint` | nodeAnalyzer apiEndpoint                                                                                                | `""`      |
+| `kspmCollector.apiEndpoint`             | kspmCollector apiEndpoint                                                                                               | `""`      |
 
 ## Agent
 
