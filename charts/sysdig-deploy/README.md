@@ -134,7 +134,6 @@ The following table lists the configurable parameters of this chart and their de
 | `nodeAnalyzer`                   | Config specific to the [Sysdig nodeAnalyzer](#nodeAnalyzer)       | `{}`      |
 | `nodeAnalyzer.enabled`           | Enable the nodeAnalyzer component in this chart                   | `true`    |
 | `nodeAnalyzer.nodeAnalyzer.apiEndpoint`           | nodeAnalyzer apiEndpoint                         | `""`      |
-| `kspmCollector.enabled`          | Enable the kspmCollector component in this chart                  | `false`   |
 | `kspmCollector.apiEndpoint`      | kspmCollector apiEndpoint                                         | `""`      |
 
 ## Agent
