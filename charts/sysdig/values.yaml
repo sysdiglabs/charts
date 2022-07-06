@@ -445,7 +445,7 @@ nodeAnalyzer:
   hostAnalyzer:
     image:
       repository: sysdig/host-analyzer
-      tag: 0.1.8
+      tag: 0.1.9
       digest:
       pullPolicy: IfNotPresent
 
