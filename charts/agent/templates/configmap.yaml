@@ -32,7 +32,7 @@ data:
 {{- if eq $disableCaptures "true" }}
     sysdig_capture_enabled: false
 {{- end }}
-{{- $collectorHost := include "get_if_not_in_settings" (dict "root" . "default" (coalesce .Values.collectorSettings.collectorHost (include "agent.collectorEndpoint" .)) "setting" "collector") }}
+{{- $collectorHost := include "get_if_not_in_settings" (dict "root" . "default" (include "agent.collectorEndpoint" .) "setting" "collector") }}
 {{- if $collectorHost }}
     collector: {{ $collectorHost }}
 {{- end }}
