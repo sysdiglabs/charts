@@ -124,7 +124,6 @@ The following table lists the configurable parameters of this chart and their de
 | `global.clusterConfig.name`             | Identifier for this cluster                                                                                             | `""`      |
 | `global.sysdig.accessKey`               | Sysdig Agent Access Key                                                                                                 | `""`      |
 | `global.sysdig.accessKeySecret`         | The name of a Kubernetes secret containing an 'access-key' entry.                                                       | `""`      |
-| `global.sysdig.region`                  | The SaaS region for these agents                                                                                        | `"us1"`   |
 | `global.sysdig.region`                  | The SaaS region for these agents. Possible values: `"us1"`, `"us2"`, `"us3"`, `"us4"`, `"eu1"`, `"au1"`, and `"custom"` | `"us1"`   |
 | `global.image.registry`                 | Container image registry                                                                                                | `quay.io` |
 | `global.proxy.httpProxy`                | Sets `http_proxy` on the Agent container                                                                                | `""`      |
