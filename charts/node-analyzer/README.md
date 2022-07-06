@@ -77,6 +77,7 @@ The following table lists the configurable parameters of the Sysdig Node Analyze
 | `global.proxy.httpProxy`                                             | Sets `HTTP_PROXY` on the Node Analyzer containers                                        | `""`                                                                           |
 | `global.proxy.httpsProxy`                                            | Sets `HTTPS_PROXY` on the Node Analyzer containers                                       | `""`                                                                           |
 | `global.proxy.noProxy`                                               | Sets `NO_PROXY` on the Node Analyzer containers                                          | `""`                                                                           |
+| `global.kspm.deploy`                                                 | Enables Sysdig KSPM node analyzer & KSPM collector                                       | `false`                                                                        |
 | `image.registry`                                                     | Sysdig Agent image registry                                                              | `quay.io`                                                                      |
 | `image.pullPolicy`                                                   | The Image pull policy                                                                    | `IfNotPresent`                                                                 |
 | `image.pullSecrets`                                                  | Image pull secrets                                                                       | `nil`                                                                          |
@@ -88,7 +89,7 @@ The following table lists the configurable parameters of the Sysdig Node Analyze
 | `sysdig.accessKey`                                                   | Your Sysdig Agent Access Key                                                             | ` ` Either accessKey or existingAccessKeySecret is required                    |
 | `sysdig.existingAccessKeySecret`                                     | Alternatively, specify the name of a Kubernetes secret containing an 'access-key' entry  | ` ` Either accessKey or existingAccessKeySecret is required                    |
 | `secure.enabled`                                                     | Enable Sysdig Secure                                                                     | `true`                                                                         |
-| `secure.vulnerabilityManagement.newEngineOnly`                       | Enable only the new vulnerability management engine                                         | `false`                                                                      |
+| `secure.vulnerabilityManagement.newEngineOnly`                       | Enable only the new vulnerability management engine                                         | `false`                                                                        |
 | `nodeAnalyzer.deploy`                                                | Deploy the Node Analyzer                                                                 | `true`                                                                         |
 | `nodeAnalyzer.apiEndpoint`                                           | Sysdig secure API endpoint, without protocol (i.e. `secure.sysdig.com`)                  | ` `                                                                            |
 | `nodeAnalyzer.sslVerifyCertificate`                                  | Can be set to false to allow insecure connections to the Sysdig backend, such as On-Prem |                                                                                |
@@ -155,7 +156,6 @@ The following table lists the configurable parameters of the Sysdig Node Analyze
 | `nodeAnalyzer.runtimeScanner.eveConnector.resources.limits.cpu`      | Eve Connector CPU limits per node                                                        | `1000m`                                                                        |
 | `nodeAnalyzer.runtimeScanner.eveConnector.resources.limits.memory`   | Eve Connector Memory limits per node                                                     | `512Mi`                                                                        |
 | `nodeAnalyzer.runtimeScanner.eveConnector.settings.replicas`         | Eve Connector deployment replicas                                                        | `1`                                                                            |
-| `nodeAnalyzer.kspmAnalyzer.deploy`                                   | Enables Sysdig KSPM node analyzer                                                        | `false`                                                                        |
 | `nodeAnalyzer.kspmAnalyzer.debug`                                    | Can be set to true to show KSPM node analyzer debug logging, useful for troubleshooting  | `false`                                                                        |
 | `nodeAnalyzer.kspmAnalyzer.image.repository`                         | The image repository to pull the  KSPM node analyzer from                                | `sysdig/kspm-analyzer`                                                         |
 | `nodeAnalyzer.kspmAnalyzer.image.tag`                                | The image tag to pull the  KSPM node analyzer                                            | `1.4.0`                                                                        |
@@ -248,7 +248,7 @@ For example:
 $ helm install --namespace sysdig-agent sysdig-agent \
     --set sysdig.accessKey=YOUR-KEY-HERE \
     --set nodeAnalyzer.apiEndpoint=42.32.196.18 \
-    --set nodeAnalyzer.kspmAnalyzer.deploy=true \
+    --set global.kspm.deploy=true \
     --set nodeAnalyzer.kspmAnalyzer.env.AGENT_PORT=8888 \
     sysdig/sysdig
 ```
