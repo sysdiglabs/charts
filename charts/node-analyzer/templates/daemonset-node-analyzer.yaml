@@ -83,10 +83,12 @@ spec:
       # the host
       hostPID: true
       containers:
-{{ if .Values.nodeAnalyzer.kspmAnalyzer.deploy }}
+{{ if .Values.global.kspm.deploy }}
       - name: sysdig-kspm-analyzer
         image: {{ template "nodeAnalyzer.image.kspmAnalyzer" . }}
         imagePullPolicy: {{ .Values.nodeAnalyzer.kspmAnalyzer.image.pullPolicy }}
+        resources:
+{{ toYaml .Values.nodeAnalyzer.kspmAnalyzer.resources | indent 10 }}
         securityContext:
           runAsUser: 0
           privileged: true
@@ -132,7 +134,7 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.namespace
-          {{- range $key, $value := .Values.nodeAnalyzer.cspmAnalyzer.env }}
+          {{- range $key, $value := .Values.nodeAnalyzer.kspmAnalyzer.env }}
           - name: "{{ $key }}"
             value: "{{ $value }}"
           {{- end }}

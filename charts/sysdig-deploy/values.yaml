@@ -7,12 +7,11 @@ global:
     region: "us1"
   image:
     registry: quay.io
+  kspm:
+    deploy: false
 
 agent:
   enabled: true
 
 nodeAnalyzer:
   enabled: true
-
-kspmCollector:
-  enabled: false

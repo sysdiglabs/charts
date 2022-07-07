@@ -4,6 +4,14 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.15.14
+### Minor changes
+* Sysdig README file: merged KSPM collector & KSPM analyzer sections
+
+## v1.15.13
+### Minor changes
+* HostAnalyzer bumped to version 0.1.9 (go 1.18)
+
 ## v1.15.12
 ### Minor changes
 * KSPM Analyzer - fix container missing CPU\Memory limits & requests
