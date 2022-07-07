@@ -4,9 +4,16 @@
 
 This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.0.4
+
+### Minor changes
+
+* Fixed the `monitorUrl` address in the helm chart install notes for certain SaaS regions
+
 ## v1.0.3
 
 ### Minor changes
+
 * KSPM Analyzer - fix container missing CPU\Memory limits & requests
 * KSPM components - Merge analyzer and collector deploy flags into 1
 
