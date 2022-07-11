@@ -30,7 +30,7 @@ sysdig:
 
 features:
   # Enable K8s Audit detections with Falco rules
-  k8sAuditDetections: false
+  k8sAuditDetections: true
 
   # [Admission Webhook Configuration rules](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#matching-requests-rules) for the Audit Detections
   k8sAuditDetectionsRules:  # +doc-gen:break
@@ -196,7 +196,7 @@ scc:
   create: true
 
 scanner:
-  # Deploy the Scanner Service
+  # If you only want the Kubernetes Audit Log functionality then disable this, and it will disable the Admission Controller Scanning Policy functionality.
   enabled: true
   # Service name for Scanner deployment
   name: scanner
