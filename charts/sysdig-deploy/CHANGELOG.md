@@ -10,6 +10,7 @@ This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. Th
 
 * Fix global.sysdig.region behavior for on-prem
 * Add some clarity to readme
+* Increment kspm dependencies versions with access key bug fix
 
 ## v1.0.4
 
