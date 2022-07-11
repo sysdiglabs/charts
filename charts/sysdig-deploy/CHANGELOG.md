@@ -4,6 +4,14 @@
 
 This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.0.5
+
+### Bugfixes
+
+* Fix global.sysdig.region behavior for on-prem
+* Add some clarity to readme
+* Increment kspm dependencies versions with access key bug fix
+
 ## v1.0.4
 
 ### Minor changes
