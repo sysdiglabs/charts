@@ -6,7 +6,7 @@ metadata:
   labels:
 {{ include "nodeAnalyzer.labels" . | indent 4 }}
 data:
-  collector_endpoint: "https://{{ required "A valid apiEndpoint is required" (include "nodeAnalyzer.apiEndpoint" .) }}/internal/scanning/scanning-analysis-collector"
+  collector_endpoint: "https://{{ include "nodeAnalyzer.apiEndpoint" . }}/internal/scanning/scanning-analysis-collector"
   {{- if hasKey .Values.nodeAnalyzer "sslVerifyCertificate" }}
   ssl_verify_certificate: "{{ .Values.nodeAnalyzer.sslVerifyCertificate }}"
   {{- end }}

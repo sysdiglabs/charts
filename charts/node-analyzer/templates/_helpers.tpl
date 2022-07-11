@@ -170,8 +170,8 @@ possible, but accept overrides from the chart values.
 Determine collector endpoint based on provided region or .Values.nodeAnalyzer.apiEndpoint
 */}}
 {{- define "nodeAnalyzer.apiEndpoint" -}}
-    {{- if .Values.nodeAnalyzer.apiEndpoint -}}
-        {{- .Values.nodeAnalyzer.apiEndpoint -}}
+    {{- if (or .Values.nodeAnalyzer.apiEndpoint (eq .Values.global.sysdig.region "custom"))  -}}
+        {{- required "A valid apiEndpoint is required" .Values.nodeAnalyzer.apiEndpoint -}}
     {{- else if (eq .Values.global.sysdig.region "us1") -}}
         {{- "secure.sysdig.com" -}}
     {{- else if (eq .Values.global.sysdig.region "us2") -}}
