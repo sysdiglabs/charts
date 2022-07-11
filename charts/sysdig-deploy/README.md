@@ -18,47 +18,72 @@ Currently included components:
 
 ## Installation
 
-Add the Sysdig Helm repo:
 
-```bash
-helm repo add sysdig https://charts.sysdig.com/
-```
+1. Add the Sysdig Helm repo:
 
-You will need to have the following values ready:
-- ACCESS_KEY: This is your Sysdig access key
-- SAAS_REGION: The Sysdig SAAS region the agents will connect to
-- CLUSTER_NAME: An identifier for your cluster
+   ```bash
+   helm repo add sysdig https://charts.sysdig.com/
+   ```
 
-Using the release name `sysdig`, run the following snippet to install the release into the namespace `sysdig-agent` (ensure that the namespace has been created before this):
+2. Collect the following values:
 
-```bash
-helm install sysdig sysdig/sysdig-deploy \
-    --namespace sysdig-agent \
-    --set global.sysdig.accessKey=ACCESS_KEY \
-    --set global.sysdig.region=SAAS_REGION \
-    --set global.clusterConfig.name=CLUSTER_NAME
-```
+   - ACCESS_KEY: This is your Sysdig access key
+   - SAAS_REGION: The Sysdig SAAS region the agents will connect to. See [Regions and IP Ranges](https://docs.sysdig.com/en/docs/administration/saas-regions-and-ip-ranges/) for more information. The Collector URL is custom for on-prem installations.
+   - CLUSTER_NAME: An identifier for your cluster
 
-Or to install with a values file, create a new file `values.sysdig.yaml`:
+3. Create a namespace for the Sysdig agent:
 
-```yaml
-global:
-  sysdig:
-    accessKey: ACCESS_KEY
-    region: SAAS_REGION
-  clusterConfig:
-    name: CLUSTER_NAME
-```
+   ```bash
+   kubectl create ns sysdig-agent
+   ```
 
-and install it with:
+4. Do one of the following:
 
-```bash
-helm install -n sysdig-agent sysdig sysdig/sysdig-deploy -f values.sysdig.yaml
-```
+   - Using the release name `sysdig`, run the following snippet to install the release into the namespace `sysdig-agent`:
 
-Further configuration information can be found below.
+    ```bash
+   helm install sysdig sysdig/sysdig-deploy \
+       --namespace sysdig-agent \
+       --set global.sysdig.accessKey=ACCESS_KEY \
+       --set global.sysdig.region=SAAS_REGION \
+       --set global.clusterConfig.name=CLUSTER_NAME
+    ```
 
-## Migrating from `sysdig`
+     **GKE Autopilot**: GKE Autopolot environments require an additional configuration parameter, `agent.gke.autopilot=true`, to install Sysdig agent:
+
+      ```bash
+   helm install sysdig sysdig/sysdig-deploy \
+        --namespace sysdig-agent \
+        --set global.sysdig.accessKey=ACCESS_KEY \
+        --set global.sysdig.region=SAAS_REGION \
+        --set global.clusterConfig.name=CLUSTER_NAME \
+        --set agent.gke.autopilot=true \
+        --set nodeAnalyzer.enabled=false
+      ```
+
+
+   - Install with a values file. 
+
+     To do so, create a new file `values.sysdig.yaml`:
+
+        ```yaml
+     global:
+       sysdig:
+         accessKey: ACCESS_KEY
+         region: SAAS_REGION
+       clusterConfig:
+         name: CLUSTER_NAME
+        ```
+
+        and install it with:
+
+        ```bash
+     helm install -n sysdig-agent sysdig sysdig/sysdig-deploy -f values.sysdig.yaml
+        ```
+
+
+
+## Migrating from `sysdig` chart
 
 To easily migrate from the previous `sysdig` chart to the new unified `sysdig-deploy` chart, use the migration helper script from this repo. This script will help re-map your existing values from the `sysdig` chart, allowing you to deploy this chart with the exact same configuration.
 
