@@ -29,10 +29,10 @@ spec:
           - name: ACCESS_KEY
             valueFrom:
               secretKeyRef:
-                {{- if not .Values.existingAccessKeySecret }}
+                {{- if not ( include "kspmCollector.accessKeySecret" .) }}
                 name: {{ template "kspmCollector.fullname" . }}
                 {{- else }}
-                name: {{ .Values.existingAccessKeySecret }}
+                name: {{ ( include "kspmCollector.accessKeySecret" .) }}
                 {{- end }}
                 key: access-key
           - name: CLUSTER_NAME

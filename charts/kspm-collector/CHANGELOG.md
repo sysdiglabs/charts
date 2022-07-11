@@ -1,3 +1,7 @@
+# v0.1.2
+### Bugfixes
+* Fix kspm-collector access key env
+
 # v0.1.1
 ### Minor change
 * KSPM Chart components - fix KSPM serviceAccount that is created when KSPM not installed
