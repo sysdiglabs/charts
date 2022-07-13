@@ -4,6 +4,19 @@
 
 This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.0.7
+
+### Minor changes
+
+* Chart output clarity improved
+* README now includes links to the chart components
+
+## v1.0.6
+
+### Minor changes
+
+* Added autopilot instructions
+
 ## v1.0.5
 
 ### Bugfixes
