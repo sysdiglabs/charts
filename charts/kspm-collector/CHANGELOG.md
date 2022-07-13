@@ -1,3 +1,7 @@
+# v0.1.3
+### Bugfixes
+* Remove duplicated apiVersion
+
 # v0.1.2
 ### Bugfixes
 * Fix kspm-collector access key env
