@@ -1,0 +1,100 @@
+# Default values for Sysdig Rapid Response
+global:
+  sysdig:
+    region: "us1"
+  proxy: {}
+
+sysdig:
+  # Required: You need your Sysdig access key before running agents, either specifying 'accessKey' here, or using 'existingAccessKeySecret'
+  accessKey: ""
+
+  # Alternatively, specify the name of a Kubernetes secret containing an 'access-key' entry
+  existingAccessKeySecret: ""
+
+rapidResponse:
+  # Required: A passphrase used to encrypt all traffic between the user and host, either specifying 'passphrase' here, or using 'existingPassphraseSecret'
+  passphrase: ""
+
+  # Alternatively, specify the name of a Kubernetes secret containing an 'passphrase' entry
+  existingPassphraseSecret: ""
+
+  image:
+    registry: quay.io
+    pullPolicy: IfNotPresent
+    repository: sysdig/rapid-response-host-component
+    tag: 0.3.3
+  
+  imagePullSecrets: []
+  
+  # The API endpoint for Sysdig Secure, specified with no protocol:
+  # * SaaS default region (US East): secure.sysdig.com
+  # * SaaS US Web: us2.app.sysdig.com
+  # * SaaS European Union: eu1.app.sysdig.com
+  # * On-Prem: sysdig.my.company.com
+  apiEndpoint: ""
+
+  # Can be set to false to allow insecure connections to the Sysdig backend,
+  # such as for on-premise installs that use self-signed certificates.
+  # By default, certificates are always verified.
+  # skipTlsVerifyCertificate: true
+  
+  # The privileged flag is necessary for OCP 4.x and other Kubernetes setups that deny host filesystem access to
+  # running containers by default regardless of volume mounts. In those cases, access to the CRI socket would fail.
+  #securityContext:
+  #  privileged: true
+  securityContext: {}
+  
+  resources:
+    limits:
+      cpu: 500m
+      memory: 500Mi
+    requests:
+      cpu: 250m
+      memory: 250Mi
+
+  extraVolumes:
+    volumes: []
+    mounts: []
+    # Allow passing extra volumes
+    # Any kind of volume can be passed. Example:
+    #
+    # Uncomment these lines if you'd like to map /root/ from the
+    # host into the container.
+    # extraVolumes:
+    #   volumes:
+    #     - name: host-root-vol
+    #       hostPath:
+    #         path: /
+    #
+    #   mounts:
+    #     - mountPath: /host
+    #       name: host-root-vol
+
+  # Perform rolling updates by default in the DaemonSet agent
+  # ref: https://kubernetes.io/docs/tasks/manage-daemon/update-daemon-set/
+  updateStrategy:
+    # You can also customize maxUnavailable, maxSurge or minReadySeconds if you
+    # need it
+    type: RollingUpdate
+    rollingUpdate: {}
+
+  # ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+  nodeSelector: {}
+
+  # arch and os will be used to template out a node affinity block matching everything in each list. If affinity is
+  # defined, these fields will be ignored
+  arch:
+    - amd64
+    - arm64
+    - s390x
+  os:
+    - linux
+  # Allow the DaemonSet to schedule using affinity rules
+  # Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+  affinity: {}
+  # Allow the DaemonSet to set annotations
+  daemonSetAnnotations: {}
+  # Allow the DaemonSet to set labels
+  daemonSetLabels: {}
+
+
