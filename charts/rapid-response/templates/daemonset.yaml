@@ -70,6 +70,18 @@ spec:
 {{ toYaml .Values.rapidResponse.securityContext | indent 12 }}
           {{- end }}
           env:
+            {{- if ( include "rapidResponse.httpProxy" . ) }}
+            - name: http_proxy
+              value: {{ .Values.rapidResponse.proxy.httpProxy | default .Values.global.proxy.httpProxy }}
+            {{- end }}
+            {{- if ( include "rapidResponse.httpsProxy" . ) }}
+            - name: https_proxy
+              value: {{ .Values.rapidResponse.proxy.httpsProxy | default .Values.global.proxy.httpsProxy }}
+            {{- end }}
+            {{- if ( include "rapidResponse.noProxy" . ) }}
+            - name: no_proxy
+              value: {{ .Values.rapidResponse.proxy.noProxy | default .Values.global.proxy.noProxy }}
+            {{- end }}
             - name: API_ENDPOINT
               valueFrom:
                 configMapKeyRef:
@@ -83,19 +95,19 @@ spec:
             - name: ACCESS_KEY
               valueFrom:
                 secretKeyRef:
-                  {{- if not ( include "rapidResponse.accessKeySecret" .) }}
+                  {{- if not ( include "rapidResponse.accessKeySecret" . ) }}
                   name: {{ template "rapidResponse.fullname" . }}-access-key
                   {{- else }}
-                  name: {{ ( include "rapidResponse.accessKeySecret" .) }}
+                  name: {{ ( include "rapidResponse.accessKeySecret" . ) }}
                   {{- end }}
                   key: access-key
             - name: PASSWORD
               valueFrom:
                 secretKeyRef:
-                  {{- if not ( include "rapidResponse.passphraseSecret" .) }}
+                  {{- if not ( include "rapidResponse.passphraseSecret" . ) }}
                   name: {{ template "rapidResponse.fullname" . }}-passphrase
                   {{- else }}
-                  name: {{ ( include "rapidResponse.passphraseSecret" .) }}
+                  name: {{ ( include "rapidResponse.passphraseSecret" . ) }}
                   {{- end }}
                   key: passphrase
           volumeMounts:

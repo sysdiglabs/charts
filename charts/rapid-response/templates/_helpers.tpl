@@ -88,7 +88,19 @@ Return the proper Rapid Response image name
 {{- if .Values.rapidResponse.overrideValue }}
     {{- printf .Values.rapidResponse.overrideValue -}}
 {{- else -}}
-    {{- include "rapidResponse.imageRegistry" . -}} / {{- include "rapidResponse.repositoryName" . -}} {{- if .Values.rapidResponse.image.digest -}} @ {{- .Values.rapidResponse.image.digest -}} {{- else -}} : {{- .Values.rapidResponse.image.tag -}} {{- end -}}
+    {{- include "rapidResponse.imageRegistry" . -}} / {{- include "rapidResponse.repositoryName" . -}} {{- if .Values.rapidResponse.image.digest -}} @ {{- .Values.rapidResponse.image.digest -}} {{- else -}} : {{- include "rapidResponse.imageTag" . -}} {{- end -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Return Rapid Response image tag from AppVersion defined on Chart.yaml
+This would avoid to manually update everytime both Chart.yaml and values.yaml with the new image tag
+*/}}
+{{- define "rapidResponse.imageTag" -}}
+{{- if .Values.rapidResponse.image.tag -}}
+{{- printf "%s" .Values.rapidResponse.image.tag -}}
+{{- else -}}
+{{- printf "%s" .Chart.AppVersion -}}
 {{- end -}}
 {{- end -}}
 
@@ -110,9 +122,6 @@ possible, but accept overrides from the chart values.
     {{- .Values.sysdig.existingAccessKeySecret | default .Values.global.sysdig.accessKeySecret | default "" -}}
 {{- end -}}
 
-#################
-# Review this
-#################
 {{- define "rapidResponse.passphrase" -}}
     {{- required "A valid passphrase is required" .Values.rapidResponse.passphrase  -}}
 {{- end -}}
@@ -120,7 +129,27 @@ possible, but accept overrides from the chart values.
 {{- define "rapidResponse.passphraseSecret" -}}
     {{- .Values.rapidResponse.existingPassphraseSecret | default "" -}}
 {{- end -}}
-#################
+
+{{/*
+HTTP/HTTPS proxy support
+*/}}
+{{- define "rapidResponse.httpProxy" -}}
+    {{- if (.Values.rapidResponse.proxy.httpProxy | default .Values.global.proxy.httpProxy) -}}
+        {{ .Values.rapidResponse.proxy.httpProxy | default .Values.global.proxy.httpProxy }}
+    {{- end -}}
+{{- end -}}
+
+{{- define "rapidResponse.httpsProxy" -}}
+    {{- if (.Values.rapidResponse.proxy.httpsProxy | default .Values.global.proxy.httpsProxy) -}}
+        {{ .Values.rapidResponse.proxy.httpsProxy | default .Values.global.proxy.httpsProxy }}
+    {{- end -}}
+{{- end -}}
+
+{{- define "rapidResponse.noProxy" -}}
+    {{- if (.Values.rapidResponse.proxy.noProxy | default .Values.global.proxy.noProxy) -}}
+        {{ .Values.rapidResponse.proxy.noProxy | default .Values.global.proxy.noProxy }}
+    {{- end -}}
+{{- end -}}
 
 {{/*
 Determine collector endpoint based on provided region or .Values.rapidResponse.apiEndpoint

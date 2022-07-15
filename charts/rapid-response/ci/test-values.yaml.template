@@ -2,3 +2,4 @@ sysdig:
   accessKey: ${SECURE_AGENT_TOKEN}
 rapidResponse:
   apiEndpoint: secure.sysdig.com
+  passphrase: "test-passphrase"

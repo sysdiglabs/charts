@@ -22,10 +22,11 @@ rapidResponse:
     registry: quay.io
     pullPolicy: IfNotPresent
     repository: sysdig/rapid-response-host-component
-    tag: 0.3.3
-  
+    # If unset, .Chart.AppVersion is used to create tag
+    # tag: 0.3.3
+
   imagePullSecrets: []
-  
+
   # The API endpoint for Sysdig Secure, specified with no protocol:
   # * SaaS default region (US East): secure.sysdig.com
   # * SaaS US Web: us2.app.sysdig.com
@@ -37,13 +38,20 @@ rapidResponse:
   # such as for on-premise installs that use self-signed certificates.
   # By default, certificates are always verified.
   # skipTlsVerifyCertificate: true
-  
+
+  # If is behind a proxy you can set a proxy server
+  # Configure it when Rapid Response needs to connect to Sysdig backend through an HTTP/HTTPS proxy:
+  proxy:
+    httpProxy: ""
+    httpsProxy: ""
+    noProxy: ""
+
   # The privileged flag is necessary for OCP 4.x and other Kubernetes setups that deny host filesystem access to
   # running containers by default regardless of volume mounts. In those cases, access to the CRI socket would fail.
-  #securityContext:
-  #  privileged: true
+  # securityContext:
+  #   privileged: true
   securityContext: {}
-  
+
   resources:
     limits:
       cpu: 500m
@@ -96,5 +104,3 @@ rapidResponse:
   daemonSetAnnotations: {}
   # Allow the DaemonSet to set labels
   daemonSetLabels: {}
-
-
