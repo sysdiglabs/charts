@@ -15,3 +15,9 @@ agent:
 
 nodeAnalyzer:
   enabled: true
+
+rapidResponse:
+  enabled: false
+  rapidResponse:
+    passphrase: ""
+    existingPassphraseSecret: ""
