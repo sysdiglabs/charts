@@ -200,6 +200,6 @@ Sysdig NATS service URL
 {{- if .Values.natsUrl -}}
     {{- .Values.natsUrl -}}
 {{- else -}}
-    wss://{{ .Values.nodeAnalyzer.apiEndpoint }}:443
+    wss://{{ ( include "nodeAnalyzer.apiEndpoint" .) }}:443
 {{- end -}}
 {{- end -}}
