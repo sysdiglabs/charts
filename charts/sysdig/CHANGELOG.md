@@ -4,6 +4,10 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.15.17
+### Minor changes
+* Fixed readme wrong defaults for RuntimeScanner
+
 ## v1.15.16
 ### Minor changes
 * KSPM: version 1.5.0
