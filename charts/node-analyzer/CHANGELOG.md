@@ -4,6 +4,12 @@
 
 This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.5.7
+### Minor changes
+* NodeImageAnalyzer: bumped to 0.1.18
+* HostAnalyzer: bumped to 0.1.9
+* RuntimeScanner: bumped to 1.1.1
+
 ## v1.5.6
 ### Bugfixes
 
