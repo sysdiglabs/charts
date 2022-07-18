@@ -1,3 +1,7 @@
+# v0.1.4
+### Bugfixes
+* Bumped image tag to 1.5.0
+
 # v0.1.3
 ### Bugfixes
 * Remove duplicated apiVersion
