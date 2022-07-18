@@ -1744,6 +1744,41 @@ entries:
   agent:
   - apiVersion: v2
     appVersion: 12.7.1
+    created: "2022-07-18T17:06:10.4234984Z"
+    description: Sysdig Monitor and Secure agent
+    digest: 87ae62f163e1488c246925b633b76de3fd798b953eac3ee12c4ad38d2dd7a24d
+    home: https://www.sysdig.com/
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: lachlan@deis.com
+      name: lachie83
+    - email: jorge.salamero@sysdig.com
+      name: bencer
+    - email: nestor.salceda@sysdig.com
+      name: nestorsalceda
+    - email: alvaro.iradier@sysdig.com
+      name: airadier
+    - email: carlos.arilla@sysdig.com
+      name: carillan81
+    - email: ashwin.chandrasekar@sysdig.com
+      name: achandras
+    name: agent
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/agent-1.5.7/agent-1.5.7.tgz
+    version: 1.5.7
+  - apiVersion: v2
+    appVersion: 12.7.1
     created: "2022-07-06T18:52:25.301143494Z"
     description: Sysdig Monitor and Secure agent
     digest: da6c70ae5e9bd6fd1ad62c7cfbc9307387b776396235914253b3221d7c7159d1
@@ -9756,6 +9791,40 @@ entries:
     version: 1.0.2
   sysdig-deploy:
   - apiVersion: v2
+    created: "2022-07-18T17:06:10.567975543Z"
+    dependencies:
+    - alias: agent
+      condition: agent.enabled
+      name: agent
+      repository: file://../agent
+      version: ~1.5.6
+    - alias: nodeAnalyzer
+      condition: nodeAnalyzer.enabled
+      name: node-analyzer
+      repository: file://../node-analyzer
+      version: ~1.5.4
+    - alias: kspmCollector
+      condition: global.kspm.deploy
+      name: kspm-collector
+      repository: file://../kspm-collector
+      version: ~0.1.2
+    description: A chart with various Sysdig components for Kubernetes
+    digest: 65128f418f0d94e7882f9b7970df48050407c878f3d3512026a27fa017343766
+    home: https://www.sysdig.com/
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    maintainers:
+    - email: ashwin.chandrasekar@sysdig.com
+      name: achandras
+    - email: zhongcheng.xiao@sysdig.com
+      name: lilx1ao
+    - email: yashgiri.goswami@sysdig.com
+      name: yashgiri
+    name: sysdig-deploy
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/sysdig-deploy-1.0.7/sysdig-deploy-1.0.7.tgz
+    version: 1.0.7
+  - apiVersion: v2
     created: "2022-07-11T19:18:04.722386984Z"
     dependencies:
     - alias: agent
@@ -10386,4 +10455,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2022-07-18T09:02:37.870619354Z"
+generated: "2022-07-18T17:06:10.573321566Z"
