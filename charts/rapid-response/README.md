@@ -57,5 +57,6 @@ Alternatively, a YAML file that specifies the values for the parameters can be p
 example,
 
 ```bash
-$ helm install --namespace kspmcollector kspm-collector -f values.yaml sysdig/kspm-collector
+$ helm install --create-namespace -n rapid-response rapid-response \
+    -f values.yaml sysdig/rapid-response
 ```

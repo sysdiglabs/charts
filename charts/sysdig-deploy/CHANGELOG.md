@@ -6,7 +6,7 @@ This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. Th
 
 ## v1.0.7
 
-### Minor changes
+### Major changes
 
 * Introduced rapidResponse helm chart
 
