@@ -4,6 +4,18 @@
 
 This file documents all notable changes to the Sysdig Agent Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.5.7
+
+### Minor Changes
+
+* Fixed README redirect
+
+## v1.5.6
+
+### Bugfix
+
+* make collectorHost required when region is custom 
+
 ## v1.5.5
 
 ### Bugfix
