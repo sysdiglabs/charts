@@ -4,6 +4,9 @@ global:
   sysdig:
     region: "us1"
   proxy: {}
+  gke:
+    # true here enables the deployment on gke autopilot clusters
+    autopilot: false
 
 namespace: ""
 
