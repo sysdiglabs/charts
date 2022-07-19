@@ -58,7 +58,7 @@ spec:
 {{ toYaml .Values.rapidResponse.imagePullSecrets | indent 8 }}
       {{- end }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: rapid-response
           image: {{ template "rapidResponse.image" . }}
           imagePullPolicy: {{ .Values.rapidResponse.image.pullPolicy }}
           resources: 
