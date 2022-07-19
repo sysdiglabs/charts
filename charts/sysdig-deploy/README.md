@@ -10,6 +10,8 @@ This chart deploys various Sysdig components into your Kubernetes cluster.
 
 Currently included components:
 - [Sysdig agent](https://github.com/sysdiglabs/charts/tree/master/charts/agent)
+- [Sysdig NodeAnalyzer](https://github.com/sysdiglabs/charts/tree/master/charts/node-analyzer)
+- [Sysdig KSPM Collector](https://github.com/sysdiglabs/charts/tree/master/charts/kspm-collector)
 
 ## Prerequisites
 
