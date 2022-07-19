@@ -4,6 +4,12 @@
 
 This file documents all notable changes to the Sysdig Agent Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.5.8
+
+### Bugfix
+
+* Fixed region collector addresses for us4, au1
+
 ## v1.5.7
 
 ### Minor Changes
