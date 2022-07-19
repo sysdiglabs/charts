@@ -1,0 +1,122 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: {{ template "rapidResponse.fullname" . }}
+  labels:
+{{ include "rapidResponse.labels" . | indent 4 }}
+{{ include "rapidResponse.daemonSetLabels" . | indent 4 }}
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "rapidResponse.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      name: {{ template "rapidResponse.fullname" .}}
+      labels:
+{{ include "rapidResponse.labels" . | indent 8 }}
+{{ include "rapidResponse.daemonSetLabels" . | indent 8 }}
+      annotations:
+{{ toYaml .Values.rapidResponse.daemonSetAnnotations | indent 8 }}
+    spec:
+{{- if .Values.priorityClassName }}
+      priorityClassName: "{{ .Values.priorityClassName }}"
+{{- end }}
+      tolerations:
+{{ toYaml .Values.tolerations | indent 8 }}
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      terminationGracePeriodSeconds: 5
+      {{- if .Values.rapidResponse.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.rapidResponse.nodeSelector | indent 8 }}
+      {{- end }}
+      affinity:
+      {{- if .Values.rapidResponse.affinity }}
+{{ toYaml .Values.rapidResponse.affinity | indent 8 }}
+      {{- else }}
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/arch
+                operator: In
+                values: {{- toYaml .Values.rapidResponse.arch | nindent 18 }}
+              - key: kubernetes.io/os
+                operator: In
+                values: {{- toYaml .Values.rapidResponse.os | nindent 18 }}
+            - matchExpressions:
+              - key: beta.kubernetes.io/arch
+                operator: In
+                values: {{- toYaml .Values.rapidResponse.arch | nindent 18 }}
+              - key: beta.kubernetes.io/os
+                operator: In
+                values: {{- toYaml .Values.rapidResponse.os | nindent 18 }}
+      {{- end }}
+      {{- if .Values.rapidResponse.imagePullSecrets }}
+      imagePullSecrets:
+{{ toYaml .Values.rapidResponse.imagePullSecrets | indent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ template "rapidResponse.image" . }}
+          imagePullPolicy: {{ .Values.rapidResponse.image.pullPolicy }}
+          resources: 
+{{ toYaml .Values.rapidResponse.resources | indent 12 }}
+          {{- if .Values.rapidResponse.securityContext }}
+          # The privileged flag is necessary for OCP 4.x and other Kubernetes setups that deny host filesystem access to
+          # running containers by default regardless of volume mounts. In those cases, access to the CRI socket would fail.
+          securityContext:
+{{ toYaml .Values.rapidResponse.securityContext | indent 12 }}
+          {{- end }}
+          env:
+            {{- if ( include "rapidResponse.httpProxy" . ) }}
+            - name: http_proxy
+              value: {{ .Values.rapidResponse.proxy.httpProxy | default .Values.global.proxy.httpProxy }}
+            {{- end }}
+            {{- if ( include "rapidResponse.httpsProxy" . ) }}
+            - name: https_proxy
+              value: {{ .Values.rapidResponse.proxy.httpsProxy | default .Values.global.proxy.httpsProxy }}
+            {{- end }}
+            {{- if ( include "rapidResponse.noProxy" . ) }}
+            - name: no_proxy
+              value: {{ .Values.rapidResponse.proxy.noProxy | default .Values.global.proxy.noProxy }}
+            {{- end }}
+            - name: API_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "rapidResponse.fullname" . }}-config
+                  key: api_endpoint
+            - name: API_TLS_SKIP_CHECK
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "rapidResponse.fullname" . }}-config
+                  key: skip_tls_check
+            - name: ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  {{- if not ( include "rapidResponse.accessKeySecret" . ) }}
+                  name: {{ template "rapidResponse.fullname" . }}-access-key
+                  {{- else }}
+                  name: {{ ( include "rapidResponse.accessKeySecret" . ) }}
+                  {{- end }}
+                  key: access-key
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  {{- if not ( include "rapidResponse.passphraseSecret" . ) }}
+                  name: {{ template "rapidResponse.fullname" . }}-passphrase
+                  {{- else }}
+                  name: {{ ( include "rapidResponse.passphraseSecret" . ) }}
+                  {{- end }}
+                  key: passphrase
+          volumeMounts:
+            {{- if .Values.rapidResponse.extraVolumes.mounts }}
+{{ toYaml .Values.rapidResponse.extraVolumes.mounts | indent 12 }}
+            {{- end }}
+      volumes:
+        {{- if .Values.rapidResponse.extraVolumes.volumes }}
+{{ toYaml .Values.rapidResponse.extraVolumes.volumes | indent 8 }}
+        {{- end }}
+  updateStrategy:
+    type: {{ .Values.rapidResponse.updateStrategy.type }}
