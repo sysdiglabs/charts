@@ -4472,6 +4472,32 @@ entries:
   rapid-response:
   - apiVersion: v2
     appVersion: 0.3.3
+    created: "2022-07-19T13:51:11.965445523Z"
+    description: Sysdig Rapid Response
+    digest: c67a556859a5782db62174618ef3a1e9695129ab8af31fa1f17b30428240ee7b
+    home: https://www.sysdig.com/
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: ashwin.chandrasekar@sysdig.com
+      name: achandras
+    - email: daniele.delorenzi@sysdig.com
+      name: dark-vex
+    name: rapid-response
+    sources:
+    - https://github.com/sysdiglabs/charts/
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/rapid-response-0.1.1/rapid-response-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 0.3.3
     created: "2022-07-19T07:33:52.442409608Z"
     description: Sysdig Rapid Response
     digest: c2210437a24877f0a319210d044805191a9fc529bbb1b5601aaca629d8c1e612
@@ -9818,6 +9844,45 @@ entries:
     version: 1.0.2
   sysdig-deploy:
   - apiVersion: v2
+    created: "2022-07-19T13:51:12.169160877Z"
+    dependencies:
+    - alias: agent
+      condition: agent.enabled
+      name: agent
+      repository: file://../agent
+      version: ~1.5.6
+    - alias: nodeAnalyzer
+      condition: nodeAnalyzer.enabled
+      name: node-analyzer
+      repository: file://../node-analyzer
+      version: ~1.5.6
+    - alias: kspmCollector
+      condition: global.kspm.deploy
+      name: kspm-collector
+      repository: file://../kspm-collector
+      version: ~0.1.4
+    - alias: rapidResponse
+      condition: rapidResponse.enabled
+      name: rapid-response
+      repository: file://../rapid-response
+      version: ~0.1.1
+    description: A chart with various Sysdig components for Kubernetes
+    digest: efa3d854d67f63bdc5a233c6dfff89ce6b87091a90ac2b32c75774567292d950
+    home: https://www.sysdig.com/
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    maintainers:
+    - email: ashwin.chandrasekar@sysdig.com
+      name: achandras
+    - email: zhongcheng.xiao@sysdig.com
+      name: lilx1ao
+    - email: yashgiri.goswami@sysdig.com
+      name: yashgiri
+    name: sysdig-deploy
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/sysdig-deploy-1.1.1/sysdig-deploy-1.1.1.tgz
+    version: 1.1.1
+  - apiVersion: v2
     created: "2022-07-19T07:33:52.58577172Z"
     dependencies:
     - alias: agent
@@ -10555,4 +10620,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2022-07-19T07:33:52.595609224Z"
+generated: "2022-07-19T13:51:12.172768376Z"
