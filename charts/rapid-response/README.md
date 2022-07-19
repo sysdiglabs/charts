@@ -42,7 +42,7 @@ The following table lists the configurable parameters of the Sysdig KSPM Collect
 | `rapidResponse.resources.requests.cpu`    | Rapid Response CPU requests                                                             | `150m`                                                        |
 | `rapidResponse.resources.requests.memory` | Rapid Response Memory requests                                                          | `256Mi`                                                       |
 | `rapidResponse.resources.limits.cpu`      | Rapid Response CPU limits                                                               | `500m`                                                        |
-| `rapidResponse.resources.limits.memory`   | Rapid Response Memory limits                                                            | `1536Mi`                                                      |
+| `rapidResponse.resources.limits.memory`   | Rapid Response Memory limits                                                            | `500Mi`                                                       |
 
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,

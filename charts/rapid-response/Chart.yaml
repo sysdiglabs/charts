@@ -37,4 +37,6 @@ sources:
 maintainers:
   - name: achandras
     email: ashwin.chandrasekar@sysdig.com
+  - name: dark-vex
+    email: daniele.delorenzi@sysdig.com
 dependencies: []
