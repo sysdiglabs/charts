@@ -2,6 +2,13 @@
 
 ## Change Log
 
+## v0.2.0
+
+### Major change
+
+* Deprecated the usage of `skipTlsVerifyCertificate`, for enabling/disabling the certificate verification use `sslVerifyCertificate` instead
+For compatibility purposes `skipTlsVerifyCertificate` is still available in this release
+
 ## v0.1.1
 
 ### Bugfix

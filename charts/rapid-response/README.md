@@ -22,7 +22,7 @@ $ helm install --create-namespace -n rapid-response rapid-response -f values.yam
 
 ## Configuration
 
-The following table lists the configurable parameters of the Sysdig KSPM Collector chart and their default values:
+The following table lists the configurable parameters of the Sysdig Rapid Response chart and their default values:
 
 | Parameter                                 | Description                                                                             | Default                                                       |
 |-------------------------------------------|-----------------------------------------------------------------------------------------|---------------------------------------------------------------|
@@ -43,6 +43,8 @@ The following table lists the configurable parameters of the Sysdig KSPM Collect
 | `rapidResponse.resources.requests.memory` | Rapid Response Memory requests                                                          | `256Mi`                                                       |
 | `rapidResponse.resources.limits.cpu`      | Rapid Response CPU limits                                                               | `500m`                                                        |
 | `rapidResponse.resources.limits.memory`   | Rapid Response Memory limits                                                            | `500Mi`                                                       |
+| `rapidResponse.skipTlsVerifyCertificate`  | ** Deprecated ** Set it to `true` for disabling the certificate verification            | `false` ** Deprecated ** use `sslVerifyCertificate` instead   |
+| `rapidResponse.sslVerifyCertificate`      | Set it to `false` for disabling the certificate verification                            | `true`                                                        |
 
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,

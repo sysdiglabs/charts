@@ -171,3 +171,19 @@ Determine collector endpoint based on provided region or .Values.rapidResponse.a
         {{- "app.au1.sysdig.com" -}}
     {{- end -}}
 {{- end -}}
+
+{{/*
+Rapid Response have the environment variable skip_tls_check: true for skip the certficate verification
+while we do the other way round for our other components (sslVerifyCertificate: false for disabling the check).
+The aim of rapidResponse.certificateValidation is to align the settings with the other Sysdig charts,
+without introducing changes on Rapid Response container image.
+*/}}
+{{- define "rapidResponse.certificateValidation" -}}
+    {{- if or (.Values.rapidResponse.skipTlsVerifyCertificate) (eq .Values.rapidResponse.sslVerifyCertificate false) -}}
+        {{- "true" -}}
+    {{/*{{- else if (eq .Values.rapidResponse.sslVerifyCertificate false) -}}
+        {{- "true" -}}*/}}
+    {{- else -}}
+        {{- "false" -}}
+    {{- end -}}
+{{- end -}}

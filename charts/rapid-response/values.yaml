@@ -34,10 +34,16 @@ rapidResponse:
   # * On-Prem: sysdig.my.company.com
   apiEndpoint: ""
 
-  # Can be set to false to allow insecure connections to the Sysdig backend,
+  # DEPRECATED - this flag has been deprecated, please use `sslVerifyCertificate`
+  # Can be set to true to allow insecure connections to the Sysdig backend,
   # such as for on-premise installs that use self-signed certificates.
   # By default, certificates are always verified.
   # skipTlsVerifyCertificate: true
+
+  # Can be set to false to allow insecure connections to the Sysdig backend,
+  # such as for on-premise installs that use self-signed certificates.
+  # By default, certificates are always verified.
+  # sslVerifyCertificate: false
 
   # If is behind a proxy you can set a proxy server
   # Configure it when Rapid Response needs to connect to Sysdig backend through an HTTP/HTTPS proxy:
