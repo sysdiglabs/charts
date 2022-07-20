@@ -4,6 +4,13 @@
 
 This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.1.3
+
+### Bugfixes
+
+* Bumped agent sub-chart version to 1.5.9
+
+
 ## v1.1.2
 
 ### Bugfixes
