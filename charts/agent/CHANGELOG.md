@@ -4,6 +4,12 @@
 
 This file documents all notable changes to the Sysdig Agent Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.5.9
+
+### Bugfix
+
+* Fix agent container name to match previous name `sysdig`
+
 ## v1.5.8
 
 ### Bugfix

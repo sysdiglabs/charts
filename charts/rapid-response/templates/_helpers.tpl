@@ -179,10 +179,8 @@ The aim of rapidResponse.certificateValidation is to align the settings with the
 without introducing changes on Rapid Response container image.
 */}}
 {{- define "rapidResponse.certificateValidation" -}}
-    {{- if or (.Values.rapidResponse.skipTlsVerifyCertificate) (eq .Values.rapidResponse.sslVerifyCertificate false) -}}
+    {{- if or ( eq (.Values.rapidResponse.skipTlsVerifyCertificate | toString) "true") (eq (.Values.rapidResponse.sslVerifyCertificate | toString) "false") -}}
         {{- "true" -}}
-    {{/*{{- else if (eq .Values.rapidResponse.sslVerifyCertificate false) -}}
-        {{- "true" -}}*/}}
     {{- else -}}
         {{- "false" -}}
     {{- end -}}
