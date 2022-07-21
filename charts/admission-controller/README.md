@@ -22,7 +22,7 @@ $ pre-commit run -a
 $ helm repo add sysdig https://charts.sysdig.com
 $ helm repo update
 $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-      --create-namespace -n sysdig-admission-controller --version=0.6.10  \
+      --create-namespace -n sysdig-admission-controller --version=0.6.11  \
       --set clusterName=CLUSTER_NAME \
       --set sysdig.secureAPIToken=SECURE_API_TOKEN
 ```
@@ -53,7 +53,7 @@ This chart deploys the Sysdig Admission Controller on a [Kubernetes](http://kube
 To install the chart with the release name `admission-controller`:
 
 ```console
-$ helm upgrade --install sysdig-admission-controller sysdig/admission-controller -n sysdig-admission-controller --version=0.6.10
+$ helm upgrade --install sysdig-admission-controller sysdig/admission-controller -n sysdig-admission-controller --version=0.6.11
 ```
 
 The command deploys the Sysdig Admission Controller on the Kubernetes cluster in the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.
@@ -159,7 +159,7 @@ Specify each parameter using the **`--set key=value[,key=value]`** argument to `
 
 ```console
 $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-    --create-namespace -n sysdig-admission-controller --version=0.6.10 \
+    --create-namespace -n sysdig-admission-controller --version=0.6.11 \
     --set sysdig.secureAPIToken=YOUR-KEY-HERE,clusterName=YOUR-CLUSTER-NAME
 ```
 
@@ -168,7 +168,7 @@ installing the chart. For example:
 
 ```console
 $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-    --create-namespace -n sysdig-admission-controller --version=0.6.10 \
+    --create-namespace -n sysdig-admission-controller --version=0.6.11 \
     --values values.yaml
 ```
 
@@ -359,6 +359,12 @@ A: Admission Controller pull changes from the Sysdig Secure platform every 5 min
 S: You can wait those five minutes, or force the admission controller webhook restart
 
     $ kubectl rollout restart deployment -n sysdig-admission-controller sysdig-admission-controller-webhook
+
+### Q: I am deploying it in a GKE Cluster with Private Network enabled and everything is slow or I cannot scale the cluster correctly.
+
+A: GKE clusters run the K8s API outside from the cluster. If Private Network is enabled, the K8s API may be unable to reach the Admission Controller's webhook that validates each API request, so eventually every API request times out and is processed, but the performance is impacted in the process.
+
+S: As specified in https://cloud.google.com/kubernetes-engine/docs/how-to/private-clusters#api_request_that_triggers_admission_webhook_timing_out, the API default firewall does not allow TCP connections for ports other than 443 and 10250, so you need to enable a new rule that allows the Control Plane's network to contact the default running port for the Admission Controller's webhook (5000 TCP). Follow the instructions in https://cloud.google.com/kubernetes-engine/docs/how-to/private-clusters#add_firewall_rules.
 
 <!--
 Q: Helm v2 usage
