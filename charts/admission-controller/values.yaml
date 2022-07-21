@@ -156,6 +156,8 @@ webhook:
   denyOnError: false
   # Dry Run request
   dryRun: false
+  # Log Level - Valid Values info or debug
+  logLevel: info
 
   ssl:
     ca:
