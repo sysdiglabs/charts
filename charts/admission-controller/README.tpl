@@ -284,6 +284,10 @@ S: You can wait those five minutes, or force the admission controller webhook re
 
     $ kubectl delete pod -n {{ .Release.Namespace }} -l app.kubernetes.io/component=webhook
 
+### Q: I am deploying it in a GKE Cluster with Private Network enabled and everything is slow or I cannot scale the cluster correctly.
+A: GKE clusters run the K8s API outside from the cluster. If Private Network is enabled, the K8s API may be unable to reach the Admission Controller's webhook that validates each API request, so eventually every API request times out and is processed, but the performance is impacted in the process.
+S: As specified in https://cloud.google.com/kubernetes-engine/docs/how-to/private-clusters#api_request_that_triggers_admission_webhook_timing_out, the API default firewall does not allow TCP connections for ports other than 443 and 10250, so you need to enable a new rule that allows the Control Plane's network to contact the default running port for the Admission Controller's webhook (5000 TCP). Follow the instructions in https://cloud.google.com/kubernetes-engine/docs/how-to/private-clusters#add_firewall_rules.
+
 <!--
 Q: Helm v2 usage
 should work with minor changes
