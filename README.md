@@ -5,13 +5,55 @@ This GitHub repository is the official source for Sysdig's Helm charts.
  For instructions about how to install charts from this repository, visit the public website at
 **[https://charts.sysdig.com](https://charts.sysdig.com/)**
 
+
 ## Contribute
 
-### - Make changes to an existing chart without publishing
+### Development
+
+#### - Make changes to an existing chart without publishing
 
 If you make changes to an existing chart, but do not change its version, nothing new will be published to the _charts repository_.
 
-### - Publishing a new version of a chart
+
+### Pull Requests
+
+[Checklist to comply-with when doing the PR](./.github/PULL_REQUEST_TEMPLATE.md)
+
+- Title of the PR starts with chart name (e.g. [mychartname])
+- Chart Version bumped
+- Variables are documented in the README.md (or README.tpl in some charts)
+- Check GithubAction checks (like lint) to avoid merge-check stoppers 
+
+#### - GithubAction Checks
+
+Make sure to comply with 
+
+- `lint` checks, running 
+    > $ make lint
+- `docs` autogeneration, based on `values.yaml`. this does only apply to charts with `README.tpl` templates (ex.: admission-controller)
+   > $ make docs
+
+
+To do this automatically, you can install [pre-commit](https://pre-commit.com/) plugin, configured in `/.pre-commit-config.yaml`, to automate this step, and validate/detect the issues when committing from your local.
+
+
+### GithubPages / Documentation
+
+https://charts.sysdig.com is managed through GithubPages action.
+`.github/workflows/release.yml` will merge each `charts/*/README.md` into the `gh-pages` branch.
+
+
+#### - Add a new chart
+
+To add a new chart, create a directory inside _charts_ with it contents at _master_ branch.
+
+When you commit it, it will be picked up by the GitHub action, and if it contains a chart and version that doesn't already exist in the _charts repository_, a new release with the package for the chart will be published on the _GitHub repository_,
+and the list of all charts at `index.yaml` on _gh-pages_ branch will be updated on the _charts repository_.
+
+
+### Release
+
+#### - Publishing a new version of a chart
 
 > TL;DR
 > <br/>When a commit to master includes a new version of a _chart_, a GitHub action will make it available on the _charts repository_.
@@ -24,20 +66,6 @@ When it detects that the version in the folder doesn't exist in  `index.yaml`, i
 
 The packaged referenced in `index.yaml`, when it's updated using the GitHub action, will link for download to the URL provided by the _GitHub repository_ release files.
 
-
-### - Add a new chart
-
-To add a new chart, create a directory inside _charts_ with it contents at _master_ branch.
-
-When you commit it, it will be picked up by the GitHub action, and if it contains a chart and version that doesn't already exist in the _charts repository_, a new release with the package for the chart will be published on the _GitHub repository_,
-and the list of all charts at `index.yaml` on _gh-pages_ branch will be updated on the _charts repository_.
-
-
-### - Modify GithubPages
-
-https://charts.sysdig.com is managed through GithubPages action.
-
-`.github/workflows/release.yml` will merge each `charts/*/README.md` into the `gh-pages` branch.
 
 
 ## More information
