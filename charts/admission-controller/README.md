@@ -340,10 +340,11 @@ A: This happens when DEBUG is enabled but Admission Controller will behave as ex
 
 
 ### Q: I need to troubleshoot, any way to switch to `debug verbose`?
-S: Add the `LOG_LEVEL=debug` key-value to the admission configmap and respawn webhook
+A: If you used helm to install, you can edit the helm values.yaml to set webhook.logLevel=debug
+S: You can edit the webhook configmap - add the `LOG_LEVEL=debug` key-value and restart the webhook
 
     $ kubectl edit configmaps -n sysdig-admission-controller sysdig-admission-controller-webhook
-    $ kubectl delete pod -n sysdig-admission-controller -l app.kubernetes.io/component=webhook
+    $ kubectl rollout restart deployment -n sysdig-admission-controller sysdig-admission-controller-webhook
     
 
 ### Q: I don't see `Policy Rules` honored
@@ -355,9 +356,9 @@ S: Review the [Admission Controller - Understanding:Evaluation Order](https://do
 
 ### Q: I don't see changes on `Policy Assignments` being applied on my cluster
 A: Admission Controller pull changes from the Sysdig Secure platform every 5 minutes<br/>
-S: You can wait those five minutes, or force the admission controller webhook respawn
+S: You can wait those five minutes, or force the admission controller webhook restart
 
-    $ kubectl delete pod -n sysdig-admission-controller -l app.kubernetes.io/component=webhook
+    $ kubectl rollout restart deployment -n sysdig-admission-controller sysdig-admission-controller-webhook
 
 <!--
 Q: Helm v2 usage
