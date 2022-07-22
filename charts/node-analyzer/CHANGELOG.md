@@ -8,7 +8,7 @@ This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The 
 ### Minor changes
 * NodeImageAnalyzer: bumped to 0.1.18
 * HostAnalyzer: bumped to 0.1.9
-* RuntimeScanner: bumped to 1.1.1
+* RuntimeScanner: bumped to 1.2.0
 
 ## v1.5.6
 ### Bugfixes
