@@ -9890,6 +9890,45 @@ entries:
     version: 1.0.0
   sysdig-deploy:
   - apiVersion: v2
+    created: "2022-07-22T15:59:01.625404053Z"
+    dependencies:
+    - alias: agent
+      condition: agent.enabled
+      name: agent
+      repository: file://../agent
+      version: ~1.5.9
+    - alias: nodeAnalyzer
+      condition: nodeAnalyzer.enabled
+      name: node-analyzer
+      repository: file://../node-analyzer
+      version: ~1.5.7
+    - alias: kspmCollector
+      condition: global.kspm.deploy
+      name: kspm-collector
+      repository: file://../kspm-collector
+      version: ~0.1.4
+    - alias: rapidResponse
+      condition: rapidResponse.enabled
+      name: rapid-response
+      repository: file://../rapid-response
+      version: ~0.2.0
+    description: A chart with various Sysdig components for Kubernetes
+    digest: 2dd49df1faeb5526fcf58998218c3afd7655e0c081a53e353eabe739643e0055
+    home: https://www.sysdig.com/
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    maintainers:
+    - email: ashwin.chandrasekar@sysdig.com
+      name: achandras
+    - email: zhongcheng.xiao@sysdig.com
+      name: lilx1ao
+    - email: yashgiri.goswami@sysdig.com
+      name: yashgiri
+    name: sysdig-deploy
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/sysdig-deploy-1.1.6/sysdig-deploy-1.1.6.tgz
+    version: 1.1.6
+  - apiVersion: v2
     created: "2022-07-21T21:52:57.208876606Z"
     dependencies:
     - alias: agent
@@ -10822,4 +10861,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2022-07-22T13:51:39.334346477Z"
+generated: "2022-07-22T15:59:01.629124184Z"
