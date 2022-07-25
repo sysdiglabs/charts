@@ -4,6 +4,10 @@
 
 This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.5.9
+### Bugfixes
+* Removed duplicate labels from deployment of `app.kubernetes.io/instance` 
+
 ## v1.5.8
 ### Minor changes
 * RuntimeScanner: bumped to 1.2.2 (performance improvement in pkgmeta client)

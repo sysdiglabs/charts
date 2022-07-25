@@ -1,3 +1,7 @@
+# v0.1.5
+### Bugfixes
+* Removed duplicate labels from deployment of `app.kubernetes.io/instance` 
+
 # v0.1.4
 ### Bugfixes
 * Bumped image tag to 1.5.0
