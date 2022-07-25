@@ -4,6 +4,10 @@
 
 This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.5.8
+### Minor changes
+* RuntimeScanner: bumped to 1.2.2 (performance improvement in pkgmeta client)
+
 ## v1.5.7
 ### Minor changes
 * NodeImageAnalyzer: bumped to 0.1.18
