@@ -4,6 +4,14 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.15.18
+### Minor changes
+* runtimeScanner: version 1.2.2 with performance improvement in pkgmeta client
+
+## v1.15.17
+### Minor changes
+* runtimeScanner: version 1.2.0 with fixes on jar manifest parser
+
 ## v1.15.16
 ### Minor changes
 * KSPM: version 1.5.0

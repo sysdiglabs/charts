@@ -87,7 +87,7 @@ Currently included components:
 
 ## Migrating from `sysdig` chart
 
-To easily migrate from the previous `sysdig` chart to the new unified `sysdig-deploy` chart, use the migration helper script from this repo. This script will help re-map your existing values from the `sysdig` chart, allowing you to deploy this chart with the exact same configuration.
+To easily migrate from the previous `sysdig` chart to the new unified `sysdig-deploy` chart, use the [migration helper script](scripts/migrate_values.py) from this repo. This script will help re-map your existing values from the `sysdig` chart, allowing you to deploy this chart with the exact same configuration.
 
 *Note*: unlike the previous chart, this chart only supports Helm 3. If you have not already done so, please upgrade your Helm version to 3.x to use this chart.
 
