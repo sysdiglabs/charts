@@ -133,7 +133,6 @@ $ helm upgrade --install cloud-connector sysdig/cloud-connector \
 
 ## Examples
 - [Default `values.yaml`](./values.yaml)
-- Find some [examples of these values](./ci)
 
 ## Configuration Detail
 
