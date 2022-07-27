@@ -295,6 +295,7 @@ spec:
         - name: "{{ $key }}"
           value: "{{ $value }}"
         {{- end }}
+      {{- if .Values.nodeAnalyzer.hostAnalyzer.deploy }}
       - name: sysdig-host-analyzer
         image: {{ template "nodeAnalyzer.image.hostAnalyzer" . }}
         securityContext:
@@ -390,6 +391,7 @@ spec:
         - name: "{{ $key }}"
           value: "{{ $value }}"
         {{- end }}
+      {{- end }}
 {{- end }}
       - name: sysdig-benchmark-runner
         image: {{ template "nodeAnalyzer.image.benchmarkRunner" . }}
