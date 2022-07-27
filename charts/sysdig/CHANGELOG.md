@@ -4,6 +4,10 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.15.21
+### Minor changes
+* Added /etc to container /host/etc volume bind
+
 ## v1.15.20
 ### Bugfixes
 * Removed duplicate labels from deployment of `app.kubernetes.io/instance` 
