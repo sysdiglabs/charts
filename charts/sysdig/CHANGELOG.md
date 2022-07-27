@@ -4,9 +4,14 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
-## v1.15.19
+## v1.15.20
 ### Bugfixes
 * Removed duplicate labels from deployment of `app.kubernetes.io/instance` 
+
+## v1.15.20
+### Minor changes
+* runtimeScanner: version 1.2.3 with fixes on java file analyzer
+
 
 ## v1.15.18
 ### Minor changes

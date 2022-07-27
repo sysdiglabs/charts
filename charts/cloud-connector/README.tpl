@@ -91,7 +91,6 @@ $ helm upgrade --install {{ .Release.Name }} {{ .Repository.Name }}/{{ .Chart.Na
 
 ## Examples
 - [Default `values.yaml`](./values.yaml)
-- Find some [examples of these values](./ci)
 
 {{- end }}
 
