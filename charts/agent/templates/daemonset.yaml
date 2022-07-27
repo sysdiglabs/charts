@@ -117,9 +117,6 @@ spec:
               name: sys-tracing
               readOnly: true
             {{- end }}
-            - mountPath: /host/etc/os-release
-              name: osrel
-              readOnly: true
       {{- end }}
       containers:
         - name: sysdig
@@ -175,6 +172,9 @@ spec:
               name: modprobe-d
               readOnly: true
             {{- end }}
+            - mountPath: /host/etc
+              name: etc-vol
+              readOnly: true
             - mountPath: /host/dev
               name: dev-vol
               readOnly: false
@@ -202,11 +202,6 @@ spec:
               name: sysdig-agent-config
             - mountPath: /opt/draios/etc/kubernetes/secrets
               name: sysdig-agent-secrets
-            {{- if (and (include "agent.ebpfEnabled" .) .Values.ebpf.settings.mountEtcVolume (not .Values.gke.autopilot)) }}
-            - mountPath: /host/etc
-              name: etc-fs
-              readOnly: true
-            {{- end }}
             {{- if (and (or (include "agent.ebpfEnabled" .) .Values.gke.autopilot) .Values.slim.enabled) }}
             - mountPath: /root/.sysdig
               name: bpf-probes
@@ -214,9 +209,6 @@ spec:
               name: sys-tracing
               readOnly: true
             {{- end }}
-            - mountPath: /host/etc/os-release
-              name: osrel
-              readOnly: true
             {{- if .Values.extraVolumes.mounts }}
 {{ toYaml .Values.extraVolumes.mounts | indent 12 }}
             {{- end }}
@@ -226,13 +218,12 @@ spec:
         - name: modprobe-d
           hostPath:
             path: /etc/modprobe.d
-        - name: osrel
-          hostPath:
-            path: /etc/os-release
-            type: FileOrCreate
         - name: dshm
           emptyDir:
             medium: Memory
+        - name: etc-vol
+          hostPath:
+            path: /etc
         - name: dev-vol
           hostPath:
             path: /dev
@@ -254,11 +245,6 @@ spec:
         - name: varrun-vol
           hostPath:
             path: /var/run
-        {{- if (and (include "agent.ebpfEnabled" .) .Values.ebpf.settings.mountEtcVolume (not .Values.gke.autopilot)) }}
-        - name: etc-fs
-          hostPath:
-            path: /etc
-        {{- end }}
         {{- if (and (or (include "agent.ebpfEnabled" .) .Values.gke.autopilot) .Values.slim.enabled) }}
         - name: bpf-probes
           emptyDir: {}
