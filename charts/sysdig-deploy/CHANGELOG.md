@@ -4,12 +4,12 @@
 
 This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
-## v1.1.5
+## v1.1.7
 
 ### Bugfixes
 
-* Bumped node-analyzer to 1.5.9
-* Bumped kspm-collector to 0.5.9
+* Bumped node-analyzer to 1.5.10
+* Bumped kspm-collector to 0.1.5
 
 ## v1.1.4
 
