@@ -23,10 +23,7 @@ spec:
         metadata:
           name: {{ include "registry-scanner.fullname" . }}
           labels:
-            app.kubernetes.io/name: {{ include "registry-scanner.name" . }}
-            app.kubernetes.io/instance: {{ .Release.Name }}
-            {{- include "registry-scanner.selectorLabels" . | nindent 12 }}
-            {{- include "registry-scanner.customLabels" . | nindent 12 }}
+            {{- include "registry-scanner.labels" . | nindent 12 }}
           {{- with .Values.podAnnotations }}
           annotations:
             {{- toYaml . | nindent 12 }}
