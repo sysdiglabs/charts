@@ -15,7 +15,6 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: {{ include "kspmCollector.name" . }}
-        app.kubernetes.io/instance: {{ .Release.Name }}
 {{ include "kspmCollector.labels" . | indent 8 }}
     spec:
       serviceAccountName: {{ template "kspmCollector.serviceAccountName" .}}

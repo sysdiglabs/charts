@@ -17,7 +17,6 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: {{ include "sysdig.name" . }}-kspm-collector
-        app.kubernetes.io/instance: {{ .Release.Name }}
 {{ include "sysdig.labels" . | indent 8 }}
     spec:
       serviceAccountName: {{ template "sysdig.serviceAccountName" .}}-kspm-collector

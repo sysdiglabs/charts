@@ -25,7 +25,6 @@ spec:
         checksum/secret: {{ include (print $.Template.BasePath "/runtimeScanner/sysdig-eve-secret.yaml") . | sha256sum }}
       labels:
         app.kubernetes.io/name: {{ include "nodeAnalyzer.name" . }}-eveconnector
-        app.kubernetes.io/instance: {{ .Release.Name }}
 {{ include "nodeAnalyzer.labels" . | indent 8 }}
     spec:
       serviceAccountName: {{ template "nodeAnalyzer.serviceAccountName" .}}
