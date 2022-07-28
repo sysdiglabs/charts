@@ -382,11 +382,9 @@ S: You can wait those five minutes, or force the admission controller webhook re
 
 ### Q: I am deploying it in a GKE Cluster, with Private Network enabled, and everything is slow or I cannot scale the cluster correctly.
 
-<!-- verify this
-```
+```text
 "Failed calling webhook, failing open audit.secure.sysdig.com: failed calling webhook "audit.secure.sysdig.com": Post "https://sysdig-ac-webhook.sysdig-agent.svc:443/k8s-audit?timeout=10s <https://sysdig-ac-webhook.sysdig-agent.svc/k8s-audit?timeout=10s>": context canceled"
 ```
--->
 
 A: GKE clusters run the K8s API outside from the cluster. If Private Network is enabled, the K8s API may be unable to reach the Admission Controller's webhook that validates each API request, so eventually every API request times out and is processed, but the performance is impacted in the process.
 <br/>S: As specified in [GKE Private Cluster Webhook Timeouts](https://cloud.google.com/kubernetes-engine/docs/how-to/private-clusters#api_request_that_triggers_admission_webhook_timing_out), the default firewall configuration does not allow TCP connections for ports other than 443 and 10250.
