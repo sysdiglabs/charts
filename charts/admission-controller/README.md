@@ -14,7 +14,8 @@ $ pre-commit run -a
 
 # Admission Controller
 
-[Sysdig Admission Controller](https://docs.sysdig.com/en/docs/sysdig-secure/scanning/admission-controller/) - This chart deploys the Sysdig Admission Controller in your Kubernetes cluster.
+[Sysdig Admission Controller](https://docs.sysdig.com/en/docs/sysdig-secure/scanning/admission-controller/) features ActivityAudit and ImageScanning on a Kubernetes Cluster.
+<br/>This chart deploys the Sysdig Admission Controller in your Kubernetes cluster.
 
 ## TL;DR;
 
@@ -22,7 +23,7 @@ $ pre-commit run -a
 $ helm repo add sysdig https://charts.sysdig.com
 $ helm repo update
 $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-      --create-namespace -n sysdig-admission-controller --version=0.6.12  \
+      --create-namespace -n sysdig-admission-controller --version=0.6.13  \
       --set clusterName=CLUSTER_NAME \
       --set sysdig.secureAPIToken=SECURE_API_TOKEN
 ```
@@ -32,6 +33,7 @@ $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller
 - [Confirm Working Status](#confirm-working-status)
 - [Troubleshooting](#troubleshooting)
 
+<br/><br/>
 
 ## Introduction
 
@@ -53,7 +55,7 @@ This chart deploys the Sysdig Admission Controller on a [Kubernetes](http://kube
 To install the chart with the release name `admission-controller`:
 
 ```console
-$ helm upgrade --install sysdig-admission-controller sysdig/admission-controller -n sysdig-admission-controller --version=0.6.12
+$ helm upgrade --install sysdig-admission-controller sysdig/admission-controller -n sysdig-admission-controller --version=0.6.13
 ```
 
 The command deploys the Sysdig Admission Controller on the Kubernetes cluster in the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.
@@ -160,7 +162,7 @@ Specify each parameter using the **`--set key=value[,key=value]`** argument to `
 
 ```console
 $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-    --create-namespace -n sysdig-admission-controller --version=0.6.12 \
+    --create-namespace -n sysdig-admission-controller --version=0.6.13 \
     --set sysdig.secureAPIToken=YOUR-KEY-HERE,clusterName=YOUR-CLUSTER-NAME
 ```
 
@@ -169,7 +171,7 @@ installing the chart. For example:
 
 ```console
 $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-    --create-namespace -n sysdig-admission-controller --version=0.6.12 \
+    --create-namespace -n sysdig-admission-controller --version=0.6.13 \
     --values values.yaml
 ```
 
@@ -301,9 +303,27 @@ $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller
 
 ## Confirm Working Status
 
+
+### Activity Audit
+
+1. Install Admission Controller on your Kubernetes Cluster following one of the (use-cases)(#usage) described
+    - This feature is enabled by default through `features.k8sAuditDetections` value
+2. Check your current "Kubernetes Audit" policies in `Sysdig Secure > Policies > Threat Detection | Runtime Policies` as we will be triggering one of those to prove it's working correctly.
+    - We suggest using "Create Privileged Pod" but you can choose any.
+3. If possible, let's activate just installed component logs to have them at sight
+    > $ kubectl logs -f -n sysdig-admission-controller -l app.kubernetes.io/component=webhook
+4. Trigger following command to force an unwanted audit detection
+    > $ kubectl run nginx --image nginx --privileged
+5. If you had a chance to activate logs, take a look at them. You should see something like this
+    > {"level":"info","component":"console-notifier","message":"Pod started with privileged container (user=** pod=nginx ns=default images=nginx)"}
+6. Confirm that event reached Sysdig Secure, looking at `Events`
+
+
+
 ### Image Scanning
 
 1. Install Admission Controller on your Kubernetes Cluster following one of the (use-cases)(#usage) described
+    - In the chart, this feature is enabled by default through `scanner.enabled` value
 2. Enable Admission-Controller on your Sysdig Secure > Image Scanning > Admission Controller > Policy Assignments
 This section can only be accessed by a user with Administrator permissions
 3. Add some an assignment to Allow or Deny images within a namespace
@@ -360,11 +380,16 @@ S: You can wait those five minutes, or force the admission controller webhook re
 
     $ kubectl rollout restart deployment -n sysdig-admission-controller sysdig-admission-controller-webhook
 
-### Q: I am deploying it in a GKE Cluster with Private Network enabled and everything is slow or I cannot scale the cluster correctly.
+### Q: I am deploying it in a GKE Cluster, with Private Network enabled, and everything is slow or I cannot scale the cluster correctly.
+
+```text
+"Failed calling webhook, failing open audit.secure.sysdig.com: failed calling webhook "audit.secure.sysdig.com": Post "https://sysdig-ac-webhook.sysdig-agent.svc:443/k8s-audit?timeout=10s <https://sysdig-ac-webhook.sysdig-agent.svc/k8s-audit?timeout=10s>": context canceled"
+```
 
 A: GKE clusters run the K8s API outside from the cluster. If Private Network is enabled, the K8s API may be unable to reach the Admission Controller's webhook that validates each API request, so eventually every API request times out and is processed, but the performance is impacted in the process.
-
-S: As specified in https://cloud.google.com/kubernetes-engine/docs/how-to/private-clusters#api_request_that_triggers_admission_webhook_timing_out, the API default firewall does not allow TCP connections for ports other than 443 and 10250, so you need to enable a new rule that allows the Control Plane's network to contact the default running port for the Admission Controller's webhook (5000 TCP). Follow the instructions in https://cloud.google.com/kubernetes-engine/docs/how-to/private-clusters#add_firewall_rules.
+<br/>S: As specified in [GKE Private Cluster Webhook Timeouts](https://cloud.google.com/kubernetes-engine/docs/how-to/private-clusters#api_request_that_triggers_admission_webhook_timing_out), the default firewall configuration does not allow TCP connections for ports other than 443 and 10250.
+Admission Controller's webhook run on `5000 TCP port`, so you need to enable a new rule that allows the Control Plane's network to access it.
+<br/>Follow the instructions in [GKE-Adding firewall rules to cluster](https://cloud.google.com/kubernetes-engine/docs/how-to/private-clusters#add_firewall_rules) to enable inbound connections to our webhook.
 
 <!--
 Q: Helm v2 usage
