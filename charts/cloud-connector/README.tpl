@@ -59,7 +59,7 @@ The command deploys {{ .Project.App }} on the Kubernetes cluster in the default 
 To uninstall/delete the `{{ .Release.Name }}`:
 
 ```console
-$ helm delete {{ .Release.Name }} -n {{ .Release.Namespace }}
+$ helm uninstall {{ .Release.Name }} -n {{ .Release.Namespace }}
 ```
 
 The command removes all the Kubernetes components associated with the chart and deletes the release.
