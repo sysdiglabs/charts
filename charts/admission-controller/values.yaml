@@ -81,8 +81,6 @@ podMonitors:
     labels: {}
     # Annotations on the webhook PodMonitor
     annotations: {}
-    # Prometheus endpoint to scrape
-    endpoint: "/metrics"
   scanner:
     # Enable the scanner PodMonitor to scrape metrics
     enabled: false
@@ -90,8 +88,6 @@ podMonitors:
     labels: {}
     # Annotatons on the scanner PodMonitor
     annotations: {}
-    # Prometheus endpoint to scrape
-    endpoint: "/metrics"
 
 webhook:
   # Service name for Webhook deployment

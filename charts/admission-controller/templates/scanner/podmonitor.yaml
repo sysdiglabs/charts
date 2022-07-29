@@ -11,7 +11,7 @@ spec:
       {{- include "admission-controller.scanner.selectorLabels" . | nindent 6 }}
   podMetricsEndpoints:
     - targetPort: {{ .Values.scanner.service.port }}
-      path: {{ .Values.podMonitors.scanner.endpoint }}
+      path: "/metrics"
       scheme: https
       tlsConfig:
         insecureSkipVerify: true

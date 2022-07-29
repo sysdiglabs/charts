@@ -11,7 +11,7 @@ spec:
       {{- include "admission-controller.webhook.selectorLabels" . | nindent 6 }}
   podMetricsEndpoints:
     - targetPort: {{ .Values.webhook.http.port }}
-      path: {{ .Values.podMonitors.webhook.endpoint }}
+      path: "/metrics"
       scheme: https
       tlsConfig:
         insecureSkipVerify: true
