@@ -1844,6 +1844,41 @@ entries:
   agent:
   - apiVersion: v2
     appVersion: 12.7.1
+    created: "2022-07-29T15:50:35.580181212Z"
+    description: Sysdig Monitor and Secure agent
+    digest: d5dc0e89ccab31ca7030893e6586f90a8ff6502aa0be420e5a5079ef67e43f4f
+    home: https://www.sysdig.com/
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: lachlan@deis.com
+      name: lachie83
+    - email: jorge.salamero@sysdig.com
+      name: bencer
+    - email: nestor.salceda@sysdig.com
+      name: nestorsalceda
+    - email: alvaro.iradier@sysdig.com
+      name: airadier
+    - email: carlos.arilla@sysdig.com
+      name: carillan81
+    - email: ashwin.chandrasekar@sysdig.com
+      name: achandras
+    name: agent
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/agent-1.5.10/agent-1.5.10.tgz
+    version: 1.5.10
+  - apiVersion: v2
+    appVersion: 12.7.1
     created: "2022-07-20T15:20:52.876176355Z"
     description: Sysdig Monitor and Secure agent
     digest: 728479b7302c2d9b7e5c163e54b39b1a1907e793920592b7cc069327eb59769c
@@ -5412,6 +5447,38 @@ entries:
     - https://github.com/sysdiglabs/charts/releases/download/registry-scanner-0.0.1/registry-scanner-0.0.1.tgz
     version: 0.0.1
   sysdig:
+  - apiVersion: v1
+    appVersion: 12.7.1
+    created: "2022-07-29T15:50:35.743579363Z"
+    description: Sysdig Monitor and Secure agent
+    digest: 91ee2994af15e11451a5b6db4eaf93780fb2aeb1f1f1cdfdad1588e1353e96e3
+    home: https://www.sysdig.com/
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: lachlan@deis.com
+      name: lachie83
+    - email: jorge.salamero@sysdig.com
+      name: bencer
+    - email: nestor.salceda@sysdig.com
+      name: nestorsalceda
+    - email: alvaro.iradier@sysdig.com
+      name: airadier
+    - email: carlos.arilla@sysdig.com
+      name: carillan81
+    name: sysdig
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/sysdig-1.15.21/sysdig-1.15.21.tgz
+    version: 1.15.21
   - apiVersion: v1
     appVersion: 12.7.1
     created: "2022-07-28T16:25:12.626663316Z"
@@ -11244,4 +11311,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2022-07-28T16:25:12.80696626Z"
+generated: "2022-07-29T15:50:35.746824826Z"
