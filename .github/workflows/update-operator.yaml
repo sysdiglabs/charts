@@ -11,7 +11,8 @@ jobs:
       - name: update sysdig-operator
         uses: peter-evans/repository-dispatch@v2
         with:
-          token: ${{ secrets.SYSDIG_OPERATOR_ACCESS_TOKEN }}
+          token: ${{ secrets.TOOLS_JENKINS_ADMIN_ACCESS_GITHUB_TOKEN }}
           repository: sysdiglabs/sysdig-operator
           event-type: sysdig-release
           client-payload: '{"tag": "${{ github.event.release.tag_name }}" }'
+          

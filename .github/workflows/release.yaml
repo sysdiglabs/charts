@@ -38,3 +38,4 @@ jobs:
           git add -A "charts/**/values.yaml"
           git pull && git commit -m "Updating README.md and values files" && git push
           popd
+          
