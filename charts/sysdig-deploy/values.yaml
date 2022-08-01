@@ -9,6 +9,7 @@ global:
     registry: quay.io
   kspm:
     deploy: false
+  agentConfigmapName: "sysdig-agent"
 
 agent:
   enabled: true
