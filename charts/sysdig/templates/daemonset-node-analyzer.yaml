@@ -179,6 +179,8 @@ spec:
             readOnly: true
           - mountPath: /var/lib/containers
             name: var-lib-containers-vol
+          - mountPath: /analysis_scratch
+            name: tmp-vol
           # Custom volume mount here
           {{- if .Values.nodeAnalyzer.imageAnalyzer.extraVolumes.mounts }}
 {{ toYaml .Values.nodeAnalyzer.imageAnalyzer.extraVolumes.mounts | indent 10 }}
