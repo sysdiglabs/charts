@@ -61,18 +61,18 @@ spec:
           hostPath:
             path: /
         - name: tmp-vol
-          {{- if .Values.nodeAnalyzer.runtimeScanner.storageClass }}
+          {{- if .Values.nodeAnalyzer.storageClass }}
           ephemeral:
             volumeClaimTemplate:
               metadata:
                 labels:
-                  type: {{ .Values.nodeAnalyzer.runtimeScanner.storageClass }}
+                  type: {{ .Values.nodeAnalyzer.storageClass }}
               spec:
                 accessModes: [ "ReadWriteOnce" ]
-                storageClassName: {{ .Values.nodeAnalyzer.runtimeScanner.storageClass }}
+                storageClassName: {{ .Values.nodeAnalyzer.storageClass }}
                 resources:
                   requests:
-                    storage: {{ .Values.nodeAnalyzer.runtimeScanner.storageClassVolumeSize }}
+                    storage: {{ .Values.nodeAnalyzer.storageClassVolumeSize }}
           {{- else }}
           emptyDir: {}
           {{- end }}
