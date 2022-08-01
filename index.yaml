@@ -10289,16 +10289,6 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-1.7.15/sysdig-1.7.15.tgz
     version: 1.7.15
-  - apiVersion: v2
-    appVersion: 1.0.0
-    created: "2020-05-13T10:32:56.061349642Z"
-    description: Sysdig Admission Controller using Sysdig Secure image scanner
-    digest: fb3c3a567250cbdf7ab665b08beebadc7bef51d7e5d7e5ae0223bf9feebac0bd
-    name: sysdig-admission-controller
-    type: application
-    urls:
-    - https://github.com/sysdiglabs/charts/releases/download/sysdig-admission-controller-1.0.0/sysdig-admission-controller-1.0.0.tgz
-    version: 1.0.0
   sysdig-deploy:
   - apiVersion: v2
     created: "2022-07-28T16:25:12.803214834Z"
