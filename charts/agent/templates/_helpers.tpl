@@ -241,5 +241,5 @@ Determine collector endpoint based on provided region
 Agent agentConfigmapName
 */}}
 {{- define "agent.configmapName" -}}
-    {{- .Values.agentConfigmapName | default .Values.global.agentConfigmapName | default "sysdig-agent" -}}
+    {{- default .Values.global.agentConfigmapName | default "sysdig-agent" -}}
 {{- end -}}
