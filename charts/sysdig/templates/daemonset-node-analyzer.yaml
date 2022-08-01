@@ -61,7 +61,21 @@ spec:
           hostPath:
             path: /
         - name: tmp-vol
+          {{- if .Values.nodeAnalyzer.runtimeScanner.storageClass }}
+          ephemeral:
+            volumeClaimTemplate:
+              metadata:
+                labels:
+                  type: {{ .Values.nodeAnalyzer.runtimeScanner.storageClass }}
+              spec:
+                accessModes: [ "ReadWriteOnce" ]
+                storageClassName: {{ .Values.nodeAnalyzer.runtimeScanner.storageClass }}
+                resources:
+                  requests:
+                    storage: {{ .Values.nodeAnalyzer.runtimeScanner.storageClassVolumeSize }}
+          {{- else }}
           emptyDir: {}
+          {{- end }}
         {{- with .Values.nodeAnalyzer.imageAnalyzer.extraVolumes.volumes }}
 {{ toYaml . | indent 8 }}
         {{- end }}

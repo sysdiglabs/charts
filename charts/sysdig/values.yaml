@@ -496,6 +496,9 @@ nodeAnalyzer:
       digest:
       pullPolicy: IfNotPresent
 
+    storageClass:
+    storageClassVolumeSize: 10Gi
+
     extraMounts: []
     # example for bottlerocket
     # extraMounts:
