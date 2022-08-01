@@ -4,6 +4,11 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.15.22
+### Minor changes
+* runtimeScanner: version 1.2.4 with fixes on tmp dirs to be used during analysis
+
+
 ## v1.15.21
 ### Minor changes
 * Added /etc to container /host/etc volume bind
