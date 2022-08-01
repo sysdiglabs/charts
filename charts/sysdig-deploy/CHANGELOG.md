@@ -4,6 +4,13 @@
 
 This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.1.8
+
+### Minor Changes
+* Bumped agent to 1.5.11
+* Bumped node-analyzer to 1.5.12
+* Accomodate global agent configmapname variable
+
 ## v1.1.7
 
 ### Bugfixes

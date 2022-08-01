@@ -24,7 +24,7 @@ spec:
       volumes:
         - name: sysdig-agent-config
           configMap:
-            name: {{ template "nodeAnalyzer.fullname" . }}
+            name: {{ include "agent.configmapName" . }}
             optional: true
         # Needed for cri-o image inspection.
         # cri-o and especially OCP 4.x by default use containers/storage to handle images, and this makes sure that the

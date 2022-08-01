@@ -254,7 +254,7 @@ spec:
         {{- end }}
         - name: sysdig-agent-config
           configMap:
-            name: {{ template "agent.fullname" . }}
+            name: {{ include "agent.configmapName" . }}
             optional: true
         - name: sysdig-agent-secrets
           secret:
