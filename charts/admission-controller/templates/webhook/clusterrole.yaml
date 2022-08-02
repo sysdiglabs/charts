@@ -17,3 +17,12 @@ rules:
   - pods
   verbs:
   - get
+- apiGroups:
+  - "apps"
+  resources:
+  - deployments
+  - replicasets
+  - statefulsets
+  - daemonsets
+  verbs:
+  - get

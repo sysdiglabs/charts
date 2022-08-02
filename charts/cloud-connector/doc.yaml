@@ -1,0 +1,22 @@
+project:
+  name: Cloud Connector
+  shortName: Cloud Connector
+  url: https://docs.sysdig.com/en/docs/installation/sysdig-secure-for-cloud/
+  description: |
+    This chart deploys the Sysdig Cloud connector on your Kubernetes cluster to enable threat-detection and image scanning.
+  app: the Sysdig Cloud Connector
+repository:
+  url: https://charts.sysdig.com
+  name: sysdig
+chart:
+  name: cloud-connector
+#  version: v0.9.0-rc.0
+#  values: "-- generate from values file --"
+  valuesExample: "sysdig.secureAPIToken=YOUR-KEY-HERE"
+prerequisites:
+- "Helm 3"
+- "Sysdig Secure API Token"
+
+release:
+  name: cloud-connector
+  namespace: cloud-connector

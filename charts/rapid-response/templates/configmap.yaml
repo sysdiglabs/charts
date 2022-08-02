@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "rapidResponse.fullname" . }}-config
+  labels:
+{{ include "rapidResponse.labels" . | indent 4 }}
+data:
+  api_endpoint: https://{{ include "rapidResponse.apiEndpoint" . }}
+  skip_tls_check: "{{ include "rapidResponse.certificateValidation" . }}"

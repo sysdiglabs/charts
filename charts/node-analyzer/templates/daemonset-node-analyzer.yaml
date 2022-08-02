@@ -16,7 +16,7 @@ spec:
     type: RollingUpdate
   template:
     metadata:
-      name: {{ template "nodeAnalyzer.name" . }}-node-analyzer
+      name: {{ template "nodeAnalyzer.fullname" . }}-node-analyzer
       labels:
         app.kubernetes.io/name: {{ include "nodeAnalyzer.name" . }}-node-analyzer
 {{ include "nodeAnalyzer.labels" . | indent 8 }}
@@ -24,7 +24,7 @@ spec:
       volumes:
         - name: sysdig-agent-config
           configMap:
-            name: {{ template "nodeAnalyzer.fullname" . }}
+            name: {{ include "agent.configmapName" . }}
             optional: true
         # Needed for cri-o image inspection.
         # cri-o and especially OCP 4.x by default use containers/storage to handle images, and this makes sure that the
@@ -83,6 +83,68 @@ spec:
       # the host
       hostPID: true
       containers:
+{{ if .Values.global.kspm.deploy }}
+      - name: sysdig-kspm-analyzer
+        image: {{ template "nodeAnalyzer.image.kspmAnalyzer" . }}
+        imagePullPolicy: {{ .Values.nodeAnalyzer.kspmAnalyzer.image.pullPolicy }}
+        resources:
+{{ toYaml .Values.nodeAnalyzer.kspmAnalyzer.resources | indent 10 }}
+        securityContext:
+          runAsUser: 0
+          privileged: true
+          capabilities:
+            add:
+              - NET_ADMIN
+              - SYS_ADMIN
+        env:
+          - name: ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                {{- if not ( include "nodeAnalyzer.accessKeySecret" .) }}
+                name: {{ template "nodeAnalyzer.fullname" . }}
+                {{- else }}
+                name: {{ ( include "nodeAnalyzer.accessKeySecret" .) }}
+                {{- end }}
+                key: access-key
+          - name: ENVIRONMENT
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "nodeAnalyzer.fullname" . }}-kspm-analyzer
+                key: environment
+          - name: EXTERNAL_NATS_URL
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "nodeAnalyzer.fullname" . }}-kspm-analyzer
+                key: external_nats_url
+          - name: CLUSTER_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "nodeAnalyzer.fullname" . }}-kspm-analyzer
+                key: cluster_name
+          - name: AGENT_APP_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "nodeAnalyzer.fullname" . }}-kspm-analyzer
+                key: agent_app_name
+          - name: NODE_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          {{- range $key, $value := .Values.nodeAnalyzer.kspmAnalyzer.env }}
+          - name: "{{ $key }}"
+            value: "{{ $value }}"
+          {{- end }}
+        volumeMounts:
+          - name: root-vol
+            mountPath: /host
+            readOnly: true
+          - name: tmp-vol
+            mountPath: /host/tmp
+{{- end }}
 {{ if not .Values.secure.vulnerabilityManagement.newEngineOnly }}
       - name: sysdig-image-analyzer
         image: {{ template "nodeAnalyzer.image.imageAnalyzer" . }}
@@ -205,6 +267,10 @@ spec:
               name: {{ template "nodeAnalyzer.fullname" . }}-image-analyzer
               key: no_proxy
               optional: true
+        {{- range $key, $value := .Values.nodeAnalyzer.imageAnalyzer.env }}
+        - name: "{{ $key }}"
+          value: "{{ $value }}"
+        {{- end }}
       - name: sysdig-host-analyzer
         image: {{ template "nodeAnalyzer.image.hostAnalyzer" . }}
         securityContext:
@@ -296,6 +362,10 @@ spec:
               key: no_proxy
               name: {{ template "nodeAnalyzer.fullname" . }}-host-analyzer
               optional: true
+        {{- range $key, $value := .Values.nodeAnalyzer.hostAnalyzer.env }}
+        - name: "{{ $key }}"
+          value: "{{ $value }}"
+        {{- end }}
 {{- end }}
       - name: sysdig-benchmark-runner
         image: {{ template "nodeAnalyzer.image.benchmarkRunner" . }}
@@ -363,6 +433,10 @@ spec:
               key: no_proxy
               name: {{ template "nodeAnalyzer.fullname" . }}-benchmark-runner
               optional: true
+        {{- range $key, $value := .Values.nodeAnalyzer.benchmarkRunner.env }}
+        - name: "{{ $key }}"
+          value: "{{ $value }}"
+        {{- end }}
 {{ if or  .Values.nodeAnalyzer.runtimeScanner.deploy .Values.secure.vulnerabilityManagement.newEngineOnly }}
       # Runtime Scanner #
       - name: sysdig-runtime-scanner
@@ -441,6 +515,10 @@ spec:
                 name: {{ template "nodeAnalyzer.fullname" . }}-runtime-scanner
                 key: no_proxy
                 optional: true
+          {{- range $key, $value := .Values.nodeAnalyzer.runtimeScanner.env }}
+          - name: "{{ $key }}"
+            value: "{{ $value }}"
+          {{- end }}
 {{- if .Values.nodeAnalyzer.runtimeScanner.settings.eveEnabled }}
           - name: EVE_ENABLED
             valueFrom:
@@ -467,6 +545,9 @@ spec:
             name: var-lib-containers-vol
           - mountPath: /tmp
             name: tmp-vol
+          {{- if .Values.nodeAnalyzer.runtimeScanner.extraMounts }}
+{{ toYaml .Values.nodeAnalyzer.runtimeScanner.extraMounts | indent 10 }}
+          {{- end }}
 # Runtime Scanner #
 {{- end }}
       {{- with .Values.nodeAnalyzer.nodeSelector }}

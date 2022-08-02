@@ -8,7 +8,7 @@ image:
 
   registry: quay.io
   repository: sysdig/agent
-  tag: 12.5.0
+  tag: 12.8.0
   # Specify a imagePullPolicy
   # Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
   # ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -166,6 +166,7 @@ slim:
       cpu: 1000m
       memory: 348Mi
     limits:
+      cpu: 1000m
       memory: 512Mi
 
 # For Sysdig On-Prem installations or for custom collector settings, set the following fields
@@ -314,6 +315,12 @@ nodeImageAnalyzer:
                 values:
                   - linux
 
+# Override value for the NATS service endpoint
+natsUrl: ""
+
+kspm:
+  deploy: false
+
 nodeAnalyzer:
   # Create node analyzer specific serviceAccount resource
   serviceAccount:
@@ -329,6 +336,7 @@ nodeAnalyzer:
   # * SaaS European Union: eu1.app.sysdig.com
   # * On-Prem: sysdig.my.company.com
   apiEndpoint: ""
+
 
   # Can be set to false to allow insecure connections to the Sysdig backend,
   # such as for on-premise installs that use self-signed certificates.
@@ -387,7 +395,7 @@ nodeAnalyzer:
   imageAnalyzer:
     image:
       repository: sysdig/node-image-analyzer
-      tag: 0.1.17
+      tag: 0.1.18
       digest:
       pullPolicy: IfNotPresent
 
@@ -417,6 +425,14 @@ nodeAnalyzer:
       # mounts:
       # - mountPath: /var/run/docker.sock
       #   name: docker-sock
+
+      # example for bottlerocket
+      # volumes:
+      #  - name: socketpath
+      #    hostPath:
+      #      path: /run/dockershim.sock
+      #      type: ""
+
     resources:
       requests:
         cpu: 150m
@@ -424,10 +440,12 @@ nodeAnalyzer:
       limits:
         cpu: 500m
         memory: 1536Mi
+
+    env: {}
   hostAnalyzer:
     image:
       repository: sysdig/host-analyzer
-      tag: 0.1.7
+      tag: 0.1.9
       digest:
       pullPolicy: IfNotPresent
 
@@ -449,12 +467,14 @@ nodeAnalyzer:
       limits:
         cpu: 500m
         memory: 1536Mi
+
+    env: {}
   benchmarkRunner:
     includeSensitivePermissions: false
 
     image:
       repository: sysdig/compliance-benchmark-runner
-      tag: 1.0.17.1
+      tag: 1.0.17.2
       digest:
       pullPolicy: IfNotPresent
 
@@ -466,13 +486,21 @@ nodeAnalyzer:
         cpu: 500m
         memory: 256Mi
 
+    env: {}
+
   runtimeScanner:
     deploy: false
     image:
       repository: sysdig/vuln-runtime-scanner
-      tag: 1.0.1
+      tag: 1.2.4
       digest:
       pullPolicy: IfNotPresent
+
+    extraMounts: []
+    # example for bottlerocket
+    # extraMounts:
+    #   - name: socketpath
+    #     mountPath: /var/run/containerd/containerd.sock
 
     resources:
       requests:
@@ -483,6 +511,8 @@ nodeAnalyzer:
         cpu: 1000m
         memory: 2Gi
         ephemeral-storage: "4Gi"
+
+    env: {}
 
     settings:
       eveEnabled: false
@@ -505,6 +535,52 @@ nodeAnalyzer:
 
       settings:
         replicas: 1
+
+  kspmAnalyzer:
+    debug: false
+    image:
+      repository: sysdig/kspm-analyzer
+      tag: 1.5.0
+      digest:
+      pullPolicy: IfNotPresent
+
+    resources:
+      requests:
+        cpu: 150m
+        memory: 256Mi
+      limits:
+        cpu: 500m
+        memory: 1536Mi
+
+    env: {}
+
+kspmCollector:
+  debug: false
+  image:
+    repository: sysdig/kspm-collector
+    tag: 1.5.0
+    digest:
+    pullPolicy: IfNotPresent
+
+  settings:
+    replicas: 1
+    namespaces:
+      included: ""
+      excluded: ""
+    workloads:
+      included: ""
+      excluded: ""
+    healthIntervalMin: 5
+
+  resources:
+    requests:
+      cpu: 150m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 1536Mi
+
+  env: {}
 
 customAppChecks: {}
   # Allow passing custom app checks for Sysdig Agent.

@@ -1,0 +1,18 @@
+{{- if .Values.podMonitors.webhook.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  annotations: {{ .Values.podMonitors.webhook.annotations | toYaml | nindent 4 }}
+  labels: {{ .Values.podMonitors.webhook.labels | toYaml | nindent 4 }}
+  name: admission-controller-webhook
+spec:
+  selector:
+    matchLabels:
+      {{- include "admission-controller.webhook.selectorLabels" . | nindent 6 }}
+  podMetricsEndpoints:
+    - targetPort: {{ .Values.webhook.http.port }}
+      path: "/metrics"
+      scheme: https
+      tlsConfig:
+        insecureSkipVerify: true
+{{- end }}

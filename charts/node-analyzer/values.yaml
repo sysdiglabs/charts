@@ -4,6 +4,8 @@ global:
   sysdig:
     region: "us1"
   proxy: {}
+  kspm:
+    deploy: false
 
 image:
   # This is a hack to support RELATED_IMAGE_<identifier> feature in Helm based
@@ -42,6 +44,9 @@ psp:
 
 # Setting a cluster name allows you to filter events from this cluster using kubernetes.cluster.name
 clusterName: ""
+
+# Override value for the NATS service endpoint
+natsUrl: ""
 
 secure:
   # true here enables Sysdig Secure: container run-time security & forensics
@@ -89,6 +94,9 @@ nodeAnalyzer:
     - effect: NoSchedule
       key: node-role.kubernetes.io/master
 
+  # Set nodeAnalyzer daemonset priorityClassName
+  priorityClassName:
+
   # Allow the DaemonSet to set labels
   labels: {}
   # Use this pullSecret to pull images from a private registry
@@ -125,7 +133,7 @@ nodeAnalyzer:
   imageAnalyzer:
     image:
       repository: sysdig/node-image-analyzer
-      tag: 0.1.16
+      tag: 0.1.18
       digest:
       pullPolicy: IfNotPresent
 
@@ -155,6 +163,14 @@ nodeAnalyzer:
       # mounts:
       # - mountPath: /var/run/docker.sock
       #   name: docker-sock
+
+      # example for bottlerocket
+      # volumes:
+      #  - name: socketpath
+      #    hostPath:
+      #      path: /run/dockershim.sock
+      #      type: ""
+
     resources:
       requests:
         cpu: 150m
@@ -162,10 +178,12 @@ nodeAnalyzer:
       limits:
         cpu: 500m
         memory: 1536Mi
+
+    env: {}
   hostAnalyzer:
     image:
       repository: sysdig/host-analyzer
-      tag: 0.1.6
+      tag: 0.1.9
       digest:
       pullPolicy: IfNotPresent
 
@@ -187,12 +205,14 @@ nodeAnalyzer:
       limits:
         cpu: 500m
         memory: 1536Mi
+
+    env: {}
   benchmarkRunner:
     includeSensitivePermissions: false
 
     image:
       repository: sysdig/compliance-benchmark-runner
-      tag: 1.0.17.1
+      tag: 1.0.17.2
       digest:
       pullPolicy: IfNotPresent
 
@@ -204,13 +224,21 @@ nodeAnalyzer:
         cpu: 500m
         memory: 256Mi
 
+    env: {}
+
   runtimeScanner:
     deploy: false
     image:
       repository: sysdig/vuln-runtime-scanner
-      tag: 1.0.0
+      tag: 1.2.4
       digest:
       pullPolicy: IfNotPresent
+
+    extraMounts: []
+    # example for bottlerocket
+    # extraMounts:
+    #   - name: socketpath
+    #     mountPath: /var/run/containerd/containerd.sock
 
     resources:
       requests:
@@ -221,6 +249,8 @@ nodeAnalyzer:
         cpu: 1000m
         memory: 2Gi
         ephemeral-storage: "4Gi"
+
+    env: {}
 
     settings:
       eveEnabled: false
@@ -243,3 +273,21 @@ nodeAnalyzer:
 
       settings:
         replicas: 1
+
+  kspmAnalyzer:
+    debug: false
+    image:
+      repository: sysdig/kspm-analyzer
+      tag: 1.5.0
+      digest:
+      pullPolicy: IfNotPresent
+
+    resources:
+      requests:
+        cpu: 150m
+        memory: 256Mi
+      limits:
+        cpu: 500m
+        memory: 1536Mi
+
+    env: {}

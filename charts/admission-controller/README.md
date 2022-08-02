@@ -6,7 +6,7 @@ DO NOT MODIFY THIS FILE MANUALLY!!
 IT'S AUTO-GENERATED vía README.tpl with pre-comit plugin
 this is under construction so it must be launched manually
 
-in the project root, run: 
+in the project root, run:
 $ pre-commit install
 $ pre-commit run -a
 
@@ -14,7 +14,8 @@ $ pre-commit run -a
 
 # Admission Controller
 
-[Sysdig Admission Controller](https://docs.sysdig.com/en/docs/sysdig-secure/scanning/admission-controller/) - This chart deploys the Sysdig Admission Controller in your Kubernetes cluster.
+[Sysdig Admission Controller](https://docs.sysdig.com/en/docs/sysdig-secure/scanning/admission-controller/) features ActivityAudit and ImageScanning on a Kubernetes Cluster.
+<br/>This chart deploys the Sysdig Admission Controller in your Kubernetes cluster.
 
 ## TL;DR;
 
@@ -22,7 +23,7 @@ $ pre-commit run -a
 $ helm repo add sysdig https://charts.sysdig.com
 $ helm repo update
 $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-      --create-namespace -n sysdig-admission-controller --version=0.6.1  \
+      --create-namespace -n sysdig-admission-controller --version=0.6.15  \
       --set clusterName=CLUSTER_NAME \
       --set sysdig.secureAPIToken=SECURE_API_TOKEN
 ```
@@ -32,6 +33,7 @@ $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller
 - [Confirm Working Status](#confirm-working-status)
 - [Troubleshooting](#troubleshooting)
 
+<br/><br/>
 
 ## Introduction
 
@@ -53,7 +55,7 @@ This chart deploys the Sysdig Admission Controller on a [Kubernetes](http://kube
 To install the chart with the release name `admission-controller`:
 
 ```console
-$ helm upgrade --install sysdig-admission-controller sysdig/admission-controller -n sysdig-admission-controller --version=0.6.1
+$ helm upgrade --install sysdig-admission-controller sysdig/admission-controller -n sysdig-admission-controller --version=0.6.15
 ```
 
 The command deploys the Sysdig Admission Controller on the Kubernetes cluster in the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.
@@ -67,7 +69,7 @@ The command deploys the Sysdig Admission Controller on the Kubernetes cluster in
 To uninstall/delete the `admission-controller`:
 
 ```console
-$ helm delete admission-controller -n admission-controller
+$ helm uninstall sysdig-admission-controller -n sysdig-admission-controller
 ```
 
 The command removes all the Kubernetes components associated with the chart and deletes the release.
@@ -82,7 +84,7 @@ The following table lists the configurable parameters of the `admission-controll
 | sysdig.secureAPIToken                              | **required** <br/> API Token to access Sysdig Secure. <br/><br/>If neither this value nor `sysdig.existingSecureAPITokenSecret` are configured, the user will be required to provide the deployment the `SECURE_API_TOKEN` (and `AUTH_BEARER_TOKEN` if the scanner is enabled) environment variables.                                                                                                                                                               | <code>""</code>                                                                                                                                                                                    |
 | sysdig.existingSecureAPITokenSecret                | **required** <br/>Existing secret with API Token to access Sysdig Secure <br/>Alternatively, specify the name of a Kubernetes secret containing `SECURE_API_TOKEN` and `AUTH_BEARER_TOKEN` entry if you're also enabling scanner. <br/><br/>If neither this value nor `sysdig.secureAPIToken` are configured, the user will be required to provide the deployment the `SECURE_API_TOKEN` (and `AUTH_BEARER_TOKEN` if the scanner is enabled) environment variables. | <code>""</code>                                                                                                                                                                                    |
 | sysdig.url                                         | The Sysdig URL prefix                                                                                                                                                                                                                                                                                                                                                                                                                                               | <code>"https://secure.sysdig.com"</code>                                                                                                                                                           |
-| features.k8sAuditDetections                        | Enable K8s Audit detections with Falco rules                                                                                                                                                                                                                                                                                                                                                                                                                        | <code>false</code>                                                                                                                                                                                 |
+| features.k8sAuditDetections                        | Enable K8s Audit detections with Falco rules                                                                                                                                                                                                                                                                                                                                                                                                                        | <code>true</code>                                                                                                                                                                                  |
 | features.k8sAuditDetectionsRules                   | [Admission Webhook Configuration rules](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#matching-requests-rules) for the Audit Detections                                                                                                                                                                                                                                                                                 | <code>[{"apiGroups":["","apps","autoscaling","batch","networking.k8s.io","rbac.authorization.k8s.io","extensions"],"apiVersions":["*"],"operations":["*"],"resources":["*/*"],"scope":"*"}]</code> |
 | verifySSL                                          | For outbound connections (secure backend, proxy,...) <br/>Whether to verify SSL on HTTPS connections                                                                                                                                                                                                                                                                                                                                                                | <code>true</code>                                                                                                                                                                                  |
 | nameOverride                                       | Chart name override                                                                                                                                                                                                                                                                                                                                                                                                                                                 | <code>""</code>                                                                                                                                                                                    |
@@ -93,6 +95,12 @@ The following table lists the configurable parameters of the `admission-controll
 | serviceAccounts.scanner.create                     | Create the service account                                                                                                                                                                                                                                                                                                                                                                                                                                          | <code>true</code>                                                                                                                                                                                  |
 | serviceAccounts.scanner.annotations                | Extra annotations for serviceAccount                                                                                                                                                                                                                                                                                                                                                                                                                                | <code>{}</code>                                                                                                                                                                                    |
 | serviceAccounts.scanner.name                       | Use this value as serviceAccount Name                                                                                                                                                                                                                                                                                                                                                                                                                               | <code>""</code>                                                                                                                                                                                    |
+| podMonitors.webhook.enabled                        | Enable the webhook PodMonitor to scrape metrics                                                                                                                                                                                                                                                                                                                                                                                                                     | <code>false</code>                                                                                                                                                                                 |
+| podMonitors.webhook.labels                         | Labels on the webhook PodMonitor                                                                                                                                                                                                                                                                                                                                                                                                                                    | <code>{}</code>                                                                                                                                                                                    |
+| podMonitors.webhook.annotations                    | Annotations on the webhook PodMonitor                                                                                                                                                                                                                                                                                                                                                                                                                               | <code>{}</code>                                                                                                                                                                                    |
+| podMonitors.scanner.enabled                        | Enable the scanner PodMonitor to scrape metrics                                                                                                                                                                                                                                                                                                                                                                                                                     | <code>false</code>                                                                                                                                                                                 |
+| podMonitors.scanner.labels                         | Labels on the scanner PodMonitor                                                                                                                                                                                                                                                                                                                                                                                                                                    | <code>{}</code>                                                                                                                                                                                    |
+| podMonitors.scanner.annotations                    | Annotatons on the scanner PodMonitor                                                                                                                                                                                                                                                                                                                                                                                                                                | <code>{}</code>                                                                                                                                                                                    |
 | webhook.name                                       | Service name for Webhook deployment                                                                                                                                                                                                                                                                                                                                                                                                                                 | <code>webhook</code>                                                                                                                                                                               |
 | webhook.replicaCount                               | Amount of replicas for webhook. **Deprecated**, use `webhook.autoscaling.minReplicas` and `webhook.autoscaling.maxReplicas` instead.                                                                                                                                                                                                                                                                                                                                | <code>1</code>                                                                                                                                                                                     |
 | webhook.image.registry                             | Webhook image registry                                                                                                                                                                                                                                                                                                                                                                                                                                              | <code>quay.io</code>                                                                                                                                                                               |
@@ -120,13 +128,15 @@ The following table lists the configurable parameters of the `admission-controll
 | webhook.affinity                                   | Configure affinity rules for webhook                                                                                                                                                                                                                                                                                                                                                                                                                                | <code>{}</code>                                                                                                                                                                                    |
 | webhook.denyOnError                                | Deny request when an error happened evaluating request                                                                                                                                                                                                                                                                                                                                                                                                              | <code>false</code>                                                                                                                                                                                 |
 | webhook.dryRun                                     | Dry Run request                                                                                                                                                                                                                                                                                                                                                                                                                                                     | <code>false</code>                                                                                                                                                                                 |
+| webhook.logLevel                                   | Log Level - Valid Values info or debug                                                                                                                                                                                                                                                                                                                                                                                                                              | <code>info</code>                                                                                                                                                                                  |
 | webhook.ssl.ca.cert                                | For outbound connections (secure backend, proxy,...) <br/>And inbound connections to serve HttpRequests as Kubernetes Webhook. <br/>A PEM-encoded x509 certificate authority. <br/>If empty, a new CA will be autogenerated.                                                                                                                                                                                                                                        | <code>""</code>                                                                                                                                                                                    |
 | webhook.ssl.ca.key                                 | For outbound connections (secure backend, proxy,...) <br/>A PEM-encoded private key of the certificate authority to use in the certificate generation. <br/>If empty, a new CA will be autogenerated.                                                                                                                                                                                                                                                               | <code>""</code>                                                                                                                                                                                    |
 | webhook.ssl.cert                                   | For inbound connections to serve HttpRequests as Kubernetes Webhook. <br/>A PEM-encoded x509 certificate signed by the CA. <br/>If empty, a new cert will be generated. <br/>If provided, it must be valid with the `webhook.ssl.ca`. <br/>If this is set, the key must also be provided.                                                                                                                                                                           | <code>""</code>                                                                                                                                                                                    |
 | webhook.ssl.key                                    | For inbound connections to serve HttpRequests as Kubernetes Webhook. <br/>A PEM-encoded private key signed by the CA. <br/>If empty, a new key will be generated. <br/>If provided, it must be valid with the `webhook.ssl.ca`. <br/>If this is set, the cert must also be provided.                                                                                                                                                                                | <code>""</code>                                                                                                                                                                                    |
 | webhook.customEntryPoint                           | Custom entrypoint for the webhook <br/>Remember to provide the webhook valid arguments with `--tls_cert_file` and `--tls_private_key_file`. <br/>default: /bin/webhook --tls_cert_file /cert/tls.crt --tls_private_key_file /cert/tls.key                                                                                                                                                                                                                           | <code>[]</code>                                                                                                                                                                                    |
 | webhook.http.port                                  | HTTP serve port where the requests will be served from                                                                                                                                                                                                                                                                                                                                                                                                              | <code>5000</code>                                                                                                                                                                                  |
-| scanner.enabled                                    | Deploy the Scanner Service                                                                                                                                                                                                                                                                                                                                                                                                                                          | <code>true</code>                                                                                                                                                                                  |
+| scc.create                                         | Enable the creation of Security Context Constraints in Openshift                                                                                                                                                                                                                                                                                                                                                                                                    | <code>true</code>                                                                                                                                                                                  |
+| scanner.enabled                                    | If you only want the Kubernetes Audit Log functionality then disable this, and it will disable the Admission Controller Scanning Policy functionality.                                                                                                                                                                                                                                                                                                              | <code>true</code>                                                                                                                                                                                  |
 | scanner.name                                       | Service name for Scanner deployment                                                                                                                                                                                                                                                                                                                                                                                                                                 | <code>scanner</code>                                                                                                                                                                               |
 | scanner.replicaCount                               | Amount of replicas for scanner                                                                                                                                                                                                                                                                                                                                                                                                                                      | <code>1</code>                                                                                                                                                                                     |
 | scanner.image.registry                             | Scanner image registry                                                                                                                                                                                                                                                                                                                                                                                                                                              | <code>quay.io</code>                                                                                                                                                                               |
@@ -158,7 +168,7 @@ Specify each parameter using the **`--set key=value[,key=value]`** argument to `
 
 ```console
 $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-    --create-namespace -n admission-controller  --version=0.6.1 \
+    --create-namespace -n sysdig-admission-controller --version=0.6.15 \
     --set sysdig.secureAPIToken=YOUR-KEY-HERE,clusterName=YOUR-CLUSTER-NAME
 ```
 
@@ -167,7 +177,7 @@ installing the chart. For example:
 
 ```console
 $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-    --create-namespace -n sysdig-admission-controller --version=0.6.1 \
+    --create-namespace -n sysdig-admission-controller --version=0.6.15 \
     --values values.yaml
 ```
 
@@ -241,7 +251,7 @@ If your Proxy is served with TLS
 
 ```
 $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-      --create-namespace -n admission-controller \
+      --create-namespace -n sysdig-admission-controller \
       --set clusterName=CLUSTER_NAME \
       --set sysdig.secureAPIToken=SECURE_API_TOKEN
 ```
@@ -254,7 +264,7 @@ Use the following command to deploy in an on-prem:
 
 ```
 $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-      --create-namespace -n admission-controller \
+      --create-namespace -n sysdig-admission-controller \
       --set clusterName=CLUSTER_NAME \
       --set sysdig.url=SECURE_URL \
       --set sysdig.secureAPIToken=SECURE_API_TOKEN \
@@ -272,7 +282,7 @@ Note: Since the certificates are not provided, they will be autogenerated with t
 
 ```
 $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-      --create-namespace -n admission-controller \
+      --create-namespace -n sysdig-admission-controller \
       --set clusterName=CLUSTER_NAME \
       --set sysdig.url=SECURE_URL \
       --set sysdig.secureAPIToken=SECURE_API_TOKEN \
@@ -287,7 +297,7 @@ The following command will deploy the admission controller with a custom CA and 
 
 ```
 $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-      --create-namespace -n admission-controller \
+      --create-namespace -n sysdig-admission-controller \
       --set clusterName=CLUSTER_NAME \
       --set sysdig.url=SECURE_URL \
       --set sysdig.secureAPIToken=SECURE_API_TOKEN \
@@ -299,15 +309,33 @@ $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller
 
 ## Confirm Working Status
 
+
+### Activity Audit
+
+1. Install Admission Controller on your Kubernetes Cluster following one of the (use-cases)(#usage) described
+    - This feature is enabled by default through `features.k8sAuditDetections` value
+2. Check your current "Kubernetes Audit" policies in `Sysdig Secure > Policies > Threat Detection | Runtime Policies` as we will be triggering one of those to prove it's working correctly.
+    - We suggest using "Create Privileged Pod" but you can choose any.
+3. If possible, let's activate just installed component logs to have them at sight
+    > $ kubectl logs -f -n sysdig-admission-controller -l app.kubernetes.io/component=webhook
+4. Trigger following command to force an unwanted audit detection
+    > $ kubectl run nginx --image nginx --privileged
+5. If you had a chance to activate logs, take a look at them. You should see something like this
+    > {"level":"info","component":"console-notifier","message":"Pod started with privileged container (user=** pod=nginx ns=default images=nginx)"}
+6. Confirm that event reached Sysdig Secure, looking at `Events`
+
+
+
 ### Image Scanning
 
 1. Install Admission Controller on your Kubernetes Cluster following one of the (use-cases)(#usage) described
+    - In the chart, this feature is enabled by default through `scanner.enabled` value
 2. Enable Admission-Controller on your Sysdig Secure > Image Scanning > Admission Controller > Policy Assignments
 This section can only be accessed by a user with Administrator permissions
 3. Add some an assignment to Allow or Deny images within a namespace
 4. Tail to the logs from the Admission Controller
     ```
-    $ kubectl logs -f -n  <ADMISSION_NAMESPACE> -l app.kubernetes.io/component=webhook
+    $ kubectl logs -f -n sysdig-admission-controller -l app.kubernetes.io/component=webhook
     ```
 5. Push some deployment into your Kubernetes Cluster to watch the result, for example an nginx image
     ```
@@ -333,11 +361,17 @@ Either way, you should see some logs in Admission Controller tail
 
 ## Troubleshooting
 
-### Q: I need to troubleshoot, any way to switch to `debug verbose`?
-S: Add the `LOG_LEVEL=debug` key-value to the admission configmap and respawn webhook
+### Q: I get tons of "TLS handshake error"
 
-    $ kubectl edit configmaps -n admission-controller admission-controller-webhook
-    $ kubectl delete pod -n admission-controller -l app.kubernetes.io/component=webhook
+A: This happens when DEBUG is enabled but Admission Controller will behave as expected. Those calls are some non-Sysidg direct calls to the Admission Controller without TLS, which raises this informational log by Go internal library.
+
+
+### Q: I need to troubleshoot, any way to switch to `debug verbose`?
+A: If you used helm to install, you can edit the helm `values.yaml` to set `webhook.logLevel=debug`
+S: You can edit the webhook configmap - add the `LOG_LEVEL=debug` key-value and restart the webhook
+
+    $ kubectl edit configmaps -n sysdig-admission-controller sysdig-admission-controller-webhook
+    $ kubectl rollout restart deployment -n sysdig-admission-controller sysdig-admission-controller-webhook
 
 ### Q: I don't see `Policy Rules` honored
 S: Review the [Admission Controller - Understanding:How Policy Conditions are applied](https://docs.sysdig.com/en/docs/sysdig-secure/scanning/admission-controller//#understanding-how-policy-conditions-are-applied)
@@ -348,9 +382,20 @@ S: Review the [Admission Controller - Understanding:Evaluation Order](https://do
 
 ### Q: I don't see changes on `Policy Assignments` being applied on my cluster
 A: Admission Controller pull changes from the Sysdig Secure platform every 5 minutes<br/>
-S: You can wait those five minutes, or force the admission controller webhook respawn
+S: You can wait those five minutes, or force the admission controller webhook restart
 
-    $ kubectl delete pod -n admission-controller -l app.kubernetes.io/component=webhook
+    $ kubectl rollout restart deployment -n sysdig-admission-controller sysdig-admission-controller-webhook
+
+### Q: I am deploying it in a GKE Cluster, with Private Network enabled, and everything is slow or I cannot scale the cluster correctly.
+
+```text
+"Failed calling webhook, failing open audit.secure.sysdig.com: failed calling webhook "audit.secure.sysdig.com": Post "https://sysdig-ac-webhook.sysdig-agent.svc:443/k8s-audit?timeout=10s <https://sysdig-ac-webhook.sysdig-agent.svc/k8s-audit?timeout=10s>": context canceled"
+```
+
+A: GKE clusters run the K8s API outside from the cluster. If Private Network is enabled, the K8s API may be unable to reach the Admission Controller's webhook that validates each API request, so eventually every API request times out and is processed, but the performance is impacted in the process.
+<br/>S: As specified in [GKE Private Cluster Webhook Timeouts](https://cloud.google.com/kubernetes-engine/docs/how-to/private-clusters#api_request_that_triggers_admission_webhook_timing_out), the default firewall configuration does not allow TCP connections for ports other than 443 and 10250.
+Admission Controller's webhook run on `5000 TCP port`, so you need to enable a new rule that allows the Control Plane's network to access it.
+<br/>Follow the instructions in [GKE-Adding firewall rules to cluster](https://cloud.google.com/kubernetes-engine/docs/how-to/private-clusters#add_firewall_rules) to enable inbound connections to our webhook.
 
 <!--
 Q: Helm v2 usage

@@ -1,16 +1,24 @@
 global:
   clusterConfig:
     name: ""  # name to identify this cluster for events and metrics
-    namespace: "sysdig-agent"  # namespace to install all components; can be overridden by components
   sysdig:
     accessKey: ""
     accessKeySecret: ""
     region: "us1"
   image:
     registry: quay.io
+  kspm:
+    deploy: false
+  agentConfigmapName: "sysdig-agent"
 
 agent:
   enabled: true
 
 nodeAnalyzer:
   enabled: true
+
+rapidResponse:
+  enabled: false
+  rapidResponse:
+    passphrase: ""
+    existingPassphraseSecret: ""

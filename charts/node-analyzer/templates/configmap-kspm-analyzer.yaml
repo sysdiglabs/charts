@@ -1,0 +1,17 @@
+{{ if .Values.global.kspm.deploy }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "nodeAnalyzer.fullname" . }}-kspm-analyzer
+  labels:
+{{ include "nodeAnalyzer.labels" . | indent 4 }}
+data:
+{{- $env := "PRODUCTION" -}}
+{{ if .Values.nodeAnalyzer.kspmAnalyzer.debug }}
+  {{- $env = "DEVELOPMENT" -}}
+{{ end}}
+  environment: {{ $env }}
+  external_nats_url: {{ include "nodeAnalyzer.natsUrl" . }}
+  cluster_name: {{ required "A valid clusterName is required" (include "nodeAnalyzer.clusterName" .) }}
+  agent_app_name: {{ include "nodeAnalyzer.name" . }}-node-analyzer
+{{- end -}}
