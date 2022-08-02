@@ -73,6 +73,22 @@ serviceAccounts:
     # Use this value as serviceAccount Name
     name: ""
 
+podMonitors:
+  webhook:
+    # Enable the webhook PodMonitor to scrape metrics
+    enabled: false
+    # Labels on the webhook PodMonitor
+    labels: {}
+    # Annotations on the webhook PodMonitor
+    annotations: {}
+  scanner:
+    # Enable the scanner PodMonitor to scrape metrics
+    enabled: false
+    # Labels on the scanner PodMonitor
+    labels: {}
+    # Annotatons on the scanner PodMonitor
+    annotations: {}
+
 webhook:
   # Service name for Webhook deployment
   name: webhook
