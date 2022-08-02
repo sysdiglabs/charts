@@ -4,6 +4,12 @@
 
 This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.6.0
+
+### Minor changes
+* Changed the names of configmaps and other resources to remove the redundant `nodeanalyzer` string
+* Fixed the ClusterRole reference to the wrong podsecuritypolicy name
+
 # v1.5.14
 ### Minor changes
 * KSPMAnalyzer: support proxy
