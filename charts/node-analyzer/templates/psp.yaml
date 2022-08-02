@@ -2,7 +2,7 @@
 apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:
-  name: {{ template "nodeAnalyzer.fullname" . }}
+  name: {{ .Release.Name }}-node-analyzer
 spec:
   allowedCapabilities:
   - '*'
