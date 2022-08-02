@@ -15,4 +15,3 @@ jobs:
           repository: sysdiglabs/sysdig-operator
           event-type: sysdig-release
           client-payload: '{"tag": "${{ github.event.release.tag_name }}" }'
-          
