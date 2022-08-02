@@ -4,6 +4,17 @@
 
 This file documents all notable changes to the Sysdig Agent Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+
+## v1.5.11
+
+### Minor changes
+* Added helper to accomodate agent configmapname
+
+## v1.5.10
+
+### Minor changes
+* Added /etc to container /host/etc volume bind
+
 ## v1.5.9
 
 ### Bugfix

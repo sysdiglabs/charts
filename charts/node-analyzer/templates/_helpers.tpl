@@ -203,3 +203,10 @@ Sysdig NATS service URL
     wss://{{ ( include "nodeAnalyzer.apiEndpoint" .) }}:443
 {{- end -}}
 {{- end -}}
+
+{{/*
+nodeAnalyzer agentConfigmapName
+*/}}
+{{- define "agent.configmapName" -}}
+    {{- default .Values.global.agentConfigmapName | default "sysdig-agent" -}}
+{{- end -}}

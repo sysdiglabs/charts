@@ -157,6 +157,7 @@ The following table lists the configurable parameters of this chart and their de
 | `global.proxy.httpsProxy`               | Sets `https_proxy` on the Agent container                                                                               | `""`      |
 | `global.proxy.noProxy`                  | Sets `no_proxy` on the Agent container                                                                                  | `""`      |
 | `global.kspm.deploy`                    | Enables Sysdig KSPM node analyzer & KSPM collector                                                                      | `false`   |
+| `global.agentConfigmapName`             | Sets a configmap name that is used to mount the agent configmap to fetch the cluster name and agent tags                | `"sysdig-agent"`      |
 | `agent`                                 | Config specific to the [Sysdig Agent](#agent)                                                                           | `{}`      |
 | `agent.enabled`                         | Enable the agent component in this chart                                                                                | `true`    |
 | `nodeAnalyzer`                          | Config specific to the [Sysdig nodeAnalyzer](#nodeAnalyzer)                                                             | `{}`      |
