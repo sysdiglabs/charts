@@ -5,20 +5,20 @@ kind: DaemonSet
 metadata:
   name: {{ .Release.Name }}-node-analyzer
   labels:
-    app.kubernetes.io/name: {{ include "nodeAnalyzer.name" . }}-node-analyzer
+    app.kubernetes.io/name: {{ include "nodeAnalyzer.name" . }}
 {{ include "nodeAnalyzer.labels" . | indent 4 }}
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "nodeAnalyzer.name" . }}-node-analyzer
+      app.kubernetes.io/name: {{ include "nodeAnalyzer.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
   updateStrategy:
     type: RollingUpdate
   template:
     metadata:
-      name: {{ template "nodeAnalyzer.fullname" . }}-node-analyzer
+      name: {{ .Release.Name }}-node-analyzer
       labels:
-        app.kubernetes.io/name: {{ include "nodeAnalyzer.name" . }}-node-analyzer
+        app.kubernetes.io/name: {{ include "nodeAnalyzer.name" . }}
 {{ include "nodeAnalyzer.labels" . | indent 8 }}
     spec:
       volumes:
