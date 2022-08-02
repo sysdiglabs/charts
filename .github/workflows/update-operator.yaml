@@ -1,0 +1,19 @@
+name: Update the Sysdig Operator Repo
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'The chart submodule will be updated to this tag'
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: update sysdig-operator
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.TOOLS_JENKINS_ADMIN_ACCESS_GITHUB_TOKEN }}
+          repository: sysdiglabs/sysdig-operator
+          event-type: sysdig-release
+          client-payload: '{"tag": "${{ github.event.inputs.tag }}" }'
