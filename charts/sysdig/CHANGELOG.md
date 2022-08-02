@@ -4,6 +4,126 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.15.22
+### Minor changes
+* runtimeScanner: version 1.2.4 with fixes on tmp dirs to be used during analysis
+
+
+## v1.15.21
+### Minor changes
+* Added /etc to container /host/etc volume bind
+
+## v1.15.20
+### Bugfixes
+* Removed duplicate labels from deployment of `app.kubernetes.io/instance` 
+
+## v1.15.19
+### Minor changes
+* runtimeScanner: version 1.2.3 with fixes on java file analyzer
+
+
+## v1.15.18
+### Minor changes
+* runtimeScanner: version 1.2.2 with performance improvement in pkgmeta client
+
+## v1.15.17
+### Minor changes
+* runtimeScanner: version 1.2.0 with fixes on jar manifest parser
+
+## v1.15.16
+### Minor changes
+* KSPM: version 1.5.0
+
+## v1.15.14
+### Minor changes
+* Sysdig README file: merged KSPM collector & KSPM analyzer sections
+
+## v1.15.13
+### Minor changes
+* HostAnalyzer bumped to version 0.1.9 (go 1.18)
+
+## v1.15.12
+### Minor changes
+* KSPM Analyzer - fix container missing CPU\Memory limits & requests
+* KSPM components - Merge analyzer and collector deploy flags into 1
+* KSPM Chart components - fix KSPM serviceAccount that is created when KSPM not installed
+
+## v1.15.11
+### Minor change
+* Security updates (July 2022) for NodeImageAnalyzer and HostAnalyzer component
+
+## v1.15.10
+### Minor changes
+* Notes section reflects proper links based on deployment region
+## v1.15.7
+### Minor changes
+* BenchmarkRunner: bump tag to 1.0.17.2
+
+## v1.15.6
+### Minor changes
+* RuntimeScanner version 1.1.1 with Golang support
+
+## v1.15.5
+### Minor changes
+* Fix expose node name to the Sysdig Agent container through Downward API
+  through K8S_NODE environment variable.
+
+## v1.15.2
+### Minor changes
+* KSPM: add kspmCollector.deploy parameter to docs
+* KSPM: bump tag to 1.4.0
+
+## v1.15.1
+### Minor changes
+* KSPM: bump tag to 1.3.0
+
+## v1.15.0
+### Major change
+* KSPMAnalyzer: rename cspm-analyzer to kspm-analyzer
+* KSPMCollector: rename cspm-collector to kspm-collector
+
+### Minor changes
+* KSPMAnalyzer: add documentation on port configuration
+
+## v1.14.34
+### Minor changes
+
+* RuntimeScanner: added nodeAnalyzer.runtimeScanner.extraMounts for handle non-standard socket paths
+
+## v1.14.32
+### Bugfixes
+* RuntimeScanner: enhanced detection of java packages
+
+### Minor changes
+* Release of runtime scanner 1.0.4
+
+## v1.14.31
+* Describe CSPM components in README and link to official Sysdig docs
+
+## v1.14.3
+### Minor change
+
+* CSPMCollector: Handle failure on apis discovery
+* CSPMAnalyzer: Send runtime parameters
+
+## v1.14.1
+### Minor change
+
+* CSPM support AKS
+
+## v1.14.0
+### Major change
+
+* Add CSPM Analyzer to Daemonset and CSPM Collector Deployment
+
+## 1.13.4
+### Bugfixes
+* RuntimeScanner: added jitter on startup to distribute requests to the k8s api over 15 minutes
+* RuntimeScanner: caching data to reduce the amount of requests to the k8s api
+
+### Minor changes
+* Release of runtime scanner 1.0.3
+
 ## v1.13.1
 ### Minor change
 

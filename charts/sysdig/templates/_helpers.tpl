@@ -155,6 +155,19 @@ Return the proper image name for the Benchmark Runner
 {{- end -}}
 
 {{/*
+Return the proper image name for the KSPM Analyzer
+*/}}
+{{- define "sysdig.image.kspmAnalyzer" -}}
+    {{- include "sysdig.imageRegistry" . -}} / {{- .Values.nodeAnalyzer.kspmAnalyzer.image.repository -}} {{- if .Values.nodeAnalyzer.kspmAnalyzer.image.digest -}} @ {{- .Values.nodeAnalyzer.kspmAnalyzer.image.digest -}} {{- else -}} : {{- .Values.nodeAnalyzer.kspmAnalyzer.image.tag -}} {{- end -}}
+{{- end -}}
+
+Return the proper image name for the KSPM Collector
+*/}}
+{{- define "sysdig.image.kspmCollector" -}}
+    {{- include "sysdig.imageRegistry" . -}} / {{- .Values.kspmCollector.image.repository -}} {{- if .Values.kspmCollector.image.digest -}} @ {{- .Values.kspmCollector.image.digest -}} {{- else -}} : {{- .Values.kspmCollector.image.tag -}} {{- end -}}
+{{- end -}}
+
+{{/*
 Common labels
 */}}
 {{- define "sysdig.labels" -}}
@@ -164,6 +177,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
+app: "sysdig-agent"
 {{- end -}}
 
 {{/*
@@ -250,5 +264,16 @@ to help the maxUnavailable and max_parallel_cold_starts pick a reasonable value 
     {{- 10 -}}
 {{- else -}}
     {{- 1 -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Sysdig NATS service URL
+*/}}
+{{- define "sysdig.natsUrl" -}}
+{{- if .Values.natsUrl -}}
+    {{- .Values.natsUrl -}}
+{{- else -}}
+    wss://{{ .Values.nodeAnalyzer.apiEndpoint }}:443
 {{- end -}}
 {{- end -}}

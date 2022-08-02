@@ -100,6 +100,13 @@ Return the proper image name for the Benchmark Runner
 {{- end -}}
 
 {{/*
+Return the proper image name for the CSPM Analyzer
+*/}}
+{{- define "nodeAnalyzer.image.kspmAnalyzer" -}}
+    {{- include "nodeAnalyzer.imageRegistry" . -}} / {{- .Values.nodeAnalyzer.kspmAnalyzer.image.repository -}} {{- if .Values.nodeAnalyzer.kspmAnalyzer.image.digest -}} @ {{- .Values.nodeAnalyzer.kspmAnalyzer.image.digest -}} {{- else -}} : {{- .Values.nodeAnalyzer.kspmAnalyzer.image.tag -}} {{- end -}}
+{{- end -}}
+
+{{/*
 Node Analyzer labels
 */}}
 {{- define "nodeAnalyzer.labels" -}}
@@ -163,8 +170,8 @@ possible, but accept overrides from the chart values.
 Determine collector endpoint based on provided region or .Values.nodeAnalyzer.apiEndpoint
 */}}
 {{- define "nodeAnalyzer.apiEndpoint" -}}
-    {{- if .Values.nodeAnalyzer.apiEndpoint -}}
-        {{- .Values.nodeAnalyzer.apiEndpoint -}}
+    {{- if (or .Values.nodeAnalyzer.apiEndpoint (eq .Values.global.sysdig.region "custom"))  -}}
+        {{- required "A valid apiEndpoint is required" .Values.nodeAnalyzer.apiEndpoint -}}
     {{- else if (eq .Values.global.sysdig.region "us1") -}}
         {{- "secure.sysdig.com" -}}
     {{- else if (eq .Values.global.sysdig.region "us2") -}}
@@ -182,6 +189,24 @@ Determine collector endpoint based on provided region or .Values.nodeAnalyzer.ap
 
 {{- define "deploy-na" -}}
 {{- if .Values.nodeAnalyzer.deploy -}}
-true 
+true
 {{- end -}}
+{{- end -}}
+
+{{/*
+Sysdig NATS service URL
+*/}}
+{{- define "nodeAnalyzer.natsUrl" -}}
+{{- if .Values.natsUrl -}}
+    {{- .Values.natsUrl -}}
+{{- else -}}
+    wss://{{ ( include "nodeAnalyzer.apiEndpoint" .) }}:443
+{{- end -}}
+{{- end -}}
+
+{{/*
+nodeAnalyzer agentConfigmapName
+*/}}
+{{- define "agent.configmapName" -}}
+    {{- default .Values.global.agentConfigmapName | default "sysdig-agent" -}}
 {{- end -}}

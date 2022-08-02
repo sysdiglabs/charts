@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "kspmCollector.fullname" . }}
+  labels:
+{{ include "kspmCollector.labels" . | indent 4 }}
+data:
+{{- $env := "PRODUCTION" -}}
+{{ if .Values.debug }}
+  {{- $env = "DEVELOPMENT" -}}
+{{ end}}
+  environment: {{ $env }}
+  included_namespaces: {{ .Values.namespaces.included | quote}}
+  excluded_namespaces: {{ .Values.namespaces.excluded | quote }}
+  included_workloads: {{ .Values.workloads.included | quote }}
+  excluded_workloads: {{ .Values.workloads.excluded | quote }}
+  health_interval_minutes: {{ .Values.healthIntervalMin | default 5 | quote }}
+  external_nats_url: {{ include "kspmCollector.natsUrl" . }}
+  cluster_name: {{ required "A valid clusterName is required" (include "kspmCollector.clusterName" .) }}

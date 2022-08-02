@@ -20,4 +20,4 @@ prerequisites:
 
 release:
   name: admission-controller
-  namespace: admission-controller
+  namespace: sysdig-admission-controller

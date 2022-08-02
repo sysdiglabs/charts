@@ -1,7 +1,6 @@
 name: Update the Sysdig Operator Repo
 
 on:
- on:
   release:
     types: [published]
 

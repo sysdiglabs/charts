@@ -1,4 +1,5 @@
 Sysdig Admission Controller is now installed!
+Confirm its working status https://charts.sysdig.com/charts/admission-controller/#confirm-working-status
 {{- if not (or .Values.sysdig.existingSecureAPITokenSecret .Values.sysdig.secureAPIToken) }}
 ================================================================================================
 Warning: the Sysdig Secure API Token was not provided with either the `sysdig.secureAPIToken` or

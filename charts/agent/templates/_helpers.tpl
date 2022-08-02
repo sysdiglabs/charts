@@ -112,6 +112,7 @@ helm.sh/chart: {{ include "agent.chart" . }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
+app: "sysdig-agent"
 {{- end }}
 
 {{/*
@@ -142,7 +143,9 @@ Return the default only if the value is not defined in sysdig.settings.<agent_se
 */}}
 {{- define "get_if_not_in_settings" -}}
 {{- if not (hasKey .root.Values.sysdig.settings .setting) -}}
+  {{- if or (kindIs "bool" .default) (.default) -}}
     {{- .default -}}
+  {{- end -}}
 {{- end -}}
 {{- end -}}
 
@@ -169,6 +172,8 @@ This helper uses the lookup function to check the osImage field of every node.
 If all of them match the string indicating COS, then this will return true. If
 the list is empty (ie, the lookup failed) or one or more don't match, this will
 be false.
+This doesn't return a true boolean, so anywhere it is used, it must be checked:
+    eq "true" (include "agent.isAllCos")
 */}}
 {{- define "agent.isAllCos" -}}
     {{- $nodes := (lookup "v1" "Node" "" "").items -}}
@@ -180,10 +185,13 @@ be false.
 {{- end -}}
 
 {{/*
-Check for all COS nodes or a flag to enable eBPF.
+Check for all COS nodes or a flag to enable eBPF. If false, return nothing so
+it can act like a boolean
 */}}
 {{- define "agent.ebpfEnabled" -}}
-  {{- or (include "agent.isAllCos" .) .Values.ebpf.enabled -}}
+  {{- if (or (eq "true" (include "agent.isAllCos" .)) .Values.ebpf.enabled) -}}
+    true
+  {{- end -}}
 {{- end -}}
 
 {{/*
@@ -212,18 +220,26 @@ Returns the namespace for installing components
 Determine collector endpoint based on provided region
 */}}
 {{- define "agent.collectorEndpoint" -}}
-    {{- if (eq .Values.global.sysdig.region "us1") -}}
+    {{- if (or .Values.collectorSettings.collectorHost (eq .Values.global.sysdig.region "custom")) -}}
+        {{- required "collectorSettings.collectorHost is required for custom regions" (.Values.collectorSettings.collectorHost) -}}
+    {{- else if (eq .Values.global.sysdig.region "us1") -}}
         {{- "collector.sysdigcloud.com" -}}
     {{- else if (eq .Values.global.sysdig.region "us2") -}}
         {{- "ingest-us2.app.sysdig.com" -}}
     {{- else if (eq .Values.global.sysdig.region "us3") -}}
         {{- "ingest.us3.app.sysdig.com" -}}
     {{- else if (eq .Values.global.sysdig.region "us4") -}}
-        {{- "ingest.us4.app.sysdig.com" -}}
+        {{- "ingest.us4.sysdig.com" -}}
     {{- else if (eq .Values.global.sysdig.region "eu1") -}}
         {{- "ingest-eu1.app.sysdig.com" -}}
     {{- else if (eq .Values.global.sysdig.region "au1") -}}
-        {{- "ingest.au1.app.sysdig.com" -}}
+        {{- "ingest.au1.sysdig.com" -}}
     {{- end -}}
 {{- end -}}
 
+{{/*
+Agent agentConfigmapName
+*/}}
+{{- define "agent.configmapName" -}}
+    {{- default .Values.global.agentConfigmapName | default "sysdig-agent" -}}
+{{- end -}}
