@@ -9,7 +9,7 @@ numbering uses [semantic versioning](http://semver.org).
 
 ### Minor changes
 
-* Fix duplicate labels in the CronJob template
+* Fix duplicate labels in the CronJob template (thanks @firaxis)
 
 ## v0.0.31
 
