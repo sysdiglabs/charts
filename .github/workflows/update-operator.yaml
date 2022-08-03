@@ -1,8 +1,9 @@
 name: Update the Sysdig Operator Repo
 
-on:
-  release:
-    types: [published]
+workflow_dispatch:
+  inputs:
+    tag:
+      description: 'The chart submodule will be updated to this tag'
 
 jobs:
   dispatch:
