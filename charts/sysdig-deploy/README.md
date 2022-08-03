@@ -51,7 +51,7 @@ Currently included components:
        --set global.clusterConfig.name=CLUSTER_NAME
     ```
 
-     **GKE Autopilot**: GKE Autopolot environments require an additional configuration parameter, `agent.gke.autopilot=true`, to install Sysdig agent:
+     **GKE Autopilot**: GKE Autopilot environments require an additional configuration parameter, `agent.gke.autopilot=true`, to install Sysdig agent:
 
       ```bash
    helm install sysdig sysdig/sysdig-deploy \
@@ -164,6 +164,7 @@ The following table lists the configurable parameters of this chart and their de
 | `nodeAnalyzer`                          | Config specific to the [Sysdig nodeAnalyzer](#nodeAnalyzer)                                                             | `{}`      |
 | `nodeAnalyzer.enabled`                  | Enable the nodeAnalyzer component in this chart                                                                         | `true`    |
 | `nodeAnalyzer.nodeAnalyzer.apiEndpoint` | nodeAnalyzer apiEndpoint                                                                                                | `""`      |
+| `kspmCollector`                         | Config specific to the [Sysdig KSPM Collector](#kspm collector)                                                         | `{}`      |
 | `kspmCollector.apiEndpoint`             | kspmCollector apiEndpoint                                                                                               | `""`      |
 
 ## Agent
@@ -201,7 +202,7 @@ agent:
 
 ## NodeAnalyzer
 
-For possible configuration values of the node-analyzer, please refer to the node-analyzer subchart [README](https://github.com/sysdiglabs/charts/blob/master/charts/node-analyzer/README.md). All agent-specific configuration can be prefixed with `nodeAnalyzer.` to apply them to this chart.
+For possible configuration values of the node-analyzer, please refer to the node-analyzer subchart [README](https://github.com/sysdiglabs/charts/blob/master/charts/node-analyzer/README.md). All specific configuration can be prefixed with `nodeAnalyzer.` to apply them to this chart.
 
 Example: override apiEndpoint variable for nodeAnalyzer chart
 
@@ -209,7 +210,7 @@ As a command line parameter:
 ```bash
 helm install sysdig sysdig/sysdig-deploy \
     --set global.sysdig.accessKey=ACCESS_KEY \
-    --set agent.sysdig.settings.collector=COLLECTOR_ENDPOINT \
+    --set agent.collectorSettings.collectorHost=COLLECTOR_ENDPOINT \
     --set nodeAnalyzer.nodeAnalyzer.apiEndpoint=API_ENDPOINT
 ```
 
@@ -221,6 +222,8 @@ global:
 
 agent:
   enabled: false
+  collectorSettings:
+    collectorHost: COLLECTOR_ENDPOINT
 
 nodeAnalyzer:
   nodeAnalyzer:
@@ -229,7 +232,7 @@ nodeAnalyzer:
 
 ## KSPM Collector
 
-For possible configuration values of the kspm-collector, please refer to the kspm-collector subchart [README](https://github.com/sysdiglabs/charts/blob/master/charts/kspm-collector/README.md). All agent-specific configuration can be prefixed with `kspmCollector.` to apply them to this chart.
+For possible configuration values of the kspm-collector, please refer to the kspm-collector subchart [README](https://github.com/sysdiglabs/charts/blob/master/charts/kspm-collector/README.md). All specific configuration can be prefixed with `kspmCollector.` to apply them to this chart.
 
 Example: override apiEndpoint variable for kspmCollector chart
 
