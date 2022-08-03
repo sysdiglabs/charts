@@ -1,9 +1,8 @@
 name: Update the Sysdig Operator Repo
 
-workflow_dispatch:
-  inputs:
-    tag:
-      description: 'The chart submodule will be updated to this tag'
+on:
+  release:
+    types: [published]
 
 jobs:
   dispatch:
@@ -12,7 +11,7 @@ jobs:
       - name: filter release tag 
         id: filter_tag
         run: |
-            if [[ ${{ github.event.release.tag_name }} =~ ^sysdig-[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            if [[ "${{ github.event.release.tag_name }}" =~ ^sysdig-[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
               echo ::set-output name=tag_match::true
             fi
 
