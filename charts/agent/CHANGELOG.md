@@ -4,7 +4,10 @@
 
 This file documents all notable changes to the Sysdig Agent Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.5.13
 
+### Minor changes
+* Reverted change for v1.5.10 that added /etc to /host/etc volume bind.
 ## v1.5.11
 
 ### Minor changes
