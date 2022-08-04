@@ -330,6 +330,12 @@ nodeAnalyzer:
 
   deploy: true
 
+  # Can provide a storage class such as gp2 name so that the Node Analyzer uses this for it's temp volume rather than emptyDir - useful for clusters that don't have a lot of disk storage on the node
+  # https://kubernetes.io/docs/concepts/storage/ephemeral-volumes/#csi-ephemeral-volumes
+  storageClass:
+  # Size of PVC you want to provide temp volume
+  storageClassVolumeSize: 10Gi
+
   # The API endpoint for Sysdig Secure, specified with no protocol:
   # * SaaS default region (US East): secure.sysdig.com
   # * SaaS US Web: us2.app.sysdig.com

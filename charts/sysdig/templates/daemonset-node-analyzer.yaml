@@ -61,7 +61,21 @@ spec:
           hostPath:
             path: /
         - name: tmp-vol
+          {{- if .Values.nodeAnalyzer.storageClass }}
+          ephemeral:
+            volumeClaimTemplate:
+              metadata:
+                labels:
+                  type: {{ .Values.nodeAnalyzer.storageClass }}
+              spec:
+                accessModes: [ "ReadWriteOnce" ]
+                storageClassName: {{ .Values.nodeAnalyzer.storageClass }}
+                resources:
+                  requests:
+                    storage: {{ .Values.nodeAnalyzer.storageClassVolumeSize }}
+          {{- else }}
           emptyDir: {}
+          {{- end }}
         {{- with .Values.nodeAnalyzer.imageAnalyzer.extraVolumes.volumes }}
 {{ toYaml . | indent 8 }}
         {{- end }}
@@ -165,6 +179,8 @@ spec:
             readOnly: true
           - mountPath: /var/lib/containers
             name: var-lib-containers-vol
+          - mountPath: /analysis_scratch
+            name: tmp-vol
           # Custom volume mount here
           {{- if .Values.nodeAnalyzer.imageAnalyzer.extraVolumes.mounts }}
 {{ toYaml .Values.nodeAnalyzer.imageAnalyzer.extraVolumes.mounts | indent 10 }}
