@@ -315,6 +315,17 @@ A: GKE clusters run the K8s API outside from the cluster. If Private Network is 
 Admission Controller's webhook run on `5000 TCP port`, so you need to enable a new rule that allows the Control Plane's network to access it.
 <br/>Follow the instructions in [GKE-Adding firewall rules to cluster](https://cloud.google.com/kubernetes-engine/docs/how-to/private-clusters#add_firewall_rules) to enable inbound connections to our webhook.
 
+
+### Q: Getting "error getting the cluster id from kubernetes: open /var/run/secrets/kubernetes.io/serviceaccount/token: permission denied"
+
+A: Some users (old versions of GKE) reported that the permissions to access serviceAccount token, mounted in the filesystem, was set to [`0600` permissions](https://discuss.hashicorp.com/t/wrong-permission-on-being-set-on-serviceaccount-token/28777), not allowing the pods to actually read from it.
+S: [Recommend](https://github.com/kubernetes/kubernetes/issues/82573) to change the `securityContext.fsGroup` to the value `65534` on the pod.
+<br/>You can specify this through our helm chart with the parameter
+```
+--set webhook.podSecurityContext.fsGroup=65534
+```
+
+
 <!--
 Q: Helm v2 usage
 should work with minor changes
