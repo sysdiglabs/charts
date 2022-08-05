@@ -23,7 +23,7 @@ $ pre-commit run -a
 $ helm repo add sysdig https://charts.sysdig.com
 $ helm repo update
 $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-      --create-namespace -n sysdig-admission-controller --version=0.6.15  \
+      --create-namespace -n sysdig-admission-controller --version=0.6.17  \
       --set clusterName=CLUSTER_NAME \
       --set sysdig.secureAPIToken=SECURE_API_TOKEN
 ```
@@ -55,7 +55,7 @@ This chart deploys the Sysdig Admission Controller on a [Kubernetes](http://kube
 To install the chart with the release name `admission-controller`:
 
 ```console
-$ helm upgrade --install sysdig-admission-controller sysdig/admission-controller -n sysdig-admission-controller --version=0.6.15
+$ helm upgrade --install sysdig-admission-controller sysdig/admission-controller -n sysdig-admission-controller --version=0.6.17
 ```
 
 The command deploys the Sysdig Admission Controller on the Kubernetes cluster in the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.
@@ -168,7 +168,7 @@ Specify each parameter using the **`--set key=value[,key=value]`** argument to `
 
 ```console
 $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-    --create-namespace -n sysdig-admission-controller --version=0.6.15 \
+    --create-namespace -n sysdig-admission-controller --version=0.6.17 \
     --set sysdig.secureAPIToken=YOUR-KEY-HERE,clusterName=YOUR-CLUSTER-NAME
 ```
 
@@ -177,7 +177,7 @@ installing the chart. For example:
 
 ```console
 $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-    --create-namespace -n sysdig-admission-controller --version=0.6.15 \
+    --create-namespace -n sysdig-admission-controller --version=0.6.17 \
     --values values.yaml
 ```
 
@@ -363,12 +363,12 @@ Either way, you should see some logs in Admission Controller tail
 
 ### Q: I get tons of "TLS handshake error"
 
-A: This happens when DEBUG is enabled but Admission Controller will behave as expected. Those calls are some non-Sysdig direct calls to the Admission Controller without TLS, which raises this informational log by Go internal library.
+A: This happens when DEBUG is enabled but Admission Controller will behave as expected. Those calls are some non-sysdig direct calls to the Admission Controller without TLS, which raises this informational log by Go internal library.
 
 
-### Q: I need to troubleshoot, any way to switch to `debug`?
+### Q: I need to troubleshoot, any way to switch to `debug` verbose?
 A: If you used helm to install, you can edit the helm `values.yaml` to set `webhook.logLevel=debug`
-<br/>Alternatively, you can edit the webhook configmap and add the `LOG_LEVEL=debug` key-value and restart the webhook
+<br/>Alternatively, you can edit the webhook configmap - add the `LOG_LEVEL=debug` key-value and restart the webhook
 ```
     $ kubectl edit configmaps -n sysdig-admission-controller sysdig-admission-controller-webhook
     $ kubectl rollout restart deployment -n sysdig-admission-controller sysdig-admission-controller-webhook
