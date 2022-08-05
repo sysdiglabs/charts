@@ -363,15 +363,16 @@ Either way, you should see some logs in Admission Controller tail
 
 ### Q: I get tons of "TLS handshake error"
 
-A: This happens when DEBUG is enabled but Admission Controller will behave as expected. Those calls are some non-Sysidg direct calls to the Admission Controller without TLS, which raises this informational log by Go internal library.
+A: This happens when DEBUG is enabled but Admission Controller will behave as expected. Those calls are some non-Sysdig direct calls to the Admission Controller without TLS, which raises this informational log by Go internal library.
 
 
-### Q: I need to troubleshoot, any way to switch to `debug verbose`?
+### Q: I need to troubleshoot, any way to switch to `debug`?
 A: If you used helm to install, you can edit the helm `values.yaml` to set `webhook.logLevel=debug`
-S: You can edit the webhook configmap - add the `LOG_LEVEL=debug` key-value and restart the webhook
-
+<br/>Alternatively, you can edit the webhook configmap and add the `LOG_LEVEL=debug` key-value and restart the webhook
+```
     $ kubectl edit configmaps -n sysdig-admission-controller sysdig-admission-controller-webhook
     $ kubectl rollout restart deployment -n sysdig-admission-controller sysdig-admission-controller-webhook
+```
 
 ### Q: I don't see `Policy Rules` honored
 S: Review the [Admission Controller - Understanding:How Policy Conditions are applied](https://docs.sysdig.com/en/docs/sysdig-secure/scanning/admission-controller//#understanding-how-policy-conditions-are-applied)
@@ -393,9 +394,20 @@ S: You can wait those five minutes, or force the admission controller webhook re
 ```
 
 A: GKE clusters run the K8s API outside from the cluster. If Private Network is enabled, the K8s API may be unable to reach the Admission Controller's webhook that validates each API request, so eventually every API request times out and is processed, but the performance is impacted in the process.
-<br/>S: As specified in [GKE Private Cluster Webhook Timeouts](https://cloud.google.com/kubernetes-engine/docs/how-to/private-clusters#api_request_that_triggers_admission_webhook_timing_out), the default firewall configuration does not allow TCP connections for ports other than 443 and 10250.
+<br/><br/>S: As specified in [GKE Private Cluster Webhook Timeouts](https://cloud.google.com/kubernetes-engine/docs/how-to/private-clusters#api_request_that_triggers_admission_webhook_timing_out), the default firewall configuration does not allow TCP connections for ports other than 443 and 10250.
 Admission Controller's webhook run on `5000 TCP port`, so you need to enable a new rule that allows the Control Plane's network to access it.
 <br/>Follow the instructions in [GKE-Adding firewall rules to cluster](https://cloud.google.com/kubernetes-engine/docs/how-to/private-clusters#add_firewall_rules) to enable inbound connections to our webhook.
+
+
+### Q: Getting "error getting the cluster id from kubernetes: open /var/run/secrets/kubernetes.io/serviceaccount/token: permission denied"
+
+A: Some users (old versions of GKE) reported that the permissions to access serviceAccount token, mounted in the filesystem, was set to [`0600` permissions](https://discuss.hashicorp.com/t/wrong-permission-on-being-set-on-serviceaccount-token/28777), not allowing the pods to actually read from it.
+<br/><br/>S: [Recommend](https://github.com/kubernetes/kubernetes/issues/82573) to change the `securityContext.fsGroup` to the value `65534` on the pod.
+<br/>You can specify this through our helm chart with the parameter
+```
+--set webhook.podSecurityContext.fsGroup=65534
+```
+
 
 <!--
 Q: Helm v2 usage
