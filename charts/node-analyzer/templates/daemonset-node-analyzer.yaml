@@ -134,11 +134,11 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.namespace
-          - name: VERIFY_CERTIFICATE
+          - name: NATS_INSECURE
             valueFrom:
               configMapKeyRef:
                 name: {{ template "nodeAnalyzer.fullname" . }}-kspm-analyzer
-                key: ssl_verify_certificate
+                key: nats_insecure
                 optional: true
           - name: HTTP_PROXY
             valueFrom:
