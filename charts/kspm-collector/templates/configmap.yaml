@@ -17,3 +17,15 @@ data:
   health_interval_minutes: {{ .Values.healthIntervalMin | default 5 | quote }}
   external_nats_url: {{ include "kspmCollector.natsUrl" . }}
   cluster_name: {{ required "A valid clusterName is required" (include "kspmCollector.clusterName" .) }}
+  {{- if hasKey .Values.kspmCollector "sslVerifyCertificate" }}
+  ssl_verify_certificate: "{{ .Values.kspmCollector.sslVerifyCertificate }}"
+  {{- end }}
+  {{- if (.Values.kspmCollector.httpProxy | default .Values.global.proxy.httpProxy) }}
+  http_proxy: {{ .Values.kspmCollector.httpProxy | default .Values.global.proxy.httpProxy }}
+  {{- end -}}
+  {{- if (.Values.kspmCollector.httpsProxy | default .Values.global.proxy.httpsProxy) }}
+  https_proxy: {{ .Values.kspmCollector.httpsProxy | default .Values.global.proxy.httpsProxy }}
+  {{- end -}}
+  {{- if (.Values.kspmCollector.noProxy | default .Values.global.proxy.noProxy) }}
+  no_proxy: {{ .Values.kspmCollector.noProxy | default .Values.global.proxy.noProxy }}
+  {{- end -}}
