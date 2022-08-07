@@ -53,6 +53,7 @@ The following table lists the configurable parameters of the Sysdig KSPM Collect
 | `httpProxy`                      | Proxy configuration variables                                                           |                                                             |
 | `httpsProxy`                     | Proxy configuration variables                                                           |                                                             |
 | `noProxy`                        | Proxy configuration variables                                                           |                                                             |
+| `sslVerifyCertificate`           | Can be set to false to allow insecure connections to the Sysdig backend                 |                                                             |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
