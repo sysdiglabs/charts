@@ -4,6 +4,10 @@
 
 This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+# v1.5.14
+### Minor changes
+* KSPMAnalyzer: support proxy
+
 ## v1.5.13
 ### Minor changes
 * RuntimeScanner: bumped to 1.2.5 with fixes on ruby file analyzer
