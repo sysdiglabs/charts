@@ -1,6 +1,10 @@
 # Can be set to true to show debug logging, useful for troubleshooting.
 debug: false
 
+httpProxy:
+httpsProxy:
+noProxy:
+
 # Default values for Sysdig KSPM Collector
 global:
   clusterConfig: {}
