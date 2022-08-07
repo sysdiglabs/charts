@@ -14,4 +14,16 @@ data:
   external_nats_url: {{ include "nodeAnalyzer.natsUrl" . }}
   cluster_name: {{ required "A valid clusterName is required" (include "nodeAnalyzer.clusterName" .) }}
   agent_app_name: {{ include "nodeAnalyzer.name" . }}-node-analyzer
+  {{- if hasKey .Values.nodeAnalyzer "sslVerifyCertificate" }}
+  nats_insecure: "{{ not .Values.nodeAnalyzer.sslVerifyCertificate }}"
+  {{- end }}
+  {{- if (.Values.nodeAnalyzer.httpProxy | default .Values.global.proxy.httpProxy) }}
+  http_proxy: {{ .Values.nodeAnalyzer.httpProxy | default .Values.global.proxy.httpProxy }}
+  {{- end -}}
+  {{- if (.Values.nodeAnalyzer.httpsProxy | default .Values.global.proxy.httpsProxy) }}
+  https_proxy: {{ .Values.nodeAnalyzer.httpsProxy | default .Values.global.proxy.httpsProxy }}
+  {{- end -}}
+  {{- if (.Values.nodeAnalyzer.noProxy | default .Values.global.proxy.noProxy) }}
+  no_proxy: {{ .Values.nodeAnalyzer.noProxy | default .Values.global.proxy.noProxy }}
+  {{- end -}}
 {{- end -}}
