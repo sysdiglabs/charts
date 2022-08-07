@@ -1,3 +1,7 @@
+# v0.1.6
+### Minor change
+* Support HTTP proxy
+
 # v0.1.5
 ### Bugfixes
 * Removed duplicate labels from deployment of `app.kubernetes.io/instance` 
