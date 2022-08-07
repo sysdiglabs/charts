@@ -24,6 +24,9 @@ The following table lists the configurable parameters of the Sysdig KSPM Collect
 
 | Parameter                        | Description                                                                             | Default                                                     |
 |----------------------------------|-----------------------------------------------------------------------------------------|-------------------------------------------------------------|
+| `global.proxy.httpProxy`         | Sets `HTTP_PROXY` on the KSPM Collector containers                                      | `""`                                                       |
+| `global.proxy.httpsProxy`        | Sets `HTTPS_PROXY` on the KSPM Collector containers                                     | `""`                                                       |
+| `global.proxy.noProxy`           | Sets `NO_PROXY` on the KSPM Collector containers                                        | `""`                                                       |
 | `sysdig.accessKey`               | Your Sysdig Access Key                                                                  | ` ` Either accessKey or existingAccessKeySecret is required |
 | `sysdig.existingAccessKeySecret` | Alternatively, specify the name of a Kubernetes secret containing an 'access-key' entry | ` ` Either accessKey or existingAccessKeySecret is required |
 | `rbac.create`                    | If true, create & use RBAC resources                                                    | `true`                                                      |
@@ -46,7 +49,10 @@ The following table lists the configurable parameters of the Sysdig KSPM Collect
 | `resources.limits.cpu`           | KSPM collector CPU limits                                                               | `500m`                                                      |
 | `resources.limits.memory`        | KSPM collector Memory limits                                                            | `1536Mi`                                                    |
 | `global.kspm.deploy`             | Enables Sysdig KSPM node analyzer & KSPM collector                                      | `true`                                                      |
-| `kspmCollector.apiEndpoint`      | kspmCollector apiEndpoint                                                               | `""`                                                        |
+| `apiEndpoint`                    | kspmCollector apiEndpoint                                                               | `""`                                                        |
+| `httpProxy`                      | Proxy configuration variables                                                           |                                                             |
+| `httpsProxy`                     | Proxy configuration variables                                                           |                                                             |
+| `noProxy`                        | Proxy configuration variables                                                           |                                                             |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
