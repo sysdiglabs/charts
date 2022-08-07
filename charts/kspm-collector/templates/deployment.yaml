@@ -74,27 +74,27 @@ spec:
               configMapKeyRef:
                 name: {{ template "kspmCollector.fullname" . }}
                 key: external_nats_url
-        - name: VERIFY_CERTIFICATE
-          valueFrom:
-            configMapKeyRef:
-              name: {{ template "kspmCollector.fullname" . }}
-              key: ssl_verify_certificate
-              optional: true
-        - name: HTTP_PROXY
-          valueFrom:
-            configMapKeyRef:
-              key: http_proxy
-              name: {{ template "kspmCollector.fullname" . }}
-              optional: true
-        - name: HTTPS_PROXY
-          valueFrom:
-            configMapKeyRef:
-              key: https_proxy
-              name: {{ template "kspmCollector.fullname" . }}
-              optional: true
-        - name: NO_PROXY
-          valueFrom:
-            configMapKeyRef:
-              key: no_proxy
-              name: {{ template "kspmCollector.fullname" . }}
-              optional: true
+          - name: VERIFY_CERTIFICATE
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "kspmCollector.fullname" . }}
+                key: ssl_verify_certificate
+                optional: true
+          - name: HTTP_PROXY
+            valueFrom:
+              configMapKeyRef:
+                key: http_proxy
+                name: {{ template "kspmCollector.fullname" . }}
+                optional: true
+          - name: HTTPS_PROXY
+            valueFrom:
+              configMapKeyRef:
+                key: https_proxy
+                name: {{ template "kspmCollector.fullname" . }}
+                optional: true
+          - name: NO_PROXY
+            valueFrom:
+              configMapKeyRef:
+                key: no_proxy
+                name: {{ template "kspmCollector.fullname" . }}
+                optional: true
