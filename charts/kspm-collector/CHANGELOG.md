@@ -1,5 +1,5 @@
 # v0.1.6
-### Bugfixes
+### Minor change
 * Support HTTP proxy
 
 # v0.1.5
