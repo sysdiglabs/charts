@@ -4,6 +4,11 @@
 
 This file documents all notable changes to the Sysdig Agent Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.5.15
+
+### Minor changes
+* Introduced support to proxy for agent initContainer
+
 ## v1.5.14
 * Documentation fix slim-agent defaults to true
 
@@ -11,6 +16,7 @@ This file documents all notable changes to the Sysdig Agent Helm Chart. The rele
 
 ### Minor changes
 * Reverted change for v1.5.10 that added /etc to /host/etc volume bind.
+
 ## v1.5.11
 
 ### Minor changes
