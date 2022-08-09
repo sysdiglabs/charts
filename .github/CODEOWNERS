@@ -2,3 +2,7 @@
 /charts/sysdig/         @achandras @yashgiri @lilx1ao
 /charts/agent/          @achandras @yashgiri @lilx1ao
 /charts/sysdig-deploy/  @achandras @yashgiri @lilx1ao
+
+/charts/admission-controller @sysdiglabs/cloud-native
+/charts/cloud-connector @sysdiglabs/cloud-native
+/charts/cloud-scanning @sysdiglabs/cloud-native
