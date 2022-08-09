@@ -20,6 +20,14 @@ jobs:
         with:
           python-version: 3.7
 
+      - name: Install pre-commit
+        run: pip install pre-commit
+
+      - name: Check pre-commit
+        run: |
+          pre-commit run -a --show-diff-on-failure
+          git clean -df .
+
       - name: Set up chart-testing
         uses: helm/chart-testing-action@v2.2.0
 
