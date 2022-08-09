@@ -4,6 +4,11 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.15.26
+
+### Minor changes
+* Agent: Introduced support to proxy for agent initContainer
+
 ## v1.15.25
 
 ### Minor changes
