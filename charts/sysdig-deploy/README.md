@@ -60,6 +60,7 @@ Currently included components:
         --set global.sysdig.region=SAAS_REGION \
         --set global.clusterConfig.name=CLUSTER_NAME \
         --set agent.gke.autopilot=true \
+        --set agent.slim.enabled=false \
         --set nodeAnalyzer.enabled=false
       ```
 
