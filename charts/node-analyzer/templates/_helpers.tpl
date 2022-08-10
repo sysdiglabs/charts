@@ -212,13 +212,13 @@ nodeAnalyzer agentConfigmapName
 {{- end -}}
 
 {{- define "nodeAnalyzer.deployHostAnalyzer" -}}
-{{- if .Values.nodeAnalyzer.hostAnalyzer.deploy }}
+{{- if or (not (hasKey .Values.nodeAnalyzer.hostAnalyzer "deploy")) .Values.nodeAnalyzer.hostAnalyzer.deploy }}
 true
 {{- end -}}
 {{- end -}}
 
 {{- define "nodeAnalyzer.deployBenchmarkRunner" -}}
-{{- if .Values.nodeAnalyzer.benchmarkRunner.deploy }}
+{{- if or (not (hasKey .Values.nodeAnalyzer.benchmarkRunner "deploy")) .Values.nodeAnalyzer.benchmarkRunner.deploy }}
 true
 {{- end -}}
 {{- end -}}
