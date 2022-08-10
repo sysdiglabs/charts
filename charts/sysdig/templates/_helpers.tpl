@@ -234,12 +234,6 @@ true
 {{- end -}}
 
 {{/*
-Set default to true for deployment of the benchmarkRunner and the hostAnalyzer
-*/}}
-{{ default true .Values.nodeAnalyzer.benchmarkRunner.deploy }}
-{{ default true .Values.nodeAnalyzer.hostAnalyzer.deploy }}
-
-{{/*
 Sysdig Eve Connector service URL
 */}}
 {{- define "eveconnector.host" -}}
@@ -281,5 +275,17 @@ Sysdig NATS service URL
     {{- .Values.natsUrl -}}
 {{- else -}}
     wss://{{ .Values.nodeAnalyzer.apiEndpoint }}:443
+{{- end -}}
+{{- end -}}
+
+{{- define "nodeAnalyzer.deployHostAnalyzer" -}}
+{{- if or (not (hasKey .Values.nodeAnalyzer.hostAnalyzer "deploy")) .Values.nodeAnalyzer.hostAnalyzer.deploy }}
+true
+{{- end -}}
+{{- end -}}
+
+{{- define "nodeAnalyzer.deployBenchmarkRunner" -}}
+{{- if or (not (hasKey .Values.nodeAnalyzer.benchmarkRunner "deploy")) .Values.nodeAnalyzer.benchmarkRunner.deploy }}
+true
 {{- end -}}
 {{- end -}}
