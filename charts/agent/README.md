@@ -1,6 +1,5 @@
 # Chart: Sysdig Agent
 
----
 
 [Sysdig](https://sysdig.com/) is a unified platform for container and microservices monitoring, troubleshooting,
 security and forensics. Sysdig platform has been built on top of [Sysdig tool](https://sysdig.com/opensource/sysdig/)
