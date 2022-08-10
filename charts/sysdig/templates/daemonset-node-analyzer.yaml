@@ -56,7 +56,7 @@ spec:
           configMap:
             name: {{ template "sysdig.fullname" . }}-image-analyzer
             optional: true
-{{ if or (include "nodeAnalyzer.deployBenchmarkRunner" .) (include "nodeAnalyzer.deployHostAnalyzer" .) .Values.global.kspm.deploy }}
+{{ if or (include "nodeAnalyzer.deployBenchmarkRunner" .) (include "nodeAnalyzer.deployHostAnalyzer" .) .Values.kspm.deploy }}
         # Needed to run Benchmarks and Host Analyzer. This mount is read-only.
         # Benchmarks include numerous checks that run tests against config files in the host filesystem. There are also
         # checks that test various host configurations such as loaded modules and enabled security features.
