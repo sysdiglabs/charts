@@ -210,3 +210,15 @@ nodeAnalyzer agentConfigmapName
 {{- define "agent.configmapName" -}}
     {{- default .Values.global.agentConfigmapName | default "sysdig-agent" -}}
 {{- end -}}
+
+{{- define "nodeAnalyzer.deployHostAnalyzer" -}}
+{{- if .Values.nodeAnalyzer.hostAnalyzer.deploy }}
+true
+{{- end -}}
+{{- end -}}
+
+{{- define "nodeAnalyzer.deployBenchmarkRunner" -}}
+{{- if .Values.nodeAnalyzer.benchmarkRunner.deploy }}
+true
+{{- end -}}
+{{- end -}}

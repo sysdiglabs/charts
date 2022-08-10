@@ -1,5 +1,5 @@
 {{- if not .Values.gke.autopilot }}
-{{- if .Values.nodeAnalyzer.deploy }}
+{{- if and .Values.nodeAnalyzer.deploy (include "nodeAnalyzer.deployBenchmarkRunner" .) }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
