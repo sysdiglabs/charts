@@ -3,7 +3,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "nodeAnalyzer.fullname" . }}-benchmark-runner
+  name: {{ .Release.Name }}-benchmark-runner
   labels:
 {{ include "nodeAnalyzer.labels" . | indent 4 }}
 data:

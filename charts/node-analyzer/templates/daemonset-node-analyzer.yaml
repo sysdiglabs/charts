@@ -3,22 +3,22 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: {{ template "nodeAnalyzer.name" . }}-node-analyzer
+  name: {{ .Release.Name }}-node-analyzer
   labels:
-    app.kubernetes.io/name: {{ include "nodeAnalyzer.name" . }}-node-analyzer
+    app.kubernetes.io/name: {{ include "nodeAnalyzer.name" . }}
 {{ include "nodeAnalyzer.labels" . | indent 4 }}
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "nodeAnalyzer.name" . }}-node-analyzer
+      app.kubernetes.io/name: {{ include "nodeAnalyzer.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
   updateStrategy:
     type: RollingUpdate
   template:
     metadata:
-      name: {{ template "nodeAnalyzer.fullname" . }}-node-analyzer
+      name: {{ .Release.Name }}-node-analyzer
       labels:
-        app.kubernetes.io/name: {{ include "nodeAnalyzer.name" . }}-node-analyzer
+        app.kubernetes.io/name: {{ include "nodeAnalyzer.name" . }}
 {{ include "nodeAnalyzer.labels" . | indent 8 }}
     spec:
       volumes:
@@ -50,7 +50,7 @@ spec:
         # Add custom volume here
         - name: sysdig-image-analyzer-config
           configMap:
-            name: {{ template "nodeAnalyzer.fullname" . }}-image-analyzer
+            name: {{ .Release.Name }}-image-analyzer
             optional: true
         # Needed to run Benchmarks. This mount is read-only.
         # Benchmarks include numerous checks that run tests against config files in the host filesystem. There are also
@@ -109,22 +109,22 @@ spec:
           - name: ENVIRONMENT
             valueFrom:
               configMapKeyRef:
-                name: {{ template "nodeAnalyzer.fullname" . }}-kspm-analyzer
+                name: {{ .Release.Name }}-kspm-analyzer
                 key: environment
           - name: EXTERNAL_NATS_URL
             valueFrom:
               configMapKeyRef:
-                name: {{ template "nodeAnalyzer.fullname" . }}-kspm-analyzer
+                name: {{ .Release.Name }}-kspm-analyzer
                 key: external_nats_url
           - name: CLUSTER_NAME
             valueFrom:
               configMapKeyRef:
-                name: {{ template "nodeAnalyzer.fullname" . }}-kspm-analyzer
+                name: {{ .Release.Name }}-kspm-analyzer
                 key: cluster_name
           - name: AGENT_APP_NAME
             valueFrom:
               configMapKeyRef:
-                name: {{ template "nodeAnalyzer.fullname" . }}-kspm-analyzer
+                name: {{ .Release.Name }}-kspm-analyzer
                 key: agent_app_name
           - name: NODE_NAME
             valueFrom:
@@ -204,55 +204,55 @@ spec:
         - name: IMAGE_PERIOD
           valueFrom:
             configMapKeyRef:
-              name: {{ template "nodeAnalyzer.fullname" . }}-image-analyzer
+              name: {{ .Release.Name }}-image-analyzer
               key: image_period
               optional: true
         - name: IMAGE_CACHE_TTL
           valueFrom:
             configMapKeyRef:
-              name: {{ template "nodeAnalyzer.fullname" . }}-image-analyzer
+              name: {{ .Release.Name }}-image-analyzer
               key: image_cache_ttl
               optional: true
         - name: REPORT_PERIOD
           valueFrom:
             configMapKeyRef:
-              name: {{ template "nodeAnalyzer.fullname" . }}-image-analyzer
+              name: {{ .Release.Name }}-image-analyzer
               key: report_period
               optional: true
         - name: DOCKER_SOCKET_PATH
           valueFrom:
             configMapKeyRef:
-              name: {{ template "nodeAnalyzer.fullname" . }}-image-analyzer
+              name: {{ .Release.Name }}-image-analyzer
               key: docker_socket_path
               optional: true
         - name: CRI_SOCKET_PATH
           valueFrom:
             configMapKeyRef:
-              name: {{ template "nodeAnalyzer.fullname" . }}-image-analyzer
+              name: {{ .Release.Name }}-image-analyzer
               key: cri_socket_path
               optional: true
         - name: CONTAINERD_SOCKET_PATH
           valueFrom:
             configMapKeyRef:
-              name: {{ template "nodeAnalyzer.fullname" . }}-image-analyzer
+              name: {{ .Release.Name }}-image-analyzer
               key: containerd_socket_path
               optional: true
         - name: AM_COLLECTOR_ENDPOINT
           valueFrom:
             configMapKeyRef:
-              name: {{ template "nodeAnalyzer.fullname" . }}-image-analyzer
+              name: {{ .Release.Name }}-image-analyzer
               key: collector_endpoint
               optional: true
         - name: AM_COLLECTOR_TIMEOUT
           valueFrom:
             configMapKeyRef:
-              name: {{ template "nodeAnalyzer.fullname" . }}-image-analyzer
+              name: {{ .Release.Name }}-image-analyzer
               key: collector_timeout
               optional: true
         - name: VERIFY_CERTIFICATE
           valueFrom:
             configMapKeyRef:
-              name: {{ template "nodeAnalyzer.fullname" . }}-image-analyzer
+              name: {{ .Release.Name }}-image-analyzer
               key: ssl_verify_certificate
               optional: true
         - name: K8S_NODE_NAME
@@ -270,25 +270,25 @@ spec:
         - name: DEBUG
           valueFrom:
             configMapKeyRef:
-              name: {{ template "nodeAnalyzer.fullname" . }}-image-analyzer
+              name: {{ .Release.Name }}-image-analyzer
               key: debug
               optional: true
         - name: HTTP_PROXY
           valueFrom:
             configMapKeyRef:
-              name: {{ template "nodeAnalyzer.fullname" . }}-image-analyzer
+              name: {{ .Release.Name }}-image-analyzer
               key: http_proxy
               optional: true
         - name: HTTPS_PROXY
           valueFrom:
             configMapKeyRef:
-              name: {{ template "nodeAnalyzer.fullname" . }}-image-analyzer
+              name: {{ .Release.Name }}-image-analyzer
               key: https_proxy
               optional: true
         - name: NO_PROXY
           valueFrom:
             configMapKeyRef:
-              name: {{ template "nodeAnalyzer.fullname" . }}-image-analyzer
+              name: {{ .Release.Name }}-image-analyzer
               key: no_proxy
               optional: true
         {{- range $key, $value := .Values.nodeAnalyzer.imageAnalyzer.env }}
@@ -322,24 +322,24 @@ spec:
         - name: AM_COLLECTOR_ENDPOINT
           valueFrom:
             configMapKeyRef:
-              name: {{ template "nodeAnalyzer.fullname" . }}-host-analyzer
+              name: {{ .Release.Name }}-host-analyzer
               key: collector_endpoint
         - name: AM_COLLECTOR_TIMEOUT
           valueFrom:
             configMapKeyRef:
-              name: {{ template "nodeAnalyzer.fullname" . }}-host-analyzer
+              name: {{ .Release.Name }}-host-analyzer
               key: collector_timeout
               optional: true
         - name: SCHEDULE
           valueFrom:
             configMapKeyRef:
-              name: {{ template "nodeAnalyzer.fullname" . }}-host-analyzer
+              name: {{ .Release.Name }}-host-analyzer
               key: schedule
               optional: true
         - name: ANALYZE_AT_STARTUP
           valueFrom:
             configMapKeyRef:
-              name: {{ template "nodeAnalyzer.fullname" . }}-host-analyzer
+              name: {{ .Release.Name }}-host-analyzer
               key: analyze_at_startup
               optional: true
         - name: HOST_BASE
@@ -347,44 +347,44 @@ spec:
         - name: DIRS_TO_SCAN
           valueFrom:
             configMapKeyRef:
-              name: {{ template "nodeAnalyzer.fullname" . }}-host-analyzer
+              name: {{ .Release.Name }}-host-analyzer
               key: dirs_to_scan
               optional: true
         - name: MAX_SEND_ATTEMPTS
           valueFrom:
             configMapKeyRef:
-              name: {{ template "nodeAnalyzer.fullname" . }}-host-analyzer
+              name: {{ .Release.Name }}-host-analyzer
               key: max_send_attempts
               optional: true
         - name: VERIFY_CERTIFICATE
           valueFrom:
             configMapKeyRef:
-              name: {{ template "nodeAnalyzer.fullname" . }}-host-analyzer
+              name: {{ .Release.Name }}-host-analyzer
               key: ssl_verify_certificate
               optional: true
         - name: DEBUG
           valueFrom:
             configMapKeyRef:
-              name: {{ template "nodeAnalyzer.fullname" . }}-host-analyzer
+              name: {{ .Release.Name }}-host-analyzer
               key: debug
               optional: true
         - name: HTTP_PROXY
           valueFrom:
             configMapKeyRef:
               key: http_proxy
-              name: {{ template "nodeAnalyzer.fullname" . }}-host-analyzer
+              name: {{ .Release.Name }}-host-analyzer
               optional: true
         - name: HTTPS_PROXY
           valueFrom:
             configMapKeyRef:
               key: https_proxy
-              name: {{ template "nodeAnalyzer.fullname" . }}-host-analyzer
+              name: {{ .Release.Name }}-host-analyzer
               optional: true
         - name: NO_PROXY
           valueFrom:
             configMapKeyRef:
               key: no_proxy
-              name: {{ template "nodeAnalyzer.fullname" . }}-host-analyzer
+              name: {{ .Release.Name }}-host-analyzer
               optional: true
         {{- range $key, $value := .Values.nodeAnalyzer.hostAnalyzer.env }}
         - name: "{{ $key }}"
@@ -421,12 +421,12 @@ spec:
         - name: BACKEND_ENDPOINT
           valueFrom:
             configMapKeyRef:
-              name: {{ template "nodeAnalyzer.fullname" . }}-benchmark-runner
+              name: {{ .Release.Name }}-benchmark-runner
               key: collector_endpoint
         - name: BACKEND_VERIFY_TLS
           valueFrom:
             configMapKeyRef:
-              name: {{ template "nodeAnalyzer.fullname" . }}-benchmark-runner
+              name: {{ .Release.Name }}-benchmark-runner
               key: ssl_verify_certificate
               optional: true
         - name: KUBERNETES_NODE_NAME
@@ -436,26 +436,26 @@ spec:
         - name: DEBUG
           valueFrom:
             configMapKeyRef:
-              name: {{ template "nodeAnalyzer.fullname" . }}-benchmark-runner
+              name: {{ .Release.Name }}-benchmark-runner
               key: debug
               optional: true
         - name: HTTP_PROXY
           valueFrom:
             configMapKeyRef:
               key: http_proxy
-              name: {{ template "nodeAnalyzer.fullname" . }}-benchmark-runner
+              name: {{ .Release.Name }}-benchmark-runner
               optional: true
         - name: HTTPS_PROXY
           valueFrom:
             configMapKeyRef:
               key: https_proxy
-              name: {{ template "nodeAnalyzer.fullname" . }}-benchmark-runner
+              name: {{ .Release.Name }}-benchmark-runner
               optional: true
         - name: NO_PROXY
           valueFrom:
             configMapKeyRef:
               key: no_proxy
-              name: {{ template "nodeAnalyzer.fullname" . }}-benchmark-runner
+              name: {{ .Release.Name }}-benchmark-runner
               optional: true
         {{- range $key, $value := .Values.nodeAnalyzer.benchmarkRunner.env }}
         - name: "{{ $key }}"
@@ -477,19 +477,19 @@ spec:
           - name: PROM_PORT
             valueFrom:
               configMapKeyRef:
-                name: {{ template "nodeAnalyzer.fullname" . }}-runtime-scanner
+                name: {{ .Release.Name }}-runtime-scanner
                 key: prom_port
                 optional: true
           - name: MAX_FILE_SIZE_ALLOWED
             valueFrom:
               configMapKeyRef:
-                name: {{ template "nodeAnalyzer.fullname" . }}-runtime-scanner
+                name: {{ .Release.Name }}-runtime-scanner
                 key: analyzer.maxFileSizeAllowed
                 optional: true
           - name: SYSDIG_API_URL
             valueFrom:
               configMapKeyRef:
-                name: {{ template "nodeAnalyzer.fullname" . }}-runtime-scanner
+                name: {{ .Release.Name }}-runtime-scanner
                 key: api_endpoint
           - name: SYSDIG_ACCESS_KEY
             valueFrom:
@@ -503,13 +503,13 @@ spec:
           - name: SYSDIG_API_VERIFY_CERTIFICATE
             valueFrom:
               configMapKeyRef:
-                name: {{ template "nodeAnalyzer.fullname" . }}-runtime-scanner
+                name: {{ .Release.Name }}-runtime-scanner
                 key: ssl_verify_certificate
                 optional: true
           - name: CLUSTER_NAME
             valueFrom:
               configMapKeyRef:
-                name: {{ template "nodeAnalyzer.fullname" . }}-runtime-scanner
+                name: {{ .Release.Name }}-runtime-scanner
                 key: cluster_name
           - name: K8S_NODE_NAME
             valueFrom:
@@ -518,25 +518,25 @@ spec:
           - name: DEBUG
             valueFrom:
               configMapKeyRef:
-                name: {{ template "nodeAnalyzer.fullname" . }}-runtime-scanner
+                name: {{ .Release.Name }}-runtime-scanner
                 key: debug
                 optional: true
           - name: HTTP_PROXY
             valueFrom:
               configMapKeyRef:
-                name: {{ template "nodeAnalyzer.fullname" . }}-runtime-scanner
+                name: {{ .Release.Name }}-runtime-scanner
                 key: http_proxy
                 optional: true
           - name: HTTPS_PROXY
             valueFrom:
               configMapKeyRef:
-                name: {{ template "nodeAnalyzer.fullname" . }}-runtime-scanner
+                name: {{ .Release.Name }}-runtime-scanner
                 key: https_proxy
                 optional: true
           - name: NO_PROXY
             valueFrom:
               configMapKeyRef:
-                name: {{ template "nodeAnalyzer.fullname" . }}-runtime-scanner
+                name: {{ .Release.Name }}-runtime-scanner
                 key: no_proxy
                 optional: true
           {{- range $key, $value := .Values.nodeAnalyzer.runtimeScanner.env }}
@@ -547,7 +547,7 @@ spec:
           - name: EVE_ENABLED
             valueFrom:
               configMapKeyRef:
-                name: {{ template "nodeAnalyzer.fullname" . }}-runtime-scanner
+                name: {{ .Release.Name }}-runtime-scanner
                 key: eve_enabled
                 optional: true
 {{- end }}
@@ -555,7 +555,7 @@ spec:
           - name: EVE_INTEGRATION_ENABLED
             valueFrom:
               configMapKeyRef:
-                name: {{ template "nodeAnalyzer.fullname" . }}-runtime-scanner
+                name: {{ .Release.Name }}-runtime-scanner
                 key: eve_integration_enabled
                 optional: true
 {{- end }}

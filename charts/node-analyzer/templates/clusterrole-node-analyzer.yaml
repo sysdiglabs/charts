@@ -2,7 +2,7 @@
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: {{ template "nodeAnalyzer.fullname" .}}-node-analyzer
+  name: {{ .Release.Name }}-node-analyzer
   labels:
 {{ include "nodeAnalyzer.labels" . | indent 4 }}
 rules:
@@ -96,7 +96,7 @@ rules:
   resources:
     - "podsecuritypolicies"
   resourceNames:
-    - "{{ template "nodeAnalyzer.fullname" . }}-node-analyzer"
+    - "{{ .Release.Name }}-node-analyzer"
   verbs:
     - "use"
 {{- end }}

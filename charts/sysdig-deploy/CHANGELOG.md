@@ -4,6 +4,13 @@
 
 This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.2.0
+
+### Minor changes
+* Changed the names of configmaps and other resources to remove the redundant `nodeanalyzer` string
+* Fixed the ClusterRole reference to the wrong podsecuritypolicy name
+* Updated daemonset selector label to be less repetitive
+
 ## v1.1.13
 * Bumped agent to 1.5.15
 

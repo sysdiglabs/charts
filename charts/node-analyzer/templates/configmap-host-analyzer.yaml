@@ -4,7 +4,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "nodeAnalyzer.fullname" . }}-host-analyzer
+  name: {{ .Release.Name }}-host-analyzer
   labels:
 {{ include "nodeAnalyzer.labels" . | indent 4 }}
 data:
