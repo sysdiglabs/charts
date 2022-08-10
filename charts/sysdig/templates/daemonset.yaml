@@ -98,6 +98,18 @@ spec:
             - name: "{{ $key }}"
               value: "{{ $value }}"
           {{- end }}
+          {{- if .Values.proxy.httpProxy }}
+            - name: http_proxy
+              value: {{ .Values.proxy.httpProxy }}
+          {{- end }}
+          {{- if .Values.proxy.httpsProxy }}
+            - name: https_proxy
+              value: {{ .Values.proxy.httpsProxy }}
+          {{- end }}
+          {{- if .Values.proxy.noProxy }}
+            - name: no_proxy
+              value: {{ .Values.proxy.noProxy }}
+          {{- end }}
           volumeMounts:
             - mountPath: /etc/modprobe.d
               name: modprobe-d

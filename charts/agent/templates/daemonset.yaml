@@ -97,6 +97,18 @@ spec:
             - name: "{{ $key }}"
               value: "{{ $value }}"
           {{- end }}
+          {{- if (.Values.proxy.httpProxy | default .Values.global.proxy.httpProxy) }}
+            - name: http_proxy
+              value: {{ .Values.proxy.httpProxy | default .Values.global.proxy.httpProxy }}
+          {{- end }}
+          {{- if (.Values.proxy.httpsProxy | default .Values.global.proxy.httpsProxy) }}
+            - name: https_proxy
+              value: {{ .Values.proxy.httpsProxy | default .Values.global.proxy.httpsProxy }}
+          {{- end }}
+          {{- if (.Values.proxy.noProxy | default .Values.global.proxy.noProxy) }}
+            - name: no_proxy
+              value: {{ .Values.proxy.noProxy | default .Values.global.proxy.noProxy }}
+          {{- end }}
           volumeMounts:
             - mountPath: /etc/modprobe.d
               name: modprobe-d
