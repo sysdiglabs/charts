@@ -289,3 +289,9 @@ true
 true
 {{- end -}}
 {{- end -}}
+
+{{- define "nodeAnalyzer.deployImageAnalyzer" -}}
+{{- if or (not (hasKey .Values.nodeAnalyzer.imageAnalyzer "deploy")) .Values.nodeAnalyzer.imageAnalyzer.deploy }}
+true
+{{- end -}}
+{{- end -}}

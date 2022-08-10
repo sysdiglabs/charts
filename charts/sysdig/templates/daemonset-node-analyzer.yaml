@@ -154,6 +154,7 @@ spec:
             mountPath: /host/tmp
 {{- end }}
 {{ if not .Values.secure.vulnerabilityManagement.newEngineOnly }}
+{{- if include "nodeAnalyzer.deployImageAnalyzer" . }}
       - name: sysdig-image-analyzer
         image: {{ template "sysdig.image.imageAnalyzer" . }}
         securityContext:
@@ -279,6 +280,7 @@ spec:
         - name: "{{ $key }}"
           value: "{{ $value }}"
         {{- end }}
+{{- end }}
 {{ if include "nodeAnalyzer.deployHostAnalyzer" . }}
       - name: sysdig-host-analyzer
         image: {{ template "sysdig.image.hostAnalyzer" . }}
