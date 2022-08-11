@@ -30,7 +30,7 @@ Currently included components:
 2. Collect the following values:
 
    - ACCESS_KEY: This is your Sysdig access key
-   - SAAS_REGION: The Sysdig SAAS region the agents will connect to. See [Regions and IP Ranges](https://docs.sysdig.com/en/docs/administration/saas-regions-and-ip-ranges/) for more information. The Collector URL is custom for on-prem installations.
+   - SAAS_REGION: The Sysdig SAAS region the agents will connect to. Possible values are `"us1"`, `"us2"`, `"us3"`, `"us4"`, `"eu1"`, `"au1"`, and `"custom"`. For on-prem installations, use `custom` and override the endpoints for each component (see [Configuration](#configuration) below).
    - CLUSTER_NAME: An identifier for your cluster
 
 3. Create a namespace for the Sysdig agent:
@@ -162,7 +162,7 @@ The following table lists the configurable parameters of this chart and their de
 | `global.clusterConfig.name`             | Identifier for this cluster                                                                                             | `""`      |
 | `global.sysdig.accessKey`               | Sysdig Agent Access Key                                                                                                 | `""`      |
 | `global.sysdig.accessKeySecret`         | The name of a Kubernetes secret containing an 'access-key' entry.                                                       | `""`      |
-| `global.sysdig.region`                  | The SaaS region for these agents. Possible values: `"us1"`, `"us2"`, `"us3"`, `"us4"`, `"eu1"`, `"au1"`, and `"custom"` | `"us1"`   |
+| `global.sysdig.region`                  | The SaaS region for these agents. Possible values: `"us1"`, `"us2"`, `"us3"`, `"us4"`, `"eu1"`, `"au1"`, and `"custom"`. See [Regions and IP Ranges](https://docs.sysdig.com/en/docs/administration/saas-regions-and-ip-ranges/) for more information. | `"us1"`   |
 | `global.image.registry`                 | Container image registry                                                                                                | `quay.io` |
 | `global.proxy.httpProxy`                | Sets `http_proxy` on the Agent container                                                                                | `""`      |
 | `global.proxy.httpsProxy`               | Sets `https_proxy` on the Agent container                                                                               | `""`      |
