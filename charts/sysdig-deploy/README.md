@@ -123,6 +123,16 @@ helm repo update
 helm install -n sysdig-agent sysdig sysdig/sysdig-deploy -f values.new.yaml
 ```
 
+### Differences between `sysdig` and `sysdig-deploy`
+
+When moving from the old chart to new, there will be some differences for the agent and node-analyzer components. The majority of these differences are in metadata names and labels.
+
+- `helm.sh/chart: sysdig-<version>` -> `helm.sh.chart: nodeAnalyzer-<version>` or `helm.sh.chart: agent-<version>`
+- label `app.kubernetes.io/name: agent` for the agent daemonset and pods
+- label `app.kubernetes.io/name: nodeanalyzer` for the nodeAnalyzer daemonset and pods
+- new configmap and secret for nodeAnalyzer named `<release-name>-nodeanalyzer`
+- label `app: sysdig-agent` is no longer on nodeAnalyzer components
+
 ## Upgrading
 
 Refresh the `sysdig` helm repo to get the latest chart.
