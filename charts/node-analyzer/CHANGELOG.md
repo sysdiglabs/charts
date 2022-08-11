@@ -4,6 +4,11 @@
 
 This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+# v1.7.0
+
+### Minor changes
+* Add flags for disabling image analyzer, benchmark runner, host analyzer separately
+
 ## v1.6.0
 
 ### Minor changes

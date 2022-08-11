@@ -1,5 +1,5 @@
 {{- if not .Values.gke.autopilot }}
-{{- if and (not (include "deploy-nia" .)) .Values.nodeAnalyzer.deploy }}
+{{- if and (not (include "deploy-nia" .)) .Values.nodeAnalyzer.deploy (include "nodeAnalyzer.deployBenchmarkRunner" .) }}
 apiVersion: v1
 kind: ConfigMap
 metadata:

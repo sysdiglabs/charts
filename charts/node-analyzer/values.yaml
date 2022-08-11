@@ -131,6 +131,7 @@ nodeAnalyzer:
                   - linux
 
   imageAnalyzer:
+    deploy: true
     image:
       repository: sysdig/node-image-analyzer
       tag: 0.1.18
@@ -181,6 +182,7 @@ nodeAnalyzer:
 
     env: {}
   hostAnalyzer:
+    deploy: true
     image:
       repository: sysdig/host-analyzer
       tag: 0.1.9
@@ -208,6 +210,7 @@ nodeAnalyzer:
 
     env: {}
   benchmarkRunner:
+    deploy: true
     includeSensitivePermissions: false
 
     image:
