@@ -30,7 +30,14 @@ Currently included components:
 2. Collect the following values:
 
    - ACCESS_KEY: This is your Sysdig access key
-   - SAAS_REGION: The Sysdig SAAS region the agents will connect to. Possible values are `"us1"`, `"us2"`, `"us3"`, `"us4"`, `"eu1"`, `"au1"`, and `"custom"`. For on-prem installations, use `custom` and override the endpoints for each component (see [Configuration](#configuration) below).
+   - SAAS_REGION: The Sysdig SAAS region the agents will connect to. Use one of the following values:
+     - `"us1"`
+     - `"us2"`
+     - `"us3"`
+     - `"us4"`
+     - `"eu1"`
+     - `"au1"`
+     - `"custom"`: For on-prem installations, use `custom` and override the endpoints for each component. For more information, see [Configuration](#configuration).
    - CLUSTER_NAME: An identifier for your cluster
 
 3. Create a namespace for the Sysdig agent:
@@ -51,7 +58,7 @@ Currently included components:
        --set global.clusterConfig.name=CLUSTER_NAME
     ```
 
-     **GKE Autopilot**: GKE Autopilot environments require an additional configuration parameter, `agent.gke.autopilot=true`, to install Sysdig agent:
+     **GKE Autopilot**: GKE Autopilot environments require an additional configuration parameter, `agent.gke.autopilot=true`, to install the Sysdig agent:
 
       ```bash
    helm install sysdig sysdig/sysdig-deploy \
@@ -125,7 +132,7 @@ helm install -n sysdig-agent sysdig sysdig/sysdig-deploy -f values.new.yaml
 
 ### Differences between `sysdig` and `sysdig-deploy`
 
-When moving from the old chart to new, there will be some differences for the agent and node-analyzer components. The majority of these differences are in metadata names and labels.
+There are several differences in the agent and node-analyzer components in the new chart compared to the old one. The majority of the differences are in the metadata names and labels.
 
 - `helm.sh/chart: sysdig-<version>` -> `helm.sh.chart: nodeAnalyzer-<version>` or `helm.sh.chart: agent-<version>`
 - label `app.kubernetes.io/name: agent` for the agent daemonset and pods
@@ -179,7 +186,7 @@ The following table lists the configurable parameters of this chart and their de
 
 ## Agent
 
-For possible configuration values of the Agent, please refer to the Agent subchart [README](https://github.com/sysdiglabs/charts/tree/master/charts/agent/README.md). All agent-specific configuration can be prefixed with `agent.` to apply them to this chart.
+For configuration values of the `agent`, see the Agent subchart [README](https://github.com/sysdiglabs/charts/tree/master/charts/agent/README.md). Prefix all the specific configurations with `agent.` to apply them to the chart.
 
 Example: override proxy variable for Agent chart
 
@@ -212,7 +219,7 @@ agent:
 
 ## NodeAnalyzer
 
-For possible configuration values of the node-analyzer, please refer to the node-analyzer subchart [README](https://github.com/sysdiglabs/charts/blob/master/charts/node-analyzer/README.md). All specific configuration can be prefixed with `nodeAnalyzer.` to apply them to this chart.
+For configuration values of the `node-analyzer`, see the `node-analyzer` subchart [README](https://github.com/sysdiglabs/charts/tree/master/charts/node-analyzer/README.md). Prefix all the specific configurations with `nodeAnalyzer.` to apply them to the chart.
 
 Example: override apiEndpoint variable for nodeAnalyzer chart
 
@@ -242,7 +249,7 @@ nodeAnalyzer:
 
 ## KSPM Collector
 
-For possible configuration values of the kspm-collector, please refer to the kspm-collector subchart [README](https://github.com/sysdiglabs/charts/blob/master/charts/kspm-collector/README.md). All specific configuration can be prefixed with `kspmCollector.` to apply them to this chart.
+For configuration values of the `kspm-collector`, see the `kspm-collector` subchart [README](https://github.com/sysdiglabs/charts/tree/master/charts/kspm-collector/README.md). Prefix all the specific configurations with `kspmCollector.` to apply them to the chart.
 
 Example: override apiEndpoint variable for kspmCollector chart
 
