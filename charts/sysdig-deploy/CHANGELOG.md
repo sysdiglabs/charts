@@ -7,7 +7,7 @@ This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. Th
 ## v1.3.1
 
 ### Minor changes
-* Bumped benchmark runner to 1.0.18.0
+* Bumped benchmark runner to 1.0.18.0 and the node-analyzer to 1.7.1
 
 ## v1.2.1
 
