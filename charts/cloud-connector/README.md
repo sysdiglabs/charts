@@ -30,6 +30,7 @@ $ helm upgrade --install cloud-connector sysdig/cloud-connector \
 - [Configuration](#configuration)
 - [Configuration Detail](#configuration-detail)
 - [Usage examples](#usage-examples)
+- [Troubleshooting](#troubleshooting)
 
 
 ## Introduction
@@ -227,6 +228,19 @@ Check live examples present in our different Terraform Modules:
 * [Single Account Deployment for AWS in K8s](https://github.com/sysdiglabs/terraform-aws-secure-for-cloud/blob/master/examples/single-account-k8s/cloud-connector.tf#L27)
 * [Single Project Deployment for GCP in K8s](https://github.com/sysdiglabs/terraform-google-secure-for-cloud/blob/master/examples/single-project-k8s/cloud-connector.tf#L32)
 * [Single Subscription Deployment for Azure in K8s](https://github.com/sysdiglabs/terraform-azurerm-secure-for-cloud/blob/master/examples/single-subscription-k8s/cloud-connector.tf#L1)
+
+
+### Troubleshooting
+
+#### Q: How do I enable `debug` logs?
+A: By editing the configmap and killing pod(s)/deployment so it restart
+```yaml
+  data:
+    cloud-connector.yaml: |
+  <    logging: info
+  >    logging: debug
+```
+
 
 
 <!--
