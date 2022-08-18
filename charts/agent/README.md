@@ -79,6 +79,10 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `resources.requests.memory`                    | Memory requested for being run in a node                                                                                                   | ` `                                                         |
 | `resources.limits.cpu`                         | CPU limit                                                                                                                                  | ` `                                                         |
 | `resources.limits.memory`                      | Memory limit                                                                                                                               | ` `                                                         |
+| `collectorSettings.collectorHost`              | The IP address or hostname of the collector                                                                                                | ` `                                                         |
+| `collectorSettings.collectorPort`              | The port number for the TCP connection of the collector service                                                                            | 6443                                                        |
+| `collectorSettings.ssl`                        | The collector accepts SSL                                                                                                                  | `true`                                                      |
+| `collectorSettings.sslVerifyCertificate`       | Set to false if you don't want to verify SSL certificate                                                                                   | `true`                                                      |
 | `gke.autopilot`                                | If true, overrides the agent configuration to run on GKE Autopilot clusters                                                                | `false`                                                     |
 | `rbac.create`                                  | If true, create & use RBAC resources                                                                                                       | `true`                                                      |
 | `scc.create`                                   | Create OpenShift's Security Context Constraint                                                                                             | `true`                                                      |
@@ -104,6 +108,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `slim.kmoduleImage.digest`                     | The image digest to pull                                                                                                                   | ` `                                                         |
 | `slim.resources.requests.cpu`                  | CPU requested for building the kernel module                                                                                               | `1000m`                                                     |
 | `slim.resources.requests.memory`               | Memory requested for building the kernel module                                                                                            | `348Mi`                                                     |
+| `slim.resources.limits.cpu`                    | CPU limit for building the kernel module                                                                                                   | `1000m`                                                     |
 | `slim.resources.limits.memory`                 | Memory limit for building the kernel module                                                                                                | `512Mi`                                                     |
 | `ebpf.enabled`                                 | Enable eBPF support for Sysdig instead of `sysdig-probe` kernel module                                                                     | `false`                                                     |
 | `ebpf.settings.mountEtcVolume`                 | Needed to detect which kernel version are running in Google COS                                                                            | `true`                                                      |
@@ -194,7 +199,7 @@ See [Tuning Sysdig Agent](https://docs.sysdig.com/en/tuning-sysdig-agent.html) f
  To deploy the Sysdig agent in GKE clusters running in Autopilot mode, run:
 
  ```bash
- $ helm install --namespace sysdig-agent sysdig-agent --set sysdig.accessKey=YOUR-KEY-HERE --set sysdig.settings.collector=COLLECTOR_URL sysdig/agent --set gke.autopilot=true
+ $ helm install --namespace sysdig-agent sysdig-agent --set sysdig.accessKey=YOUR-KEY-HERE --set sysdig.collectorSettings.collectorHost=COLLECTOR_URL sysdig/agent --set gke.autopilot=true
  ```
 
  When the flag `gke.autopilot=true` gets `true`, the chart configuration is overridden as follows: 

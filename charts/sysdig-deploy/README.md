@@ -30,7 +30,14 @@ Currently included components:
 2. Collect the following values:
 
    - ACCESS_KEY: This is your Sysdig access key
-   - SAAS_REGION: The Sysdig SAAS region the agents will connect to. See [Regions and IP Ranges](https://docs.sysdig.com/en/docs/administration/saas-regions-and-ip-ranges/) for more information. The Collector URL is custom for on-prem installations.
+   - SAAS_REGION: The Sysdig SAAS region the agents will connect to. Use one of the following values:
+     - `"us1"`
+     - `"us2"`
+     - `"us3"`
+     - `"us4"`
+     - `"eu1"`
+     - `"au1"`
+     - `"custom"`: For on-prem installations, use `custom` and override the endpoints for each component. For more information, see [Configuration](#configuration).
    - CLUSTER_NAME: An identifier for your cluster
 
 3. Create a namespace for the Sysdig agent:
@@ -51,7 +58,7 @@ Currently included components:
        --set global.clusterConfig.name=CLUSTER_NAME
     ```
 
-     **GKE Autopilot**: GKE Autopolot environments require an additional configuration parameter, `agent.gke.autopilot=true`, to install Sysdig agent:
+     **GKE Autopilot**: GKE Autopilot environments require an additional configuration parameter, `agent.gke.autopilot=true`, to install the Sysdig agent:
 
       ```bash
    helm install sysdig sysdig/sysdig-deploy \
@@ -123,6 +130,16 @@ helm repo update
 helm install -n sysdig-agent sysdig sysdig/sysdig-deploy -f values.new.yaml
 ```
 
+### Differences between `sysdig` and `sysdig-deploy`
+
+There are several differences in the agent and node-analyzer components in the new chart compared to the old one. The majority of the differences are in the metadata names and labels.
+
+- `helm.sh/chart: sysdig-<version>` -> `helm.sh.chart: nodeAnalyzer-<version>` or `helm.sh.chart: agent-<version>`
+- label `app.kubernetes.io/name: agent` for the agent daemonset and pods
+- label `app.kubernetes.io/name: nodeanalyzer` for the nodeAnalyzer daemonset and pods
+- new configmap and secret for nodeAnalyzer named `<release-name>-nodeanalyzer`
+- label `app: sysdig-agent` is no longer on nodeAnalyzer components
+
 ## Upgrading
 
 Refresh the `sysdig` helm repo to get the latest chart.
@@ -152,7 +169,7 @@ The following table lists the configurable parameters of this chart and their de
 | `global.clusterConfig.name`             | Identifier for this cluster                                                                                             | `""`      |
 | `global.sysdig.accessKey`               | Sysdig Agent Access Key                                                                                                 | `""`      |
 | `global.sysdig.accessKeySecret`         | The name of a Kubernetes secret containing an 'access-key' entry.                                                       | `""`      |
-| `global.sysdig.region`                  | The SaaS region for these agents. Possible values: `"us1"`, `"us2"`, `"us3"`, `"us4"`, `"eu1"`, `"au1"`, and `"custom"` | `"us1"`   |
+| `global.sysdig.region`                  | The SaaS region for these agents. Possible values: `"us1"`, `"us2"`, `"us3"`, `"us4"`, `"eu1"`, `"au1"`, and `"custom"`. See [Regions and IP Ranges](https://docs.sysdig.com/en/docs/administration/saas-regions-and-ip-ranges/) for more information. | `"us1"`   |
 | `global.image.registry`                 | Container image registry                                                                                                | `quay.io` |
 | `global.proxy.httpProxy`                | Sets `http_proxy` on the Agent container                                                                                | `""`      |
 | `global.proxy.httpsProxy`               | Sets `https_proxy` on the Agent container                                                                               | `""`      |
@@ -164,11 +181,12 @@ The following table lists the configurable parameters of this chart and their de
 | `nodeAnalyzer`                          | Config specific to the [Sysdig nodeAnalyzer](#nodeAnalyzer)                                                             | `{}`      |
 | `nodeAnalyzer.enabled`                  | Enable the nodeAnalyzer component in this chart                                                                         | `true`    |
 | `nodeAnalyzer.nodeAnalyzer.apiEndpoint` | nodeAnalyzer apiEndpoint                                                                                                | `""`      |
+| `kspmCollector`                         | Config specific to the [Sysdig KSPM Collector](#kspm collector)                                                         | `{}`      |
 | `kspmCollector.apiEndpoint`             | kspmCollector apiEndpoint                                                                                               | `""`      |
 
 ## Agent
 
-For possible configuration values of the Agent, please refer to the Agent subchart [README](https://github.com/sysdiglabs/charts/tree/master/charts/agent/README.md). All agent-specific configuration can be prefixed with `agent.` to apply them to this chart.
+For configuration values of the `agent`, see the Agent subchart [README](https://github.com/sysdiglabs/charts/tree/master/charts/agent/README.md). Prefix all the specific configurations with `agent.` to apply them to the chart.
 
 Example: override proxy variable for Agent chart
 
@@ -201,7 +219,7 @@ agent:
 
 ## NodeAnalyzer
 
-For possible configuration values of the node-analyzer, please refer to the node-analyzer subchart [README](https://github.com/sysdiglabs/charts/blob/master/charts/node-analyzer/README.md). All agent-specific configuration can be prefixed with `nodeAnalyzer.` to apply them to this chart.
+For configuration values of the `node-analyzer`, see the `node-analyzer` subchart [README](https://github.com/sysdiglabs/charts/tree/master/charts/node-analyzer/README.md). Prefix all the specific configurations with `nodeAnalyzer.` to apply them to the chart.
 
 Example: override apiEndpoint variable for nodeAnalyzer chart
 
@@ -209,7 +227,7 @@ As a command line parameter:
 ```bash
 helm install sysdig sysdig/sysdig-deploy \
     --set global.sysdig.accessKey=ACCESS_KEY \
-    --set agent.sysdig.settings.collector=COLLECTOR_ENDPOINT \
+    --set agent.collectorSettings.collectorHost=COLLECTOR_ENDPOINT \
     --set nodeAnalyzer.nodeAnalyzer.apiEndpoint=API_ENDPOINT
 ```
 
@@ -221,6 +239,8 @@ global:
 
 agent:
   enabled: false
+  collectorSettings:
+    collectorHost: COLLECTOR_ENDPOINT
 
 nodeAnalyzer:
   nodeAnalyzer:
@@ -229,7 +249,7 @@ nodeAnalyzer:
 
 ## KSPM Collector
 
-For possible configuration values of the kspm-collector, please refer to the kspm-collector subchart [README](https://github.com/sysdiglabs/charts/blob/master/charts/kspm-collector/README.md). All agent-specific configuration can be prefixed with `kspmCollector.` to apply them to this chart.
+For configuration values of the `kspm-collector`, see the `kspm-collector` subchart [README](https://github.com/sysdiglabs/charts/tree/master/charts/kspm-collector/README.md). Prefix all the specific configurations with `kspmCollector.` to apply them to the chart.
 
 Example: override apiEndpoint variable for kspmCollector chart
 
