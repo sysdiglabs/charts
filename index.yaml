@@ -1944,6 +1944,41 @@ entries:
   agent:
   - apiVersion: v2
     appVersion: 12.8.0
+    created: "2022-08-18T17:38:48.864844692Z"
+    description: Sysdig Monitor and Secure agent
+    digest: 6eb9a66d7a83d85d37e13831a125f6b0910e4a4dd5a1d715a6703d42c831fa37
+    home: https://www.sysdig.com/
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: lachlan@deis.com
+      name: lachie83
+    - email: jorge.salamero@sysdig.com
+      name: bencer
+    - email: nestor.salceda@sysdig.com
+      name: nestorsalceda
+    - email: alvaro.iradier@sysdig.com
+      name: airadier
+    - email: carlos.arilla@sysdig.com
+      name: carillan81
+    - email: ashwin.chandrasekar@sysdig.com
+      name: achandras
+    name: agent
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/agent-1.5.17/agent-1.5.17.tgz
+    version: 1.5.17
+  - apiVersion: v2
+    appVersion: 12.8.0
     created: "2022-08-10T19:10:07.214857799Z"
     description: Sysdig Monitor and Secure agent
     digest: 535033200c28b57cfb9cfadaf9b826706c725ca2739e893b91e9aa001ba81d1a
@@ -4610,6 +4645,40 @@ entries:
   node-analyzer:
   - apiVersion: v2
     appVersion: 12.6.0
+    created: "2022-08-18T17:38:48.985232231Z"
+    description: Sysdig Node Analyzer
+    digest: 6f15204fa97ce060488dd3da25d4655c1e2a59b469c9471384161b3b5e52c5d5
+    home: https://www.sysdig.com/
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: lachlan@deis.com
+      name: lachie83
+    - email: jorge.salamero@sysdig.com
+      name: bencer
+    - email: nestor.salceda@sysdig.com
+      name: nestorsalceda
+    - email: alvaro.iradier@sysdig.com
+      name: airadier
+    - email: carlos.arilla@sysdig.com
+      name: carillan81
+    - email: yashgiri.goswami@sysdig.com
+      name: yashgiri
+    name: node-analyzer
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/node-analyzer-1.7.2/node-analyzer-1.7.2.tgz
+    version: 1.7.2
+  - apiVersion: v2
+    appVersion: 12.6.0
     created: "2022-08-16T00:26:21.503091081Z"
     description: Sysdig Node Analyzer
     digest: 29fb2abbf63c274a7e57625e1cb254c7a1453fe0fb30b03459152682b2ec4c42
@@ -6084,6 +6153,38 @@ entries:
     - https://github.com/sysdiglabs/charts/releases/download/registry-scanner-0.0.1/registry-scanner-0.0.1.tgz
     version: 0.0.1
   sysdig:
+  - apiVersion: v1
+    appVersion: 12.8.0
+    created: "2022-08-18T17:38:49.091592229Z"
+    description: Sysdig Monitor and Secure agent
+    digest: 74a75488bbc60fc9976e4c92248a130189a4e5bca525b736f7c963667f7f7755
+    home: https://www.sysdig.com/
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: lachlan@deis.com
+      name: lachie83
+    - email: jorge.salamero@sysdig.com
+      name: bencer
+    - email: nestor.salceda@sysdig.com
+      name: nestorsalceda
+    - email: alvaro.iradier@sysdig.com
+      name: airadier
+    - email: carlos.arilla@sysdig.com
+      name: carillan81
+    name: sysdig
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/sysdig-1.15.28/sysdig-1.15.28.tgz
+    version: 1.15.28
   - apiVersion: v1
     appVersion: 12.8.0
     created: "2022-08-11T12:13:25.911767305Z"
@@ -11120,6 +11221,45 @@ entries:
     version: 1.7.15
   sysdig-deploy:
   - apiVersion: v2
+    created: "2022-08-18T17:38:49.19237339Z"
+    dependencies:
+    - alias: agent
+      condition: agent.enabled
+      name: agent
+      repository: file://../agent
+      version: ~1.5.17
+    - alias: nodeAnalyzer
+      condition: nodeAnalyzer.enabled
+      name: node-analyzer
+      repository: file://../node-analyzer
+      version: ~1.7.2
+    - alias: kspmCollector
+      condition: global.kspm.deploy
+      name: kspm-collector
+      repository: file://../kspm-collector
+      version: ~0.1.6
+    - alias: rapidResponse
+      condition: rapidResponse.enabled
+      name: rapid-response
+      repository: file://../rapid-response
+      version: ~0.2.0
+    description: A chart with various Sysdig components for Kubernetes
+    digest: d44327374f23af9ebb39e49201d7b37a6621a48297be378ce913056fa9c722a7
+    home: https://www.sysdig.com/
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    maintainers:
+    - email: ashwin.chandrasekar@sysdig.com
+      name: achandras
+    - email: zhongcheng.xiao@sysdig.com
+      name: lilx1ao
+    - email: yashgiri.goswami@sysdig.com
+      name: yashgiri
+    name: sysdig-deploy
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/sysdig-deploy-1.3.2/sysdig-deploy-1.3.2.tgz
+    version: 1.3.2
+  - apiVersion: v2
     created: "2022-08-16T00:26:21.614981171Z"
     dependencies:
     - alias: agent
@@ -12520,4 +12660,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2022-08-18T08:41:47.387144985Z"
+generated: "2022-08-18T17:38:49.197062604Z"
