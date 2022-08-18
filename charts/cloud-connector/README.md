@@ -23,13 +23,14 @@ $ pre-commit run -a
 $ helm repo add sysdig https://charts.sysdig.com
 $ helm repo update
 $ helm upgrade --install cloud-connector sysdig/cloud-connector \
-      --create-namespace -n cloud-connector --version=0.7.13  \
+      --create-namespace -n cloud-connector --version=0.7.14  \
       --set sysdig.secureAPIToken=SECURE_API_TOKEN
 ```
 
 - [Configuration](#configuration)
 - [Configuration Detail](#configuration-detail)
 - [Usage examples](#usage-examples)
+- [Troubleshooting](#troubleshooting)
 
 
 ## Introduction
@@ -47,7 +48,7 @@ to enable threat-detection and image scanning capabilities for the main three pr
 To install the chart with the release name `cloud-connector`:
 
 ```console
-$ helm upgrade --install cloud-connector sysdig/cloud-connector -n cloud-connector --version=0.7.13
+$ helm upgrade --install cloud-connector sysdig/cloud-connector -n cloud-connector --version=0.7.14
 ```
 
 The command deploys the Sysdig Cloud Connector on the Kubernetes cluster in the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.
@@ -118,7 +119,7 @@ Specify each parameter using the **`--set key=value[,key=value]`** argument to `
 
 ```console
 $ helm upgrade --install cloud-connector sysdig/cloud-connector \
-    --create-namespace -n cloud-connector --version=0.7.13 \
+    --create-namespace -n cloud-connector --version=0.7.14 \
     --set sysdig.secureAPIToken=YOUR-KEY-HERE
 ```
 
@@ -127,7 +128,7 @@ installing the chart. For example:
 
 ```console
 $ helm upgrade --install cloud-connector sysdig/cloud-connector \
-    --create-namespace -n cloud-connector --version=0.7.13 \
+    --create-namespace -n cloud-connector --version=0.7.14 \
     --values values.yaml
 ```
 
@@ -227,6 +228,19 @@ Check live examples present in our different Terraform Modules:
 * [Single Account Deployment for AWS in K8s](https://github.com/sysdiglabs/terraform-aws-secure-for-cloud/blob/master/examples/single-account-k8s/cloud-connector.tf#L27)
 * [Single Project Deployment for GCP in K8s](https://github.com/sysdiglabs/terraform-google-secure-for-cloud/blob/master/examples/single-project-k8s/cloud-connector.tf#L32)
 * [Single Subscription Deployment for Azure in K8s](https://github.com/sysdiglabs/terraform-azurerm-secure-for-cloud/blob/master/examples/single-subscription-k8s/cloud-connector.tf#L1)
+
+
+### Troubleshooting
+
+#### Q: How do I enable `debug` logs?
+A: By editing the configmap and killing pod(s)/deployment so it restart
+```yaml
+  data:
+    cloud-connector.yaml: |
+  <    logging: info
+  >    logging: debug
+```
+
 
 
 <!--
