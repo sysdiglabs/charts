@@ -5,8 +5,7 @@ global:
     accessKey: ""
     accessKeySecret: ""
     region: "us1"
-  image:
-    registry: quay.io
+  imageRegistry: quay.io
   proxy: {}
   kspm:
     deploy: false
