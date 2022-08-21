@@ -4,6 +4,11 @@
 
 This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.3.4
+
+### Bugfix
+* Previous change introduced a default to `global.imageRegistry`, breaking chart-specific overrides
+
 ## v1.3.3
 
 ### Bugfix
