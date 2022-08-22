@@ -4,6 +4,11 @@
 
 This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.3.5
+
+### Minor changes
+* Added /etc to container and initContainer /host/etc volume bind
+
 ## v1.3.4
 
 ### Bugfix
