@@ -13,7 +13,7 @@ data:
   environment: {{ $env }}
   external_nats_url: {{ include "nodeAnalyzer.natsUrl" . }}
   cluster_name: {{ required "A valid clusterName is required" (include "nodeAnalyzer.clusterName" .) }}
-  agent_app_name: {{ include "nodeAnalyzer.name" . }}-node-analyzer
+  agent_app_name: {{ include "nodeAnalyzer.name" . }}
   {{- if hasKey .Values.nodeAnalyzer "sslVerifyCertificate" }}
   nats_insecure: "{{ not .Values.nodeAnalyzer.sslVerifyCertificate }}"
   {{- end }}
