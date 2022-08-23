@@ -54,6 +54,9 @@ The following table lists the configurable parameters of the Sysdig KSPM Collect
 | `httpsProxy`                     | Proxy configuration variables                                                           |                                                             |
 | `noProxy`                        | Proxy configuration variables                                                           |                                                             |
 | `sslVerifyCertificate`           | Can be set to false to allow insecure connections to the Sysdig backend                 |                                                             |
+| `arch`                               | Allowed architectures for scheduling                                                                                                       | `[ amd64, arm64 ]`                                   |
+| `os`                                 | Allowed OSes for scheduling                                                                                                                | `[ linux ]`                                                 |
+| `affinity`                           | Node affinities. Overrides `arch` and `os` values                                                                      | `{}`                        
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
