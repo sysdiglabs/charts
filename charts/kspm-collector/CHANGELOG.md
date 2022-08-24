@@ -1,3 +1,7 @@
+# v0.1.7
+### Minor change
+* Support the arm64 architecture
+
 # v0.1.6
 ### Minor change
 * Support HTTP proxy
