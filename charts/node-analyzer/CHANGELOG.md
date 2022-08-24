@@ -4,6 +4,11 @@
 
 This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+# v1.7.3
+
+### Minor changes
+* kspm-analyzer: fixed agent_app_name value and support the arm64 architecture
+
 # v1.7.2
 
 ### Minor changes
