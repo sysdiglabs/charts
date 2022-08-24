@@ -495,7 +495,7 @@ nodeAnalyzer:
     deploy: false
     image:
       repository: sysdig/vuln-runtime-scanner
-      tag: 1.2.5
+      tag: 1.2.6
       digest:
       pullPolicy: IfNotPresent
 

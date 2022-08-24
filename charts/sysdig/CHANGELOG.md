@@ -4,6 +4,10 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.15.30
+### Minor changes
+* RuntimeScanner: version 1.2.6 ignores the fix solution date of a vuln when no fix version is available
+
 ## v1.15.29
 
 ### Minor changes
