@@ -6,6 +6,7 @@ This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. Th
 
 ## v1.3.6
 
+### Minor changes
 * Bumped node-analyzer to 1.7.4
 * Bumped kspm-collector to 0.1.7
 
