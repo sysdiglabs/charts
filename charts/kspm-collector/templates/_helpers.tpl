@@ -133,3 +133,10 @@ Sysdig NATS service URL
     wss://{{ (include "kspmCollector.apiEndpoint" .) }}:443
 {{- end -}}
 {{- end -}}
+
+{{/*
+Returns the namespace for installing components
+*/}}
+{{- define "kspmCollector.namespace" -}}
+    {{- coalesce .Values.namespace .Release.Namespace -}}
+{{- end -}}
