@@ -4,6 +4,11 @@
 
 This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+
+# v1.8.0
+### Minor changes
+* HostScanner: added to deamonset
+
 ## v1.7.48
 ### Minor changes
 * RuntimeScanner: bump to version 1.4.0
@@ -79,7 +84,6 @@ This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The 
     * Added liveliness and readiness probes.
     * All capabilities are now dropped.
     * Bumped image tag to 1.13.0
-
 ## v1.7.32
 ### Minor changes:
 * NodeAnalyzer:
@@ -175,7 +179,6 @@ This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The 
 ## v1.7.19
 ### Minor changes
 * RuntimeScanner: Added ability to support storage class for ephemeral storage.
-
 
 ## v1.7.18
 ### Minor changes

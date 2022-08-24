@@ -3,6 +3,7 @@ global:
   clusterConfig: {}
   sysdig:
     region: "us1"
+    tags: {}
   proxy: {}
   kspm:
     deploy: false
@@ -59,6 +60,7 @@ secure:
   # true here enables Sysdig Secure: container run-time security & forensics
   enabled: true
   vulnerabilityManagement:
+    # set to true to disable the deployment of legacy components
     newEngineOnly: false
 
 sysdig:
@@ -192,6 +194,7 @@ nodeAnalyzer:
         memory: 1536Mi
 
     env: {}
+
   hostAnalyzer:
     deploy: true
     image:
@@ -220,6 +223,7 @@ nodeAnalyzer:
         memory: 1536Mi
 
     env: {}
+
   benchmarkRunner:
     deploy: true
     includeSensitivePermissions: false
@@ -295,6 +299,30 @@ nodeAnalyzer:
 
       settings:
         replicas: 1
+
+  hostScanner:
+    deploy: false
+
+    image:
+      repository: sysdig/vuln-host-scanner
+      tag: unstable-20220920130253-5137e58e  # TODO: change with stable version before releasing chart
+      digest:
+      pullPolicy: IfNotPresent
+
+    resources:
+      requests:
+        cpu: 150m
+        memory: 512Mi
+        ephemeral-storage: 512Mi
+      limits:
+        cpu: 500m
+        memory: 1Gi
+        ephemeral-storage: 1Gi
+
+    env: {}
+
+    settings:
+      replicas: 1
 
   kspmAnalyzer:
     debug: false

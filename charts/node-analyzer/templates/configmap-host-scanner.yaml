@@ -1,0 +1,38 @@
+{{- if and .Values.nodeAnalyzer.deploy (not .Values.gke.autopilot) (include "nodeAnalyzer.deployHostScanner" .) }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-host-scanner
+  labels:
+{{ include "nodeAnalyzer.labels" . | indent 4 }}
+data:
+  api_endpoint: https://{{ include "nodeAnalyzer.apiEndpoint" . }}
+  cluster_name: {{ required "A valid clusterName is required" (include "nodeAnalyzer.clusterName" . ) }}
+  {{- if hasKey .Values.global.sysdig "tags" }}
+    {{- $customTags := list -}}
+    {{ range $key, $val := .Values.global.sysdig.tags }}
+      {{- $entry := list $key $val | join ":" -}}
+      {{- $customTags = append $customTags $entry -}}
+    {{ end }}
+  custom_tags: {{ join "," $customTags | quote }}
+  {{- end }}
+  {{- if hasKey .Values.nodeAnalyzer.hostScanner "scanOnStart" }}
+  scan_on_start: "{{ .Values.nodeAnalyzer.hostScanner.scanOnStart }}"
+  {{- end }}
+  {{- if .Values.nodeAnalyzer.hostScanner.dirsToScan }}
+  dirs_to_scan: {{ .Values.nodeAnalyzer.hostScanner.dirsToScan }}
+  {{- end }}
+  {{- if hasKey .Values.nodeAnalyzer "sslVerifyCertificate" }}
+  ssl_verify_certificate: "{{ .Values.nodeAnalyzer.sslVerifyCertificate }}"
+  {{- end }}
+  debug: "{{ .Values.nodeAnalyzer.debug | default false }}"
+  {{- if .Values.nodeAnalyzer.httpProxy }}
+  http_proxy: {{ .Values.nodeAnalyzer.httpProxy }}
+  {{- end -}}
+  {{- if .Values.nodeAnalyzer.httpsProxy }}
+  https_proxy: {{ .Values.nodeAnalyzer.httpsProxy }}
+  {{- end -}}
+  {{- if .Values.nodeAnalyzer.noProxy }}
+  no_proxy: {{ .Values.nodeAnalyzer.noProxy }}
+  {{- end -}}
+{{- end }}

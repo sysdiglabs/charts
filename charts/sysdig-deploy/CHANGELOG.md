@@ -320,6 +320,12 @@ This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. Th
 ### Bugfix
 * Don't deploy psp policies on k8s 1.25.x
 
+## v1.4.0
+
+### Minor changes
+* Add new HostScanner component to nodeAnalyzer chart
+* Add `global.sysdig.tags` to chart values
+
 ## v1.3.17
 ### Minor changes
 * Added a global gke autopilot flag

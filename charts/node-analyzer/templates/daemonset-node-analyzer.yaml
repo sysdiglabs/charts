@@ -24,12 +24,12 @@ spec:
 {{ include "nodeAnalyzer.labels" . | indent 8 }}
     spec:
       volumes:
-{{- if include "nodeAnalyzer.deployBenchmarkRunner" . }}
+        {{- if include "nodeAnalyzer.deployBenchmarkRunner" . }}
         - name: sysdig-agent-config
           configMap:
             name: {{ include "agent.configmapName" . }}
             optional: true
-{{- end }}
+        {{- end }}
         # Needed for cri-o image inspection.
         # cri-o and especially OCP 4.x by default use containers/storage to handle images, and this makes sure that the
         # analyzer has access to the configuration. This file is mounted read-only.
@@ -56,14 +56,14 @@ spec:
           configMap:
             name: {{ .Release.Name }}-image-analyzer
             optional: true
-{{- if or (include "nodeAnalyzer.deployBenchmarkRunner" .) (include "nodeAnalyzer.deployHostAnalyzer" .) .Values.global.kspm.deploy }}
-        # Needed to run Benchmarks and Host Analyzer. This mount is read-only.
+        {{- if or (include "nodeAnalyzer.deployHostScanner" .) (include "nodeAnalyzer.deployBenchmarkRunner" .) (include "nodeAnalyzer.deployHostAnalyzer" .) .Values.global.kspm.deploy }}
+        # Needed to run Benchmarks and Host Analyzer/Scanner. This mount is read-only.
         # Benchmarks include numerous checks that run tests against config files in the host filesystem. There are also
         # checks that test various host configurations such as loaded modules and enabled security features.
         - name: root-vol
           hostPath:
             path: /
-{{- end }}
+        {{- end }}
         - name: tmp-vol
           {{- if .Values.nodeAnalyzer.runtimeScanner.storageClassName }}
           ephemeral:
@@ -97,7 +97,7 @@ spec:
 {{ toYaml .Values.nodeAnalyzer.pullSecrets | indent 8 }}
       {{- end }}
       terminationGracePeriodSeconds: 5
-{{- if include "nodeAnalyzer.deployBenchmarkRunner" . }}
+      {{- if include "nodeAnalyzer.deployBenchmarkRunner" . }}
       # Use the Host Network Namespace.
       # This is required by the Benchmark container to determine the hostname and host mac address
       hostNetwork: true
@@ -105,9 +105,10 @@ spec:
       # This is required for Kubernetes benchmarks, as they contain tests that check Kubernetes processes running on
       # the host
       hostPID: true
-{{- end }}
+      {{- end }}
       containers:
-{{ if .Values.global.kspm.deploy }}
+      {{ if .Values.global.kspm.deploy }}
+      # kspm-analyzer
       - name: sysdig-kspm-analyzer
         image: {{ template "nodeAnalyzer.image.kspmAnalyzer" . }}
         ports:
@@ -213,9 +214,10 @@ spec:
             readOnly: true
           - name: tmp-vol
             mountPath: /host/tmp
-{{- end }}
-{{ if not .Values.secure.vulnerabilityManagement.newEngineOnly }}
-{{- if include "nodeAnalyzer.deployImageAnalyzer" . }}
+      # kspm-analyzer
+      {{- end }}
+      {{- if include "nodeAnalyzer.deployImageAnalyzer" . }}
+      # image-analyzer
       - name: sysdig-image-analyzer
         image: {{ template "nodeAnalyzer.image.imageAnalyzer" . }}
         securityContext:
@@ -341,8 +343,10 @@ spec:
         - name: "{{ $key }}"
           value: "{{ $value }}"
         {{- end }}
-{{- end }}
-{{- if include "nodeAnalyzer.deployHostAnalyzer" . }}
+      # image-analyzer
+      {{- end }}
+      {{- if include "nodeAnalyzer.deployHostAnalyzer" . }}
+      # host-analyzer
       - name: sysdig-host-analyzer
         image: {{ template "nodeAnalyzer.image.hostAnalyzer" . }}
         securityContext:
@@ -438,9 +442,10 @@ spec:
         - name: "{{ $key }}"
           value: "{{ $value }}"
         {{- end }}
+      # host-analyzer
       {{- end }}
-{{- end }}
-{{- if include "nodeAnalyzer.deployBenchmarkRunner" . }}
+      {{- if include "nodeAnalyzer.deployBenchmarkRunner" . }}
+      # benchmark-runner
       - name: sysdig-benchmark-runner
         image: {{ template "nodeAnalyzer.image.benchmarkRunner" . }}
         imagePullPolicy: {{ .Values.nodeAnalyzer.benchmarkRunner.image.pullPolicy }}
@@ -511,9 +516,10 @@ spec:
         - name: "{{ $key }}"
           value: "{{ $value }}"
         {{- end }}
-{{- end }}
-{{ if or  .Values.nodeAnalyzer.runtimeScanner.deploy .Values.secure.vulnerabilityManagement.newEngineOnly }}
-      # Runtime Scanner #
+      # benchmark-runner
+      {{- end }}
+      {{- if include "nodeAnalyzer.deployRuntimeScanner" . }}
+      # runtime-scanner
       - name: sysdig-runtime-scanner
         image: {{ template "nodeAnalyzer.image.runtimeScanner" . }}
         imagePullPolicy: {{ .Values.nodeAnalyzer.runtimeScanner.image.pullPolicy }}
@@ -600,22 +606,22 @@ spec:
           - name: "{{ $key }}"
             value: "{{ $value }}"
           {{- end }}
-{{- if .Values.nodeAnalyzer.runtimeScanner.settings.eveEnabled }}
+          {{- if .Values.nodeAnalyzer.runtimeScanner.settings.eveEnabled }}
           - name: EVE_ENABLED
             valueFrom:
               configMapKeyRef:
                 name: {{ .Release.Name }}-runtime-scanner
                 key: eve_enabled
                 optional: true
-{{- end }}
-{{- if .Values.nodeAnalyzer.runtimeScanner.eveConnector.deploy }}
+          {{- end }}
+          {{- if .Values.nodeAnalyzer.runtimeScanner.eveConnector.deploy }}
           - name: EVE_INTEGRATION_ENABLED
             valueFrom:
               configMapKeyRef:
                 name: {{ .Release.Name }}-runtime-scanner
                 key: eve_integration_enabled
                 optional: true
-{{- end }}
+          {{- end }}
         volumeMounts:
           - mountPath: /var/run
             name: varrun-vol
@@ -629,8 +635,116 @@ spec:
           {{- if .Values.nodeAnalyzer.runtimeScanner.extraMounts }}
 {{ toYaml .Values.nodeAnalyzer.runtimeScanner.extraMounts | indent 10 }}
           {{- end }}
-# Runtime Scanner #
-{{- end }}
+      # runtime-scanner
+      {{- end }}
+      {{- if include "nodeAnalyzer.deployHostScanner" . }}
+      # host-scanner
+      - name: sysdig-host-scanner
+        image: {{ template "nodeAnalyzer.image.hostScanner" . }}
+        imagePullPolicy: {{ .Values.nodeAnalyzer.hostScanner.image.pullPolicy }}
+        securityContext:
+          # The privileged flag is necessary for OCP 4.x and other Kubernetes setups that deny host filesystem access to
+          # running containers by default regardless of volume mounts.
+          privileged: true
+        resources:
+{{ toYaml .Values.nodeAnalyzer.hostScanner.resources | indent 10 }}
+        env:
+          - name: HOST_FS_MOUNT_PATH
+            value: /host
+          - name: HOST_DIRS_TO_SCAN
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-host-scanner
+                key: host_dirs_to_scan
+                optional: true
+          - name: SCAN_ON_START
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-host-scanner
+                key: scan_on_start
+                optional: true
+          - name: CUSTOM_TAGS
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-host-scanner
+                key: custom_tags
+                optional: true
+          - name: SYSDIG_API_URL
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-host-scanner
+                key: api_endpoint
+          - name: SYSDIG_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                {{- if not ( include "nodeAnalyzer.accessKeySecret" .) }}
+                name: {{ template "nodeAnalyzer.fullname" . }}
+                {{- else }}
+                name: {{ ( include "nodeAnalyzer.accessKeySecret" .) }}
+                {{- end }}
+                key: access-key
+          - name: SYSDIG_API_VERIFY_CERTIFICATE
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-host-scanner
+                key: ssl_verify_certificate
+                optional: true
+          - name: K8S_CLUSTER_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-host-scanner
+                key: cluster_name
+          - name: K8S_NODE_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+          - name: DEBUG
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-host-scanner
+                key: debug
+                optional: true
+          - name: HTTP_PROXY
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-host-scanner
+                key: http_proxy
+                optional: true
+          - name: HTTPS_PROXY
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-host-scanner
+                key: https_proxy
+                optional: true
+          - name: NO_PROXY
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-host-scanner
+                key: no_proxy
+                optional: true
+          - name: MAX_FILE_SIZE_ALLOWED
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-host-scanner
+                key: analyzer.maxFileSizeAllowed
+                optional: true
+          - name: TMPDIR
+            value: "/tmp"
+          {{- range $key, $value := .Values.nodeAnalyzer.hostScanner.env }}
+          - name: "{{ $key }}"
+            value: "{{ $value }}"
+          {{- end }}
+        volumeMounts:
+          - mountPath: /tmp
+            name: tmp-vol
+          - mountPath: /host
+            name: root-vol
+            readOnly: true
+          {{- if .Values.nodeAnalyzer.hostScanner.extraMounts }}
+{{ toYaml .Values.nodeAnalyzer.hostScanner.extraMounts | indent 10 }}
+          {{- end }}
+      # host-scanner
+      {{- end }}
       {{- with .Values.nodeAnalyzer.nodeSelector }}
       nodeSelector: {{ toYaml . | nindent 8 }}
       {{- end }}

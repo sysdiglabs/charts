@@ -79,6 +79,13 @@ Return the proper Sysdig nodeAnalyzer image name for the Eve Connector
 {{- end -}}
 
 {{/*
+Return the proper nodeAnalyzer Agent image name for the Host Scanner
+*/}}
+{{- define "nodeAnalyzer.image.hostScanner" -}}
+    {{- include "nodeAnalyzer.imageRegistry" . -}} / {{- .Values.nodeAnalyzer.hostScanner.image.repository -}} {{- if .Values.nodeAnalyzer.hostScanner.image.digest -}} @ {{- .Values.nodeAnalyzer.hostScanner.image.digest -}} {{- else -}} : {{- .Values.nodeAnalyzer.hostScanner.image.tag -}} {{- end -}}
+{{- end -}}
+
+{{/*
 Return the proper image name for the Image Analyzer
 */}}
 {{- define "nodeAnalyzer.image.imageAnalyzer" -}}
@@ -222,8 +229,14 @@ nodeAnalyzer agentConfigmapName
     {{- default .Values.global.agentConfigmapName | default "sysdig-agent" -}}
 {{- end -}}
 
-{{- define "nodeAnalyzer.deployHostAnalyzer" -}}
-{{- if or (not (hasKey .Values.nodeAnalyzer.hostAnalyzer "deploy")) .Values.nodeAnalyzer.hostAnalyzer.deploy }}
+{{- define "nodeAnalyzer.deployHostScanner" -}}
+{{- if or .Values.secure.vulnerabilityManagement.newEngineOnly (not (hasKey .Values.nodeAnalyzer.hostScanner "deploy")) .Values.nodeAnalyzer.hostScanner.deploy }}
+true
+{{- end -}}
+{{- end -}}
+
+{{- define "nodeAnalyzer.deployRuntimeScanner" -}}
+{{- if or .Values.secure.vulnerabilityManagement.newEngineOnly (not (hasKey .Values.nodeAnalyzer.runtimeScanner "deploy")) .Values.nodeAnalyzer.runtimeScanner.deploy }}
 true
 {{- end -}}
 {{- end -}}
@@ -235,7 +248,14 @@ true
 {{- end -}}
 
 {{- define "nodeAnalyzer.deployImageAnalyzer" -}}
-{{- if or (not (hasKey .Values.nodeAnalyzer.imageAnalyzer "deploy")) .Values.nodeAnalyzer.imageAnalyzer.deploy }}
+{{- if and (not .Values.secure.vulnerabilityManagement.newEngineOnly) (or (not (hasKey .Values.nodeAnalyzer.imageAnalyzer "deploy")) .Values.nodeAnalyzer.imageAnalyzer.deploy) }}
+true
+{{- end -}}
+{{- end -}}
+
+# Legacy components #
+{{- define "nodeAnalyzer.deployHostAnalyzer" -}}
+{{- if and (not .Values.secure.vulnerabilityManagement.newEngineOnly) (or (not (hasKey .Values.nodeAnalyzer.hostAnalyzer "deploy")) .Values.nodeAnalyzer.hostAnalyzer.deploy) }}
 true
 {{- end -}}
 {{- end -}}
