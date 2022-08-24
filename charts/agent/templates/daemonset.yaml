@@ -129,9 +129,15 @@ spec:
               name: sys-tracing
               readOnly: true
             {{- end }}
+            {{- if .Values.gke.autopilot }}
+            - mountPath: /host/etc/os-release
+              name: osrel
+              readOnly: true
+            {{- else }}
             - mountPath: /host/etc
               name: etc-vol
               readOnly: true
+            {{- end }}
       {{- end }}
       containers:
         - name: sysdig
@@ -187,9 +193,15 @@ spec:
               name: modprobe-d
               readOnly: true
             {{- end }}
+            {{- if .Values.gke.autopilot }}
+            - mountPath: /host/etc/os-release
+              name: osrel
+              readOnly: true
+            {{- else }}
             - mountPath: /host/etc
               name: etc-vol
               readOnly: true
+            {{- end }}
             - mountPath: /host/dev
               name: dev-vol
               readOnly: false
@@ -236,9 +248,16 @@ spec:
         - name: dshm
           emptyDir:
             medium: Memory
+        {{- if .Values.gke.autopilot }}
+        - name: osrel
+          hostPath:
+            path: /etc/os-release
+            type: FileOrCreate
+        {{- else }}
         - name: etc-vol
           hostPath:
             path: /etc
+        {{- end }}
         - name: dev-vol
           hostPath:
             path: /dev
