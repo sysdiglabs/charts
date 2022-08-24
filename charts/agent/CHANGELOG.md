@@ -4,6 +4,11 @@
 
 This file documents all notable changes to the Sysdig Agent Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.5.19
+
+### Bugfixes
+* Don't mount /etc on GKE autopilot
+
 ## v1.5.18
 
 ### Minor changes

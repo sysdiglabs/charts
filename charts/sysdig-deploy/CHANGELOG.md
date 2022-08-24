@@ -4,6 +4,12 @@
 
 This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.3.7
+
+### Minor changes
+* Don't mount /etc for GKE autopilot
+* Update agent chart version
+
 ## v1.3.6
 
 ### Minor changes
