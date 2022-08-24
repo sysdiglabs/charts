@@ -35,7 +35,7 @@ The following table lists the configurable parameters of the Sysdig KSPM Collect
 | `clusterName`                    | Set a cluster name to identify events using *kubernetes.cluster.name* tag               | ` `                                                         |
 | `image.registry`                 | KSPM Collector image registry                                                           | `quay.io`                                                   |
 | `image.repository`               | The image repository to pull from                                                       | `sysdig/kspm-collector`                                     |
-| `image.tag`                      | The image tag to pull                                                                   | `1.5.0`                                                     |
+| `image.tag`                      | The image tag to pull                                                                   | `1.6.0`                                                     |
 | `image.digest`                   | The image digest to pull                                                                | ` `                                                         |
 | `image.pullPolicy`               | The Image pull policy                                                                   | `Always`                                                    |
 | `replicas`                       | KSPM collector deployment replicas                                                      | `1`                                                         |
@@ -54,6 +54,9 @@ The following table lists the configurable parameters of the Sysdig KSPM Collect
 | `httpsProxy`                     | Proxy configuration variables                                                           |                                                             |
 | `noProxy`                        | Proxy configuration variables                                                           |                                                             |
 | `sslVerifyCertificate`           | Can be set to false to allow insecure connections to the Sysdig backend                 |                                                             |
+| `arch`                               | Allowed architectures for scheduling                                                                                                       | `[ amd64, arm64 ]`                                   |
+| `os`                                 | Allowed OSes for scheduling                                                                                                                | `[ linux ]`                                                 |
+| `affinity`                           | Node affinities. Overrides `arch` and `os` values                                                                      | `{}`                        
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 

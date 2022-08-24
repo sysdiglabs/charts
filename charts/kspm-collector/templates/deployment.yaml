@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ template "kspmCollector.fullname" . }}
+  namespace: {{ include "kspmCollector.namespace" . }} 
   labels:
     app.kubernetes.io/name: {{ include "kspmCollector.name" . }}
 {{ include "kspmCollector.labels" . | indent 4 }}
@@ -18,6 +19,33 @@ spec:
 {{ include "kspmCollector.labels" . | indent 8 }}
     spec:
       serviceAccountName: {{ template "kspmCollector.serviceAccountName" .}}
+      affinity:
+      {{- if .Values.affinity }}
+{{ toYaml .Values.affinity | indent 8 }}
+      {{- else }}
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/arch
+                operator: In
+                values: {{- toYaml .Values.arch | nindent 18 }}
+              - key: kubernetes.io/os
+                operator: In
+                values: {{- toYaml .Values.os | nindent 18 }}
+            - matchExpressions:
+              - key: beta.kubernetes.io/arch
+                operator: In
+                values: {{- toYaml .Values.arch | nindent 18 }}
+              - key: beta.kubernetes.io/os
+                operator: In
+                values: {{- toYaml .Values.os | nindent 18 }}
+      {{- end }}
+      tolerations:
+      - key: kubernetes.io/arch
+        operator: Equal
+        value: arm64
+        effect: NoSchedule
       containers:
       - name: {{ include "kspmCollector.name" . }}
         image: {{ template "kspmCollector.image.kspmCollector" . }}

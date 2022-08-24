@@ -5,6 +5,9 @@ httpProxy:
 httpsProxy:
 noProxy:
 
+# Namespace to deploy to (Optional: Will default to release namespace)
+namespace:
+
 # Default values for Sysdig KSPM Collector
 global:
   clusterConfig: {}
@@ -35,7 +38,7 @@ clusterName: ""
 
 image:
   repository: sysdig/kspm-collector
-  tag: 1.5.0
+  tag: 1.6.0
   digest:
   registry: quay.io
   pullPolicy: Always
@@ -69,3 +72,14 @@ resources:
   limits:
     cpu: 500m
     memory: 1536Mi
+
+# arch and os will be used to template out a node affinity block matching everything in each list. If affinity is
+# defined, these fields will be ignored
+arch:
+  - amd64
+  - arm64
+os:
+  - linux
+# Allow the DaemonSet to schedule using affinity rules
+# Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+affinity: {}
