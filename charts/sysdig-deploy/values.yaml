@@ -4,6 +4,8 @@ global:
   sysdig:
     accessKey: ""
     accessKeySecret: ""
+    secureAPIToken: ""
+    existingSecureAPITokenSecre: ""
     region: "us1"
   proxy: {}
   kspm:
@@ -21,3 +23,7 @@ rapidResponse:
   rapidResponse:
     passphrase: ""
     existingPassphraseSecret: ""
+
+admissionController:
+  enabled: false
+
