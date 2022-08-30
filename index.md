@@ -37,7 +37,7 @@ $ helm repo update
 
 ## Use Sysdig Chart Repository
 
-Once you have added this charts repository to your local `helm`, you can start using it:
+Once you have added the chart repository to your local `helm`, you can start using it:
 
 ```bash
 # List all charts:
