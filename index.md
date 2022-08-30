@@ -21,6 +21,8 @@ The Sysdig Chart Repository includes the following charts:
 |[`registry-scanner`](/charts/registry-scanner) | Deploys the Sysdig Registry Scanner as a scheduled cronjob in your Kubernetes cluster. |
 |[`sysdig-mcm-navmenu`](/charts/sysdig-mcm-navmenu) | Deploys services and ingress required to create Multi-Cloud Management menu in Sysdig. |
 |[`sysdig-stackdriver-bridge`](/charts/sysdig-stackdriver-bridge) | Deploys the the Sysdig Stackdriver Bridge application to enable reading and sending audit logs from Stackdriver to Sysdig agent. |
+
+
 ## Add Chart Repository 
 
 To start using Sysdig charts, add the Sysdig chart repository to your local helm :
