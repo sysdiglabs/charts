@@ -235,11 +235,17 @@ $ helm upgrade --install sysdig-{{ .Release.Name }} {{ .Repository.Name }}/{{ .C
 2. Check your current "Kubernetes Audit" policies in `Sysdig Secure > Policies > Threat Detection | Runtime Policies` as we will be triggering one of those to prove it's working correctly.
     - We suggest using "Create Privileged Pod" but you can choose any.
 3. If possible, let's activate just installed component logs to have them at sight
-    > $ kubectl logs -f -n sysdig-admission-controller -l app.kubernetes.io/component=webhook
+    ```
+    $ kubectl logs -f -n sysdig-admission-controller -l app.kubernetes.io/component=webhook
+    ```
 4. Trigger following command to force an unwanted audit detection
-    > $ kubectl run nginx --image nginx --privileged
+    ```
+    $ kubectl run nginx --image nginx --privileged
+    ```
 5. If you had a chance to activate logs, take a look at them. You should see something like this
-    > {"level":"info","component":"console-notifier","message":"Pod started with privileged container (user=** pod=nginx ns=default images=nginx)"}
+    ```
+    {"level":"info","component":"console-notifier","message":"Pod started with privileged container (user=** pod=nginx ns=default images=nginx)"}
+    ```
 6. Confirm that event reached Sysdig Secure, looking at `Events`
 
 
@@ -325,6 +331,24 @@ A: Some users (old versions of GKE) reported that the permissions to access serv
 ```
 --set webhook.podSecurityContext.fsGroup=65534
 ```
+
+### Q: Getting readiness probe errors and cannot startup
+
+```
+13m         Warning   FailedComputeMetricsReplicas   horizontalpodautoscaler/sysdig-admission-controller-webhook   invalid metrics (1 invalid out of 1), first error is: failed to get cpu utilization: unable to get metrics for resource cpu: unable to fetch metrics from resource metrics API: the server could not find the requested resource (get pods.metrics.k8s.io)
+```
+
+A: [HorizontalAutoScaller](https://github.com/sysdiglabs/charts/blob/master/charts/admission-controller/templates/webhook/autoscaler.yaml) requires your kubernetes cluster to be able to use [metrics API](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#support-for-metrics-apis), which in some lightweight installations, such as minikube, must be enabled through a plugin
+<br/>S: For minikube, enable `metric-server` plugin
+```
+ $ minikube addons list | grep metrics-server
+ $  minikube addons enable metrics-server
+ ```
+
+### Q: Getting error "x509: certificate signed by unknown authority"
+
+A: Sysdig installation is made with an unverfied certificate, such as self-signed, `SECURE_URL` being `https`
+<br/>S: Add `--set verifySSL=false` to your installation parameters 
 
 
 <!--

@@ -48,48 +48,48 @@ Currently included components:
 
 4. Do one of the following:
 
-   - Using the release name `sysdig`, run the following snippet to install the release into the namespace `sysdig-agent`:
-
-    ```bash
-   helm install sysdig sysdig/sysdig-deploy \
-       --namespace sysdig-agent \
-       --set global.sysdig.accessKey=ACCESS_KEY \
-       --set global.sysdig.region=SAAS_REGION \
-       --set global.clusterConfig.name=CLUSTER_NAME
-    ```
-
-     **GKE Autopilot**: GKE Autopilot environments require an additional configuration parameter, `agent.gke.autopilot=true`, to install the Sysdig agent:
+    - Using the release name `sysdig`, run the following snippet to install the release into the namespace `sysdig-agent`:
 
       ```bash
-   helm install sysdig sysdig/sysdig-deploy \
-        --namespace sysdig-agent \
-        --set global.sysdig.accessKey=ACCESS_KEY \
-        --set global.sysdig.region=SAAS_REGION \
-        --set global.clusterConfig.name=CLUSTER_NAME \
-        --set agent.gke.autopilot=true \
-        --set agent.slim.enabled=false \
-        --set nodeAnalyzer.enabled=false
+      helm install sysdig sysdig/sysdig-deploy \
+          --namespace sysdig-agent \
+          --set global.sysdig.accessKey=ACCESS_KEY \
+          --set global.sysdig.region=SAAS_REGION \
+          --set global.clusterConfig.name=CLUSTER_NAME
+        ```
+
+      **GKE Autopilot**: GKE Autopilot environments require an additional configuration parameter, `agent.gke.autopilot=true`, to install the Sysdig agent:
+
+      ```bash
+      helm install sysdig sysdig/sysdig-deploy \
+          --namespace sysdig-agent \
+          --set global.sysdig.accessKey=ACCESS_KEY \
+          --set global.sysdig.region=SAAS_REGION \
+          --set global.clusterConfig.name=CLUSTER_NAME \
+          --set agent.gke.autopilot=true \
+          --set agent.slim.enabled=false \
+          --set nodeAnalyzer.enabled=false
       ```
 
 
-   - Install with a values file. 
+    - Install with a values file. 
 
-     To do so, create a new file `values.sysdig.yaml`:
+      To do so, create a new file `values.sysdig.yaml`:
 
-        ```yaml
-     global:
-       sysdig:
-         accessKey: ACCESS_KEY
-         region: SAAS_REGION
-       clusterConfig:
-         name: CLUSTER_NAME
-        ```
+       ```yaml
+       global:
+         sysdig:
+           accessKey: ACCESS_KEY
+           region: SAAS_REGION
+         clusterConfig:
+           name: CLUSTER_NAME
+       ```
 
-        and install it with:
+       and install it with:
 
-        ```bash
-     helm install -n sysdig-agent sysdig sysdig/sysdig-deploy -f values.sysdig.yaml
-        ```
+       ```bash
+       helm install -n sysdig-agent sysdig sysdig/sysdig-deploy -f values.sysdig.yaml
+       ```
 
 
 
@@ -170,7 +170,7 @@ The following table lists the configurable parameters of this chart and their de
 | `global.sysdig.accessKey`               | Sysdig Agent Access Key                                                                                                 | `""`      |
 | `global.sysdig.accessKeySecret`         | The name of a Kubernetes secret containing an 'access-key' entry.                                                       | `""`      |
 | `global.sysdig.region`                  | The SaaS region for these agents. Possible values: `"us1"`, `"us2"`, `"us3"`, `"us4"`, `"eu1"`, `"au1"`, and `"custom"`. See [Regions and IP Ranges](https://docs.sysdig.com/en/docs/administration/saas-regions-and-ip-ranges/) for more information. | `"us1"`   |
-| `global.imageRegistry`                  | Container image registry                                                                                                | `quay.io` |
+| `global.imageRegistry`                  | Container image registry                                                                                                | `` |
 | `global.proxy.httpProxy`                | Sets `http_proxy` on the Agent container                                                                                | `""`      |
 | `global.proxy.httpsProxy`               | Sets `https_proxy` on the Agent container                                                                               | `""`      |
 | `global.proxy.noProxy`                  | Sets `no_proxy` on the Agent container                                                                                  | `""`      |

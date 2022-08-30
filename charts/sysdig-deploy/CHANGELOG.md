@@ -4,6 +4,33 @@
 
 This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.3.8
+
+### Minor changes
+* Fix indentation for install steps in README.md
+
+## v1.3.7
+
+### Minor changes
+* Don't mount /etc for GKE autopilot
+* Update agent chart version
+
+## v1.3.6
+
+### Minor changes
+* Bumped node-analyzer to 1.7.4
+* Bumped kspm-collector to 0.1.7
+
+## v1.3.5
+
+### Minor changes
+* Added /etc to container and initContainer /host/etc volume bind
+
+## v1.3.4
+
+### Bugfix
+* Previous change introduced a default to `global.imageRegistry`, breaking chart-specific overrides
+
 ## v1.3.3
 
 ### Bugfix

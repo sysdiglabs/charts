@@ -4,6 +4,19 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.15.31
+### Bugfixes
+* Don't mount /etc in GKE Autopilot
+
+## v1.15.30
+### Minor changes
+* RuntimeScanner: version 1.2.6 ignores the fix solution date of a vuln when no fix version is available
+
+## v1.15.29
+
+### Minor changes
+* Added /etc to container and initContainer /host/etc volume bind
+
 ## v1.15.28
 
 ### Minor changes
@@ -18,6 +31,7 @@ This file documents all notable changes to Sysdig Helm Chart. The release number
 
 ### Minor changes
 * reverted change made in v1.15.21 that added /etc to container /host/etc volume bind
+
 ## v1.15.24
 ### Minor changes
 * runtimeScanner: version 1.2.5 with fixes on ruby file analyzer
