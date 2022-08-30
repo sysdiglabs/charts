@@ -23,7 +23,7 @@ The Sysdig Chart Repository includes the following charts:
 |[`sysdig-stackdriver-bridge`](/charts/sysdig-stackdriver-bridge) | Deploys the the Sysdig Stackdriver Bridge application to enable reading and sending audit logs from Stackdriver to Sysdig agent. |
 
 
-## Add Chart Repository 
+## Add Sysdig Chart Repository 
 
 To start using Sysdig charts, add the Sysdig chart repository to your local helm :
 
@@ -35,7 +35,7 @@ $ helm repo add sysdig https://charts.sysdig.com
 $ helm repo update
 ```
 
-## Use Sysdig Charts Repository
+## Use Sysdig Chart Repository
 
 Once you have added this charts repository to your local `helm`, you can start using it:
 
