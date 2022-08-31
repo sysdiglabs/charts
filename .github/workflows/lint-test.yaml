@@ -61,4 +61,4 @@ jobs:
           k3s-version: v1.23.9+k3s1
 
       - name: Run chart-testing (install)
-        run: ct install
+        run: ct install --upgrade
