@@ -4,6 +4,10 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.15.32
+ ### Minor changes
+ * Moved the clusterrole's Ingresses resource to the networking.k8s.io group 
+
 ## v1.15.31
 ### Bugfixes
 * Don't mount /etc in GKE Autopilot
