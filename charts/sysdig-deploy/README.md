@@ -194,27 +194,27 @@ As a command line parameter:
 ```bash
 helm install sysdig sysdig/sysdig-deploy \
     --namespace sysdig-agent \
-    --set global.sysdig.accessKey=ACCESS_KEY \
-    --set global.sysdig.region=SAAS_REGION \
-    --set global.clusterConfig.name=CLUSTER_NAME \
-    --set global.proxy.httpProxy=PROXY_URL \
-    --set agent.proxy.httpProxy=OVERRIDE_PROXY_URL
+    --set global.sysdig.accessKey=${SDC_ACCESS_KEY} \
+    --set global.sysdig.region=${SDC_REGION} \
+    --set global.clusterConfig.name=${CLUSTER_NAME} \
+    --set global.proxy.httpProxy=${PROXY_URL} \
+    --set agent.proxy.httpProxy=${OVERRIDE_PROXY_URL}
 ```
 
 As a values file:
 ```yaml
 global:
   sysdig:
-    accessKey: ACCESS_KEY
-    region: SAAS_REGION
+    accessKey: ${ACCESS_KEY}
+    region: ${SAAS_REGION}
   clusterConfig:
-    name: CLUSTER_NAME
+    name: ${CLUSTER_NAME}
   proxy:
-    httpProxy: PROXY_URL
+    httpProxy: ${PROXY_URL}
 
 agent:
   proxy:
-    httpProxy: OVERRIDE_PROXY_URL
+    httpProxy: ${OVERRIDE_PROXY_URL}
 ```
 
 ## NodeAnalyzer
@@ -226,25 +226,25 @@ Example: override apiEndpoint variable for nodeAnalyzer chart
 As a command line parameter:
 ```bash
 helm install sysdig sysdig/sysdig-deploy \
-    --set global.sysdig.accessKey=ACCESS_KEY \
-    --set agent.collectorSettings.collectorHost=COLLECTOR_ENDPOINT \
-    --set nodeAnalyzer.nodeAnalyzer.apiEndpoint=API_ENDPOINT
+    --set global.sysdig.accessKey=${SDC_ACCESS_KEY} \
+    --set agent.collectorSettings.collectorHost=${COLLECTOR_ENDPOINT} \
+    --set nodeAnalyzer.nodeAnalyzer.apiEndpoint=${API_ENDPOINT}
 ```
 
 As a values file:
 ```yaml
 global:
   sysdig:
-    accessKey: ACCESS_KEY
+    accessKey: ${ACCESS_KEY}
 
 agent:
   enabled: false
   collectorSettings:
-    collectorHost: COLLECTOR_ENDPOINT
+    collectorHost: ${COLLECTOR_ENDPOINT}
 
 nodeAnalyzer:
   nodeAnalyzer:
-    apiEndpoint: API_ENDPOINT
+    apiEndpoint: ${API_ENDPOINT}
 ```
 
 ## KSPM Collector
@@ -256,16 +256,16 @@ Example: override apiEndpoint variable for kspmCollector chart
 As a command line parameter:
 ```bash
 helm install sysdig sysdig/sysdig-deploy \
-    --set global.sysdig.accessKey=ACCESS_KEY \
-    --set kspmCollector.apiEndpoint=API_ENDPOINT
+    --set global.sysdig.accessKey=${SDC_ACCESS_KEY} \
+    --set kspmCollector.apiEndpoint=${API_ENDPOINT}
 ```
 
 As a values file:
 ```yaml
 global:
   sysdig:
-    accessKey: ACCESS_KEY
+    accessKey: ${SDC_ACCESS_KEY}
 
 kspmCollector:
-  apiEndpoint: API_ENDPOINT
+  apiEndpoint: ${API_ENDPOINT}
 ```
