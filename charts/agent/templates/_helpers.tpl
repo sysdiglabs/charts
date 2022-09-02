@@ -243,3 +243,4 @@ Agent agentConfigmapName
 {{- define "agent.configmapName" -}}
     {{- default .Values.global.agentConfigmapName | default "sysdig-agent" -}}
 {{- end -}}
+
