@@ -127,6 +127,8 @@ ingestors: []
 scanners: []
 
 bruteForceDetection:
+  # Enable Brute Force detection
+  enabled: true
   # Time window for a bruteforce attack try
   duration: 24h
   # Maximum number of tries for given time window
