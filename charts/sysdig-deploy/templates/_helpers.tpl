@@ -7,7 +7,7 @@ Determine sysdig monitor endpoint based on provided region
     {{- else if (eq .Values.global.sysdig.region "us2") -}}
         {{- "us2.app.sysdig.com" -}}
     {{- else if (eq .Values.global.sysdig.region "us3") -}}
-        {{- "us3.app.sysdig.com" -}}
+        {{- "app.us3.sysdig.com" -}}
     {{- else if (eq .Values.global.sysdig.region "us4") -}}
         {{- "app.us4.sysdig.com" -}}
     {{- else if (eq .Values.global.sysdig.region "eu1") -}}
@@ -26,7 +26,7 @@ Determine sysdig secure endpoint based on provided region
     {{- else if (eq .Values.global.sysdig.region "us2") -}}
         {{- "us2.app.sysdig.com/secure" -}}
     {{- else if (eq .Values.global.sysdig.region "us3") -}}
-        {{- "us3.app.sysdig.com/secure" -}}
+        {{- "app.us3.sysdig.com" -}}
     {{- else if (eq .Values.global.sysdig.region "us4") -}}
         {{- "app.us4.sysdig.com/secure" -}}
     {{- else if (eq .Values.global.sysdig.region "eu1") -}}
