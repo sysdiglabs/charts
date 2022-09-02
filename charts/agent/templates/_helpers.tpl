@@ -236,11 +236,9 @@ Determine collector endpoint based on provided region
         {{- "ingest.au1.sysdig.com" -}}
     {{- end -}}
 {{- end -}}
-
 {{/*
 Agent agentConfigmapName
 */}}
 {{- define "agent.configmapName" -}}
     {{- default .Values.global.agentConfigmapName | default "sysdig-agent" -}}
 {{- end -}}
-
