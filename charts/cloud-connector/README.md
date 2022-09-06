@@ -23,7 +23,7 @@ $ pre-commit run -a
 $ helm repo add sysdig https://charts.sysdig.com
 $ helm repo update
 $ helm upgrade --install cloud-connector sysdig/cloud-connector \
-      --create-namespace -n cloud-connector --version=0.7.14  \
+      --create-namespace -n cloud-connector --version=0.7.15  \
       --set sysdig.secureAPIToken=SECURE_API_TOKEN
 ```
 
@@ -48,7 +48,7 @@ to enable threat-detection and image scanning capabilities for the main three pr
 To install the chart with the release name `cloud-connector`:
 
 ```console
-$ helm upgrade --install cloud-connector sysdig/cloud-connector -n cloud-connector --version=0.7.14
+$ helm upgrade --install cloud-connector sysdig/cloud-connector -n cloud-connector --version=0.7.15
 ```
 
 The command deploys the Sysdig Cloud Connector on the Kubernetes cluster in the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.
@@ -111,6 +111,7 @@ The following table lists the configurable parameters of the `cloud-connector` c
 | rules                                   | Rules Section for Cloud Connector                                                                                      | <code>[]</code>                                                                                          |
 | ingestors                               | Thread-Detection event ingestion configuration ([config](#ingestors))                                                  | <code>[]</code>                                                                                          |
 | scanners                                | Scanning capabilities configuration ([config](#scanners))                                                              | <code>[]</code>                                                                                          |
+| bruteForceDetection.enabled             | Enable Brute Force detection                                                                                           | <code>true</code>                                                                                        |
 | bruteForceDetection.duration            | Time window for a bruteforce attack try                                                                                | <code>24h</code>                                                                                         |
 | bruteForceDetection.maximumTries        | Maximum number of tries for given time window                                                                          | <code>10</code>                                                                                          |
 
@@ -119,7 +120,7 @@ Specify each parameter using the **`--set key=value[,key=value]`** argument to `
 
 ```console
 $ helm upgrade --install cloud-connector sysdig/cloud-connector \
-    --create-namespace -n cloud-connector --version=0.7.14 \
+    --create-namespace -n cloud-connector --version=0.7.15 \
     --set sysdig.secureAPIToken=YOUR-KEY-HERE
 ```
 
@@ -128,7 +129,7 @@ installing the chart. For example:
 
 ```console
 $ helm upgrade --install cloud-connector sysdig/cloud-connector \
-    --create-namespace -n cloud-connector --version=0.7.14 \
+    --create-namespace -n cloud-connector --version=0.7.15 \
     --values values.yaml
 ```
 
