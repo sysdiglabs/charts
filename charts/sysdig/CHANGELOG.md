@@ -4,9 +4,13 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.15.33
+### Minor changes
+* Update default values to not create psp since it has been deprecated in k8s 1.25
+
 ## v1.15.32
  ### Minor changes
- * Moved the clusterrole's Ingresses resource to the networking.k8s.io group 
+ * Moved the clusterrole's Ingresses resource to the networking.k8s.io group
 
 ## v1.15.31
 ### Bugfixes
@@ -50,7 +54,7 @@ This file documents all notable changes to Sysdig Helm Chart. The release number
 
 ## v1.15.20
 ### Bugfixes
-* Removed duplicate labels from deployment of `app.kubernetes.io/instance` 
+* Removed duplicate labels from deployment of `app.kubernetes.io/instance`
 
 ## v1.15.19
 ### Minor changes
