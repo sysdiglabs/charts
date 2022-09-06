@@ -8,6 +8,7 @@ data:
   cloud-connector.yaml: |
     logging: info
     bruteForceDetection:
+      enabled: {{ .Values.bruteForceDetection.enabled }}
       duration: {{ .Values.bruteForceDetection.duration }}
       maximumTries: {{ .Values.bruteForceDetection.maximumTries }}
     rules:
