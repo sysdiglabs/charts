@@ -79,7 +79,7 @@ scc:
 
 psp:
   # true here enables creation of Pod Security Policy to allow the agent run with the required permissions
-  create: true
+  create: false
 
 serviceAccount:
   # Create and use serviceAccount resources
