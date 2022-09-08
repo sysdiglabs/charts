@@ -4,6 +4,13 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.15.34
+### Minor changes
+* RuntimeScanner: bumped to 1.2.7 which:
+  * removed the old golang analyzer based on the go.sum files. Only go packages from binary will be analyzed.
+  * fixes several bugs in loading images into openshift clusters.
+  * improve memory consumption.
+
 ## v1.15.32
  ### Minor changes
  * Moved the clusterrole's Ingresses resource to the networking.k8s.io group 
