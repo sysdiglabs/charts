@@ -1,3 +1,7 @@
+# v0.1.9
+### Minor change
+* Bumped image tag to 1.8.0
+
 # v0.1.8
 ### Bugfixes
 * Bumped image tag to 1.7.0

@@ -4,6 +4,10 @@
 
 This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.7.8
+### Minor changes
+* KSPMAnalyzer: bump tag to 1.8.0
+
 ## v1.7.7
 ### Minor changes
 * KSPMAnalyzer: bump tag to 1.7.0
