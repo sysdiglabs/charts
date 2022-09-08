@@ -4,6 +4,11 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.15.35
+
+### Minor changes
+* Added cerftificatesigningrequests resources to clusterrole
+
 ## v1.15.34
 ### Minor changes
 * RuntimeScanner: bumped to 1.2.7 which:
