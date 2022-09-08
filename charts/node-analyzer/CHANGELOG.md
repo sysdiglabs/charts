@@ -7,7 +7,7 @@ This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The 
 ## v1.7.9
 ### Minor changes
 * RuntimeScanner: bumped to 1.2.7 which:
-  * replace the old golang analyzer with a new one, to generate more accurate results.
+  * removed the old golang analyzer based on the go.sum files. Only go packages from binary will be analyzed.
   * fixes several bugs in loading images into openshift clusters.
   * improve memory consumption.
 
