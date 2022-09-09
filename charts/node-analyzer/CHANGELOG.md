@@ -4,6 +4,10 @@
 
 This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.7.10
+### Minor changes
+* Security updates (August 2022) for NodeImageAnalyzer and HostAnalyzer components
+
 ## v1.7.9
 ### Minor changes
 * RuntimeScanner: bumped to 1.2.7 which:
@@ -76,7 +80,7 @@ This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The 
 
 ## v1.5.10
 ### Bugfixes
-* Removed duplicate labels from deployment of `app.kubernetes.io/instance` 
+* Removed duplicate labels from deployment of `app.kubernetes.io/instance`
 
 ## v1.5.9
 ### Minor changes
