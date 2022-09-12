@@ -4,6 +4,10 @@
 
 This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.3.14
+### Minor changes
+* Added cerftificatesigningrequests resources to clusterrole
+
 ## v1.3.13
 
 ### Minor changes
