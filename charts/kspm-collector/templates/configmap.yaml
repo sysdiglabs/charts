@@ -18,9 +18,7 @@ data:
   health_interval_minutes: {{ .Values.healthIntervalMin | default 5 | quote }}
   external_nats_url: {{ include "kspmCollector.natsUrl" . }}
   cluster_name: {{ required "A valid clusterName is required" (include "kspmCollector.clusterName" .) }}
-  {{- if hasKey .Values "sslVerifyCertificate" }}
-  nats_insecure: "{{ not .Values.sslVerifyCertificate }}"
-  {{- end }}
+  nats_insecure: {{ template "kspmCollector.natsInsecure" }}
   {{- if (.Values.httpProxy | default .Values.global.proxy.httpProxy) }}
   http_proxy: {{ .Values.httpProxy | default .Values.global.proxy.httpProxy }}
   {{- end -}}

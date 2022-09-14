@@ -134,6 +134,19 @@ Sysdig NATS service URL
 {{- end -}}
 {{- end -}}
 
+
+{{/*
+ Helper to define if to enable nats_insecure
+*/}}
+{{- define "kspmCollector.natsInsecure" -}}
+{{- if or (.Values.sslVerifyCertificate) (.Values.global.sslVerifyCertificate) -}}
+    "false"
+{{- else -}}
+    "true"
+{{- end -}}
+{{- end -}}
+
+
 {{/*
 Returns the namespace for installing components
 */}}
