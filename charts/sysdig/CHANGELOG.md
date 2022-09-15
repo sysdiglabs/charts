@@ -4,6 +4,10 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.15.36
+### Minor changes
+* RuntimeScanner: bumped to 1.2.8 with a fix regarding the dpkg packages version used to match vulnerabilities.
+
 ## v1.15.35
 ### Minor changes
 * Security updates (August 2022) for NodeImageAnalyzer and HostAnalyzer components
