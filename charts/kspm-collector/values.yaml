@@ -13,10 +13,10 @@ global:
   clusterConfig: {}
   sysdig:
     region: "us1"
+  sslVerifyCertificate:
   proxy: {}
   kspm:
     deploy: true
-  sslVerifyCertificate:
 
 sysdig:
   # Required: You need your Sysdig access key before running agents, either specifying 'accessKey' here, or using 'existingAccessKeySecret'
