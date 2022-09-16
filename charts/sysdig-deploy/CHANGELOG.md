@@ -4,6 +4,11 @@
 
 This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.3.15
+
+### Minor changes
+* Updating kspm-collector minimum version to 0.1.10
+
 ## v1.3.14
 
 ### Minor changes
