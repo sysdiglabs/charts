@@ -4,6 +4,10 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.15.37
+### Minor changes
+* HostAnalyzer: fixed certificates issue introduced in 0.1.10
+
 ## v1.15.36
 ### Minor changes
 * RuntimeScanner: bumped to 1.2.8 with a fix regarding the dpkg packages version used to match vulnerabilities.

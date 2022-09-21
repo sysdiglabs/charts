@@ -170,7 +170,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `nodeAnalyzer.imageAnalyzer.env`                                     | Extra environment variables that will be passed onto pods                                | `{}`                                                                           |
 | `nodeAnalyzer.hostAnalyzer.deploy`                                   | Deploy the Host Analyzer                                                                 | `true    `                                                                     |
 | `nodeAnalyzer.hostAnalyzer.image.repository`                         | The image repository to pull the Host Analyzer from                                      | `sysdig/host-analyzer`                                                         |
-| `nodeAnalyzer.hostAnalyzer.image.tag`                                | The image tag to pull the Host Analyzer                                                  | `0.1.10`                                                                       |
+| `nodeAnalyzer.hostAnalyzer.image.tag`                                | The image tag to pull the Host Analyzer                                                  | `0.1.11`                                                                       |
 | `nodeAnalyzer.hostAnalyzer.image.digest`                             | The image digest to pull                                                                 | ` `                                                                            |
 | `nodeAnalyzer.hostAnalyzer.image.pullPolicy`                         | The Image pull policy for the Host Analyzer                                              | `IfNotPresent`                                                                 |
 | `nodeAnalyzer.hostAnalyzer.schedule`                                 | The scanning schedule specification for the host analyzer expressed as a crontab         | `@dailydefault`                                                                |
@@ -414,7 +414,7 @@ To enable the KSPM Collector set the kspm.deploy flag to true:
 Note that the flag ```kspm.deploy``` enables both KSPM node analyzer and KSPM collector.
 
 ## GKE Autopilot
-Autopilot is an operation mode for creating and managing clusters in GKE. 
+Autopilot is an operation mode for creating and managing clusters in GKE.
 With Autopilot, Google configures and manages the underlying node infrastructure for you.
 
 To deploy the Sysdig agent in GKE clusters running in Autopilot mode, run:
@@ -423,7 +423,7 @@ To deploy the Sysdig agent in GKE clusters running in Autopilot mode, run:
 $ helm install --namespace sysdig-agent sysdig-agent --set sysdig.accessKey=YOUR-KEY-HERE --set sysdig.settings.collector=COLLECTOR_URL sysdig/sysdig --set gke.autopilot=true
 ```
 
-When the flag `gke.autopilot=true` gets `true`, the chart configuration is overridden as follows: 
+When the flag `gke.autopilot=true` gets `true`, the chart configuration is overridden as follows:
  - `nodeAnalyzer.deploy=false`
  - `ebpf.enabled=true`
  - `ebpf.settings.mountEtcVolume=false`

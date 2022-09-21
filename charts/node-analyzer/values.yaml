@@ -185,7 +185,7 @@ nodeAnalyzer:
     deploy: true
     image:
       repository: sysdig/host-analyzer
-      tag: 0.1.10
+      tag: 0.1.11
       digest:
       pullPolicy: IfNotPresent
 
