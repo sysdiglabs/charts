@@ -1,6 +1,14 @@
 # Default values for admission-controller.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
+global:
+  clusterConfig: {}
+  sysdig:
+    secureAPIToken: ""
+    secureAPITokenSecret: ""
+  proxy:
+    httpProxy: ""
+    httpsProxy: ""
 
 
 # **required**

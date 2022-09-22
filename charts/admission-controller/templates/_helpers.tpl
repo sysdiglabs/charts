@@ -231,3 +231,19 @@ Allow overriding registry and repository for air-gapped environments
     {{- $globalRegistry | default $imageRegistry | default "docker.io" -}} / {{- $imageRepository -}} {{- if $imageDigest -}} @ {{- $imageDigest -}} {{- else -}} : {{- $imageTag -}} {{- end -}}
 {{- end -}}
 {{- end -}}
+{{/*
+
+The following helper functions are all designed to use global values where
+possible, but accept overrides from the chart values.
+*/}}
+{{- define "sysdig.secureAPIToken" -}}
+    {{- required "A valid secureAPIToken is required" (.Values.sysdig.secureAPIToken | default .Values.global.sysdig.secureAPIToken) -}}
+{{- end -}}
+
+{{- define "sysdig.secureAPITokenSecret" -}}
+    {{- .Values.sysdig.existingSecureAPITokenSecret | default .Values.global.sysdig.secureAPITokenSecret | default "" -}}
+{{- end -}}
+
+{{- define "clusterName" -}}
+    {{- required "A valid cluster name is required" (.Values.clusterName| default .Values.global.sysdig.clusterConfig.name) -}}
+{{- end -}}

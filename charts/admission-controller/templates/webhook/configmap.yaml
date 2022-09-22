@@ -11,7 +11,7 @@ data:
   {{- else }}
   SCANNER_URL: ""
   {{- end }}
-  CLUSTER_NAME: {{ required "value 'clusterName' is required, but is not set"  .Values.clusterName }}
+  CLUSTER_NAME: {{ include "clusterName" . }}
   LOG_LEVEL: "{{ .Values.webhook.logLevel }}"
   VERIFY_SSL: "{{ .Values.verifySSL }}"
   K8S_AUDIT_DETECTIONS: "{{ .Values.features.k8sAuditDetections }}"
