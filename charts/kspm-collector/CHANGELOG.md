@@ -1,3 +1,7 @@
+# v0.1.10
+### Minor change
+* Improving nats_insecure conditional logic
+
 # v0.1.9
 ### Minor change
 * Bumped image tag to 1.8.0

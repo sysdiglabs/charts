@@ -447,7 +447,7 @@ nodeAnalyzer:
     deploy: true
     image:
       repository: sysdig/host-analyzer
-      tag: 0.1.10
+      tag: 0.1.11
       digest:
       pullPolicy: IfNotPresent
 
@@ -495,7 +495,7 @@ nodeAnalyzer:
     deploy: false
     image:
       repository: sysdig/vuln-runtime-scanner
-      tag: 1.2.7
+      tag: 1.2.8
       digest:
       pullPolicy: IfNotPresent
 

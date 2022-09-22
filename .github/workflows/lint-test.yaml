@@ -55,11 +55,10 @@ jobs:
             echo "::set-output name=changed::true"
           fi
 
-      - name: Create kind cluster
-        uses: helm/kind-action@v1.2.0
+      - name: Set up testing cluster
+        uses: jupyterhub/action-k3s-helm@v3
         with:
-          wait: 120s
-        if: steps.list-changed.outputs.changed == 'true'
+          k3s-version: v1.23.9+k3s1
 
       - name: Run chart-testing (install)
-        run: ct install
+        run: ct install --upgrade

@@ -4,7 +4,7 @@ debug: false
 httpProxy:
 httpsProxy:
 noProxy:
-
+sslVerifyCertificate:
 # Namespace to deploy to (Optional: Will default to release namespace)
 namespace:
 
@@ -13,6 +13,7 @@ global:
   clusterConfig: {}
   sysdig:
     region: "us1"
+  sslVerifyCertificate:
   proxy: {}
   kspm:
     deploy: true

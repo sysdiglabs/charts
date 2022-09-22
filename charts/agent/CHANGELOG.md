@@ -4,15 +4,19 @@
 
 This file documents all notable changes to the Sysdig Agent Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.5.23
+### Minor changes
+* Added certificatesigningrequests resources in agent clusterrole
+
 ## v1.5.22
 
 ### Minor changes
-* Added certificatesigningrequests resources in agent clusterrole
+* Add deployment test to agent chart
 
 ## v1.5.21
 
 ### Minor changes
-* Moved the clusterrole's Ingresses resource in the networking.k8s.io group 
+* Moved the clusterrole's Ingresses resource in the networking.k8s.io group
 
 ## v1.5.19
 

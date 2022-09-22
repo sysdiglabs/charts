@@ -4,9 +4,19 @@
 
 This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
-## v1.3.14
+## v1.3.16
 ### Minor changes
 * Added cerftificatesigningrequests resources to clusterrole
+
+## v1.3.15
+
+### Minor changes
+* Updating kspm-collector minimum version to 0.1.10
+
+## v1.3.14
+
+### Minor changes
+* Add deployment test to agent chart
 
 ## v1.3.13
 
@@ -29,7 +39,7 @@ This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. Th
 
 ### Minor changes
 * Bumped nodeAnalyzer to 1.7.5
-* Bumped benchmark runner to 1.0.18.2 
+* Bumped benchmark runner to 1.0.18.2
 
 ## v1.3.8
 
