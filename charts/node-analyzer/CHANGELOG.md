@@ -4,6 +4,41 @@
 
 This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.7.12
+### Minor changes
+* HostAnalyzer: fixed certificates issue introduced in 0.1.10
+
+## v1.7.11
+### Minor changes
+* RuntimeScanner: bumped to 1.2.8 with a fix regarding the dpkg packages version used to match vulnerabilities.
+
+## v1.7.10
+### Minor changes
+* Security updates (August 2022) for NodeImageAnalyzer and HostAnalyzer components
+
+## v1.7.9
+### Minor changes
+* RuntimeScanner: bumped to 1.2.7 which:
+  * removed the old golang analyzer based on the go.sum files. Only go packages from binary will be analyzed.
+  * fixes several bugs in loading images into openshift clusters.
+  * improve memory consumption.
+
+## v1.7.8
+### Minor changes
+* KSPMAnalyzer: bump tag to 1.8.0
+
+## v1.7.7
+### Minor changes
+* KSPMAnalyzer: bump tag to 1.7.0
+
+## v1.7.6
+### Minor changes
+* kspm-analyzer: Fixed configmap reference for environment variables
+
+## v1.7.5
+### Minor changes
+* BenchmarkRunner: bump tag to 1.0.18.2
+
 ## v1.7.4
 ### Minor changes
 * RuntimeScanner: bumped to 1.2.6 with fix of ignoring the fix solution date of a vuln when no fix version is available
@@ -53,7 +88,7 @@ This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The 
 
 ## v1.5.10
 ### Bugfixes
-* Removed duplicate labels from deployment of `app.kubernetes.io/instance` 
+* Removed duplicate labels from deployment of `app.kubernetes.io/instance`
 
 ## v1.5.9
 ### Minor changes

@@ -86,7 +86,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 |----------------------------------------------------------------------|------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------|
 | `image.registry`                                                     | Sysdig Agent image registry                                                              | `quay.io`                                                                      |
 | `image.repository`                                                   | The image repository to pull from                                                        | `sysdig/agent`                                                                 |
-| `image.tag`                                                          | The image tag to pull                                                                    | `12.8.0`                                                                       |
+| `image.tag`                                                          | The image tag to pull                                                                    | `12.8.1`                                                                       |
 | `image.digest`                                                       | The image digest to pull                                                                 | ` `                                                                            |
 | `image.pullPolicy`                                                   | The Image pull policy                                                                    | `IfNotPresent`                                                                 |
 | `image.pullSecrets`                                                  | Image pull secrets                                                                       | `nil`                                                                          |
@@ -155,7 +155,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `nodeAnalyzer.pullSecrets`                                           | Image pull secrets for the Node Analyzer containers                                      | `nil`                                                                          |
 | `nodeAnalyzer.imageAnalyzer.deploy`                                  | Deploy the Image Analyzer                                                                | `true    `                                                                     |
 | `nodeAnalyzer.imageAnalyzer.image.repository`                        | The image repository to pull the Node Image Analyzer from                                | `sysdig/node-image-analyzer`                                                   |
-| `nodeAnalyzer.imageAnalyzer.image.tag`                               | The image tag to pull the Node Image Analyzer                                            | `0.1.18`                                                                       |
+| `nodeAnalyzer.imageAnalyzer.image.tag`                               | The image tag to pull the Node Image Analyzer                                            | `0.1.19`                                                                       |
 | `nodeAnalyzer.imageAnalyzer.image.digest`                            | The image digest to pull                                                                 | ` `                                                                            |
 | `nodeAnalyzer.imageAnalyzer.image.pullPolicy`                        | The Image pull policy for the Node Image Analyzer                                        | `IfNotPresent`                                                                 |
 | `nodeAnalyzer.imageAnalyzer.dockerSocketPath`                        | The Docker socket path                                                                   |                                                                                |
@@ -170,7 +170,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `nodeAnalyzer.imageAnalyzer.env`                                     | Extra environment variables that will be passed onto pods                                | `{}`                                                                           |
 | `nodeAnalyzer.hostAnalyzer.deploy`                                   | Deploy the Host Analyzer                                                                 | `true    `                                                                     |
 | `nodeAnalyzer.hostAnalyzer.image.repository`                         | The image repository to pull the Host Analyzer from                                      | `sysdig/host-analyzer`                                                         |
-| `nodeAnalyzer.hostAnalyzer.image.tag`                                | The image tag to pull the Host Analyzer                                                  | `0.1.9`                                                                        |
+| `nodeAnalyzer.hostAnalyzer.image.tag`                                | The image tag to pull the Host Analyzer                                                  | `0.1.11`                                                                       |
 | `nodeAnalyzer.hostAnalyzer.image.digest`                             | The image digest to pull                                                                 | ` `                                                                            |
 | `nodeAnalyzer.hostAnalyzer.image.pullPolicy`                         | The Image pull policy for the Host Analyzer                                              | `IfNotPresent`                                                                 |
 | `nodeAnalyzer.hostAnalyzer.schedule`                                 | The scanning schedule specification for the host analyzer expressed as a crontab         | `@dailydefault`                                                                |
@@ -195,7 +195,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `nodeAnalyzer.runtimeScanner.deploy`                                 | Deploy the Runtime Scanner                                                               | `false`                                                                        |
 | `nodeAnalyzer.runtimeScanner.extraMounts`                            | Specify a container engine custom socket path (docker, containerd, CRI-O)                |                                                                                |
 | `nodeAnalyzer.runtimeScanner.image.repository`                       | The image repository to pull the Runtime Scanner from                                    | `sysdig/eveclient-api`                                                         |
-| `nodeAnalyzer.runtimeScanner.image.tag`                              | The image tag to pull the Runtime Scanner                                                | `1.2.6`                                                                        |
+| `nodeAnalyzer.runtimeScanner.image.tag`                              | The image tag to pull the Runtime Scanner                                                | `1.2.8`                                                                        |
 | `nodeAnalyzer.runtimeScanner.image.digest`                           | The image digest to pull                                                                 | ` `                                                                            |
 | `nodeAnalyzer.runtimeScanner.image.pullPolicy`                       | The image pull policy for the Runtime Scanner                                            | `IfNotPresent`                                                                 |
 | `nodeAnalyzer.runtimeScanner.resources.requests.cpu`                 | Runtime Scanner CPU requests per node                                                    | `250m`                                                                         |
@@ -414,7 +414,7 @@ To enable the KSPM Collector set the kspm.deploy flag to true:
 Note that the flag ```kspm.deploy``` enables both KSPM node analyzer and KSPM collector.
 
 ## GKE Autopilot
-Autopilot is an operation mode for creating and managing clusters in GKE. 
+Autopilot is an operation mode for creating and managing clusters in GKE.
 With Autopilot, Google configures and manages the underlying node infrastructure for you.
 
 To deploy the Sysdig agent in GKE clusters running in Autopilot mode, run:
@@ -423,7 +423,7 @@ To deploy the Sysdig agent in GKE clusters running in Autopilot mode, run:
 $ helm install --namespace sysdig-agent sysdig-agent --set sysdig.accessKey=YOUR-KEY-HERE --set sysdig.settings.collector=COLLECTOR_URL sysdig/sysdig --set gke.autopilot=true
 ```
 
-When the flag `gke.autopilot=true` gets `true`, the chart configuration is overridden as follows: 
+When the flag `gke.autopilot=true` gets `true`, the chart configuration is overridden as follows:
  - `nodeAnalyzer.deploy=false`
  - `ebpf.enabled=true`
  - `ebpf.settings.mountEtcVolume=false`

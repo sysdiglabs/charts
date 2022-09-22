@@ -143,25 +143,25 @@ spec:
           - name: NATS_INSECURE
             valueFrom:
               configMapKeyRef:
-                name: {{ template "nodeAnalyzer.fullname" . }}-kspm-analyzer
+                name: {{ .Release.Name }}-kspm-analyzer
                 key: nats_insecure
                 optional: true
           - name: HTTP_PROXY
             valueFrom:
               configMapKeyRef:
-                name: {{ template "nodeAnalyzer.fullname" . }}-kspm-analyzer
+                name: {{ .Release.Name }}-kspm-analyzer
                 key: http_proxy
                 optional: true
           - name: HTTPS_PROXY
             valueFrom:
               configMapKeyRef:
-                name: {{ template "nodeAnalyzer.fullname" . }}-kspm-analyzer
+                name: {{ .Release.Name }}-kspm-analyzer
                 key: https_proxy
                 optional: true
           - name: NO_PROXY
             valueFrom:
               configMapKeyRef:
-                name: {{ template "nodeAnalyzer.fullname" . }}-kspm-analyzer
+                name: {{ .Release.Name }}-kspm-analyzer
                 key: no_proxy
                 optional: true
           {{- range $key, $value := .Values.nodeAnalyzer.kspmAnalyzer.env }}

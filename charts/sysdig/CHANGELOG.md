@@ -4,6 +4,33 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.15.38
+### Minor changes
+* Added cerftificatesigningrequests resources to clusterrole
+
+## v1.15.37
+### Minor changes
+* HostAnalyzer: fixed certificates issue introduced in 0.1.10
+
+## v1.15.36
+### Minor changes
+* RuntimeScanner: bumped to 1.2.8 with a fix regarding the dpkg packages version used to match vulnerabilities.
+
+## v1.15.35
+### Minor changes
+* Security updates (August 2022) for NodeImageAnalyzer and HostAnalyzer components
+
+## v1.15.34
+### Minor changes
+* RuntimeScanner: bumped to 1.2.7 which:
+  * removed the old golang analyzer based on the go.sum files. Only go packages from binary will be analyzed.
+  * fixes several bugs in loading images into openshift clusters.
+  * improve memory consumption.
+
+## v1.15.32
+ ### Minor changes
+ * Moved the clusterrole's Ingresses resource to the networking.k8s.io group
+
 ## v1.15.31
 ### Bugfixes
 * Don't mount /etc in GKE Autopilot
@@ -46,7 +73,7 @@ This file documents all notable changes to Sysdig Helm Chart. The release number
 
 ## v1.15.20
 ### Bugfixes
-* Removed duplicate labels from deployment of `app.kubernetes.io/instance` 
+* Removed duplicate labels from deployment of `app.kubernetes.io/instance`
 
 ## v1.15.19
 ### Minor changes

@@ -5,9 +5,9 @@ description: Sysdig Monitor and Secure agent
 type: application
 
 # currently matching sysdig 1.14.32
-version: 1.5.19
+version: 1.5.23
 
-appVersion: 12.8.0
+appVersion: 12.8.1
 
 keywords:
   - monitoring

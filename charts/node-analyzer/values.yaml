@@ -134,7 +134,7 @@ nodeAnalyzer:
     deploy: true
     image:
       repository: sysdig/node-image-analyzer
-      tag: 0.1.18
+      tag: 0.1.19
       digest:
       pullPolicy: IfNotPresent
 
@@ -185,7 +185,7 @@ nodeAnalyzer:
     deploy: true
     image:
       repository: sysdig/host-analyzer
-      tag: 0.1.9
+      tag: 0.1.11
       digest:
       pullPolicy: IfNotPresent
 
@@ -215,7 +215,7 @@ nodeAnalyzer:
 
     image:
       repository: sysdig/compliance-benchmark-runner
-      tag: 1.0.18.1
+      tag: 1.0.18.2
       digest:
       pullPolicy: IfNotPresent
 
@@ -233,7 +233,7 @@ nodeAnalyzer:
     deploy: false
     image:
       repository: sysdig/vuln-runtime-scanner
-      tag: 1.2.6
+      tag: 1.2.8
       digest:
       pullPolicy: IfNotPresent
 
@@ -281,7 +281,7 @@ nodeAnalyzer:
     debug: false
     image:
       repository: sysdig/kspm-analyzer
-      tag: 1.6.0
+      tag: 1.8.0
       digest:
       pullPolicy: IfNotPresent
 
