@@ -4,6 +4,10 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.15.38
+### Minor changes
+* Added cerftificatesigningrequests resources to clusterrole
+
 ## v1.15.37
 ### Minor changes
 * HostAnalyzer: fixed certificates issue introduced in 0.1.10
