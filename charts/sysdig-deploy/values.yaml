@@ -5,7 +5,7 @@ global:
     accessKey: ""
     accessKeySecret: ""
     secureAPIToken: ""
-    existingSecureAPITokenSecre: ""
+    secureAPITokenSecret: ""
     region: "us1"
   proxy: {}
   kspm:
