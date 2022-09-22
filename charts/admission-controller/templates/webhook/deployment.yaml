@@ -70,11 +70,11 @@ spec:
             {{- end }}
           imagePullPolicy: {{ .Values.webhook.image.pullPolicy }}
           env:
-            {{- if (or .Values.webhook.httpProxy .Values.webhook.httpsProxy) }}
+            {{- if (or (include "webhook.httpProxy" .) (include "webhook.httpsProxy" .) )}}
             - name: HTTP_PROXY
-              value: {{ .Values.webhook.httpProxy }}
+              value: {{ include "webhook.httpProxy" . }}
             - name: HTTPS_PROXY
-              value: {{ .Values.webhook.httpsProxy }}
+              value: {{ include "webhook.httpsProxy" . }}
             - name: NO_PROXY
               value: {{ .Values.webhook.noProxy }},{{ include "admission-controller.scanner.fullname" . }}
             {{- end }}

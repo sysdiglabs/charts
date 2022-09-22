@@ -71,11 +71,11 @@ spec:
           {{- end }}
           imagePullPolicy: {{ .Values.scanner.image.pullPolicy }}
           env:
-            {{- if (or .Values.scanner.httpProxy .Values.scanner.httpsProxy) }}
+            {{- if (or (include "scanner.httpProxy" .) (include "scanner.httpsProxy" .)) }}
             - name: HTTP_PROXY
-              value: {{ .Values.scanner.httpProxy }}
+              value: {{ include "scanner.httpProxy" . }}
             - name: HTTPS_PROXY
-              value: {{ .Values.scanner.httpsProxy }}
+              value: {{ include "scanner.httpsProxy" . }}
             - name: NO_PROXY
               value: {{ .Values.scanner.noProxy }}
             {{- end }}

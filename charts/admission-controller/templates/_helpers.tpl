@@ -247,3 +247,19 @@ possible, but accept overrides from the chart values.
 {{- define "clusterName" -}}
     {{- required "A valid cluster name is required" (.Values.clusterName| default .Values.global.sysdig.clusterConfig.name) -}}
 {{- end -}}
+
+{{- define "scanner.httpProxy" -}}
+    {{- .Values.scanner.httpProxy | default .Values.global.proxy.httpProxy | default "" -}}
+{{- end -}}
+
+{{- define "scanner.httpsProxy" -}}
+    {{- .Values.scanner.httpsProxy | default .Values.global.proxy.httpsProxy | default "" -}}
+{{- end -}}
+
+{{- define "webhook.httpProxy" -}}
+    {{- .Values.webhook.httpProxy | default .Values.global.proxy.httpProxy | default "" -}}
+{{- end -}}
+
+{{- define "webhook.httpsProxy" -}}
+    {{- .Values.webhook.httpsProxy | default .Values.global.proxy.httpsProxy | default "" -}}
+{{- end -}}
