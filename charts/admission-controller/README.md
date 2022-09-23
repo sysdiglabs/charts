@@ -23,8 +23,9 @@ $ pre-commit run -a
 $ helm repo add sysdig https://charts.sysdig.com
 $ helm repo update
 $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-      --create-namespace -n sysdig-admission-controller --version=0.6.20  \
+      --create-namespace -n sysdig-admission-controller --version=0.6.21  \
       --set clusterName=CLUSTER_NAME \
+      --set sysdig.url=SECURE_URL \
       --set sysdig.secureAPIToken=SECURE_API_TOKEN
 ```
 
@@ -55,7 +56,7 @@ This chart deploys the Sysdig Admission Controller on a [Kubernetes](http://kube
 To install the chart with the release name `admission-controller`:
 
 ```console
-$ helm upgrade --install sysdig-admission-controller sysdig/admission-controller -n sysdig-admission-controller --version=0.6.20
+$ helm upgrade --install sysdig-admission-controller sysdig/admission-controller -n sysdig-admission-controller --version=0.6.21
 ```
 
 The command deploys the Sysdig Admission Controller on the Kubernetes cluster in the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.
@@ -83,7 +84,7 @@ The following table lists the configurable parameters of the `admission-controll
 | clusterName                                        | **required** <br/>Cluster Name which appear on Secure UI                                                                                                                                                                                                                                                                                                                                                                                                            | <code>""</code>                                                                                                                                                                                    |
 | sysdig.secureAPIToken                              | **required** <br/> API Token to access Sysdig Secure. <br/><br/>If neither this value nor `sysdig.existingSecureAPITokenSecret` are configured, the user will be required to provide the deployment the `SECURE_API_TOKEN` (and `AUTH_BEARER_TOKEN` if the scanner is enabled) environment variables.                                                                                                                                                               | <code>""</code>                                                                                                                                                                                    |
 | sysdig.existingSecureAPITokenSecret                | **required** <br/>Existing secret with API Token to access Sysdig Secure <br/>Alternatively, specify the name of a Kubernetes secret containing `SECURE_API_TOKEN` and `AUTH_BEARER_TOKEN` entry if you're also enabling scanner. <br/><br/>If neither this value nor `sysdig.secureAPIToken` are configured, the user will be required to provide the deployment the `SECURE_API_TOKEN` (and `AUTH_BEARER_TOKEN` if the scanner is enabled) environment variables. | <code>""</code>                                                                                                                                                                                    |
-| sysdig.url                                         | The Sysdig URL prefix                                                                                                                                                                                                                                                                                                                                                                                                                                               | <code>"https://secure.sysdig.com"</code>                                                                                                                                                           |
+| sysdig.url                                         | Sysdig URL.<br/> <ul> <li>Default https://secure.sysdig.com is for the us-east region.</li> <li>For us-west use https://us2.app.sysdig.com</li> <li>For European Union, use https://eu1.app.sysdig.com</li> <li>For APAC, use https://app.au1.sysdig.com</li> <li>For US4 (our west Google cloud region) use https://app.us4.sysdig.com</li> <li>For on-prem, your own enpoints</li> </ul>                                                                          | <code>"https://secure.sysdig.com"</code>                                                                                                                                                           |
 | features.k8sAuditDetections                        | Enable K8s Audit detections with Falco rules                                                                                                                                                                                                                                                                                                                                                                                                                        | <code>true</code>                                                                                                                                                                                  |
 | features.k8sAuditDetectionsRules                   | [Admission Webhook Configuration rules](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#matching-requests-rules) for the Audit Detections                                                                                                                                                                                                                                                                                 | <code>[{"apiGroups":["","apps","autoscaling","batch","networking.k8s.io","rbac.authorization.k8s.io","extensions"],"apiVersions":["*"],"operations":["*"],"resources":["*/*"],"scope":"*"}]</code> |
 | verifySSL                                          | For outbound connections (secure backend, proxy,...) <br/>Whether to verify SSL on HTTPS connections                                                                                                                                                                                                                                                                                                                                                                | <code>true</code>                                                                                                                                                                                  |
@@ -168,8 +169,8 @@ Specify each parameter using the **`--set key=value[,key=value]`** argument to `
 
 ```console
 $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-    --create-namespace -n sysdig-admission-controller --version=0.6.20 \
-    --set sysdig.secureAPIToken=YOUR-KEY-HERE,clusterName=YOUR-CLUSTER-NAME
+    --create-namespace -n sysdig-admission-controller --version=0.6.21 \
+    --set sysdig.secureAPIToken=YOUR-KEY-HERE,sysdig.url=SECURE_URL,clusterName=YOUR-CLUSTER-NAME
 ```
 
 **Alternatively, a YAML file** that specifies the values for the parameters can be provided while
@@ -177,7 +178,7 @@ installing the chart. For example:
 
 ```console
 $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-    --create-namespace -n sysdig-admission-controller --version=0.6.20 \
+    --create-namespace -n sysdig-admission-controller --version=0.6.21 \
     --values values.yaml
 ```
 
@@ -253,6 +254,7 @@ If your Proxy is served with TLS
 $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
       --create-namespace -n sysdig-admission-controller \
       --set clusterName=CLUSTER_NAME \
+      --set sysdig.url=SECURE_URL \
       --set sysdig.secureAPIToken=SECURE_API_TOKEN
 ```
 
