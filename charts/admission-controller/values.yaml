@@ -26,14 +26,12 @@ sysdig:
   existingSecureAPITokenSecret: ""
 
   # Sysdig URL.<br/>
-  # <ul>
-  # <li>Default https://secure.sysdig.com is for the us-east region.</li>
-  # <li>For us-west use https://us2.app.sysdig.com</li>
-  # <li>For European Union, use https://eu1.app.sysdig.com</li>
-  # <li>For APAC, use https://app.au1.sysdig.com</li>
-  # <li>For US4 (our west Google cloud region) use https://app.us4.sysdig.com</li>
-  # <li>For on-prem, your own enpoints</li>
-  # </ul>
+  # - Default https://secure.sysdig.com is for the us-east region.<br/>
+  # - For us-west use https://us2.app.sysdig.com<br/>
+  # - For European Union, use https://eu1.app.sysdig.com<br/>
+  # - For APAC, use https://app.au1.sysdig.com<br/>
+  # - For US4 (our west Google cloud region) use https://app.us4.sysdig.com<br/>
+  # - For on-prem, your own enpoints<br/>
   url: "https://secure.sysdig.com"
 
 features:
