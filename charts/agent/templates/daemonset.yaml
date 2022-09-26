@@ -129,7 +129,7 @@ spec:
               name: sys-tracing
               readOnly: true
             {{- end }}
-            {{- if .Values.gke.autopilot }}
+            {{- if include "agent.gke.autopilot" . }}
             - mountPath: /host/etc/os-release
               name: osrel
               readOnly: true
@@ -193,7 +193,7 @@ spec:
               name: modprobe-d
               readOnly: true
             {{- end }}
-            {{- if .Values.gke.autopilot }}
+            {{- if include "agent.gke.autopilot" . }}
             - mountPath: /host/etc/os-release
               name: osrel
               readOnly: true
@@ -248,7 +248,7 @@ spec:
         - name: dshm
           emptyDir:
             medium: Memory
-        {{- if .Values.gke.autopilot }}
+        {{- if include "agent.gke.autopilot" . }}
         - name: osrel
           hostPath:
             path: /etc/os-release
