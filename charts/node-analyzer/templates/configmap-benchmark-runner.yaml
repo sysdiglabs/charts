@@ -1,4 +1,4 @@
-{{- if not .Values.gke.autopilot }}
+{{- if not (include "nodeAnalyzer.gke.autopilot" .) }}
 {{- if and .Values.nodeAnalyzer.deploy (include "nodeAnalyzer.deployBenchmarkRunner" .) }}
 apiVersion: v1
 kind: ConfigMap

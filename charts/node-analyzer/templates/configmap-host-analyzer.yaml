@@ -1,4 +1,4 @@
-{{- if not .Values.gke.autopilot }}
+{{- if not (include "nodeAnalyzer.gke.autopilot" .) }}
 {{ if not .Values.secure.vulnerabilityManagement.newEngineOnly }}
 {{- if and .Values.nodeAnalyzer.deploy (include "nodeAnalyzer.deployHostAnalyzer" .) }}
 apiVersion: v1

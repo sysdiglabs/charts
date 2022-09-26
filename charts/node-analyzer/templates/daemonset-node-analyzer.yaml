@@ -1,4 +1,4 @@
-{{- if not .Values.gke.autopilot }}
+{{- if not (include "nodeAnalyzer.gke.autopilot" .) }}
 {{- if (include "deploy-na" .) }}
 apiVersion: apps/v1
 kind: DaemonSet

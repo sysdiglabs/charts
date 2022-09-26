@@ -228,3 +228,12 @@ true
 true
 {{- end -}}
 {{- end -}}
+
+{{/*
+Deploy on GKE autopilot
+*/}}
+{{- define "nodeAnalyzer.gke.autopilot" -}}
+    {{- if (or .Values.global.gke.autopilot .Values.gke.autopilot) }}
+        true
+    {{- end -}}
+{{- end -}}

@@ -1,3 +1,4 @@
+{{- if not (include "nodeAnalyzer.gke.autopilot" .) }}
 {{ if .Values.global.kspm.deploy }}
 apiVersion: v1
 kind: ConfigMap
@@ -26,4 +27,5 @@ data:
   {{- if (.Values.nodeAnalyzer.noProxy | default .Values.global.proxy.noProxy) }}
   no_proxy: {{ .Values.nodeAnalyzer.noProxy | default .Values.global.proxy.noProxy }}
   {{- end -}}
+{{- end -}}
 {{- end -}}

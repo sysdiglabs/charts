@@ -1,3 +1,4 @@
+{{- if not (include "nodeAnalyzer.gke.autopilot" .) }}
 {{- if .Values.psp.create  }}
 apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
@@ -23,4 +24,5 @@ spec:
     rule: RunAsAny
   volumes:
   - '*'
+{{- end }}
 {{- end }}
