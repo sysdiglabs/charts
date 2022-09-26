@@ -67,6 +67,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `global.proxy.httpProxy`                       | Sets `http_proxy` on the Agent container                                                                                                   | `""`                                                        |
 | `global.proxy.httpsProxy`                      | Sets `https_proxy` on the Agent container                                                                                                  | `""`                                                        |
 | `global.proxy.noProxy`                         | Sets `no_proxy` on the Agent container                                                                                                     | `""`                                                        |
+| `global.gke.autopilot`                         | If true, overrides the agent configuration to run on GKE Autopilot clusters                                                                | `false`                                                        |
 | `namespace`                                    | Overrides the global namespace setting and release namespace for components.                                                               | `""`                                                        |
 | `image.registry`                               | Sysdig Agent image registry                                                                                                                | `quay.io`                                                   |
 | `image.repository`                             | The image repository to pull from                                                                                                          | `sysdig/agent`                                              |
@@ -199,10 +200,10 @@ See [Tuning Sysdig Agent](https://docs.sysdig.com/en/tuning-sysdig-agent.html) f
  To deploy the Sysdig agent in GKE clusters running in Autopilot mode, run:
 
  ```bash
- $ helm install --namespace sysdig-agent sysdig-agent --set sysdig.accessKey=YOUR-KEY-HERE --set sysdig.collectorSettings.collectorHost=COLLECTOR_URL sysdig/agent --set gke.autopilot=true
+ $ helm install --namespace sysdig-agent sysdig-agent --set global.sysdig.accessKey=YOUR-KEY-HERE --set global.gke.autopilot=true sysdig/agent
  ```
 
- When the flag `gke.autopilot=true` gets `true`, the chart configuration is overridden as follows: 
+ When the flag `global.gke.autopilot=true` gets `true`, the chart configuration is overridden as follows:
   - `ebpf.enabled=true`
   - `ebpf.settings.mountEtcVolume=false`
   - `daemonset.annotations='autopilot\.gke\.io/no-connect="true"'`
