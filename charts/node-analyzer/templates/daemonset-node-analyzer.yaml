@@ -498,6 +498,12 @@ spec:
                 name: {{ .Release.Name }}-runtime-scanner
                 key: analyzer.maxFileSizeAllowed
                 optional: true
+          - name: MAX_IMAGE_SIZE_ALLOWED
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-runtime-scanner
+                key: max_image_size_allowed
+                optional: true
           - name: SYSDIG_API_URL
             valueFrom:
               configMapKeyRef:

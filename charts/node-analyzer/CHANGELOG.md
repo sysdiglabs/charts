@@ -4,6 +4,12 @@
 
 This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.7.14
+### Minor changes
+* RuntimeScanner:
+	* bump to 1.2.9 version
+  	* configurable thresholds for maxFileSize and maxImageSize. Bigger files/images will be skipped
+
 ## v1.7.13
 ### Minor changes
 * Added a global gke autopilot flag
