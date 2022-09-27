@@ -30,4 +30,11 @@ data:
   {{- if hasKey .Values.nodeAnalyzer.runtimeScanner "settings" }}
   prom_port: {{ .Values.nodeAnalyzer.runtimeScanner.settings.prometheusPort | default 25001 | quote }}
   {{- end -}}
+
+  {{- if .Values.nodeAnalyzer.runtimeScanner.settings.maxImageSizeAllowed }}
+  max_image_size_allowed: {{ .Values.nodeAnalyzer.runtimeScanner.settings.maxImageSizeAllowed | quote }}
+  {{- end -}}
+  {{- if .Values.nodeAnalyzer.runtimeScanner.settings.maxFileSizeAllowed }}
+  analyzer.maxFileSizeAllowed: {{ .Values.nodeAnalyzer.runtimeScanner.settings.maxFileSizeAllowed | quote }}
+  {{- end -}}
 {{- end }}
