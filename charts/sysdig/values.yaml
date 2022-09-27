@@ -495,7 +495,7 @@ nodeAnalyzer:
     deploy: false
     image:
       repository: sysdig/vuln-runtime-scanner
-      tag: 1.2.8
+      tag: 1.2.9
       digest:
       pullPolicy: IfNotPresent
 
@@ -519,6 +519,14 @@ nodeAnalyzer:
 
     settings:
       eveEnabled: false
+      # Threshold for which images will be skipped in the analysis.
+      # Size is in bytes, default is not set (don't skip)
+      # maxImageSizeAllowed: ""
+
+      # Threshold for which files will be skipped in the analysis.
+      # Fine tune this parameter if you have large files that needs to be analyzed (eg: big .JAR files)
+      # Size is in bytes, default is 250MB
+      maxFileSizeAllowed: "262144000"
 
     eveConnector:
       deploy: false
