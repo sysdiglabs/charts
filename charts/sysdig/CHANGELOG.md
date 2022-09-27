@@ -4,6 +4,13 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.15.39
+### Minor changes
+* RuntimeScanner:
+	* bump to 1.2.9 version
+  	* configurable thresholds for maxFileSize and maxImageSize. Bigger files/images will be skipped
+	* logging about the skipping of a file to be analysed changed from error to warning.
+
 ## v1.15.38
 ### Minor changes
 * Added cerftificatesigningrequests resources to clusterrole
