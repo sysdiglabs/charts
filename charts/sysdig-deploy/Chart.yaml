@@ -4,7 +4,7 @@ description: A chart with various Sysdig components for Kubernetes
 
 type: application
 
-version: 1.3.17
+version: 1.3.18
 
 maintainers:
   - name: achandras
@@ -20,13 +20,13 @@ dependencies:
 - name: agent
   # repository: https://charts.sysdig.com
   repository: file://../agent
-  version: ~1.5.24
+  version: ~1.5.25
   alias: agent
   condition: agent.enabled
 - name: node-analyzer
   # repository: https://charts.sysdig.com
   repository: file://../node-analyzer
-  version: ~1.7.13
+  version: ~1.7.16
   alias: nodeAnalyzer
   condition: nodeAnalyzer.enabled
 - name: kspm-collector

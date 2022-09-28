@@ -4,6 +4,10 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.15.41
+### Bugfix
+* Don't deploy psp policies on k8s 1.25.x
+
 ## v1.15.40
 ### Minor changes
 * RuntimeScanner:
