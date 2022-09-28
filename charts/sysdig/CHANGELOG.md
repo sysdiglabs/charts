@@ -4,6 +4,12 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.15.40
+### Minor changes
+* RuntimeScanner:
+    * bump to 1.2.10 version
+    * add image size and storage info to warning log
+
 ## v1.15.39
 ### Minor changes
 * RuntimeScanner:
