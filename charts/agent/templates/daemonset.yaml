@@ -18,7 +18,7 @@ spec:
       labels:
 {{ include "agent.labels" . | indent 8 }}
 {{ include "daemonset.labels" . | indent 8 }}
-      {{- if .Values.gke.autopilot }}
+      {{- if (include "agent.gke.autopilot" .) }}
       annotations:
         autopilot.gke.io/no-connect: "true"
       {{- else }}
@@ -42,7 +42,7 @@ spec:
       nodeSelector:
 {{ toYaml .Values.daemonset.nodeSelector | indent 8 }}
       {{- end }}
-      {{- if .Values.gke.autopilot }}
+      {{- if (include "agent.gke.autopilot" .) }}
       affinity: null
       {{- else }}
       affinity:
@@ -89,7 +89,7 @@ spec:
           resources:
 {{ toYaml .Values.slim.resources | indent 12 }}
           env:
-          {{- if or (include "agent.ebpfEnabled" .) .Values.gke.autopilot }}
+          {{- if or (include "agent.ebpfEnabled" .) (include "agent.gke.autopilot" .) }}
             - name: SYSDIG_BPF_PROBE
               value:
           {{- end }}
@@ -122,14 +122,14 @@ spec:
             - mountPath: /host/usr
               name: usr-vol
               readOnly: true
-            {{- if or (include "agent.ebpfEnabled" .) .Values.gke.autopilot}}
+            {{- if or (include "agent.ebpfEnabled" .) (include "agent.gke.autopilot" .)}}
             - mountPath: /root/.sysdig
               name: bpf-probes
             - mountPath: /sys/kernel/debug
               name: sys-tracing
               readOnly: true
             {{- end }}
-            {{- if .Values.gke.autopilot }}
+            {{- if include "agent.gke.autopilot" . }}
             - mountPath: /host/etc/os-release
               name: osrel
               readOnly: true
@@ -159,7 +159,7 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: spec.nodeName
-            {{- if or (include "agent.ebpfEnabled" .)  .Values.gke.autopilot}}
+            {{- if or (include "agent.ebpfEnabled" .)  (include "agent.gke.autopilot" .)}}
             - name: SYSDIG_BPF_PROBE
               value:
             {{- end }}
@@ -193,7 +193,7 @@ spec:
               name: modprobe-d
               readOnly: true
             {{- end }}
-            {{- if .Values.gke.autopilot }}
+            {{- if include "agent.gke.autopilot" . }}
             - mountPath: /host/etc/os-release
               name: osrel
               readOnly: true
@@ -229,7 +229,7 @@ spec:
               name: sysdig-agent-config
             - mountPath: /opt/draios/etc/kubernetes/secrets
               name: sysdig-agent-secrets
-            {{- if (and (or (include "agent.ebpfEnabled" .) .Values.gke.autopilot) .Values.slim.enabled) }}
+            {{- if (and (or (include "agent.ebpfEnabled" .) (include "agent.gke.autopilot" .)) .Values.slim.enabled) }}
             - mountPath: /root/.sysdig
               name: bpf-probes
             - mountPath: /sys/kernel/debug
@@ -248,7 +248,7 @@ spec:
         - name: dshm
           emptyDir:
             medium: Memory
-        {{- if .Values.gke.autopilot }}
+        {{- if include "agent.gke.autopilot" . }}
         - name: osrel
           hostPath:
             path: /etc/os-release
@@ -279,7 +279,7 @@ spec:
         - name: varrun-vol
           hostPath:
             path: /var/run
-        {{- if (and (or (include "agent.ebpfEnabled" .) .Values.gke.autopilot) .Values.slim.enabled) }}
+        {{- if (and (or (include "agent.ebpfEnabled" .) (include "agent.gke.autopilot" .)) .Values.slim.enabled) }}
         - name: bpf-probes
           emptyDir: {}
         - name: sys-tracing

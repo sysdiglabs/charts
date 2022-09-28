@@ -73,7 +73,7 @@ Currently included components:
       ```
 
 
-    - Install with a values file. 
+    - Install with a values file.
 
       To do so, create a new file `values.sysdig.yaml`:
 
@@ -170,8 +170,8 @@ The following table lists the configurable parameters of this chart and their de
 | `global.clusterConfig.name`                  | Identifier for this cluster                                                                                             | `""`      |
 | `global.sysdig.accessKey`                    | Sysdig Agent Access Key                                                                                                 | `""`      |
 | `global.sysdig.accessKeySecret`              | The name of a Kubernetes secret containing an 'access-key' entry.                                                       | `""`      |
-| `global.sysdig.secureAPIToken`               | API Token to access Sysdig Secure                                                                                                 | `""`      |
-| `global.sysdig.existingSecureAPITokenSecre`  | The name of a Kubernetes secret containing API Token to access Sysdig Secure .                                                       | `""`      |
+| `global.sysdig.secureAPIToken`               | API Token to access Sysdig Secure                                                                                       | `""`      |
+| `global.sysdig.existingSecureAPITokenSecre`  | The name of a Kubernetes secret containing API Token to access Sysdig Secure .                                          | `""`      |
 | `global.sysdig.region`                       | The SaaS region for these agents. Possible values: `"us1"`, `"us2"`, `"us3"`, `"us4"`, `"eu1"`, `"au1"`, and `"custom"`. See [Regions and IP Ranges](https://docs.sysdig.com/en/docs/administration/saas-regions-and-ip-ranges/) for more information. | `"us1"`   |
 | `global.imageRegistry`                       | Container image registry                                                                                                | `` |
 | `global.proxy.httpProxy`                     | Sets `http_proxy` on the Agent container                                                                                | `""`      |
@@ -179,6 +179,7 @@ The following table lists the configurable parameters of this chart and their de
 | `global.proxy.noProxy`                       | Sets `no_proxy` on the Agent container                                                                                  | `""`      |
 | `global.kspm.deploy`                         | Enables Sysdig KSPM node analyzer & KSPM collector                                                                      | `false`   |
 | `global.agentConfigmapName`                  | Sets a configmap name that is used to mount the agent configmap to fetch the cluster name and agent tags                | `"sysdig-agent"`      |
+| `global.gke.autopilot`                       | If true, overrides the configuration to values for GKE Autopilot clusters                                               | `false`   |
 | `agent`                                      | Config specific to the [Sysdig Agent](#agent)                                                                           | `{}`      |
 | `agent.enabled`                              | Enable the agent component in this chart                                                                                | `true`    |
 | `nodeAnalyzer`                               | Config specific to the [Sysdig nodeAnalyzer](#nodeAnalyzer)                                                             | `{}`      |
@@ -186,7 +187,7 @@ The following table lists the configurable parameters of this chart and their de
 | `nodeAnalyzer.nodeAnalyzer.apiEndpoint`      | nodeAnalyzer apiEndpoint                                                                                                | `""`      |
 | `kspmCollector`                              | Config specific to the [Sysdig KSPM Collector](#kspm collector)                                                         | `{}`      |
 | `kspmCollector.apiEndpoint`                  | kspmCollector apiEndpoint                                                                                               | `""`      |
-| `admissionController.enabled`                | Enable the admission controller component in this chart                                                                                | `true`    |
+| `admissionController.enabled`                | Enable the admission controller component in this chart                                                                 | `true`    |
 
 ## Agent
 

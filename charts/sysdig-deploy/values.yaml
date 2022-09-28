@@ -11,6 +11,8 @@ global:
   kspm:
     deploy: false
   agentConfigmapName: "sysdig-agent"
+  gke:
+    autopilot: false
 
 agent:
   enabled: true

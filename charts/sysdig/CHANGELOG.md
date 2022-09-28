@@ -4,6 +4,23 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.15.41
+### Bugfix
+* Don't deploy psp policies on k8s 1.25.x
+
+## v1.15.40
+### Minor changes
+* RuntimeScanner:
+    * bump to 1.2.10 version
+    * add image size and storage info to warning log
+
+## v1.15.39
+### Minor changes
+* RuntimeScanner:
+	* bump to 1.2.9 version
+  	* configurable thresholds for maxFileSize and maxImageSize. Bigger files/images will be skipped
+	* logging about the skipping of a file to be analysed changed from error to warning.
+
 ## v1.15.38
 ### Minor changes
 * Added cerftificatesigningrequests resources to clusterrole

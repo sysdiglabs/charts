@@ -1,0 +1,41 @@
+name: Publish Sysdig-deploy to VM
+
+on:
+  push:
+    tags:
+    - 'sysdig-deploy*'
+
+env:
+  MKPCLI_VERSION: 0.14.1
+
+jobs:
+  publish-chart:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Get name from tag
+      id: tag_name
+      env:
+        TAG_REF: ${{ github.ref }}
+      run: |
+        echo "::set-output name=name::${TAG_REF#refs/tags/}"
+        echo "::set-output name=version::${TAG_REF#refs/tags/sysdig-deploy-}"
+
+    - name: Set up mkpcli
+      run: |
+        curl -LO https://github.com/vmware-labs/marketplace-cli/releases/download/v${MKPCLI_VERSION}/mkpcli-linux-amd64.tgz
+        tar xvf mkpcli-linux-amd64.tgz
+        chmod +x mkpcli
+
+    - name: Publish chart version
+      env:
+        TAG_NAME: ${{ steps.tag_name.outputs.name }}
+        VERSION: ${{ steps.tag_name.outputs.version }}
+        CSP_API_TOKEN: ${{ secrets.CSP_API_TOKEN }}
+      run: |
+        ./mkpcli attach chart \
+          -p sysdig-agent-helm-chart \
+          -c https://github.com/sysdiglabs/charts/releases/download/${TAG_NAME}/${TAG_NAME}.tgz \
+          -v ${VERSION} \
+          --create-version \
+          --instructions "https://charts.sysdig.com/charts/sysdig-deploy/" \
+          --csp-api-token ${CSP_API_TOKEN}

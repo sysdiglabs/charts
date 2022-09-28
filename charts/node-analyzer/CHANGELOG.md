@@ -4,6 +4,31 @@
 
 This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.7.17
+### Bug fix
+* Readme held incorrect values for runtimeScanner resources
+
+## v1.7.16
+### Bugfix
+* Don't deploy psp policies on k8s 1.25.x
+
+## v1.7.15
+### Minor changes
+* RuntimeScanner:
+    * bump to 1.2.10 version
+    * add image size and storage info to warning log
+
+## v1.7.14
+### Minor changes
+* RuntimeScanner:
+	* bump to 1.2.9 version
+  	* configurable thresholds for maxFileSize and maxImageSize. Bigger files/images will be skipped
+	* logging about the skipping of a file to be analysed changed from error to warning.
+
+## v1.7.13
+### Minor changes
+* Added a global gke autopilot flag
+
 ## v1.7.12
 ### Minor changes
 * HostAnalyzer: fixed certificates issue introduced in 0.1.10
