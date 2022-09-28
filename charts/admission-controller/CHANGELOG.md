@@ -1,4 +1,11 @@
-# admission-controller-0.6.20
+# admission-controller
 
-## Documentation
-- changelog addition
+## Change Log
+
+This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
+
+## v0.7.0
+
+### Major changes
+
+* Use global common values
