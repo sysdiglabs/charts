@@ -44,6 +44,6 @@ dependencies:
 - name: admission-controller
   # repository: https://charts.sysdig.com
   repository: file://../admission-controller
-  version: ~0.6.19
+  version: ~0.6.23
   alias: admissionController
   condition: admissionController.enabled
