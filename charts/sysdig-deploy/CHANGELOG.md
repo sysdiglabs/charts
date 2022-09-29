@@ -4,6 +4,14 @@
 
 This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.3.19
+### Bug fix
+* node-analyzer readme held incorrect values for runtimeScanner resources
+
+## v1.3.18
+### Bugfix
+* Don't deploy psp policies on k8s 1.25.x
+
 ## v1.3.17
 ### Minor changes
 * Added a global gke autopilot flag

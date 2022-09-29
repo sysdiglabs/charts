@@ -4,6 +4,20 @@
 
 This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.7.17
+### Bug fix
+* Readme held incorrect values for runtimeScanner resources
+
+## v1.7.16
+### Bugfix
+* Don't deploy psp policies on k8s 1.25.x
+
+## v1.7.15
+### Minor changes
+* RuntimeScanner:
+    * bump to 1.2.10 version
+    * add image size and storage info to warning log
+
 ## v1.7.14
 ### Minor changes
 * RuntimeScanner:
