@@ -245,7 +245,7 @@ possible, but accept overrides from the chart values.
 {{- end -}}
 
 {{- define "clusterName" -}}
-    {{- required "A valid cluster name is required" (.Values.clusterName| default .Values.global.sysdig.clusterConfig.name) -}}
+    {{- required "A valid cluster name is required" (.Values.clusterName| default .Values.global.clusterConfig.name) -}}
 {{- end -}}
 
 {{- define "scanner.httpProxy" -}}
