@@ -74,6 +74,8 @@ spec:
                 storageClassName: {{ .Values.nodeAnalyzer.runtimeScanner.storageClassName }}
                 resources:
                   requests:
+                    storage: {{ index .Values.nodeAnalyzer.runtimeScanner.resources.requests "ephemeral-storage" }}
+                  limits:
                     storage: {{ index .Values.nodeAnalyzer.runtimeScanner.resources.limits "ephemeral-storage" }}
           {{- else }}
           emptyDir: {}
