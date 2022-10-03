@@ -12,6 +12,7 @@ Currently included components:
 - [Sysdig agent](https://github.com/sysdiglabs/charts/tree/master/charts/agent)
 - [Sysdig NodeAnalyzer](https://github.com/sysdiglabs/charts/tree/master/charts/node-analyzer)
 - [Sysdig KSPM Collector](https://github.com/sysdiglabs/charts/tree/master/charts/kspm-collector)
+- [Sysdig Rapid Response](https://github.com/sysdiglabs/charts/tree/master/charts/rapid-response)
 
 ## Prerequisites
 
@@ -184,6 +185,8 @@ The following table lists the configurable parameters of this chart and their de
 | `nodeAnalyzer.nodeAnalyzer.apiEndpoint` | nodeAnalyzer apiEndpoint                                                                                                | `""`      |
 | `kspmCollector`                         | Config specific to the [Sysdig KSPM Collector](#kspm collector)                                                         | `{}`      |
 | `kspmCollector.apiEndpoint`             | kspmCollector apiEndpoint                                                                                               | `""`      |
+| `rapidResponse`                         | Config specific to [Sysdig Rapid Response](#rapid response)                                                             | `{}`      |
+| `rapidResponse.enabled`                 | Enable Rapid Response component in this chart                                                                           | `""`      |
 
 ## Agent
 
@@ -269,4 +272,30 @@ global:
 
 kspmCollector:
   apiEndpoint: API_ENDPOINT
+```
+
+## Rapid Response
+
+For configuration values of `rapid-response`, see the `rapid-response` subchart [README](https://github.com/sysdiglabs/charts/tree/master/charts/rapid-response/README.md). Prefix all the specific configurations with `rapidResponse.` to apply them to the chart.
+
+Example: Enable the Rapid Response component and define the passphrase for it
+
+As a command line parameter:
+```bash
+helm install sysdig sysdig/sysdig-deploy \
+    --set global.sysdig.accessKey=ACCESS_KEY \
+    --set rapidResponse.enabled=true \
+    --set rapidResponse.rapidResponse.passphrase=THIS_IS_A_SECRET_PASSPHRASE
+```
+
+As a values file:
+```yaml
+global:
+  sysdig:
+    accessKey: ACCESS_KEY
+
+rapidResponse:
+  enabled: true
+  rapidResponse:
+    passphrase: THIS_IS_A_SECRET_PASSPHRASE
 ```

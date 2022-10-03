@@ -3,6 +3,9 @@
 ## Change Log
 
 This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
+## v1.3.24
+### Minor changes
+* Added rapid-response doc in sysdig-deploy README.md
 
 ## v1.3.23
 ### Minor Changes
