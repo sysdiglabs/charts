@@ -4,6 +4,18 @@
 
 This file documents all notable changes to the Sysdig Agent Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.5.25
+### Bugfix
+* Don't deploy psp policies on k8s 1.25.x
+
+## v1.5.24
+### Minor changes
+* Added a global gke autopilot flag
+
+## v1.5.23
+### Minor changes
+* Added certificatesigningrequests resources in agent clusterrole
+
 ## v1.5.22
 
 ### Minor changes

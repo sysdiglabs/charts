@@ -476,6 +476,12 @@ spec:
                 name: {{ template "sysdig.fullname" . }}-runtime-scanner
                 key: analyzer.maxFileSizeAllowed
                 optional: true
+          - name: MAX_IMAGE_SIZE_ALLOWED
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "sysdig.fullname" . }}-runtime-scanner
+                key: max_image_size_allowed
+                optional: true
           - name: SYSDIG_API_URL
             valueFrom:
               configMapKeyRef:

@@ -25,6 +25,7 @@ $ helm repo update
 $ helm upgrade --install sysdig-{{ .Release.Name }} {{ .Repository.Name }}/{{ .Chart.Name }} \
       --create-namespace -n {{ .Release.Namespace }}{{ with .Chart.Version }} --version={{.}} {{ end }} \
       --set clusterName=CLUSTER_NAME \
+      --set sysdig.url=SECURE_URL \
       --set sysdig.secureAPIToken=SECURE_API_TOKEN
 ```
 
@@ -171,6 +172,7 @@ If your Proxy is served with TLS
 $ helm upgrade --install sysdig-{{ .Release.Name }} {{ .Repository.Name }}/{{ .Chart.Name }} \
       --create-namespace -n {{ .Release.Namespace }} \
       --set clusterName=CLUSTER_NAME \
+      --set sysdig.url=SECURE_URL \
       --set sysdig.secureAPIToken=SECURE_API_TOKEN
 ```
 

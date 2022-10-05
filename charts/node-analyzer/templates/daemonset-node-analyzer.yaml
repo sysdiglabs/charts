@@ -1,4 +1,4 @@
-{{- if not .Values.gke.autopilot }}
+{{- if not (include "nodeAnalyzer.gke.autopilot" .) }}
 {{- if (include "deploy-na" .) }}
 apiVersion: apps/v1
 kind: DaemonSet
@@ -513,6 +513,12 @@ spec:
               configMapKeyRef:
                 name: {{ .Release.Name }}-runtime-scanner
                 key: analyzer.maxFileSizeAllowed
+                optional: true
+          - name: MAX_IMAGE_SIZE_ALLOWED
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-runtime-scanner
+                key: max_image_size_allowed
                 optional: true
           - name: SYSDIG_API_URL
             valueFrom:

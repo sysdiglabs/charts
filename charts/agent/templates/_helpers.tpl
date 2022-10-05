@@ -243,3 +243,12 @@ Agent agentConfigmapName
 {{- define "agent.configmapName" -}}
     {{- default .Values.global.agentConfigmapName | default "sysdig-agent" -}}
 {{- end -}}
+
+{{/*
+Deploy on GKE autopilot
+*/}}
+{{- define "agent.gke.autopilot" -}}
+    {{- if (or .Values.global.gke.autopilot .Values.gke.autopilot) }}
+        true
+    {{- end -}}
+{{- end -}}
