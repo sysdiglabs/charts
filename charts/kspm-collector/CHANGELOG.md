@@ -1,3 +1,7 @@
+# v0.1.11
+### Minor changes
+* Removed trailing spaces
+
 # v0.1.10
 ### Minor change
 * Improving nats_insecure conditional logic
