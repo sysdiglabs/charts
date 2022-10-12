@@ -62,7 +62,7 @@ This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The 
 
 ## v1.7.5
 ### Minor changes
-* BenchmarkRunner: bump tag to 1.0.18.2
+* BenchmarkRunner: bump tag to 1.0.19.0
 
 ## v1.7.4
 ### Minor changes
@@ -81,7 +81,7 @@ This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The 
 # v1.7.1
 
 ### Minor changes
-* BenchmarkRunner: bump tag to 1.0.18.1
+* BenchmarkRunner: bump tag to 1.0.19.0
 
 # v1.7.0
 
