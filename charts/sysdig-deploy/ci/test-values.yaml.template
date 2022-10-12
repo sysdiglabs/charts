@@ -3,25 +3,3 @@ global:
     namespace: ""
   sysdig:
     accessKey: ${SECURE_AGENT_TOKEN}
-agent:
-  resources:
-    requests:
-      cpu: 250m
-  slim:
-    resources:
-      requests:
-        cpu: 250m
-nodeAnalyzer:
-  nodeAnalyzer:
-    imageAnalyzer:
-      resources:
-        requests:
-          cpu: 75m
-    hostAnalyzer:
-      resources:
-        requests:
-          cpu: 75m
-    benchmark-runner:
-      resources:
-        requests:
-          cpu: 75m
