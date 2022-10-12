@@ -4,9 +4,14 @@
 
 This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
-## v1.7.18
+## v1.7.19
 ### Minor changes
 * RuntimeScanner: Added ability to support storage class for ephemeral storage.
+
+
+## v1.7.18
+### Minor changes
+* BenchmarkRunner: bump tag to 1.0.19.0
 
 ## v1.7.17
 ### Bug fix

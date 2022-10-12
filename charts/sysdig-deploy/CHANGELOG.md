@@ -4,12 +4,16 @@
 
 This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
-## v1.3.21
+## v1.3.22
 ### Minor Changes
-* node-analyzer bumping version to ~1.7.18
+* node-analyzer bumping version to ~1.7.19
+
+## v1.3.21
+* Bumped nodeAnalyzer to 1.7.18
+* Bumped benchmark runner to 1.0.19.0
 
 ## v1.3.20
-### Minor Changes
+### Minor changes
 * CI workflow testing with kind cluster replaced with k3s.
 
 ## v1.3.19
