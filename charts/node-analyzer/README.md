@@ -8,12 +8,19 @@ The Node Analyzer daemonset contains three containers, each providing a specific
 the (deprecated) Node Image Analyzer daemonset.
 
 ## Table of Contents
-- [Introduction](#introduction)
-- [Prerequisites](#prerequisites)
-- [Installing the Chart](#installing-the-chart)
-- [Uninstalling the Chart](#uninstalling-the-chart)
-- [Configuration](#configuration)
-- [Support](#support)
+- [Chart: Node Analyzer](#chart-node-analyzer)
+  - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
+  - [Prerequisites](#prerequisites)
+  - [Installing the Chart](#installing-the-chart)
+  - [Uninstalling the Chart](#uninstalling-the-chart)
+  - [Configuration](#configuration)
+  - [Node Analyzer](#node-analyzer)
+    - [Node Image Analyzer](#node-image-analyzer)
+    - [Host Analyzer](#host-analyzer)
+    - [Benchmark Runner](#benchmark-runner)
+    - [KSPM Analyzer (Preview)](#kspm-analyzer-preview)
+  - [Support](#support)
 
 ## Introduction
 
@@ -142,6 +149,7 @@ The following table lists the configurable parameters of the Sysdig Node Analyze
 | `nodeAnalyzer.benchmarkRunner.env`                                   | Extra environment variables that will be passed onto pods                                | `{}`                                                                           |
 | `nodeAnalyzer.runtimeScanner.deploy`                                 | Deploy the Runtime Scanner                                                               | `false`                                                                        |
 | `nodeAnalyzer.runtimeScanner.extraMounts`                            | Specify a container engine custom socket path (docker, containerd, CRI-O)                |                                                                                |
+| `nodeAnalyzer.runtimeScanner.storageClassName`                       | Runtime Scanner storage class to use instead of emptyDir for ephemeral storage                                                    | ``                                                                         |
 | `nodeAnalyzer.runtimeScanner.image.repository`                       | The image repository to pull the Runtime Scanner from                                    | `sysdig/vuln-runtime-scanner`                                                  |
 | `nodeAnalyzer.runtimeScanner.image.tag`                              | The image tag to pull the Runtime Scanner                                                | `1.2.10`                                                                       |
 | `nodeAnalyzer.runtimeScanner.image.digest`                           | The image digest to pull                                                                 | ` `                                                                            |

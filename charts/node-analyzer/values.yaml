@@ -26,7 +26,7 @@ image:
   # Secrets must be manually created in the namespace.
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
   #
-  # pullSecrets:
+  pullSecrets: {}
   #   - name: myRegistrKeySecretName
 
 gke:
@@ -103,7 +103,7 @@ nodeAnalyzer:
   # Allow the DaemonSet to set labels
   labels: {}
   # Use this pullSecret to pull images from a private registry
-  # pullSecrets:
+  pullSecrets: {}
   #   - name: myRegistryKeySecretName
 
   nodeSelector: {}
@@ -239,7 +239,7 @@ nodeAnalyzer:
       tag: 1.2.10
       digest:
       pullPolicy: IfNotPresent
-
+    storageClassName:
     extraMounts: []
     # example for bottlerocket
     # extraMounts:

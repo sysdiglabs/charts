@@ -63,7 +63,23 @@ spec:
             path: /
 {{- end }}
         - name: tmp-vol
+          {{- if .Values.nodeAnalyzer.runtimeScanner.storageClassName }}
+          ephemeral:
+            volumeClaimTemplate:
+              metadata:
+                labels:
+                  type: {{ .Values.nodeAnalyzer.runtimeScanner.storageClassName }}
+              spec:
+                accessModes: [ "ReadWriteOnce" ]
+                storageClassName: {{ .Values.nodeAnalyzer.runtimeScanner.storageClassName }}
+                resources:
+                  requests:
+                    storage: {{ index .Values.nodeAnalyzer.runtimeScanner.resources.requests "ephemeral-storage" }}
+                  limits:
+                    storage: {{ index .Values.nodeAnalyzer.runtimeScanner.resources.limits "ephemeral-storage" }}
+          {{- else }}
           emptyDir: {}
+          {{- end }}
         {{- with .Values.nodeAnalyzer.imageAnalyzer.extraVolumes.volumes }}
 {{ toYaml . | indent 8 }}
         {{- end }}
