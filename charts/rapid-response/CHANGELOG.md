@@ -2,6 +2,12 @@
 
 ## Change Log
 
+## v0.2.1
+
+### Minor changes
+
+* Removed trailing spaces
+
 ## v0.2.0
 
 ### Major change
