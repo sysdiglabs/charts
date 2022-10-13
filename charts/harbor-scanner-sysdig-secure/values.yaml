@@ -59,6 +59,9 @@ tolerations: []
 
 affinity: {}
 
+# Custom entrypoint for the harbor plugin
+customEntryPoint: []
+
 sysdig:
   secure:
 
