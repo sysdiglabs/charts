@@ -8,8 +8,8 @@ This file documents all notable changes to Sysdig Helm Chart. The release number
 ### Minor changes
 * RuntimeScanner:
     * bump to 1.2.12 version
-    * add support Arm64 (to deploy it benchmark must be disabled and arm64 affinity must be added)
-    * bump affected go modules
+    * add support Arm64 (to deploy, benchmark must be disabled and arm64 affinity must be added)
+    * update vulnerable packages
     * bump to 1.9 Go version
 ### Bugfix
 * RuntimeScanner:
