@@ -61,7 +61,7 @@ spec:
         - name: rapid-response
           image: {{ template "rapidResponse.image" . }}
           imagePullPolicy: {{ .Values.rapidResponse.image.pullPolicy }}
-          resources: 
+          resources:
 {{ toYaml .Values.rapidResponse.resources | indent 12 }}
           {{- if .Values.rapidResponse.securityContext }}
           # The privileged flag is necessary for OCP 4.x and other Kubernetes setups that deny host filesystem access to

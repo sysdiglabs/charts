@@ -12,7 +12,11 @@ Currently included components:
 - [Sysdig agent](https://github.com/sysdiglabs/charts/tree/master/charts/agent)
 - [Sysdig NodeAnalyzer](https://github.com/sysdiglabs/charts/tree/master/charts/node-analyzer)
 - [Sysdig KSPM Collector](https://github.com/sysdiglabs/charts/tree/master/charts/kspm-collector)
+<<<<<<< HEAD
 - [Admission controller](https://github.com/sysdiglabs/charts/tree/master/charts/admission-controller)
+=======
+- [Sysdig Rapid Response](https://github.com/sysdiglabs/charts/tree/master/charts/rapid-response)
+>>>>>>> 0af1107 (Rapid response in sysdig deploy doc (#651))
 
 ## Prerequisites
 
@@ -165,6 +169,7 @@ helm upgrade -n sysdig-agent sysdig sysdig/sysdig-deploy -f values.sysdig.yaml
 
 The following table lists the configurable parameters of this chart and their default values.
 
+<<<<<<< HEAD
 | Parameter                                    | Description                                                                                                             | Default   |
 | -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | --------- |
 | `global.clusterConfig.name`                  | Identifier for this cluster                                                                                             | `""`      |
@@ -188,6 +193,30 @@ The following table lists the configurable parameters of this chart and their de
 | `kspmCollector`                              | Config specific to the [Sysdig KSPM Collector](#kspm collector)                                                         | `{}`      |
 | `kspmCollector.apiEndpoint`                  | kspmCollector apiEndpoint                                                                                               | `""`      |
 | `admissionController.enabled`                | Enable the admission controller component in this chart                                                                 | `true`    |
+=======
+| Parameter                               | Description                                                                                                             | Default   |
+| --------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | --------- |
+| `global.clusterConfig.name`             | Identifier for this cluster                                                                                             | `""`      |
+| `global.sysdig.accessKey`               | Sysdig Agent Access Key                                                                                                 | `""`      |
+| `global.sysdig.accessKeySecret`         | The name of a Kubernetes secret containing an 'access-key' entry.                                                       | `""`      |
+| `global.sysdig.region`                  | The SaaS region for these agents. Possible values: `"us1"`, `"us2"`, `"us3"`, `"us4"`, `"eu1"`, `"au1"`, and `"custom"`. See [Regions and IP Ranges](https://docs.sysdig.com/en/docs/administration/saas-regions-and-ip-ranges/) for more information. | `"us1"`   |
+| `global.imageRegistry`                  | Container image registry                                                                                                | `` |
+| `global.proxy.httpProxy`                | Sets `http_proxy` on the Agent container                                                                                | `""`      |
+| `global.proxy.httpsProxy`               | Sets `https_proxy` on the Agent container                                                                               | `""`      |
+| `global.proxy.noProxy`                  | Sets `no_proxy` on the Agent container                                                                                  | `""`      |
+| `global.kspm.deploy`                    | Enables Sysdig KSPM node analyzer & KSPM collector                                                                      | `false`   |
+| `global.agentConfigmapName`             | Sets a configmap name that is used to mount the agent configmap to fetch the cluster name and agent tags                | `"sysdig-agent"`      |
+| `global.gke.autopilot`                  | If true, overrides the configuration to values for GKE Autopilot clusters                                             | `false`   |
+| `agent`                                 | Config specific to the [Sysdig Agent](#agent)                                                                           | `{}`      |
+| `agent.enabled`                         | Enable the agent component in this chart                                                                                | `true`    |
+| `nodeAnalyzer`                          | Config specific to the [Sysdig nodeAnalyzer](#nodeAnalyzer)                                                             | `{}`      |
+| `nodeAnalyzer.enabled`                  | Enable the nodeAnalyzer component in this chart                                                                         | `true`    |
+| `nodeAnalyzer.nodeAnalyzer.apiEndpoint` | nodeAnalyzer apiEndpoint                                                                                                | `""`      |
+| `kspmCollector`                         | Config specific to the [Sysdig KSPM Collector](#kspm collector)                                                         | `{}`      |
+| `kspmCollector.apiEndpoint`             | kspmCollector apiEndpoint                                                                                               | `""`      |
+| `rapidResponse`                         | Config specific to [Sysdig Rapid Response](#rapid response)                                                             | `{}`      |
+| `rapidResponse.enabled`                 | Enable Rapid Response component in this chart                                                                           | `""`      |
+>>>>>>> 0af1107 (Rapid response in sysdig deploy doc (#651))
 
 ## Agent
 
@@ -301,4 +330,28 @@ admissionController:
   admissionCotroller:
     sysdig:
       url: URL
+```
+
+## Rapid Response
+
+For configuration values of `rapid-response`, see the `rapid-response` subchart [README](https://github.com/sysdiglabs/charts/tree/master/charts/rapid-response/README.md). Prefix all the specific configurations with `rapidResponse.` to apply them to the chart.
+
+Example: Enable the Rapid Response component and define the passphrase for it
+
+```bash
+helm install sysdig sysdig/sysdig-deploy \
+    --set global.sysdig.accessKey=ACCESS_KEY \
+    --set rapidResponse.enabled=true \
+    --set rapidResponse.rapidResponse.passphrase=THIS_IS_A_SECRET_PASSPHRASE
+```
+As a values file:
+```yaml
+global:
+  sysdig:
+    accessKey: ACCESS_KEY
+
+rapidResponse:
+  enabled: true
+  rapidResponse:
+    passphrase: THIS_IS_A_SECRET_PASSPHRASE
 ```
