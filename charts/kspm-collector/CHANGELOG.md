@@ -1,3 +1,7 @@
+# v0.1.12
+### Minor changes
+* Fixed trailing spaces lintin issues with empty keys
+
 # v0.1.11
 ### Minor changes
 * Removed trailing spaces

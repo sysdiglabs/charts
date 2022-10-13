@@ -2,6 +2,12 @@
 
 ## Change Log
 
+## v0.2.2
+
+### Minor changes
+
+* Fixed trailing spaces lintin issues with empty keys
+
 ## v0.2.1
 
 ### Minor changes

@@ -4,6 +4,10 @@
 
 This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.7.20
+### Minor changes
+* Fixed trailing spaces lintin issues with empty keys
+
 ## v1.7.19
 ### Minor changes
 * RuntimeScanner: Added ability to support storage class for ephemeral storage.

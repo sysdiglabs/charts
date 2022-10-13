@@ -1,4 +1,4 @@
 sysdig:
-  accessKey: ${SECURE_AGENT_TOKEN}
+  accessKey: "${SECURE_AGENT_TOKEN}"
 nodeAnalyzer:
   apiEndpoint: secure.sysdig.com
