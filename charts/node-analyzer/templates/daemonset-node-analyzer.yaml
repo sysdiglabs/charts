@@ -97,17 +97,19 @@ spec:
 {{ toYaml .Values.nodeAnalyzer.pullSecrets | indent 8 }}
       {{- end }}
       terminationGracePeriodSeconds: 5
-      {{- if include "nodeAnalyzer.deployBenchmarkRunner" . }}
+      {{- if or (include "nodeAnalyzer.deployBenchmarkRunner" .) (include "nodeAnalyzer.deployHostScanner" .) }}
       # Use the Host Network Namespace.
-      # This is required by the Benchmark container to determine the hostname and host mac address
+      # This is required by the Benchmark and the HostScanner containers to determine the hostname and host mac address
       hostNetwork: true
+      {{- end }}
+      {{- if include "nodeAnalyzer.deployBenchmarkRunner" . }}
       # Use the Host PID namespace.
       # This is required for Kubernetes benchmarks, as they contain tests that check Kubernetes processes running on
       # the host
       hostPID: true
       {{- end }}
       containers:
-      {{ if .Values.global.kspm.deploy }}
+      {{- if .Values.global.kspm.deploy }}
       # kspm-analyzer
       - name: sysdig-kspm-analyzer
         image: {{ template "nodeAnalyzer.image.kspmAnalyzer" . }}
