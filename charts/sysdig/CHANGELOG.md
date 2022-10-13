@@ -3,6 +3,17 @@
 ## Change Log
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
+
+## v1.15.44
+### Minor changes
+* RuntimeScanner:
+    * bump to 1.2.12 version
+    * update vulnerable packages
+    * bump to 1.9 Go version
+### Bugfix
+* RuntimeScanner:
+    * fix container-storage locks
+
 ## v1.15.43
 ### Minor changes
 * KSPMCollector updated to version 1.9.0
