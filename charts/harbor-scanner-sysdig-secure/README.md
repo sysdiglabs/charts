@@ -32,6 +32,7 @@ Sysdig Secure chart and their default values:
 
 | Parameter                                     | Description                                                                                                                 | Default                                   |
 | ---                                           | ---                                                                                                                         | ---                                       |
+| `customEntryPoint`                            | Ovverride container entrypoint                                                                                              | `[]`                                      |
 | `replicaCount`                                | Amount of replicas for Scanner Adapter                                                                                      | `1`                                       |
 | `image.repository`                            | The image repository to pull from                                                                                           | `sysdiglabs/harbor-scanner-sysdig-secure` |
 | `image.pullPolicy`                            | The image pull policy                                                                                                       | `IfNotPresent`                            |
