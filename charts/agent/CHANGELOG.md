@@ -4,7 +4,7 @@
 
 This file documents all notable changes to the Sysdig Agent Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
-## v1.5.26
+## v1.5.27
 ### Minor changes
 * Removed trailing spaces
 
