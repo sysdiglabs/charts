@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ template "kspmCollector.fullname" . }}
-  namespace: {{ include "kspmCollector.namespace" . }} 
+  namespace: {{ include "kspmCollector.namespace" . }}
   labels:
     app.kubernetes.io/name: {{ include "kspmCollector.name" . }}
 {{ include "kspmCollector.labels" . | indent 4 }}

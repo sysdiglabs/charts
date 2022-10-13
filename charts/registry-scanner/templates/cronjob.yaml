@@ -17,7 +17,7 @@ spec:
   jobTemplate:
     metadata:
       labels:
-        {{- include "registry-scanner.customLabels" . | nindent 8 }} 
+        {{- include "registry-scanner.customLabels" . | nindent 8 }}
     spec:
       template:
         metadata:
