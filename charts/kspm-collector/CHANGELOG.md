@@ -1,3 +1,7 @@
+# v0.1.12
+### Minor chagnes
+* Bumped image tag to 1.9.0
+
 # v0.1.11
 ### Minor changes
 * Removed trailing spaces

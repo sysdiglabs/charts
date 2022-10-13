@@ -3,6 +3,10 @@
 ## Change Log
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
+## v1.15.43
+### Minor changes
+* kspm-collector updated to version 1.9.0
+* kspm-analyzer updated to version 1.9.0
 
 ## v1.15.41
 ### Bugfix
