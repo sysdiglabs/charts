@@ -180,12 +180,12 @@ The following table lists the configurable parameters of this chart and their de
 | `global.gke.autopilot`                  | If true, overrides the configuration to values for GKE Autopilot clusters                                             | `false`   |
 | `agent`                                 | Config specific to the [Sysdig Agent](#agent)                                                                           | `{}`      |
 | `agent.enabled`                         | Enable the agent component in this chart                                                                                | `true`    |
-| `nodeAnalyzer`                          | Config specific to the [Sysdig nodeAnalyzer](#nodeAnalyzer)                                                             | `{}`      |
+| `nodeAnalyzer`                          | Config specific to the [Sysdig nodeAnalyzer](#nodeanalyzer)                                                             | `{}`      |
 | `nodeAnalyzer.enabled`                  | Enable the nodeAnalyzer component in this chart                                                                         | `true`    |
 | `nodeAnalyzer.nodeAnalyzer.apiEndpoint` | nodeAnalyzer apiEndpoint                                                                                                | `""`      |
-| `kspmCollector`                         | Config specific to the [Sysdig KSPM Collector](#kspm collector)                                                         | `{}`      |
+| `kspmCollector`                         | Config specific to the [Sysdig KSPM Collector](#kspm-collector)                                                         | `{}`      |
 | `kspmCollector.apiEndpoint`             | kspmCollector apiEndpoint                                                                                               | `""`      |
-| `rapidResponse`                         | Config specific to [Sysdig Rapid Response](#rapid response)                                                             | `{}`      |
+| `rapidResponse`                         | Config specific to [Sysdig Rapid Response](#rapid-response)                                                             | `{}`      |
 | `rapidResponse.enabled`                 | Enable Rapid Response component in this chart                                                                           | `""`      |
 
 ## Agent
