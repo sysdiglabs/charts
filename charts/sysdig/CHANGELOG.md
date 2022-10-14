@@ -4,6 +4,11 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.15.46
+### Minor changes
+* RapidResponse:
+    * bump to version 0.3.4
+
 ## v1.15.45
 ### Minor changes
 * RuntimeScanner:

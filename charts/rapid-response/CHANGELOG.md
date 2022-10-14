@@ -2,6 +2,10 @@
 
 ## Change Log
 
+## v0.2.2
+### Minor changes
+* bump image tag to 0.3.4
+
 ## v0.2.1
 
 ### Minor changes
