@@ -142,3 +142,4 @@ Temporary Items
 
 Chart.lock
 *.tgz
+.envrc

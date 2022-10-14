@@ -10,3 +10,13 @@ lint:
 
 deps:
 	go install kubepack.dev/chart-doc-gen@latest
+
+run-local-admission:
+	helm upgrade --install --create-namespace -n sysdig-admission-controller sysdig-admission-controller \
+		--set sysdig.url=$(SECURE_URL) \
+		--set sysdig.secureAPIToken=$(SECURE_API_TOKEN) \
+		--set clusterName="minikube-local" \
+		./charts/admission-controller
+
+uninstall-local-admission:
+	helm uninstall sysdig-admission-controller -n sysdig-admission-controller
