@@ -32,7 +32,7 @@ The following table lists the configurable parameters of the Sysdig Rapid Respon
 | `rapidResponse.existingPassphraseSecret`  | Alternatively, specify the name of a Kubernetes secret containing an 'passphrase' entry | ` ` Either passphrase or existingPassphraseSecret is required |
 | `rapidResponse.image.registry`            | Rapid Response image registry                                                           | `quay.io`                                                     |
 | `rapidResponse.image.repository`          | The image repository to pull from                                                       | `sysdig/rapid-response-host-component`                        |
-| `rapidResponse.image.tag`                 | The image tag to pull                                                                   | `0.3.3`                                                       |
+| `rapidResponse.image.tag`                 | The image tag to pull                                                                   | `0.3.4`                                                       |
 | `rapidResponse.image.pullPolicy`          | The Image pull policy                                                                   | `IfNotPresent`                                                |
 | `rapidResponse.imagePullSecrets`          | The Image pull secret                                                                   | ` `                                                           |
 | `rapidResponse.apiEndpoint`               | Rapid Response apiEndpoint                                                              | ` `                                                           |
