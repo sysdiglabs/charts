@@ -3,12 +3,12 @@
 ## Change Log
 
 This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
-## v1.7.21
+## v1.7.22
 ### Minor changes
 * RuntimeScanner:
     * bump to 1.2.12 version
     * update vulnerable packages
-    * bump to 1.9 Go version
+    * bump to 1.19 Go version
 ### Bugfix
 * RuntimeScanner:
     * fix container-storage locks
