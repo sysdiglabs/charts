@@ -4,12 +4,12 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
-## v1.15.44
+## v1.15.45
 ### Minor changes
 * RuntimeScanner:
     * bump to 1.2.12 version
     * update vulnerable packages
-    * bump to 1.9 Go version
+    * bump to 1.19 Go version
 ### Bugfix
 * RuntimeScanner:
     * fix container-storage locks
