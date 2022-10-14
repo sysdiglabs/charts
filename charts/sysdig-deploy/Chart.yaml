@@ -38,7 +38,7 @@ dependencies:
 - name: rapid-response
   # repository: https://charts.sysdig.com
   repository: file://../rapid-response
-  version: ~0.2.0
+  version: ~0.2.2
   alias: rapidResponse
   condition: rapidResponse.enabled
 - name: admission-controller
