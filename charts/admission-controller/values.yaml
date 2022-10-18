@@ -119,6 +119,10 @@ webhook:
     # Configure port for the webhook service
     port: 443
 
+  rbac:
+    # Enable the creation of ClusterRoles and the binding of these roles
+    create: true
+
   # HTTP Proxy settings for webhook.
   # <br/>Set to http(s)://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy
   httpProxy: ""
