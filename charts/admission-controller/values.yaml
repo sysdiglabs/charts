@@ -120,7 +120,7 @@ webhook:
     port: 443
 
   rbac:
-    # Whether to create a clusterrole and bind it
+    # Enable the creation of ClusterRoles and the binding of these role
     create: true
 
   # HTTP Proxy settings for webhook.
