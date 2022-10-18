@@ -7,3 +7,5 @@ This file documents all notable changes to the Admission Controller Helm Chart. 
 ## v0.6.24
 
 ### Minor changes
+
+* Added RBAC enable/disable flag
