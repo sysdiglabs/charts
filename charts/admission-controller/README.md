@@ -23,7 +23,7 @@ $ pre-commit run -a
 $ helm repo add sysdig https://charts.sysdig.com
 $ helm repo update
 $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-      --create-namespace -n sysdig-admission-controller --version=0.6.23  \
+      --create-namespace -n sysdig-admission-controller --version=0.6.24  \
       --set clusterName=CLUSTER_NAME \
       --set sysdig.url=SECURE_URL \
       --set sysdig.secureAPIToken=SECURE_API_TOKEN
@@ -56,7 +56,7 @@ This chart deploys the Sysdig Admission Controller on a [Kubernetes](http://kube
 To install the chart with the release name `admission-controller`:
 
 ```console
-$ helm upgrade --install sysdig-admission-controller sysdig/admission-controller -n sysdig-admission-controller --version=0.6.23
+$ helm upgrade --install sysdig-admission-controller sysdig/admission-controller -n sysdig-admission-controller --version=0.6.24
 ```
 
 The command deploys the Sysdig Admission Controller on the Kubernetes cluster in the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.
@@ -111,6 +111,7 @@ The following table lists the configurable parameters of the `admission-controll
 | webhook.image.digest                               | Specify the image digest value.  If set, this value is used instead of the tag value.                                                                                                                                                                                                                                                                                                                                                                               | <code></code>                                                                                                                                                                                      |
 | webhook.service.type                               | Use this type as webhook service                                                                                                                                                                                                                                                                                                                                                                                                                                    | <code>ClusterIP</code>                                                                                                                                                                             |
 | webhook.service.port                               | Configure port for the webhook service                                                                                                                                                                                                                                                                                                                                                                                                                              | <code>443</code>                                                                                                                                                                                   |
+| webhook.rbac.create                                | Enable the creation of ClusterRoles and the binding of these roles                                                                                                                                                                                                                                                                                                                                                                                                  | <code>true</code>                                                                                                                                                                                  |
 | webhook.httpProxy                                  | HTTP Proxy settings for webhook. <br/>Set to http(s)://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy                                                                                                                                                                                                                                                                                                                                       | <code>""</code>                                                                                                                                                                                    |
 | webhook.httpsProxy                                 | HTTPS Proxy settings for webhook. <br/>Set to http(s)://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy                                                                                                                                                                                                                                                                                                                                      | <code>""</code>                                                                                                                                                                                    |
 | webhook.noProxy                                    | List of hosts, IPs, or IPs in CIDR format that should not go through the proxy. We include "kubernetes" service and typical 10.0.0.0/8 services                                                                                                                                                                                                                                                                                                                     | <code>kubernetes,10.0.0.0/8</code>                                                                                                                                                                 |
@@ -169,7 +170,7 @@ Specify each parameter using the **`--set key=value[,key=value]`** argument to `
 
 ```console
 $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-    --create-namespace -n sysdig-admission-controller --version=0.6.23 \
+    --create-namespace -n sysdig-admission-controller --version=0.6.24 \
     --set sysdig.secureAPIToken=YOUR-KEY-HERE,sysdig.url=SECURE_URL,clusterName=YOUR-CLUSTER-NAME
 ```
 
@@ -178,7 +179,7 @@ installing the chart. For example:
 
 ```console
 $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-    --create-namespace -n sysdig-admission-controller --version=0.6.23 \
+    --create-namespace -n sysdig-admission-controller --version=0.6.24 \
     --values values.yaml
 ```
 
