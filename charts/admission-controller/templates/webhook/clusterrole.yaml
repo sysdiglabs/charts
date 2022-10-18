@@ -27,4 +27,4 @@ rules:
   - daemonsets
   verbs:
   - get
-{{- end}}
+{{- end }}
