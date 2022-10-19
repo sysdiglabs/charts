@@ -305,7 +305,7 @@ nodeAnalyzer:
 
     image:
       repository: sysdig/vuln-host-scanner
-      tag: unstable-20220920130253-5137e58e  # TODO: change with stable version before releasing chart
+      tag: 0.2.0  # TODO: change with stable version before releasing chart
       digest:
       pullPolicy: IfNotPresent
 
