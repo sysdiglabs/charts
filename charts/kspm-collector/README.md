@@ -24,10 +24,10 @@ The following table lists the configurable parameters of the Sysdig KSPM Collect
 
 | Parameter                        | Description                                                                             | Default                                                     |
 |----------------------------------|-----------------------------------------------------------------------------------------|-------------------------------------------------------------|
-| `global.proxy.httpProxy`         | Sets `HTTP_PROXY` on the KSPM Collector containers                                      | `""`                                                       |
-| `global.proxy.httpsProxy`        | Sets `HTTPS_PROXY` on the KSPM Collector containers                                     | `""`                                                       |
-| `global.proxy.noProxy`           | Sets `NO_PROXY` on the KSPM Collector containers                                        | `""`                                                       |
-| `global.sslVerifyCertificate`           | Sets `NATS_INSECURE` env variable on the KSPM Collector Containers                                      |                                                        |
+| `global.proxy.httpProxy`         | Sets `HTTP_PROXY` on the KSPM Collector containers                                      | `""`                                                        |
+| `global.proxy.httpsProxy`        | Sets `HTTPS_PROXY` on the KSPM Collector containers                                     | `""`                                                        |
+| `global.proxy.noProxy`           | Sets `NO_PROXY` on the KSPM Collector containers                                        | `""`                                                        |
+| `global.sslVerifyCertificate`           | Sets `NATS_INSECURE` env variable on the KSPM Collector Containers               |                                                             |
 | `global.kspm.deploy`             | Enables Sysdig KSPM node analyzer & KSPM collector                                      | `true`                                                      |
 | `sysdig.accessKey`               | Your Sysdig Access Key                                                                  | ` ` Either accessKey or existingAccessKeySecret is required |
 | `sysdig.existingAccessKeySecret` | Alternatively, specify the name of a Kubernetes secret containing an 'access-key' entry | ` ` Either accessKey or existingAccessKeySecret is required |
@@ -54,10 +54,11 @@ The following table lists the configurable parameters of the Sysdig KSPM Collect
 | `httpProxy`                      | Proxy configuration variables                                                           |                                                             |
 | `httpsProxy`                     | Proxy configuration variables                                                           |                                                             |
 | `noProxy`                        | Proxy configuration variables                                                           |                                                             |
-| `sslVerifyCertificate`           | Sets `NATS_INSECURE` env variable on the KSPM Collector Containers                 |                                                             |
-| `arch`                               | Allowed architectures for scheduling                                                                                                       | `[ amd64, arm64 ]`                                   |
-| `os`                                 | Allowed OSes for scheduling                                                                                                                | `[ linux ]`                                                 |
-| `affinity`                           | Node affinities. Overrides `arch` and `os` values                                                                      | `{}`                        
+| `sslVerifyCertificate`           | Sets `NATS_INSECURE` env variable on the KSPM Collector Containers                      |                                                             |
+| `arch`                           | Allowed architectures for scheduling                                                    | `[ amd64, arm64 ]`                                          |
+| `os`                             | Allowed OSes for scheduling                                                             | `[ linux ]`                                                 |
+| `affinity`                       | Node affinities. Overrides `arch` and `os` values                                       | `{}`                                                        |
+| `labels`                         | kspmCollector specific labels (as a multi-line templated string map or as YAML)         | `{}`                                                        |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
