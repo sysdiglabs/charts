@@ -4,6 +4,19 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.15.49
+### Minor changes:
+* EveConnector:
+    * bump to 1.1.0 version
+### Bugfix
+* EveConnector:
+    * reduce the size of the image
+    * bump dependencies to resolve critical and high vulnerabilities:
+      * CVE-2022-1996
+      * CVE-2022-1271
+      * CVE-2022-2526
+      * CVE-2022-3515
+
 ## v1.15.48
 ### Minor changes:
 * RuntimeScanner:
