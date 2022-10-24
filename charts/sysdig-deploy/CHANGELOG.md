@@ -7,8 +7,10 @@ This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. Th
 ## v1.4.0
 
 ### Major changes
-
 * Introduced admission-controller helm chart
+
+## v1.3.20
+* CI workflow testing with kind cluster replaced with k3s.
 
 ## v1.3.19
 ### Bug fix
