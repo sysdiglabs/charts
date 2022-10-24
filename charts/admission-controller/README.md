@@ -370,6 +370,23 @@ Either way, you should see some logs in Admission Controller tail
 
 ## Troubleshooting
 
+### Q: I'm not able to get an alert for an event with the `ka.verb=get` condition.
+
+A: Despite [Kubernetes Extensible Admission Controller webhook allows it](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#matching-requests-rules), Sysdig Admission Controller does only handle `CREATE`, `UPDATE`, `DELETE` and `CONNECT` type of events.
+
+Still, if required, you can make use of the [legacy admission](https://docs.sysdig.com/en/docs/sysdig-secure/secure-events/kubernetes-audit-logging/#legacy-installation-instructions) which do support more verbs.
+
+<!--
+
+https://github.com/sysdiglabs/cloud-connector/blob/master/pkg/engine/ingestor/k8s/admission/event_builder.go#L75-L84
+
+https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#matching-requests-rules
+
+
+
+
+-->
+
 ### Q: I get tons of "TLS handshake error"
 
 A: This happens when DEBUG is enabled but Admission Controller will behave as expected. Those calls are some non-sysdig direct calls to the Admission Controller without TLS, which raises this informational log by Go internal library.
