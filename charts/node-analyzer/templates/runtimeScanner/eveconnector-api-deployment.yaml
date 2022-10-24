@@ -80,4 +80,23 @@ spec:
                 name: {{ template "nodeAnalyzer.fullname" . }}-eveconnector
                 key: ssl_verify_certificate
                 optional: true
+          # proxy settings
+          - name: HTTP_PROXY
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "nodeAnalyzer.fullname" . }}-eveconnector
+                key: http_proxy
+                optional: true
+          - name: HTTPS_PROXY
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "nodeAnalyzer.fullname" . }}-eveconnector
+                key: https_proxy
+                optional: true
+          - name: NO_PROXY
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "nodeAnalyzer.fullname" . }}-eveconnector
+                key: no_proxy
+                optional: true
 {{- end }}

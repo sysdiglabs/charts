@@ -4,6 +4,13 @@
 
 This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.3.28
+### Major changes:
+* EveConnector:
+    * Introduced proxy support
+### Buxfix
+* RuntimeScanner:
+    * Fixed an issue where runtime scanner was not leverage on global proxy setting
 
 ## v1.3.28
 ### Minor changes
