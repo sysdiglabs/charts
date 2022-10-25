@@ -292,7 +292,7 @@ Either way, you should see some logs in Admission Controller tail
 A: Despite [Kubernetes Extensible Admission Controller webhook allows it](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#matching-requests-rules), Sysdig Admission Controller does only handle `CREATE`, `UPDATE`, `DELETE` and `CONNECT` type of events.
 Also, beware Kubernetes [`apiGroups`](https://github.com/sysdiglabs/charts/blob/master/charts/admission-controller/values.yaml#L41-L54) are scoped
 
-S: Still, if required, you can make use of the [legacy admission](https://docs.sysdig.com/en/docs/sysdig-secure/secure-events/kubernetes-audit-logging/#legacy-installation-instructions) which do support more verbs.
+S: Still, if required, you can make use of the [legacy Kubernetes Audit Log](https://docs.sysdig.com/en/docs/sysdig-secure/secure-events/kubernetes-audit-logging/#legacy-installation-instructions) which do support more verbs.
 
 <!--
 
