@@ -13,3 +13,4 @@ This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. Th
 ### Minor changes
 
 * Added RBAC enable/disable flag
+

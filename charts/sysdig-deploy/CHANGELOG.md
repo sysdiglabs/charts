@@ -4,6 +4,10 @@
 
 This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.4.0
+### Major changes
+* Introduced admission-controller helm chart
+
 ## v1.3.28
 ### Major changes:
 * EveConnector:
@@ -33,10 +37,6 @@ This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. Th
 ### Minor changes
 * Added rapid-response doc in sysdig-deploy README.md
 
-## v1.4.0
-### Major changes
-* Introduced admission-controller helm chart
- 
 ## v1.3.23
 ### Minor Changes
 * agent bumping version to 1.3.23

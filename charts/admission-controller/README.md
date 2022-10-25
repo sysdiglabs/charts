@@ -189,7 +189,8 @@ $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller
 ```
 
 ## Examples
-- [Default `values.yaml`](https://github.com/sysdiglabs/charts/blob/master/charts/admission-controller/values.yaml)
+- [Default `values.yaml`](https://github.com/sysdiglabs/charts/blob/
+/charts/admission-controller/values.yaml)
 - Find some [examples of these values](https://github.com/sysdiglabs/charts/tree/master/charts/admission-controller/ci)
 
 ### Custom Admission Controller Rules to be detected
