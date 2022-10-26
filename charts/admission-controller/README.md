@@ -23,7 +23,7 @@ $ pre-commit run -a
 $ helm repo add sysdig https://charts.sysdig.com
 $ helm repo update
 $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-      --create-namespace -n sysdig-admission-controller --version=0.6.24  \
+      --create-namespace -n sysdig-admission-controller --version=0.6.25  \
       --set clusterName=CLUSTER_NAME \
       --set sysdig.url=SECURE_URL \
       --set sysdig.secureAPIToken=SECURE_API_TOKEN
@@ -56,7 +56,7 @@ This chart deploys the Sysdig Admission Controller on a [Kubernetes](http://kube
 To install the chart with the release name `admission-controller`:
 
 ```console
-$ helm upgrade --install sysdig-admission-controller sysdig/admission-controller -n sysdig-admission-controller --version=0.6.24
+$ helm upgrade --install sysdig-admission-controller sysdig/admission-controller -n sysdig-admission-controller --version=0.6.25
 ```
 
 The command deploys the Sysdig Admission Controller on the Kubernetes cluster in the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.
@@ -170,7 +170,7 @@ Specify each parameter using the **`--set key=value[,key=value]`** argument to `
 
 ```console
 $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-    --create-namespace -n sysdig-admission-controller --version=0.6.24 \
+    --create-namespace -n sysdig-admission-controller --version=0.6.25 \
     --set sysdig.secureAPIToken=YOUR-KEY-HERE,sysdig.url=SECURE_URL,clusterName=YOUR-CLUSTER-NAME
 ```
 
@@ -179,7 +179,7 @@ installing the chart. For example:
 
 ```console
 $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-    --create-namespace -n sysdig-admission-controller --version=0.6.24 \
+    --create-namespace -n sysdig-admission-controller --version=0.6.25 \
     --values values.yaml
 ```
 
@@ -369,6 +369,18 @@ Either way, you should see some logs in Admission Controller tail
 
 
 ## Troubleshooting
+
+### Q: I'm not able to get an alert for an event with the `ka.verb=get` condition.
+
+A: Despite [Kubernetes Extensible Admission Controller webhook allows it](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#matching-requests-rules), Sysdig Admission Controller does only handle `CREATE`, `UPDATE`, `DELETE` and `CONNECT` type of events.
+Also, beware Kubernetes [`apiGroups`](https://github.com/sysdiglabs/charts/blob/master/charts/admission-controller/values.yaml#L41-L54) are scoped
+
+S: Still, if required, you can make use of the [legacy Sysdig Kubernetes Audit Log](https://docs.sysdig.com/en/docs/sysdig-secure/secure-events/kubernetes-audit-logging/#legacy-installation-instructions) which do support more verbs.
+
+<!--
+https://github.com/sysdiglabs/cloud-connector/blob/master/pkg/engine/ingestor/k8s/admission/event_builder.go#L75-L84
+https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#matching-requests-rules
+-->
 
 ### Q: I get tons of "TLS handshake error"
 
