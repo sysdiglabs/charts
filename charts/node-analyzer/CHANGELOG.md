@@ -4,6 +4,22 @@
 
 This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.7.27
+### Minor changes:
+* NodeAnalyzer:
+    * NodeImageAnalyzer: bump to version 0.1.20 which contains security updates (October 2022)
+        * CVE-2022-1941
+        * CVE-2022-1996
+        * CVE-2022-3515
+        * CVE-2022-27191
+        * CVE-2022-27664
+        * CVE-2022-32149
+        * CVE-2022-39237
+        * CVE-2022-40674
+    * HostAnalyzer: bump to version 0.1.12 which contains security updates (October 2022)
+        * CVE-2022-27664
+        * CVE-2022-32149
+
 ## v1.7.26
 ### Minor changes:
 * BenchmarkRunner
