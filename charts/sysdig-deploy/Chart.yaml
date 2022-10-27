@@ -7,8 +7,8 @@ type: application
 version: 1.3.31
 
 maintainers:
-  - name: achandras
-    email: ashwin.chandrasekar@sysdig.com
+  - name: aroberts87
+    email: adam.roberts@sysdig.com
   - name: lilx1ao
     email: zhongcheng.xiao@sysdig.com
   - name: yashgiri
