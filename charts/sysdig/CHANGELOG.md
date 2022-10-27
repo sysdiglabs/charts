@@ -4,6 +4,13 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.15.50
+### Minor changes:
+* BenchmarkRunner
+    * multiarch builds
+    * support arm64 hosts
+    * bump to version 1.1.0.1
+
 ## v1.15.49
 ### Minor changes:
 * EveConnector:
