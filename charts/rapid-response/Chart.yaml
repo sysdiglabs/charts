@@ -15,7 +15,7 @@ type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 0.2.2
+version: 0.2.3
 
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
@@ -35,8 +35,8 @@ icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/upload
 sources:
   - https://github.com/sysdiglabs/charts/
 maintainers:
-  - name: achandras
-    email: ashwin.chandrasekar@sysdig.com
+  - name: aroberts87
+    email: adam.roberts@sysdig.com
   - name: dark-vex
     email: daniele.delorenzi@sysdig.com
 dependencies: []
