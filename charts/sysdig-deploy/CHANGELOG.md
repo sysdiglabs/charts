@@ -4,6 +4,11 @@
 
 This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.3.34
+### Minor changes
+* sysdig-deploy:
+    * Fix migrate_values.py link
+
 ## v1.3.33
 ### Minor changes
 * Bumped agent to 1.5.29 to include the usage of global.sysdig.tags
