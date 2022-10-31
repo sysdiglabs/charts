@@ -116,12 +116,18 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
-  {{- if .Values.nodeAnalyzer.labels }}
-    {{- $tp := typeOf .Values.nodeAnalyzer.labels }}
+{{- end -}}
+
+{{/*
+Daemonset labels
+*/}}
+{{- define "daemonset.labels" -}}
+  {{- if .Values.daemonset.labels }}
+  {{- $tp := typeOf .Values.daemonset.labels }}
     {{- if eq $tp "string" }}
-      {{- tpl .Values.nodeAnalyzer.labels . }}
+      {{- tpl .Values.daemonset.labels . }}
     {{- else }}
-      {{- toYaml .Values.nodeAnalyzer.labels }}
+      {{- toYaml .Values.daemonset.labels }}
     {{- end }}
   {{- end }}
 {{- end -}}

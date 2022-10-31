@@ -6,6 +6,7 @@ metadata:
   name: {{ .Release.Name }}-node-analyzer
   labels:
     app.kubernetes.io/name: {{ include "nodeAnalyzer.name" . }}
+{{ include "daemonset.labels" . | indent 4 }}
 {{ include "nodeAnalyzer.labels" . | indent 4 }}
 spec:
   selector:
@@ -19,6 +20,7 @@ spec:
       name: {{ .Release.Name }}-node-analyzer
       labels:
         app.kubernetes.io/name: {{ include "nodeAnalyzer.name" . }}
+{{ include "daemonset.labels" . | indent 8 }}
 {{ include "nodeAnalyzer.labels" . | indent 8 }}
     spec:
       volumes:

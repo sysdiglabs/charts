@@ -4,7 +4,7 @@ description: A chart with various Sysdig components for Kubernetes
 
 type: application
 
-version: 1.3.34
+version: 1.3.35
 
 maintainers:
   - name: aroberts87
@@ -26,7 +26,7 @@ dependencies:
   - name: node-analyzer
     # repository: https://charts.sysdig.com
     repository: file://../node-analyzer
-    version: ~1.7.27
+    version: ~1.7.28
     alias: nodeAnalyzer
     condition: nodeAnalyzer.enabled
   - name: kspm-collector
