@@ -3,8 +3,8 @@ name: cloud-connector
 description: Sysdig Cloud Connector
 
 type: application
-version: 0.7.16
-appVersion: 0.16.17
+version: 0.7.17
+appVersion: 0.16.21
 home: https://sysdiglabs.github.io/cloud-connector
 
 maintainers:
@@ -20,3 +20,5 @@ maintainers:
     email: david.gonzalez@sysdig.com
   - name: miketnt
     email: miguel.baztan@sysdig.com
+  - name: jprieto92
+    email: javier.prieto@sysdig.com
