@@ -9,6 +9,7 @@ This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The 
 ### Minor changes:
 * NodeAnalyzer:
     * Replaced nodeAnalyzer.labels with daemonset.labels similar to how agent chart works to make it more consistent for customers.
+
 ## v1.7.27
 ### Minor changes:
 * NodeAnalyzer:

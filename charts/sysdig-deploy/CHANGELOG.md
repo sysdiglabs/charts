@@ -7,6 +7,7 @@ This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. Th
 
 ### Minor changes
 * Bumped nodeanalyzer to 1.7.28. Made nodeanalyzer labels consistent with agent.
+
 ## v1.3.34
 ### Minor changes
 * sysdig-deploy:
