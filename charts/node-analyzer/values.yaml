@@ -33,6 +33,10 @@ gke:
   # true here enables the deployment on gke autopilot clusters
   autopilot: false
 
+daemonset:
+  # Allow the DaemonSet to set labels
+  labels: {}
+
 rbac:
   # true here enables creation of rbac resources
   create: true
