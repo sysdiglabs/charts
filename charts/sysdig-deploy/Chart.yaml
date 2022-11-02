@@ -4,7 +4,7 @@ description: A chart with various Sysdig components for Kubernetes
 
 type: application
 
-version: 1.3.35
+version: 1.3.36
 
 maintainers:
   - name: aroberts87
@@ -26,13 +26,13 @@ dependencies:
   - name: node-analyzer
     # repository: https://charts.sysdig.com
     repository: file://../node-analyzer
-    version: ~1.7.28
+    version: ~1.7.29
     alias: nodeAnalyzer
     condition: nodeAnalyzer.enabled
   - name: kspm-collector
     # repository: https://charts.sysdig.com
     repository: file://../kspm-collector
-    version: ~0.1.13
+    version: ~0.1.14
     alias: kspmCollector
     condition: global.kspm.deploy
   - name: rapid-response
