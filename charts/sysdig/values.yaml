@@ -319,7 +319,7 @@ nodeImageAnalyzer:
 natsUrl: ""
 
 kspm:
-  deploy: false
+  deploy: true
 
 nodeAnalyzer:
   # Create node analyzer specific serviceAccount resource
