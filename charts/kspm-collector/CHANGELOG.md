@@ -1,3 +1,7 @@
+# v0.1.14
+### Minor chagnes
+* Bumped image tag to 1.11.0
+
 # v0.1.13
 ### Bugfixes
 * Fix labels indentation
