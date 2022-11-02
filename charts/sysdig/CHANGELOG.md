@@ -4,6 +4,11 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.15.52
+### Minor changes
+* KSPMAnalyzer:
+    * setting deploy to true by default 
+
 ## v1.15.51
 ### Minor changes
 * NodeAnalyzer:
