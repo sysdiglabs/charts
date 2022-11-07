@@ -274,8 +274,8 @@ $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller
       --create-namespace -n sysdig-admission-controller \
       --set clusterName=CLUSTER_NAME \
       --set sysdig.url=SECURE_URL \
-      --set verifySSL=false \
-      --set sysdig.secureAPIToken=SECURE_API_TOKEN
+      --set sysdig.secureAPIToken=SECURE_API_TOKEN \
+      --set verifySSL=false
 ```
 
 Use `verifySSL=false` if you are using self signed certificates.
