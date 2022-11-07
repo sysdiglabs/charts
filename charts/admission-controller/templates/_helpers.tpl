@@ -2,8 +2,8 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "admission-controller.name" -}}
-{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" | lower -}}
+{{- define "admissionController.name" -}}
+{{- default .Chart.Name .Values.admissionController.nameOverride | trunc 63 | trimSuffix "-" | lower -}}
 {{- end -}}
 
 {{/*
@@ -11,11 +11,11 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "admission-controller.fullname" -}}
-{{- if .Values.fullnameOverride -}}
-{{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" | lower -}}
+{{- define "admissionController.fullname" -}}
+{{- if .Values.admissionController.fullnameOverride -}}
+{{- .Values.admissionController.fullnameOverride | trunc 63 | trimSuffix "-" | lower -}}
 {{- else -}}
-{{- $name := default .Chart.Name .Values.nameOverride -}}
+{{- $name := default .Chart.Name .Values.admissionController.nameOverride -}}
 {{- if contains $name .Release.Name -}}
 {{- .Release.Name | trunc 63 | trimSuffix "-" | lower -}}
 {{- else -}}
@@ -27,15 +27,15 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "admission-controller.chart" -}}
+{{- define "admissionController.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{/*
 Common labels
 */}}
-{{- define "admission-controller.labels" -}}
-helm.sh/chart: {{ include "admission-controller.chart" . }}
+{{- define "admissionController.labels" -}}
+helm.sh/chart: {{ include "admissionController.chart" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,8 +45,8 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "admission-controller.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "admission-controller.name" . }}
+{{- define "admissionController.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "admissionController.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end -}}
 
@@ -59,33 +59,33 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "admission-controller.webhook.fullname" -}}
-{{- if .Values.fullnameOverride -}}
-{{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" | lower -}}
+{{- define "admissionController.webhook.fullname" -}}
+{{- if .Values.admissionController.fullnameOverride -}}
+{{- .Values.admissionController.fullnameOverride | trunc 63 | trimSuffix "-" | lower -}}
 {{- else -}}
-{{- $name := default .Chart.Name .Values.nameOverride -}}
+{{- $name := default .Chart.Name .Values.admissionController.nameOverride -}}
 {{- if contains $name .Release.Name -}}
-{{- printf "%s-%s" .Release.Name .Values.webhook.name| trunc 63 | trimSuffix "-" | lower -}}
+{{- printf "%s-%s" .Release.Name .Values.admissionController.webhook.name| trunc 63 | trimSuffix "-" | lower -}}
 {{- else -}}
-{{- printf "%s-%s-%s" .Release.Name $name .Values.webhook.name | trunc 63 | trimSuffix "-" | lower -}}
+{{- printf "%s-%s-%s" .Release.Name $name .Values.admissionController.webhook.name | trunc 63 | trimSuffix "-" | lower -}}
 {{- end -}}
 {{- end -}}
 {{- end -}}
 
-{{- define "admission-controller.webhook.defaultPodAnnotations" -}}
-{{- toYaml (dict "prometheus.io/path" "/metrics" "prometheus.io/port" (quote .Values.webhook.http.port) "prometheus.io/scheme" "https" "prometheus.io/scrape" "true" "sidecar.istio.io/inject" "false") -}}
+{{- define "admissionController.webhook.defaultPodAnnotations" -}}
+{{- toYaml (dict "prometheus.io/path" "/metrics" "prometheus.io/port" (quote .Values.admissionController.webhook.http.port) "prometheus.io/scheme" "https" "prometheus.io/scrape" "true" "sidecar.istio.io/inject" "false") -}}
 {{- end -}}
 
-{{- define "admission-controller.webhook.podAnnotations" -}}
-{{- if .Values.webhook.podAnnotations }}
-{{- .Values.webhook.podAnnotations | toYaml -}}
+{{- define "admissionController.webhook.podAnnotations" -}}
+{{- if .Values.admissionController.webhook.podAnnotations }}
+{{- .Values.admissionController.webhook.podAnnotations | toYaml -}}
 {{- else -}}
-{{- include "admission-controller.webhook.defaultPodAnnotations" . -}}
+{{- include "admissionController.webhook.defaultPodAnnotations" . -}}
 {{- end -}}
 {{- end -}}
 
-{{- define "admission-controller.webhook.defaultSecurityContext" -}}
- {{- if (lt (int .Values.webhook.http.port) 1024) -}}
+{{- define "admissionController.webhook.defaultSecurityContext" -}}
+ {{- if (lt (int .Values.admissionController.webhook.http.port) 1024) -}}
         {{- toYaml (dict "runAsUser" 0 "runAsNonRoot" false) -}}
     {{- else -}}
         {{- toYaml (dict "runAsUser" 1000 "runAsNonRoot" true) -}}
@@ -96,16 +96,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Common labels
 */}}
-{{- define "admission-controller.webhook.labels" -}}
-{{ include "admission-controller.labels" . }}
-{{ include "admission-controller.webhook.selectorLabels" . }}
+{{- define "admissionController.webhook.labels" -}}
+{{ include "admissionController.labels" . }}
+{{ include "admissionController.webhook.selectorLabels" . }}
 {{- end -}}
 
 {{/*
 Selector labels
 */}}
-{{- define "admission-controller.webhook.selectorLabels" -}}
-{{ include "admission-controller.selectorLabels" . }}
+{{- define "admissionController.webhook.selectorLabels" -}}
+{{ include "admissionController.selectorLabels" . }}
 app.kubernetes.io/component: webhook
 {{- end -}}
 
@@ -113,28 +113,28 @@ app.kubernetes.io/component: webhook
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "admission-controller.webhook.serviceAccountName" -}}
-    {{ default (include "admission-controller.webhook.fullname" .) .Values.serviceAccounts.webhook.name }}
+{{- define "admissionController.webhook.serviceAccountName" -}}
+    {{ default (include "admissionController.webhook.fullname" .) .Values.admissionController.serviceAccounts.webhook.name }}
 {{- end -}}
 
 {{/*
 Generate certificates for aggregated api server
 */}}
 
-{{- $cert := genCA ( printf "%s.%s.svc" (include "admission-controller.webhook.fullname" .) .Release.Namespace ) 3650 -}}
+{{- $cert := genCA ( printf "%s.%s.svc" (include "admissionController.webhook.fullname" .) .Release.Namespace ) 3650 -}}
 
-{{- define "admission-controller.webhook.gen-certs" -}}
-    {{- $ca := genCA (include "admission-controller.webhook.fullname" .) 3650 -}}
-    {{- if (and .Values.webhook.ssl.ca.cert .Values.webhook.ssl.ca.key) -}}
-        {{- $ca = buildCustomCert (.Values.webhook.ssl.ca.cert | b64enc) (.Values.webhook.ssl.ca.key | b64enc) -}}
+{{- define "admissionController.webhook.gen-certs" -}}
+    {{- $ca := genCA (include "admissionController.webhook.fullname" .) 3650 -}}
+    {{- if (and .Values.admissionController.webhook.ssl.ca.cert .Values.admissionController.webhook.ssl.ca.key) -}}
+        {{- $ca = buildCustomCert (.Values.admissionController.webhook.ssl.ca.cert | b64enc) (.Values.admissionController.webhook.ssl.ca.key | b64enc) -}}
     {{- end -}}
 
-    {{- $cn := printf "%s.%s.svc" (include "admission-controller.webhook.fullname" .) .Release.Namespace -}}
+    {{- $cn := printf "%s.%s.svc" (include "admissionController.webhook.fullname" .) .Release.Namespace -}}
     {{- $san := list $cn -}}
     {{- $cert := genSignedCert $cn nil $san 3650 $ca -}}
 
-    {{- if (and .Values.webhook.ssl.cert .Values.webhook.ssl.key) -}}
-        {{- printf "%s$%s$%s" (.Values.webhook.ssl.cert | b64enc) (.Values.webhook.ssl.key | b64enc) ($ca.Cert | b64enc) -}}
+    {{- if (and .Values.admissionController.webhook.ssl.cert .Values.admissionController.webhook.ssl.key) -}}
+        {{- printf "%s$%s$%s" (.Values.admissionController.webhook.ssl.cert | b64enc) (.Values.admissionController.webhook.ssl.key | b64enc) ($ca.Cert | b64enc) -}}
     {{- else -}}
         {{- printf "%s$%s$%s" ($cert.Cert | b64enc) ($cert.Key | b64enc) ($ca.Cert | b64enc) -}}
     {{- end -}}
@@ -143,15 +143,15 @@ Generate certificates for aggregated api server
 {{/*
 Allow overriding registry and repository for air-gapped environments
 */}}
-{{- define "admission-controller.webhook.image" -}}
-{{- if .Values.webhook.image.overrideValue -}}
-    {{- .Values.webhook.image.overrideValue -}}
+{{- define "admissionController.webhook.image" -}}
+{{- if .Values.admissionController.webhook.image.overrideValue -}}
+    {{- .Values.admissionController.webhook.image.overrideValue -}}
 {{- else -}}
-    {{- $imageRegistry := .Values.webhook.image.registry -}}
-    {{- $imageRepository := .Values.webhook.image.repository -}}
-    {{- $imageTag := .Values.webhook.image.tag | default .Chart.AppVersion -}}
-    {{- $imageDigest := .Values.webhook.image.digest -}}
-    {{- $globalRegistry := (default .Values.global dict).imageRegistry -}}
+    {{- $imageRegistry := .Values.admissionController.webhook.image.registry -}}
+    {{- $imageRepository := .Values.admissionController.webhook.image.repository -}}
+    {{- $imageTag := .Values.admissionController.webhook.image.tag | default .Chart.AppVersion -}}
+    {{- $imageDigest := .Values.admissionController.webhook.image.digest -}}
+    {{- $globalRegistry := (default .Values.admissionController.global dict).imageRegistry -}}
     {{- $globalRegistry | default $imageRegistry | default "docker.io" -}} / {{- $imageRepository -}} {{- if $imageDigest -}} @ {{- $imageDigest -}} {{- else -}} : {{- $imageTag -}} {{- end -}}
 {{- end -}}
 {{- end -}}
@@ -165,15 +165,15 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "admission-controller.scanner.fullname" -}}
-{{- if .Values.scanner.fullnameOverride -}}
-{{- .Values.scanner.fullnameOverride | trunc 63 | trimSuffix "-" | lower -}}
+{{- define "admissionController.scanner.fullname" -}}
+{{- if .Values.admissionController.scanner.fullnameOverride -}}
+{{- .Values.admissionController.scanner.fullnameOverride | trunc 63 | trimSuffix "-" | lower -}}
 {{- else -}}
-{{- $name := default .Chart.Name .Values.nameOverride -}}
+{{- $name := default .Chart.Name .Values.admissionController.nameOverride -}}
 {{- if contains $name .Release.Name -}}
-{{- printf "%s-%s" .Release.Name .Values.scanner.name| trunc 63 | trimSuffix "-" | lower -}}
+{{- printf "%s-%s" .Release.Name .Values.admissionController.scanner.name| trunc 63 | trimSuffix "-" | lower -}}
 {{- else -}}
-{{- printf "%s-%s-%s" .Release.Name $name .Values.scanner.name | trunc 63 | trimSuffix "-" | lower -}}
+{{- printf "%s-%s-%s" .Release.Name $name .Values.admissionController.scanner.name | trunc 63 | trimSuffix "-" | lower -}}
 {{- end -}}
 {{- end -}}
 {{- end -}}
@@ -181,16 +181,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Common labels
 */}}
-{{- define "admission-controller.scanner.labels" -}}
-{{ include "admission-controller.labels" . }}
-{{ include "admission-controller.scanner.selectorLabels" . }}
+{{- define "admissionController.scanner.labels" -}}
+{{ include "admissionController.labels" . }}
+{{ include "admissionController.scanner.selectorLabels" . }}
 {{- end -}}
 
 {{/*
 Selector labels
 */}}
-{{- define "admission-controller.scanner.selectorLabels" -}}
-{{ include "admission-controller.selectorLabels" . }}
+{{- define "admissionController.scanner.selectorLabels" -}}
+{{ include "admissionController.selectorLabels" . }}
 app.kubernetes.io/component: scanner
 {{- end -}}
 
@@ -198,19 +198,19 @@ app.kubernetes.io/component: scanner
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "admission-controller.scanner.serviceAccountName" -}}
-    {{ default (include "admission-controller.scanner.fullname" .) .Values.serviceAccounts.scanner.name }}
+{{- define "admissionController.scanner.serviceAccountName" -}}
+    {{ default (include "admissionController.scanner.fullname" .) .Values.admissionController.serviceAccounts.scanner.name }}
 {{- end -}}
 
 {{/*
 Generate certificates for aggregated api server
 */}}
 
-{{- $cert := genCA ( printf "%s.%s.svc" (include "admission-controller.scanner.fullname" .) .Release.Namespace ) 3650 -}}
+{{- $cert := genCA ( printf "%s.%s.svc" (include "admissionController.scanner.fullname" .) .Release.Namespace ) 3650 -}}
 
-{{- define "admission-controller.scanner.gen-certs" -}}
-{{- $ca := genCA (include "admission-controller.scanner.fullname" .) 3650 -}}
-{{- $cn := printf "%s.%s.svc" (include "admission-controller.scanner.fullname" .) .Release.Namespace -}}
+{{- define "admissionController.scanner.gen-certs" -}}
+{{- $ca := genCA (include "admissionController.scanner.fullname" .) 3650 -}}
+{{- $cn := printf "%s.%s.svc" (include "admissionController.scanner.fullname" .) .Release.Namespace -}}
 {{- $san := list $cn -}}
 {{- $cert := genSignedCert $cn nil $san 3650 $ca -}}
 {{- printf "%s$%s$%s" ($cert.Cert | b64enc) ($cert.Key | b64enc) ($ca.Cert | b64enc) -}}
@@ -219,18 +219,40 @@ Generate certificates for aggregated api server
 {{/*
 Allow overriding registry and repository for air-gapped environments
 */}}
-{{- define "admission-controller.scanner.image" -}}
-{{- if .Values.scanner.image.overrideValue -}}
-    {{- .Values.scanner.image.overrideValue -}}
+{{- define "admissionController.scanner.image" -}}
+{{- if .Values.admissionController.scanner.image.overrideValue -}}
+    {{- .Values.admissionController.scanner.image.overrideValue -}}
 {{- else -}}
-    {{- $imageRegistry := .Values.scanner.image.registry -}}
-    {{- $imageRepository := .Values.scanner.image.repository -}}
-    {{- $imageTag := .Values.scanner.image.tag | default .Chart.AppVersion -}}
-    {{- $imageDigest := .Values.scanner.image.digest -}}
-    {{- $globalRegistry := (default .Values.global dict).imageRegistry -}}
+    {{- $imageRegistry := .Values.admissionController.scanner.image.registry -}}
+    {{- $imageRepository := .Values.admissionController.scanner.image.repository -}}
+    {{- $imageTag := .Values.admissionController.scanner.image.tag | default .Chart.AppVersion -}}
+    {{- $imageDigest := .Values.admissionController.scanner.image.digest -}}
+    {{- $globalRegistry := (default .Values.admissionController.global dict).imageRegistry -}}
     {{- $globalRegistry | default $imageRegistry | default "docker.io" -}} / {{- $imageRepository -}} {{- if $imageDigest -}} @ {{- $imageDigest -}} {{- else -}} : {{- $imageTag -}} {{- end -}}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Determine collector endpoint based on provided region or .Values.admissionController.apiEndpoint
+*/}}
+{{- define "admissionController.apiEndpoint" -}}
+    {{- if (or .Values.admissionController.apiEndpoint (eq .Values.global.sysdig.region "custom"))  -}}
+        {{- required "A valid apiEndpoint is required" .Values.admissionController.apiEndpoint -}}
+    {{- else if (eq .Values.global.sysdig.region "us1") -}}
+        {{- "secure.sysdig.com" -}}
+    {{- else if (eq .Values.global.sysdig.region "us2") -}}
+        {{- "us2.app.sysdig.com" -}}
+    {{- else if (eq .Values.global.sysdig.region "us3") -}}
+        {{- "app.us3.sysdig.com" -}}
+    {{- else if (eq .Values.global.sysdig.region "us4") -}}
+        {{- "app.us4.sysdig.com" -}}
+    {{- else if (eq .Values.global.sysdig.region "eu1") -}}
+        {{- "eu1.app.sysdig.com" -}}
+    {{- else if (eq .Values.global.sysdig.region "au1") -}}
+        {{- "app.au1.sysdig.com" -}}
+    {{- end -}}
+{{- end -}}
+
 {{/*
 The following helper functions are all designed to use global values where
 possible, but accept overrides from the chart values.
@@ -248,25 +270,25 @@ possible, but accept overrides from the chart values.
 {{- end -}}
 
 {{- define "scanner.httpProxy" -}}
-    {{- .Values.scanner.httpProxy | default .Values.global.proxy.httpProxy | default "" -}}
+    {{- .Values.admissionController.scanner.httpProxy | default .Values.global.proxy.httpProxy | default "" -}}
 {{- end -}}
 
 {{- define "scanner.httpsProxy" -}}
-    {{- .Values.scanner.httpsProxy | default .Values.global.proxy.httpsProxy | default "" -}}
+    {{- .Values.admissionController.scanner.httpsProxy | default .Values.global.proxy.httpsProxy | default "" -}}
 {{- end -}}
 
 {{- define "scanner.noProxy" -}}
-    {{- .Values.scanner.noProxy | default .Values.global.proxy.noProxy | default "" -}}
+    {{- .Values.admissionController.scanner.noProxy | default .Values.global.proxy.noProxy | default "" -}}
 {{- end -}}
 
 {{- define "webhook.httpProxy" -}}
-    {{- .Values.webhook.httpProxy | default .Values.global.proxy.httpProxy | default "" -}}
+    {{- .Values.admissionController.webhook.httpProxy | default .Values.global.proxy.httpProxy | default "" -}}
 {{- end -}}
 
 {{- define "webhook.httpsProxy" -}}
-    {{- .Values.webhook.httpsProxy | default .Values.global.proxy.httpsProxy | default "" -}}
+    {{- .Values.admissionController.webhook.httpsProxy | default .Values.global.proxy.httpsProxy | default "" -}}
 {{- end -}}
 
 {{- define "webhook.noProxy" -}}
-    {{- .Values.webhook.noProxy | default .Values.global.proxy.noProxy | default "" -}}
+    {{- .Values.admissionController.webhook.noProxy | default .Values.global.proxy.noProxy | default "" -}}
 {{- end -}}

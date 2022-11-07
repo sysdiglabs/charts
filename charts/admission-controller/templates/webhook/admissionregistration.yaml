@@ -2,17 +2,17 @@
 We need to put all resources that need certificate or CA Bundle together,
 so the template is executed just once
  */}}
-{{- $certString := include "admission-controller.webhook.gen-certs" . -}}
+{{- $certString := include "admissionController.webhook.gen-certs" . -}}
 {{- $certList := split "$" $certString -}}
 ---
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
 metadata:
-  name: {{ include "admission-controller.webhook.fullname" . }}
+  name: {{ include "admissionController.webhook.fullname" . }}
   annotations:
     "helm.sh/hook": "post-install, post-upgrade"
 webhooks:
-{{- if .Values.scanner.enabled }}
+{{- if .Values.admissionController.scanner.enabled }}
 - name: scanning.secure.sysdig.com
   matchPolicy: Equivalent
   rules:
@@ -34,43 +34,43 @@ webhooks:
   clientConfig:
     service:
       namespace: {{ .Release.Namespace }}
-      name: {{ include "admission-controller.webhook.fullname" . }}
+      name: {{ include "admissionController.webhook.fullname" . }}
       path: /allow-pod
     caBundle: {{ $certList._2 }}
   admissionReviewVersions: ["v1", "v1beta1"]
   sideEffects: None
-  timeoutSeconds: {{ .Values.webhook.timeoutSeconds }}
-  {{- if .Values.webhook.denyOnError }}
+  timeoutSeconds: {{ .Values.admissionController.webhook.timeoutSeconds }}
+  {{- if .Values.admissionController.webhook.denyOnError }}
   failurePolicy: Fail
   {{- else }}
   failurePolicy: Ignore
   {{- end }}
 {{- end }}
-{{- if .Values.features.k8sAuditDetections }}
+{{- if .Values.admissionController.features.k8sAuditDetections }}
 - name: audit.secure.sysdig.com
   matchPolicy: Equivalent
   rules:
-  {{- with .Values.features.k8sAuditDetectionsRules }}
+  {{- with .Values.admissionController.features.k8sAuditDetectionsRules }}
     {{- toYaml . | nindent 2 }}
   {{- end }}
   clientConfig:
     service:
       namespace: {{ .Release.Namespace }}
-      name: {{ include "admission-controller.webhook.fullname" . }}
+      name: {{ include "admissionController.webhook.fullname" . }}
       path: /k8s-audit
     caBundle: {{ $certList._2 }}
   admissionReviewVersions: ["v1", "v1beta1"]
   sideEffects: None
-  timeoutSeconds: {{ .Values.webhook.timeoutSeconds }}
+  timeoutSeconds: {{ .Values.admissionController.webhook.timeoutSeconds }}
   failurePolicy: Ignore
 {{- end }}
 ---
 apiVersion: v1
 kind: Secret
 metadata:
-  name: {{ include "admission-controller.webhook.fullname" . }}-tls
+  name: {{ include "admissionController.webhook.fullname" . }}-tls
   labels:
-    {{ include "admission-controller.webhook.labels" . | nindent 4 }}
+    {{ include "admissionController.webhook.labels" . | nindent 4 }}
 data:
   tls.crt: {{ $certList._0 }}
   tls.key: {{ $certList._1 }}

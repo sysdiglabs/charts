@@ -1,8 +1,8 @@
-{{- if .Values.scanner.psp.create  }}
+{{- if .Values.admissionController.scanner.psp.create  }}
 apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:
-  name: {{ include "admission-controller.scanner.fullname" . }}
+  name: {{ include "admissionController.scanner.fullname" . }}
 spec:
   allowPrivilegeEscalation: false
   fsGroup:

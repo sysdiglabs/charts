@@ -1,17 +1,17 @@
-{{- if .Values.scanner.enabled -}}
+{{- if .Values.admissionController.scanner.enabled -}}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "admission-controller.scanner.fullname" . }}
+  name: {{ include "admissionController.scanner.fullname" . }}
   labels:
-    {{- include "admission-controller.scanner.labels" . | nindent 4 }}
+    {{- include "admissionController.scanner.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.scanner.service.type }}
+  type: {{ .Values.admissionController.scanner.service.type }}
   ports:
     - name: https
-      port: {{ .Values.scanner.service.port }}
+      port: {{ .Values.admissionController.scanner.service.port }}
       targetPort: http
       protocol: TCP
   selector:
-    {{- include "admission-controller.scanner.selectorLabels" . | nindent 4 }}
+    {{- include "admissionController.scanner.selectorLabels" . | nindent 4 }}
 {{- end -}}

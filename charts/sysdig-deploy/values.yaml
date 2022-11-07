@@ -1,6 +1,7 @@
 global:
   clusterConfig:
-    name: "" # name to identify this cluster for events and metrics
+    # name to identify this cluster for events and metrics
+    name: ""
   sysdig:
     accessKey: ""
     accessKeySecret: ""

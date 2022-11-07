@@ -1,13 +1,13 @@
-{{- if .Values.scanner.psp.create  }}
+{{- if .Values.admissionController.scanner.psp.create  }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: {{ include "admission-controller.scanner.fullname" . }}
+  name: {{ include "admissionController.scanner.fullname" . }}
 rules:
   - apiGroups:
       - policy
     resourceNames:
-      - {{ include "admission-controller.scanner.fullname" . }}
+      - {{ include "admissionController.scanner.fullname" . }}
     resources:
       - podsecuritypolicies
     verbs:

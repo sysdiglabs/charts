@@ -1,77 +1,77 @@
-{{- if .Values.scanner.enabled -}}
+{{- if .Values.admissionController.scanner.enabled -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "admission-controller.scanner.fullname" . }}
+  name: {{ include "admissionController.scanner.fullname" . }}
   labels:
-    {{- include "admission-controller.scanner.labels" . | nindent 4 }}
+    {{- include "admissionController.scanner.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.scanner.replicaCount }}
+  replicas: {{ .Values.admissionController.scanner.replicaCount }}
   selector:
     matchLabels:
-      {{- include "admission-controller.scanner.selectorLabels" . | nindent 6 }}
+      {{- include "admissionController.scanner.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       annotations:
-      {{- with .Values.scanner.podAnnotations }}
+      {{- with .Values.admissionController.scanner.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
         checksum/configmap: {{ include (print $.Template.BasePath "/scanner/configmap.yaml") . | sha256sum }}
         checksum/secret: {{ include (print $.Template.BasePath "/scanner/secret.yaml") . | sha256sum }}
       labels:
-        {{- include "admission-controller.scanner.labels" . | nindent 8 }}
+        {{- include "admissionController.scanner.labels" . | nindent 8 }}
     spec:
-      {{- with .Values.scanner.imagePullSecrets }}
+      {{- with .Values.admissionController.scanner.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "admission-controller.scanner.serviceAccountName" . }}
+      serviceAccountName: {{ include "admissionController.scanner.serviceAccountName" . }}
       securityContext:
-        {{- toYaml .Values.scanner.podSecurityContext | nindent 8 }}
+        {{- toYaml .Values.admissionController.scanner.podSecurityContext | nindent 8 }}
       volumes:
         - name: tmp-dir
           emptyDir: {}
-        {{- if .Values.scanner.dockerCfgSecretName }}
+        {{- if .Values.admissionController.scanner.dockerCfgSecretName }}
         - name: dockercfg
           secret:
             defaultMode: 420
-            secretName: {{ .Values.scanner.dockerCfgSecretName }}
+            secretName: {{ .Values.admissionController.scanner.dockerCfgSecretName }}
         {{- end }}
-        {{- if .Values.scanner.ssl.ca.cert }}
+        {{- if .Values.admissionController.scanner.ssl.ca.cert }}
         - name: ca-cert
           secret:
-            secretName: {{ include "admission-controller.scanner.fullname" . }}-ca
+            secretName: {{ include "admissionController.scanner.fullname" . }}-ca
         {{- end }}
       containers:
         - name: inline-scanner
           securityContext:
-            {{- toYaml .Values.scanner.securityContext | nindent 12 }}
-          image: "{{ include "admission-controller.scanner.image" . }}"
+            {{- toYaml .Values.admissionController.scanner.securityContext | nindent 12 }}
+          image: "{{ include "admissionController.scanner.image" . }}"
           volumeMounts:
             - mountPath: /tmp
               name: tmp-dir
-            {{- if .Values.scanner.dockerCfgSecretName }}
+            {{- if .Values.admissionController.scanner.dockerCfgSecretName }}
             - mountPath: /dockerauth
               name: dockercfg
               readOnly: true
             {{- end }}
-            {{- if .Values.scanner.ssl.ca.cert }}
+            {{- if .Values.admissionController.scanner.ssl.ca.cert }}
             - name: ca-cert
               mountPath: /ca-cert
               readOnly: true
             {{- end }}
-          {{- if .Values.scanner.customEntryPoint }}
-          command: {{ .Values.scanner.customEntryPoint | toYaml | nindent 10 }}
+          {{- if .Values.admissionController.scanner.customEntryPoint }}
+          command: {{ .Values.admissionController.scanner.customEntryPoint | toYaml | nindent 10 }}
           {{- else }}
           args:
-            - --server_port={{ .Values.scanner.service.port }}
-            {{- if .Values.scanner.authWithSecureToken }}
+            - --server_port={{ .Values.admissionController.scanner.service.port }}
+            {{- if .Values.admissionController.scanner.authWithSecureToken }}
             - --auth_secure_token
             {{- end }}
           {{- end }}
-          imagePullPolicy: {{ .Values.scanner.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.admissionController.scanner.image.pullPolicy }}
           env:
-            {{- if (or .Values.scanner.httpProxy .Values.scanner.httpsProxy) }}
+            {{- if (or .Values.admissionController.scanner.httpProxy .Values.admissionController.scanner.httpsProxy) }}
             - name: HTTP_PROXY
               value: {{ include "scanner.httpProxy" . }}
             - name: HTTPS_PROXY
@@ -79,42 +79,42 @@ spec:
             - name: NO_PROXY
               value: {{ include "scanner.noProxy" . }}
             {{- end }}
-            {{- if .Values.scanner.ssl.ca.cert }}
+            {{- if .Values.admissionController.scanner.ssl.ca.cert }}
             - name: SSL_CERT_FILE
               value: /ca-cert/root_ca_file.crt # mounted from the secret
             {{- end }}
           envFrom:
             - configMapRef:
-                name: {{ include "admission-controller.scanner.fullname" . }}
+                name: {{ include "admissionController.scanner.fullname" . }}
             {{- if or (include "sysdig.secureAPIToken" .) (include "sysdig.secureAPITokenSecret" .) }}
             - secretRef:
                 {{- if include "sysdig.secureAPIToken" . }}
-                name: {{ include "admission-controller.scanner.fullname" . }}-api-token
+                name: {{ include "admissionController.scanner.fullname" . }}-api-token
                 {{- else }}
                 name: {{ include "sysdig.secureAPITokenSecret" . }}
                 {{- end }}
             - secretRef:
                 {{- if include "sysdig.secureAPIToken" . }}
-                name: {{ include "admission-controller.scanner.fullname" . }}-auth
+                name: {{ include "admissionController.scanner.fullname" . }}-auth
                 {{- else }}
                 name: {{ include "sysdig.secureAPITokenSecret" . }}
                 {{- end }}
             {{- end }}
           ports:
             - name: http
-              containerPort: {{ .Values.scanner.service.port }}
+              containerPort: {{ .Values.admissionController.scanner.service.port }}
               protocol: TCP
           resources:
-            {{- toYaml .Values.scanner.resources | nindent 12 }}
-      {{- with .Values.scanner.nodeSelector }}
+            {{- toYaml .Values.admissionController.scanner.resources | nindent 12 }}
+      {{- with .Values.admissionController.scanner.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.scanner.affinity }}
+      {{- with .Values.admissionController.scanner.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.scanner.tolerations }}
+      {{- with .Values.admissionController.scanner.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}

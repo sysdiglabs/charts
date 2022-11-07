@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "admission-controller.webhook.fullname" . }}
+  name: {{ include "admissionController.webhook.fullname" . }}
   labels:
-    {{- include "admission-controller.webhook.labels" . | nindent 4 }}
+    {{- include "admissionController.webhook.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.webhook.replicaCount }}
+  replicas: {{ .Values.admissionController.webhook.replicaCount }}
   selector:
     matchLabels:
-      {{- include "admission-controller.webhook.selectorLabels" . | nindent 6 }}
+      {{- include "admissionController.webhook.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       annotations:
-        {{- include "admission-controller.webhook.podAnnotations" . | nindent 8 }}
+        {{- include "admissionController.webhook.podAnnotations" . | nindent 8 }}
         checksum/configmap: {{ include (print $.Template.BasePath "/webhook/configmap.yaml") . | sha256sum }}
         checksum/secret: {{ include (print $.Template.BasePath "/webhook/secret.yaml") . | sha256sum }}
         checksum/certs: {{ include (print $.Template.BasePath "/webhook/admissionregistration.yaml") . | sha256sum }}
       labels:
-        {{- include "admission-controller.webhook.labels" . | nindent 8 }}
+        {{- include "admissionController.webhook.labels" . | nindent 8 }}
     spec:
       affinity:
         podAntiAffinity:
@@ -26,30 +26,30 @@ spec:
                 topologyKey: kubernetes.io/hostname
                 labelSelector:
                   matchLabels:
-                    {{- include "admission-controller.webhook.selectorLabels" . | nindent 20 }}
+                    {{- include "admissionController.webhook.selectorLabels" . | nindent 20 }}
               weight: 10
-      {{- with .Values.webhook.imagePullSecrets }}
+      {{- with .Values.admissionController.webhook.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "admission-controller.webhook.serviceAccountName" . }}
+      serviceAccountName: {{ include "admissionController.webhook.serviceAccountName" . }}
       securityContext:
-        {{- if .Values.webhook.podSecurityContext }}
-        {{- toYaml .Values.webhook.podSecurityContext | nindent 8 }}
+        {{- if .Values.admissionController.webhook.podSecurityContext }}
+        {{- toYaml .Values.admissionController.webhook.podSecurityContext | nindent 8 }}
         {{- else }}
-        {{- include "admission-controller.webhook.defaultSecurityContext" . | nindent 8 }}
+        {{- include "admissionController.webhook.defaultSecurityContext" . | nindent 8 }}
         {{- end }}
-      {{- if .Values.webhook.hostNetwork }}
+      {{- if .Values.admissionController.webhook.hostNetwork }}
       hostNetwork: true
       {{- end }}
       containers:
         - name: admission-controller
-          image: "{{ include "admission-controller.webhook.image" . }}"
-          {{- if .Values.webhook.customEntryPoint }}
-          command: {{ .Values.webhook.customEntryPoint | toYaml | nindent 10 }}
+          image: "{{ include "admissionController.webhook.image" . }}"
+          {{- if .Values.admissionController.webhook.customEntryPoint }}
+          command: {{ .Values.admissionController.webhook.customEntryPoint | toYaml | nindent 10 }}
           {{- else }}
           args:
-            {{- with .Values.webhook.http.port }}
+            {{- with .Values.admissionController.webhook.http.port }}
             - --http_port
             - {{ . | quote }}
             {{- end }}
@@ -59,16 +59,16 @@ spec:
             - /cert/tls.key
           {{- end }}
           securityContext:
-            {{- if .Values.webhook.securityContext }}
-            {{- toYaml .Values.webhook.securityContext | nindent 12 }}
+            {{- if .Values.admissionController.webhook.securityContext }}
+            {{- toYaml .Values.admissionController.webhook.securityContext | nindent 12 }}
             {{- else }}
-            {{- include "admission-controller.webhook.defaultSecurityContext" . | nindent 12}}
+            {{- include "admissionController.webhook.defaultSecurityContext" . | nindent 12}}
             readOnlyRootFilesystem: true
             capabilities:
               drop:
                 - ALL
             {{- end }}
-          imagePullPolicy: {{ .Values.webhook.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.admissionController.webhook.image.pullPolicy }}
           env:
             {{- if (or (include "webhook.httpProxy" .) (include "webhook.httpsProxy" .) )}}
             - name: HTTP_PROXY
@@ -76,15 +76,15 @@ spec:
             - name: HTTPS_PROXY
               value: {{ include "webhook.httpsProxy" . }}
             - name: NO_PROXY
-              value: {{ include "webhook.noProxy" . }},{{ include "admission-controller.scanner.fullname" . }}
+              value: {{ include "webhook.noProxy" . }},{{ include "admissionController.scanner.fullname" . }}
             {{- end }}
-            {{- if .Values.webhook.ssl.ca.cert }}
+            {{- if .Values.admissionController.webhook.ssl.ca.cert }}
             - name: SSL_CERT_FILE
               value: /ca-cert/root_ca_file.crt # mounted from the secret
             {{- end }}
           ports:
             - name: http
-              containerPort: {{ .Values.webhook.http.port }}
+              containerPort: {{ .Values.admissionController.webhook.http.port }}
               protocol: TCP
           livenessProbe:
             httpGet:
@@ -100,42 +100,42 @@ spec:
             {{- if or (include "sysdig.secureAPIToken" .) (include "sysdig.secureAPITokenSecret" .) }}
             - secretRef:
                 {{- if (include "sysdig.secureAPIToken" .) }}
-                name: {{ include "admission-controller.webhook.fullname" . }}
+                name: {{ include "admissionController.webhook.fullname" . }}
                 {{- else }}
                 name: {{ include "sysdig.secureAPITokenSecret" . }}
                 {{- end }}
             {{- end }}
             - configMapRef:
-                name: {{ include "admission-controller.webhook.fullname" . }}
+                name: {{ include "admissionController.webhook.fullname" . }}
           volumeMounts:
             - name: cert
               mountPath: /cert
               readOnly: true
-            {{- if .Values.webhook.ssl.ca.cert }}
+            {{- if .Values.admissionController.webhook.ssl.ca.cert }}
             - name: ca-cert
               mountPath: /ca-cert
               readOnly: true
             {{- end }}
           resources:
-            {{- toYaml .Values.webhook.resources | nindent 12 }}
+            {{- toYaml .Values.admissionController.webhook.resources | nindent 12 }}
       volumes:
         - name: cert
           secret:
-            secretName: {{ include "admission-controller.webhook.fullname" . }}-tls
-      {{- if .Values.webhook.ssl.ca.cert }}
+            secretName: {{ include "admissionController.webhook.fullname" . }}-tls
+      {{- if .Values.admissionController.webhook.ssl.ca.cert }}
         - name: ca-cert
           secret:
-            secretName: {{ include "admission-controller.webhook.fullname" . }}-ca
+            secretName: {{ include "admissionController.webhook.fullname" . }}-ca
       {{- end }}
-    {{- with .Values.webhook.nodeSelector }}
+    {{- with .Values.admissionController.webhook.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-    {{- with .Values.webhook.affinity }}
+    {{- with .Values.admissionController.webhook.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-    {{- with .Values.webhook.tolerations }}
+    {{- with .Values.admissionController.webhook.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
     {{- end }}

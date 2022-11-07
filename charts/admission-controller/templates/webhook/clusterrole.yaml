@@ -1,8 +1,8 @@
-{{- if .Values.webhook.rbac.create  }}
+{{- if .Values.admissionController.webhook.rbac.create  }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: {{ include "admission-controller.webhook.fullname" . }}
+  name: {{ include "admissionController.webhook.fullname" . }}
 rules:
 - apiGroups:
   - ""
