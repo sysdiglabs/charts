@@ -208,7 +208,7 @@ As a command line parameter:
 helm install sysdig sysdig/sysdig-deploy \
     --set global.sysdig.secureAPIToken=SECURE_API_TOKEN \
     --set global.clusterConfig.name=CLUSTER_NAME \
-    --set admissionController.admissionController.sysdig.url=API_ENDPOINT
+    --set admissionController.sysdig.url=SECURE_URL
 ```
 
 As a values file:
