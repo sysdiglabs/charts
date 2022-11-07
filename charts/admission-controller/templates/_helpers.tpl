@@ -3,7 +3,7 @@
 Expand the name of the chart.
 */}}
 {{- define "admission-controller.name" -}}
-{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
+{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" | lower -}}
 {{- end -}}
 
 {{/*
@@ -13,13 +13,13 @@ If release name contains chart name it will be used as a full name.
 */}}
 {{- define "admission-controller.fullname" -}}
 {{- if .Values.fullnameOverride -}}
-{{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
+{{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" | lower -}}
 {{- else -}}
 {{- $name := default .Chart.Name .Values.nameOverride -}}
 {{- if contains $name .Release.Name -}}
-{{- .Release.Name | trunc 63 | trimSuffix "-" -}}
+{{- .Release.Name | trunc 63 | trimSuffix "-" | lower -}}
 {{- else -}}
-{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
+{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" | lower -}}
 {{- end -}}
 {{- end -}}
 {{- end -}}
@@ -61,13 +61,13 @@ If release name contains chart name it will be used as a full name.
 */}}
 {{- define "admission-controller.webhook.fullname" -}}
 {{- if .Values.fullnameOverride -}}
-{{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
+{{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" | lower -}}
 {{- else -}}
 {{- $name := default .Chart.Name .Values.nameOverride -}}
 {{- if contains $name .Release.Name -}}
-{{- printf "%s-%s" .Release.Name .Values.webhook.name| trunc 63 | trimSuffix "-" -}}
+{{- printf "%s-%s" .Release.Name .Values.webhook.name| trunc 63 | trimSuffix "-" | lower -}}
 {{- else -}}
-{{- printf "%s-%s-%s" .Release.Name $name .Values.webhook.name | trunc 63 | trimSuffix "-" -}}
+{{- printf "%s-%s-%s" .Release.Name $name .Values.webhook.name | trunc 63 | trimSuffix "-" | lower -}}
 {{- end -}}
 {{- end -}}
 {{- end -}}
@@ -167,13 +167,13 @@ If release name contains chart name it will be used as a full name.
 */}}
 {{- define "admission-controller.scanner.fullname" -}}
 {{- if .Values.scanner.fullnameOverride -}}
-{{- .Values.scanner.fullnameOverride | trunc 63 | trimSuffix "-" -}}
+{{- .Values.scanner.fullnameOverride | trunc 63 | trimSuffix "-" | lower -}}
 {{- else -}}
 {{- $name := default .Chart.Name .Values.nameOverride -}}
 {{- if contains $name .Release.Name -}}
-{{- printf "%s-%s" .Release.Name .Values.scanner.name| trunc 63 | trimSuffix "-" -}}
+{{- printf "%s-%s" .Release.Name .Values.scanner.name| trunc 63 | trimSuffix "-" | lower -}}
 {{- else -}}
-{{- printf "%s-%s-%s" .Release.Name $name .Values.scanner.name | trunc 63 | trimSuffix "-" -}}
+{{- printf "%s-%s-%s" .Release.Name $name .Values.scanner.name | trunc 63 | trimSuffix "-" | lower -}}
 {{- end -}}
 {{- end -}}
 {{- end -}}

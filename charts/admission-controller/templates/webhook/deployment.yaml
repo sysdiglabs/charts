@@ -43,7 +43,7 @@ spec:
       hostNetwork: true
       {{- end }}
       containers:
-        - name: {{ include "admission-controller.name" . }}
+        - name: admission-controller
           image: "{{ include "admission-controller.webhook.image" . }}"
           {{- if .Values.webhook.customEntryPoint }}
           command: {{ .Values.webhook.customEntryPoint | toYaml | nindent 10 }}

@@ -43,7 +43,7 @@ spec:
             secretName: {{ include "admission-controller.scanner.fullname" . }}-ca
         {{- end }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: inline-scanner
           securityContext:
             {{- toYaml .Values.scanner.securityContext | nindent 12 }}
           image: "{{ include "admission-controller.scanner.image" . }}"
