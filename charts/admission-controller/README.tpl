@@ -25,8 +25,8 @@ $ helm repo update
 $ helm upgrade --install sysdig-{{ .Release.Name }} {{ .Repository.Name }}/{{ .Chart.Name }} \
       --create-namespace -n {{ .Release.Namespace }}{{ with .Chart.Version }} --version={{.}} {{ end }} \
       --set clusterName=CLUSTER_NAME \
-      --set sysdig.secureAPIToken=SECURE_API_TOKEN \
-      --set sysdig.url=SECURE_URL
+      --set sysdig.url=SECURE_URL \
+      --set sysdig.secureAPIToken=SECURE_API_TOKEN
 ```
 
 - [Configuration](#configuration)
@@ -187,8 +187,8 @@ $ helm upgrade --install sysdig-{{ .Release.Name }} {{ .Repository.Name }}/{{ .C
       --create-namespace -n {{ .Release.Namespace }} \
       --set clusterName=CLUSTER_NAME \
       --set sysdig.url=SECURE_URL \
-      --set sysdig.secureAPIToken=SECURE_API_TOKEN \
-      --set verifySSL=false
+      --set verifySSL=false \
+      --set sysdig.secureAPIToken=SECURE_API_TOKEN
 ```
 
 Use `verifySSL=false` if you are using self signed certificates.
