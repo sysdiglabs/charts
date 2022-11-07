@@ -49,27 +49,31 @@ Currently included components:
 
 4. Do one of the following:
 
-    - Using the release name `sysdig`, run the following snippet to install the release into the namespace `sysdig-agent`:
+    - Using the release name `sysdig-agent`, run the following snippet to install the release into the namespace `sysdig-agent`:
 
       ```bash
-      helm install sysdig sysdig/sysdig-deploy \
-          --namespace sysdig-agent \
-          --set global.sysdig.accessKey=ACCESS_KEY \
-          --set global.sysdig.region=SAAS_REGION \
-          --set global.clusterConfig.name=CLUSTER_NAME
+      helm install sysdig-agent --namespace sysdig-agent \
+      --set global.sysdig.accessKey=<ACCESS_KEY> \
+      --set global.sysdig.region=<SAAS_REGION> \
+      --set nodeAnalyzer.secure.vulnerabilityManagement.newEngineOnly=true \
+      --set global.kspm.deploy=true \
+      --set nodeAnalyzer.nodeAnalyzer.benchmarkRunner.deploy=false \
+      --set global.clusterConfig.name=<CLUSTER_NAME> \
+      sysdig/sysdig-deploy
         ```
 
       **GKE Autopilot**: GKE Autopilot environments require an additional configuration parameter, `agent.gke.autopilot=true`, to install the Sysdig agent:
 
       ```bash
-      helm install sysdig sysdig/sysdig-deploy \
-          --namespace sysdig-agent \
-          --set global.sysdig.accessKey=ACCESS_KEY \
-          --set global.sysdig.region=SAAS_REGION \
-          --set global.clusterConfig.name=CLUSTER_NAME \
-          --set agent.gke.autopilot=true \
-          --set agent.slim.enabled=false \
-          --set nodeAnalyzer.enabled=false
+      helm install sysdig-agent --namespace sysdig-agent \
+      --set global.sysdig.accessKey=<ACCESS_KEY> \
+      --set global.sysdig.region=<SAAS_REGION> \
+      --set nodeAnalyzer.secure.vulnerabilityManagement.newEngineOnly=true \
+      --set global.kspm.deploy=true \
+      --set nodeAnalyzer.nodeAnalyzer.benchmarkRunner.deploy=false \
+      --set global.clusterConfig.name=<CLUSTER_NAME> \
+      --set agent.gke.autopilot=true \
+      sysdig/sysdig-deploy
       ```
 
 
