@@ -1,4 +1,4 @@
-{{- if .Values.admissionController.scanner.enabled -}}
+{{- if .Values.scanner.enabled -}}
 apiVersion: v1
 kind: Service
 metadata:
@@ -6,10 +6,10 @@ metadata:
   labels:
     {{- include "admissionController.scanner.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.admissionController.scanner.service.type }}
+  type: {{ .Values.scanner.service.type }}
   ports:
     - name: https
-      port: {{ .Values.admissionController.scanner.service.port }}
+      port: {{ .Values.scanner.service.port }}
       targetPort: http
       protocol: TCP
   selector:

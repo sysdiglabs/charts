@@ -1,7 +1,6 @@
 sysdig:
   secureAPIToken: ${SECURE_API_TOKEN}
 clusterName: CI-Cluster
-admissionController:
-  webhook:
-    http:
-      port: 443
+webhook:
+  http:
+    port: 443

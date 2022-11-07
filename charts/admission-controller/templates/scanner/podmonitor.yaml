@@ -1,16 +1,16 @@
-{{- if .Values.admissionController.podMonitors.scanner.enabled }}
+{{- if .Values.podMonitors.scanner.enabled }}
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
-  annotations: {{ .Values.admissionController.podMonitors.scanner.annotations | toYaml | nindent 4 }}
-  labels: {{ .Values.admissionController.podMonitors.scanner.labels | toYaml | nindent 4 }}
+  annotations: {{ .Values.podMonitors.scanner.annotations | toYaml | nindent 4 }}
+  labels: {{ .Values.podMonitors.scanner.labels | toYaml | nindent 4 }}
   name: admission-controller-scanner
 spec:
   selector:
     matchLabels:
       {{- include "admissionController.scanner.selectorLabels" . | nindent 6 }}
   podMetricsEndpoints:
-    - targetPort: {{ .Values.admissionController.scanner.service.port }}
+    - targetPort: {{ .Values.scanner.service.port }}
       path: "/metrics"
       scheme: https
       tlsConfig:

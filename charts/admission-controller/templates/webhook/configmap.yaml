@@ -5,16 +5,16 @@ metadata:
   labels:
     {{ include "admissionController.webhook.labels" . | nindent 4 }}
 data:
-  SECURE_URL: "https://{{ include "admissionController.apiEndpoint" . }}"
-  {{- if .Values.admissionController.scanner.enabled }}
-  SCANNER_URL: http://{{ include "admissionController.scanner.fullname" . }}:{{ .Values.admissionController.scanner.service.port }}
+  SECURE_URL: "{{ include "admissionController.secureUrl" . }}"
+  {{- if .Values.scanner.enabled }}
+  SCANNER_URL: http://{{ include "admissionController.scanner.fullname" . }}:{{ .Values.scanner.service.port }}
   {{- else }}
   SCANNER_URL: ""
   {{- end }}
   CLUSTER_NAME: {{ include "clusterName" . }}
-  LOG_LEVEL: "{{ .Values.admissionController.webhook.logLevel }}"
-  VERIFY_SSL: "{{ .Values.admissionController.verifySSL }}"
-  K8S_AUDIT_DETECTIONS: "{{ .Values.admissionController.features.k8sAuditDetections }}"
-  DENY_ON_ERROR: "{{ .Values.admissionController.webhook.denyOnError }}"
-  DRY_RUN: "{{ .Values.admissionController.webhook.dryRun }}"
-  HTTP_TIMEOUT: "{{ .Values.admissionController.webhook.timeoutSeconds }}s"
+  LOG_LEVEL: "{{ .Values.webhook.logLevel }}"
+  VERIFY_SSL: "{{ .Values.verifySSL }}"
+  K8S_AUDIT_DETECTIONS: "{{ .Values.features.k8sAuditDetections }}"
+  DENY_ON_ERROR: "{{ .Values.webhook.denyOnError }}"
+  DRY_RUN: "{{ .Values.webhook.dryRun }}"
+  HTTP_TIMEOUT: "{{ .Values.webhook.timeoutSeconds }}s"

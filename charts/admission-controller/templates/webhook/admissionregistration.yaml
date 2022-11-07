@@ -12,7 +12,7 @@ metadata:
   annotations:
     "helm.sh/hook": "post-install, post-upgrade"
 webhooks:
-{{- if .Values.admissionController.scanner.enabled }}
+{{- if .Values.scanner.enabled }}
 - name: scanning.secure.sysdig.com
   matchPolicy: Equivalent
   rules:
@@ -39,18 +39,18 @@ webhooks:
     caBundle: {{ $certList._2 }}
   admissionReviewVersions: ["v1", "v1beta1"]
   sideEffects: None
-  timeoutSeconds: {{ .Values.admissionController.webhook.timeoutSeconds }}
-  {{- if .Values.admissionController.webhook.denyOnError }}
+  timeoutSeconds: {{ .Values.webhook.timeoutSeconds }}
+  {{- if .Values.webhook.denyOnError }}
   failurePolicy: Fail
   {{- else }}
   failurePolicy: Ignore
   {{- end }}
 {{- end }}
-{{- if .Values.admissionController.features.k8sAuditDetections }}
+{{- if .Values.features.k8sAuditDetections }}
 - name: audit.secure.sysdig.com
   matchPolicy: Equivalent
   rules:
-  {{- with .Values.admissionController.features.k8sAuditDetectionsRules }}
+  {{- with .Values.features.k8sAuditDetectionsRules }}
     {{- toYaml . | nindent 2 }}
   {{- end }}
   clientConfig:
@@ -61,7 +61,7 @@ webhooks:
     caBundle: {{ $certList._2 }}
   admissionReviewVersions: ["v1", "v1beta1"]
   sideEffects: None
-  timeoutSeconds: {{ .Values.admissionController.webhook.timeoutSeconds }}
+  timeoutSeconds: {{ .Values.webhook.timeoutSeconds }}
   failurePolicy: Ignore
 {{- end }}
 ---

@@ -26,7 +26,7 @@ $ helm upgrade --install sysdig-{{ .Release.Name }} {{ .Repository.Name }}/{{ .C
       --create-namespace -n {{ .Release.Namespace }}{{ with .Chart.Version }} --version={{.}} {{ end }} \
       --set clusterName=CLUSTER_NAME \
       --set sysdig.secureAPIToken=SECURE_API_TOKEN \
-      --set admissionController.apiEndpoint=SECURE_API_ENDPOINT
+      --set sysdig.url=SECURE_URL
 ```
 
 - [Configuration](#configuration)
@@ -173,7 +173,7 @@ $ helm upgrade --install sysdig-{{ .Release.Name }} {{ .Repository.Name }}/{{ .C
       --create-namespace -n {{ .Release.Namespace }} \
       --set clusterName=CLUSTER_NAME \
       --set sysdig.secureAPIToken=SECURE_API_TOKEN \
-      --set admissionController.apiEndpoint=SECURE_API_ENDPOINT
+      --set sysdig.url=SECURE_URL
 ```
 
 
@@ -187,8 +187,8 @@ $ helm upgrade --install sysdig-{{ .Release.Name }} {{ .Repository.Name }}/{{ .C
       --create-namespace -n {{ .Release.Namespace }} \
       --set clusterName=CLUSTER_NAME \
       --set sysdig.secureAPIToken=SECURE_API_TOKEN \
-      --set admissionController.apiEndpoint=SECURE_API_ENDPOINT \
-      --set admissionController.verifySSL=false
+      --set sysdig.url=SECURE_URL \
+      --set verifySSL=false
 ```
 
 Use `verifySSL=false` if you are using self signed certificates.
@@ -205,9 +205,9 @@ $ helm upgrade --install sysdig-{{ .Release.Name }} {{ .Repository.Name }}/{{ .C
       --create-namespace -n {{ .Release.Namespace }} \
       --set clusterName=CLUSTER_NAME \
       --set sysdig.secureAPIToken=SECURE_API_TOKEN \
-      --set admissionController.apiEndpoint=SECURE_API_ENDPOINT \
-      --set admissionController.webhook.ssl.ca.cert=YOUR_CA_CERT_AS_PEM_ENCODED \
-      --set admissionController.webhook.ssl.ca.key=YOUR_CA_KEY_AS_PEM_ENCODED
+      --set sysdig.url=SECURE_URL \
+      --set webhook.ssl.ca.cert=YOUR_CA_CERT_AS_PEM_ENCODED \
+      --set webhook.ssl.ca.key=YOUR_CA_KEY_AS_PEM_ENCODED
 ```
 
 
@@ -220,11 +220,11 @@ $ helm upgrade --install sysdig-{{ .Release.Name }} {{ .Repository.Name }}/{{ .C
       --create-namespace -n {{ .Release.Namespace }} \
       --set clusterName=CLUSTER_NAME \
       --set sysdig.secureAPIToken=SECURE_API_TOKEN \
-      --set admissionController.apiEndpoint=SECURE_API_ENDPOINT \
-      --set admissionController.webhook.ssl.ca.cert=YOUR_CA_CERT_AS_PEM_ENCODED \
-      --set admissionController.webhook.ssl.ca.key=YOUR_CA_KEY_AS_PEM_ENCODED \
-      --set admissionController.webhook.ssl.cert=YOUR_CERT_AS_PEM_ENCODED \
-      --set admissionController.webhook.ssl.key=YOUR_KEY_AS_PEM_ENCODED
+      --set sysdig.url=SECURE_URL \
+      --set webhook.ssl.ca.cert=YOUR_CA_CERT_AS_PEM_ENCODED \
+      --set webhook.ssl.ca.key=YOUR_CA_KEY_AS_PEM_ENCODED \
+      --set webhook.ssl.cert=YOUR_CERT_AS_PEM_ENCODED \
+      --set webhook.ssl.key=YOUR_KEY_AS_PEM_ENCODED
 ```
 
 ## Confirm Working Status
@@ -343,7 +343,7 @@ A: Some users (old versions of GKE) reported that the permissions to access serv
 <br/><br/>S: [Recommend](https://github.com/kubernetes/kubernetes/issues/82573) to change the `securityContext.fsGroup` to the value `65534` on the pod.
 <br/>You can specify this through our helm chart with the parameter
 ```
---set admissionController.webhook.podSecurityContext.fsGroup=65534
+--set webhook.podSecurityContext.fsGroup=65534
 ```
 
 ### Q: Getting readiness probe errors and cannot startup
@@ -362,7 +362,7 @@ A: [HorizontalAutoScaller](https://github.com/sysdiglabs/charts/blob/master/char
 ### Q: Getting error "x509: certificate signed by unknown authority"
 
 A: Sysdig installation is made with an unverfied certificate, such as self-signed, `SECURE_URL` being `https`
-<br/>S: Add `--set admissionController.verifySSL=false` to your installation parameters
+<br/>S: Add `--set verifySSL=false` to your installation parameters
 
 
 <!--

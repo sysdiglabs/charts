@@ -7,7 +7,7 @@ Warning: the Sysdig Secure API Token was not provided with either the `sysdig.se
 
 This deployment may not work correctly unless the token is provided through the SECURE_API_TOKEN
 environment variable, which is up to the final user to decide how to configure.
-{{- if .Values.admissionController.scanner.enabled }}
+{{- if .Values.scanner.enabled }}
 
 The Scanner also needs the AUTH_BEARER_TOKEN environment variable configured with the valid
 Secure API Token.

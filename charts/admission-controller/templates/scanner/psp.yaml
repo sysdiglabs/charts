@@ -1,4 +1,4 @@
-{{- if .Values.admissionController.scanner.psp.create  }}
+{{- if .Values.scanner.psp.create  }}
 apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:
