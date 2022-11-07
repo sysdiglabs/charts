@@ -70,13 +70,13 @@ spec:
             {{- end }}
           imagePullPolicy: {{ .Values.webhook.image.pullPolicy }}
           env:
-            {{- if (or .Values.webhook.httpProxy .Values.webhook.httpsProxy) }}
+            {{- if (or (include "webhook.httpProxy" .) (include "webhook.httpsProxy" .) )}}
             - name: HTTP_PROXY
-              value: {{ .Values.webhook.httpProxy }}
+              value: {{ include "webhook.httpProxy" . }}
             - name: HTTPS_PROXY
-              value: {{ .Values.webhook.httpsProxy }}
+              value: {{ include "webhook.httpsProxy" . }}
             - name: NO_PROXY
-              value: {{ .Values.webhook.noProxy }},{{ include "admission-controller.scanner.fullname" . }}
+              value: {{ include "webhook.noProxy" . }},{{ include "admission-controller.scanner.fullname" . }}
             {{- end }}
             {{- if .Values.webhook.ssl.ca.cert }}
             - name: SSL_CERT_FILE
@@ -97,12 +97,12 @@ spec:
               port: http
               scheme: HTTPS
           envFrom:
-            {{- if or .Values.sysdig.secureAPIToken .Values.sysdig.existingSecureAPITokenSecret }}
+            {{- if or (include "sysdig.secureAPIToken" .) (include "sysdig.secureAPITokenSecret" .) }}
             - secretRef:
-                {{- if .Values.sysdig.secureAPIToken }}
+                {{- if (include "sysdig.secureAPIToken" .) }}
                 name: {{ include "admission-controller.webhook.fullname" . }}
                 {{- else }}
-                name: {{ .Values.sysdig.existingSecureAPITokenSecret }}
+                name: {{ include "sysdig.secureAPITokenSecret" . }}
                 {{- end }}
             {{- end }}
             - configMapRef:

@@ -73,11 +73,11 @@ spec:
           env:
             {{- if (or .Values.scanner.httpProxy .Values.scanner.httpsProxy) }}
             - name: HTTP_PROXY
-              value: {{ .Values.scanner.httpProxy }}
+              value: {{ include "scanner.httpProxy" . }}
             - name: HTTPS_PROXY
-              value: {{ .Values.scanner.httpsProxy }}
+              value: {{ include "scanner.httpsProxy" . }}
             - name: NO_PROXY
-              value: {{ .Values.scanner.noProxy }}
+              value: {{ include "scanner.noProxy" . }}
             {{- end }}
             {{- if .Values.scanner.ssl.ca.cert }}
             - name: SSL_CERT_FILE
@@ -86,18 +86,18 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ include "admission-controller.scanner.fullname" . }}
-            {{- if or .Values.sysdig.secureAPIToken .Values.sysdig.existingSecureAPITokenSecret }}
+            {{- if or (include "sysdig.secureAPIToken" .) (include "sysdig.secureAPITokenSecret" .) }}
             - secretRef:
-                {{- if .Values.sysdig.secureAPIToken }}
+                {{- if include "sysdig.secureAPIToken" . }}
                 name: {{ include "admission-controller.scanner.fullname" . }}-api-token
                 {{- else }}
-                name: {{ .Values.sysdig.existingSecureAPITokenSecret }}
+                name: {{ include "sysdig.secureAPITokenSecret" . }}
                 {{- end }}
             - secretRef:
-                {{- if .Values.sysdig.secureAPIToken }}
+                {{- if include "sysdig.secureAPIToken" . }}
                 name: {{ include "admission-controller.scanner.fullname" . }}-auth
                 {{- else }}
-                name: {{ .Values.sysdig.existingSecureAPITokenSecret }}
+                name: {{ include "sysdig.secureAPITokenSecret" . }}
                 {{- end }}
             {{- end }}
           ports:

@@ -60,8 +60,8 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 If release name contains chart name it will be used as a full name.
 */}}
 {{- define "admission-controller.webhook.fullname" -}}
-{{- if .Values.webhook.fullnameOverride -}}
-{{- .Values.webhook.fullnameOverride | trunc 63 | trimSuffix "-" -}}
+{{- if .Values.fullnameOverride -}}
+{{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
 {{- else -}}
 {{- $name := default .Chart.Name .Values.nameOverride -}}
 {{- if contains $name .Release.Name -}}
@@ -230,4 +230,43 @@ Allow overriding registry and repository for air-gapped environments
     {{- $globalRegistry := (default .Values.global dict).imageRegistry -}}
     {{- $globalRegistry | default $imageRegistry | default "docker.io" -}} / {{- $imageRepository -}} {{- if $imageDigest -}} @ {{- $imageDigest -}} {{- else -}} : {{- $imageTag -}} {{- end -}}
 {{- end -}}
+{{- end -}}
+{{/*
+The following helper functions are all designed to use global values where
+possible, but accept overrides from the chart values.
+*/}}
+{{- define "sysdig.secureAPIToken" -}}
+    {{- required "A valid secureAPIToken is required" (.Values.sysdig.secureAPIToken | default .Values.global.sysdig.secureAPIToken) -}}
+{{- end -}}
+
+{{- define "sysdig.secureAPITokenSecret" -}}
+    {{- .Values.sysdig.existingSecureAPITokenSecret | default .Values.global.sysdig.secureAPITokenSecret | default "" -}}
+{{- end -}}
+
+{{- define "clusterName" -}}
+    {{- required "A valid cluster name is required" (.Values.clusterName| default .Values.global.clusterConfig.name) -}}
+{{- end -}}
+
+{{- define "scanner.httpProxy" -}}
+    {{- .Values.scanner.httpProxy | default .Values.global.proxy.httpProxy | default "" -}}
+{{- end -}}
+
+{{- define "scanner.httpsProxy" -}}
+    {{- .Values.scanner.httpsProxy | default .Values.global.proxy.httpsProxy | default "" -}}
+{{- end -}}
+
+{{- define "scanner.noProxy" -}}
+    {{- .Values.scanner.noProxy | default .Values.global.proxy.noProxy | default "" -}}
+{{- end -}}
+
+{{- define "webhook.httpProxy" -}}
+    {{- .Values.webhook.httpProxy | default .Values.global.proxy.httpProxy | default "" -}}
+{{- end -}}
+
+{{- define "webhook.httpsProxy" -}}
+    {{- .Values.webhook.httpsProxy | default .Values.global.proxy.httpsProxy | default "" -}}
+{{- end -}}
+
+{{- define "webhook.noProxy" -}}
+    {{- .Values.webhook.noProxy | default .Values.global.proxy.noProxy | default "" -}}
 {{- end -}}

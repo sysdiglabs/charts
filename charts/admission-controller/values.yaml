@@ -2,13 +2,19 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+global:
+  clusterConfig:
+    name: ""
+  sysdig:
+    secureAPIToken: ""
+    secureAPITokenSecret: ""
+  proxy: {}
 
 # **required**
 # <br/>Cluster Name which appear on Secure UI
 clusterName: ""
 
 sysdig:
-
   # **required**
   # <br/> API Token to access Sysdig Secure.
   # <br/><br/>If neither this value nor `sysdig.existingSecureAPITokenSecret` are configured, the
@@ -39,20 +45,19 @@ features:
   k8sAuditDetections: true
 
   # [Admission Webhook Configuration rules](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#matching-requests-rules) for the Audit Detections
-  k8sAuditDetectionsRules:  # +doc-gen:break
+  k8sAuditDetectionsRules: # +doc-gen:break
     - apiGroups:
-      - ""
-      - apps
-      - autoscaling
-      - batch
-      - networking.k8s.io
-      - rbac.authorization.k8s.io
-      - extensions
+        - ""
+        - apps
+        - autoscaling
+        - batch
+        - networking.k8s.io
+        - rbac.authorization.k8s.io
+        - extensions
       apiVersions: ["*"]
       operations: ["*"]
       resources: ["*/*"]
       scope: "*"
-
 
 # For outbound connections (secure backend, proxy,...)
 # <br/>Whether to verify SSL on HTTPS connections
@@ -150,7 +155,7 @@ webhook:
   # The image pull secrets for webhook
   imagePullSecrets: []
   # Resource request and limits for webhook
-  resources:  # +doc-gen:break
+  resources: # +doc-gen:break
     limits:
       cpu: 250m
       memory: 256Mi
@@ -218,7 +223,6 @@ webhook:
     # HTTP serve port where the requests will be served from
     port: 5000
 
-
 scc:
   # Enable the creation of Security Context Constraints in Openshift
   create: true
@@ -260,7 +264,7 @@ scanner:
   noProxy: kubernetes,10.0.0.0/8
 
   # Scanner pod annotations
-  podAnnotations:  # +doc-gen:break
+  podAnnotations: # +doc-gen:break
     prometheus.io/scrape: "true"
     prometheus.io/path: "/metrics"
     prometheus.io/port: "8080"
@@ -279,7 +283,7 @@ scanner:
   dockerCfgSecretName: ""
 
   # Configure securityContext for scanner
-  securityContext:  # +doc-gen:break
+  securityContext: # +doc-gen:break
     capabilities:
       drop:
         - ALL
@@ -291,12 +295,12 @@ scanner:
 
   # Resource requests and limits for scanner
   resources: {}
-#    limits:
-#      cpu: 250m
-#      memory: 256Mi
-#    requests:
-#      cpu: 250m
-#      memory: 256Mi
+  #    limits:
+  #      cpu: 250m
+  #      memory: 256Mi
+  #    requests:
+  #      cpu: 250m
+  #      memory: 256Mi
 
   # Configure nodeSelector for scheduling for the scanner
   nodeSelector: {}
