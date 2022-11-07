@@ -4,10 +4,14 @@
 
 global:
   clusterConfig:
+    # Global cluster Name which appear on Secure UI
     name: ""
   sysdig:
+    # Global API token to access Sysdig Secure.
     secureAPIToken: ""
+    # Global secret with API Token to access Sysdig Secure
     secureAPITokenSecret: ""
+  # Global HTTP Proxy settings.
   proxy: {}
 
 # **required**
@@ -20,6 +24,7 @@ sysdig:
   # <br/><br/>If neither this value nor `sysdig.existingSecureAPITokenSecret` are configured, the
   # user will be required to provide the deployment the `SECURE_API_TOKEN`
   # (and `AUTH_BEARER_TOKEN` if the scanner is enabled) environment variables.
+  # Overrides `global.sysdig.secureAPIToken`
   secureAPIToken: ""
 
   # **required**
