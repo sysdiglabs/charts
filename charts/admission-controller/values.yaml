@@ -50,7 +50,8 @@ features:
   k8sAuditDetections: true
 
   # [Admission Webhook Configuration rules](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#matching-requests-rules) for the Audit Detections
-  k8sAuditDetectionsRules:  # +doc-gen:break
+  # +doc-gen:break
+  k8sAuditDetectionsRules:
     - apiGroups:
         - ""
         - apps
@@ -160,7 +161,8 @@ webhook:
   # The image pull secrets for webhook
   imagePullSecrets: []
   # Resource request and limits for webhook
-  resources:  # +doc-gen:break
+  # +doc-gen:break
+  resources:
     limits:
       cpu: 250m
       memory: 256Mi
@@ -269,7 +271,8 @@ scanner:
   noProxy: kubernetes,10.0.0.0/8
 
   # Scanner pod annotations
-  podAnnotations:  # +doc-gen:break
+  # +doc-gen:break
+  podAnnotations:
     prometheus.io/scrape: "true"
     prometheus.io/path: "/metrics"
     prometheus.io/port: "8080"
@@ -288,7 +291,8 @@ scanner:
   dockerCfgSecretName: ""
 
   # Configure securityContext for scanner
-  securityContext:  # +doc-gen:break
+  # +doc-gen:break
+  securityContext:
     capabilities:
       drop:
         - ALL
