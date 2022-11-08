@@ -9,8 +9,6 @@ version: 1.4.0
 maintainers:
   - name: aroberts87
     email: adam.roberts@sysdig.com
-  - name: ironashram
-    email: michele.palazzi@sysdig.com
   - name: lilx1ao
     email: zhongcheng.xiao@sysdig.com
   - name: yashgiri
