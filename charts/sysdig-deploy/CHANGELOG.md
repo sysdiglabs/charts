@@ -2,6 +2,12 @@
 
 ## Change Log
 
+This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
+
+## v1.3.41
+### Minor changes:
+* node-analyzer bumping version to 1.7.31
+
 ## v1.3.40
 ### Minor changes:
 * sysdig-deploy:
@@ -14,7 +20,6 @@
 * agent:
     * Tests: Added helm unit test to check apiEndpoint value set because of different region inputs. 
 
-This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 ## v1.3.38
 ### Minor changes
 * RapidResponse:
