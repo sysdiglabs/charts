@@ -16,7 +16,7 @@ global:
     autopilot: false
 
 admissionController:
-  enabled: true
+  enabled: false
 
 agent:
   enabled: true

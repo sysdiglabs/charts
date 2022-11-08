@@ -5,7 +5,7 @@ metadata:
   labels:
     {{ include "admissionController.webhook.labels" . | nindent 4 }}
 data:
-  SECURE_URL: "{{ include "admissionController.secureUrl" . }}"
+  SECURE_URL: "{{ .Values.sysdig.url }}"
   {{- if .Values.scanner.enabled }}
   SCANNER_URL: http://{{ include "admissionController.scanner.fullname" . }}:{{ .Values.scanner.service.port }}
   {{- else }}

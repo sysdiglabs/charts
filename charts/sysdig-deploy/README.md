@@ -178,7 +178,7 @@ The following table lists the configurable parameters of this chart and their de
 | `global.sysdig.secureAPITokenSecret`    | The name of a Kubernetes secret containing API Token to access Sysdig Secure .                                          | `""`      |
 | `global.sysdig.region`                  | The SaaS region for these agents. Possible values: `"us1"`, `"us2"`, `"us3"`, `"us4"`, `"eu1"`, `"au1"`, and `"custom"`. See [Regions and IP Ranges](https://docs.sysdig.com/en/docs/administration/saas-regions-and-ip-ranges/) for more information. | `"us1"`   |
 | `global.sysdig.tags`                    | Sets the global tags which can override agent tags                                                                      | `{}`      |
-| `global.imageRegistry`                  | Container image registry                                                                                                | `` |
+| `global.imageRegistry`                  | Container image registry                                                                                                | ``        |
 | `global.proxy.httpProxy`                | Sets `http_proxy` on the Agent container                                                                                | `""`      |
 | `global.proxy.httpsProxy`               | Sets `https_proxy` on the Agent container                                                                               | `""`      |
 | `global.proxy.noProxy`                  | Sets `no_proxy` on the Agent container                                                                                  | `""`      |
@@ -186,15 +186,15 @@ The following table lists the configurable parameters of this chart and their de
 | `global.agentConfigmapName`             | Sets a configmap name that is used to mount the agent configmap to fetch the cluster name and agent tags                | `"sysdig-agent"`      |
 | `global.gke.autopilot`                  | If true, overrides the configuration to values for GKE Autopilot clusters                                               | `false`   |
 | `admissionController`                   | Config specific to the [Sysdig AdmissionController](#admissioncontroller)                                               | `{}`      |
-| `admissionController.enabled`           | Enable the admission controller component in this chart                                                                 | `true`    |
+| `admissionController.enabled`           | Enable the admission controller component in this chart                                                                 | `false`   |
 | `agent`                                 | Config specific to the [Sysdig Agent](#agent)                                                                           | `{}`      |
 | `agent.enabled`                         | Enable the agent component in this chart                                                                                | `true`    |
 | `nodeAnalyzer`                          | Config specific to the [Sysdig nodeAnalyzer](#nodeanalyzer)                                                             | `{}`      |
 | `nodeAnalyzer.enabled`                  | Enable the nodeAnalyzer component in this chart                                                                         | `true`    |
 | `nodeAnalyzer.nodeAnalyzer.apiEndpoint` | nodeAnalyzer apiEndpoint                                                                                                | `""`      |
-| `kspmCollector`                         | Config specific to the [Sysdig KSPM Collector](#kspm-collector)                                                          | `{}`      |
+| `kspmCollector`                         | Config specific to the [Sysdig KSPM Collector](#kspm-collector)                                                         | `{}`      |
 | `kspmCollector.apiEndpoint`             | kspmCollector apiEndpoint                                                                                               | `""`      |
-| `rapidResponse`                         | Config specific to [Sysdig Rapid Response](#rapid-response)                                                              | `{}`      |
+| `rapidResponse`                         | Config specific to [Sysdig Rapid Response](#rapid-response)                                                             | `{}`      |
 | `rapidResponse.enabled`                 | Enable Rapid Response component in this chart                                                                           | `""`      |
 
 ## AdmissionController
@@ -206,8 +206,10 @@ Example: override sysdig url variable for admissionController chart
 As a command line parameter:
 ```bash
 helm install sysdig sysdig/sysdig-deploy \
+    --set global.sysdig.accessKey=ACCESS_KEY \
     --set global.sysdig.secureAPIToken=SECURE_API_TOKEN \
     --set global.clusterConfig.name=CLUSTER_NAME \
+    --set admissionController.enabled=true \
     --set admissionController.sysdig.url=SECURE_URL
 ```
 
@@ -217,12 +219,12 @@ global:
   clusterConfig:
     name: CLUSTER_NAME
   sysdig:
+    accessKey: ACCESS_KEY
     secureAPIToken: SECURE_API_TOKEN
 admissionController:
   enabled: true
-  admissionCotroller:
-    sysdig:
-      url: URL
+  sysdig:
+    url: URL
 ```
 
 ## Agent
