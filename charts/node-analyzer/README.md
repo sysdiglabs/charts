@@ -267,6 +267,25 @@ $ helm install --namespace sysdig-agent sysdig-agent \
     sysdig/sysdig
 ```
 
+## Running helm unit tests
+
+The sysdiglabs/charts repository uses the following helm unittest plugin: https://github.com/quintush/helm-unittest
+
+You can test the changes to your chart by running the test suite as follows:
+```bash
+% helm unittest --helm3 .
+
+### Chart [ node-analyzer ] .
+
+ PASS  Test benchmark runner collector_endpoint value for all regions	tests/collector-endpoint-region_test.yaml
+
+Charts:      1 passed, 1 total
+Test Suites: 1 passed, 1 total
+Tests:       6 passed, 6 total
+Snapshot:    0 passed, 0 total
+Time:        114.372474ms
+```
+
 ## Support
 
 For getting support from the Sysdig team, you should refer to the official

@@ -2,6 +2,13 @@
 
 ## Change Log
 
+## v1.3.39
+### Minor changes:
+* node-analyzer: 
+    * Tests: Added helm unit test to check collector_endpoint value set because of different region inputs.
+* agent:
+    * Tests: Added helm unit test to check apiEndpoint value set because of different region inputs. 
+
 This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 ## v1.3.38
 ### Minor changes
