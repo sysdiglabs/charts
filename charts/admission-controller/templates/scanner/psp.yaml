@@ -3,6 +3,7 @@ apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:
   name: {{ include "admissionController.scanner.fullname" . }}
+  namespace: {{ include "admissionController.namespace" . }}
 spec:
   allowPrivilegeEscalation: false
   fsGroup:

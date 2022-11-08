@@ -32,6 +32,13 @@ Create chart name and version as used by the chart label.
 {{- end -}}
 
 {{/*
+Returns the namespace for installing components
+*/}}
+{{- define "admissionController.namespace" -}}
+    {{- coalesce .Values.namespace .Values.global.clusterConfig.namespace .Release.Namespace -}}
+{{- end -}}
+
+{{/*
 Common labels
 */}}
 {{- define "admissionController.labels" -}}

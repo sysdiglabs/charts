@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "admissionController.webhook.fullname" . }}
+  namespace: {{ include "admissionController.namespace" . }}
   labels:
     {{- include "admissionController.webhook.labels" . | nindent 4 }}
 spec:

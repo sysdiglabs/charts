@@ -3,6 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "admissionController.scanner.fullname" . }}
+  namespace: {{ include "admissionController.namespace" . }}
   labels:
     {{- include "admissionController.scanner.labels" . | nindent 4 }}
 spec:

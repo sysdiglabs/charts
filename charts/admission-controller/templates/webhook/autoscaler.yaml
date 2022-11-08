@@ -2,6 +2,7 @@ apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
   name: {{ include "admissionController.webhook.fullname" . }}
+  namespace: {{ include "admissionController.namespace" . }}
 spec:
   maxReplicas: {{ .Values.webhook.autoscaling.maxReplicas }}
   minReplicas: {{ .Values.webhook.autoscaling.minReplicas }}

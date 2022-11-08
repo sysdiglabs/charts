@@ -3,9 +3,8 @@
 # Declare variables to be passed into your templates.
 
 global:
-  clusterConfig:
-    # Global cluster Name which appear on Secure UI.
-    name: ""
+  # Global cluster config options
+  clusterConfig: {}
   sysdig:
     # Global API token to access Sysdig Secure.
     secureAPIToken: ""
@@ -17,6 +16,9 @@ global:
 # **required**
 # <br/>Cluster Name which appear on Secure UI
 clusterName: ""
+
+# Namespace to install components, if not specified `Release.Namespace` is used.
+namespace: ""
 
 sysdig:
   # **required**
