@@ -8,7 +8,7 @@ This file documents all notable changes to the Admission Controller Helm Chart. 
 ### Major changes
 
 * Add support for global values, allows admission-controller to be used as dependency of the sysdig-deploy chart
-* Add namespace filed to all resources
+* Add namespace field to all resources
 
 ## v0.6.24
 
