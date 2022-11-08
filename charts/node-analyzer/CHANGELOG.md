@@ -7,7 +7,10 @@ This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The 
 ## v1.7.30
 
 ### Minor changes:
-* KSPMAnalyzer: permissions update
+* KSPMAnalyzer:
+    * Added liveliness and readiness probes.
+    * All capabilities are now dropped.
+
 ## v1.7.29
 
 ### Minor changes:
