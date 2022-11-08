@@ -19,6 +19,8 @@ spec:
 {{ include "kspmCollector.labels" . | indent 8 }}
     spec:
       serviceAccountName: {{ template "kspmCollector.serviceAccountName" .}}
+      securityContext:
+        runAsNonRoot: true
       affinity:
       {{- if .Values.affinity }}
 {{ toYaml .Values.affinity | indent 8 }}
@@ -50,6 +52,29 @@ spec:
       - name: {{ include "kspmCollector.name" . }}
         image: {{ template "kspmCollector.image.kspmCollector" . }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 10001
+          runAsGroup: 10001
+          readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - all
+        ports:
+          - name: http
+            containerPort: 8080
+            protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: http
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: http
         resources:
 {{ toYaml .Values.resources | indent 10 }}
         env:
