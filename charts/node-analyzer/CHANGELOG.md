@@ -4,6 +4,11 @@
 
 This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.7.30
+
+### Minor changes:
+* Tests: Added helm unit test to check collector_endpoint value set because of different region inputs.
+
 ## v1.7.29
 
 ### Minor changes:
