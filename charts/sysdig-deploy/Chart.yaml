@@ -4,7 +4,7 @@ description: A chart with various Sysdig components for Kubernetes
 
 type: application
 
-version: 1.3.37
+version: 1.3.38
 
 maintainers:
   - name: aroberts87
@@ -38,6 +38,6 @@ dependencies:
   - name: rapid-response
     # repository: https://charts.sysdig.com
     repository: file://../rapid-response
-    version: ~0.2.3
+    version: ~0.2.4
     alias: rapidResponse
     condition: rapidResponse.enabled
