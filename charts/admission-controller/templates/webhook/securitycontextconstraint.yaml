@@ -6,7 +6,6 @@ metadata:
     kubernetes.io/description: |
       This provides the minimum requirements to the Sysdig agent to run in the Openshift.
   name: {{ include "admissionController.webhook.fullname" . }}
-  namespace: {{ include "admissionController.namespace" . }}
   labels: {{- include "admissionController.webhook.labels" . | nindent 4 }}
 allowHostDirVolumePlugin: true
 allowHostIPC: false
@@ -33,7 +32,7 @@ seccompProfiles:
 supplementalGroups:
   type: RunAsAny
 users:
-- system:serviceaccount:{{ .Release.Namespace }}:{{ include "admissionController.webhook.serviceAccountName" . }}
+- system:serviceaccount:{{ .include "admissionController.namespace" . }}:{{ include "admissionController.webhook.serviceAccountName" . }}
 volumes:
 - hostPath
 - emptyDir

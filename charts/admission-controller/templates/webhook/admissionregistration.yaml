@@ -34,7 +34,7 @@ webhooks:
     scope: "*"
   clientConfig:
     service:
-      namespace: {{ .Release.Namespace }}
+      namespace: {{ include "admissionController.namespace" . }}
       name: {{ include "admissionController.webhook.fullname" . }}
       path: /allow-pod
     caBundle: {{ $certList._2 }}
@@ -56,7 +56,7 @@ webhooks:
   {{- end }}
   clientConfig:
     service:
-      namespace: {{ .Release.Namespace }}
+      namespace: {{ include "admissionController.namespace" . }}
       name: {{ include "admissionController.webhook.fullname" . }}
       path: /k8s-audit
     caBundle: {{ $certList._2 }}
