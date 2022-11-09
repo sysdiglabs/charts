@@ -5,10 +5,11 @@ metadata:
   annotations: {{ .Values.podMonitors.scanner.annotations | toYaml | nindent 4 }}
   labels: {{ .Values.podMonitors.scanner.labels | toYaml | nindent 4 }}
   name: admission-controller-scanner
+  namespace: {{ include "admissionController.namespace" . }}
 spec:
   selector:
     matchLabels:
-      {{- include "admission-controller.scanner.selectorLabels" . | nindent 6 }}
+      {{- include "admissionController.scanner.selectorLabels" . | nindent 6 }}
   podMetricsEndpoints:
     - targetPort: {{ .Values.scanner.service.port }}
       path: "/metrics"

@@ -2,14 +2,15 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "admission-controller.scanner.fullname" . }}
+  name: {{ include "admissionController.scanner.fullname" . }}
+  namespace: {{ include "admissionController.namespace" . }}
   labels:
-    {{- include "admission-controller.scanner.labels" . | nindent 4 }}
+    {{- include "admissionController.scanner.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.scanner.replicaCount }}
   selector:
     matchLabels:
-      {{- include "admission-controller.scanner.selectorLabels" . | nindent 6 }}
+      {{- include "admissionController.scanner.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       annotations:
@@ -19,13 +20,13 @@ spec:
         checksum/configmap: {{ include (print $.Template.BasePath "/scanner/configmap.yaml") . | sha256sum }}
         checksum/secret: {{ include (print $.Template.BasePath "/scanner/secret.yaml") . | sha256sum }}
       labels:
-        {{- include "admission-controller.scanner.labels" . | nindent 8 }}
+        {{- include "admissionController.scanner.labels" . | nindent 8 }}
     spec:
       {{- with .Values.scanner.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "admission-controller.scanner.serviceAccountName" . }}
+      serviceAccountName: {{ include "admissionController.scanner.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.scanner.podSecurityContext | nindent 8 }}
       volumes:
@@ -40,13 +41,13 @@ spec:
         {{- if .Values.scanner.ssl.ca.cert }}
         - name: ca-cert
           secret:
-            secretName: {{ include "admission-controller.scanner.fullname" . }}-ca
+            secretName: {{ include "admissionController.scanner.fullname" . }}-ca
         {{- end }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: inline-scanner
           securityContext:
             {{- toYaml .Values.scanner.securityContext | nindent 12 }}
-          image: "{{ include "admission-controller.scanner.image" . }}"
+          image: "{{ include "admissionController.scanner.image" . }}"
           volumeMounts:
             - mountPath: /tmp
               name: tmp-dir
@@ -73,11 +74,11 @@ spec:
           env:
             {{- if (or .Values.scanner.httpProxy .Values.scanner.httpsProxy) }}
             - name: HTTP_PROXY
-              value: {{ .Values.scanner.httpProxy }}
+              value: {{ include "scanner.httpProxy" . }}
             - name: HTTPS_PROXY
-              value: {{ .Values.scanner.httpsProxy }}
+              value: {{ include "scanner.httpsProxy" . }}
             - name: NO_PROXY
-              value: {{ .Values.scanner.noProxy }}
+              value: {{ include "scanner.noProxy" . }}
             {{- end }}
             {{- if .Values.scanner.ssl.ca.cert }}
             - name: SSL_CERT_FILE
@@ -85,19 +86,19 @@ spec:
             {{- end }}
           envFrom:
             - configMapRef:
-                name: {{ include "admission-controller.scanner.fullname" . }}
-            {{- if or .Values.sysdig.secureAPIToken .Values.sysdig.existingSecureAPITokenSecret }}
+                name: {{ include "admissionController.scanner.fullname" . }}
+            {{- if or (include "sysdig.secureAPIToken" .) (include "sysdig.secureAPITokenSecret" .) }}
             - secretRef:
-                {{- if .Values.sysdig.secureAPIToken }}
-                name: {{ include "admission-controller.scanner.fullname" . }}-api-token
+                {{- if include "sysdig.secureAPIToken" . }}
+                name: {{ include "admissionController.scanner.fullname" . }}-api-token
                 {{- else }}
-                name: {{ .Values.sysdig.existingSecureAPITokenSecret }}
+                name: {{ include "sysdig.secureAPITokenSecret" . }}
                 {{- end }}
             - secretRef:
-                {{- if .Values.sysdig.secureAPIToken }}
-                name: {{ include "admission-controller.scanner.fullname" . }}-auth
+                {{- if include "sysdig.secureAPIToken" . }}
+                name: {{ include "admissionController.scanner.fullname" . }}-auth
                 {{- else }}
-                name: {{ .Values.sysdig.existingSecureAPITokenSecret }}
+                name: {{ include "sysdig.secureAPITokenSecret" . }}
                 {{- end }}
             {{- end }}
           ports:
