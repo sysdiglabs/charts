@@ -1,4 +1,4 @@
-name: Lint and Test Charts
+name: Unit testing charts
 
 on: pull_request
 
@@ -21,3 +21,6 @@ jobs:
       
       - name: Test node-analyzer
         run: helm unittest --helm3 ./charts/node-analyzer
+
+      - name: Test agent
+        run: helm unittest --helm3 ./charts/agent
