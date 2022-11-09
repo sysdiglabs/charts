@@ -2,6 +2,11 @@
 
 ## Change Log
 
+## v1.3.40
+### Minor changes:
+* sysdig-deploy:
+    * Updated readme.md file
+
 ## v1.3.39
 ### Minor changes:
 * node-analyzer: 
