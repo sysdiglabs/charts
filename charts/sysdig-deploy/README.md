@@ -188,9 +188,9 @@ The following table lists the configurable parameters of this chart and their de
 | `nodeAnalyzer`                          | Config specific to the [Sysdig nodeAnalyzer](#nodeAnalyzer)                                                             | `{}`      |
 | `nodeAnalyzer.enabled`                  | Enable the nodeAnalyzer component in this chart                                                                         | `true`    |
 | `nodeAnalyzer.nodeAnalyzer.apiEndpoint` | nodeAnalyzer apiEndpoint                                                                                                | `""`      |
-| `kspmCollector`                         | Config specific to the [Sysdig KSPM Collector](#kspm collector)                                                         | `{}`      |
+| `kspmCollector`                         | Config specific to the [Sysdig KSPM Collector](#kspm-collector)                                                         | `{}`      |
 | `kspmCollector.apiEndpoint`             | kspmCollector apiEndpoint                                                                                               | `""`      |
-| `rapidResponse`                         | Config specific to [Sysdig Rapid Response](#rapid response)                                                             | `{}`      |
+| `rapidResponse`                         | Config specific to [Sysdig Rapid Response](#rapid-response)                                                             | `{}`      |
 | `rapidResponse.enabled`                 | Enable Rapid Response component in this chart                                                                           | `""`      |
 
 ## Agent
