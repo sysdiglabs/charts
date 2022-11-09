@@ -3,7 +3,7 @@ name: Unit testing charts
 on: pull_request
 
 jobs:
-  lint-test:
+  Unit-tests:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
