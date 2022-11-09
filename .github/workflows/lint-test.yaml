@@ -45,7 +45,7 @@ jobs:
           SECURE_AGENT_TOKEN: ${{ secrets.KUBELAB_AGENT_KEY }}
 
       - name: Run chart-testing (lint)
-        run: ct lint
+        run: ct lint --debug
 
       - name: Run chart-testing (list-changed)
         id: list-changed
