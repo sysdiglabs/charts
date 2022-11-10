@@ -2,7 +2,8 @@ apiVersion: v2
 name: sysdig-deploy
 description: A chart with various Sysdig components for Kubernetes
 type: application
-version: 1.4.32
+version: 1.5.0
+
 maintainers:
   - name: aroberts87
     email: adam.roberts@sysdig.com
