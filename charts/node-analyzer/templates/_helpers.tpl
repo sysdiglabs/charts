@@ -181,7 +181,7 @@ Determine collector endpoint based on provided region or .Values.nodeAnalyzer.ap
     {{- else if (eq .Values.global.sysdig.region "us1") -}}
         {{- "secure.sysdig.com" -}}
     {{- else if (eq .Values.global.sysdig.region "us2") -}}
-        {{- "us2.app.sysdig.com" -}}
+        {{- "us7.app.sysdig.com" -}}
     {{- else if (eq .Values.global.sysdig.region "us3") -}}
         {{- "app.us3.sysdig.com" -}}
     {{- else if (eq .Values.global.sysdig.region "us4") -}}
