@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 
 global:
-  # Global cluster config options
+  # Global cluster config options.
   clusterConfig: {}
   sysdig:
     # Global API token to access Sysdig Secure.
@@ -14,10 +14,12 @@ global:
   proxy: {}
 
 # **required**
-# <br/>Cluster Name which appear on Secure UI
+# <br/> Cluster Name which appear on Secure UI
 clusterName: ""
 
-# Namespace to install components, if not specified `Release.Namespace` is used.
+# Namespace to install components (Optional, will default to release namespace).
+# <br/><br/> IMPORTANT: If a namespace is specified this way it must already exist
+# otherwise installation will fail.
 namespace: ""
 
 sysdig:
