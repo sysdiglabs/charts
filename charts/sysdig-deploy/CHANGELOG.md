@@ -3,6 +3,10 @@
 ## Change Log
 
 This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
+## v1.4.2
+### Minor changes
+* Add ironashram to chart maintainers
+
 ## v1.4.1
 ### Minor changes:
 * node-analyzer bumping version to 1.7.32
