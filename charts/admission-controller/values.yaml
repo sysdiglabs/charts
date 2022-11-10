@@ -2,18 +2,33 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+global:
+  # Global cluster config options.
+  clusterConfig: {}
+  sysdig:
+    # Global API token to access Sysdig Secure.
+    secureAPIToken: ""
+    # Global secret with API Token to access Sysdig Secure.
+    secureAPITokenSecret: ""
+  # Global HTTP Proxy settings.
+  proxy: {}
 
 # **required**
-# <br/>Cluster Name which appear on Secure UI
+# <br/> Cluster Name which appear on Secure UI
 clusterName: ""
 
-sysdig:
+# Namespace to install components (Optional, will default to release namespace).
+# <br/><br/> IMPORTANT: If a namespace is specified this way it must already exist
+# otherwise installation will fail.
+namespace: ""
 
+sysdig:
   # **required**
   # <br/> API Token to access Sysdig Secure.
   # <br/><br/>If neither this value nor `sysdig.existingSecureAPITokenSecret` are configured, the
   # user will be required to provide the deployment the `SECURE_API_TOKEN`
   # (and `AUTH_BEARER_TOKEN` if the scanner is enabled) environment variables.
+  # Overrides `global.sysdig.secureAPIToken`
   secureAPIToken: ""
 
   # **required**
@@ -41,18 +56,17 @@ features:
   # [Admission Webhook Configuration rules](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#matching-requests-rules) for the Audit Detections
   k8sAuditDetectionsRules:  # +doc-gen:break
     - apiGroups:
-      - ""
-      - apps
-      - autoscaling
-      - batch
-      - networking.k8s.io
-      - rbac.authorization.k8s.io
-      - extensions
+        - ""
+        - apps
+        - autoscaling
+        - batch
+        - networking.k8s.io
+        - rbac.authorization.k8s.io
+        - extensions
       apiVersions: ["*"]
       operations: ["*"]
       resources: ["*/*"]
       scope: "*"
-
 
 # For outbound connections (secure backend, proxy,...)
 # <br/>Whether to verify SSL on HTTPS connections
@@ -218,7 +232,6 @@ webhook:
     # HTTP serve port where the requests will be served from
     port: 5000
 
-
 scc:
   # Enable the creation of Security Context Constraints in Openshift
   create: true
@@ -291,12 +304,12 @@ scanner:
 
   # Resource requests and limits for scanner
   resources: {}
-#    limits:
-#      cpu: 250m
-#      memory: 256Mi
-#    requests:
-#      cpu: 250m
-#      memory: 256Mi
+  #    limits:
+  #      cpu: 250m
+  #      memory: 256Mi
+  #    requests:
+  #      cpu: 250m
+  #      memory: 256Mi
 
   # Configure nodeSelector for scheduling for the scanner
   nodeSelector: {}
