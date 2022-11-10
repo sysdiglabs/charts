@@ -1,7 +1,7 @@
 # request review from agent team members for changes to sysdig chart
-/charts/sysdig/         @aroberts87 @yashgiri @lilx1ao
-/charts/agent/          @aroberts87 @yashgiri @lilx1ao
-/charts/sysdig-deploy/  @aroberts87 @yashgiri @lilx1ao
+/charts/sysdig/         @aroberts87 @ironashram @yashgiri @lilx1ao
+/charts/agent/          @aroberts87 @ironashram @yashgiri @lilx1ao
+/charts/sysdig-deploy/  @aroberts87 @ironashram @yashgiri @lilx1ao
 
 /charts/admission-controller @sysdiglabs/cloud-native
 /charts/cloud-connector @sysdiglabs/cloud-native
