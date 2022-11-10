@@ -2,9 +2,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "admission-controller.scanner.fullname" . }}
+  name: {{ include "admissionController.scanner.fullname" . }}
+  namespace: {{ include "admissionController.namespace" . }}
   labels:
-    {{- include "admission-controller.scanner.labels" . | nindent 4 }}
+    {{- include "admissionController.scanner.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.scanner.service.type }}
   ports:
@@ -13,5 +14,5 @@ spec:
       targetPort: http
       protocol: TCP
   selector:
-    {{- include "admission-controller.scanner.selectorLabels" . | nindent 4 }}
+    {{- include "admissionController.scanner.selectorLabels" . | nindent 4 }}
 {{- end -}}

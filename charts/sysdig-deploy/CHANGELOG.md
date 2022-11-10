@@ -3,6 +3,13 @@
 ## Change Log
 
 This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
+## v1.4.0
+### Major changes:
+* sysdig-deploy:
+    * Introduce admission-controller as chart dependency
+* admission-controller:
+    * Support global values
+    * Add namespace field to all resources
 
 ## v1.3.41
 ### Minor changes:
@@ -15,10 +22,10 @@ This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. Th
 
 ## v1.3.39
 ### Minor changes:
-* node-analyzer: 
+* node-analyzer:
     * Tests: Added helm unit test to check collector_endpoint value set because of different region inputs.
 * agent:
-    * Tests: Added helm unit test to check apiEndpoint value set because of different region inputs. 
+    * Tests: Added helm unit test to check apiEndpoint value set because of different region inputs.
 
 ## v1.3.38
 ### Minor changes

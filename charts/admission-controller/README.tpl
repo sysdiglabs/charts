@@ -362,7 +362,7 @@ A: [HorizontalAutoScaller](https://github.com/sysdiglabs/charts/blob/master/char
 ### Q: Getting error "x509: certificate signed by unknown authority"
 
 A: Sysdig installation is made with an unverfied certificate, such as self-signed, `SECURE_URL` being `https`
-<br/>S: Add `--set verifySSL=false` to your installation parameters 
+<br/>S: Add `--set verifySSL=false` to your installation parameters
 
 
 <!--

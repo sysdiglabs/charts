@@ -2,12 +2,13 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: {{ include "admission-controller.scanner.fullname" . }}
+  name: {{ include "admissionController.scanner.fullname" . }}
+  namespace: {{ include "admissionController.namespace" . }}
 rules:
   - apiGroups:
       - policy
     resourceNames:
-      - {{ include "admission-controller.scanner.fullname" . }}
+      - {{ include "admissionController.scanner.fullname" . }}
     resources:
       - podsecuritypolicies
     verbs:

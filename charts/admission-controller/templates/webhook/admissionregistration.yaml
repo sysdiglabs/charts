@@ -2,13 +2,14 @@
 We need to put all resources that need certificate or CA Bundle together,
 so the template is executed just once
  */}}
-{{- $certString := include "admission-controller.webhook.gen-certs" . -}}
+{{- $certString := include "admissionController.webhook.gen-certs" . -}}
 {{- $certList := split "$" $certString -}}
 ---
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
 metadata:
-  name: {{ include "admission-controller.webhook.fullname" . }}
+  name: {{ include "admissionController.webhook.fullname" . }}
+  namespace: {{ include "admissionController.namespace" . }}
   annotations:
     "helm.sh/hook": "post-install, post-upgrade"
 webhooks:
@@ -33,8 +34,8 @@ webhooks:
     scope: "*"
   clientConfig:
     service:
-      namespace: {{ .Release.Namespace }}
-      name: {{ include "admission-controller.webhook.fullname" . }}
+      namespace: {{ include "admissionController.namespace" . }}
+      name: {{ include "admissionController.webhook.fullname" . }}
       path: /allow-pod
     caBundle: {{ $certList._2 }}
   admissionReviewVersions: ["v1", "v1beta1"]
@@ -55,8 +56,8 @@ webhooks:
   {{- end }}
   clientConfig:
     service:
-      namespace: {{ .Release.Namespace }}
-      name: {{ include "admission-controller.webhook.fullname" . }}
+      namespace: {{ include "admissionController.namespace" . }}
+      name: {{ include "admissionController.webhook.fullname" . }}
       path: /k8s-audit
     caBundle: {{ $certList._2 }}
   admissionReviewVersions: ["v1", "v1beta1"]
@@ -68,9 +69,9 @@ webhooks:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: {{ include "admission-controller.webhook.fullname" . }}-tls
+  name: {{ include "admissionController.webhook.fullname" . }}-tls
   labels:
-    {{ include "admission-controller.webhook.labels" . | nindent 4 }}
+    {{ include "admissionController.webhook.labels" . | nindent 4 }}
 data:
   tls.crt: {{ $certList._0 }}
   tls.key: {{ $certList._1 }}
