@@ -3,9 +3,14 @@
 ## Change Log
 
 This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
-## v1.4.3
+## v1.4.4
 ### Feature
 * Add imagePullSecret flag for kspm-collector
+
+## v1.4.3
+### Minor changes
+* admission-controller:
+    * Fix bug while using secureAPITokenSecret, removed hard requirement for secureAPIToken
 
 ## v1.4.2
 ### Minor changes
