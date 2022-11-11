@@ -1,3 +1,7 @@
+# v0.1.15
+### Feature
+* Add imagePullSecret flag for kspm-collector
+
 # v0.1.14
 ### Minor chagnes
 * Bumped image tag to 1.11.0
