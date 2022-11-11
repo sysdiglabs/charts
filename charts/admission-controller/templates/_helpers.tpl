@@ -244,7 +244,7 @@ The following helper functions are all designed to use global values where
 possible, but accept overrides from the chart values.
 */}}
 {{- define "sysdig.secureAPIToken" -}}
-    {{- required "A valid secureAPIToken is required" (.Values.sysdig.secureAPIToken | default .Values.global.sysdig.secureAPIToken) -}}
+    {{- .Values.sysdig.secureAPIToken | default .Values.global.sysdig.secureAPIToken -}}
 {{- end -}}
 
 {{- define "sysdig.secureAPITokenSecret" -}}
