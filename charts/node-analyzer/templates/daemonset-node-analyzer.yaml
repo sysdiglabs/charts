@@ -112,20 +112,20 @@ spec:
         image: {{ template "nodeAnalyzer.image.kspmAnalyzer" . }}
         ports:
           - name: http
-            containerPort: 12000
+            containerPort: {{ .Values.nodeAnalyzer.kspmAnalyzer.probes.port }}
             protocol: TCP
         livenessProbe:
           httpGet:
             path: /health
             port: http
-          initialDelaySeconds: 3
-          periodSeconds: 3
+          initialDelaySeconds: {{ .Values.nodeAnalyzer.kspmAnalyzer.probes.delay }}
+          periodSeconds: {{ .Values.nodeAnalyzer.kspmAnalyzer.probes.delay }}
         readinessProbe:
           httpGet:
             path: /health
             port: http
-          initialDelaySeconds: 3
-          periodSeconds: 3
+          initialDelaySeconds: {{ .Values.nodeAnalyzer.kspmAnalyzer.probes.delay }}
+          periodSeconds: {{ .Values.nodeAnalyzer.kspmAnalyzer.probes.delay }}
         imagePullPolicy: {{ .Values.nodeAnalyzer.kspmAnalyzer.image.pullPolicy }}
         resources:
 {{ toYaml .Values.nodeAnalyzer.kspmAnalyzer.resources | indent 10 }}

@@ -308,4 +308,8 @@ nodeAnalyzer:
         cpu: 500m
         memory: 1536Mi
 
+    probes:
+      port: 12000
+      delay: 3
+
     env: {}
