@@ -80,6 +80,10 @@ resources:
     cpu: 500m
     memory: 1536Mi
 
+probes:
+  port: 8080
+  delay: 3
+
 # arch and os will be used to template out a node affinity block matching everything in each list. If affinity is
 # defined, these fields will be ignored
 arch:

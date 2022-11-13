@@ -67,18 +67,20 @@ spec:
               - all
         ports:
           - name: http
-            containerPort: 8080
+            containerPort: {{ .Values.probes.port }}
             protocol: TCP
         livenessProbe:
           httpGet:
             path: /health
             port: http
-          initialDelaySeconds: 3
-          periodSeconds: 3
+          initialDelaySeconds: {{ .Values.probes.delay }}
+          periodSeconds: {{ .Values.probes.delay }}
         readinessProbe:
           httpGet:
             path: /health
             port: http
+          initialDelaySeconds: {{ .Values.probes.delay }}
+          periodSeconds: {{ .Values.probes.delay }}
         resources:
 {{ toYaml .Values.resources | indent 10 }}
         env:
