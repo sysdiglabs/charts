@@ -2,6 +2,10 @@
 
 ## Change Log
 
+## v0.2.4
+### Minor changes
+* bump image tag to 0.3.5
+
 ## v0.2.3
 ### Minor changes
 * Add aroberts87 to chart maintainers

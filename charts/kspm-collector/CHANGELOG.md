@@ -1,9 +1,14 @@
-# v0.1.15
+# v0.1.16
 ### Minor changes:
 * KSPMCollector:
     * Added liveliness and readiness probes.
     * All capabilities are now dropped.
     * Pod will not run with root privileges.
+
+# v0.1.15
+### Feature
+* Add imagePullSecret flag for kspm-collector
+
 # v0.1.14
 ### Minor chagnes
 * Bumped image tag to 1.11.0

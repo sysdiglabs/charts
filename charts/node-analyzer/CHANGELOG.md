@@ -4,6 +4,21 @@
 
 This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.7.32
+### Minor changes:
+* NodeAnalyzer:
+    * Runtimescanner: added ARM64 support
+
+## 1.7.31
+### Minor changes:
+* BenchmarkRunner
+    * bump to version 1.1.0.2
+
+## v1.7.30
+
+### Minor changes:
+* Tests: Added helm unit test to check collector_endpoint value set because of different region inputs.
+
 ## v1.7.29
 
 ### Minor changes:
