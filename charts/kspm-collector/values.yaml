@@ -44,6 +44,12 @@ image:
   registry: quay.io
   pullPolicy: Always
 
+# Set image pull secret name
+# Example
+# imagePullSecrets:
+#   - name: my-super-secret-pull
+imagePullSecrets: []
+
 rbac:
   # true here enables creation of rbac resources
   create: true

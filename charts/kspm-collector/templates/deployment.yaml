@@ -46,6 +46,10 @@ spec:
         operator: Equal
         value: arm64
         effect: NoSchedule
+      {{- if .Values.imagePullSecrets }}
+      imagePullSecrets:
+{{ toYaml .Values.imagePullSecrets | indent 8 }}
+      {{- end }}
       containers:
       - name: {{ include "kspmCollector.name" . }}
         image: {{ template "kspmCollector.image.kspmCollector" . }}

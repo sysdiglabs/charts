@@ -413,6 +413,25 @@ extraVolumes:
       name: sysdig-new-secret
 ```
 
+## Running helm unit tests
+
+The sysdiglabs/charts repository uses the following helm unittest plugin: https://github.com/quintush/helm-unittest
+
+You can test the changes to your chart by running the test suite as follows:
+```bash
+% helm unittest --helm3 .
+
+### Chart [ agent ] .
+
+ PASS  Test agent configmap collector value set by api_endpoint for all regions (us1,us2,us3,us4,eu1,au1)	tests/api-endpoint-region_test.yaml
+
+Charts:      1 passed, 1 total
+Test Suites: 1 passed, 1 total
+Tests:       6 passed, 6 total
+Snapshot:    0 passed, 0 total
+Time:        149.270458ms
+```
+
 ## Support
 
 For getting support from the Sysdig team, you should refer to the official

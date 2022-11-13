@@ -4,6 +4,10 @@
 
 This file documents all notable changes to the Sysdig Agent Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.5.30
+### Minor changes
+* Tests: Added helm unit test to check apiEndpoint value set because of different region inputs.
+
 ## v1.5.29
 ### Minor changes
 * Usage of global tags over existing value of tags

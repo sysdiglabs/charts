@@ -1,0 +1,66 @@
+suite: Test agent configmap collector value set by api_endpoint for all regions (us1,us2,us3,us4,eu1,au1)
+templates:
+  - templates/configmap.yaml
+tests:
+  - it: Checking default value no region specified (us1)
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: .*collector\.sysdigcloud\.com.*
+  - it: Checking region 'us2'
+    set:
+      global: 
+        sysdig:
+          region: us2
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: .*ingest\-us2\.app\.sysdig\.com.*
+  - it: Checking region 'us3'
+    set:
+      global: 
+        sysdig:
+          region: us3
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: .*ingest\.us3\.app\.sysdig\.com.*
+  - it: Checking region 'us4'
+    set:
+      global: 
+        sysdig:
+          region: us4
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: .*ingest\.us4\.sysdig\.com.*
+  - it: Checking region 'eu1'
+    set:
+      global: 
+        sysdig:
+          region: eu1
+    asserts:
+        - isKind:
+            of: ConfigMap
+        - matchRegex:
+            path: data.dragent\.yaml
+            pattern: .*ingest\-eu1\.app\.sysdig\.com.*
+  - it: Checking region 'au1'
+    set:
+      global: 
+        sysdig:
+          region: au1
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: .*ingest\.au1\.sysdig\.com.*

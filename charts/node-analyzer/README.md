@@ -138,7 +138,7 @@ The following table lists the configurable parameters of the Sysdig Node Analyze
 | `nodeAnalyzer.hostAnalyzer.env`                                      | Extra environment variables that will be passed onto pods                                | `{}`                                                                           |
 | `nodeAnalyzer.benchmarkRunner.deploy`                                | Deploy the Benchmark Runner                                                              | `true`                                                                         |
 | `nodeAnalyzer.benchmarkRunner.image.repository`                      | The image repository to pull the Benchmark Runner from                                   | `sysdig/compliance-benchmark-runner`                                           |
-| `nodeAnalyzer.benchmarkRunner.image.tag`                             | The image tag to pull the Benchmark Runner                                               | `1.0.17.2`                                                                     |
+| `nodeAnalyzer.benchmarkRunner.image.tag`                             | The image tag to pull the Benchmark Runner                                               | `1.1.0.2`                                                                     |
 | `nodeAnalyzer.benchmarkRunner.image.digest`                          | The image digest to pull                                                                 | ` `                                                                            |
 | `nodeAnalyzer.benchmarkRunner.image.pullPolicy`                      | The Image pull policy for the Benchmark Runner                                           | `IfNotPresent`                                                                 |
 | `nodeAnalyzer.benchmarkRunner.includeSensitivePermissions`           | Grant the service account elevated permissions to run CIS Benchmark for OS4              | `false`                                                                        |
@@ -265,6 +265,25 @@ $ helm install --namespace sysdig-agent sysdig-agent \
     --set global.kspm.deploy=true \
     --set nodeAnalyzer.kspmAnalyzer.env.AGENT_PORT=8888 \
     sysdig/sysdig
+```
+
+## Running helm unit tests
+
+The sysdiglabs/charts repository uses the following helm unittest plugin: https://github.com/quintush/helm-unittest
+
+You can test the changes to your chart by running the test suite as follows:
+```bash
+% helm unittest --helm3 .
+
+### Chart [ node-analyzer ] .
+
+ PASS  Test benchmark runner collector_endpoint value for all regions	tests/collector-endpoint-region_test.yaml
+
+Charts:      1 passed, 1 total
+Test Suites: 1 passed, 1 total
+Tests:       6 passed, 6 total
+Snapshot:    0 passed, 0 total
+Time:        114.372474ms
 ```
 
 ## Support
