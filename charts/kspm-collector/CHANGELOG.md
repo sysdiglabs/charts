@@ -4,6 +4,7 @@
     * Added liveliness and readiness probes.
     * All capabilities are now dropped.
     * Pod will not run with root privileges.
+    * Bumped image tag to 1.12.0
 
 # v0.1.15
 ### Feature
