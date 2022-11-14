@@ -283,8 +283,6 @@ possible, but accept overrides from the chart values.
 Validate Secure API Token Config
 */}}
 {{- define "admissionController.validTokenConfig" -}}
-{{- $errorMsg := `
-The Sysdig Secure API Token was not provided with either the sysdig.secureAPIToken or sysdig.secureAPITokenSecret values.`
--}}
+{{- $errorMsg := "The Sysdig Secure API Token was not provided with either the sysdig.secureAPIToken or sysdig.secureAPITokenSecret values." -}}
     {{- required $errorMsg (or (include "sysdig.secureAPIToken" .) (include "sysdig.secureAPITokenSecret" .)) -}}
 {{- end -}}

@@ -1,4 +1,5 @@
-{{- include "admissionController.validTokenConfig" . }}
+{{- if (include "admissionController.validTokenConfig" .) }}
+{{- end }}
 
 Sysdig Admission Controller is now installed!
 Confirm its working status https://charts.sysdig.com/charts/admission-controller/#confirm-working-status
