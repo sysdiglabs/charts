@@ -57,7 +57,7 @@ spec:
         image: {{ template "kspmCollector.image.kspmCollector" . }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         securityContext:
-{{- toYaml .Values.securityContext | nindent 8 }}
+{{- toYaml .Values.securityContext | nindent 10 }}
         ports:
           - name: http
             containerPort: {{ .Values.port }}

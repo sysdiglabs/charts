@@ -95,6 +95,7 @@ securityContext:
   capabilities:
     drop:
       - all
+
 # arch and os will be used to template out a node affinity block matching everything in each list. If affinity is
 # defined, these fields will be ignored
 arch:
