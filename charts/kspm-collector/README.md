@@ -37,7 +37,7 @@ The following table lists the configurable parameters of the Sysdig KSPM Collect
 | `clusterName`                    | Set a cluster name to identify events using *kubernetes.cluster.name* tag               | ` `                                                         |
 | `image.registry`                 | KSPM Collector image registry                                                           | `quay.io`                                                   |
 | `image.repository`               | The image repository to pull from                                                       | `sysdig/kspm-collector`                                     |
-| `image.tag`                      | The image tag to pull                                                                   | `1.12.0`                                                    |
+| `image.tag`                      | The image tag to pull                                                                   | `1.13.0`                                                    |
 | `image.digest`                   | The image digest to pull                                                                | ` `                                                         |
 | `image.pullPolicy`               | The Image pull policy                                                                   | `Always`                                                    |
 | `imagePullSecrets`               | The Image pull secret                                                                   | `[]`                                                        |
@@ -60,6 +60,9 @@ The following table lists the configurable parameters of the Sysdig KSPM Collect
 | `os`                             | Allowed OSes for scheduling                                                             | `[ linux ]`                                                 |
 | `affinity`                       | Node affinities. Overrides `arch` and `os` values                                       | `{}`                                                        |
 | `labels`                         | kspmCollector specific labels (as a multi-line templated string map or as YAML)         | `{}`                                                        |
+| `port` | KSPM node analyzer Port for health checks                                               | `12000`                                                                        |
+| `probes.initialDelay`| KSPM node analyzer Initial delay before starting k8s health checks in seconds            | `3`                                                                            |
+| `probes.periodDelay` | KSPM node analyzer Delay beetween two consecutive k8s health checks                      | `3`                                                                            |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 

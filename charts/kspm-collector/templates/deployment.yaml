@@ -67,20 +67,20 @@ spec:
               - all
         ports:
           - name: http
-            containerPort: {{ .Values.probes.port }}
+            containerPort: {{ .Values.port }}
             protocol: TCP
         livenessProbe:
           httpGet:
             path: /health
             port: http
-          initialDelaySeconds: {{ .Values.probes.delay }}
-          periodSeconds: {{ .Values.probes.delay }}
+          initialDelaySeconds: {{ .Values.probes.initialDelay }}
+          periodSeconds: {{ .Values.probes.periodDelay }}
         readinessProbe:
           httpGet:
             path: /health
             port: http
-          initialDelaySeconds: {{ .Values.probes.delay }}
-          periodSeconds: {{ .Values.probes.delay }}
+          initialDelaySeconds: {{ .Values.probes.initialDelay }}
+          periodSeconds: {{ .Values.probes.periodDelay }}
         resources:
 {{ toYaml .Values.resources | indent 10 }}
         env:
@@ -155,5 +155,11 @@ spec:
             valueFrom:
               configMapKeyRef:
                 key: nats_insecure
+                name: {{ template "kspmCollector.fullname" . }}
+                optional: true
+          - name: AGENT_PORT
+            valueFrom:
+              configMapKeyRef:
+                key: agent_port
                 name: {{ template "kspmCollector.fullname" . }}
                 optional: true

@@ -39,7 +39,7 @@ clusterName: ""
 
 image:
   repository: sysdig/kspm-collector
-  tag: 1.12.0
+  tag: 1.13.0-rc
   digest:
   registry: quay.io
   pullPolicy: Always
@@ -80,9 +80,11 @@ resources:
     cpu: 500m
     memory: 1536Mi
 
+port: 8080
+
 probes:
-  port: 8080
-  delay: 3
+  initialDelay: 3
+  periodDelay: 3
 
 # arch and os will be used to template out a node affinity block matching everything in each list. If affinity is
 # defined, these fields will be ignored
