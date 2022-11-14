@@ -239,8 +239,6 @@ Allow overriding registry and repository for air-gapped environments
 {{- end -}}
 {{- end -}}
 
-
-
 {{/*
 The following helper functions are all designed to use global values where
 possible, but accept overrides from the chart values.
