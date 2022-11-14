@@ -57,14 +57,7 @@ spec:
         image: {{ template "kspmCollector.image.kspmCollector" . }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         securityContext:
-          runAsNonRoot: true
-          runAsUser: 10001
-          runAsGroup: 10001
-          readOnlyRootFilesystem: true
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-              - all
+{{- toYaml .Values.securityContext | nindent 8 }}
         ports:
           - name: http
             containerPort: {{ .Values.port }}
