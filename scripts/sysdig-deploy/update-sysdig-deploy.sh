@@ -18,16 +18,15 @@ check_update_needed () {
     new_subchart_version=$(yq eval '.version' charts/$chart/Chart.yaml)
     sysdig_subchart_version=$(yq eval '.dependencies[] | select(.name == "'$chart'") | .version ' charts/$sysdig_deploy_path/Chart.yaml | sed "s/~//")
 
+    IFS="."
+    read -ra prev_ver <<< "$sysdig_subchart_version"
+    read -ra next_ver <<< "$new_subchart_version"
+
     echo "subchart version in" $chart"/Chart.yaml"
     echo $new_subchart_version
     echo $chart "subchart version in sysdig-deploy/Chart.yaml"
     echo $sysdig_subchart_version
 
-
-    IFS="."
-    read -ra prev_ver <<< "$sysdig_subchart_version"
-    read -ra next_ver <<< "$new_subchart_version"
-    
     # update the subchart version in sysdig-deploy/Chart.yaml
     yq -i '( .dependencies[] | select(.name == "'$chart'") | .version) = "~'"$new_subchart_version"'"' charts/$sysdig_deploy_path/Chart.yaml
 
