@@ -3,6 +3,18 @@
 ## Change Log
 
 This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
+
+## v1.4.6
+### Minor changes
+* agent:
+    * Added unit tests to check local overrides
+* node-analyzer:
+    * Added unit tests to check local overrides
+* kspm-collector:
+    * Added unit tests to check local overrides
+* rapid-response:
+    * Added unit tests to check local overrides
+
 ## v1.4.5
 ### Feature
 * Reduced privileges for kspm-collector

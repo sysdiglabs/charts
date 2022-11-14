@@ -1,0 +1,180 @@
+suite: Test global value overrides
+templates:
+  - secrets.yaml
+  - daemonset.yaml
+tests:
+  - it: check value of accessKey without local chart override
+    documentIndex: 0
+    set: 
+      global:
+        sysdig:
+          accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+      rapidResponse:
+        passphrase: passcode
+    asserts:
+      - equal:
+          path: data.access-key
+          value: QUFBQUFBQUEtQkJCQi1DQ0NDLUREREQtRUVFRUVFRUVFRUVF
+        template: secrets.yaml
+
+  - it: check value of accessKey with local chart override
+    documentIndex: 0
+    set: 
+      global:
+        sysdig:
+          accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+      rapidResponse:
+        passphrase: passcode
+      sysdig:
+        accessKey: ZZZZZZZZ-YYYY-XXXX-FFFF-ABCDEFGHIJKL
+    asserts:
+      - equal:
+          path: data.access-key
+          value: WlpaWlpaWlotWVlZWS1YWFhYLUZGRkYtQUJDREVGR0hJSktM
+        template: secrets.yaml
+
+  - it: check value of accessKeySecret without local chart override
+    set: 
+      global:
+        sysdig:
+          accessKeySecret: standard_key
+      rapidResponse:
+        passphrase: passcode
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+              name: ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: access-key
+                  name: standard_key
+        template: daemonset.yaml
+
+  - it: check value of accessKeySecret with local chart override
+    set: 
+      global:
+        sysdig:
+          accessKeySecret: standard_key
+      rapidResponse:
+        passphrase: passcode
+      sysdig:
+        existingAccessKeySecret: override_key
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+              name: ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: access-key
+                  name: override_key
+        template: daemonset.yaml
+
+  - it: check value of httpProxy without local chart override
+    set: 
+      global:
+        sysdig:
+          accessKeySecret: standard_key
+        proxy:
+          httpProxy: testProxy
+      rapidResponse:
+        passphrase: passcode
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+              name: http_proxy
+              value: testProxy
+        template: daemonset.yaml
+
+  - it: check value of httpProxy with local chart override
+    set: 
+      global:
+        sysdig:
+          accessKeySecret: standard_key
+        proxy:
+          httpProxy: testProxy
+      rapidResponse:
+        passphrase: passcode
+        proxy:
+          httpProxy: overrideProxy
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+              name: http_proxy
+              value: overrideProxy
+        template: daemonset.yaml
+
+  - it: check value of httpsProxy without local chart override
+    set: 
+      global:
+        sysdig:
+          accessKeySecret: standard_key
+        proxy:
+          httpsProxy: testProxy
+      rapidResponse:
+        passphrase: passcode
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+              name: https_proxy
+              value: testProxy
+        template: daemonset.yaml
+
+  - it: check value of httpsProxy with local chart override
+    set: 
+      global:
+        sysdig:
+          accessKeySecret: standard_key
+        proxy:
+          httpsProxy: testProxy
+      rapidResponse:
+        passphrase: passcode
+        proxy:
+          httpsProxy: overrideProxy
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+              name: https_proxy
+              value: overrideProxy
+        template: daemonset.yaml
+
+  - it: check value of noProxy without local chart override
+    set: 
+      global:
+        sysdig:
+          accessKeySecret: standard_key
+        proxy:
+          noProxy: testhttpsProxy
+      rapidResponse:
+        passphrase: passcode
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+              name: no_proxy
+              value: testhttpsProxy
+        template: daemonset.yaml
+
+  - it: check value of noProxy with local chart override
+    set: 
+      global:
+        sysdig:
+          accessKeySecret: standard_key
+        proxy:
+          noProxy: testnoProxy
+      rapidResponse:
+        passphrase: passcode
+        proxy:
+          noProxy: overridenoProxy
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+              name: no_proxy
+              value: overridenoProxy
+        template: daemonset.yaml

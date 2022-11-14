@@ -1,0 +1,90 @@
+suite: Test global value overrides
+templates:
+  - secret.yaml
+  - deployment.yaml
+  - configmap.yaml
+tests:
+  - it: check value of accessKey without local chart override
+    set: 
+      global:
+        clusterConfig:
+          name: standard_cluster
+        sysdig:
+          accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+    asserts:
+      - equal:
+          path: data.access-key
+          value: QUFBQUFBQUEtQkJCQi1DQ0NDLUREREQtRUVFRUVFRUVFRUVF
+        template: secret.yaml
+
+  - it: check value of accessKey with local chart override
+    set: 
+      global:
+        clusterConfig:
+            name: standard_cluster
+        sysdig:
+          accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+      sysdig:
+        accessKey: ZZZZZZZZ-YYYY-XXXX-FFFF-ABCDEFGHIJKL
+    asserts:
+      - equal:
+          path: data.access-key
+          value: WlpaWlpaWlotWVlZWS1YWFhYLUZGRkYtQUJDREVGR0hJSktM
+        template: secret.yaml
+
+  - it: check value of accessKeySecret without local chart override
+    set: 
+      global:
+        clusterConfig:
+            name: standard_cluster
+        sysdig:
+          accessKeySecret: standard_key
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.name
+          value: standard_key
+        template: deployment.yaml
+
+  - it: check value of accessKeySecret with local chart override
+    set: 
+      global:
+        clusterConfig:
+            name: standard_cluster
+        sysdig:
+          accessKeySecret: standard_key
+      sysdig:
+        existingAccessKeySecret: override_key
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.name
+          value: override_key
+        template: deployment.yaml
+
+  - it: check value of cluster name without local chart override
+    set: 
+      global:
+        sysdig:
+          accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+        clusterConfig:
+          name: standard_cluster
+    asserts:
+      - equal:
+          path: data.cluster_name
+          value: standard_cluster
+        template: configmap.yaml
+
+  - it: check value of cluster name with local chart override
+    set: 
+      global:
+        sysdig:
+          accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+        clusterConfig:
+          name: standard_cluster
+      clusterName: override_cluster
+    asserts:
+      - equal:
+          path: data.cluster_name
+          value: override_cluster
+        template: configmap.yaml
+
+
