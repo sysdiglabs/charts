@@ -26,6 +26,7 @@ data:
   {{- end -}}
   {{- if (.Values.nodeAnalyzer.noProxy | default .Values.global.proxy.noProxy) }}
   no_proxy: {{ .Values.nodeAnalyzer.noProxy | default .Values.global.proxy.noProxy }}
+  agent_port: {{ .Values.nodeAnalyzer.kspmAnalyzer.port }}
   {{- end -}}
 {{- end -}}
 {{- end -}}
