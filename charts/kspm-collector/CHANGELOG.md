@@ -1,3 +1,7 @@
+# v0.1.17
+### Minor changes
+* Added unit tests to check local overrides of global values
+
 # v0.1.16
 ### Minor changes:
 * KSPMCollector:

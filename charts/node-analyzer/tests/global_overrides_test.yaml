@@ -1,0 +1,53 @@
+suite: Test subchart overrides of global values
+templates:
+  - secrets.yaml
+  - daemonset-node-analyzer.yaml
+tests:
+  - it: check value of accessKey without local chart override
+    set: 
+      global:
+        sysdig:
+          accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+    asserts:
+      - equal:
+          path: data.access-key
+          value: QUFBQUFBQUEtQkJCQi1DQ0NDLUREREQtRUVFRUVFRUVFRUVF
+        template: secrets.yaml
+
+  - it: check value of accessKey with local chart override
+    set: 
+      global:
+        sysdig:
+          accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+      sysdig:
+        accessKey: ZZZZZZZZ-YYYY-XXXX-FFFF-ABCDEFGHIJKL
+    asserts:
+      - equal:
+          path: data.access-key
+          value: WlpaWlpaWlotWVlZWS1YWFhYLUZGRkYtQUJDREVGR0hJSktM
+        template: secrets.yaml
+
+  - it: check value of accessKeySecret without local chart override
+    set: 
+      global:
+        sysdig:
+          accessKeySecret: standard_key
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.name
+          value: standard_key
+        template: daemonset-node-analyzer.yaml
+
+  - it: check value of accessKeySecret with local chart override
+    set: 
+      global:
+        sysdig:
+          accessKeySecret: standard_key
+      sysdig:
+        existingAccessKeySecret: override_key
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.name
+          value: override_key
+        template: daemonset-node-analyzer.yaml
+
