@@ -176,12 +176,12 @@ The following table lists the configurable parameters of the Sysdig Node Analyze
 | `nodeAnalyzer.kspmAnalyzer.image.digest`                             | The image digest to pull                                                                 | ` `                                                                            |
 | `nodeAnalyzer.kspmAnalyzer.image.pullPolicy`                         | The image pull policy for the  KSPM node analyzer                                        | `IfNotPresent`                                                                 |
 | `nodeAnalyzer.kspmAnalyzer.resources.requests.cpu`                   | KSPM node analyzer CPU requests per node                                                 | `150m`                                                                         |
-| `nodeAnalyzer.kspmAnalyzer.resources.requests.memory`                | KSPM node analyzer Memory requests per node                                              | `256Mi`                                                                        |
+| `nodeAnalyzer.kspmAnalyzer.resources.requests.memory`                | KSPM node analyzer memory requests per node                                              | `256Mi`                                                                        |
 | `nodeAnalyzer.kspmAnalyzer.resources.limits.cpu`                     | KSPM node analyzer CPU limits per node                                                   | `500m`                                                                         |
-| `nodeAnalyzer.kspmAnalyzer.resources.limits.memory`                  | KSPM node analyzer Memory limits per node                                                | `1536Mi`                                                                       |
-| `nodeAnalyzer.kspmAnalyzer.port`                                     | KSPM node analyzer Port for health checks                                                | `12000`                                                                        |
-| `nodeAnalyzer.kspmAnalyzer.probes.initialDelay`                      | KSPM node analyzer Initial delay before starting k8s health checks in seconds            | `3`                                                                            |
-| `nodeAnalyzer.kspmAnalyzer.probes.periodDelay`                       | KSPM node analyzer Delay beetween two consecutive k8s health checks                      | `3`                                                                            |
+| `nodeAnalyzer.kspmAnalyzer.resources.limits.memory`                  | KSPM node analyzer memory limits per node                                                | `1536Mi`                                                                       |
+| `nodeAnalyzer.kspmAnalyzer.port`                                     | KSPM node analyzer port for health checks and results API                                               | `12000`                                                                        |
+| `nodeAnalyzer.kspmAnalyzer.probes.initialDelay`                      | KSPM node analyzer initial delay before starting k8s health checks in seconds            | `3`                                                                            |
+| `nodeAnalyzer.kspmAnalyzer.probes.periodDelay`                       | KSPM node analyzer delay beetween two consecutive k8s health checks                      | `3`                                                                            |
 | `nodeAnalyzer.kspmAnalyzer.env`                                      | Extra environment variables that will be passed onto pods                                | `{}`                                                                           |
 | `nodeAnalyzer.nodeSelector`                                          | Node Selector                                                                            | `{}`                                                                           |
 | `nodeAnalyzer.affinity`                                              | Node affinities                                                                          | `schedule on amd64 and linux`                                                  |
@@ -257,7 +257,7 @@ See the [Actionable Compliance documentation](https://docs.sysdig.com/en/docs/sy
 KSPM Analyzer analyzes your host's configuration and sends the output to be evaluated against compliance policies.
 The scan results are displayed in Sysdig Secure's Actionable Compliance screens.
 
-The agent listens to port 12000 by default. To override it, you can set the AGENT_PORT environment variable.
+The agent listens to port 12000 by default. To override it, you can set the nodeAnalyzer.kspmAnalyzer.port variable.
 
 For example:
 
@@ -266,7 +266,7 @@ $ helm install --namespace sysdig-agent sysdig-agent \
     --set sysdig.accessKey=YOUR-KEY-HERE \
     --set nodeAnalyzer.apiEndpoint=42.32.196.18 \
     --set global.kspm.deploy=true \
-    --set nodeAnalyzer.kspmAnalyzer.env.AGENT_PORT=8888 \
+    --set nodeAnalyzer.kspmAnalyzer.port=8888 \
     sysdig/sysdig
 ```
 
