@@ -67,8 +67,8 @@ The following table lists the configurable parameters of the Sysdig KSPM Collect
 | `securityContext.runAsUser`               | make KSPM collector run as user with this ID                                            | `10001`                                                     |
 | `securityContext.runAsGroup`              | make KSPM collector run as group with this ID                                           | `10001`                                                     |
 | `securityContext.readOnlyRootFilesystem`  | make KSPM collector root file system read only                                          | `true`                                                      |
-| `securityContext.allowPrivilegeEscalation`| allow KSPM collector apps to gain priviledges stronger than their parent process        | `true`                                                      |
-| `securityContext.capabilities.drop`       | Linux capabilities to be taken from KSPM collector                                      | `true`                                                      |
+| `securityContext.allowPrivilegeEscalation`| allow KSPM collector apps to gain priviledges stronger than their parent process        | `false`                                                      |
+| `securityContext.capabilities.drop`       | Linux capabilities to be taken from KSPM collector                                      | `['all']`                                                      |
 
 
 
