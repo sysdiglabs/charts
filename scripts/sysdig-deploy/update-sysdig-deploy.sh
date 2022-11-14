@@ -4,7 +4,7 @@ set -e
 
 node_analyzer_chart_path="node-analyzer"
 agent_chart_path="agent"
-kspm_collectore_chart_path="kspm-collector"
+kspm_collector_chart_path="kspm-collector"
 rapid_response_chart_path="rapid-response"
 admission_controller_chart_path="admission-controller"
 sysdig_deploy_path="sysdig-deploy"
@@ -18,11 +18,10 @@ check_update_needed () {
     new_subchart_version=$(yq eval '.version' charts/$chart/Chart.yaml)
     sysdig_subchart_version=$(yq eval '.dependencies[] | select(.name == "'$chart'") | .version ' charts/$sysdig_deploy_path/Chart.yaml | sed "s/~//")
 
-    IFS="."
-    read -ra prev_ver <<< "$sysdig_subchart_version"
-    read -ra next_ver <<< "$new_subchart_version"
+    IFS="." read -ra prev_ver <<< "$sysdig_subchart_version"
+    IFS="." read -ra next_ver <<< "$new_subchart_version"
 
-    echo "subchart version in" $chart"/Chart.yaml"
+    echo "subchart version in ${chart}/Chart.yaml"
     echo $new_subchart_version
     echo $chart "subchart version in sysdig-deploy/Chart.yaml"
     echo $sysdig_subchart_version
@@ -47,7 +46,7 @@ check_update_needed () {
     done
 }
 
-charts=( "$node_analyzer_chart_path" "$agent_chart_path" "$kspm_collectore_chart_path" "$rapid_response_chart_path" "$admission_controller_chart_path" )
+charts=( "$node_analyzer_chart_path" "$agent_chart_path" "$kspm_collector_chart_path" "$rapid_response_chart_path" "$admission_controller_chart_path" )
 for chart in ${charts[@]}
 do
     check_update_needed $chart
@@ -80,6 +79,7 @@ then
     echo "patch version change needed"
 else
     echo "No modifications necessary"
+    
 fi
 
 final_sysdig_deploy_version=$(echo "$new_major.$new_minor.$new_patch")
