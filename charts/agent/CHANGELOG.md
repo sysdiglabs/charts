@@ -4,7 +4,7 @@
 
 ## v1.5.31
 ### Minor changes
-* Added unit tests to check local overrides
+* Added unit tests to check local overrides of global values
 
 This file documents all notable changes to the Sysdig Agent Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 

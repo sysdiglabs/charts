@@ -6,7 +6,7 @@ This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The 
 
 ## v1.7.34
 ### Minor changes:
-* Added unit tests to check local overrides
+* Added unit tests to check local overrides of global values
 
 ## v1.7.33
 

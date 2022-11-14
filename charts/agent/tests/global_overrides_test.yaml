@@ -1,4 +1,4 @@
-suite: Test global value overrides
+suite: Test subchart overrides of global values
 templates:
   - secrets.yaml
   - daemonset.yaml

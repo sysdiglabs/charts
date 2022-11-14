@@ -7,13 +7,13 @@ This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. Th
 ## v1.4.6
 ### Minor changes
 * agent:
-    * Added unit tests to check local overrides
+    * Added unit tests to check local overrides of global values
 * node-analyzer:
-    * Added unit tests to check local overrides
+    * Added unit tests to check local overrides of global values
 * kspm-collector:
-    * Added unit tests to check local overrides
+    * Added unit tests to check local overrides of global values
 * rapid-response:
-    * Added unit tests to check local overrides
+    * Added unit tests to check local overrides of global values
 
 ## v1.4.5
 ### Feature

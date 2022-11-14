@@ -3,7 +3,7 @@
 ## Change Log
 
 ## v0.2.5
-* Added unit tests to check local overrides
+* Added unit tests to check local overrides of global values
 
 ## v0.2.4
 ### Minor changes
