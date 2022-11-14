@@ -3,6 +3,10 @@
 ## Change Log
 
 This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
+## v1.4.7
+### Minor changes
+* admission-controller:
+    * Add proper validation check for Secure API Token
 
 ## v1.4.6
 ### Minor changes

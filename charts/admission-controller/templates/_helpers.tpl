@@ -239,6 +239,8 @@ Allow overriding registry and repository for air-gapped environments
 {{- end -}}
 {{- end -}}
 
+
+
 {{/*
 The following helper functions are all designed to use global values where
 possible, but accept overrides from the chart values.
@@ -277,4 +279,14 @@ possible, but accept overrides from the chart values.
 
 {{- define "webhook.noProxy" -}}
     {{- .Values.webhook.noProxy | default .Values.global.proxy.noProxy | default "" -}}
+{{- end -}}
+
+{{/*
+Validate Secure API Token Config
+*/}}
+{{- define "admissionController.validTokenConfig" -}}
+{{- $errorMsg := `
+The Sysdig Secure API Token was not provided with either the sysdig.secureAPIToken or sysdig.secureAPITokenSecret values.`
+-}}
+    {{- required $errorMsg (or (include "sysdig.secureAPIToken" .) (include "sysdig.secureAPITokenSecret" .)) -}}
 {{- end -}}
