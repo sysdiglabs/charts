@@ -3,6 +3,11 @@
 ## Change Log
 
 This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
+## v1.4.8
+### Minor changes
+* RapidResponse:
+  * bump to version 0.3.6
+
 ## v1.4.7
 ### Minor changes
 * admission-controller:
