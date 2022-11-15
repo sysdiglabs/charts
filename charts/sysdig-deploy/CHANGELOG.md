@@ -3,6 +3,11 @@
 ## Change Log
 
 This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
+## v1.4.9
+### Minor changes
+* kspm-collector:
+  * bump to version 0.1.18
+
 ## v1.4.8
 ### Minor changes
 * RapidResponse:
