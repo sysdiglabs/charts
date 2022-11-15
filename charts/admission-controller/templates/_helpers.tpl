@@ -278,3 +278,14 @@ possible, but accept overrides from the chart values.
 {{- define "webhook.noProxy" -}}
     {{- .Values.webhook.noProxy | default .Values.global.proxy.noProxy | default "" -}}
 {{- end -}}
+
+{{/*
+Validate Secure API Token Config
+The follwoing named template is not used in the chart itself, it is used to
+check whether at least one of the required parameters was specified and return
+an error if not.
+*/}}
+{{- define "admissionController.validTokenConfig" -}}
+{{- $errorMsg := "The Sysdig Secure API Token was not provided with either the sysdig.secureAPIToken or sysdig.secureAPITokenSecret values." -}}
+    {{- required $errorMsg (or (include "sysdig.secureAPIToken" .) (include "sysdig.secureAPITokenSecret" .)) -}}
+{{- end -}}
