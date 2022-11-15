@@ -41,6 +41,6 @@ jobs:
           base: master
           delete-branch: true
           labels: automated PR
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.deploy_version_change_token }}
           add-paths: charts/sysdig-deploy/Chart.yaml
           commit-message: "[sysdig-deploy] Updating sysdig-deploy version"
