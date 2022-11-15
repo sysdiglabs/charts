@@ -79,7 +79,7 @@ then
     echo "patch version change needed"
 else
     echo "No modifications necessary"
-    
+    exit 0
 fi
 
 final_sysdig_deploy_version=$(echo "$new_major.$new_minor.$new_patch")
