@@ -2,6 +2,10 @@
 
 ## Change Log
 
+## v1.5.33
+### Minor changes
+* Added unit tests for testing helm install commands in readme
+
 ## v1.5.32
 ### Minor changes
 * Added unit tests to check local overrides of global values

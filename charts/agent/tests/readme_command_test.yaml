@@ -1,0 +1,131 @@
+suite: Testing install commands in Readme
+templates:
+  - secrets.yaml
+  - configmap.yaml
+  - daemonset.yaml
+tests:
+  - it: check Readme install command titled "Installing the Chart"
+    set: 
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+      collectorSettings:
+        collectorHost: 192.168.100.100
+        collectorPort: 4000
+    asserts:
+      - isKind:
+          of: Secret
+        template: secrets.yaml
+      - isKind:
+          of: ConfigMap
+        template: configmap.yaml
+      - equal:
+          path: data.access-key
+          value: QUFBQUFBQUEtQkJCQi1DQ0NDLUREREQtRUVFRUVFRUVFRUVF
+        template: secrets.yaml
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: |
+            collector: 192.168.100.100
+            collector_port: 4000
+        template: configmap.yaml
+
+  - it: check Readme install command showing options usage
+    set: 
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+        settings:
+          # removed '\' which was in the readme command as it is interpreted differently by the helm unittest
+          tags: "role:webserver,location:europe"
+    asserts:
+      - isKind:
+          of: Secret
+        template: secrets.yaml
+      - isKind:
+          of: ConfigMap
+        template: configmap.yaml
+      - equal:
+          path: data.access-key
+          value: QUFBQUFBQUEtQkJCQi1DQ0NDLUREREQtRUVFRUVFRUVFRUVF
+        template: secrets.yaml
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: |
+            tags: role:webserver,location:europe
+        template: configmap.yaml
+
+  - it: check Readme install command example 1
+    set: 
+      global:
+        sysdig:
+          accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+        gke:
+          autopilot: true
+    asserts:
+      - isKind:
+          of: Secret
+        template: secrets.yaml
+      - isKind:
+          of: DaemonSet
+        template: daemonset.yaml
+      - equal:
+          path: data.access-key
+          value: QUFBQUFBQUEtQkJCQi1DQ0NDLUREREQtRUVFRUVFRUVFRUVF
+        template: secrets.yaml
+      - equal:
+          path: spec.template.metadata.annotations.autopilot\.gke\.io\/no\-connect
+          value: "true"
+        template: daemonset.yaml
+  
+  - it: check Readme install command titled "How to upgrade to the last version"
+    set: 
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+      ebpf:
+        enabled: true
+    asserts:
+      - isKind:
+          of: Secret
+        template: secrets.yaml
+      - isKind:
+          of: ConfigMap
+        template: configmap.yaml
+      - equal:
+          path: data.access-key
+          value: QUFBQUFBQUEtQkJCQi1DQ0NDLUREREQtRUVFRUVFRUVFRUVF
+        template: secrets.yaml
+      - contains:
+          path: spec.template.spec.initContainers[0].env
+          content:
+            name: SYSDIG_BPF_PROBE
+            value: null
+        template: daemonset.yaml
+
+  - it: check Readme upgrade command titled "How to upgrade to the last version"
+    set: 
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+      ebpf:
+        enabled: true
+      image:
+        tag: 12.8.5
+    asserts:
+      - isKind:
+          of: Secret
+        template: secrets.yaml
+      - isKind:
+          of: ConfigMap
+        template: configmap.yaml
+      - equal:
+          path: data.access-key
+          value: QUFBQUFBQUEtQkJCQi1DQ0NDLUREREQtRUVFRUVFRUVFRUVF
+        template: secrets.yaml
+      - contains:
+          path: spec.template.spec.initContainers[0].env
+          content:
+            name: SYSDIG_BPF_PROBE
+            value: null
+        template: daemonset.yaml
+      - equal:
+          path: spec.template.spec.initContainers[0].image
+          value: quay.io/sysdig/agent-kmodule:12.8.5
+        template: daemonset.yaml

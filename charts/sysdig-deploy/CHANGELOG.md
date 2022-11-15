@@ -18,6 +18,13 @@ This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. Th
 * admission-controller:
     * Add proper validation check for Secure API Token
 
+## v1.4.7
+### Minor changes
+* agent:
+    * Added unit tests for testing helm install commands in readme
+* node-analyzer:
+    * Added unit tests for testing helm install commands in readme
+
 ## v1.4.6
 ### Minor changes
 * agent:

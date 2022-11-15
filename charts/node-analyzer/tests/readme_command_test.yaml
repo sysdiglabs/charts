@@ -1,0 +1,30 @@
+suite: Testing install commands in Readme
+templates:
+  - secrets.yaml
+  - configmap-benchmark-runner.yaml
+tests:
+  - it: check Readme install command titled "Installing the Chart"
+    set:
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+      nodeAnalyzer:
+        apiEndpoint: secure.apiendpoint.com
+    asserts:
+      - equal:
+          path: data.access-key
+          value: QUFBQUFBQUEtQkJCQi1DQ0NDLUREREQtRUVFRUVFRUVFRUVF
+        template: secrets.yaml
+      - equal:
+          path: data.collector_endpoint
+          value: https://secure.apiendpoint.com
+        template: configmap-benchmark-runner.yaml
+
+  - it: check Readme install command showing options usage example
+    set:
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+    asserts:
+      - equal:
+          path: data.access-key
+          value: QUFBQUFBQUEtQkJCQi1DQ0NDLUREREQtRUVFRUVFRUVFRUVF
+        template: secrets.yaml
