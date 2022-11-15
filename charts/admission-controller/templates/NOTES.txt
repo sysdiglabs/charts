@@ -1,4 +1,6 @@
+Validating Admission Controller Secure API Token configuration:
 {{- if (include "admissionController.validTokenConfig" .) }}
+Success!
 {{- end }}
 
 Sysdig Admission Controller is now installed!
