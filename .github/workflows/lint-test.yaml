@@ -77,7 +77,13 @@ jobs:
 
       - name: Set up helm unit test plugin
         run: helm plugin install https://github.com/quintush/helm-unittest
-      
+
+      - name: Update dependencies for sysdig-deploy
+        run: helm dep update charts/sysdig-deploy
+
+      - name: Test sysdig-deploy
+        run: helm unittest --helm3 ./charts/sysdig-deploy
+
       - name: Test node-analyzer
         run: helm unittest --helm3 ./charts/node-analyzer
 
