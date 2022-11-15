@@ -2,6 +2,15 @@
 
 ## Change Log
 
+## v1.4.10
+### Minor changes
+* agent:
+    * Added unit tests for testing helm install commands in readme
+* node-analyzer:
+    * Added unit tests for testing helm install commands in readme
+* sysdig-deploy:
+    * Added unit tests for testing helm install commands in readme
+
 This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 ## v1.4.9
 ### Minor changes
@@ -17,13 +26,6 @@ This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. Th
 ### Minor changes
 * admission-controller:
     * Add proper validation check for Secure API Token
-
-## v1.4.7
-### Minor changes
-* agent:
-    * Added unit tests for testing helm install commands in readme
-* node-analyzer:
-    * Added unit tests for testing helm install commands in readme
 
 ## v1.4.6
 ### Minor changes
