@@ -33,11 +33,6 @@ jobs:
         run: |
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-      - name: Add the chart file
-        if: steps.dependent_files.outputs.any_changed == 'true'
-        run: |
-          git add -A "charts/sysdig-deploy/Chart.yaml"
-          git pull && git commit -m "[sysdig-deploy] Updating sysdig-deploy version"
       - name: Create Pull Request
         if: steps.dependent_files.outputs.any_changed == 'true'
         uses: peter-evans/create-pull-request@v4.2.0
@@ -47,3 +42,5 @@ jobs:
           delete-branch: true
           labels: automated PR
           token: ${{ secrets.GITHUB_TOKEN }}
+          add-paths: charts/sysdig-deploy/Chart.yaml
+          commit-message: "[sysdig-deploy] Updating sysdig-deploy version"
