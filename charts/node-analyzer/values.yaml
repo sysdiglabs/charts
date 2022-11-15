@@ -303,6 +303,13 @@ nodeAnalyzer:
   hostScanner:
     deploy: false
 
+    # scanOnStart will make a scann happen at startup.
+    # scanOnStart: true
+    #
+    # dirsToScan is a list absolute host paths that should analyzed.
+    # Do not set it unless you know what you are doing.
+    # dirsToScan: []
+
     image:
       repository: sysdig/vuln-host-scanner
       tag: 0.2.0  # TODO: change with stable version before releasing chart
@@ -312,12 +319,12 @@ nodeAnalyzer:
     resources:
       requests:
         cpu: 150m
-        memory: 512Mi
-        ephemeral-storage: 512Mi
+        memory: 150Mi
+        ephemeral-storage: 250Mi
       limits:
-        cpu: 500m
-        memory: 1Gi
-        ephemeral-storage: 1Gi
+        cpu: 150m
+        memory: 150Mi
+        ephemeral-storage: 250Mi
 
     env: {}
 
