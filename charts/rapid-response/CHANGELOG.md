@@ -2,6 +2,10 @@
 
 ## Change Log
 
+## v0.2.6
+### Minor changes
+* bump image tag to 0.3.6
+
 ## v0.2.5
 * Added unit tests to check local overrides of global values
 
