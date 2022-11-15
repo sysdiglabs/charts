@@ -1,3 +1,19 @@
+# v0.1.18
+### Minor changes
+* Bumped image tag to 1.14.0
+
+# v0.1.17
+### Minor changes
+* Added unit tests to check local overrides of global values
+
+# v0.1.16
+### Minor changes:
+* KSPMCollector:
+    * Added liveliness and readiness probes.
+    * All capabilities are now dropped.
+    * Pod will not run with root privileges.
+    * Bumped image tag to 1.13.0
+
 # v0.1.15
 ### Feature
 * Add imagePullSecret flag for kspm-collector

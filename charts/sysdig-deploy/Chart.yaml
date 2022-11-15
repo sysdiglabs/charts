@@ -4,7 +4,7 @@ description: A chart with various Sysdig components for Kubernetes
 
 type: application
 
-version: 1.4.4
+version: 1.4.9
 
 maintainers:
   - name: aroberts87
@@ -22,30 +22,30 @@ dependencies:
   - name: admission-controller
     # repository: https://charts.sysdig.com
     repository: file://../admission-controller
-    version: ~0.7.1
+    version: ~0.7.2
     alias: admissionController
     condition: admissionController.enabled
   - name: agent
     # repository: https://charts.sysdig.com
     repository: file://../agent
-    version: ~1.5.30
+    version: ~1.5.32
     alias: agent
     condition: agent.enabled
   - name: node-analyzer
     # repository: https://charts.sysdig.com
     repository: file://../node-analyzer
-    version: ~1.7.32
+    version: ~1.7.34
     alias: nodeAnalyzer
     condition: nodeAnalyzer.enabled
   - name: kspm-collector
     # repository: https://charts.sysdig.com
     repository: file://../kspm-collector
-    version: ~0.1.15
+    version: ~0.1.18
     alias: kspmCollector
     condition: global.kspm.deploy
   - name: rapid-response
     # repository: https://charts.sysdig.com
     repository: file://../rapid-response
-    version: ~0.2.4
+    version: ~0.2.6
     alias: rapidResponse
     condition: rapidResponse.enabled

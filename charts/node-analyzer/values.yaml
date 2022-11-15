@@ -298,7 +298,7 @@ nodeAnalyzer:
     debug: false
     image:
       repository: sysdig/kspm-analyzer
-      tag: 1.11.0
+      tag: 1.13.0
       digest:
       pullPolicy: IfNotPresent
 
@@ -309,5 +309,11 @@ nodeAnalyzer:
       limits:
         cpu: 500m
         memory: 1536Mi
+
+    port: 12000
+
+    probes:
+      initialDelay: 3
+      periodDelay: 3
 
     env: {}

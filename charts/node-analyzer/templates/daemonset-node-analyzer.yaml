@@ -110,6 +110,22 @@ spec:
 {{ if .Values.global.kspm.deploy }}
       - name: sysdig-kspm-analyzer
         image: {{ template "nodeAnalyzer.image.kspmAnalyzer" . }}
+        ports:
+          - name: http
+            containerPort: {{ .Values.nodeAnalyzer.kspmAnalyzer.port }}
+            protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: http
+          initialDelaySeconds: {{ .Values.nodeAnalyzer.kspmAnalyzer.probes.initialDelay }}
+          periodSeconds: {{ .Values.nodeAnalyzer.kspmAnalyzer.probes.periodDelay }}
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: http
+          initialDelaySeconds: {{ .Values.nodeAnalyzer.kspmAnalyzer.probes.initialDelay }}
+          periodSeconds: {{ .Values.nodeAnalyzer.kspmAnalyzer.probes.periodDelay }}
         imagePullPolicy: {{ .Values.nodeAnalyzer.kspmAnalyzer.image.pullPolicy }}
         resources:
 {{ toYaml .Values.nodeAnalyzer.kspmAnalyzer.resources | indent 10 }}
@@ -117,9 +133,8 @@ spec:
           runAsUser: 0
           privileged: true
           capabilities:
-            add:
-              - NET_ADMIN
-              - SYS_ADMIN
+            drop:
+              - all
         env:
           - name: ACCESS_KEY
             valueFrom:
@@ -181,6 +196,12 @@ spec:
               configMapKeyRef:
                 name: {{ .Release.Name }}-kspm-analyzer
                 key: no_proxy
+                optional: true
+          - name: AGENT_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-kspm-analyzer
+                key: agent_port
                 optional: true
           {{- range $key, $value := .Values.nodeAnalyzer.kspmAnalyzer.env }}
           - name: "{{ $key }}"

@@ -83,3 +83,9 @@ jobs:
 
       - name: Test agent
         run: helm unittest --helm3 ./charts/agent
+
+      - name: Test kspm-collector
+        run: helm unittest --helm3 ./charts/kspm-collector
+
+      - name: Test rapid-response
+        run: helm unittest --helm3 ./charts/rapid-response
