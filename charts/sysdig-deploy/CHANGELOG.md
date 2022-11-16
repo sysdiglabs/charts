@@ -2,6 +2,23 @@
 
 ## Change Log
 
+This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
+
+## v1.4.13
+### Minor changes
+* admission-controller:
+  * bump to version 0.7.5
+
+## 1.4.12
+### Minor changes
+* NodeAnalyzer:
+  * bump to version 1.7.35
+
+## v1.4.11
+### Minor changes
+* admission-controller:
+    * Added unit tests to check local overrides of global values
+
 ## v1.4.10
 ### Minor changes
 * agent:
@@ -11,7 +28,6 @@
 * sysdig-deploy:
     * Added unit tests for testing helm install commands in readme
 
-This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 ## v1.4.9
 ### Minor changes
 * kspm-collector:

@@ -1,0 +1,4 @@
+sysdig:
+  secureAPIToken: ${SECURE_API_TOKEN}
+  url: "https://secure.sysdig.com"
+clusterName: CI-Cluster

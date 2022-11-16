@@ -1,0 +1,86 @@
+suite: Test subchart overrides of global values
+templates:
+  - scanner/deployment.yaml
+  - scanner/configmap.yaml
+  - scanner/secret.yaml
+  - webhook/deployment.yaml
+  - webhook/configmap.yaml
+  - webhook/secret.yaml
+  - webhook/admissionregistration.yaml
+tests:
+  - it: check value of secure_API_TOKEN without local chart override
+    documentIndex: 0
+    set:
+      sysdig:
+        secureAPIToken: standard_token
+        url: secure.sysdigcloud.com
+      clusterName: test-k8s
+      version: 0.7.3
+    asserts:
+      - equal:
+          path: stringData.SECURE_API_TOKEN
+          value: standard_token
+        template: scanner/secret.yaml
+      - equal:
+          path: stringData.SECURE_API_TOKEN
+          value: standard_token
+        template: webhook/secret.yaml
+
+  - it: check value of secure_API_TOKEN with local chart override
+    documentIndex: 0
+    set:
+      global:
+        sysdig:
+          secureAPIToken: standard_token
+      clusterName: test-k8s
+      sysdig:
+        url: secure_url.com
+        secureAPIToken: override_token
+    asserts:
+      - equal:
+          path: stringData.SECURE_API_TOKEN
+          value: override_token
+        template: scanner/secret.yaml
+      - equal:
+          path: stringData.SECURE_API_TOKEN
+          value: override_token
+        template: webhook/secret.yaml
+
+  - it: check value of secureAPITokenSecret without local chart override
+    documentIndex: 0
+    set:
+      global:
+        sysdig:
+          secureAPITokenSecret: standard_token
+      clusterName: test-k8s
+      sysdig:
+        url: secure_url.com
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].envFrom[1].secretRef.name
+          value: standard_token
+        template: scanner/deployment.yaml
+      - equal:
+          path: spec.template.spec.containers[0].envFrom[0].secretRef.name
+          value: standard_token
+        template: webhook/deployment.yaml
+
+  - it: check value of secureAPITokenSecret with local chart override
+    documentIndex: 0
+    set:
+      global:
+        sysdig:
+          secureAPITokenSecret: standard_token
+      clusterName: test-k8s
+      sysdig:
+        url: secure_url.com
+        existingSecureAPITokenSecret: override_token
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].envFrom[1].secretRef.name
+          value: override_token
+        template: scanner/deployment.yaml
+      - equal:
+          path: spec.template.spec.containers[0].envFrom[0].secretRef.name
+          value: override_token
+        template: webhook/deployment.yaml
