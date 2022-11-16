@@ -95,3 +95,6 @@ jobs:
 
       - name: Test rapid-response
         run: helm unittest --helm3 ./charts/rapid-response
+
+      - name: Test admission-controller
+        run: helm unittest --helm3 ./charts/admission-controller/
