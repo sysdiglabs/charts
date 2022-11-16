@@ -32,7 +32,7 @@ seccompProfiles:
 supplementalGroups:
   type: RunAsAny
 users:
-- system:serviceaccount:{{ .include "admissionController.namespace" . }}:{{ include "admissionController.webhook.serviceAccountName" . }}
+- system:serviceaccount:{{ include "admissionController.namespace" . }}:{{ include "admissionController.webhook.serviceAccountName" . }}
 volumes:
 - hostPath
 - emptyDir

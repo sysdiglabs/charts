@@ -99,6 +99,27 @@ If release name contains chart name it will be used as a full name.
     {{- end -}}
 {{- end -}}
 
+{{/*
+Determine Secure endpoint based on provided region or .Values.sysdig.url
+*/}}
+{{- define "admissionController.apiEndpoint" -}}
+    {{- if (or .Values.sysdig.url (eq .Values.global.sysdig.region "custom"))  -}}
+        {{- required "A valid Sysdig URL is required" .Values.sysdig.url -}}
+    {{- else if (eq .Values.global.sysdig.region "us1") -}}
+        {{- "secure.sysdig.com" -}}
+    {{- else if (eq .Values.global.sysdig.region "us2") -}}
+        {{- "us2.app.sysdig.com" -}}
+    {{- else if (eq .Values.global.sysdig.region "us3") -}}
+        {{- "app.us3.sysdig.com" -}}
+    {{- else if (eq .Values.global.sysdig.region "us4") -}}
+        {{- "app.us4.sysdig.com" -}}
+    {{- else if (eq .Values.global.sysdig.region "eu1") -}}
+        {{- "eu1.app.sysdig.com" -}}
+    {{- else if (eq .Values.global.sysdig.region "au1") -}}
+        {{- "app.au1.sysdig.com" -}}
+    {{- end -}}
+{{- end -}}
+
 
 {{/*
 Common labels
