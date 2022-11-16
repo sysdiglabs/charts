@@ -2,6 +2,10 @@
 
 ## Change Log
 
+## v1.4.11
+### Minor changes
+* admission-controller:
+    * Added unit tests to check local overrides of global values
 ## v1.4.10
 ### Minor changes
 * agent:
