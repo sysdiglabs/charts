@@ -3,16 +3,13 @@
 ## Change Log
 
 This file documents all notable changes to the Admission Controller Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
-<<<<<<< HEAD
+## v0.7.5
+### Minor changes
+* Add support for building Sysdig Secure URL from global region value
 
 ## v0.7.4
 ### Minor changes
 * Added unit tests to check local overrides of global values
-=======
-## v0.7.4
-### Minor changes
-* Add support for building Sysdig Secure URL from global region value
->>>>>>> 9a7d2ff (Determine Secure URL from global region value)
 
 ## v0.7.2
 ### Minor changes

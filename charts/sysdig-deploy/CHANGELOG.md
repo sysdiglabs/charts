@@ -2,18 +2,16 @@
 
 ## Change Log
 
-<<<<<<< HEAD
+This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
+## v1.4.12
+### Minor changes
+* admission-controller:
+  * bump to version 0.7.5
+
 ## v1.4.11
 ### Minor changes
 * admission-controller:
     * Added unit tests to check local overrides of global values
-=======
-This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
-## v1.4.11
-### Minor changes
-* admission-controller:
-  * bump to version 0.7.4
->>>>>>> 9a7d2ff (Determine Secure URL from global region value)
 
 ## v1.4.10
 ### Minor changes
