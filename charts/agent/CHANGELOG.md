@@ -2,6 +2,10 @@
 
 ## Change Log
 
+## v1.5.34
+### Minor changes
+* Fixed .helmignore to add chart tests back when packaging the chart
+
 ## v1.5.33
 ### Minor changes
 * Added unit tests for testing helm install commands in readme
