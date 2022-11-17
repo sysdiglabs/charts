@@ -1,4 +1,4 @@
-name: Update the Sysdig deploy chart versions
+name: Update the sysdig-deploy chart versions
 run-name: github actions is updating sysdig-deploy versions based on dependencies
 on:
   push:
