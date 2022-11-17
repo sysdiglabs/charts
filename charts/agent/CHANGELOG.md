@@ -2,6 +2,10 @@
 
 ## Change Log
 
+## v1.5.35
+### Minor changes
+* Remove 'beta' from kubernets.io/arch and kubernetes.io/os in daemonset due to deprecation
+
 ## v1.5.34
 ### Minor changes
 * Fixed .helmignore to add chart tests back when packaging the chart
