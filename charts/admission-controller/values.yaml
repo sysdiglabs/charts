@@ -10,6 +10,8 @@ global:
     secureAPIToken: ""
     # Global secret with API Token to access Sysdig Secure.
     secureAPITokenSecret: ""
+    # Global Sysdig Secure region
+    region: "us1"
   # Global HTTP Proxy settings.
   proxy: {}
 
@@ -47,7 +49,7 @@ sysdig:
   # - For APAC, use https://app.au1.sysdig.com<br/>
   # - For US4 (our west Google cloud region) use https://app.us4.sysdig.com<br/>
   # - For on-prem, your own enpoints<br/>
-  url: "https://secure.sysdig.com"
+  url: ""
 
 features:
   # Enable K8s Audit detections with Falco rules

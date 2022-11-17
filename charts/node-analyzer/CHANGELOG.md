@@ -4,6 +4,26 @@
 
 This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.7.38
+### Minor changes
+* Added toleration doc on node-analyzer chart
+
+## v1.7.37
+### Minor change:
+* Fixed .helmignore to not exclude chart tests when packaging the node-analyzer chart
+
+## v1.7.36
+### Minor changes:
+* NodeAnalyzer:
+    * RuntimeScanner: bump to version 1.3.0
+        * fixes CVE-2022-32149
+        * fixes CVE-2022-39237
+        * add support for rhel9-based OSes
+
+## v1.7.35
+### Minor changes:
+* Added unit tests for testing helm install commands in readme
+
 ## v1.7.34
 ### Minor changes:
 * Added unit tests to check local overrides of global values

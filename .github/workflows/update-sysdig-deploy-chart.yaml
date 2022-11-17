@@ -1,0 +1,46 @@
+name: update_sysdig_deploy_chart_versions
+run-name: github actions is updating sysdig-deploy versions based on dependencies
+on:
+  push:
+    branches:
+      - master
+jobs:
+  update-sysdig-deploy-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Check if dependent charts were modified or not
+        uses: tj-actions/changed-files@v14.3
+        id: dependent_files
+        with:
+          files: |
+            charts/node-analyzer/*
+            charts/agent/*
+            charts/kspm-collector/*
+            charts/rapid-response/*
+            charts/admission-controller/*
+      - name: Install YQ
+        if: steps.dependent_files.outputs.any_changed == 'true'
+        uses: dcarbone/install-yq-action@v1.0.1
+      - name: run the script
+        if: steps.dependent_files.outputs.any_changed == 'true'
+        run: scripts/sysdig-deploy/update-sysdig-deploy.sh
+      - name: Configure Git
+        if: steps.dependent_files.outputs.any_changed == 'true'
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+      - name: Create Pull Request
+        if: steps.dependent_files.outputs.any_changed == 'true'
+        uses: peter-evans/create-pull-request@v4.2.0
+        with:
+          title: Changes to update sysdig deploy chart made by github action
+          base: master
+          delete-branch: true
+          labels: automated PR
+          token: ${{ secrets.deploy_version_change_token }}
+          add-paths: charts/sysdig-deploy/Chart.yaml
+          commit-message: "[sysdig-deploy] Updating sysdig-deploy version"

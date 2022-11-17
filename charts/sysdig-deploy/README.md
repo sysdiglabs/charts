@@ -13,6 +13,7 @@ Currently included components:
 - [Sysdig NodeAnalyzer](https://github.com/sysdiglabs/charts/tree/master/charts/node-analyzer)
 - [Sysdig KSPM Collector](https://github.com/sysdiglabs/charts/tree/master/charts/kspm-collector)
 - [Sysdig Rapid Response](https://github.com/sysdiglabs/charts/tree/master/charts/rapid-response)
+- [Sysdig Admission Controller](https://github.com/sysdiglabs/charts/tree/master/charts/admission-controller)
 
 ## Prerequisites
 
