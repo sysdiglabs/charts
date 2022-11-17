@@ -1,4 +1,4 @@
-name: update_sysdig_deploy_chart_versions
+name: Update the Sysdig deploy chart versions
 run-name: github actions is updating sysdig-deploy versions based on dependencies
 on:
   push:
@@ -41,6 +41,6 @@ jobs:
           base: master
           delete-branch: true
           labels: automated PR
-          token: ${{ secrets.deploy_version_change_token }}
+          token: ${{ secrets.DEPLOY_VERSION_CHANGE_TOKEN }}
           add-paths: charts/sysdig-deploy/Chart.yaml
           commit-message: "[sysdig-deploy] Updating sysdig-deploy version"
