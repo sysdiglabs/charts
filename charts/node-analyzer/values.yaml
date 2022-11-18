@@ -301,7 +301,9 @@ nodeAnalyzer:
         replicas: 1
 
   hostScanner:
-    deploy: false
+    # Note: deploy has been commented so that it will be used as hard override to newEngineOnly flag
+    # but when not set, newEngineOnly will win. Desiderata examples in ./tests/hostscanner_test.yaml
+    # deploy: false
 
     # scanOnStart will make a scann happen at startup.
     # scanOnStart: true

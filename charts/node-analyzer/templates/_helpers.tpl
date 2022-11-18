@@ -231,7 +231,7 @@ nodeAnalyzer agentConfigmapName
 
 {{- define "nodeAnalyzer.deployHostScanner" -}}
 {{- if and (hasKey .Values.nodeAnalyzer.hostScanner "deploy") (not .Values.nodeAnalyzer.hostScanner.deploy ) }}
-{{- else if or .Values.secure.vulnerabilityManagement.newEngineOnly (not (hasKey .Values.nodeAnalyzer.hostScanner "deploy")) .Values.nodeAnalyzer.hostScanner.deploy -}}
+{{- else if or .Values.secure.vulnerabilityManagement.newEngineOnly (and (hasKey .Values.nodeAnalyzer.hostScanner "deploy") .Values.nodeAnalyzer.hostScanner.deploy) -}}
 true
 {{- end -}}
 {{- end -}}
