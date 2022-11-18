@@ -2,6 +2,10 @@
 
 ## Change Log
 
+## v1.5.36
+### Minor changes
+* Revert changes from 1.5.35 due to breaking OKD3.
+
 ## v1.5.35
 ### Minor changes
 * Remove 'beta' from kubernets.io/arch and kubernetes.io/os in daemonset due to deprecation
