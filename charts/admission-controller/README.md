@@ -23,7 +23,7 @@ $ pre-commit run -a
 $ helm repo add sysdig https://charts.sysdig.com
 $ helm repo update
 $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-      --create-namespace -n sysdig-admission-controller --version=0.7.6  \
+      --create-namespace -n sysdig-admission-controller --version=0.7.7  \
       --set clusterName=CLUSTER_NAME \
       --set sysdig.url=SECURE_URL \
       --set sysdig.secureAPIToken=SECURE_API_TOKEN
@@ -56,7 +56,7 @@ This chart deploys the Sysdig Admission Controller on a [Kubernetes](http://kube
 To install the chart with the release name `admission-controller`:
 
 ```console
-$ helm upgrade --install sysdig-admission-controller sysdig/admission-controller -n sysdig-admission-controller --version=0.7.6
+$ helm upgrade --install sysdig-admission-controller sysdig/admission-controller -n sysdig-admission-controller --version=0.7.7
 ```
 
 The command deploys the Sysdig Admission Controller on the Kubernetes cluster in the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.
@@ -136,7 +136,7 @@ The following table lists the configurable parameters of the `admission-controll
 | webhook.affinity                                   | Configure affinity rules for webhook                                                                                                                                                                                                                                                                                                                                                                                                                                | <code>{}</code>                                                                                                                                                                                    |
 | webhook.denyOnError                                | Deny request when an error happened evaluating request                                                                                                                                                                                                                                                                                                                                                                                                              | <code>false</code>                                                                                                                                                                                 |
 | webhook.dryRun                                     | Dry Run request                                                                                                                                                                                                                                                                                                                                                                                                                                                     | <code>false</code>                                                                                                                                                                                 |
-| webhook.logLevel                                   | Log Level - Valid Values info or debug                                                                                                                                                                                                                                                                                                                                                                                                                              | <code>info</code>                                                                                                                                                                                  |
+| webhook.logLevel                                   | Log Level - Valid Values are: error, info, debug, trace                                                                                                                                                                                                                                                                                                                                                                                                             | <code>info</code>                                                                                                                                                                                  |
 | webhook.ssl.ca.cert                                | For outbound connections (secure backend, proxy,...) <br/>And inbound connections to serve HttpRequests as Kubernetes Webhook. <br/>A PEM-encoded x509 certificate authority. <br/>If empty, a new CA will be autogenerated.                                                                                                                                                                                                                                        | <code>""</code>                                                                                                                                                                                    |
 | webhook.ssl.ca.key                                 | For outbound connections (secure backend, proxy,...) <br/>A PEM-encoded private key of the certificate authority to use in the certificate generation. <br/>If empty, a new CA will be autogenerated.                                                                                                                                                                                                                                                               | <code>""</code>                                                                                                                                                                                    |
 | webhook.ssl.cert                                   | For inbound connections to serve HttpRequests as Kubernetes Webhook. <br/>A PEM-encoded x509 certificate signed by the CA. <br/>If empty, a new cert will be generated. <br/>If provided, it must be valid with the `webhook.ssl.ca`. <br/>If this is set, the key must also be provided.                                                                                                                                                                           | <code>""</code>                                                                                                                                                                                    |
@@ -176,7 +176,7 @@ Specify each parameter using the **`--set key=value[,key=value]`** argument to `
 
 ```console
 $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-    --create-namespace -n sysdig-admission-controller --version=0.7.6 \
+    --create-namespace -n sysdig-admission-controller --version=0.7.7 \
     --set sysdig.secureAPIToken=YOUR-KEY-HERE,sysdig.url=SECURE_URL,clusterName=YOUR-CLUSTER-NAME
 ```
 
@@ -185,7 +185,7 @@ installing the chart. For example:
 
 ```console
 $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-    --create-namespace -n sysdig-admission-controller --version=0.7.6 \
+    --create-namespace -n sysdig-admission-controller --version=0.7.7 \
     --values values.yaml
 ```
 
