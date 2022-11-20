@@ -2,6 +2,10 @@
 ### Minor changes
 * Bumped image tag to 1.14.0
 
+# v0.1.18
+### Minor changes
+* Added unit tests for testing labels
+
 # v0.1.17
 ### Minor changes
 * Added unit tests to check local overrides of global values

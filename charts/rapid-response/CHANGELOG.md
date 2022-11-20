@@ -2,6 +2,10 @@
 
 ## Change Log
 
+## v0.2.7
+### Minor changes
+* Added unit tests for testing labels
+
 ## v0.2.6
 ### Minor changes
 * bump image tag to 0.3.6
