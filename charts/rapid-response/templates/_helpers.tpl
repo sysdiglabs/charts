@@ -59,9 +59,12 @@ Daemonset labels
   {{- if .Values.rapidResponse.daemonSetLabels }}
     {{- $tp := typeOf .Values.rapidResponse.daemonSetLabels }}
     {{- if eq $tp "string" }}
-      {{- tpl .Values.rapidResponse.daemonSetLabels . }}
+        {{- if not (regexMatch "^[a-z0-9A-Z].*(: )(.*[a-z0-9A-Z]$)?" .Values.rapidResponse.daemonSetLabels) }}
+            {{- fail "daemonSetLabels does not seem to be of the type key:[space]value" }}
+        {{- end }}
+        {{- tpl .Values.rapidResponse.daemonSetLabels . }}
     {{- else }}
-      {{- toYaml .Values.rapidResponse.daemonSetLabels }}
+        {{- toYaml .Values.rapidResponse.daemonSetLabels }}
     {{- end }}
   {{- end }}
 {{- end -}}
