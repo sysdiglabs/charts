@@ -78,6 +78,8 @@ verifySSL: true
 nameOverride: ""
 # Chart full name override
 fullnameOverride: ""
+# Additional labels, applies to both scanner and webhook
+labels: {}
 
 serviceAccounts:
   webhook:
@@ -128,6 +130,9 @@ webhook:
     tag:
     # Specify the image digest value.  If set, this value is used instead of the tag value.
     digest:
+
+  # Additional labels, applies to webhook only
+  labels: {}
 
   service:
     # Use this type as webhook service
@@ -257,6 +262,9 @@ scanner:
     tag: 0.0.11
     # Specify the image digest value.  If set, this value is used instead of the tag value.
     digest:
+
+  # Additional labels, applies to scanner only
+  labels: {}
 
   service:
     # Configure port for the webhook service
