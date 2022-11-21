@@ -39,7 +39,7 @@ Returns the namespace for installing components
 {{- end -}}
 
 {{/*
-Common labels
+Admission Controller labels
 */}}
 {{- define "admissionController.labels" -}}
 helm.sh/chart: {{ include "admissionController.chart" . }}
@@ -47,6 +47,17 @@ helm.sh/chart: {{ include "admissionController.chart" . }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- if .Values.labels }}
+{{- $tp := typeOf .Values.labels }}
+{{- if eq $tp "string" }}
+{{- if not (regexMatch "^[a-z0-9A-Z].*(: )(.*[a-z0-9A-Z]$)?" .Values.labels) }}
+    {{- fail "labels does not seem to be of the type key:[space]value" }}
+{{- end }}
+{{ tpl .Values.labels . }}
+{{- else }}
+{{ toYaml .Values.labels }}
+{{- end }}
+{{- end }}
 {{- end -}}
 
 {{/*
@@ -127,6 +138,17 @@ Common labels
 {{- define "admissionController.webhook.labels" -}}
 {{ include "admissionController.labels" . }}
 {{ include "admissionController.webhook.selectorLabels" . }}
+{{- if .Values.webhook.labels }}
+{{- $tp := typeOf .Values.webhook.labels }}
+{{- if eq $tp "string" }}
+{{- if not (regexMatch "^[a-z0-9A-Z].*(: )(.*[a-z0-9A-Z]$)?" .Values.webhook.labels) }}
+    {{- fail "labels does not seem to be of the type key:[space]value" }}
+{{- end }}
+{{ tpl .Values.webhook.labels . }}
+{{- else }}
+{{ toYaml .Values.webhook.labels }}
+{{- end }}
+{{- end }}
 {{- end -}}
 
 {{/*
@@ -212,6 +234,17 @@ Common labels
 {{- define "admissionController.scanner.labels" -}}
 {{ include "admissionController.labels" . }}
 {{ include "admissionController.scanner.selectorLabels" . }}
+{{- if .Values.scanner.labels }}
+{{- $tp := typeOf .Values.scanner.labels }}
+{{- if eq $tp "string" }}
+{{- if not (regexMatch "^[a-z0-9A-Z].*(: )(.*[a-z0-9A-Z]$)?" .Values.scanner.labels) }}
+    {{- fail "labels does not seem to be of the type key:[space]value" }}
+{{- end }}
+{{ tpl .Values.scanner.labels . }}
+{{- else }}
+{{ toYaml .Values.scanner.labels }}
+{{- end }}
+{{- end }}
 {{- end -}}
 
 {{/*
