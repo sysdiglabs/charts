@@ -1,0 +1,27 @@
+name: Greeting
+on:
+  pull_request_target:
+    types:
+      - opened
+
+jobs:
+  greeting:
+    permissions:
+      pull-requests: write
+    name: Greeting comment upon PR from fork
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository
+
+    steps:
+      - name: Issue the greeting comment
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            Hi @${{ github.event.pull_request.user.login }}. Thanks for your PR.
+
+            After inspecting your changes someone with write access to this repo needs
+            to approve and run the workflow with the follwoing slash_command.
+
+            * `/approve-test-run sha=<short commit sha to test>`:            Run helm chart linting and testing workflow
