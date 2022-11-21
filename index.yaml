@@ -3,6 +3,33 @@ entries:
   admission-controller:
   - apiVersion: v2
     appVersion: 3.9.14
+    created: "2022-11-21T15:29:28.930223501Z"
+    description: Sysdig Admission Controller using Sysdig Secure inline image scanner
+    digest: 2a3eb97bd96bb44187e6a8920d017200d8f2c93036defdf94bf2d9dfafe26d5a
+    home: https://sysdiglabs.github.io/admission-controller/
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    maintainers:
+    - email: hayk.kocharyan@sysdig.com
+      name: hayk99
+    - email: irune.prado@sysdig.com
+      name: wideawakening
+    - email: ruben.eguiluz@sysdig.com
+      name: regiluze
+    - email: fede.barcelona@sysdig.com
+      name: tembleking
+    - email: david.gonzalez@sysdig.com
+      name: penguinjournals
+    - email: miguel.baztan@sysdig.com
+      name: miketnt
+    - email: javier.prieto@sysdig.com
+      name: jprieto92
+    name: admission-controller
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/admission-controller-0.7.8/admission-controller-0.7.8.tgz
+    version: 0.7.8
+  - apiVersion: v2
+    appVersion: 3.9.14
     created: "2022-11-18T23:08:04.879272058Z"
     description: Sysdig Admission Controller using Sysdig Secure inline image scanner
     digest: 8ecd1bd21c7cb703fc17a7057fccc381e994472718f59ee621a76fee50bedf7e
@@ -14964,6 +14991,52 @@ entries:
     version: 1.7.15
   sysdig-deploy:
   - apiVersion: v2
+    created: "2022-11-21T15:29:29.068017704Z"
+    dependencies:
+    - alias: admissionController
+      condition: admissionController.enabled
+      name: admission-controller
+      repository: file://../admission-controller
+      version: ~0.7.8
+    - alias: agent
+      condition: agent.enabled
+      name: agent
+      repository: file://../agent
+      version: ~1.5.36
+    - alias: nodeAnalyzer
+      condition: nodeAnalyzer.enabled
+      name: node-analyzer
+      repository: file://../node-analyzer
+      version: ~1.7.38
+    - alias: kspmCollector
+      condition: global.kspm.deploy
+      name: kspm-collector
+      repository: file://../kspm-collector
+      version: ~0.1.18
+    - alias: rapidResponse
+      condition: rapidResponse.enabled
+      name: rapid-response
+      repository: file://../rapid-response
+      version: ~0.2.6
+    description: A chart with various Sysdig components for Kubernetes
+    digest: aa85f4acb4885ad0cd87463b60ee29250b1ca01424e2dd44a5a4674e37c48927
+    home: https://www.sysdig.com/
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    maintainers:
+    - email: adam.roberts@sysdig.com
+      name: aroberts87
+    - email: michele.palazzi@sysdig.com
+      name: ironashram
+    - email: zhongcheng.xiao@sysdig.com
+      name: lilx1ao
+    - email: yashgiri.goswami@sysdig.com
+      name: yashgiri
+    name: sysdig-deploy
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/sysdig-deploy-1.4.20/sysdig-deploy-1.4.20.tgz
+    version: 1.4.20
+  - apiVersion: v2
     created: "2022-11-18T23:28:00.122330147Z"
     dependencies:
     - alias: admissionController
@@ -18840,4 +18913,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2022-11-18T23:28:00.131954141Z"
+generated: "2022-11-21T15:29:29.073516752Z"
