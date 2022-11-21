@@ -4,6 +4,11 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.15.55
+### Minor changes:
+* BenchmarkRunner
+    * bump to runner version 1.1.0.3
+
 ## v1.15.54
 ### Minor changes:
 * NodeAnalyzer
