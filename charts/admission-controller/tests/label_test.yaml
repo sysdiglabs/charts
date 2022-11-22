@@ -1,0 +1,251 @@
+suite: Testing if labels are applied correctly
+templates:
+  - scanner/deployment.yaml
+  - scanner/configmap.yaml
+  - scanner/secret.yaml
+  - webhook/deployment.yaml
+  - webhook/configmap.yaml
+  - webhook/secret.yaml
+  - webhook/admissionregistration.yaml
+  - webhook/serviceaccount.yaml
+  - scanner/serviceaccount.yaml
+  - scanner/podmonitor.yaml
+  - webhook/podmonitor.yaml
+tests:
+  - it: check application of admissionController labels example 1
+    set: 
+      sysdig:
+        secureAPIToken: standard_token
+        url: secure.sysdigcloud.com
+      labels: {"my.label/key1": "testlabel1","my.label/key2": "testlabel2"}
+      clusterName: test-k8s
+    asserts:
+    - equal:
+        path: metadata.labels.my\.label\/key1
+        value: testlabel1
+      template: scanner/deployment.yaml
+    - equal:
+        path: metadata.labels.my\.label\/key2
+        value: testlabel2
+      template: scanner/deployment.yaml
+    - equal:
+        path: metadata.labels.my\.label\/key1
+        value: testlabel1
+      template: webhook/deployment.yaml
+    - equal:
+        path: metadata.labels.my\.label\/key2
+        value: testlabel2
+      template: webhook/deployment.yaml
+
+  - it: check application of admissionController labels example 2
+    set: 
+      sysdig:
+        secureAPIToken: standard_token
+        url: secure.sysdigcloud.com
+      labels:
+        my.label/key1: testlabel1
+        my.label/key2: testlabel2
+      clusterName: test-k8s
+    asserts:
+    - equal:
+        path: metadata.labels.my\.label\/key1
+        value: testlabel1
+      template: scanner/deployment.yaml
+    - equal:
+        path: metadata.labels.my\.label\/key2
+        value: testlabel2
+      template: scanner/deployment.yaml
+    - equal:
+        path: metadata.labels.my\.label\/key1
+        value: testlabel1
+      template: webhook/deployment.yaml
+    - equal:
+        path: metadata.labels.my\.label\/key2
+        value: testlabel2
+      template: webhook/deployment.yaml
+
+  - it: check application of admissionController labels example 3
+    set: 
+      sysdig:
+        secureAPIToken: standard_token
+        url: secure.sysdigcloud.com
+      labels:
+        my.label/key: testlabel
+        my.label/version: 2.7.3
+      clusterName: test-k8s
+    asserts:
+    - equal:
+        path: metadata.labels.my\.label\/key
+        value: testlabel
+      template: scanner/deployment.yaml
+    - equal:
+        path: metadata.labels.my\.label\/version
+        value: 2.7.3
+      template: scanner/deployment.yaml
+    - equal:
+        path: metadata.labels.my\.label\/key
+        value: testlabel
+      template: webhook/deployment.yaml
+    - equal:
+        path: metadata.labels.my\.label\/version
+        value: 2.7.3
+      template: webhook/deployment.yaml
+
+  - it: check application of correct admissionController labels with value of label empty
+    set: 
+      sysdig:
+        secureAPIToken: standard_token
+        url: secure.sysdigcloud.com
+      labels: "my.label/key1: "
+      clusterName: test-k8s
+    asserts:
+    - isNull:
+        path: metadata.labels.my\.label\/key1
+      template: scanner/deployment.yaml
+    - isNull:
+        path: metadata.labels.my\.label\/key1
+      template: webhook/deployment.yaml
+
+  - it: check application of incorrect admissionController labels with yaml
+    set: 
+      sysdig:
+        secureAPIToken: standard_token
+        url: secure.sysdigcloud.com
+      labels : "my.label/key1:testlabel1"
+      clusterName: test-k8s
+    template: webhook/serviceaccount.yaml
+    asserts:
+    - failedTemplate:
+        errorMessage: "labels does not seem to be of the type key:[space]value"
+
+  - it: check application of incorrect admissionController labels with yaml key is empty
+    set: 
+      sysdig:
+        secureAPIToken: standard_token
+        url: secure.sysdigcloud.com
+      labels: ":testlabel1"
+      clusterName: test-k8s
+    template: webhook/serviceaccount.yaml
+    asserts:
+    - failedTemplate:
+        errorMessage: "labels does not seem to be of the type key:[space]value"
+
+  - it: check application of admission controller scanner labels example
+    set: 
+      sysdig:
+        secureAPIToken: standard_token
+        url: secure.sysdigcloud.com
+      scanner:
+        enabled: true
+        labels:
+          my.label/key: testlabel
+          my.label/version: 2.7.3
+      clusterName: test-k8s
+    template: scanner/deployment.yaml
+    asserts:
+    - equal:
+        path: metadata.labels.my\.label\/key
+        value: testlabel
+    - equal:
+        path: metadata.labels.my\.label\/version
+        value: 2.7.3
+
+  - it: check application of correct admission controller scanner labels with value of label empty
+    set: 
+      sysdig:
+        secureAPIToken: standard_token
+        url: secure.sysdigcloud.com
+      scanner:
+        enabled: true
+        labels: "my.label/key1: "
+      clusterName: test-k8s
+    template: scanner/deployment.yaml
+    asserts:
+    - isNull:
+        path: metadata.labels.my\.label\/key1
+
+  - it: check application of incorrect admission controller scanner labels with yaml
+    set: 
+      sysdig:
+        secureAPIToken: standard_token
+        url: secure.sysdigcloud.com
+      scanner:
+        labels: "my.label/key1:testlabel1"
+      clusterName: test-k8s
+    template: scanner/serviceaccount.yaml
+    asserts:
+    - failedTemplate:
+        errorMessage: "labels does not seem to be of the type key:[space]value"
+
+  - it: check application of incorrect admission controller scanner labels with yaml key is empty
+    set: 
+      sysdig:
+        secureAPIToken: standard_token
+        url: secure.sysdigcloud.com
+      scanner:
+        labels: ":testlabel1"
+      clusterName: test-k8s
+    template: scanner/serviceaccount.yaml
+    asserts:
+    - failedTemplate:
+        errorMessage: "labels does not seem to be of the type key:[space]value"
+
+  - it: check application of admission controller webhook labels example
+    set: 
+      sysdig:
+        secureAPIToken: standard_token
+        url: secure.sysdigcloud.com
+      webhook:
+        enabled: true
+        labels:
+          my.label/key: testlabel
+          my.label/version: 2.7.3
+      clusterName: test-k8s
+    template: webhook/deployment.yaml
+    asserts:
+    - equal:
+        path: metadata.labels.my\.label\/key
+        value: testlabel
+    - equal:
+        path: metadata.labels.my\.label\/version
+        value: 2.7.3
+
+  - it: check application of correct admission controller webhook labels with value of label empty
+    set: 
+      sysdig:
+        secureAPIToken: standard_token
+        url: secure.sysdigcloud.com
+      webhook:
+        enabled: true
+        labels: "my.label/key1: "
+      clusterName: test-k8s
+    template: webhook/deployment.yaml
+    asserts:
+    - isNull:
+        path: metadata.labels.my\.label\/key1
+
+  - it: check application of incorrect admission controller webhook labels with yaml
+    set: 
+      sysdig:
+        secureAPIToken: standard_token
+        url: secure.sysdigcloud.com
+      webhook:
+        labels: "my.label/key1:testlabel1"
+      clusterName: test-k8s
+    template: webhook/serviceaccount.yaml
+    asserts:
+    - failedTemplate:
+        errorMessage: "labels does not seem to be of the type key:[space]value"
+
+  - it: check application of incorrect admission controller webhook labels with yaml key is empty
+    set: 
+      sysdig:
+        secureAPIToken: standard_token
+        url: secure.sysdigcloud.com
+      webhook:
+        labels: ":testlabel1"
+      clusterName: test-k8s
+    template: webhook/serviceaccount.yaml
+    asserts:
+    - failedTemplate:
+        errorMessage: "labels does not seem to be of the type key:[space]value"

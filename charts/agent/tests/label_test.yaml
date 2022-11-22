@@ -52,9 +52,8 @@ tests:
       daemonset:
         labels: "my.label/key1: "
     asserts:
-    - equal:
+    - isNull:
         path: metadata.labels.my\.label\/key1
-        value: 
   - it: check application of incorrect agent labels with yaml
     set: 
       sysdig:
