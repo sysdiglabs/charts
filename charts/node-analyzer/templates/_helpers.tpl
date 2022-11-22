@@ -125,9 +125,12 @@ Daemonset labels
   {{- if .Values.daemonset.labels }}
   {{- $tp := typeOf .Values.daemonset.labels }}
     {{- if eq $tp "string" }}
-      {{- tpl .Values.daemonset.labels . }}
+        {{- if not (regexMatch "^[a-z0-9A-Z].*(: )(.*[a-z0-9A-Z]$)?" .Values.daemonset.labels) }}
+            {{- fail "daemonset.label does not seem to be of the type key:[space]value" }}
+        {{- end }}
+        {{- tpl .Values.daemonset.labels . }}
     {{- else }}
-      {{- toYaml .Values.daemonset.labels }}
+        {{- toYaml .Values.daemonset.labels }}
     {{- end }}
   {{- end }}
 {{- end -}}

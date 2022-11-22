@@ -1,3 +1,7 @@
+# v0.1.19
+### Minor changes
+* Added unit tests for testing labels
+
 # v0.1.18
 ### Minor changes
 * Bumped image tag to 1.14.0

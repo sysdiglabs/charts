@@ -2,6 +2,10 @@
 
 ## Change Log
 
+## v0.7.9
+### Minor changes
+* Added unit tests for testing labels
+
 This file documents all notable changes to the Admission Controller Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 ## v0.7.8
 ### Minor changes

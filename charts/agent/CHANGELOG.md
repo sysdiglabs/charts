@@ -2,6 +2,10 @@
 
 ## Change Log
 
+## v1.5.37
+### Minor changes
+* Added unit tests for testing labels
+
 ## v1.5.36
 ### Minor changes
 * Revert changes from 1.5.35 due to breaking OKD3.
