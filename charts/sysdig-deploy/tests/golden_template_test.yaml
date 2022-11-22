@@ -1,4 +1,4 @@
-suite: Testing golden templates
+suite: Testing pre-generated values and best-known edge cases
 templates:
   - charts/agent/templates/daemonset.yaml
   - charts/agent/templates/configmap.yaml

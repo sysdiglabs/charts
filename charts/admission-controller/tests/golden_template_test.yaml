@@ -39,6 +39,6 @@ tests:
           value: https://us2.app.sysdig.com
         template: webhook/configmap.yaml
       - equal:
-          path: metadata.labels
+          path: data.CLUSTER_NAME
           value: test-k8s
-        template: scanner/deployment.yaml
+        template: webhook/configmap.yaml
