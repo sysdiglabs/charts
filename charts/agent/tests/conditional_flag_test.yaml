@@ -1,0 +1,39 @@
+suite: Test conditional flags and its dependent changes
+templates:
+  - daemonset.yaml
+tests:
+  - it: Checking global gke autopilot
+    set:
+      global:
+        gke:
+          autopilot: true
+    asserts:
+      - equal:
+          path: spec.template.metadata.annotations.autopilot\.gke\.io\/no\-connect
+          value: "true"
+      - equal:
+          path: spec.template.spec.affinity
+          value: null
+      - contains:
+          path: spec.template.spec.initContainers[0].env
+          content:
+            name: SYSDIG_BPF_PROBE
+            value: null
+      - contains:
+          path: spec.template.spec.initContainers[0].volumeMounts
+          content:
+            mountPath: /root/.sysdig
+            name: bpf-probes
+
+  - it: Checking slim enabled
+    set:
+      slim:
+        enabled: true
+      image:
+        registry: quay.io
+        tag: 12.9.0
+        repository: testing/agent-slim
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].image
+          value: quay.io/sysdig/agent-slim:12.9.0

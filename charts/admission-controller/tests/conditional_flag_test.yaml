@@ -1,0 +1,67 @@
+suite: Test conditional flags and its dependent changes
+templates:
+  - scanner/serviceaccount.yaml
+  - scanner/deployment.yaml
+  - scanner/podmonitor.yaml
+  - scanner/secret.yaml
+  - scanner/service.yaml
+  - scanner/configmap.yaml
+  - webhook/serviceaccount.yaml
+  - webhook/deployment.yaml
+  - webhook/configmap.yaml
+  - webhook/secret.yaml
+  - webhook/admissionregistration.yaml
+  - webhook/podmonitor.yaml
+tests:
+  - it: Checking scanner enabled flag
+    set:
+      scanner:
+        enabled: true
+      clusterName: test-k8s
+      sysdig:
+        secureAPIToken: standard_token
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+        template: scanner/deployment.yaml
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+        template: scanner/configmap.yaml
+      - containsDocument:
+          kind: Secret
+          apiVersion: v1
+        template: scanner/secret.yaml
+      - containsDocument:
+          kind: Service
+          apiVersion: v1
+        template: scanner/service.yaml
+
+  - it: Checking podmonitors scanner enabled
+    set:
+      podMonitors:
+        scanner:
+          enabled: true
+      clusterName: test-k8s
+      sysdig:
+        secureAPIToken: standard_token
+    asserts:
+      - containsDocument:
+          kind: PodMonitor
+          apiVersion: monitoring.coreos.com/v1
+        template: scanner/podmonitor.yaml
+
+  - it: Checking podmonitors webhook enabled
+    set:
+      podMonitors:
+        webhook:
+          enabled: true
+      clusterName: test-k8s
+      sysdig:
+        secureAPIToken: standard_token
+    asserts:
+      - containsDocument:
+          kind: PodMonitor
+          apiVersion: monitoring.coreos.com/v1
+        template: webhook/podmonitor.yaml

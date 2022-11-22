@@ -1,0 +1,189 @@
+suite: Test conditional flags and its dependent changes
+templates:
+  - daemonset-node-analyzer.yaml
+  - configmap-kspm-analyzer.yaml
+  - runtimeScanner/eveconnector-api-configmap.yaml
+  - runtimeScanner/eveconnector-api-service.yaml
+  - runtimeScanner/eveconnector-api-deployment.yaml
+  - runtimeScanner/sysdig-eve-secret.yaml
+tests:
+  - it: Check global kspm deploy
+    set:
+      global:
+        kspm:
+          deploy: true
+      clusterName: test-cluster
+    template: configmap-kspm-analyzer.yaml
+    asserts:
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+        template: configmap-kspm-analyzer.yaml
+
+  - it: Check global kspm deploy without clusterName
+    set:
+      global:
+        kspm:
+          deploy: true
+    template: configmap-kspm-analyzer.yaml
+    asserts:
+      - failedTemplate:
+          errorMessage: "A valid clusterName is required"
+
+  - it: Check nodeAnalyzer imageAnalyzer deploy
+    set:
+      nodeAnalyzer:
+        imageAnalyzer:
+          deploy: true
+    template: daemonset-node-analyzer.yaml
+    asserts:
+      - contains:
+          path: spec.template.spec.containers
+          content:
+            name: "sysdig-image-analyzer"
+          count: 1
+          any: true
+
+  - it: Check nodeAnalyzer hostAnalyzer deploy
+    set:
+      nodeAnalyzer:
+        hostAnalyzer:
+          deploy: true
+    template: daemonset-node-analyzer.yaml
+    asserts:
+      - contains:
+          path: spec.template.spec.containers
+          content:
+            name: "sysdig-host-analyzer"
+          count: 1
+          any: true
+
+  - it: Check nodeAnalyzer benchmarkRunner deploy
+    set:
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
+    template: daemonset-node-analyzer.yaml
+    asserts:
+      - contains:
+          path: spec.template.spec.containers
+          content:
+            name: "sysdig-benchmark-runner"
+          count: 1
+          any: true
+
+  - it: Check nodeAnalyzer runtimeScanner deploy
+    set:
+      nodeAnalyzer:
+        runtimeScanner:
+          deploy: true
+    template: daemonset-node-analyzer.yaml
+    asserts:
+      - contains:
+          path: spec.template.spec.containers
+          content:
+            name: "sysdig-runtime-scanner"
+          count: 1
+          any: true
+
+  - it: Check nodeAnalyzer runtimeScanner eveConnector deploy
+    set:
+      nodeAnalyzer:
+        runtimeScanner:
+          deploy: true
+          eveConnector:
+            deploy: true
+      clusterName: test-k8s
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[3].env
+          content:
+            name: EVE_INTEGRATION_ENABLED
+          count: 1
+          any: true
+        template: daemonset-node-analyzer.yaml
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+        template: runtimeScanner/eveconnector-api-configmap.yaml
+      - containsDocument:
+          kind: Service
+          apiVersion: v1
+        template: runtimeScanner/eveconnector-api-service.yaml
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+        template: runtimeScanner/eveconnector-api-deployment.yaml
+
+  - it: Check nodeAnalyzer imageAnalyzer deploy set to false
+    set:
+      nodeAnalyzer:
+        imageAnalyzer:
+          deploy: false
+    template: daemonset-node-analyzer.yaml
+    asserts:
+      - notContains:
+          path: spec.template.spec.containers
+          content:
+            name: "sysdig-image-analyzer"
+          count: 1
+          any: true
+
+  - it: Check nodeAnalyzer hostAnalyzer deploy set to false
+    set:
+      nodeAnalyzer:
+        hostAnalyzer:
+          deploy: false
+    template: daemonset-node-analyzer.yaml
+    asserts:
+      - notContains:
+          path: spec.template.spec.containers
+          content:
+            name: "sysdig-host-analyzer"
+          count: 1
+          any: true
+
+  - it: Check nodeAnalyzer benchmarkRunner deploy set to false
+    set:
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: false
+    template: daemonset-node-analyzer.yaml
+    asserts:
+      - notContains:
+          path: spec.template.spec.containers
+          content:
+            name: "sysdig-benchmark-runner"
+          count: 1
+          any: true
+
+  - it: Check nodeAnalyzer runtimeScanner deploy set to false
+    set:
+      nodeAnalyzer:
+        runtimeScanner:
+          deploy: false
+    template: daemonset-node-analyzer.yaml
+    asserts:
+      - notContains:
+          path: spec.template.spec.containers
+          content:
+            name: "sysdig-runtime-scanner"
+          count: 1
+          any: true
+
+  - it: Check nodeAnalyzer runtimeScanner eveConnector deploy set to false
+    set:
+      nodeAnalyzer:
+        runtimeScanner:
+          deploy: true
+          eveConnector:
+            deploy: false
+      clusterName: test-k8s
+    asserts:
+      - notContains:
+          path: spec.template.spec.containers[3].env
+          content:
+            name: EVE_INTEGRATION_ENABLED
+          count: 1
+          any: true
+        template: daemonset-node-analyzer.yaml

@@ -2,6 +2,10 @@
 
 ## Change Log
 
+## v1.5.38
+### Minor changes
+* Added unit tests to check conditional flag testing
+
 ## v1.5.37
 ### Minor changes
 * Added unit tests for testing labels
