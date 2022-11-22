@@ -1,3 +1,7 @@
+# v0.1.21
+### Minor changes
+* Added golden template tests
+
 # v0.1.20
 ### Minor changes
 * Added unit tests to check conditional flag testing

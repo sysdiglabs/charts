@@ -2,6 +2,9 @@
 
 ## Change Log
 
+## v1.5.39
+### Minor changes
+* Added golden template tests
 ## v1.5.38
 ### Minor changes
 * Added unit tests to check conditional flag testing

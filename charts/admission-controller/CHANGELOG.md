@@ -4,6 +4,10 @@
 
 This file documents all notable changes to the Admission Controller Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v0.7.11
+### Minor changes
+* Added golden template tests
+
 ## v0.7.10
 ### Minor changes
 * Added unit tests to check conditional flag testing

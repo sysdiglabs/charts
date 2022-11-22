@@ -4,6 +4,19 @@
 
 This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.4.24
+### Minor changes
+* admission-controller
+    * Added golden template tests
+* agent
+    * Added golden template tests
+* kspm-collector
+    * Added golden template tests
+* node-analyzer
+    * Added golden template tests
+* rapid-response
+    * Added golden template tests
+
 ## v1.4.23
 ### Minor changes
 
