@@ -1,3 +1,7 @@
+# v0.1.20
+### Minor changes
+* Added unit tests to check conditional flag testing
+
 # v0.1.19
 ### Minor changes
 * Added unit tests for testing labels

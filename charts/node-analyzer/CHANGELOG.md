@@ -4,6 +4,10 @@
 
 This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.7.41
+### Minor changes
+* Added unit tests to check conditional flag testing
+
 ## v1.7.40
 ### Minor changes
 * Added unit tests for testing labels

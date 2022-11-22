@@ -4,6 +4,18 @@
 
 This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.4.23
+### Minor changes
+
+* admission-controller
+    * Added unit tests to check conditional flag testing
+* agent
+    * Added unit tests to check conditional flag testing
+* kspm-collector
+    * Added unit tests to check conditional flag testing
+* node-analyzer
+    * Added unit tests to check conditional flag testing
+
 ## v1.4.22
 ### Minor changes
 * admission-controller
