@@ -62,3 +62,15 @@ example,
 $ helm install --create-namespace -n rapid-response rapid-response \
     -f values.yaml sysdig/rapid-response
 ```
+
+## Running helm unit tests
+
+The sysdiglabs/charts repository uses the following helm unittest plugin: https://github.com/quintush/helm-unittest
+
+You can test the changes to your chart by running the test suites as follows:
+
+```
+helm unittest --helm3 .
+```
+
+The helm unit tests are in the tests folder. It is recommended to add new tests as new features are added here.
