@@ -1,0 +1,52 @@
+suite: Testing pre-generated values and best-known edge cases
+templates:
+  - daemonset.yaml
+  - configmap.yaml
+  - secrets.yaml
+tests:
+  - it: Testing agent deployed
+    set: 
+      global:
+        sysdig:
+          region: us2
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+    asserts:
+      - containsDocument:
+          kind: DaemonSet
+          apiVersion: apps/v1
+        template: daemonset.yaml
+      - matchRegex: 
+          path: data.dragent\.yaml
+          pattern: .*ingest\-us2\.app\.sysdig\.com.*
+        template: configmap.yaml
+      - equal:
+          path: data.access-key
+          value: QUFBQUFBQUEtQkJCQi1DQ0NDLUREREQtRUVFRUVFRUVFRUVF
+        template: secrets.yaml
+
+  - it: Test cpu resources overrides
+    set: 
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+      resources:
+          requests:
+            cpu: 2500m
+            memory: 1500Mi
+          limits:
+            cpu: 5000m
+            memory: 2500Mi
+    asserts:
+      - contains:
+          path: spec.template.spec.containers
+          content:
+            resources:
+              limits:
+                cpu: 5000m
+                memory: 2500Mi
+              requests:
+                cpu: 2500m
+                memory: 1500Mi
+          any: true
+          count: 1
+        template: daemonset.yaml
