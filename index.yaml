@@ -3,6 +3,33 @@ entries:
   admission-controller:
   - apiVersion: v2
     appVersion: 3.9.14
+    created: "2022-11-22T08:27:01.157476924Z"
+    description: Sysdig Admission Controller using Sysdig Secure inline image scanner
+    digest: 896ebc8cc38c79e0f9a89f604141dbe975d54301f31448741c6c4f8da8be7be4
+    home: https://sysdiglabs.github.io/admission-controller/
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    maintainers:
+    - email: hayk.kocharyan@sysdig.com
+      name: hayk99
+    - email: irune.prado@sysdig.com
+      name: wideawakening
+    - email: ruben.eguiluz@sysdig.com
+      name: regiluze
+    - email: fede.barcelona@sysdig.com
+      name: tembleking
+    - email: david.gonzalez@sysdig.com
+      name: penguinjournals
+    - email: miguel.baztan@sysdig.com
+      name: miketnt
+    - email: javier.prieto@sysdig.com
+      name: jprieto92
+    name: admission-controller
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/admission-controller-0.7.9/admission-controller-0.7.9.tgz
+    version: 0.7.9
+  - apiVersion: v2
+    appVersion: 3.9.14
     created: "2022-11-21T15:29:28.930223501Z"
     description: Sysdig Admission Controller using Sysdig Secure inline image scanner
     digest: 2a3eb97bd96bb44187e6a8920d017200d8f2c93036defdf94bf2d9dfafe26d5a
@@ -2387,6 +2414,41 @@ entries:
     - https://github.com/sysdiglabs/charts/releases/download/admission-controller-0.1.0/admission-controller-0.1.0.tgz
     version: 0.1.0
   agent:
+  - apiVersion: v2
+    appVersion: 12.9.1
+    created: "2022-11-22T08:27:01.427892151Z"
+    description: Sysdig Monitor and Secure agent
+    digest: ba27e3a79111c2c3dd5a8b525c520d59f7bf2efe09fb072c67441cbef85d3389
+    home: https://www.sysdig.com/
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: lachlan@deis.com
+      name: lachie83
+    - email: jorge.salamero@sysdig.com
+      name: bencer
+    - email: nestor.salceda@sysdig.com
+      name: nestorsalceda
+    - email: alvaro.iradier@sysdig.com
+      name: airadier
+    - email: carlos.arilla@sysdig.com
+      name: carillan81
+    - email: adam.roberts@sysdig.com
+      name: aroberts87
+    name: agent
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/agent-1.5.37/agent-1.5.37.tgz
+    version: 1.5.37
   - apiVersion: v2
     appVersion: 12.9.1
     created: "2022-11-18T18:13:27.625541846Z"
@@ -5746,6 +5808,30 @@ entries:
   kspm-collector:
   - apiVersion: v2
     appVersion: 1.11.0
+    created: "2022-11-22T08:27:01.656597636Z"
+    description: Sysdig KSPM collector
+    digest: 9b1cfc2cb0a40a3cc52b70807849cc170b639fbeb9517ea5895ec66b380879b2
+    home: https://www.sysdig.com/
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: chen.shmilovich@sysdig.com
+      name: chen-shmilovich-sysdig
+    name: kspm-collector
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/kspm-collector-0.1.19/kspm-collector-0.1.19.tgz
+    version: 0.1.19
+  - apiVersion: v2
+    appVersion: 1.11.0
     created: "2022-11-15T15:53:37.776263825Z"
     description: Sysdig KSPM collector
     digest: fa374e96eb6c9af06bf4ca3dbc9d0a931abad2a4d3a9768e5825b4395bb0cbb5
@@ -6201,6 +6287,40 @@ entries:
     - https://github.com/sysdiglabs/charts/releases/download/kspm-collector-0.1.0/kspm-collector-0.1.0.tgz
     version: 0.1.0
   node-analyzer:
+  - apiVersion: v2
+    appVersion: 12.6.0
+    created: "2022-11-22T08:27:01.836486381Z"
+    description: Sysdig Node Analyzer
+    digest: 1ffeba1a133415d15dd9800d6c5e1f624833d1e184c88d6ef1a18f61d38a582b
+    home: https://www.sysdig.com/
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: lachlan@deis.com
+      name: lachie83
+    - email: jorge.salamero@sysdig.com
+      name: bencer
+    - email: nestor.salceda@sysdig.com
+      name: nestorsalceda
+    - email: alvaro.iradier@sysdig.com
+      name: airadier
+    - email: carlos.arilla@sysdig.com
+      name: carillan81
+    - email: yashgiri.goswami@sysdig.com
+      name: yashgiri
+    name: node-analyzer
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/node-analyzer-1.7.40/node-analyzer-1.7.40.tgz
+    version: 1.7.40
   - apiVersion: v2
     appVersion: 12.6.0
     created: "2022-11-21T18:54:08.76569407Z"
@@ -8378,6 +8498,32 @@ entries:
     - https://github.com/sysdiglabs/charts/releases/download/node-analyzer-1.0.0/node-analyzer-1.0.0.tgz
     version: 1.0.0
   rapid-response:
+  - apiVersion: v2
+    appVersion: 0.3.6
+    created: "2022-11-22T08:27:02.004715917Z"
+    description: Sysdig Rapid Response
+    digest: 851e2dedb7d0e0476761cef90b3dfb59a693d785ede00a24dd66fa8c50d81dd4
+    home: https://www.sysdig.com/
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: adam.roberts@sysdig.com
+      name: aroberts87
+    - email: daniele.delorenzi@sysdig.com
+      name: dark-vex
+    name: rapid-response
+    sources:
+    - https://github.com/sysdiglabs/charts/
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/rapid-response-0.2.7/rapid-response-0.2.7.tgz
+    version: 0.2.7
   - apiVersion: v2
     appVersion: 0.3.6
     created: "2022-11-15T10:46:21.831564321Z"
@@ -15057,6 +15203,52 @@ entries:
     version: 1.7.15
   sysdig-deploy:
   - apiVersion: v2
+    created: "2022-11-22T08:27:02.217564789Z"
+    dependencies:
+    - alias: admissionController
+      condition: admissionController.enabled
+      name: admission-controller
+      repository: file://../admission-controller
+      version: ~0.7.9
+    - alias: agent
+      condition: agent.enabled
+      name: agent
+      repository: file://../agent
+      version: ~1.5.37
+    - alias: nodeAnalyzer
+      condition: nodeAnalyzer.enabled
+      name: node-analyzer
+      repository: file://../node-analyzer
+      version: ~1.7.40
+    - alias: kspmCollector
+      condition: global.kspm.deploy
+      name: kspm-collector
+      repository: file://../kspm-collector
+      version: ~0.1.19
+    - alias: rapidResponse
+      condition: rapidResponse.enabled
+      name: rapid-response
+      repository: file://../rapid-response
+      version: ~0.2.7
+    description: A chart with various Sysdig components for Kubernetes
+    digest: b772c75f3ae2db6e801ef86514bac988d52029d0bedea646c90f96561bf0de73
+    home: https://www.sysdig.com/
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    maintainers:
+    - email: adam.roberts@sysdig.com
+      name: aroberts87
+    - email: michele.palazzi@sysdig.com
+      name: ironashram
+    - email: zhongcheng.xiao@sysdig.com
+      name: lilx1ao
+    - email: yashgiri.goswami@sysdig.com
+      name: yashgiri
+    name: sysdig-deploy
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/sysdig-deploy-1.4.22/sysdig-deploy-1.4.22.tgz
+    version: 1.4.22
+  - apiVersion: v2
     created: "2022-11-21T18:54:08.996358988Z"
     dependencies:
     - alias: admissionController
@@ -19025,4 +19217,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2022-11-21T18:54:09.002767639Z"
+generated: "2022-11-22T08:27:02.227505297Z"
