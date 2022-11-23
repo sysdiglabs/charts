@@ -93,3 +93,15 @@ Alternatively, a YAML file that specifies the values for the parameters can be p
 ```bash
 $ helm install my-release-name -f values.yaml sysdig/kspm-collector
 ```
+
+## Running helm unit tests
+
+The sysdiglabs/charts repository uses the following helm unittest plugin: https://github.com/quintush/helm-unittest
+
+You can test the changes to your chart by running the test suites as follows:
+
+```
+helm unittest --helm3 ./charts/kspm-collector
+```
+
+The helm unit tests are in the tests folder. It is recommended to add new tests as new features are added here.
