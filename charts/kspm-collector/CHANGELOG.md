@@ -1,3 +1,7 @@
+# v0.1.22
+### Minor changes
+* Readme changes to indicate helm unit testing.
+
 # v0.1.21
 ### Minor changes
 * Added golden template tests

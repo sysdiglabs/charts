@@ -339,3 +339,19 @@ rapidResponse:
   rapidResponse:
     passphrase: THIS_IS_A_SECRET_PASSPHRASE
 ```
+
+## Running helm unit tests
+
+The sysdiglabs/charts repository uses the following helm unittest plugin: https://github.com/quintush/helm-unittest
+
+Before running the tests make sure the chart dependencies are updated
+```
+helm dependency update
+```
+
+You can test the changes to your chart by running the test suites as follows:
+```
+helm unittest --helm3 .
+```
+
+The helm unit tests are in the tests folder. It is recommended to add new tests as new features are added here.
