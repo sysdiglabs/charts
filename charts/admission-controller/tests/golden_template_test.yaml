@@ -17,10 +17,6 @@ tests:
         sysdig:
           region: us2
       clusterName: test-k8s
-      scanner:
-        enabled: true
-      webhook:
-        enabled: true
     asserts:
       - equal:
           path: stringData.SECURE_API_TOKEN
