@@ -376,7 +376,6 @@ Either way, you should see some logs in Admission Controller tail
     {"level":"info","component":"scanning-evaluator","message":"matched policy=Reject Allways for namespace=default and image=nginx"}
     {"level":"info","component":"scanning-evaluator","message":"denying container with name=nginx and image=nginx reason=\"Reject Always\""}
 
-
 ## Running helm unit tests
 
 The sysdiglabs/charts repository uses the following helm unittest plugin: https://github.com/quintush/helm-unittest
