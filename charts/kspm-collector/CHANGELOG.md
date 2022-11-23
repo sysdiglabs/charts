@@ -1,3 +1,7 @@
+# v0.1.23
+### Minor changes
+* Readme small fix to helm unit test command
+
 # v0.1.22
 ### Minor changes
 * Readme changes to indicate helm unit testing.
