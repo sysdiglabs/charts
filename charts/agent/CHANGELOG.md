@@ -4,6 +4,10 @@
 
 ## v1.5.39
 ### Minor changes
+* Readme changes to indicate helm unit testing.
+
+## v1.5.39
+### Minor changes
 * Added golden template tests
 ## v1.5.38
 ### Minor changes

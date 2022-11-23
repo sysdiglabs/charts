@@ -4,6 +4,10 @@
 
 ## v0.2.8
 ### Minor changes
+* Readme changes to indicate helm unit testing.
+
+## v0.2.8
+### Minor changes
 * Added golden template tests
 ## v0.2.7
 ### Minor changes

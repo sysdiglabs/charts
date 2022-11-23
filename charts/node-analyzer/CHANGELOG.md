@@ -4,6 +4,10 @@
 
 This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.7.43
+### Minor changes
+* Readme changes to indicate helm unit testing.
+
 ## v1.7.42
 ### Minor changes
 * Added golden template tests
