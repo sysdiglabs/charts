@@ -22,16 +22,17 @@ If you make changes to an existing chart, but do not change its version, nothing
 
 [Checklist to comply-with when doing the PR](./.github/PULL_REQUEST_TEMPLATE.md)
 
-- Title of the PR starts with chart name (e.g. [mychartname])
+- Title of the PR starts with type and scope, type must be one of feat, new, fix, perf, refactor, chore, docs (e.g. fix(node-analyzer):)
 - Chart Version bumped
 - Variables are documented in the README.md (or README.tpl in some charts)
-- Check GithubAction checks (like lint) to avoid merge-check stoppers 
+- Check GithubAction checks (like lint) to avoid merge-check stoppers
+- Changelogs and Release Notes are automated based on the commit messages using git-chglog
 
 #### - GithubAction Checks
 
-Make sure to comply with 
+Make sure to comply with
 
-- `lint` checks, running 
+- `lint` checks, running
     > $ make lint
 - `docs` autogeneration, based on `values.yaml`. this does only apply to charts with `README.tpl` templates (ex.: admission-controller)
    > $ make docs

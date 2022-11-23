@@ -4,9 +4,8 @@
 
 [Place an '[x]' (no spaces) in all applicable fields. Please remove unrelated fields.]
 
-- [ ] Title of the PR starts with chart name (e.g. [mychartname])
+- [ ] Title of the PR starts with type and scope, type must be one of feat, new, fix, perf, refactor, chore, docs (e.g. fix(node-analyzer):)
 - [ ] Chart Version bumped for the respective charts
-- [ ] Changelog updated for the charts with version updates.
 - [ ] Variables are documented in the README.md (or README.tpl in some charts)
 - [ ] Check GithubAction checks (like lint) to avoid merge-check stoppers
 - [ ] All test files are added in the tests folder of their respective chart and have a "_test" suffix

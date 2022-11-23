@@ -43,4 +43,4 @@ jobs:
           labels: automated PR
           token: ${{ secrets.TOOLS_JENKINS_ADMIN_ACCESS_GITHUB_TOKEN }}
           add-paths: charts/sysdig-deploy/Chart.yaml
-          commit-message: "[sysdig-deploy] Updating sysdig-deploy version"
+          commit-message: "github_actions_ci: Updating sysdig-deploy version"
