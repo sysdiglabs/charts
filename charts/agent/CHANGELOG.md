@@ -2,7 +2,7 @@
 
 ## Change Log
 
-## v1.5.39
+## v1.5.40
 ### Minor changes
 * Readme changes to indicate helm unit testing.
 

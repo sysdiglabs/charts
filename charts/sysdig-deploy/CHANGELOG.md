@@ -4,7 +4,7 @@
 
 This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
-## v1.4.24
+## v1.4.25
 ### Minor changes
 * admission-controller
     * Readme changes to indicate helm unit testing.
