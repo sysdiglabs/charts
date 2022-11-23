@@ -101,7 +101,7 @@ The sysdiglabs/charts repository uses the following helm unittest plugin: https:
 You can test the changes to your chart by running the test suites as follows:
 
 ```
-helm unittest --helm3 ./charts/kspm-collector
+helm unittest --helm3 .
 ```
 
 The helm unit tests are in the tests folder. It is recommended to add new tests as new features are added here.
