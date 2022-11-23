@@ -1,0 +1,40 @@
+suite: Testing pre-generated values and best-known edge cases 
+templates:
+  - scanner/deployment.yaml
+  - scanner/configmap.yaml
+  - scanner/secret.yaml
+  - webhook/deployment.yaml
+  - webhook/configmap.yaml
+  - webhook/secret.yaml
+  - webhook/admissionregistration.yaml
+tests:
+  - it: check value of secure_API_TOKEN without local chart override
+    documentIndex: 0
+    set:
+      sysdig:
+        secureAPIToken: standard_token
+      global:
+        sysdig:
+          region: us2
+      clusterName: test-k8s
+    asserts:
+      - equal:
+          path: stringData.SECURE_API_TOKEN
+          value: standard_token
+        template: scanner/secret.yaml
+      - equal:
+          path: stringData.SECURE_API_TOKEN
+          value: standard_token
+        template: webhook/secret.yaml
+      - equal:
+          path: data.SECURE_BASE_URL
+          value: https://us2.app.sysdig.com
+        template: scanner/configmap.yaml
+      - equal:
+          path: data.SECURE_URL
+          value: https://us2.app.sysdig.com
+        template: webhook/configmap.yaml
+      - equal:
+          path: data.CLUSTER_NAME
+          value: test-k8s
+        template: webhook/configmap.yaml

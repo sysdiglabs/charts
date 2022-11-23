@@ -1,0 +1,40 @@
+suite: Testing pre-generated values and best-known edge cases
+templates:
+  - daemonset-node-analyzer.yaml
+  - configmap-benchmark-runner.yaml
+tests:
+  - it: Testing node-analyzer deployed
+    set: 
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+      nodeAnalyzer:
+        imageAnalyzer:
+          resources:
+            requests:
+              cpu: 500m 
+              memory: 600Mi
+            limits:
+              cpu: 700m
+              memory: 2000Mi
+    asserts:
+      - containsDocument:
+          kind: DaemonSet
+          apiVersion: apps/v1
+        template: daemonset-node-analyzer.yaml
+      - equal:
+          path: data.collector_endpoint
+          value: https://secure.sysdig.com
+        template: configmap-benchmark-runner.yaml
+      - contains:
+          path: spec.template.spec.containers
+          content:
+            resources:
+              requests:
+                cpu: 500m
+                memory: 600Mi
+              limits:
+                cpu: 700m
+                memory: 2000Mi
+          any: true
+          count: 1
+        template: daemonset-node-analyzer.yaml

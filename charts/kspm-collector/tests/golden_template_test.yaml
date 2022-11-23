@@ -1,0 +1,23 @@
+suite: Testing pre-generated values and best-known edge cases
+templates:
+  - deployment.yaml
+  - configmap.yaml
+tests:
+  - it: check normal install testcase
+    set: 
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+      clusterName: test-k8s
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+        template: deployment.yaml
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+        template: configmap.yaml
+      - equal: 
+          path: data.cluster_name
+          value: test-k8s
+        template: configmap.yaml

@@ -1,0 +1,31 @@
+suite: Testing pre-generated values and best-known edge cases
+templates:
+  - daemonset.yaml
+  - configmap.yaml
+  - secrets.yaml
+tests:
+  - it: check normal install testcase
+    set: 
+      sysdig: 
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+      clusterName: test-k8s
+      rapidResponse:
+        passphrase: testphrase
+    asserts:
+      - containsDocument:
+          kind: DaemonSet
+          apiVersion: apps/v1
+        template: daemonset.yaml
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+        template: configmap.yaml
+      - containsDocument:
+          kind: Secret
+          apiVersion: v1
+        template: secrets.yaml
+      - equal:
+          path: data.access\-key
+          value: QUFBQUFBQUEtQkJCQi1DQ0NDLUREREQtRUVFRUVFRUVFRUVF
+        documentIndex: 0
+        template: secrets.yaml
