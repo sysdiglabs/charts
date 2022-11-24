@@ -8,11 +8,31 @@ templates:
   - webhook/secret.yaml
   - webhook/admissionregistration.yaml
 tests:
-  - it: check value of secure_API_TOKEN without local chart override
+  - it: check value of secure_API_TOKEN without local chart override - local value provided
     documentIndex: 0
     set:
       sysdig:
         secureAPIToken: standard_token
+        url: secure.sysdigcloud.com
+      clusterName: test-k8s
+      version: 0.7.3
+    asserts:
+      - equal:
+          path: stringData.SECURE_API_TOKEN
+          value: standard_token
+        template: scanner/secret.yaml
+      - equal:
+          path: stringData.SECURE_API_TOKEN
+          value: standard_token
+        template: webhook/secret.yaml
+
+  - it: check value of secure_API_TOKEN without local chart override - global value provided
+    documentIndex: 0
+    set:
+      global:
+        sysdig:
+          secureAPIToken: standard_token
+      sysdig:
         url: secure.sysdigcloud.com
       clusterName: test-k8s
       version: 0.7.3
@@ -46,7 +66,24 @@ tests:
           value: override_token
         template: webhook/secret.yaml
 
-  - it: check value of secureAPITokenSecret without local chart override
+  - it: check value of secureAPITokenSecret without local chart override - local value provided
+    documentIndex: 0
+    set:
+      sysdig:
+        existingSecureAPITokenSecret: standard_token
+        url: secure_url.com
+      clusterName: test-k8s        
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].envFrom[1].secretRef.name
+          value: standard_token
+        template: scanner/deployment.yaml
+      - equal:
+          path: spec.template.spec.containers[0].envFrom[0].secretRef.name
+          value: standard_token
+        template: webhook/deployment.yaml
+
+  - it: check value of secureAPITokenSecret without local chart override - global value provided
     documentIndex: 0
     set:
       global:

@@ -3,7 +3,17 @@ templates:
   - secrets.yaml
   - daemonset.yaml
 tests:
-  - it: check value of accessKey without local chart override
+  - it: check value of accessKey without local chart override - local value provided 
+    set: 
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+    asserts:
+      - equal:
+          path: data.access-key
+          value: QUFBQUFBQUEtQkJCQi1DQ0NDLUREREQtRUVFRUVFRUVFRUVF
+        template: secrets.yaml
+
+  - it: check value of accessKey without local chart override - global value provided
     set: 
       global:
         sysdig:
@@ -27,7 +37,20 @@ tests:
           value: WlpaWlpaWlotWVlZWS1YWFhYLUZGRkYtQUJDREVGR0hJSktM
         template: secrets.yaml
 
-  - it: check value of accessKeySecret without local chart override
+  - it: check value of accessKeySecret without local chart override - local value provided
+    set: 
+      sysdig:
+        existingAccessKeySecret: standard_key
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content: 
+            name: sysdig-agent-secrets
+            secret: 
+              secretName: standard_key
+        template: daemonset.yaml
+
+  - it: check value of accessKeySecret without local chart override - global value provided
     set: 
       global:
         sysdig:
