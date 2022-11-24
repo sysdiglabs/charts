@@ -1,0 +1,18 @@
+name: PR Lint
+
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+
+jobs:
+  pr-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: morrisoncole/pr-lint-action@v1.7.0
+        with:
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          title-regex: "^(\\w*)(?:\\(([\\w\\$\\.\\-\\*\\s]*)\\))?\\:\\s(.*)$"
+          on-failed-regex-fail-action: false
+          on-failed-regex-create-review: true
+          on-failed-regex-request-changes: true
+          on-failed-regex-comment: "PR title does not comply with regex: `%regex%`! <br /> Check PR guidelines at https://github.com/sysdiglabs/charts/blob/master/README.md#pull-requests"
