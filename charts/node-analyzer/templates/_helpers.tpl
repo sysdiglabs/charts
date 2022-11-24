@@ -193,6 +193,8 @@ Determine collector endpoint based on provided region or .Values.nodeAnalyzer.ap
         {{- "eu1.app.sysdig.com" -}}
     {{- else if (eq .Values.global.sysdig.region "au1") -}}
         {{- "app.au1.sysdig.com" -}}
+    {{- else -}}
+        {{- fail (printf "global.sysdig.region=%s provided is not recognized." .Values.global.sysdig.region ) -}}
     {{- end -}}
 {{- end -}}
 

@@ -4,6 +4,12 @@
 
 This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.4.28
+* agent
+    * Added negative test case to check incorrect sysdig region input, also added code changes to fail on wrong sysdig region input.
+* node-analyzer
+    * Added negative test case to check incorrect sysdig region input, also added code changes to fail on wrong sysdig region input.
+
 ## v1.4.27
 ### Minor changes
 * admission-controller

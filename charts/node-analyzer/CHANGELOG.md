@@ -4,6 +4,10 @@
 
 This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.7.45
+### Minor changes
+* Added negative test case to check incorrect sysdig region input, also added code changes to fail on wrong sysdig region input.
+
 ## v1.7.44
 ### Minor changes
 * Updated override helm tests to include extra testcases.

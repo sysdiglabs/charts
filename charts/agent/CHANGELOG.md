@@ -2,6 +2,10 @@
 
 ## Change Log
 
+## v1.5.42
+### Minor changes
+* Added negative test case to check incorrect sysdig region input, also added code changes to fail on wrong sysdig region input.
+
 ## v1.5.41
 ### Minor changes
 * Updated override helm tests to include extra testcases.
