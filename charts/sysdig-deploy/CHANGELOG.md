@@ -4,6 +4,14 @@
 
 This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.4.29
+### Major changes
+* RapidResponse:
+  * Added support to custom CA certificates
+### Bugfix
+* RapidResponse:
+  * Fixed missing tolerations, this was preventing Rapid Response to be deployed on control plane nodes
+
 ## v1.4.28
 * agent
     * Added negative test case to check incorrect sysdig region input, also added code changes to fail on wrong sysdig region input.
@@ -55,7 +63,6 @@ This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. Th
 
 ## v1.4.23
 ### Minor changes
-
 * admission-controller
     * Added unit tests to check conditional flag testing
 * agent
