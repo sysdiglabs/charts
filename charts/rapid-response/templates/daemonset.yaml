@@ -19,11 +19,8 @@ spec:
       annotations:
 {{ toYaml .Values.rapidResponse.daemonSetAnnotations | indent 8 }}
     spec:
-{{- if .Values.priorityClassName }}
-      priorityClassName: "{{ .Values.priorityClassName }}"
-{{- end }}
       tolerations:
-{{ toYaml .Values.tolerations | indent 8 }}
+{{ toYaml .Values.rapidResponse.tolerations | indent 8 }}
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
       terminationGracePeriodSeconds: 5
@@ -110,13 +107,26 @@ spec:
                   name: {{ ( include "rapidResponse.passphraseSecret" . ) }}
                   {{- end }}
                   key: passphrase
+            {{- if .Values.rapidResponse.ssl.ca.certs }}
+            - name: SSL_CERT_DIR
+              value: /ca-certs
+            {{- end }}
           volumeMounts:
             {{- if .Values.rapidResponse.extraVolumes.mounts }}
 {{ toYaml .Values.rapidResponse.extraVolumes.mounts | indent 12 }}
             {{- end }}
+            {{- if .Values.rapidResponse.ssl.ca.certs }}
+            - mountPath: /ca-certs
+              name: ca-cert
+            {{- end }}
       volumes:
         {{- if .Values.rapidResponse.extraVolumes.volumes }}
 {{ toYaml .Values.rapidResponse.extraVolumes.volumes | indent 8 }}
+        {{- end }}
+        {{- if .Values.rapidResponse.ssl.ca.certs }}
+        - name: ca-cert
+          secret:
+            secretName: {{ template "rapidResponse.fullname" . }}-additionalca
         {{- end }}
   updateStrategy:
     type: {{ .Values.rapidResponse.updateStrategy.type }}

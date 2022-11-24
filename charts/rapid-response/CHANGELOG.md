@@ -2,6 +2,12 @@
 
 ## Change Log
 
+## v0.3.0
+### Major changes
+* Added support to custom CA certificates
+### Bugfix
+* Fixed missing tolerations, this was preventing Rapid Response to be deployed on control plane nodes
+
 ## v0.2.10
 ### Minor changes
 * Updated override helm tests to include extra testcases.
@@ -13,6 +19,7 @@
 ## v0.2.8
 ### Minor changes
 * Added golden template tests
+
 ## v0.2.7
 ### Minor changes
 * Added unit tests for testing labels
