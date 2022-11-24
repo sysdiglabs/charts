@@ -1,3 +1,6 @@
+This file documents all Helm Chart notable changes. The release numbering uses [semantic versioning](http://semver.org).<br></br>
+It's AUTO-GENERATED vía github actions ci, do not edit manually.
+
 {{ if .Versions -}}
 {{ range .Versions }}
 <a name="{{ .Tag.Name }}"></a>
