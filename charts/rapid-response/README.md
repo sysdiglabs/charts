@@ -44,7 +44,9 @@ The following table lists the configurable parameters of the Sysdig Rapid Respon
 | `rapidResponse.resources.limits.cpu`      | Rapid Response CPU limits                                                               | `500m`                                                        |
 | `rapidResponse.resources.limits.memory`   | Rapid Response Memory limits                                                            | `500Mi`                                                       |
 | `rapidResponse.skipTlsVerifyCertificate`  | ** Deprecated ** Set it to `true` for disabling the certificate verification            | `false` ** Deprecated ** use `sslVerifyCertificate` instead   |
+| `rapidResponse.ssl.ca.certs`              | Add a list of CA certificates that need to be used by Rapid Response                    | `[]`                                                          |
 | `rapidResponse.sslVerifyCertificate`      | Set it to `false` for disabling the certificate verification                            | `true`                                                        |
+| `rapidResponse.tolerations`               | The tolerations for scheduling	                                                      | `node-role.kubernetes.io/master:NoSchedule`                   |
 
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
