@@ -4,6 +4,19 @@
 
 This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.4.27
+### Minor changes
+* admission-controller
+    * Updated override helm tests to include extra testcases.
+* agent
+    * Updated override helm tests to include extra testcases.
+* kspm-collector
+    * Updated override helm tests to include extra testcases.
+* node-analyzer
+    * Updated override helm tests to include extra testcases.
+* rapid-response
+    * Updated override helm tests to include extra testcases.
+
 ## v1.4.26
 * kspm-collector
     * Readme small fix to helm unit test command

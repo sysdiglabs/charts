@@ -2,6 +2,10 @@
 
 ## Change Log
 
+## v1.5.41
+### Minor changes
+* Updated override helm tests to include extra testcases.
+
 ## v1.5.40
 ### Minor changes
 * Readme changes to indicate helm unit testing.

@@ -4,7 +4,20 @@ templates:
   - deployment.yaml
   - configmap.yaml
 tests:
-  - it: check value of accessKey without local chart override
+  - it: check value of accessKey without local chart override - local value provided
+    set: 
+      global:
+        clusterConfig:
+          name: standard_cluster
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+    asserts:
+      - equal:
+          path: data.access-key
+          value: QUFBQUFBQUEtQkJCQi1DQ0NDLUREREQtRUVFRUVFRUVFRUVF
+        template: secret.yaml
+
+  - it: check value of accessKey without local chart override - global value provided
     set: 
       global:
         clusterConfig:
@@ -32,7 +45,20 @@ tests:
           value: WlpaWlpaWlotWVlZWS1YWFhYLUZGRkYtQUJDREVGR0hJSktM
         template: secret.yaml
 
-  - it: check value of accessKeySecret without local chart override
+  - it: check value of accessKeySecret without local chart override - local value provided
+    set: 
+      global:
+        clusterConfig:
+            name: standard_cluster
+      sysdig:
+        existingAccessKeySecret: standard_key
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.name
+          value: standard_key
+        template: deployment.yaml
+
+  - it: check value of accessKeySecret without local chart override - global value provided
     set: 
       global:
         clusterConfig:
@@ -60,7 +86,19 @@ tests:
           value: override_key
         template: deployment.yaml
 
-  - it: check value of cluster name without local chart override
+  - it: check value of cluster name without local chart override - local value provided
+    set: 
+      global:
+        sysdig:
+          accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+      clusterName: standard_cluster
+    asserts:
+      - equal:
+          path: data.cluster_name
+          value: standard_cluster
+        template: configmap.yaml
+
+  - it: check value of cluster name without local chart override - global value provided
     set: 
       global:
         sysdig:

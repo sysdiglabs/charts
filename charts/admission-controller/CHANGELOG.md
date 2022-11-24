@@ -4,6 +4,10 @@
 
 This file documents all notable changes to the Admission Controller Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v0.7.13
+### Minor changes
+* Updated override helm tests to include extra testcases.
+
 ## v0.7.12
 ### Minor changes
 * Readme changes to indicate helm unit testing.

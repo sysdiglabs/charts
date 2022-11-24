@@ -1,3 +1,7 @@
+# v0.1.24
+### Minor changes
+* Updated override helm tests to include extra testcases.
+
 # v0.1.23
 ### Minor changes
 * Readme small fix to helm unit test command
