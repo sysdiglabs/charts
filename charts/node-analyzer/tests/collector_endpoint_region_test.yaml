@@ -9,6 +9,7 @@ tests:
       - equal:
           path: data.collector_endpoint
           value: https://secure.sysdig.com
+
   - it: Checking region 'us2'
     set:
       global: 
@@ -20,6 +21,7 @@ tests:
       - equal:
           path: data.collector_endpoint
           value: https://us2.app.sysdig.com
+
   - it: Checking region 'us3'
     set:
       global: 
@@ -31,6 +33,7 @@ tests:
       - equal:
           path: data.collector_endpoint
           value: https://app.us3.sysdig.com
+
   - it: Checking region 'us4'
     set:
       global: 
@@ -42,6 +45,7 @@ tests:
       - equal:
           path: data.collector_endpoint
           value: https://app.us4.sysdig.com
+
   - it: Checking region 'eu1'
     set:
       global: 
@@ -53,6 +57,7 @@ tests:
       - equal:
           path: data.collector_endpoint
           value: https://eu1.app.sysdig.com
+
   - it: Checking region 'au1'
     set:
       global: 
@@ -64,3 +69,12 @@ tests:
       - equal:
           path: data.collector_endpoint
           value: https://app.au1.sysdig.com
+
+  - it: Checking wrong region input
+    set:
+      global: 
+        sysdig:
+          region: us7
+    asserts:
+      - failedTemplate:
+          errorMessage: "global.sysdig.region=us7 provided is not recognized."
