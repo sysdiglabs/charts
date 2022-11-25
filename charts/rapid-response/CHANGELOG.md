@@ -2,6 +2,10 @@
 
 ## Change Log
 
+## v0.3.1
+### Minor changes
+* Added `node-role.kubernetes.io/control-plane` toleration
+
 ## v0.3.0
 ### Major changes
 * Added support to custom CA certificates

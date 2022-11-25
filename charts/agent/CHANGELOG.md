@@ -2,6 +2,10 @@
 
 ## Change Log
 
+## v1.5.43
+### Minor changes
+* Added `node-role.kubernetes.io/control-plane` toleration
+
 ## v1.5.42
 ### Minor changes
 * Added negative test case to check incorrect sysdig region input, also added code changes to fail on wrong sysdig region input.

@@ -4,6 +4,15 @@
 
 This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.4.30
+### Minor changes
+* agent
+    * Added `node-role.kubernetes.io/control-plane` toleration
+* node-analyzer
+    * Added `node-role.kubernetes.io/control-plane` toleration
+* rapid-response
+    * Added `node-role.kubernetes.io/control-plane` toleration
+
 ## v1.4.29
 ### Major changes
 * RapidResponse:
