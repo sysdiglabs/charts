@@ -314,7 +314,7 @@ nodeAnalyzer:
 
     image:
       repository: sysdig/vuln-host-scanner
-      tag: 0.2.0  # TODO: change with stable version before releasing chart
+      tag: 0.3.0
       digest:
       pullPolicy: IfNotPresent
 
