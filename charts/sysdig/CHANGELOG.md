@@ -4,6 +4,10 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.15.56
+### Minor changes:
+* Added `node-role.kubernetes.io/control-plane` toleration to agent and node-analyzer
+
 ## v1.15.55
 ### Minor changes:
 * BenchmarkRunner
