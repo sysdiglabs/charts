@@ -4,6 +4,13 @@
 
 This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.7.48
+### Minor changes
+* RuntimeScanner: bump to version 1.4.0
+	* path for nested java packages now reflect the nesting
+	* fix for sporadic deadlocks when analyzing Java packages
+	* added AcceptRisk support
+
 ## v1.7.47
 ### Minor changes
 * Do not add psp policy to clusterrole if k8s > 1.25
