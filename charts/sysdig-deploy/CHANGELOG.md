@@ -4,6 +4,11 @@
 
 This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.4.32
+### Minor changes
+* node-analyzer:
+	* bump dependency to ~1.7.48
+
 ## v1.4.31
 ### Minor changes
 * agent
