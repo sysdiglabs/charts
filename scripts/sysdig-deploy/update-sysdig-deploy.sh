@@ -16,12 +16,11 @@ patch=0
 
 # helper functions to preserve empty lines and avoid unnecessary changes
 bump_dep_preserve_blank() {
-    yq '( .dependencies[] | select(.name == "'$1'") | .version) = "~'"$2"'"' charts/$3/Chart.yaml | diff -B charts/$3/Chart.yaml - | patch charts/$3/Chart.yaml -
+    sed -i "$(yq '( .dependencies[] | select(.name == "'$1'") | .version) | line' "charts/$4/Chart.yaml")s/$2/$3/" "charts/$4/Chart.yaml"
 }
 
 bump_main_preserve_blank() {
-    local old_val=$(yq '.version' charts/$2/Chart.yaml)
-    sed -i "$(yq '.version | line' "charts/$2/Chart.yaml")s/$old_val/$1/" "charts/$2/Chart.yaml"
+    sed -i "$(yq '.version | line' "charts/$3/Chart.yaml")s/$1/$2/" "charts/$3/Chart.yaml"
 }
 
 check_update_needed () {
@@ -36,9 +35,6 @@ check_update_needed () {
     echo $new_subchart_version
     echo $chart "subchart version in sysdig-deploy/Chart.yaml"
     echo $sysdig_subchart_version
-
-    # update the subchart version in sysdig-deploy/Chart.yaml
-    bump_dep_preserve_blank $chart $new_subchart_version $sysdig_deploy_path
 
     for ((idx=0; idx<3; ++idx)); do
         if [ ${next_ver[idx]} -gt ${prev_ver[idx]} ]
@@ -55,6 +51,11 @@ check_update_needed () {
             fi
         fi
     done
+
+    if [[ $minor > 0 || $major > 0 || $patch > 0  ]]; then
+        # update the subchart version in sysdig-deploy/Chart.yaml
+        bump_dep_preserve_blank $chart $sysdig_subchart_version $new_subchart_version $sysdig_deploy_path
+    fi
 }
 
 charts=( "$node_analyzer_chart_path" "$agent_chart_path" "$kspm_collector_chart_path" "$rapid_response_chart_path" "$admission_controller_chart_path" )
@@ -96,4 +97,4 @@ fi
 IFS=$OLDIFS
 final_sysdig_deploy_version=$(echo -n "$new_major.$new_minor.$new_patch")
 echo "Final deploy version is to be : $final_sysdig_deploy_version"
-bump_main_preserve_blank $final_sysdig_deploy_version $sysdig_deploy_path
+bump_main_preserve_blank $current_sysdig_deploy_version $final_sysdig_deploy_version $sysdig_deploy_path
