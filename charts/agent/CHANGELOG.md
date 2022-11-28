@@ -2,6 +2,10 @@
 
 ## Change Log
 
+## v1.5.44
+### Minor changes
+* * Do not add psp policy to clusterrole if k8s > 1.25
+
 ## v1.5.43
 ### Minor changes
 * Added `node-role.kubernetes.io/control-plane` toleration
@@ -154,7 +158,7 @@ This file documents all notable changes to the Sysdig Agent Helm Chart. The rele
 
 ### Bugfix
 
-* make collectorHost required when region is custom 
+* make collectorHost required when region is custom
 
 ## v1.5.5
 

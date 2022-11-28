@@ -4,6 +4,13 @@
 
 This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.4.31
+### Minor changes
+* agent
+    * Do not add psp policy to clusterrole if k8s > 1.25
+* node-analyzer
+    * Do not add psp policy to clusterrole if k8s > 1.25
+
 ## v1.4.30
 ### Minor changes
 * agent
@@ -98,7 +105,7 @@ This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. Th
 ### Minor changes:
 * node-analyzer
     * bump to version 1.7.39
-    
+
 ## v1.4.20
 ### Minor changes
 * admission-controller
