@@ -11,7 +11,7 @@ jobs:
       - uses: morrisoncole/pr-lint-action@v1.7.0
         with:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
-          title-regex: "^(\\w*)(?:\\(([\\w\\$\\.\\-\\*\\s]*)\\))?\\:\\s(.*)$"
+          title-regex: "^(\\w*)(?:\\(([\\w\\$\\.\\,\\-\\*\\s]*)\\))?\\:\\s?(.*)$"
           on-failed-regex-fail-action: false
           on-failed-regex-create-review: true
           on-failed-regex-request-changes: true

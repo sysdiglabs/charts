@@ -22,11 +22,32 @@ If you make changes to an existing chart, but do not change its version, nothing
 
 [Checklist to comply-with when doing the PR](./.github/PULL_REQUEST_TEMPLATE.md)
 
-- Title of the PR starts with type and scope, type must be one of feat, new, fix, perf, refactor, chore, docs (e.g. fix(node-analyzer):)
+- Title of the PR starts with type and scope, for more details check [Commit and PR tile guidelines](#commit-and-pr-tile-guidelines)
 - Chart Version bumped
 - Variables are documented in the README.md (or README.tpl in some charts)
 - Check GithubAction checks (like lint) to avoid merge-check stoppers
 - Changelogs and Release Notes are automated based on the commit messages using git-chglog
+
+#### Commit and PR tile guidelines
+In order to automatically generate a meaningful changelog PR titles must respect the following rules (the same title must be used when merging it)
+
+A Type must be specified, avalilable types are:
+- feat
+- new
+- fix
+- perf
+- refactor
+- chore
+- docs
+
+A Scope should be always present, a few examples:
+- (agent)
+- (sysdig-deploy)
+- (agent,node-analyzer,sysdig-deploy)
+
+Full PR title example
+`feat(agent,node-analyzer,sysdig-deploy): add automated changelogs`
+
 
 #### - GithubAction Checks
 

@@ -26,7 +26,7 @@ options:
       docs: Documentation
       github_actions_ci: Ignored
   header:
-    pattern: "^(\\w*)(?:\\(([\\w\\$\\.\\-\\*\\s]*)\\))?\\:\\s(.*)$"
+    pattern: "^(\\w*)(?:\\(([\\w\\$\\.\\,\\-\\*\\s]*)\\))?\\:\\s?(.*)$"
     pattern_maps:
       - Type
       - Scope
