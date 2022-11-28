@@ -4,6 +4,10 @@
 
 This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.7.47
+### Minor changes
+* Do not add psp policy to clusterrole if k8s > 1.25
+
 ## v1.7.46
 ### Minor changes
 * Added `node-role.kubernetes.io/control-plane` toleration
