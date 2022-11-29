@@ -3,6 +3,7 @@ global:
   clusterConfig: {}
   sysdig:
     region: "us1"
+    tags: {}
   proxy: {}
   kspm:
     deploy: false
@@ -59,6 +60,7 @@ secure:
   # true here enables Sysdig Secure: container run-time security & forensics
   enabled: true
   vulnerabilityManagement:
+    # set to true to disable the deployment of legacy components
     newEngineOnly: false
 
 sysdig:
@@ -192,6 +194,7 @@ nodeAnalyzer:
         memory: 1536Mi
 
     env: {}
+
   hostAnalyzer:
     deploy: true
     image:
@@ -220,6 +223,7 @@ nodeAnalyzer:
         memory: 1536Mi
 
     env: {}
+
   benchmarkRunner:
     deploy: true
     includeSensitivePermissions: false
@@ -295,6 +299,39 @@ nodeAnalyzer:
 
       settings:
         replicas: 1
+
+  hostScanner:
+    # Note: deploy has been commented so that it will be used as hard override to newEngineOnly flag
+    # but when not set, newEngineOnly will win. Desiderata examples in ./tests/hostscanner_test.yaml
+    # deploy: false
+
+    # scanOnStart will make a scann happen at startup.
+    # scanOnStart: true
+    #
+    # dirsToScan is a list absolute host paths that should analyzed.
+    # Do not set it unless you know what you are doing.
+    # dirsToScan: []
+
+    image:
+      repository: sysdig/vuln-host-scanner
+      tag: 0.3.0
+      digest:
+      pullPolicy: IfNotPresent
+
+    resources:
+      requests:
+        cpu: 150m
+        memory: 150Mi
+        ephemeral-storage: 250Mi
+      limits:
+        cpu: 150m
+        memory: 150Mi
+        ephemeral-storage: 250Mi
+
+    env: {}
+
+    settings:
+      replicas: 1
 
   kspmAnalyzer:
     debug: false
