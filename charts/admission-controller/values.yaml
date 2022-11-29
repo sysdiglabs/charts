@@ -259,7 +259,7 @@ scanner:
     # PullPolicy for Scanner image
     pullPolicy: IfNotPresent
     # Scanner image tag
-    tag: 0.0.11
+    tag: 0.0.12
     # Specify the image digest value.  If set, this value is used instead of the tag value.
     digest:
 
