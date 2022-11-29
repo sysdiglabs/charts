@@ -1,4 +1,5 @@
 # Default values for Sysdig Monitor and Secure Helm package.
+
 image:
   # This is a hack to support RELATED_IMAGE_<identifier> feature in Helm based
   # Operators
