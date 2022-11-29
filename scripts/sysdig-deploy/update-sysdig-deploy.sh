@@ -16,11 +16,11 @@ patch=0
 
 # helper functions to preserve empty lines and avoid unnecessary changes
 bump_dep_preserve_blank() {
-    sed -i "$(yq '( .dependencies[] | select(.name == "'"$1"'") | .version) | line' "charts/$4/Chart.yaml")s/$2/$3/" "charts/$4/Chart.yaml"
+    sed -i'' "$(yq '( .dependencies[] | select(.name == "'"$1"'") | .version) | line' "charts/$4/Chart.yaml")s/$2/$3/" "charts/$4/Chart.yaml"
 }
 
 bump_main_preserve_blank() {
-    sed -i "$(yq '.version | line' "charts/$3/Chart.yaml")s/$1/$2/" "charts/$3/Chart.yaml"
+    sed -i'' "$(yq '.version | line' "charts/$3/Chart.yaml")s/$1/$2/" "charts/$3/Chart.yaml"
 }
 
 check_update_needed () {
