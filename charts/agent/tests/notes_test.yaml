@@ -1,0 +1,74 @@
+suite: Test links in the notes section for regions (us1,us2,us3,us4,eu1,au1)
+templates:
+  - templates/NOTES.txt
+tests:
+  - it: Checking default value no region specified (us1)
+    asserts:
+      - matchRegexRaw:
+          pattern: https://app.sysdigcloud.com/#/dashboard-template/view.sysdig.agents\?last=10
+      - matchRegexRaw:
+          pattern: https://secure.sysdig.com/#/data-sources/agents
+
+  - it: Checking region 'us2'
+    set:
+      global: 
+        sysdig:
+          region: us2
+    asserts:
+      - matchRegexRaw:
+          pattern: https://us2.app.sysdig.com/#/dashboard-template/view.sysdig.agents\?last=10
+      - matchRegexRaw:
+          pattern: https://us2.app.sysdig.com/secure/#/data-sources/agents
+
+  - it: Checking region 'us3'
+    set:
+      global: 
+        sysdig:
+          region: us3
+    asserts:
+      - matchRegexRaw:
+          pattern: https://us3.app.sysdig.com/#/dashboard-template/view.sysdig.agents\?last=10
+      - matchRegexRaw:
+          pattern: https://us3.app.sysdig.com/secure/#/data-sources/agents
+
+  - it: Checking region 'us4'
+    set:
+      global: 
+        sysdig:
+          region: us4
+    asserts:
+      - matchRegexRaw:
+          pattern: https://app.us4.sysdig.com/#/dashboard-template/view.sysdig.agents\?last=10
+      - matchRegexRaw:
+          pattern: https://app.us4.sysdig.com/secure/#/data-sources/agents
+
+  - it: Checking region 'eu1'
+    set:
+      global: 
+        sysdig:
+          region: eu1
+    asserts:
+      - matchRegexRaw:
+          pattern: https://eu1.app.sysdig.com/#/dashboard-template/view.sysdig.agents\?last=10
+      - matchRegexRaw:
+          pattern: https://eu1.app.sysdig.com/secure/#/data-sources/agents
+
+  - it: Checking region 'au1'
+    set:
+      global: 
+        sysdig:
+          region: au1
+    asserts:
+      - matchRegexRaw:
+          pattern: https://app.au1.sysdig.com/#/dashboard-template/view.sysdig.agents\?last=10
+      - matchRegexRaw:
+          pattern: https://app.au1.sysdig.com/secure/#/data-sources/agents
+
+  - it: Checking incorrect region 'ap3' should fail
+    set:
+      global: 
+        sysdig:
+          region: ap3
+    asserts:
+      - failedTemplate:
+          errorMessage: "raw: global.sysdig.region=ap3 provided is not recognized."
