@@ -4,6 +4,21 @@
 
 This file documents all notable changes to Sysdig Node Analyzer Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+# v1.8.1
+### Minor changes
+* NodeAnalyzer:
+    * NodeImageAnalyzer: bump to version 0.1.21 which contains security updates (November 2022). Fixed 21 CVEs in total, the ones with high or critical severity are:
+        * CVE-2022-1941
+        * CVE-2022-1996
+        * CVE-2022-27191
+        * CVE-2022-27664
+        * CVE-2022-29361
+        * CVE-2022-32149
+        * CVE-2022-3515
+        * CVE-2022-39237
+        * CVE-2022-40674
+    * HostAnalyzer: bump to version 0.1.13 (November 2022)
+
 # v1.8.0
 ### Minor changes
 * HostScanner: added to deamonset
