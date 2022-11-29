@@ -4,6 +4,21 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.15.57
+### Minor changes
+* NodeAnalyzer:
+    * NodeImageAnalyzer: bump to version 0.1.21 which contains security updates (November 2022). Fixed 21 CVEs in total, the ones with high or critical severity are:
+        * CVE-2022-1941
+        * CVE-2022-1996
+        * CVE-2022-27191
+        * CVE-2022-27664
+        * CVE-2022-29361
+        * CVE-2022-32149
+        * CVE-2022-3515
+        * CVE-2022-39237
+        * CVE-2022-40674
+    * HostAnalyzer: bump to version 0.1.13 (November 2022)
+
 ## v1.15.56
 ### Minor changes:
 * Added `node-role.kubernetes.io/control-plane` toleration to agent and node-analyzer
