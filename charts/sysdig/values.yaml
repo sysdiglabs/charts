@@ -355,6 +355,8 @@ nodeAnalyzer:
   tolerations:
     - effect: NoSchedule
       key: node-role.kubernetes.io/master
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/control-plane
 
   # Set nodeAnalyzer daemonset priorityClassName
   priorityClassName:
@@ -635,6 +637,8 @@ extraVolumes:
 tolerations:
   - effect: NoSchedule
     key: node-role.kubernetes.io/master
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/control-plane
 
 leaderelection:
   enable: false
