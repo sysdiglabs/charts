@@ -1,0 +1,123 @@
+# requires unittest plugin: https://github.com/quintush/helm-unittest
+# Run "helm unittest -3 -f ./tests/hostscanner_test.yaml ." from within the `charts/node-analyzer` folder
+suite: Test HostScanner configuration
+templates:
+  - ../templates/daemonset-node-analyzer.yaml
+values:
+  - ../values.yaml
+
+tests:
+  - it: "HS not deployed by default"
+    templates:
+      - ../templates/daemonset-node-analyzer.yaml
+    asserts:
+      - isKind:
+          of: DaemonSet
+      - equal:
+          path: "spec.template.spec.containers[0].name"
+          value: "sysdig-image-analyzer"
+      - equal:
+          path: "spec.template.spec.containers[1].name"
+          value: "sysdig-host-analyzer"
+      - equal:
+          path: "spec.template.spec.containers[2].name"
+          value: "sysdig-benchmark-runner"
+      - isEmpty:
+          path: "spec.template.spec.containers[3]"
+  - it: "HS deployed if newEngineOnly is active but deploy unset"
+    set:
+      secure.vulnerabilityManagement.newEngineOnly: true
+    templates:
+      - ../templates/daemonset-node-analyzer.yaml
+    asserts:
+      - isKind:
+          of: DaemonSet
+      - equal:
+          path: "spec.template.spec.containers[0].name"
+          value: "sysdig-benchmark-runner"
+      - equal:
+          path: "spec.template.spec.containers[1].name"
+          value: "sysdig-runtime-scanner"
+      - equal:
+          path: "spec.template.spec.containers[2].name"
+          value: "sysdig-host-scanner"
+      - isEmpty:
+          path: "spec.template.spec.containers[3]"
+  - it: "HS deployed if newEngineOnly is true and deploy set to true"
+    set:
+      secure.vulnerabilityManagement.newEngineOnly: true
+      nodeAnalyzer.hostScanner.deploy: true
+    templates:
+      - ../templates/daemonset-node-analyzer.yaml
+    asserts:
+      - isKind:
+          of: DaemonSet
+      - equal:
+          path: "spec.template.spec.containers[0].name"
+          value: "sysdig-benchmark-runner"
+      - equal:
+          path: "spec.template.spec.containers[1].name"
+          value: "sysdig-runtime-scanner"
+      - equal:
+          path: "spec.template.spec.containers[2].name"
+          value: "sysdig-host-scanner"
+      - isEmpty:
+          path: "spec.template.spec.containers[3]"
+  - it: "HS not deployed if explicitly set to false while newEngineOnly is active"
+    set:
+      secure.vulnerabilityManagement.newEngineOnly: true
+      nodeAnalyzer.hostScanner.deploy: false
+    templates:
+      - ../templates/daemonset-node-analyzer.yaml
+    asserts:
+      - isKind:
+          of: DaemonSet
+      - equal:
+          path: "spec.template.spec.containers[0].name"
+          value: "sysdig-benchmark-runner"
+      - equal:
+          path: "spec.template.spec.containers[1].name"
+          value: "sysdig-runtime-scanner"
+      - isEmpty:
+          path: "spec.template.spec.containers[2]"
+  - it: "HS deployed if newEngineOnly is unset and deploy set to true"
+    set:
+      nodeAnalyzer.hostScanner.deploy: true
+    templates:
+      - ../templates/daemonset-node-analyzer.yaml
+    asserts:
+      - isKind:
+          of: DaemonSet
+      - equal:
+          path: "spec.template.spec.containers[0].name"
+          value: "sysdig-image-analyzer"
+      - equal:
+          path: "spec.template.spec.containers[1].name"
+          value: "sysdig-host-analyzer"
+      - equal:
+          path: "spec.template.spec.containers[2].name"
+          value: "sysdig-benchmark-runner"
+      - equal:
+          path: "spec.template.spec.containers[3].name"
+          value: "sysdig-host-scanner"
+      - isEmpty:
+          path: "spec.template.spec.containers[4]"
+  - it: "HS not deployed if explicitly set to false"
+    set:
+      nodeAnalyzer.hostScanner.deploy: false
+    templates:
+      - ../templates/daemonset-node-analyzer.yaml
+    asserts:
+      - isKind:
+          of: DaemonSet
+      - equal:
+          path: "spec.template.spec.containers[0].name"
+          value: "sysdig-image-analyzer"
+      - equal:
+          path: "spec.template.spec.containers[1].name"
+          value: "sysdig-host-analyzer"
+      - equal:
+          path: "spec.template.spec.containers[2].name"
+          value: "sysdig-benchmark-runner"
+      - isEmpty:
+          path: "spec.template.spec.containers[3]"
