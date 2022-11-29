@@ -2,7 +2,6 @@
 
 set -e
 
-OLDIFS=$IFS
 node_analyzer_chart_path="node-analyzer"
 agent_chart_path="agent"
 kspm_collector_chart_path="kspm-collector"
@@ -14,12 +13,21 @@ minor=0
 major=0
 patch=0
 
-# helper functions to preserve empty lines and avoid unnecessary changes
-bump_dep_preserve_blank() {
+# helper functions used to update exclusively the chart version
+# at the line identified with yq
+# Usage:
+# update_dependencies <subchart> <current_subchart_version> <new_subchart_version> <main_chart_path>
+update_dependencies() {
+    # Translates to something like:
+    # sed -i'' 46s/0.3.1/0.3.2/ charts/sysdig-deploy/Chart.yaml
+    # sed -i'' instead of sed -i is used only to make it work in OSX
+    # https://stackoverflow.com/questions/4247068/sed-command-with-i-option-failing-on-mac-but-works-on-linux/14813278#14813278
     sed -i'' "$(yq '( .dependencies[] | select(.name == "'"$1"'") | .version) | line' "charts/$4/Chart.yaml")s/$2/$3/" "charts/$4/Chart.yaml"
 }
 
-bump_main_preserve_blank() {
+# Usage:
+# update_main_chart <current_chart_version> <new_chart_version> <main_chart_path>
+update_main_chart() {
     sed -i'' "$(yq '.version | line' "charts/$3/Chart.yaml")s/$1/$2/" "charts/$3/Chart.yaml"
 }
 
@@ -54,7 +62,7 @@ check_update_needed () {
 
     # update the subchart version in sysdig-deploy/Chart.yaml
     if [[ $minor -gt 0 || $major -gt 0 || $patch -gt 0  ]]; then
-        bump_dep_preserve_blank "$chart" "$sysdig_subchart_version" "$new_subchart_version" "$sysdig_deploy_path"
+        update_dependencies "$chart" "$sysdig_subchart_version" "$new_subchart_version" "$sysdig_deploy_path"
     fi
 }
 
@@ -67,8 +75,7 @@ done
 current_sysdig_deploy_version=$(yq '.version' charts/$sysdig_deploy_path/Chart.yaml)
 
 echo -e "\nsysdig-deploy version : $current_sysdig_deploy_version"
-IFS='.'
-read -ra sysdig_deploy_version <<< "$current_sysdig_deploy_version"
+IFS='.' read -ra sysdig_deploy_version <<< "$current_sysdig_deploy_version"
 
 new_major=$((sysdig_deploy_version[0]))
 new_minor=$((sysdig_deploy_version[1]))
@@ -94,7 +101,6 @@ else
     exit 0
 fi
 
-IFS=$OLDIFS
 final_sysdig_deploy_version=$(echo -n "$new_major.$new_minor.$new_patch")
 echo "Final deploy version is to be : $final_sysdig_deploy_version"
-bump_main_preserve_blank "$current_sysdig_deploy_version" "$final_sysdig_deploy_version" "$sysdig_deploy_path"
+update_main_chart "$current_sysdig_deploy_version" "$final_sysdig_deploy_version" "$sysdig_deploy_path"
