@@ -7,6 +7,7 @@ This file documents all notable changes to the Admission Controller Helm Chart. 
 ## v0.7.14
 ### Minor changes
 * Bump inline scan service image version bump
+* Updated chart icon
 
 ## v0.7.13
 ### Minor changes

@@ -8,6 +8,7 @@ This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. Th
 ### Minor changes
 * admission-controller:
   * bump dependency to ~0.7.14
+* Updated chart icon
 
 ## v1.5.1
 ### Minor changes
