@@ -1,3 +1,7 @@
+# v0.1.25
+### Minor changes
+* Updated chart icon
+
 # v0.1.24
 ### Minor changes
 * Updated override helm tests to include extra testcases.

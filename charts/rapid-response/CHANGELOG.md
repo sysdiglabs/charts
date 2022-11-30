@@ -2,6 +2,10 @@
 
 ## Change Log
 
+## v0.3.2
+### Minor changes
+* Updated chart icon
+
 ## v0.3.1
 ### Minor changes
 * Added `node-role.kubernetes.io/control-plane` toleration
