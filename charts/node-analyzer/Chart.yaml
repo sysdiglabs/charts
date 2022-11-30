@@ -3,7 +3,7 @@ name: node-analyzer
 description: Sysdig Node Analyzer
 
 # currently matching Sysdig's appVersion 1.14.34
-version: 1.8.1
+version: 1.8.2
 appVersion: 12.6.0
 keywords:
   - monitoring
@@ -13,7 +13,7 @@ keywords:
   - troubleshooting
   - run-time
 home: https://www.sysdig.com/
-icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
 sources:
   - https://app.sysdigcloud.com/#/settings/user
   - https://github.com/draios/sysdig

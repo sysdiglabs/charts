@@ -2,6 +2,12 @@
 
 ## Change Log
 
+## v0.3.4
+
+### Minor
+
+* Updated chart icon
+
 ## v0.3.3
 
 ### Feature
