@@ -4,9 +4,12 @@
 
 This file documents all notable changes to the Admission Controller Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
-## v0.7.14
+## v0.7.15
 ### Minor changes
 * Bump inline scan service image version bump
+
+## v0.7.14
+### Minor changes
 * Updated chart icon
 
 ## v0.7.13
