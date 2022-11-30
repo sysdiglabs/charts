@@ -13,7 +13,7 @@ config:
   # registryApiUrl: https://my-docker-registry.com/artifactory/api/docker/
   registryUser:
   registryPassword:
-  # Defaults to "dockerv2" if not specified. Available options: dockerv2, icr
+  # Defaults to "dockerv2" if not specified. Available options: dockerv2, icr, jfrog
   registryType:
   # AccountID - Only for ICR registry type
   # registryAccountId:
@@ -33,6 +33,8 @@ config:
     maxAgeDays:
     maxTagsPerRepository:
   scan:
+    # Override the default k8sjob scanner for the inline scanner job. Options: k8sjob, new-vm-scanner
+    newVmScanner: false
     # Override the default quay.io/sysdig/secure-inline-scan:2 image for the inline scanner job
     inlineScanImage: ""
     # Change container securityContext
