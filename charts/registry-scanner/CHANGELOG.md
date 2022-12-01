@@ -5,6 +5,13 @@
 This file documents all notable changes to Sysdig Registry Scanner. The release
 numbering uses [semantic versioning](http://semver.org).
 
+## v0.0.35
+
+### Minor changes
+
+* Bump registry-scanner version to 0.1.11 (Update gem deps) 
+* Experimental and unsupported feature to activate the new vm beta image scanning 
+
 ## v0.0.34
 
 ### Minor changes
@@ -15,7 +22,7 @@ numbering uses [semantic versioning](http://semver.org).
 
 ### Minor changes
 
-* Dump registry-scanner version to 0.1.9 (fix memory leak issue)
+* Bump registry-scanner version to 0.1.9 (fix memory leak issue)
 
 ## v0.0.32
 

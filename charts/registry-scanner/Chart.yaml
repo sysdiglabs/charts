@@ -4,10 +4,22 @@ description: Sysdig Registry Scanner
 type: application
 home: https://sysdiglabs.github.io/registry-scanner/
 icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
-version: 0.0.34
-appVersion: 0.1.9
+version: 0.0.35
+appVersion: 0.1.11
 maintainers:
   - name: airadier
     email: alvaro.iradier@sysdig.com
-  - name: guipal
-    email: guillermo@sysdig.com
+  - name: hayk99
+    email: hayk.kocharyan@sysdig.com
+  - name: wideawakening
+    email: irune.prado@sysdig.com
+  - name: regiluze
+    email: ruben.eguiluz@sysdig.com
+  - name: tembleking
+    email: fede.barcelona@sysdig.com
+  - name: penguinjournals
+    email: david.gonzalez@sysdig.com
+  - name: miketnt
+    email: miguel.baztan@sysdig.com
+  - name: jprieto92
+    email: javier.prieto@sysdig.com
