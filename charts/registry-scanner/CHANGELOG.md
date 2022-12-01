@@ -5,6 +5,12 @@
 This file documents all notable changes to Sysdig Registry Scanner. The release
 numbering uses [semantic versioning](http://semver.org).
 
+## v0.0.35
+
+### Minor changes
+ 
+* Experimental and unsupported feature to activate the new vm beta image scanning 
+
 ## v0.0.34
 
 ### Minor changes
