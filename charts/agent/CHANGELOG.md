@@ -2,13 +2,18 @@
 
 ## Change Log
 
+
+## v1.5.46
+### Minor changes
+* Fixed links displayed in the Notes section
+
 ## v1.5.45
 ### Minor changes
-* * Updated chart icon
+* Updated chart icon
 
 ## v1.5.44
 ### Minor changes
-* * Do not add psp policy to clusterrole if k8s > 1.25
+* Do not add psp policy to clusterrole if k8s > 1.25
 
 ## v1.5.43
 ### Minor changes

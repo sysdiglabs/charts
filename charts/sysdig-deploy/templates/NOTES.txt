@@ -4,7 +4,7 @@ Sysdig Agent Health & Status Dashboard.
 
 Links for your deployment:
   * Sysdig Monitor: https://{{ include "monitorUrl" . }}/#/dashboard-template/view.sysdig.agents?last=10
-  * Sysdig Secure: https://{{ include "secureUrl" . }}/#/events/l:600/*/*?viewAs=list
+  * Sysdig Secure: https://{{ include "secureUrl" . }}/#/data-sources/agents
 
 {{- if .Values.global.sysdig.tags }}
 Usage of global tags will override any local tags you might be using.
