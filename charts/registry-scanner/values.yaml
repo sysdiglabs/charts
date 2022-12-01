@@ -43,6 +43,8 @@ config:
       # readOnlyRootFilesystem: true
       # runAsNonRoot: true
       # runAsUser: 1000
+    # true/false whether to activate the beta image scanning (experimental and unsupported)
+    newVmScanner: false
 ssl:
   ca:
     # For outbound connections
