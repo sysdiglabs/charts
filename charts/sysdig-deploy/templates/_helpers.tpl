@@ -15,7 +15,9 @@ Determine sysdig monitor endpoint based on provided region
     {{- else if (eq .Values.global.sysdig.region "au1") -}}
         {{- "app.au1.sysdig.com" -}}
     {{- else -}}
-        {{- fail (printf "global.sysdig.region=%s provided is not recognized." .Values.global.sysdig.region ) -}}
+        {{- if (ne .Values.global.sysdig.region "custom") -}}
+            {{- fail (printf "global.sysdig.region=%s provided is not recognized." .Values.global.sysdig.region ) -}}
+        {{- end -}}
     {{- end -}}
 {{- end -}}
 
@@ -36,6 +38,8 @@ Determine sysdig secure endpoint based on provided region
     {{- else if (eq .Values.global.sysdig.region "au1") -}}
         {{- "app.au1.sysdig.com/secure" -}}
     {{- else -}}
-        {{- fail (printf "global.sysdig.region=%s provided is not recognized." .Values.global.sysdig.region ) -}}
+        {{- if (ne .Values.global.sysdig.region "custom") -}}
+            {{- fail (printf "global.sysdig.region=%s provided is not recognized." .Values.global.sysdig.region ) -}}
+        {{- end -}}
     {{- end -}}
 {{- end -}}
