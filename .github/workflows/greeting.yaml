@@ -24,4 +24,7 @@ jobs:
             After inspecting your changes someone with write access to this repo needs
             to approve and run the workflow with the following slash_command.
 
+            NOTE: the workflow triggered this way will only report the final status to this PR,
+            in order to check the logs please go to the Actions tab and look for approve-test-run-command.
+
             * `/approve-test-run sha=<short commit sha to test>`:            Run helm chart linting and testing workflow
