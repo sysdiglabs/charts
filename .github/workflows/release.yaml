@@ -44,13 +44,21 @@ jobs:
             chart_tag="${chart_name}-${chart_version}"
             chart_path="charts/${chart_name}"
 
+            # generate the new changelog entry
             git-chglog \
               --config .chglog/config-changelog.yml \
-              --output "${chart_path}/CHANGELOG.md" \
+              --output "/tmp/CHANGELOG_${chart_name}_new.md" \
               --tag-filter-pattern "${chart_name}" \
               --next-tag "${chart_tag}" \
-              --path "${chart_path}"
+              --path "${chart_path}" "${chart_tag}"
 
+            # insert the new changelog entry to the changelog
+            # file after the '## Change Log' header
+            cat "/tmp/CHANGELOG_${chart_name}_new.md" \
+              | sed -i '/^##\ Change Log$/ r /dev/stdin' \
+              "charts/${chart_name}/CHANGELOG.md"
+
+            # generate the release notes for github release
             git-chglog \
               --config .chglog/config-release.yml \
               --output "${chart_path}/RELEASE-NOTES.md" \
