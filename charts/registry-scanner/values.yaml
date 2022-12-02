@@ -13,7 +13,7 @@ config:
   # registryApiUrl: https://my-docker-registry.com/artifactory/api/docker/
   registryUser:
   registryPassword:
-  # Defaults to "dockerv2" if not specified. Available options: dockerv2, icr
+  # Defaults to "dockerv2" if not specified. Available options: dockerv2, icr, artifactory
   registryType:
   # AccountID - Only for ICR registry type
   # registryAccountId:
