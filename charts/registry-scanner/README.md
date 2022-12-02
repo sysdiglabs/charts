@@ -42,7 +42,7 @@ kubectl create job --from=cronjob/registry-scanner registry-scanner-manual
 To uninstall/delete
 
 ```console
-$ helm uninstall sysdig/registry-scanner -n registry-scanner
+$ helm uninstall registry-scanner
 ```
 
 The command removes all the Kubernetes components associated with the chart and deletes the release.
