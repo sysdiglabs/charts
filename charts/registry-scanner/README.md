@@ -10,11 +10,43 @@ Add Sysdig Helm charts repository:
 $ helm repo add sysdig https://charts.sysdig.com
 ```
 
-Deploy the registry scanner
+Deploy the registry scanner specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
+
+```bash
+$ helm upgrade --install registry-scanner \
+    --set config.secureBaseURL=SECURE_URL \
+    --set config.secureAPIToken=YOUR-KEY-HERE \
+    --set config.registryURL=REGISTRY-URL \
+    --set config.registryUser=admin \
+    --set config.registryPassword=REGISTRY-PASSWORD-HERE \
+    sysdig/registry-scanner
+```
+
+Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
+
+```bash
+$ helm install my-release-name -f values.yaml sysdig/registry-scanner
+```
+
+
+By default the created CronJob, scheduled at the default time: 6:00 am.
+For testing purpose you can launch a manual job:
 
 ```
-$ helm install --create-namespace -n registry-scanner registry-scanner -f values.yaml sysdig/registry-scanner
+kubectl create job --from=cronjob/registry-scanner registry-scanner-manual
 ```
+
+
+## Uninstalling the Chart
+
+To uninstall/delete
+
+```console
+$ helm uninstall registry-scanner
+```
+
+The command removes all the Kubernetes components associated with the chart and deletes the release.
+
 
 ## Configuration
 
@@ -71,33 +103,20 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | `tolerations`                        | Tolerations for scheduling                                                                                             | `[]`                            |
 | `affinity`                           | Configure affinity rules                                                                                               | `{}`                            |
 
-Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
-```bash
-$ helm install my-release-name \
-    --set config.secureAPIToken=YOUR-KEY-HERE \
-    --set config.registryUser=admin \
-    --set config.registryPassword=REGISTRY-PASSWORD-HERE \
-    sysdig/registry-scanner
-```
-
-Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
-
-```bash
-$ helm install my-release-name -f values.yaml sysdig/registry-scanner
-```
 
 ### On-Prem deployment
 
 Use the following command to deploy in an on-prem:
 
 ```
-$ helm install my-release-name \
+$ helm upgrade --install registry-scanner \
+    --set config.secureBaseURL=SECURE_URL \
     --set config.secureAPIToken=YOUR-KEY-HERE \
+    --set config.secureSkipTLS=true \
+    --set config.registryURL=REGISTRY-URL \
     --set config.registryUser=admin \
     --set config.registryPassword=REGISTRY-PASSWORD-HERE \
-    --set config.secureBaseURL=SECURE_URL \
-    --set config.secureSkipTLS=true \
     sysdig/registry-scanner
 ```
 
