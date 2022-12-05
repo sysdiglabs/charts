@@ -22,7 +22,7 @@ spec:
       - status
       - daemonset/{{ include "nodeAnalyzer.fullname" . }}
       - -n
-      - {{ .Release.Namespace }}
+      - {{ include "nodeAnalyzer.namespace" . }}
       - -w
       - --timeout={{ .Values.tests.timeout }}
   restartPolicy: Never

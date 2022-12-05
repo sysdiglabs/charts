@@ -269,3 +269,10 @@ Deploy on GKE autopilot
         true
     {{- end -}}
 {{- end -}}
+
+{{/*
+Returns the namespace for installing components
+*/}}
+{{- define "nodeAnalyzer.namespace" -}}
+    {{- coalesce .Values.namespace .Values.global.clusterConfig.namespace .Release.Namespace -}}
+{{- end -}}
