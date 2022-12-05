@@ -3,6 +3,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ .Release.Name }}-image-analyzer
+  namespace: {{ include "nodeAnalyzer.namespace" . }}
   labels:
 {{ include "nodeAnalyzer.labels" . | indent 4 }}
 data:

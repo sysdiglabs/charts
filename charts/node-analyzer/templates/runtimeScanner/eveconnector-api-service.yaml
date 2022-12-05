@@ -3,6 +3,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ template "nodeAnalyzer.fullname" . }}-eveconnector
+  namespace: {{ include "nodeAnalyzer.namespace" . }}
   labels:
     app.kubernetes.io/name: {{ include "nodeAnalyzer.name" . }}-eveconnector
 {{ include "nodeAnalyzer.labels" . | indent 4 }}
