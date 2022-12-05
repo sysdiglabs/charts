@@ -6,7 +6,7 @@ This chart deploys the Sysdig Registry Scanner as a scheduled Cronjob in your Ku
 
 Add Sysdig Helm charts repository:
 
-```
+```bash
 $ helm repo add sysdig https://charts.sysdig.com
 ```
 
@@ -14,18 +14,18 @@ Deploy the registry scanner specify each parameter using the `--set key=value[,k
 
 ```bash
 $ helm upgrade --install registry-scanner \
-    --set config.secureBaseURL=SECURE_URL \
-    --set config.secureAPIToken=YOUR-KEY-HERE \
-    --set config.registryURL=REGISTRY-URL \
+    --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
+    --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
+    --set config.registryURL=<REGISTRY_URL> \
     --set config.registryUser=admin \
-    --set config.registryPassword=REGISTRY-PASSWORD-HERE \
+    --set config.registryPassword=<REGISTRY_PASSWORD> \
     sysdig/registry-scanner
 ```
 
 Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
 
 ```bash
-$ helm install my-release-name -f values.yaml sysdig/registry-scanner
+$ helm install registry-scanner -f values.yaml sysdig/registry-scanner
 ```
 
 
@@ -41,7 +41,7 @@ kubectl create job --from=cronjob/registry-scanner registry-scanner-manual
 
 To uninstall/delete
 
-```console
+```bash
 $ helm uninstall registry-scanner
 ```
 
@@ -63,7 +63,7 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | `config.registryApiUrl`              | API URL of the registry to scan. This is required if your registry type is Artifactory                                 | ` `                             |
 | `config.registryUser`                | Username for registry authentication                                                                                   | ` `                             |
 | `config.registryPassword`            | Password for registry authentication                                                                                   | ` `                             |
-| `config.registryType`                | Registry Type. Optional. dockerv2 (default if not specified), icr                                               | ` `                             |
+| `config.registryType`                | Registry Type. Optional. dockerv2 (default if not specified), icr, artifactory, ecr                                    | ` `                             |
 | `config.registryAccountId`           | AccountID - Only for ICR registry type                                                                                 | ` `                             |
 | `config.icrIamApi`                   | IAM API Endpoint - Only for ICR registry type                                                                          | ` `                             |
 | `config.icrIamApiSkipTLS`            | Ignore TLS certificate for IAM API - Only for ICR registry type                                                        | `false`                         |
@@ -71,6 +71,9 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | `config.secureBaseURL`               | Sysdig Secure Base URL                                                                                                 | `https://secure.sysdig.com`     |
 | `config.secureAPIToken`              | API Token to access Sysdig Secure                                                                                      | ` `                             |
 | `config.secureOnPrem`                | Sysdig Secure is on-prem installation (vs SaaS)                                                                        | `false`                         |
+| `config.aws.accessKeyId`             | AWS Credentials AccessKeyID                                                                                            | ` `                             |
+| `config.aws.secretAccessKey`         | AWS Credentials SecretAccessKey                                                                                        | ` `                             |
+| `config.aws.region`                  | AWS Region                                                                                                             | ` `                             |
 | `config.secureSkipTLS`               | Ignore Sysdig Secure TLS certificate errors                                                                            | `false`                         |
 | `config.maxWorkers`                  | Max number of parallel inline scanner workers to spawn in cluster                                                      | `1`                             |
 | `config.filter.include`              | List of regular expressions. Images matching any of these expressions are *always* included when scanning.             | `[]`                            |
@@ -109,15 +112,66 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 
 Use the following command to deploy in an on-prem:
 
-```
+```bash
 $ helm upgrade --install registry-scanner \
-    --set config.secureBaseURL=SECURE_URL \
-    --set config.secureAPIToken=YOUR-KEY-HERE \
+    --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
+    --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
     --set config.secureSkipTLS=true \
-    --set config.registryURL=REGISTRY-URL \
+    --set config.registryURL=<REGISTRY_URL> \
     --set config.registryUser=admin \
-    --set config.registryPassword=REGISTRY-PASSWORD-HERE \
+    --set config.registryPassword=<REGISTRY_PASSWORD> \
     sysdig/registry-scanner
 ```
 
 Use `config.secureSkipTLS=true` if you are using self signed certificates.
+
+## Supported vendor specific deployments
+
+### AWS ECR
+
+```bash
+$ helm upgrade --install registry-scanner \
+    --set config.scan.newVmScanner=true \
+    --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
+    --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
+    --set config.registryType=ecr \
+    --set config.aws.accessKeyId=<AWS_ACCESS_KEY_ID> \
+    --set config.aws.secretAccessKey=<AWS_SECRET_ACCESS_KEY> \
+    --set config.aws.region=<AWS_REGION> \
+    --set config.registryURL=<AWS_ECR_URL> \
+    sysdig/registry-scanner
+```
+
+### JFrog Artifactory - OnPrem
+
+- JFROG_ARTIFACTORY_URL: JFrog Artifactory url. ex.: artifactory.internal.mycompany.com
+
+```bash
+$ helm upgrade --install registry-scanner \                                                                                                                            ─╯
+    --set config.scan.newVmScanner=true \
+    --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
+    --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
+    --set config.registryType=artifactory \
+    --set config.registryURL=<JFROG_ARTIFACTORY_REGISTRY_URL> \
+    --set config.registryUser=<JFROG_ARTIFACTORY_USER> \
+    --set config.registryPassword=<JFROG_ARTIFACTORY_PASSWORD> \
+    sysdig/registry-scanner
+```
+
+### JFrog Artifactory - SaaS
+
+- JFROG_ARTIFACTORY_REGISTRY_URL: JFrog Artifactory Cloud registry URL. ex.: https://myaccount.jfrog.io/some-registry
+- JFROG_ARTIFACTORY_REGISTRY_API_DOCKER_URL: JFrog Artifactory Cloud registry docker API endpoint. ex.: https://myaccount.jfrog.io/artifactory/api/docker/some-registry
+
+```bash
+$ helm upgrade --install registry-scanner \                                                                                                                            ─╯
+    --set config.scan.newVmScanner=true \
+    --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
+    --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
+    --set config.registryType=artifactory \
+    --set config.registryURL=<JFROG_ARTIFACTORY_REGISTRY_URL> \
+    --set config.registryApiUrl=<JFROG_ARTIFACTORY_REGISTRY_API_DOCKER_URL> \
+    --set config.registryUser=<JFROG_ARTIFACTORY_USER> \
+    --set config.registryPassword=<JFROG_ARTIFACTORY_PASSWORD> \
+    sysdig/registry-scanner
+```
