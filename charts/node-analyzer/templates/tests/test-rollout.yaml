@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/managed-by: {{ .Release.Service }}
   annotations:
     "helm.sh/hook": test
-    "helm.sh/hook-delete-policy": before-hook-creation
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
 spec:
   serviceAccountName: {{ include "nodeAnalyzer.serviceAccountName" . }}
   containers:
@@ -20,7 +20,7 @@ spec:
       args:
       - rollout
       - status
-      - daemonset/{{ include "nodeAnalyzer.fullname" . }}
+      - daemonset/{{ .Release.Name }}-node-analyzer
       - -n
       - {{ include "nodeAnalyzer.namespace" . }}
       - -w

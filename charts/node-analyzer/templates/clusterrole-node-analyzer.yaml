@@ -29,7 +29,6 @@ rules:
 - apiGroups:
     - ""
   resources:
-    - daemonsets
     - configmaps
     - endpoints
     - nodes
