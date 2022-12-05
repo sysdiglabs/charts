@@ -5,6 +5,15 @@
 This file documents all notable changes to Sysdig Registry Scanner. The release
 numbering uses [semantic versioning](http://semver.org).
 
+## v0.1.0
+
+### Major changes
+
+* Bump registry-scanner version to 0.2.0:
+  - Append https in artifactory api url if user doesn't specify protocol
+  - Update artifactory authentication method to not increment downloads counter (See https://www.jfrog.com/confluence/display/JFROG/Artifactory+REST+API#ArtifactoryRESTAPI-RetrieveArtifact)
+  - Add ECR as new registry type supported
+
 ## v0.0.36
 
 * Enhance chart documentation
@@ -14,7 +23,7 @@ numbering uses [semantic versioning](http://semver.org).
 ### Minor changes
 
 * Bump registry-scanner version to 0.1.11 (Update gem deps) 
-* Experimental and unsupported feature to activate the new vm beta image scanning 
+* Experimental an unsupported feature to activate the new vm beta image scanning 
 
 ## v0.0.34
 

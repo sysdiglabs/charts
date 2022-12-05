@@ -13,14 +13,21 @@ config:
   # registryApiUrl: https://my-docker-registry.com/artifactory/api/docker/
   registryUser:
   registryPassword:
-  # Defaults to "dockerv2" if not specified. Available options: dockerv2, icr
-  registryType:
+  # Defaults to "dockerv2" if not specified. Available options: dockerv2, icr, artifactory, ecr
+  registryType: ""
   # AccountID - Only for ICR registry type
   # registryAccountId:
   # ICR IAM API - Only for ICR registry type
   # icrIamApi:
   # ICR IAM API Skip TLS - Only for ICR registry type
   # icrIamApiSkipTLS:
+  aws:
+    # AWS Credentials AccessKeyID
+    accessKeyId: ""
+    # AWS Credentials: SecretAccessKey
+    secretAccessKey: ""
+    # AWS Region
+    region: ""
   registrySkipTLS: false
   secureBaseURL: https://secure.sysdig.com
   secureAPIToken:
@@ -103,7 +110,8 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
-# Specify the name of a Kubernetes secret containing 'secureAPIToken', 'registryUser', and 'registryPassword' entries
+# Specify the name of a Kubernetes secret containing 'secureAPIToken', 'registryUser', and 'registryPassword' entries or
+# if you are using ecr as registryType, add also 'accessKeyId', 'secretAccessKey' and 'region' entries.
 existingSecretName: ""
 
 podAnnotations: {}

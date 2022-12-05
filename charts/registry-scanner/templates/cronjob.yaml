@@ -88,6 +88,35 @@ spec:
               - name: SSL_CERT_DIR
                 value: "/ca-certs"
               {{- end }}
+              {{- if eq .Values.config.registryType "ecr" }}
+              - name: AWS_ACCESS_KEY_ID
+                valueFrom:
+                  secretKeyRef:
+                    {{- if not .Values.existingSecretName }}
+                    name: {{ include "registry-scanner.fullname" . }}
+                    {{- else }}
+                    name: {{ .Values.existingSecretName }}
+                    {{- end }}
+                    key: aws_access_key_id
+              - name: AWS_SECRET_ACCESS_KEY
+                valueFrom:
+                  secretKeyRef:
+                    {{- if not .Values.existingSecretName }}
+                    name: {{ include "registry-scanner.fullname" . }}
+                    {{- else }}
+                    name: {{ .Values.existingSecretName }}
+                    {{- end }}
+                    key: aws_secret_access_key
+              - name: AWS_REGION
+                valueFrom:
+                  secretKeyRef:
+                    {{- if not .Values.existingSecretName }}
+                    name: {{ include "registry-scanner.fullname" . }}
+                    {{- else }}
+                    name: {{ .Values.existingSecretName }}
+                    {{- end }}
+                    key: aws_region
+              {{- else }}
               - name: REGISTRYSCANNER_REGISTRY_USER
                 valueFrom:
                   secretKeyRef:
@@ -106,6 +135,7 @@ spec:
                     name: {{ .Values.existingSecretName }}
                     {{- end }}
                     key: registryPassword
+              {{- end }}
           restartPolicy: {{ .Values.cronjob.restartPolicy }}
           {{- with .Values.nodeSelector }}
           nodeSelector:
