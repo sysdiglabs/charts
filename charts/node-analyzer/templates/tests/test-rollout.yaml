@@ -20,7 +20,7 @@ spec:
       args:
       - rollout
       - status
-      - daemonset/{{ include "agent.fullname" . }}
+      - daemonset/{{ include "nodeAnalyzer.fullname" . }}
       - -n
       - {{ include "nodeAnalyzer.namespace" . }}
       - -w
