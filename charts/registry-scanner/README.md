@@ -71,6 +71,9 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | `config.secureBaseURL`               | Sysdig Secure Base URL                                                                                                 | `https://secure.sysdig.com`     |
 | `config.secureAPIToken`              | API Token to access Sysdig Secure                                                                                      | ` `                             |
 | `config.secureOnPrem`                | Sysdig Secure is on-prem installation (vs SaaS)                                                                        | `false`                         |
+| `config.aws.accessKeyId`             | AWS Credentials AccessKeyID                                                                                            | ` `                             |
+| `config.aws.secretAccessKey`         | AWS Credentials SecretAccessKey                                                                                        | ` `                             |
+| `config.aws.region`                  | AWS Region                                                                                                             | ` `                             |
 | `config.secureSkipTLS`               | Ignore Sysdig Secure TLS certificate errors                                                                            | `false`                         |
 | `config.maxWorkers`                  | Max number of parallel inline scanner workers to spawn in cluster                                                      | `1`                             |
 | `config.filter.include`              | List of regular expressions. Images matching any of these expressions are *always* included when scanning.             | `[]`                            |

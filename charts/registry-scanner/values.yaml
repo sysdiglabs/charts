@@ -21,6 +21,13 @@ config:
   # icrIamApi:
   # ICR IAM API Skip TLS - Only for ICR registry type
   # icrIamApiSkipTLS:
+  aws:
+    # AWS Credentials AccessKeyID
+    accessKeyId: ""
+    # AWS Credentials: SecretAccessKey
+    secretAccessKey: ""
+    # AWS Region
+    region: ""
   registrySkipTLS: false
   secureBaseURL: https://secure.sysdig.com
   secureAPIToken:
@@ -103,7 +110,8 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
-# Specify the name of a Kubernetes secret containing 'secureAPIToken', 'registryUser', and 'registryPassword' entries
+# Specify the name of a Kubernetes secret containing 'secureAPIToken', 'registryUser', and 'registryPassword' entries or
+# if you are using ecr as registryType, add also 'accessKeyId', 'secretAccessKey' and 'region' entries.
 existingSecretName: ""
 
 podAnnotations: {}
