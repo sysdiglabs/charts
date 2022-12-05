@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/managed-by: {{ .Release.Service }}
   annotations:
     "helm.sh/hook": test
-    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+    "helm.sh/hook-delete-policy": before-hook-creation
 spec:
   serviceAccountName: {{ include "nodeAnalyzer.serviceAccountName" . }}
   containers:
@@ -18,11 +18,8 @@ spec:
       command:
       - kubectl
       args:
-      - rollout
-      - status
-      - daemonset/{{ include "nodeAnalyzer.fullname" . }}
+      - get
+      - pods
       - -n
       - {{ include "nodeAnalyzer.namespace" . }}
-      - -w
-      - --timeout={{ .Values.tests.timeout }}
   restartPolicy: Never
