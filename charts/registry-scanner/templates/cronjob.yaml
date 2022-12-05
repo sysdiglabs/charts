@@ -88,7 +88,7 @@ spec:
               - name: SSL_CERT_DIR
                 value: "/ca-certs"
               {{- end }}
-              {{- if eq .Values.config.registryType "ecr" | quote }}
+              {{- if eq .Values.config.registryType "ecr" }}
               - name: AWS_ACCESS_KEY_ID
                 valueFrom:
                   secretKeyRef:
