@@ -18,8 +18,11 @@ spec:
       command:
       - kubectl
       args:
-      - get
-      - pods
+      - rollout
+      - status
+      - daemonset/{{ include "agent.fullname" . }}
       - -n
       - {{ include "nodeAnalyzer.namespace" . }}
+      - -w
+      - --timeout={{ .Values.tests.timeout }}
   restartPolicy: Never
