@@ -173,7 +173,7 @@ serviceAccount:
   # true here enables creation of service account
   create: true
   # Use this value as kspmCollectorServiceAccountName
-  name: "rapid-response"    
+  name: "rapid-response"
 
 tests:
   timeout: 300s
