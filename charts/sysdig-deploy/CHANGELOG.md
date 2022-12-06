@@ -6,7 +6,7 @@ This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. Th
 
 ## 1.5.10
 * node-analyzer
-  * bump to version 1.8.4
+  * bump to version 1.8.5
 
 ## 1.5.9
 ### Minor changes:
