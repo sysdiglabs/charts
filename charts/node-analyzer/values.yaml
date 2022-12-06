@@ -310,13 +310,17 @@ nodeAnalyzer:
     # scanOnStart will make a scann happen at startup.
     # scanOnStart: true
     #
-    # dirsToScan is a list absolute host paths that should analyzed.
+    # dirsToScan is a comma-separated list absolute host paths that should analyzed.
     # Do not set it unless you know what you are doing.
-    # dirsToScan: []
+    # dirsToScan: "/usr,/tmp,/foo"
+    #
+    # additionalDirsToScan is a optional comma-separated list of directories that
+    # should be analyzer in addition to default ones.
+    # additionalDirsToScan: "/foo/bar/baz,/my/other/folder"
 
     image:
       repository: sysdig/vuln-host-scanner
-      tag: 0.3.0
+      tag: 0.3.1
       digest:
       pullPolicy: IfNotPresent
 

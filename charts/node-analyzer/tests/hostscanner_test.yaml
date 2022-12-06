@@ -3,6 +3,7 @@
 suite: Test HostScanner configuration
 templates:
   - ../templates/daemonset-node-analyzer.yaml
+  - ../templates/configmap-host-scanner.yaml
 values:
   - ../values.yaml
 
@@ -26,6 +27,7 @@ tests:
           path: "spec.template.spec.containers[3]"
   - it: "HS deployed if newEngineOnly is active but deploy unset"
     set:
+      clusterName: "test"
       secure.vulnerabilityManagement.newEngineOnly: true
     templates:
       - ../templates/daemonset-node-analyzer.yaml
@@ -45,6 +47,7 @@ tests:
           path: "spec.template.spec.containers[3]"
   - it: "HS deployed if newEngineOnly is true and deploy set to true"
     set:
+      clusterName: "test"
       secure.vulnerabilityManagement.newEngineOnly: true
       nodeAnalyzer.hostScanner.deploy: true
     templates:
@@ -82,6 +85,7 @@ tests:
           path: "spec.template.spec.containers[2]"
   - it: "HS deployed if newEngineOnly is unset and deploy set to true"
     set:
+      clusterName: "test"
       nodeAnalyzer.hostScanner.deploy: true
     templates:
       - ../templates/daemonset-node-analyzer.yaml
@@ -121,3 +125,28 @@ tests:
           value: "sysdig-benchmark-runner"
       - isEmpty:
           path: "spec.template.spec.containers[3]"
+
+  - it: "Additional dirs to scan is set"
+    set:
+      clusterName: "test"
+      nodeAnalyzer.hostScanner.additionalDirsToScan: "/hello,/world"
+      nodeAnalyzer.hostScanner.deploy: true
+    templates:
+      - ../templates/configmap-host-scanner.yaml
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - equal:
+          path: data.additional_dirs_to_scan
+          value: "/hello,/world"
+  - it: "Additional dirs to scan is unset by default"
+    set:
+      clusterName: "test"
+      nodeAnalyzer.hostScanner.deploy: true
+    templates:
+      - ../templates/configmap-host-scanner.yaml
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - isNull:
+          path: data.additional_dirs_to_scan

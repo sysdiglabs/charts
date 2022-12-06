@@ -405,6 +405,12 @@ spec:
               name: {{ .Release.Name }}-host-analyzer
               key: dirs_to_scan
               optional: true
+        - name: ADDITIONAL_HOST_DIRS_TO_SCAN
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Release.Name }}-host-analyzer
+              key: additional_dirs_to_scan
+              optional: true
         - name: MAX_SEND_ATTEMPTS
           valueFrom:
             configMapKeyRef:
