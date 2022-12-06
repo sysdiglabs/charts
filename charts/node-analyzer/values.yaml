@@ -356,3 +356,9 @@ nodeAnalyzer:
       periodDelay: 3
 
     env: {}
+
+tests:
+  timeout: 300s
+  image:
+    repo: bitnami/kubectl
+    tag: 1.24.4

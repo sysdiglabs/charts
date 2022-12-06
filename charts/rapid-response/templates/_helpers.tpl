@@ -188,3 +188,14 @@ without introducing changes on Rapid Response container image.
         {{- "false" -}}
     {{- end -}}
 {{- end -}}
+
+{{/*
+Create the name of the Rapid Response collector specific service account to use
+*/}}
+{{- define "rapidResponse.serviceAccountName" -}}
+{{- if .Values.tests.serviceAccount.create -}}
+    {{ default (include "rapidResponse.fullname" .) .Values.tests.serviceAccount.name }}
+{{- else -}}
+    {{ default "default" .Values.tests.serviceAccount.name }}
+{{- end -}}
+{{- end -}}

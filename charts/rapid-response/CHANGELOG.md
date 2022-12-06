@@ -2,6 +2,10 @@
 
 ## Change Log
 
+## v0.3.3
+### Minor changes
+* Add deployment test to rapid response chart
+
 ## v0.3.2
 ### Minor changes
 * Updated chart icon
