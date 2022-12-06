@@ -8,9 +8,7 @@ options:
     filters:
       Type:
         - feat
-        - new
         - fix
-        - perf
         - refactor
         - chore
         - docs
@@ -18,9 +16,7 @@ options:
   commit_groups:
     title_maps:
       feat: New Features
-      new: New Features
       fix: Bug Fixes
-      perf: Performance Improvements
       refactor: Code Refactoring
       chore: Chores
       docs: Documentation
@@ -31,3 +27,6 @@ options:
       - Type
       - Scope
       - Subject
+  notes:
+    keywords:
+      - Extended Changelog

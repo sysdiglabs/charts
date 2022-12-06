@@ -6,6 +6,11 @@
 ### {{ .Title }}
 {{ range .Commits -}}
 - {{ if .Scope }}**{{ .Scope }}** [{{ end }}[{{.Hash.Short}}]({{ $.Info.RepositoryURL }}/commit/{{ .Hash.Long }})]: {{ .Subject }}
+{{- if .Notes -}}
+{{ range .Notes }}
+    * {{ .Body }}
+{{ end }}
+{{ end -}}
 {{ end -}}
 {{ end -}}
 {{ end -}}
