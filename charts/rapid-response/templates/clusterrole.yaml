@@ -18,8 +18,7 @@ rules:
       - 'storage.k8s.io'
     resources:
       - 'daemonsets'
-      - 'configmap'
-      - 'secrets'
+      - 'configmaps/secrets'
     verbs:
       - 'get'
       - 'list'
