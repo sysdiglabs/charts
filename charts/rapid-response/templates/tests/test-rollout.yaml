@@ -26,3 +26,64 @@ spec:
       - -w
       - --timeout={{ .Values.tests.timeout }}
   restartPolicy: Never
+
+---
+
+{{- if .Values.rbac.create  }}
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: {{ template "rapidResponse.fullname" .}}
+  labels:
+{{ include "rapidResponse.labels" . | indent 4 }}
+rules:
+  - apiGroups:
+      - ''
+      - 'rbac.authorization.k8s.io'
+      - 'extensions'
+      - 'apps'
+      - 'batch'
+      - 'networking.k8s.io'
+      - 'autoscaling'
+      - 'policy'
+      - 'storage.k8s.io'
+    resources:
+      - 'daemonsets'
+      - 'configmaps/secrets'
+    verbs:
+      - 'get'
+      - 'list'
+      - 'watch'
+{{- end }}
+
+---
+
+{{- if and .Values.rbac.create }}
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: {{ template "rapidResponse.fullname" .}}
+  labels:
+{{ include "rapidResponse.labels" . | indent 4 }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ template "rapidResponse.serviceAccountName" .}}
+    namespace: {{ .Release.Namespace }}
+roleRef:
+  kind: ClusterRole
+  name: {{ template "rapidResponse.fullname" .}}
+  apiGroup: rbac.authorization.k8s.io
+{{- end }}
+
+---
+
+{{- if .Values.serviceAccount.create }}
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ template "rapidResponse.serviceAccountName" .}}
+  namespace: {{ .Release.Namespace }}
+  labels:
+{{ include "rapidResponse.labels" . | indent 4 }}
+{{- end }}
+
