@@ -1,16 +1,16 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: "{{ include "kspmCollector.fullname" . }}-test-rollout"
+  name: "{{ include "rapidResponse.fullname" . }}-test-rollout"
   labels:
-    helm.sh/chart: {{ include "kspmCollector.chart" . }}
+    helm.sh/chart: {{ include "rapidResponse.chart" . }}
     app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
   annotations:
     "helm.sh/hook": test
     "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
 spec:
-  serviceAccountName: {{ include "kspmCollector.serviceAccountName" . }}
+  serviceAccountName: {{ include "rapidResponse.serviceAccountName" . }}
   containers:
     - name: kubectl
       image: {{ .Values.tests.image.repo }}:{{ .Values.tests.image.tag }}
@@ -20,9 +20,9 @@ spec:
       args:
       - rollout
       - status
-      - deployment/{{ include "kspmCollector.fullname" . }}
+      - daemonset/{{ include "rapidResponse.fullname" . }}
       - -n
-      - {{ include "kspmCollector.namespace" . }}
+      - {{ .Release.Namespace }}
       - -w
       - --timeout={{ .Values.tests.timeout }}
   restartPolicy: Never

@@ -164,3 +164,19 @@ rapidResponse:
     key: node-role.kubernetes.io/master
   - effect: NoSchedule
     key: node-role.kubernetes.io/control-plane
+
+rbac:
+  # true here enables creation of rbac resources
+  create: true
+
+serviceAccount:
+  # true here enables creation of service account
+  create: true
+  # Use this value as kspmCollectorServiceAccountName
+  name: "rapid-response"    
+
+tests:
+  timeout: 300s
+  image:
+    repo: bitnami/kubectl
+    tag: 1.24.4
