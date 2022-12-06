@@ -36,17 +36,13 @@ metadata:
   name: {{ template "rapidResponse.fullname" .}}
   labels:
 {{ include "rapidResponse.labels" . | indent 4 }}
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
 rules:
   - apiGroups:
       - ''
-      - 'rbac.authorization.k8s.io'
-      - 'extensions'
       - 'apps'
-      - 'batch'
-      - 'networking.k8s.io'
-      - 'autoscaling'
-      - 'policy'
-      - 'storage.k8s.io'
     resources:
       - 'daemonsets'
       - 'configmaps/secrets'
@@ -65,6 +61,9 @@ metadata:
   name: {{ template "rapidResponse.fullname" .}}
   labels:
 {{ include "rapidResponse.labels" . | indent 4 }}
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
 subjects:
   - kind: ServiceAccount
     name: {{ template "rapidResponse.serviceAccountName" .}}
@@ -85,5 +84,8 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
 {{ include "rapidResponse.labels" . | indent 4 }}
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
 {{- end }}
 
