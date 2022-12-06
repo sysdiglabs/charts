@@ -357,8 +357,6 @@ nodeAnalyzer:
 
     env: {}
 
-namespace: ""
-
 tests:
   timeout: 300s
   image:

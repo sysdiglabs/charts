@@ -4,7 +4,6 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: {{ .Release.Name }}-node-analyzer
-  namespace: {{ include "nodeAnalyzer.namespace" . }}
   labels:
     app.kubernetes.io/name: {{ include "nodeAnalyzer.name" . }}
 {{ include "daemonset.labels" . | indent 4 }}

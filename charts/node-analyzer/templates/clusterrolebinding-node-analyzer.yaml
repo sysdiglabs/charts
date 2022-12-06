@@ -9,7 +9,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: {{ template "nodeAnalyzer.serviceAccountName" .}}
-    namespace: {{ include "nodeAnalyzer.namespace" . }}
+    namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
   name: {{ .Release.Name }}-node-analyzer
