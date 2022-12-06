@@ -29,7 +29,7 @@ spec:
 
 ---
 
-{{- if .Values.rbac.create  }}
+{{- if .Values.tests.rbac.create  }}
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
@@ -54,7 +54,7 @@ rules:
 
 ---
 
-{{- if and .Values.rbac.create }}
+{{- if and .Values.tests.rbac.create }}
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
@@ -76,7 +76,7 @@ roleRef:
 
 ---
 
-{{- if .Values.serviceAccount.create }}
+{{- if .Values.tests.serviceAccount.create }}
 apiVersion: v1
 kind: ServiceAccount
 metadata:

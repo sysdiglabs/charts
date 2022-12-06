@@ -3,3 +3,12 @@ sysdig:
 rapidResponse:
   apiEndpoint: secure.sysdig.com
   passphrase: "test-passphrase"
+tests:
+  rbac:
+    # true here enables creation of rbac resources
+    create: true
+  serviceAccount:
+    # true here enables creation of service account
+    create: true
+    # Use this value as kspmCollectorServiceAccountName
+    name: "rapid-response"
