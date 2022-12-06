@@ -48,6 +48,9 @@ The following table lists the configurable parameters of the Sysdig Rapid Respon
 | `rapidResponse.sslVerifyCertificate`      | Set it to `false` for disabling the certificate verification                            | `true`                                                        |
 | `rapidResponse.tolerations`               | The tolerations for scheduling	                                                      | `node-role.kubernetes.io/master:NoSchedule`                   |
 |                                                                                                                                       `node-role.kubernetes.io/control-plane:NoSchedule`            |
+| `rbac.create`                             | If true, create & use RBAC resources                                                    | `true`   |
+| `serviceAccount.create`                   | Create serviceAccount                                                                   | `true`   |
+| `serviceAccount.name`                     | Use this value as serviceAccountName                                                    | ` `   |
 
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,

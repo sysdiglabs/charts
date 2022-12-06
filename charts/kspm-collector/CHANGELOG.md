@@ -1,3 +1,7 @@
+# v0.1.26
+### Minor changes
+* Add deployment test to kspm collector chart
+
 # v0.1.25
 ### Minor changes
 * Updated chart icon

@@ -2,6 +2,11 @@
 
 ## Change Log
 
+## v0.3.3
+### Minor changes
+* Add deployment test to rapid response chart
+* Adding serviceaccount template
+
 ## v0.3.2
 ### Minor changes
 * Updated chart icon

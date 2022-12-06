@@ -4,6 +4,16 @@
 
 This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## 1.5.9
+### Minor changes:
+* kspm-collector
+    * Add deployment test to kspm collector chart
+* node-analyzer
+    * Add deployment test to node analyzer chart
+* rapid-response
+    * Add deployment test to rapid response chart
+    * Adding serviceaccount template
+
 ## 1.5.8
 ### Minor changes:
 * Fixed notes failing when custom option is provided.
