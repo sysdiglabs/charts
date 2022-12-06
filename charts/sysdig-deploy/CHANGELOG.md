@@ -12,7 +12,6 @@ This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. Th
     * Add deployment test to node analyzer chart
 * rapid-response
     * Add deployment test to rapid response chart
-    * Adding serviceaccount template
 
 ## 1.5.8
 ### Minor changes:
