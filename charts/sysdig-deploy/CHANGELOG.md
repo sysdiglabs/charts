@@ -3,6 +3,11 @@
 ## Change Log
 
 This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
+## 1.5.11
+* node-analuzer
+  * namespace definition added
+* admission-controller
+  * priorityClass introduced for deployments
 
 ## 1.5.10
 * node-analyzer
