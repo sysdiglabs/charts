@@ -1,4 +1,4 @@
-# Chart: Cloud Connector
+# Chart: Cloud Bench
 
 All notable changes to this chart will be documented in this file.
 
@@ -10,13 +10,3 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
-
-# cloud-connector-0.16.22
-
-Features
-Disable bruteforce until explicitly specified
-
-# cloud-connector-0.7.16
-
-## Documentation
-- changelog addition
