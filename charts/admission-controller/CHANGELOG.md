@@ -4,6 +4,10 @@
 
 This file documents all notable changes to the Admission Controller Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v0.7.16
+### Minor changes
+* `priorityClassName` is optional for scanner and webhook deployments
+
 ## v0.7.15
 ### Minor changes
 * Bump inline scan service image version bump

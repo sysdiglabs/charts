@@ -116,6 +116,9 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.scanner.tolerations }}
+      {{- if .Values.scanner.priorityClassName }}
+      priorityClassName: "{{ .Values.scanner.priorityClassName }}"
+      {{- end }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}

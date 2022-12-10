@@ -136,6 +136,9 @@ spec:
       affinity:
         {{- toYaml . | nindent 8 }}
     {{- end }}
+    {{- if .Values.webhook.priorityClassName }}
+      priorityClassName: "{{ .Values.webhook.priorityClassName }}"
+    {{- end }}
     {{- with .Values.webhook.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}

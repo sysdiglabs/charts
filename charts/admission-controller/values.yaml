@@ -193,6 +193,9 @@ webhook:
   # Configure nodeSelector for scheduling for webhook
   nodeSelector: {}
 
+  # priorityClassName config for the webhook
+  priorityClassName:
+
   # Tolerations for scheduling for webhook
   tolerations: []
 
@@ -323,6 +326,9 @@ scanner:
 
   # Configure nodeSelector for scheduling for the scanner
   nodeSelector: {}
+
+  # priorityClassName config for the scanner
+  priorityClassName:
 
   # Tolerations for scheduling for the scanner
   tolerations: []

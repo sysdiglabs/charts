@@ -69,6 +69,8 @@ sysdig:
   # Alternatively, specify the name of a Kubernetes secret containing an 'access-key' entry
   existingAccessKeySecret: ""
 
+namespace: ""
+
 nodeAnalyzer:
   # Create node analyzer specific serviceAccount resource
   serviceAccount:
