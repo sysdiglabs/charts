@@ -1,3 +1,7 @@
+# v0.1.27
+### Minor changes
+* Bumped image tag to 1.15.0
+
 # v0.1.26
 ### Minor changes
 * Add deployment test to kspm collector chart
