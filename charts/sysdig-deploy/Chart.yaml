@@ -31,13 +31,13 @@ dependencies:
   - name: node-analyzer
     # repository: https://charts.sysdig.com
     repository: file://../node-analyzer
-    version: ~1.8.6
+    version: ~1.8.7
     alias: nodeAnalyzer
     condition: nodeAnalyzer.enabled
   - name: kspm-collector
     # repository: https://charts.sysdig.com
     repository: file://../kspm-collector
-    version: ~0.1.26
+    version: ~0.1.27
     alias: kspmCollector
     condition: global.kspm.deploy
   - name: rapid-response
