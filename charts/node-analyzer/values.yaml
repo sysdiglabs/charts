@@ -339,7 +339,7 @@ nodeAnalyzer:
     debug: false
     image:
       repository: sysdig/kspm-analyzer
-      tag: 1.13.0
+      tag: 1.14.0
       digest:
       pullPolicy: IfNotPresent
 
