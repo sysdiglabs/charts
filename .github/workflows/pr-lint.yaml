@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: morrisoncole/pr-lint-action@v1.7.0
         with:
-          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          repo-token: ${{ secrets.TOOLS_JENKINS_ADMIN_ACCESS_GITHUB_TOKEN }}
           title-regex: "^(\\w*)(?:\\(([\\w\\$\\.\\,\\-\\*\\s]*)\\))?\\:\\s?(.*)$"
           on-failed-regex-fail-action: false
           on-failed-regex-create-review: true
