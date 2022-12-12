@@ -1,15 +1,22 @@
-# Chart: sysdig-deploy
+# Chart: Sysdig Deploy
+
+All notable changes to this chart will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+Please note that it's automatically updated vía github actions.
+Manual edits are supported only below '## Change Log' and should be used
+exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
-
-This file documents all notable changes to Sysdig's sysdig-deploy Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
 ## 1.5.12
 * node-analyzer
   * bump version to fix CVEs
 * kspm-collector
   * bump version to fix CVEs
-  
+
 ## 1.5.11
 * node-analuzer
   * namespace definition added
