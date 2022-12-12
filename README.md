@@ -22,16 +22,58 @@ If you make changes to an existing chart, but do not change its version, nothing
 
 [Checklist to comply-with when doing the PR](./.github/PULL_REQUEST_TEMPLATE.md)
 
-- Title of the PR starts with chart name (e.g. [mychartname])
+- Title of the PR starts with type and scope, for more details check [Commit and PR tile guidelines](#commit-and-pr-tile-guidelines)
 - Chart Version bumped
 - Variables are documented in the README.md (or README.tpl in some charts)
-- Check GithubAction checks (like lint) to avoid merge-check stoppers 
+- Check GithubAction checks (like lint) to avoid merge-check stoppers
+- Changelogs and Release Notes are automated based on the commit messages using git-chglog
+
+#### Commit and PR tile guidelines
+In order to automatically generate a meaningful changelog PR titles must respect the following rules (the same title must be used when merging it)
+
+A Type must be specified, avalilable types are:
+- feat
+- fix
+- refactor
+- chore
+- docs
+
+A Scope should be always present, a few examples:
+- (agent)
+- (sysdig-deploy)
+- (agent,node-analyzer,sysdig-deploy)
+
+Full PR title example
+`feat(agent,node-analyzer,sysdig-deploy): add automated changelogs`
+
+#### Extended Changelog
+If necessary it is possible to add extended details to a changelog entry by adding a special section in the commit body.
+
+The custom section must start with `Extended Changelog:`, in order to instruct the rendering engine to stop and avoid capturing things like `Signed-off-by:` it is important to add `@@__CHGLOG_DELIMITER__@@` at the end of the section.
+
+Example
+```
+Extended Changelog: Fixed 21 CVEs in total, the ones with high or critical severity are:
+            * CVE-2022-1941
+            * CVE-2022-1996
+            * CVE-2022-27191
+            * CVE-2022-27664
+            * CVE-2022-29361
+            * CVE-2022-32149
+            * CVE-2022-3515
+            * CVE-2022-39237
+            * CVE-2022-40674
+@@__CHGLOG_DELIMITER__@@
+
+Signed-off-by: someone@sysdig.com
+```
+> **_NOTE:_**  While merging a PR with squash&merge the `Extended Changelog` section must be manually added to the body or the workflow won't be able to process it.
 
 #### - GithubAction Checks
 
-Make sure to comply with 
+Make sure to comply with
 
-- `lint` checks, running 
+- `lint` checks, running
     > $ make lint
 - `docs` autogeneration, based on `values.yaml`. this does only apply to charts with `README.tpl` templates (ex.: admission-controller)
    > $ make docs

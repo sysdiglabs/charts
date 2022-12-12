@@ -1,0 +1,32 @@
+style: github
+template: RELEASE.tpl.md
+info:
+  title: RELEASE
+  repository_url: https://github.com/sysdiglabs/charts
+options:
+  commits:
+    filters:
+      Type:
+        - feat
+        - fix
+        - refactor
+        - chore
+        - docs
+        - github_actions_ci
+  commit_groups:
+    title_maps:
+      feat: New Features
+      fix: Bug Fixes
+      refactor: Code Refactoring
+      chore: Chores
+      docs: Documentation
+      github_actions_ci: Ignored
+  header:
+    pattern: "^(\\w*)(?:\\(([\\w\\$\\.\\,\\-\\*\\s]*)\\))?\\:\\s?(.*)$"
+    pattern_maps:
+      - Type
+      - Scope
+      - Subject
+  notes:
+    keywords:
+      - Extended Changelog
