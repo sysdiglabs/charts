@@ -37,10 +37,10 @@ jobs:
         if: steps.dependent_files.outputs.any_changed == 'true'
         uses: peter-evans/create-pull-request@v4.2.0
         with:
-          title: "chore: update sysdig deploy chart made by github action"
+          title: "chore: Changes to update sysdig deploy chart made by github action"
           base: master
           delete-branch: true
           labels: automated PR
           token: ${{ secrets.TOOLS_JENKINS_ADMIN_ACCESS_GITHUB_TOKEN }}
           add-paths: charts/sysdig-deploy/Chart.yaml
-          commit-message: "github_actions_ci: Updating sysdig-deploy version"
+          commit-message: "chore: Updating sysdig-deploy version"
