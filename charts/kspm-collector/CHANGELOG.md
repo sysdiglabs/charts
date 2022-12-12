@@ -10,9 +10,6 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
-# v0.1.29
-### Minor changes
-* Fix port configmap numeric value
 
 # v0.1.28
 ### New Features
