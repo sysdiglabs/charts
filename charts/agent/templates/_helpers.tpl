@@ -318,3 +318,27 @@ Use global sysdig tags for agent
         {{- end -}}
     {{- end -}}
 {{- end -}}
+
+{{/*
+Determine agent log priority values
+*/}}
+{{- define "agent.logPriority" -}}
+    {{- if and .Values.logPriority (hasKey .Values.sysdig.settings "log") }}
+        {{- fail "Mutually exclusive options agent.logPriority and agent.sysdig.settings.log have been set" -}}
+    {{- else if (hasKey .Values.sysdig.settings "log") }}
+        {{- $logConfigString := "log:\n" }}
+        {{- if (hasKey .Values.sysdig.settings.log "console_priority") }}
+            {{- $consolePriority := .Values.sysdig.settings.log.console_priority }}
+            {{- $logConfigString = printf "%s  %s: %s" $logConfigString "console_priority" $consolePriority }}
+        {{- end }}
+        {{- if (hasKey .Values.sysdig.settings.log "file_priority") }}
+            {{- $filePriority := .Values.sysdig.settings.log.file_priority }}
+            {{- $logConfigString = printf "%s\n  %s: %s" $logConfigString "file_priority" $filePriority }}
+        {{- end }}
+        {{- $logConfigString }}
+    {{- else if .Values.logPriority }}
+        {{- $logConfigString := "log:\n" }}
+        {{- $logConfigString = printf "%s  console_priority: %s\n  file_priority: %s\n" $logConfigString .Values.logPriority .Values.logPriority }}
+        {{- $logConfigString }}
+    {{- end }}
+{{- end }}
