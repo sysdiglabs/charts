@@ -154,4 +154,4 @@ jobs:
               git commit -m "github_actions_ci: Update CHANGELOG and RELEASE-NOTES for ${chart_name}-${chart_version}"
           done
           # Push changes to the master branch.
-          git push origin "${GITHUB_REF##*/}":master
+          git push origin "${GITHUB_REF##*/}":master -f
