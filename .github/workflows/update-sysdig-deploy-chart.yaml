@@ -37,7 +37,7 @@ jobs:
         if: steps.dependent_files.outputs.any_changed == 'true'
         uses: peter-evans/create-pull-request@v4.2.0
         with:
-          title: Changes to update sysdig deploy chart made by github action
+          title: "chore: update sysdig deploy chart made by github action"
           base: master
           delete-branch: true
           labels: automated PR
