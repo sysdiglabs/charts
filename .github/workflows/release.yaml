@@ -140,6 +140,8 @@ jobs:
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
       - name: Commit CHANGELOG.md and RELEASE-NOTES.md
+        with:
+          token: ${{ secrets.TOOLS_JENKINS_ADMIN_ACCESS_GITHUB_TOKEN }}
         run: |
           released_charts_files="${{ needs.charts-to-release.outputs.modified-charts-files }}"
           echo "released_charts_files: ${released_charts_files}"
