@@ -3,6 +3,33 @@ entries:
   admission-controller:
   - apiVersion: v2
     appVersion: 3.9.14
+    created: "2022-12-12T08:23:39.86842781Z"
+    description: Sysdig Admission Controller using Sysdig Secure inline image scanner
+    digest: cbab1178494aaf466b213e83acb31843f8477c2cd757e57ab2b24136923319b9
+    home: https://sysdiglabs.github.io/admission-controller/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    maintainers:
+    - email: hayk.kocharyan@sysdig.com
+      name: hayk99
+    - email: irune.prado@sysdig.com
+      name: wideawakening
+    - email: ruben.eguiluz@sysdig.com
+      name: regiluze
+    - email: fede.barcelona@sysdig.com
+      name: tembleking
+    - email: david.gonzalez@sysdig.com
+      name: penguinjournals
+    - email: miguel.baztan@sysdig.com
+      name: miketnt
+    - email: javier.prieto@sysdig.com
+      name: jprieto92
+    name: admission-controller
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/admission-controller-0.7.17/admission-controller-0.7.17.tgz
+    version: 0.7.17
+  - apiVersion: v2
+    appVersion: 3.9.14
     created: "2022-12-10T00:46:01.356008287Z"
     description: Sysdig Admission Controller using Sysdig Secure inline image scanner
     digest: fae33aa05abac0b405fa70c41ed89bf924fec240062b1063d90d9a954005b7e2
@@ -2605,6 +2632,41 @@ entries:
   agent:
   - apiVersion: v2
     appVersion: 12.9.1
+    created: "2022-12-12T08:23:40.009325987Z"
+    description: Sysdig Monitor and Secure agent
+    digest: 2fe835652de0f23aa5af7a6534f5eee617ad5a409314a0f42e37474654665bf6
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: lachlan@deis.com
+      name: lachie83
+    - email: jorge.salamero@sysdig.com
+      name: bencer
+    - email: nestor.salceda@sysdig.com
+      name: nestorsalceda
+    - email: alvaro.iradier@sysdig.com
+      name: airadier
+    - email: carlos.arilla@sysdig.com
+      name: carillan81
+    - email: adam.roberts@sysdig.com
+      name: aroberts87
+    name: agent
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/agent-1.5.47/agent-1.5.47.tgz
+    version: 1.5.47
+  - apiVersion: v2
+    appVersion: 12.9.1
     created: "2022-11-30T22:01:28.227823425Z"
     description: Sysdig Monitor and Secure agent
     digest: 88ec773a0b078698e30505356f226e5dae169c9b905efff8a5a7b657f8df9f58
@@ -4671,6 +4733,23 @@ entries:
   cloud-bench:
   - apiVersion: v2
     appVersion: 0.1.0
+    created: "2022-12-12T08:23:40.141976896Z"
+    description: Sysdig Cloud Bench
+    digest: d5ea1ee9af5758722959750c70a1e65f90d579fc6fd4894845242d68918a61f0
+    home: https://sysdig.com
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    maintainers:
+    - email: yathindra.naik@sysdig.com
+      name: yathi-sysdig
+    - email: alvaro.iradier@sysdig.com
+      name: airadier
+    name: cloud-bench
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/cloud-bench-0.2.2/cloud-bench-0.2.2.tgz
+    version: 0.2.2
+  - apiVersion: v2
+    appVersion: 0.1.0
     created: "2022-01-10T16:03:49.475132745Z"
     description: Sysdig Cloud Bench
     digest: cd87fd7c3dfb426b15333061cee9217543e97b8b197cc7f961fee80b7f1fdd4c
@@ -4755,6 +4834,32 @@ entries:
     - https://github.com/sysdiglabs/charts/releases/download/cloud-bench-0.1.0/cloud-bench-0.1.0.tgz
     version: 0.1.0
   cloud-connector:
+  - apiVersion: v2
+    appVersion: 0.16.23
+    created: "2022-12-12T08:23:40.280521554Z"
+    description: Sysdig Cloud Connector
+    digest: e135aeb50214b992a2fecf8ad0cf8e9461d70c164c9e421161de7590904b1622
+    home: https://sysdiglabs.github.io/cloud-connector
+    maintainers:
+    - email: hayk.kocharyan@sysdig.com
+      name: hayk99
+    - email: fede.barcelona@sysdig.com
+      name: tembleking
+    - email: irune.prado@sysdig.com
+      name: wideawakening
+    - email: ruben.eguiluz@sysdig.com
+      name: regiluze
+    - email: david.gonzalez@sysdig.com
+      name: penguinjournals
+    - email: miguel.baztan@sysdig.com
+      name: miketnt
+    - email: javier.prieto@sysdig.com
+      name: jprieto92
+    name: cloud-connector
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/cloud-connector-0.7.20/cloud-connector-0.7.20.tgz
+    version: 0.7.20
   - apiVersion: v2
     appVersion: 0.16.23
     created: "2022-11-15T11:00:16.310968634Z"
@@ -5732,6 +5837,22 @@ entries:
   cloud-scanning:
   - apiVersion: v2
     appVersion: 0.11.3
+    created: "2022-12-12T08:23:40.417834201Z"
+    description: Sysdig Cloud Scanning
+    digest: b64dfe569176ddddd25444357b8ea4d9badfd4d7ef5350624ca181ef509b1dfc
+    home: https://sysdiglabs.github.io/cloud-connector
+    maintainers:
+    - email: alvaro.iradier@sysdig.com
+      name: airadier
+    - email: nestor.salceda@sysdig.com
+      name: nestorsalceda
+    name: cloud-scanning
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/cloud-scanning-0.3.2/cloud-scanning-0.3.2.tgz
+    version: 0.3.2
+  - apiVersion: v2
+    appVersion: 0.11.3
     created: "2022-01-10T16:03:49.644439856Z"
     description: Sysdig Cloud Scanning
     digest: c04e528f0add0973f37e1bb38ae4a2c135466745a8c491fba52bfc1cd16fb139
@@ -5984,6 +6105,23 @@ entries:
     - https://github.com/sysdiglabs/charts/releases/download/cspm-collector-0.0.1/cspm-collector-0.0.1.tgz
     version: 0.0.1
   harbor-scanner-sysdig-secure:
+  - apiVersion: v2
+    appVersion: 0.5.0
+    created: "2022-12-12T08:23:40.554951047Z"
+    description: Harbor Scanner for Sysdig Secure
+    digest: bf0aa1af68e97044e895154759d435564782fdb845e7a2786379711c6f2b4ec7
+    home: https://github.com/sysdiglabs/harbor-scanner-sysdig-secure
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    maintainers:
+    - email: nestor.salceda@sysdig.com
+      name: nestorsalceda
+    - email: alvaro.iradier@sysdig.com
+      name: airadier
+    name: harbor-scanner-sysdig-secure
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/harbor-scanner-sysdig-secure-0.3.5/harbor-scanner-sysdig-secure-0.3.5.tgz
+    version: 0.3.5
   - apiVersion: v2
     appVersion: 0.5.0
     created: "2022-11-30T12:31:33.433023691Z"
@@ -6327,6 +6465,30 @@ entries:
     - https://github.com/sysdiglabs/charts/releases/download/harbor-scanner-sysdig-secure-0.1.0/harbor-scanner-sysdig-secure-0.1.0.tgz
     version: 0.1.0
   kspm-collector:
+  - apiVersion: v2
+    appVersion: 1.15.0
+    created: "2022-12-12T08:23:40.685656439Z"
+    description: Sysdig KSPM collector
+    digest: 8682451cb407ead27805897824d0f650e14d4ce30b7791fd2a82e6e2d2a301c5
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: chen.shmilovich@sysdig.com
+      name: chen-shmilovich-sysdig
+    name: kspm-collector
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/kspm-collector-0.1.28/kspm-collector-0.1.28.tgz
+    version: 0.1.28
   - apiVersion: v2
     appVersion: 1.15.0
     created: "2022-12-11T14:46:15.892709855Z"
@@ -7000,6 +7162,40 @@ entries:
     - https://github.com/sysdiglabs/charts/releases/download/kspm-collector-0.1.0/kspm-collector-0.1.0.tgz
     version: 0.1.0
   node-analyzer:
+  - apiVersion: v2
+    appVersion: 12.6.0
+    created: "2022-12-12T08:23:40.841415241Z"
+    description: Sysdig Node Analyzer
+    digest: 8d30b0c671846677a625e082a616739ad3bc4c5e1a314c40cc34817aadda1376
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: lachlan@deis.com
+      name: lachie83
+    - email: jorge.salamero@sysdig.com
+      name: bencer
+    - email: nestor.salceda@sysdig.com
+      name: nestorsalceda
+    - email: alvaro.iradier@sysdig.com
+      name: airadier
+    - email: carlos.arilla@sysdig.com
+      name: carillan81
+    - email: yashgiri.goswami@sysdig.com
+      name: yashgiri
+    name: node-analyzer
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/node-analyzer-1.8.8/node-analyzer-1.8.8.tgz
+    version: 1.8.8
   - apiVersion: v2
     appVersion: 12.6.0
     created: "2022-12-11T14:50:03.863826427Z"
@@ -9757,6 +9953,32 @@ entries:
   rapid-response:
   - apiVersion: v2
     appVersion: 0.3.6
+    created: "2022-12-12T08:23:40.964891073Z"
+    description: Sysdig Rapid Response
+    digest: f75851ad5239866e082febfd845d07c864cb5516db591ce82af32c25b3e74da9
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: adam.roberts@sysdig.com
+      name: aroberts87
+    - email: daniele.delorenzi@sysdig.com
+      name: dark-vex
+    name: rapid-response
+    sources:
+    - https://github.com/sysdiglabs/charts/
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/rapid-response-0.3.4/rapid-response-0.3.4.tgz
+    version: 0.3.4
+  - apiVersion: v2
+    appVersion: 0.3.6
     created: "2022-12-06T18:32:48.824737431Z"
     description: Sysdig Rapid Response
     digest: 24adf916a081f2cc08036d2d52684cd1b682138f7bf90e556e234edef104a1b3
@@ -10198,6 +10420,35 @@ entries:
     - https://github.com/sysdiglabs/charts/releases/download/rapid-response-0.1.0/rapid-response-0.1.0.tgz
     version: 0.1.0
   registry-scanner:
+  - apiVersion: v2
+    appVersion: 0.2.0
+    created: "2022-12-12T08:23:41.111686399Z"
+    description: Sysdig Registry Scanner
+    digest: 567400c57fec46c532d00e218aa0213995126d1d07d6c354c6d37908e4d5488d
+    home: https://sysdiglabs.github.io/registry-scanner/
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    maintainers:
+    - email: alvaro.iradier@sysdig.com
+      name: airadier
+    - email: hayk.kocharyan@sysdig.com
+      name: hayk99
+    - email: irune.prado@sysdig.com
+      name: wideawakening
+    - email: ruben.eguiluz@sysdig.com
+      name: regiluze
+    - email: fede.barcelona@sysdig.com
+      name: tembleking
+    - email: david.gonzalez@sysdig.com
+      name: penguinjournals
+    - email: miguel.baztan@sysdig.com
+      name: miketnt
+    - email: javier.prieto@sysdig.com
+      name: jprieto92
+    name: registry-scanner
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/registry-scanner-0.1.1/registry-scanner-0.1.1.tgz
+    version: 0.1.1
   - apiVersion: v2
     appVersion: 0.2.0
     created: "2022-12-05T15:53:37.373529173Z"
@@ -10797,6 +11048,38 @@ entries:
     - https://github.com/sysdiglabs/charts/releases/download/registry-scanner-0.0.1/registry-scanner-0.0.1.tgz
     version: 0.0.1
   sysdig:
+  - apiVersion: v1
+    appVersion: 12.9.1
+    created: "2022-12-12T08:23:41.262179957Z"
+    description: Sysdig Monitor and Secure agent
+    digest: 882e5b80bd997ee602339ee1aeb5ff7692559571dfa8eb545a5a4d5b37ed5c39
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: lachlan@deis.com
+      name: lachie83
+    - email: jorge.salamero@sysdig.com
+      name: bencer
+    - email: nestor.salceda@sysdig.com
+      name: nestorsalceda
+    - email: alvaro.iradier@sysdig.com
+      name: airadier
+    - email: carlos.arilla@sysdig.com
+      name: carillan81
+    name: sysdig
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/sysdig-1.15.61/sysdig-1.15.61.tgz
+    version: 1.15.61
   - apiVersion: v1
     appVersion: 12.9.1
     created: "2022-12-06T19:53:01.176434339Z"
@@ -21842,6 +22125,20 @@ entries:
   sysdig-mcm-navmenu:
   - apiVersion: v1
     appVersion: 1.0.0
+    created: "2022-12-12T08:23:41.57013483Z"
+    description: Sysdig IBM MCM Nav Menu integration
+    digest: a0df9200cb42b07cc6fe7cfba5a827c82bf261674cb4b83ed4e76820bb4f9a21
+    home: https://www.sysdig.com/
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    maintainers:
+    - email: alvaro.iradier@sysdig.com
+      name: airadier
+    name: sysdig-mcm-navmenu
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/sysdig-mcm-navmenu-1.0.3/sysdig-mcm-navmenu-1.0.3.tgz
+    version: 1.0.3
+  - apiVersion: v1
+    appVersion: 1.0.0
     created: "2020-05-29T22:07:45.059736132Z"
     description: Sysdig IBM MCM Nav Menu integration
     digest: cb656dce09e64586ad5ac4977c35bf2cdb759629dacf1af1ea8c2e1bcaeddc4f
@@ -21877,6 +22174,34 @@ entries:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-mcm-navmenu-1.0.0/sysdig-mcm-navmenu-1.0.0.tgz
     version: 1.0.0
   sysdig-stackdriver-bridge:
+  - apiVersion: v1
+    appVersion: 0.0.7
+    created: "2022-12-12T08:23:41.733722397Z"
+    description: Sysdig Monitor and Secure agent
+    digest: 02e0c762ca8059cb4c6d3691b44ed85791ffce711dddd5b7d25529e2ca077de2
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: jorge.salamero@sysdig.com
+      name: bencer
+    - email: nestor.salceda@sysdig.com
+      name: nestorsalceda
+    - email: scott@echoboomer.net
+      name: echoboomer
+    name: sysdig-stackdriver-bridge
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.1.3/sysdig-stackdriver-bridge-1.1.3.tgz
+    version: 1.1.3
   - apiVersion: v1
     appVersion: 0.0.7
     created: "2022-11-30T12:31:34.257480996Z"
@@ -21989,4 +22314,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2022-12-12T07:56:41.942186073Z"
+generated: "2022-12-12T08:23:41.738593738Z"
