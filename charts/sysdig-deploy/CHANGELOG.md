@@ -17,17 +17,17 @@ exclusively to fix incorrect entries and not to add new ones.
 * [ef50eb8](https://github.com/sysdiglabs/charts/commit/ef50eb8d34c3d8e6c4dc33f3b508efb3ccdce907)
 # v1.5.15
 ### Chores
-* [b67804c](https://github.com/sysdiglabs/charts/commit/b67804c5ffc51ebba438aeb1380b8f160d810c9b)]: Changes to update sysdig deploy chart made by github action ([#803](https://github.com/sysdiglabs/charts/issues/803))
+* [b67804c](https://github.com/sysdiglabs/charts/commit/b67804c5ffc51ebba438aeb1380b8f160d810c9b): Changes to update sysdig deploy chart made by github action ([#803](https://github.com/sysdiglabs/charts/issues/803))
 ### Others
 * [f697f80](https://github.com/sysdiglabs/charts/commit/f697f806dcde52c9c84c86b32cc832da4e477878)
 # v1.5.14
 ### Bug Fixes
-* [c830967](https://github.com/sysdiglabs/charts/commit/c8309676d4418d078d933d4ac21887edaaf33abf)]: fix changelog entry ([#795](https://github.com/sysdiglabs/charts/issues/795))
+* [c830967](https://github.com/sysdiglabs/charts/commit/c8309676d4418d078d933d4ac21887edaaf33abf): fix changelog entry ([#795](https://github.com/sysdiglabs/charts/issues/795))
 # v1.5.13
 ### Chores
-* [f69a9c1](https://github.com/sysdiglabs/charts/commit/f69a9c10aa03dc0ec9e20d6d4dae762225046a23)]: Updating sysdig-deploy version ([#794](https://github.com/sysdiglabs/charts/issues/794))
+* [f69a9c1](https://github.com/sysdiglabs/charts/commit/f69a9c10aa03dc0ec9e20d6d4dae762225046a23): Updating sysdig-deploy version ([#794](https://github.com/sysdiglabs/charts/issues/794))
 ### New Features
-* [f4cb189](https://github.com/sysdiglabs/charts/commit/f4cb189afba6833fd458f99dcfcc0121f9d9dfa2)]: unify changelog headers ([#787](https://github.com/sysdiglabs/charts/issues/787))
+* [f4cb189](https://github.com/sysdiglabs/charts/commit/f4cb189afba6833fd458f99dcfcc0121f9d9dfa2): unify changelog headers ([#787](https://github.com/sysdiglabs/charts/issues/787))
 
 ## 1.5.12
 * node-analyzer
