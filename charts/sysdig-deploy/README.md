@@ -195,7 +195,7 @@ The following table lists the configurable parameters of this chart and their de
 | `nodeAnalyzer.secure.enabled`           | Enable Sysdig Secure                                                                                                    | `true`    |
 | `nodeAnalyzer.secure.vulnerabilityManagement.newEngineOnly` | Enable only the new vulnerability management engine                                                 | `false`   |
 | `nodeAnalyzer.nodeAnalyzer.apiEndpoint` | nodeAnalyzer apiEndpoint                                                                                                | `""`      |
-| `nodeAnalyzer.nodeAnalyzer.benchmarkRunner.deploy` | Deploy the Runtime Scanner                                                                                   | `true`   |
+| `nodeAnalyzer.nodeAnalyzer.benchmarkRunner.deploy` | Deploy the Benchmark Runner Scanner                                                                          | `true`   |
 | `nodeAnalyzer.nodeAnalyzer.runtimeScanner.deploy` | Deploy the Runtime Scanner                                                                                    | `false`   |
 | `kspmCollector`                         | Config specific to the [Sysdig KSPM Collector](#kspm-collector)                                                         | `{}`      |
 | `kspmCollector.apiEndpoint`             | kspmCollector apiEndpoint                                                                                               | `""`      |
