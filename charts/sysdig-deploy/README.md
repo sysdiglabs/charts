@@ -168,7 +168,7 @@ helm upgrade -n sysdig-agent sysdig sysdig/sysdig-deploy -f values.sysdig.yaml
 
 ## Configuration
 
-The following table lists the configurable parameters of this chart and their default values.
+The following table lists the configurable parameters of this chart and their default values, it is indicate and is not complete. If you are looking for more advanced configuration values, those are available in the documentation of the admission-controller, agent, node-analyzer, kspm-collector and rapid-response charts.
 
 | Parameter                               | Description                                                                                                             | Default   |
 | --------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | --------- |
@@ -192,7 +192,11 @@ The following table lists the configurable parameters of this chart and their de
 | `agent.enabled`                         | Enable the agent component in this chart                                                                                | `true`    |
 | `nodeAnalyzer`                          | Config specific to the [Sysdig nodeAnalyzer](#nodeanalyzer)                                                             | `{}`      |
 | `nodeAnalyzer.enabled`                  | Enable the nodeAnalyzer component in this chart                                                                         | `true`    |
+| `nodeAnalyzer.secure.enabled`           | Enable Sysdig Secure                                                                                                    | `true`    |
+| `nodeAnalyzer.secure.vulnerabilityManagement.newEngineOnly` | Enable only the new vulnerability management engine                                                 | `false`   |
 | `nodeAnalyzer.nodeAnalyzer.apiEndpoint` | nodeAnalyzer apiEndpoint                                                                                                | `""`      |
+| `nodeAnalyzer.nodeAnalyzer.benchmarkRunner.deploy` | Deploy the Runtime Scanner                                                                                   | `true`   |
+| `nodeAnalyzer.nodeAnalyzer.runtimeScanner.deploy` | Deploy the Runtime Scanner                                                                                    | `false`   |
 | `kspmCollector`                         | Config specific to the [Sysdig KSPM Collector](#kspm-collector)                                                         | `{}`      |
 | `kspmCollector.apiEndpoint`             | kspmCollector apiEndpoint                                                                                               | `""`      |
 | `rapidResponse`                         | Config specific to [Sysdig Rapid Response](#rapid-response)                                                             | `{}`      |
