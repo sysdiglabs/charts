@@ -6494,6 +6494,30 @@ entries:
   kspm-collector:
   - apiVersion: v2
     appVersion: 1.15.0
+    created: "2022-12-13T07:49:08.461938308Z"
+    description: Sysdig KSPM collector
+    digest: e9b1a218f365b4f7d912a4d7be71c6d8e3863a9c08574030d7a18b25f622feb4
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: chen.shmilovich@sysdig.com
+      name: chen-shmilovich-sysdig
+    name: kspm-collector
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/kspm-collector-0.1.29/kspm-collector-0.1.29.tgz
+    version: 0.1.29
+  - apiVersion: v2
+    appVersion: 1.15.0
     created: "2022-12-12T08:23:40.685656439Z"
     description: Sysdig KSPM collector
     digest: 8682451cb407ead27805897824d0f650e14d4ce30b7791fd2a82e6e2d2a301c5
@@ -22467,4 +22491,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2022-12-13T07:48:19.830776142Z"
+generated: "2022-12-13T07:49:08.463403813Z"
