@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.7.19
+### New Features
+* **admission-controller** [a0949f3](https://github.com/sysdiglabs/charts/commit/a0949f335d2735c0a646041adab3dbb3e46f1e51): Reuse TLS secret on upgrade ([#808](https://github.com/sysdiglabs/charts/issues/808))
 # v0.7.18
 ### New Features
 * **admission-controller** [[c91349e](https://github.com/sysdiglabs/charts/commit/c91349e46428f4f615808a83c3c2ebcb5221a6b2)]: Update AC to 3.9.15 ([#802](https://github.com/sysdiglabs/charts/issues/802))
