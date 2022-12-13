@@ -1,5 +1,6 @@
 # What's Changed
 
-### New Features
-- [f4cb189](https://github.com/sysdiglabs/charts/commit/f4cb189afba6833fd458f99dcfcc0121f9d9dfa2)]: unify changelog headers ([#787](https://github.com/sysdiglabs/charts/issues/787))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.1.27...kspm-collector-0.1.28
+### Bug Fixes
+- **kspm-collector** [[7c70012](https://github.com/sysdiglabs/charts/commit/7c700124693d3e143eac25fbc3c6b93c01ab5ba3)]: Fix numeric port on configmap
+
+#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.1.28...kspm-collector-0.1.29
