@@ -27,5 +27,7 @@ data:
   {{- end -}}
   {{- if (.Values.noProxy | default .Values.global.proxy.noProxy) }}
   no_proxy: {{ .Values.noProxy | default .Values.global.proxy.noProxy }}
-  agent_port: {{ .Values.port }}
+  {{- end -}}
+  {{- if .Values.port }}
+  agent_port: {{ .Values.port | quote }}
   {{- end -}}

@@ -75,3 +75,4 @@ metadata:
 data:
   tls.crt: {{ $certList._0 }}
   tls.key: {{ $certList._1 }}
+  ca.crt: {{ $certList._2 }}

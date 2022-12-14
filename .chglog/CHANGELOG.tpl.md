@@ -7,7 +7,7 @@
 {{- if not (eq "Ignored" .Title ) -}}
 ### {{ .Title }}
 {{ range .Commits -}}
-* {{ if .Scope }}**{{ .Scope }}** [{{ end }}[{{.Hash.Short}}]({{ $.Info.RepositoryURL }}/commit/{{ .Hash.Long }})]: {{ .Subject }}
+* {{ if .Scope }}**{{ .Scope }}** {{ end }}[{{.Hash.Short}}]({{ $.Info.RepositoryURL }}/commit/{{ .Hash.Long }}): {{ .Subject }}
 {{ if .Notes -}}
 {{ range .Notes }}
     * {{ .Body }}
