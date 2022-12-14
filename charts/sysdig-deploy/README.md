@@ -168,7 +168,7 @@ helm upgrade -n sysdig-agent sysdig sysdig/sysdig-deploy -f values.sysdig.yaml
 
 ## Configuration
 
-The following table lists the configurable parameters of this chart and their default values, it is indicate and is not complete. If you are looking for more advanced configuration values, those are available in the documentation of the admission-controller, agent, node-analyzer, kspm-collector and rapid-response charts.
+The following table lists the configurable parameters of this chart and their default values, it is indicative and contains only the most commonly used parameters. If you are looking for more advanced configuration values, those are available in the documentation of the admission-controller, agent, node-analyzer, kspm-collector and rapid-response charts.
 
 | Parameter                               | Description                                                                                                             | Default   |
 | --------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | --------- |
