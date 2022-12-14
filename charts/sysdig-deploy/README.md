@@ -168,7 +168,8 @@ helm upgrade -n sysdig-agent sysdig sysdig/sysdig-deploy -f values.sysdig.yaml
 
 ## Configuration
 
-The following table lists the configurable parameters of this chart and their default values, it is indicative and contains only the most commonly used parameters. If you are looking for more advanced configuration values, those are available in the documentation of the admission-controller, agent, node-analyzer, kspm-collector and rapid-response charts.
+
+The following table lists the configurable parameters of the sysdig-deploy chart and their default values. The sysdig-deploy chart itself only has select parameters that are used by multiple subcharts, and those are used to enable/disable selected subcharts. If you need additional configuration values, those are available in the various READMEs of the individual subcharts ([admission-controller](https://charts.sysdig.com/charts/admission-controller/), [agent](https://charts.sysdig.com/charts/agent/), [node-analyzer](https://charts.sysdig.com/charts/node-analyzer/), [kspm-collector](https://charts.sysdig.com/charts/kspm-collector/) and [rapid-response](https://charts.sysdig.com/charts/rapid-response/)).
 
 | Parameter                               | Description                                                                                                             | Default   |
 | --------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | --------- |
