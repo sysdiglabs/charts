@@ -36,7 +36,7 @@ $ helm install --namespace sysdig-agent sysdig-agent --set sysdig.accessKey=YOUR
 To find the values:
 
 - YOUR-KEY-HERE: This is the agent access key. You can retrieve this from Settings > Agent Installation in the Sysdig UI.
-- COLLECTOR_HOST and COLLECTOR_PORT: These values are region-dependent in SaaS and is auto-completed on the Get Started page in the UI. (They are custom values in on-prem installations.)
+- COLLECTOR_HOST and COLLECTOR_PORT: These values are region-dependent in SaaS and is auto-completed in install snippets in the UI. (They are custom values in on-prem installations.)
 
 After a few seconds, you should see hosts and containers appearing in Sysdig Monitor and Sysdig Secure.
 
