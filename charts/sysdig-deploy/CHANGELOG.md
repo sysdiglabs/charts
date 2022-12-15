@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.5.19
+### Chores
+* [6036b4f](https://github.com/sysdiglabs/charts/commit/6036b4fb5b8cf5ec0d2b4185076eb187a4efcb3f): Changes to update sysdig deploy chart made by github action ([#816](https://github.com/sysdiglabs/charts/issues/816))
 # v1.5.18
 ### Chores
 * [85f65d1](https://github.com/sysdiglabs/charts/commit/85f65d19456d815e1144dd18d08fd73de2584c74): Changes to update sysdig deploy chart made by github action ([#812](https://github.com/sysdiglabs/charts/issues/812))
