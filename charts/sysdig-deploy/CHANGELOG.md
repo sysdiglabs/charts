@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.5.21
+### Chores
+* [a83f837](https://github.com/sysdiglabs/charts/commit/a83f837e86c807567c9fbcec598406e1e81da323): Changes to update sysdig deploy chart made by github action ([#817](https://github.com/sysdiglabs/charts/issues/817))
 # v1.5.20
 ### Bug Fixes
 * **sysdig-deploy** [92c7949](https://github.com/sysdiglabs/charts/commit/92c7949fe19fad2ed4036e14d2a0d243f0be0c50): Chart documentation fix values missing from configuration but referenced in examples ([#811](https://github.com/sysdiglabs/charts/issues/811))
