@@ -1,0 +1,75 @@
+suite: Test agent log priority flag configurations
+templates:
+  - templates/configmap.yaml
+tests:
+  - it: Checking default values
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - notMatchRegex:
+          path: data.dragent\.yaml
+          pattern: .*log:\n(?:(?:\s+console_priority:\s*(?:debug|info))|(?:\s+file_priority:\s*(?:debug|info)\n)){1,2}.*
+      - notMatchRegex:
+          path: data.dragent\.yaml
+          pattern: .*log:.*
+
+  - it: Setting logPriority
+    set:
+      logPriority: debug
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: .*log:\n(?:(?:\s+console_priority:\s*debug)|(?:\s+file_priority:\s*debug)){2}.*
+
+  - it: Set console_priority
+    set:
+      sysdig:
+        settings:
+          log:
+            console_priority: debug
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: .*log:\n(?:\s+console_priority:\s*debug).*
+
+  - it: Set file_priority
+    set:
+      sysdig:
+        settings:
+          log:
+            file_priority: debug
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: .*log:\n(?:\s+file_priority:\s*debug).*
+
+  - it: Set console_priority and file_priority
+    set:
+      sysdig:
+        settings:
+          log:
+            console_priority: debug
+            file_priority: info
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: .*log:\n(?:(?:\s+console_priority:\s*debug)|(?:\s+file_priority:\s*info)){2}.*
+
+  - it: Verify user cannot specify sysdig.settings.log and logPriority simultaneously
+    set:
+      sysdig:
+        settings:
+          log:
+            console_priority: debug
+      logPriority: info
+    asserts:
+      - failedTemplate:
+          errorMessage: 'Mutually exclusive options agent.logPriority and agent.sysdig.settings.log have been set'

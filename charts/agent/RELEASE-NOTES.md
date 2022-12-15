@@ -1,5 +1,6 @@
 # What's Changed
 
-### New Features
-- [f4cb189](https://github.com/sysdiglabs/charts/commit/f4cb189afba6833fd458f99dcfcc0121f9d9dfa2)]: unify changelog headers ([#787](https://github.com/sysdiglabs/charts/issues/787))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.5.46...agent-1.5.47
+### Chores
+- **agent** [ede1c8e](https://github.com/sysdiglabs/charts/commit/ede1c8ebcacbf315814a272eb39f68150e1cc979): bump agent version to 12.10.0 ([#815](https://github.com/sysdiglabs/charts/issues/815))
+
+#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.5.48...agent-1.5.49

@@ -19,7 +19,7 @@ image:
 
   registry: quay.io
   repository: sysdig/agent
-  tag: 12.9.1
+  tag: 12.10.0
   # Specify a imagePullPolicy
   # Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
   # ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -255,6 +255,9 @@ tolerations:
 
 leaderelection:
   enable: false
+
+# Allow direct setting of Agent log priority levels for console and file logs (info|debug)
+logPriority:
 
 tests:
   timeout: 300s
