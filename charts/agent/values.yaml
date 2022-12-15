@@ -246,6 +246,15 @@ extraVolumes:
   #     - mountPath: /opt/draios/secret
   #       name: sysdig-new-secret
 
+extraSecrets: []
+  # Allow passing extra secrets that can be mounted via extraVolumes
+  #
+  # extraSecrets:
+  #   - name: sysdig-new-secret
+  #     data:
+  #       sysdig-new-password-key1: bXlwYXNzd29yZA==
+  #       sysdig-new-password-key2: bXlwYXNzd29yZA==
+
 # Allow sysdig to run on Kubernetes 1.6 masters.
 tolerations:
   - effect: NoSchedule
