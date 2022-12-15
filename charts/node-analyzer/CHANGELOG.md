@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.8.10
+### Documentation
+* **node-analyzer** [1e0fb04](https://github.com/sysdiglabs/charts/commit/1e0fb04e90d6c88d22e3811fd312a8cf2378f26a): adding the new container and host scanner ([#797](https://github.com/sysdiglabs/charts/issues/797))
 # v1.8.8
 ### New Features
 * [f4cb189](https://github.com/sysdiglabs/charts/commit/f4cb189afba6833fd458f99dcfcc0121f9d9dfa2)]: unify changelog headers ([#787](https://github.com/sysdiglabs/charts/issues/787))
