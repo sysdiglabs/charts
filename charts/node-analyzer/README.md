@@ -223,7 +223,7 @@ $ helm install --namespace nodeanalyzer node-analyzer -f values.yaml sysdig/node
 
 The Node Analyzer is deployed by default unless you set the value `nodeAnalyzer.deploy` to `false`.
 
-The Node Analyzer daemonset contains three containers, each providing a specific functionality. This daemonset replaces
+The Node Analyzer daemonset contains five containers, each providing a specific functionality. This daemonset replaces
 the (deprecated) Node Image Analyzer daemonset.
 
 See the [Node Analyzer installation documentation](https://docs.sysdig.com/en/node-analyzer--multi-feature-installation.html)
@@ -231,7 +231,21 @@ for details about installation, and
 [Running Node Analyzer Behind a Proxy](https://docs.sysdig.com/en/docs/installation/node-analyzer-multi-feature-installation/#running-node-analyzer-behind-a-proxy)
 for proxy settings.
 
-### Node Image Analyzer
+### Runtime Scanner
+
+See the [Vulnerability -> Runtime documentation](https://docs.sysdig.com/en/docs/sysdig-secure/vulnerabilities/runtime/#why-runtime-scanning) for details about Runtime vulnerability management feature.
+
+The Runtime scanner will automatically observe and report on all the Runtime workloads, keeping a close-to-real time view of images and workloads executing on the different Kubernetes scopes of your infrastructure.
+Perform periodic re-scans, guaranteeing that the vulnerabilities associated with the Runtime workloads and images are up-to-date with the latest vulnerabilities feed databases. It will automatically match a newly reported vulnerability to your runtime workloads without requiring any additional user interaction.
+
+### Host Scanner
+
+See the [Vulnerability -> Runtime, Host scanning documentation](https://docs.sysdig.com/en/docs/sysdig-secure/vulnerabilities/runtime/#host-scanning) for details about Runtime vulnerability management feature for Hosts.
+
+The Host scanner will automatically analyze the software packages installed, and show the scan results in the Runtime view page.
+Perform periodic re-scans, guaranteeing that the vulnerabilities associated with the software packages installed are up-to-date with the latest vulnerabilities feed databases. It will automatically match a newly reported vulnerability to your hosts without requiring any additional user interaction.
+
+### Node Image Analyzer (Legacy)
 
 See the [Image Analyzer Configmap Options](https://docs.sysdig.com/en/docs/installation/node-analyzer-multi-feature-installation/#image-analyzer-configmap-options)
 for details about the available options, and
@@ -245,7 +259,7 @@ On container start-up, the analyzer scans all pre-existing running images presen
 scan any new image that enters a running state in the node. It will scan each image once, then forward the results to
 the Sysdig Secure scanning backend. Image metadata and the full scan report is then available in the Sysdig Secure UI.
 
-### Host Analyzer
+### Host Analyzer (Legacy)
 
 See the [Host Scanning Configuration Options](https://docs.sysdig.com/en/docs/installation/node-analyzer-multi-feature-installation/#host-scanning-configuration-options)
 for details about installation options, and
