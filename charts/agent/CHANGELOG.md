@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.5.52
+### Bug Fixes
+* **agent** [ea56818](https://github.com/sysdiglabs/charts/commit/ea568182894e0803d92a9051bcd500792ee6bee2): Fix agent logPriority rendering ([#824](https://github.com/sysdiglabs/charts/issues/824))
 # v1.5.51
 ### Bug Fixes
 * **agent** [751015b](https://github.com/sysdiglabs/charts/commit/751015b713b0bd3a9a738f8e47d72cfe2167e70e): fix region us3 endpoints for agent and sysdig-deploy ([#823](https://github.com/sysdiglabs/charts/issues/823))
