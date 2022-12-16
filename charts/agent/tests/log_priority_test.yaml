@@ -21,7 +21,7 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data.dragent\.yaml
-          pattern: .*log:\n(?:(?:\s+console_priority:\s*debug)|(?:\s+file_priority:\s*debug)){2}.*
+          pattern: log:\n\s{2}console_priority:\sdebug\n\s+file_priority:\sdebug
 
   - it: Set console_priority
     set:
@@ -34,7 +34,7 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data.dragent\.yaml
-          pattern: .*log:\n(?:\s+console_priority:\s*debug).*
+          pattern: log:\n\s{2}console_priority:\sdebug
 
   - it: Set file_priority
     set:
@@ -47,7 +47,7 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data.dragent\.yaml
-          pattern: .*log:\n(?:\s+file_priority:\s*debug).*
+          pattern: log:\n\s{2}file_priority:\sdebug
 
   - it: Set console_priority and file_priority
     set:
@@ -61,7 +61,7 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data.dragent\.yaml
-          pattern: .*log:\n(?:(?:\s+console_priority:\s*debug)|(?:\s+file_priority:\s*info)){2}.*
+          pattern: log:\n\s{2}console_priority:\sdebug\n\s{2}file_priority:\sinfo
 
   - it: Verify user cannot specify sysdig.settings.log and logPriority simultaneously
     set:
@@ -72,4 +72,31 @@ tests:
       logPriority: info
     asserts:
       - failedTemplate:
-          errorMessage: 'Mutually exclusive options agent.logPriority and agent.sysdig.settings.log have been set'
+          errorMessage: 'Cannot set logPriority when either sysdig.settings.log.console_priority or sysdig.settings.log.file_priority are set'
+
+  - it: Verify log settings are rendered when no log priority values are given
+    set:
+      sysdig:
+        settings:
+          log:
+            max_size: 100
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: log:\n\s{2}max_size:\s100
+
+  - it: Verify other log settings are rendered when logPriority is set
+    set:
+      sysdig:
+        settings:
+          log:
+            max_size: 100
+      logPriority: debug
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: log:\n\s{2}console_priority:\sdebug\n\s{2}file_priority:\sdebug\n\s{2}max_size:\s100
