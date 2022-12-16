@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.15.63
+### New Features
+* **sysdig** [ef5afd9](https://github.com/sysdiglabs/charts/commit/ef5afd9ed9a041a6af0464f55467f82e034fe05c): add extra secrets ([#820](https://github.com/sysdiglabs/charts/issues/820))
 # v1.15.62
 ### Chores
 * **sysdig** [0e014c2](https://github.com/sysdiglabs/charts/commit/0e014c2a2ebd285edd0e9c45422df6d98827cfc4): bump agent version to 12.10.0 ([#814](https://github.com/sysdiglabs/charts/issues/814))
