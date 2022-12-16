@@ -32,7 +32,7 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data.dragent\.yaml
-          pattern: .*ingest\.us3\.app\.sysdig\.com.*
+          pattern: .*ingest\.us3\.sysdig\.com.*
 
   - it: Checking region 'us4'
     set:
