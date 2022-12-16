@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.5.24
+### Chores
+* [7232fc2](https://github.com/sysdiglabs/charts/commit/7232fc26952f93d3f2a8bd9618ff309e659043dd): Changes to update sysdig deploy chart made by github action ([#825](https://github.com/sysdiglabs/charts/issues/825))
 # v1.5.23
 ### Bug Fixes
 * **agent** [751015b](https://github.com/sysdiglabs/charts/commit/751015b713b0bd3a9a738f8e47d72cfe2167e70e): fix region us3 endpoints for agent and sysdig-deploy ([#823](https://github.com/sysdiglabs/charts/issues/823))
