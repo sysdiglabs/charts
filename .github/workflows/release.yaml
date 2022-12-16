@@ -6,7 +6,7 @@ on:
       - master
 
 env:
-  GITHUB_USERNAME: jenkins
+  GITHUB_USERNAME: draios-jenkins
 
 jobs:
   charts-to-release:
