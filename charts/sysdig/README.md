@@ -142,6 +142,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `prometheus.yaml`                                                    | prometheus.yaml content to configure metric collection: relabelling and filtering        | ` `                                                                            |
 | `extraVolumes.volumes`                                               | Additional volumes to mount in the sysdig agent to pass new secrets or configmaps        | `[]`                                                                           |
 | `extraVolumes.mounts`                                                | Mount points for additional volumes                                                      | `[]`                                                                           |
+| `extraSecrets`                                                       | Allow passing extra secrets that can be mounted via extraVolumes                         | `[]`                                                                           |
 | `kspm.deploy`                                                        | Enables Sysdig KSPM node analyzer & KSPM collector                                       | `false`                                                                        |
 | `nodeAnalyzer.deploy`                                                | Deploy the Node Analyzer                                                                 | `true`                                                                         |
 | `nodeAnalyzer.apiEndpoint`                                           | Sysdig secure API endpoint, without protocol (i.e. `secure.sysdig.com`)                  | ` `                                                                            |
@@ -710,6 +711,21 @@ extraVolumes:
       name: sysdig-new-cm
     - mountPath: /opt/draios/secret
       name: sysdig-new-secret
+```
+
+### Adding additional secrets
+
+To add a new secret to the sysdig agent.
+
+You can create additional secrets (for example for Prometheus basic auth). The values are Opaque type secrets and must be in base64 encoded.
+An example of this could be:
+
+```yaml
+extraSecrets:
+  - name: sysdig-new-secret
+    data:
+      sysdig-new-password-key1: bXlwYXNzd29yZA==
+      sysdig-new-password-key2: bXlwYXNzd29yZA==
 ```
 
 ## Support
