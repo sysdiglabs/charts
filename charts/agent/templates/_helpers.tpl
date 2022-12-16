@@ -318,3 +318,31 @@ Use global sysdig tags for agent
         {{- end -}}
     {{- end -}}
 {{- end -}}
+
+{{/*
+Determine Sysdig Secure features that need to be enabled/disabled
+*/}}
+{{- define "agent.secureFeatures" }}
+    {{- $secureBlockConfig := dict "security" (dict
+        "enabled" .Values.secure.enabled
+        "k8s_audit_server_enabled" .Values.auditLog.enabled) }}
+    {{- if .Values.auditLog.enabled }}
+        {{- range $key, $val := (dict
+                 "k8s_audit_server_url" .Values.auditLog.auditServerUrl
+                 "k8s_audit_server_port" .Values.auditLog.auditServerPort) }}
+            {{- $_ := set $secureBlockConfig.security $key $val }}
+        {{- end }}
+    {{- end }}
+    {{- if not .Values.secure.enabled }}
+        {{- range $secureFeature := (list
+            "commandlines_capture"
+            "drift_killer"
+            "falcobaseline"
+            "memdump"
+            "network_topology"
+            "secure_audit_streams") }}
+            {{- $_ := set $.Values.sysdig.settings $secureFeature (dict "enabled" false) }}
+        {{- end }}
+    {{- end }}
+    {{- toYaml $secureBlockConfig }}
+{{- end }}
