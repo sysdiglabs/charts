@@ -230,7 +230,7 @@ Determine collector endpoint based on provided region
     {{- else if (eq .Values.global.sysdig.region "us2") -}}
         {{- "ingest-us2.app.sysdig.com" -}}
     {{- else if (eq .Values.global.sysdig.region "us3") -}}
-        {{- "ingest.us3.app.sysdig.com" -}}
+        {{- "ingest.us3.sysdig.com" -}}
     {{- else if (eq .Values.global.sysdig.region "us4") -}}
         {{- "ingest.us4.sysdig.com" -}}
     {{- else if (eq .Values.global.sysdig.region "eu1") -}}
