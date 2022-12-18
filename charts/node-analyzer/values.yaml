@@ -354,7 +354,7 @@ nodeAnalyzer:
     port: 12000
 
     probes:
-      initialDelay: 90
+      initialDelay: 3
       periodDelay: 3
 
     env: {}
