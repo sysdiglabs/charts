@@ -37,7 +37,7 @@ dependencies:
   - name: kspm-collector
     # repository: https://charts.sysdig.com
     repository: file://../kspm-collector
-    version: ~0.1.20
+    version: ~0.1.30
     alias: kspmCollector
     condition: global.kspm.deploy
   - name: rapid-response
