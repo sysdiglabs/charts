@@ -3,7 +3,7 @@ name: sysdig-deploy
 description: A chart with various Sysdig components for Kubernetes
 type: application
 
-version: 1.5.26
+version: 1.5.27
 
 
 maintainers:
