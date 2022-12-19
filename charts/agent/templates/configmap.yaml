@@ -52,6 +52,13 @@ data:
     k8s_coldstart:
       max_parallel_cold_starts: {{ include "agent.parallelStarts" .}}
 {{- end }}
+{{/* check for log level sanity */}}
+{{- if and .Values.logPriority (or (hasKey (default dict .Values.sysdig.settings.log) "console_priority") (hasKey (default dict .Values.sysdig.settings.log) "file_priority")) }}
+  {{- fail "Cannot set logPriority when either sysdig.settings.log.console_priority or sysdig.settings.log.file_priority are set" }}
+{{- end }}
+{{- if .Values.logPriority }}
+  {{- $_ := merge .Values.sysdig.settings (dict "log" (dict "console_priority" .Values.logPriority "file_priority" .Values.logPriority)) }}
+{{- end }}
 {{/* add in the remaining items from sysdig.settings */}}
 {{- if .Values.sysdig.settings }}
 {{ toYaml .Values.sysdig.settings | indent 4 }}

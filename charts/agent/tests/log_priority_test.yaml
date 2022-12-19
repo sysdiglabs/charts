@@ -1,0 +1,102 @@
+suite: Test agent log priority flag configurations
+templates:
+  - templates/configmap.yaml
+tests:
+  - it: Checking default values
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - notMatchRegex:
+          path: data.dragent\.yaml
+          pattern: .*log:\n(?:(?:\s+console_priority:\s*(?:debug|info))|(?:\s+file_priority:\s*(?:debug|info)\n)){1,2}.*
+      - notMatchRegex:
+          path: data.dragent\.yaml
+          pattern: .*log:.*
+
+  - it: Setting logPriority
+    set:
+      logPriority: debug
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: log:\n\s{2}console_priority:\sdebug\n\s+file_priority:\sdebug
+
+  - it: Set console_priority
+    set:
+      sysdig:
+        settings:
+          log:
+            console_priority: debug
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: log:\n\s{2}console_priority:\sdebug
+
+  - it: Set file_priority
+    set:
+      sysdig:
+        settings:
+          log:
+            file_priority: debug
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: log:\n\s{2}file_priority:\sdebug
+
+  - it: Set console_priority and file_priority
+    set:
+      sysdig:
+        settings:
+          log:
+            console_priority: debug
+            file_priority: info
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: log:\n\s{2}console_priority:\sdebug\n\s{2}file_priority:\sinfo
+
+  - it: Verify user cannot specify sysdig.settings.log and logPriority simultaneously
+    set:
+      sysdig:
+        settings:
+          log:
+            console_priority: debug
+      logPriority: info
+    asserts:
+      - failedTemplate:
+          errorMessage: 'Cannot set logPriority when either sysdig.settings.log.console_priority or sysdig.settings.log.file_priority are set'
+
+  - it: Verify log settings are rendered when no log priority values are given
+    set:
+      sysdig:
+        settings:
+          log:
+            max_size: 100
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: log:\n\s{2}max_size:\s100
+
+  - it: Verify other log settings are rendered when logPriority is set
+    set:
+      sysdig:
+        settings:
+          log:
+            max_size: 100
+      logPriority: debug
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: log:\n\s{2}console_priority:\sdebug\n\s{2}file_priority:\sdebug\n\s{2}max_size:\s100

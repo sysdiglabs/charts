@@ -174,6 +174,8 @@ Generate certificates for aggregated api server
 {{- $cert := genCA ( printf "%s.%s.svc" (include "admissionController.webhook.fullname" .) .Release.Namespace ) 3650 -}}
 
 {{- define "admissionController.webhook.gen-certs" -}}
+    {{- $secretName := printf "%s-tls" (include "admissionController.webhook.fullname" .) -}}
+    {{- $secret := lookup "v1" "Secret" .Release.Namespace $secretName -}}
     {{- $ca := genCA (include "admissionController.webhook.fullname" .) 3650 -}}
     {{- if (and .Values.webhook.ssl.ca.cert .Values.webhook.ssl.ca.key) -}}
         {{- $ca = buildCustomCert (.Values.webhook.ssl.ca.cert | b64enc) (.Values.webhook.ssl.ca.key | b64enc) -}}
@@ -185,6 +187,8 @@ Generate certificates for aggregated api server
 
     {{- if (and .Values.webhook.ssl.cert .Values.webhook.ssl.key) -}}
         {{- printf "%s$%s$%s" (.Values.webhook.ssl.cert | b64enc) (.Values.webhook.ssl.key | b64enc) ($ca.Cert | b64enc) -}}
+    {{- else if and .Values.webhook.ssl.reuseTLSSecret $secret -}}
+        {{- printf "%s$%s$%s" (index $secret.data "tls.crt") (index $secret.data "tls.key") (index $secret.data "ca.crt") -}}
     {{- else -}}
         {{- printf "%s$%s$%s" ($cert.Cert | b64enc) ($cert.Key | b64enc) ($ca.Cert | b64enc) -}}
     {{- end -}}
