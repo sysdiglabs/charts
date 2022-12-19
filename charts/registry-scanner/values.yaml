@@ -1,48 +1,72 @@
+# Default values for admission-controller.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
 cronjob:
-  schedule: "0 6 * * *"
+  # Cronjob expression for registry scan scheduling (you can check https://crontab.guru/ for help)
+  schedule: "0 6 * * 6"
+  # Number of failed job history to keep on the cluster.
   failedJobsHistoryLimit: 5
+  # Number of successful job history to keep on the cluster.
   successfulJobsHistoryLimit: 2
+  # Restart policy for a failed registry-scan execution.
   restartPolicy: Never
 
-# Specify a volume claim to write the final JSON report there instead of standard output
+# Specify a volume claim to write the final JSON report there instead of standard output.
 reportToPersistentVolumeClaim: ""
 
 config:
+  # **required**
+  # <br/> URL of the registry to scan.
   registryURL: https://my-docker-registry.com
-  # In case API URL differs from registry base URL, like in Artifactory, uncomment and set registryApiUrl
-  # registryApiUrl: https://my-docker-registry.com/artifactory/api/docker/
-  registryUser:
-  registryPassword:
-  # Defaults to "dockerv2" if not specified. Available options: dockerv2, icr, artifactory, ecr
+  # API URL of the registry to scan. This is required if your registry type is Artifactory.
+  registryApiUrl: https://my-docker-registry.com/artifactory/api/docker/
+  # Username for registry authentication.
+  registryUser: ""
+  # Password for registry authentication.
+  registryPassword: ""
+  # Registry Type. Optional. dockerv2 (default if not specified), icr, artifactory, ecr.
   registryType: ""
-  # AccountID - Only for ICR registry type
-  # registryAccountId:
-  # ICR IAM API - Only for ICR registry type
-  # icrIamApi:
-  # ICR IAM API Skip TLS - Only for ICR registry type
-  # icrIamApiSkipTLS:
+  # AccountID - Only for ICR registry type.
+  registryAccountId: ""
+  # ICR IAM API - Only for ICR registry type.
+  icrIamApi: ""
+  # Ignore TLS certificate for IAM API - Only for ICR registry type.
+  icrIamApiSkipTLS: false
   aws:
-    # AWS Credentials AccessKeyID
+    # AWS Credentials AccessKeyID.
     accessKeyId: ""
-    # AWS Credentials: SecretAccessKey
+    # AWS Credentials: SecretAccessKey.
     secretAccessKey: ""
-    # AWS Region
+    # AWS Region.
     region: ""
+  # Ignore registry TLS certificate errors (self-signed, etc.).
   registrySkipTLS: false
+  # **required**
+  # <br/> Sysdig Secure Base URL
   secureBaseURL: https://secure.sysdig.com
-  secureAPIToken:
+  # **required**
+  # <br/> API Token to access Sysdig Secure.
+  secureAPIToken: ""
+  # Sysdig Secure is on-prem installation (vs SaaS).
   secureOnPrem: false
+  # Ignore Sysdig Secure TLS certificate errors.
   secureSkipTLS: false
+  # Max number of parallel inline scanner workers to spawn in cluster.
   maxWorkers: 1
   filter:
+    # List of regular expressions. Images matching any of these expressions are *always* included when scanning.
     include: []
+    # List of regular expressions. Images matching any of these expressions are excluded when scanning.
     exclude: []
+    # Exclude images with creation date older than specified number of days.
     maxAgeDays:
+    # Only scan a maximum number of tags per repository, excluding older images by creation date.
     maxTagsPerRepository:
   scan:
-    # Override the default quay.io/sysdig/secure-inline-scan:2 image for the inline scanner job
+    # Override the default (if not specified) `quay.io/sysdig/secure-inline-scan:2` image for the inline scanner job.
     inlineScanImage: ""
-    # Change container securityContext
+    # Security context for Inline Scanner container.
     securityContext: {}
       # capabilities:
       #   drop:
@@ -79,11 +103,13 @@ ssl:
       #     MMNlTAQ9fvdNOTzZntye0PQYR5SR13E=
       #     -----END CERTIFICATE-----
 
-# Additional labels to add to CronJob and Scanning Jobs.
+# Additional labels to add to CronJob and Scanning Jobs. Custom labels to be added to kubernetes manifests of all resources created.
 customLabels: {}
 
 proxy:
+  # URL of the proxy for HTTP connections, or empty if not using proxy (sets the http_proxy environment variable).
   httpProxy:
+  #  URL of the proxy for HTTPS connections, or empty if not using proxy (sets the https_proxy environment variable).
   httpsProxy:
   # Comma-separated list of domain extensions proxy should not be used for.
   # Include in noProxy the internal IP of the kubeapi server,
@@ -91,34 +117,43 @@ proxy:
   noProxy:
 
 image:
+  # Sysdig Registry Scanner image registry.
   registry: quay.io
+  # Sysdig Registry Scanner image repository
   repository: sysdig/registry-scanner
-  # Empty to defaul to the chart.yaml appVersion
+  # Registry Scanner image tag. If empty, default to appVersion in Chart.yaml.
   tag:
+  # PullPolicy for Registry Scanner image.
   pullPolicy: Always
 
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
-  # Annotations to add to the service account
+  # Extra annotations to add to the service account
   annotations: {}
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
+# The image pull secrets.
 imagePullSecrets: []
+# Chart name override
 nameOverride: ""
+# Chart fullname override
 fullnameOverride: ""
 
 # Specify the name of a Kubernetes secret containing 'secureAPIToken', 'registryUser', and 'registryPassword' entries or
 # if you are using ecr as registryType, add also 'accessKeyId', 'secretAccessKey' and 'region' entries.
 existingSecretName: ""
 
+# Registry scanner pod annotations
 podAnnotations: {}
 
+# Security context for Registry Scanner pod
 podSecurityContext: {}
   # fsGroup: 2000
 
+# Security context for Registry Scanner container
 securityContext: {}
   # capabilities:
   #   drop:
@@ -127,6 +162,7 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
+# Resource limits for registry scanner container.
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
@@ -139,8 +175,9 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
 
+# Configure nodeSelector for scheduling the registry scanner pod.
 nodeSelector: {}
-
+# Configure tolerations for scheduling the registry scanner pod.
 tolerations: []
-
+# Configure affinity for scheduling the registry scanner pod.
 affinity: {}
