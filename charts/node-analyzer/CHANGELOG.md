@@ -10,6 +10,12 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+
+## v1.8.12
+### Minor changes
+* RuntimeScanner: bump to version 1.4.1. Fixed 1 CVE:
+  * CVE-2022-41717
+
 # v1.8.11
 ### Bug Fixes
 * **kspm-analyzer** [388dcdf](https://github.com/sysdiglabs/charts/commit/388dcdfb90c2834e09f0802370b521ce5b99570c): longer initial delay on analyzer startup probe ([#827](https://github.com/sysdiglabs/charts/issues/827))
