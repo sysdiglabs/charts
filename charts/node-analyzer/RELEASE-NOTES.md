@@ -1,6 +1,6 @@
 # What's Changed
 
-### Documentation
-- **node-analyzer** [1e0fb04](https://github.com/sysdiglabs/charts/commit/1e0fb04e90d6c88d22e3811fd312a8cf2378f26a): adding the new container and host scanner ([#797](https://github.com/sysdiglabs/charts/issues/797))
+### Bug Fixes
+- **kspm-analyzer** [388dcdf](https://github.com/sysdiglabs/charts/commit/388dcdfb90c2834e09f0802370b521ce5b99570c): longer initial delay on analyzer startup probe ([#827](https://github.com/sysdiglabs/charts/issues/827))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.8.9...node-analyzer-1.8.10
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.8.10...node-analyzer-1.8.11
