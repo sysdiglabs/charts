@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.8.12
+### New Features
+* **node-analyzer** [90766bb](https://github.com/sysdiglabs/charts/commit/90766bbd66297671da37136503aef6d578b81e6b): runtimescanner bump to 1.4.1 ([#836](https://github.com/sysdiglabs/charts/issues/836))
 
 ## v1.8.12
 ### Minor changes
