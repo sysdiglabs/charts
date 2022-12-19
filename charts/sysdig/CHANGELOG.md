@@ -9,6 +9,11 @@ Please note that it's automatically updated vía github actions.
 Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
+## v1.15.65
+### Minor changes
+* RuntimeScanner: bump to version 1.4.1. Fixed 1 CVE:
+    * CVE-2022-41717
+
 ## Change Log
 # v1.15.64
 ### Bug Fixes
