@@ -210,6 +210,8 @@ webhook:
   logLevel: info
 
   ssl:
+    # Reuse existing TLS Secret during chart upgrade
+    reuseTLSSecret: false
     ca:
       # For outbound connections (secure backend, proxy,...)
       # <br/>And inbound connections to serve HttpRequests as Kubernetes Webhook.

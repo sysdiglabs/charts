@@ -19,7 +19,7 @@ image:
 
   registry: quay.io
   repository: sysdig/agent
-  tag: 12.9.1
+  tag: 12.10.0
   # Specify a imagePullPolicy
   # Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
   # ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -246,6 +246,15 @@ extraVolumes:
   #     - mountPath: /opt/draios/secret
   #       name: sysdig-new-secret
 
+extraSecrets: []
+  # Allow passing extra secrets that can be mounted via extraVolumes
+  #
+  # extraSecrets:
+  #   - name: sysdig-new-secret
+  #     data:
+  #       sysdig-new-password-key1: bXlwYXNzd29yZA==
+  #       sysdig-new-password-key2: bXlwYXNzd29yZA==
+
 # Allow sysdig to run on Kubernetes 1.6 masters.
 tolerations:
   - effect: NoSchedule
@@ -255,6 +264,9 @@ tolerations:
 
 leaderelection:
   enable: false
+
+# Allow direct setting of Agent log priority levels for console and file logs (info|debug)
+logPriority:
 
 tests:
   timeout: 300s
