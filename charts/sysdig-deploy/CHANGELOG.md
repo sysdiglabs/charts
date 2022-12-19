@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.5.27
+### Bug Fixes
+* **sysdig-deploy** [e8251f4](https://github.com/sysdiglabs/charts/commit/e8251f4ff24f9517032562d1fe841d28c4561bdc): bump collector and analyzer ([#828](https://github.com/sysdiglabs/charts/issues/828))
 # v1.5.26
 ### Chores
 * [c1d697e](https://github.com/sysdiglabs/charts/commit/c1d697ea9287edfb14123d133296bc0844e7ba98): Changes to update sysdig deploy chart made by github action ([#831](https://github.com/sysdiglabs/charts/issues/831))
