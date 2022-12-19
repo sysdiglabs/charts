@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.1.3
+### Chores
+* **registry-scanner** [df88b05](https://github.com/sysdiglabs/charts/commit/df88b05aff423e11b3b2fa7fb8e27598e23e7785): Update default cronjob schedule to 6AM on Saturdays ([#830](https://github.com/sysdiglabs/charts/issues/830))
 # v0.1.2
 ### Documentation
 * **registry-scanner** [496466e](https://github.com/sysdiglabs/charts/commit/496466e333330ae479bba17f2ce224af7c822e07): auto generate documentation file readme ([#806](https://github.com/sysdiglabs/charts/issues/806))
