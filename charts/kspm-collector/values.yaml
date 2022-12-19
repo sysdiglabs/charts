@@ -83,7 +83,7 @@ resources:
 port: 8080
 
 probes:
-  initialDelay: 3
+  initialDelay: 90
   periodDelay: 3
 
 securityContext:
