@@ -250,7 +250,7 @@ nodeAnalyzer:
     deploy: false
     image:
       repository: sysdig/vuln-runtime-scanner
-      tag: 1.4.0
+      tag: 1.4.1
       digest:
       pullPolicy: IfNotPresent
     storageClassName:
@@ -339,7 +339,7 @@ nodeAnalyzer:
     debug: false
     image:
       repository: sysdig/kspm-analyzer
-      tag: 1.15.0-rc
+      tag: 1.15.0
       digest:
       pullPolicy: IfNotPresent
 
