@@ -1,6 +1,6 @@
 # What's Changed
 
-### Documentation
-- **registry-scanner** [496466e](https://github.com/sysdiglabs/charts/commit/496466e333330ae479bba17f2ce224af7c822e07): auto generate documentation file readme ([#806](https://github.com/sysdiglabs/charts/issues/806))
+### Chores
+- **registry-scanner** [df88b05](https://github.com/sysdiglabs/charts/commit/df88b05aff423e11b3b2fa7fb8e27598e23e7785): Update default cronjob schedule to 6AM on Saturdays ([#830](https://github.com/sysdiglabs/charts/issues/830))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-0.1.1...registry-scanner-0.1.2
+#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-0.1.2...registry-scanner-0.1.3
