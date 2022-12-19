@@ -131,7 +131,7 @@ $ helm upgrade --install registry-scanner \
 - JFROG_ARTIFACTORY_URL: JFrog Artifactory url. ex.: artifactory.internal.mycompany.com
 
 ```bash
-$ helm upgrade --install registry-scanner \                                                                                                                            ─╯
+$ helm upgrade --install registry-scanner \
     --set config.scan.newVmScanner=true \
     --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
     --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
@@ -148,7 +148,7 @@ $ helm upgrade --install registry-scanner \                                     
 - JFROG_ARTIFACTORY_REGISTRY_API_DOCKER_URL: JFrog Artifactory Cloud registry docker API endpoint. ex.: https://myaccount.jfrog.io/artifactory/api/docker/some-registry
 
 ```bash
-$ helm upgrade --install registry-scanner \                                                                                                                            ─╯
+$ helm upgrade --install registry-scanner \
     --set config.scan.newVmScanner=true \
     --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
     --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
