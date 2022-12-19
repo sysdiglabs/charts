@@ -3,8 +3,8 @@
 # Declare variables to be passed into your templates.
 
 cronjob:
-  # Cronjob expression for registry scan scheduling.
-  schedule: "0 6 * * *"
+  # Cronjob expression for registry scan scheduling (you can check https://crontab.guru/ for help)
+  schedule: "0 6 * * 6"
   # Number of failed job history to keep on the cluster.
   failedJobsHistoryLimit: 5
   # Number of successful job history to keep on the cluster.
