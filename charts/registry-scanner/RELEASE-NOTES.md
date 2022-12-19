@@ -1,5 +1,6 @@
 # What's Changed
 
-### New Features
-- [f4cb189](https://github.com/sysdiglabs/charts/commit/f4cb189afba6833fd458f99dcfcc0121f9d9dfa2)]: unify changelog headers ([#787](https://github.com/sysdiglabs/charts/issues/787))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-0.1.0...registry-scanner-0.1.1
+### Chores
+- **registry-scanner** [df88b05](https://github.com/sysdiglabs/charts/commit/df88b05aff423e11b3b2fa7fb8e27598e23e7785): Update default cronjob schedule to 6AM on Saturdays ([#830](https://github.com/sysdiglabs/charts/issues/830))
+
+#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-0.1.2...registry-scanner-0.1.3

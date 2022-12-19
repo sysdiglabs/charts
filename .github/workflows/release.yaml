@@ -5,6 +5,9 @@ on:
     branches:
       - master
 
+env:
+  GITHUB_USERNAME: draios-jenkins
+
 jobs:
   charts-to-release:
     runs-on: ubuntu-latest
@@ -93,8 +96,8 @@ jobs:
 
       - name: Configure Git
         run: |
-          git config user.name "$GITHUB_ACTOR"
-          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          git config user.name "$GITHUB_USERNAME"
+          git config user.email "$GITHUB_USERNAME@sysdig.com"
 
       - name: Run Chart Releaser
         uses: helm/chart-releaser-action@v1.4.1
@@ -137,8 +140,8 @@ jobs:
 
       - name: Configure Git
         run: |
-          git config user.name "$GITHUB_ACTOR"
-          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          git config user.name "$GITHUB_USERNAME"
+          git config user.email "$GITHUB_USERNAME@sysdig.com"
 
       - name: Commit CHANGELOG.md and RELEASE-NOTES.md
         run: |
