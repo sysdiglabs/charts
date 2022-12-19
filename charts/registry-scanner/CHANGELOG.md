@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.1.4
+### Chores
+* **registry-scanner** [6450b90](https://github.com/sysdiglabs/charts/commit/6450b9080f3de6b03c3c1b1eeabf0c7770063d73): bump registry scanner image version ([#833](https://github.com/sysdiglabs/charts/issues/833))
 # v0.1.3
 ### Chores
 * **registry-scanner** [df88b05](https://github.com/sysdiglabs/charts/commit/df88b05aff423e11b3b2fa7fb8e27598e23e7785): Update default cronjob schedule to 6AM on Saturdays ([#830](https://github.com/sysdiglabs/charts/issues/830))
