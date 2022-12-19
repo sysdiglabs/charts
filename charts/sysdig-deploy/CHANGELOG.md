@@ -10,6 +10,12 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.5.26
+### Chores
+* [c1d697e](https://github.com/sysdiglabs/charts/commit/c1d697ea9287edfb14123d133296bc0844e7ba98): Changes to update sysdig deploy chart made by github action ([#831](https://github.com/sysdiglabs/charts/issues/831))
+# v1.5.25
+### Chores
+* **sysdig-deploy, admission-controller** [73427aa](https://github.com/sysdiglabs/charts/commit/73427aa186cfeaa2d03ed8faa7ab97f32303ff1e): scan service image version bump ([#829](https://github.com/sysdiglabs/charts/issues/829))
 # v1.5.24
 ### Chores
 * [7232fc2](https://github.com/sysdiglabs/charts/commit/7232fc26952f93d3f2a8bd9618ff309e659043dd): Changes to update sysdig deploy chart made by github action ([#825](https://github.com/sysdiglabs/charts/issues/825))
