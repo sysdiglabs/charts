@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.1.30
+### Bug Fixes
+* **kspm-collector** [c321da9](https://github.com/sysdiglabs/charts/commit/c321da920147c9182cc69cebb33e91d0258746f0): longer initial delay on collector startup probe ([#826](https://github.com/sysdiglabs/charts/issues/826))
 # v0.1.29
 ### Bug Fixes
 * **kspm-collector** [[7c70012](https://github.com/sysdiglabs/charts/commit/7c700124693d3e143eac25fbc3c6b93c01ab5ba3)]: Fix numeric port on configmap
