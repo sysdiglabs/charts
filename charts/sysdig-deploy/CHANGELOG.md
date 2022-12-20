@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.5.30
+### New Features
+* **sysdig-deploy** [228bb11](https://github.com/sysdiglabs/charts/commit/228bb11e0a7fb6dcf0d3a9aaaa038ba9632a7b20): update node-analyzer subchart ([#846](https://github.com/sysdiglabs/charts/issues/846))
 # v1.5.29
 ### New Features
 * **sysdig-deploy** [ed8a8a3](https://github.com/sysdiglabs/charts/commit/ed8a8a3a5510adaca5149d80a9036bce6e511bbe): bumped NodeAnalyzer chart to 1.8.14 ([#842](https://github.com/sysdiglabs/charts/issues/842))
