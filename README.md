@@ -49,25 +49,31 @@ Full PR title example
 #### Extended Changelog
 If necessary it is possible to add extended details to a changelog entry by adding a special section in the commit body.
 
-The custom section must start with `Extended Changelog:`, in order to instruct the rendering engine to stop and avoid capturing things like `Signed-off-by:` it is important to add `@@__CHGLOG_DELIMITER__@@` at the end of the section.
+The custom section must start with `Extended Changelog:`, in order to instruct the rendering engine to stop and avoid capturing things like `Signed-off-by:` it is possible to add `@@__CHGLOG_DELIMITER__@@` at the end of the section.
 
-Example
+Example with `Signed-off-by`
 ```
 Extended Changelog: Fixed 21 CVEs in total, the ones with high or critical severity are:
             * CVE-2022-1941
             * CVE-2022-1996
-            * CVE-2022-27191
-            * CVE-2022-27664
-            * CVE-2022-29361
-            * CVE-2022-32149
-            * CVE-2022-3515
-            * CVE-2022-39237
-            * CVE-2022-40674
 @@__CHGLOG_DELIMITER__@@
 
 Signed-off-by: someone@sysdig.com
 ```
+
+> **_NOTE:_**  Do not add the delimiter `@@__CHGLOG_DELIMITER__@@` at the end of the commit body as it will cause an error.
+
+Example without `Signed-off-by`
+```
+Extended Changelog: Fixed 21 CVEs in total, the ones with high or critical severity are:
+            * CVE-2022-1941
+            * CVE-2022-1996
+```
+
 > **_NOTE:_**  While merging a PR with squash&merge the `Extended Changelog` section must be manually added to the body or the workflow won't be able to process it.
+
+#### Manual Changelog
+Although not usually recommended it is possible to manually add a changelog entry, the ci does a simple grep in the `CHANGELOG.md` file and if the version being released is already present it will skip adding a new entry.
 
 #### - GithubAction Checks
 
