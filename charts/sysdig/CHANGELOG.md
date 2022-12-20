@@ -10,6 +10,12 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+
+## v1.15.68
+### Minor changes:
+* BenchmarkRunner
+    * bump to runner version 1.1.0.7
+
 # v1.15.67
 ### Chores
 * **sysdig** [577e003](https://github.com/sysdiglabs/charts/commit/577e003eddd43e6e9a71bb89e4265a3a2d131262): bump agent version to 12.10.1 ([#849](https://github.com/sysdiglabs/charts/issues/849))
