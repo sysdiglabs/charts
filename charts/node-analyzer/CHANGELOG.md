@@ -10,6 +10,11 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.8.15
+### New Features
+* **node-analyzer** [c0a3768](https://github.com/sysdiglabs/charts/commit/c0a3768d53e292c1f124b1da795b8b2a177170f9): Update legacy engine NIA/HostAnalyzer component with security updates ([#844](https://github.com/sysdiglabs/charts/issues/844))
+
+    * Security updates (December 2022) for NodeImageAnalyzer and HostAnalyzer components
 # v1.8.14
 ### New Features
 * **node-analyzer** [05728e3](https://github.com/sysdiglabs/charts/commit/05728e35705e99b979c4f6f2a523cc40367d9b51): release HostScanner 0.3.1 ([#783](https://github.com/sysdiglabs/charts/issues/783))
