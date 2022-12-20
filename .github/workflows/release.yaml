@@ -7,6 +7,7 @@ on:
 
 env:
   GITHUB_USERNAME: draios-jenkins
+  GITHUB_USER_EMAIL: jenkins@sysdig.com
 
 jobs:
   charts-to-release:
@@ -47,19 +48,24 @@ jobs:
             chart_tag="${chart_name}-${chart_version}"
             chart_path="charts/${chart_name}"
 
-            # generate the new changelog entry
-            git-chglog \
-              --config .chglog/config-changelog.yml \
-              --output "/tmp/CHANGELOG_${chart_name}_new.md" \
-              --tag-filter-pattern "${chart_name}" \
-              --next-tag "${chart_tag}" \
-              --path "${chart_path}" "${chart_tag}"
+            if grep -q "$chart_version" "charts/${chart_name}/CHANGELOG.md"
+            then
+                echo "Changelog entry already present, skipping"
+            else
+              # generate the new changelog entry
+              git-chglog \
+                --config .chglog/config-changelog.yml \
+                --output "/tmp/CHANGELOG_${chart_name}_new.md" \
+                --tag-filter-pattern "${chart_name}" \
+                --next-tag "${chart_tag}" \
+                --path "${chart_path}" "${chart_tag}"
 
-            # insert the new changelog entry to the changelog
-            # file after the '## Change Log' header
-            cat "/tmp/CHANGELOG_${chart_name}_new.md" \
-              | sed -i '/^##\ Change Log$/ r /dev/stdin' \
-              "charts/${chart_name}/CHANGELOG.md"
+              # insert the new changelog entry to the changelog
+              # file after the '## Change Log' header
+              cat "/tmp/CHANGELOG_${chart_name}_new.md" \
+                | sed -i '/^##\ Change Log$/ r /dev/stdin' \
+                "charts/${chart_name}/CHANGELOG.md"
+            fi
 
             # generate the release notes for github release
             git-chglog \
@@ -97,7 +103,7 @@ jobs:
       - name: Configure Git
         run: |
           git config user.name "$GITHUB_USERNAME"
-          git config user.email "$GITHUB_USERNAME@sysdig.com"
+          git config user.email "$GITHUB_USER_EMAIL"
 
       - name: Run Chart Releaser
         uses: helm/chart-releaser-action@v1.4.1
@@ -141,7 +147,7 @@ jobs:
       - name: Configure Git
         run: |
           git config user.name "$GITHUB_USERNAME"
-          git config user.email "$GITHUB_USERNAME@sysdig.com"
+          git config user.email "$GITHUB_USER_EMAIL"
 
       - name: Commit CHANGELOG.md and RELEASE-NOTES.md
         run: |
