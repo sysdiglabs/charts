@@ -10,6 +10,11 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.15.66
+### New Features
+* **sysdig** [be92144](https://github.com/sysdiglabs/charts/commit/be92144be843bc46377c949c7f8c88a4b5df5fc4): Update legacy engine NIA/HostAnalyzer components with security updates ([#843](https://github.com/sysdiglabs/charts/issues/843))
+
+    * Security updates (December 2022) for NodeImageAnalyzer and HostAnalyzer components
 # v1.15.65
 ### New Features
 * **sysdig** [3fa1178](https://github.com/sysdiglabs/charts/commit/3fa1178e722f921f595d056c0d91991a9ad85690): runtimescanner bump to 1.4.1 ([#838](https://github.com/sysdiglabs/charts/issues/838))

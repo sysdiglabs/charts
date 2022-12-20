@@ -1,9 +1,8 @@
 # What's Changed
 
 ### New Features
-- **sysdig** [3fa1178](https://github.com/sysdiglabs/charts/commit/3fa1178e722f921f595d056c0d91991a9ad85690): runtimescanner bump to 1.4.1 ([#838](https://github.com/sysdiglabs/charts/issues/838))
+- **sysdig** [be92144](https://github.com/sysdiglabs/charts/commit/be92144be843bc46377c949c7f8c88a4b5df5fc4): Update legacy engine NIA/HostAnalyzer components with security updates ([#843](https://github.com/sysdiglabs/charts/issues/843))
 
-    * RuntimeScanner: bump to version 1.4.1. Fixed 1 CVE:
-    * CVE-2022-41717
+    * Security updates (December 2022) for NodeImageAnalyzer and HostAnalyzer components
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.5.27...sysdig-1.15.65
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.5.29...sysdig-1.15.66
