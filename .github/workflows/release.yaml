@@ -48,7 +48,8 @@ jobs:
             chart_tag="${chart_name}-${chart_version}"
             chart_path="charts/${chart_name}"
 
-            if grep -q "$chart_version" "charts/${chart_name}/CHANGELOG.md"
+            # check if a changelog entry already present
+            if grep -q "^# v$chart_version" "charts/${chart_name}/CHANGELOG.md"
             then
                 echo "Changelog entry already present, skipping"
             else
