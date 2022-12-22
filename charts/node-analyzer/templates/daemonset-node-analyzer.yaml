@@ -526,6 +526,18 @@ spec:
       - name: sysdig-runtime-scanner
         image: {{ template "nodeAnalyzer.image.runtimeScanner" . }}
         imagePullPolicy: {{ .Values.nodeAnalyzer.runtimeScanner.image.pullPolicy }}
+        livenessProbe:
+          httpGet:
+            port: {{ .Values.nodeAnalyzer.runtimeScanner.probesPort }}
+            path: /probes/liveness
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            port: {{ .Values.nodeAnalyzer.runtimeScanner.probesPort }}
+            path: /probes/readiness
+          initialDelaySeconds: 3
+          periodSeconds: 3
         securityContext:
             privileged: true
         resources:
@@ -599,6 +611,8 @@ spec:
                 name: {{ .Release.Name }}-runtime-scanner
                 key: https_proxy
                 optional: true
+          - name: PROBES_PORT
+            value: {{ .Values.nodeAnalyzer.runtimeScanner.probesPort }}
           - name: NO_PROXY
             valueFrom:
               configMapKeyRef:
