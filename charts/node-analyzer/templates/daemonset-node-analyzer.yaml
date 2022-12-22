@@ -659,6 +659,18 @@ spec:
       - name: sysdig-host-scanner
         image: {{ template "nodeAnalyzer.image.hostScanner" . }}
         imagePullPolicy: {{ .Values.nodeAnalyzer.hostScanner.image.pullPolicy }}
+        livenessProbe:
+          httpGet:
+            port: {{ .Values.nodeAnalyzer.hostScanner.probesPort }}
+            path: /probes/liveness
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            port: {{ .Values.nodeAnalyzer.hostScanner.probesPort }}
+            path: /probes/readiness
+          initialDelaySeconds: 3
+          periodSeconds: 3
         securityContext:
           # The privileged flag is necessary for OCP 4.x and other Kubernetes setups that deny host filesystem access to
           # running containers by default regardless of volume mounts.
@@ -753,6 +765,8 @@ spec:
                 optional: true
           - name: TMPDIR
             value: "/tmp"
+          - name: PROBES_PORT
+            value: {{ .Values.nodeAnalyzer.hostScanner.probesPort | quote }}
           {{- range $key, $value := .Values.nodeAnalyzer.hostScanner.env }}
           - name: "{{ $key }}"
             value: "{{ $value }}"
