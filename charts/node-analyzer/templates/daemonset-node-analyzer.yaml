@@ -405,12 +405,6 @@ spec:
               name: {{ .Release.Name }}-host-analyzer
               key: dirs_to_scan
               optional: true
-        - name: ADDITIONAL_HOST_DIRS_TO_SCAN
-          valueFrom:
-            configMapKeyRef:
-              name: {{ .Release.Name }}-host-analyzer
-              key: additional_dirs_to_scan
-              optional: true
         - name: MAX_SEND_ATTEMPTS
           valueFrom:
             configMapKeyRef:
@@ -664,7 +658,13 @@ spec:
             valueFrom:
               configMapKeyRef:
                 name: {{ .Release.Name }}-host-scanner
-                key: host_dirs_to_scan
+                key: dirs_to_scan
+                optional: true
+          - name: ADDITIONAL_HOST_DIRS_TO_SCAN
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-host-scanner
+                key: additional_dirs_to_scan
                 optional: true
           - name: SCAN_ON_START
             valueFrom:
