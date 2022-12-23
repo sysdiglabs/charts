@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.8.18
+### New Features
+* **node-analyzer** [d364d34](https://github.com/sysdiglabs/charts/commit/d364d342bddab96c6e78345bbb60e17e343a2463): runtimescanner bump to 1.4.4 ([#853](https://github.com/sysdiglabs/charts/issues/853))
 # v1.8.17
 ### Bug Fixes
 * **node-analyzer** [e894e55](https://github.com/sysdiglabs/charts/commit/e894e55a2febb72749ec44b214370596fa569fda): fix typo in dirs to scan and additional dirs set to analyzer instead of scanner ([#854](https://github.com/sysdiglabs/charts/issues/854))
