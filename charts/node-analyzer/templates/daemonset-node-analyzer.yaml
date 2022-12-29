@@ -612,7 +612,7 @@ spec:
                 key: https_proxy
                 optional: true
           - name: PROBES_PORT
-            value: {{ .Values.nodeAnalyzer.runtimeScanner.probesPort }}
+            value: {{ .Values.nodeAnalyzer.runtimeScanner.probesPort | quote }}
           - name: NO_PROXY
             valueFrom:
               configMapKeyRef:
