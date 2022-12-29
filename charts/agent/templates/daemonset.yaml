@@ -158,6 +158,11 @@ spec:
             readOnlyRootFilesystem: false
             allowPrivilegeEscalation: true
           env:
+            - name: GOMAXPROCS
+              valueFrom:
+                resourceFieldRef:
+                  resource: requests.cpu
+                  divisor: "1"
             - name: K8S_NODE
               valueFrom:
                 fieldRef:
