@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.8.19
+### Bug Fixes
+* **node-analyzer,sysdig-deploy** [1e001d1](https://github.com/sysdiglabs/charts/commit/1e001d17e3ec9fce3db2043f8f626b53d157f159): Added quotes to Runtime Scanner probe port ([#863](https://github.com/sysdiglabs/charts/issues/863))
 # v1.8.18
 ### New Features
 * **node-analyzer** [d364d34](https://github.com/sysdiglabs/charts/commit/d364d342bddab96c6e78345bbb60e17e343a2463): runtimescanner bump to 1.4.4 ([#853](https://github.com/sysdiglabs/charts/issues/853))
