@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.5.54
+### Documentation
+* **agent,node-analyzer,sysdig** [bd37186](https://github.com/sysdiglabs/charts/commit/bd371864313e64d7a7ac07f79fe30f296b46d540): Remove references to Get Started in the READMEs ([#819](https://github.com/sysdiglabs/charts/issues/819))
 # v1.5.53
 ### Chores
 * **agent** [60531e5](https://github.com/sysdiglabs/charts/commit/60531e52a565b8dbf85c385d401e45661cbd54a5): bump agent version to 12.10.1
