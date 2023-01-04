@@ -1,6 +1,6 @@
 # What's Changed
 
-### Bug Fixes
-- **node-analyzer,sysdig-deploy** [1e001d1](https://github.com/sysdiglabs/charts/commit/1e001d17e3ec9fce3db2043f8f626b53d157f159): Added quotes to Runtime Scanner probe port ([#863](https://github.com/sysdiglabs/charts/issues/863))
+### Documentation
+- **agent,node-analyzer,sysdig** [bd37186](https://github.com/sysdiglabs/charts/commit/bd371864313e64d7a7ac07f79fe30f296b46d540): Remove references to Get Started in the READMEs ([#819](https://github.com/sysdiglabs/charts/issues/819))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.8.18...node-analyzer-1.8.19
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.8.19...node-analyzer-1.8.20
