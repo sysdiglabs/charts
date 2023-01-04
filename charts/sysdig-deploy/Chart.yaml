@@ -43,6 +43,6 @@ dependencies:
   - name: rapid-response
     # repository: https://charts.sysdig.com
     repository: file://../rapid-response
-    version: ~0.3.4
+    version: ~0.3.5
     alias: rapidResponse
     condition: rapidResponse.enabled
