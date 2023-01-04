@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.5.36
+### Documentation
+* **rapid-response,sysdig-deploy** [9b7cb32](https://github.com/sysdiglabs/charts/commit/9b7cb32e2c51141d74a05f2aa9bfd03babb782c4): Updated rapid-response doc ([#865](https://github.com/sysdiglabs/charts/issues/865))
 # v1.5.35
 ### Bug Fixes
 * **node-analyzer,sysdig-deploy** [1e001d1](https://github.com/sysdiglabs/charts/commit/1e001d17e3ec9fce3db2043f8f626b53d157f159): Added quotes to Runtime Scanner probe port ([#863](https://github.com/sysdiglabs/charts/issues/863))

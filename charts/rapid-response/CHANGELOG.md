@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.3.5
+### Documentation
+* **rapid-response,sysdig-deploy** [9b7cb32](https://github.com/sysdiglabs/charts/commit/9b7cb32e2c51141d74a05f2aa9bfd03babb782c4): Updated rapid-response doc ([#865](https://github.com/sysdiglabs/charts/issues/865))
 # v0.3.4
 ### New Features
 * [f4cb189](https://github.com/sysdiglabs/charts/commit/f4cb189afba6833fd458f99dcfcc0121f9d9dfa2)]: unify changelog headers ([#787](https://github.com/sysdiglabs/charts/issues/787))
