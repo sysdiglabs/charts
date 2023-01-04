@@ -66,6 +66,10 @@ $ helm install --create-namespace -n rapid-response rapid-response \
     -f values.yaml sysdig/rapid-response
 ```
 
+## How-to customise Rapid Response image
+
+An example on how-to customize the Rapid Response image for adding more tools like for ex: `kubectl` can be found at this link: https://github.com/sysdiglabs/rapid-response-custom-image-example/ the repository contains a sample `Dockerfile`
+
 ## Running helm unit tests
 
 The sysdiglabs/charts repository uses the following helm unittest plugin: https://github.com/quintush/helm-unittest
