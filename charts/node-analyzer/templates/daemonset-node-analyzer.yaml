@@ -530,13 +530,13 @@ spec:
           httpGet:
             port: {{ .Values.nodeAnalyzer.runtimeScanner.probesPort }}
             path: /probes/liveness
-          initialDelaySeconds: 3
+          initialDelaySeconds: 90
           periodSeconds: 3
         readinessProbe:
           httpGet:
             port: {{ .Values.nodeAnalyzer.runtimeScanner.probesPort }}
             path: /probes/readiness
-          initialDelaySeconds: 3
+          initialDelaySeconds: 90
           periodSeconds: 3
         securityContext:
             privileged: true
@@ -663,13 +663,13 @@ spec:
           httpGet:
             port: {{ .Values.nodeAnalyzer.hostScanner.probesPort }}
             path: /probes/liveness
-          initialDelaySeconds: 3
+          initialDelaySeconds: 90
           periodSeconds: 3
         readinessProbe:
           httpGet:
             port: {{ .Values.nodeAnalyzer.hostScanner.probesPort }}
             path: /probes/readiness
-          initialDelaySeconds: 3
+          initialDelaySeconds: 90
           periodSeconds: 3
         securityContext:
           # The privileged flag is necessary for OCP 4.x and other Kubernetes setups that deny host filesystem access to
