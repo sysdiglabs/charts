@@ -1,6 +1,6 @@
 # What's Changed
 
-### Documentation
-- **agent,node-analyzer,sysdig,sysdig-stackdriver-bridge** [da18fe5](https://github.com/sysdiglabs/charts/commit/da18fe5e7225be9bbfc484d6dcb22987d7d08066): remove references of the deprecated --purge option for 'helm delete' ([#864](https://github.com/sysdiglabs/charts/issues/864))
+### Chores
+- **sysdig-deploy** [5c2cc62](https://github.com/sysdiglabs/charts/commit/5c2cc62873b61766da2f395e46fe051205ac2699): Automatic version bump due to updated dependencies ([#873](https://github.com/sysdiglabs/charts/issues/873))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.5.39...sysdig-deploy-1.5.40
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.5.40...sysdig-deploy-1.5.41
