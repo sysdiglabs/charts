@@ -1,0 +1,8 @@
+sysdig:
+  accessKey: ${SECURE_AGENT_TOKEN}
+nodeAnalyzer:
+  apiEndpoint: secure.sysdig.com
+  runtimeScanner:
+    deploy: true
+  hostScanner:
+    deploy: true
