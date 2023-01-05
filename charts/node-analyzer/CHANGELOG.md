@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.8.23
+### Documentation
+* **agent,node-analyzer,sysdig,sysdig-stackdriver-bridge** [da18fe5](https://github.com/sysdiglabs/charts/commit/da18fe5e7225be9bbfc484d6dcb22987d7d08066): remove references of the deprecated --purge option for 'helm delete' ([#864](https://github.com/sysdiglabs/charts/issues/864))
 # v1.8.22
 ### Chores
 * **node-analyzer** [7971a25](https://github.com/sysdiglabs/charts/commit/7971a253e2fe4f282ab05c9e3316985646fd4009): Added test template for new runtime and host scanner ([#867](https://github.com/sysdiglabs/charts/issues/867))
