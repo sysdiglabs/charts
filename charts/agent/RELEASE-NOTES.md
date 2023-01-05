@@ -1,6 +1,6 @@
 # What's Changed
 
 ### Documentation
-- **agent,node-analyzer,sysdig** [bd37186](https://github.com/sysdiglabs/charts/commit/bd371864313e64d7a7ac07f79fe30f296b46d540): Remove references to Get Started in the READMEs ([#819](https://github.com/sysdiglabs/charts/issues/819))
+- **agent,node-analyzer,sysdig,sysdig-stackdriver-bridge** [da18fe5](https://github.com/sysdiglabs/charts/commit/da18fe5e7225be9bbfc484d6dcb22987d7d08066): remove references of the deprecated --purge option for 'helm delete' ([#864](https://github.com/sysdiglabs/charts/issues/864))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.5.53...agent-1.5.54
+#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.5.54...agent-1.5.55
