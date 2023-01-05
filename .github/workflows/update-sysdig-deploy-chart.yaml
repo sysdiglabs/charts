@@ -12,6 +12,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+
       - name: Check if dependent charts were modified or not
         uses: tj-actions/changed-files@v14.3
         id: dependent_files
@@ -22,18 +23,23 @@ jobs:
             charts/kspm-collector/*
             charts/rapid-response/*
             charts/admission-controller/*
+
       - name: Install YQ
         if: steps.dependent_files.outputs.any_changed == 'true'
         uses: dcarbone/install-yq-action@v1.0.1
+
       - name: run the script
         if: steps.dependent_files.outputs.any_changed == 'true'
         run: scripts/sysdig-deploy/update-sysdig-deploy.sh
+
       - name: Configure Git
         if: steps.dependent_files.outputs.any_changed == 'true'
         run: |
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+
       - name: Create Pull Request
+        id: cpr
         if: steps.dependent_files.outputs.any_changed == 'true'
         uses: peter-evans/create-pull-request@v4.2.0
         with:
@@ -44,3 +50,18 @@ jobs:
           token: ${{ secrets.TOOLS_JENKINS_ADMIN_ACCESS_GITHUB_TOKEN }}
           add-paths: charts/sysdig-deploy/Chart.yaml
           commit-message: "chore: Updating sysdig-deploy version"
+
+      - name: Enable Pull Request Automerge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v2
+        with:
+          token: ${{ secrets.TOOLS_JENKINS_ADMIN_ACCESS_GITHUB_TOKEN }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: squash
+
+      - name: Auto approve
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: juliangruber/approve-pull-request-action@v2
+        with:
+          github-token: ${{ secrets.TOOLS_JENKINS_ADMIN_ACCESS_GITHUB_TOKEN }}
+          number: ${{ steps.cpr.outputs.pull-request-number }}
