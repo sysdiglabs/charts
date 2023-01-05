@@ -11,7 +11,7 @@ global:
     tags: {}
   proxy: {}
   kspm:
-    deploy: false
+    deploy: true
   agentConfigmapName: "sysdig-agent"
   gke:
     autopilot: false

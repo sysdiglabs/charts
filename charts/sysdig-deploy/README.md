@@ -57,7 +57,6 @@ Currently included components:
       --set global.sysdig.accessKey=<ACCESS_KEY> \
       --set global.sysdig.region=<SAAS_REGION> \
       --set nodeAnalyzer.secure.vulnerabilityManagement.newEngineOnly=true \
-      --set global.kspm.deploy=true \
       --set nodeAnalyzer.nodeAnalyzer.benchmarkRunner.deploy=false \
       --set global.clusterConfig.name=<CLUSTER_NAME> \
       sysdig/sysdig-deploy
@@ -70,7 +69,6 @@ Currently included components:
       --set global.sysdig.accessKey=<ACCESS_KEY> \
       --set global.sysdig.region=<SAAS_REGION> \
       --set nodeAnalyzer.secure.vulnerabilityManagement.newEngineOnly=true \
-      --set global.kspm.deploy=true \
       --set nodeAnalyzer.nodeAnalyzer.benchmarkRunner.deploy=false \
       --set global.clusterConfig.name=<CLUSTER_NAME> \
       --set agent.gke.autopilot=true \
@@ -184,7 +182,7 @@ The following table lists the configurable parameters of the sysdig-deploy chart
 | `global.proxy.httpProxy`                | Sets `http_proxy` on the Agent container                                                                                | `""`      |
 | `global.proxy.httpsProxy`               | Sets `https_proxy` on the Agent container                                                                               | `""`      |
 | `global.proxy.noProxy`                  | Sets `no_proxy` on the Agent container                                                                                  | `""`      |
-| `global.kspm.deploy`                    | Enables Sysdig KSPM node analyzer & KSPM collector                                                                      | `false`   |
+| `global.kspm.deploy`                    | Enables Sysdig KSPM node analyzer & KSPM collector                                                                      | `true`   |
 | `global.agentConfigmapName`             | Sets a configmap name that is used to mount the agent configmap to fetch the cluster name and agent tags                | `"sysdig-agent"`      |
 | `global.gke.autopilot`                  | If true, overrides the configuration to values for GKE Autopilot clusters                                               | `false`   |
 | `admissionController`                   | Config specific to the [Sysdig AdmissionController](#admissioncontroller)                                               | `{}`      |
