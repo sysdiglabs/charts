@@ -345,6 +345,34 @@ rapidResponse:
     passphrase: THIS_IS_A_SECRET_PASSPHRASE
 ```
 
+## Pod Security Policy & Pod Security Admission
+
+- Some Sysdig components pods require privileged access in order to run, (e.g. agent, admission-controller(scanner), node-analyzer).\
+We used to ship a Pod Security Policy by default on every installation.\
+However, Pod Security Policy has been deprecated since Kubernetes v1.21 and removed since Kubernetes v1.25, [link](https://kubernetes.io/docs/concepts/security/pod-security-policy/).\
+Therefore we introduced a [check](https://github.com/sysdiglabs/charts/blob/607573107af04dd070fd7204f094d886415796db/charts/agent/templates/psp.yaml#L1)
+in order to deploy the policy only if the k8s version detected by helm is < 1.25.
+
+- As a replacement for Pod Security Policy, Kubernetes provides a new mechanism, [Pod Security Admission](https://kubernetes.io/docs/concepts/security/pod-security-admission/).\
+In a cluster using Pod Security Admission controller, enforcing a lower than priviliged [level](https://kubernetes.io/docs/concepts/security/pod-security-admission/#pod-security-levels)\
+will prevent the pods from working as intended, in order to avoid such issue the correct labels must be set in the namespace where the pods run.\
+(This step cannot be done by the helm chart itself during the installation due to helm limitations)
+
+For example, adding the following labels to the namespace that is running Agent pods:
+```yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sysdig-agent
+  labels:
+    pod-security.kubernetes.io/enforce: privileged
+    pod-security.kubernetes.io/enforce-version: latest
+    pod-security.kubernetes.io/audit: privileged
+    pod-security.kubernetes.io/audit-version: latest
+    pod-security.kubernetes.io/warn: privileged
+    pod-security.kubernetes.io/warn-version: latest
+```
+
 ## Running helm unit tests
 
 The sysdiglabs/charts repository uses the following helm unittest plugin: https://github.com/quintush/helm-unittest
