@@ -2713,6 +2713,41 @@ entries:
   agent:
   - apiVersion: v2
     appVersion: 12.10.1
+    created: "2023-01-05T10:03:52.43173845Z"
+    description: Sysdig Monitor and Secure agent
+    digest: bffc4a846471c5c9226d5fe7ef23263acc1498ad31d46c4459594891830cd1a2
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: lachlan@deis.com
+      name: lachie83
+    - email: jorge.salamero@sysdig.com
+      name: bencer
+    - email: nestor.salceda@sysdig.com
+      name: nestorsalceda
+    - email: alvaro.iradier@sysdig.com
+      name: airadier
+    - email: carlos.arilla@sysdig.com
+      name: carillan81
+    - email: adam.roberts@sysdig.com
+      name: aroberts87
+    name: agent
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/agent-1.5.55/agent-1.5.55.tgz
+    version: 1.5.55
+  - apiVersion: v2
+    appVersion: 12.10.1
     created: "2023-01-04T18:14:36.44239187Z"
     description: Sysdig Monitor and Secure agent
     digest: 6b867f8a8481b2c78636ba9018deed1f7fa4e72dc08ca094080c8cca7e4f9d0d
@@ -7562,6 +7597,40 @@ entries:
   node-analyzer:
   - apiVersion: v2
     appVersion: 12.6.0
+    created: "2023-01-05T10:03:52.566718926Z"
+    description: Sysdig Node Analyzer
+    digest: af09d030552452dae598a653902349078ad5ee88564665903c9c9f16cad90ab6
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: lachlan@deis.com
+      name: lachie83
+    - email: jorge.salamero@sysdig.com
+      name: bencer
+    - email: nestor.salceda@sysdig.com
+      name: nestorsalceda
+    - email: alvaro.iradier@sysdig.com
+      name: airadier
+    - email: carlos.arilla@sysdig.com
+      name: carillan81
+    - email: yashgiri.goswami@sysdig.com
+      name: yashgiri
+    name: node-analyzer
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/node-analyzer-1.8.23/node-analyzer-1.8.23.tgz
+    version: 1.8.23
+  - apiVersion: v2
+    appVersion: 12.6.0
     created: "2023-01-05T09:24:37.010123719Z"
     description: Sysdig Node Analyzer
     digest: 0b5ea800cf74b3dc33e749301296590818cbd3e1186d535b4db7be42838b5aa0
@@ -12064,6 +12133,38 @@ entries:
     - https://github.com/sysdiglabs/charts/releases/download/registry-scanner-0.0.1/registry-scanner-0.0.1.tgz
     version: 0.0.1
   sysdig:
+  - apiVersion: v1
+    appVersion: 12.10.1
+    created: "2023-01-05T10:03:52.714105127Z"
+    description: Sysdig Monitor and Secure agent
+    digest: b8582493db819338c27e1bc50dc493d06a7b75c87f701d6052fc9619aa5edf34
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: lachlan@deis.com
+      name: lachie83
+    - email: jorge.salamero@sysdig.com
+      name: bencer
+    - email: nestor.salceda@sysdig.com
+      name: nestorsalceda
+    - email: alvaro.iradier@sysdig.com
+      name: airadier
+    - email: carlos.arilla@sysdig.com
+      name: carillan81
+    name: sysdig
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/sysdig-1.15.69/sysdig-1.15.69.tgz
+    version: 1.15.69
   - apiVersion: v1
     appVersion: 12.10.1
     created: "2023-01-04T18:14:36.847671198Z"
@@ -18412,6 +18513,52 @@ entries:
     version: 1.7.15
   sysdig-deploy:
   - apiVersion: v2
+    created: "2023-01-05T10:03:52.859734311Z"
+    dependencies:
+    - alias: admissionController
+      condition: admissionController.enabled
+      name: admission-controller
+      repository: file://../admission-controller
+      version: ~0.7.20
+    - alias: agent
+      condition: agent.enabled
+      name: agent
+      repository: file://../agent
+      version: ~1.5.55
+    - alias: nodeAnalyzer
+      condition: nodeAnalyzer.enabled
+      name: node-analyzer
+      repository: file://../node-analyzer
+      version: ~1.8.23
+    - alias: kspmCollector
+      condition: global.kspm.deploy
+      name: kspm-collector
+      repository: file://../kspm-collector
+      version: ~0.1.31
+    - alias: rapidResponse
+      condition: rapidResponse.enabled
+      name: rapid-response
+      repository: file://../rapid-response
+      version: ~0.3.5
+    description: A chart with various Sysdig components for Kubernetes
+    digest: cb730e5c29e3a083d1d9448d03d7e676b1adc5f63b33fa24d297f008f09bc0c3
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    maintainers:
+    - email: adam.roberts@sysdig.com
+      name: aroberts87
+    - email: michele.palazzi@sysdig.com
+      name: ironashram
+    - email: zhongcheng.xiao@sysdig.com
+      name: lilx1ao
+    - email: yashgiri.goswami@sysdig.com
+      name: yashgiri
+    name: sysdig-deploy
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/sysdig-deploy-1.5.40/sysdig-deploy-1.5.40.tgz
+    version: 1.5.40
+  - apiVersion: v2
     created: "2023-01-05T09:33:47.696310589Z"
     dependencies:
     - alias: admissionController
@@ -24658,6 +24805,34 @@ entries:
   sysdig-stackdriver-bridge:
   - apiVersion: v1
     appVersion: 0.0.7
+    created: "2023-01-05T10:03:52.985762695Z"
+    description: Sysdig Monitor and Secure agent
+    digest: 8f422d8877ffc3475a7d8bf9654c28a68720217ed9828c373ae7a1e59b600696
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: jorge.salamero@sysdig.com
+      name: bencer
+    - email: nestor.salceda@sysdig.com
+      name: nestorsalceda
+    - email: scott@echoboomer.net
+      name: echoboomer
+    name: sysdig-stackdriver-bridge
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.1.4/sysdig-stackdriver-bridge-1.1.4.tgz
+    version: 1.1.4
+  - apiVersion: v1
+    appVersion: 0.0.7
     created: "2022-12-12T08:23:41.733722397Z"
     description: Sysdig Monitor and Secure agent
     digest: 02e0c762ca8059cb4c6d3691b44ed85791ffce711dddd5b7d25529e2ca077de2
@@ -24796,4 +24971,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2023-01-05T09:33:47.699384896Z"
+generated: "2023-01-05T10:03:52.988939727Z"
