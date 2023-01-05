@@ -47,6 +47,8 @@ tests:
   - it: Test cpu resources overrides
     set: 
       global:
+        clusterConfig:
+          name: test
         sysdig:
           accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
       agent:
