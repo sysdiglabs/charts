@@ -70,8 +70,6 @@ To uninstall/delete the `sysdig-agent` deployment:
 $ helm delete --namespace nodeanalyzer node-analyzer
 ```
 
-> **Tip**: Use `helm delete --namespace nodeanalyzer --purge node-analyzer` to completely remove the release from Helm internal storage
-
 The command removes all the Kubernetes components associated with the chart and deletes the release.
 
 ## Configuration
