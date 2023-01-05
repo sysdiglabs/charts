@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.5.42
+### Bug Fixes
+* **admission-controller,sysdig-deploy** [369665e](https://github.com/sysdiglabs/charts/commit/369665e8c9075c3847583b1d55d6d66ab60a3f92): fix missing namespace declarations in secrets ([#874](https://github.com/sysdiglabs/charts/issues/874))
 # v1.5.41
 ### Chores
 * **sysdig-deploy** [5c2cc62](https://github.com/sysdiglabs/charts/commit/5c2cc62873b61766da2f395e46fe051205ac2699): Automatic version bump due to updated dependencies ([#873](https://github.com/sysdiglabs/charts/issues/873))

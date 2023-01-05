@@ -1,6 +1,6 @@
 # What's Changed
 
-### Chores
-- **sysdig-deploy** [5c2cc62](https://github.com/sysdiglabs/charts/commit/5c2cc62873b61766da2f395e46fe051205ac2699): Automatic version bump due to updated dependencies ([#873](https://github.com/sysdiglabs/charts/issues/873))
+### Bug Fixes
+- **admission-controller,sysdig-deploy** [369665e](https://github.com/sysdiglabs/charts/commit/369665e8c9075c3847583b1d55d6d66ab60a3f92): fix missing namespace declarations in secrets ([#874](https://github.com/sysdiglabs/charts/issues/874))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.5.40...sysdig-deploy-1.5.41
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.5.41...sysdig-deploy-1.5.42
