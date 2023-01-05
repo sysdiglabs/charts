@@ -74,8 +74,6 @@ To uninstall/delete the `sysdig-agent` deployment:
 $ helm delete --namespace sysdig-agent sysdig-agent
 ```
 
-> **Tip**: Use `helm delete --namespace sysdig-agent --purge sysdig-agent` to completely remove the release from Helm internal storage
-
 The command removes all the Kubernetes components associated with the chart and deletes the release.
 
 ## Configuration
