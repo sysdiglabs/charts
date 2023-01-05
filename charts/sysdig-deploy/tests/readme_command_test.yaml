@@ -45,6 +45,8 @@ tests:
   - it: check Readme install command under "NodeAnalyzer" example 
     set:
       global:
+        clusterConfig:
+          name: test-k8s
         sysdig:
           accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
       agent:
@@ -66,6 +68,8 @@ tests:
   - it: check Readme install command under "Rapid Response" example 
     set:
       global:
+        clusterConfig:
+          name: test-k8s
         sysdig:
           accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
       rapidResponse:

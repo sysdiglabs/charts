@@ -12,6 +12,8 @@ tests:
   - it: Checking region 'us2'
     set:
       global: 
+        clusterConfig:
+          name: test-k8s
         sysdig:
           region: us2
     asserts:
@@ -23,6 +25,8 @@ tests:
   - it: Checking region 'us3'
     set:
       global: 
+        clusterConfig:
+          name: test-k8s
         sysdig:
           region: us3
     asserts:
@@ -34,6 +38,8 @@ tests:
   - it: Checking region 'us4'
     set:
       global: 
+        clusterConfig:
+          name: test-k8s
         sysdig:
           region: us4
     asserts:
@@ -45,6 +51,8 @@ tests:
   - it: Checking region 'eu1'
     set:
       global: 
+        clusterConfig:
+          name: test-k8s
         sysdig:
           region: eu1
     asserts:
@@ -56,6 +64,8 @@ tests:
   - it: Checking region 'au1'
     set:
       global: 
+        clusterConfig:
+          name: test-k8s
         sysdig:
           region: au1
     asserts:
@@ -67,6 +77,8 @@ tests:
   - it: Checking incorrect region 'ap3' should fail
     set:
       global: 
+        clusterConfig:
+          name: test-k8s
         sysdig:
           region: ap3
     asserts:

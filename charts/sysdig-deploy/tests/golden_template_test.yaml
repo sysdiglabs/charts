@@ -48,7 +48,7 @@ tests:
     set: 
       global:
         clusterConfig:
-          name: test
+          name: test-k8s
         sysdig:
           accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
       agent:
