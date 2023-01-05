@@ -319,9 +319,12 @@ nodeAnalyzer:
     # should be analyzer in addition to default ones.
     # additionalDirsToScan: "/foo/bar/baz,/my/other/folder"
 
+    # probesPort is the port where readiness and liveness probes are exposed
+    probesPort: 7001
+
     image:
       repository: sysdig/vuln-host-scanner
-      tag: 0.3.2
+      tag: 0.3.4
       digest:
       pullPolicy: IfNotPresent
 
