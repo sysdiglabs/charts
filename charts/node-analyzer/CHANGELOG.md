@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.8.22
+### Chores
+* **node-analyzer** [7971a25](https://github.com/sysdiglabs/charts/commit/7971a253e2fe4f282ab05c9e3316985646fd4009): Added test template for new runtime and host scanner ([#867](https://github.com/sysdiglabs/charts/issues/867))
 # v1.8.21
 ### New Features
 * **node-analyzer** [c2e8885](https://github.com/sysdiglabs/charts/commit/c2e88858702ff11b262aac6c695c78508ba0317d): host-scanner bump to 0.3.4 ([#857](https://github.com/sysdiglabs/charts/issues/857))
