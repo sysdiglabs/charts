@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.3.6
+### Documentation
+* **rapid-response** [21d07d8](https://github.com/sysdiglabs/charts/commit/21d07d8c09b38f9033891ba1d02ce59ae5fde8e6): Updated Rapid Response ([#878](https://github.com/sysdiglabs/charts/issues/878))
 # v0.3.5
 ### Documentation
 * **rapid-response,sysdig-deploy** [9b7cb32](https://github.com/sysdiglabs/charts/commit/9b7cb32e2c51141d74a05f2aa9bfd03babb782c4): Updated rapid-response doc ([#865](https://github.com/sysdiglabs/charts/issues/865))
