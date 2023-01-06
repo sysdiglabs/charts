@@ -30,6 +30,7 @@ The following table lists the configurable parameters of the Sysdig Rapid Respon
 | `sysdig.existingAccessKeySecret`          | Alternatively, specify the name of a Kubernetes secret containing an 'access-key' entry | ` ` Either accessKey or existingAccessKeySecret is required   |
 | `rapidResponse.passphrase`                | A passphrase used to encrypt all traffic between the user and host                      | ` ` Either passphrase or existingPassphraseSecret is required |
 | `rapidResponse.existingPassphraseSecret`  | Alternatively, specify the name of a Kubernetes secret containing an 'passphrase' entry | ` ` Either passphrase or existingPassphraseSecret is required |
+| `rapidResponse.existingServiceAccount`    | ** Optional ** Service Account name for provide additional capabilities to Rapid Response pod | ` ` |
 | `rapidResponse.image.registry`            | Rapid Response image registry                                                           | `quay.io`                                                     |
 | `rapidResponse.image.repository`          | The image repository to pull from                                                       | `sysdig/rapid-response-host-component`                        |
 | `rapidResponse.image.tag`                 | The image tag to pull                                                                   | `0.3.6`                                                       |
@@ -50,7 +51,7 @@ The following table lists the configurable parameters of the Sysdig Rapid Respon
 | `rapidResponse.ssl.ca.certs`              | Add a list of CA certificates that need to be used by Rapid Response                    | `[]`                                                          |
 | `rapidResponse.sslVerifyCertificate`      | Set it to `false` for disabling the certificate verification                            | `true`                                                        |
 | `rapidResponse.tolerations`               | The tolerations for scheduling	                                                      | `node-role.kubernetes.io/master:NoSchedule`                   |
-|                                                                                                                                       `node-role.kubernetes.io/control-plane:NoSchedule`            |
+|                                           |                                                                                         | `node-role.kubernetes.io/control-plane:NoSchedule`            |
 
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,

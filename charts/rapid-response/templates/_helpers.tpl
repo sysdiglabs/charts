@@ -74,9 +74,11 @@ Define the proper imageRegistry to use for Rapid Response image
 */}}
 {{- define "rapidResponse.imageRegistry" -}}
 {{- if and .Values.global (hasKey (default .Values.global dict) "imageRegistry") -}}
-    {{- .Values.global.imageRegistry -}}
+    {{- required "A valid global registry name is required" .Values.global.imageRegistry -}}
+    {{/*- .Values.global.imageRegistry -*/}}
 {{- else -}}
-    {{- .Values.rapidResponse.image.registry -}}
+    {{- required "A valid registry name is required" .Values.rapidResponse.image.registry  -}}
+    {{/*- .Values.rapidResponse.image.registry -*/}}
 {{- end -}}
 {{- end -}}
 
@@ -84,7 +86,8 @@ Define the proper imageRegistry to use for Rapid Response image
 Return the proper Rapid Response image name
 */}}
 {{- define "rapidResponse.repositoryName" -}}
-    {{- .Values.rapidResponse.image.repository -}}
+    {{- required "A valid repository name is required" .Values.rapidResponse.image.repository -}}
+    {{/*- .Values.rapidResponse.image.repository -*/}}
 {{- end -}}
 
 {{- define "rapidResponse.image" -}}
@@ -172,6 +175,8 @@ Determine collector endpoint based on provided region or .Values.rapidResponse.a
         {{- "eu1.app.sysdig.com" -}}
     {{- else if (eq .Values.global.sysdig.region "au1") -}}
         {{- "app.au1.sysdig.com" -}}
+    {{- else -}}
+        {{- fail (printf "global.sysdig.region=%s provided is not recognized." .Values.global.sysdig.region ) -}}
     {{- end -}}
 {{- end -}}
 
