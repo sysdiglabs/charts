@@ -5,7 +5,7 @@ templates:
 tests:
   - it: check value of accessKey without local chart override - local value provided
     documentIndex: 0
-    set: 
+    set:
       sysdig:
         accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
       rapidResponse:
@@ -18,7 +18,7 @@ tests:
 
   - it: check value of accessKey without local chart override - global value provided
     documentIndex: 0
-    set: 
+    set:
       global:
         sysdig:
           accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
@@ -32,7 +32,7 @@ tests:
 
   - it: check value of accessKey with local chart override
     documentIndex: 0
-    set: 
+    set:
       global:
         sysdig:
           accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
@@ -47,7 +47,7 @@ tests:
         template: secrets.yaml
 
   - it: check value of accessKeySecret without local chart override - local value provided
-    set: 
+    set:
       sysdig:
         existingAccessKeySecret: standard_key
       rapidResponse:
@@ -64,7 +64,7 @@ tests:
         template: daemonset.yaml
 
   - it: check value of accessKeySecret without local chart override - global value provided
-    set: 
+    set:
       global:
         sysdig:
           accessKeySecret: standard_key
@@ -82,7 +82,7 @@ tests:
         template: daemonset.yaml
 
   - it: check value of accessKeySecret with local chart override
-    set: 
+    set:
       global:
         sysdig:
           accessKeySecret: standard_key
@@ -101,8 +101,40 @@ tests:
                   name: override_key
         template: daemonset.yaml
 
+  - it: check value of rapidResponse.passphrase
+    documentIndex: 1
+    set:
+      global:
+        sysdig:
+          accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+      rapidResponse:
+        passphrase: passcode
+    asserts:
+      - equal:
+          path: data.passphrase
+          value: cGFzc2NvZGU=
+        template: secrets.yaml
+
+  - it: check value of rapidResponse.existingPassphraseSecret
+    set:
+      global:
+        sysdig:
+          accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+      rapidResponse:
+        existingPassphraseSecret: external-passcode
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+              name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: passphrase
+                  name: external-passcode
+        template: daemonset.yaml
+
   - it: check value of httpProxy without local chart override - local value provided
-    set: 
+    set:
       global:
         sysdig:
           accessKeySecret: standard_key
@@ -119,7 +151,7 @@ tests:
         template: daemonset.yaml
 
   - it: check value of httpProxy without local chart override - global value provided
-    set: 
+    set:
       global:
         sysdig:
           accessKeySecret: standard_key
@@ -136,7 +168,7 @@ tests:
         template: daemonset.yaml
 
   - it: check value of httpProxy with local chart override
-    set: 
+    set:
       global:
         sysdig:
           accessKeySecret: standard_key
@@ -155,7 +187,7 @@ tests:
         template: daemonset.yaml
 
   - it: check value of httpsProxy without local chart override - local value provided
-    set: 
+    set:
       global:
         sysdig:
           accessKeySecret: standard_key
@@ -172,7 +204,7 @@ tests:
         template: daemonset.yaml
 
   - it: check value of httpsProxy without local chart override - global value provided
-    set: 
+    set:
       global:
         sysdig:
           accessKeySecret: standard_key
@@ -189,7 +221,7 @@ tests:
         template: daemonset.yaml
 
   - it: check value of httpsProxy with local chart override
-    set: 
+    set:
       global:
         sysdig:
           accessKeySecret: standard_key
@@ -208,7 +240,7 @@ tests:
         template: daemonset.yaml
 
   - it: check value of noProxy without local chart override - local value provided
-    set: 
+    set:
       global:
         sysdig:
           accessKeySecret: standard_key
@@ -225,7 +257,7 @@ tests:
         template: daemonset.yaml
 
   - it: check value of noProxy without local chart override - global value provided
-    set: 
+    set:
       global:
         sysdig:
           accessKeySecret: standard_key
@@ -242,7 +274,7 @@ tests:
         template: daemonset.yaml
 
   - it: check value of noProxy with local chart override
-    set: 
+    set:
       global:
         sysdig:
           accessKeySecret: standard_key
