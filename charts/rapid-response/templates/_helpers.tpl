@@ -75,10 +75,8 @@ Define the proper imageRegistry to use for Rapid Response image
 {{- define "rapidResponse.imageRegistry" -}}
 {{- if and .Values.global (hasKey (default .Values.global dict) "imageRegistry") -}}
     {{- required "A valid global registry name is required" .Values.global.imageRegistry -}}
-    {{/*- .Values.global.imageRegistry -*/}}
 {{- else -}}
     {{- required "A valid registry name is required" .Values.rapidResponse.image.registry  -}}
-    {{/*- .Values.rapidResponse.image.registry -*/}}
 {{- end -}}
 {{- end -}}
 
@@ -87,7 +85,6 @@ Return the proper Rapid Response image name
 */}}
 {{- define "rapidResponse.repositoryName" -}}
     {{- required "A valid repository name is required" .Values.rapidResponse.image.repository -}}
-    {{/*- .Values.rapidResponse.image.repository -*/}}
 {{- end -}}
 
 {{- define "rapidResponse.image" -}}
