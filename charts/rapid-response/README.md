@@ -43,6 +43,9 @@ The following table lists the configurable parameters of the Sysdig Rapid Respon
 | `rapidResponse.resources.requests.memory` | Rapid Response Memory requests                                                          | `256Mi`                                                       |
 | `rapidResponse.resources.limits.cpu`      | Rapid Response CPU limits                                                               | `500m`                                                        |
 | `rapidResponse.resources.limits.memory`   | Rapid Response Memory limits                                                            | `500Mi`                                                       |
+| `rapidResponse.extraVolumes.volumes`  | Use this to specify volumes to be made available in the Rapid Response shell                                                             | []                                                       |
+| `rapidResponse.extraVolumes.mounts`  | Use this to specify mount paths for volumes specified                                                         | []                                                       |
+| `rapidResponse.securityContext.privileged`  | Privileged flag. OCP 4.x and other Kubernetes distributions require this flag in order to access host filesystem.             | `false`                                                       |
 | `rapidResponse.skipTlsVerifyCertificate`  | ** Deprecated ** Set it to `true` for disabling the certificate verification            | `false` ** Deprecated ** use `sslVerifyCertificate` instead   |
 | `rapidResponse.ssl.ca.certs`              | Add a list of CA certificates that need to be used by Rapid Response                    | `[]`                                                          |
 | `rapidResponse.sslVerifyCertificate`      | Set it to `false` for disabling the certificate verification                            | `true`                                                        |
@@ -66,9 +69,25 @@ $ helm install --create-namespace -n rapid-response rapid-response \
     -f values.yaml sysdig/rapid-response
 ```
 
-## How-to customise Rapid Response image
+## Adding volumes to Rapid Response
 
-An example on how-to customize the Rapid Response image for adding more tools like for ex: `kubectl` can be found at this link: https://github.com/sysdiglabs/rapid-response-custom-image-example/ the repository contains a sample `Dockerfile`
+Rapid response is an isolated container when used out of the box. In order to access other volumes this chart supports specifying them through `rapidResponse.extraVolumes.volumes` and `rapidResponse.extraVolumes.mounts`. In this example, the host root is mounted under `/host`:
+```
+rapidResponse:
+  extraVolumes:
+    volumes:
+      - name: host-root-vol
+        hostPath:
+          path: /
+
+    mounts:
+      - mountPath: /host
+        name: host-root-vol
+```
+
+## Customize Rapid Response image
+
+As each team can have different necessities and constraints when accessing critical workloads. For this reason the Rapid Response image has a small footprint, so that everyone can customize it based on each own criteria. A basic customization example in which `kubectl` is added can be found (here)[https://github.com/sysdiglabs/rapid-response-custom-image-example/].
 
 ## Running helm unit tests
 
