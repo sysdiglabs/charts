@@ -87,7 +87,7 @@ rapidResponse:
 
 ## Customize Rapid Response image
 
-As each team can have different necessitiesi and constraints when accessing critical workloads. For this reason the Rapid Response image has a small footprint, so that everyone can customize it based on each own criteria. A basic customization example in which `kubectl` is added can be found (here)[https://github.com/sysdiglabs/rapid-response-custom-image-example/].
+As each team can have different necessities and constraints when accessing critical workloads. For this reason the Rapid Response image has a small footprint, so that everyone can customize it based on each own criteria. A basic customization example in which `kubectl` is added can be found (here)[https://github.com/sysdiglabs/rapid-response-custom-image-example/].
 
 ## Running helm unit tests
 
