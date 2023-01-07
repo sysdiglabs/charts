@@ -1,4 +1,4 @@
-suite: Testing if labels are applied correctly
+suite: Testing if image settings are applied correctly
 templates:
   - daemonset.yaml
 tests:
