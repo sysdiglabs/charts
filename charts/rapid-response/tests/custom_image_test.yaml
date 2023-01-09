@@ -1,0 +1,65 @@
+suite: Testing if image settings are applied correctly
+templates:
+  - daemonset.yaml
+tests:
+  - it: check of rapid response custom image and imagePullSecrets
+    set: 
+      rapidResponse:
+        image:
+          registry: ghcr.io
+          repository: test/rapid-image
+          tag: 0.1.0
+          pullPolicy: Always
+        imagePullSecrets: test-pull-secret
+    asserts:
+    - equal:
+        path: spec.template.spec.containers[0].image
+        value: ghcr.io/test/rapid-image:0.1.0
+    - equal:
+        path: spec.template.spec.containers[0].imagePullPolicy
+        value: Always
+    - equal:
+        path: spec.template.spec.imagePullSecrets
+        value: test-pull-secret
+ 
+  # incorrect image, pullPolicy and pullSecret tests
+  - it: check application of incorrect rapidResponse.image.repository with empty yaml key
+    set: 
+      rapidResponse:
+        image:
+          registry: ghcr.io
+          repository: ""
+          tag: 0.1.0
+          pullPolicy: Always
+        imagePullSecrets: test-pull-secret
+    asserts:
+    - failedTemplate:
+        errorMessage: "A valid repository name is required"
+
+  - it: check application of incorrect rapidResponse.image.registry with empty yaml key
+    set: 
+      rapidResponse:
+        image:
+          registry: ""
+          repository: test/rapid-image
+          tag: 0.1.0
+          pullPolicy: Always
+        imagePullSecrets: test-pull-secret
+    asserts:
+    - failedTemplate:
+        errorMessage: "A valid registry name is required"
+
+  - it: check application of incorrect global.imageRegistry with empty yaml key
+    set:
+      global:
+        imageRegistry: ""
+      rapidResponse:
+        image:
+          registry: ""
+          repository: test/rapid-image
+          tag: 0.1.0
+          pullPolicy: Always
+        imagePullSecrets: test-pull-secret
+    asserts:
+    - failedTemplate:
+        errorMessage: "A valid global registry name is required"

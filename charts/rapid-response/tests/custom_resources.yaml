@@ -1,0 +1,28 @@
+suite: Testing pre-generated values and best-known edge cases
+templates:
+  - daemonset.yaml
+tests:
+  - it: Test cpu resources overrides
+    set:
+      rapidResponse
+        resources:
+          requests:
+            cpu: 2500m
+            memory: 1500Mi
+          limits:
+            cpu: 5000m
+            memory: 2500Mi
+    asserts:
+      - contains:
+          path: spec.template.spec.containers
+          content:
+            resources:
+              limits:
+                cpu: 5000m
+                memory: 2500Mi
+              requests:
+                cpu: 2500m
+                memory: 1500Mi
+          any: true
+          count: 1
+        template: daemonset.yaml

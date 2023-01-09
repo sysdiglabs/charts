@@ -18,6 +18,10 @@ rapidResponse:
   # Alternatively, specify the name of a Kubernetes secret containing an 'passphrase' entry
   existingPassphraseSecret: ""
 
+  # Rapid Response doesn't require to access to any specific Kubernetes resources by default.
+  # Users can specify a Service Account name in order to give some capabilities to Rapid Response pod
+  existingServiceAccount: ""
+
   image:
     registry: quay.io
     pullPolicy: IfNotPresent

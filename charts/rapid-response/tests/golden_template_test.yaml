@@ -5,8 +5,8 @@ templates:
   - secrets.yaml
 tests:
   - it: check normal install testcase
-    set: 
-      sysdig: 
+    set:
+      sysdig:
         accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
       clusterName: test-k8s
       rapidResponse:
@@ -25,7 +25,16 @@ tests:
           apiVersion: v1
         template: secrets.yaml
       - equal:
-          path: data.access\-key
+          path: data.access-key
           value: QUFBQUFBQUEtQkJCQi1DQ0NDLUREREQtRUVFRUVFRUVFRUVF
         documentIndex: 0
+        template: secrets.yaml
+      - containsDocument:
+          kind: Secret
+          apiVersion: v1
+        template: secrets.yaml
+      - equal:
+          path: data.passphrase
+          value: dGVzdHBocmFzZQ==
+        documentIndex: 1
         template: secrets.yaml
