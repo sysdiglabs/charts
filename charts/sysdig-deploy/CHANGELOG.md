@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.5.46
+### Documentation
+* **rapid-response** [02e4b0e](https://github.com/sysdiglabs/charts/commit/02e4b0eefc19767ffc4bdfcaad6724a602c2ba37): Removed extra ']' ([#881](https://github.com/sysdiglabs/charts/issues/881))
 # v1.5.45
 ### Documentation
 * **rapid-response** [2056b2b](https://github.com/sysdiglabs/charts/commit/2056b2b7678d178c9adf04e138cdd44e1bd6af87): Added some examples ([#880](https://github.com/sysdiglabs/charts/issues/880))
