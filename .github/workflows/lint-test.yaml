@@ -16,9 +16,9 @@ jobs:
           fetch-depth: 0
 
       - name: Set up Helm
-        uses: azure/setup-helm@v1
+        uses: azure/setup-helm@v3.5
         with:
-          version: v3.4.0
+          version: v3.10.3
 
       - uses: actions/setup-python@v4
         with:
@@ -38,7 +38,7 @@ jobs:
           git clean -df .
 
       - name: Set up chart-testing
-        uses: helm/chart-testing-action@v2.2.0
+        uses: helm/chart-testing-action@v2.3.1
 
       - name: Expand templates for CI
         run: |
@@ -82,9 +82,9 @@ jobs:
           fetch-depth: 0
 
       - name: Set up Helm
-        uses: azure/setup-helm@v1
+        uses: azure/setup-helm@v3.5
         with:
-          version: v3.4.0
+          version: v3.10.3
 
       - uses: actions/setup-python@v4
         with:
@@ -104,7 +104,7 @@ jobs:
           git clean -df .
 
       - name: Set up chart-testing
-        uses: helm/chart-testing-action@v2.2.0
+        uses: helm/chart-testing-action@v2.3.1
 
       - name: Expand templates for CI
         run: |
