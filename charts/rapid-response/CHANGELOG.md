@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.4.1
+### Documentation
+* **rapid-response** [2056b2b](https://github.com/sysdiglabs/charts/commit/2056b2b7678d178c9adf04e138cdd44e1bd6af87): Added some examples ([#880](https://github.com/sysdiglabs/charts/issues/880))
 # v0.4.0
 ### New Features
 * **rapid-response** [eb1d4c8](https://github.com/sysdiglabs/charts/commit/eb1d4c8442834e99984e397e3f93caf641c88816): Introduced the possibility of specifying a Service Account ([#879](https://github.com/sysdiglabs/charts/issues/879))
