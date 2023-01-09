@@ -89,7 +89,7 @@ rapidResponse:
 
 As each team can have different necessities and constraints when accessing critical workloads. For this reason the Rapid Response image has a small footprint, so that everyone can customize it based on each own criteria.
 
-A basic customization example in which `kubectl` is added can be found [here](https://github.com/sysdiglabs/rapid-response-custom-image-example/]).
+A basic customization example in which `kubectl` is added can be found [here](https://github.com/sysdiglabs/rapid-response-custom-image-example/).
 
 Along with this, you might need to pull such image from a private repository. In order to do that, follow your registry guidelines to deploy the credentials on the cluster. After that, you will be able to use them by setting the `rapidResponse.imagePullSecrets` parameter value to the secret name to use.
 
