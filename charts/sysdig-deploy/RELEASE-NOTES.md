@@ -1,6 +1,6 @@
 # What's Changed
 
-### New Features
-- **rapid-response** [eb1d4c8](https://github.com/sysdiglabs/charts/commit/eb1d4c8442834e99984e397e3f93caf641c88816): Introduced the possibility of specifying a Service Account ([#879](https://github.com/sysdiglabs/charts/issues/879))
+### Documentation
+- **rapid-response** [2056b2b](https://github.com/sysdiglabs/charts/commit/2056b2b7678d178c9adf04e138cdd44e1bd6af87): Added some examples ([#880](https://github.com/sysdiglabs/charts/issues/880))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.5.43...sysdig-deploy-1.5.44
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.5.44...sysdig-deploy-1.5.45
