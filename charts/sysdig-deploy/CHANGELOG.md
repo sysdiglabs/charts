@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.5.49
+### Chores
+* **sysdig-deploy** [70d5764](https://github.com/sysdiglabs/charts/commit/70d57645b53c5e038bd0b2d2f7ef587ec78ef5c9): Automatic version bump due to updated dependencies ([#883](https://github.com/sysdiglabs/charts/issues/883))
 # v1.5.48
 ### Documentation
 * **sysdig-deploy** [bccaab9](https://github.com/sysdiglabs/charts/commit/bccaab9e5a32f85aa388723b31e03ee8cecfe18c): add Pod Security Policy section ([#876](https://github.com/sysdiglabs/charts/issues/876))
