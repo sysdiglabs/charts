@@ -1,6 +1,6 @@
 # What's Changed
 
-### Bug Fixes
-- **admission-controller,sydig-deploy** [7693f02](https://github.com/sysdiglabs/charts/commit/7693f025c4493e22de6caddbfff6c077198a24aa): fix priorityClassName in wrong scope for scanner deployment ([#882](https://github.com/sysdiglabs/charts/issues/882))
+### Documentation
+- **sysdig-deploy** [bccaab9](https://github.com/sysdiglabs/charts/commit/bccaab9e5a32f85aa388723b31e03ee8cecfe18c): add Pod Security Policy section ([#876](https://github.com/sysdiglabs/charts/issues/876))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.5.46...sysdig-deploy-1.5.47
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.5.47...sysdig-deploy-1.5.48
