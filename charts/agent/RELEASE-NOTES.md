@@ -1,6 +1,6 @@
 # What's Changed
 
-### Documentation
-- **agent,node-analyzer,sysdig,sysdig-stackdriver-bridge** [da18fe5](https://github.com/sysdiglabs/charts/commit/da18fe5e7225be9bbfc484d6dcb22987d7d08066): remove references of the deprecated --purge option for 'helm delete' ([#864](https://github.com/sysdiglabs/charts/issues/864))
+### Bug Fixes
+- **agent** [6dcd65e](https://github.com/sysdiglabs/charts/commit/6dcd65ed1bc02e3c6929f0925167e803e820909b): Set agent node selector os and arch by k8s version ([#859](https://github.com/sysdiglabs/charts/issues/859))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.5.54...agent-1.5.55
+#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.5.55...agent-1.5.56
