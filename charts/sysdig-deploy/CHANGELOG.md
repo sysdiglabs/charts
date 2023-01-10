@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.5.47
+### Bug Fixes
+* **admission-controller,sydig-deploy** [7693f02](https://github.com/sysdiglabs/charts/commit/7693f025c4493e22de6caddbfff6c077198a24aa): fix priorityClassName in wrong scope for scanner deployment ([#882](https://github.com/sysdiglabs/charts/issues/882))
 # v1.5.46
 ### Documentation
 * **rapid-response** [02e4b0e](https://github.com/sysdiglabs/charts/commit/02e4b0eefc19767ffc4bdfcaad6724a602c2ba37): Removed extra ']' ([#881](https://github.com/sysdiglabs/charts/issues/881))

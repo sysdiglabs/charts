@@ -1,6 +1,6 @@
 # What's Changed
 
-### Documentation
-- **rapid-response** [02e4b0e](https://github.com/sysdiglabs/charts/commit/02e4b0eefc19767ffc4bdfcaad6724a602c2ba37): Removed extra ']' ([#881](https://github.com/sysdiglabs/charts/issues/881))
+### Bug Fixes
+- **admission-controller,sydig-deploy** [7693f02](https://github.com/sysdiglabs/charts/commit/7693f025c4493e22de6caddbfff6c077198a24aa): fix priorityClassName in wrong scope for scanner deployment ([#882](https://github.com/sysdiglabs/charts/issues/882))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.5.45...sysdig-deploy-1.5.46
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.5.46...sysdig-deploy-1.5.47
