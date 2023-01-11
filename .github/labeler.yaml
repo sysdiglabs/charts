@@ -1,0 +1,3 @@
+no-tests:
+  - any: ['charts/**/*.yaml', 'charts/**/*.tpl']
+    all: ['!charts/**/tests/*.yaml']
