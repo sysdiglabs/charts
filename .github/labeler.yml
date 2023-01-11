@@ -1,0 +1,8 @@
+no-tests:
+  - any:
+    - 'charts/*/templates/**/*'
+    - '!charts/**/*.md'
+    - '!charts/**/*.txt'
+    - '!charts/**/README.tpl'
+    all:
+    - '!charts/**/tests/*.yaml'
