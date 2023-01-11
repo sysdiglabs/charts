@@ -357,8 +357,14 @@ nodeAnalyzer:
       key: node-role.kubernetes.io/master
     - effect: NoSchedule
       key: node-role.kubernetes.io/control-plane
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/controlplane
+      operator: Equal
+      value: "true"
     - effect: NoExecute
       key: node-role.kubernetes.io/etcd
+      operator: Equal
+      value: "true"
 
   # Set nodeAnalyzer daemonset priorityClassName
   priorityClassName:
