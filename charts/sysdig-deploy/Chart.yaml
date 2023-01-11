@@ -25,7 +25,7 @@ dependencies:
   - name: agent
     # repository: https://charts.sysdig.com
     repository: file://../agent
-    version: ~1.5.56
+    version: ~1.5.57
     alias: agent
     condition: agent.enabled
   - name: node-analyzer
@@ -43,6 +43,6 @@ dependencies:
   - name: rapid-response
     # repository: https://charts.sysdig.com
     repository: file://../rapid-response
-    version: ~0.4.2
+    version: ~0.4.3
     alias: rapidResponse
     condition: rapidResponse.enabled
