@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.5.50
+### Bug Fixes
+* **node-analyzer,sydig-deploy** [7693f02](https://github.com/sysdiglabs/charts/commit/771c5846a79dd78a3a69ba20553a1c8f3e93b2ed): Make the readinessProbe and livenessProbe configurable for kspm node-analyzer ([#888](https://github.com/sysdiglabs/charts/issues/888))
 # v1.5.49
 ### Chores
 * **sysdig-deploy** [70d5764](https://github.com/sysdiglabs/charts/commit/70d57645b53c5e038bd0b2d2f7ef587ec78ef5c9): Automatic version bump due to updated dependencies ([#883](https://github.com/sysdiglabs/charts/issues/883))
