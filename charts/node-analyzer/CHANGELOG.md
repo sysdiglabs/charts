@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.8.25
+### Bug Fixes
+* **node-analyzer** [771c584](https://github.com/sysdiglabs/charts/commit/771c5846a79dd78a3a69ba20553a1c8f3e93b2ed): Make probes configurable ([#888](https://github.com/sysdiglabs/charts/issues/888))
 # v1.8.24
 ### Bug Fixes
 * **node-analyzer** [9cee27d](https://github.com/sysdiglabs/charts/commit/9cee27d3f1ac66e709e8a50f5dd5ad00fc9b52ee): increase initial delay of the probes ([#872](https://github.com/sysdiglabs/charts/issues/872))
