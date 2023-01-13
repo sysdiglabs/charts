@@ -318,3 +318,41 @@ Use global sysdig tags for agent
         {{- end -}}
     {{- end -}}
 {{- end -}}
+
+{{/*
+Determine Sysdig Secure features that need to be enabled/disabled
+
+For secure.enabled=true, only security.enabled is set to true
+For secure.enabled=false, disable all secure features
+Set k8s_audit_server_enabled to the provided value for auditLog.enabled
+
+The logic behind enabling only security.enabled when secure.enabled=true is
+that we can then rely on the agent's defualts, or a backend push to enable
+the features the customer needs. However, when the user requests
+secure.enabled=false we need to explicitly put those config entires in the
+agent config to prevent a backend push from enabling them after installation.
+*/}}
+{{- define "agent.secureFeatures" }}
+    {{- $secureBlockConfig := dict "security" (dict
+        "enabled" .Values.secure.enabled
+        "k8s_audit_server_enabled" .Values.auditLog.enabled) }}
+    {{- if .Values.auditLog.enabled }}
+        {{- range $key, $val := (dict
+                 "k8s_audit_server_url" .Values.auditLog.auditServerUrl
+                 "k8s_audit_server_port" .Values.auditLog.auditServerPort) }}
+            {{- $_ := set $secureBlockConfig.security $key $val }}
+        {{- end }}
+    {{- end }}
+    {{- if not .Values.secure.enabled }}
+        {{- range $secureFeature := (list
+            "commandlines_capture"
+            "drift_killer"
+            "falcobaseline"
+            "memdump"
+            "network_topology"
+            "secure_audit_streams") }}
+            {{- $_ := set $.Values.sysdig.settings $secureFeature (dict "enabled" false) }}
+        {{- end }}
+    {{- end }}
+    {{- toYaml $secureBlockConfig }}
+{{- end }}
