@@ -1,6 +1,6 @@
 # What's Changed
 
-### Bug Fixes
-- **agent** [6dcd65e](https://github.com/sysdiglabs/charts/commit/6dcd65ed1bc02e3c6929f0925167e803e820909b): Set agent node selector os and arch by k8s version ([#859](https://github.com/sysdiglabs/charts/issues/859))
+### New Features
+- **agent,node-analyzer,rapid-response** [487b421](https://github.com/sysdiglabs/charts/commit/487b421c922e097047e5ca65c01cee466664daba): add Rancher-specific tolerations ([#884](https://github.com/sysdiglabs/charts/issues/884))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.5.55...agent-1.5.56
+#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.5.56...agent-1.5.57
