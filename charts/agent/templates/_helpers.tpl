@@ -321,6 +321,16 @@ Use global sysdig tags for agent
 
 {{/*
 Determine Sysdig Secure features that need to be enabled/disabled
+
+For secure.enabled=true, only security.enabled is set to true
+For secure.enabled=false, disable all secure features
+Set k8s_audit_server_enabled to the provided value for auditLog.enabled
+
+The logic behind enabling only security.enabled when secure.enabled=true is
+that we can then rely on the agent's defualts, or a backend push to enable
+the features the customer needs. However, when the user requests
+secure.enabled=false we need to explicitly put those config entires in the
+agent config to prevent a backend push from enabling them after installation.
 */}}
 {{- define "agent.secureFeatures" }}
     {{- $secureBlockConfig := dict "security" (dict
