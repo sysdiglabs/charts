@@ -60,7 +60,8 @@ rapidResponse:
   # Import custom CA certificates
   ssl:
     ca:
-      certs: []
+      certs:
+        []
         # Example of certificate
         # - |
         #     -----BEGIN CERTIFICATE-----
@@ -164,14 +165,22 @@ rapidResponse:
 
   # Allow sysdig to run on Kubernetes 1.6 masters.
   tolerations:
-  - effect: NoSchedule
-    key: node-role.kubernetes.io/master
-  - effect: NoSchedule
-    key: node-role.kubernetes.io/control-plane
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/control-plane
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/controlplane
+      operator: Equal
+      value: "true"
+    - effect: NoExecute
+      key: node-role.kubernetes.io/etcd
+      operator: Equal
+      value: "true"
 
 tests:
   rbac:
-  # true here enables creation of rbac resources
+    # true here enables creation of rbac resources
     create: true
   serviceAccount:
     # true here enables creation of service account
