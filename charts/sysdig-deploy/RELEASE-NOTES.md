@@ -1,6 +1,6 @@
 # What's Changed
 
-### Chores
-- **sysdig-deploy** [81e30e0](https://github.com/sysdiglabs/charts/commit/81e30e065ad7f57e99f0818069d95de0b9070de9): Automatic version bump due to updated dependencies ([#889](https://github.com/sysdiglabs/charts/issues/889))
+### New Features
+- **agent,node-analyzer,rapid-response** [487b421](https://github.com/sysdiglabs/charts/commit/487b421c922e097047e5ca65c01cee466664daba): add Rancher-specific tolerations ([#884](https://github.com/sysdiglabs/charts/issues/884))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.5.49...sysdig-deploy-1.5.50
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.5.50...sysdig-deploy-1.5.51
