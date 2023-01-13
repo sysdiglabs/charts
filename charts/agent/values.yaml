@@ -212,7 +212,7 @@ secure:
 
 auditLog:
   # true here activates the K8s Audit Log feature for Sysdig Secure
-  enabled: false
+  enabled: true
   auditServerUrl: 0.0.0.0
   auditServerPort: 7765
 
