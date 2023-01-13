@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.4.3
+### New Features
+* **agent,node-analyzer,rapid-response** [487b421](https://github.com/sysdiglabs/charts/commit/487b421c922e097047e5ca65c01cee466664daba): add Rancher-specific tolerations ([#884](https://github.com/sysdiglabs/charts/issues/884))
 # v0.4.2
 ### Documentation
 * **rapid-response** [02e4b0e](https://github.com/sysdiglabs/charts/commit/02e4b0eefc19767ffc4bdfcaad6724a602c2ba37): Removed extra ']' ([#881](https://github.com/sysdiglabs/charts/issues/881))
