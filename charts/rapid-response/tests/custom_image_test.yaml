@@ -22,7 +22,6 @@ tests:
         path: spec.template.spec.imagePullSecrets
         value: test-pull-secret
  
-  # incorrect image, pullPolicy and pullSecret tests
   - it: check application of incorrect rapidResponse.image.repository with empty yaml key
     set: 
       rapidResponse:
@@ -63,3 +62,42 @@ tests:
     asserts:
     - failedTemplate:
         errorMessage: "A valid global registry name is required"
+
+  # This test was valid for chart version <= 0.4.3 
+  #- it: check of rapid response image tag does gets converted to string
+  #  set:
+  #    rapidResponse:
+  #      image:
+  #        tag: 1.0
+  #  asserts:
+  #  - equal:
+  #      path: spec.template.spec.containers[0].image
+  #      value: quay.io/sysdig/rapid-response-host-component:1.0
+
+  #- it: check of rapid response image tag does gets converted to string
+  #  set:
+  #    rapidResponse:
+  #      image:
+  #        tag: 1
+  #  asserts:
+  #  - equal:
+  #      path: spec.template.spec.containers[0].image
+  #      value: quay.io/sysdig/rapid-response-host-component:1
+
+  - it: check application of incorrect rapidResponse.image.tag with float64 value
+    set:
+      rapidResponse:
+        image:
+          tag: 1.0
+    asserts:
+    - failedTemplate:
+        errorMessage: "Rapid Response image tag does not seems to be a string"
+
+  - it: check application of incorrect rapidResponse.image.tag with int/float64 value
+    set:
+      rapidResponse:
+        image:
+          tag: 1
+    asserts:
+    - failedTemplate:
+        errorMessage: "Rapid Response image tag does not seems to be a string"
