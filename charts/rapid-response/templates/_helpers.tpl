@@ -101,7 +101,12 @@ This would avoid to manually update everytime both Chart.yaml and values.yaml wi
 */}}
 {{- define "rapidResponse.imageTag" -}}
 {{- if .Values.rapidResponse.image.tag -}}
-{{- printf "%s" .Values.rapidResponse.image.tag -}}
+    {{- $tp := typeOf .Values.rapidResponse.image.tag }}
+    {{- if ne $tp "string" }}
+      {{- fail "Rapid Response image tag does not seems to be a string" }}
+    {{- else }}
+        {{- printf "%s" .Values.rapidResponse.image.tag -}}
+    {{- end }}
 {{- else -}}
 {{- printf "%s" .Chart.AppVersion -}}
 {{- end -}}
