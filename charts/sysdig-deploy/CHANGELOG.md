@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.5.54
+### Chores
+* **sysdig-deploy** [40fa5e0](https://github.com/sysdiglabs/charts/commit/40fa5e093e229d87e5a8bfb1494fdb07af4e2c7e): Automatic version bump due to updated dependencies ([#896](https://github.com/sysdiglabs/charts/issues/896))
 # v1.5.53
 ### New Features
 * **rapid-response,sysdig-deploy** [6158dda](https://github.com/sysdiglabs/charts/commit/6158dda036e90e8493d002b3501479ade32b48c1): Verify that image.tag is a string ([#894](https://github.com/sysdiglabs/charts/issues/894))
