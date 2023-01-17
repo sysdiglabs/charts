@@ -62,18 +62,18 @@ spec:
           - name: http
             containerPort: {{ .Values.port }}
             protocol: TCP
-        livenessProbe:
-          httpGet:
-            path: /health
-            port: http
-          initialDelaySeconds: {{ .Values.probes.initialDelay }}
-          periodSeconds: {{ .Values.probes.periodDelay }}
+        {{- if .Values.readinessProbe.enabled }}
+        {{- with .Values.readinessProbe.probe }}
         readinessProbe:
-          httpGet:
-            path: /health
-            port: http
-          initialDelaySeconds: {{ .Values.probes.initialDelay }}
-          periodSeconds: {{ .Values.probes.periodDelay }}
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- end }}
+        {{- if .Values.livenessProbe.enabled }}
+        {{- with .Values.livenessProbe.probe }}
+        livenessProbe:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- end }}
         resources:
 {{ toYaml .Values.resources | indent 10 }}
         env:

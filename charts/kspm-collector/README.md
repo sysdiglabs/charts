@@ -61,8 +61,8 @@ The following table lists the configurable parameters of the Sysdig KSPM Collect
 | `affinity`                                | Node affinities. Overrides `arch` and `os` values                                       | `{}`                                                        |
 | `labels`                                  | KSPM collector specific labels (as a multi-line templated string map or as YAML)        | `{}`                                                        |
 | `port`                                    | KSPM collector port for health checks                                                   | `8080`                                                      |
-| `probes.initialDelay`                     | KSPM collector initial delay before starting k8s health checks in seconds               | `90`                                                         |
-| `probes.periodDelay`                      | KSPM collector delay beetween two consecutive k8s health checks in seconds              | `3`                                                         |
+| `readinessProbe.enabled`                  | KSPM collector readinessProbe enablement                                                | `true`                                                         |
+| `livenessProbe.enabled`                   | KSPM collector livenessProbe enablement                                                 | `true`                                                         |
 | `securityContext.runAsNonRoot`            | make KSPM collector run as non root                                                     | `true`                                                      |
 | `securityContext.runAsUser`               | make KSPM collector run as user with this ID                                            | `10001`                                                     |
 | `securityContext.runAsGroup`              | make KSPM collector run as group with this ID                                           | `10001`                                                     |
