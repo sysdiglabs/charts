@@ -118,6 +118,24 @@ When it detects that the version in the folder doesn't exist in  `index.yaml`, i
 The packaged referenced in `index.yaml`, when it's updated using the GitHub action, will link for download to the URL provided by the _GitHub repository_ release files.
 <br/><br/>
 
+### Helm Provenance and Integrity
+The helm charts released in this repo are signed with a GPG key, here we describe how one can verify the integrity of such packages.
+
+- Retrieve the public keyring
+    > `curl https://raw.githubusercontent.com/sysdiglabs/charts/gh-pages/charts/helm_public_key.asc | gpg --dearmor > pubring.gpg`
+
+- Download a the helm package form the releases, including the `.prov` file, example
+    >
+```
+    sysdig-deploy-1.5.27.tgz
+    sysdig-deploy-1.5.27.tgz.prov
+```
+
+- Run Helm Verify
+    > `helm verify <chart-package>.tgz --keyring pubring.gpg`
+
+- Check [helm-docs](https://helm.sh/docs/topics/provenance/) for more info on the topic
+
 ## More information
 
 You can find more information at:

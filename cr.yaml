@@ -1,2 +1,4 @@
 release-notes-file: RELEASE-NOTES.md
 skip-existing: true
+sign: true
+key: helm-signing@sysdig.com
