@@ -2,109 +2,105 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-cronjob:
-  # Cronjob expression for registry scan scheduling (you can check https://crontab.guru/ for help)
-  schedule: "0 6 * * 6"
-  # Number of failed job history to keep on the cluster.
-  failedJobsHistoryLimit: 5
-  # Number of successful job history to keep on the cluster.
-  successfulJobsHistoryLimit: 2
-  # Restart policy for a failed registry-scan execution.
-  restartPolicy: Never
-
-# Specify a volume claim to write the final JSON report there instead of standard output.
-reportToPersistentVolumeClaim: ""
-
+# Configure affinity for scheduling the registry scanner pod.
+affinity: {}
 config:
-  # **required**
-  # <br/> URL of the registry to scan.
-  registryURL: https://my-docker-registry.com
-  # API URL of the registry to scan. This is required if your registry type is Artifactory.
-  registryApiUrl: https://my-docker-registry.com/artifactory/api/docker/
-  # Username for registry authentication.
-  registryUser: ""
-  # Password for registry authentication.
-  registryPassword: ""
-  # Registry Type. Optional. dockerv2 (default if not specified), icr, artifactory, ecr.
-  registryType: ""
-  # AccountID - Only for ICR registry type.
-  registryAccountId: ""
-  # ICR IAM API - Only for ICR registry type.
-  icrIamApi: ""
-  # Ignore TLS certificate for IAM API - Only for ICR registry type.
-  icrIamApiSkipTLS: false
   aws:
     # AWS Credentials AccessKeyID.
     accessKeyId: ""
-    # AWS Credentials: SecretAccessKey.
-    secretAccessKey: ""
     # AWS Region.
     region: ""
-  # Ignore registry TLS certificate errors (self-signed, etc.).
-  registrySkipTLS: false
-  # **required**
-  # <br/> Sysdig Secure Base URL
-  secureBaseURL: https://secure.sysdig.com
-  # **required**
-  # <br/> API Token to access Sysdig Secure.
-  secureAPIToken: ""
-  # Sysdig Secure is on-prem installation (vs SaaS).
-  secureOnPrem: false
-  # Ignore Sysdig Secure TLS certificate errors.
-  secureSkipTLS: false
-  # Max number of parallel inline scanner workers to spawn in cluster.
-  maxWorkers: 1
+    # AWS Credentials: SecretAccessKey.
+    secretAccessKey: ""
   filter:
-    # List of regular expressions. Images matching any of these expressions are *always* included when scanning.
-    include: []
     # List of regular expressions. Images matching any of these expressions are excluded when scanning.
     exclude: []
+    # List of regular expressions. Images matching any of these expressions are *always* included when scanning.
+    include: []
     # Exclude images with creation date older than specified number of days.
     maxAgeDays:
     # Only scan a maximum number of tags per repository, excluding older images by creation date.
     maxTagsPerRepository:
+  # ICR IAM API - Only for ICR registry type.
+  icrIamApi: ""
+  # Ignore TLS certificate for IAM API - Only for ICR registry type.
+  icrIamApiSkipTLS: false
+  # Max number of parallel inline scanner workers to spawn in cluster.
+  maxWorkers: 1
+  # AccountID - Only for ICR registry type.
+  registryAccountId: ""
+  # API URL of the registry to scan. This is required if your registry type is Artifactory.
+  registryApiUrl: https://my-docker-registry.com/artifactory/api/docker/
+  # Password for registry authentication.
+  registryPassword: ""
+  # Ignore registry TLS certificate errors (self-signed, etc.).
+  registrySkipTLS: false
+  # Registry Type. Optional. dockerv2 (default if not specified), icr, artifactory, ecr.
+  registryType: ""
+  # **required**
+  # <br/> URL of the registry to scan.
+  registryURL: https://my-docker-registry.com
+  # Username for registry authentication.
+  registryUser: ""
   scan:
     # Override the default (if not specified) `quay.io/sysdig/secure-inline-scan:2` image for the inline scanner job.
     inlineScanImage: ""
-    # Security context for Inline Scanner container.
-    securityContext: {}
-      # capabilities:
-      #   drop:
-      #   - ALL
-      # readOnlyRootFilesystem: true
-      # runAsNonRoot: true
-      # runAsUser: 1000
+    # capabilities:
+    #   drop:
+    #   - ALL
+    # readOnlyRootFilesystem: true
+    # runAsNonRoot: true
+    # runAsUser: 1000
     # true/false whether to activate the beta image scanning (experimental and unsupported)
     newVmScanner: false
-ssl:
-  ca:
-    # For outbound connections
-    # <br/>List of PEM-encoded x509 certificate authority.
-    certs: {}
-      # Example of certificate
-      # - |
-      #     -----BEGIN CERTIFICATE-----
-      #     MIIDEzCCAfugAwIBAgIQKiv9U+KxPJzu1adXwC06RzANBgkqhkiG9w0BAQsFADAU
-      #     MRIwEAYDVQQDEwloYXJib3ItY2EwHhcNMjIwMjIzMDY1NjExWhcNMjMwMjIzMDY1
-      #     NjExWjAUMRIwEAYDVQQDEwloYXJib3ItY2EwggEiMA0GCSqGSIb3DQEBAQUAA4IB
-      #     DwAwggEKAoIBAQCqiqSoGHDbQhULBpkS+4Ip4VLF36DZpT8CJ4rOBA5+8Cnjd3XY
-      #     I+n1g6ta/s/6QMEy46rHUysGrmtb/G5+dDAzfNUuAJh2vJEb3Yt8ysihxPwxLie+
-      #     85dgEQirruyruvR7zczRo1BVoa7Q5M9kMPnM6a+M5mEjnVoqwdD3g4QigkSQ2ewD
-      #     7AwwOALgDd4duuUUoCz+IKr+8PWBHvCpRrgwSoVNjw8fckWb4fMLaChiyr9SZfpq
-      #     qjR8rRq65Yb7etmpRew61czWMv2Tv45bz6xigdB/zWe6+qAFiHqXaHDyxytkji3C
-      #     ZuBxa8Xl7xYfpcczEa1qh8ByAQyWzKN5xRY1AgMBAAGjYTBfMA4GA1UdDwEB/wQE
-      #     AwICpDAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwDwYDVR0TAQH/BAUw
-      #     AwEB/zAdBgNVHQ4EFgQUslz034d5FUO+jSzlsgWlFeP/ogwwDQYJKoZIhvcNAQEL
-      #     BQADggEBAJH3MIVEnnjB3XLA6cw61dWTtigLcA5caT5yEJALf126dBaPwFsOn0mi
-      #     ehxdSRh+LrDzEN1MP9NJRpKQxMCy694sAzZGJggBhBGE6P0InLM56lBHlmqN2Cfy
-      #     apwtueUtXm/GoB+3FEsRnjl7qzi40oadosdu0pIrqvviTjmbfm6CfxaW4crAu6Ev
-      #     3fl41WW/2WWzFU7KV7ApfRfzJUZ82vo8n6CXv2ogt7DOrAE4l27KS5oqNu8K5STh
-      #     FdNM4fBjDhoRhwIrurHDGabsIJa+0yThwRQSSafereqredfafLOHqV/ar6S63BGe
-      #     MMNlTAQ9fvdNOTzZntye0PQYR5SR13E=
-      #     -----END CERTIFICATE-----
-
+    # Security context for Inline Scanner container.
+    securityContext: {}
+  # **required**
+  # <br/> API Token to access Sysdig Secure.
+  secureAPIToken: ""
+  # **required**
+  # <br/> Sysdig Secure Base URL
+  secureBaseURL: https://secure.sysdig.com
+  # Sysdig Secure is on-prem installation (vs SaaS).
+  secureOnPrem: false
+  # Ignore Sysdig Secure TLS certificate errors.
+  secureSkipTLS: false
+cronjob:
+  # Number of failed job history to keep on the cluster.
+  failedJobsHistoryLimit: 5
+  # Restart policy for a failed registry-scan execution.
+  restartPolicy: Never
+  # Cronjob expression for registry scan scheduling (you can check https://crontab.guru/ for help)
+  schedule: 0 6 * * 6
+  # Number of successful job history to keep on the cluster.
+  successfulJobsHistoryLimit: 2
 # Additional labels to add to CronJob and Scanning Jobs. Custom labels to be added to kubernetes manifests of all resources created.
 customLabels: {}
+# Specify the name of a Kubernetes secret containing 'secureAPIToken', 'registryUser', and 'registryPassword' entries or
+# if you are using ecr as registryType, add also 'accessKeyId', 'secretAccessKey' and 'region' entries.
+existingSecretName: ""
+# Chart fullname override
+fullnameOverride: ""
+image:
+  # PullPolicy for Registry Scanner image.
+  pullPolicy: Always
+  # Sysdig Registry Scanner image registry.
+  registry: quay.io
+  # Sysdig Registry Scanner image repository
+  repository: sysdig/registry-scanner
+  # Registry Scanner image tag. If empty, default to appVersion in Chart.yaml.
+  tag:
+# The image pull secrets.
+imagePullSecrets: []
+# Chart name override
+nameOverride: ""
+# Configure nodeSelector for scheduling the registry scanner pod.
+nodeSelector: {}
+# Registry scanner pod annotations
+podAnnotations: {}
+# Security context for Registry Scanner pod
+podSecurityContext: {}
+# fsGroup: 2000
 
 proxy:
   # URL of the proxy for HTTP connections, or empty if not using proxy (sets the http_proxy environment variable).
@@ -115,69 +111,63 @@ proxy:
   # Include in noProxy the internal IP of the kubeapi server,
   # and you probably need to add your registry if it is inside the cluster
   noProxy:
-
-image:
-  # Sysdig Registry Scanner image registry.
-  registry: quay.io
-  # Sysdig Registry Scanner image repository
-  repository: sysdig/registry-scanner
-  # Registry Scanner image tag. If empty, default to appVersion in Chart.yaml.
-  tag:
-  # PullPolicy for Registry Scanner image.
-  pullPolicy: Always
-
-serviceAccount:
-  # Specifies whether a service account should be created
-  create: true
-  # Extra annotations to add to the service account
-  annotations: {}
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
-  name: ""
-
-# The image pull secrets.
-imagePullSecrets: []
-# Chart name override
-nameOverride: ""
-# Chart fullname override
-fullnameOverride: ""
-
-# Specify the name of a Kubernetes secret containing 'secureAPIToken', 'registryUser', and 'registryPassword' entries or
-# if you are using ecr as registryType, add also 'accessKeyId', 'secretAccessKey' and 'region' entries.
-existingSecretName: ""
-
-# Registry scanner pod annotations
-podAnnotations: {}
-
-# Security context for Registry Scanner pod
-podSecurityContext: {}
-  # fsGroup: 2000
+# Specify a volume claim to write the final JSON report there instead of standard output.
+reportToPersistentVolumeClaim: ""
+# Resource limits for registry scanner container.
+resources: {}
+# We usually recommend not to specify default resources and to leave this as a conscious
+# choice for the user. This also increases chances charts run on environments with little
+# resources, such as Minikube. If you do want to specify resources, uncomment the following
+# lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+# limits:
+#   cpu: 100m
+#   memory: 128Mi
+# requests:
+#   cpu: 100m
+#   memory: 128Mi
 
 # Security context for Registry Scanner container
 securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
+# capabilities:
+#   drop:
+#   - ALL
+# readOnlyRootFilesystem: true
+# runAsNonRoot: true
+# runAsUser: 1000
 
-# Resource limits for registry scanner container.
-resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
-
-# Configure nodeSelector for scheduling the registry scanner pod.
-nodeSelector: {}
+serviceAccount:
+  # Extra annotations to add to the service account
+  annotations: {}
+  # Specifies whether a service account should be created
+  create: true
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+ssl:
+  ca:
+    # For outbound connections
+    # <br/>List of PEM-encoded x509 certificate authority.
+    certs: {}
+    # Example of certificate
+    # - |
+    #     -----BEGIN CERTIFICATE-----
+    #     MIIDEzCCAfugAwIBAgIQKiv9U+KxPJzu1adXwC06RzANBgkqhkiG9w0BAQsFADAU
+    #     MRIwEAYDVQQDEwloYXJib3ItY2EwHhcNMjIwMjIzMDY1NjExWhcNMjMwMjIzMDY1
+    #     NjExWjAUMRIwEAYDVQQDEwloYXJib3ItY2EwggEiMA0GCSqGSIb3DQEBAQUAA4IB
+    #     DwAwggEKAoIBAQCqiqSoGHDbQhULBpkS+4Ip4VLF36DZpT8CJ4rOBA5+8Cnjd3XY
+    #     I+n1g6ta/s/6QMEy46rHUysGrmtb/G5+dDAzfNUuAJh2vJEb3Yt8ysihxPwxLie+
+    #     85dgEQirruyruvR7zczRo1BVoa7Q5M9kMPnM6a+M5mEjnVoqwdD3g4QigkSQ2ewD
+    #     7AwwOALgDd4duuUUoCz+IKr+8PWBHvCpRrgwSoVNjw8fckWb4fMLaChiyr9SZfpq
+    #     qjR8rRq65Yb7etmpRew61czWMv2Tv45bz6xigdB/zWe6+qAFiHqXaHDyxytkji3C
+    #     ZuBxa8Xl7xYfpcczEa1qh8ByAQyWzKN5xRY1AgMBAAGjYTBfMA4GA1UdDwEB/wQE
+    #     AwICpDAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwDwYDVR0TAQH/BAUw
+    #     AwEB/zAdBgNVHQ4EFgQUslz034d5FUO+jSzlsgWlFeP/ogwwDQYJKoZIhvcNAQEL
+    #     BQADggEBAJH3MIVEnnjB3XLA6cw61dWTtigLcA5caT5yEJALf126dBaPwFsOn0mi
+    #     ehxdSRh+LrDzEN1MP9NJRpKQxMCy694sAzZGJggBhBGE6P0InLM56lBHlmqN2Cfy
+    #     apwtueUtXm/GoB+3FEsRnjl7qzi40oadosdu0pIrqvviTjmbfm6CfxaW4crAu6Ev
+    #     3fl41WW/2WWzFU7KV7ApfRfzJUZ82vo8n6CXv2ogt7DOrAE4l27KS5oqNu8K5STh
+    #     FdNM4fBjDhoRhwIrurHDGabsIJa+0yThwRQSSafereqredfafLOHqV/ar6S63BGe
+    #     MMNlTAQ9fvdNOTzZntye0PQYR5SR13E=
+    #     -----END CERTIFICATE-----
 # Configure tolerations for scheduling the registry scanner pod.
 tolerations: []
-# Configure affinity for scheduling the registry scanner pod.
-affinity: {}

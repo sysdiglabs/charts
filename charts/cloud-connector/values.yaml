@@ -3,72 +3,38 @@
 # Declare variables to be passed into your templates.
 
 # Amount of replicas for Cloud Connector
-replicaCount: 1
-
-image:
-  # The image repository to pull from.
-  repository: quay.io/sysdig/cloud-connector
-  # The image pull policy.
-  pullPolicy: IfNotPresent
-  # The image tag (immutable tags are recommended). Overrides the image tag whose default is the chart appVersion.
-  tag:
-
-# The image pull secrets
-imagePullSecrets: []
-# Chart name override
-nameOverride: ""
-# Chart full name override
-fullnameOverride: ""
-
-serviceAccount:
-  # Create the service account
-  create: true
-  # Extra annotations for serviceAccount
-  annotations: {}
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
-  name: ""
-
-# Pod annotations
-podAnnotations:  # +doc-gen:break
-  prometheus.io/scrape: "true"
-  prometheus.io/path: "/metrics"
-  prometheus.io/port: "5000"
-
-# Configure deployment PSP's
-podSecurityContext: {}
-
-# Configure securityContext
-securityContext:  # +doc-gen:break
-  capabilities:
-    drop:
-    - ALL
-  readOnlyRootFilesystem: true
-  runAsNonRoot: true
-
-service:
-  # Use this type as service
-  type: ClusterIP
-  # Configure port for the service
-  port: 80
-  # Additional labels to specify for the service
-  labels: {}
-
-# Configure resource requests and limits
-resources: {}
-
-# Configure nodeSelector for scheduling
-nodeSelector: {}
-
-# Tolerations for scheduling
-tolerations: []
-
 # Configure affinity rules
 affinity: {}
-
-# Configure deployment source for inner telemetry
-telemetryDeploymentMethod: "helm"
-
+## Secret values
+aws:
+  # AWS Credentials AccessKeyID
+  accessKeyId: ""
+  # AWS Region
+  region: ""
+  # AWS Credentials: SecretAccessKey
+  secretAccessKey: ""
+azure:
+  # Azure service principal client id
+  clientId: ""
+  # Azure service principal client secret
+  clientSecret: ""
+  # Azure Event Grid EventHub Connection String
+  eventGridEventHubConnectionString: ""
+  # Azure EventHub Connection String
+  eventHubConnectionString: ""
+  # Azure region
+  region: ""
+  # Azure service principal tenant id
+  tenantId: ""
+bruteForceDetection:
+  # Time window for a bruteforce attack try
+  duration: 24h
+  # Enable Brute Force detection
+  enabled: true
+  # Maximum number of tries for given time window
+  maximumTries: 10
+# Provide an existing secret name (see details in 'templates/secret.yaml') for the entries it uses.
+existingSecretName: ""
 # Extra environment variables to be set
 extraEnvVars: []
 #   - name: HTTP_PROXY
@@ -79,57 +45,69 @@ extraEnvVars: []
 #     value: foo.com,bar.net:4000
 #
 
-## Secret values
-
-aws:
-  # AWS Credentials AccessKeyID
-  accessKeyId: ""
-  # AWS Credentials: SecretAccessKey
-  secretAccessKey: ""
-  # AWS Region
-  region: ""
-
+# Chart full name override
+fullnameOverride: ""
 # GCP Credentials JSON
 gcpCredentials: ""
-
-azure:
-  # Azure EventHub Connection String
-  eventHubConnectionString: ""
-  # Azure Event Grid EventHub Connection String
-  eventGridEventHubConnectionString: ""
-  # Azure service principal tenant id
-  tenantId: ""
-  # Azure service principal client id
-  clientId: ""
-  # Azure service principal client secret
-  clientSecret: ""
-  # Azure region
-  region: ""
-
-sysdig:
-  # Sysdig Secure URL
-  url: "https://secure.sysdig.com"
-  # API Token to access Sysdig Secure
-  secureAPIToken: ""
-  # Verify SSL certificate
-  verifySSL: true
-
-# Provide an existing secret name (see details in 'templates/secret.yaml') for the entries it uses.
-existingSecretName: ""
-
-# Rules Section for Cloud Connector
-rules: []
-
+image:
+  # The image pull policy.
+  pullPolicy: IfNotPresent
+  # The image repository to pull from.
+  repository: quay.io/sysdig/cloud-connector
+  # The image tag (immutable tags are recommended). Overrides the image tag whose default is the chart appVersion.
+  tag:
+# The image pull secrets
+imagePullSecrets: []
 # Thread-Detection event ingestion configuration ([config](#ingestors))
 ingestors: []
-
+# Chart name override
+nameOverride: ""
+# Configure nodeSelector for scheduling
+nodeSelector: {}
+# Pod annotations
+podAnnotations:  # +doc-gen:break
+  prometheus.io/path: /metrics
+  prometheus.io/port: "5000"
+  prometheus.io/scrape: "true"
+# Configure deployment PSP's
+podSecurityContext: {}
+replicaCount: 1
+# Configure resource requests and limits
+resources: {}
+# Rules Section for Cloud Connector
+rules: []
 # Scanning capabilities configuration ([config](#scanners))
 scanners: []
-
-bruteForceDetection:
-  # Enable Brute Force detection
-  enabled: true
-  # Time window for a bruteforce attack try
-  duration: 24h
-  # Maximum number of tries for given time window
-  maximumTries: 10
+# Configure securityContext
+securityContext:  # +doc-gen:break
+  capabilities:
+    drop:
+      - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+service:
+  # Additional labels to specify for the service
+  labels: {}
+  # Configure port for the service
+  port: 80
+  # Use this type as service
+  type: ClusterIP
+serviceAccount:
+  # Extra annotations for serviceAccount
+  annotations: {}
+  # Create the service account
+  create: true
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+sysdig:
+  # API Token to access Sysdig Secure
+  secureAPIToken: ""
+  # Sysdig Secure URL
+  url: https://secure.sysdig.com
+  # Verify SSL certificate
+  verifySSL: true
+# Configure deployment source for inner telemetry
+telemetryDeploymentMethod: helm
+# Tolerations for scheduling
+tolerations: []

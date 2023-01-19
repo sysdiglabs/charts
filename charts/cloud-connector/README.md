@@ -23,7 +23,7 @@ $ pre-commit run -a
 $ helm repo add sysdig https://charts.sysdig.com
 $ helm repo update
 $ helm upgrade --install cloud-connector sysdig/cloud-connector \
-      --create-namespace -n cloud-connector --version=0.7.22  \
+      --create-namespace -n cloud-connector --version=0.7.23  \
       --set sysdig.secureAPIToken=SECURE_API_TOKEN
 ```
 
@@ -48,7 +48,7 @@ to enable threat-detection and image scanning capabilities for the main three pr
 To install the chart with the release name `cloud-connector`:
 
 ```console
-$ helm upgrade --install cloud-connector sysdig/cloud-connector -n cloud-connector --version=0.7.22
+$ helm upgrade --install cloud-connector sysdig/cloud-connector -n cloud-connector --version=0.7.23
 ```
 
 The command deploys the Sysdig Cloud Connector on the Kubernetes cluster in the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.
@@ -72,7 +72,7 @@ The following table lists the configurable parameters of the `cloud-connector` c
 
 |                Parameter                |                                                      Description                                                       |                                                 Default                                                  |
 |-----------------------------------------|------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------|
-| affinity                                | Configure affinity rules                                                                                               | <code>{}</code>                                                                                          |
+| affinity                                | Amount of replicas for Cloud Connector Configure affinity rules                                                        | <code>{}</code>                                                                                          |
 | aws.accessKeyId                         | AWS Credentials AccessKeyID                                                                                            | <code>""</code>                                                                                          |
 | aws.region                              | AWS Region                                                                                                             | <code>""</code>                                                                                          |
 | aws.secretAccessKey                     | AWS Credentials: SecretAccessKey                                                                                       | <code>""</code>                                                                                          |
@@ -90,29 +90,29 @@ The following table lists the configurable parameters of the `cloud-connector` c
 | fullnameOverride                        | Chart full name override                                                                                               | <code>""</code>                                                                                          |
 | gcpCredentials                          | GCP Credentials JSON                                                                                                   | <code>""</code>                                                                                          |
 | image.pullPolicy                        | The image pull policy.                                                                                                 | <code>IfNotPresent</code>                                                                                |
-| imagePullSecrets                        | The image pull secrets                                                                                                 | <code>[]</code>                                                                                          |
 | image.repository                        | The image repository to pull from.                                                                                     | <code>quay.io/sysdig/cloud-connector</code>                                                              |
 | image.tag                               | The image tag (immutable tags are recommended). Overrides the image tag whose default is the chart appVersion.         | <code></code>                                                                                            |
+| imagePullSecrets                        | The image pull secrets                                                                                                 | <code>[]</code>                                                                                          |
 | ingestors                               | Thread-Detection event ingestion configuration ([config](#ingestors))                                                  | <code>[]</code>                                                                                          |
 | nameOverride                            | Chart name override                                                                                                    | <code>""</code>                                                                                          |
 | nodeSelector                            | Configure nodeSelector for scheduling                                                                                  | <code>{}</code>                                                                                          |
 | podAnnotations                          | Pod annotations                                                                                                        | <code>{"prometheus.io/path":"/metrics","prometheus.io/port":"5000","prometheus.io/scrape":"true"}</code> |
 | podSecurityContext                      | Configure deployment PSP's                                                                                             | <code>{}</code>                                                                                          |
-| replicaCount                            | Amount of replicas for Cloud Connector                                                                                 | <code>1</code>                                                                                           |
+| replicaCount                            |                                                                                                                        | <code>1</code>                                                                                           |
 | resources                               | Configure resource requests and limits                                                                                 | <code>{}</code>                                                                                          |
 | rules                                   | Rules Section for Cloud Connector                                                                                      | <code>[]</code>                                                                                          |
 | scanners                                | Scanning capabilities configuration ([config](#scanners))                                                              | <code>[]</code>                                                                                          |
 | securityContext                         | Configure securityContext                                                                                              | <code>{"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":true,"runAsNonRoot":true}</code>         |
-| serviceAccount.annotations              | Extra annotations for serviceAccount                                                                                   | <code>{}</code>                                                                                          |
-| serviceAccount.create                   | Create the service account                                                                                             | <code>true</code>                                                                                        |
-| serviceAccount.name                     | The name of the service account to use. If not set and create is true, a name is generated using the fullname template | <code>""</code>                                                                                          |
 | service.labels                          | Additional labels to specify for the service                                                                           | <code>{}</code>                                                                                          |
 | service.port                            | Configure port for the service                                                                                         | <code>80</code>                                                                                          |
 | service.type                            | Use this type as service                                                                                               | <code>ClusterIP</code>                                                                                   |
+| serviceAccount.annotations              | Extra annotations for serviceAccount                                                                                   | <code>{}</code>                                                                                          |
+| serviceAccount.create                   | Create the service account                                                                                             | <code>true</code>                                                                                        |
+| serviceAccount.name                     | The name of the service account to use. If not set and create is true, a name is generated using the fullname template | <code>""</code>                                                                                          |
 | sysdig.secureAPIToken                   | API Token to access Sysdig Secure                                                                                      | <code>""</code>                                                                                          |
-| sysdig.url                              | Sysdig Secure URL                                                                                                      | <code>"https://secure.sysdig.com"</code>                                                                 |
+| sysdig.url                              | Sysdig Secure URL                                                                                                      | <code>https://secure.sysdig.com</code>                                                                   |
 | sysdig.verifySSL                        | Verify SSL certificate                                                                                                 | <code>true</code>                                                                                        |
-| telemetryDeploymentMethod               | Configure deployment source for inner telemetry                                                                        | <code>"helm"</code>                                                                                      |
+| telemetryDeploymentMethod               | Configure deployment source for inner telemetry                                                                        | <code>helm</code>                                                                                        |
 | tolerations                             | Tolerations for scheduling                                                                                             | <code>[]</code>                                                                                          |
 
 
@@ -120,7 +120,7 @@ Specify each parameter using the **`--set key=value[,key=value]`** argument to `
 
 ```console
 $ helm upgrade --install cloud-connector sysdig/cloud-connector \
-    --create-namespace -n cloud-connector --version=0.7.22 \
+    --create-namespace -n cloud-connector --version=0.7.23 \
     --set sysdig.secureAPIToken=YOUR-KEY-HERE
 ```
 
@@ -129,7 +129,7 @@ installing the chart. For example:
 
 ```console
 $ helm upgrade --install cloud-connector sysdig/cloud-connector \
-    --create-namespace -n cloud-connector --version=0.7.22 \
+    --create-namespace -n cloud-connector --version=0.7.23 \
     --values values.yaml
 ```
 
