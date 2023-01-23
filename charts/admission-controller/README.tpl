@@ -380,7 +380,7 @@ A: Sysdig installation is made with an unverfied certificate, such as self-signe
 ### Q: Why is there no support for `ka.sourceips`?
 
 AdmissionController is unable to retrieve the source IP of the events, because this information is not provided by the [Kubernetes AdmissionReview](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#request).
-As a workaround in order to get this field in the auditing events, you can use [Sysdig Agent + Kubernetes Audit](https://docs.sysdig.com/en/docs/sysdig-secure/secure-events/kubernetes-audit-logging/#kubernetes-audit-logging)
+If you really require this field, as a workaround, you can use the legacy [Sysdig Agent + Kubernetes Audit](https://docs.sysdig.com/en/docs/sysdig-secure/secure-events/kubernetes-audit-logging/#legacy-installation-instructions)
 
 
 <!--
