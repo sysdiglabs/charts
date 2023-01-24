@@ -320,6 +320,58 @@ Use global sysdig tags for agent
 {{- end -}}
 
 {{/*
+Determine the plan settings (monitor/secure) set in the sysdig-deploy chart
+and set the agent chart parameters accordingly
+*/}}
+{{- define "agent.planSettings" -}}
+    {{/* Determine if secure or secure_light mode is being requested in Agent settings and store state */}}
+    {{- if hasKey .Values.sysdig.settings "feature" }}
+        {{- $_ := set .Values "secureLight" (eq .Values.sysdig.settings.feature.mode "secure_light") }}
+        {{- $_ := set .Values "secureFeatProvided" (or .Values.secureLight
+                                                       (eq .Values.sysdig.settings.feature.mode "secure")) }}
+    {{- end }}
+
+    {{/* Basic plan sanity checks */}}
+    {{- if and (and (hasKey .Values.global.sysdig "secure")
+                    (not .Values.global.sysdig.secure))
+                    .Values.secureFeatProvided }}
+        {{ fail "Cannot unset global.sysdig.secure when agent.sysdig.settings.feature.mode is secure or secure_light" }}
+    {{- end }}
+    {{- if and (and (hasKey .Values.global.sysdig "monitor")
+                    .Values.global.sysdig.monitor)
+                    .Values.secureFeatProvided }}
+        {{ fail "Cannot set global.sysdig.monitor when agent.sysdig.settings.feature.mode is secure or secure_light" }}
+    {{- end }}
+    {{- if hasKey .Values.global.sysdig "monitor" }}
+        {{- $_ := set $.Values.monitor "enabled" .Values.global.sysdig.monitor }}
+    {{- end }}
+    {{- if hasKey .Values.global.sysdig "secure" }}
+        {{ $_ := set $.Values.secure "enabled" .Values.global.sysdig.secure }}
+    {{- end }}
+{{ include "agent.monitorFeatures" . }}
+{{ include "agent.secureFeatures" . }}
+{{- end -}}
+
+{{/*
+Determine Sysdig Monitor features that need to be enabled/disabled.
+
+For monitor.enabled=true, don't render any content and take the Agent's defaults (which is monitor mode)
+For monitor.enabled=false, disable all Monitor specific extras (like app checks, prometheus, etc.)
+*/}}
+{{- define "agent.monitorFeatures" }}
+    {{- if not .Values.monitor.enabled }}
+        {{- $monitorBlock := dict "app_checks_enabled" false }}
+        {{- range $monitorFeature := (list
+            "jmx"
+            "prometheus"
+            "statsd") }}
+            {{- $_ := set $monitorBlock $monitorFeature (dict "enabled" false) }}
+        {{- end }}
+{{- toYaml $monitorBlock }}
+    {{- end -}}
+{{- end -}}
+
+{{/*
 Determine Sysdig Secure features that need to be enabled/disabled
 
 For secure.enabled=true, only security.enabled is set to true
@@ -333,17 +385,24 @@ secure.enabled=false we need to explicitly put those config entires in the
 agent config to prevent a backend push from enabling them after installation.
 */}}
 {{- define "agent.secureFeatures" }}
-    {{- $secureBlockConfig := dict "security" (dict
-        "enabled" .Values.secure.enabled
-        "k8s_audit_server_enabled" .Values.auditLog.enabled) }}
     {{- if .Values.auditLog.enabled }}
-        {{- range $key, $val := (dict
-                 "k8s_audit_server_url" .Values.auditLog.auditServerUrl
-                 "k8s_audit_server_port" .Values.auditLog.auditServerPort) }}
-            {{- $_ := set $secureBlockConfig.security $key $val }}
+        {{- if or (and (hasKey .Values.global.sysdig "secure")
+                       (not .Values.global.sysdig.secure))
+                   .Values.secureLight }}
+            {{- $_ := set .Values.auditLog "enabled" false }}
         {{- end }}
     {{- end }}
-    {{- if not .Values.secure.enabled }}
+    {{- $secureConfig := dict "security" (dict "enabled" .Values.secure.enabled
+                                               "k8s_audit_server_enabled" .Values.auditLog.enabled) }}
+    {{- if .Values.auditLog.enabled }}
+        {{- range $key, $val := (dict
+             "k8s_audit_server_url" .Values.auditLog.auditServerUrl
+             "k8s_audit_server_port" .Values.auditLog.auditServerPort) }}
+        {{- $_ := set $secureConfig.security $key $val }}
+        {{- end }}
+    {{- end }}
+    {{- if or (not .Values.secure.enabled)
+              .Values.secureLight }}
         {{- range $secureFeature := (list
             "commandlines_capture"
             "drift_killer"
@@ -351,8 +410,8 @@ agent config to prevent a backend push from enabling them after installation.
             "memdump"
             "network_topology"
             "secure_audit_streams") }}
-            {{- $_ := set $.Values.sysdig.settings $secureFeature (dict "enabled" false) }}
+            {{- $secureConfig := set $secureConfig $secureFeature (dict "enabled" false) }}
         {{- end }}
     {{- end }}
-    {{- toYaml $secureBlockConfig }}
+{{- toYaml $secureConfig }}
 {{- end }}

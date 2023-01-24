@@ -1,0 +1,229 @@
+suite: Test global.sysdig plan values to enable/disable subcharts
+templates:
+  - charts/agent/templates/configmap.yaml
+  - charts/agent/templates/daemonset.yaml
+  - charts/nodeAnalyzer/templates/configmap-benchmark-runner.yaml
+  - charts/nodeAnalyzer/templates/configmap-host-analyzer.yaml
+  - charts/nodeAnalyzer/templates/configmap-image-analyzer.yaml
+  - charts/nodeAnalyzer/templates/daemonset-node-analyzer.yaml
+tests:
+  - it: Test enabling monitor and secure plans
+    set:
+      global:
+        sysdig:
+          accessKey: "AAAA-BBBB-CCCC-DDDD"
+          monitor: true
+          secure: true
+    asserts:
+      - containsDocument:
+          kind: DaemonSet
+          apiVersion: apps/v1
+        template: charts/agent/templates/daemonset.yaml
+      - containsDocument:
+          kind: DaemonSet
+          apiVersion: apps/v1
+        template: charts/nodeAnalyzer/templates/daemonset-node-analyzer.yaml
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+        template: charts/nodeAnalyzer/templates/configmap-image-analyzer.yaml
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+        template: charts/nodeAnalyzer/templates/configmap-host-analyzer.yaml
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+        template: charts/nodeAnalyzer/templates/configmap-benchmark-runner.yaml
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: 'security:\n {2}enabled: true\n {2}k8s_audit_server_enabled: true'
+        template: charts/agent/templates/configmap.yaml
+  - it: Test enabling monitor only
+    set:
+      global:
+        sysdig:
+          accessKey: "AAAA-BBBB-CCCC-DDDD"
+          monitor: true
+          secure: false
+    asserts:
+      - containsDocument:
+          kind: DaemonSet
+          apiVersion: apps/v1
+        template: charts/agent/templates/daemonset.yaml
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: 'security:\n {2}enabled: false\n {2}k8s_audit_server_enabled: false'
+        template: charts/agent/templates/configmap.yaml
+  - it: Test enabling secure only
+    set:
+      global:
+        sysdig:
+          accessKey: "AAAA-BBBB-CCCC-DDDD"
+          monitor: false
+          secure: true
+    asserts:
+      - containsDocument:
+          kind: DaemonSet
+          apiVersion: apps/v1
+        template: charts/agent/templates/daemonset.yaml
+      - containsDocument:
+          kind: DaemonSet
+          apiVersion: apps/v1
+        template: charts/nodeAnalyzer/templates/daemonset-node-analyzer.yaml
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+        template: charts/nodeAnalyzer/templates/configmap-image-analyzer.yaml
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+        template: charts/nodeAnalyzer/templates/configmap-host-analyzer.yaml
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+        template: charts/nodeAnalyzer/templates/configmap-benchmark-runner.yaml
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: 'security:\n {2}enabled: true\n {2}k8s_audit_server_enabled: true'
+        template: charts/agent/templates/configmap.yaml
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: 'app_checks_enabled: false'
+        template: charts/agent/templates/configmap.yaml
+  - it: Test Monitor mode disable prometheus
+    set:
+      global:
+        sysdig:
+          accessKey: "AAAA-BBBB-CCCC-DDDD"
+          monitor: true
+          secure: false
+      agent:
+        sysdig:
+          settings:
+            prometheus:
+              enabled: false
+    asserts:
+      - containsDocument:
+          kind: DaemonSet
+          apiVersion: apps/v1
+        template: charts/agent/templates/daemonset.yaml
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: 'security:\n {2}enabled: false\n {2}k8s_audit_server_enabled: false'
+        template: charts/agent/templates/configmap.yaml
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: 'prometheus:\n {2}enabled: false'
+        template: charts/agent/templates/configmap.yaml
+  - it: Test Secure mode disable network_topology
+    set:
+      global:
+        sysdig:
+          accessKey: "AAAA-BBBB-CCCC-DDDD"
+          monitor: false
+          secure: true
+      agent:
+        sysdig:
+          settings:
+            network_topology:
+              enabled: false
+    asserts:
+      - containsDocument:
+          kind: DaemonSet
+          apiVersion: apps/v1
+        template: charts/agent/templates/daemonset.yaml
+      - containsDocument:
+          kind: DaemonSet
+          apiVersion: apps/v1
+        template: charts/nodeAnalyzer/templates/daemonset-node-analyzer.yaml
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+        template: charts/nodeAnalyzer/templates/configmap-image-analyzer.yaml
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+        template: charts/nodeAnalyzer/templates/configmap-host-analyzer.yaml
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+        template: charts/nodeAnalyzer/templates/configmap-benchmark-runner.yaml
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: 'security:\n {2}enabled: true\n {2}k8s_audit_server_enabled: true'
+        template: charts/agent/templates/configmap.yaml
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: 'network_topology:\n {2}enabled: false'
+        template: charts/agent/templates/configmap.yaml
+  - it: Test Secure Light mode
+    set:
+      global:
+        sysdig:
+          monitor: false
+          secure: true
+      agent:
+        sysdig:
+          settings:
+            feature:
+              mode: secure_light
+    asserts:
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+        template: charts/agent/templates/configmap.yaml
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: 'security:\n {2}enabled: true'
+        template: charts/agent/templates/configmap.yaml
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: 'feature:\n {2}mode: secure_light'
+        template: charts/agent/templates/configmap.yaml
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: 'commandlines_capture:\n {2}enabled: false\ndrift_killer:\n {2}enabled: false\nfalcobaseline:\n {2}enabled: false\nmemdump:\n {2}enabled: false\nnetwork_topology:\n {2}enabled: false\nsecure_audit_streams:\n {2}enabled: false'
+        template: charts/agent/templates/configmap.yaml
+  - it: Try to enable secure_light with global.sysdig.secure disabled
+    set:
+      global:
+        sysdig:
+          secure: false
+      agent:
+        sysdig:
+          settings:
+            feature:
+              mode: secure_light
+    asserts:
+      - failedTemplate:
+          errorMessage: "Cannot unset global.sysdig.secure when agent.sysdig.settings.feature.mode is secure or secure_light"
+    template: charts/agent/templates/configmap.yaml
+  - it: Try to enable Agent secure_light mode with global.sysdig.monitor enabled
+    set:
+      global:
+        sysdig:
+          monitor: true
+      agent:
+        sysdig:
+          settings:
+            feature:
+              mode: secure_light
+    asserts:
+      - failedTemplate:
+          errorMessage: "Cannot set global.sysdig.monitor when agent.sysdig.settings.feature.mode is secure or secure_light"
+    template: charts/agent/templates/configmap.yaml
+  - it: Try to enable Agent secure mode with global.sysdig.monitor enabled
+    set:
+      global:
+        sysdig:
+          monitor: true
+      agent:
+        sysdig:
+          settings:
+            feature:
+              mode: secure
+    asserts:
+      - failedTemplate:
+          errorMessage: "Cannot set global.sysdig.monitor when agent.sysdig.settings.feature.mode is secure or secure_light"
+    template: charts/agent/templates/configmap.yaml

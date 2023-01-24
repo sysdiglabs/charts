@@ -5,6 +5,8 @@ global:
   sysdig:
     accessKey: ""
     accessKeySecret: ""
+    monitor: true
+    secure: true
     secureAPIToken: ""
     secureAPITokenSecret: ""
     region: "us1"
@@ -18,12 +20,6 @@ global:
 
 admissionController:
   enabled: false
-
-agent:
-  enabled: true
-
-nodeAnalyzer:
-  enabled: true
 
 rapidResponse:
   enabled: false
