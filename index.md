@@ -12,6 +12,8 @@ To simplify your deployment experience, Sysdig provides helm charts to install a
 
 The Sysdig Chart Repository includes the following charts:
 
+Test change 
+
 | Charts          | Description |
 | :---------------| ----------- |
 |[`sysdig-deploy`](/charts/sysdig-deploy)    | Deploys the following components in your Kubernetes cluster:<br>`kspm-collector`:  Enables collecting and sendin Kubernetes resource manifests to be evaluated against compliance policies. The scan results are displayed by Sysdig Secure's Actionable Compliance.<br>`node-analyzer`: Enables  Image Analyzer, Benchmarks, and Host Scanning features.<br>`rapid-response`:  Allows designated advance users to investigate and troubleshoot events from a remote shell.<br>`agent`: Processes syscall events and metrics, creates [capture](https://docs.sysdig.com/en/docs/sysdig-secure/investigate/captures/#captures) files, and performs auditing and compliance. |
