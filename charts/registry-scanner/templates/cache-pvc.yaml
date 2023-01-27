@@ -1,0 +1,13 @@
+{{- if .Values.experimental.cache.enabled -}}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "registry-scanner.fullname" . }}-cache
+spec:
+  accessModes:
+  - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: {{ .Values.experimental.cache.size }}
+{{- end -}}

@@ -141,6 +141,8 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | nodeSelector                       | Configure nodeSelector for scheduling the registry scanner pod.                                                                                                                                                              | <code>{}</code>                                                     |
 | tolerations                        | Configure tolerations for scheduling the registry scanner pod.                                                                                                                                                               | <code>[]</code>                                                     |
 | affinity                           | Configure affinity for scheduling the registry scanner pod.                                                                                                                                                                  | <code>{}</code>                                                     |
+| experimental.cache.enabled         | Enable the experimental cache. Expect this field to be removed in the future.                                                                                                                                                | <code>false</code>                                                  |
+| experimental.cache.size            | The size of the cache. Expect this field to be removed in the future.                                                                                                                                                        | <code>8Gi</code>                                                    |
 
 
 

@@ -62,6 +62,10 @@ spec:
             - name: ca-certs
               mountPath: "/ca-certs"
             {{- end }}
+            {{- if .Values.experimental.cache.enabled }}
+            - name: cache-storage
+              mountPath: "/tmp/sysdig-image-scanner-cache.db"
+            {{- end }}
             env:
               - name: SECURE_API_TOKEN
                 valueFrom:
@@ -166,4 +170,9 @@ spec:
           - name: report-storage
             persistentVolumeClaim:
               claimName: {{ .Values.reportToPersistentVolumeClaim }}
+          {{- end }}
+          {{- if .Values.experimental.cache.enabled }}
+          - name: cache-storage
+            persistentVolumeClaim:
+              claimName: {{ include "registry-scanner.fullname" . }}-cache
           {{- end }}
