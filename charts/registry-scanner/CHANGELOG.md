@@ -10,6 +10,18 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.1.7
+
+### Chores
+* **registry-scanner** [6450b90](https://github.com/sysdiglabs/charts/commit/6450b9080f3de6b03c3c1b1eeabf0c7770063d73): bump registry scanner image version  to 0.2.3, which includes
+
+#### Performance optimizations
+* feat: Update CC so we have image cache by @tembleking in https://github.com/sysdiglabs/registry-scanner/pull/87
+* perf: Implement parallelization in metadata retrieval by @tembleking in https://github.com/sysdiglabs/registry-scanner/pull/91
+
+#### Bug fixes
+* fix(aws-ecr): region fetch from registry url by @wideawakening in https://github.com/sysdiglabs/registry-scanner/pull/89
+
 # v0.1.6
 ### Documentation
 * **registry-scanner** [95495b8](https://github.com/sysdiglabs/charts/commit/95495b84911d63c69401ec96aad9a194bf939983): fix value documentation ([#902](https://github.com/sysdiglabs/charts/issues/902))
