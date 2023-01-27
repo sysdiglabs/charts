@@ -10,6 +10,15 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.8.27
+### Bug Fixes
+* **node-analyzer,sysdig-deploy** [9e11852](https://github.com/sysdiglabs/charts/commit/9e118521c490c788ca6053b513f281d09a7f9ccd): Global proxy values for host-scanner ([#901](https://github.com/sysdiglabs/charts/issues/901))
+# v1.8.26
+### New Features
+* **agent,node-analyzer,rapid-response** [487b421](https://github.com/sysdiglabs/charts/commit/487b421c922e097047e5ca65c01cee466664daba): add Rancher-specific tolerations ([#884](https://github.com/sysdiglabs/charts/issues/884))
+# v1.8.25
+### Bug Fixes
+* **node-analyzer** [771c584](https://github.com/sysdiglabs/charts/commit/771c5846a79dd78a3a69ba20553a1c8f3e93b2ed): Make probes configurable ([#888](https://github.com/sysdiglabs/charts/issues/888))
 # v1.8.24
 ### Bug Fixes
 * **node-analyzer** [9cee27d](https://github.com/sysdiglabs/charts/commit/9cee27d3f1ac66e709e8a50f5dd5ad00fc9b52ee): increase initial delay of the probes ([#872](https://github.com/sysdiglabs/charts/issues/872))

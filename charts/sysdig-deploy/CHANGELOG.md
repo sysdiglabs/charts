@@ -10,6 +10,24 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.5.55
+### Bug Fixes
+* **node-analyzer,sysdig-deploy** [9e11852](https://github.com/sysdiglabs/charts/commit/9e118521c490c788ca6053b513f281d09a7f9ccd): Global proxy values for host-scanner ([#901](https://github.com/sysdiglabs/charts/issues/901))
+# v1.5.54
+### Chores
+* **sysdig-deploy** [40fa5e0](https://github.com/sysdiglabs/charts/commit/40fa5e093e229d87e5a8bfb1494fdb07af4e2c7e): Automatic version bump due to updated dependencies ([#896](https://github.com/sysdiglabs/charts/issues/896))
+# v1.5.53
+### New Features
+* **rapid-response,sysdig-deploy** [6158dda](https://github.com/sysdiglabs/charts/commit/6158dda036e90e8493d002b3501479ade32b48c1): Verify that image.tag is a string ([#894](https://github.com/sysdiglabs/charts/issues/894))
+# v1.5.52
+### Chores
+* **sysdig-deploy** [8cf7293](https://github.com/sysdiglabs/charts/commit/8cf7293de6763c606170eaf0c0a3ca78da648662): Automatic version bump due to updated dependencies ([#892](https://github.com/sysdiglabs/charts/issues/892))
+# v1.5.51
+### New Features
+* **agent,node-analyzer,rapid-response** [487b421](https://github.com/sysdiglabs/charts/commit/487b421c922e097047e5ca65c01cee466664daba): add Rancher-specific tolerations ([#884](https://github.com/sysdiglabs/charts/issues/884))
+# v1.5.50
+### Chores
+* **sysdig-deploy** [81e30e0](https://github.com/sysdiglabs/charts/commit/81e30e065ad7f57e99f0818069d95de0b9070de9): Automatic version bump due to updated dependencies ([#889](https://github.com/sysdiglabs/charts/issues/889))
 # v1.5.49
 ### Chores
 * **sysdig-deploy** [70d5764](https://github.com/sysdiglabs/charts/commit/70d57645b53c5e038bd0b2d2f7ef587ec78ef5c9): Automatic version bump due to updated dependencies ([#883](https://github.com/sysdiglabs/charts/issues/883))

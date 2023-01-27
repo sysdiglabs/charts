@@ -106,6 +106,14 @@ nodeAnalyzer:
       key: node-role.kubernetes.io/master
     - effect: NoSchedule
       key: node-role.kubernetes.io/control-plane
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/controlplane
+      operator: Equal
+      value: "true"
+    - effect: NoExecute
+      key: node-role.kubernetes.io/etcd
+      operator: Equal
+      value: "true"
 
   # Set nodeAnalyzer daemonset priorityClassName
   priorityClassName:
@@ -361,9 +369,22 @@ nodeAnalyzer:
 
     port: 12000
 
-    probes:
-      initialDelay: 90
-      periodDelay: 3
+    readinessProbe:
+      enabled: true
+      probe:
+        httpGet:
+          path: /health
+          port: http
+        initialDelaySeconds: 90
+        periodSeconds: 3
+    livenessProbe:
+      enabled: true
+      probe:
+        httpGet:
+          path: /health
+          port: http
+        initialDelaySeconds: 90
+        periodSeconds: 3
 
     env: {}
 

@@ -10,6 +10,12 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.5.58
+### Bug Fixes
+* **agent** [a2891bc](https://github.com/sysdiglabs/charts/commit/a2891bc82b2cfef7be5da1d22f39f8b81b05c897): Fix agent.secure.enabled flag ([#858](https://github.com/sysdiglabs/charts/issues/858))
+# v1.5.57
+### New Features
+* **agent,node-analyzer,rapid-response** [487b421](https://github.com/sysdiglabs/charts/commit/487b421c922e097047e5ca65c01cee466664daba): add Rancher-specific tolerations ([#884](https://github.com/sysdiglabs/charts/issues/884))
 # v1.5.56
 ### Bug Fixes
 * **agent** [6dcd65e](https://github.com/sysdiglabs/charts/commit/6dcd65ed1bc02e3c6929f0925167e803e820909b): Set agent node selector os and arch by k8s version ([#859](https://github.com/sysdiglabs/charts/issues/859))

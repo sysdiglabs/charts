@@ -13,20 +13,7 @@ data:
 {{- if $clusterName }}
     k8s_cluster_name: {{ $clusterName }}
 {{- end }}
-{{- if or .Values.secure.enabled .Values.auditLog.enabled }}
-    security:
-  {{- if .Values.auditLog.enabled }}
-      k8s_audit_server_url: {{ .Values.auditLog.auditServerUrl }}
-      k8s_audit_server_port: {{ .Values.auditLog.auditServerPort }}
-  {{- end }}
-  {{- if .Values.secure.enabled }}
-      enabled: true
-    commandlines_capture:
-      enabled: true
-    memdump:
-      enabled: true
-  {{- end }}
-{{- end }}
+{{ include "agent.secureFeatures" . | indent 4 -}}
 {{/* skip values already set in sysdig.settings */}}
 {{- $disableCaptures := include "get_if_not_in_settings" (dict "root" . "default" .Values.sysdig.disableCaptures "setting" "sysdig_capture_enabled") }}
 {{- if eq $disableCaptures "true" }}

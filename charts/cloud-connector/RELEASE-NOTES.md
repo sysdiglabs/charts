@@ -1,5 +1,6 @@
 # What's Changed
 
-### New Features
-- [f4cb189](https://github.com/sysdiglabs/charts/commit/f4cb189afba6833fd458f99dcfcc0121f9d9dfa2)]: unify changelog headers ([#787](https://github.com/sysdiglabs/charts/issues/787))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/cloud-connector-0.7.19...cloud-connector-0.7.20
+### Chores
+- **cloud-connector** [9d3702d](https://github.com/sysdiglabs/charts/commit/9d3702d745ccbc1d280b7f20c4fff93de33b2a45): Update version to 0.16.26 ([#898](https://github.com/sysdiglabs/charts/issues/898))
+
+#### Full diff: https://github.com/sysdiglabs/charts/compare/cloud-connector-0.7.21...cloud-connector-0.7.22
