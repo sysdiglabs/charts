@@ -27,7 +27,8 @@ rapidResponse:
     pullPolicy: IfNotPresent
     repository: sysdig/rapid-response-host-component
     # If unset, .Chart.AppVersion is used to create tag
-    # tag: 0.3.3
+    # Note: Image tag must be a string specified in double-quotes
+    # tag: "0.3.3"
 
   imagePullSecrets: []
 
