@@ -58,21 +58,21 @@ spec:
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         securityContext:
 {{- toYaml .Values.securityContext | nindent 10 }}
-        ports:
-          - name: http
-            containerPort: {{ .Values.port }}
-            protocol: TCP
         {{- if .Values.readinessProbe.enabled }}
-        {{- with .Values.readinessProbe.probe }}
         readinessProbe:
-          {{- toYaml . | nindent 10 }}
-        {{- end }}
+          httpGet:
+            path: /health
+            port: {{ .Values.port }}
+          initialDelaySeconds: {{ .Values.readinessProbe.probe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.readinessProbe.probe.periodSeconds }}
         {{- end }}
         {{- if .Values.livenessProbe.enabled }}
-        {{- with .Values.livenessProbe.probe }}
         livenessProbe:
-          {{- toYaml . | nindent 10 }}
-        {{- end }}
+          httpGet:
+            path: /health
+            port: {{ .Values.port }}
+          initialDelaySeconds: {{ .Values.livenessProbe.probe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.livenessProbe.probe.periodSeconds }}
         {{- end }}
         resources:
 {{ toYaml .Values.resources | indent 10 }}
