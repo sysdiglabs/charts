@@ -54,6 +54,10 @@ rbac:
   # true here enables creation of rbac resources
   create: true
 
+scc:
+  # true here enables creation of Security Context Constraints in Openshift
+  create: true
+
 serviceAccount:
   # true here enables creation of service account
   create: true

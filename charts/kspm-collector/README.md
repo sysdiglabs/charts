@@ -63,6 +63,7 @@ The following table lists the configurable parameters of the Sysdig KSPM Collect
 | `port`                                    | KSPM collector port for health checks                                                   | `8080`                                                      |
 | `readinessProbe.enabled`                  | KSPM collector readinessProbe enablement                                                | `true`                                                         |
 | `livenessProbe.enabled`                   | KSPM collector livenessProbe enablement                                                 | `true`                                                         |
+| `scc.create`                                                         | Create OpenShift's Security Context Constraint                                           | `true`                                                         |
 | `securityContext.runAsNonRoot`            | make KSPM collector run as non root                                                     | `true`                                                      |
 | `securityContext.runAsUser`               | make KSPM collector run as user with this ID                                            | `10001`                                                     |
 | `securityContext.runAsGroup`              | make KSPM collector run as group with this ID                                           | `10001`                                                     |
