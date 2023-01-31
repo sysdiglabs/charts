@@ -10,6 +10,11 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.7.23
+* Bump admission-controler to 3.9.16.
+  * fix: remove unnecessary patch call to onboarding
+  * chore: change customer ID endpoint due to its deprecation
+
 # v0.7.22
 ### Bug Fixes
 * **admission-controller,sydig-deploy** [7693f02](https://github.com/sysdiglabs/charts/commit/7693f025c4493e22de6caddbfff6c077198a24aa): fix priorityClassName in wrong scope for scanner deployment ([#882](https://github.com/sysdiglabs/charts/issues/882))
