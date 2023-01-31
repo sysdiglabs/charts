@@ -10,6 +10,12 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.4.5
+### Bug Fixes
+* **rapid-response** [ad996c4](https://github.com/sysdiglabs/charts/commit/ad996c432eca3c68ad41e2d41566c513919259db): update chart version ([#909](https://github.com/sysdiglabs/charts/issues/909))
+## v0.4.5
+### Minor changes
+* bump image tag to 0.3.8
 # v0.4.4
 ### New Features
 * **rapid-response,sysdig-deploy** [6158dda](https://github.com/sysdiglabs/charts/commit/6158dda036e90e8493d002b3501479ade32b48c1): Verify that image.tag is a string ([#894](https://github.com/sysdiglabs/charts/issues/894))
