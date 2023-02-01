@@ -176,6 +176,8 @@ The following table lists the configurable parameters of the sysdig-deploy chart
 | `global.clusterConfig.name`             | Identifier for this cluster                                                                                             | `""`      |
 | `global.sysdig.accessKey`               | Sysdig Agent Access Key                                                                                                 | `""`      |
 | `global.sysdig.accessKeySecret`         | The name of a Kubernetes secret containing an 'access-key' entry                                                        | `""`      |
+| `global.sysdig.monitor`                 | Enable all Sysdig Monitor charts and components                                                                         | `true`    |
+| `global.sysdig.secure`                  | Enable all Sysdig Secure charts and components                                                                          | `true`    |
 | `global.sysdig.secureAPIToken`          | API Token to access Sysdig Secure                                                                                       | `""`      |
 | `global.sysdig.secureAPITokenSecret`    | The name of a Kubernetes secret containing API Token to access Sysdig Secure                                            | `""`      |
 | `global.sysdig.region`                  | The SaaS region for these agents. Possible values: `"us1"`, `"us2"`, `"us3"`, `"us4"`, `"eu1"`, `"au1"`, and `"custom"`. See [Regions and IP Ranges](https://docs.sysdig.com/en/docs/administration/saas-regions-and-ip-ranges/) for more information  | `"us1"`   |
@@ -202,6 +204,42 @@ The following table lists the configurable parameters of the sysdig-deploy chart
 | `kspmCollector.apiEndpoint`             | kspmCollector apiEndpoint                                                                                               | `""`      |
 | `rapidResponse`                         | Config specific to [Sysdig Rapid Response](#rapid-response)                                                             | `{}`      |
 | `rapidResponse.enabled`                 | Enable Rapid Response component in this chart                                                                           | `""`      |
+
+## Sysdig Plan Settings
+The `global.sysdig.monitor` and `global.sysdig.secure` parameters allow for easy, convenient control over deployed charts and chart configurations depending on the Sysdig plan desired.
+
+Per chart overrides are supported should modifications to these sets be desired. For example, to deploy the [kspm-collector](https://github.com/sysdiglabs/charts/tree/master/charts/kspm-collector) in addition to the other Sysdig Secure components, the following command can be used:
+```bash
+$ helm install --namespace sysdig --set global.kspm.deploy=true --set global.sysdig.secure=true sysdig sysdig/sysdig-deploy
+```
+
+### Sysdig Monitor
+
+Setting `global.sysdig.monitor=true` will deploy and configure the Sysdig Agent with all features necessary to support the Sysdig Monitor product. Disabling the setting will deploy the Sysdig Agent with the following features disabled:
+ - App Checks
+ - JMX
+ - Prometheus
+ - StatsD
+
+### Sysdig Secure
+Setting `global.sysdig.secure=true` will deploy the following charts:
+ - [agent](https://github.com/sysdiglabs/charts/tree/master/charts/agent)
+ - [node-analyzer](https://github.com/sysdiglabs/charts/tree/master/charts/node-analyzer)
+
+Disabling `global.sysdig.secure` will result in only the Sysdig Agent being deployed and all Sysdig Secure components in the Sysdig Agent being disabled.
+
+#### Secure Light Mode
+The Sysdig Agent has support for a [Secure Light](https://docs.sysdig.com/en/docs/installation/sysdig-agent/agent-configuration/configure-agent-modes/#secure-light) mode that offers reduced Agent resource consumption by enabling only a curated subset of Sysdig Secure features. Those features are:
+ - Runtime Policies
+ - Activity Audit
+ - Captures
+
+Sysdig Agent version 12.10 or above is needed for Secure Light mode. 
+
+To deploy the Sysdig Agent in Secure Light mode, run:
+```bash
+$ helm install --namespace sysdig --set agent.sysdig.settings.features.mode=secure_light sysdig sysdig/sysdig-deploy
+```
 
 ## AdmissionController
 
