@@ -158,3 +158,20 @@ Returns the namespace for installing components
 {{- define "kspmCollector.namespace" -}}
     {{- coalesce .Values.namespace .Release.Namespace -}}
 {{- end -}}
+
+{{/*
+KSPM Collector nodeSelector
+*/}}
+{{- define "kspmCollector.nodeSelector" -}}
+{{- if .Values.nodeSelector }}
+{{- $tp := typeOf .Values.nodeSelector }}
+{{- if eq $tp "string" }}
+{{- if not (regexMatch "^[a-z0-9A-Z].*(: )(.*[a-z0-9A-Z]$)?" .Values.nodeSelector) }}
+    {{- fail "nodeSelector does not seem to be of the type key:[space]value" }}
+{{- end }}
+{{ tpl .Values.nodeSelector . }}
+{{- else }}
+{{ toYaml .Values.nodeSelector }}
+{{- end }}
+{{- end }}
+{{- end -}}
