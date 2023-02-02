@@ -21,6 +21,10 @@ spec:
       serviceAccountName: {{ template "kspmCollector.serviceAccountName" .}}
       securityContext:
         runAsNonRoot: true
+      {{- if .Values.nodeSelector }}
+      nodeSelector:
+{{ include "kspmCollector.nodeSelector" . | trim | indent 8 }}
+      {{- end }}
       affinity:
       {{- if .Values.affinity }}
 {{ toYaml .Values.affinity | indent 8 }}
@@ -44,10 +48,7 @@ spec:
                 values: {{- toYaml .Values.os | nindent 18 }}
       {{- end }}
       tolerations:
-      - key: kubernetes.io/arch
-        operator: Equal
-        value: arm64
-        effect: NoSchedule
+{{ toYaml .Values.tolerations | indent 8 }}
       {{- if .Values.imagePullSecrets }}
       imagePullSecrets:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}
