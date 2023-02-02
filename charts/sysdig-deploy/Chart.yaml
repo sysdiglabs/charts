@@ -21,7 +21,7 @@ dependencies:
     repository: file://../admission-controller
     version: ~0.7.23
     alias: admissionController
-    condition: admissionController.enabled,global.sysdig.plan.secure
+    condition: admissionController.enabled,global.sysdig.secure
   - name: agent
     # repository: https://charts.sysdig.com
     repository: file://../agent
@@ -33,16 +33,16 @@ dependencies:
     repository: file://../node-analyzer
     version: ~1.8.27
     alias: nodeAnalyzer
-    condition: nodeAnalyzer.enabled,global.sysdig.plan.secure
+    condition: nodeAnalyzer.enabled,global.sysdig.secure
   - name: kspm-collector
     # repository: https://charts.sysdig.com
     repository: file://../kspm-collector
     version: ~0.1.32
     alias: kspmCollector
-    condition: global.kspm.deploy,global.sysdig.plan.secure
+    condition: global.kspm.deploy,global.sysdig.secure
   - name: rapid-response
     # repository: https://charts.sysdig.com
     repository: file://../rapid-response
     version: ~0.4.5
     alias: rapidResponse
-    condition: rapidResponse.enabled,global.sysdig.plan.secure
+    condition: rapidResponse.enabled,global.sysdig.secure
