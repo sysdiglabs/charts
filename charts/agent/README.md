@@ -277,19 +277,6 @@ $ helm install --namespace sysdig-agent sysdig-agent -f values.yaml sysdig/agent
 You can read more details about this
 in [Kubernetes Documentation](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/).
 
-## Secure Light Mode
-[Secure Light](https://docs.sysdig.com/en/docs/installation/sysdig-agent/agent-configuration/configure-agent-modes/#secure-light) mode offers reduced Agent resource consumption by enabling only a curated subset of Sysdig Secure features. Those features are:
- - Runtime Policies
- - Activity Audit
- - Captures
-
-Sysdig Agent version 12.10 or above is needed for Secure Light mode. 
-
-To deploy the Sysdig Agent in Secure Light mode, run:
-```bash
-$ helm install --namespace sysdig-agent sysdig-agent --set sysdig.settings.features.mode=secure_light sysdig/agent
-```
-
 ## Modifying Sysdig agent configuration
 
 The Sysdig agent uses a file called `dragent.yaml` to store the configuration.
