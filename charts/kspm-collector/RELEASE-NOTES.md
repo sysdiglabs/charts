@@ -1,6 +1,6 @@
 # What's Changed
 
 ### New Features
-- **kspm-collector** [4d65693](https://github.com/sysdiglabs/charts/commit/4d656930ec460e595bc89449a4352b52857b9631): Make probes configurable ([#895](https://github.com/sysdiglabs/charts/issues/895))
+- **kspm-collector** [faf65fa](https://github.com/sysdiglabs/charts/commit/faf65fa003469a6ed99ae4d97aaef040cbfa6d0b): Custom tolerations and nodeSelector ([#912](https://github.com/sysdiglabs/charts/issues/912))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.1.31...kspm-collector-0.1.32
+#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.1.32...kspm-collector-0.1.33
