@@ -335,7 +335,7 @@ and set the agent chart parameters accordingly
     {{- if and (and (hasKey .Values.global.sysdig "secure")
                     (not .Values.global.sysdig.secure))
                     .Values.secureFeatProvided }}
-        {{ fail "Cannot unset global.sysdig.secure when agent.sysdig.settings.feature.mode is secure or secure_light" }}
+        {{ fail "Set global.sysdig.secure=true when specifying agent.sysdig.settings.feature.mode=secure or agent.sysdig.settings.feature.mode=secure_light" }}
     {{- end }}
     {{- if and (and (hasKey .Values.global.sysdig "monitor")
                     .Values.global.sysdig.monitor)

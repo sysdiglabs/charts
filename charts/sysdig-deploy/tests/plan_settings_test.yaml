@@ -197,7 +197,7 @@ tests:
               mode: secure_light
     asserts:
       - failedTemplate:
-          errorMessage: "Cannot unset global.sysdig.secure when agent.sysdig.settings.feature.mode is secure or secure_light"
+          errorMessage: "Set global.sysdig.secure=true when specifying agent.sysdig.settings.feature.mode=secure or agent.sysdig.settings.feature.mode=secure_light"
     template: charts/agent/templates/configmap.yaml
   - it: Try to enable Agent secure_light mode with global.sysdig.monitor enabled
     set:
