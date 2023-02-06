@@ -337,6 +337,49 @@ Use global sysdig tags for agent
 {{- end -}}
 
 {{/*
+Determine the plan settings (monitor/secure) set in the sysdig-deploy chart
+and set the agent chart parameters accordingly
+*/}}
+{{- define "agent.planSettings" -}}
+    {{/* Determine if secure or secure_light mode is being requested in Agent settings and store state */}}
+    {{- if hasKey .Values.sysdig.settings "feature" }}
+        {{- $_ := set .Values "secureLight" (eq .Values.sysdig.settings.feature.mode "secure_light") }}
+        {{- $_ := set .Values "secureFeatProvided" (or .Values.secureLight
+                                                       (eq .Values.sysdig.settings.feature.mode "secure")) }}
+    {{- end }}
+    {{/* Basic plan sanity checks */}}
+    {{- if and (not .Values.secure.enabled)
+                .Values.secureFeatProvided }}
+        {{ fail "Set agent.secure.enabled=true when specifying agent.sysdig.settings.feature.mode is secure or secure_light" }}
+    {{- end }}
+    {{- if and .Values.monitor.enabled
+               .Values.secureFeatProvided }}
+        {{ fail "Cannot set agent.monitor.enabled=true when agent.sysdig.settings.feature.mode is secure or secure_light" }}
+    {{- end }}
+{{ include "agent.monitorFeatures" . }}
+{{ include "agent.secureFeatures" . }}
+{{- end -}}
+
+{{/*
+Determine Sysdig Monitor features that need to be enabled/disabled.
+
+For monitor.enabled=true, don't render any content and take the Agent's defaults (which is monitor mode)
+For monitor.enabled=false, disable all Monitor specific extras (like app checks, prometheus, etc.)
+*/}}
+{{- define "agent.monitorFeatures" }}
+    {{- if not .Values.monitor.enabled }}
+        {{- $monitorBlock := dict "app_checks_enabled" false }}
+        {{- range $monitorFeature := (list
+            "jmx"
+            "prometheus"
+            "statsd") }}
+            {{- $_ := set $monitorBlock $monitorFeature (dict "enabled" false) }}
+        {{- end }}
+{{ toYaml $monitorBlock }}
+    {{- end -}}
+{{- end -}}
+
+{{/*
 Determine Sysdig Secure features that need to be enabled/disabled
 
 For secure.enabled=true, only security.enabled is set to true
@@ -372,7 +415,7 @@ agent config to prevent a backend push from enabling them after installation.
             {{- $_ := set $secureBlockConfig $secureFeature (dict "enabled" false) }}
         {{- end }}
     {{- end }}
-    {{- toYaml $secureBlockConfig }}
+{{ toYaml $secureConfig }}
 {{- end }}
 
 {{ define "agent.k8sColdStart" }}
