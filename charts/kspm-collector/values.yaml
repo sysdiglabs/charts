@@ -54,6 +54,10 @@ rbac:
   # true here enables creation of rbac resources
   create: true
 
+scc:
+  # true here enables creation of Security Context Constraints in Openshift
+  create: true
+
 serviceAccount:
   # true here enables creation of service account
   create: true
@@ -87,17 +91,11 @@ port: 8080
 readinessProbe:
   enabled: true
   probe:
-    httpGet:
-      path: /health
-      port: http
     initialDelaySeconds: 90
     periodSeconds: 3
 livenessProbe:
   enabled: true
   probe:
-    httpGet:
-      path: /health
-      port: http
     initialDelaySeconds: 90
     periodSeconds: 3
 
