@@ -10,6 +10,12 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.5.57
+### Chores
+* **sysdig-deploy** [76715ce](https://github.com/sysdiglabs/charts/commit/76715ce71c3cfd2a5156ea74cee68073eae82dd8): Automatic version bump due to updated dependencies ([#913](https://github.com/sysdiglabs/charts/issues/913))
+# v1.5.56
+### Chores
+* **sysdig-deploy** [112487d](https://github.com/sysdiglabs/charts/commit/112487d14aea2b03c29d35ee5294b02c8eeab683): Automatic version bump due to updated dependencies ([#910](https://github.com/sysdiglabs/charts/issues/910))
 # v1.5.55
 ### Bug Fixes
 * **node-analyzer,sysdig-deploy** [9e11852](https://github.com/sysdiglabs/charts/commit/9e118521c490c788ca6053b513f281d09a7f9ccd): Global proxy values for host-scanner ([#901](https://github.com/sysdiglabs/charts/issues/901))

@@ -70,6 +70,8 @@ namespaces:
   included: ""
   excluded: ""
 
+nodeSelector: {}
+
 workloads:
   included: ""
   excluded: ""
@@ -106,6 +108,12 @@ securityContext:
   capabilities:
     drop:
       - all
+
+tolerations:
+  - key: kubernetes.io/arch
+    operator: Equal
+    value: arm64
+    effect: NoSchedule
 
 # arch and os will be used to template out a node affinity block matching everything in each list. If affinity is
 # defined, these fields will be ignored
