@@ -126,7 +126,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{/*
 Daemonset labels
 */}}
-{{- define "daemonset.labels" -}}
+{{- define "agent.daemonsetLabels" -}}
   {{- if .Values.daemonset.labels }}
     {{- $tp := typeOf .Values.daemonset.labels }}
     {{- if eq $tp "string" }}
@@ -136,6 +136,23 @@ Daemonset labels
         {{- tpl .Values.daemonset.labels . }}
     {{- else }}
         {{- toYaml .Values.daemonset.labels }}
+    {{- end }}
+  {{- end }}
+{{- end -}}
+
+{{/*
+Deployment labels
+*/}}
+{{- define "agent.deploymentLabels" -}}
+  {{- if .Values.largeClusterSupport.deployment.labels }}
+    {{- $tp := typeOf .Values.largeClusterSupport.deployment.labels }}
+    {{- if eq $tp "string" }}
+        {{- if not (regexMatch "^[a-z0-9A-Z].*(: )(.*[a-z0-9A-Z]$)?" .Values.largeClusterSupport.deployment.labels) }}
+            {{- fail "largeClusterSupport.deployment.labels does not seem to be of the type key:[space]value" }}
+        {{- end }}
+        {{- tpl .Values.largeClusterSupport.deployment.labels . }}
+    {{- else }}
+        {{- toYaml .Values.largeClusterSupport.deployment.labels }}
     {{- end }}
   {{- end }}
 {{- end -}}
@@ -355,4 +372,65 @@ agent config to prevent a backend push from enabling them after installation.
         {{- end }}
     {{- end }}
     {{- toYaml $secureBlockConfig }}
+{{- end }}
+
+{{ define "agent.k8sColdStart" }}
+    {{- $k8sColdStartBlock := dict }}
+    {{- if .Values.leaderelection.enable }}
+        {{- range $key, $val := (dict "enabled" true
+                                    "enforce_leader_election" true
+                                    "namespace" (include "agent.namespace")) }}
+            {{- $_ := set $k8sColdStartBlock $key $val }}
+        {{- end }}
+    {{- end }}
+    {{- if not .Values.sysdig.settings.k8s_coldstart }}
+        {{- $_ := set $k8sColdStartBlock "max_parallel_cold_starts" (include "agent.parallelStarts" . | int ) }}
+    {{- end }}
+    {{- $completeBlock := dict "k8s_coldstart" $k8sColdStartBlock }}
+    {{- toYaml $completeBlock }}
+{{- end }}
+
+{{ define "agent.connectionSettings" }}
+collector: {{ include "agent.collectorEndpoint" . }}
+{{- if .Values.collectorSettings.collectorPort }}
+collector_port: {{ .Values.collectorSettings.collectorPort }}
+{{- end }}
+{{- if .Values.collectorSettings.ssl }}
+ssl: {{ .Values.collectorSettings.ssl }}
+{{- end }}
+{{- if .Values.collectorSettings.sslVerifyCertificate }}
+ssl_verify_certificate: {{ .Values.collectorSettings.sslVerifyCertificate }}
+{{- end }}
+{{- end }}
+
+{{ define "agent.logSettings" }}
+{{/* check for log level sanity */}}
+{{- if and .Values.logPriority (or (hasKey (default dict .Values.sysdig.settings.log) "console_priority") (hasKey (default dict .Values.sysdig.settings.log) "file_priority")) }}
+  {{- fail "Cannot set logPriority when either sysdig.settings.log.console_priority or sysdig.settings.log.file_priority are set" }}
+{{- end }}
+{{- if .Values.logPriority }}
+  {{- $_ := merge .Values.sysdig.settings (dict "log" (dict "console_priority" .Values.logPriority "file_priority" .Values.logPriority)) }}
+{{- end }}
+{{- end }}
+
+{{ define "agent.containerProxyEnvVars" }}
+{{- if (.Values.proxy.httpProxy | default .Values.global.proxy.httpProxy) }}
+- name: http_proxy
+  value: {{ .Values.proxy.httpProxy | default .Values.global.proxy.httpProxy }}
+{{- end }}
+{{- if (.Values.proxy.httpsProxy | default .Values.global.proxy.httpsProxy) }}
+- name: https_proxy
+  value: {{ .Values.proxy.httpsProxy | default .Values.global.proxy.httpsProxy }}
+{{- end }}
+{{- if (.Values.proxy.noProxy | default .Values.global.proxy.noProxy) }}
+- name: no_proxy
+  value: {{ .Values.proxy.noProxy | default .Values.global.proxy.noProxy }}
+{{- end }}
+{{- end }}
+
+{{ define "agent.clusterName" }}
+{{- $clusterName := include "get_if_not_in_settings" (dict "root" . "default" (coalesce .Values.clusterName .Values.global.clusterConfig.name) "setting" "k8s_cluster_name") }}
+{{- if $clusterName }}
+k8s_cluster_name: {{ $clusterName }}
+{{- end }}
 {{- end }}

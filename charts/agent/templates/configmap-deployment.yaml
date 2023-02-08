@@ -1,24 +1,40 @@
-{{- if or .Values.daemonset.deploy .Values.largeClusterSupport.enabled }}
+{{- if .Values.largeClusterSupport.enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "agent.configmapName" . }}
+  name: {{ include "agent.configmapName" . | printf "%s-deployment" | trunc 63 | trimSuffix "-" }}
   namespace: {{ include "agent.namespace" . }}
   labels:
-{{ (include "agent.labels" .) | indent 4 }}
+{{ include "agent.labels" . | indent 4 }}
 data:
   dragent.yaml: |
     new_k8s: true
     {{- include "agent.clusterName" . | indent 4 }}
-    {{- if .Values.largeClusterSupport.enabled }}
-    cointerface_enabled: false
-    {{- end }}
-    {{- include "agent.connectionSettings" . | indent 4 }}
-    {{- include "agent.secureFeatures" . | nindent 4 }}
+    {{- include "agent.connectionSettings" . | nindent 4 }}
+    feature:
+      mode: monitor_light
+    cointerface_enabled: true
+    k8s_delegated_nodes: -1
+    top_processes_in_sample: 0
+    container_engines:
+      bpm: false
+      cri: false
+      docker: false
+      libvirt_lxc: false
+      lxc: false
+      mesos: false
+      podman: false
+      rkt: false
+    app_checks_enabled: false
+    jmx:
+      enabled: false
+    prometheus:
+      enabled: false
+    statsd:
+      enabled: false
     {{- include "agent.k8sColdStart" . | nindent 4 }}
-    {{- if .Values.sysdig.disableCaptures }}
-    sysdig_capture_enabled: false
-    {{- end }}
+    {{- $_ := merge .Values.secure (dict "enabled" false) }}
+    {{- include "agent.secureFeatures" . | nindent 4 }}
     {{/* check for log level sanity */}}
     {{- if and .Values.logPriority (or (hasKey (default dict .Values.sysdig.settings.log) "console_priority") (hasKey (default dict .Values.sysdig.settings.log) "file_priority")) }}
     {{- fail "Cannot set logPriority when either sysdig.settings.log.console_priority or sysdig.settings.log.file_priority are set" }}
@@ -26,15 +42,9 @@ data:
     {{- if .Values.logPriority }}
     {{- $_ := merge .Values.sysdig.settings (dict "log" (dict "console_priority" .Values.logPriority "file_priority" .Values.logPriority)) }}
     {{- end }}
-    {{/* add in the remaining items from sysdig.settings */}}
-    {{- if .Values.sysdig.settings }}
-    {{ toYaml .Values.sysdig.settings | nindent 4 }}
-    {{- end }}
     {{- if .Values.global.sysdig.tags }}
     tags: {{ include "agent.tags" . }}
     {{- end }}
-    {{- if .Values.prometheus.file }}
-  prometheus.yaml: |
-    {{ toYaml .Values.prometheus.yaml }}
-  {{- end }}
+    {{/* add in the remaining items from sysdig.settings */}}
+    {{- toYaml .Values.sysdig.settings | nindent 4 }}
 {{- end }}
