@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.5.60
+### Chores
+* **agent,sysdig-deploy** [75ae713](https://github.com/sysdiglabs/charts/commit/75ae7139fa1bdb7693f0562015ddcff0a1a3f394): Update chart maintainers ([#919](https://github.com/sysdiglabs/charts/issues/919))
 # v1.5.59
 ### Bug Fixes
 * **sysdig-deploy** [36fe5b3](https://github.com/sysdiglabs/charts/commit/36fe5b35715ff6adeea162d4eaa65080edea09b5): Fix issues with sysdig-deploy unit tests ([#918](https://github.com/sysdiglabs/charts/issues/918))
