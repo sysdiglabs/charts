@@ -1,0 +1,47 @@
+suite: Testing that tains/tolerations are applied correctly
+templates:
+  - deployment.yaml
+tests:
+  - it: check application of kspm collector tolerations
+    set: 
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+      tolerations:
+        - effect: NoSchedule
+          key: kubernetes.io/arch
+          operator: Equal
+          value: arm64  
+        - effect: "NoSchedule"
+          key: "CriticalAddonsOnly"
+          operator: "Equal"
+          value: "true"
+    asserts:
+      - equal:
+          path: spec.template.spec.tolerations
+          value:
+            - effect: NoSchedule
+              key: kubernetes.io/arch
+              operator: Equal
+              value: arm64
+            - effect: NoSchedule
+              key: CriticalAddonsOnly
+              operator: Equal
+              value: "true"
+
+  - it: check application of kspm collector tolerations (replace of default values)
+    set: 
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+      tolerations:
+        - effect: "NoSchedule"
+          key: "CriticalAddonsOnly"
+          operator: "Equal"
+          value: "true"
+    asserts:
+      - equal:
+          path: spec.template.spec.tolerations
+          value:
+            - effect: NoSchedule
+              key: CriticalAddonsOnly
+              operator: Equal
+              value: "true"

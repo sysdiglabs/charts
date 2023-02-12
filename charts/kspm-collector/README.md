@@ -44,6 +44,7 @@ The following table lists the configurable parameters of the Sysdig KSPM Collect
 | `replicas`                                | KSPM collector deployment replicas                                                      | `1`                                                         |
 | `namespaces.included`                     | Namespaces to include in the KSPM collector scans, when empty scans all                 | ``                                                          |
 | `namespaces.excluded`                     | Namespaces to exclude in the KSPM collector scans                                       | ``                                                          |
+| `nodeSelector`                            | Node Selector                                                                           | `{}`                                                        |
 | `workloads.included`                      | Workloads to include in the KSPM collector scans, when empty scans all                  | ``                                                          |
 | `workloads.excluded`                      | Workloads to exclude in the KSPM collector scans, when empty scans all                  | ``                                                          |
 | `healthIntervalMin`                       | Minutes interval for KSPM collector health status messages                              | `5`                                                         |
@@ -61,15 +62,16 @@ The following table lists the configurable parameters of the Sysdig KSPM Collect
 | `affinity`                                | Node affinities. Overrides `arch` and `os` values                                       | `{}`                                                        |
 | `labels`                                  | KSPM collector specific labels (as a multi-line templated string map or as YAML)        | `{}`                                                        |
 | `port`                                    | KSPM collector port for health checks                                                   | `8080`                                                      |
-| `readinessProbe.enabled`                  | KSPM collector readinessProbe enablement                                                | `true`                                                         |
-| `livenessProbe.enabled`                   | KSPM collector livenessProbe enablement                                                 | `true`                                                         |
+| `readinessProbe.enabled`                  | KSPM collector readinessProbe enablement                                                | `true`                                                      |
+| `livenessProbe.enabled`                   | KSPM collector livenessProbe enablement                                                 | `true`                                                      |
+| `scc.create`                              | Create OpenShift's Security Context Constraint                                          | `true`                                                      |
 | `securityContext.runAsNonRoot`            | make KSPM collector run as non root                                                     | `true`                                                      |
 | `securityContext.runAsUser`               | make KSPM collector run as user with this ID                                            | `10001`                                                     |
 | `securityContext.runAsGroup`              | make KSPM collector run as group with this ID                                           | `10001`                                                     |
 | `securityContext.readOnlyRootFilesystem`  | make KSPM collector root file system read only                                          | `true`                                                      |
-| `securityContext.allowPrivilegeEscalation`| allow KSPM collector apps to gain priviledges stronger than their parent process        | `false`                                                      |
-| `securityContext.capabilities.drop`       | Linux capabilities to be taken from KSPM collector                                      | `['all']`                                                      |
-
+| `securityContext.allowPrivilegeEscalation`| allow KSPM collector apps to gain priviledges stronger than their parent process        | `false`                                                     |
+| `securityContext.capabilities.drop`       | Linux capabilities to be taken from KSPM collector                                      | `['all']`                                                   |
+| `tolerations`                             | The tolerations for scheduling                                                          | `kubernetes.io/arch=arm64:NoSchedule`                       |
 
 
 

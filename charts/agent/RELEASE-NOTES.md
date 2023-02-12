@@ -1,6 +1,6 @@
 # What's Changed
 
-### Bug Fixes
-- **agent** [a2891bc](https://github.com/sysdiglabs/charts/commit/a2891bc82b2cfef7be5da1d22f39f8b81b05c897): Fix agent.secure.enabled flag ([#858](https://github.com/sysdiglabs/charts/issues/858))
+### Chores
+- **agent,sysdig-deploy** [75ae713](https://github.com/sysdiglabs/charts/commit/75ae7139fa1bdb7693f0562015ddcff0a1a3f394): Update chart maintainers ([#919](https://github.com/sysdiglabs/charts/issues/919))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.5.57...agent-1.5.58
+#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.5.58...agent-1.5.59

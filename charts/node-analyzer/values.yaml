@@ -372,17 +372,11 @@ nodeAnalyzer:
     readinessProbe:
       enabled: true
       probe:
-        httpGet:
-          path: /health
-          port: http
         initialDelaySeconds: 90
         periodSeconds: 3
     livenessProbe:
       enabled: true
       probe:
-        httpGet:
-          path: /health
-          port: http
         initialDelaySeconds: 90
         periodSeconds: 3
 
