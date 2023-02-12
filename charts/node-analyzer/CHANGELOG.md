@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.8.29
+### New Features
+* **node-analyzer** [cce0f8c](https://github.com/sysdiglabs/charts/commit/cce0f8cf6922b1cd35a7de63926b4bf51c335182): Bump KSPM Analyzer to latest version ([#922](https://github.com/sysdiglabs/charts/issues/922))
 # v1.8.28
 ### Bug Fixes
 * **node-analyzer,kspm-collector** [59543e8](https://github.com/sysdiglabs/charts/commit/59543e8da45e1e61f21b2489500fe5452906bca0): Fix security context permission for KSPM components ([#907](https://github.com/sysdiglabs/charts/issues/907))
