@@ -1,6 +1,6 @@
 # What's Changed
 
 ### New Features
-- **kspm-collector** [faf65fa](https://github.com/sysdiglabs/charts/commit/faf65fa003469a6ed99ae4d97aaef040cbfa6d0b): Custom tolerations and nodeSelector ([#912](https://github.com/sysdiglabs/charts/issues/912))
+- **kspm-collector** [d1328c0](https://github.com/sysdiglabs/charts/commit/d1328c02976901a64d91f4e86a2a26035045496c): bumped KSPM Collector to latest version ([#921](https://github.com/sysdiglabs/charts/issues/921))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.1.32...kspm-collector-0.1.33
+#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.1.34...kspm-collector-0.1.35

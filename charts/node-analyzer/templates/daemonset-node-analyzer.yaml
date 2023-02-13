@@ -114,21 +114,21 @@ spec:
       # kspm-analyzer
       - name: sysdig-kspm-analyzer
         image: {{ template "nodeAnalyzer.image.kspmAnalyzer" . }}
-        ports:
-          - name: http
-            containerPort: {{ .Values.nodeAnalyzer.kspmAnalyzer.port }}
-            protocol: TCP
         {{- if .Values.nodeAnalyzer.kspmAnalyzer.readinessProbe.enabled }}
-        {{- with .Values.nodeAnalyzer.kspmAnalyzer.readinessProbe.probe }}
         readinessProbe:
-          {{- toYaml . | nindent 10 }}
-        {{- end }}
+          httpGet:
+            path: /health
+            port:  {{ .Values.nodeAnalyzer.kspmAnalyzer.port }}
+          initialDelaySeconds: {{ .Values.nodeAnalyzer.kspmAnalyzer.readinessProbe.probe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.nodeAnalyzer.kspmAnalyzer.readinessProbe.probe.periodSeconds }}
         {{- end }}
         {{- if .Values.nodeAnalyzer.kspmAnalyzer.livenessProbe.enabled }}
-        {{- with .Values.nodeAnalyzer.kspmAnalyzer.livenessProbe.probe }}
         livenessProbe:
-          {{- toYaml . | nindent 10 }}
-        {{- end }}
+          httpGet:
+            path: /health
+            port: {{ .Values.nodeAnalyzer.kspmAnalyzer.port }}
+          initialDelaySeconds: {{ .Values.nodeAnalyzer.kspmAnalyzer.livenessProbe.probe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.nodeAnalyzer.kspmAnalyzer.livenessProbe.probe.periodSeconds }}
         {{- end }}
         imagePullPolicy: {{ .Values.nodeAnalyzer.kspmAnalyzer.image.pullPolicy }}
         resources:

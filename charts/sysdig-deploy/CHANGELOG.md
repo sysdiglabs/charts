@@ -10,6 +10,21 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.5.62
+### Chores
+* **sysdig-deploy** [938fd44](https://github.com/sysdiglabs/charts/commit/938fd442c0a573808e633525f36c83523befccb4): Automatic version bump due to updated dependencies ([#923](https://github.com/sysdiglabs/charts/issues/923))
+# v1.5.61
+### Chores
+* **sysdig-deploy** [d916f9f](https://github.com/sysdiglabs/charts/commit/d916f9f4c66fe9ded281f1c13a17a07045a8fac8): Automatic version bump due to updated dependencies ([#920](https://github.com/sysdiglabs/charts/issues/920))
+# v1.5.60
+### Chores
+* **agent,sysdig-deploy** [75ae713](https://github.com/sysdiglabs/charts/commit/75ae7139fa1bdb7693f0562015ddcff0a1a3f394): Update chart maintainers ([#919](https://github.com/sysdiglabs/charts/issues/919))
+# v1.5.59
+### Bug Fixes
+* **sysdig-deploy** [36fe5b3](https://github.com/sysdiglabs/charts/commit/36fe5b35715ff6adeea162d4eaa65080edea09b5): Fix issues with sysdig-deploy unit tests ([#918](https://github.com/sysdiglabs/charts/issues/918))
+# v1.5.58
+### Chores
+* **sysdig-deploy** [c674546](https://github.com/sysdiglabs/charts/commit/c6745463a97fe5ea42b8a21696cfb72869fe8c34): Automatic version bump due to updated dependencies ([#914](https://github.com/sysdiglabs/charts/issues/914))
 # v1.5.57
 ### Chores
 * **sysdig-deploy** [76715ce](https://github.com/sysdiglabs/charts/commit/76715ce71c3cfd2a5156ea74cee68073eae82dd8): Automatic version bump due to updated dependencies ([#913](https://github.com/sysdiglabs/charts/issues/913))

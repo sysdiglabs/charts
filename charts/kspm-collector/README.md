@@ -37,7 +37,7 @@ The following table lists the configurable parameters of the Sysdig KSPM Collect
 | `clusterName`                             | Set a cluster name to identify events using *kubernetes.cluster.name* tag               | ` `                                                         |
 | `image.registry`                          | KSPM Collector image registry                                                           | `quay.io`                                                   |
 | `image.repository`                        | The image repository to pull from                                                       | `sysdig/kspm-collector`                                     |
-| `image.tag`                               | The image tag to pull                                                                   | `1.16.0`                                                    |
+| `image.tag`                               | The image tag to pull                                                                   | `1.18.0`                                                    |
 | `image.digest`                            | The image digest to pull                                                                | ` `                                                         |
 | `image.pullPolicy`                        | The Image pull policy                                                                   | `Always`                                                    |
 | `imagePullSecrets`                        | The Image pull secret                                                                   | `[]`                                                        |
@@ -64,6 +64,7 @@ The following table lists the configurable parameters of the Sysdig KSPM Collect
 | `port`                                    | KSPM collector port for health checks                                                   | `8080`                                                      |
 | `readinessProbe.enabled`                  | KSPM collector readinessProbe enablement                                                | `true`                                                      |
 | `livenessProbe.enabled`                   | KSPM collector livenessProbe enablement                                                 | `true`                                                      |
+| `scc.create`                              | Create OpenShift's Security Context Constraint                                          | `true`                                                      |
 | `securityContext.runAsNonRoot`            | make KSPM collector run as non root                                                     | `true`                                                      |
 | `securityContext.runAsUser`               | make KSPM collector run as user with this ID                                            | `10001`                                                     |
 | `securityContext.runAsGroup`              | make KSPM collector run as group with this ID                                           | `10001`                                                     |
