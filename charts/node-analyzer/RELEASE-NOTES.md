@@ -1,6 +1,6 @@
 # What's Changed
 
 ### New Features
-- **node-analyzer** [cce0f8c](https://github.com/sysdiglabs/charts/commit/cce0f8cf6922b1cd35a7de63926b4bf51c335182): Bump KSPM Analyzer to latest version ([#922](https://github.com/sysdiglabs/charts/issues/922))
+- **sysdig,node-analyzer** [61deccc](https://github.com/sysdiglabs/charts/commit/61decccbf840632176424593b3959c7b8499c4a6): bump legacy NodeImageAnalyzer to v0.1.23 ([#924](https://github.com/sysdiglabs/charts/issues/924))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.8.28...node-analyzer-1.8.29
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.8.29...node-analyzer-1.8.30
