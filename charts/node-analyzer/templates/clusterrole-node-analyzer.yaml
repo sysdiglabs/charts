@@ -32,7 +32,7 @@ rules:
   resources:
     - "flowschemas"
   verbs:
-    "list"
+    - list
 - apiGroups:
     - ""
   resources:
