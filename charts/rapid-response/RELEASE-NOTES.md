@@ -1,6 +1,6 @@
 # What's Changed
 
 ### Bug Fixes
-- **rapid-response** [ad996c4](https://github.com/sysdiglabs/charts/commit/ad996c432eca3c68ad41e2d41566c513919259db): update chart version ([#909](https://github.com/sysdiglabs/charts/issues/909))
+- **rapid-response** [afe34ab](https://github.com/sysdiglabs/charts/commit/afe34ab63ee778f2a10b1902cdfb8fccc00c6762): Set rapid-response node selector os and arch by k8s version ([#930](https://github.com/sysdiglabs/charts/issues/930))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/rapid-response-0.4.4...rapid-response-0.4.5
+#### Full diff: https://github.com/sysdiglabs/charts/compare/rapid-response-0.4.5...rapid-response-0.4.6
