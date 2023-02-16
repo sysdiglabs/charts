@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.1.36
+### New Features
+* **kspm-analyzer, kspm-collector** [dedebca](https://github.com/sysdiglabs/charts/commit/dedebca2a44e00828d80379c00cafbb50d90db8d): OCP4 support ([#915](https://github.com/sysdiglabs/charts/issues/915))
 # v0.1.35
 ### New Features
 * **kspm-collector** [d1328c0](https://github.com/sysdiglabs/charts/commit/d1328c02976901a64d91f4e86a2a26035045496c): bumped KSPM Collector to latest version ([#921](https://github.com/sysdiglabs/charts/issues/921))
