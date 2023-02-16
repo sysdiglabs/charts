@@ -1,7 +1,7 @@
 <!--
 
 
-DO NOT MODIFY THIS FILE MANUALLY!!
+DO NOT MODIFY THIS FILE (README.md) MANUALLY!!
 
 IT'S AUTO-GENERATED vía README.tpl with pre-comit plugin
 this is under construction so it must be launched manually
