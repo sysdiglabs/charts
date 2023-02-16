@@ -1,6 +1,6 @@
 # What's Changed
 
 ### New Features
-- **sysdig,node-analyzer** [61deccc](https://github.com/sysdiglabs/charts/commit/61decccbf840632176424593b3959c7b8499c4a6): bump legacy NodeImageAnalyzer to v0.1.23 ([#924](https://github.com/sysdiglabs/charts/issues/924))
+- **node-analyzer** [19ec540](https://github.com/sysdiglabs/charts/commit/19ec540233c937fa2a98cd87921161025439f693): bumped RuntimeScanner and HostScanner to latest versions ([#916](https://github.com/sysdiglabs/charts/issues/916))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.8.29...node-analyzer-1.8.30
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.8.30...node-analyzer-1.8.31

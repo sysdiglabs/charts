@@ -1,0 +1,63 @@
+suite: Test node selector labels used on different cluster versions
+templates:
+  - templates/daemonset.yaml
+tests:
+  - it: Test clusters < v1.14
+    capabilities:
+      majorVersion: 1
+      minorVersion: 13
+    asserts:
+      - isKind:
+          of: DaemonSet
+      - contains:
+          path: spec.template.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms
+          content:
+            matchExpressions:
+              - key: beta.kubernetes.io/arch
+                operator: In
+                values:
+                  - amd64
+              - key: beta.kubernetes.io/os
+                operator: In
+                values:
+                  - linux
+
+  - it: Test clusters >=v1.14
+    capabilities:
+      majorVersion: 1
+      minorVersion: 26
+    asserts:
+      - isKind:
+          of: DaemonSet
+      - contains:
+          path: spec.template.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms
+          content:
+            matchExpressions:
+              - key: kubernetes.io/arch
+                operator: In
+                values:
+                  - amd64
+              - key: kubernetes.io/os
+                operator: In
+                values:
+                  - linux
+
+  - it: Test for major Kube Version bump
+    capabilities:
+      majorVersion: 2
+      minorVersion: 0
+    asserts:
+      - isKind:
+          of: DaemonSet
+      - contains:
+          path: spec.template.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms
+          content:
+            matchExpressions:
+              - key: kubernetes.io/arch
+                operator: In
+                values:
+                  - amd64
+              - key: kubernetes.io/os
+                operator: In
+                values:
+                  - linux
