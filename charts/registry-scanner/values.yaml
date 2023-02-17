@@ -16,9 +16,8 @@ cronjob:
 reportToPersistentVolumeClaim: ""
 
 config:
-  # **required**
-  # <br/> URL of the registry to scan.
-  registryURL: https://my-docker-registry.com
+  # URL of the registry to scan.
+  registryURL: ""
   # API URL of the registry to scan. This is required if your registry type is Artifactory.
   registryApiUrl: https://my-docker-registry.com/artifactory/api/docker/
   # Username for registry authentication.
