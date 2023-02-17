@@ -39,7 +39,7 @@ config:
     # AWS Credentials: SecretAccessKey.
     secretAccessKey: ""
     # AWS Region.
-    region: ""
+    region: "us-east-1"
     # Optional. In an AWS organizational custom setup, the aws role arn to have access to the management account.
     managementAccountRoleARN:
     # Optional. In an AWS organizational custom setup, the aws role attached only to the member accounts allowed to scan.

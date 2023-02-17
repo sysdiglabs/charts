@@ -104,7 +104,7 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | config.icrIamApiSkipTLS             | Ignore TLS certificate for IAM API - Only for ICR registry type.                                                                                                                                                             | <code>false</code>                                                  |
 | config.aws.accessKeyId              | AWS Credentials AccessKeyID.                                                                                                                                                                                                 | <code>""</code>                                                     |
 | config.aws.secretAccessKey          | AWS Credentials: SecretAccessKey.                                                                                                                                                                                            | <code>""</code>                                                     |
-| config.aws.region                   | AWS Region.                                                                                                                                                                                                                  | <code>""</code>                                                     |
+| config.aws.region                   | AWS Region.                                                                                                                                                                                                                  | <code>"us-east-1"</code>                                            |
 | config.aws.managementAccountRoleARN | Optional. In an AWS organizational custom setup, the aws role arn to have access to the management account.                                                                                                                  | <code></code>                                                       |
 | config.aws.memberAccountsRoleName   | Optional. In an AWS organizational custom setup, the aws role attached only to the member accounts allowed to scan.                                                                                                          | <code></code>                                                       |
 | config.registrySkipTLS              | Ignore registry TLS certificate errors (self-signed, etc.).                                                                                                                                                                  | <code>false</code>                                                  |
@@ -193,7 +193,6 @@ $ helm upgrade --install registry-scanner \
     --set config.aws.region=<AWS_REGION> \
     --set config.aws.managementAccountRoleARN=<AWS_MANAGEMENT_ACCOUNT_ARN> \
     --set config.aws.memberAccountsRoleName=<AWS_MEMBER_ACCOUNTS_ROLE_NAME> \
-    --set config.registryURL=<AWS_ECR_URL> \
     sysdig/registry-scanner
 ```
 
