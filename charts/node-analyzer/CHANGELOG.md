@@ -10,6 +10,12 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.8.32
+### New Features
+* **kspm-analyzer, kspm-collector** [dedebca](https://github.com/sysdiglabs/charts/commit/dedebca2a44e00828d80379c00cafbb50d90db8d): OCP4 support ([#915](https://github.com/sysdiglabs/charts/issues/915))
+# v1.8.31
+### New Features
+* **node-analyzer** [19ec540](https://github.com/sysdiglabs/charts/commit/19ec540233c937fa2a98cd87921161025439f693): bumped RuntimeScanner and HostScanner to latest versions ([#916](https://github.com/sysdiglabs/charts/issues/916))
 # v1.8.30
 ### New Features
 * **sysdig,node-analyzer** [61deccc](https://github.com/sysdiglabs/charts/commit/61decccbf840632176424593b3959c7b8499c4a6): bump legacy NodeImageAnalyzer to v0.1.23 ([#924](https://github.com/sysdiglabs/charts/issues/924))

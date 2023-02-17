@@ -1,6 +1,6 @@
 # What's Changed
 
 ### New Features
-- **sysdig,node-analyzer** [61deccc](https://github.com/sysdiglabs/charts/commit/61decccbf840632176424593b3959c7b8499c4a6): bump legacy NodeImageAnalyzer to v0.1.23 ([#924](https://github.com/sysdiglabs/charts/issues/924))
+- **kspm-analyzer, kspm-collector** [dedebca](https://github.com/sysdiglabs/charts/commit/dedebca2a44e00828d80379c00cafbb50d90db8d): OCP4 support ([#915](https://github.com/sysdiglabs/charts/issues/915))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.8.29...node-analyzer-1.8.30
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.8.31...node-analyzer-1.8.32
