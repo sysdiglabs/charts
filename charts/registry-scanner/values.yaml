@@ -40,10 +40,10 @@ config:
     secretAccessKey: ""
     # AWS Region.
     region: "us-east-1"
-    # Optional. In an AWS organizational custom setup, the aws role arn to have access to the management account.
+    # In an AWS organizational custom setup, the aws role arn to have access to the management account.
     managementAccountRoleARN:
-    # Optional. In an AWS organizational custom setup, the aws role attached only to the member accounts allowed to scan.
-    memberAccountsRoleName:
+    # In an AWS organizational custom setup, the aws role attached only to the member accounts allowed to scan.
+    memberAccountsRoleName: "OrganizationAccountAccessRole"
   # Ignore registry TLS certificate errors (self-signed, etc.).
   registrySkipTLS: false
   # **required**
