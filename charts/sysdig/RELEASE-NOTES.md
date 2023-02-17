@@ -1,6 +1,6 @@
 # What's Changed
 
-### New Features
-- **agent,node-analyzer,rapid-response** [487b421](https://github.com/sysdiglabs/charts/commit/487b421c922e097047e5ca65c01cee466664daba): add Rancher-specific tolerations ([#884](https://github.com/sysdiglabs/charts/issues/884))
+### Chores
+- **sysdig** [38ce49c](https://github.com/sysdiglabs/charts/commit/38ce49c5e323b4703fa3cbe9e2a20c469fd784f0): bump agent version to 12.11.0 ([#926](https://github.com/sysdiglabs/charts/issues/926))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.5.50...sysdig-1.15.70
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.5.63...sysdig-1.15.72

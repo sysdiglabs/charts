@@ -27,13 +27,11 @@ tests:
         template: charts/agent/templates/secrets.yaml
       - matchRegex:
           path: data.dragent\.yaml
-          pattern: |
-            k8s_cluster_name: test-k8s
+          pattern: 'k8s_cluster_name: test-k8s'
         template: charts/agent/templates/configmap.yaml
       - matchRegex:
           path: data.dragent\.yaml
-          pattern: |
-            collector: collector.sysdigcloud.com
+          pattern: 'collector: collector.sysdigcloud.com'
         template: charts/agent/templates/configmap.yaml
       - contains:
           path: spec.template.spec.initContainers[0].env
@@ -47,6 +45,7 @@ tests:
       global:
         sysdig:
           accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+          region: custom
       agent:
         collectorSettings:
           collectorHost: collector_host

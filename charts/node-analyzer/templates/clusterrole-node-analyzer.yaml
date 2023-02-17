@@ -22,10 +22,30 @@ rules:
     - "cronjobs"
     - "jobs"
     - "nodes"
+    - "nodes/proxy"
   verbs:
     - get
     - list
     - watch
+- apiGroups:
+    - flowcontrol.apiserver.k8s.io
+  resources:
+    - "flowschemas"
+  verbs:
+    - list
+- apiGroups:
+    - ""
+  resources:
+    - "pods"
+    - "pods/exec"
+  verbs:
+    - "create"
+- apiGroups:
+    - ""
+  resources:
+    - "pods"
+  verbs:
+    - "delete"
 - apiGroups:
     - ""
   resources:

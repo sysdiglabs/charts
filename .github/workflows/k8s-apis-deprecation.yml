@@ -1,0 +1,51 @@
+name: "Checks Kubernetes API Deprecation"
+
+# Run manually
+on: workflow_dispatch
+
+# on:
+#   schedule:
+#     Run weekly
+#     - cron:  '10 1 * * 1'
+#     Run it monthly at first day of the month
+#     - cron:  '10 1 1 1-12 *'
+
+jobs:
+
+  charts:
+    runs-on: ubuntu-latest
+    # Parallel builds
+    strategy:
+      # Don't stop the pipeline in case one of parallel jobs fails
+      fail-fast: false
+      matrix:
+        charts_name: ["admission-controller", "agent", "kspm-collector", "node-analyzer", "rapid-response", "sysdig-deploy", "sysdig"]
+        k8s_version: ["v1.20.0", "v1.21.0", "v1.22.0", "v1.23.0", "v1.24.0", "v1.25.0", "v1.26.0", "v1.27.0"]
+
+    steps:
+      - name: "🛎️ Checkout"
+        uses: actions/checkout@v3
+
+      - name: "🔑 Expand templates for CI"
+        run: |
+          find -iname "*.yaml.template" | xargs -L1 -- bash -c 'envsubst < $0 > ${0%.template}'
+          helm dependency build ./charts/sysdig-deploy
+        shell: bash
+        env:
+          SECURE_API_TOKEN: ${{ secrets.KUBELAB_SECURE_API_TOKEN }}
+          SECURE_AGENT_TOKEN: ${{ secrets.KUBELAB_AGENT_KEY }}
+
+      - name: "🛠️ Setup Pluto"
+        # Pluto in the docs suggest to use master but would be better to tag a release version
+        uses: FairwindsOps/pluto/github-action@v5.12.0
+
+      - name: "🔍 Inspecting ${{ matrix.charts_name }} against k8s ${{ matrix.k8s_version }}"
+        id: inspecting
+        run: |
+          helm template ./charts/${{ matrix.charts_name }} -f ./charts/${{ matrix.charts_name }}/ci/test-values.yaml | pluto detect --target-versions k8s=${{ matrix.k8s_version }} -omarkdown - >> SUMMARY.md
+
+      - name: "Show Summary"
+        if: failure() && steps.inspecting.outcome == 'failure'
+        run: |
+          cat SUMMARY.md >> $GITHUB_STEP_SUMMARY
+        shell: bash
