@@ -2,7 +2,7 @@ apiVersion: v2
 name: sysdig-deploy
 description: A chart with various Sysdig components for Kubernetes
 type: application
-version: 1.5.67
+version: 1.5.68
 
 maintainers:
   - name: aroberts87
@@ -15,7 +15,7 @@ dependencies:
   - name: admission-controller
     # repository: https://charts.sysdig.com
     repository: file://../admission-controller
-    version: ~0.7.23
+    version: ~0.7.24
     alias: admissionController
     condition: admissionController.enabled
   - name: agent
