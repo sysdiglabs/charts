@@ -1,6 +1,6 @@
 # What's Changed
 
 ### New Features
-- **kspm-analyzer, kspm-collector** [dedebca](https://github.com/sysdiglabs/charts/commit/dedebca2a44e00828d80379c00cafbb50d90db8d): OCP4 support ([#915](https://github.com/sysdiglabs/charts/issues/915))
+- **node-analyzer,sysdig** [42e3aa5](https://github.com/sysdiglabs/charts/commit/42e3aa5c30a06166eb959632ec223149a6784421): Feat/bench runner bump to 1.1.0.8 ([#937](https://github.com/sysdiglabs/charts/issues/937))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.8.31...node-analyzer-1.8.32
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.8.33...node-analyzer-1.8.34

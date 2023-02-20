@@ -157,7 +157,7 @@ nodeAnalyzer:
     deploy: true
     image:
       repository: sysdig/node-image-analyzer
-      tag: 0.1.23
+      tag: 0.1.24
       digest:
       pullPolicy: IfNotPresent
 
@@ -240,7 +240,7 @@ nodeAnalyzer:
 
     image:
       repository: sysdig/compliance-benchmark-runner
-      tag: 1.1.0.5
+      tag: 1.1.0.8
       digest:
       pullPolicy: IfNotPresent
 

@@ -23,7 +23,7 @@ $ pre-commit run -a
 $ helm repo add sysdig https://charts.sysdig.com
 $ helm repo update
 $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-      --create-namespace -n sysdig-admission-controller --version=0.7.23  \
+      --create-namespace -n sysdig-admission-controller --version=0.7.24  \
       --set clusterName=CLUSTER_NAME \
       --set sysdig.url=SECURE_URL \
       --set sysdig.secureAPIToken=SECURE_API_TOKEN
@@ -56,7 +56,7 @@ This chart deploys the Sysdig Admission Controller on a [Kubernetes](http://kube
 To install the chart with the release name `admission-controller`:
 
 ```console
-$ helm upgrade --install sysdig-admission-controller sysdig/admission-controller -n sysdig-admission-controller --version=0.7.23
+$ helm upgrade --install sysdig-admission-controller sysdig/admission-controller -n sysdig-admission-controller --version=0.7.24
 ```
 
 The command deploys the Sysdig Admission Controller on the Kubernetes cluster in the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.
@@ -182,7 +182,7 @@ Specify each parameter using the **`--set key=value[,key=value]`** argument to `
 
 ```console
 $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-    --create-namespace -n sysdig-admission-controller --version=0.7.23 \
+    --create-namespace -n sysdig-admission-controller --version=0.7.24 \
     --set sysdig.secureAPIToken=YOUR-KEY-HERE,sysdig.url=SECURE_URL,clusterName=YOUR-CLUSTER-NAME
 ```
 
@@ -191,7 +191,7 @@ installing the chart. For example:
 
 ```console
 $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-    --create-namespace -n sysdig-admission-controller --version=0.7.23 \
+    --create-namespace -n sysdig-admission-controller --version=0.7.24 \
     --values values.yaml
 ```
 
@@ -393,6 +393,7 @@ The helm unit tests are in the tests folder. It is recommended to add new tests 
 
 ## Troubleshooting
 
+
 ### Q: I'm not able to get an alert for an event with the `ka.verb=get` condition.
 
 A: Despite [Kubernetes Extensible Admission Controller webhook allows it](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#matching-requests-rules), Sysdig Admission Controller does only handle `CREATE`, `UPDATE`, `DELETE` and `CONNECT` type of events.
@@ -469,6 +470,12 @@ A: [HorizontalAutoScaller](https://github.com/sysdiglabs/charts/blob/master/char
 
 A: Sysdig installation is made with an unverfied certificate, such as self-signed, `SECURE_URL` being `https`
 <br/>S: Add `--set verifySSL=false` to your installation parameters
+
+
+### Q: Why is there no support for `ka.sourceips`?
+
+AdmissionController is unable to retrieve the source IP of the events, because this information is not provided by the [Kubernetes AdmissionReview](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#request).
+If you really require this field, as a workaround, you can use the legacy [Sysdig Agent + Kubernetes Audit](https://docs.sysdig.com/en/docs/sysdig-secure/secure-events/kubernetes-audit-logging/#legacy-installation-instructions)
 
 
 <!--
