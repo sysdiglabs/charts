@@ -34,7 +34,8 @@ data:
       memberAccountsRoleName: {{ .Values.config.aws.memberAccountsRoleName }}
       {{- end }}
       {{- if .Values.config.aws.allowListMemberAccountIDs }}
-      allowListMemberAccountIDs: {{- toYaml .Values.config.aws.allowListMemberAccountIDs }}
+      allowListMemberAccountIDs:
+        {{- toYaml .Values.config.aws.allowListMemberAccountIDs | nindent 8}}
       {{- end }}
     secure:
       baseUrl: {{ default "https://secure.sysdig.com" .Values.config.secureBaseURL }}
