@@ -27,7 +27,16 @@ data:
       {{- if .Values.config.registryApiUrl }}
       api: {{ .Values.config.registryApiUrl }}
       {{- end }}
-
+      {{- if .Values.config.aws.managementAccountRoleARN }}
+      managementAccountRoleARN: {{ .Values.config.aws.managementAccountRoleARN }}
+      {{- end }}
+      {{- if .Values.config.aws.managementAccountRoleARN }}
+      memberAccountsRoleName: {{ .Values.config.aws.memberAccountsRoleName }}
+      {{- end }}
+      {{- if .Values.config.aws.allowListMemberAccountIDs }}
+      allowListMemberAccountIDs:
+        {{- toYaml .Values.config.aws.allowListMemberAccountIDs | nindent 8}}
+      {{- end }}
     secure:
       baseUrl: {{ default "https://secure.sysdig.com" .Values.config.secureBaseURL }}
       apiToken: from-secret

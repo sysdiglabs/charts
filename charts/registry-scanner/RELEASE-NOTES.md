@@ -1,6 +1,6 @@
 # What's Changed
 
-### Chores
-- **registry-scanner** [c32a29e](https://github.com/sysdiglabs/charts/commit/c32a29ef5b391f694b55a6a728601156d8c93e00): registry 0.2.3 ([#905](https://github.com/sysdiglabs/charts/issues/905))
+### New Features
+- **registry-scanner** [e76c266](https://github.com/sysdiglabs/charts/commit/e76c26685d9b22a060fe5aff859c12612644a5bf): add options for ecr organization custom setup ([#929](https://github.com/sysdiglabs/charts/issues/929))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-0.1.6...registry-scanner-0.1.7
+#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-0.1.7...registry-scanner-0.1.8
