@@ -1,7 +1,7 @@
 <!--
 
 
-DO NOT MODIFY THIS FILE MANUALLY!!
+DO NOT MODIFY THIS FILE (README.md) MANUALLY!!
 
 IT'S AUTO-GENERATED vía README.tpl with pre-comit plugin
 this is under construction so it must be launched manually
@@ -123,6 +123,23 @@ $ helm upgrade --install registry-scanner \
     --set config.aws.secretAccessKey=<AWS_SECRET_ACCESS_KEY> \
     --set config.aws.region=<AWS_REGION> \
     --set config.registryURL=<AWS_ECR_URL> \
+    sysdig/registry-scanner
+```
+
+### AWS ECR Organizational
+
+```bash
+$ helm upgrade --install registry-scanner \
+    --set config.scan.newVmScanner=true \
+    --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
+    --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
+    --set config.registryType=ecr \
+    --set config.aws.accessKeyId=<AWS_ACCESS_KEY_ID> \
+    --set config.aws.secretAccessKey=<AWS_SECRET_ACCESS_KEY> \
+    --set config.aws.region=<AWS_REGION> \
+    --set config.aws.managementAccountRoleARN=<AWS_MANAGEMENT_ACCOUNT_ARN> \
+    --set config.aws.memberAccountsRoleName=<AWS_MEMBER_ACCOUNTS_ROLE_NAME> \
+    --set config.aws.allowListMemberAccountIDs=<ALLOW_LIST_MEMBER_ACCOUNT_IDS> \
     sysdig/registry-scanner
 ```
 
