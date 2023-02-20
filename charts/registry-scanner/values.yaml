@@ -43,6 +43,8 @@ config:
     managementAccountRoleARN:
     # In an AWS organizational custom setup, the aws role attached only to the member accounts allowed to scan.
     memberAccountsRoleName: "OrganizationAccountAccessRole"
+    # In an AWS organizational custom setup, the member accounts ids to scan. If empty, it will scan everything.
+    allowListMemberAccountIDs: ""
   # Ignore registry TLS certificate errors (self-signed, etc.).
   registrySkipTLS: false
   # **required**

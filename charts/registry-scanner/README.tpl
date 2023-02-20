@@ -139,6 +139,7 @@ $ helm upgrade --install registry-scanner \
     --set config.aws.region=<AWS_REGION> \
     --set config.aws.managementAccountRoleARN=<AWS_MANAGEMENT_ACCOUNT_ARN> \
     --set config.aws.memberAccountsRoleName=<AWS_MEMBER_ACCOUNTS_ROLE_NAME> \
+    --set config.aws.allowListMemberAccountIDs=<ALLOW_LIST_MEMBER_ACCOUNT_IDS> \
     sysdig/registry-scanner
 ```
 
