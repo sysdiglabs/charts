@@ -39,11 +39,11 @@ config:
     secretAccessKey: ""
     # AWS Region.
     region: "us-east-1"
-    # In an AWS organizational custom setup, the aws role arn to have access to the management account.
+    # Management role arn to be used to impersonate over the member accounts
     managementAccountRoleARN:
-    # In an AWS organizational custom setup, the aws role attached only to the member accounts allowed to scan.
+    # Member account role name (available in all member accounts) to dig into their registries
     memberAccountsRoleName: "OrganizationAccountAccessRole"
-    # In an AWS organizational custom setup, the member accounts ids to scan. If empty, it will scan everything.
+    # Organization account ids in which to perform the registry scan
     allowListMemberAccountIDs: []
   # Ignore registry TLS certificate errors (self-signed, etc.).
   registrySkipTLS: false
