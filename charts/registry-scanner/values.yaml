@@ -16,6 +16,8 @@ cronjob:
 reportToPersistentVolumeClaim: ""
 
 config:
+  # log level. use either trace,debug,info,error
+  logging: "info"
   # URL of the registry to scan.
   registryURL: ""
   # API URL of the registry to scan. This is required if your registry type is Artifactory.

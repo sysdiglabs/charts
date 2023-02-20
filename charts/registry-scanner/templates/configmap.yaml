@@ -6,6 +6,8 @@ metadata:
 {{ include "registry-scanner.labels" . | indent 4 }}
 data:
   config.yaml: |
+    logging: {{ .Values.config.logging }}
+
     # Registry configuration
     registry:
       url: {{ .Values.config.registryURL }}
@@ -30,7 +32,7 @@ data:
       {{- if .Values.config.aws.managementAccountRoleARN }}
       managementAccountRoleARN: {{ .Values.config.aws.managementAccountRoleARN }}
       {{- end }}
-      {{- if .Values.config.aws.managementAccountRoleARN }}
+      {{- if .Values.config.aws.memberAccountsRoleName }}
       memberAccountsRoleName: {{ .Values.config.aws.memberAccountsRoleName }}
       {{- end }}
       {{- if .Values.config.aws.allowListMemberAccountIDs }}
