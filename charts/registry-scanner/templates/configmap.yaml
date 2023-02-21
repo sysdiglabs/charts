@@ -6,6 +6,8 @@ metadata:
 {{ include "registry-scanner.labels" . | indent 4 }}
 data:
   config.yaml: |
+    logging: {{ .Values.config.logging }}
+
     # Registry configuration
     registry:
       url: {{ .Values.config.registryURL }}
