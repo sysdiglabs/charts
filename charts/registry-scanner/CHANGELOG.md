@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.1.10
+### New Features
+* **registry-scanner** [bb1e039](https://github.com/sysdiglabs/charts/commit/bb1e0392124130d2df2242c6ae8b015300a65ec3): add logging ([#943](https://github.com/sysdiglabs/charts/issues/943))
 # v0.1.9
 ### Bug Fixes
 * **registry-scanner** [e033969](https://github.com/sysdiglabs/charts/commit/e0339692514de08cbcff7a34cb78d99507e355ca): fix if exist memberAccountsRoleName ([#942](https://github.com/sysdiglabs/charts/issues/942))
