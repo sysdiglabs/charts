@@ -30,7 +30,7 @@ data:
       {{- if .Values.config.aws.managementAccountRoleARN }}
       managementAccountRoleARN: {{ .Values.config.aws.managementAccountRoleARN }}
       {{- end }}
-      {{- if .Values.config.aws.managementAccountRoleARN }}
+      {{- if .Values.config.aws.memberAccountsRoleName }}
       memberAccountsRoleName: {{ .Values.config.aws.memberAccountsRoleName }}
       {{- end }}
       {{- if .Values.config.aws.allowListMemberAccountIDs }}
