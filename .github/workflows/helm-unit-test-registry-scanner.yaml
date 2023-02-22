@@ -7,7 +7,7 @@ on:
       - '.*/registry-scanner/*'
 
 jobs:
-  Unit-tests:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -15,13 +15,13 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set up Helm
+      - name: install helm
         uses: azure/setup-helm@v1
         with:
           version: v3.4.0
 
-      - name: Set up helm unit test plugin
+      - name: install helm test
         run: make deps-helm
 
-      - name: Test sysdig-deploy
+      - name: test
         run: make test-registry-scanner
