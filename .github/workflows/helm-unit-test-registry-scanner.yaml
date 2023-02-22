@@ -4,7 +4,7 @@ on:
   workflow_dispatch:  # manual test
   pull_request:
     paths:
-      - '.*/registry-scanner/*'
+      - 'charts/registry-scanner/**'
 
 jobs:
   test:
