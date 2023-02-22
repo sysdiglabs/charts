@@ -1,4 +1,4 @@
-name: Helm Unit Tests
+name: Helm Unit Tests - Registry Scanner
 
 on:
   workflow_dispatch:  # manual test
