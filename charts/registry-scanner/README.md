@@ -145,6 +145,8 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | nodeSelector                         | Configure nodeSelector for scheduling the registry scanner pod.                                                                                                                                                              | <code>{}</code>                                                     |
 | tolerations                          | Configure tolerations for scheduling the registry scanner pod.                                                                                                                                                               | <code>[]</code>                                                     |
 | affinity                             | Configure affinity for scheduling the registry scanner pod.                                                                                                                                                                  | <code>{}</code>                                                     |
+| scanOnStart.enabled                  | true|false on whether to start the scanning after installation                                                                                                                                                               | <code>false</code>                                                  |
+| scanOnStart.jobName                  | name of the job created for the scanning after installation                                                                                                                                                                  | <code>"registry-scanner-start-test"</code>                          |
 
 
 

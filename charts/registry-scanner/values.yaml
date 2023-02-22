@@ -189,3 +189,9 @@ nodeSelector: {}
 tolerations: []
 # Configure affinity for scheduling the registry scanner pod.
 affinity: {}
+
+scanOnStart:
+  # true|false on whether to start the scanning after installation
+  enabled: false
+  # name of the job created for the scanning after installation
+  jobName: "registry-scanner-start-test"
