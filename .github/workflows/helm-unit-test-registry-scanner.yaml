@@ -1,6 +1,7 @@
 name: Helm Unit Tests
 
 on:
+  workflow_dispatch:  # manual test
   pull_request:
     paths:
       - '.*/registry-scanner/*'
