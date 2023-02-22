@@ -70,6 +70,222 @@ tests:
           path: data.collector_endpoint
           value: https://app.au1.sysdig.com
 
+  - it: Checking region 'au-syd'
+    set:
+      global:
+        sysdig:
+          region: au-syd
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - equal:
+          path: data.collector_endpoint
+          value: https://au-syd.sysdig-secure.cloud.ibm.com
+
+  - it: Checking region 'br-sao'
+    set:
+      global:
+        sysdig:
+          region: br-sao
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - equal:
+          path: data.collector_endpoint
+          value: https://br-sao.sysdig-secure.cloud.ibm.com
+
+  - it: Checking region 'ca-tor'
+    set:
+      global:
+        sysdig:
+          region: ca-tor
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - equal:
+          path: data.collector_endpoint
+          value: https://ca-tor.sysdig-secure.cloud.ibm.com
+
+  - it: Checking region 'eu-de'
+    set:
+      global:
+        sysdig:
+          region: eu-de
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - equal:
+          path: data.collector_endpoint
+          value: https://eu-de.sysdig-secure.cloud.ibm.com
+
+  - it: Checking region 'eu-gb'
+    set:
+      global:
+        sysdig:
+          region: eu-gb
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - equal:
+          path: data.collector_endpoint
+          value: https://eu-gb.sysdig-secure.cloud.ibm.com
+
+  - it: Checking region 'jp-osa'
+    set:
+      global:
+        sysdig:
+          region: jp-osa
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - equal:
+          path: data.collector_endpoint
+          value: https://jp-osa.sysdig-secure.cloud.ibm.com
+
+  - it: Checking region 'jp-tok'
+    set:
+      global:
+        sysdig:
+          region: jp-tok
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - equal:
+          path: data.collector_endpoint
+          value: https://jp-tok.sysdig-secure.cloud.ibm.com
+
+  - it: Checking region 'us-east'
+    set:
+      global:
+        sysdig:
+          region: us-east
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - equal:
+          path: data.collector_endpoint
+          value: https://us-east.sysdig-secure.cloud.ibm.com
+
+  - it: Checking region 'us-south'
+    set:
+      global:
+        sysdig:
+          region: us-south
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - equal:
+          path: data.collector_endpoint
+          value: https://us-south.sysdig-secure.cloud.ibm.com
+
+  - it: Checking region 'au-syd-private'
+    set:
+      global:
+        sysdig:
+          region: au-syd-private
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - equal:
+          path: data.collector_endpoint
+          value: https://private.au-syd.sysdig-secure.cloud.ibm.com
+
+  - it: Checking region 'br-sao-private'
+    set:
+      global:
+        sysdig:
+          region: br-sao-private
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - equal:
+          path: data.collector_endpoint
+          value: https://private.br-sao.sysdig-secure.cloud.ibm.com
+
+  - it: Checking region 'ca-tor-private'
+    set:
+      global:
+        sysdig:
+          region: ca-tor-private
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - equal:
+          path: data.collector_endpoint
+          value: https://private.ca-tor.sysdig-secure.cloud.ibm.com
+
+  - it: Checking region 'eu-de-private'
+    set:
+      global:
+        sysdig:
+          region: eu-de-private
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - equal:
+          path: data.collector_endpoint
+          value: https://private.eu-de.sysdig-secure.cloud.ibm.com
+
+  - it: Checking region 'eu-gb-private'
+    set:
+      global:
+        sysdig:
+          region: eu-gb-private
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - equal:
+          path: data.collector_endpoint
+          value: https://private.eu-gb.sysdig-secure.cloud.ibm.com
+
+  - it: Checking region 'jp-osa-private'
+    set:
+      global:
+        sysdig:
+          region: jp-osa-private
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - equal:
+          path: data.collector_endpoint
+          value: https://private.jp-osa.sysdig-secure.cloud.ibm.com
+
+  - it: Checking region 'jp-tok-private'
+    set:
+      global:
+        sysdig:
+          region: jp-tok-private
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - equal:
+          path: data.collector_endpoint
+          value: https://private.jp-tok.sysdig-secure.cloud.ibm.com
+
+  - it: Checking region 'us-east-private'
+    set:
+      global:
+        sysdig:
+          region: us-east-private
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - equal:
+          path: data.collector_endpoint
+          value: https://private.us-east.sysdig-secure.cloud.ibm.com
+
+  - it: Checking region 'us-south-private'
+    set:
+      global:
+        sysdig:
+          region: us-south-private
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - equal:
+          path: data.collector_endpoint
+          value: https://private.us-south.sysdig-secure.cloud.ibm.com
+
   - it: Checking wrong region input
     set:
       global:

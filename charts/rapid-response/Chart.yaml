@@ -39,4 +39,8 @@ maintainers:
     email: adam.roberts@sysdig.com
   - name: dark-vex
     email: daniele.delorenzi@sysdig.com
-dependencies: []
+dependencies:
+  - name: common
+    # repository: https://charts.sysdig.com
+    repository: file://../common
+    version: ~1.0.0

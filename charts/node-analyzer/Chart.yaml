@@ -30,4 +30,8 @@ maintainers:
     email: carlos.arilla@sysdig.com
   - name: yashgiri
     email: yashgiri.goswami@sysdig.com
-dependencies: []
+dependencies:
+  - name: common
+    # repository: https://charts.sysdig.com
+    repository: file://../common
+    version: ~1.0.0
