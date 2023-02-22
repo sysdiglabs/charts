@@ -1,0 +1,26 @@
+name: Helm Unit Tests
+
+on:
+  pull_request:
+    paths:
+      - '.*/registry-scanner/*'
+
+jobs:
+  Unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v1
+        with:
+          version: v3.4.0
+
+      - name: Set up helm unit test plugin
+        run: make deps-helm
+
+      - name: Test sysdig-deploy
+        run: make test-registry-scanner
