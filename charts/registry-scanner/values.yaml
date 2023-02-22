@@ -192,8 +192,8 @@ affinity: {}
 
 scanOnStart:
   # true/false on whether to start the scanning after installation
-  #<br/>beware that concurrencyPolicy does not work on jobs (only cronjobs).
-  #<br/>always check if there is any scanning running and if so, remove it.
+  # <br/>beware that concurrencyPolicy does not work on jobs (only cronjobs).
+  # <br/>always check if there is any scanning running and if so, remove it.
   enabled: false
   # name of the job created for the scanning after installation
   jobName: "registry-scanner-start-test"
