@@ -23,78 +23,151 @@
                                    "monitorApiEndpoint" "app.us4.sysdig.com"
                                    "secureApiEndpoint"  "app.us4.sysdig.com"
                                    "secureUi"           "app.us4.sysdig.com/secure")
-                      "au-syd" (dict "collectorEndpoint"    "ingest.au-syd.monitoring.cloud.ibm.com"
-                                     "monitorApiEndpoint"   "au-syd.monitoring.cloud.ibm.com"
-                                     "secureApiEndpoint"    "au-syd.sysdig-secure.cloud.ibm.com"
-                                     "secureUi"             "au-syd.sysdig-secure.cloud.ibm.com")
-                      "br-sao" (dict "collectorEndpoint"    "ingest.br-sao.monitoring.cloud.ibm.com"
-                                     "monitorApiEndpoint"   "br-sao.monitoring.cloud.ibm.com"
-                                     "secureApiEndpoint"    "br-sao.sysdig-secure.cloud.ibm.com"
-                                     "secureUi"             "br-sao.sysdig-secure.cloud.ibm.com")
-                      "ca-tor" (dict "collectorEndpoint"    "ingest.ca-tor.monitoring.cloud.ibm.com"
-                                     "monitorApiEndpoint"   "ca-tor.monitoring.cloud.ibm.com"
-                                     "secureApiEndpoint"    "ca-tor.sysdig-secure.cloud.ibm.com"
-                                     "secureUi"             "ca-tor.sysdig-secure.cloud.ibm.com")
-                      "eu-de" (dict "collectorEndpoint"     "ingest.eu-de.monitoring.cloud.ibm.com"
-                                    "monitorApiEndpoint"    "eu-de.monitoring.cloud.ibm.com"
-                                    "secureApiEndpoint"     "eu-de.sysdig-secure.cloud.ibm.com"
-                                    "secureUi"              "eu-de.sysdig-secure.cloud.ibm.com")
-                      "eu-gb" (dict "collectorEndpoint"     "ingest.eu-gb.monitoring.cloud.ibm.com"
-                                    "monitorApiEndpoint"    "eu-gb.monitoring.cloud.ibm.com"
-                                    "secureApiEndpoint"     "eu-gb.sysdig-secure.cloud.ibm.com"
-                                    "secureUi"              "eu-gb.sysdig-secure.cloud.ibm.com")
-                      "jp-osa" (dict "collectorEndpoint"    "ingest.jp-osa.monitoring.cloud.ibm.com"
-                                     "monitorApiEndpoint"   "jp-osa.monitoring.cloud.ibm.com"
-                                     "secureApiEndpoint"    "jp-osa.sysdig-secure.cloud.ibm.com"
-                                     "secureUi"             "jp-osa.sysdig-secure.cloud.ibm.com")
-                      "jp-tok" (dict "collectorEndpoint"    "ingest.jp-tok.monitoring.cloud.ibm.com"
-                                     "monitorApiEndpoint"   "jp-tok.monitoring.cloud.ibm.com"
-                                     "secureApiEndpoint"    "jp-tok.sysdig-secure.cloud.ibm.com"
-                                     "secureUi"             "jp-tok.sysdig-secure.cloud.ibm.com")
-                      "us-east" (dict "collectorEndpoint"   "ingest.us-east.monitoring.cloud.ibm.com"
-                                      "monitorApiEndpoint"  "us-east.monitoring.cloud.ibm.com"
-                                      "secureApiEndpoint"   "us-east.sysdig-secure.cloud.ibm.com"
-                                      "secureUi"            "us-east.sysdig-secure.cloud.ibm.com")
-                      "us-south" (dict "collectorEndpoint"  "ingest.us-south.monitoring.cloud.ibm.com"
-                                       "monitorApiEndpoint" "us-south.monitoring.cloud.ibm.com"
-                                       "secureApiEndpoint"  "us-south.sysdig-secure.cloud.ibm.com"
-                                       "secureUi"           "us-south.sysdig-secure.cloud.ibm.com")
-                      "au-syd-private" (dict "collectorEndpoint"    "ingest.private.au-syd.monitoring.cloud.ibm.com"
-                                             "monitorApiEndpoint"   "private.au-syd.monitoring.cloud.ibm.com"
-                                             "secureApiEndpoint"    "private.au-syd.sysdig-secure.cloud.ibm.com"
-                                             "secureUi"             "private.au-syd.sysdig-secure.cloud.ibm.com")
-                      "br-sao-private" (dict "collectorEndpoint"    "ingest.private.br-sao.monitoring.cloud.ibm.com"
-                                             "monitorApiEndpoint"   "private.br-sao.monitoring.cloud.ibm.com"
-                                             "secureApiEndpoint"    "private.br-sao.sysdig-secure.cloud.ibm.com"
-                                             "secureUi"             "private.br-sao.sysdig-secure.cloud.ibm.com")
-                      "ca-tor-private" (dict "collectorEndpoint"    "ingest.private.ca-tor.monitoring.cloud.ibm.com"
-                                             "monitorApiEndpoint"   "private.ca-tor.monitoring.cloud.ibm.com"
-                                             "secureApiEndpoint"    "private.ca-tor.sysdig-secure.cloud.ibm.com"
-                                             "secureUi"             "private.ca-tor.sysdig-secure.cloud.ibm.com")
-                      "eu-de-private" (dict "collectorEndpoint"     "ingest.private.eu-de.monitoring.cloud.ibm.com"
-                                            "monitorApiEndpoint"    "private.eu-de.monitoring.cloud.ibm.com"
-                                            "secureApiEndpoint"     "private.eu-de.sysdig-secure.cloud.ibm.com"
-                                            "secureUi"              "private.eu-de.sysdig-secure.cloud.ibm.com")
-                      "eu-gb-private" (dict "collectorEndpoint"     "ingest.private.eu-gb.monitoring.cloud.ibm.com"
-                                            "monitorApiEndpoint"    "private.eu-gb.monitoring.cloud.ibm.com"
-                                            "secureApiEndpoint"     "private.eu-gb.sysdig-secure.cloud.ibm.com"
-                                            "secureUi"              "private.eu-gb.sysdig-secure.cloud.ibm.com")
-                      "jp-osa-private" (dict "collectorEndpoint"    "ingest.private.jp-osa.monitoring.cloud.ibm.com"
-                                             "monitorApiEndpoint"   "private.jp-osa.monitoring.cloud.ibm.com"
-                                             "secureApiEndpoint"    "private.jp-osa.sysdig-secure.cloud.ibm.com"
-                                             "secureUi"             "private.jp-osa.sysdig-secure.cloud.ibm.com")
-                      "jp-tok-private" (dict "collectorEndpoint"    "ingest.private.jp-tok.monitoring.cloud.ibm.com"
-                                             "monitorApiEndpoint"   "private.jp-tok.monitoring.cloud.ibm.com"
-                                             "secureApiEndpoint"    "private.jp-tok.sysdig-secure.cloud.ibm.com"
-                                             "secureUi"             "private.jp-tok.sysdig-secure.cloud.ibm.com")
-                      "us-east-private" (dict "collectorEndpoint"   "ingest.private.us-east.monitoring.cloud.ibm.com"
-                                              "monitorApiEndpoint"  "private.us-east.monitoring.cloud.ibm.com"
-                                              "secureApiEndpoint"   "private.us-east.sysdig-secure.cloud.ibm.com"
-                                              "secureUi"            "private.us-east.sysdig-secure.cloud.ibm.com")
-                      "us-south-private" (dict "collectorEndpoint"  "ingest.private.us-south.monitoring.cloud.ibm.com"
-                                               "monitorApiEndpoint" "private.us-south.monitoring.cloud.ibm.com"
-                                               "secureApiEndpoint"  "private.us-south.sysdig-secure.cloud.ibm.com"
-                                               "secureUi"           "private.us-south.sysdig-secure.cloud.ibm.com") }}
+                      "au-syd-monitor"   (dict "collectorEndpoint"  "ingest.au-syd.monitoring.cloud.ibm.com"
+                                               "monitorApiEndpoint" "au-syd.monitoring.cloud.ibm.com"
+                                               "secureApiEndpoint"  "au-syd.sysdig-secure.cloud.ibm.com"
+                                               "secureUi"           "au-syd.sysdig-secure.cloud.ibm.com")
+                      "br-sao-monitor"   (dict "collectorEndpoint"  "ingest.br-sao.monitoring.cloud.ibm.com"
+                                               "monitorApiEndpoint" "br-sao.monitoring.cloud.ibm.com"
+                                               "secureApiEndpoint"  "br-sao.sysdig-secure.cloud.ibm.com"
+                                               "secureUi"           "br-sao.sysdig-secure.cloud.ibm.com")
+                      "ca-tor-monitor"   (dict "collectorEndpoint"  "ingest.ca-tor.monitoring.cloud.ibm.com"
+                                               "monitorApiEndpoint" "ca-tor.monitoring.cloud.ibm.com"
+                                               "secureApiEndpoint"  "ca-tor.sysdig-secure.cloud.ibm.com"
+                                               "secureUi"           "ca-tor.sysdig-secure.cloud.ibm.com")
+                      "eu-de-monitor"    (dict "collectorEndpoint"  "ingest.eu-de.monitoring.cloud.ibm.com"
+                                               "monitorApiEndpoint" "eu-de.monitoring.cloud.ibm.com"
+                                               "secureApiEndpoint"  "eu-de.sysdig-secure.cloud.ibm.com"
+                                               "secureUi"           "eu-de.sysdig-secure.cloud.ibm.com")
+                      "eu-gb-monitor"    (dict "collectorEndpoint"  "ingest.eu-gb.monitoring.cloud.ibm.com"
+                                               "monitorApiEndpoint" "eu-gb.monitoring.cloud.ibm.com"
+                                               "secureApiEndpoint"  "eu-gb.sysdig-secure.cloud.ibm.com"
+                                               "secureUi"           "eu-gb.sysdig-secure.cloud.ibm.com")
+                      "jp-osa-monitor"   (dict "collectorEndpoint"  "ingest.jp-osa.monitoring.cloud.ibm.com"
+                                               "monitorApiEndpoint" "jp-osa.monitoring.cloud.ibm.com"
+                                               "secureApiEndpoint"  "jp-osa.sysdig-secure.cloud.ibm.com"
+                                               "secureUi"           "jp-osa.sysdig-secure.cloud.ibm.com")
+                      "jp-tok-monitor"   (dict "collectorEndpoint"  "ingest.jp-tok.monitoring.cloud.ibm.com"
+                                               "monitorApiEndpoint" "jp-tok.monitoring.cloud.ibm.com"
+                                               "secureApiEndpoint"  "jp-tok.sysdig-secure.cloud.ibm.com"
+                                               "secureUi"           "jp-tok.sysdig-secure.cloud.ibm.com")
+                      "us-east-monitor"  (dict "collectorEndpoint"  "ingest.us-east.monitoring.cloud.ibm.com"
+                                               "monitorApiEndpoint" "us-east.monitoring.cloud.ibm.com"
+                                               "secureApiEndpoint"  "us-east.sysdig-secure.cloud.ibm.com"
+                                               "secureUi"           "us-east.sysdig-secure.cloud.ibm.com")
+                      "us-south-monitor" (dict "collectorEndpoint"  "ingest.us-south.monitoring.cloud.ibm.com"
+                                               "monitorApiEndpoint" "us-south.monitoring.cloud.ibm.com"
+                                               "secureApiEndpoint"  "us-south.sysdig-secure.cloud.ibm.com"
+                                               "secureUi"           "us-south.sysdig-secure.cloud.ibm.com")
+                      "au-syd-private-monitor"   (dict "collectorEndpoint"  "ingest.private.au-syd.monitoring.cloud.ibm.com"
+                                                       "monitorApiEndpoint" "private.au-syd.monitoring.cloud.ibm.com"
+                                                       "secureApiEndpoint"  "private.au-syd.sysdig-secure.cloud.ibm.com"
+                                                       "secureUi"           "private.au-syd.sysdig-secure.cloud.ibm.com")
+                      "br-sao-private-monitor"   (dict "collectorEndpoint"  "ingest.private.br-sao.monitoring.cloud.ibm.com"
+                                                       "monitorApiEndpoint" "private.br-sao.monitoring.cloud.ibm.com"
+                                                       "secureApiEndpoint"  "private.br-sao.sysdig-secure.cloud.ibm.com"
+                                                       "secureUi"           "private.br-sao.sysdig-secure.cloud.ibm.com")
+                      "ca-tor-private-monitor"   (dict "collectorEndpoint"  "ingest.private.ca-tor.monitoring.cloud.ibm.com"
+                                                       "monitorApiEndpoint" "private.ca-tor.monitoring.cloud.ibm.com"
+                                                       "secureApiEndpoint"  "private.ca-tor.sysdig-secure.cloud.ibm.com"
+                                                       "secureUi"           "private.ca-tor.sysdig-secure.cloud.ibm.com")
+                      "eu-de-private-monitor"    (dict "collectorEndpoint"  "ingest.private.eu-de.monitoring.cloud.ibm.com"
+                                                       "monitorApiEndpoint" "private.eu-de.monitoring.cloud.ibm.com"
+                                                       "secureApiEndpoint"  "private.eu-de.sysdig-secure.cloud.ibm.com"
+                                                       "secureUi"           "private.eu-de.sysdig-secure.cloud.ibm.com")
+                      "eu-gb-private-monitor"    (dict "collectorEndpoint"  "ingest.private.eu-gb.monitoring.cloud.ibm.com"
+                                                       "monitorApiEndpoint" "private.eu-gb.monitoring.cloud.ibm.com"
+                                                       "secureApiEndpoint"  "private.eu-gb.sysdig-secure.cloud.ibm.com"
+                                                       "secureUi"           "private.eu-gb.sysdig-secure.cloud.ibm.com")
+                      "jp-osa-private-monitor"   (dict "collectorEndpoint"  "ingest.private.jp-osa.monitoring.cloud.ibm.com"
+                                                       "monitorApiEndpoint" "private.jp-osa.monitoring.cloud.ibm.com"
+                                                       "secureApiEndpoint"  "private.jp-osa.sysdig-secure.cloud.ibm.com"
+                                                       "secureUi"           "private.jp-osa.sysdig-secure.cloud.ibm.com")
+                      "jp-tok-private-monitor"   (dict "collectorEndpoint"  "ingest.private.jp-tok.monitoring.cloud.ibm.com"
+                                                       "monitorApiEndpoint" "private.jp-tok.monitoring.cloud.ibm.com"
+                                                       "secureApiEndpoint"  "private.jp-tok.sysdig-secure.cloud.ibm.com"
+                                                       "secureUi"           "private.jp-tok.sysdig-secure.cloud.ibm.com")
+                      "us-east-private-monitor"  (dict "collectorEndpoint"  "ingest.private.us-east.monitoring.cloud.ibm.com"
+                                                       "monitorApiEndpoint" "private.us-east.monitoring.cloud.ibm.com"
+                                                       "secureApiEndpoint"  "private.us-east.sysdig-secure.cloud.ibm.com"
+                                                       "secureUi"           "private.us-east.sysdig-secure.cloud.ibm.com")
+                      "us-south-private-monitor" (dict "collectorEndpoint"  "ingest.private.us-south.monitoring.cloud.ibm.com"
+                                                       "monitorApiEndpoint" "private.us-south.monitoring.cloud.ibm.com"
+                                                       "secureApiEndpoint"  "private.us-south.sysdig-secure.cloud.ibm.com"
+                                                       "secureUi"           "private.us-south.sysdig-secure.cloud.ibm.com")
+                      "au-syd-secure"   (dict "collectorEndpoint"  "ingest.au-syd.sysdig-secure.cloud.ibm.com"
+                                              "monitorApiEndpoint" "au-syd.monitoring.cloud.ibm.com"
+                                              "secureApiEndpoint"  "au-syd.sysdig-secure.cloud.ibm.com"
+                                              "secureUi"           "au-syd.sysdig-secure.cloud.ibm.com")
+                      "br-sao-secure"   (dict "collectorEndpoint"  "ingest.br-sao.sysdig-secure.cloud.ibm.com"
+                                              "monitorApiEndpoint" "br-sao.monitoring.cloud.ibm.com"
+                                              "secureApiEndpoint"  "br-sao.sysdig-secure.cloud.ibm.com"
+                                              "secureUi"           "br-sao.sysdig-secure.cloud.ibm.com")
+                      "ca-tor-secure"   (dict "collectorEndpoint"  "ingest.ca-tor.sysdig-secure.cloud.ibm.com"
+                                              "monitorApiEndpoint" "ca-tor.monitoring.cloud.ibm.com"
+                                              "secureApiEndpoint"  "ca-tor.sysdig-secure.cloud.ibm.com"
+                                              "secureUi"           "ca-tor.sysdig-secure.cloud.ibm.com")
+                      "eu-de-secure"    (dict "collectorEndpoint"  "ingest.eu-de.sysdig-secure.cloud.ibm.com"
+                                              "monitorApiEndpoint" "eu-de.monitoring.cloud.ibm.com"
+                                              "secureApiEndpoint"  "eu-de.sysdig-secure.cloud.ibm.com"
+                                              "secureUi"           "eu-de.sysdig-secure.cloud.ibm.com")
+                      "eu-gb-secure"    (dict "collectorEndpoint"  "ingest.eu-gb.sysdig-secure.cloud.ibm.com"
+                                              "monitorApiEndpoint" "eu-gb.monitoring.cloud.ibm.com"
+                                              "secureApiEndpoint"  "eu-gb.sysdig-secure.cloud.ibm.com"
+                                              "secureUi"           "eu-gb.sysdig-secure.cloud.ibm.com")
+                      "jp-osa-secure"   (dict "collectorEndpoint"  "ingest.jp-osa.sysdig-secure.cloud.ibm.com"
+                                              "monitorApiEndpoint" "jp-osa.monitoring.cloud.ibm.com"
+                                              "secureApiEndpoint"  "jp-osa.sysdig-secure.cloud.ibm.com"
+                                              "secureUi"           "jp-osa.sysdig-secure.cloud.ibm.com")
+                      "jp-tok-secure"   (dict "collectorEndpoint"  "ingest.jp-tok.sysdig-secure.cloud.ibm.com"
+                                              "monitorApiEndpoint" "jp-tok.monitoring.cloud.ibm.com"
+                                              "secureApiEndpoint"  "jp-tok.sysdig-secure.cloud.ibm.com"
+                                              "secureUi"           "jp-tok.sysdig-secure.cloud.ibm.com")
+                      "us-east-secure"  (dict "collectorEndpoint"  "ingest.us-east.sysdig-secure.cloud.ibm.com"
+                                              "monitorApiEndpoint" "us-east.monitoring.cloud.ibm.com"
+                                              "secureApiEndpoint"  "us-east.sysdig-secure.cloud.ibm.com"
+                                              "secureUi"           "us-east.sysdig-secure.cloud.ibm.com")
+                      "us-south-secure" (dict "collectorEndpoint"  "ingest.us-south.sysdig-secure.cloud.ibm.com"
+                                              "monitorApiEndpoint" "us-south.monitoring.cloud.ibm.com"
+                                              "secureApiEndpoint"  "us-south.sysdig-secure.cloud.ibm.com"
+                                              "secureUi"           "us-south.sysdig-secure.cloud.ibm.com")
+                      "au-syd-private-secure"   (dict "collectorEndpoint"  "ingest.private.au-syd.sysdig-secure.cloud.ibm.com"
+                                                      "monitorApiEndpoint" "private.au-syd.monitoring.cloud.ibm.com"
+                                                      "secureApiEndpoint"  "private.au-syd.sysdig-secure.cloud.ibm.com"
+                                                      "secureUi"           "private.au-syd.sysdig-secure.cloud.ibm.com")
+                      "br-sao-private-secure"   (dict "collectorEndpoint"  "ingest.private.br-sao.sysdig-secure.cloud.ibm.com"
+                                                      "monitorApiEndpoint" "private.br-sao.monitoring.cloud.ibm.com"
+                                                      "secureApiEndpoint"  "private.br-sao.sysdig-secure.cloud.ibm.com"
+                                                      "secureUi"           "private.br-sao.sysdig-secure.cloud.ibm.com")
+                      "ca-tor-private-secure"   (dict "collectorEndpoint"  "ingest.private.ca-tor.sysdig-secure.cloud.ibm.com"
+                                                      "monitorApiEndpoint" "private.ca-tor.monitoring.cloud.ibm.com"
+                                                      "secureApiEndpoint"  "private.ca-tor.sysdig-secure.cloud.ibm.com"
+                                                      "secureUi"           "private.ca-tor.sysdig-secure.cloud.ibm.com")
+                      "eu-de-private-secure"    (dict "collectorEndpoint"  "ingest.private.eu-de.sysdig-secure.cloud.ibm.com"
+                                                      "monitorApiEndpoint" "private.eu-de.monitoring.cloud.ibm.com"
+                                                      "secureApiEndpoint"  "private.eu-de.sysdig-secure.cloud.ibm.com"
+                                                      "secureUi"           "private.eu-de.sysdig-secure.cloud.ibm.com")
+                      "eu-gb-private-secure"    (dict "collectorEndpoint"  "ingest.private.eu-gb.sysdig-secure.cloud.ibm.com"
+                                                      "monitorApiEndpoint" "private.eu-gb.monitoring.cloud.ibm.com"
+                                                      "secureApiEndpoint"  "private.eu-gb.sysdig-secure.cloud.ibm.com"
+                                                      "secureUi"           "private.eu-gb.sysdig-secure.cloud.ibm.com")
+                      "jp-osa-private-secure"   (dict "collectorEndpoint"  "ingest.private.jp-osa.sysdig-secure.cloud.ibm.com"
+                                                      "monitorApiEndpoint" "private.jp-osa.monitoring.cloud.ibm.com"
+                                                      "secureApiEndpoint"  "private.jp-osa.sysdig-secure.cloud.ibm.com"
+                                                      "secureUi"           "private.jp-osa.sysdig-secure.cloud.ibm.com")
+                      "jp-tok-private-secure"   (dict "collectorEndpoint"  "ingest.private.jp-tok.sysdig-secure.cloud.ibm.com"
+                                                      "monitorApiEndpoint" "private.jp-tok.monitoring.cloud.ibm.com"
+                                                      "secureApiEndpoint"  "private.jp-tok.sysdig-secure.cloud.ibm.com"
+                                                      "secureUi"           "private.jp-tok.sysdig-secure.cloud.ibm.com")
+                      "us-east-private-secure"  (dict "collectorEndpoint"  "ingest.private.us-east.sysdig-secure.cloud.ibm.com"
+                                                      "monitorApiEndpoint" "private.us-east.monitoring.cloud.ibm.com"
+                                                      "secureApiEndpoint"  "private.us-east.sysdig-secure.cloud.ibm.com"
+                                                      "secureUi"           "private.us-east.sysdig-secure.cloud.ibm.com")
+                      "us-south-private-secure" (dict "collectorEndpoint"  "ingest.private.us-south.sysdig-secure.cloud.ibm.com"
+                                                      "monitorApiEndpoint" "private.us-south.monitoring.cloud.ibm.com"
+                                                      "secureApiEndpoint"  "private.us-south.sysdig-secure.cloud.ibm.com"
+                                                      "secureUi"           "private.us-south.sysdig-secure.cloud.ibm.com") }}
+
   {{- toYaml $regions }}
 {{- end }}
 
