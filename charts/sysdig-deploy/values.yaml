@@ -1,32 +1,28 @@
+admissionController:
+  enabled: false
+agent:
+  enabled: true
 global:
+  agentConfigmapName: "sysdig-agent"
   clusterConfig:
     # name to identify this cluster for events and metrics
     name: ""
+  gke:
+    autopilot: false
+  kspm:
+    deploy: false
+  proxy: {}
   sysdig:
     accessKey: ""
     accessKeySecret: ""
+    region: "us1"
     secureAPIToken: ""
     secureAPITokenSecret: ""
-    region: "us1"
     tags: {}
-  proxy: {}
-  kspm:
-    deploy: false
-  agentConfigmapName: "sysdig-agent"
-  gke:
-    autopilot: false
-
-admissionController:
-  enabled: false
-
-agent:
-  enabled: true
-
 nodeAnalyzer:
   enabled: true
-
 rapidResponse:
   enabled: false
   rapidResponse:
-    passphrase: ""
     existingPassphraseSecret: ""
+    passphrase: ""

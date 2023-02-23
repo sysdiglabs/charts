@@ -2,59 +2,25 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicaCount: 1
-
-image:
-  repository: quay.io/sysdig/cloud-scanning
-  pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag:
-
-imagePullSecrets: []
-nameOverride: ""
-fullnameOverride: ""
-
-serviceAccount:
-  # Specifies whether a service account should be created
-  create: true
-  # Annotations to add to the service account
-  annotations: {}
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
-  name: ""
-
-podAnnotations:
-  prometheus.io/scrape: "true"
-  prometheus.io/path: "/metrics"
-  prometheus.io/port: "5000"
-
-podSecurityContext: {}
-
-securityContext:
-  capabilities:
-    drop:
-    - ALL
-  readOnlyRootFilesystem: true
-  runAsNonRoot: true
-
-service:
-  type: ClusterIP
-  port: 80
-
-resources:
-  limits:
-    cpu: 250m
-    memory: 256Mi
-  requests:
-    cpu: 250m
-    memory: 256Mi
-
-nodeSelector: {}
-
-tolerations: []
-
 affinity: {}
-
+## Secret values
+aws:
+  accessKeyId: ""
+  region: ""
+  secretAccessKey: ""
+codeBuildProject: ""
+## Cloud Scanning configuration
+ecrScanning: true
+ecsScanning: true
+# Alternatively, you can provide the name of an existing secret. It will be used
+# See example secret in 'templates/secret.yaml'
+# The existing secret must provide the following entries:
+#  aws_access_key_id
+#  aws_secret_access_key
+#  aws_region
+#  gcp_credentials
+#  secure_api_token
+existingSecretName: ""
 ## Additional environment variables to set
 ## Example:
 ## extraEnvVars:
@@ -66,34 +32,50 @@ affinity: {}
 ##     value: foo.com,bar.net:4000
 ##
 extraEnvVars: []
-
-## Secret values
-
-aws:
-  accessKeyId: ""
-  secretAccessKey: ""
-  region: ""
-
+fullnameOverride: ""
 gcpCredentials: ""
-
-sysdig:
-  url: "https://secure.sysdig.com"
-  secureAPIToken: ""
-  verifySSL: true
-
-# Alternatively, you can provide the name of an existing secret. It will be used
-# See example secret in 'templates/secret.yaml'
-# The existing secret must provide the following entries:
-#  aws_access_key_id
-#  aws_secret_access_key
-#  aws_region
-#  gcp_credentials
-#  secure_api_token
-existingSecretName: ""
-
-## Cloud Scanning configuration
-ecrScanning: true
-ecsScanning: true
-codeBuildProject: ""
-sqsQueueUrl: ""
+image:
+  pullPolicy: IfNotPresent
+  repository: quay.io/sysdig/cloud-scanning
+  # Overrides the image tag whose default is the chart appVersion.
+  tag:
+imagePullSecrets: []
+nameOverride: ""
+nodeSelector: {}
+podAnnotations:
+  prometheus.io/path: "/metrics"
+  prometheus.io/port: "5000"
+  prometheus.io/scrape: "true"
+podSecurityContext: {}
+replicaCount: 1
+resources:
+  limits:
+    cpu: 250m
+    memory: 256Mi
+  requests:
+    cpu: 250m
+    memory: 256Mi
 secureAPITokenSecret: ""
+securityContext:
+  capabilities:
+    drop:
+      - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+service:
+  port: 80
+  type: ClusterIP
+serviceAccount:
+  # Annotations to add to the service account
+  annotations: {}
+  # Specifies whether a service account should be created
+  create: true
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+sqsQueueUrl: ""
+sysdig:
+  secureAPIToken: ""
+  url: "https://secure.sysdig.com"
+  verifySSL: true
+tolerations: []

@@ -1,32 +1,26 @@
 # Default values for Sysdig Stackdriver Bridge.
 
+affinity: {}
+annotations: {}
 image:
-  repository: sysdiglabs/stackdriver-webhook-bridge
   pullPolicy: IfNotPresent
+  repository: sysdiglabs/stackdriver-webhook-bridge
   tag: v0.0.7-a4d6ade
-
+nodeSelector: {}
 secret:
   # If this is true, the chart will create the Secret and pass in secret.data as key.json.
   create: false
   data: ''
   # Secret name that contains GCP SA creds for the stackdriver Service Account.
   name: stackdriver-webhook-bridge
-
 settings:
+  clusterID:
   # Settings for ConfigMap
   forwardURL: http://sysdig-agent.sysdig-agent.svc.cluster.local:7765/k8s_audit
-  projectID:
-  clusterID:
+  lagInterval: 30s
   logFile:
+  logLevel: info
   outFile:
   pollInterval: 5s
-  lagInterval: 30s
-  logLevel: info
-
-nodeSelector: {}
-
-affinity: {}
-
-annotations: {}
-
+  projectID:
 tolerations: []

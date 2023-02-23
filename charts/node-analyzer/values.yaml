@@ -1,24 +1,29 @@
 # Default values for Sysdig Node Analyzer
+# Setting a cluster name allows you to filter events from this cluster using kubernetes.cluster.name
+clusterName: ""
+daemonset:
+  # Allow the DaemonSet to set labels
+  labels: {}
+gke:
+  # true here enables the deployment on gke autopilot clusters
+  autopilot: false
 global:
   clusterConfig: {}
-  sysdig:
-    region: "us1"
-    tags: {}
-  proxy: {}
-  kspm:
-    deploy: false
   gke:
     # true here enables the deployment on gke autopilot clusters
     autopilot: false
-
+  kspm:
+    deploy: false
+  proxy: {}
+  sysdig:
+    region: "us1"
+    tags: {}
 image:
   # This is a hack to support RELATED_IMAGE_<identifier> feature in Helm based
   # Operators
   #
   # As long as I don't want to people to use this, I will keep it undocumented
   overrideValue:
-
-  registry: quay.io
   # Specify a imagePullPolicy
   # Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
   # ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -30,102 +35,11 @@ image:
   pullSecrets: {}
   #   - name: myRegistrKeySecretName
 
-gke:
-  # true here enables the deployment on gke autopilot clusters
-  autopilot: false
-
-daemonset:
-  # Allow the DaemonSet to set labels
-  labels: {}
-
-rbac:
-  # true here enables creation of rbac resources
-  create: true
-
-scc:
-  # true here enables creation of Security Context Constraints in Openshift
-  create: true
-
-psp:
-  # true here enables creation of Pod Security Policy to allow the agent run with the required permissions
-  create: true
-
-# Setting a cluster name allows you to filter events from this cluster using kubernetes.cluster.name
-clusterName: ""
-
+  registry: quay.io
+namespace: ""
 # Override value for the NATS service endpoint
 natsUrl: ""
-
-secure:
-  # true here enables Sysdig Secure: container run-time security & forensics
-  enabled: true
-  vulnerabilityManagement:
-    # set to true to disable the deployment of legacy components
-    newEngineOnly: false
-
-sysdig:
-  # Required: You need your Sysdig access key before running agents, either specifying 'accessKey' here, or using 'existingAccessKeySecret'
-  accessKey: ""
-  # Alternatively, specify the name of a Kubernetes secret containing an 'access-key' entry
-  existingAccessKeySecret: ""
-
-namespace: ""
-
 nodeAnalyzer:
-  # Create node analyzer specific serviceAccount resource
-  serviceAccount:
-    create: true
-    # Use this value as nodeAnalyzerServiceAccountName
-    name: "node-analyzer"
-
-  deploy: true
-
-  # The API endpoint for Sysdig Secure, specified with no protocol:
-  # * SaaS default region (US East): secure.sysdig.com
-  # * SaaS US Web: us2.app.sysdig.com
-  # * SaaS European Union: eu1.app.sysdig.com
-  # * On-Prem: sysdig.my.company.com
-  apiEndpoint: ""
-
-  # Can be set to false to allow insecure connections to the Sysdig backend,
-  # such as for on-premise installs that use self-signed certificates.
-  # By default, certificates are always verified.
-  # sslVerifyCertificate: false
-
-  # Can be set to true to show debug logging, useful for troubleshooting.
-  debug: false
-
-  # Proxy configuration variables. See also: [Running Node Analyzer Behind a Proxy](https://docs.sysdig.com/en/node-analyzer--multi-feature-installation.html#UUID-35c14c46-b327-c2a8-ed9c-82a2af995218_section-idm51621039128136)
-  httpProxy:
-  httpsProxy:
-  noProxy:
-
-  # Allow sysdig Node Image Analyzer to run on Kubernetes 1.6 masters
-  tolerations:
-    - effect: NoSchedule
-      key: node-role.kubernetes.io/master
-    - effect: NoSchedule
-      key: node-role.kubernetes.io/control-plane
-    - effect: NoSchedule
-      key: node-role.kubernetes.io/controlplane
-      operator: Equal
-      value: "true"
-    - effect: NoExecute
-      key: node-role.kubernetes.io/etcd
-      operator: Equal
-      value: "true"
-
-  # Set nodeAnalyzer daemonset priorityClassName
-  priorityClassName:
-
-  # Allow the DaemonSet to set labels
-  labels: {}
-  # Use this pullSecret to pull images from a private registry
-  pullSecrets: {}
-  #   - name: myRegistryKeySecretName
-
-  nodeSelector: {}
-
   # Allow the DaemonSet to schedule using affinity rules
   # Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
   affinity:
@@ -152,166 +66,67 @@ nodeAnalyzer:
                 operator: In
                 values:
                   - linux
-
-  imageAnalyzer:
+  # The API endpoint for Sysdig Secure, specified with no protocol:
+  # * SaaS default region (US East): secure.sysdig.com
+  # * SaaS US Web: us2.app.sysdig.com
+  # * SaaS European Union: eu1.app.sysdig.com
+  # * On-Prem: sysdig.my.company.com
+  apiEndpoint: ""
+  benchmarkRunner:
     deploy: true
+    env: {}
     image:
-      repository: sysdig/node-image-analyzer
-      tag: 0.1.24
       digest:
       pullPolicy: IfNotPresent
-
-    # The Docker socket path.
-    # If a custom path is specified, ensure it is correctly mounted from the host inside the container.
-    # dockerSocketPath: unix:///var/run/docker.sock
-
-    # The socket path to a CRI compatible runtime, such as CRI-O.
-    # If a custom path is specified, ensure it is correctly mounted from the host inside the container.
-    # criSocketPath: unix:///var/run/crio/crio.sock
-
-    # The socket path to a CRI-Containerd daemon.
-    # If a custom path is specified, ensure it is correctly mounted from the host inside the container.
-    # containerdSocketPath: unix:///var/run/containerd/containerd.sock
-
-    # Allow passing extra volumes to the Node Image Analyzer to mount docker socket, cri-o socket, etc.
-    extraVolumes:
-      volumes: []
-      mounts: []
-
-      # Example:
-
-      # volumes:
-      # - name: docker-sock
-      #   hostPath:
-      #     path: /var/run/docker.sock
-      # mounts:
-      # - mountPath: /var/run/docker.sock
-      #   name: docker-sock
-
-      # example for bottlerocket
-      # volumes:
-      #  - name: socketpath
-      #    hostPath:
-      #      path: /run/dockershim.sock
-      #      type: ""
-
+      repository: sysdig/compliance-benchmark-runner
+      tag: 1.1.0.8
+    includeSensitivePermissions: false
     resources:
-      requests:
-        cpu: 150m
-        memory: 512Mi
       limits:
         cpu: 500m
-        memory: 1536Mi
+        memory: 256Mi
+      requests:
+        cpu: 150m
+        memory: 128Mi
+  # Can be set to false to allow insecure connections to the Sysdig backend,
+  # such as for on-premise installs that use self-signed certificates.
+  # By default, certificates are always verified.
+  # sslVerifyCertificate: false
 
-    env: {}
-
+  # Can be set to true to show debug logging, useful for troubleshooting.
+  debug: false
+  deploy: true
   hostAnalyzer:
     deploy: true
+    env: {}
     image:
-      repository: sysdig/host-analyzer
-      tag: 0.1.14
       digest:
       pullPolicy: IfNotPresent
-
-    # The scanning schedule specification for the host analyzer expressed as a crontab string such as “5 4 * * *”.
-    # The default value of @dailydefault instructs the analyzer to automatically pick a schedule that will start
-    # shortly after it is deployed and will perform a scan every 24 hours.
-    schedule: "@dailydefault"
-
+      repository: sysdig/host-analyzer
+      tag: 0.1.14
     # The list of directories to inspect during the scan, expressed as a comma separated list.
     # dirsToScan: "/etc,/var/lib/dpkg,/usr/local,/usr/lib/sysimage/rpm,/var/lib/rpm,/lib/apk/db"
 
     # The number of times the analysis collector is allowed to retry sending results if backend communication fails.
     # maxSendAttempts: 3
-
     resources:
-      requests:
-        cpu: 150m
-        memory: 512Mi
       limits:
         cpu: 500m
         memory: 1536Mi
-
-    env: {}
-
-  benchmarkRunner:
-    deploy: true
-    includeSensitivePermissions: false
-
-    image:
-      repository: sysdig/compliance-benchmark-runner
-      tag: 1.1.0.8
-      digest:
-      pullPolicy: IfNotPresent
-
-    resources:
-      requests:
-        cpu: 150m
-        memory: 128Mi
-      limits:
-        cpu: 500m
-        memory: 256Mi
-
-    env: {}
-
-  runtimeScanner:
-    deploy: false
-    probesPort: 7002
-    image:
-      repository: sysdig/vuln-runtime-scanner
-      tag: 1.4.6
-      digest:
-      pullPolicy: IfNotPresent
-    storageClassName:
-    extraMounts: []
-    # example for bottlerocket
-    # extraMounts:
-    #   - name: socketpath
-    #     mountPath: /var/run/containerd/containerd.sock
-
-    resources:
       requests:
         cpu: 150m
         memory: 512Mi
-        ephemeral-storage: "2Gi"
-      limits:
-        cpu: 1000m
-        memory: 2Gi
-        ephemeral-storage: "4Gi"
-
-    env: {}
-
-    settings:
-      eveEnabled: false
-      # Threshold for which images will be skipped in the analysis.
-      # Size is in bytes, default is not set (don't skip)
-      # maxImageSizeAllowed: ""
-
-      # Threshold for which files will be skipped in the analysis.
-      # Fine tune this parameter if you have large files that needs to be analyzed (eg: big .JAR files)
-      # Size is in bytes, default is 250MB
-      maxFileSizeAllowed: "262144000"
-
-    eveConnector:
-      deploy: false
-      image:
-        repository: sysdig/eveclient-api
-        tag: 1.1.0
-        digest:
-        pullPolicy: IfNotPresent
-
-      resources:
-        requests:
-          cpu: 100m
-          memory: 128Mi
-        limits:
-          cpu: 1000m
-          memory: 512Mi
-
-      settings:
-        replicas: 1
-
+    # The scanning schedule specification for the host analyzer expressed as a crontab string such as “5 4 * * *”.
+    # The default value of @dailydefault instructs the analyzer to automatically pick a schedule that will start
+    # shortly after it is deployed and will perform a scan every 24 hours.
+    schedule: "@dailydefault"
   hostScanner:
+    env: {}
+    image:
+      digest:
+      pullPolicy: IfNotPresent
+      repository: sysdig/vuln-host-scanner
+      tag: 0.3.6
     # Note: deploy has been commented so that it will be used as hard override to newEngineOnly flag
     # but when not set, newEngineOnly will win. Desiderata examples in ./tests/hostscanner_test.yaml
     # deploy: false
@@ -329,61 +144,196 @@ nodeAnalyzer:
 
     # probesPort is the port where readiness and liveness probes are exposed
     probesPort: 7001
-
-    image:
-      repository: sysdig/vuln-host-scanner
-      tag: 0.3.6
-      digest:
-      pullPolicy: IfNotPresent
-
     resources:
-      requests:
-        cpu: 150m
-        memory: 150Mi
-        ephemeral-storage: 250Mi
       limits:
         cpu: 150m
-        memory: 150Mi
         ephemeral-storage: 250Mi
-
-    env: {}
-
-    settings:
-      replicas: 1
-
-  kspmAnalyzer:
-    debug: false
-    image:
-      repository: sysdig/kspm-analyzer
-      tag: 1.19.2
-      digest:
-      pullPolicy: IfNotPresent
-
-    resources:
+        memory: 150Mi
       requests:
         cpu: 150m
-        memory: 256Mi
+        ephemeral-storage: 250Mi
+        memory: 150Mi
+    settings:
+      replicas: 1
+  # Proxy configuration variables. See also: [Running Node Analyzer Behind a Proxy](https://docs.sysdig.com/en/node-analyzer--multi-feature-installation.html#UUID-35c14c46-b327-c2a8-ed9c-82a2af995218_section-idm51621039128136)
+  httpProxy:
+  httpsProxy:
+  imageAnalyzer:
+    deploy: true
+    env: {}
+    # The Docker socket path.
+    # If a custom path is specified, ensure it is correctly mounted from the host inside the container.
+    # dockerSocketPath: unix:///var/run/docker.sock
+
+    # The socket path to a CRI compatible runtime, such as CRI-O.
+    # If a custom path is specified, ensure it is correctly mounted from the host inside the container.
+    # criSocketPath: unix:///var/run/crio/crio.sock
+
+    # The socket path to a CRI-Containerd daemon.
+    # If a custom path is specified, ensure it is correctly mounted from the host inside the container.
+    # containerdSocketPath: unix:///var/run/containerd/containerd.sock
+
+    # Allow passing extra volumes to the Node Image Analyzer to mount docker socket, cri-o socket, etc.
+    extraVolumes:
+      mounts: []
+      # Example:
+
+      # volumes:
+      # - name: docker-sock
+      #   hostPath:
+      #     path: /var/run/docker.sock
+      # mounts:
+      # - mountPath: /var/run/docker.sock
+      #   name: docker-sock
+
+      # example for bottlerocket
+      # volumes:
+      #  - name: socketpath
+      #    hostPath:
+      #      path: /run/dockershim.sock
+      #      type: ""
+
+      volumes: []
+    image:
+      digest:
+      pullPolicy: IfNotPresent
+      repository: sysdig/node-image-analyzer
+      tag: 0.1.24
+    resources:
       limits:
         cpu: 500m
         memory: 1536Mi
-
-    port: 12000
-
-    readinessProbe:
-      enabled: true
-      probe:
-        initialDelaySeconds: 90
-        periodSeconds: 3
+      requests:
+        cpu: 150m
+        memory: 512Mi
+  kspmAnalyzer:
+    debug: false
+    env: {}
+    image:
+      digest:
+      pullPolicy: IfNotPresent
+      repository: sysdig/kspm-analyzer
+      tag: 1.19.2
     livenessProbe:
       enabled: true
       probe:
         initialDelaySeconds: 90
         periodSeconds: 3
+    port: 12000
+    readinessProbe:
+      enabled: true
+      probe:
+        initialDelaySeconds: 90
+        periodSeconds: 3
+    resources:
+      limits:
+        cpu: 500m
+        memory: 1536Mi
+      requests:
+        cpu: 150m
+        memory: 256Mi
+  # Allow the DaemonSet to set labels
+  labels: {}
+  noProxy:
+  nodeSelector: {}
+  # Set nodeAnalyzer daemonset priorityClassName
+  priorityClassName:
+  # Use this pullSecret to pull images from a private registry
+  pullSecrets: {}
+  #   - name: myRegistryKeySecretName
 
+  runtimeScanner:
+    deploy: false
     env: {}
+    eveConnector:
+      deploy: false
+      image:
+        digest:
+        pullPolicy: IfNotPresent
+        repository: sysdig/eveclient-api
+        tag: 1.1.0
+      resources:
+        limits:
+          cpu: 1000m
+          memory: 512Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
+      settings:
+        replicas: 1
+    extraMounts: []
+    # example for bottlerocket
+    # extraMounts:
+    #   - name: socketpath
+    #     mountPath: /var/run/containerd/containerd.sock
 
+    image:
+      digest:
+      pullPolicy: IfNotPresent
+      repository: sysdig/vuln-runtime-scanner
+      tag: 1.4.6
+    probesPort: 7002
+    resources:
+      limits:
+        cpu: 1000m
+        ephemeral-storage: "4Gi"
+        memory: 2Gi
+      requests:
+        cpu: 150m
+        ephemeral-storage: "2Gi"
+        memory: 512Mi
+    settings:
+      eveEnabled: false
+      # Threshold for which images will be skipped in the analysis.
+      # Size is in bytes, default is not set (don't skip)
+      # maxImageSizeAllowed: ""
+
+      # Threshold for which files will be skipped in the analysis.
+      # Fine tune this parameter if you have large files that needs to be analyzed (eg: big .JAR files)
+      # Size is in bytes, default is 250MB
+      maxFileSizeAllowed: "262144000"
+    storageClassName:
+  # Create node analyzer specific serviceAccount resource
+  serviceAccount:
+    create: true
+    # Use this value as nodeAnalyzerServiceAccountName
+    name: "node-analyzer"
+  # Allow sysdig Node Image Analyzer to run on Kubernetes 1.6 masters
+  tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/control-plane
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/controlplane
+      operator: Equal
+      value: "true"
+    - effect: NoExecute
+      key: node-role.kubernetes.io/etcd
+      operator: Equal
+      value: "true"
+psp:
+  # true here enables creation of Pod Security Policy to allow the agent run with the required permissions
+  create: true
+rbac:
+  # true here enables creation of rbac resources
+  create: true
+scc:
+  # true here enables creation of Security Context Constraints in Openshift
+  create: true
+secure:
+  # true here enables Sysdig Secure: container run-time security & forensics
+  enabled: true
+  vulnerabilityManagement:
+    # set to true to disable the deployment of legacy components
+    newEngineOnly: false
+sysdig:
+  # Required: You need your Sysdig access key before running agents, either specifying 'accessKey' here, or using 'existingAccessKeySecret'
+  accessKey: ""
+  # Alternatively, specify the name of a Kubernetes secret containing an 'access-key' entry
+  existingAccessKeySecret: ""
 tests:
-  timeout: 300s
   image:
     repo: bitnami/kubectl
     tag: 1.24.4
+  timeout: 300s

@@ -1,135 +1,111 @@
 # Can be set to true to show debug logging, useful for troubleshooting.
-debug: false
-
-httpProxy:
-httpsProxy:
-noProxy:
-sslVerifyCertificate:
-# Namespace to deploy to (Optional: Will default to release namespace)
-namespace:
-
-# Default values for Sysdig KSPM Collector
-global:
-  clusterConfig: {}
-  sysdig:
-    region: "us1"
-  sslVerifyCertificate:
-  proxy: {}
-  kspm:
-    deploy: true
-
-sysdig:
-  # Required: You need your Sysdig access key before running agents, either specifying 'accessKey' here, or using 'existingAccessKeySecret'
-  accessKey: ""
-  # Alternatively, specify the name of a Kubernetes secret containing an 'access-key' entry
-  existingAccessKeySecret: ""
-
+# Allow the DaemonSet to schedule using affinity rules
+# Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+affinity: {}
 # The API endpoint for Sysdig Secure, specified with no protocol:
 # * SaaS default region (US East): secure.sysdig.com
 # * SaaS US Web: us2.app.sysdig.com
 # * SaaS European Union: eu1.app.sysdig.com
 # * On-Prem: sysdig.my.company.com
 apiEndpoint: ""
-
-# Override value for the NATS service endpoint
-natsUrl: ""
-
-# Setting a cluster name allows you to filter events from this cluster using kubernetes.cluster.name
-clusterName: ""
-
-image:
-  repository: sysdig/kspm-collector
-  tag: 1.19.2
-  digest:
-  registry: quay.io
-  pullPolicy: Always
-
-# Set image pull secret name
-# Example
-# imagePullSecrets:
-#   - name: my-super-secret-pull
-imagePullSecrets: []
-
-rbac:
-  # true here enables creation of rbac resources
-  create: true
-
-scc:
-  # true here enables creation of Security Context Constraints in Openshift
-  create: true
-
-serviceAccount:
-  # true here enables creation of service account
-  create: true
-  # Use this value as kspmCollectorServiceAccountName
-  name: "kspm-collector"
-
-replicas: 1
-
-namespaces:
-  included: ""
-  excluded: ""
-
-nodeSelector: {}
-
-workloads:
-  included: ""
-  excluded: ""
-
-healthIntervalMin: 5
-
-resources:
-  requests:
-    cpu: 150m
-    memory: 256Mi
-  limits:
-    cpu: 500m
-    memory: 1536Mi
-
-port: 8080
-
-readinessProbe:
-  enabled: true
-  probe:
-    initialDelaySeconds: 90
-    periodSeconds: 3
-livenessProbe:
-  enabled: true
-  probe:
-    initialDelaySeconds: 90
-    periodSeconds: 3
-
-securityContext:
-  runAsNonRoot: true
-  runAsUser: 10001
-  runAsGroup: 10001
-  readOnlyRootFilesystem: true
-  allowPrivilegeEscalation: false
-  capabilities:
-    drop:
-      - all
-
-tolerations:
-  - key: kubernetes.io/arch
-    operator: Equal
-    value: arm64
-    effect: NoSchedule
-
 # arch and os will be used to template out a node affinity block matching everything in each list. If affinity is
 # defined, these fields will be ignored
 arch:
   - amd64
   - arm64
+# Setting a cluster name allows you to filter events from this cluster using kubernetes.cluster.name
+clusterName: ""
+debug: false
+# Default values for Sysdig KSPM Collector
+global:
+  clusterConfig: {}
+  kspm:
+    deploy: true
+  proxy: {}
+  sslVerifyCertificate:
+  sysdig:
+    region: "us1"
+healthIntervalMin: 5
+httpProxy:
+httpsProxy:
+image:
+  digest:
+  pullPolicy: Always
+  registry: quay.io
+  repository: sysdig/kspm-collector
+  tag: 1.19.2
+# Set image pull secret name
+# Example
+# imagePullSecrets:
+#   - name: my-super-secret-pull
+imagePullSecrets: []
+labels: {}
+livenessProbe:
+  enabled: true
+  probe:
+    initialDelaySeconds: 90
+    periodSeconds: 3
+# Namespace to deploy to (Optional: Will default to release namespace)
+namespace:
+namespaces:
+  excluded: ""
+  included: ""
+# Override value for the NATS service endpoint
+natsUrl: ""
+noProxy:
+nodeSelector: {}
 os:
   - linux
-# Allow the DaemonSet to schedule using affinity rules
-# Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
-affinity: {}
-
-labels: {}
-
+port: 8080
+rbac:
+  # true here enables creation of rbac resources
+  create: true
+readinessProbe:
+  enabled: true
+  probe:
+    initialDelaySeconds: 90
+    periodSeconds: 3
+replicas: 1
+resources:
+  limits:
+    cpu: 500m
+    memory: 1536Mi
+  requests:
+    cpu: 150m
+    memory: 256Mi
+scc:
+  # true here enables creation of Security Context Constraints in Openshift
+  create: true
+securityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - all
+  readOnlyRootFilesystem: true
+  runAsGroup: 10001
+  runAsNonRoot: true
+  runAsUser: 10001
+serviceAccount:
+  # true here enables creation of service account
+  create: true
+  # Use this value as kspmCollectorServiceAccountName
+  name: "kspm-collector"
+sslVerifyCertificate:
+sysdig:
+  # Required: You need your Sysdig access key before running agents, either specifying 'accessKey' here, or using 'existingAccessKeySecret'
+  accessKey: ""
+  # Alternatively, specify the name of a Kubernetes secret containing an 'access-key' entry
+  existingAccessKeySecret: ""
 tests:
-  timeout: 300s
   image:
     repo: bitnami/kubectl
     tag: 1.24.4
+  timeout: 300s
+tolerations:
+  - effect: NoSchedule
+    key: kubernetes.io/arch
+    operator: Equal
+    value: arm64
+workloads:
+  excluded: ""
+  included: ""
