@@ -69,14 +69,14 @@ Currently included components:
       helm install sysdig-agent --namespace sysdig-agent \
       --set global.sysdig.accessKey=<ACCESS_KEY> \
       --set global.sysdig.region=<SAAS_REGION> \
-      --set nodeAnalyzer.secure.vulnerabilityManagement.newEngineOnly=true \
+      --set nodeAnalyzer.secure.vulnerabilityManagement.newEngineOnly=false \
       --set global.kspm.deploy=true \
       --set nodeAnalyzer.nodeAnalyzer.benchmarkRunner.deploy=false \
       --set global.clusterConfig.name=<CLUSTER_NAME> \
       --set agent.gke.autopilot=true \
       sysdig/sysdig-deploy
       ```
-
+     Installing New Scanning engine using sysdig-deploy chart is not supported.
 
     - Install with a values file.
 
