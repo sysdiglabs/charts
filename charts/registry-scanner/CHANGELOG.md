@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.1.12
+### New Features
+* **registry-scanner,ci** [901981f](https://github.com/sysdiglabs/charts/commit/901981fd4931bffac2236bb26aa9837d942ca6b9): add test for registry-scanner ([#947](https://github.com/sysdiglabs/charts/issues/947))
 # v0.1.11
 ### New Features
 * **registry-scanner** [9d26281](https://github.com/sysdiglabs/charts/commit/9d262815a76e1ea37377ed895d2732bb686be48f): add scanOnStart ([#949](https://github.com/sysdiglabs/charts/issues/949))
