@@ -189,3 +189,11 @@ nodeSelector: {}
 tolerations: []
 # Configure affinity for scheduling the registry scanner pod.
 affinity: {}
+
+scanOnStart:
+  # true/false on whether to start the post-install scanner job, in addition to the cronjob.
+  # <br/>beware that concurrencyPolicy does not work on jobs (only cronjobs).
+  # <br/>always check if there is any scanning running and if so, remove it.
+  enabled: false
+  # Name of the job created for the post-install scanner job
+  jobName: "registry-scanner-start-test"

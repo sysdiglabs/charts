@@ -1,0 +1,11 @@
+{{- if eq .Values.scanOnStart.enabled true }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{ .Values.scanOnStart.jobName }}"
+  labels:
+{{ include "registry-scanner.labels" . | indent 4 }}
+{{- include "registry-scanner.customLabels" . | nindent 4 }}
+spec:
+  {{- include "registry-scanner.jobTemplate" . | indent 2}}
+{{- end}}
