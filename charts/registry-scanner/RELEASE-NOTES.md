@@ -1,6 +1,6 @@
 # What's Changed
 
 ### New Features
-- **registry-scanner** [bb1e039](https://github.com/sysdiglabs/charts/commit/bb1e0392124130d2df2242c6ae8b015300a65ec3): add logging ([#943](https://github.com/sysdiglabs/charts/issues/943))
+- **registry-scanner** [9d26281](https://github.com/sysdiglabs/charts/commit/9d262815a76e1ea37377ed895d2732bb686be48f): add scanOnStart ([#949](https://github.com/sysdiglabs/charts/issues/949))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-0.1.9...registry-scanner-0.1.10
+#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-0.1.10...registry-scanner-0.1.11
