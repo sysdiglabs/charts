@@ -1,0 +1,9 @@
+suite: Registry Scanner - cronjob
+templates:
+  - templates/cronjob.yaml
+tests:
+  - it: Check currency policy is set to Forbid
+    asserts:
+      - equal:
+          path: spec.concurrencyPolicy
+          value: Forbid
