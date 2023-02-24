@@ -66,15 +66,13 @@ Currently included components:
       **GKE Autopilot**: GKE Autopilot environments require an additional configuration parameter, `agent.gke.autopilot=true`, to install the Sysdig agent:
 
       ```bash
-      helm install sysdig-agent --namespace sysdig-agent \
-      --set global.sysdig.accessKey=<ACCESS_KEY> \
-      --set global.sysdig.region=<SAAS_REGION> \
-      --set nodeAnalyzer.secure.vulnerabilityManagement.newEngineOnly=false \
-      --set global.kspm.deploy=true \
-      --set nodeAnalyzer.nodeAnalyzer.benchmarkRunner.deploy=false \
-      --set global.clusterConfig.name=<CLUSTER_NAME> \
-      --set agent.gke.autopilot=true \
-      sysdig/sysdig-deploy
+         helm install sysdig-agent sysdig/sysdig-deploy --namespace sysdig-agent \
+         --set global.sysdig.accessKey=token \
+         --set global.sysdig.region=region \
+         --set global.clusterConfig.name=gke-autopilot-cluster-name \
+         --set agent.gke.autopilot=true \
+         --set agent.slim.enabled=false \
+         --set nodeAnalyzer.enabled=false
       ```
      Installing New Scanning engine using sysdig-deploy chart is not supported.
 
