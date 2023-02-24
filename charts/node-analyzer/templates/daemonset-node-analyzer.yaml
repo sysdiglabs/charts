@@ -231,6 +231,9 @@ spec:
         resources:
 {{ toYaml .Values.nodeAnalyzer.imageAnalyzer.resources | indent 10 }}
         volumeMounts:
+          # Needed for some IBM OpenShift clusters which symlink /var/run/containers/storage to contents of /var/data by default
+          - mountPath: /var/data
+            name: vardata-vol
           - mountPath: /var/run
             name: varrun-vol
           - mountPath: /etc/containers/storage.conf
@@ -640,6 +643,9 @@ spec:
                 optional: true
           {{- end }}
         volumeMounts:
+          # Needed for some IBM OpenShift clusters which symlink /var/run/containers/storage to contents of /var/data by default
+          - mountPath: /var/data
+            name: vardata-vol
           - mountPath: /var/run
             name: varrun-vol
           - mountPath: /etc/containers/storage.conf
