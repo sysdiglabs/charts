@@ -43,7 +43,6 @@ jobs:
       - name: Expand templates for CI
         run: |
           find -path ".*/ci/*.yaml.template" | xargs -L1 -- bash -c 'envsubst < $0 > ${0%.template}'
-          find -path ".*/ci/*.yaml" | xargs -L1 -- bash -c 'envsubst < $0 > ${0%.yaml}'
         shell: bash
         env:
           SECURE_AGENT_TOKEN: ${{ secrets.KUBELAB_AGENT_KEY }}

@@ -144,4 +144,4 @@ Chart.lock
 *.tgz
 *.envrc
 .vscode
-/charts/.*/ci/local-*
+.local
