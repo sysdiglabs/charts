@@ -42,11 +42,16 @@ jobs:
 
       - name: Expand templates for CI
         run: |
-          find -iname "*.yaml.template" | xargs -L1 -- bash -c 'envsubst < $0 > ${0%.template}'
+          find -path ".*/ci/*.yaml.template" | xargs -L1 -- bash -c 'envsubst < $0 > ${0%.template}'
+          find -path ".*/ci/*.yaml" | xargs -L1 -- bash -c 'envsubst < $0 > ${0%.yaml}'
         shell: bash
         env:
-          SECURE_API_TOKEN: ${{ secrets.KUBELAB_SECURE_API_TOKEN }}
           SECURE_AGENT_TOKEN: ${{ secrets.KUBELAB_AGENT_KEY }}
+          SECURE_API_TOKEN: ${{ secrets.KUBELAB_SECURE_API_TOKEN }}
+          SYSDIG_JFROG_SAAS_QA_URL: ${{ secrets.SYSDIG_JFROG_SAAS_QA_URL }}
+          SYSDIG_JFROG_SAAS_QA_API_URL: ${{ secrets.SYSDIG_JFROG_SAAS_QA_API_URL }}
+          SYSDIG_JFROG_SAAS_QA_USER: ${{ secrets.SYSDIG_JFROG_SAAS_QA_USER }}
+          SYSDIG_JFROG_SAAS_QA_TOKEN: ${{ secrets.SYSDIG_JFROG_SAAS_QA_TOKEN }}
 
       - name: Run chart-testing (lint)
         run: ct lint
@@ -66,12 +71,6 @@ jobs:
 
       - name: Run chart-testing (install)
         run: ct install --upgrade --excluded-charts sysdig-stackdriver-bridge
-        env:
-          SECURE_API_TOKEN: ${{ secrets.KUBELAB_SECURE_API_TOKEN }}
-          SYSDIG_JFROG_SAAS_QA_URL: ${{ secrets.SYSDIG_JFROG_SAAS_QA_URL }}
-          SYSDIG_JFROG_SAAS_QA_API_URL: ${{ secrets.SYSDIG_JFROG_SAAS_QA_API_URL }}
-          SYSDIG_JFROG_SAAS_QA_USER: ${{ secrets.SYSDIG_JFROG_SAAS_QA_USER }}
-          SYSDIG_JFROG_SAAS_QA_TOKEN: ${{ secrets.SYSDIG_JFROG_SAAS_QA_TOKEN }}
 
   lint-test-fork:
     runs-on: ubuntu-latest
