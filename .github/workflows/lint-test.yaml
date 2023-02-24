@@ -66,6 +66,12 @@ jobs:
 
       - name: Run chart-testing (install)
         run: ct install --upgrade --excluded-charts sysdig-stackdriver-bridge
+        env:
+          SECURE_API_TOKEN: ${{ secrets.KUBELAB_SECURE_API_TOKEN }}
+          SYSDIG_JFROG_SAAS_QA_URL: ${{ secrets.SYSDIG_JFROG_SAAS_QA_URL }}
+          SYSDIG_JFROG_SAAS_QA_API_URL: ${{ secrets.SYSDIG_JFROG_SAAS_QA_API_URL }}
+          SYSDIG_JFROG_SAAS_QA_USER: ${{ secrets.SYSDIG_JFROG_SAAS_QA_USER }}
+          SYSDIG_JFROG_SAAS_QA_TOKEN: ${{ secrets.SYSDIG_JFROG_SAAS_QA_TOKEN }}
 
   lint-test-fork:
     runs-on: ubuntu-latest
