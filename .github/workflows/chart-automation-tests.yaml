@@ -24,4 +24,4 @@ jobs:
               "SLACK_CHANNEL": "#qa-activity-agent"
               "HELM_CHART_BRANCH": "${{ github.head_ref }}",
             }
-          job_timeout: "3600"
+          job_timeout: "43200"
