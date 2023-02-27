@@ -1,4 +1,4 @@
-name: charts-automation tests
+name: charts-automation-tests
 
 on:
   pull_request:
