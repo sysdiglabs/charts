@@ -144,3 +144,4 @@ Chart.lock
 *.tgz
 *.envrc
 .vscode
+.local

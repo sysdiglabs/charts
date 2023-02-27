@@ -10,6 +10,16 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.1.14
+# v0.1.13
+### Chores
+* **registry-scanner** [f182507](https://github.com/sysdiglabs/charts/commit/f182507d3a81154978a49bd0f1eaa25555d2d332): tests and logs ([#951](https://github.com/sysdiglabs/charts/issues/951))
+# v0.1.12
+### New Features
+* **registry-scanner,ci** [901981f](https://github.com/sysdiglabs/charts/commit/901981fd4931bffac2236bb26aa9837d942ca6b9): add test for registry-scanner ([#947](https://github.com/sysdiglabs/charts/issues/947))
+# v0.1.11
+### New Features
+* **registry-scanner** [9d26281](https://github.com/sysdiglabs/charts/commit/9d262815a76e1ea37377ed895d2732bb686be48f): add scanOnStart ([#949](https://github.com/sysdiglabs/charts/issues/949))
 # v0.1.10
 ### New Features
 * **registry-scanner** [bb1e039](https://github.com/sysdiglabs/charts/commit/bb1e0392124130d2df2242c6ae8b015300a65ec3): add logging ([#943](https://github.com/sysdiglabs/charts/issues/943))
