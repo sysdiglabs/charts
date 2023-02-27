@@ -1,4 +1,4 @@
-name: charts-automation-tests
+name: Charts Validation Tests
 
 on:
   pull_request:
