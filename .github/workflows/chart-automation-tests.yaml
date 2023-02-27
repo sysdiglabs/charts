@@ -5,7 +5,11 @@ on:
     branches:
       - master
     paths:
-      - 'charts/**'
+      - 'charts/sysdig-deploy/**'
+      - 'charts/admission-controller/**'
+      - 'charts/node-analyzer/**'
+      - 'charts/kspm-collector/**'
+      - 'charts/rapid-response/**'
 
 jobs:
   helm-charts-validation-test:
