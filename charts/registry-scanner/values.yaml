@@ -197,3 +197,6 @@ scanOnStart:
   enabled: false
   # Name of the job created for the post-install scanner job
   jobName: "registry-scanner-start-test"
+  # true/false on whether to launch the job as a post-install helm hook.
+  # <br/>mainly for testing purpose
+  asPostInstallHook: false
