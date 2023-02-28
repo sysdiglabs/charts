@@ -20,8 +20,7 @@ jobs:
         uses: toptal/jenkins-job-trigger-action@master
         with:
           jenkins_url: "https://sysdig-jenkins.internal.sysdig.com"
-          jenkins_user: ${{ secrets.JENKINS_USER }}
-          jenkins_token: ${{ secrets.JENKINS_API_TOKEN }}
+          jenkins_token: ${{ secrets.TOOLS_JENKINS_ADMIN_ACCESS_GITHUB_TOKEN }}
           job_name: "QA-agent/job/helm-charts-validation/"
           job_params: |
             {
