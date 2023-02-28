@@ -116,6 +116,8 @@
                 {{- end }}
                 key: registryPassword
           {{- end }}
+          - name: SHOW_USAGE
+            value: false
       restartPolicy: {{ .Values.cronjob.restartPolicy }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
