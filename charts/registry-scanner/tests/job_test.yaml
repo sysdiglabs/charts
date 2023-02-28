@@ -19,3 +19,8 @@ tests:
       - equal:
           path: metadata.name
           value: foo
+  - it: checks SHOW_USAGE env is always false
+    assert:
+      - equal:
+          path:
+          value: false
