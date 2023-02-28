@@ -13,7 +13,7 @@ on:
 
 jobs:
   helm-charts-validation-test:
-    runs-on: tools-runner
+    runs-on: ubuntu-latest
     steps:
       - name: Trigger QA helm-charts-validation tests
         id: helm-charts-validation
@@ -25,7 +25,6 @@ jobs:
           job_name: "QA-agent/job/helm-charts-validation/"
           job_params: |
             {
-              "SLACK_CHANNEL": "#qa-activity-agent"
               "HELM_CHART_BRANCH": "${{ github.head_ref }}",
             }
           job_timeout: "43200"
