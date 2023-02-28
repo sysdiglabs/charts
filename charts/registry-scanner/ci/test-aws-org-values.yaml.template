@@ -8,7 +8,7 @@ config:
     secretAccessKey: ${SYSDIG_AWS_QA_CNT_ACCOUNT_SECRET_ACCESS_KEY}
     managementAccountRoleARN: ${SYSDIG_AWS_QA_REG_MANAGEMENT_ROLE_ARN}
     allowListMemberAccountIDs:
-      - ${SYSDIG_AWS_QA_CNT_ACCOUNT_SECRET_ACCESS_KEY}'
+      - ${SYSDIG_AWS_QA_TARGET_ACCOUNT_ID}'
   filter:
     include: 'do-not-delete-reg-scanner-1:latest'
     exclude: '.*'
