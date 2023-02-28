@@ -25,6 +25,6 @@ jobs:
           job_name: "QA-agent/job/helm-charts-validation/"
           job_params: |
             {
-              "HELM_CHART_BRANCH": "${{ github.head_ref }}",
+              "HELM_CHART_BRANCH": "${{ github.head_ref }}"
             }
           job_timeout: "43200"
