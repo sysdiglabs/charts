@@ -52,13 +52,11 @@ Currently, two types of tests are available
 Several checks are tested before a PR is merged.
 Make sure to fail-fast on your local, before commiting, with [pre-commit](https://pre-commit.com/) plugin, configured in `/.pre-commit-config.yaml`, to automate this step, and validate/detect the issues when committing from your local.
 
-Some current checks
-
+Some current checks:
 - `lint` checks, running
-  > $ make lint
-
 - `docs` autogeneration, based on `values.yaml`. this does only apply to charts with `README.tpl` templates (ex.: admission-controller)
-  > $ make docs
+
+<br/><br/>
 
 ### Changelog
 
@@ -95,7 +93,7 @@ Although not usually recommended it is possible to manually add a changelog entr
 
 <br/><br/>
 
-### - GithubPages / Documentation
+### GithubPages / Documentation
 
 https://charts.sysdig.com is managed through GithubPages action.
 `.github/workflows/release.yml` will merge each `charts/*/README.md` into the `gh-pages` branch.
