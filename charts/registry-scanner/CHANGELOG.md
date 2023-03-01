@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.1.18
+### Bug Fixes
+* **registry-scanner** [ef5bb18](https://github.com/sysdiglabs/charts/commit/ef5bb18f06ab9ea03eb5d13a4be1d2da58c49d3f): fix installation in EKS ([#969](https://github.com/sysdiglabs/charts/issues/969))
 # v0.1.17
 # v0.1.16
 # v0.1.15
