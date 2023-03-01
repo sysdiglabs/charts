@@ -7,7 +7,7 @@ templates:
   - charts/nodeAnalyzer/templates/configmap-benchmark-runner.yaml
   - charts/rapidResponse/templates/secrets.yaml
 tests:
-  - it: check Readme install command under "Agent" example 
+  - it: check Readme install command under "Agent" example
     set:
       global:
         sysdig:
@@ -18,7 +18,7 @@ tests:
         proxy:
           httpProxy: 172.0.0.1
       agent:
-        proxy: 
+        proxy:
           httpProxy: 192.168.0.1
     asserts:
       - equal:
@@ -40,7 +40,7 @@ tests:
             value: 192.168.0.1
         template: charts/agent/templates/daemonset.yaml
 
-  - it: check Readme install command under "NodeAnalyzer" example 
+  - it: check Readme install command under "NodeAnalyzer" example
     set:
       global:
         sysdig:
@@ -62,7 +62,7 @@ tests:
           value: https://secure.apiendpoint.com
         template: charts/nodeAnalyzer/templates/configmap-benchmark-runner.yaml
 
-  - it: check Readme install command under "Rapid Response" example 
+  - it: check Readme install command under "Rapid Response" example
     set:
       global:
         sysdig:
@@ -82,4 +82,3 @@ tests:
           value: VEhJU19JU19BX1NFQ1JFVF9QQVNTUEhSQVNF
         template: charts/rapidResponse/templates/secrets.yaml
         documentIndex: 1
-

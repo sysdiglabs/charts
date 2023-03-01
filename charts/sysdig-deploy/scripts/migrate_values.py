@@ -106,4 +106,3 @@ if __name__ == "__main__":
     old_values_filename = sys.argv[1]
 
     migrate_values(old_values_filename)
-

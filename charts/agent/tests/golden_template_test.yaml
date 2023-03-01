@@ -5,7 +5,7 @@ templates:
   - secrets.yaml
 tests:
   - it: Testing agent deployed
-    set: 
+    set:
       global:
         sysdig:
           region: us2
@@ -16,7 +16,7 @@ tests:
           kind: DaemonSet
           apiVersion: apps/v1
         template: daemonset.yaml
-      - matchRegex: 
+      - matchRegex:
           path: data.dragent\.yaml
           pattern: .*ingest\-us2\.app\.sysdig\.com.*
         template: configmap.yaml
@@ -26,7 +26,7 @@ tests:
         template: secrets.yaml
 
   - it: Test cpu resources overrides
-    set: 
+    set:
       sysdig:
         accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
       resources:
