@@ -12758,6 +12758,31 @@ entries:
   registry-scanner:
   - apiVersion: v2
     appVersion: 0.2.7
+    created: "2023-03-01T17:10:01.120991225Z"
+    description: Sysdig Registry Scanner
+    digest: 4ba4f9c00e9007548a53aca88cdee600f441e3dda51d15908caa5318c92ce7c5
+    home: https://sysdiglabs.github.io/registry-scanner/
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    maintainers:
+    - email: alvaro.iradier@sysdig.com
+      name: airadier
+    - email: hayk.kocharyan@sysdig.com
+      name: hayk99
+    - email: irune.prado@sysdig.com
+      name: wideawakening
+    - email: fede.barcelona@sysdig.com
+      name: tembleking
+    - email: miguel.baztan@sysdig.com
+      name: miketnt
+    - email: javier.prieto@sysdig.com
+      name: jprieto92
+    name: registry-scanner
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/registry-scanner-0.1.18/registry-scanner-0.1.18.tgz
+    version: 0.1.18
+  - apiVersion: v2
+    appVersion: 0.2.7
     created: "2023-03-01T10:40:38.177200674Z"
     description: Sysdig Registry Scanner
     digest: 3bb0d88ad829ebb7767806f702a3cadf71b6c3e7fc841885849f0a717ed6d1a1
@@ -28326,4 +28351,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2023-03-01T13:00:00.230904159Z"
+generated: "2023-03-01T17:10:01.123180565Z"
