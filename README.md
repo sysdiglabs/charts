@@ -13,40 +13,59 @@ This GitHub repository is the official source for Sysdig's Helm charts.
 
 ### Development
 
-#### - Make changes to an existing chart without publishing
+#### - Howto make changes to an existing chart without publishing
 
 If you make changes to an existing chart, but do not change its version, nothing new will be published to the _charts repository_.
+
+
+#### - Add a new chart
+
+To add a new chart, create a directory inside _charts_ with it contents at _master_ branch.
+
+When you commit it, it will be picked up by the GitHub action, and if it contains a chart and version that doesn't already exist in the _charts repository_, a new release with the package for the chart will be published on the _GitHub repository_,
+and the list of all charts at `index.yaml` on _gh-pages_ branch will be updated on the _charts repository_.
 <br/><br/>
+
+
+
+#### - Add tests
+
+Currently, two types of tests are available
+- Chat unit testing, through the [quintush/helm-unittest](https://github.com/quintush/helm-unittest) helm plugin.
+- Integration testing, through the [helm/chart-testing](https://github.com/helm/chart-testing/) tooling
 
 ### Pull Requests
 
+#### - Comply with requirements
+
 [Checklist to comply-with when doing the PR](./.github/PULL_REQUEST_TEMPLATE.md)
 
-- Title of the PR starts with type and scope, for more details check [Commit and PR tile guidelines](#commit-and-pr-tile-guidelines)
-- Chart Version bumped
-- Variables are documented in the README.md (or README.tpl in some charts)
-- Check GithubAction checks (like lint) to avoid merge-check stoppers
-- Changelogs and Release Notes are automated based on the commit messages using git-chglog
+  - Title of the PR starts with type and scope
+    - In order to automatically generate a meaningful changelog PR titles must respect the following rules (the same title must be used when merging it)
+    - A Type and Scope should always be present. check [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
+      ex.:`feat(agent,node-analyzer,sysdig-deploy): add automated changelogs`
+  - Chart Version bumped
+  - Variables are documented in the README.md (or README.tpl in some charts)
+  - Check GithubAction checks (run pre-commit) to avoid merge-check stoppers
+  - Changelogs and Release Notes are automated based on the commit messages using git-chglog
 
-#### Commit and PR tile guidelines
-In order to automatically generate a meaningful changelog PR titles must respect the following rules (the same title must be used when merging it)
+#### - Comply with GithubAction Checks
 
-A Type must be specified, avalilable types are:
-- feat
-- fix
-- refactor
-- chore
-- docs
+Several checks are tested before a PR is merged.
+Make sure to fail-fast on your local, before commiting, with [pre-commit](https://pre-commit.com/) plugin, configured in `/.pre-commit-config.yaml`, to automate this step, and validate/detect the issues when committing from your local.
 
-A Scope should be always present, a few examples:
-- (agent)
-- (sysdig-deploy)
-- (agent,node-analyzer,sysdig-deploy)
+Some current checks
 
-Full PR title example
-`feat(agent,node-analyzer,sysdig-deploy): add automated changelogs`
+- `lint` checks, running
+  > $ make lint
+
+- `docs` autogeneration, based on `values.yaml`. this does only apply to charts with `README.tpl` templates (ex.: admission-controller)
+  > $ make docs
+
+### Changelog
 
 #### Extended Changelog
+
 If necessary it is possible to add extended details to a changelog entry by adding a special section in the commit body.
 
 The custom section must start with `Extended Changelog:`, in order to instruct the rendering engine to stop and avoid capturing things like `Signed-off-by:` it is possible to add `@@__CHGLOG_DELIMITER__@@` at the end of the section.
@@ -73,34 +92,14 @@ Extended Changelog: Fixed 21 CVEs in total, the ones with high or critical sever
 > **_NOTE:_**  While merging a PR with squash&merge the `Extended Changelog` section must be manually added to the body or the workflow won't be able to process it.
 
 #### Manual Changelog
+
 Although not usually recommended it is possible to manually add a changelog entry, the ci does a simple grep in the `CHANGELOG.md` file and if the version being released is already present it will skip adding a new entry.
-
-#### - GithubAction Checks
-
-Make sure to comply with
-
-- `lint` checks, running
-    > $ make lint
-- `docs` autogeneration, based on `values.yaml`. this does only apply to charts with `README.tpl` templates (ex.: admission-controller)
-   > $ make docs
-
-
-To do this automatically, you can install [pre-commit](https://pre-commit.com/) plugin, configured in `/.pre-commit-config.yaml`, to automate this step, and validate/detect the issues when committing from your local.
 
 
 ### GithubPages / Documentation
 
 https://charts.sysdig.com is managed through GithubPages action.
 `.github/workflows/release.yml` will merge each `charts/*/README.md` into the `gh-pages` branch.
-
-
-#### - Add a new chart
-
-To add a new chart, create a directory inside _charts_ with it contents at _master_ branch.
-
-When you commit it, it will be picked up by the GitHub action, and if it contains a chart and version that doesn't already exist in the _charts repository_, a new release with the package for the chart will be published on the _GitHub repository_,
-and the list of all charts at `index.yaml` on _gh-pages_ branch will be updated on the _charts repository_.
-<br/><br/>
 
 ### Release
 
