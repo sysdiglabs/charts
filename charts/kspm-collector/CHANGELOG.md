@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.1.40
+### New Features
+* **kspm-collector** [84e8b53](https://github.com/sysdiglabs/charts/commit/84e8b53a84ff809cda26dc5d9aea0f6470cf44a5): Added permission for ocp api ([#964](https://github.com/sysdiglabs/charts/issues/964))
 # v0.1.39
 # v0.1.38
 ### New Features
