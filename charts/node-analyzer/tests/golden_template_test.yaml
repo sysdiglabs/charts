@@ -4,14 +4,14 @@ templates:
   - configmap-benchmark-runner.yaml
 tests:
   - it: Testing node-analyzer deployed
-    set: 
+    set:
       sysdig:
         accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
       nodeAnalyzer:
         imageAnalyzer:
           resources:
             requests:
-              cpu: 500m 
+              cpu: 500m
               memory: 600Mi
             limits:
               cpu: 700m

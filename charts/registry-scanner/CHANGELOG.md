@@ -10,6 +10,8 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.1.17
+# v0.1.16
 # v0.1.15
 # v0.1.14
 # v0.1.13

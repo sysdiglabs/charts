@@ -195,7 +195,7 @@ If anything is set for your `resources`, that will be used instead of the resour
 See [Tuning Sysdig Agent](https://docs.sysdig.com/en/tuning-sysdig-agent.html) for more info.
 
 ## GKE Autopilot
- Autopilot is an operation mode for creating and managing clusters in GKE. 
+ Autopilot is an operation mode for creating and managing clusters in GKE.
  With Autopilot, Google configures and manages the underlying node infrastructure for you.
 
  To deploy the Sysdig agent in GKE clusters running in Autopilot mode, run:

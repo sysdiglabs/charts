@@ -325,5 +325,3 @@ In addition to this, you can browse the documentation for the different componen
 * [Platform Documentation](https://docs.sysdig.com/en/sysdig-platform.html)
 * [Monitor Documentation](https://docs.sysdig.com/en/sysdig-monitor.html)
 * [Secure Documentation](https://docs.sysdig.com/en/sysdig-secure.html)
-
-
