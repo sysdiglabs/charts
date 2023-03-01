@@ -5,7 +5,7 @@ templates:
   - configmap.yaml
 tests:
   - it: check value of accessKey without local chart override - local value provided
-    set: 
+    set:
       global:
         clusterConfig:
           name: standard_cluster
@@ -18,7 +18,7 @@ tests:
         template: secret.yaml
 
   - it: check value of accessKey without local chart override - global value provided
-    set: 
+    set:
       global:
         clusterConfig:
           name: standard_cluster
@@ -31,7 +31,7 @@ tests:
         template: secret.yaml
 
   - it: check value of accessKey with local chart override
-    set: 
+    set:
       global:
         clusterConfig:
             name: standard_cluster
@@ -46,7 +46,7 @@ tests:
         template: secret.yaml
 
   - it: check value of accessKeySecret without local chart override - local value provided
-    set: 
+    set:
       global:
         clusterConfig:
             name: standard_cluster
@@ -59,7 +59,7 @@ tests:
         template: deployment.yaml
 
   - it: check value of accessKeySecret without local chart override - global value provided
-    set: 
+    set:
       global:
         clusterConfig:
             name: standard_cluster
@@ -72,7 +72,7 @@ tests:
         template: deployment.yaml
 
   - it: check value of accessKeySecret with local chart override
-    set: 
+    set:
       global:
         clusterConfig:
             name: standard_cluster
@@ -87,7 +87,7 @@ tests:
         template: deployment.yaml
 
   - it: check value of cluster name without local chart override - local value provided
-    set: 
+    set:
       global:
         sysdig:
           accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
@@ -99,7 +99,7 @@ tests:
         template: configmap.yaml
 
   - it: check value of cluster name without local chart override - global value provided
-    set: 
+    set:
       global:
         sysdig:
           accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
@@ -112,7 +112,7 @@ tests:
         template: configmap.yaml
 
   - it: check value of cluster name with local chart override
-    set: 
+    set:
       global:
         sysdig:
           accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
@@ -124,5 +124,3 @@ tests:
           path: data.cluster_name
           value: override_cluster
         template: configmap.yaml
-
-

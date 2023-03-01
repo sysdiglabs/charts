@@ -12,4 +12,3 @@ data:
     bechmarkType: {{ toYaml .Values.benchmarkType }}
     outputDir: {{ toYaml .Values.outputDir }}
     policyFile: {{ toYaml .Values.policyFile }}
-

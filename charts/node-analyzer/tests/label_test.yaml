@@ -3,7 +3,7 @@ templates:
   - daemonset-node-analyzer.yaml
 tests:
   - it: check application of node-analyzer labels example 1
-    set: 
+    set:
       sysdig:
         accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
       daemonset:
@@ -16,7 +16,7 @@ tests:
         path: metadata.labels.my\.label\/key2
         value: testlabel2
   - it: check application of node-analyzer example 2
-    set: 
+    set:
       sysdig:
         accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
       daemonset:
@@ -31,7 +31,7 @@ tests:
         path: metadata.labels.my\.label\/key2
         value: testlabel2
   - it: check application of node-analyzer labels example 3
-    set: 
+    set:
       sysdig:
         accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
       daemonset:
@@ -46,7 +46,7 @@ tests:
         path: metadata.labels.my\.label\/version
         value: 2.7.3
   - it: check application of correct node-analyzer labels with value of label empty
-    set: 
+    set:
       sysdig:
         accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
       daemonset:
@@ -54,9 +54,9 @@ tests:
     asserts:
     - equal:
         path: metadata.labels.my\.label\/key1
-        value: 
+        value:
   - it: check application of incorrect node-analyzer labels with yaml
-    set: 
+    set:
       sysdig:
         accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
       daemonset:
@@ -65,7 +65,7 @@ tests:
     - failedTemplate:
         errorMessage: "daemonset.label does not seem to be of the type key:[space]value"
   - it: check application of incorrect node-analyzer labels with yaml key is empty
-    set: 
+    set:
       sysdig:
         accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
       daemonset:
