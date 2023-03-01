@@ -17,22 +17,20 @@ This GitHub repository is the official source for Sysdig's Helm charts.
 
 If you make changes to an existing chart, but do not change its version, nothing new will be published to the _charts repository_.
 
-
 #### - Add a new chart
 
 To add a new chart, create a directory inside _charts_ with it contents at _master_ branch.
 
 When you commit it, it will be picked up by the GitHub action, and if it contains a chart and version that doesn't already exist in the _charts repository_, a new release with the package for the chart will be published on the _GitHub repository_,
 and the list of all charts at `index.yaml` on _gh-pages_ branch will be updated on the _charts repository_.
-<br/><br/>
-
-
 
 #### - Add tests
 
 Currently, two types of tests are available
 - Chat unit testing, through the [quintush/helm-unittest](https://github.com/quintush/helm-unittest) helm plugin.
 - Integration testing, through the [helm/chart-testing](https://github.com/helm/chart-testing/) tooling
+
+<br/><br/>
 
 ### Pull Requests
 
@@ -64,7 +62,7 @@ Some current checks
 
 ### Changelog
 
-#### Extended Changelog
+#### - Extended Changelog
 
 If necessary it is possible to add extended details to a changelog entry by adding a special section in the commit body.
 
@@ -91,15 +89,18 @@ Extended Changelog: Fixed 21 CVEs in total, the ones with high or critical sever
 
 > **_NOTE:_**  While merging a PR with squash&merge the `Extended Changelog` section must be manually added to the body or the workflow won't be able to process it.
 
-#### Manual Changelog
+#### - Manual Changelog
 
 Although not usually recommended it is possible to manually add a changelog entry, the ci does a simple grep in the `CHANGELOG.md` file and if the version being released is already present it will skip adding a new entry.
 
+<br/><br/>
 
-### GithubPages / Documentation
+### - GithubPages / Documentation
 
 https://charts.sysdig.com is managed through GithubPages action.
 `.github/workflows/release.yml` will merge each `charts/*/README.md` into the `gh-pages` branch.
+
+<br/><br/>
 
 ### Release
 
