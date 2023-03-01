@@ -1,0 +1,16 @@
+config:
+  scan:
+    newVmScanner: true
+  secureAPIToken: ${SECURE_API_TOKEN}
+  registryType: ecr
+  registryURL: ${SYSDIG_AWS_QA_TARGET_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com
+  aws:
+    region: us-east-1
+    accessKeyId: ${SYSDIG_AWS_QA_CNT_ACCOUNT_ACCESS_KEY_ID}
+    secretAccessKey: ${SYSDIG_AWS_QA_CNT_ACCOUNT_SECRET_ACCESS_KEY}
+  filter:
+    include: 'do-not-delete-reg-scanner-1:latest'
+    exclude: '.*'
+scanOnStart:
+  enabled: true
+  asPostInstallHook: true
