@@ -13,7 +13,7 @@ This GitHub repository is the official source for Sysdig's Helm charts.
 
 ### Development
 
-#### - Howto make changes to an existing chart without publishing
+#### - How to make changes to an existing chart without publishing
 
 If you make changes to an existing chart, but do not change its version, nothing new will be published to the _charts repository_.
 
