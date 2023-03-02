@@ -71,17 +71,7 @@ data:
       {{- end }}
       {{- end }}
 
-    filter:
-      {{- if .Values.config.filter.include }}
-      include:
-        {{- toYaml .Values.config.filter.include | nindent 8 }}
-      {{- end }}
-      {{- if .Values.config.filter.exclude }}
-      exclude:
-        {{- toYaml .Values.config.filter.exclude | nindent 8 }}
-      {{- end }}
-      maxAgeDays: {{ default 0 .Values.config.filter.maxAgeDays }}
-      maxTagsPerRepository: {{ default 0 .Values.config.filter.maxTagsPerRepository }}
+    filter: {{- toYaml .Values.config.filter | nindent 6 }}
 
     {{- if .Values.reportToPersistentVolumeClaim }}
     reportPath: /output/registry-scanner-{DATE}.json
