@@ -1,0 +1,80 @@
+suite: Test GKE Specific config settings
+templates:
+  - daemonset.yaml
+tests:
+  - it: Enable GKE Autopilot (agent-slim)
+    set:
+      gke:
+        autopilot: true
+    asserts:
+      - containsDocument:
+          kind: DaemonSet
+          apiVersion: apps/v1
+        template: daemonset.yaml
+      - contains:
+          path: spec.template.spec.initContainers[0].env
+          content:
+            name: SYSDIG_BPF_PROBE
+            value:
+        template: daemonset.yaml
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SYSDIG_BPF_PROBE
+            value:
+        template: daemonset.yaml
+      - equal:
+          path: spec.template.spec.containers[0].resources.requests.ephemeral-storage
+          value: 500Mi
+        not: true
+        template: daemonset.yaml
+      - equal:
+          path: spec.template.spec.initContainers[0].resources.requests.ephemeral-storage
+          value: 500Mi
+        template: daemonset.yaml
+
+  - it: Enable GKE Autopilot
+    set:
+      gke:
+        autopilot: true
+      slim:
+        enabled: false
+    asserts:
+      - containsDocument:
+          kind: DaemonSet
+          apiVersion: apps/v1
+        template: daemonset.yaml
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SYSDIG_BPF_PROBE
+            value:
+        template: daemonset.yaml
+      - equal:
+          path: spec.template.spec.containers[0].resources.requests.ephemeral-storage
+          value: 500Mi
+        template: daemonset.yaml
+
+  - it: Set custom value for ephemeral storage (agent-slim)
+    set:
+      gke:
+        autopilot: true
+        ephemeralStorage: 256Mi
+    asserts:
+      - equal:
+          path: spec.template.spec.initContainers[0].resources.requests.ephemeral-storage
+          value: 256Mi
+        template: daemonset.yaml
+
+  - it: Set custom value for ephemeral storage
+    set:
+      gke:
+        autopilot: true
+        ephemeralStorage: 256Mi
+      slim:
+        enabled: false
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].resources.requests.ephemeral-storage
+          value: 256Mi
+        template: daemonset.yaml

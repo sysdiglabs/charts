@@ -7,6 +7,7 @@ global:
   gke:
     # true here enables the deployment on gke autopilot clusters
     autopilot: false
+    ephemeralStorage: "500Mi"
 
 namespace: ""
 
@@ -74,6 +75,7 @@ resourceProfile: small
 gke:
   # true here enables the deployment on gke autopilot clusters
   autopilot: false
+  ephemeralStorage: "500Mi"
 
 rbac:
   # true here enables creation of rbac resources
