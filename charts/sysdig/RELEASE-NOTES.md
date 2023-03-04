@@ -1,6 +1,6 @@
 # What's Changed
 
-### New Features
-- **node-analyzer,sysdig** [42e3aa5](https://github.com/sysdiglabs/charts/commit/42e3aa5c30a06166eb959632ec223149a6784421): Feat/bench runner bump to 1.1.0.8 ([#937](https://github.com/sysdiglabs/charts/issues/937))
+### Chores
+- **sysdig** [40b4958](https://github.com/sysdiglabs/charts/commit/40b4958987085f6682751814a9276fdafa4d9c2e): bump agent version to 12.12.0 ([#973](https://github.com/sysdiglabs/charts/issues/973))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.5.69...sysdig-1.15.74
+#### Full diff: https://github.com/sysdiglabs/charts/compare/harbor-scanner-sysdig-secure-0.3.6...sysdig-1.15.76

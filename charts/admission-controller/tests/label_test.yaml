@@ -13,7 +13,7 @@ templates:
   - webhook/podmonitor.yaml
 tests:
   - it: check application of admissionController labels example 1
-    set: 
+    set:
       sysdig:
         secureAPIToken: standard_token
         url: secure.sysdigcloud.com
@@ -38,7 +38,7 @@ tests:
       template: webhook/deployment.yaml
 
   - it: check application of admissionController labels example 2
-    set: 
+    set:
       sysdig:
         secureAPIToken: standard_token
         url: secure.sysdigcloud.com
@@ -65,7 +65,7 @@ tests:
       template: webhook/deployment.yaml
 
   - it: check application of admissionController labels example 3
-    set: 
+    set:
       sysdig:
         secureAPIToken: standard_token
         url: secure.sysdigcloud.com
@@ -92,7 +92,7 @@ tests:
       template: webhook/deployment.yaml
 
   - it: check application of correct admissionController labels with value of label empty
-    set: 
+    set:
       sysdig:
         secureAPIToken: standard_token
         url: secure.sysdigcloud.com
@@ -107,7 +107,7 @@ tests:
       template: webhook/deployment.yaml
 
   - it: check application of incorrect admissionController labels with yaml
-    set: 
+    set:
       sysdig:
         secureAPIToken: standard_token
         url: secure.sysdigcloud.com
@@ -119,7 +119,7 @@ tests:
         errorMessage: "labels does not seem to be of the type key:[space]value"
 
   - it: check application of incorrect admissionController labels with yaml key is empty
-    set: 
+    set:
       sysdig:
         secureAPIToken: standard_token
         url: secure.sysdigcloud.com
@@ -131,7 +131,7 @@ tests:
         errorMessage: "labels does not seem to be of the type key:[space]value"
 
   - it: check application of admission controller scanner labels example
-    set: 
+    set:
       sysdig:
         secureAPIToken: standard_token
         url: secure.sysdigcloud.com
@@ -151,7 +151,7 @@ tests:
         value: 2.7.3
 
   - it: check application of correct admission controller scanner labels with value of label empty
-    set: 
+    set:
       sysdig:
         secureAPIToken: standard_token
         url: secure.sysdigcloud.com
@@ -165,7 +165,7 @@ tests:
         path: metadata.labels.my\.label\/key1
 
   - it: check application of incorrect admission controller scanner labels with yaml
-    set: 
+    set:
       sysdig:
         secureAPIToken: standard_token
         url: secure.sysdigcloud.com
@@ -178,7 +178,7 @@ tests:
         errorMessage: "labels does not seem to be of the type key:[space]value"
 
   - it: check application of incorrect admission controller scanner labels with yaml key is empty
-    set: 
+    set:
       sysdig:
         secureAPIToken: standard_token
         url: secure.sysdigcloud.com
@@ -191,7 +191,7 @@ tests:
         errorMessage: "labels does not seem to be of the type key:[space]value"
 
   - it: check application of admission controller webhook labels example
-    set: 
+    set:
       sysdig:
         secureAPIToken: standard_token
         url: secure.sysdigcloud.com
@@ -211,7 +211,7 @@ tests:
         value: 2.7.3
 
   - it: check application of correct admission controller webhook labels with value of label empty
-    set: 
+    set:
       sysdig:
         secureAPIToken: standard_token
         url: secure.sysdigcloud.com
@@ -225,7 +225,7 @@ tests:
         path: metadata.labels.my\.label\/key1
 
   - it: check application of incorrect admission controller webhook labels with yaml
-    set: 
+    set:
       sysdig:
         secureAPIToken: standard_token
         url: secure.sysdigcloud.com
@@ -238,7 +238,7 @@ tests:
         errorMessage: "labels does not seem to be of the type key:[space]value"
 
   - it: check application of incorrect admission controller webhook labels with yaml key is empty
-    set: 
+    set:
       sysdig:
         secureAPIToken: standard_token
         url: secure.sysdigcloud.com
