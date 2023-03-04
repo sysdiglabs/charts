@@ -12,7 +12,7 @@ tests:
 
   - it: Checking region 'us2'
     set:
-      global: 
+      global:
         sysdig:
           region: us2
     asserts:
@@ -24,7 +24,7 @@ tests:
 
   - it: Checking region 'us3'
     set:
-      global: 
+      global:
         sysdig:
           region: us3
     asserts:
@@ -36,7 +36,7 @@ tests:
 
   - it: Checking region 'us4'
     set:
-      global: 
+      global:
         sysdig:
           region: us4
     asserts:
@@ -48,7 +48,7 @@ tests:
 
   - it: Checking region 'eu1'
     set:
-      global: 
+      global:
         sysdig:
           region: eu1
     asserts:
@@ -60,7 +60,7 @@ tests:
 
   - it: Checking region 'au1'
     set:
-      global: 
+      global:
         sysdig:
           region: au1
     asserts:
@@ -72,7 +72,7 @@ tests:
 
   - it: Checking wrong region input
     set:
-      global: 
+      global:
         sysdig:
           region: us7
     asserts:

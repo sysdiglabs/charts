@@ -4,7 +4,7 @@ templates:
   - configmap.yaml
 tests:
   - it: check normal install testcase
-    set: 
+    set:
       sysdig:
         accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
       clusterName: test-k8s
@@ -17,7 +17,7 @@ tests:
           kind: ConfigMap
           apiVersion: v1
         template: configmap.yaml
-      - equal: 
+      - equal:
           path: data.cluster_name
           value: test-k8s
         template: configmap.yaml

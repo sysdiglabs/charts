@@ -16,6 +16,7 @@ rules:
       - 'autoscaling'
       - 'policy'
       - 'storage.k8s.io'
+      - 'config.openshift.io'
     resources:
       - 'pods'
       - 'pods/log'
@@ -48,6 +49,7 @@ rules:
       - 'podsecuritypolicies'
       - 'storageclasses'
       - 'volumeattachments'
+      - 'clusterversions'
     verbs:
       - 'get'
       - 'list'

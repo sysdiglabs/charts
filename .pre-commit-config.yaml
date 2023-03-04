@@ -11,3 +11,16 @@ repos:
     name: Lint charts
     entry: make lint
     language: system
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.2.0
+  hooks:
+    - id: trailing-whitespace
+    - id: end-of-file-fixer
+    - id: check-added-large-files
+    - id: check-merge-conflict
+    - id: check-symlinks
+    - id: detect-private-key
+      exclude: charts/.*/ci/.*
+    - id: check-yaml
+      args: ["-m"]
+      exclude: charts/.*/templates/.*

@@ -8,7 +8,7 @@ jobs:
   dispatch:
     runs-on: ubuntu-latest
     steps:
-      - name: filter release tag 
+      - name: filter release tag
         id: filter_tag
         run: |
             if [[ "${{ github.event.release.tag_name }}" =~ ^sysdig-[0-9]+\.[0-9]+\.[0-9]+$ ]]; then

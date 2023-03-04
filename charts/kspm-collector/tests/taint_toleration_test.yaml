@@ -3,14 +3,14 @@ templates:
   - deployment.yaml
 tests:
   - it: check application of kspm collector tolerations
-    set: 
+    set:
       sysdig:
         accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
       tolerations:
         - effect: NoSchedule
           key: kubernetes.io/arch
           operator: Equal
-          value: arm64  
+          value: arm64
         - effect: "NoSchedule"
           key: "CriticalAddonsOnly"
           operator: "Equal"
@@ -29,7 +29,7 @@ tests:
               value: "true"
 
   - it: check application of kspm collector tolerations (replace of default values)
-    set: 
+    set:
       sysdig:
         accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
       tolerations:
