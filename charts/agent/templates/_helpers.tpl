@@ -95,7 +95,8 @@ Sysdig Agent resources
                (not .Values.slim.enabled) }}
         {{- $_ := merge $resourceBlock (dict "ephemeral-storage" .Values.gke.ephemeralStorage) }}
     {{- end }}
-{{- toYaml (dict "requests" $resourceBlock) }}
+{{- toYaml (dict "requests" $resourceBlock
+                 "limits"   (omit $resourceBlock "ephemeral-storage")) }}
 {{- end -}}
 {{- end -}}
 
