@@ -1,4 +1,4 @@
-{{- if or .Values.daemonset.deploy .Values.largeClusterSupport.enabled }}
+{{- if or .Values.daemonset.deploy .Values.delegatedAgentDeployment.enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -10,7 +10,7 @@ data:
   dragent.yaml: |
     new_k8s: true
     {{- include "agent.clusterName" . | indent 4 }}
-    {{- if .Values.largeClusterSupport.enabled }}
+    {{- if .Values.delegatedAgentDeployment.enabled }}
     cointerface_enabled: false
     {{- end }}
     {{- include "agent.connectionSettings" . | indent 4 }}

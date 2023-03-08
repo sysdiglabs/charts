@@ -1,4 +1,4 @@
-{{- if .Values.largeClusterSupport.enabled }}
+{{- if .Values.delegatedAgentDeployment.enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:

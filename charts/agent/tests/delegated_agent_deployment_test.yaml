@@ -1,4 +1,4 @@
-suite: Test Agent large cluster support with Daemonset+Deployment
+suite: Test delegated Agent Deployment installation type
 templates:
   - templates/configmap.yaml
   - templates/configmap-deployment.yaml
@@ -7,7 +7,7 @@ templates:
 tests:
   - it: Enable Large Cluster support
     set:
-      largeClusterSupport:
+      delegatedAgentDeployment:
         enabled: true
     asserts:
       - containsDocument:
@@ -35,7 +35,7 @@ tests:
       name: sysdig
       namespace: sysdig
     set:
-      largeClusterSupport:
+      delegatedAgentDeployment:
         enabled: true
     asserts:
       - equal:
@@ -54,7 +54,7 @@ tests:
 
   - it: Test progressDeadlineSeconds
     set:
-      largeClusterSupport:
+      delegatedAgentDeployment:
         enabled: true
         deployment:
           progressDeadlineSeconds: 30
@@ -66,7 +66,7 @@ tests:
 
   - it: Test replica setting
     set:
-      largeClusterSupport:
+      delegatedAgentDeployment:
         enabled: true
         deployment:
           replicas: 20
@@ -78,7 +78,7 @@ tests:
 
   - it: Revision history limit
     set:
-      largeClusterSupport:
+      delegatedAgentDeployment:
         enabled: true
         deployment:
           revisionHistoryLimit: 25
@@ -92,7 +92,7 @@ tests:
     release:
       name: sg1
     set:
-      largeClusterSupport:
+      delegatedAgentDeployment:
         enabled: true
     asserts:
       - equal:
@@ -104,7 +104,7 @@ tests:
 
   - it: Test Update Strategy defaults
     set:
-      largeClusterSupport:
+      delegatedAgentDeployment:
         enabled: true
     asserts:
       - equal:
@@ -118,7 +118,7 @@ tests:
 
   - it: Test nodeSelector
     set:
-      largeClusterSupport:
+      delegatedAgentDeployment:
         enabled: true
         deployment:
           nodeSelector:
@@ -134,7 +134,7 @@ tests:
 
   - it: Change Deployment affinity
     set:
-      largeClusterSupport:
+      delegatedAgentDeployment:
         enabled: true
         deployment:
           affinity:
@@ -165,7 +165,7 @@ tests:
       majorVersion: "1"
       minorVersion: "13"
     set:
-      largeClusterSupport:
+      delegatedAgentDeployment:
         enabled: true
         deployment:
           arch:
@@ -195,7 +195,7 @@ tests:
       majorVersion: "1"
       minorVersion: "26"
     set:
-      largeClusterSupport:
+      delegatedAgentDeployment:
         enabled: true
         deployment:
           arch:
@@ -225,7 +225,7 @@ tests:
       image:
         pullSecrets:
           - name: P2X-3YZ
-      largeClusterSupport:
+      delegatedAgentDeployment:
         enabled: true
     asserts:
       - equal:
@@ -240,7 +240,7 @@ tests:
     set:
       image:
         tag: 86.753.09
-      largeClusterSupport:
+      delegatedAgentDeployment:
         enabled: true
     asserts:
       - equal:
@@ -255,7 +255,7 @@ tests:
 
   - it: Test container resource constraints
     set:
-      largeClusterSupport:
+      delegatedAgentDeployment:
         enabled: true
         deployment:
           resources:
@@ -279,7 +279,7 @@ tests:
 
   - it: Test container proxy settings (Deployment)
     set:
-      largeClusterSupport:
+      delegatedAgentDeployment:
         enabled: true
       proxy:
         httpProxy: 192.168.10.2
@@ -305,7 +305,7 @@ tests:
 
   - it: Test container proxy settings (Daemonset)
     set:
-      largeClusterSupport:
+      delegatedAgentDeployment:
         enabled: true
       proxy:
         httpProxy: 192.168.10.2

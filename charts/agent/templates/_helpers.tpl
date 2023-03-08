@@ -144,15 +144,15 @@ Daemonset labels
 Deployment labels
 */}}
 {{- define "agent.deploymentLabels" -}}
-  {{- if .Values.largeClusterSupport.deployment.labels }}
-    {{- $tp := typeOf .Values.largeClusterSupport.deployment.labels }}
+  {{- if .Values.delegatedAgentDeployment.deployment.labels }}
+    {{- $tp := typeOf .Values.delegatedAgentDeployment.deployment.labels }}
     {{- if eq $tp "string" }}
-        {{- if not (regexMatch "^[a-z0-9A-Z].*(: )(.*[a-z0-9A-Z]$)?" .Values.largeClusterSupport.deployment.labels) }}
-            {{- fail "largeClusterSupport.deployment.labels does not seem to be of the type key:[space]value" }}
+        {{- if not (regexMatch "^[a-z0-9A-Z].*(: )(.*[a-z0-9A-Z]$)?" .Values.delegatedAgentDeployment.deployment.labels) }}
+            {{- fail "delegatedAgentDeployment.deployment.labels does not seem to be of the type key:[space]value" }}
         {{- end }}
-        {{- tpl .Values.largeClusterSupport.deployment.labels . }}
+        {{- tpl .Values.delegatedAgentDeployment.deployment.labels . }}
     {{- else }}
-        {{- toYaml .Values.largeClusterSupport.deployment.labels }}
+        {{- toYaml .Values.delegatedAgentDeployment.deployment.labels }}
     {{- end }}
   {{- end }}
 {{- end -}}

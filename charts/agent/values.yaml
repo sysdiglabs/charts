@@ -275,7 +275,7 @@ tolerations:
 leaderelection:
   enable: false
 
-largeClusterSupport:
+delegatedAgentDeployment:
   # Enable a specialized installation where an Agent Deployment is installed
   # in addition to the traditional DaemonSet. The DaemonSet Agents will not
   # be configured to communicate with the Kubernetes API Server, but the

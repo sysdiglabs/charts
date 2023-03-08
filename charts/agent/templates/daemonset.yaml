@@ -1,4 +1,4 @@
-{{- if or .Values.daemonset.deploy .Values.largeClusterSupport }}
+{{- if or .Values.daemonset.deploy .Values.delegatedAgentDeployment }}
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
