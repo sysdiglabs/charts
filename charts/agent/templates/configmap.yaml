@@ -35,6 +35,6 @@ data:
     {{- end }}
     {{- if .Values.prometheus.file }}
   prometheus.yaml: |
-    {{ toYaml .Values.prometheus.yaml }}
+{{ toYaml .Values.prometheus.yaml | indent 4 }}
   {{- end }}
 {{- end }}
