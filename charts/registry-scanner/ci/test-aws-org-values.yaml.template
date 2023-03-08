@@ -1,0 +1,17 @@
+config:
+  scan:
+    newVmScanner: true
+  secureAPIToken: ${SECURE_API_TOKEN}
+  registryType: ecr
+  aws:
+    accessKeyId: ${SYSDIG_AWS_QA_CNT_ACCOUNT_ACCESS_KEY_ID}
+    secretAccessKey: ${SYSDIG_AWS_QA_CNT_ACCOUNT_SECRET_ACCESS_KEY}
+    managementAccountRoleARN: ${SYSDIG_AWS_QA_REG_MANAGEMENT_ROLE_ARN}
+    allowListMemberAccountIDs:
+      - ${SYSDIG_AWS_QA_TARGET_ACCOUNT_ID}'
+  filter:
+    include: 'do-not-delete-reg-scanner-1:latest'
+    exclude: '.*'
+scanOnStart:
+  enabled: true
+  asPostInstallHook: true

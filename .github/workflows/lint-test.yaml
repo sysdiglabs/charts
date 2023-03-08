@@ -51,7 +51,11 @@ jobs:
           SYSDIG_JFROG_SAAS_QA_API_URL: ${{ secrets.SYSDIG_JFROG_SAAS_QA_API_URL }}
           SYSDIG_JFROG_SAAS_QA_USER: ${{ secrets.SYSDIG_JFROG_SAAS_QA_USER }}
           SYSDIG_JFROG_SAAS_QA_TOKEN: ${{ secrets.SYSDIG_JFROG_SAAS_QA_TOKEN }}
-
+          SYSDIG_AWS_QA_CNT_ACCOUNT_ACCESS_KEY_ID: ${{secrets.SYSDIG_AWS_QA_CNT_ACCOUNT_ACCESS_KEY_ID}}
+          SYSDIG_AWS_QA_CNT_ACCOUNT_SECRET_ACCESS_KEY: ${{secrets.SYSDIG_AWS_QA_CNT_ACCOUNT_SECRET_ACCESS_KEY}}
+          SYSDIG_AWS_QA_REG_MANAGEMENT_ROLE_ARN: ${{secrets.SYSDIG_AWS_QA_REG_MANAGEMENT_ROLE_ARN}}
+          SYSDIG_AWS_QA_TARGET_ACCOUNT_ID: ${{secrets.SYSDIG_AWS_QA_TARGET_ACCOUNT_ID}}   # cnt QA account
+          SHOW_USAGE: false
       - name: Run chart-testing (lint)
         run: ct lint
 
@@ -69,7 +73,7 @@ jobs:
           k3s-version: v1.23.9+k3s1
 
       - name: Run chart-testing (install)
-        run: ct install --upgrade --excluded-charts sysdig-stackdriver-bridge
+        run: ct install --upgrade --excluded-charts sysdig-stackdriver-bridge,sysdig-mcm-navmenu
 
   lint-test-fork:
     runs-on: ubuntu-latest

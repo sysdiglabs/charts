@@ -5,7 +5,7 @@ templates:
   - daemonset.yaml
 tests:
   - it: check Readme install command titled "Installing the Chart"
-    set: 
+    set:
       sysdig:
         accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
       collectorSettings:
@@ -30,7 +30,7 @@ tests:
         template: configmap.yaml
 
   - it: check Readme install command showing options usage
-    set: 
+    set:
       sysdig:
         accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
         settings:
@@ -53,7 +53,7 @@ tests:
         template: configmap.yaml
 
   - it: check Readme install command example 1
-    set: 
+    set:
       global:
         sysdig:
           accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
@@ -74,9 +74,9 @@ tests:
           path: spec.template.metadata.annotations.autopilot\.gke\.io\/no\-connect
           value: "true"
         template: daemonset.yaml
-  
+
   - it: check Readme install command titled "How to upgrade to the last version"
-    set: 
+    set:
       sysdig:
         accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
       ebpf:
@@ -100,7 +100,7 @@ tests:
         template: daemonset.yaml
 
   - it: check Readme upgrade command titled "How to upgrade to the last version"
-    set: 
+    set:
       sysdig:
         accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
       ebpf:

@@ -10,6 +10,15 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.1.19
+### Bug Fixes
+* **registry-scanner** [990ad5f](https://github.com/sysdiglabs/charts/commit/990ad5f97a4619c3a2928be67beb3ca302386467): insecure tls connections ([#972](https://github.com/sysdiglabs/charts/issues/972))
+# v0.1.18
+### Bug Fixes
+* **registry-scanner** [ef5bb18](https://github.com/sysdiglabs/charts/commit/ef5bb18f06ab9ea03eb5d13a4be1d2da58c49d3f): fix installation in EKS ([#969](https://github.com/sysdiglabs/charts/issues/969))
+# v0.1.17
+# v0.1.16
+# v0.1.15
 # v0.1.14
 # v0.1.13
 ### Chores

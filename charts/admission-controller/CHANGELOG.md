@@ -10,6 +10,7 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.7.25
 # v0.7.24
 ### Documentation
 * **admission-controller** [6271999](https://github.com/sysdiglabs/charts/commit/6271999eafafeff122bd8ada7483d098376e11b0): troubleshoot sourceIp support ([#885](https://github.com/sysdiglabs/charts/issues/885))

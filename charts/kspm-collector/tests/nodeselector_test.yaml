@@ -3,7 +3,7 @@ templates:
   - deployment.yaml
 tests:
   - it: check application of kspm collector nodeSelector
-    set: 
+    set:
       sysdig:
         accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
       nodeSelector:
@@ -14,7 +14,7 @@ tests:
         value: cpuoptimized
 
   - it: check application of incorrect kspm collector nodeSelector with yaml
-    set: 
+    set:
       sysdig:
         accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
       nodeSelector:
@@ -24,7 +24,7 @@ tests:
         errorMessage: "nodeSelector does not seem to be of the type key:[space]value"
 
   - it: check application of incorrect kspm collector nodeSelector with yaml key is empty
-    set: 
+    set:
       sysdig:
         accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
       nodeSelector:

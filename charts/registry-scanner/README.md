@@ -235,4 +235,3 @@ $ helm upgrade --install registry-scanner \
     --set config.registryPassword=<JFROG_ARTIFACTORY_PASSWORD> \
     sysdig/registry-scanner
 ```
-
