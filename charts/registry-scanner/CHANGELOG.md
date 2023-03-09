@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.1.20
+### Bug Fixes
+* **registry-scanner** [1f464c9](https://github.com/sysdiglabs/charts/commit/1f464c948bcedae60545579a2fa8e3923af657fd): bump 2.0.10 to recover stdout logs ([#978](https://github.com/sysdiglabs/charts/issues/978))
 # v0.1.19
 ### Bug Fixes
 * **registry-scanner** [990ad5f](https://github.com/sysdiglabs/charts/commit/990ad5f97a4619c3a2928be67beb3ca302386467): insecure tls connections ([#972](https://github.com/sysdiglabs/charts/issues/972))
