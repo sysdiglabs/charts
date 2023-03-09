@@ -78,3 +78,34 @@ tests:
           path: spec.template.spec.containers[0].resources.requests.ephemeral-storage
           value: 256Mi
         template: daemonset.yaml
+
+  - it: Check limits are correctly set (agent-slim)
+    set:
+      gke:
+        autopilot: true
+    asserts:
+      - equal:
+          path: spec.template.spec.initContainers[0].resources.limits
+          value:
+            cpu: 1000m
+            memory: 512Mi
+      - equal:
+          path: spec.template.spec.containers[0].resources.limits
+          value:
+            cpu: 1000m
+            memory: 1024Mi
+    template: daemonset.yaml
+
+  - it: Check limits are correctly set
+    set:
+      gke:
+        autopilot: true
+      slim:
+        enabled: false
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].resources.limits
+          value:
+            cpu: 1000m
+            memory: 1024Mi
+    template: daemonset.yaml
