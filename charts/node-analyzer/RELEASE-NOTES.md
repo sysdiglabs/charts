@@ -1,6 +1,6 @@
 # What's Changed
 
-### Bug Fixes
-- **sysdig,node-analyzer** [27ce551](https://github.com/sysdiglabs/charts/commit/27ce5515b64325ebe0e97762dbcc0a2b8deddbd3): Added missing volumeMount required for IBM OCP on legacy and new VM ([#955](https://github.com/sysdiglabs/charts/issues/955))
+### New Features
+- **kspm-collector,node-analyzer** [3632fb0](https://github.com/sysdiglabs/charts/commit/3632fb0aabeb97a98d76c208e2cc566f376a08a3): bumped KSPM to latest version ([#977](https://github.com/sysdiglabs/charts/issues/977))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.8.37...node-analyzer-1.8.38
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.8.38...node-analyzer-1.8.39
