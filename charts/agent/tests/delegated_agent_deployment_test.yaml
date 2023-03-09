@@ -326,3 +326,29 @@ tests:
             - name: no_proxy
               value: 192.168.10.4
         template: templates/daemonset.yaml
+
+  - it: Check Deployment and Daemonset labels
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+        deployment:
+          labels:
+            super: cool
+            deployment: labels
+      daemonset:
+        labels:
+          super: cool
+          daemonset: labels
+    asserts:
+      - isSubset:
+          path: metadata.labels
+          content:
+            super: cool
+            deployment: labels
+        template: templates/deployment.yaml
+      - isSubset:
+          path: metadata.labels
+          content:
+            super: cool
+            daemonset: labels
+        template: templates/daemonset.yaml
