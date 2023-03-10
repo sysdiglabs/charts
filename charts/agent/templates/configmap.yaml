@@ -14,24 +14,18 @@ data:
     cointerface_enabled: false
     {{- end }}
     {{- include "agent.connectionSettings" . | indent 4 }}
-    {{- include "agent.secureFeatures" . | nindent 4 }}
+    {{- (include "agent.secureFeatures" (dict "root" . "force_secure_disabled" nil)) | nindent 4 }}
     {{- include "agent.k8sColdStart" . | nindent 4 }}
     {{- if .Values.sysdig.disableCaptures }}
     sysdig_capture_enabled: false
     {{- end }}
-    {{/* check for log level sanity */}}
-    {{- if and .Values.logPriority (or (hasKey (default dict .Values.sysdig.settings.log) "console_priority") (hasKey (default dict .Values.sysdig.settings.log) "file_priority")) }}
-    {{- fail "Cannot set logPriority when either sysdig.settings.log.console_priority or sysdig.settings.log.file_priority are set" }}
-    {{- end }}
-    {{- if .Values.logPriority }}
-    {{- $_ := merge .Values.sysdig.settings (dict "log" (dict "console_priority" .Values.logPriority "file_priority" .Values.logPriority)) }}
+    {{- include "agent.logSettings" . }}
+    {{- if .Values.global.sysdig.tags }}
+    tags: {{ include "agent.tags" . }}
     {{- end }}
     {{/* add in the remaining items from sysdig.settings */}}
     {{- if .Values.sysdig.settings }}
-    {{ toYaml .Values.sysdig.settings | nindent 4 }}
-    {{- end }}
-    {{- if .Values.global.sysdig.tags }}
-    tags: {{ include "agent.tags" . }}
+      {{- toYaml .Values.sysdig.settings | nindent 4 }}
     {{- end }}
     {{- if .Values.prometheus.file }}
   prometheus.yaml: |

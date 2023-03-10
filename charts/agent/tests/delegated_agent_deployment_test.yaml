@@ -352,3 +352,87 @@ tests:
             super: cool
             daemonset: labels
         template: templates/daemonset.yaml
+
+  - it: Test setting logging levels
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+      logPriority: debug
+    asserts:
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: "log:\n\ {2}console_priority:\ debug\n\ {2}file_priority:\ debug"
+        template: templates/configmap.yaml
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: "log:\n\ {2}console_priority:\ debug\n\ {2}file_priority:\ debug"
+        template: templates/configmap-deployment.yaml
+
+  - it: Ensure Secure features are disabled in the Deployment Agents
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+    asserts:
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: "commandlines_capture:\n {2}enabled: false\ndrift_killer:\n {2}enabled: false\nfalcobaseline:\n {2}enabled: false\nmemdump:\n {2}enabled: false\nnetwork_topology:\n {2}enabled: false\nsecure_audit_streams:\n {2}enabled: false"
+        template: templates/configmap-deployment.yaml
+
+  - it: Ensure disabling secure still works for Daemonset too
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+      secure:
+        enabled: false
+    asserts:
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: "commandlines_capture:\n {2}enabled: false\ndrift_killer:\n {2}enabled: false\nfalcobaseline:\n {2}enabled: false\nmemdump:\n {2}enabled: false\nnetwork_topology:\n {2}enabled: false\nsecure_audit_streams:\n {2}enabled: false"
+        template: templates/configmap-deployment.yaml
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: "commandlines_capture:\n {2}enabled: false\ndrift_killer:\n {2}enabled: false\nfalcobaseline:\n {2}enabled: false\nmemdump:\n {2}enabled: false\nnetwork_topology:\n {2}enabled: false\nsecure_audit_streams:\n {2}enabled: false"
+        template: templates/configmap.yaml
+
+  - it: Check extra volumes/mounts
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+      extraVolumes:
+        mounts:
+          - mountPath: /opt/draios/cm
+            name: my-new-cm
+        volumes:
+          - name: my-new-cm
+            configMap:
+              name: my-new-cm
+              optional: true
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            mountPath: /opt/draios/cm
+            name: my-new-cm
+        template: templates/daemonset.yaml
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: my-new-cm
+            configMap:
+              name: my-new-cm
+              optional: true
+        template: templates/daemonset.yaml
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            mountPath: /opt/draios/cm
+            name: my-new-cm
+        template: templates/deployment.yaml
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: my-new-cm
+            configMap:
+              name: my-new-cm
+              optional: true
+        template: templates/deployment.yaml

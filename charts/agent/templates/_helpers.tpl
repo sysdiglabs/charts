@@ -350,17 +350,18 @@ secure.enabled=false we need to explicitly put those config entires in the
 agent config to prevent a backend push from enabling them after installation.
 */}}
 {{- define "agent.secureFeatures" }}
+    {{- $secureEnabled := ternary false .root.Values.secure.enabled (eq .force_secure_disabled true) }}
     {{- $secureBlockConfig := dict "security" (dict
-        "enabled" .Values.secure.enabled
-        "k8s_audit_server_enabled" .Values.auditLog.enabled) }}
-    {{- if .Values.auditLog.enabled }}
+        "enabled" $secureEnabled
+        "k8s_audit_server_enabled" .root.Values.auditLog.enabled) }}
+    {{- if .root.Values.auditLog.enabled }}
         {{- range $key, $val := (dict
-                 "k8s_audit_server_url" .Values.auditLog.auditServerUrl
-                 "k8s_audit_server_port" .Values.auditLog.auditServerPort) }}
+                 "k8s_audit_server_url" .root.Values.auditLog.auditServerUrl
+                 "k8s_audit_server_port" .root.Values.auditLog.auditServerPort) }}
             {{- $_ := set $secureBlockConfig.security $key $val }}
         {{- end }}
     {{- end }}
-    {{- if not .Values.secure.enabled }}
+    {{- if not $secureEnabled }}
         {{- range $secureFeature := (list
             "commandlines_capture"
             "drift_killer"
@@ -368,7 +369,7 @@ agent config to prevent a backend push from enabling them after installation.
             "memdump"
             "network_topology"
             "secure_audit_streams") }}
-            {{- $_ := set $.Values.sysdig.settings $secureFeature (dict "enabled" false) }}
+            {{- $_ := set $secureBlockConfig $secureFeature (dict "enabled" false) }}
         {{- end }}
     {{- end }}
     {{- toYaml $secureBlockConfig }}
@@ -404,8 +405,11 @@ ssl_verify_certificate: {{ .Values.collectorSettings.sslVerifyCertificate }}
 {{- end }}
 
 {{ define "agent.logSettings" }}
-{{/* check for log level sanity */}}
-{{- if and .Values.logPriority (or (hasKey (default dict .Values.sysdig.settings.log) "console_priority") (hasKey (default dict .Values.sysdig.settings.log) "file_priority")) }}
+{{/* check for log level sanity and skip this check if delegatedAgentDeployment
+     is enabled because this will be run twice and the second check will error out. */}}
+{{- if and .Values.logPriority
+            (or (hasKey (default dict .Values.sysdig.settings.log) "console_priority") (hasKey (default dict .Values.sysdig.settings.log) "file_priority"))
+            (not .Values.delegatedAgentDeployment.enabled) }}
   {{- fail "Cannot set logPriority when either sysdig.settings.log.console_priority or sysdig.settings.log.file_priority are set" }}
 {{- end }}
 {{- if .Values.logPriority }}
