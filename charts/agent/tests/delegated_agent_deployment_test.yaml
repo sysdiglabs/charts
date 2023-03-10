@@ -5,7 +5,7 @@ templates:
   - templates/daemonset.yaml
   - templates/deployment.yaml
 tests:
-  - it: Enable Large Cluster support
+  - it: Enable Delegated Agent Deployment
     set:
       delegatedAgentDeployment:
         enabled: true
