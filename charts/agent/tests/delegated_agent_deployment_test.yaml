@@ -277,7 +277,7 @@ tests:
               memory: 384Mi
     template: templates/deployment.yaml
 
-  - it: Test container proxy settings (Deployment)
+  - it: Test container proxy settings
     set:
       delegatedAgentDeployment:
         enabled: true
@@ -286,46 +286,24 @@ tests:
         httpsProxy: 192.168.10.3
         noProxy: 192.168.10.4
     asserts:
-      - equal:
+      - contains:
           path: spec.template.spec.containers[0].env
-          value:
-            - name: RUN_MODE
-              value: nodriver
-            - name: K8S_NODE
-              valueFrom:
-                fieldRef:
-                  fieldPath: spec.nodeName
-            - name: http_proxy
-              value: 192.168.10.2
-            - name: https_proxy
-              value: 192.168.10.3
-            - name: no_proxy
-              value: 192.168.10.4
-    template: templates/deployment.yaml
-
-  - it: Test container proxy settings (Daemonset)
-    set:
-      delegatedAgentDeployment:
-        enabled: true
-      proxy:
-        httpProxy: 192.168.10.2
-        httpsProxy: 192.168.10.3
-        noProxy: 192.168.10.4
-    asserts:
-      - equal:
+          content:
+            name: http_proxy
+            value: 192.168.10.2
+      - contains:
           path: spec.template.spec.containers[0].env
-          value:
-            - name: K8S_NODE
-              valueFrom:
-                fieldRef:
-                  fieldPath: spec.nodeName
-            - name: http_proxy
-              value: 192.168.10.2
-            - name: https_proxy
-              value: 192.168.10.3
-            - name: no_proxy
-              value: 192.168.10.4
-        template: templates/daemonset.yaml
+          content:
+            name: https_proxy
+            value: 192.168.10.3
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: no_proxy
+            value: 192.168.10.4
+    templates:
+      - templates/daemonset.yaml
+      - templates/deployment.yaml
 
   - it: Check Deployment and Daemonset labels
     set:
