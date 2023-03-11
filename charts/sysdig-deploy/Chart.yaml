@@ -21,7 +21,7 @@ dependencies:
   - name: agent
     # repository: https://charts.sysdig.com
     repository: file://../agent
-    version: ~1.5.62
+    version: ~1.5.63
     alias: agent
     condition: agent.enabled
   - name: node-analyzer
