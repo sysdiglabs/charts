@@ -18,7 +18,7 @@ Currently included components:
 ## Prerequisites
 
 - Kubernetes 1.9+ with Beta APIs enabled
-- Helm v3+
+- Helm v3.6+
 
 ## Installation
 
