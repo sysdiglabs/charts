@@ -59,8 +59,8 @@ config:
   secureOnPrem: false
   # Ignore Sysdig Secure TLS certificate errors.
   secureSkipTLS: false
-  # Max number of parallel inline scanner workers to spawn in cluster.
-  maxWorkers: 1
+  # Max number of parallel job scan workers to spawn
+  maxWorkers: 5
   filter:
     # List of regular expressions. Images matching any of these expressions are *always* included when scanning.
     include: []
