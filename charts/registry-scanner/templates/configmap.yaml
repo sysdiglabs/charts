@@ -80,7 +80,7 @@ data:
       exclude:
         {{- toYaml .Values.config.filter.exclude | nindent 8 }}
       {{- end }}
-      maxAgeDays: {{ default 0 .Values.config.filter.maxAgeDays }}
+      maxAgeDays: {{ default 5 .Values.config.filter.maxAgeDays }}
       maxTagsPerRepository: {{ default 0 .Values.config.filter.maxTagsPerRepository }}
 
     {{- if .Values.reportToPersistentVolumeClaim }}
