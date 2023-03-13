@@ -10,7 +10,7 @@ data:
   dragent.yaml: |
     new_k8s: true
     {{- include "agent.clusterName" . | indent 4 }}
-    {{- include "agent.connectionSettings" . | nindent 4 }}
+    {{- include "agent.connectionSettings" . | indent 4 }}
     feature:
       mode: monitor_light
     cointerface_enabled: true

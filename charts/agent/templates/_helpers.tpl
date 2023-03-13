@@ -392,15 +392,21 @@ agent config to prevent a backend push from enabling them after installation.
 {{- end }}
 
 {{ define "agent.connectionSettings" }}
-collector: {{ include "agent.collectorEndpoint" . }}
-{{- if .Values.collectorSettings.collectorPort }}
-collector_port: {{ .Values.collectorSettings.collectorPort }}
+{{- $collectorHost := include "get_if_not_in_settings" (dict "root" . "default" (include "agent.collectorEndpoint" .) "setting" "collector") }}
+{{- if $collectorHost }}
+collector: {{ $collectorHost }}
 {{- end }}
-{{- if .Values.collectorSettings.ssl }}
-ssl: {{ .Values.collectorSettings.ssl }}
+{{- $collectorPort := include "get_if_not_in_settings" (dict "root" . "default" .Values.collectorSettings.collectorPort "setting" "collector_port")}}
+{{- if $collectorPort }}
+collector_port: {{ $collectorPort }}
 {{- end }}
-{{- if .Values.collectorSettings.sslVerifyCertificate }}
-ssl_verify_certificate: {{ .Values.collectorSettings.sslVerifyCertificate }}
+{{- $ssl := include "get_if_not_in_settings" (dict "root" . "default" .Values.collectorSettings.ssl "setting" "ssl")}}
+{{- if $ssl }}
+ssl: {{ $ssl }}
+{{- end }}
+{{- $sslVerifyCertificate := include "get_if_not_in_settings" (dict "root" . "default" .Values.collectorSettings.sslVerifyCertificate "setting" "ssl_verify_certificate")}}
+{{- if $sslVerifyCertificate }}
+ssl_verify_certificate: {{ $sslVerifyCertificate }}
 {{- end }}
 {{- end }}
 
