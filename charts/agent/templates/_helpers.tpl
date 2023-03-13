@@ -379,13 +379,17 @@ agent config to prevent a backend push from enabling them after installation.
     {{- $k8sColdStartBlock := dict }}
     {{- if .Values.leaderelection.enable }}
         {{- range $key, $val := (dict "enabled" true
-                                    "enforce_leader_election" true
-                                    "namespace" (include "agent.namespace")) }}
+                                      "enforce_leader_election" true
+                                      "namespace" (include "agent.namespace" .)) }}
             {{- $_ := set $k8sColdStartBlock $key $val }}
         {{- end }}
     {{- end }}
     {{- if not .Values.sysdig.settings.k8s_coldstart }}
-        {{- $_ := set $k8sColdStartBlock "max_parallel_cold_starts" (include "agent.parallelStarts" . | int ) }}
+        {{- if not .Values.delegatedAgentDeployment.enabled }}
+            {{- $_ := set $k8sColdStartBlock "max_parallel_cold_starts" (include "agent.parallelStarts" . | int ) }}
+        {{- else }}
+            {{- $_ := set $k8sColdStartBlock "max_parallel_cold_starts" 1 }}
+        {{- end }}
     {{- end }}
     {{- $completeBlock := dict "k8s_coldstart" $k8sColdStartBlock }}
     {{- toYaml $completeBlock }}

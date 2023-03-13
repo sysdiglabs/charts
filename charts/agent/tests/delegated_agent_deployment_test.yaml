@@ -397,3 +397,38 @@ tests:
     templates:
       - templates/daemonset.yaml
       - templates/deployment.yaml
+
+  - it: Enable leaderelection
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+      leaderelection:
+        enable: true
+    asserts:
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: |
+            k8s_coldstart:
+              enabled: true
+              enforce_leader_election: true
+              max_parallel_cold_starts: 1
+              namespace: NAMESPACE
+    template: templates/configmap-deployment.yaml
+
+  - it: Enable leaderelection and specify custom cold start number
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+      leaderelection:
+        enable: true
+      resourceProfile: large
+    asserts:
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: |
+            k8s_coldstart:
+              enabled: true
+              enforce_leader_election: true
+              max_parallel_cold_starts: 1
+              namespace: NAMESPACE
+    template: templates/configmap-deployment.yaml
