@@ -61,3 +61,18 @@ tests:
       - matchRegex:
           path: data.config\.yaml
           pattern: "maxAgeDays: 1"
+  - it: maxRepositories defaults if no custom setup is given
+    asserts:
+      - matchRegex:
+          path: data.config\.yaml
+          pattern: "maxRepositories: 500"
+
+  - it: maxRepositories wires if custom setup is given
+    set:
+      config:
+        filter:
+          repositoriesPerRegistry: 1
+    asserts:
+      - matchRegex:
+          path: data.config\.yaml
+          pattern: "maxRepositories: 1"

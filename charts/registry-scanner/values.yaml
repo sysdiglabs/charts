@@ -70,6 +70,8 @@ config:
     maxAgeDays: 90
     # Based on its creation date, newer ones take precedence, maximum number of tags to scan per repository. Maximum 10
     maxTagsPerRepository: 5
+    # Number of repositories to scan per registry. Maximum Value 1000
+    repositoriesPerRegistry: 500
   scan:
     # Override the default (if not specified) `quay.io/sysdig/secure-inline-scan:2` image for the inline scanner job.
     inlineScanImage: ""
