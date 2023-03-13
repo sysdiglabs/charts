@@ -27,7 +27,8 @@ and the list of all charts at `index.yaml` on _gh-pages_ branch will be updated 
 #### - Add tests
 
 Currently, two types of tests are available
-- Chat unit testing, through the [quintush/helm-unittest](https://github.com/quintush/helm-unittest) helm plugin.
+- Chat unit testing, through the [quintush/helm-unittest](https://github.com/helm-unittest/helm-unittest helm plugin.
+  - [test cheatsheet](https://github.com/helm-unittest/helm-unittest/blob/main/DOCUMENT.md#test-job)
 - Integration testing, through the [helm/chart-testing](https://github.com/helm/chart-testing/) tooling
 
 <br/><br/>
@@ -50,12 +51,12 @@ Currently, two types of tests are available
 #### - Comply with GithubAction Checks
 
 Several checks are tested before a PR is merged.
-Make sure to fail-fast on your local, before commiting, with [pre-commit](https://pre-commit.com/) plugin, configured in `/.pre-commit-config.yaml`, to automate this step, and validate/detect the issues when committing from your local.
+Make sure to fail-fast on your local, before committing, with [pre-commit](https://pre-commit.com/) plugin, configured in `/.pre-commit-config.yaml`, to automate this step, and validate/detect the issues when committing from your local.
 
 Some current checks:
 - `lint` checks, running
 - `docs` autogeneration, based on `values.yaml`. this does only apply to charts with `README.tpl` templates (ex.: admission-controller)
-
+- `unit-test`, which will call [unit-tets](#--add-tests)
 <br/><br/>
 
 ### Changelog

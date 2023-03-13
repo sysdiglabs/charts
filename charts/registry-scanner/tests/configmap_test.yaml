@@ -1,0 +1,31 @@
+suite: Registry Scanner - configmap
+templates:
+  - templates/configmap.yaml
+tests:
+  - it: contains a configmap
+    asserts:
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+      - hasDocuments:
+          count: 1
+  - it: defaults logging to info
+    asserts:
+      - isNotEmpty:
+          path: data
+      - matchRegex:
+          path: data.config\.yaml
+          pattern: "logging: info"
+  - it: defaults to maxWorkers if no custom setup is given
+    asserts:
+      - matchRegex:
+          path: data.config\.yaml
+          pattern: "workers: 5"
+  - it: wires set workers if custom setup is given
+    set:
+      config:
+        maxWorkers: 10
+    asserts:
+      - matchRegex:
+          path: data.config\.yaml
+          pattern: "workers: 10"
