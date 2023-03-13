@@ -9,19 +9,20 @@ tests:
           apiVersion: v1
       - hasDocuments:
           count: 1
-  - it: defaults logging to info
+  - it: logging defaults to info
     asserts:
       - isNotEmpty:
           path: data
       - matchRegex:
           path: data.config\.yaml
           pattern: "logging: info"
-  - it: defaults to maxWorkers if no custom setup is given
+
+  - it: maxWorkers defaults if no custom setup is given
     asserts:
       - matchRegex:
           path: data.config\.yaml
           pattern: "workers: 5"
-  - it: wires set workers if custom setup is given
+  - it: maxWorkers wires if custom setup is given
     set:
       config:
         maxWorkers: 10
@@ -29,3 +30,19 @@ tests:
       - matchRegex:
           path: data.config\.yaml
           pattern: "workers: 10"
+
+  - it: maxTagsPerRepository defaults if no custom setup is given
+    asserts:
+      - matchRegex:
+          path: data.config\.yaml
+          pattern: "maxTagsPerRepository: 5"
+
+  - it: maxTagsPerRepository wires if custom setup is given
+    set:
+      config:
+        filter:
+          maxTagsPerRepository: 1
+    asserts:
+      - matchRegex:
+          path: data.config\.yaml
+          pattern: "maxTagsPerRepository: 1"

@@ -81,7 +81,7 @@ data:
         {{- toYaml .Values.config.filter.exclude | nindent 8 }}
       {{- end }}
       maxAgeDays: {{ default 5 .Values.config.filter.maxAgeDays }}
-      maxTagsPerRepository: {{ default 0 .Values.config.filter.maxTagsPerRepository }}
+      maxTagsPerRepository: {{ .Values.config.filter.maxTagsPerRepository }}
 
     {{- if .Values.reportToPersistentVolumeClaim }}
     reportPath: /output/registry-scanner-{DATE}.json
