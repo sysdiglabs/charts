@@ -66,9 +66,9 @@ config:
     include: []
     # List of regular expressions. Images matching any of these expressions are excluded when scanning.
     exclude: []
-    # Exclude images with creation date older than specified number of days.
-    maxAgeDays:
-    # Based on its creation date, newer ones take precedence, maximum number of tags to scan per repository
+    # Based on its creation date, excludes images older than specified number of days. Maximum 365
+    maxAgeDays: 90
+    # Based on its creation date, newer ones take precedence, maximum number of tags to scan per repository. Maximum 10
     maxTagsPerRepository: 5
   scan:
     # Override the default (if not specified) `quay.io/sysdig/secure-inline-scan:2` image for the inline scanner job.
