@@ -69,7 +69,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `namespace`                                    | Overrides the global namespace setting and release namespace for components.                                                                            | `""`                                                        |
 | `image.registry`                               | Sysdig Agent image registry                                                                                                                             | `quay.io`                                                   |
 | `image.repository`                             | The image repository to pull from                                                                                                                       | `sysdig/agent`                                              |
-| `image.tag`                                    | The image tag to pull                                                                                                                                   | `12.11.0`                                                    |
+| `image.tag`                                    | The image tag to pull                                                                                                                                   | `12.12.1`                                                    |
 | `image.digest`                                 | The image digest to pull                                                                                                                                | ` `                                                         |
 | `image.pullPolicy`                             | The Image pull policy                                                                                                                                   | `IfNotPresent`                                              |
 | `image.pullSecrets`                            | Image pull secrets                                                                                                                                      | `nil`                                                       |
@@ -195,7 +195,7 @@ If anything is set for your `resources`, that will be used instead of the resour
 See [Tuning Sysdig Agent](https://docs.sysdig.com/en/tuning-sysdig-agent.html) for more info.
 
 ## GKE Autopilot
- Autopilot is an operation mode for creating and managing clusters in GKE. 
+ Autopilot is an operation mode for creating and managing clusters in GKE.
  With Autopilot, Google configures and manages the underlying node infrastructure for you.
 
  To deploy the Sysdig agent in GKE clusters running in Autopilot mode, run:

@@ -7,14 +7,14 @@ templates:
   - charts/nodeAnalyzer/templates/configmap-benchmark-runner.yaml
 tests:
   - it: Testing agent and node-analyzer deployed
-    set: 
+    set:
       global:
         sysdig:
           region: us2
           accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
-        kspm: 
+        kspm:
           deploy: false
-        nodeAnalyzer: 
+        nodeAnalyzer:
           nodeAnalyzer:
             benchmarkrunner:
               deploy: true
@@ -23,7 +23,7 @@ tests:
           kind: DaemonSet
           apiVersion: apps/v1
         template: charts/agent/templates/daemonset.yaml
-      - matchRegex: 
+      - matchRegex:
           path: data.dragent\.yaml
           pattern: .*ingest\-us2\.app\.sysdig\.com.*
         template: charts/agent/templates/configmap.yaml
@@ -45,7 +45,7 @@ tests:
         template: charts/nodeAnalyzer/templates/configmap-benchmark-runner.yaml
 
   - it: Test cpu resources overrides
-    set: 
+    set:
       global:
         sysdig:
           accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
@@ -71,4 +71,3 @@ tests:
           any: true
           count: 1
         template: charts/agent/templates/daemonset.yaml
-

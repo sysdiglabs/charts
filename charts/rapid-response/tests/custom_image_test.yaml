@@ -3,7 +3,7 @@ templates:
   - daemonset.yaml
 tests:
   - it: check of rapid response custom image and imagePullSecrets
-    set: 
+    set:
       rapidResponse:
         image:
           registry: ghcr.io
@@ -21,9 +21,9 @@ tests:
     - equal:
         path: spec.template.spec.imagePullSecrets
         value: test-pull-secret
- 
+
   - it: check application of incorrect rapidResponse.image.repository with empty yaml key
-    set: 
+    set:
       rapidResponse:
         image:
           registry: ghcr.io
@@ -36,7 +36,7 @@ tests:
         errorMessage: "A valid repository name is required"
 
   - it: check application of incorrect rapidResponse.image.registry with empty yaml key
-    set: 
+    set:
       rapidResponse:
         image:
           registry: ""
@@ -63,7 +63,7 @@ tests:
     - failedTemplate:
         errorMessage: "A valid global registry name is required"
 
-  # This test was valid for chart version <= 0.4.3 
+  # This test was valid for chart version <= 0.4.3
   #- it: check of rapid response image tag does gets converted to string
   #  set:
   #    rapidResponse:

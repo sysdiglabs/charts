@@ -1,0 +1,21 @@
+suite: Registry Scanner - cronjob
+templates:
+  - templates/job.yaml
+tests:
+  - it: checks job manifest is available when scanOnStart is enabled
+    set:
+      scanOnStart:
+        enabled: true
+    asserts:
+      - containsDocument:
+          kind: Job
+          apiVersion: batch/v1
+  - it: checks job name is same as scanOnStart.jobName
+    set:
+      scanOnStart:
+        enabled: true
+        jobName: foo
+    asserts:
+      - equal:
+          path: metadata.name
+          value: foo

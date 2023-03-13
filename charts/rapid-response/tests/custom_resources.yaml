@@ -4,7 +4,7 @@ templates:
 tests:
   - it: Test cpu resources overrides
     set:
-      rapidResponse
+      rapidResponse:
         resources:
           requests:
             cpu: 2500m
