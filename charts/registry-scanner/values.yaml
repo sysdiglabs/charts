@@ -21,7 +21,7 @@ config:
   # URL of the registry to scan.
   registryURL: ""
   # API URL of the registry to scan. This is required if your registry type is Artifactory.
-  registryApiUrl: https://my-docker-registry.com/artifactory/api/docker/
+  registryApiUrl: ""
   # Username for registry authentication.
   registryUser: ""
   # Password for registry authentication.
