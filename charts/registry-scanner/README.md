@@ -99,7 +99,7 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | config.registryApiUrl                 | API URL of the registry to scan. This is required if your registry type is Artifactory.                                                                                                                                                     | <code>https://my-docker-registry.com/artifactory/api/docker/</code> |
 | config.registryUser                   | Username for registry authentication.                                                                                                                                                                                                       | <code>""</code>                                                     |
 | config.registryPassword               | Password for registry authentication.                                                                                                                                                                                                       | <code>""</code>                                                     |
-| config.registryType                   | Registry Type. Supported types: artifactory, ecr, icr, acr, quay, harbor, and by default dockerv2.                                                                                                                                          | <code>""</code>                                                     |
+| config.registryType                   | Mandatory.<br/>Registry Type. Supported types: artifactory, ecr, icr, acr, quay, harbor, and dockerv2.                                                                                                                                      | <code>""</code>                                                     |
 | config.registryAccountId              | AccountID - Only for ICR registry type.                                                                                                                                                                                                     | <code>""</code>                                                     |
 | config.icrIamApi                      | ICR IAM API - Only for ICR registry type.                                                                                                                                                                                                   | <code>""</code>                                                     |
 | config.icrIamApiSkipTLS               | Ignore TLS certificate for IAM API - Only for ICR registry type.                                                                                                                                                                            | <code>false</code>                                                  |
@@ -115,11 +115,11 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | config.secureOnPrem                   | Sysdig Secure is on-prem installation (vs SaaS).                                                                                                                                                                                            | <code>false</code>                                                  |
 | config.secureSkipTLS                  | Ignore Sysdig Secure TLS certificate errors.                                                                                                                                                                                                | <code>false</code>                                                  |
 | config.maxWorkers                     | Max number of parallel job scan workers to spawn                                                                                                                                                                                            | <code>5</code>                                                      |
-| config.filter.include                 | List of regular expressions. Images matching any of these expressions are *always* included when scanning.                                                                                                                                  | <code>[]</code>                                                     |
-| config.filter.exclude                 | List of regular expressions. Images matching any of these expressions are excluded when scanning.                                                                                                                                           | <code>[]</code>                                                     |
-| config.filter.maxAgeDays              | Based on its creation date, excludes images older than specified number of days. Maximum 365                                                                                                                                                | <code>90</code>                                                     |
-| config.filter.maxTagsPerRepository    | Based on its creation date, newer ones take precedence, maximum number of tags to scan per repository. Maximum 10                                                                                                                           | <code>5</code>                                                      |
-| config.filter.repositoriesPerRegistry | Number of repositories to scan per registry. Maximum Value 1000                                                                                                                                                                             | <code>500</code>                                                    |
+| config.filter.include                 | List of regular expressions.<br/>Images matching any of these expressions are *always* included when scanning.                                                                                                                              | <code>[]</code>                                                     |
+| config.filter.exclude                 | List of regular expressions.<br/>Images matching any of these expressions are excluded when scanning.                                                                                                                                       | <code>[]</code>                                                     |
+| config.filter.maxAgeDays              | Based on its creation date, excludes images older than specified number of days.<br/>Maximum 365                                                                                                                                            | <code>90</code>                                                     |
+| config.filter.maxTagsPerRepository    | Based on its creation date, newer ones take precedence, maximum number of tags to scan per repository.<br/>Maximum 10                                                                                                                       | <code>5</code>                                                      |
+| config.filter.repositoriesPerRegistry | Number of repositories to scan per registry.<br/>Maximum Value 1000                                                                                                                                                                         | <code>500</code>                                                    |
 | config.scan.inlineScanImage           | Override the default (if not specified) `quay.io/sysdig/secure-inline-scan:2` image for the inline scanner job.                                                                                                                             | <code>""</code>                                                     |
 | config.scan.securityContext           | Security context for Inline Scanner container.                                                                                                                                                                                              | <code>{}</code>                                                     |
 | config.scan.newVmScanner              | true/false whether to activate the beta image scanning (experimental and unsupported)                                                                                                                                                       | <code>false</code>                                                  |
@@ -168,71 +168,3 @@ $ helm upgrade --install registry-scanner \
 ```
 
 Use `config.secureSkipTLS=true` if you are using self signed certificates.
-
-## Supported vendor specific deployments
-
-### AWS ECR
-
-```bash
-$ helm upgrade --install registry-scanner \
-    --set config.scan.newVmScanner=true \
-    --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
-    --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
-    --set config.registryType=ecr \
-    --set config.aws.accessKeyId=<AWS_ACCESS_KEY_ID> \
-    --set config.aws.secretAccessKey=<AWS_SECRET_ACCESS_KEY> \
-    --set config.aws.region=<AWS_REGION> \
-    --set config.registryURL=<AWS_ECR_URL> \
-    sysdig/registry-scanner
-```
-
-### AWS ECR Organizational
-
-```bash
-$ helm upgrade --install registry-scanner \
-    --set config.scan.newVmScanner=true \
-    --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
-    --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
-    --set config.registryType=ecr \
-    --set config.aws.accessKeyId=<AWS_ACCESS_KEY_ID> \
-    --set config.aws.secretAccessKey=<AWS_SECRET_ACCESS_KEY> \
-    --set config.aws.region=<AWS_REGION> \
-    --set config.aws.managementAccountRoleARN=<AWS_MANAGEMENT_ACCOUNT_ARN> \
-    --set config.aws.memberAccountsRoleName=<AWS_MEMBER_ACCOUNTS_ROLE_NAME> \
-    --set config.aws.allowListMemberAccountIDs=<ALLOW_LIST_MEMBER_ACCOUNT_IDS> \
-    sysdig/registry-scanner
-```
-
-### JFrog Artifactory - OnPrem
-
-- JFROG_ARTIFACTORY_URL: JFrog Artifactory url. ex.: artifactory.internal.mycompany.com
-
-```bash
-$ helm upgrade --install registry-scanner \
-    --set config.scan.newVmScanner=true \
-    --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
-    --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
-    --set config.registryType=artifactory \
-    --set config.registryURL=<JFROG_ARTIFACTORY_REGISTRY_URL> \
-    --set config.registryUser=<JFROG_ARTIFACTORY_USER> \
-    --set config.registryPassword=<JFROG_ARTIFACTORY_PASSWORD> \
-    sysdig/registry-scanner
-```
-
-### JFrog Artifactory - SaaS
-
-- JFROG_ARTIFACTORY_REGISTRY_URL: JFrog Artifactory Cloud registry URL. ex.: https://myaccount.jfrog.io/some-registry
-- JFROG_ARTIFACTORY_REGISTRY_API_DOCKER_URL: JFrog Artifactory Cloud registry docker API endpoint. ex.: https://myaccount.jfrog.io/artifactory/api/docker/some-registry
-
-```bash
-$ helm upgrade --install registry-scanner \
-    --set config.scan.newVmScanner=true \
-    --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
-    --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
-    --set config.registryType=artifactory \
-    --set config.registryURL=<JFROG_ARTIFACTORY_REGISTRY_URL> \
-    --set config.registryApiUrl=<JFROG_ARTIFACTORY_REGISTRY_API_DOCKER_URL> \
-    --set config.registryUser=<JFROG_ARTIFACTORY_USER> \
-    --set config.registryPassword=<JFROG_ARTIFACTORY_PASSWORD> \
-    sysdig/registry-scanner
-```
