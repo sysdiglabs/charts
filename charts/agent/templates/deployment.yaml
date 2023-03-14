@@ -139,7 +139,7 @@ spec:
       schedulerName: default-scheduler
       dnsPolicy: ClusterFirstWithHostNet
       securityContext: {}
-      serviceAccountName: {{ template "agent.serviceAccountName" }}
+      serviceAccountName: {{ template "agent.serviceAccountName" .}}
       terminationGracePeriodSeconds: 5
       tolerations:
 {{ toYaml .Values.tolerations | indent 8 }}
