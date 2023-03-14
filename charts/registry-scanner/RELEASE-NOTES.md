@@ -1,6 +1,6 @@
 # What's Changed
 
-### Bug Fixes
-- **registry-scanner** [1f464c9](https://github.com/sysdiglabs/charts/commit/1f464c948bcedae60545579a2fa8e3923af657fd): bump 2.0.10 to recover stdout logs ([#978](https://github.com/sysdiglabs/charts/issues/978))
+### New Features
+- [3475c7a](https://github.com/sysdiglabs/charts/commit/3475c7aa1580ada2e10ba728565f81d2a55fcbdd): update rs ([#986](https://github.com/sysdiglabs/charts/issues/986))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-0.1.19...registry-scanner-0.1.20
+#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-0.1.21...registry-scanner-0.1.22
