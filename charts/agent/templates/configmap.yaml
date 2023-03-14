@@ -15,11 +15,8 @@ data:
     {{- end }}
     {{- include "agent.connectionSettings" . | indent 4 }}
     {{- (include "agent.secureFeatures" (dict "root" . "force_secure_disabled" nil)) | nindent 4 }}
-    {{- include "agent.k8sColdStart" . | nindent 4 }}
-    {{- $disableCaptures := include "get_if_not_in_settings" (dict "root" . "default" .Values.sysdig.disableCaptures "setting" "sysdig_capture_enabled") }}
-    {{- if eq $disableCaptures "true" }}
-        sysdig_capture_enabled: false
-    {{- end }}
+    {{- include "agent.k8sColdStart" . | nindent 4 -}}
+    {{ include "agent.disableCaptures" . }}
     {{- include "agent.logSettings" . }}
     {{- if .Values.global.sysdig.tags }}
     tags: {{ include "agent.tags" . }}

@@ -432,3 +432,18 @@ tests:
               max_parallel_cold_starts: 1
               namespace: NAMESPACE
     template: templates/configmap-deployment.yaml
+
+  - it: Checking disabling captures in delegated agent deployment mode
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+      sysdig:
+        disableCaptures: true
+    asserts:
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: |
+            sysdig_capture_enabled: false
+    templates:
+      - templates/configmap.yaml
+      - templates/configmap-deployment.yaml
