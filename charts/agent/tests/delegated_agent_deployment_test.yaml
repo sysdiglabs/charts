@@ -1,9 +1,12 @@
 suite: Test delegated Agent Deployment installation type
 templates:
+  - templates/clusterrole.yaml
+  - templates/clusterrolebinding.yaml
   - templates/configmap.yaml
   - templates/configmap-deployment.yaml
   - templates/daemonset.yaml
   - templates/deployment.yaml
+  - templates/serviceaccount.yaml
 tests:
   - it: Enable Delegated Agent Deployment
     set:
@@ -447,3 +450,44 @@ tests:
     templates:
       - templates/configmap.yaml
       - templates/configmap-deployment.yaml
+
+  - it: Ensure sanity of Agent service account
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+    asserts:
+      - containsDocument:
+          apiVersion: rbac.authorization.k8s.io/v1
+          kind: ClusterRole
+          name: RELEASE-NAME-agent
+        template: templates/clusterrole.yaml
+      - containsDocument:
+          apiVersion: rbac.authorization.k8s.io/v1
+          kind: ClusterRoleBinding
+          name: RELEASE-NAME-agent
+        template: templates/clusterrolebinding.yaml
+      - contains:
+          path: subjects
+          content:
+            kind: ServiceAccount
+            name: RELEASE-NAME-agent
+            namespace: NAMESPACE
+        template: templates/clusterrolebinding.yaml
+      - equal:
+          path: roleRef
+          value:
+            kind: ClusterRole
+            name: RELEASE-NAME-agent
+            apiGroup: rbac.authorization.k8s.io
+        template: templates/clusterrolebinding.yaml
+      - containsDocument:
+          apiVersion: v1
+          kind: ServiceAccount
+          name: RELEASE-NAME-agent
+          namespace: NAMESPACE
+        template: templates/serviceaccount.yaml
+      - isSubset:
+          path: spec.template.spec
+          content:
+            serviceAccountName: RELEASE-NAME-agent
+        template: templates/deployment.yaml
