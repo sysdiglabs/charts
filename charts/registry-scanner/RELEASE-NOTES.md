@@ -1,6 +1,6 @@
 # What's Changed
 
-### New Features
-- **registry-scanner** [4de03a5](https://github.com/sysdiglabs/charts/commit/4de03a52683242f40e4a475f5250ce80e0674294): add ca certs support ([#988](https://github.com/sysdiglabs/charts/issues/988))
+### Documentation
+- **registry-scanner** [2aa4c30](https://github.com/sysdiglabs/charts/commit/2aa4c30adf5369a8a21438c6f1d5ca666a896d45): updating ca-certs usage from object to list ([#992](https://github.com/sysdiglabs/charts/issues/992))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-0.1.22...registry-scanner-0.1.24
+#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-0.1.24...registry-scanner-0.1.25
