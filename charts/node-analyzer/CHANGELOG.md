@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.8.40
+### New Features
+* **sysdig** [5273f8e](https://github.com/sysdiglabs/charts/commit/5273f8e29d38d79981797f2060271733654110dd): Update legacy engine NIA/HostAnalyzer components with security updates ([#989](https://github.com/sysdiglabs/charts/issues/989))
 # v1.8.39
 ### New Features
 * **kspm-collector,node-analyzer** [3632fb0](https://github.com/sysdiglabs/charts/commit/3632fb0aabeb97a98d76c208e2cc566f376a08a3): bumped KSPM to latest version ([#977](https://github.com/sysdiglabs/charts/issues/977))
