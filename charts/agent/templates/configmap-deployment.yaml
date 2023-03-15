@@ -9,8 +9,8 @@ metadata:
 data:
   dragent.yaml: |
     new_k8s: true
-    {{- include "agent.clusterName" . | indent 4 }}
-    {{- include "agent.connectionSettings" . | indent 4 }}
+{{- include "agent.clusterName" . | trim | nindent 4 }}
+{{- include "agent.connectionSettings" . | trim | nindent 4 }}
     feature:
       mode: monitor_light
     cointerface_enabled: true
@@ -32,16 +32,16 @@ data:
       enabled: false
     statsd:
       enabled: false
-    {{- include "agent.k8sColdStart" . | nindent 4 }}
-    {{ include "agent.disableCaptures" . }}
-    {{- $_ := mergeOverwrite .Values.secure (dict "enabled" false) }}
-    {{- (include "agent.secureFeatures" (dict "root" . "force_secure_disabled" false)) | nindent 4 }}
-    {{- include "agent.logSettings" . }}
-    {{- if .Values.global.sysdig.tags }}
+{{- include "agent.k8sColdStart" . | nindent 4 }}
+{{ include "agent.disableCaptures" . }}
+{{- $_ := mergeOverwrite .Values.secure (dict "enabled" false) }}
+{{- (include "agent.secureFeatures" (dict "root" . "force_secure_disabled" false)) | nindent 4 }}
+{{- include "agent.logSettings" . }}
+{{- if .Values.global.sysdig.tags }}
     tags: {{ include "agent.tags" . }}
-    {{- end }}
-    {{/* add in the remaining items from sysdig.settings */}}
-    {{- if .Values.sysdig.settings }}
-      {{- toYaml .Values.sysdig.settings | nindent 4 }}
-    {{- end }}
+{{- end }}
+{{/* add in the remaining items from sysdig.settings */}}
+{{- if .Values.sysdig.settings }}
+{{- toYaml .Values.sysdig.settings | nindent 4 }}
+{{- end }}
 {{- end }}

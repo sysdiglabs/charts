@@ -451,7 +451,7 @@ k8s_cluster_name: {{ $clusterName }}
 
 {{- define "agent.disableCaptures" }}
 {{- $disableCaptures := include "get_if_not_in_settings" (dict "root" . "default" .Values.sysdig.disableCaptures "setting" "sysdig_capture_enabled") }}
-  {{- if eq $disableCaptures "true" }}
-    sysdig_capture_enabled: false
-  {{- end }}
+{{- if eq $disableCaptures "true" }}
+sysdig_capture_enabled: false
+{{- end }}
 {{- end }}

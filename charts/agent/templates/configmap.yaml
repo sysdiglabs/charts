@@ -9,24 +9,24 @@ metadata:
 data:
   dragent.yaml: |
     new_k8s: true
-    {{- include "agent.clusterName" . | indent 4 }}
-    {{- if .Values.delegatedAgentDeployment.enabled }}
+{{- include "agent.clusterName" . | trim | nindent 4 }}
+{{- if .Values.delegatedAgentDeployment.enabled }}
     cointerface_enabled: false
-    {{- end }}
-    {{- include "agent.connectionSettings" . | indent 4 }}
-    {{- (include "agent.secureFeatures" (dict "root" . "force_secure_disabled" nil)) | nindent 4 }}
-    {{- include "agent.k8sColdStart" . | nindent 4 -}}
-    {{ include "agent.disableCaptures" . }}
-    {{- include "agent.logSettings" . }}
-    {{- if .Values.global.sysdig.tags }}
+{{- end }}
+{{- include "agent.connectionSettings" . | trim | nindent 4 }}
+{{- (include "agent.secureFeatures" (dict "root" . "force_secure_disabled" nil)) | nindent 4 }}
+{{- include "agent.k8sColdStart" . | nindent 4 -}}
+{{ include "agent.disableCaptures" . }}
+{{- include "agent.logSettings" . }}
+{{- if .Values.global.sysdig.tags }}
     tags: {{ include "agent.tags" . }}
-    {{- end }}
-    {{/* add in the remaining items from sysdig.settings */}}
-    {{- if .Values.sysdig.settings }}
-      {{- toYaml .Values.sysdig.settings | nindent 4 }}
-    {{- end }}
-    {{- if .Values.prometheus.file }}
+{{- end }}
+{{/* add in the remaining items from sysdig.settings */}}
+{{- if .Values.sysdig.settings }}
+  {{- toYaml .Values.sysdig.settings | trim | nindent 4 }}
+{{- end }}
+{{- if .Values.prometheus.file }}
   prometheus.yaml: |
 {{ toYaml .Values.prometheus.yaml | indent 4 }}
-  {{- end }}
+{{- end }}
 {{- end }}
