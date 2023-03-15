@@ -23,7 +23,7 @@
           {{- toYaml .Values.securityContext | nindent 14 }}
         image: {{ include "registry-scanner.image" . }}
         {{- if .Values.config.scan.newVmScanner }}
-        args: [ "--scan_runner=new-vm-scanner" ]
+        args: [ "--scan_runner=new-vm-scanner-k8s-job"]
         {{- else}}
         args: [ "--scan_runner=k8sjob" ]
         {{- end }}
