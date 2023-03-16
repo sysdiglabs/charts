@@ -19,3 +19,19 @@ tests:
       - equal:
           path: metadata.name
           value: foo
+#  - it: sets extraEnvVars on job
+#    set:
+#      extraEnvVars:
+#        - name: FOO
+#          value: bar
+#    asserts:
+#      - isNotEmpty:
+#          path: spec.template.spec.containers[0]
+#      - equal:
+#          path: spec.template.spec.containers[0].env["FOO"]
+#          value: fff
+#      - contains:
+#          path: spec.template.spec.containers[0].env
+#          content:
+#            name: FOO
+#            value: bar

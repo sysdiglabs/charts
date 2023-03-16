@@ -202,3 +202,8 @@ scanOnStart:
   # true/false on whether to launch the job as a post-install helm hook.
   # <br/>mainly for testing purpose
   asPostInstallHook: false
+
+# Extra environment variables to be set
+extraEnvVars: []
+#   - name: FOO
+#     value: bar

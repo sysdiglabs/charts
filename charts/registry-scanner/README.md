@@ -149,6 +149,7 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | scanOnStart.enabled                      | true/false on whether to start the post-install scanner job, in addition to the cronjob. <br/>beware that concurrencyPolicy does not work on jobs (only cronjobs). <br/>always check if there is any scanning running and if so, remove it. | <code>false</code>                           |
 | scanOnStart.jobName                      | Name of the job created for the post-install scanner job                                                                                                                                                                                    | <code>"registry-scanner-start-test"</code>   |
 | scanOnStart.asPostInstallHook            | true/false on whether to launch the job as a post-install helm hook. <br/>mainly for testing purpose                                                                                                                                        | <code>false</code>                           |
+| extraEnvVars                             | Extra environment variables to be set                                                                                                                                                                                                       | <code>[]</code>                              |
 
 
 
