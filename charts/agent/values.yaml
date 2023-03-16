@@ -284,6 +284,8 @@ delegatedAgentDeployment:
   # with very large node counts.
   enabled: false
 
+  delegated_nodes: -1
+
   deployment:
     # affinity: {}
     arch:

@@ -14,7 +14,7 @@ data:
     feature:
       mode: monitor_light
     cointerface_enabled: true
-    k8s_delegated_nodes: -1
+    k8s_delegated_nodes: {{ .Values.delegatedAgentDeployment.delegated_nodes | int }}
     top_processes_in_sample: 0
     container_engines:
       bpm: false
