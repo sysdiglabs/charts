@@ -5,7 +5,7 @@ docs: deps-docs
 	find . -name "doc.yaml" | \
 		xargs -L1 dirname | \
 		xargs -I% sh -c \
-			"cd %; chart-doc-gen -v values.yaml -d doc.yaml -t README.tpl > README.md"
+			"chart-doc-gen -c %/Chart.yaml -v %/values.yaml -d %/doc.yaml -t %/README.tpl > %/README.md"
 
 lint:
 	find . -name "Chart.lock" -type f -delete
@@ -21,7 +21,7 @@ unittest:
 	find ./charts -name "Chart.yaml" | \
 		xargs -L1 dirname | \
 		xargs -I% sh -c \
-			"helm dependency update % ; helm unittest --strict %"
+			"helm dependency build % ; helm unittest --strict %"
 
 test-unit-all: deps-helm test-registry-scanner
 
