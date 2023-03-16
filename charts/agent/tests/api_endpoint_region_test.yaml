@@ -7,7 +7,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: .*collector\.sysdigcloud\.com.*
 
   - it: Checking region 'us2'
@@ -19,7 +19,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: .*ingest\-us2\.app\.sysdig\.com.*
 
   - it: Checking region 'us3'
@@ -31,7 +31,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: .*ingest\.us3\.sysdig\.com.*
 
   - it: Checking region 'us4'
@@ -43,7 +43,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: .*ingest\.us4\.sysdig\.com.*
 
   - it: Checking region 'eu1'
@@ -55,7 +55,7 @@ tests:
         - isKind:
             of: ConfigMap
         - matchRegex:
-            path: data.dragent\.yaml
+            path: data['dragent.yaml']
             pattern: .*ingest\-eu1\.app\.sysdig\.com.*
 
   - it: Checking region 'au1'
@@ -67,7 +67,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: .*ingest\.au1\.sysdig\.com.*
 
   - it: Checking wrong region input

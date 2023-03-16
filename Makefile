@@ -11,8 +11,17 @@ lint:
 	find . -name "Chart.lock" -type f -delete
 	docker run --rm -e CT_VALIDATE_MAINTAINERS=false -u $(shell id -u) -v $(PWD):/charts quay.io/helmpack/chart-testing:latest sh -c "cd /charts; ct lint --all"
 
-deps-helm:
-	helm plugin install https://github.com/quintush/helm-unittest  || true
+deps-unittest:
+# TODO: check the if condition
+	if [ ! -f $$(helm plugin list | grep unittest) ]; then \
+		helm plugin install https://github.com/helm-unittest/helm-unittest --version=0.3.0; \
+	fi
+
+unittest:
+	find ./charts -name "Chart.yaml" | \
+		xargs -L1 dirname | \
+		xargs -I% sh -c \
+			"helm dependency update % ; helm unittest --strict %"
 
 test-unit-all: deps-helm test-registry-scanner
 

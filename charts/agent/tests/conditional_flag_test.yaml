@@ -9,7 +9,7 @@ tests:
           autopilot: true
     asserts:
       - equal:
-          path: spec.template.metadata.annotations.autopilot\.gke\.io\/no\-connect
+          path: spec.template.metadata.annotations['autopilot.gke.io/no-connect']
           value: "true"
       - equal:
           path: spec.template.spec.affinity

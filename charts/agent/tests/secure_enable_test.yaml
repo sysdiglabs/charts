@@ -7,7 +7,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: .*(?:security:\n {2}enabled:\s*true).*
 
   - it: Set secure.enabled=true
@@ -18,7 +18,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: .*(?:security:\n {2}enabled:\s*true).*
 
   - it: Set secure.enabled=false
@@ -29,25 +29,25 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: .*(?:security:\n {2}enabled:\s*false).*
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: commandlines_capture:\n\ {2}enabled:\ false
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: drift_killer:\n\ {2}enabled:\ false
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: falcobaseline:\n {2}enabled:\ false
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: memdump:\n\ {2}enabled:\ false
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: network_topology:\n\ {2}enabled:\ false
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: secure_audit_streams:\n\ {2}enabled:\ false
 
   - it: Set secure.enabled=true and auditLog.enabled=true
@@ -60,7 +60,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: security:\n\ {2}enabled:\ true\n\ {2}k8s_audit_server_enabled:\ true\n\ {2}k8s_audit_server_port:\ 7765\n\ {2}k8s_audit_server_url:\ 0\.0\.0\.0
 
   - it: Set secure.enabled=false and auditLog.enabled=true
@@ -73,7 +73,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: security:\n\ {2}enabled:\ false\n {2}k8s_audit_server_enabled:\ true\n\ {2}k8s_audit_server_port:\ 7765\n\ {2}k8s_audit_server_url:\ 0\.0\.0\.0
 
   - it: Test secure.enabled with secure_light mode specified

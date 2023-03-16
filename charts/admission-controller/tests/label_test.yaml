@@ -21,19 +21,19 @@ tests:
       clusterName: test-k8s
     asserts:
     - equal:
-        path: metadata.labels.my\.label\/key1
+        path: metadata.labels['my.label/key1']
         value: testlabel1
       template: scanner/deployment.yaml
     - equal:
-        path: metadata.labels.my\.label\/key2
+        path: metadata.labels['my.label/key2']
         value: testlabel2
       template: scanner/deployment.yaml
     - equal:
-        path: metadata.labels.my\.label\/key1
+        path: metadata.labels['my.label/key1']
         value: testlabel1
       template: webhook/deployment.yaml
     - equal:
-        path: metadata.labels.my\.label\/key2
+        path: metadata.labels['my.label/key2']
         value: testlabel2
       template: webhook/deployment.yaml
 
@@ -48,19 +48,19 @@ tests:
       clusterName: test-k8s
     asserts:
     - equal:
-        path: metadata.labels.my\.label\/key1
+        path: metadata.labels['my.label/key1']
         value: testlabel1
       template: scanner/deployment.yaml
     - equal:
-        path: metadata.labels.my\.label\/key2
+        path: metadata.labels['my.label/key2']
         value: testlabel2
       template: scanner/deployment.yaml
     - equal:
-        path: metadata.labels.my\.label\/key1
+        path: metadata.labels['my.label/key1']
         value: testlabel1
       template: webhook/deployment.yaml
     - equal:
-        path: metadata.labels.my\.label\/key2
+        path: metadata.labels['my.label/key2']
         value: testlabel2
       template: webhook/deployment.yaml
 
@@ -75,19 +75,19 @@ tests:
       clusterName: test-k8s
     asserts:
     - equal:
-        path: metadata.labels.my\.label\/key
+        path: metadata.labels['my.label/key']
         value: testlabel
       template: scanner/deployment.yaml
     - equal:
-        path: metadata.labels.my\.label\/version
+        path: metadata.labels['my.label/version']
         value: 2.7.3
       template: scanner/deployment.yaml
     - equal:
-        path: metadata.labels.my\.label\/key
+        path: metadata.labels['my.label/key']
         value: testlabel
       template: webhook/deployment.yaml
     - equal:
-        path: metadata.labels.my\.label\/version
+        path: metadata.labels['my.label/version']
         value: 2.7.3
       template: webhook/deployment.yaml
 
@@ -100,10 +100,10 @@ tests:
       clusterName: test-k8s
     asserts:
     - isNull:
-        path: metadata.labels.my\.label\/key1
+        path: metadata.labels['my.label/key1']
       template: scanner/deployment.yaml
     - isNull:
-        path: metadata.labels.my\.label\/key1
+        path: metadata.labels['my.label/key1']
       template: webhook/deployment.yaml
 
   - it: check application of incorrect admissionController labels with yaml
@@ -144,10 +144,10 @@ tests:
     template: scanner/deployment.yaml
     asserts:
     - equal:
-        path: metadata.labels.my\.label\/key
+        path: metadata.labels['my.label/key']
         value: testlabel
     - equal:
-        path: metadata.labels.my\.label\/version
+        path: metadata.labels['my.label/version']
         value: 2.7.3
 
   - it: check application of correct admission controller scanner labels with value of label empty
@@ -162,7 +162,7 @@ tests:
     template: scanner/deployment.yaml
     asserts:
     - isNull:
-        path: metadata.labels.my\.label\/key1
+        path: metadata.labels['my.label/key1']
 
   - it: check application of incorrect admission controller scanner labels with yaml
     set:
@@ -204,10 +204,10 @@ tests:
     template: webhook/deployment.yaml
     asserts:
     - equal:
-        path: metadata.labels.my\.label\/key
+        path: metadata.labels['my.label/key']
         value: testlabel
     - equal:
-        path: metadata.labels.my\.label\/version
+        path: metadata.labels['my.label/version']
         value: 2.7.3
 
   - it: check application of correct admission controller webhook labels with value of label empty
@@ -222,7 +222,7 @@ tests:
     template: webhook/deployment.yaml
     asserts:
     - isNull:
-        path: metadata.labels.my\.label\/key1
+        path: metadata.labels['my.label/key1']
 
   - it: check application of incorrect admission controller webhook labels with yaml
     set:
