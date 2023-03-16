@@ -410,7 +410,7 @@ tests:
     asserts:
       - matchRegex:
           path: data.dragent\.yaml
-          pattern: |
+          pattern: |-
             k8s_coldstart:
               enabled: true
               enforce_leader_election: true
@@ -428,7 +428,7 @@ tests:
     asserts:
       - matchRegex:
           path: data.dragent\.yaml
-          pattern: |
+          pattern: |-
             k8s_coldstart:
               enabled: true
               enforce_leader_election: true
