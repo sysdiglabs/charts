@@ -295,7 +295,7 @@ delegatedAgentDeployment:
       - linux
     labels: {}
     progressDeadlineSeconds: 600
-    replicas: 2
+    replicas: 1
     resources:
       limits:
         cpu: 1000m
