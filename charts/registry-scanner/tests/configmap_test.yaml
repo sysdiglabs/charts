@@ -1,0 +1,78 @@
+suite: Registry Scanner - configmap
+templates:
+  - templates/configmap.yaml
+tests:
+  - it: contains a configmap
+    asserts:
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+      - hasDocuments:
+          count: 1
+  - it: logging defaults to info
+    asserts:
+      - isNotEmpty:
+          path: data
+      - matchRegex:
+          path: data.config\.yaml
+          pattern: "logging: info"
+
+  - it: maxWorkers defaults if no custom setup is given
+    asserts:
+      - matchRegex:
+          path: data.config\.yaml
+          pattern: "workers: 5"
+  - it: maxWorkers wires if custom setup is given
+    set:
+      config:
+        maxWorkers: 10
+    asserts:
+      - matchRegex:
+          path: data.config\.yaml
+          pattern: "workers: 10"
+
+  - it: maxTagsPerRepository defaults if no custom setup is given
+    asserts:
+      - matchRegex:
+          path: data.config\.yaml
+          pattern: "maxTagsPerRepository: 5"
+
+  - it: maxTagsPerRepository wires if custom setup is given
+    set:
+      config:
+        filter:
+          maxTagsPerRepository: 1
+    asserts:
+      - matchRegex:
+          path: data.config\.yaml
+          pattern: "maxTagsPerRepository: 1"
+  - it: maxAgeDays defaults if no custom setup is given
+    asserts:
+      - matchRegex:
+          path: data.config\.yaml
+          pattern: "maxAgeDays: 90"
+
+  - it: maxAgeDays wires if custom setup is given
+    set:
+      config:
+        filter:
+          maxAgeDays: 1
+    asserts:
+      - matchRegex:
+          path: data.config\.yaml
+          pattern: "maxAgeDays: 1"
+  - it: maxRepositories defaults if no custom setup is given
+    asserts:
+      - matchRegex:
+          path: data.config\.yaml
+          pattern: "maxRepositoriesPerRegistry: 500"
+
+  - it: maxRepositories wires if custom setup is given
+    set:
+      config:
+        filter:
+          maxRepositoriesPerRegistry: 1
+    asserts:
+      - matchRegex:
+          path: data.config\.yaml
+          pattern: "maxRepositoriesPerRegistry: 1"
