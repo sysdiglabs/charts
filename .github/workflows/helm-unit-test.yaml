@@ -17,25 +17,49 @@ jobs:
           version: v3.4.0
 
       - name: Set up helm unit test plugin
-        run: helm plugin install https://github.com/helm-unittest/helm-unittest --version=0.2.11
+        run: helm plugin install https://github.com/helm-unittest/helm-unittest --version=0.3.0
 
       - name: Bundle sysdig-deploy dependencies
         run: helm dependency build ./charts/sysdig-deploy
 
-      - name: Test sysdig-deploy
-        run: helm unittest --helm3 ./charts/sysdig-deploy
-
-      - name: Test node-analyzer
-        run: helm unittest --helm3 ./charts/node-analyzer
+      - name: Test admission-controller
+        run: helm unittest --strict ./charts/admission-controller
 
       - name: Test agent
-        run: helm unittest --helm3 ./charts/agent
+        run: helm unittest --strict ./charts/agent
+
+      - name: Test cloud-bench
+        run: helm unittest --strict ./charts/cloud-bench
+
+      - name: Test cloud-connector
+        run: helm unittest --strict ./charts/cloud-connector
+
+      - name: Test cloud-scanning
+        run: helm unittest --strict ./charts/cloud-scanning
+
+      - name: Test harbor-scanner-sysdig-secure
+        run: helm unittest --strict ./charts/harbor-scanner-sysdig-secure
 
       - name: Test kspm-collector
-        run: helm unittest --helm3 ./charts/kspm-collector
+        run: helm unittest --strict ./charts/kspm-collector
+
+      - name: Test node-analyzer
+        run: helm unittest --strict ./charts/node-analyzer
 
       - name: Test rapid-response
-        run: helm unittest --helm3 ./charts/rapid-response
+        run: helm unittest --strict ./charts/rapid-response
 
-      - name: Test admission-controller
-        run: helm unittest --helm3 ./charts/admission-controller/
+      - name: Test registry-scanner
+        run: helm unittest --strict ./charts/registry-scanner
+
+      - name: Test sysdig
+        run: helm unittest --strict ./charts/sysdig
+
+      - name: Test sysdig-deploy
+        run: helm unittest --strict ./charts/sysdig-deploy
+
+      - name: Test sysdig-mcm-navmenu
+        run: helm unittest --strict ./charts/sysdig-mcm-navmenu
+
+      - name: Test sysdig-stackdriver-bridge
+        run: helm unittest --strict ./charts/sysdig-stackdriver-bridge
