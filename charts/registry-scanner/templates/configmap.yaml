@@ -82,7 +82,7 @@ data:
       {{- end }}
       maxAgeDays: {{ .Values.config.filter.maxAgeDays }}
       maxTagsPerRepository: {{ .Values.config.filter.maxTagsPerRepository }}
-      maxRepositories: {{ .Values.config.filter.repositoriesPerRegistry }}
+      maxRepositoriesPerRegistry: {{ .Values.config.filter.maxRepositoriesPerRegistry }}
 
     {{- if .Values.reportToPersistentVolumeClaim }}
     reportPath: /output/registry-scanner-{DATE}.json

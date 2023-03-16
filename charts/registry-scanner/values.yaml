@@ -71,7 +71,7 @@ config:
     # Based on its creation date, newer ones take precedence, maximum number of tags to scan per repository.<br/>Maximum 10
     maxTagsPerRepository: 5
     # Number of repositories to scan per registry.<br/>Maximum Value 1000
-    repositoriesPerRegistry: 500
+    maxRepositoriesPerRegistry: 500
   scan:
     # Override the default (if not specified) `quay.io/sysdig/secure-inline-scan:2` image for the inline scanner job.
     inlineScanImage: ""
@@ -90,7 +90,7 @@ ssl:
   ca:
     # For outbound connections
     # <br/>List of PEM-encoded x509 certificate authority.
-    certs: {}
+    certs: []
       # Example of certificate
       # - |
       #     -----BEGIN CERTIFICATE-----

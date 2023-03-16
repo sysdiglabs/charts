@@ -65,14 +65,14 @@ tests:
     asserts:
       - matchRegex:
           path: data.config\.yaml
-          pattern: "maxRepositories: 500"
+          pattern: "maxRepositoriesPerRegistry: 500"
 
   - it: maxRepositories wires if custom setup is given
     set:
       config:
         filter:
-          repositoriesPerRegistry: 1
+          maxRepositoriesPerRegistry: 1
     asserts:
       - matchRegex:
           path: data.config\.yaml
-          pattern: "maxRepositories: 1"
+          pattern: "maxRepositoriesPerRegistry: 1"
