@@ -7,3 +7,14 @@ tests:
       - equal:
           path: spec.concurrencyPolicy
           value: Forbid
+  - it: sets extraEnvVars on job
+    set:
+      extraEnvVars:
+        - name: FOO
+          value: bar
+    asserts:
+      - contains:
+          path: spec.jobTemplate.spec.template.spec.containers[0].env
+          content:
+            name: FOO
+            value: bar
