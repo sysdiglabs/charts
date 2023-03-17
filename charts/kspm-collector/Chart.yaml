@@ -2,7 +2,7 @@ apiVersion: v2
 name: kspm-collector
 description: Sysdig KSPM collector
 
-version: 0.1.40
+version: 0.1.41
 appVersion: 1.18.0
 keywords:
   - monitoring

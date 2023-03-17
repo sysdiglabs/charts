@@ -10,6 +10,30 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.1.26
+### Chores
+* **registry-scanner** [c3130ad](https://github.com/sysdiglabs/charts/commit/c3130adb2cbdd31bce58cb7aa6e04d875e4816b9): filters review ([#985](https://github.com/sysdiglabs/charts/issues/985))
+# v0.1.25
+### Documentation
+* **registry-scanner** [2aa4c30](https://github.com/sysdiglabs/charts/commit/2aa4c30adf5369a8a21438c6f1d5ca666a896d45): updating ca-certs usage from object to list ([#992](https://github.com/sysdiglabs/charts/issues/992))
+# v0.1.24
+### New Features
+* **registry-scanner** [4de03a5](https://github.com/sysdiglabs/charts/commit/4de03a52683242f40e4a475f5250ce80e0674294): add ca certs support ([#988](https://github.com/sysdiglabs/charts/issues/988))
+# v0.1.22
+### New Features
+* [3475c7a](https://github.com/sysdiglabs/charts/commit/3475c7aa1580ada2e10ba728565f81d2a55fcbdd): update rs ([#986](https://github.com/sysdiglabs/charts/issues/986))
+# v0.1.21
+### New Features
+* [e0bc897](https://github.com/sysdiglabs/charts/commit/e0bc897a5d04bf4f217113ddba89093fd7a9d33f): add new vendors support ([#984](https://github.com/sysdiglabs/charts/issues/984))
+# v0.1.20
+### Bug Fixes
+* **registry-scanner** [1f464c9](https://github.com/sysdiglabs/charts/commit/1f464c948bcedae60545579a2fa8e3923af657fd): bump 2.0.10 to recover stdout logs ([#978](https://github.com/sysdiglabs/charts/issues/978))
+# v0.1.19
+### Bug Fixes
+* **registry-scanner** [990ad5f](https://github.com/sysdiglabs/charts/commit/990ad5f97a4619c3a2928be67beb3ca302386467): insecure tls connections ([#972](https://github.com/sysdiglabs/charts/issues/972))
+# v0.1.18
+### Bug Fixes
+* **registry-scanner** [ef5bb18](https://github.com/sysdiglabs/charts/commit/ef5bb18f06ab9ea03eb5d13a4be1d2da58c49d3f): fix installation in EKS ([#969](https://github.com/sysdiglabs/charts/issues/969))
 # v0.1.17
 # v0.1.16
 # v0.1.15
