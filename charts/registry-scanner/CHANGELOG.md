@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.1.27
+### New Features
+* **registry-scanner** [368a628](https://github.com/sysdiglabs/charts/commit/368a6282fa1da32fa0b2debb8a8902a87b9932d9): add extraEnvVars ([#994](https://github.com/sysdiglabs/charts/issues/994))
 # v0.1.26
 ### Chores
 * **registry-scanner** [c3130ad](https://github.com/sysdiglabs/charts/commit/c3130adb2cbdd31bce58cb7aa6e04d875e4816b9): filters review ([#985](https://github.com/sysdiglabs/charts/issues/985))
