@@ -205,5 +205,5 @@ scanOnStart:
 
 # Extra environment variables to be set
 extraEnvVars: []
-#   - name: FOO
-#     value: bar
+#  - name: FOO
+#    value: bar

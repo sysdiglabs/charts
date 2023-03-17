@@ -117,7 +117,7 @@
                 key: registryPassword
           {{- end }}
           {{- if .Values.extraEnvVars }}
-          {{- toYaml .Values.extraEnvVars | nindent 12}}
+          {{- toYaml .Values.extraEnvVars | nindent 10 }}
           {{- end }}
       restartPolicy: {{ .Values.cronjob.restartPolicy }}
       {{- with .Values.nodeSelector }}
