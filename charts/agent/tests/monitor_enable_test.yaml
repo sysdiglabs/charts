@@ -8,7 +8,8 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data.dragent\.yaml
-          pattern: 'app_checks_enabled: false'
+          pattern: |-
+            app_checks_enabled: false
         not: true
 
   - it: Set monitor.enabled=true
@@ -20,7 +21,8 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data.dragent\.yaml
-          pattern: 'app_checks_enabled: false'
+          pattern: |-
+            app_checks_enabled: false
         not: true
 
   - it: Set monitor.enabled=false
@@ -32,7 +34,14 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data.dragent\.yaml
-          pattern: 'app_checks_enabled: false\njmx:\n {2}enabled: false\nprometheus:\n {2}enabled: false\nstatsd:\n {2}enabled: false'
+          pattern: |-
+            app_checks_enabled: false
+            jmx:
+              enabled: false
+            prometheus:
+              enabled: false
+            statsd:
+              enabled: false
 
   - it: Test monitor.enabled when specifying secure_light mode
     set:
