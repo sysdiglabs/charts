@@ -75,6 +75,7 @@ resourceProfile: small
 gke:
   # true here enables the deployment on gke autopilot clusters
   autopilot: false
+  createPriorityClass: false
   ephemeralStorage: "500Mi"
 
 rbac:

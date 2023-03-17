@@ -83,21 +83,21 @@ Sysdig Agent resources
                                              "memory" "3072Mi")
                               "large"  (dict "cpu" "5000m"
                                              "memory" "6144Mi") }}
+{{- $resources := dict }}
 {{/* custom resource values are always first-class */}}
 {{- if .Values.resources }}
-{{- toYaml .Values.resources -}}
+    {{- toYaml .Values.resources -}}
+{{- else if not (hasKey $resourceProfiles .Values.resourceProfile) }}
+    {{- fail (printf "Invalid value for resourceProfile provided: %s" .Values.resourceProfile) }}
+{{- else if and (include "agent.gke.autopilot" .) (not .Values.slim.enabled) }}
+    {{- toYaml (dict "requests" (dict "cpu" "250m"
+                                      "ephemeral-storage" .Values.gke.ephemeralStorage
+                                      "memory" "512Mi")
+                     "limits"   (get $resourceProfiles .Values.resourceProfile)) }}
 {{- else }}
-    {{- if not (hasKey $resourceProfiles .Values.resourceProfile) }}
-        {{- fail (printf "Invalid value for resourceProfile provided: %s" .Values.resourceProfile) }}
-    {{- end }}
-    {{- $resourceBlock := get $resourceProfiles .Values.resourceProfile }}
-    {{- if and (include "agent.gke.autopilot" .)
-               (not .Values.slim.enabled) }}
-        {{- $_ := merge $resourceBlock (dict "ephemeral-storage" .Values.gke.ephemeralStorage) }}
-    {{- end }}
-{{- toYaml (dict "requests" $resourceBlock
-                 "limits"   (omit $resourceBlock "ephemeral-storage")) }}
-{{- end -}}
+    {{- toYaml (dict "requests" (get $resourceProfiles .Values.resourceProfile)
+                     "limits"   (get $resourceProfiles .Values.resourceProfile)) }}
+{{- end }}
 {{- end -}}
 
 {{/*

@@ -29,8 +29,8 @@ spec:
       {{- end }}
     spec:
       serviceAccountName: {{ template "agent.serviceAccountName" .}}
-{{- if .Values.priorityClassName }}
-      priorityClassName: "{{ .Values.priorityClassName }}"
+{{- if or .Values.priorityClassName .Values.gke.autopilot }}
+      priorityClassName: {{ .Values.priorityClassName | quote }}
 {{- end }}
       tolerations:
 {{ toYaml .Values.tolerations | indent 8 }}
@@ -89,10 +89,6 @@ spec:
             readOnlyRootFilesystem: false
             allowPrivilegeEscalation: true
           resources:
-          {{- if and (include "agent.gke.autopilot" .)
-                     (not (hasKey $.Values.slim.resources.requests "ephemeral-storage")) }}
-            {{- $_ := merge $.Values.slim.resources.requests (dict "ephemeral-storage" .Values.gke.ephemeralStorage) }}
-          {{- end }}
 {{ toYaml .Values.slim.resources | indent 12 }}
           env:
           {{- if or (include "agent.ebpfEnabled" .) (include "agent.gke.autopilot" .) }}

@@ -1,0 +1,16 @@
+{{- if and .Values.gke.autopilot (not .Values.slim.enabled) }}
+{{- if and (not .Values.gke.createPriorityClass) (not .Values.priorityClassName) }}
+  {{- fail "A PriorityClass is required for GKE Autopilot environments. Please set gke.createPriorityClass=true or provide the name of an existing PriorityClass by using the priorityClassName parameter" }}
+{{- end }}
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+{{- if and .Values.gke.createPriorityClass (not .Values.priorityClassName) }}
+  {{ $_ := set .Values "priorityClassName" "sysdig-daemonset-priority" }}
+{{- end }}
+  name: {{ .Values.priorityClassName }}
+value: 10
+preemptionPolicy: PreemptLowerPriority
+globalDefault: false
+description: "Sysdig DaemonSet priority"
+{{- end }}

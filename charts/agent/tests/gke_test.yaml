@@ -1,75 +1,46 @@
 suite: Test GKE Specific config settings
 templates:
-  - daemonset.yaml
+  - templates/daemonset.yaml
+  - templates/gkeautopilotpriorityclass.yaml
 tests:
   - it: Enable GKE Autopilot (agent-slim)
     set:
       gke:
         autopilot: true
+        createPriorityClass: ture
+      slim:
+        enabled: true
     asserts:
-      - containsDocument:
-          kind: DaemonSet
-          apiVersion: apps/v1
-        template: daemonset.yaml
-      - contains:
-          path: spec.template.spec.initContainers[0].env
-          content:
-            name: SYSDIG_BPF_PROBE
-            value:
-        template: daemonset.yaml
-      - contains:
-          path: spec.template.spec.containers[0].env
-          content:
-            name: SYSDIG_BPF_PROBE
-            value:
-        template: daemonset.yaml
-      - equal:
-          path: spec.template.spec.containers[0].resources.requests.ephemeral-storage
-          value: 500Mi
-        not: true
-        template: daemonset.yaml
-      - equal:
-          path: spec.template.spec.initContainers[0].resources.requests.ephemeral-storage
-          value: 500Mi
-        template: daemonset.yaml
+      - failedTemplate:
+          errorMessage: "The slim agent is not enabled in GKE Autopilot. Please set slim.enabled=false"
+    template: templates/daemonset.yaml
 
   - it: Enable GKE Autopilot
     set:
       gke:
         autopilot: true
+        createPriorityClass: true
       slim:
         enabled: false
     asserts:
       - containsDocument:
           kind: DaemonSet
           apiVersion: apps/v1
-        template: daemonset.yaml
       - contains:
           path: spec.template.spec.containers[0].env
           content:
             name: SYSDIG_BPF_PROBE
             value:
-        template: daemonset.yaml
       - equal:
           path: spec.template.spec.containers[0].resources.requests.ephemeral-storage
           value: 500Mi
-        template: daemonset.yaml
-
-  - it: Set custom value for ephemeral storage (agent-slim)
-    set:
-      gke:
-        autopilot: true
-        ephemeralStorage: 256Mi
-    asserts:
-      - equal:
-          path: spec.template.spec.initContainers[0].resources.requests.ephemeral-storage
-          value: 256Mi
-        template: daemonset.yaml
+    template: templates/daemonset.yaml
 
   - it: Set custom value for ephemeral storage
     set:
       gke:
         autopilot: true
+        createPriorityClass: true
         ephemeralStorage: 256Mi
       slim:
         enabled: false
@@ -77,29 +48,13 @@ tests:
       - equal:
           path: spec.template.spec.containers[0].resources.requests.ephemeral-storage
           value: 256Mi
-        template: daemonset.yaml
-
-  - it: Check limits are correctly set (agent-slim)
-    set:
-      gke:
-        autopilot: true
-    asserts:
-      - equal:
-          path: spec.template.spec.initContainers[0].resources.limits
-          value:
-            cpu: 1000m
-            memory: 512Mi
-      - equal:
-          path: spec.template.spec.containers[0].resources.limits
-          value:
-            cpu: 1000m
-            memory: 1024Mi
-    template: daemonset.yaml
+    template: templates/daemonset.yaml
 
   - it: Check limits are correctly set
     set:
       gke:
         autopilot: true
+        createPriorityClass: true
       slim:
         enabled: false
     asserts:
@@ -108,4 +63,55 @@ tests:
           value:
             cpu: 1000m
             memory: 1024Mi
-    template: daemonset.yaml
+    template: templates/daemonset.yaml
+
+  - it: Check PriorityClass requirement
+    set:
+      gke:
+        autopilot: true
+        createPriorityClass: false
+      priorityClassName:
+      slim:
+        enabled: false
+    asserts:
+      - failedTemplate:
+          errorMessage: "A PriorityClass is required for GKE Autopilot environments. Please set gke.createPriorityClass=true or provide the name of an existing PriorityClass by using the priorityClassName parameter"
+    template: templates/gkeautopilotpriorityclass.yaml
+
+  - it: Check PriorityClass
+    set:
+      gke:
+        autopilot: true
+        createPriorityClass: true
+      slim:
+        enabled: false
+    asserts:
+      - containsDocument:
+          apiVersion: scheduling.k8s.io/v1
+          kind: PriorityClass
+          name: sysdig-daemonset-priority
+      - equal:
+          path: value
+          value: 10
+      - equal:
+          path: preemptionPolicy
+          value: PreemptLowerPriority
+      - equal:
+          path: globalDefault
+          value: false
+    template: templates/gkeautopilotpriorityclass.yaml
+
+  - it: Check PriorityClass name override
+    set:
+      gke:
+        autopilot: true
+        createPriorityClass: true
+      priorityClassName: my-priority-class
+      slim:
+        enabled: false
+    asserts:
+      - containsDocument:
+          apiVersion: scheduling.k8s.io/v1
+          kind: PriorityClass
+          name: my-priority-class
+    template: templates/gkeautopilotpriorityclass.yaml
