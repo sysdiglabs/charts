@@ -111,7 +111,7 @@ tests:
       - failedTemplate:
           errorMessage: 'Set agent.secure.enabled=true when specifying agent.sysdig.settings.feature.mode is secure or secure_light'
 
-  - it: Test monitor.enabled when specifying secure_light mode
+  - it: Test monitor.enabled when specifying secure mode
     set:
       secure:
         enabled: false
