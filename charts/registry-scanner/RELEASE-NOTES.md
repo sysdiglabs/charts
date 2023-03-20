@@ -1,6 +1,6 @@
 # What's Changed
 
-### Documentation
-- **registry-scanner** [2aa4c30](https://github.com/sysdiglabs/charts/commit/2aa4c30adf5369a8a21438c6f1d5ca666a896d45): updating ca-certs usage from object to list ([#992](https://github.com/sysdiglabs/charts/issues/992))
+### New Features
+- **registry-scanner** [368a628](https://github.com/sysdiglabs/charts/commit/368a6282fa1da32fa0b2debb8a8902a87b9932d9): add extraEnvVars ([#994](https://github.com/sysdiglabs/charts/issues/994))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-0.1.24...registry-scanner-0.1.25
+#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-0.1.26...registry-scanner-0.1.27

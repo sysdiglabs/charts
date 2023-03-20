@@ -49,7 +49,7 @@ data:
       runner: k8sjob
       k8sInCluster: true
       namespace: {{ .Release.Namespace }}
-      workers: {{ default 1 .Values.config.maxWorkers }}
+      workers: {{ .Values.config.maxWorkers }}
       {{- if .Values.config.scan.inlineScanImage }}
       inlineScanImage: {{ .Values.config.scan.inlineScanImage }}
       {{- end }}
@@ -80,8 +80,9 @@ data:
       exclude:
         {{- toYaml .Values.config.filter.exclude | nindent 8 }}
       {{- end }}
-      maxAgeDays: {{ default 0 .Values.config.filter.maxAgeDays }}
-      maxTagsPerRepository: {{ default 0 .Values.config.filter.maxTagsPerRepository }}
+      maxAgeDays: {{ .Values.config.filter.maxAgeDays }}
+      maxTagsPerRepository: {{ .Values.config.filter.maxTagsPerRepository }}
+      maxRepositoriesPerRegistry: {{ .Values.config.filter.maxRepositoriesPerRegistry }}
 
     {{- if .Values.reportToPersistentVolumeClaim }}
     reportPath: /output/registry-scanner-{DATE}.json

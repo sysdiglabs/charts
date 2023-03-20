@@ -10,6 +10,12 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.1.27
+### New Features
+* **registry-scanner** [368a628](https://github.com/sysdiglabs/charts/commit/368a6282fa1da32fa0b2debb8a8902a87b9932d9): add extraEnvVars ([#994](https://github.com/sysdiglabs/charts/issues/994))
+# v0.1.26
+### Chores
+* **registry-scanner** [c3130ad](https://github.com/sysdiglabs/charts/commit/c3130adb2cbdd31bce58cb7aa6e04d875e4816b9): filters review ([#985](https://github.com/sysdiglabs/charts/issues/985))
 # v0.1.25
 ### Documentation
 * **registry-scanner** [2aa4c30](https://github.com/sysdiglabs/charts/commit/2aa4c30adf5369a8a21438c6f1d5ca666a896d45): updating ca-certs usage from object to list ([#992](https://github.com/sysdiglabs/charts/issues/992))
