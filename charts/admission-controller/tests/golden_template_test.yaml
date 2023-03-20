@@ -1,4 +1,4 @@
-suite: Testing pre-generated values and best-known edge cases 
+suite: Testing pre-generated values and best-known edge cases
 templates:
   - scanner/deployment.yaml
   - scanner/configmap.yaml

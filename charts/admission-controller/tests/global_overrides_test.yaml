@@ -72,7 +72,7 @@ tests:
       sysdig:
         existingSecureAPITokenSecret: standard_token
         url: secure_url.com
-      clusterName: test-k8s        
+      clusterName: test-k8s
     asserts:
       - equal:
           path: spec.template.spec.containers[0].envFrom[1].secretRef.name

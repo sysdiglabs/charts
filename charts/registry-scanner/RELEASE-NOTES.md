@@ -1,6 +1,6 @@
 # What's Changed
 
 ### New Features
-- **registry-scanner** [bb1e039](https://github.com/sysdiglabs/charts/commit/bb1e0392124130d2df2242c6ae8b015300a65ec3): add logging ([#943](https://github.com/sysdiglabs/charts/issues/943))
+- **registry-scanner** [368a628](https://github.com/sysdiglabs/charts/commit/368a6282fa1da32fa0b2debb8a8902a87b9932d9): add extraEnvVars ([#994](https://github.com/sysdiglabs/charts/issues/994))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-0.1.9...registry-scanner-0.1.10
+#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-0.1.26...registry-scanner-0.1.27

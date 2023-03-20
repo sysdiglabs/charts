@@ -1,0 +1,20 @@
+suite: Registry Scanner - cronjob
+templates:
+  - templates/cronjob.yaml
+tests:
+  - it: Check currency policy is set to Forbid
+    asserts:
+      - equal:
+          path: spec.concurrencyPolicy
+          value: Forbid
+  - it: sets extraEnvVars on job
+    set:
+      extraEnvVars:
+        - name: FOO
+          value: bar
+    asserts:
+      - contains:
+          path: spec.jobTemplate.spec.template.spec.containers[0].env
+          content:
+            name: FOO
+            value: bar

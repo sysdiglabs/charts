@@ -1,4 +1,0 @@
-config:
-  secureAPIToken: ${SECURE_API_TOKEN}
-  registryUser: foo
-  registryPassword: bar

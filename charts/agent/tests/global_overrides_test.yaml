@@ -3,8 +3,8 @@ templates:
   - secrets.yaml
   - daemonset.yaml
 tests:
-  - it: check value of accessKey without local chart override - local value provided 
-    set: 
+  - it: check value of accessKey without local chart override - local value provided
+    set:
       sysdig:
         accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
     asserts:
@@ -14,7 +14,7 @@ tests:
         template: secrets.yaml
 
   - it: check value of accessKey without local chart override - global value provided
-    set: 
+    set:
       global:
         sysdig:
           accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
@@ -25,7 +25,7 @@ tests:
         template: secrets.yaml
 
   - it: check value of accessKey with local chart override
-    set: 
+    set:
       global:
         sysdig:
           accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
@@ -38,34 +38,34 @@ tests:
         template: secrets.yaml
 
   - it: check value of accessKeySecret without local chart override - local value provided
-    set: 
+    set:
       sysdig:
         existingAccessKeySecret: standard_key
     asserts:
       - contains:
           path: spec.template.spec.volumes
-          content: 
+          content:
             name: sysdig-agent-secrets
-            secret: 
+            secret:
               secretName: standard_key
         template: daemonset.yaml
 
   - it: check value of accessKeySecret without local chart override - global value provided
-    set: 
+    set:
       global:
         sysdig:
           accessKeySecret: standard_key
     asserts:
       - contains:
           path: spec.template.spec.volumes
-          content: 
+          content:
             name: sysdig-agent-secrets
-            secret: 
+            secret:
               secretName: standard_key
         template: daemonset.yaml
 
   - it: check value of accessKeySecret with local chart override
-    set: 
+    set:
       global:
         sysdig:
           accessKeySecret: standard_key
@@ -74,9 +74,8 @@ tests:
     asserts:
       - contains:
           path: spec.template.spec.volumes
-          content: 
+          content:
             name: sysdig-agent-secrets
-            secret: 
+            secret:
               secretName: override_key
         template: daemonset.yaml
-
