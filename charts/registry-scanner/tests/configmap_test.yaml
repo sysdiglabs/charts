@@ -91,14 +91,16 @@ tests:
     asserts:
       - matchRegex:
           path: data.config\.yaml
-          pattern: request:\n\s*memory:\s*500Mi\n\s*cpu:\s*500m\n\s*limit:\s*memory:\s*2Gi
+          pattern: requests:\n\s*memory:\s*500Mi\n\s*cpu:\s*500m\n\s*limits:\s*memory:\s*2Gi
   - it: resource request and limit wires if custom setup is given
     set:
-      config.scan.jobs:
-        requestMemory: 1Mi
-        requestCpu: 1m
-        limitMemory: 2Mi
+      config.scan.jobs.resources:
+        requests:
+          memory: 1Mi
+          cpu: 1m
+        limits:
+            memory: 2Mi
     asserts:
       - matchRegex:
           path: data.config\.yaml
-          pattern: request:\n\s*memory:\s*1Mi\n\s*cpu:\s*1m\n\s*limit:\s*memory:\s*2Mi
+          pattern: requests:\n\s*memory:\s*1Mi\n\s*cpu:\s*1m\n\s*limits:\s*memory:\s*2Mi

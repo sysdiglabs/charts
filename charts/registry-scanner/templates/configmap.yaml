@@ -52,11 +52,12 @@ data:
       workers: {{ .Values.config.maxWorkers }}
       jobs:
         ttlSecondsAfterFinished: {{ .Values.config.scan.jobs.ttlSecondsAfterFinished }}
-        request:
-          memory: {{ .Values.config.scan.jobs.requestMemory }}
-          cpu: {{ .Values.config.scan.jobs.requestCpu }}
-        limit:
-          memory: {{ .Values.config.scan.jobs.limitMemory }}
+        resources:
+          requests:
+            memory: {{ .Values.config.scan.jobs.resources.requests.memory }}
+            cpu: {{ .Values.config.scan.jobs.resources.requests.cpu }}
+          limits:
+            memory: {{ .Values.config.scan.jobs.resources.limits.memory }}
       {{- if .Values.config.scan.inlineScanImage }}
       inlineScanImage: {{ .Values.config.scan.inlineScanImage }}
       {{- end }}

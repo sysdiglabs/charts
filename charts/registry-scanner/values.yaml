@@ -86,12 +86,15 @@ config:
     jobs:
       # TTL for scanner jobs
       ttlSecondsAfterFinished: 600
-      # Resouce request memory for scanner job
-      requestMemory: 500Mi
-      # Resource request CPU for scanner job
-      requestCpu: 500m
-      # Resource limit memory for scanner job
-      limitMemory: 2Gi
+      resources:
+        requests:
+          # Resource request memory for scanner job
+          memory: 500Mi
+          # Resource request CPU for scanner job
+          cpu: 500m
+        limits:
+          # Resource limit memory for scanner job
+          memory: 2Gi
     # true/false whether to activate the beta image scanning (experimental and unsupported)
     newVmScanner: false
 ssl:
