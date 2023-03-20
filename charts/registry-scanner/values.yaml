@@ -61,8 +61,6 @@ config:
   secureSkipTLS: false
   # Max number of parallel job scan workers to spawn
   maxWorkers: 5
-  # TTL for scanner jobs
-  ttlSecondsAfterFinished: 600
   filter:
     # List of regular expressions.<br/>Images matching any of these expressions are *always* included when scanning.
     include: []
@@ -85,7 +83,15 @@ config:
       # readOnlyRootFilesystem: true
       # runAsNonRoot: true
       # runAsUser: 1000
-
+    jobs:
+      # TTL for scanner jobs
+      ttlSecondsAfterFinished: 600
+      # Resouce request memory for scanner job
+      requestMemory: 500Mi
+      # Resource request CPU for scanner job
+      requestCpu: 500m
+      # Resource limit memory for scanner job
+      limitMemory: 2Gi
     # true/false whether to activate the beta image scanning (experimental and unsupported)
     newVmScanner: false
 ssl:

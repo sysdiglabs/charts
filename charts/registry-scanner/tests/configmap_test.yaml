@@ -82,8 +82,23 @@ tests:
           pattern: "ttlSecondsAfterFinished: 600"
   - it: ttlSecondsAfterFinished wires if custom setup is given
     set:
-      config.ttlSecondsAfterFinished: 0
+      config.scan.jobs.ttlSecondsAfterFinished: 0
     asserts:
       - matchRegex:
           path: data.config\.yaml
           pattern: "ttlSecondsAfterFinished: 0"
+  - it: resource request and limit defaults if no custom setup is given
+    asserts:
+      - matchRegex:
+          path: data.config\.yaml
+          pattern: request:\n\s*memory:\s*500Mi\n\s*cpu:\s*500m\n\s*limit:\s*memory:\s*2Gi
+  - it: resource request and limit wires if custom setup is given
+    set:
+      config.scan.jobs:
+        requestMemory: 1Mi
+        requestCpu: 1m
+        limitMemory: 2Mi
+    asserts:
+      - matchRegex:
+          path: data.config\.yaml
+          pattern: request:\n\s*memory:\s*1Mi\n\s*cpu:\s*1m\n\s*limit:\s*memory:\s*2Mi
