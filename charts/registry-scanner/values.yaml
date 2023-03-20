@@ -61,6 +61,8 @@ config:
   secureSkipTLS: false
   # Max number of parallel job scan workers to spawn
   maxWorkers: 5
+  # TTL for scanner jobs
+  ttlSecondsAfterFinished: 600
   filter:
     # List of regular expressions.<br/>Images matching any of these expressions are *always* included when scanning.
     include: []

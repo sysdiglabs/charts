@@ -50,6 +50,7 @@ data:
       k8sInCluster: true
       namespace: {{ .Release.Namespace }}
       workers: {{ .Values.config.maxWorkers }}
+      ttlSecondsAfterFinished: {{ .Values.config.ttlSecondsAfterFinished }}
       {{- if .Values.config.scan.inlineScanImage }}
       inlineScanImage: {{ .Values.config.scan.inlineScanImage }}
       {{- end }}
