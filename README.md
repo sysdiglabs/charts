@@ -2,7 +2,7 @@
 
 This GitHub repository is the official source for Sysdig's Helm charts.
 
-For instructions about how to install charts from this repository, visit the public website at 
+For instructions about how to install charts from this repository, visit the public website at
 **[https://charts.sysdig.com](https://charts.sysdig.com/)**
 
 ---

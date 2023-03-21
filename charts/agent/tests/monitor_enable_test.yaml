@@ -7,7 +7,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: |-
             app_checks_enabled: false
         not: true
@@ -20,7 +20,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: |-
             app_checks_enabled: false
         not: true
@@ -33,7 +33,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: |-
             app_checks_enabled: false
             jmx:
