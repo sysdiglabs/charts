@@ -50,6 +50,14 @@ data:
       k8sInCluster: true
       namespace: {{ .Release.Namespace }}
       workers: {{ .Values.config.maxWorkers }}
+      jobs:
+        ttlSecondsAfterFinished: {{ .Values.config.scan.jobs.ttlSecondsAfterFinished }}
+        resources:
+          requests:
+            memory: {{ .Values.config.scan.jobs.resources.requests.memory }}
+            cpu: {{ .Values.config.scan.jobs.resources.requests.cpu }}
+          limits:
+            memory: {{ .Values.config.scan.jobs.resources.limits.memory }}
       {{- if .Values.config.scan.inlineScanImage }}
       inlineScanImage: {{ .Values.config.scan.inlineScanImage }}
       {{- end }}
