@@ -83,7 +83,18 @@ config:
       # readOnlyRootFilesystem: true
       # runAsNonRoot: true
       # runAsUser: 1000
-
+    jobs:
+      # TTL for scanner jobs
+      ttlSecondsAfterFinished: 600
+      resources:
+        requests:
+          # Resource request memory for scanner job
+          memory: 500Mi
+          # Resource request CPU for scanner job
+          cpu: 500m
+        limits:
+          # Resource limit memory for scanner job
+          memory: 2Gi
     # true/false whether to activate the beta image scanning (experimental and unsupported)
     newVmScanner: false
 ssl:
@@ -172,7 +183,7 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
-# Resource limits for registry scanner container.
+# Resource limits for main registry scanner orchestrator.<br/>For scanner job resources use `config.scan.jobs.resources`
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
