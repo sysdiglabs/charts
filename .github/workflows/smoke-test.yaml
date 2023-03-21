@@ -1,0 +1,155 @@
+name: Installation Smoke Test
+
+on:
+  pull_request:
+  repository_dispatch:
+    types: [approve-test-run-command]
+jobs:
+  smoke-test-branch:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+    strategy:
+      matrix:
+        helm_version: [ v3.6.3, v3.7.2, v3.8.2, v3.9.4, v3.10.3, v3.11.2 ]
+        k8s_versions: [ v1.23.17+k3s1, v1.24.11+k3s1, v1.25.7+k3s1, v1.26.2+k3s1 ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v3.5
+        with:
+          version: ${{ matrix.helm_version }}
+
+      - uses: actions/setup-go@v3
+        with:
+          go-version: "^1.18"
+          check-latest: true
+
+      - name: Set up chart-testing
+        uses: helm/chart-testing-action@v2.3.1
+
+      - name: Run chart-testing (list-changed)
+        id: list-changed
+        run: |
+          changed=$(ct list-changed --target-branch ${{ github.event.repository.default_branch }})
+          if [[ -n "$changed" ]]; then
+            echo "::set-output name=changed::true"
+          fi
+
+      - name: Expand templates for CI
+        run: |
+          find -path ".*/ci/*.yaml.template" | xargs -L1 -- bash -c 'envsubst < $0 > ${0%.template}'
+        shell: bash
+        env:
+          SECURE_AGENT_TOKEN: ${{ secrets.KUBELAB_AGENT_KEY }}
+          SECURE_API_TOKEN: ${{ secrets.KUBELAB_SECURE_API_TOKEN }}
+          SYSDIG_JFROG_SAAS_QA_URL: ${{ secrets.SYSDIG_JFROG_SAAS_QA_URL }}
+          SYSDIG_JFROG_SAAS_QA_API_URL: ${{ secrets.SYSDIG_JFROG_SAAS_QA_API_URL }}
+          SYSDIG_JFROG_SAAS_QA_USER: ${{ secrets.SYSDIG_JFROG_SAAS_QA_USER }}
+          SYSDIG_JFROG_SAAS_QA_TOKEN: ${{ secrets.SYSDIG_JFROG_SAAS_QA_TOKEN }}
+          SYSDIG_AWS_QA_CNT_ACCOUNT_ACCESS_KEY_ID: ${{secrets.SYSDIG_AWS_QA_CNT_ACCOUNT_ACCESS_KEY_ID}}
+          SYSDIG_AWS_QA_CNT_ACCOUNT_SECRET_ACCESS_KEY: ${{secrets.SYSDIG_AWS_QA_CNT_ACCOUNT_SECRET_ACCESS_KEY}}
+          SYSDIG_AWS_QA_REG_MANAGEMENT_ROLE_ARN: ${{secrets.SYSDIG_AWS_QA_REG_MANAGEMENT_ROLE_ARN}}
+          SYSDIG_AWS_QA_TARGET_ACCOUNT_ID: ${{secrets.SYSDIG_AWS_QA_TARGET_ACCOUNT_ID}}   # cnt QA account
+          SHOW_USAGE: false
+        if: steps.list-changed.outputs.changed == 'true'
+
+      - name: Create testing cluster
+        uses: jupyterhub/action-k3s-helm@v3
+        with:
+          k3s-version: ${{ matrix.k8s_version }}
+        if: steps.list-changed.outputs.changed == 'true'
+
+      - name: Run chart-testing (install)
+        run: ct install --upgrade --excluded-charts sysdig-stackdriver-bridge,sysdig-mcm-navmenu
+        if: steps.list-changed.outputs.changed == 'true'
+
+
+  smoke-test-fork:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        helm_version: [ v3.6.3, v3.7.2, v3.8.2, v3.9.4, v3.10.3, v3.11.2 ]
+        k8s_versions: [ v1.23.17+k3s1, v1.24.11+k3s1, v1.25.7+k3s1, v1.26.2+k3s1 ]
+    permissions:
+      checks: write
+    if: github.event_name == 'repository_dispatch' &&
+      github.event.client_payload.slash_command.sha != '' &&
+      contains(github.event.client_payload.pull_request.head.sha, github.event.client_payload.slash_command.sha)
+    steps:
+      - name: Fork based /approve-test-run checkout
+        uses: actions/checkout@v2
+        with:
+          ref: "refs/pull/${{ github.event.client_payload.pull_request.number }}/merge"
+          fetch-depth: 0
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v3.5
+        with:
+          version: ${{ matrix.helm_version }}
+
+      - uses: actions/setup-go@v3
+        with:
+          go-version: "^1.18"
+          check-latest: true
+
+      - name: Set up chart-testing
+        uses: helm/chart-testing-action@v2.3.1
+
+      - name: Run chart-testing (list-changed)
+        id: list-changed
+        run: |
+          changed=$(ct list-changed --target-branch ${{ github.event.repository.default_branch }})
+          if [[ -n "$changed" ]]; then
+            echo "::set-output name=changed::true"
+          fi
+
+      - name: Expand templates for CI
+        run: |
+          find -iname "*.yaml.template" | xargs -L1 -- bash -c 'envsubst < $0 > ${0%.template}'
+        shell: bash
+        env:
+          SECURE_API_TOKEN: ${{ secrets.KUBELAB_SECURE_API_TOKEN }}
+          SECURE_AGENT_TOKEN: ${{ secrets.KUBELAB_AGENT_KEY }}
+        if: steps.list-changed.outputs.changed == 'true'
+
+      - name: Create testing cluster
+        uses: jupyterhub/action-k3s-helm@v3
+        with:
+          k3s-version: ${{ matrix.k8s_version }}
+        if: steps.list-changed.outputs.changed == 'true'
+
+      - name: Run chart-testing (install)
+        run: ct install --upgrade --excluded-charts sysdig-stackdriver-bridge,sysdig-mcm-navmenu
+        if: steps.list-changed.outputs.changed == 'true'
+
+      - uses: actions/github-script@v5
+        id: update-check-run
+        if: ${{ always() }}
+        env:
+          number: ${{ github.event.client_payload.pull_request.number }}
+          job: ${{ github.job }}
+          conclusion: ${{ job.status }}
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { data: pull } = await github.rest.pulls.get({
+              ...context.repo,
+              pull_number: process.env.number
+            });
+            const ref = pull.head.sha;
+            const { data: checks } = await github.rest.checks.listForRef({
+              ...context.repo,
+              ref
+            });
+            const check = checks.check_runs.filter(c => c.name === process.env.job);
+            const { data: result } = await github.rest.checks.update({
+              ...context.repo,
+              check_run_id: check[0].id,
+              status: 'completed',
+              conclusion: process.env.conclusion
+            });
+            return result;
