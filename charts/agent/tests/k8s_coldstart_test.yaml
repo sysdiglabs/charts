@@ -1,0 +1,34 @@
+suite: Test the leaderelection flag
+templates:
+  - templates/configmap.yaml
+tests:
+  - it: Enable leaderelection
+    set:
+      leaderelection:
+        enable: true
+    asserts:
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: |-
+            k8s_coldstart:
+              enabled: true
+              enforce_leader_election: true
+              max_parallel_cold_starts: 1
+              namespace: NAMESPACE
+    template: templates/configmap.yaml
+
+  - it: Enable leaderelection and specify custom cold start number
+    set:
+      leaderelection:
+        enable: true
+      resourceProfile: large
+    asserts:
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: |-
+            k8s_coldstart:
+              enabled: true
+              enforce_leader_election: true
+              max_parallel_cold_starts: 10
+              namespace: NAMESPACE
+    template: templates/configmap.yaml

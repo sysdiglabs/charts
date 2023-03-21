@@ -1,0 +1,214 @@
+{{- if .Values.delegatedAgentDeployment.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "agent.fullname" . }}
+  namespace: {{ include "agent.namespace" . }}
+  labels:
+{{ include "agent.labels" . | indent 4 }}
+{{ include "agent.deploymentLabels" . | indent 4 }}
+spec:
+  progressDeadlineSeconds: {{ .Values.delegatedAgentDeployment.deployment.progressDeadlineSeconds }}
+  replicas: {{ .Values.delegatedAgentDeployment.deployment.replicas}}
+  revisionHistoryLimit: {{ .Values.delegatedAgentDeployment.deployment.revisionHistoryLimit }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: {{ .Release.Name }}
+      app.kubernetes.io/name: {{ include "agent.name" . }}
+  strategy:
+{{ toYaml .Values.delegatedAgentDeployment.deployment.updateStrategy | indent 4 }}
+  template:
+    metadata:
+      labels:
+{{ include "agent.labels" . | indent 8 }}
+{{ include "agent.deploymentLabels" . | indent 8 }}
+      name: {{ include "agent.fullname" . }}
+    spec:
+      {{- if .Values.delegatedAgentDeployment.deployment.nodeSelector }}
+      nodeSelector:
+        {{ toYaml .Values.delegatedAgentDeployment.deployment.nodeSelector | nindent 8 }}
+      {{- end }}
+      affinity:
+      {{- if .Values.delegatedAgentDeployment.deployment.affinity }}
+{{ toYaml .Values.delegatedAgentDeployment.deployment.affinity | nindent 8 }}
+      {{- else }}
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              {{- if and (eq (int .Capabilities.KubeVersion.Major) 1)
+                (lt (int .Capabilities.KubeVersion.Minor) 14) }}
+              - key: beta.kubernetes.io/arch
+                operator: In
+                values: {{- toYaml .Values.delegatedAgentDeployment.deployment.arch | nindent 18 }}
+              - key: beta.kubernetes.io/os
+                operator: In
+                values: {{- toYaml .Values.delegatedAgentDeployment.deployment.os | nindent 18 }}
+              {{- else }}
+              - key: kubernetes.io/arch
+                operator: In
+                values: {{- toYaml .Values.delegatedAgentDeployment.deployment.arch | nindent 18 }}
+              - key: kubernetes.io/os
+                operator: In
+                values: {{- toYaml .Values.delegatedAgentDeployment.deployment.os | nindent 18 }}
+              {{- end }}
+      {{- end }}
+      {{- if .Values.image.pullSecrets }}
+      imagePullSecrets:
+      {{ toYaml .Values.image.pullSecrets }}
+      {{- end }}
+      containers:
+        - name: sysdig-cointerface
+          image: {{ template "agent.image" . }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          resources:
+{{ toYaml .Values.delegatedAgentDeployment.deployment.resources | indent 12 }}
+          securityContext:
+            capabilities:
+              drop:
+                - ALL
+            privileged: true
+            runAsNonRoot: false
+            runAsUser: 0
+            readOnlyRootFilesystem: false
+            allowPrivilegeEscalation: true
+          env:
+          - name: RUN_MODE
+            value: nodriver
+          - name: K8S_NODE
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+          {{- if .Values.timezone }}
+          - name: TZ
+            value: {{ .Values.timezone }}
+            {{- end }}
+          {{- range $key, $value := .Values.delegatedAgentDeployment.deployment.env }}
+          - name: "{{ $key }}"
+            value: "{{ $value }}"
+          {{- end }}
+          {{- if (.Values.proxy.httpProxy | default .Values.global.proxy.httpProxy) }}
+          - name: http_proxy
+            value: {{ .Values.proxy.httpProxy | default .Values.global.proxy.httpProxy }}
+          {{- end }}
+          {{- if (.Values.proxy.httpsProxy | default .Values.global.proxy.httpsProxy) }}
+          - name: https_proxy
+            value: {{ .Values.proxy.httpsProxy | default .Values.global.proxy.httpsProxy }}
+          {{- end }}
+          {{- if (.Values.proxy.noProxy | default .Values.global.proxy.noProxy) }}
+          - name: no_proxy
+            value: {{ .Values.proxy.noProxy | default .Values.global.proxy.noProxy }}
+          {{- end }}
+          readinessProbe:
+            exec:
+              command: [ "test", "-e", "/opt/draios/logs/running" ]
+            failureThreshold: 3
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            {{- if include "agent.gke.autopilot" . }}
+            - mountPath: /host/etc/os-release
+              name: osrel
+              readOnly: true
+            {{- else }}
+            - mountPath: /host/etc
+              name: etc-vol
+              readOnly: true
+            {{- end }}
+            - mountPath: /host/dev
+              name: dev-vol
+            - mountPath: /host/proc
+              name: proc-vol
+              readOnly: true
+            - mountPath: /host/run
+              name: run-vol
+            - mountPath: /host/var/run
+              name: varrun-vol
+            - mountPath: /dev/shm
+              name: dshm
+            - mountPath: /opt/draios/etc/kubernetes/config
+              name: sysdig-agent-config
+            - mountPath: /opt/draios/etc/kubernetes/secrets
+              name: sysdig-agent-secrets
+            - mountPath: /etc/podinfo
+              name: podinfo
+            {{- if .Values.extraVolumes.mounts }}
+{{ toYaml .Values.extraVolumes.mounts | indent 12 }}
+            {{- end }}
+      hostPID: true
+      schedulerName: default-scheduler
+      dnsPolicy: ClusterFirstWithHostNet
+      securityContext: {}
+      serviceAccountName: {{ template "agent.serviceAccountName" .}}
+      terminationGracePeriodSeconds: 5
+      tolerations:
+{{ toYaml .Values.tolerations | indent 8 }}
+      volumes:
+        - hostPath:
+            path: /etc/modprobe.d
+            type: ""
+          name: modprobe-d
+        - hostPath:
+            path: /etc/os-release
+            type: FileOrCreate
+          name: osrel
+        - emptyDir:
+            medium: Memory
+          name: dshm
+        - hostPath:
+            path: /etc
+            type: ""
+          name: etc-vol
+        - hostPath:
+            path: /dev
+            type: ""
+          name: dev-vol
+        - hostPath:
+            path: /proc
+            type: ""
+          name: proc-vol
+        - hostPath:
+            path: /boot
+            type: ""
+          name: boot-vol
+        - hostPath:
+            path: /lib/modules
+            type: ""
+          name: modules-vol
+        - hostPath:
+            path: /usr
+            type: ""
+          name: usr-vol
+        - hostPath:
+            path: /run
+            type: ""
+          name: run-vol
+        - hostPath:
+            path: /var/run
+            type: ""
+          name: varrun-vol
+        {{- if .Values.extraVolumes.volumes }}
+{{ toYaml .Values.extraVolumes.volumes | indent 8 }}
+        {{- end }}
+        - configMap:
+            defaultMode: 420
+            name: {{ printf "%s-deployment" (include "agent.configmapName" . ) | trunc 63 | trimSuffix "-" }}
+            optional: true
+          name: sysdig-agent-config
+        - name: sysdig-agent-secrets
+          secret:
+            defaultMode: 420
+            secretName: sysdig-agent
+        - downwardAPI:
+            defaultMode: 420
+            items:
+              - fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+                path: namespace
+              - fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.name
+                path: name
+          name: podinfo
+{{- end }}
