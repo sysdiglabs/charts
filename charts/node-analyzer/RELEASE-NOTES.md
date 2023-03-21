@@ -1,10 +1,13 @@
 # What's Changed
 
 ### New Features
-- **node-analyzer** [90e8df4](https://github.com/sysdiglabs/charts/commit/90e8df4228ce33e3ec57e6401de545e3fb265ced): bumped RuntimeScanner and HostScanner to latest versions ([#993](https://github.com/sysdiglabs/charts/issues/993))
+- **node-analyzer** [79f7679](https://github.com/sysdiglabs/charts/commit/79f76794e271abf031216b261165f313192001f5): Update HostScanner and RuntimeScanner images containing latest security updates and fix ([#999](https://github.com/sysdiglabs/charts/issues/999))
 
-    * * Hostscanner bumped to 0.3.7, Runtimescanner bumped to 1.4.7
-     * fixed issue with detection of vulns in java packages with version ending with .RELEASE
-     * fixed issue with full java path not showing for dependencies (ex: jar in a war)
+    * * Hostscanner bumped to 0.3.8
+     * Fix CVE-2022-41721
+     * Fix CVE-2022-41723
+     * Improved JAR's manifest parsing
+* Runtimescanner bumped to 1.4.7
+     * Improved JAR's manifest parsing
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.8.40...node-analyzer-1.8.41
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.8.41...node-analyzer-1.8.42
