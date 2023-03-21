@@ -153,6 +153,10 @@ nodeAnalyzer:
                 values:
                   - linux
 
+  # Allow passing extra volumes to the Node Analyzer to mount docker socket, cri-o socket, etc.
+  extraVolumes:
+    volumes: []
+
   imageAnalyzer:
     deploy: true
     image:
@@ -174,6 +178,7 @@ nodeAnalyzer:
     # containerdSocketPath: unix:///var/run/containerd/containerd.sock
 
     # Allow passing extra volumes to the Node Image Analyzer to mount docker socket, cri-o socket, etc.
+    # DEPRECATED: use nodeAnalyzer.extraVolumes instead
     extraVolumes:
       volumes: []
       mounts: []
