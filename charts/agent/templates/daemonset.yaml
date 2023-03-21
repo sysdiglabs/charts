@@ -1,4 +1,4 @@
-{{- if .Values.daemonset.deploy }}
+{{- if or .Values.daemonset.deploy .Values.delegatedAgentDeployment }}
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
@@ -6,7 +6,7 @@ metadata:
   namespace: {{ include "agent.namespace" . }}
   labels:
 {{ include "agent.labels" . | indent 4 }}
-{{ include "daemonset.labels" . | indent 4 }}
+{{ include "agent.daemonsetLabels" . | indent 4 }}
 spec:
   selector:
     matchLabels:
@@ -17,7 +17,7 @@ spec:
       name: {{ template "agent.fullname" .}}
       labels:
 {{ include "agent.labels" . | indent 8 }}
-{{ include "daemonset.labels" . | indent 8 }}
+{{ include "agent.daemonsetLabels" . | indent 8 }}
       {{- if (include "agent.gke.autopilot" .) }}
       annotations:
         autopilot.gke.io/no-connect: "true"
@@ -318,5 +318,5 @@ spec:
   updateStrategy:
     type: {{ .Values.daemonset.updateStrategy.type }}
     rollingUpdate:
-      maxUnavailable: {{include "agent.parallelStarts" .}}
+      maxUnavailable: {{ include "agent.parallelStarts" . }}
 {{- end }}
