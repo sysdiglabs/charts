@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.6.1
+### Chores
+* **sysdig-deploy** [7d545ee](https://github.com/sysdiglabs/charts/commit/7d545eee029b024a15fdfb8267403372fd60d3b2): Automatic version bump due to updated dependencies ([#1001](https://github.com/sysdiglabs/charts/issues/1001))
 # v1.6.0
 ### Bug Fixes
 * **sysdig-deploy** [c8e3c36](https://github.com/sysdiglabs/charts/commit/c8e3c36de90584bd34e6a2f279670e8a3c2ed115): Fixed release name from the helm upgrade commands ([#944](https://github.com/sysdiglabs/charts/issues/944))
