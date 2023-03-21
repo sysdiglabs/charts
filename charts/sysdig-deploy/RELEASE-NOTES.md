@@ -1,6 +1,8 @@
 # What's Changed
 
-### Chores
-- **sysdig-deploy** [53b70d1](https://github.com/sysdiglabs/charts/commit/53b70d18ad397b8b75213ffcf4b90b2bb36b423b): Automatic version bump due to updated dependencies ([#995](https://github.com/sysdiglabs/charts/issues/995))
+### Bug Fixes
+- **sysdig-deploy** [c8e3c36](https://github.com/sysdiglabs/charts/commit/c8e3c36de90584bd34e6a2f279670e8a3c2ed115): Fixed release name from the helm upgrade commands ([#944](https://github.com/sysdiglabs/charts/issues/944))
+### New Features
+- **agent** [e3ed91f](https://github.com/sysdiglabs/charts/commit/e3ed91f82c6e5335fb56e2edb4d1f40803a16f10): Create Delegated Agent installation mechanism ([#945](https://github.com/sysdiglabs/charts/issues/945))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.5.79...sysdig-deploy-1.5.80
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.5.80...sysdig-deploy-1.6.0

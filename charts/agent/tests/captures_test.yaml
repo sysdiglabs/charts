@@ -1,0 +1,14 @@
+suite: Test captures settings
+templates:
+  - templates/configmap.yaml
+tests:
+  - it: Checking disabling captures
+    set:
+      sysdig:
+        disableCaptures: true
+    asserts:
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: |
+            sysdig_capture_enabled: false
+    template: templates/configmap.yaml
