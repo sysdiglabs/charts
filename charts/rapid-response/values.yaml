@@ -57,6 +57,16 @@ rapidResponse:
     httpsProxy: ""
     noProxy: ""
 
+  scc:
+    # true here enables creation of Security Context Constraints in Openshift
+    create: true
+
+  serviceAccount:
+    # true here enables creation of service account
+    create: true
+    # Use this value as rapidResponseServiceAccountName
+    name: "rapid-response"
+
   ### Not working when is empty
   # Import custom CA certificates
   ssl:
@@ -183,11 +193,6 @@ tests:
   rbac:
     # true here enables creation of rbac resources
     create: true
-  serviceAccount:
-    # true here enables creation of service account
-    create: true
-    # Use this value as kspmCollectorServiceAccountName
-    name: "rapid-response"
   timeout: 300s
   image:
     repo: bitnami/kubectl
