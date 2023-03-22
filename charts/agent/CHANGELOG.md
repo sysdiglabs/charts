@@ -10,6 +10,12 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.6.1
+### Bug Fixes
+* **agent** [9d7f5a4](https://github.com/sysdiglabs/charts/commit/9d7f5a43ff82ce2c6dac332c36146c2bda7516e7): Fix invalid comparison type ([#1002](https://github.com/sysdiglabs/charts/issues/1002))
+# v1.6.0
+### New Features
+* **agent** [e3ed91f](https://github.com/sysdiglabs/charts/commit/e3ed91f82c6e5335fb56e2edb4d1f40803a16f10): Create Delegated Agent installation mechanism ([#945](https://github.com/sysdiglabs/charts/issues/945))
 # v1.5.63
 ### Chores
 * **agent** [e02fffc](https://github.com/sysdiglabs/charts/commit/e02fffce3c105b52742c7680fc1bf7d7f7765889): bump agent version to 12.12.1 ([#982](https://github.com/sysdiglabs/charts/issues/982))

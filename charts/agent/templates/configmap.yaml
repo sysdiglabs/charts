@@ -1,64 +1,29 @@
-{{- if .Values.daemonset.deploy }}
+{{- if or .Values.daemonset.deploy .Values.delegatedAgentDeployment.enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ include "agent.configmapName" . }}
   namespace: {{ include "agent.namespace" . }}
   labels:
-{{ include "agent.labels" . | indent 4 }}
+{{ (include "agent.labels" .) | indent 4 }}
 data:
   dragent.yaml: |
     new_k8s: true
-{{- $clusterName := include "get_if_not_in_settings" (dict "root" . "default" (coalesce .Values.clusterName .Values.global.clusterConfig.name) "setting" "k8s_cluster_name") }}
-{{- if $clusterName }}
-    k8s_cluster_name: {{ $clusterName }}
+{{- include "agent.clusterName" . | trim | nindent 4 }}
+{{- if .Values.delegatedAgentDeployment.enabled }}
+    cointerface_enabled: false
 {{- end }}
-{{ include "agent.secureFeatures" . | indent 4 -}}
-{{/* skip values already set in sysdig.settings */}}
-{{- $disableCaptures := include "get_if_not_in_settings" (dict "root" . "default" .Values.sysdig.disableCaptures "setting" "sysdig_capture_enabled") }}
-{{- if eq $disableCaptures "true" }}
-    sysdig_capture_enabled: false
-{{- end }}
-{{- $collectorHost := include "get_if_not_in_settings" (dict "root" . "default" (include "agent.collectorEndpoint" .) "setting" "collector") }}
-{{- if $collectorHost }}
-    collector: {{ $collectorHost }}
-{{- end }}
-{{- $collectorPort := include "get_if_not_in_settings" (dict "root" . "default" .Values.collectorSettings.collectorPort "setting" "collector_port")}}
-{{- if $collectorPort }}
-    collector_port: {{ $collectorPort }}
-{{- end }}
-{{- $ssl := include "get_if_not_in_settings" (dict "root" . "default" .Values.collectorSettings.ssl "setting" "ssl")}}
-{{- if $ssl }}
-    ssl: {{ $ssl }}
-{{- end }}
-{{- $sslVerifyCertificate := include "get_if_not_in_settings" (dict "root" . "default" .Values.collectorSettings.sslVerifyCertificate "setting" "ssl_verify_certificate")}}
-{{- if $sslVerifyCertificate }}
-    ssl_verify_certificate: {{ $sslVerifyCertificate }}
-{{- end }}
-{{- if not .Values.sysdig.settings.k8s_coldstart}}
-    k8s_coldstart:
-      max_parallel_cold_starts: {{ include "agent.parallelStarts" .}}
-{{- end }}
-{{/* check for log level sanity */}}
-{{- if and .Values.logPriority (or (hasKey (default dict .Values.sysdig.settings.log) "console_priority") (hasKey (default dict .Values.sysdig.settings.log) "file_priority")) }}
-  {{- fail "Cannot set logPriority when either sysdig.settings.log.console_priority or sysdig.settings.log.file_priority are set" }}
-{{- end }}
-{{- if .Values.logPriority }}
-  {{- $_ := merge .Values.sysdig.settings (dict "log" (dict "console_priority" .Values.logPriority "file_priority" .Values.logPriority)) }}
+{{- include "agent.connectionSettings" . | trim | nindent 4 }}
+{{- (include "agent.secureFeatures" (dict "root" . "force_secure_disabled" false)) | nindent 4 }}
+{{- include "agent.k8sColdStart" . | nindent 4 -}}
+{{ include "agent.disableCaptures" . | nindent 4 }}
+{{- include "agent.logSettings" . }}
+{{- if .Values.global.sysdig.tags }}
+    tags: {{ include "agent.tags" . }}
 {{- end }}
 {{/* add in the remaining items from sysdig.settings */}}
 {{- if .Values.sysdig.settings }}
-{{ toYaml .Values.sysdig.settings | indent 4 }}
-{{- end }}
-{{- if .Values.leaderelection.enable }}
-    k8s_delegation_election: true
-    k8s_coldstart:
-      enabled: true
-      enforce_leader_election: true
-      namespace: {{ include "agent.namespace" . }}
-{{- end }}
-{{- if .Values.global.sysdig.tags }}
-    tags: {{ include "agent.tags" . }}
+  {{- toYaml .Values.sysdig.settings | trim | nindent 4 }}
 {{- end }}
 {{- if .Values.prometheus.file }}
   prometheus.yaml: |
