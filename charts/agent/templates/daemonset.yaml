@@ -7,6 +7,7 @@ metadata:
   labels:
 {{ include "agent.labels" . | indent 4 }}
 {{ include "agent.daemonsetLabels" . | indent 4 }}
+{{/* Small change to trigger CI */}}
 spec:
   selector:
     matchLabels:
