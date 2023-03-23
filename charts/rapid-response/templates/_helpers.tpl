@@ -200,9 +200,7 @@ without introducing changes on Rapid Response container image.
 Create the name of the Rapid Response collector specific service account to use
 */}}
 {{- define "rapidResponse.serviceAccountName" -}}
-{{- if .Values.rapidResponse.existingServiceAccount -}}
-    {{ .Values.rapidResponse.existingServiceAccount }}
-{{- else if .Values.rapidResponse.serviceAccount.create -}}
+{{- if .Values.rapidResponse.serviceAccount.create -}}
     {{ default (include "rapidResponse.fullname" .) .Values.rapidResponse.serviceAccount.name }}
 {{- else -}}
     {{ default "default" .Values.rapidResponse.serviceAccount.name }}

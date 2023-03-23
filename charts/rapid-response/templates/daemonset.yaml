@@ -19,7 +19,11 @@ spec:
       annotations:
 {{ toYaml .Values.rapidResponse.daemonSetAnnotations | indent 8 }}
     spec:
+      {{- if .Values.rapidResponse.existingServiceAccount }}
+      serviceAccountName: {{ .Values.rapidResponse.existingServiceAccount }}
+      {{- else }}
       serviceAccountName: {{ template "rapidResponse.serviceAccountName" .}}
+      {{- end }}
       tolerations:
 {{ toYaml .Values.rapidResponse.tolerations | indent 8 }}
       hostNetwork: true
