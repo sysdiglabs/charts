@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.4.8
+### New Features
+* **rapid-response** [d034b71](https://github.com/sysdiglabs/charts/commit/d034b710e27688c5f67fc441ee7b9af3e2f3cbdc): Add ServiceAccount and SecurityContextConstraint for Rapid Response ([#1006](https://github.com/sysdiglabs/charts/issues/1006))
 # v0.4.7
 # v0.4.6
 ### Bug Fixes
