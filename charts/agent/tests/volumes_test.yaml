@@ -1,0 +1,14 @@
+suite: Host volumes are available for agent
+templates:
+  - templates/daemonset.yaml
+tests:
+  - it: Ensure /var host volume is mounted as /host/var in container
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[*].volumeMounts[?(@.name == "var-vol")].mountPath
+          value: /host/var
+        template: templates/daemonset.yaml
+      - equal:
+          path: spec.template.spec.volumes[?(@.name == "var-vol")].hostPath.path
+          value: /var
+        template: templates/daemonset.yaml
