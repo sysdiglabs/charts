@@ -22,7 +22,6 @@ $ pre-commit run -a
 - [Installing the Chart](#installing-the-chart)
 - [Uninstalling the Chart](#uninstalling-the-chart)
 - [Configuration](#configuration)
-- [Supported vendor specific deployments](#supported-vendor-specific-deployments)
 
 <br/>
 
