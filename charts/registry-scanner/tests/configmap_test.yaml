@@ -104,3 +104,18 @@ tests:
       - matchRegex:
           path: data.config\.yaml
           pattern: requests:\n\s*memory:\s*1Mi\n\s*cpu:\s*1m\n\s*limits:\s*memory:\s*2Mi
+  - it: sets the temporaryVolumeSizeLimit on job
+    set:
+      config:
+        scan:
+          jobs:
+            temporaryVolumeSizeLimit: 10Gi
+    asserts:
+      - matchRegex:
+          path: data.config\.yaml
+          pattern: "temporaryVolumeSizeLimit: 10Gi"
+  - it: sets the default temporaryVolumeSizeLimit on job
+    asserts:
+      - matchRegex:
+          path: data.config\.yaml
+          pattern: "temporaryVolumeSizeLimit: 2Gi"
