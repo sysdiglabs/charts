@@ -10,6 +10,12 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.6.2
+### New Features
+* **agent** [d48ef54](https://github.com/sysdiglabs/charts/commit/d48ef54afb4c79c72d8b51a77d8e101f9d25a4f4): Add poddisruptionbudget permissions to the Agent clusterrole ([#968](https://github.com/sysdiglabs/charts/issues/968))
+# v1.6.1
+### Bug Fixes
+* **agent** [9d7f5a4](https://github.com/sysdiglabs/charts/commit/9d7f5a43ff82ce2c6dac332c36146c2bda7516e7): Fix invalid comparison type ([#1002](https://github.com/sysdiglabs/charts/issues/1002))
 # v1.6.0
 ### New Features
 * **agent** [e3ed91f](https://github.com/sysdiglabs/charts/commit/e3ed91f82c6e5335fb56e2edb4d1f40803a16f10): Create Delegated Agent installation mechanism ([#945](https://github.com/sysdiglabs/charts/issues/945))

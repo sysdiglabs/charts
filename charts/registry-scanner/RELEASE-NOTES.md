@@ -1,6 +1,6 @@
 # What's Changed
 
-### New Features
-- **registry-scanner** [368a628](https://github.com/sysdiglabs/charts/commit/368a6282fa1da32fa0b2debb8a8902a87b9932d9): add extraEnvVars ([#994](https://github.com/sysdiglabs/charts/issues/994))
+### Chores
+- [bdaf2cd](https://github.com/sysdiglabs/charts/commit/bdaf2cd6d967ba9d7ed7372f4da3dcb49d5c7acf): bumps registry scanner to 0.2.19 ([#1012](https://github.com/sysdiglabs/charts/issues/1012))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-0.1.26...registry-scanner-0.1.27
+#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-0.1.28...registry-scanner-0.1.29

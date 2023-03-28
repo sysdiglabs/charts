@@ -76,7 +76,7 @@ roleRef:
 
 ---
 
-{{- if .Values.tests.serviceAccount.create }}
+{{- if .Values.rapidResponse.serviceAccount.create }}
 apiVersion: v1
 kind: ServiceAccount
 metadata:

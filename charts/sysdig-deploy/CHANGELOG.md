@@ -10,6 +10,18 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.6.4
+### Chores
+* **sysdig-deploy** [032ea40](https://github.com/sysdiglabs/charts/commit/032ea40d47a9dde294fd9f5ad91f6b7f5e1e7edc): Automatic version bump due to updated dependencies ([#1010](https://github.com/sysdiglabs/charts/issues/1010))
+# v1.6.3
+### Chores
+* **sysdig-deploy** [560af5c](https://github.com/sysdiglabs/charts/commit/560af5c3211b36256a096c4d5177050135ad213c): Automatic version bump due to updated dependencies ([#1008](https://github.com/sysdiglabs/charts/issues/1008))
+# v1.6.2
+### Chores
+* **sysdig-deploy** [1822a9b](https://github.com/sysdiglabs/charts/commit/1822a9bbe7692f0958f06beb7938b1ec4c37ef26): Automatic version bump due to updated dependencies ([#1003](https://github.com/sysdiglabs/charts/issues/1003))
+# v1.6.1
+### Chores
+* **sysdig-deploy** [7d545ee](https://github.com/sysdiglabs/charts/commit/7d545eee029b024a15fdfb8267403372fd60d3b2): Automatic version bump due to updated dependencies ([#1001](https://github.com/sysdiglabs/charts/issues/1001))
 # v1.6.0
 ### Bug Fixes
 * **sysdig-deploy** [c8e3c36](https://github.com/sysdiglabs/charts/commit/c8e3c36de90584bd34e6a2f279670e8a3c2ed115): Fixed release name from the helm upgrade commands ([#944](https://github.com/sysdiglabs/charts/issues/944))
