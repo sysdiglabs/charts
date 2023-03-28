@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.1.29
+### Chores
+* [bdaf2cd](https://github.com/sysdiglabs/charts/commit/bdaf2cd6d967ba9d7ed7372f4da3dcb49d5c7acf): bumps registry scanner to 0.2.19 ([#1012](https://github.com/sysdiglabs/charts/issues/1012))
 # v0.1.28
 ### New Features
 * **registry-scanner** [88053c7](https://github.com/sysdiglabs/charts/commit/88053c7a7e719c6b00e575c535275a19f0710a16): adds k8jobs-options ([#997](https://github.com/sysdiglabs/charts/issues/997))
