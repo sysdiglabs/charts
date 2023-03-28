@@ -10,6 +10,12 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.8.44
+### New Features
+* **node-analyzer** [f3d3eb5](https://github.com/sysdiglabs/charts/commit/f3d3eb5ba7ab4d7e1dbef7f59270dea860428bfa): update runtimeScanner image with a fix for k8s v1.26 ([#1017](https://github.com/sysdiglabs/charts/issues/1017))
+
+    * * Runtimescanner bumped to 1.4.9:
+      * Fix: use CRI api v1 to ensure support for kubernetes v1.26
 # v1.8.43
 ### New Features
 * **node-analyzer** [fd600e8](https://github.com/sysdiglabs/charts/commit/fd600e86b1d28f141ca59439bc687c31fdc141b1): add extraVolumes to daemonset with nodeAnalyzer.extraVolumes.volumes
