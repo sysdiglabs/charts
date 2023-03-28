@@ -95,6 +95,9 @@ config:
         limits:
           # Resource limit memory for scanner job
           memory: 2Gi
+      # Size limit for the emptyDir volume used by the scanner job.<br/>
+      # This volume is used to store both the vulnerability database and the image to scan.
+      temporaryVolumeSizeLimit: 2Gi
     # true/false whether to activate the beta image scanning (experimental and unsupported)
     newVmScanner: false
 ssl:
