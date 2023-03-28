@@ -1,0 +1,49 @@
+# requires unittest plugin: https://github.com/quintush/helm-unittest
+# Run "helm unittest -3 -f ./tests/runtimescanner_test.yaml ." from within the `charts/node-analyzer` folder
+suite: Test RuntimeScanner configuration
+templates:
+  - ../templates/daemonset-node-analyzer.yaml
+values:
+  - ../values.yaml
+
+tests:
+  - it: "Add extra volume through nodeAnalyzer.imageAnalyzer.extraVolumes parameter (deprecated)"
+    templates:
+      - ../templates/daemonset-node-analyzer.yaml
+    set:
+      nodeAnalyzer:
+        imageAnalyzer:
+          extraVolumes:
+            volumes:
+              - name: docker-sock
+                hostPath:
+                  path: /var/run/docker.sock
+    asserts:
+      - isKind:
+          of: DaemonSet
+      - contains:
+          path: "spec.template.spec.volumes"
+          content:
+            name: docker-sock
+            hostPath:
+              path: /var/run/docker.sock
+
+  - it: "Add extra volume through nodeAnalyzer.extraVolumes parameter"
+    templates:
+      - ../templates/daemonset-node-analyzer.yaml
+    set:
+      nodeAnalyzer:
+          extraVolumes:
+            volumes:
+              - name: docker-sock
+                hostPath:
+                  path: /var/run/docker.sock
+    asserts:
+      - isKind:
+          of: DaemonSet
+      - contains:
+          path: "spec.template.spec.volumes"
+          content:
+            name: docker-sock
+            hostPath:
+              path: /var/run/docker.sock
