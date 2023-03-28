@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.7.26
+### Chores
+* **admission-controller** [af8be4e](https://github.com/sysdiglabs/charts/commit/af8be4e6857a505c6e17739c390e5943f2bab751): Update to v3.9.17 ([#1014](https://github.com/sysdiglabs/charts/issues/1014))
 # v0.7.25
 # v0.7.24
 ### Documentation
