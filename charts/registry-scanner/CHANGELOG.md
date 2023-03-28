@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.1.30
+### New Features
+* **registry-scanner** [2133ce8](https://github.com/sysdiglabs/charts/commit/2133ce86603c5a7442848301f4cb9acc3d2e086f): Add config value for tmp volume size limit ([#1016](https://github.com/sysdiglabs/charts/issues/1016))
 # v0.1.29
 ### Chores
 * [bdaf2cd](https://github.com/sysdiglabs/charts/commit/bdaf2cd6d967ba9d7ed7372f4da3dcb49d5c7acf): bumps registry scanner to 0.2.19 ([#1012](https://github.com/sysdiglabs/charts/issues/1012))
