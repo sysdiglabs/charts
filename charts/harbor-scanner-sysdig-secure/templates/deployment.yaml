@@ -69,6 +69,11 @@ spec:
             {{- if .Values.inlineScanning.enabled }}
             - name: INLINE_SCANNING
               value: "true"
+            - name: ASYNC_MODE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "harbor-scanner-sysdig-secure.fullname" . }}
+                  key: async_mode_enabled
             - name: NAMESPACE_NAME
               value: {{ .Release.Namespace }}
             - name: SECRET_NAME

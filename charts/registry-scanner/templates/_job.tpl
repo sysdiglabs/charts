@@ -1,4 +1,6 @@
 {{- define "registry-scanner.jobTemplate" }}
+  backoffLimit: 0
+  ttlSecondsAfterFinished: 3600
   template:
     metadata:
       name: {{ include "registry-scanner.fullname" . }}
@@ -14,7 +16,7 @@
       imagePullSecrets:
         {{- toYaml . | nindent 12 }}
       {{- end }}
-      serviceAccountName: {{ include "registry-scanner.fullname" . }}
+      serviceAccountName: {{ include "registry-scanner.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 12 }}
       containers:

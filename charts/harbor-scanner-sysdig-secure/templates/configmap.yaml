@@ -6,3 +6,4 @@ metadata:
     {{- include "harbor-scanner-sysdig-secure.labels" . | nindent 4 }}
 data:
   sysdig_secure_url: {{ .Values.sysdig.secure.url }}
+  async_mode_enabled: {{ .Values.asyncMode.enabled | quote }}
