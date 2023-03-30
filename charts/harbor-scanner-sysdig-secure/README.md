@@ -6,7 +6,7 @@ Kubernetes cluster.
 ## Installing the Chart
 
 1. Ensure you are passing the **sysdig.secure.apiToken** value. This one is
-mandatory to connect with the backend and perform scanning analysis
+   mandatory to connect with the backend and perform scanning analysis
 2. Create a namespace for the deployment:
 
 ```
@@ -58,7 +58,8 @@ Sysdig Secure chart and their default values:
 | `proxy.httpProxy`                             | URL of the proxy for HTTP connections, or empty if not using proxy (sets the http_proxy environment variable)               | ` `                                       |
 | `proxy.httpsProxy`                            | URL of the proxy for HTTPS connections, or empty if not using proxy (sets the https_proxy environment variable)             | ` `                                       |
 | `proxy.noProxy`                               | Comma-separated list of domain extensions proxy should not be used for. Include the internal IP of the kubeapi server.      | ` `                                       |
-| `inlineScanning.enabled`                      | Enable Inline Scanning feature                                                                                              | `true`                                   |
+| `inlineScanning.enabled`                      | Enable Inline Scanning feature                                                                                              | `true`                                    |
+| `asyncMode.enabled`                           | Enable Async-Mode feature                                                                                                   | `false`                                   |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
