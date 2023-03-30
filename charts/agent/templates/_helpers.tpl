@@ -394,14 +394,13 @@ agent config to prevent a backend push from enabling them after installation.
 */}}
 {{- define "agent.secureFeatures" }}
     {{- $secureEnabled := ternary false .root.Values.secure.enabled (eq .force_secure_disabled true) }}
-    {{- $secureBlockConfig := dict "security" (dict
-        "enabled" $secureEnabled
-        "k8s_audit_server_enabled" .root.Values.auditLog.enabled) }}
+    {{- $secureConfig := dict "security" (dict "enabled" $secureEnabled
+                                               "k8s_audit_server_enabled" .Values.auditLog.enabled) }}
     {{- if .root.Values.auditLog.enabled }}
         {{- range $key, $val := (dict
                  "k8s_audit_server_url" .root.Values.auditLog.auditServerUrl
                  "k8s_audit_server_port" .root.Values.auditLog.auditServerPort) }}
-            {{- $_ := set $secureBlockConfig.security $key $val }}
+            {{- $_ := set $secureConfig.security $key $val }}
         {{- end }}
     {{- end }}
     {{- if not $secureEnabled }}
@@ -412,7 +411,7 @@ agent config to prevent a backend push from enabling them after installation.
             "memdump"
             "network_topology"
             "secure_audit_streams") }}
-            {{- $_ := set $secureBlockConfig $secureFeature (dict "enabled" false) }}
+            {{- $secureConfig := set $secureConfig $secureFeature (dict "enabled" false) }}
         {{- end }}
     {{- end }}
 {{ toYaml $secureConfig }}

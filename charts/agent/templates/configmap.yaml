@@ -13,7 +13,7 @@ data:
 {{- if .Values.delegatedAgentDeployment.enabled }}
     cointerface_enabled: false
 {{- end }}
-{{- include "agent.connectionSettings" . | trim | nindent 4 }}
+{{- include "agent.planSettings" . | trim | nindent 4 }}
 {{- (include "agent.secureFeatures" (dict "root" . "force_secure_disabled" false)) | nindent 4 }}
 {{- include "agent.k8sColdStart" . | nindent 4 -}}
 {{ include "agent.disableCaptures" . | nindent 4 }}
