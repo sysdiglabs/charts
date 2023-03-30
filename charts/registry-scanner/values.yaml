@@ -45,7 +45,7 @@ config:
     managementAccountRoleARN:
     # Member account role name (available in all member accounts) to dig into their registries
     memberAccountsRoleName: "OrganizationAccountAccessRole"
-    # Organization account ids in which to perform the registry scan
+    # Organization account ids in which to perform the registry scan. If not configured, the scan will be performed in all the member accounts of the organization.
     allowListMemberAccountIDs: []
   # Ignore registry TLS certificate errors (self-signed, etc.).
   registrySkipTLS: false
