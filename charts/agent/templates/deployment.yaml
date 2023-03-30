@@ -122,8 +122,10 @@ spec:
               readOnly: true
             - mountPath: /host/run
               name: run-vol
-            - mountPath: /host/var
-              name: var-vol
+            - mountPath: /host/var/run
+              name: varrun-vol
+            - mountPath: /host/var/lib
+              name: varlib-vol
             - mountPath: /dev/shm
               name: dshm
             - mountPath: /opt/draios/etc/kubernetes/config
@@ -184,9 +186,13 @@ spec:
             type: ""
           name: run-vol
         - hostPath:
-            path: /var
+            path: /var/run
             type: ""
-          name: var-vol
+          name: varrun-vol
+        - hostPath:
+            path: /var/lib
+            type: ""
+          name: varlib-vol
         {{- if .Values.extraVolumes.volumes }}
 {{ toYaml .Values.extraVolumes.volumes | indent 8 }}
         {{- end }}
