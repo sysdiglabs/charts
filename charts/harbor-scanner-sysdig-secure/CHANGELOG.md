@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.4.0
+### New Features
+* **harbor-scanner-sysdig-secure** [496a0b0](https://github.com/sysdiglabs/charts/commit/496a0b02f7d7cb024aad3cdd4b994e698eb679c8): Adds config parameter to enable new async-mode ([#1011](https://github.com/sysdiglabs/charts/issues/1011))
 # v0.3.6
 # v0.3.5
 ### New Features

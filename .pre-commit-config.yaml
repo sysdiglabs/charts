@@ -11,6 +11,11 @@ repos:
     name: Lint charts
     entry: make lint
     language: system
+  - id: unit-test
+    pass_filenames: false
+    name: Lint charts
+    entry: make test-unit-all
+    language: system
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v4.2.0
   hooks:

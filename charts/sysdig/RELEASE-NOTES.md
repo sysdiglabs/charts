@@ -1,6 +1,6 @@
 # What's Changed
 
-### Bug Fixes
-- **sysdig,node-analyzer** [27ce551](https://github.com/sysdiglabs/charts/commit/27ce5515b64325ebe0e97762dbcc0a2b8deddbd3): Added missing volumeMount required for IBM OCP on legacy and new VM ([#955](https://github.com/sysdiglabs/charts/issues/955))
+### Chores
+- **sysdig** [b360599](https://github.com/sysdiglabs/charts/commit/b3605992c9167f3d5d1c54fb097b83dc66f9c6f5): bump agent version to 12.13.0 ([#1021](https://github.com/sysdiglabs/charts/issues/1021))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.5.74...sysdig-1.15.77
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.6.6...sysdig-1.15.81

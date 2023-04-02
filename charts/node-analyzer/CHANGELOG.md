@@ -10,6 +10,44 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.8.45
+### New Features
+* **kspm-collector,node-analyzer** [af66e68](https://github.com/sysdiglabs/charts/commit/af66e68abcc2d0345ec84c93b7cba1f65a8b0a97): bumped KSPM to latest version ([#1019](https://github.com/sysdiglabs/charts/issues/1019))
+# v1.8.44
+### New Features
+* **node-analyzer** [f3d3eb5](https://github.com/sysdiglabs/charts/commit/f3d3eb5ba7ab4d7e1dbef7f59270dea860428bfa): update runtimeScanner image with a fix for k8s v1.26 ([#1017](https://github.com/sysdiglabs/charts/issues/1017))
+
+    * * Runtimescanner bumped to 1.4.9:
+      * Fix: use CRI api v1 to ensure support for kubernetes v1.26
+# v1.8.43
+### New Features
+* **node-analyzer** [fd600e8](https://github.com/sysdiglabs/charts/commit/fd600e86b1d28f141ca59439bc687c31fdc141b1): add extraVolumes to daemonset with nodeAnalyzer.extraVolumes.volumes
+
+    * adds new option `nodeAnalyzer.extraVolumes.volumes`. This allows to define volumes for the nodeAnalyzer daemonset in a cleaner way.
+Previously it was necessary to use the option `nodeAnalyzer.imageAnalyzer.extraVolumes.volumes`.
+# v1.8.42
+### New Features
+* **node-analyzer** [79f7679](https://github.com/sysdiglabs/charts/commit/79f76794e271abf031216b261165f313192001f5): Update HostScanner and RuntimeScanner images containing latest security updates and fix ([#999](https://github.com/sysdiglabs/charts/issues/999))
+
+    * * Hostscanner bumped to 0.3.8
+     * Fix CVE-2022-41721
+     * Fix CVE-2022-41723
+     * Improved JAR's manifest parsing
+* Runtimescanner bumped to 1.4.7
+     * Improved JAR's manifest parsing
+# v1.8.41
+### New Features
+* **node-analyzer** [90e8df4](https://github.com/sysdiglabs/charts/commit/90e8df4228ce33e3ec57e6401de545e3fb265ced): bumped RuntimeScanner and HostScanner to latest versions ([#993](https://github.com/sysdiglabs/charts/issues/993))
+
+    * * Hostscanner bumped to 0.3.7, Runtimescanner bumped to 1.4.7
+     * fixed issue with detection of vulns in java packages with version ending with .RELEASE
+     * fixed issue with full java path not showing for dependencies (ex: jar in a war)
+# v1.8.40
+### New Features
+* **sysdig** [5273f8e](https://github.com/sysdiglabs/charts/commit/5273f8e29d38d79981797f2060271733654110dd): Update legacy engine NIA/HostAnalyzer components with security updates ([#989](https://github.com/sysdiglabs/charts/issues/989))
+# v1.8.39
+### New Features
+* **kspm-collector,node-analyzer** [3632fb0](https://github.com/sysdiglabs/charts/commit/3632fb0aabeb97a98d76c208e2cc566f376a08a3): bumped KSPM to latest version ([#977](https://github.com/sysdiglabs/charts/issues/977))
 # v1.8.38
 ### Bug Fixes
 * **sysdig,node-analyzer** [27ce551](https://github.com/sysdiglabs/charts/commit/27ce5515b64325ebe0e97762dbcc0a2b8deddbd3): Added missing volumeMount required for IBM OCP on legacy and new VM ([#955](https://github.com/sysdiglabs/charts/issues/955))

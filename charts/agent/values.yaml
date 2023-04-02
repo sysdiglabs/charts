@@ -19,7 +19,7 @@ image:
 
   registry: quay.io
   repository: sysdig/agent
-  tag: 12.12.0
+  tag: 12.13.0
   # Specify a imagePullPolicy
   # Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
   # ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -274,6 +274,43 @@ tolerations:
 
 leaderelection:
   enable: false
+
+delegatedAgentDeployment:
+  # Enable a specialized installation where an Agent Deployment is installed
+  # in addition to the traditional DaemonSet. The DaemonSet Agents will not
+  # be configured to communicate with the Kubernetes API Server, but the
+  # smaller set of Agents deployed in the Deployment will. This is a specialized
+  # installation type to reduce load on the Kubernetes API servers on clusters
+  # with very large node counts.
+  enabled: false
+
+  delegated_nodes: -1
+
+  deployment:
+    # affinity: {}
+    arch:
+      - amd64
+      - arm64
+      - s390x
+    env: {}
+    os:
+      - linux
+    labels: {}
+    progressDeadlineSeconds: 600
+    replicas: 1
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 1Gi
+      requests:
+        cpu: 250m
+        memory: 384Mi
+    revisionHistoryLimit: 10
+    updateStrategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
 
 # Allow direct setting of Agent log priority levels for console and file logs (info|debug)
 logPriority:

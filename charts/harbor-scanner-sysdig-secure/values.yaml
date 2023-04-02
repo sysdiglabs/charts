@@ -88,3 +88,6 @@ proxy:
 
 inlineScanning:
   enabled: true
+
+asyncMode:
+  enabled: "false"

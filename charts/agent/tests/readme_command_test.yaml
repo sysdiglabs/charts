@@ -49,8 +49,7 @@ tests:
         template: secrets.yaml
       - matchRegex:
           path: data.dragent\.yaml
-          pattern: |
-            tags: role:webserver,location:europe
+          pattern: 'tags: role:webserver,location:europe'
         template: configmap.yaml
 
   - it: check Readme install command example 1

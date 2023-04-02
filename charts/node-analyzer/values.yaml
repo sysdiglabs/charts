@@ -143,11 +143,15 @@ nodeAnalyzer:
                 values:
                   - linux
 
+  # Allow passing extra volumes to the Node Analyzer to mount docker socket, cri-o socket, etc.
+  extraVolumes:
+    volumes: []
+
   imageAnalyzer:
     deploy: true
     image:
       repository: sysdig/node-image-analyzer
-      tag: 0.1.24
+      tag: 0.1.25
       digest:
       pullPolicy: IfNotPresent
 
@@ -164,6 +168,7 @@ nodeAnalyzer:
     # containerdSocketPath: unix:///var/run/containerd/containerd.sock
 
     # Allow passing extra volumes to the Node Image Analyzer to mount docker socket, cri-o socket, etc.
+    # DEPRECATED: use nodeAnalyzer.extraVolumes instead
     extraVolumes:
       volumes: []
       mounts: []
@@ -199,7 +204,7 @@ nodeAnalyzer:
     deploy: true
     image:
       repository: sysdig/host-analyzer
-      tag: 0.1.14
+      tag: 0.1.15
       digest:
       pullPolicy: IfNotPresent
 
@@ -249,7 +254,7 @@ nodeAnalyzer:
     probesPort: 7002
     image:
       repository: sysdig/vuln-runtime-scanner
-      tag: 1.4.6
+      tag: 1.4.9
       digest:
       pullPolicy: IfNotPresent
     storageClassName:
@@ -322,7 +327,7 @@ nodeAnalyzer:
 
     image:
       repository: sysdig/vuln-host-scanner
-      tag: 0.3.6
+      tag: 0.3.8
       digest:
       pullPolicy: IfNotPresent
 
@@ -345,7 +350,7 @@ nodeAnalyzer:
     debug: false
     image:
       repository: sysdig/kspm-analyzer
-      tag: 1.20.1
+      tag: 1.22.0
       digest:
       pullPolicy: IfNotPresent
 

@@ -7,3 +7,24 @@ tests:
       - equal:
           path: spec.concurrencyPolicy
           value: Forbid
+  - it: sets extraEnvVars on job
+    set:
+      extraEnvVars:
+        - name: FOO
+          value: bar
+    asserts:
+      - contains:
+          path: spec.jobTemplate.spec.template.spec.containers[0].env
+          content:
+            name: FOO
+            value: bar
+  - it: sets the service account for the jobs
+    asserts:
+    - equal:
+        path: spec.jobTemplate.spec.template.spec.serviceAccountName
+        value: RELEASE-NAME-registry-scanner
+  - it: sets the backoff limit to 0
+    asserts:
+    - equal:
+        path: spec.jobTemplate.spec.backoffLimit
+        value: 0

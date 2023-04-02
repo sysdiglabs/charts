@@ -1,4 +1,6 @@
 {{- define "registry-scanner.jobTemplate" }}
+  backoffLimit: 0
+  ttlSecondsAfterFinished: 3600
   template:
     metadata:
       name: {{ include "registry-scanner.fullname" . }}
@@ -14,7 +16,7 @@
       imagePullSecrets:
         {{- toYaml . | nindent 12 }}
       {{- end }}
-      serviceAccountName: {{ include "registry-scanner.fullname" . }}
+      serviceAccountName: {{ include "registry-scanner.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 12 }}
       containers:
@@ -23,7 +25,7 @@
           {{- toYaml .Values.securityContext | nindent 14 }}
         image: {{ include "registry-scanner.image" . }}
         {{- if .Values.config.scan.newVmScanner }}
-        args: [ "--scan_runner=new-vm-scanner" ]
+        args: [ "--scan_runner=new-vm-scanner-k8s-job"]
         {{- else}}
         args: [ "--scan_runner=k8sjob" ]
         {{- end }}
@@ -115,6 +117,9 @@
                 name: {{ .Values.existingSecretName }}
                 {{- end }}
                 key: registryPassword
+          {{- end }}
+          {{- if .Values.extraEnvVars }}
+          {{- toYaml .Values.extraEnvVars | nindent 10 }}
           {{- end }}
       restartPolicy: {{ .Values.cronjob.restartPolicy }}
       {{- with .Values.nodeSelector }}

@@ -14,7 +14,7 @@ lint:
 deps-helm:
 	helm plugin install https://github.com/quintush/helm-unittest  || true
 
-test-all: deps-helm test-registry-scanner
+test-unit-all: deps-helm test-registry-scanner
 
 test-registry-scanner:
 	helm unittest --helm3 ./charts/registry-scanner

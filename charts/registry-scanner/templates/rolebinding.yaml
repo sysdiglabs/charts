@@ -8,5 +8,5 @@ roleRef:
   name: {{ include "registry-scanner.fullname" . }}
 subjects:
 - kind: ServiceAccount
-  name: {{ include "registry-scanner.fullname" . }}
+  name: {{ include "registry-scanner.serviceAccountName" . }}
   namespace: {{ .Release.Namespace }}

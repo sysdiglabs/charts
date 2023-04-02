@@ -1,0 +1,47 @@
+{{- if .Values.delegatedAgentDeployment.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "agent.configmapName" . | printf "%s-deployment" | trunc 63 | trimSuffix "-" }}
+  namespace: {{ include "agent.namespace" . }}
+  labels:
+{{ include "agent.labels" . | indent 4 }}
+data:
+  dragent.yaml: |
+    new_k8s: true
+{{- include "agent.clusterName" . | trim | nindent 4 }}
+{{- include "agent.connectionSettings" . | trim | nindent 4 }}
+    feature:
+      mode: monitor_light
+    cointerface_enabled: true
+    k8s_delegated_nodes: {{ .Values.delegatedAgentDeployment.delegated_nodes | int }}
+    top_processes_in_sample: 0
+    container_engines:
+      bpm: false
+      cri: false
+      docker: false
+      libvirt_lxc: false
+      lxc: false
+      mesos: false
+      podman: false
+      rkt: false
+    app_checks_enabled: false
+    jmx:
+      enabled: false
+    prometheus:
+      enabled: false
+    statsd:
+      enabled: false
+{{- include "agent.k8sColdStart" . | nindent 4 }}
+{{ include "agent.disableCaptures" . | nindent 4 }}
+{{- $_ := mergeOverwrite .Values.secure (dict "enabled" false) }}
+{{- (include "agent.secureFeatures" (dict "root" . "force_secure_disabled" false)) | nindent 4 }}
+{{- include "agent.logSettings" . }}
+{{- if .Values.global.sysdig.tags }}
+    tags: {{ include "agent.tags" . }}
+{{- end }}
+{{/* add in the remaining items from sysdig.settings */}}
+{{- if .Values.sysdig.settings }}
+{{- toYaml .Values.sysdig.settings | nindent 4 }}
+{{- end }}
+{{- end }}

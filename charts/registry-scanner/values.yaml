@@ -21,12 +21,12 @@ config:
   # URL of the registry to scan.
   registryURL: ""
   # API URL of the registry to scan. This is required if your registry type is Artifactory.
-  registryApiUrl: https://my-docker-registry.com/artifactory/api/docker/
+  registryApiUrl: ""
   # Username for registry authentication.
   registryUser: ""
   # Password for registry authentication.
   registryPassword: ""
-  # Registry Type. Optional. dockerv2 (default if not specified), icr, artifactory, ecr.
+  # Mandatory.<br/>Registry Type. Supported types: artifactory, ecr, icr, acr, quay, harbor, and dockerv2.
   registryType: ""
   # AccountID - Only for ICR registry type.
   registryAccountId: ""
@@ -45,7 +45,7 @@ config:
     managementAccountRoleARN:
     # Member account role name (available in all member accounts) to dig into their registries
     memberAccountsRoleName: "OrganizationAccountAccessRole"
-    # Organization account ids in which to perform the registry scan
+    # Organization account ids in which to perform the registry scan. If not configured, the scan will be performed in all the member accounts of the organization.
     allowListMemberAccountIDs: []
   # Ignore registry TLS certificate errors (self-signed, etc.).
   registrySkipTLS: false
@@ -59,17 +59,19 @@ config:
   secureOnPrem: false
   # Ignore Sysdig Secure TLS certificate errors.
   secureSkipTLS: false
-  # Max number of parallel inline scanner workers to spawn in cluster.
-  maxWorkers: 1
+  # Max number of parallel job scan workers to spawn
+  maxWorkers: 5
   filter:
-    # List of regular expressions. Images matching any of these expressions are *always* included when scanning.
+    # List of regular expressions.<br/>Images matching any of these expressions are *always* included when scanning.
     include: []
-    # List of regular expressions. Images matching any of these expressions are excluded when scanning.
+    # List of regular expressions.<br/>Images matching any of these expressions are excluded when scanning.
     exclude: []
-    # Exclude images with creation date older than specified number of days.
-    maxAgeDays:
-    # Only scan a maximum number of tags per repository, excluding older images by creation date.
-    maxTagsPerRepository:
+    # Based on its creation date, excludes images older than specified number of days.<br/>Maximum 365
+    maxAgeDays: 90
+    # Based on its creation date, newer ones take precedence, maximum number of tags to scan per repository.<br/>Maximum 10
+    maxTagsPerRepository: 5
+    # Number of repositories to scan per registry.<br/>Maximum Value 1000
+    maxRepositoriesPerRegistry: 500
   scan:
     # Override the default (if not specified) `quay.io/sysdig/secure-inline-scan:2` image for the inline scanner job.
     inlineScanImage: ""
@@ -81,14 +83,28 @@ config:
       # readOnlyRootFilesystem: true
       # runAsNonRoot: true
       # runAsUser: 1000
-
+    jobs:
+      # TTL for scanner jobs
+      ttlSecondsAfterFinished: 600
+      resources:
+        requests:
+          # Resource request memory for scanner job
+          memory: 500Mi
+          # Resource request CPU for scanner job
+          cpu: 500m
+        limits:
+          # Resource limit memory for scanner job
+          memory: 2Gi
+      # Size limit for the emptyDir volume used by the scanner job.<br/>
+      # This volume is used to store both the vulnerability database and the image to scan.
+      temporaryVolumeSizeLimit: 2Gi
     # true/false whether to activate the beta image scanning (experimental and unsupported)
     newVmScanner: false
 ssl:
   ca:
     # For outbound connections
     # <br/>List of PEM-encoded x509 certificate authority.
-    certs: {}
+    certs: []
       # Example of certificate
       # - |
       #     -----BEGIN CERTIFICATE-----
@@ -170,7 +186,7 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
-# Resource limits for registry scanner container.
+# Resource limits for main registry scanner orchestrator.<br/>For scanner job resources use `config.scan.jobs.resources`
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
@@ -200,3 +216,8 @@ scanOnStart:
   # true/false on whether to launch the job as a post-install helm hook.
   # <br/>mainly for testing purpose
   asPostInstallHook: false
+
+# Extra environment variables to be set
+extraEnvVars: []
+#  - name: FOO
+#    value: bar

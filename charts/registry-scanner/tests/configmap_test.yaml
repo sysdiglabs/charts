@@ -1,0 +1,121 @@
+suite: Registry Scanner - configmap
+templates:
+  - templates/configmap.yaml
+tests:
+  - it: contains a configmap
+    asserts:
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+      - hasDocuments:
+          count: 1
+  - it: logging defaults to info
+    asserts:
+      - isNotEmpty:
+          path: data
+      - matchRegex:
+          path: data.config\.yaml
+          pattern: "logging: info"
+
+  - it: maxWorkers defaults if no custom setup is given
+    asserts:
+      - matchRegex:
+          path: data.config\.yaml
+          pattern: "workers: 5"
+  - it: maxWorkers wires if custom setup is given
+    set:
+      config:
+        maxWorkers: 10
+    asserts:
+      - matchRegex:
+          path: data.config\.yaml
+          pattern: "workers: 10"
+
+  - it: maxTagsPerRepository defaults if no custom setup is given
+    asserts:
+      - matchRegex:
+          path: data.config\.yaml
+          pattern: "maxTagsPerRepository: 5"
+  - it: maxTagsPerRepository wires if custom setup is given
+    set:
+      config:
+        filter:
+          maxTagsPerRepository: 1
+    asserts:
+      - matchRegex:
+          path: data.config\.yaml
+          pattern: "maxTagsPerRepository: 1"
+
+  - it: maxAgeDays defaults if no custom setup is given
+    asserts:
+      - matchRegex:
+          path: data.config\.yaml
+          pattern: "maxAgeDays: 90"
+  - it: maxAgeDays wires if custom setup is given
+    set:
+      config:
+        filter:
+          maxAgeDays: 1
+    asserts:
+      - matchRegex:
+          path: data.config\.yaml
+          pattern: "maxAgeDays: 1"
+
+  - it: maxRepositories defaults if no custom setup is given
+    asserts:
+      - matchRegex:
+          path: data.config\.yaml
+          pattern: "maxRepositoriesPerRegistry: 500"
+  - it: maxRepositories wires if custom setup is given
+    set:
+      config:
+        filter:
+          maxRepositoriesPerRegistry: 1
+    asserts:
+      - matchRegex:
+          path: data.config\.yaml
+          pattern: "maxRepositoriesPerRegistry: 1"
+  - it: ttlSecondsAfterFinished defaults if no custom setup is given
+    asserts:
+      - matchRegex:
+          path: data.config\.yaml
+          pattern: "ttlSecondsAfterFinished: 600"
+  - it: ttlSecondsAfterFinished wires if custom setup is given
+    set:
+      config.scan.jobs.ttlSecondsAfterFinished: 0
+    asserts:
+      - matchRegex:
+          path: data.config\.yaml
+          pattern: "ttlSecondsAfterFinished: 0"
+  - it: resource request and limit defaults if no custom setup is given
+    asserts:
+      - matchRegex:
+          path: data.config\.yaml
+          pattern: requests:\n\s*memory:\s*500Mi\n\s*cpu:\s*500m\n\s*limits:\s*memory:\s*2Gi
+  - it: resource request and limit wires if custom setup is given
+    set:
+      config.scan.jobs.resources:
+        requests:
+          memory: 1Mi
+          cpu: 1m
+        limits:
+            memory: 2Mi
+    asserts:
+      - matchRegex:
+          path: data.config\.yaml
+          pattern: requests:\n\s*memory:\s*1Mi\n\s*cpu:\s*1m\n\s*limits:\s*memory:\s*2Mi
+  - it: sets the temporaryVolumeSizeLimit on job
+    set:
+      config:
+        scan:
+          jobs:
+            temporaryVolumeSizeLimit: 10Gi
+    asserts:
+      - matchRegex:
+          path: data.config\.yaml
+          pattern: "temporaryVolumeSizeLimit: 10Gi"
+  - it: sets the default temporaryVolumeSizeLimit on job
+    asserts:
+      - matchRegex:
+          path: data.config\.yaml
+          pattern: "temporaryVolumeSizeLimit: 2Gi"

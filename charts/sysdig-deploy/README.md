@@ -18,7 +18,7 @@ Currently included components:
 ## Prerequisites
 
 - Kubernetes 1.9+ with Beta APIs enabled
-- Helm v3+
+- Helm v3.6+
 
 ## Installation
 
@@ -157,13 +157,13 @@ helm repo update
 Get the currently deployed values and save them to `values.sysdig.yaml`.
 
 ```bash
-helm get values -n sysdig-agent sysdig -o yaml > values.sysdig.yaml
+helm get values -n sysdig-agent sysdig-agent -o yaml > values.sysdig.yaml
 ```
 
 Upgrade to the latest version of the chart:
 
 ```bash
-helm upgrade -n sysdig-agent sysdig sysdig/sysdig-deploy -f values.sysdig.yaml
+helm upgrade -n sysdig-agent sysdig-agent sysdig/sysdig-deploy -f values.sysdig.yaml
 ```
 
 ## Configuration

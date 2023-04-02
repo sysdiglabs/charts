@@ -1,0 +1,493 @@
+suite: Test delegated Agent Deployment installation type
+templates:
+  - templates/clusterrole.yaml
+  - templates/clusterrolebinding.yaml
+  - templates/configmap.yaml
+  - templates/configmap-deployment.yaml
+  - templates/daemonset.yaml
+  - templates/deployment.yaml
+  - templates/serviceaccount.yaml
+tests:
+  - it: Enable Delegated Agent Deployment
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+    asserts:
+      - containsDocument:
+          kind: DaemonSet
+          apiVersion: apps/v1
+        template: templates/daemonset.yaml
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+        template: templates/deployment.yaml
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+        template: templates/configmap.yaml
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+        template: templates/configmap-deployment.yaml
+
+  - it: Check deployment metadata
+    chart:
+      version: 1.5.61
+      appVersion: 12.11.0
+    release:
+      name: sysdig
+      namespace: sysdig
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+    asserts:
+      - equal:
+          path: metadata
+          value:
+            name: sysdig-agent
+            namespace: sysdig
+            labels:
+              app: sysdig-agent
+              app.kubernetes.io/instance: sysdig
+              app.kubernetes.io/managed-by: Helm
+              app.kubernetes.io/name: agent
+              app.kubernetes.io/version: 12.11.0
+              helm.sh/chart: agent-1.5.61
+    template: templates/deployment.yaml
+
+  - it: Test progressDeadlineSeconds
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+        deployment:
+          progressDeadlineSeconds: 30
+    asserts:
+      - equal:
+          path: spec.progressDeadlineSeconds
+          value: 30
+    template: templates/deployment.yaml
+
+  - it: Test replica setting
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+        deployment:
+          replicas: 20
+    asserts:
+      - equal:
+          path: spec.replicas
+          value: 20
+    template: templates/deployment.yaml
+
+  - it: Revision history limit
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+        deployment:
+          revisionHistoryLimit: 25
+    asserts:
+      - equal:
+          path: spec.revisionHistoryLimit
+          value: 25
+    template: templates/deployment.yaml
+
+  - it: Test matchLabels
+    release:
+      name: sg1
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+    asserts:
+      - equal:
+          path: spec.selector.matchLabels
+          value:
+            app.kubernetes.io/instance: sg1
+            app.kubernetes.io/name: agent
+    template: templates/deployment.yaml
+
+  - it: Test Update Strategy defaults
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+    asserts:
+      - equal:
+          path: spec.strategy
+          value:
+            rollingUpdate:
+              maxSurge: 25%
+              maxUnavailable: 25%
+            type: RollingUpdate
+        template: templates/deployment.yaml
+
+  - it: Test nodeSelector
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+        deployment:
+          nodeSelector:
+            cpu: quantum
+            memoryVolatile: extremely
+    asserts:
+      - equal:
+          path: spec.template.spec.nodeSelector
+          value:
+            cpu: quantum
+            memoryVolatile: extremely
+    template: templates/deployment.yaml
+
+  - it: Change Deployment affinity
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+        deployment:
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                      - key: topology.kubernetes.io/zone
+                        operator: In
+                        values:
+                          - stargate-command
+    asserts:
+      - equal:
+          path: spec.template.spec.affinity
+          value:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                      - key: topology.kubernetes.io/zone
+                        operator: In
+                        values:
+                          - stargate-command
+        template: templates/deployment.yaml
+
+  - it: Change CPU architectures and OS types allowed for the deployment (OpenShift 3)
+    capabilities:
+      majorVersion: "1"
+      minorVersion: "13"
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+        deployment:
+          arch:
+            - IA64
+          os:
+            - HP-UX
+    asserts:
+      - equal:
+          path: spec.template.spec.affinity
+          value:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                      - key: beta.kubernetes.io/arch
+                        operator: In
+                        values:
+                          - IA64
+                      - key: beta.kubernetes.io/os
+                        operator: In
+                        values:
+                          - HP-UX
+    template: templates/deployment.yaml
+
+  - it: Change CPU architectures and OS types allowed for the deployment
+    capabilities:
+      majorVersion: "1"
+      minorVersion: "26"
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+        deployment:
+          arch:
+            - IA64
+          os:
+            - HP-UX
+    asserts:
+      - equal:
+          path: spec.template.spec.affinity
+          value:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                      - key: kubernetes.io/arch
+                        operator: In
+                        values:
+                          - IA64
+                      - key: kubernetes.io/os
+                        operator: In
+                        values:
+                          - HP-UX
+    template: templates/deployment.yaml
+
+  - it: Image Pull Secrets
+    set:
+      image:
+        pullSecrets:
+          - name: P2X-3YZ
+      delegatedAgentDeployment:
+        enabled: true
+    asserts:
+      - equal:
+          path: spec.template.spec.imagePullSecrets
+          value:
+            - name: P2X-3YZ
+    templates:
+      - templates/daemonset.yaml
+      - templates/deployment.yaml
+
+  - it: Test container image
+    set:
+      image:
+        tag: 86.753.09
+      delegatedAgentDeployment:
+        enabled: true
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].image
+          value: "quay.io/sysdig/agent-slim:86.753.09"
+      - equal:
+          path: spec.template.spec.containers[0].imagePullPolicy
+          value: IfNotPresent
+    templates:
+      - templates/daemonset.yaml
+      - templates/deployment.yaml
+
+  - it: Test container resource constraints
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+        deployment:
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+            requests:
+              cpu: 250m
+              memory: 384Mi
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].resources
+          value:
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+            requests:
+              cpu: 250m
+              memory: 384Mi
+    template: templates/deployment.yaml
+
+  - it: Test container proxy settings
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+      proxy:
+        httpProxy: 192.168.10.2
+        httpsProxy: 192.168.10.3
+        noProxy: 192.168.10.4
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: http_proxy
+            value: 192.168.10.2
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: https_proxy
+            value: 192.168.10.3
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: no_proxy
+            value: 192.168.10.4
+    templates:
+      - templates/daemonset.yaml
+      - templates/deployment.yaml
+
+  - it: Check Deployment and Daemonset labels
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+        deployment:
+          labels:
+            super: cool
+            deployment: labels
+      daemonset:
+        labels:
+          super: cool
+          daemonset: labels
+    asserts:
+      - isSubset:
+          path: metadata.labels
+          content:
+            super: cool
+            deployment: labels
+        template: templates/deployment.yaml
+      - isSubset:
+          path: metadata.labels
+          content:
+            super: cool
+            daemonset: labels
+        template: templates/daemonset.yaml
+
+  - it: Test setting logging levels
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+      logPriority: debug
+    asserts:
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: "log:\n\ {2}console_priority:\ debug\n\ {2}file_priority:\ debug"
+    templates:
+      - templates/configmap.yaml
+      - templates/configmap-deployment.yaml
+
+  - it: Ensure Secure features are disabled in the Deployment Agents
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+    asserts:
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: "commandlines_capture:\n {2}enabled: false\ndrift_killer:\n {2}enabled: false\nfalcobaseline:\n {2}enabled: false\nmemdump:\n {2}enabled: false\nnetwork_topology:\n {2}enabled: false\nsecure_audit_streams:\n {2}enabled: false"
+        template: templates/configmap-deployment.yaml
+
+  - it: Ensure disabling secure still works for Daemonset too
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+      secure:
+        enabled: false
+    asserts:
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: "commandlines_capture:\n {2}enabled: false\ndrift_killer:\n {2}enabled: false\nfalcobaseline:\n {2}enabled: false\nmemdump:\n {2}enabled: false\nnetwork_topology:\n {2}enabled: false\nsecure_audit_streams:\n {2}enabled: false"
+    templates:
+      - templates/configmap.yaml
+      - templates/configmap-deployment.yaml
+
+  - it: Check extra volumes/mounts
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+      extraVolumes:
+        mounts:
+          - mountPath: /opt/draios/cm
+            name: my-new-cm
+        volumes:
+          - name: my-new-cm
+            configMap:
+              name: my-new-cm
+              optional: true
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            mountPath: /opt/draios/cm
+            name: my-new-cm
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: my-new-cm
+            configMap:
+              name: my-new-cm
+              optional: true
+    templates:
+      - templates/daemonset.yaml
+      - templates/deployment.yaml
+
+  - it: Enable leaderelection
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+      leaderelection:
+        enable: true
+    asserts:
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: |-
+            k8s_coldstart:
+              enabled: true
+              enforce_leader_election: true
+              max_parallel_cold_starts: 1
+              namespace: NAMESPACE
+    template: templates/configmap-deployment.yaml
+
+  - it: Enable leaderelection and specify custom cold start number
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+      leaderelection:
+        enable: true
+      resourceProfile: large
+    asserts:
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: |-
+            k8s_coldstart:
+              enabled: true
+              enforce_leader_election: true
+              max_parallel_cold_starts: 1
+              namespace: NAMESPACE
+    template: templates/configmap-deployment.yaml
+
+  - it: Checking disabling captures in delegated agent deployment mode
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+      sysdig:
+        disableCaptures: true
+    asserts:
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: |
+            sysdig_capture_enabled: false
+    templates:
+      - templates/configmap.yaml
+      - templates/configmap-deployment.yaml
+
+  - it: Ensure sanity of Agent service account
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+    asserts:
+      - containsDocument:
+          apiVersion: rbac.authorization.k8s.io/v1
+          kind: ClusterRole
+          name: RELEASE-NAME-agent
+        template: templates/clusterrole.yaml
+      - containsDocument:
+          apiVersion: rbac.authorization.k8s.io/v1
+          kind: ClusterRoleBinding
+          name: RELEASE-NAME-agent
+        template: templates/clusterrolebinding.yaml
+      - contains:
+          path: subjects
+          content:
+            kind: ServiceAccount
+            name: RELEASE-NAME-agent
+            namespace: NAMESPACE
+        template: templates/clusterrolebinding.yaml
+      - equal:
+          path: roleRef
+          value:
+            kind: ClusterRole
+            name: RELEASE-NAME-agent
+            apiGroup: rbac.authorization.k8s.io
+        template: templates/clusterrolebinding.yaml
+      - containsDocument:
+          apiVersion: v1
+          kind: ServiceAccount
+          name: RELEASE-NAME-agent
+          namespace: NAMESPACE
+        template: templates/serviceaccount.yaml
+      - isSubset:
+          path: spec.template.spec
+          content:
+            serviceAccountName: RELEASE-NAME-agent
+        template: templates/deployment.yaml

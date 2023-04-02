@@ -1,0 +1,41 @@
+suite: Test Prometheus file injection
+templates:
+  - templates/configmap.yaml
+  - templates/configmap-deployment.yaml
+tests:
+  - it: Check customizing Prometheus parameters
+    set:
+      prometheus:
+        file: true
+        yaml:
+          custom: content
+          is: here
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - equal:
+          path: data.prometheus\.yaml
+          value: |
+            custom: content
+            is: here
+    template: configmap.yaml
+
+  - it: Check customizing Prometheus parameters in Delegated Agent mode
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+      prometheus:
+        file: true
+        yaml:
+          custom: content
+          is: here
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - equal:
+          path: data.prometheus\.yaml
+          value: |
+            custom: content
+            is: here
+        not: true
+    template: configmap-deployment.yaml

@@ -126,7 +126,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{/*
 Daemonset labels
 */}}
-{{- define "daemonset.labels" -}}
+{{- define "agent.daemonsetLabels" -}}
   {{- if .Values.daemonset.labels }}
     {{- $tp := typeOf .Values.daemonset.labels }}
     {{- if eq $tp "string" }}
@@ -136,6 +136,23 @@ Daemonset labels
         {{- tpl .Values.daemonset.labels . }}
     {{- else }}
         {{- toYaml .Values.daemonset.labels }}
+    {{- end }}
+  {{- end }}
+{{- end -}}
+
+{{/*
+Deployment labels
+*/}}
+{{- define "agent.deploymentLabels" -}}
+  {{- if .Values.delegatedAgentDeployment.deployment.labels }}
+    {{- $tp := typeOf .Values.delegatedAgentDeployment.deployment.labels }}
+    {{- if eq $tp "string" }}
+        {{- if not (regexMatch "^[a-z0-9A-Z].*(: )(.*[a-z0-9A-Z]$)?" .Values.delegatedAgentDeployment.deployment.labels) }}
+            {{- fail "delegatedAgentDeployment.deployment.labels does not seem to be of the type key:[space]value" }}
+        {{- end }}
+        {{- tpl .Values.delegatedAgentDeployment.deployment.labels . }}
+    {{- else }}
+        {{- toYaml .Values.delegatedAgentDeployment.deployment.labels }}
     {{- end }}
   {{- end }}
 {{- end -}}
@@ -333,17 +350,18 @@ secure.enabled=false we need to explicitly put those config entires in the
 agent config to prevent a backend push from enabling them after installation.
 */}}
 {{- define "agent.secureFeatures" }}
+    {{- $secureEnabled := ternary false .root.Values.secure.enabled (eq .force_secure_disabled true) }}
     {{- $secureBlockConfig := dict "security" (dict
-        "enabled" .Values.secure.enabled
-        "k8s_audit_server_enabled" .Values.auditLog.enabled) }}
-    {{- if .Values.auditLog.enabled }}
+        "enabled" $secureEnabled
+        "k8s_audit_server_enabled" .root.Values.auditLog.enabled) }}
+    {{- if .root.Values.auditLog.enabled }}
         {{- range $key, $val := (dict
-                 "k8s_audit_server_url" .Values.auditLog.auditServerUrl
-                 "k8s_audit_server_port" .Values.auditLog.auditServerPort) }}
+                 "k8s_audit_server_url" .root.Values.auditLog.auditServerUrl
+                 "k8s_audit_server_port" .root.Values.auditLog.auditServerPort) }}
             {{- $_ := set $secureBlockConfig.security $key $val }}
         {{- end }}
     {{- end }}
-    {{- if not .Values.secure.enabled }}
+    {{- if not $secureEnabled }}
         {{- range $secureFeature := (list
             "commandlines_capture"
             "drift_killer"
@@ -351,8 +369,89 @@ agent config to prevent a backend push from enabling them after installation.
             "memdump"
             "network_topology"
             "secure_audit_streams") }}
-            {{- $_ := set $.Values.sysdig.settings $secureFeature (dict "enabled" false) }}
+            {{- $_ := set $secureBlockConfig $secureFeature (dict "enabled" false) }}
         {{- end }}
     {{- end }}
     {{- toYaml $secureBlockConfig }}
+{{- end }}
+
+{{ define "agent.k8sColdStart" }}
+    {{- $k8sColdStartBlock := dict }}
+    {{- if .Values.leaderelection.enable }}
+        {{- range $key, $val := (dict "enabled" true
+                                      "enforce_leader_election" true
+                                      "namespace" (include "agent.namespace" .)) }}
+            {{- $_ := set $k8sColdStartBlock $key $val }}
+        {{- end }}
+    {{- end }}
+    {{- if not .Values.sysdig.settings.k8s_coldstart }}
+        {{- if not .Values.delegatedAgentDeployment.enabled }}
+            {{- $_ := set $k8sColdStartBlock "max_parallel_cold_starts" (include "agent.parallelStarts" . | int ) }}
+        {{- else }}
+            {{- $_ := set $k8sColdStartBlock "max_parallel_cold_starts" 1 }}
+        {{- end }}
+    {{- end }}
+    {{- $completeBlock := dict "k8s_coldstart" $k8sColdStartBlock }}
+    {{- toYaml $completeBlock }}
+{{- end }}
+
+{{ define "agent.connectionSettings" }}
+{{- $collectorHost := include "get_if_not_in_settings" (dict "root" . "default" (include "agent.collectorEndpoint" .) "setting" "collector") }}
+{{- if $collectorHost }}
+collector: {{ $collectorHost }}
+{{- end }}
+{{- $collectorPort := include "get_if_not_in_settings" (dict "root" . "default" .Values.collectorSettings.collectorPort "setting" "collector_port")}}
+{{- if $collectorPort }}
+collector_port: {{ $collectorPort }}
+{{- end }}
+{{- $ssl := include "get_if_not_in_settings" (dict "root" . "default" .Values.collectorSettings.ssl "setting" "ssl")}}
+{{- if $ssl }}
+ssl: {{ $ssl }}
+{{- end }}
+{{- $sslVerifyCertificate := include "get_if_not_in_settings" (dict "root" . "default" .Values.collectorSettings.sslVerifyCertificate "setting" "ssl_verify_certificate")}}
+{{- if $sslVerifyCertificate }}
+ssl_verify_certificate: {{ $sslVerifyCertificate }}
+{{- end }}
+{{- end }}
+
+{{ define "agent.logSettings" }}
+{{/* check for log level sanity and skip this check if delegatedAgentDeployment
+     is enabled because this will be run twice and the second check will error out. */}}
+{{- if and .Values.logPriority
+            (or (hasKey (default dict .Values.sysdig.settings.log) "console_priority") (hasKey (default dict .Values.sysdig.settings.log) "file_priority"))
+            (not .Values.delegatedAgentDeployment.enabled) }}
+  {{- fail "Cannot set logPriority when either sysdig.settings.log.console_priority or sysdig.settings.log.file_priority are set" }}
+{{- end }}
+{{- if .Values.logPriority }}
+  {{- $_ := merge .Values.sysdig.settings (dict "log" (dict "console_priority" .Values.logPriority "file_priority" .Values.logPriority)) }}
+{{- end }}
+{{- end }}
+
+{{ define "agent.containerProxyEnvVars" }}
+{{- if (.Values.proxy.httpProxy | default .Values.global.proxy.httpProxy) }}
+- name: http_proxy
+  value: {{ .Values.proxy.httpProxy | default .Values.global.proxy.httpProxy }}
+{{- end }}
+{{- if (.Values.proxy.httpsProxy | default .Values.global.proxy.httpsProxy) }}
+- name: https_proxy
+  value: {{ .Values.proxy.httpsProxy | default .Values.global.proxy.httpsProxy }}
+{{- end }}
+{{- if (.Values.proxy.noProxy | default .Values.global.proxy.noProxy) }}
+- name: no_proxy
+  value: {{ .Values.proxy.noProxy | default .Values.global.proxy.noProxy }}
+{{- end }}
+{{- end }}
+
+{{ define "agent.clusterName" }}
+{{- $clusterName := include "get_if_not_in_settings" (dict "root" . "default" (coalesce .Values.clusterName .Values.global.clusterConfig.name) "setting" "k8s_cluster_name") }}
+{{- if $clusterName }}
+k8s_cluster_name: {{ $clusterName }}
+{{- end }}
+{{- end }}
+
+{{- define "agent.disableCaptures" }}
+{{- $disableCaptures := include "get_if_not_in_settings" (dict "root" . "default" .Values.sysdig.disableCaptures "setting" "sysdig_capture_enabled") }}
+{{- if eq $disableCaptures "true" }}
+sysdig_capture_enabled: false
+{{- end }}
 {{- end }}
