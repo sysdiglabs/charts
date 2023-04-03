@@ -53,7 +53,7 @@ tests:
             mode: secure_light
     asserts:
       - failedTemplate:
-          errorMessage: 'Cannot set agent.monitor.enabled=true when agent.sysdig.settings.feature.mode is secure or secure_light'
+          errorMessage: 'Cannot set monitor.enabled=true when sysdig.settings.feature.mode is `secure` or `secure_light`'
 
   - it: Test monitor.enabled when specifying secure mode
     set:
@@ -65,4 +65,4 @@ tests:
             mode: secure
     asserts:
       - failedTemplate:
-          errorMessage: 'Cannot set agent.monitor.enabled=true when agent.sysdig.settings.feature.mode is secure or secure_light'
+          errorMessage: 'Cannot set monitor.enabled=true when sysdig.settings.feature.mode is `secure` or `secure_light`'

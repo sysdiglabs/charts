@@ -350,11 +350,11 @@ and set the agent chart parameters accordingly
     {{/* Basic plan sanity checks */}}
     {{- if and (not .Values.secure.enabled)
                 .Values.secureFeatProvided }}
-        {{ fail "Set agent.secure.enabled=true when specifying agent.sysdig.settings.feature.mode is secure or secure_light" }}
+        {{ fail "Set secure.enabled=true when specifying sysdig.settings.feature.mode is `secure` or `secure_light`" }}
     {{- end }}
     {{- if and .Values.monitor.enabled
                .Values.secureFeatProvided }}
-        {{ fail "Cannot set agent.monitor.enabled=true when agent.sysdig.settings.feature.mode is secure or secure_light" }}
+        {{ fail "Cannot set monitor.enabled=true when sysdig.settings.feature.mode is `secure` or `secure_light`" }}
     {{- end }}
 {{ include "agent.monitorFeatures" . }}
 {{ include "agent.secureFeatures" . }}
