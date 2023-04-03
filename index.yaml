@@ -2863,6 +2863,33 @@ entries:
   agent:
   - apiVersion: v2
     appVersion: 12.13.0
+    created: "2023-04-03T13:30:43.283808839Z"
+    description: Sysdig Monitor and Secure agent
+    digest: dc46c4b25ff9a3d06adc38cf68007fa81d1cf4c796c05ecce3d5d5dd2c028d5b
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: adam.roberts@sysdig.com
+      name: aroberts87
+    - email: zhongcheng.xiao@sysdig.com
+      name: lilx1ao
+    name: agent
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/agent-1.6.4/agent-1.6.4.tgz
+    version: 1.6.4
+  - apiVersion: v2
+    appVersion: 12.13.0
     created: "2023-03-29T18:28:29.066670524Z"
     description: Sysdig Monitor and Secure agent
     digest: be4bee89e6fd5e943279ebd541f99151768da0a74904a8cce3571ab8f47e2b44
@@ -14695,6 +14722,38 @@ entries:
     - https://github.com/sysdiglabs/charts/releases/download/registry-scanner-0.0.1/registry-scanner-0.0.1.tgz
     version: 0.0.1
   sysdig:
+  - apiVersion: v1
+    appVersion: 12.13.0
+    created: "2023-04-03T13:30:43.4743396Z"
+    description: Sysdig Monitor and Secure agent
+    digest: 30aafbd93ff61d3a3de10b27be7682ad9f65445afd105ddd08a7dc25afff6563
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: lachlan@deis.com
+      name: lachie83
+    - email: jorge.salamero@sysdig.com
+      name: bencer
+    - email: nestor.salceda@sysdig.com
+      name: nestorsalceda
+    - email: alvaro.iradier@sysdig.com
+      name: airadier
+    - email: carlos.arilla@sysdig.com
+      name: carillan81
+    name: sysdig
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/sysdig-1.15.82/sysdig-1.15.82.tgz
+    version: 1.15.82
   - apiVersion: v1
     appVersion: 12.13.0
     created: "2023-03-29T18:13:24.963130217Z"
@@ -30065,4 +30124,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2023-03-30T17:48:27.191174345Z"
+generated: "2023-04-03T13:30:43.688107292Z"
