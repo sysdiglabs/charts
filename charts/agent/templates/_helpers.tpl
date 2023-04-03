@@ -357,7 +357,7 @@ and set the agent chart parameters accordingly
         {{ fail "Cannot set monitor.enabled=true when sysdig.settings.feature.mode is `secure` or `secure_light`" }}
     {{- end }}
 {{ include "agent.monitorFeatures" . }}
-{{ include "agent.secureFeatures" . }}
+{{ include "agent.secureFeatures" (dict "root" .) }}
 {{- end -}}
 
 {{/*
@@ -395,7 +395,7 @@ agent config to prevent a backend push from enabling them after installation.
 {{- define "agent.secureFeatures" }}
     {{- $secureEnabled := ternary false .root.Values.secure.enabled (eq .force_secure_disabled true) }}
     {{- $secureConfig := dict "security" (dict "enabled" $secureEnabled
-                                               "k8s_audit_server_enabled" .Values.auditLog.enabled) }}
+                                               "k8s_audit_server_enabled" .root.Values.auditLog.enabled) }}
     {{- if .root.Values.auditLog.enabled }}
         {{- range $key, $val := (dict
                  "k8s_audit_server_url" .root.Values.auditLog.auditServerUrl
