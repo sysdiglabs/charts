@@ -341,23 +341,21 @@ Determine the plan settings (monitor/secure) set in the sysdig-deploy chart
 and set the agent chart parameters accordingly
 */}}
 {{- define "agent.planSettings" -}}
+    {{- $secureFeatProvided := false }}
     {{/* Determine if secure or secure_light mode is being requested in Agent settings and store state */}}
-    {{- if hasKey .Values.sysdig.settings "feature" }}
-        {{- $_ := set .Values "secureLight" (eq .Values.sysdig.settings.feature.mode "secure_light") }}
-        {{- $_ := set .Values "secureFeatProvided" (or .Values.secureLight
-                                                       (eq .Values.sysdig.settings.feature.mode "secure")) }}
+    {{- if and (hasKey .Values.sysdig.settings "feature") (hasKey .Values.sysdig.settings.feature "mode") }}
+        {{- $secureLight := (eq .Values.sysdig.settings.feature.mode "secure_light") }}
+        {{- $secureFeatProvided = (or $secureLight (eq .Values.sysdig.settings.feature.mode "secure")) }}
     {{- end }}
     {{/* Basic plan sanity checks */}}
-    {{- if and (not .Values.secure.enabled)
-                .Values.secureFeatProvided }}
+    {{- if and (not .Values.secure.enabled) $secureFeatProvided }}
         {{ fail "Set secure.enabled=true when specifying sysdig.settings.feature.mode is `secure` or `secure_light`" }}
     {{- end }}
-    {{- if and .Values.monitor.enabled
-               .Values.secureFeatProvided }}
+    {{- if and .Values.monitor.enabled $secureFeatProvided }}
         {{ fail "Cannot set monitor.enabled=true when sysdig.settings.feature.mode is `secure` or `secure_light`" }}
     {{- end }}
-{{ include "agent.monitorFeatures" . }}
-{{ include "agent.secureFeatures" (dict "root" .) }}
+    {{- include "agent.monitorFeatures" . }}
+    {{- include "agent.secureFeatures" . }}
 {{- end -}}
 
 {{/*
@@ -375,7 +373,7 @@ For monitor.enabled=false, disable all Monitor specific extras (like app checks,
             "statsd") }}
             {{- $_ := set $monitorBlock $monitorFeature (dict "enabled" false) }}
         {{- end }}
-{{ toYaml $monitorBlock }}
+        {{- toYaml $monitorBlock }}
     {{- end -}}
 {{- end -}}
 
@@ -393,17 +391,28 @@ secure.enabled=false we need to explicitly put those config entires in the
 agent config to prevent a backend push from enabling them after installation.
 */}}
 {{- define "agent.secureFeatures" }}
-    {{- $secureEnabled := ternary false .root.Values.secure.enabled (eq .force_secure_disabled true) }}
-    {{- $secureConfig := dict "security" (dict "enabled" $secureEnabled
-                                               "k8s_audit_server_enabled" .root.Values.auditLog.enabled) }}
-    {{- if .root.Values.auditLog.enabled }}
+    {{- $secureConfig := dict "security" (dict
+        "enabled" .Values.secure.enabled
+        "k8s_audit_server_enabled" .Values.auditLog.enabled
+    ) }}
+    {{- if .Values.auditLog.enabled }}
         {{- range $key, $val := (dict
-                 "k8s_audit_server_url" .root.Values.auditLog.auditServerUrl
-                 "k8s_audit_server_port" .root.Values.auditLog.auditServerPort) }}
+                "k8s_audit_server_url" .Values.auditLog.auditServerUrl
+                "k8s_audit_server_port" .Values.auditLog.auditServerPort
+        ) }}
             {{- $_ := set $secureConfig.security $key $val }}
         {{- end }}
     {{- end }}
-    {{- if not $secureEnabled }}
+    {{- if or
+        (not .Values.secure.enabled)
+        (
+            and
+                (.Values.secure.enabled)
+                (hasKey .Values.sysdig.settings "feature")
+                (hasKey .Values.sysdig.settings.feature "mode")
+                (eq .Values.sysdig.settings.feature.mode "secure_light")
+        )
+    }}
         {{- range $secureFeature := (list
             "commandlines_capture"
             "drift_killer"
@@ -414,7 +423,7 @@ agent config to prevent a backend push from enabling them after installation.
             {{- $secureConfig := set $secureConfig $secureFeature (dict "enabled" false) }}
         {{- end }}
     {{- end }}
-{{ toYaml $secureConfig }}
+    {{- toYaml $secureConfig }}
 {{- end }}
 
 {{ define "agent.k8sColdStart" }}
@@ -456,17 +465,19 @@ ssl_verify_certificate: {{ $sslVerifyCertificate }}
 {{- end }}
 {{- end }}
 
+{{/*
+Check for log level sanity and skip this check if delegatedAgentDeployment
+is enabled because this will be run twice and the second check will error out.
+*/}}
 {{ define "agent.logSettings" }}
-{{/* check for log level sanity and skip this check if delegatedAgentDeployment
-     is enabled because this will be run twice and the second check will error out. */}}
-{{- if and .Values.logPriority
+    {{- if and .Values.logPriority
             (or (hasKey (default dict .Values.sysdig.settings.log) "console_priority") (hasKey (default dict .Values.sysdig.settings.log) "file_priority"))
             (not .Values.delegatedAgentDeployment.enabled) }}
-  {{- fail "Cannot set logPriority when either sysdig.settings.log.console_priority or sysdig.settings.log.file_priority are set" }}
-{{- end }}
-{{- if .Values.logPriority }}
-  {{- $_ := merge .Values.sysdig.settings (dict "log" (dict "console_priority" .Values.logPriority "file_priority" .Values.logPriority)) }}
-{{- end }}
+        {{- fail "Cannot set logPriority when either sysdig.settings.log.console_priority or sysdig.settings.log.file_priority are set" }}
+    {{- end }}
+    {{- if .Values.logPriority }}
+        {{- $_ := merge .Values.sysdig.settings (dict "log" (dict "console_priority" .Values.logPriority "file_priority" .Values.logPriority)) }}
+    {{- end }}
 {{- end }}
 
 {{ define "agent.containerProxyEnvVars" }}
@@ -485,15 +496,15 @@ ssl_verify_certificate: {{ $sslVerifyCertificate }}
 {{- end }}
 
 {{ define "agent.clusterName" }}
-{{- $clusterName := include "get_if_not_in_settings" (dict "root" . "default" (coalesce .Values.clusterName .Values.global.clusterConfig.name) "setting" "k8s_cluster_name") }}
-{{- if $clusterName }}
+    {{- $clusterName := include "get_if_not_in_settings" (dict "root" . "default" (coalesce .Values.clusterName .Values.global.clusterConfig.name) "setting" "k8s_cluster_name") }}
+    {{- if $clusterName }}
 k8s_cluster_name: {{ $clusterName }}
-{{- end }}
+    {{- end }}
 {{- end }}
 
 {{- define "agent.disableCaptures" }}
-{{- $disableCaptures := include "get_if_not_in_settings" (dict "root" . "default" .Values.sysdig.disableCaptures "setting" "sysdig_capture_enabled") }}
-{{- if eq $disableCaptures "true" }}
+    {{- $disableCaptures := include "get_if_not_in_settings" (dict "root" . "default" .Values.sysdig.disableCaptures "setting" "sysdig_capture_enabled") }}
+    {{- if eq $disableCaptures "true" }}
 sysdig_capture_enabled: false
-{{- end }}
+    {{- end }}
 {{- end }}
