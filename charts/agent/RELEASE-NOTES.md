@@ -1,6 +1,6 @@
 # What's Changed
 
-### Chores
-- **agent** [dc2a37a](https://github.com/sysdiglabs/charts/commit/dc2a37a2f4d63967e14874ee11c788eb7cd7fba1): bump agent version to 12.13.0 ([#1022](https://github.com/sysdiglabs/charts/issues/1022))
+### New Features
+- **agent** [99a4b36](https://github.com/sysdiglabs/charts/commit/99a4b36bfd535264766b30ce176f4e244da0eb1f): Include /var/libs host volume mount ([#1009](https://github.com/sysdiglabs/charts/issues/1009))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.6.2...agent-1.6.3
+#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.6.3...agent-1.6.4

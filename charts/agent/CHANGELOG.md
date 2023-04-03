@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.6.4
+### New Features
+* **agent** [99a4b36](https://github.com/sysdiglabs/charts/commit/99a4b36bfd535264766b30ce176f4e244da0eb1f): Include /var/libs host volume mount ([#1009](https://github.com/sysdiglabs/charts/issues/1009))
 # v1.6.3
 ### Chores
 * **agent** [dc2a37a](https://github.com/sysdiglabs/charts/commit/dc2a37a2f4d63967e14874ee11c788eb7cd7fba1): bump agent version to 12.13.0 ([#1022](https://github.com/sysdiglabs/charts/issues/1022))
