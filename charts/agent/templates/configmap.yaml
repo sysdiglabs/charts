@@ -14,9 +14,8 @@ data:
     cointerface_enabled: false
 {{- end }}
 {{- include "agent.planSettings" . | trim | nindent 4 }}
-{{- (include "agent.secureFeatures" (dict "root" . "force_secure_disabled" false)) | nindent 4 }}
-{{- include "agent.k8sColdStart" . | nindent 4 -}}
-{{ include "agent.disableCaptures" . | nindent 4 }}
+{{- include "agent.k8sColdStart" . | nindent 4 }}
+{{- include "agent.disableCaptures" . | nindent 4 }}
 {{- include "agent.logSettings" . }}
 {{- if .Values.global.sysdig.tags }}
     tags: {{ include "agent.tags" . }}
