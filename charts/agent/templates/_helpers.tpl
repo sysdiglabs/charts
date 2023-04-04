@@ -422,7 +422,7 @@ agent config to prevent a backend push from enabling them after installation.
             "memdump"
             "network_topology"
             "secure_audit_streams") }}
-            {{- $secureConfig := set $secureConfig $secureFeature (dict "enabled" false) }}
+            {{- $_ := set $secureConfig $secureFeature (dict "enabled" false) }}
         {{- end }}
     {{- end }}
     {{- toYaml $secureConfig }}
