@@ -354,8 +354,10 @@ and set the agent chart parameters accordingly
     {{- if and .Values.monitor.enabled $secureFeatProvided }}
         {{ fail "Cannot set monitor.enabled=true when sysdig.settings.feature.mode is `secure` or `secure_light`" }}
     {{- end }}
-    {{- include "agent.monitorFeatures" . }}
-    {{- include "agent.secureFeatures" . }}
+
+{{ include "agent.monitorFeatures" . }}
+{{ include "agent.secureFeatures" . }}
+
 {{- end -}}
 
 {{/*
