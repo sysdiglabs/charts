@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.6.7
+### Bug Fixes
+* **agent** [4049502](https://github.com/sysdiglabs/charts/commit/40495021ac9daa2317b90a610f3081a43471dc0e): remove inline multiple checks that are not supported by helm 3.7 ([#1033](https://github.com/sysdiglabs/charts/issues/1033))
 # v1.6.6
 ### Chores
 * **admission-controller,agent,kspm-collector,node-analyzer,rapid-response,registry-scanner,sysdig-deploy** [7f35eb1](https://github.com/sysdiglabs/charts/commit/7f35eb1f88d93fa59c2839e7fbb756e50a378bea): update helm unittest plugin ([#996](https://github.com/sysdiglabs/charts/issues/996))
