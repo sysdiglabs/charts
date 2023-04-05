@@ -1,6 +1,6 @@
 # What's Changed
 
-### New Features
-- **kspm-collector,node-analyzer** [af66e68](https://github.com/sysdiglabs/charts/commit/af66e68abcc2d0345ec84c93b7cba1f65a8b0a97): bumped KSPM to latest version ([#1019](https://github.com/sysdiglabs/charts/issues/1019))
+### Chores
+- **admission-controller,agent,kspm-collector,node-analyzer,rapid-response,registry-scanner,sysdig-deploy** [7f35eb1](https://github.com/sysdiglabs/charts/commit/7f35eb1f88d93fa59c2839e7fbb756e50a378bea): update helm unittest plugin ([#996](https://github.com/sysdiglabs/charts/issues/996))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.1.41...kspm-collector-0.1.42
+#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.1.42...kspm-collector-0.1.43
