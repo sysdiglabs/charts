@@ -75,3 +75,50 @@ tests:
       - matchRegex:
           path: data.dragent\.yaml
           pattern: security:\n\ {2}enabled:\ false\n {2}k8s_audit_server_enabled:\ true\n\ {2}k8s_audit_server_port:\ 7765\n\ {2}k8s_audit_server_url:\ 0\.0\.0\.0
+
+  - it: Test secure.enabled with secure_light mode specified
+    set:
+      monitor:
+        enabled: false
+      secure:
+        enabled: true
+      sysdig:
+        settings:
+          feature:
+            mode: secure_light
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: 'app_checks_enabled: false\njmx:\n {2}enabled: false\nprometheus:\n {2}enabled: false\nstatsd:\n {2}enabled: false'
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: 'security:\n {2}enabled: true'
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: 'commandlines_capture:\n\ {2}enabled:\ false\ndrift_killer:\n\ {2}enabled:\ false\nfalcobaseline:\n {2}enabled:\ false\nmemdump:\n\ {2}enabled:\ false\nnetwork_topology:\n\ {2}enabled:\ false\nsecure_audit_streams:\n\ {2}enabled:\ false'
+
+  - it: Test secure.enabled=false when specifying secure_light mode
+    set:
+      secure:
+        enabled: false
+      sysdig:
+        settings:
+          feature:
+            mode: secure_light
+    asserts:
+      - failedTemplate:
+          errorMessage: 'Set secure.enabled=true when specifying sysdig.settings.feature.mode is `secure` or `secure_light`'
+
+  - it: Test secure.enabled=false when specifying secure mode
+    set:
+      secure:
+        enabled: false
+      sysdig:
+        settings:
+          feature:
+            mode: secure
+    asserts:
+      - failedTemplate:
+          errorMessage: 'Set secure.enabled=true when specifying sysdig.settings.feature.mode is `secure` or `secure_light`'

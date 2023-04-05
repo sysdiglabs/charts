@@ -1,6 +1,6 @@
 # What's Changed
 
 ### Chores
-- **registry-scanner** [3cd717f](https://github.com/sysdiglabs/charts/commit/3cd717f375203bb9224599a882b329b90bb23955): update to v0.2.24 ([#1028](https://github.com/sysdiglabs/charts/issues/1028))
+- **registry-scanner** [2d4c185](https://github.com/sysdiglabs/charts/commit/2d4c185489ff17884b94fa465bd5a7353034d6ee): update to v0.2.25 ([#1030](https://github.com/sysdiglabs/charts/issues/1030))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-0.1.32...registry-scanner-0.1.33
+#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-0.1.33...registry-scanner-0.1.34

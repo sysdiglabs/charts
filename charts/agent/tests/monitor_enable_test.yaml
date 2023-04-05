@@ -1,0 +1,68 @@
+suite: Test enabling/disabling monitor features
+templates:
+  - templates/configmap.yaml
+tests:
+  - it: Set chart defaults (monitor.enabled=true)
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: |-
+            app_checks_enabled: false
+        not: true
+
+  - it: Set monitor.enabled=true
+    set:
+      monitor:
+        enabled: true
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: |-
+            app_checks_enabled: false
+        not: true
+
+  - it: Set monitor.enabled=false
+    set:
+      monitor:
+        enabled: false
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: data.dragent\.yaml
+          pattern: |-
+            app_checks_enabled: false
+            jmx:
+              enabled: false
+            prometheus:
+              enabled: false
+            statsd:
+              enabled: false
+
+  - it: Test monitor.enabled when specifying secure_light mode
+    set:
+      monitor:
+        enabled: true
+      sysdig:
+        settings:
+          feature:
+            mode: secure_light
+    asserts:
+      - failedTemplate:
+          errorMessage: 'Cannot set monitor.enabled=true when sysdig.settings.feature.mode is `secure` or `secure_light`'
+
+  - it: Test monitor.enabled when specifying secure mode
+    set:
+      monitor:
+        enabled: true
+      sysdig:
+        settings:
+          feature:
+            mode: secure
+    asserts:
+      - failedTemplate:
+          errorMessage: 'Cannot set monitor.enabled=true when sysdig.settings.feature.mode is `secure` or `secure_light`'
