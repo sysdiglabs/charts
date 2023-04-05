@@ -343,9 +343,11 @@ and set the agent chart parameters accordingly
 {{- define "agent.planSettings" -}}
     {{- $secureFeatProvided := false }}
     {{/* Determine if secure or secure_light mode is being requested in Agent settings and store state */}}
-    {{- if and (hasKey .Values.sysdig.settings "feature") (hasKey .Values.sysdig.settings.feature "mode") }}
-        {{- $secureLight := (eq .Values.sysdig.settings.feature.mode "secure_light") }}
-        {{- $secureFeatProvided = (or $secureLight (eq .Values.sysdig.settings.feature.mode "secure")) }}
+    {{- if hasKey .Values.sysdig.settings "feature" }}
+        {{- if hasKey .Values.sysdig.settings.feature "mode" }}
+            {{- $secureLight := (eq .Values.sysdig.settings.feature.mode "secure_light") }}
+            {{- $secureFeatProvided = (or $secureLight (eq .Values.sysdig.settings.feature.mode "secure")) }}
+        {{- end }}
     {{- end }}
     {{/* Basic plan sanity checks */}}
     {{- if and (not .Values.secure.enabled) $secureFeatProvided }}
@@ -405,16 +407,17 @@ agent config to prevent a backend push from enabling them after installation.
             {{- $_ := set $secureConfig.security $key $val }}
         {{- end }}
     {{- end }}
-    {{- if or
-        (not .Values.secure.enabled)
-        (
-            and
-                (.Values.secure.enabled)
-                (hasKey .Values.sysdig.settings "feature")
-                (hasKey .Values.sysdig.settings.feature "mode")
-                (eq .Values.sysdig.settings.feature.mode "secure_light")
-        )
-    }}
+
+    {{- $secureLightMode := false }}
+    {{/* We can't evaluate all this contitions in one single operation untile we stop supporting helm version <3.9 */}}
+    {{- if hasKey .Values.sysdig.settings "feature" }}
+        {{- if hasKey .Values.sysdig.settings.feature "mode" }}
+            {{- if (eq .Values.sysdig.settings.feature.mode "secure_light") }}
+                {{- $secureLightMode = true }}
+            {{- end }}
+        {{- end }}
+    {{- end }}
+    {{- if or (not .Values.secure.enabled) (and .Values.secure.enabled $secureLightMode) }}
         {{- range $secureFeature := (list
             "commandlines_capture"
             "drift_killer"
