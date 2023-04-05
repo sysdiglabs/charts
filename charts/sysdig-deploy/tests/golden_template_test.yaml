@@ -24,7 +24,7 @@ tests:
           apiVersion: apps/v1
         template: charts/agent/templates/daemonset.yaml
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: .*ingest\-us2\.app\.sysdig\.com.*
         template: charts/agent/templates/configmap.yaml
       - equal:

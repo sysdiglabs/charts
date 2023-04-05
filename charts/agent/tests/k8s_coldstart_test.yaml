@@ -8,7 +8,7 @@ tests:
         enable: true
     asserts:
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: |-
             k8s_coldstart:
               enabled: true
@@ -24,7 +24,7 @@ tests:
       resourceProfile: large
     asserts:
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: |-
             k8s_coldstart:
               enabled: true

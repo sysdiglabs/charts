@@ -7,10 +7,10 @@ tests:
       - isKind:
           of: ConfigMap
       - notMatchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: .*log:\n(?:(?:\s+console_priority:\s*(?:debug|info))|(?:\s+file_priority:\s*(?:debug|info)\n)){1,2}.*
       - notMatchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: .*log:.*
 
   - it: Setting logPriority
@@ -20,7 +20,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: log:\n\s{2}console_priority:\sdebug\n\s+file_priority:\sdebug
 
   - it: Set console_priority
@@ -33,7 +33,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: log:\n\s{2}console_priority:\sdebug
 
   - it: Set file_priority
@@ -46,7 +46,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: log:\n\s{2}file_priority:\sdebug
 
   - it: Set console_priority and file_priority
@@ -60,7 +60,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: log:\n\s{2}console_priority:\sdebug\n\s{2}file_priority:\sinfo
 
   - it: Verify user cannot specify sysdig.settings.log and logPriority simultaneously
@@ -84,7 +84,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: log:\n\s{2}max_size:\s100
 
   - it: Verify other log settings are rendered when logPriority is set
@@ -98,5 +98,5 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: log:\n\s{2}console_priority:\sdebug\n\s{2}file_priority:\sdebug\n\s{2}max_size:\s100

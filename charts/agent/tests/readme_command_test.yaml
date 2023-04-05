@@ -23,7 +23,7 @@ tests:
           value: QUFBQUFBQUEtQkJCQi1DQ0NDLUREREQtRUVFRUVFRUVFRUVF
         template: secrets.yaml
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: |
             collector: 192.168.100.100
             collector_port: 4000
@@ -48,7 +48,7 @@ tests:
           value: QUFBQUFBQUEtQkJCQi1DQ0NDLUREREQtRUVFRUVFRUVFRUVF
         template: secrets.yaml
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: 'tags: role:webserver,location:europe'
         template: configmap.yaml
 
@@ -71,7 +71,7 @@ tests:
           value: QUFBQUFBQUEtQkJCQi1DQ0NDLUREREQtRUVFRUVFRUVFRUVF
         template: secrets.yaml
       - equal:
-          path: spec.template.metadata.annotations.autopilot\.gke\.io\/no\-connect
+          path: spec.template.metadata.annotations['autopilot.gke.io/no-connect']
           value: "true"
         template: daemonset.yaml
 

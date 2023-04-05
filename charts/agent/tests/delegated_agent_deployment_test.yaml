@@ -341,7 +341,7 @@ tests:
       logPriority: debug
     asserts:
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: "log:\n\ {2}console_priority:\ debug\n\ {2}file_priority:\ debug"
     templates:
       - templates/configmap.yaml
@@ -353,7 +353,7 @@ tests:
         enabled: true
     asserts:
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: "commandlines_capture:\n {2}enabled: false\ndrift_killer:\n {2}enabled: false\nfalcobaseline:\n {2}enabled: false\nmemdump:\n {2}enabled: false\nnetwork_topology:\n {2}enabled: false\nsecure_audit_streams:\n {2}enabled: false"
         template: templates/configmap-deployment.yaml
 
@@ -365,7 +365,7 @@ tests:
         enabled: false
     asserts:
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: "commandlines_capture:\n {2}enabled: false\ndrift_killer:\n {2}enabled: false\nfalcobaseline:\n {2}enabled: false\nmemdump:\n {2}enabled: false\nnetwork_topology:\n {2}enabled: false\nsecure_audit_streams:\n {2}enabled: false"
     templates:
       - templates/configmap.yaml
@@ -409,7 +409,7 @@ tests:
         enable: true
     asserts:
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: |-
             k8s_coldstart:
               enabled: true
@@ -427,7 +427,7 @@ tests:
       resourceProfile: large
     asserts:
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: |-
             k8s_coldstart:
               enabled: true
@@ -444,7 +444,7 @@ tests:
         disableCaptures: true
     asserts:
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: |
             sysdig_capture_enabled: false
     templates:

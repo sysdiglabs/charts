@@ -14,7 +14,7 @@ tests:
       - isKind:
           of: ConfigMap
       - equal:
-          path: data.prometheus\.yaml
+          path: data['prometheus.yaml']
           value: |
             custom: content
             is: here
@@ -32,10 +32,6 @@ tests:
     asserts:
       - isKind:
           of: ConfigMap
-      - equal:
-          path: data.prometheus\.yaml
-          value: |
-            custom: content
-            is: here
-        not: true
+      - isNull:
+          path: data['prometheus.yaml']
     template: configmap-deployment.yaml
