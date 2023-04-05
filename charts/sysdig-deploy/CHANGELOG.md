@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.6.10
+### Chores
+* **admission-controller,agent,kspm-collector,node-analyzer,rapid-response,registry-scanner,sysdig-deploy** [7f35eb1](https://github.com/sysdiglabs/charts/commit/7f35eb1f88d93fa59c2839e7fbb756e50a378bea): update helm unittest plugin ([#996](https://github.com/sysdiglabs/charts/issues/996))
 # v1.6.9
 ### Chores
 * **sysdig-deploy** [a9b4786](https://github.com/sysdiglabs/charts/commit/a9b47869b627b371925a8159aaae57e8c866639d): Automatic version bump due to updated dependencies ([#1026](https://github.com/sysdiglabs/charts/issues/1026))
