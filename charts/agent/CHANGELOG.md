@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.6.5
+### New Features
+* **agent** [b97fbc8](https://github.com/sysdiglabs/charts/commit/b97fbc85a81f2d848230c63b6c49ae551551cd09): Add new monitor.enabled flag to agent chart ([#917](https://github.com/sysdiglabs/charts/issues/917))
 # v1.6.4
 ### New Features
 * **agent** [99a4b36](https://github.com/sysdiglabs/charts/commit/99a4b36bfd535264766b30ce176f4e244da0eb1f): Include /var/libs host volume mount ([#1009](https://github.com/sysdiglabs/charts/issues/1009))
