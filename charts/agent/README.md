@@ -284,7 +284,7 @@ The Sysdig agent uses a file called `dragent.yaml` to store the configuration.
 
 Using the Helm chart, the default configuration settings can be updated using `sysdig.settings` either
 via `--set sysdig.settings.key = value` or in the values YAML file. For example, to eanble Prometheus metrics scraping,
-you need this in your `values.yaml` file::
+you need this in your `values.yaml` file:
 
 ```yaml
 sysdig:
@@ -297,6 +297,19 @@ sysdig:
 
 ```bash
 $ helm install --namespace sysdig-agent sysdig-agent -f values.yaml sysdig/agent
+```
+
+### Agent Modes
+When directly specifying the agent mode by `sysdig.settitngs.feature.mode`, the values of `monitor.enabled` and
+`secure.enabled` must match the provided type. For example, setting `sysdig.settings.feature.mode=secure` would require
+the following:
+```yaml
+monitor:
+  enabled: false
+sysdig:
+  settings:
+    feature:
+      mode: secure
 ```
 
 ## Upgrading Sysdig agent configuration
