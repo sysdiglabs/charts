@@ -6,4 +6,17 @@ Links for your deployment:
   * Sysdig Monitor: https://{{ include "monitorUrl" . }}/#/dashboard-template/view.sysdig.agents?last=10
   * Sysdig Secure: https://{{ include "secureUrl" . }}/#/data-sources/agents
 
+{{- $secureFeatProvided := false }}
+{{- if hasKey .Values.sysdig.settings "feature" }}
+    {{- if hasKey .Values.sysdig.settings.feature "mode" }}
+        {{- $secureLight := (eq .Values.sysdig.settings.feature.mode "secure_light") }}
+        {{- $secureFeatProvided = (or $secureLight (eq .Values.sysdig.settings.feature.mode "secure")) }}
+    {{- end }}
+{{- end }}
+{{ if and .Values.monitor.enabled $secureFeatProvided }}
+The monitor.enabled parameter is true while using sysdig.settings.feature.mode to put the Agent into either
+secure or secure_light mode. Please set monitor.enabled=false to ensure all Sysdig Monitor components are disabled
+when running the Agent in secure or secure_light modes.
+{{ else }}
 No further action should be required.
+{{ end }}

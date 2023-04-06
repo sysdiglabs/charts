@@ -1,6 +1,7 @@
 suite: Test enabling/disabling monitor features
 templates:
   - templates/configmap.yaml
+  - templates/NOTES.txt
 tests:
   - it: Set chart defaults (monitor.enabled=true)
     asserts:
@@ -11,6 +12,7 @@ tests:
           pattern: |-
             app_checks_enabled: false
         not: true
+    template: templates/configmap.yaml
 
   - it: Set monitor.enabled=true
     set:
@@ -24,6 +26,7 @@ tests:
           pattern: |-
             app_checks_enabled: false
         not: true
+    template: templates/configmap.yaml
 
   - it: Set monitor.enabled=false
     set:
@@ -42,6 +45,7 @@ tests:
               enabled: false
             statsd:
               enabled: false
+    template: templates/configmap.yaml
 
   - it: Test monitor.enabled when specifying secure_light mode
     set:
@@ -52,8 +56,12 @@ tests:
           feature:
             mode: secure_light
     asserts:
-      - failedTemplate:
-          errorMessage: 'Cannot set monitor.enabled=true when sysdig.settings.feature.mode is `secure` or `secure_light`'
+      - matchRegexRaw:
+          pattern: |-
+            The monitor.enabled parameter is true while using sysdig.settings.feature.mode to put the Agent into either
+            secure or secure_light mode. Please set monitor.enabled=false to ensure all Sysdig Monitor components are disabled
+            when running the Agent in secure or secure_light modes.
+    template: templates/NOTES.txt
 
   - it: Test monitor.enabled when specifying secure mode
     set:
@@ -64,5 +72,9 @@ tests:
           feature:
             mode: secure
     asserts:
-      - failedTemplate:
-          errorMessage: 'Cannot set monitor.enabled=true when sysdig.settings.feature.mode is `secure` or `secure_light`'
+      - matchRegexRaw:
+          pattern: |-
+            The monitor.enabled parameter is true while using sysdig.settings.feature.mode to put the Agent into either
+            secure or secure_light mode. Please set monitor.enabled=false to ensure all Sysdig Monitor components are disabled
+            when running the Agent in secure or secure_light modes.
+    template: templates/NOTES.txt
