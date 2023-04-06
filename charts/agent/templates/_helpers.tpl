@@ -377,7 +377,7 @@ For monitor.enabled=false, disable all Monitor specific extras (like app checks,
             "statsd") }}
             {{- $_ := set $monitorBlock $monitorFeature (dict "enabled" false) }}
         {{- end }}
-        {{- toYaml $monitorBlock }}
+{{ toYaml $monitorBlock }}
     {{- end -}}
 {{- end -}}
 
@@ -428,7 +428,7 @@ agent config to prevent a backend push from enabling them after installation.
             {{- $_ := set $secureConfig $secureFeature (dict "enabled" false) }}
         {{- end }}
     {{- end }}
-    {{- toYaml $secureConfig }}
+{{ toYaml $secureConfig }}
 {{- end }}
 
 {{ define "agent.k8sColdStart" }}
