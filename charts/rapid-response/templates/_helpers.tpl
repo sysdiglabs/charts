@@ -206,3 +206,16 @@ Create the name of the Rapid Response collector specific service account to use
     {{ default "default" .Values.rapidResponse.serviceAccount.name }}
 {{- end -}}
 {{- end -}}
+
+{{/* Returns string 'true' if the cluster's kubeVersion is less than the parameter provided, or nothing otherwise
+     Use like: {{ include "rapidResponse.kubeVersionLessThan" (dict "root" . "major" "<kube_major_to_compare>" "minor" "<kube_minor_to_compare>") }}
+
+     Note: The use of `"root" .` in the parameter dict is necessary as the .Capabilities fields are not provided in
+           helper functions when "helm template" is used.
+*/}}
+{{- define "rapidResponse.kubeVersionLessThan" }}
+{{- if (and (le (.root.Capabilities.KubeVersion.Major | int) .major)
+            (lt (.root.Capabilities.KubeVersion.Minor | trimSuffix "+" | int) .minor)) }}
+true
+{{- end }}
+{{- end }}

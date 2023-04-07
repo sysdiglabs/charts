@@ -41,8 +41,7 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
             - matchExpressions:
-              {{- if and (eq (int .Capabilities.KubeVersion.Major) 1)
-                  (lt (int .Capabilities.KubeVersion.Minor) 14) }}
+              {{- if (include "rapidResponse.kubeVersionLessThan" (dict "root" . "major" 1 "minor" 25)) }}
               - key: beta.kubernetes.io/arch
                 operator: In
                 values: {{- toYaml .Values.rapidResponse.arch | nindent 18 }}

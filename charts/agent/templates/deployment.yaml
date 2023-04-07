@@ -36,8 +36,7 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
             - matchExpressions:
-              {{- if and (eq (int .Capabilities.KubeVersion.Major) 1)
-                (lt (int .Capabilities.KubeVersion.Minor) 14) }}
+              {{- if (include "agent.kubeVersionLessThan" (dict "root" . "major" 1 "minor" 14)) }}
               - key: beta.kubernetes.io/arch
                 operator: In
                 values: {{- toYaml .Values.delegatedAgentDeployment.deployment.arch | nindent 18 }}

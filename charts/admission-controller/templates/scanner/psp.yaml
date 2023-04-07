@@ -1,4 +1,4 @@
-{{- if and .Values.scanner.psp.create (lt (int .Capabilities.KubeVersion.Minor) 25) }}
+{{- if and .Values.scanner.psp.create (include "admissionController.kubeVersionLessThan" (dict "root" . "major" 1 "minor" 25)) }}
 apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:

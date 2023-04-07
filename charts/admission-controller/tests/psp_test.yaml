@@ -1,0 +1,35 @@
+suite: PSP create test
+templates:
+  - templates/scanner/psp.yaml
+  - templates/scanner/role.yaml
+  - templates/scanner/rolebinding.yaml
+tests:
+  - it: Ensure PSP is created on k8s <1.25
+    capabilities:
+      majorVersion: 1
+      minorVersion: 24
+    set:
+      scanner:
+        psp:
+          create: true
+    asserts:
+      - containsDocument:
+          apiVersion: policy/v1beta1
+          kind: PodSecurityPolicy
+        template: templates/scanner/psp.yaml
+      - containsDocument:
+          apiVersion: rbac.authorization.k8s.io/v1
+          kind: Role
+        template: templates/scanner/role.yaml
+      - containsDocument:
+          apiVersion: rbac.authorization.k8s.io/v1
+          kind: RoleBinding
+        template: templates/scanner/rolebinding.yaml
+
+  - it: Ensure PSP is not created on k8s >=1.25
+    capabilities:
+      majorVersion: 1
+      minorVersion: 25
+    asserts:
+      - hasDocuments:
+          count: 0

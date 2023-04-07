@@ -1,0 +1,37 @@
+suite: Agent Cluster Role Tests
+templates:
+  - templates/clusterrole.yaml
+tests:
+  - it: Test PSP information included in k8s <1.25
+    capabilities:
+      majorVersion: 1
+      minorVersion: 24
+    asserts:
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - "policy"
+            resources:
+              - "podsecuritypolicies"
+            resourceNames:
+              - RELEASE-NAME-agent
+            verbs:
+              - "use"
+
+  - it: Test PSP information not included in k8s >=1.25
+    capabilities:
+      majorVersion: 1
+      minorVersion: 25
+    asserts:
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - "policy"
+            resources:
+              - "podsecuritypolicies"
+            resourceNames:
+              - RELEASE-NAME-agent
+            verbs:
+              - "use"

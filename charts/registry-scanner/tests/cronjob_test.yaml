@@ -28,3 +28,21 @@ tests:
     - equal:
         path: spec.jobTemplate.spec.backoffLimit
         value: 0
+
+  - it: Check apiVersion for Kube <1.21
+    capabilities:
+      majorVersion: 1
+      minorVersion: 20
+    asserts:
+      - equal:
+          path: apiVersion
+          value: batch/v1beta1
+
+  - it: Check apiVersion for Kube >=1.21
+    capabilities:
+      majorVersion: 1
+      minorVersion: 21
+    asserts:
+      - equal:
+          path: apiVersion
+          value: batch/v1

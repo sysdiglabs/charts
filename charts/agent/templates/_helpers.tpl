@@ -513,3 +513,16 @@ k8s_cluster_name: {{ $clusterName }}
 sysdig_capture_enabled: false
     {{- end }}
 {{- end }}
+
+{{/* Returns string 'true' if the cluster's kubeVersion is less than the parameter provided, or nothing otherwise
+     Use like: {{ include "agent.kubeVersionLessThan" (dict "root" . "major" "<kube_major_to_compare>" "minor" "<kube_minor_to_compare>") }}
+
+     Note: The use of `"root" .` in the parameter dict is necessary as the .Capabilities fields are not provided in
+           helper functions when "helm template" is used.
+*/}}
+{{- define "agent.kubeVersionLessThan" }}
+{{- if (and (le (.root.Capabilities.KubeVersion.Major | int) .major)
+            (lt (.root.Capabilities.KubeVersion.Minor | trimSuffix "+" | int) .minor)) }}
+true
+{{- end }}
+{{- end }}
