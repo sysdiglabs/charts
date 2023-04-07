@@ -10,6 +10,14 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.8.47
+### Chores
+* **node-analyzer** [a8daf9c](https://github.com/sysdiglabs/charts/commit/a8daf9cb5776d1b154e4dfbf54a551c85bec1bcb): Release HostScanner and RuntimeScanner updates ([#1037](https://github.com/sysdiglabs/charts/issues/1037))
+
+    * * Hostscanner bumped to 0.3.9
+     * Support for .NET analyzer
+* Runtimescanner bumped to 1.4.10
+     * Support for .NET analyzer
 # v1.8.46
 ### Chores
 * **admission-controller,agent,kspm-collector,node-analyzer,rapid-response,registry-scanner,sysdig-deploy** [7f35eb1](https://github.com/sysdiglabs/charts/commit/7f35eb1f88d93fa59c2839e7fbb756e50a378bea): update helm unittest plugin ([#996](https://github.com/sysdiglabs/charts/issues/996))
