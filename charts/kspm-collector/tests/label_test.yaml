@@ -9,10 +9,10 @@ tests:
       labels: {"my.label/key1": "testlabel1","my.label/key2": "testlabel2"}
     asserts:
     - equal:
-        path: metadata.labels.my\.label\/key1
+        path: metadata.labels['my.label/key1']
         value: testlabel1
     - equal:
-        path: metadata.labels.my\.label\/key2
+        path: metadata.labels['my.label/key2']
         value: testlabel2
   - it: check application of kspm collector labels example 2
     set:
@@ -23,10 +23,10 @@ tests:
         my.label/key2: testlabel2
     asserts:
     - equal:
-        path: metadata.labels.my\.label\/key1
+        path: metadata.labels['my.label/key1']
         value: testlabel1
     - equal:
-        path: metadata.labels.my\.label\/key2
+        path: metadata.labels['my.label/key2']
         value: testlabel2
   - it: check application of kspm collector labels example 3
     set:
@@ -37,10 +37,10 @@ tests:
         my.label/version: 2.7.3
     asserts:
     - equal:
-        path: metadata.labels.my\.label\/key
+        path: metadata.labels['my.label/key']
         value: testlabel
     - equal:
-        path: metadata.labels.my\.label\/version
+        path: metadata.labels['my.label/version']
         value: 2.7.3
   - it: check application of correct kspm collector labels with value of label empty
     set:
@@ -49,7 +49,7 @@ tests:
       labels: "my.label/key1: "
     asserts:
     - equal:
-        path: metadata.labels.my\.label\/key1
+        path: metadata.labels['my.label/key1']
         value:
   - it: check application of incorrect kspm collector labels with yaml
     set:

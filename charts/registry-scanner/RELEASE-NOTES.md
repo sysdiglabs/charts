@@ -1,6 +1,6 @@
 # What's Changed
 
 ### Chores
-- **registry-scanner** [2d4c185](https://github.com/sysdiglabs/charts/commit/2d4c185489ff17884b94fa465bd5a7353034d6ee): update to v0.2.25 ([#1030](https://github.com/sysdiglabs/charts/issues/1030))
+- **admission-controller,agent,kspm-collector,node-analyzer,rapid-response,registry-scanner,sysdig-deploy** [7f35eb1](https://github.com/sysdiglabs/charts/commit/7f35eb1f88d93fa59c2839e7fbb756e50a378bea): update helm unittest plugin ([#996](https://github.com/sysdiglabs/charts/issues/996))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-0.1.33...registry-scanner-0.1.34
+#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-0.1.35...registry-scanner-0.1.36

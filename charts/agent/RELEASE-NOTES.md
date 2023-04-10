@@ -1,6 +1,6 @@
 # What's Changed
 
-### New Features
-- **agent** [b97fbc8](https://github.com/sysdiglabs/charts/commit/b97fbc85a81f2d848230c63b6c49ae551551cd09): Add new monitor.enabled flag to agent chart ([#917](https://github.com/sysdiglabs/charts/issues/917))
+### Bug Fixes
+- **agent** [6cefcd1](https://github.com/sysdiglabs/charts/commit/6cefcd1318c8054183afc72d8e76fd7075d0cc87): Fix dragent.yaml indentation for security block ([#1034](https://github.com/sysdiglabs/charts/issues/1034))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.6.4...agent-1.6.5
+#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.6.7...agent-1.6.8

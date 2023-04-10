@@ -1,6 +1,6 @@
 # What's Changed
 
 ### Chores
-- **admission-controller** [af8be4e](https://github.com/sysdiglabs/charts/commit/af8be4e6857a505c6e17739c390e5943f2bab751): Update to v3.9.17 ([#1014](https://github.com/sysdiglabs/charts/issues/1014))
+- **admission-controller,agent,kspm-collector,node-analyzer,rapid-response,registry-scanner,sysdig-deploy** [7f35eb1](https://github.com/sysdiglabs/charts/commit/7f35eb1f88d93fa59c2839e7fbb756e50a378bea): update helm unittest plugin ([#996](https://github.com/sysdiglabs/charts/issues/996))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/admission-controller-0.7.25...admission-controller-0.7.26
+#### Full diff: https://github.com/sysdiglabs/charts/compare/admission-controller-0.7.26...admission-controller-0.7.27

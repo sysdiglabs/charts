@@ -10,6 +10,18 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.6.13
+### Chores
+* **sysdig-deploy** [31443f5](https://github.com/sysdiglabs/charts/commit/31443f56140cdc34bb9b8fd9b954620f006d2e4b): Automatic version bump due to updated dependencies ([#1038](https://github.com/sysdiglabs/charts/issues/1038))
+# v1.6.12
+### Chores
+* **sysdig-deploy** [cbf83a6](https://github.com/sysdiglabs/charts/commit/cbf83a6ed90fbb90991f24f10e9b8724d6c81cac): Automatic version bump due to updated dependencies ([#1035](https://github.com/sysdiglabs/charts/issues/1035))
+# v1.6.11
+### Chores
+* **sysdig-deploy** [71107ed](https://github.com/sysdiglabs/charts/commit/71107eda11de5b0c1029735b55a0390d21807ed8): Automatic version bump due to updated dependencies ([#1031](https://github.com/sysdiglabs/charts/issues/1031))
+# v1.6.10
+### Chores
+* **admission-controller,agent,kspm-collector,node-analyzer,rapid-response,registry-scanner,sysdig-deploy** [7f35eb1](https://github.com/sysdiglabs/charts/commit/7f35eb1f88d93fa59c2839e7fbb756e50a378bea): update helm unittest plugin ([#996](https://github.com/sysdiglabs/charts/issues/996))
 # v1.6.9
 ### Chores
 * **sysdig-deploy** [a9b4786](https://github.com/sysdiglabs/charts/commit/a9b47869b627b371925a8159aaae57e8c866639d): Automatic version bump due to updated dependencies ([#1026](https://github.com/sysdiglabs/charts/issues/1026))

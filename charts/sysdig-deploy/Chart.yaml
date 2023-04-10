@@ -2,7 +2,7 @@ apiVersion: v2
 name: sysdig-deploy
 description: A chart with various Sysdig components for Kubernetes
 type: application
-version: 1.6.9
+version: 1.6.13
 
 maintainers:
   - name: aroberts87
@@ -15,30 +15,30 @@ dependencies:
   - name: admission-controller
     # repository: https://charts.sysdig.com
     repository: file://../admission-controller
-    version: ~0.7.26
+    version: ~0.7.27
     alias: admissionController
     condition: admissionController.enabled
   - name: agent
     # repository: https://charts.sysdig.com
     repository: file://../agent
-    version: ~1.6.4
+    version: ~1.6.8
     alias: agent
     condition: agent.enabled
   - name: node-analyzer
     # repository: https://charts.sysdig.com
     repository: file://../node-analyzer
-    version: ~1.8.45
+    version: ~1.8.47
     alias: nodeAnalyzer
     condition: nodeAnalyzer.enabled
   - name: kspm-collector
     # repository: https://charts.sysdig.com
     repository: file://../kspm-collector
-    version: ~0.1.42
+    version: ~0.1.43
     alias: kspmCollector
     condition: global.kspm.deploy
   - name: rapid-response
     # repository: https://charts.sysdig.com
     repository: file://../rapid-response
-    version: ~0.4.8
+    version: ~0.4.9
     alias: rapidResponse
     condition: rapidResponse.enabled

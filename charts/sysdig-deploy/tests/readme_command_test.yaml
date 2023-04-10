@@ -26,11 +26,11 @@ tests:
           value: QUFBQUFBQUEtQkJCQi1DQ0NDLUREREQtRUVFRUVFRUVFRUVF
         template: charts/agent/templates/secrets.yaml
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: 'k8s_cluster_name: test-k8s'
         template: charts/agent/templates/configmap.yaml
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: 'collector: collector.sysdigcloud.com'
         template: charts/agent/templates/configmap.yaml
       - contains:
