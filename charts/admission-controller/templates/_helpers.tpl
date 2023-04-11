@@ -349,7 +349,7 @@ an error if not.
 {{- end -}}
 
 {{/* Returns string 'true' if the cluster's kubeVersion is less than the parameter provided, or nothing otherwise
-     Use like: {{ include "admissionController.kubeVersionLessThan" (dict "root" . "major" "<kube_major_to_compare>" "minor" "<kube_minor_to_compare>") }}
+     Use like: {{ include "admissionController.kubeVersionLessThan" (dict "root" . "major" <kube_major_to_compare> "minor" <kube_minor_to_compare>) }}
 
      Note: The use of `"root" .` in the parameter dict is necessary as the .Capabilities fields are not provided in
            helper functions when "helm template" is used.
