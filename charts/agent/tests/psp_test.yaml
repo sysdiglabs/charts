@@ -18,6 +18,32 @@ tests:
     capabilities:
       majorVersion: 1
       minorVersion: 25
+    set:
+      psp:
+        create: true
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: Ensure PSP is created on k8s <1.25 with '+' character in minor version
+    capabilities:
+      majorVersion: 1
+      minorVersion: "24+"
+    set:
+      psp:
+        create: true
+    asserts:
+      - containsDocument:
+          apiVersion: policy/v1beta1
+          kind: PodSecurityPolicy
+
+  - it: Ensure PSP is not created on k8s >=1.25 with '+' character in minor version
+    capabilities:
+      majorVersion: 1
+      minorVersion: "25+"
+    set:
+      psp:
+        create: true
     asserts:
       - hasDocuments:
           count: 0
