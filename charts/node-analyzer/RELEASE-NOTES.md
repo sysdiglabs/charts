@@ -1,11 +1,6 @@
 # What's Changed
 
-### Chores
-- **node-analyzer** [a8daf9c](https://github.com/sysdiglabs/charts/commit/a8daf9cb5776d1b154e4dfbf54a551c85bec1bcb): Release HostScanner and RuntimeScanner updates ([#1037](https://github.com/sysdiglabs/charts/issues/1037))
+### New Features
+- **node-analyzer** [138602f](https://github.com/sysdiglabs/charts/commit/138602f0bf30808240f86ed35bad61f5496d1073): Allow daemonset to have maxUnavailable setting configurable ([#1029](https://github.com/sysdiglabs/charts/issues/1029))
 
-    * * Hostscanner bumped to 0.3.9
-     * Support for .NET analyzer
-* Runtimescanner bumped to 1.4.10
-     * Support for .NET analyzer
-
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.8.46...node-analyzer-1.8.47
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.8.47...node-analyzer-1.8.48
