@@ -37,6 +37,14 @@ gke:
 daemonset:
   # Allow the DaemonSet to set labels
   labels: {}
+  # Perform rolling updates by default in the DaemonSet agent
+  # ref: https://kubernetes.io/docs/tasks/manage-daemon/update-daemon-set/
+  updateStrategy:
+    # Only RollingUpdate is supported
+    type: RollingUpdate
+    # You can also customize maxUnavailable
+    rollingUpdate:
+      maxUnavailable: 1
 
 rbac:
   # true here enables creation of rbac resources
