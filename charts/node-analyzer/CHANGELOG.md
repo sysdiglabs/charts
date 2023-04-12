@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.8.49
+### Bug Fixes
+* **admission-controller,agent,node-analyzer,rapid-response,registry-scanner,sysdig** [0bf9682](https://github.com/sysdiglabs/charts/commit/0bf96827ebf80d76aab61b8fa3d26b3903df220b): Improve KubeVersion Comparisons ([#1040](https://github.com/sysdiglabs/charts/issues/1040))
 # v1.8.48
 ### New Features
 * **node-analyzer** [138602f](https://github.com/sysdiglabs/charts/commit/138602f0bf30808240f86ed35bad61f5496d1073): Allow daemonset to have maxUnavailable setting configurable ([#1029](https://github.com/sysdiglabs/charts/issues/1029))

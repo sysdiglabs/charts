@@ -1,6 +1,6 @@
 # What's Changed
 
-### New Features
-- **agent** [99a4b36](https://github.com/sysdiglabs/charts/commit/99a4b36bfd535264766b30ce176f4e244da0eb1f): Include /var/libs host volume mount ([#1009](https://github.com/sysdiglabs/charts/issues/1009))
+### Bug Fixes
+- **admission-controller,agent,node-analyzer,rapid-response,registry-scanner,sysdig** [0bf9682](https://github.com/sysdiglabs/charts/commit/0bf96827ebf80d76aab61b8fa3d26b3903df220b): Improve KubeVersion Comparisons ([#1040](https://github.com/sysdiglabs/charts/issues/1040))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.6.8...sysdig-1.15.82
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.6.14...sysdig-1.15.83

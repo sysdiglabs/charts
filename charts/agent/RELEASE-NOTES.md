@@ -1,6 +1,6 @@
 # What's Changed
 
 ### Bug Fixes
-- **agent** [6cefcd1](https://github.com/sysdiglabs/charts/commit/6cefcd1318c8054183afc72d8e76fd7075d0cc87): Fix dragent.yaml indentation for security block ([#1034](https://github.com/sysdiglabs/charts/issues/1034))
+- **admission-controller,agent,node-analyzer,rapid-response,registry-scanner,sysdig** [0bf9682](https://github.com/sysdiglabs/charts/commit/0bf96827ebf80d76aab61b8fa3d26b3903df220b): Improve KubeVersion Comparisons ([#1040](https://github.com/sysdiglabs/charts/issues/1040))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.6.7...agent-1.6.8
+#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.6.8...agent-1.6.9
