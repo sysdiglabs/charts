@@ -35,3 +35,37 @@ tests:
               - RELEASE-NAME-node-analyzer
             verbs:
               - "use"
+
+  - it: Test PSP information included in k8s <1.25 with '+' character in minor version
+    capabilities:
+      majorVersion: 1
+      minorVersion: "24+"
+    asserts:
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - "policy"
+            resources:
+              - "podsecuritypolicies"
+            resourceNames:
+              - RELEASE-NAME-node-analyzer
+            verbs:
+              - "use"
+
+  - it: Test PSP information not included in k8s >=1.25 with '+' character in minor version
+    capabilities:
+      majorVersion: 1
+      minorVersion: "25+"
+    asserts:
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - "policy"
+            resources:
+              - "podsecuritypolicies"
+            resourceNames:
+              - RELEASE-NAME-node-analyzer
+            verbs:
+              - "use"

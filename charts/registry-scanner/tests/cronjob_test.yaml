@@ -46,3 +46,21 @@ tests:
       - equal:
           path: apiVersion
           value: batch/v1
+
+  - it: Check apiVersion for Kube <1.21 with '+' character in minor version
+    capabilities:
+      majorVersion: 1
+      minorVersion: "20+"
+    asserts:
+      - equal:
+          path: apiVersion
+          value: batch/v1beta1
+
+  - it: Check apiVersion for Kube >=1.21 with '+' character in minor version
+    capabilities:
+      majorVersion: 1
+      minorVersion: "21+"
+    asserts:
+      - equal:
+          path: apiVersion
+          value: batch/v1
