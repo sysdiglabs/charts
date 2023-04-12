@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.1.38
+### Bug Fixes
+* **admission-controller,agent,node-analyzer,rapid-response,registry-scanner,sysdig** [0bf9682](https://github.com/sysdiglabs/charts/commit/0bf96827ebf80d76aab61b8fa3d26b3903df220b): Improve KubeVersion Comparisons ([#1040](https://github.com/sysdiglabs/charts/issues/1040))
 # v0.1.37
 ### Chores
 * **registry-scanner** [7b4a28a](https://github.com/sysdiglabs/charts/commit/7b4a28a4254a68760af579a38bdfa0fede2fc5e0): update to v0.2.27 ([#1043](https://github.com/sysdiglabs/charts/issues/1043))
