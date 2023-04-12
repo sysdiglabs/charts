@@ -90,6 +90,23 @@ tests:
             when running the Agent in secure or secure_light modes.
     template: templates/NOTES.txt
 
+  - it: Test agent.monitor.enabled=false when specifying Agent secure_light mode
+    set:
+      agent:
+        monitor:
+          enabled: false
+        sysdig:
+          settings:
+            feature:
+              mode: secure_light
+    asserts:
+      - notMatchRegexRaw:
+          pattern: |-
+            The agent.monitor.enabled parameter is true while using agent.sysdig.settings.feature.mode to put the Agent into either
+            secure or secure_light mode. Please set agent.monitor.enabled=false to ensure all Sysdig Monitor components are disabled
+            when running the Agent in secure or secure_light modes.
+    template: templates/NOTES.txt
+
   - it: Test agent.monitor.enabled when specifying Agent secure mode
     set:
       agent:
@@ -101,6 +118,23 @@ tests:
               mode: secure
     asserts:
       - matchRegexRaw:
+          pattern: |-
+            The agent.monitor.enabled parameter is true while using agent.sysdig.settings.feature.mode to put the Agent into either
+            secure or secure_light mode. Please set agent.monitor.enabled=false to ensure all Sysdig Monitor components are disabled
+            when running the Agent in secure or secure_light modes.
+    template: templates/NOTES.txt
+
+  - it: Test agent.monitor.enabled=false when specifying Agent secure mode
+    set:
+      agent:
+        monitor:
+          enabled: false
+        sysdig:
+          settings:
+            feature:
+              mode: secure
+    asserts:
+      - notMatchRegexRaw:
           pattern: |-
             The agent.monitor.enabled parameter is true while using agent.sysdig.settings.feature.mode to put the Agent into either
             secure or secure_light mode. Please set agent.monitor.enabled=false to ensure all Sysdig Monitor components are disabled
