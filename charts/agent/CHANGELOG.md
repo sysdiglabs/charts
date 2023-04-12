@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.6.9
+### Bug Fixes
+* **admission-controller,agent,node-analyzer,rapid-response,registry-scanner,sysdig** [0bf9682](https://github.com/sysdiglabs/charts/commit/0bf96827ebf80d76aab61b8fa3d26b3903df220b): Improve KubeVersion Comparisons ([#1040](https://github.com/sysdiglabs/charts/issues/1040))
 # v1.6.8
 ### Bug Fixes
 * **agent** [6cefcd1](https://github.com/sysdiglabs/charts/commit/6cefcd1318c8054183afc72d8e76fd7075d0cc87): Fix dragent.yaml indentation for security block ([#1034](https://github.com/sysdiglabs/charts/issues/1034))
