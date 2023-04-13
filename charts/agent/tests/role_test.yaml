@@ -1,0 +1,51 @@
+suite: Agent Role Tests
+templates:
+  - templates/role.yaml
+  - templates/rolebinding.yaml
+tests:
+  - it: Role and RoleBinding created when rbac.create is set
+    set:
+      rbac:
+        create: true
+    asserts:
+      - containsDocument:
+          name: RELEASE-NAME-agent
+          apiVersion: rbac.authorization.k8s.io/v1
+          kind: Role
+        template: templates/role.yaml
+      - containsDocument:
+          name:  RELEASE-NAME-agent
+          apiVersion: rbac.authorization.k8s.io/v1
+          kind: RoleBinding
+        template: templates/rolebinding.yaml
+
+  - it: RoleBinding linked with Role and ServiceAccount
+    set:
+      rbac:
+        create: true
+    asserts:
+      - equal:
+          path: roleRef
+          value:
+            apiGroup: rbac.authorization.k8s.io
+            kind: Role
+            name: RELEASE-NAME-agent
+      - contains:
+          path: subjects
+          content:
+            kind: ServiceAccount
+            name: RELEASE-NAME-agent
+            namespace: NAMESPACE
+    template: templates/rolebinding.yaml
+
+  - it: Role and RoleBinding are not created when rbac.create is set to false
+    set:
+      rbac:
+        create: false
+    asserts:
+      - hasDocuments:
+          count: 0
+        template: templates/role.yaml
+      - hasDocuments:
+          count: 0
+        template: templates/rolebinding.yaml
