@@ -29,7 +29,7 @@ spec:
       {{- end }}
     spec:
       serviceAccountName: {{ template "agent.serviceAccountName" .}}
-{{- if or .Values.priorityClassName .Values.gke.autopilot }}
+{{- if or .Values.priorityClassName (include "agent.gke.autopilot" .) }}
       priorityClassName: {{ .Values.priorityClassName | quote }}
 {{- end }}
       tolerations:
