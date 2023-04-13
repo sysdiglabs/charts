@@ -1,4 +1,4 @@
-suite: Test links in the notes section for regions (us1,us2,us3,us4,eu1,au1)
+suite: Test NOTES.txt content
 templates:
   - templates/NOTES.txt
 tests:
@@ -72,3 +72,71 @@ tests:
     asserts:
       - failedTemplate:
           errorMessage: "raw: global.sysdig.region=ap3 provided is not recognized."
+
+  - it: Test agent.monitor.enabled when specifying Agent secure_light mode
+    set:
+      agent:
+        monitor:
+          enabled: true
+        sysdig:
+          settings:
+            feature:
+              mode: secure_light
+    asserts:
+      - matchRegexRaw:
+          pattern: |-
+            The agent.monitor.enabled parameter is true while using agent.sysdig.settings.feature.mode to put the Agent into either
+            secure or secure_light mode. Please set agent.monitor.enabled=false to ensure all Sysdig Monitor components are disabled
+            when running the Agent in secure or secure_light modes.
+    template: templates/NOTES.txt
+
+  - it: Test agent.monitor.enabled=false when specifying Agent secure_light mode
+    set:
+      agent:
+        monitor:
+          enabled: false
+        sysdig:
+          settings:
+            feature:
+              mode: secure_light
+    asserts:
+      - notMatchRegexRaw:
+          pattern: |-
+            The agent.monitor.enabled parameter is true while using agent.sysdig.settings.feature.mode to put the Agent into either
+            secure or secure_light mode. Please set agent.monitor.enabled=false to ensure all Sysdig Monitor components are disabled
+            when running the Agent in secure or secure_light modes.
+    template: templates/NOTES.txt
+
+  - it: Test agent.monitor.enabled when specifying Agent secure mode
+    set:
+      agent:
+        monitor:
+          enabled: true
+        sysdig:
+          settings:
+            feature:
+              mode: secure
+    asserts:
+      - matchRegexRaw:
+          pattern: |-
+            The agent.monitor.enabled parameter is true while using agent.sysdig.settings.feature.mode to put the Agent into either
+            secure or secure_light mode. Please set agent.monitor.enabled=false to ensure all Sysdig Monitor components are disabled
+            when running the Agent in secure or secure_light modes.
+    template: templates/NOTES.txt
+
+  - it: Test agent.monitor.enabled=false when specifying Agent secure mode
+    set:
+      agent:
+        monitor:
+          enabled: false
+        sysdig:
+          settings:
+            feature:
+              mode: secure
+    asserts:
+      - notMatchRegexRaw:
+          pattern: |-
+            The agent.monitor.enabled parameter is true while using agent.sysdig.settings.feature.mode to put the Agent into either
+            secure or secure_light mode. Please set agent.monitor.enabled=false to ensure all Sysdig Monitor components are disabled
+            when running the Agent in secure or secure_light modes.
+    template: templates/NOTES.txt
