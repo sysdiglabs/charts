@@ -22,6 +22,11 @@ The "drift_killer" feature in agent is not supported when running on GKE Autopil
         {{- end }}
     {{- end }}
 
+    {{- if and (or .Values.agent.gke.autopilot .Values.global.gke.autopilot) (not .Values.agent.gke.createPriorityClass) (not .Values.agent.priorityClassName) }}
+
+A PriorityClass is recommended for GKE Autopilot environments. Please set agent.gke.createPriorityClass=true or provide the name of an existing PriorityClass by using the agent.priorityClassName parameter.
+    {{- end }}
+
     {{- $agentSecureFeatProvided := false }}
     {{- if hasKey .Values.agent.sysdig.settings "feature" }}
         {{- if hasKey .Values.agent.sysdig.settings.feature "mode" }}

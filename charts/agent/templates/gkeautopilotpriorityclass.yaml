@@ -1,4 +1,6 @@
 {{- if and .Values.gke.autopilot (not .Values.slim.enabled) }}
+
+
 {{- if and (not .Values.gke.createPriorityClass) (not .Values.priorityClassName) }}
   {{- fail "A PriorityClass is required for GKE Autopilot environments. Please set gke.createPriorityClass=true or provide the name of an existing PriorityClass by using the priorityClassName parameter" }}
 {{- end }}
