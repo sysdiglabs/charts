@@ -2909,6 +2909,33 @@ entries:
   agent:
   - apiVersion: v2
     appVersion: 12.13.0
+    created: "2023-04-13T15:37:26.444505904Z"
+    description: Sysdig Monitor and Secure agent
+    digest: 0541fe81c4b3fac9ff05539fc64ce5985f9d5dc43fefaa44b01752033bfc1f44
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: adam.roberts@sysdig.com
+      name: aroberts87
+    - email: zhongcheng.xiao@sysdig.com
+      name: lilx1ao
+    name: agent
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/agent-1.7.0/agent-1.7.0.tgz
+    version: 1.7.0
+  - apiVersion: v2
+    appVersion: 12.13.0
     created: "2023-04-13T14:55:24.658407428Z"
     description: Sysdig Monitor and Secure agent
     digest: d54675de52fefdb5a4b7fa65784f229a7cd74580c7e0d0ac60187355aea9a04f
@@ -22170,6 +22197,48 @@ entries:
     version: 1.7.15
   sysdig-deploy:
   - apiVersion: v2
+    created: "2023-04-13T15:37:26.640704796Z"
+    dependencies:
+    - alias: admissionController
+      condition: admissionController.enabled
+      name: admission-controller
+      repository: file://../admission-controller
+      version: ~0.7.28
+    - alias: agent
+      condition: agent.enabled
+      name: agent
+      repository: file://../agent
+      version: ~1.7.0
+    - alias: nodeAnalyzer
+      condition: nodeAnalyzer.enabled
+      name: node-analyzer
+      repository: file://../node-analyzer
+      version: ~1.8.49
+    - alias: kspmCollector
+      condition: global.kspm.deploy
+      name: kspm-collector
+      repository: file://../kspm-collector
+      version: ~0.1.43
+    - alias: rapidResponse
+      condition: rapidResponse.enabled
+      name: rapid-response
+      repository: file://../rapid-response
+      version: ~0.4.10
+    description: A chart with various Sysdig components for Kubernetes
+    digest: ac87b02108539dca25b9c0728cf2284d53f1706f1482518ae926208e2634bfc2
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    maintainers:
+    - email: adam.roberts@sysdig.com
+      name: aroberts87
+    - email: zhongcheng.xiao@sysdig.com
+      name: lilx1ao
+    name: sysdig-deploy
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/sysdig-deploy-1.7.0/sysdig-deploy-1.7.0.tgz
+    version: 1.7.0
+  - apiVersion: v2
     created: "2023-04-13T14:55:24.960595576Z"
     dependencies:
     - alias: admissionController
@@ -31112,4 +31181,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2023-04-13T14:55:24.962486076Z"
+generated: "2023-04-13T15:37:26.643681707Z"
