@@ -6,6 +6,17 @@ Links for your deployment:
   * Sysdig Monitor: https://{{ include "monitorUrl" . }}/#/dashboard-template/view.sysdig.agents?last=10
   * Sysdig Secure: https://{{ include "secureUrl" . }}/#/data-sources/agents
 
+{{- if include "agent.gke.autopilot" . }}
+    {{- if hasKey .Values.sysdig.settings "drift_killer" }}
+        {{- if hasKey .Values.sysdig.settings.drift_killer "enabled" }}
+            {{- if .Values.sysdig.settings.drift_killer.enabled }}
+
+The "drift_killer" feature in agent is not supported when running on GKE Autopilot.
+            {{- end }}
+        {{- end }}
+    {{- end }}
+{{- end }}
+
 {{- $secureFeatProvided := false }}
 {{- if hasKey .Values.sysdig.settings "feature" }}
     {{- if hasKey .Values.sysdig.settings.feature "mode" }}
