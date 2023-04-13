@@ -140,3 +140,32 @@ tests:
             secure or secure_light mode. Please set agent.monitor.enabled=false to ensure all Sysdig Monitor components are disabled
             when running the Agent in secure or secure_light modes.
     template: templates/NOTES.txt
+
+  - it: Test "drift_killer" feature message is visible when enabled and we run in GKE with autopilot enabled
+    set:
+      agent:
+        sysdig:
+          settings:
+            drift_killer:
+              enabled: true
+        gke:
+          autopilot: true
+    asserts:
+      - matchRegexRaw:
+          pattern: |-
+            The "drift_killer" feature in agent is not supported when running on GKE Autopilot.
+    template: templates/NOTES.txt
+  - it: Test "drift_killer" feature is not enabled when run with gke.autopilot=false
+    set:
+      agent:
+        sysdig:
+          settings:
+            drift_killer:
+              enabled: true
+        gke:
+          autopilot: false
+    asserts:
+      - notMatchRegexRaw:
+          pattern: |-
+            The "drift_killer" feature in agent is not supported when running on GKE Autopilot.
+    template: templates/NOTES.txt

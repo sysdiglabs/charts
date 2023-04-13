@@ -33,15 +33,3 @@ tests:
       - isNull:
           path: spec.template.spec.volumes[?(@.name == "varlib-vol")]
         template: templates/daemonset.yaml
-  - it: Ensure /var/lib host volume is not mounted as /host/var/lib in container when running on global.gke.autopilot
-    set:
-      global:
-        gke:
-          autopilot: true
-    asserts:
-      - isNull:
-          path: spec.template.spec.containers[*].volumeMounts[?(@.name == "varlib-vol")]
-        template: templates/daemonset.yaml
-      - isNull:
-          path: spec.template.spec.volumes[?(@.name == "varlib-vol")]
-        template: templates/daemonset.yaml

@@ -425,6 +425,9 @@ agent config to prevent a backend push from enabling them after installation.
             {{- $_ := set $secureConfig $secureFeature (dict "enabled" false) }}
         {{- end }}
     {{- end }}
+    {{- if include "agent.gke.autopilot" . }}
+        {{- $_ := set $secureConfig "drift_killer" (dict "enabled" false) }}
+    {{- end }}
 {{ toYaml $secureConfig }}
 {{- end }}
 
