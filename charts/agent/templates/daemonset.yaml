@@ -118,26 +118,26 @@ spec:
             - mountPath: /host/boot
               name: boot-vol
               readOnly: true
+            {{- if not (include "agent.gke.autopilot" .) }}
+            - mountPath: /host/etc
+              name: etc-vol
+              readOnly: true
             - mountPath: /host/lib/modules
               name: modules-vol
               readOnly: true
             - mountPath: /host/usr
               name: usr-vol
               readOnly: true
+            {{- else }}
+            - mountPath: /host/etc/os-release
+              name: osrel
+              readOnly: true
+            {{- end }}
             {{- if or (include "agent.ebpfEnabled" .) (include "agent.gke.autopilot" .)}}
             - mountPath: /root/.sysdig
               name: bpf-probes
             - mountPath: /sys/kernel/debug
               name: sys-tracing
-              readOnly: true
-            {{- end }}
-            {{- if include "agent.gke.autopilot" . }}
-            - mountPath: /host/etc/os-release
-              name: osrel
-              readOnly: true
-            {{- else }}
-            - mountPath: /host/etc
-              name: etc-vol
               readOnly: true
             {{- end }}
       {{- end }}
