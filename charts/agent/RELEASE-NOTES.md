@@ -1,6 +1,6 @@
 # What's Changed
 
 ### Bug Fixes
-- **admission-controller,agent,node-analyzer,rapid-response,registry-scanner,sysdig** [0bf9682](https://github.com/sysdiglabs/charts/commit/0bf96827ebf80d76aab61b8fa3d26b3903df220b): Improve KubeVersion Comparisons ([#1040](https://github.com/sysdiglabs/charts/issues/1040))
+- **agent,sysdig-deploy** [47651ab](https://github.com/sysdiglabs/charts/commit/47651ab557dd675a9daf0d3cdb0b758d63735e74): Reduce Agent mode misconfiguration from fail to NOTES output ([#1039](https://github.com/sysdiglabs/charts/issues/1039))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.6.8...agent-1.6.9
+#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.6.9...agent-1.6.10
