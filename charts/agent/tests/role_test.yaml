@@ -37,3 +37,15 @@ tests:
             name: RELEASE-NAME-agent
             namespace: NAMESPACE
     template: templates/rolebinding.yaml
+
+  - it: Role and RoleBinding are not created when rbac.create is set to false
+    set:
+      rbac:
+        create: false
+    asserts:
+      - hasDocuments:
+          count: 0
+        template: templates/role.yaml
+      - hasDocuments:
+          count: 0
+        template: templates/rolebinding.yaml
