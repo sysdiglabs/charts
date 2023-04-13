@@ -2909,6 +2909,33 @@ entries:
   agent:
   - apiVersion: v2
     appVersion: 12.13.0
+    created: "2023-04-13T19:42:09.825725582Z"
+    description: Sysdig Monitor and Secure agent
+    digest: 3d68d5e18b49734ec41e811657fa5fbd4d77bcc99e06c0a318fdca54bd5e9fa6
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: adam.roberts@sysdig.com
+      name: aroberts87
+    - email: zhongcheng.xiao@sysdig.com
+      name: lilx1ao
+    name: agent
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/agent-1.7.1/agent-1.7.1.tgz
+    version: 1.7.1
+  - apiVersion: v2
+    appVersion: 12.13.0
     created: "2023-04-13T15:37:26.444505904Z"
     description: Sysdig Monitor and Secure agent
     digest: 0541fe81c4b3fac9ff05539fc64ce5985f9d5dc43fefaa44b01752033bfc1f44
@@ -15397,6 +15424,38 @@ entries:
   sysdig:
   - apiVersion: v1
     appVersion: 12.13.0
+    created: "2023-04-13T19:42:09.939128994Z"
+    description: Sysdig Monitor and Secure agent
+    digest: 664049dacd4c885f09aec3d008debdef8bafab40f05806da104d4b7ee77de54f
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: lachlan@deis.com
+      name: lachie83
+    - email: jorge.salamero@sysdig.com
+      name: bencer
+    - email: nestor.salceda@sysdig.com
+      name: nestorsalceda
+    - email: alvaro.iradier@sysdig.com
+      name: airadier
+    - email: carlos.arilla@sysdig.com
+      name: carillan81
+    name: sysdig
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/sysdig-1.15.84/sysdig-1.15.84.tgz
+    version: 1.15.84
+  - apiVersion: v1
+    appVersion: 12.13.0
     created: "2023-04-12T19:12:34.351152123Z"
     description: Sysdig Monitor and Secure agent
     digest: 2f230cf9cc669032254474166959dfc8ce5310322b3d794c0a1e90b0545b60a9
@@ -22222,6 +22281,48 @@ entries:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-1.7.15/sysdig-1.7.15.tgz
     version: 1.7.15
   sysdig-deploy:
+  - apiVersion: v2
+    created: "2023-04-13T19:42:10.060819179Z"
+    dependencies:
+    - alias: admissionController
+      condition: admissionController.enabled
+      name: admission-controller
+      repository: file://../admission-controller
+      version: ~0.7.28
+    - alias: agent
+      condition: agent.enabled
+      name: agent
+      repository: file://../agent
+      version: ~1.7.0
+    - alias: nodeAnalyzer
+      condition: nodeAnalyzer.enabled
+      name: node-analyzer
+      repository: file://../node-analyzer
+      version: ~1.8.49
+    - alias: kspmCollector
+      condition: global.kspm.deploy
+      name: kspm-collector
+      repository: file://../kspm-collector
+      version: ~0.1.43
+    - alias: rapidResponse
+      condition: rapidResponse.enabled
+      name: rapid-response
+      repository: file://../rapid-response
+      version: ~0.4.11
+    description: A chart with various Sysdig components for Kubernetes
+    digest: 4ff49859bb726a23c183a1d4e0d96c02c76512c5a30b83d87fd892034622d454
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    maintainers:
+    - email: adam.roberts@sysdig.com
+      name: aroberts87
+    - email: zhongcheng.xiao@sysdig.com
+      name: lilx1ao
+    name: sysdig-deploy
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/sysdig-deploy-1.7.2/sysdig-deploy-1.7.2.tgz
+    version: 1.7.2
   - apiVersion: v2
     created: "2023-04-13T16:03:02.66436788Z"
     dependencies:
@@ -31249,4 +31350,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2023-04-13T16:03:02.666634195Z"
+generated: "2023-04-13T19:42:10.064597313Z"
