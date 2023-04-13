@@ -1,6 +1,6 @@
 # What's Changed
 
-### Bug Fixes
-- **admission-controller,agent,node-analyzer,rapid-response,registry-scanner,sysdig** [0bf9682](https://github.com/sysdiglabs/charts/commit/0bf96827ebf80d76aab61b8fa3d26b3903df220b): Improve KubeVersion Comparisons ([#1040](https://github.com/sysdiglabs/charts/issues/1040))
+### New Features
+- **registry-scanner** [47eea09](https://github.com/sysdiglabs/charts/commit/47eea099f1dec7676d04d75fe765bd9772a71b72): Update README.md removing old content ([#1036](https://github.com/sysdiglabs/charts/issues/1036))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-0.1.37...registry-scanner-0.1.38
+#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-0.1.38...registry-scanner-0.1.39
