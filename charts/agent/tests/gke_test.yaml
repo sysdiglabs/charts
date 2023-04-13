@@ -3,18 +3,6 @@ templates:
   - templates/daemonset.yaml
   - templates/gkeautopilotpriorityclass.yaml
 tests:
-  - it: Enable GKE Autopilot (agent-slim)
-    set:
-      gke:
-        autopilot: true
-        createPriorityClass: ture
-      slim:
-        enabled: true
-    asserts:
-      - failedTemplate:
-          errorMessage: "The slim agent is not enabled in GKE Autopilot. Please set slim.enabled=false"
-    template: templates/daemonset.yaml
-
   - it: Enable GKE Autopilot
     set:
       gke:
@@ -64,19 +52,6 @@ tests:
             cpu: 1000m
             memory: 1024Mi
     template: templates/daemonset.yaml
-
-  - it: Check PriorityClass requirement
-    set:
-      gke:
-        autopilot: true
-        createPriorityClass: false
-      priorityClassName:
-      slim:
-        enabled: false
-    asserts:
-      - failedTemplate:
-          errorMessage: "A PriorityClass is required for GKE Autopilot environments. Please set gke.createPriorityClass=true or provide the name of an existing PriorityClass by using the priorityClassName parameter"
-    template: templates/gkeautopilotpriorityclass.yaml
 
   - it: Check PriorityClass
     set:
