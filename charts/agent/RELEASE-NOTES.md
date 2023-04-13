@@ -1,6 +1,6 @@
 # What's Changed
 
-### Bug Fixes
-- **agent,sysdig-deploy** [47651ab](https://github.com/sysdiglabs/charts/commit/47651ab557dd675a9daf0d3cdb0b758d63735e74): Reduce Agent mode misconfiguration from fail to NOTES output ([#1039](https://github.com/sysdiglabs/charts/issues/1039))
+### New Features
+- **agent** [a44de57](https://github.com/sysdiglabs/charts/commit/a44de570eb9f124e6df2087e76ff817198a77b14): Move Agent lease permissions ([#1041](https://github.com/sysdiglabs/charts/issues/1041))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.6.9...agent-1.6.10
+#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.6.10...agent-1.7.0
