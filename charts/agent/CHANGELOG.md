@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.7.1
+### Bug Fixes
+* **agent,sysdig** [0702edd](https://github.com/sysdiglabs/charts/commit/0702eddfc46c823b8362b5f0d42e7be9d3bfe1ac): do not mount /var/lib when GKE autopilot is enabled ([#1047](https://github.com/sysdiglabs/charts/issues/1047))
 # v1.7.0
 ### New Features
 * **agent** [a44de57](https://github.com/sysdiglabs/charts/commit/a44de570eb9f124e6df2087e76ff817198a77b14): Move Agent lease permissions ([#1041](https://github.com/sysdiglabs/charts/issues/1041))
