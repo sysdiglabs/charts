@@ -1,6 +1,4 @@
 config:
-  scan:
-    newVmScanner: true
   secureAPIToken: ${SECURE_API_TOKEN}
   registryType: ecr
   aws:
