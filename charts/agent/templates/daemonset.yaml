@@ -96,8 +96,8 @@ spec:
               value:
           {{- end }}
           {{- range $key, $value := .Values.daemonset.kmodule.env }}
-            - name: "{{ $key }}"
-              value: "{{ $value }}"
+            - name: {{ $key | quote }}
+              value: {{ $value | quote }}
           {{- end }}
           {{- if (.Values.proxy.httpProxy | default .Values.global.proxy.httpProxy) }}
             - name: http_proxy
@@ -182,8 +182,8 @@ spec:
               value: {{ .Values.timezone }}
             {{- end }}
             {{- range $key, $value := .Values.daemonset.env }}
-            - name: "{{ $key }}"
-              value: "{{ $value }}"
+            - name: {{ $key | quote }}
+              value: {{ $value | quote }}
             {{- end }}
           readinessProbe:
             exec:

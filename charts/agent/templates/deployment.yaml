@@ -83,8 +83,8 @@ spec:
             value: {{ .Values.timezone }}
             {{- end }}
           {{- range $key, $value := .Values.delegatedAgentDeployment.deployment.env }}
-          - name: "{{ $key }}"
-            value: "{{ $value }}"
+          - name: {{ $key | quote }}
+            value: {{ $value | quote }}
           {{- end }}
           {{- if (.Values.proxy.httpProxy | default .Values.global.proxy.httpProxy) }}
           - name: http_proxy
