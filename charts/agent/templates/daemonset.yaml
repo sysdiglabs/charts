@@ -221,10 +221,15 @@ spec:
               name: usr-vol
               readOnly: true
             {{- end }}
+            {{- if not (and (include "agent.gke.autopilot" .) .Values.slim.enabled) }}
             - mountPath: /host/run
               name: run-vol
             - mountPath: /host/var/run
               name: varrun-vol
+            {{- else }}
+            - mountPath: /host/var/run/containerd/containerd.sock
+              name: containerdsock-vol
+            {{- end }}
             {{- if not (include "agent.gke.autopilot" .) }}
             - mountPath: /host/var/lib
               name: varlib-vol
@@ -289,6 +294,11 @@ spec:
         - name: varlib-vol
           hostPath:
             path: /var/lib
+        {{- end }}
+        {{- if and (include "agent.gke.autopilot" .) .Values.slim.enabled }}
+        - name: containerdsock-vol
+          hostPath:
+            path: /var/run/containerd/containerd.sock
         {{- end }}
         {{- if (and (or (include "agent.ebpfEnabled" .) (include "agent.gke.autopilot" .)) .Values.slim.enabled) }}
         - name: bpf-probes
