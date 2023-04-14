@@ -1,6 +1,6 @@
 # What's Changed
 
 ### Bug Fixes
-- **admission-controller,agent,node-analyzer,rapid-response,registry-scanner,sysdig** [0bf9682](https://github.com/sysdiglabs/charts/commit/0bf96827ebf80d76aab61b8fa3d26b3903df220b): Improve KubeVersion Comparisons ([#1040](https://github.com/sysdiglabs/charts/issues/1040))
+- **agent,sysdig** [0702edd](https://github.com/sysdiglabs/charts/commit/0702eddfc46c823b8362b5f0d42e7be9d3bfe1ac): do not mount /var/lib when GKE autopilot is enabled ([#1047](https://github.com/sysdiglabs/charts/issues/1047))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.6.8...agent-1.6.9
+#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.7.0...agent-1.7.1

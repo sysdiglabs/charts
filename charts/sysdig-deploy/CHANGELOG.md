@@ -10,6 +10,18 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.7.2
+### Bug Fixes
+* **agent,sysdig** [0702edd](https://github.com/sysdiglabs/charts/commit/0702eddfc46c823b8362b5f0d42e7be9d3bfe1ac): do not mount /var/lib when GKE autopilot is enabled ([#1047](https://github.com/sysdiglabs/charts/issues/1047))
+# v1.7.1
+### Chores
+* **sysdig-deploy** [951a984](https://github.com/sysdiglabs/charts/commit/951a984087b20f617b1e5452abb4293cc548fe01): Automatic version bump due to updated dependencies ([#1046](https://github.com/sysdiglabs/charts/issues/1046))
+# v1.7.0
+### New Features
+* **agent** [a44de57](https://github.com/sysdiglabs/charts/commit/a44de570eb9f124e6df2087e76ff817198a77b14): Move Agent lease permissions ([#1041](https://github.com/sysdiglabs/charts/issues/1041))
+# v1.6.16
+### Bug Fixes
+* **agent,sysdig-deploy** [47651ab](https://github.com/sysdiglabs/charts/commit/47651ab557dd675a9daf0d3cdb0b758d63735e74): Reduce Agent mode misconfiguration from fail to NOTES output ([#1039](https://github.com/sysdiglabs/charts/issues/1039))
 # v1.6.15
 ### Chores
 * **sysdig-deploy** [0b2d76b](https://github.com/sysdiglabs/charts/commit/0b2d76b5e219287b07e5a3280d0a2cd90434c6a1): Automatic version bump due to updated dependencies ([#1044](https://github.com/sysdiglabs/charts/issues/1044))

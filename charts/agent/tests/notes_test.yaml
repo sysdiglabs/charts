@@ -72,3 +72,30 @@ tests:
     asserts:
       - failedTemplate:
           errorMessage: "raw: global.sysdig.region=ap3 provided is not recognized."
+
+  - it: Test "drift_killer" feature message is visible when enabled and we run in GKE with autopilot enabled
+    set:
+      sysdig:
+        settings:
+          drift_killer:
+            enabled: true
+      gke:
+        autopilot: true
+    asserts:
+      - matchRegexRaw:
+          pattern: |-
+            The "drift_killer" feature in agent is not supported when running on GKE Autopilot.
+    template: templates/NOTES.txt
+  - it: Test "drift_killer" feature is not enabled when run with gke.autopilot=false
+    set:
+      sysdig:
+        settings:
+          drift_killer:
+            enabled: true
+      gke:
+        autopilot: false
+    asserts:
+      - notMatchRegexRaw:
+          pattern: |-
+            The "drift_killer" feature in agent is not supported when running on GKE Autopilot.
+    template: templates/NOTES.txt
