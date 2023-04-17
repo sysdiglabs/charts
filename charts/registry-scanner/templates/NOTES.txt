@@ -1,3 +1,15 @@
+# ============================================================================================
+#  Info: Chart version {{ .Chart.Version }} has been installed with Registry Scanner {{ .Chart.AppVersion }}.
+#
+#        The chart version follows SemVer (https://semver.org/), you can pin
+#        the chart version with --version=1, --version=1.0, --version=1.0.0, etc.
+#        Using --version=1 will ensure that you get the latest 1.x.x version, but
+#        you don't get any breaking changes when updating.
+#
+#        For more information, or you are still using the legacy scanning engine,
+#        please check the documentation:
+#        > https://docs.sysdig.com/en/docs/installation/container-registry-scanner/
+# ============================================================================================
 #
 {{- if eq .Values.scanOnStart.enabled true }}
 # Because 'scanOnStart:true' job '{{ .Values.scanOnStart.jobName }}' has been launched to perform an initial scan.
