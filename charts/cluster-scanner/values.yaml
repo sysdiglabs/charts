@@ -1,0 +1,122 @@
+# Default values for cluster-scanner.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+global:
+  sysdigHost: "change-me"
+  sysdigAccessKey: "change-me"
+  sysdigSkipVerifyCertificate: false
+  clusterName: "change-me"
+  scannerMode: "local" # or "multi"
+  loggingLevel: "INFO"
+
+eveEnabled: false
+eveIntegrationEnabled: false
+rootNamespace: "kube-system"
+
+multicluster:
+  # kubeconfigSecretName: ""
+
+localcluster:
+  # restrict access to specific docker secrets to obtain pull credentials. Optional.
+  # Default behaviour is listing all secrets
+  # rbac:
+  #   allowedPullSecrets:
+  #     namespaceOneName:
+  #       - myDockerSecretOne
+  #       - myDockerSecretTwo
+  #     anotherNamespace:
+  #       - myOtherDockerSecretOne
+  #       - myOtherDockerSecretTwo
+
+replicaCount: 2
+
+# Params to manage leader election of rsi component.
+# Leader election is implemented leveraging the native capabilities of Kubernetes
+# see: https://kubernetes.io/blog/2016/01/simple-leader-election-with-kubernetes/
+# leaderElectionLeaseNameOverride: ""
+# leaderElectionLeaseNamespaceOverride: ""
+
+rsi:
+  image:
+    repository: quay.io/sysdig/runtime-status-integrator
+    pullPolicy: IfNotPresent
+    tag: "0.1.0"
+  ports:
+    metrics: 25000
+    probes: 7000
+  resources:
+    limits:
+      cpu: "1"
+      memory: 350Mi
+    requests:
+      cpu: "350m"
+      memory: 350Mi
+ise:
+  image:
+    repository: quay.io/sysdig/image-sbom-extractor
+    pullPolicy: IfNotPresent
+    tag: "0.1.0"
+  ports:
+    metrics: 25001
+    probes: 7001
+  resources:
+    limits:
+      cpu: "1"
+      memory: 350Mi
+    requests:
+      cpu: "150m"
+      memory: 350Mi
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+selectorLabels: {}
+
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+js:
+  user: "default-user"
+  password: ""
+
+cache:
+  type: "local" # other possible value is "redis"
+  prefix: "sysdig-cluster-scanner"
+  # redis:
+  #   address: ""
+  #   user: ""
+  #   password: ""
+  #   database: ""
+  #   tlsEnabled: false
+  #   tlsSkip: ""
+  #   tlsCa: ""
+  #   sentinelMaster: ""
+  #   sentinelAddress: ""
