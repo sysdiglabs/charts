@@ -73,7 +73,7 @@ config:
     # Number of repositories to scan per registry.<br/>Maximum Value 1000
     maxRepositoriesPerRegistry: 500
   scan:
-    # Override the default (if not specified) `quay.io/sysdig/secure-inline-scan:2` image for the inline scanner job.
+    # Override the default image for the inline scanner job.
     inlineScanImage: ""
     # Security context for Inline Scanner container.
     securityContext: {}
@@ -98,8 +98,6 @@ config:
       # Size limit for the emptyDir volume used by the scanner job.<br/>
       # This volume is used to store both the vulnerability database and the image to scan.
       temporaryVolumeSizeLimit: 2Gi
-    # true/false whether to activate the beta image scanning (experimental and unsupported)
-    newVmScanner: false
 ssl:
   ca:
     # For outbound connections
