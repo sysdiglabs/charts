@@ -295,11 +295,6 @@ spec:
               name: run-vol
             - mountPath: /host/var/run
               name: varrun-vol
-            - mountPath: /root/.sysdig
-              name: bpf-probes
-            - mountPath: /sys/kernel/debug
-              name: sys-tracing
-              readOnly: true
           {{- end }}
 
           {{- /* Slim = true, Autopilot = true */}}
@@ -450,11 +445,6 @@ spec:
         - name: varrun-vol
           hostPath:
             path: /var/run
-        - name: bpf-probes
-          emptyDir: {}
-        - name: sys-tracing
-          hostPath:
-            path: /sys/kernel/debug
       {{- end }}
 
       {{- /* Slim = true, Autopilot = true */}}
