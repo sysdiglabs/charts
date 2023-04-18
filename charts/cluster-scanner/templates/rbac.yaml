@@ -1,0 +1,47 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "cluster-scanner.fullname" . }}
+rules:
+- apiGroups: ["", "apps", "batch", "extensions"]
+  resources:
+    - "namespaces"
+    - "deployments"
+    - "replicasets"
+    - "daemonsets"
+    - "statefulsets"
+    - "pods"
+    - "cronjobs"
+    - "jobs"
+    - "nodes"
+    - "secrets"
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["", "coordination.k8s.io"]
+  resources:
+    - "leases"
+  resourceNames:
+    - {{ .Values.leaderElectionLeaseNameOverride | default (include "cluster-scanner.fullname" .) }}
+  verbs: ["*"]
+- apiGroups: ["*"]
+  resources:
+    - "endpoints"
+  verbs: ["get", "watch", "list"]
+- apiGroups: ["*"]
+  resources:
+    - "endpoints"
+  resourceNames:
+    - {{ include "cluster-scanner.fullname" . }}
+  verbs: ["*"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "cluster-scanner.fullname" . }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ include "cluster-scanner.fullname" . }}
+subjects:
+  - kind: ServiceAccount
+    namespace: {{ .Release.Namespace }}
+    name: {{ include "cluster-scanner.serviceAccountName" . }}
