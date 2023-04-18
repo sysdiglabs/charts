@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.7.3
+### Chores
+* **sysdig-deploy** [1b5ab1b](https://github.com/sysdiglabs/charts/commit/1b5ab1b4f6fc461c75c5bc93ce2e718c2cabd49d): Automatic version bump due to updated dependencies ([#1048](https://github.com/sysdiglabs/charts/issues/1048))
 # v1.7.2
 ### Bug Fixes
 * **agent,sysdig** [0702edd](https://github.com/sysdiglabs/charts/commit/0702eddfc46c823b8362b5f0d42e7be9d3bfe1ac): do not mount /var/lib when GKE autopilot is enabled ([#1047](https://github.com/sysdiglabs/charts/issues/1047))

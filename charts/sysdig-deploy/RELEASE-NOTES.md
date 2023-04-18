@@ -1,6 +1,6 @@
 # What's Changed
 
-### Bug Fixes
-- **agent,sysdig** [0702edd](https://github.com/sysdiglabs/charts/commit/0702eddfc46c823b8362b5f0d42e7be9d3bfe1ac): do not mount /var/lib when GKE autopilot is enabled ([#1047](https://github.com/sysdiglabs/charts/issues/1047))
+### Chores
+- **sysdig-deploy** [1b5ab1b](https://github.com/sysdiglabs/charts/commit/1b5ab1b4f6fc461c75c5bc93ce2e718c2cabd49d): Automatic version bump due to updated dependencies ([#1048](https://github.com/sysdiglabs/charts/issues/1048))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.7.1...sysdig-deploy-1.7.2
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.7.2...sysdig-deploy-1.7.3
