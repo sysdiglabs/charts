@@ -1,0 +1,68 @@
+suite: Host volumes are available for agent
+templates:
+  - templates/daemonset.yaml
+tests:
+  - it: Ensure only volumes from host allowed in GKE Autopilot when agent running in fat mode are mounted
+    set:
+      gke:
+        autopilot: true
+      slim:
+        enabled: false
+    asserts:
+      - isNotNull:
+          path: spec.template.spec.volumes[?(@.hostPath.path == "/dev")]
+      - isNotNull:
+          path: spec.template.spec.volumes[?(@.hostPath.path == "/proc")]
+      - isNotNull:
+          path: spec.template.spec.volumes[?(@.hostPath.path == "/etc/modprobe.d")]
+      - isNotNull:
+          path: spec.template.spec.volumes[?(@.hostPath.path == "/etc/os-release")]
+      - isNotNull:
+          path: spec.template.spec.volumes[?(@.hostPath.path == "/boot")]
+      - isNotNull:
+          path: spec.template.spec.volumes[?(@.hostPath.path == "/lib/modules")]
+      - isNotNull:
+          path: spec.template.spec.volumes[?(@.hostPath.path == "/usr")]
+      - isNotNull:
+          path: spec.template.spec.volumes[?(@.hostPath.path == "/run")]
+      - isNotNull:
+          path: spec.template.spec.volumes[?(@.hostPath.path == "/var/run")]
+      - isNotNull:
+          path: spec.template.spec.volumes[?(@.hostPath.path == "/sys/kernel/debug")]
+      # This seems not work as expected, need deeper investigation
+      # - lengthEqual:
+      #     path: spec.template.spec.volumes[?(@.hostPath.path =~ /\/.*/)]
+      #     count: 10
+      # We are going to use this "workaround" until we found a proper solution
+      - isNull:
+          path: spec.template.spec.volumes[?(@.hostPath.path =~ /\/.*/ && @.hostPath.path != "/dev" && @.hostPath.path != "/proc" && @.hostPath.path != "/etc/modprobe.d" && @.hostPath.path != "/etc/os-release" && @.hostPath.path != "/boot" && @.hostPath.path != "/lib/modules" && @.hostPath.path != "/usr" && @.hostPath.path != "/run" && @.hostPath.path != "/var/run" && @.hostPath.path != "/sys/kernel/debug")]
+
+  - it: Ensure only volumes from host allowed in GKE Autopilot when agent running in slim mode are mounted
+    set:
+      gke:
+        autopilot: true
+      slim:
+        enabled: true
+    asserts:
+      - isNotNull:
+          path: spec.template.spec.volumes[?(@.hostPath.path == "/dev")]
+      - isNotNull:
+          path: spec.template.spec.volumes[?(@.hostPath.path == "/proc")]
+      - isNotNull:
+          path: spec.template.spec.volumes[?(@.hostPath.path == "/etc/modprobe.d")]
+      - isNotNull:
+          path: spec.template.spec.volumes[?(@.hostPath.path == "/etc/os-release")]
+      - isNotNull:
+          path: spec.template.spec.volumes[?(@.hostPath.path == "/boot")]
+      - isNotNull:
+          path: spec.template.spec.volumes[?(@.hostPath.path == "/var/run/containerd/containerd.sock")]
+      - isNotNull:
+          path: spec.template.spec.volumes[?(@.hostPath.path == "/sys/kernel/debug")]
+      
+      # This seems not work as expected, need deeper investigation
+      # - lengthEqual:
+      #     path: spec.template.spec.volumes[?(@.hostPath.path =~ /\/.*/)]
+      #     count: 7
+      # We are going to use this "workaround" until we found a proper solution
+      - isNull:
+          path: spec.template.spec.volumes[?(@.hostPath.path =~ /\/.*/ && @.hostPath.path != "/dev" && @.hostPath.path != "/proc" && @.hostPath.path != "/etc/modprobe.d" && @.hostPath.path != "/etc/os-release" && @.hostPath.path != "/boot" && @.hostPath.path != "/var/run/containerd/containerd.sock" && @.hostPath.path != "/sys/kernel/debug")]
