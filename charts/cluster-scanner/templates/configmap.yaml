@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "cluster-scanner.fullname" . }}
+  labels:
+   {{- include "cluster-scanner.labels" . | nindent 4 }}
+data:
+  sysdig_host: {{ .Values.global.sysdigHost }}
+  sysdig_skip_verify_certificate: {{ .Values.global.sysdigSkipVerifyCertificate | quote }}
+  cluster_name: {{ .Values.global.clusterName }}
+  root_namespace: {{ .Values.rootNamespace }}
+  eve_enabled: {{ .Values.eveEnabled | quote}}
+  eve_integration_enabled: {{ .Values.eveIntegrationEnabled | quote }}
+  logging_level: {{ .Values.global.loggingLevel }}
+{{- include "cluster-scanner.modeConfig" . | nindent 2 }}
+  js_server_user: {{ .Values.js.user }}
+  js_server_url: "nats://{{- include "cluster-scanner.fullname" . }}:4222"
+  rsi_leaderelection_lock_name: {{ .Values.leaderElectionLeaseNameOverride | default (include "cluster-scanner.fullname" .) }}
+  rsi_leaderelection_lock_namespace: {{ .Values.leaderElectionLeaseNamespaceOverride | default .Release.Namespace }}
+  rsi_service_name: {{ include "cluster-scanner.fullname" . }}
+{{- include "cluster-scanner.rsiJsConfig" . | nindent 2 }}
+  ise_cache_type: {{ .Values.cache.type }}
+  ise_cache_prefix: {{ .Values.cache.prefix }}
+{{- include "cluster-scanner.iseJsConfig" . | nindent 2 }}
+{{- include "cluster-scanner.redisCacheConfig" . | nindent 2 }}
