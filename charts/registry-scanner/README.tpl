@@ -47,6 +47,9 @@ Deploy the registry scanner specify each parameter using the `--set key=value[,k
 
 ```bash
 $ helm upgrade --install {{ .Chart.Name }} \
+    {{- with .Chart.Version }}
+    --version={{.}} \
+    {{- end }}
     --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
     --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
     --set config.registryURL=<REGISTRY_URL> \
@@ -58,7 +61,7 @@ $ helm upgrade --install {{ .Chart.Name }} \
 Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
 
 ```bash
-$ helm install {{ .Chart.Name }} -f values.yaml sysdig/{{ .Chart.Name }}
+$ helm install {{ .Chart.Name }} -f values.yaml {{- with .Chart.Version }} --version={{.}} {{- end }} sysdig/{{ .Chart.Name }}
 ```
 
 
@@ -80,7 +83,7 @@ $ helm uninstall {{ .Chart.Name }}
 
 The command removes all the Kubernetes components associated with the chart and deletes the release.
 
-{{ if .Chart.Values -}}
+{{- if .Chart.Values }}
 
 ## Configuration
 
@@ -90,13 +93,15 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 
 {{- end }}
 
-
 ### On-Prem deployment
 
 Use the following command to deploy in an on-prem:
 
 ```bash
 $ helm upgrade --install registry-scanner \
+    {{- with .Chart.Version }}
+    --version={{.}} \
+    {{- end }}
     --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
     --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
     --set config.secureSkipTLS=true \

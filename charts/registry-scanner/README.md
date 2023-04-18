@@ -49,6 +49,7 @@ Deploy the registry scanner specify each parameter using the `--set key=value[,k
 
 ```bash
 $ helm upgrade --install registry-scanner \
+    --version=1.0.0 \
     --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
     --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
     --set config.registryURL=<REGISTRY_URL> \
@@ -60,7 +61,7 @@ $ helm upgrade --install registry-scanner \
 Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
 
 ```bash
-$ helm install registry-scanner -f values.yaml sysdig/registry-scanner
+$ helm install registry-scanner -f values.yaml --version=1.0.0 sysdig/registry-scanner
 ```
 
 
@@ -119,14 +120,13 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | config.filter.maxAgeDays                   | Based on its creation date, excludes images older than specified number of days.<br/>Maximum 365                                                                                                                                            | <code>90</code>                              |
 | config.filter.maxTagsPerRepository         | Based on its creation date, newer ones take precedence, maximum number of tags to scan per repository.<br/>Maximum 10                                                                                                                       | <code>5</code>                               |
 | config.filter.maxRepositoriesPerRegistry   | Number of repositories to scan per registry.<br/>Maximum Value 1000                                                                                                                                                                         | <code>500</code>                             |
-| config.scan.inlineScanImage                | Override the default (if not specified) `quay.io/sysdig/secure-inline-scan:2` image for the inline scanner job.                                                                                                                             | <code>""</code>                              |
+| config.scan.inlineScanImage                | Override the default image for the inline scanner job.                                                                                                                                                                                      | <code>""</code>                              |
 | config.scan.securityContext                | Security context for Inline Scanner container.                                                                                                                                                                                              | <code>{}</code>                              |
 | config.scan.jobs.ttlSecondsAfterFinished   | TTL for scanner jobs                                                                                                                                                                                                                        | <code>600</code>                             |
 | config.scan.jobs.resources.requests.memory | Resource request memory for scanner job                                                                                                                                                                                                     | <code>500Mi</code>                           |
 | config.scan.jobs.resources.requests.cpu    | Resource request CPU for scanner job                                                                                                                                                                                                        | <code>500m</code>                            |
 | config.scan.jobs.resources.limits.memory   | Resource limit memory for scanner job                                                                                                                                                                                                       | <code>2Gi</code>                             |
 | config.scan.jobs.temporaryVolumeSizeLimit  | Size limit for the emptyDir volume used by the scanner job.<br/> This volume is used to store both the vulnerability database and the image to scan.                                                                                        | <code>2Gi</code>                             |
-| config.scan.newVmScanner                   | true/false whether to activate the beta image scanning (experimental and unsupported)                                                                                                                                                       | <code>false</code>                           |
 | ssl.ca.certs                               | For outbound connections <br/>List of PEM-encoded x509 certificate authority.                                                                                                                                                               | <code>[]</code>                              |
 | customLabels                               | Additional labels to add to CronJob and Scanning Jobs. Custom labels to be added to kubernetes manifests of all resources created.                                                                                                          | <code>{}</code>                              |
 | proxy.httpProxy                            | URL of the proxy for HTTP connections, or empty if not using proxy (sets the http_proxy environment variable).                                                                                                                              | <code></code>                                |
@@ -156,13 +156,13 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | extraEnvVars                               | Extra environment variables to be set                                                                                                                                                                                                       | <code>[]</code>                              |
 
 
-
 ### On-Prem deployment
 
 Use the following command to deploy in an on-prem:
 
 ```bash
 $ helm upgrade --install registry-scanner \
+    --version=1.0.0 \
     --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
     --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
     --set config.secureSkipTLS=true \

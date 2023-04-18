@@ -1,6 +1,4 @@
 config:
-  scan:
-    newVmScanner: true
   secureAPIToken: ${SECURE_API_TOKEN}
   registryType: artifactory
   registryURL: ${SYSDIG_JFROG_SAAS_QA_URL}
