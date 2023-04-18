@@ -43,6 +43,7 @@ Add Sysdig Helm charts repository:
 
 ```bash
 $ helm repo add sysdig https://charts.sysdig.com
+$ helm repo update
 ```
 
 Deploy the registry scanner specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
@@ -155,6 +156,14 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | scanOnStart.asPostInstallHook              | true/false on whether to launch the job as a post-install helm hook. <br/>mainly for testing purpose                                                                                                                                        | <code>false</code>                           |
 | extraEnvVars                               | Extra environment variables to be set                                                                                                                                                                                                       | <code>[]</code>                              |
 
+
+
+## Other Options
+
+### I still want to use legacy scanning engine
+
+Chart version `1.*` relies on new Vulnerability Management scanning engine.
+<br/>If you still use the legacy scanning engine and want to keep running that version, pin the Helm chart version with  `--version=0.1.39`
 
 ### On-Prem deployment
 
