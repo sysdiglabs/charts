@@ -14,8 +14,10 @@ $ pre-commit run -a
 
 # Registry Scanner
 
-Sysdig Registry Scanner scan your images registry on a Kubernetes Cluster.
+Sysdig Registry Scanner scan your images registry on a Kubernetes Cluster .
 <br/>This chart deploys the Sysdig Registry Scanner as a scheduled Cronjob in your Kubernetes cluster.
+
+For more insight check Sysdig **Official Docs on Registry-Scanner** [feature](https://docs.sysdig.com/en/vuln-registry-scan) and [installation process guidelines](https://docs.sysdig.com/en/install-registry-scan)
 
 <br/>
 

@@ -14,8 +14,10 @@ $ pre-commit run -a
 
 # Registry Scanner
 
-{{ .Project.Name }} scan your images registry on a Kubernetes Cluster.
+{{ .Project.Name }} scan your images registry on a Kubernetes Cluster .
 <br/>{{ .Project.Description }}
+
+For more insight check Sysdig **Official Docs on Registry-Scanner** [feature](https://docs.sysdig.com/en/vuln-registry-scan) and [installation process guidelines](https://docs.sysdig.com/en/install-registry-scan)
 
 <br/>
 
