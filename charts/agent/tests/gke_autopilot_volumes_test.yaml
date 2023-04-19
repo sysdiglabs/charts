@@ -2,19 +2,19 @@ suite: Host volumes are available for agent
 templates:
   - templates/daemonset.yaml
 tests:
-  - it: Ensure only volumes from host allowed in GKE Autopilot when agent running in fat mode are mounted
+  - it: Ensure only the right volumes are mounted when running on GKE Autopilot, the agent is slim mode without eBPF
     set:
       gke:
         autopilot: true
       slim:
+        enabled: false
+      ebpf:
         enabled: false
     asserts:
       - isNotNull:
           path: spec.template.spec.volumes[?(@.hostPath.path == "/dev")]
       - isNotNull:
           path: spec.template.spec.volumes[?(@.hostPath.path == "/proc")]
-      - isNotNull:
-          path: spec.template.spec.volumes[?(@.hostPath.path == "/etc/modprobe.d")]
       - isNotNull:
           path: spec.template.spec.volumes[?(@.hostPath.path == "/etc/os-release")]
       - isNotNull:
@@ -30,16 +30,47 @@ tests:
       # This seems not work as expected, need deeper investigation
       # - lengthEqual:
       #     path: spec.template.spec.volumes[?(@.hostPath.path =~ /\/.*/)]
-      #     count: 10
+      #     count: 8
       # We are going to use this "workaround" until we found a proper solution
       - isNull:
-          path: spec.template.spec.volumes[?(@.hostPath.path =~ /\/.*/ && @.hostPath.path != "/dev" && @.hostPath.path != "/proc" && @.hostPath.path != "/etc/modprobe.d" && @.hostPath.path != "/etc/os-release" && @.hostPath.path != "/boot" && @.hostPath.path != "/lib/modules" && @.hostPath.path != "/usr" && @.hostPath.path != "/run" && @.hostPath.path != "/var/run")]
+          path: spec.template.spec.volumes[?(@.hostPath.path =~ /\/.*/ && @.hostPath.path != "/dev" && @.hostPath.path != "/proc" && @.hostPath.path != "/etc/os-release" && @.hostPath.path != "/boot" && @.hostPath.path != "/lib/modules" && @.hostPath.path != "/usr" && @.hostPath.path != "/run" && @.hostPath.path != "/var/run")]
 
-  - it: Ensure only volumes from host allowed in GKE Autopilot when agent running in slim mode are mounted
+  - it: Ensure only the right volumes are mounted when running on GKE Autopilot, the agent is slim mode without eBPF
     set:
       gke:
         autopilot: true
       slim:
+        enabled: true
+      ebpf:
+        enabled: false
+    asserts:
+      - isNotNull:
+          path: spec.template.spec.volumes[?(@.hostPath.path == "/dev")]
+      - isNotNull:
+          path: spec.template.spec.volumes[?(@.hostPath.path == "/proc")]
+      - isNotNull:
+          path: spec.template.spec.volumes[?(@.hostPath.path == "/etc/os-release")]
+      - isNotNull:
+          path: spec.template.spec.volumes[?(@.hostPath.path == "/boot")]
+      - isNotNull:
+          path: spec.template.spec.volumes[?(@.hostPath.path == "/var/run/containerd/containerd.sock")]
+      - isNotNull:
+          path: spec.template.spec.volumes[?(@.hostPath.path == "/sys/kernel/debug")]
+      # This seems not work as expected, need deeper investigation
+      # - lengthEqual:
+      #     path: spec.template.spec.volumes[?(@.hostPath.path =~ /\/.*/)]
+      #     count: 6
+      # We are going to use this "workaround" until we found a proper solution
+      - isNull:
+          path: spec.template.spec.volumes[?(@.hostPath.path =~ /\/.*/ && @.hostPath.path != "/dev" && @.hostPath.path != "/proc" && @.hostPath.path != "/etc/os-release" && @.hostPath.path != "/boot" && @.hostPath.path != "/var/run/containerd/containerd.sock" && @.hostPath.path != "/sys/kernel/debug")]
+
+  - it: Ensure only the right volumes are mounted when running on GKE Autopilot, the agent is slim mode with eBPF
+    set:
+      gke:
+        autopilot: true
+      slim:
+        enabled: false
+      ebpf:
         enabled: true
     asserts:
       - isNotNull:
@@ -47,18 +78,50 @@ tests:
       - isNotNull:
           path: spec.template.spec.volumes[?(@.hostPath.path == "/proc")]
       - isNotNull:
-          path: spec.template.spec.volumes[?(@.hostPath.path == "/etc/modprobe.d")]
+          path: spec.template.spec.volumes[?(@.hostPath.path == "/etc/os-release")]
+      - isNotNull:
+          path: spec.template.spec.volumes[?(@.hostPath.path == "/boot")]
+      - isNotNull:
+          path: spec.template.spec.volumes[?(@.hostPath.path == "/lib/modules")]
+      - isNotNull:
+          path: spec.template.spec.volumes[?(@.hostPath.path == "/usr")]
+      - isNotNull:
+          path: spec.template.spec.volumes[?(@.hostPath.path == "/run")]
+      - isNotNull:
+          path: spec.template.spec.volumes[?(@.hostPath.path == "/var/run")]
+      # This seems not work as expected, need deeper investigation
+      # - lengthEqual:
+      #     path: spec.template.spec.volumes[?(@.hostPath.path =~ /\/.*/)]
+      #     count: 8
+      # We are going to use this "workaround" until we found a proper solution
+      - isNull:
+          path: spec.template.spec.volumes[?(@.hostPath.path =~ /\/.*/ && @.hostPath.path != "/dev" && @.hostPath.path != "/proc" && @.hostPath.path != "/etc/os-release" && @.hostPath.path != "/boot" && @.hostPath.path != "/lib/modules" && @.hostPath.path != "/usr" && @.hostPath.path != "/run" && @.hostPath.path != "/var/run")]
+
+  - it: Ensure only the right volumes are mounted when running on GKE Autopilot, the agent is slim mode with eBPF
+    set:
+      gke:
+        autopilot: true
+      slim:
+        enabled: true
+      ebpf:
+        enabled: true
+    asserts:
+      - isNotNull:
+          path: spec.template.spec.volumes[?(@.hostPath.path == "/dev")]
+      - isNotNull:
+          path: spec.template.spec.volumes[?(@.hostPath.path == "/proc")]
       - isNotNull:
           path: spec.template.spec.volumes[?(@.hostPath.path == "/etc/os-release")]
       - isNotNull:
           path: spec.template.spec.volumes[?(@.hostPath.path == "/boot")]
       - isNotNull:
           path: spec.template.spec.volumes[?(@.hostPath.path == "/var/run/containerd/containerd.sock")]
-      
+      - isNotNull:
+          path: spec.template.spec.volumes[?(@.hostPath.path == "/sys/kernel/debug")]
       # This seems not work as expected, need deeper investigation
       # - lengthEqual:
       #     path: spec.template.spec.volumes[?(@.hostPath.path =~ /\/.*/)]
-      #     count: 7
+      #     count: 6
       # We are going to use this "workaround" until we found a proper solution
       - isNull:
-          path: spec.template.spec.volumes[?(@.hostPath.path =~ /\/.*/ && @.hostPath.path != "/dev" && @.hostPath.path != "/proc" && @.hostPath.path != "/etc/modprobe.d" && @.hostPath.path != "/etc/os-release" && @.hostPath.path != "/boot" && @.hostPath.path != "/var/run/containerd/containerd.sock")]
+          path: spec.template.spec.volumes[?(@.hostPath.path =~ /\/.*/ && @.hostPath.path != "/dev" && @.hostPath.path != "/proc" && @.hostPath.path != "/etc/os-release" && @.hostPath.path != "/boot" && @.hostPath.path != "/var/run/containerd/containerd.sock" && @.hostPath.path != "/sys/kernel/debug")]

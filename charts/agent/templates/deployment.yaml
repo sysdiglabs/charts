@@ -176,9 +176,6 @@ spec:
 
           {{- /* Slim = false, Autopilot = true */}}
           {{- if and (not .Values.slim.enabled) (include "agent.gke.autopilot" .) }}
-            - mountPath: /etc/modprobe.d
-              name: modprobe-d
-              readOnly: true
             - mountPath: /host/etc/os-release
               name: osrel
               readOnly: true
@@ -318,9 +315,6 @@ spec:
 
       {{- /* Slim = false, Autopilot = true */}}
       {{- if and (not .Values.slim.enabled) (include "agent.gke.autopilot" .) }}
-        - name: modprobe-d
-          hostPath:
-            path: /etc/modprobe.d
         - name: osrel
           hostPath:
             path: /etc/os-release
