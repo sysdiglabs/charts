@@ -14,8 +14,10 @@ $ pre-commit run -a
 
 # Registry Scanner
 
-Sysdig Registry Scanner scan your images registry on a Kubernetes Cluster.
+Sysdig Registry Scanner scan your images registry on a Kubernetes Cluster .
 <br/>This chart deploys the Sysdig Registry Scanner as a scheduled Cronjob in your Kubernetes cluster.
+
+For more insight check Sysdig **Official Docs on Registry-Scanner** [feature](https://docs.sysdig.com/en/vuln-registry-scan) and [installation process guidelines](https://docs.sysdig.com/en/install-registry-scan)
 
 <br/>
 
@@ -43,13 +45,14 @@ Add Sysdig Helm charts repository:
 
 ```bash
 $ helm repo add sysdig https://charts.sysdig.com
+$ helm repo update
 ```
 
 Deploy the registry scanner specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
 ```bash
 $ helm upgrade --install registry-scanner \
-    --version=1.0.1 \
+    --version=1.0.2 \
     --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
     --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
     --set config.registryURL=<REGISTRY_URL> \
@@ -61,7 +64,7 @@ $ helm upgrade --install registry-scanner \
 Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
 
 ```bash
-$ helm install registry-scanner -f values.yaml --version=1.0.1 sysdig/registry-scanner
+$ helm install registry-scanner -f values.yaml --version=1.0.2 sysdig/registry-scanner
 ```
 
 
@@ -156,13 +159,21 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | extraEnvVars                               | Extra environment variables to be set                                                                                                                                                                                                       | <code>[]</code>                              |
 
 
+
+## Other Options
+
+### I still want to use legacy scanning engine
+
+Chart version `1.*` relies on new Vulnerability Management scanning engine.
+<br/>If you still use the legacy scanning engine and want to keep running that version, pin the Helm chart version with  `--version=0.1.39`
+
 ### On-Prem deployment
 
 Use the following command to deploy in an on-prem:
 
 ```bash
 $ helm upgrade --install registry-scanner \
-    --version=1.0.1 \
+    --version=1.0.2 \
     --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
     --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
     --set config.secureSkipTLS=true \
