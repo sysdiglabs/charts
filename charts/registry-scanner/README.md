@@ -52,7 +52,7 @@ Deploy the registry scanner specify each parameter using the `--set key=value[,k
 
 ```bash
 $ helm upgrade --install registry-scanner \
-    --version=1.0.2 \
+    --version=1.0.3 \
     --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
     --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
     --set config.registryURL=<REGISTRY_URL> \
@@ -64,7 +64,7 @@ $ helm upgrade --install registry-scanner \
 Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
 
 ```bash
-$ helm install registry-scanner -f values.yaml --version=1.0.2 sysdig/registry-scanner
+$ helm install registry-scanner -f values.yaml --version=1.0.3 sysdig/registry-scanner
 ```
 
 
@@ -173,7 +173,7 @@ Use the following command to deploy in an on-prem:
 
 ```bash
 $ helm upgrade --install registry-scanner \
-    --version=1.0.2 \
+    --version=1.0.3 \
     --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
     --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
     --set config.secureSkipTLS=true \
