@@ -61,6 +61,10 @@ Create the name of the service account to use
 {{- end }}
 {{- end }}
 
+{{- define "cluster-scanner.namespace" -}}
+{{ required "speficy a release namespace" .Release.Namespace }}
+{{- end }}
+
 {{/*
 Generates configmap data for mode-specific values
 */}}

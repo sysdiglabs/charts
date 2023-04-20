@@ -1,0 +1,94 @@
+suite: deployment
+templates:
+  - ../templates/deployment.yaml
+values:
+  - ../values.yaml
+release:
+  name: test-release
+  namespace: test-ns
+
+tests:
+  - it: "generates a deployment resource"
+    templates:
+      - ../templates/deployment.yaml
+    asserts:
+      - isKind:
+          of: Deployment
+
+  - it: "has correct name and namespace"
+    templates:
+      - ../templates/deployment.yaml
+    asserts:
+      - equal:
+          path: metadata.name
+          value: test-release-cluster-scanner
+      - equal:
+          path: metadata.namespace
+          value: test-ns
+
+  - it: "sets replicas"
+    templates:
+      - ../templates/deployment.yaml
+    set:
+      replicaCount: 42
+    asserts:
+      - equal:
+          path: spec.replicas
+          value: 42
+
+  - it: "has RSI and ISE containers"
+    templates:
+      - ../templates/deployment.yaml
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].name
+          value: rsi
+      - equal:
+          path: spec.template.spec.containers[1].name
+          value: ise
+
+  - it: "has non empty default image"
+    templates:
+      - ../templates/deployment.yaml
+    asserts:
+      - not: true
+        isEmpty:
+          path: spec.template.spec.containers[0].image
+      - not: true
+        isEmpty:
+          path: spec.template.spec.containers[1].image
+
+  - it: "sets tag and repository"
+    templates:
+      - ../templates/deployment.yaml
+    set:
+      rsi.image.repository: test.com/repo
+      rsi.image.tag: rsi
+      ise.image.repository: test.com/repo
+      ise.image.tag: ise
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].image
+          value: test.com/repo:rsi
+      - equal:
+          path: spec.template.spec.containers[1].image
+          value: test.com/repo:ise
+
+  - it: "sets kubeconfig env var if set"
+    templates:
+      - ../templates/deployment.yaml
+    set:
+      global.scannerMode: "multi"
+      multicluster.kubeconfigSecretName: "my-secret"
+    asserts:
+      - not: true
+        isEmpty:
+          path: spec.template.spec.containers[0].env[8]
+      - isSubset:
+          path: spec.template.spec.containers[0].env[8]
+          content:
+            name: SYSDIG_KUBECONFIG_CONTENT
+            valueFrom:
+              secretKeyRef:
+                name: "my-secret"
+                key: .kubeconfig
