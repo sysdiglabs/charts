@@ -1,12 +1,13 @@
-# Default values for cluster-scanner.
+#basic Default values for cluster-scanner.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 global:
-  sysdigHost: "change-me"
-  sysdigAccessKey: "change-me"
+  sysdigHost: ""
+  sysdigAccessKey: ""
+  clusterName: ""
   sysdigSkipVerifyCertificate: false
-  clusterName: "change-me"
+
   scannerMode: "local" # or "multi"
   loggingLevel: "INFO"
 
@@ -41,7 +42,7 @@ rsi:
   image:
     repository: quay.io/sysdig/runtime-status-integrator
     pullPolicy: IfNotPresent
-    tag: "0.1.0"
+    tag: "0.1.2-vf589546"
   ports:
     metrics: 25000
     probes: 7000
@@ -56,7 +57,7 @@ ise:
   image:
     repository: quay.io/sysdig/image-sbom-extractor
     pullPolicy: IfNotPresent
-    tag: "0.1.0"
+    tag: "0.1.2-vae4fc61"
   ports:
     metrics: 25001
     probes: 7001
@@ -105,7 +106,8 @@ affinity: {}
 
 js:
   user: "default-user"
-  password: ""
+  # Default uses a random password for each installation.
+  # password: ""
 
 cache:
   type: "local" # other possible value is "redis"
