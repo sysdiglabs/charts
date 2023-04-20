@@ -144,7 +144,6 @@ spec:
               name: run-vol
             - mountPath: /host/var/run
               name: varrun-vol
-
             {{- if (include "agent.ebpfEnabled" .) }}
             - mountPath: /root/.sysdig
               name: bpf-probes
@@ -203,9 +202,6 @@ spec:
               name: containerdsock-vol
             - mountPath: /root/.sysdig
               name: bpf-probes
-            - mountPath: /sys/kernel/debug
-              name: sys-tracing
-              readOnly: true
           {{- end }}
 
           {{- if .Values.extraVolumes.mounts }}
@@ -280,7 +276,6 @@ spec:
         - name: varrun-vol
           hostPath:
             path: /var/run
-
         {{- if (include "agent.ebpfEnabled" .) }}
         - name: bpf-probes
           emptyDir: {}
@@ -347,9 +342,6 @@ spec:
             path: /var/run/containerd/containerd.sock
         - name: bpf-probes
           emptyDir: {}
-        - name: sys-tracing
-          hostPath:
-            path: /sys/kernel/debug
       {{- end }}
 
       {{- if .Values.extraVolumes.volumes }}
