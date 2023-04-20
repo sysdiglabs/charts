@@ -5,7 +5,7 @@ metadata:
   labels:
    {{- include "cluster-scanner.labels" . | nindent 4 }}
 data:
-  sysdig_host: {{ .Values.global.sysdigHost }}
+  sysdig_host: {{ required "please provide a sysdig host" .Values.global.sysdigHost }}
   sysdig_skip_verify_certificate: {{ .Values.global.sysdigSkipVerifyCertificate | quote }}
   cluster_name: {{ .Values.global.clusterName }}
   root_namespace: {{ .Values.rootNamespace }}
