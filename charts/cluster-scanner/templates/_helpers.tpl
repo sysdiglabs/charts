@@ -129,3 +129,12 @@ cache_redis_sentinel_address: {{ .sentinelAddress }}
 {{- end }}
 {{- end }}
 {{- end }}
+
+
+{{- define "cluster-scanner.configContent" }}
+{{ .Values.global }}
+{{ .Values.multicluster }}
+{{ .Values.localcluster }}
+{{ .Values.js }}
+{{ .Values.cache }}
+{{- end }}

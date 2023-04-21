@@ -4,6 +4,7 @@ metadata:
   name: {{ include "cluster-scanner.fullname" . }}
   namespace: {{ include "cluster-scanner.namespace" . }}
   labels:
+    checksum/config: {{ include "cluster-scanner.configContent" . | sha256sum | trunc 63 | quote }}
    {{- include "cluster-scanner.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
