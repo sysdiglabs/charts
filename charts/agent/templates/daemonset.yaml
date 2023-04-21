@@ -412,7 +412,6 @@ spec:
         - name: osrel
           hostPath:
             path: /etc/os-release
-            type: FileOrCreate
         - name: boot-vol
           hostPath:
             path: /boot
@@ -438,7 +437,6 @@ spec:
         - name: osrel
           hostPath:
             path: /etc/os-release
-            type: FileOrCreate
         - name: bpf-probes
           emptyDir: {}
         - name: containerdsock-vol

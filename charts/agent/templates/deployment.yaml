@@ -313,7 +313,6 @@ spec:
         - name: osrel
           hostPath:
             path: /etc/os-release
-            type: FileOrCreate
         - name: boot-vol
           hostPath:
             path: /boot
@@ -336,7 +335,6 @@ spec:
         - name: osrel
           hostPath:
             path: /etc/os-release
-            type: FileOrCreate
         - name: containerdsock-vol
           hostPath:
             path: /var/run/containerd/containerd.sock
