@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.7.4
+### Bug Fixes
+* **sysdig-deploy** [c003852](https://github.com/sysdiglabs/charts/commit/c003852116a4b84fc8878a2894055efaa36f8b4a): nil pointer evaluating interface {}.autopilot ([#1052](https://github.com/sysdiglabs/charts/issues/1052))
 # v1.7.3
 ### Chores
 * **sysdig-deploy** [1b5ab1b](https://github.com/sysdiglabs/charts/commit/1b5ab1b4f6fc461c75c5bc93ce2e718c2cabd49d): Automatic version bump due to updated dependencies ([#1048](https://github.com/sysdiglabs/charts/issues/1048))
