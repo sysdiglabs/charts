@@ -50,10 +50,10 @@ tests:
 
   - it: "sets tag and repository"
     set:
-      rsi.image.repository: test.com/repo
-      rsi.image.tag: rsi
-      ise.image.repository: test.com/repo
-      ise.image.tag: ise
+      runtimeStatusIntegrator.image.repository: test.com/repo
+      runtimeStatusIntegrator.image.tag: rsi
+      imageSbomExtractor.image.repository: test.com/repo
+      imageSbomExtractor.image.tag: ise
     asserts:
       - equal:
           path: spec.template.spec.containers[0].image

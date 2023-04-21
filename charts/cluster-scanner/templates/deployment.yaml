@@ -31,7 +31,7 @@ spec:
         - name: rsi
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-      {{- with .Values.rsi }}
+      {{- with .Values.runtimeStatusIntegrator }}
           image: "{{ .image.repository }}:{{ .image.tag }}"
           imagePullPolicy: {{ .image.pullPolicy }}
           ports:
@@ -200,14 +200,14 @@ spec:
             httpGet:
               path: /probes/readiness
               port: probes
-      {{- with .Values.rsi }}
+      {{- with .Values.runtimeStatusIntegrator }}
           resources:
             {{- toYaml .resources | nindent 12 }}
       {{- end }}
         - name: ise
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-      {{- with .Values.ise }}
+      {{- with .Values.imageSbomExtractor }}
           image: "{{ .image.repository }}:{{ .image.tag }}"
           imagePullPolicy: {{ .image.pullPolicy }}
           ports:
@@ -382,7 +382,7 @@ spec:
                 key: cache_redis_sentinel_address
                 optional: true
           {{- end }}
-      {{- with .Values.ise }}
+      {{- with .Values.imageSbomExtractor }}
           resources:
             {{- toYaml .resources | nindent 12 }}
       {{- end }}

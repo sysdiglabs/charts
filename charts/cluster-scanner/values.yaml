@@ -38,7 +38,7 @@ replicaCount: 2
 # leaderElectionLeaseNameOverride: ""
 # leaderElectionLeaseNamespaceOverride: ""
 
-rsi:
+runtimeStatusIntegrator:
   image:
     repository: quay.io/sysdig/runtime-status-integrator
     pullPolicy: IfNotPresent
@@ -53,7 +53,7 @@ rsi:
     requests:
       cpu: "350m"
       memory: 350Mi
-ise:
+imageSbomExtractor:
   image:
     repository: quay.io/sysdig/image-sbom-extractor
     pullPolicy: IfNotPresent
