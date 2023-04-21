@@ -64,3 +64,6 @@ jobs:
 
       - name: Test sysdig-stackdriver-bridge
         run: helm unittest --strict ./charts/sysdig-stackdriver-bridge
+
+      - name: Test cluster-scanner
+        run: helm unittest --strict ./charts/cluster-scanner
