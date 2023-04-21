@@ -1,0 +1,88 @@
+suite: configmap
+templates:
+  - ../templates/configmap.yaml
+values:
+  - ../values.yaml
+release:
+  name: test-release
+  namespace: test-ns
+
+tests:
+  - it: "is a configmap with the has correct name"
+    set:
+      global.sysdigHost: "http://test.com"
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - equal:
+          path: metadata.name
+          value: test-release-cluster-scanner
+      - equal:
+          path: metadata.namespace
+          value: test-ns
+
+  - it: "has correct content"
+    set:
+      global.sysdigHost: "http://test.com"
+    asserts:
+      - equal:
+          path: data.sysdig_host
+          value: "http://test.com"
+      - equal:
+          path: data.root_namespace
+          value: kube-system
+      - equal:
+          path: data.eve_enabled
+          value: "false"
+      - equal:
+          path: data.eve_integration_enabled
+          value: "false"
+      - equal:
+          path: data.logging_level
+          value: "INFO"
+      - not: true
+        isEmpty:
+          path: data.js_server_user
+      - not: true
+        isEmpty:
+          path: data.js_server_url
+      - equal:
+          path: data.rsi_leaderelection_lock_name
+          value: test-release-cluster-scanner
+      - equal:
+          path: data.rsi_leaderelection_lock_namespace
+          value: test-ns
+      - equal:
+          path: data.rsi_service_name
+          value: test-release-cluster-scanner
+      - equal:
+          path: data.ise_cache_type
+          value: local
+      - equal:
+          path: data.ise_cache_prefix
+          value: sysdig-cluster-scanner
+
+  - it: "has local mode as default"
+    set:
+      global.sysdigHost: "http://test.com"
+    asserts:
+      - equal:
+          path: data.rsi_mode
+          value: "sitting"
+
+  - it: "can set multi mod"
+    set:
+      global.sysdigHost: "http://test.com"
+      global.scannerMode: "multi"
+    asserts:
+      - equal:
+          path: data.rsi_mode
+          value: "mcm"
+
+  - it: "raise error on unknown mod"
+    set:
+      global.sysdigHost: "http://test.com"
+      global.scannerMode: "foobar"
+    asserts:
+      - failedTemplate:
+          errorMessage: "invalid scannerMode, accepted options [local, multi]"
