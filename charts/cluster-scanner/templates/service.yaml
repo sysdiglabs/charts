@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ include "cluster-scanner.fullname" . }}
+  namespace: {{ include "cluster-scanner.namespace" . }}
   labels:
     {{- include "cluster-scanner.labels" . | nindent 4 }}
 spec:
