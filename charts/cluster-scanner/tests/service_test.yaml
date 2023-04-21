@@ -9,15 +9,11 @@ release:
 
 tests:
   - it: "has not selector"
-    templates:
-      - ../templates/service.yaml
     asserts:
-      - isEmpty:
+      - isNull:
           path: spec.selector
 
   - it: "has correct name and namespace"
-    templates:
-      - ../templates/service.yaml
     asserts:
       - equal:
           path: metadata.name
@@ -27,8 +23,6 @@ tests:
           value: test-ns
 
   - it: "generates a service resource"
-    templates:
-      - ../templates/service.yaml
     set:
       global.sysdigAccessKey: "secret"
     asserts:

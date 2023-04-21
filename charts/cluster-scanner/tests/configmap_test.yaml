@@ -9,8 +9,6 @@ release:
 
 tests:
   - it: "is a configmap with the has correct name"
-    templates:
-      - ../templates/configmap.yaml
     set:
       global.sysdigHost: "http://test.com"
     asserts:
@@ -24,8 +22,6 @@ tests:
           value: test-ns
 
   - it: "has correct content"
-    templates:
-      - ../templates/configmap.yaml
     set:
       global.sysdigHost: "http://test.com"
     asserts:
@@ -67,8 +63,6 @@ tests:
           value: sysdig-cluster-scanner
 
   - it: "has local mode as default"
-    templates:
-      - ../templates/configmap.yaml
     set:
       global.sysdigHost: "http://test.com"
     asserts:
@@ -77,8 +71,6 @@ tests:
           value: "sitting"
 
   - it: "can set multi mod"
-    templates:
-      - ../templates/configmap.yaml
     set:
       global.sysdigHost: "http://test.com"
       global.scannerMode: "multi"
@@ -88,8 +80,6 @@ tests:
           value: "mcm"
 
   - it: "raise error on unknown mod"
-    templates:
-      - ../templates/configmap.yaml
     set:
       global.sysdigHost: "http://test.com"
       global.scannerMode: "foobar"

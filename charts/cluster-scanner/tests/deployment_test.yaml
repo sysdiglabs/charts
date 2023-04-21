@@ -9,15 +9,11 @@ release:
 
 tests:
   - it: "generates a deployment resource"
-    templates:
-      - ../templates/deployment.yaml
     asserts:
       - isKind:
           of: Deployment
 
   - it: "has correct name and namespace"
-    templates:
-      - ../templates/deployment.yaml
     asserts:
       - equal:
           path: metadata.name
@@ -27,8 +23,6 @@ tests:
           value: test-ns
 
   - it: "sets replicas"
-    templates:
-      - ../templates/deployment.yaml
     set:
       replicaCount: 42
     asserts:
@@ -37,8 +31,6 @@ tests:
           value: 42
 
   - it: "has RSI and ISE containers"
-    templates:
-      - ../templates/deployment.yaml
     asserts:
       - equal:
           path: spec.template.spec.containers[0].name
@@ -48,8 +40,6 @@ tests:
           value: ise
 
   - it: "has non empty default image"
-    templates:
-      - ../templates/deployment.yaml
     asserts:
       - not: true
         isEmpty:
@@ -59,8 +49,6 @@ tests:
           path: spec.template.spec.containers[1].image
 
   - it: "sets tag and repository"
-    templates:
-      - ../templates/deployment.yaml
     set:
       rsi.image.repository: test.com/repo
       rsi.image.tag: rsi
@@ -75,8 +63,6 @@ tests:
           value: test.com/repo:ise
 
   - it: "sets kubeconfig env var if set"
-    templates:
-      - ../templates/deployment.yaml
     set:
       global.scannerMode: "multi"
       multicluster.kubeconfigSecretName: "my-secret"
