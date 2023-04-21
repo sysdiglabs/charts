@@ -250,7 +250,7 @@ scc:
 
 scanner:
   # If you only want the Kubernetes Audit Log functionality then disable this, and it will disable the Admission Controller Scanning Policy functionality.
-  enabled: true
+  enabled: false
   # Service name for Scanner deployment
   name: scanner
   # Amount of replicas for scanner

@@ -17,6 +17,10 @@ $ pre-commit run -a
 [{{ .Project.Name }}]({{ .Project.URL }}) features ActivityAudit and ImageScanning on a Kubernetes Cluster.
 <br/>{{ .Project.Description }}
 
+## :warning: Breaking changes from 0.8.0
+This chart no longer deploys the Scanning component by default.
+It has to be enabled manually using the `scanner.enabled=true` value.
+
 ## TL;DR;
 
 ```

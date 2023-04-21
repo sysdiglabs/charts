@@ -12,3 +12,11 @@ The Scanner also needs the AUTH_BEARER_TOKEN environment variable configured wit
 Secure API Token.
 ================================================================================================
 {{- end }}
+
+{{- if not .Values.scanner.enabled }}
+###############################
+⚠️ Breaking changes from 0.8.0
+###############################
+This chart no longer deploys the Scanning component by default.
+It has to be enabled manually using the scanner.enabled=true value.
+{{- end }}

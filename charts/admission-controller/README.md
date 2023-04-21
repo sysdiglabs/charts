@@ -17,13 +17,17 @@ $ pre-commit run -a
 [Sysdig Admission Controller](https://docs.sysdig.com/en/docs/sysdig-secure/scanning/admission-controller/) features ActivityAudit and ImageScanning on a Kubernetes Cluster.
 <br/>This chart deploys the Sysdig Admission Controller in your Kubernetes cluster.
 
+## :warning: Breaking changes from 0.8.0
+This chart no longer deploys the Scanning component by default.
+It has to be enabled manually using the `scanner.enabled=true` value.
+
 ## TL;DR;
 
 ```
 $ helm repo add sysdig https://charts.sysdig.com
 $ helm repo update
 $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-      --create-namespace -n sysdig-admission-controller --version=0.7.28  \
+      --create-namespace -n sysdig-admission-controller --version=0.8.0  \
       --set clusterName=CLUSTER_NAME \
       --set sysdig.url=SECURE_URL \
       --set sysdig.secureAPIToken=SECURE_API_TOKEN
@@ -56,7 +60,7 @@ This chart deploys the Sysdig Admission Controller on a [Kubernetes](http://kube
 To install the chart with the release name `admission-controller`:
 
 ```console
-$ helm upgrade --install sysdig-admission-controller sysdig/admission-controller -n sysdig-admission-controller --version=0.7.28
+$ helm upgrade --install sysdig-admission-controller sysdig/admission-controller -n sysdig-admission-controller --version=0.8.0
 ```
 
 The command deploys the Sysdig Admission Controller on the Kubernetes cluster in the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.
@@ -148,7 +152,7 @@ The following table lists the configurable parameters of the `admission-controll
 | webhook.customEntryPoint                           | Custom entrypoint for the webhook <br/>Remember to provide the webhook valid arguments with `--tls_cert_file` and `--tls_private_key_file`. <br/>default: /bin/webhook --tls_cert_file /cert/tls.crt --tls_private_key_file /cert/tls.key                                                                                                                                                                                                                           | <code>[]</code>                                                                                                                                                                                    |
 | webhook.http.port                                  | HTTP serve port where the requests will be served from                                                                                                                                                                                                                                                                                                                                                                                                              | <code>5000</code>                                                                                                                                                                                  |
 | scc.create                                         | Enable the creation of Security Context Constraints in Openshift                                                                                                                                                                                                                                                                                                                                                                                                    | <code>true</code>                                                                                                                                                                                  |
-| scanner.enabled                                    | If you only want the Kubernetes Audit Log functionality then disable this, and it will disable the Admission Controller Scanning Policy functionality.                                                                                                                                                                                                                                                                                                              | <code>true</code>                                                                                                                                                                                  |
+| scanner.enabled                                    | If you only want the Kubernetes Audit Log functionality then disable this, and it will disable the Admission Controller Scanning Policy functionality.                                                                                                                                                                                                                                                                                                              | <code>false</code>                                                                                                                                                                                 |
 | scanner.name                                       | Service name for Scanner deployment                                                                                                                                                                                                                                                                                                                                                                                                                                 | <code>scanner</code>                                                                                                                                                                               |
 | scanner.replicaCount                               | Amount of replicas for scanner                                                                                                                                                                                                                                                                                                                                                                                                                                      | <code>1</code>                                                                                                                                                                                     |
 | scanner.image.registry                             | Scanner image registry                                                                                                                                                                                                                                                                                                                                                                                                                                              | <code>quay.io</code>                                                                                                                                                                               |
@@ -182,7 +186,7 @@ Specify each parameter using the **`--set key=value[,key=value]`** argument to `
 
 ```console
 $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-    --create-namespace -n sysdig-admission-controller --version=0.7.28 \
+    --create-namespace -n sysdig-admission-controller --version=0.8.0 \
     --set sysdig.secureAPIToken=YOUR-KEY-HERE,sysdig.url=SECURE_URL,clusterName=YOUR-CLUSTER-NAME
 ```
 
@@ -191,7 +195,7 @@ installing the chart. For example:
 
 ```console
 $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-    --create-namespace -n sysdig-admission-controller --version=0.7.28 \
+    --create-namespace -n sysdig-admission-controller --version=0.8.0 \
     --values values.yaml
 ```
 
