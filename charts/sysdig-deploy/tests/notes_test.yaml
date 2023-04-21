@@ -73,6 +73,14 @@ tests:
       - failedTemplate:
           errorMessage: "raw: global.sysdig.region=ap3 provided is not recognized."
 
+  - it: Notes should not fail if the agent is not enabled.
+    set:
+      agent:
+        enabled: false
+    asserts:
+      - notFailedTemplate:
+          errorMessage: "nil pointer evaluating interface {}.autopilot"
+
   - it: Test agent.monitor.enabled when specifying Agent secure_light mode
     set:
       agent:
@@ -88,7 +96,6 @@ tests:
             The agent.monitor.enabled parameter is true while using agent.sysdig.settings.feature.mode to put the Agent into either
             secure or secure_light mode. Please set agent.monitor.enabled=false to ensure all Sysdig Monitor components are disabled
             when running the Agent in secure or secure_light modes.
-    template: templates/NOTES.txt
 
   - it: Test agent.monitor.enabled=false when specifying Agent secure_light mode
     set:
@@ -105,7 +112,6 @@ tests:
             The agent.monitor.enabled parameter is true while using agent.sysdig.settings.feature.mode to put the Agent into either
             secure or secure_light mode. Please set agent.monitor.enabled=false to ensure all Sysdig Monitor components are disabled
             when running the Agent in secure or secure_light modes.
-    template: templates/NOTES.txt
 
   - it: Test agent.monitor.enabled when specifying Agent secure mode
     set:
@@ -122,7 +128,6 @@ tests:
             The agent.monitor.enabled parameter is true while using agent.sysdig.settings.feature.mode to put the Agent into either
             secure or secure_light mode. Please set agent.monitor.enabled=false to ensure all Sysdig Monitor components are disabled
             when running the Agent in secure or secure_light modes.
-    template: templates/NOTES.txt
 
   - it: Test agent.monitor.enabled=false when specifying Agent secure mode
     set:
@@ -139,7 +144,6 @@ tests:
             The agent.monitor.enabled parameter is true while using agent.sysdig.settings.feature.mode to put the Agent into either
             secure or secure_light mode. Please set agent.monitor.enabled=false to ensure all Sysdig Monitor components are disabled
             when running the Agent in secure or secure_light modes.
-    template: templates/NOTES.txt
 
   - it: Test "drift_killer" feature message is visible when enabled and we run in GKE with autopilot enabled
     set:
@@ -154,7 +158,6 @@ tests:
       - matchRegexRaw:
           pattern: |-
             The "drift_killer" feature in agent is not supported when running on GKE Autopilot.
-    template: templates/NOTES.txt
   - it: Test "drift_killer" feature is not enabled when run with gke.autopilot=false
     set:
       agent:
@@ -168,4 +171,3 @@ tests:
       - notMatchRegexRaw:
           pattern: |-
             The "drift_killer" feature in agent is not supported when running on GKE Autopilot.
-    template: templates/NOTES.txt
