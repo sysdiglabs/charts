@@ -11,27 +11,27 @@ Usage of global tags will override any local tags you might be using.
 {{- end }}
 
 {{- if .Values.agent.enabled }}
-{{- if (or .Values.agent.gke.autopilot .Values.global.gke.autopilot) }}
-    {{- if hasKey .Values.agent.sysdig.settings "drift_killer" }}
-        {{- if hasKey .Values.agent.sysdig.settings.drift_killer "enabled" }}
-            {{- if .Values.agent.sysdig.settings.drift_killer.enabled }}
+    {{- if (or .Values.agent.gke.autopilot .Values.global.gke.autopilot) }}
+        {{- if hasKey .Values.agent.sysdig.settings "drift_killer" }}
+            {{- if hasKey .Values.agent.sysdig.settings.drift_killer "enabled" }}
+                {{- if .Values.agent.sysdig.settings.drift_killer.enabled }}
 
 The "drift_killer" feature in agent is not supported when running on GKE Autopilot.
+                {{- end }}
             {{- end }}
         {{- end }}
     {{- end }}
-{{- end }}
 
-{{- $agentSecureFeatProvided := false }}
-{{- if hasKey .Values.agent.sysdig.settings "feature" }}
-    {{- if hasKey .Values.agent.sysdig.settings.feature "mode" }}
-        {{- $secureLight := (eq .Values.agent.sysdig.settings.feature.mode "secure_light") }}
-        {{- $agentSecureFeatProvided = (or $secureLight (eq .Values.agent.sysdig.settings.feature.mode "secure")) }}
+    {{- $agentSecureFeatProvided := false }}
+    {{- if hasKey .Values.agent.sysdig.settings "feature" }}
+        {{- if hasKey .Values.agent.sysdig.settings.feature "mode" }}
+            {{- $secureLight := (eq .Values.agent.sysdig.settings.feature.mode "secure_light") }}
+            {{- $agentSecureFeatProvided = (or $secureLight (eq .Values.agent.sysdig.settings.feature.mode "secure")) }}
+        {{- end }}
     {{- end }}
-{{- end }}
-{{ if and .Values.agent.monitor.enabled $agentSecureFeatProvided }}
+    {{ if and .Values.agent.monitor.enabled $agentSecureFeatProvided }}
 The agent.monitor.enabled parameter is true while using agent.sysdig.settings.feature.mode to put the Agent into either
 secure or secure_light mode. Please set agent.monitor.enabled=false to ensure all Sysdig Monitor components are disabled
 when running the Agent in secure or secure_light modes.
-{{ end }}
+    {{ end }}
 {{ end }}
