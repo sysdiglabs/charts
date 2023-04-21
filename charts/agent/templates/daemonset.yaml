@@ -80,9 +80,6 @@ spec:
           image: {{ template "agent.image.kmodule" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           securityContext:
-            capabilities:
-              drop:
-                - ALL
             privileged: true
             runAsNonRoot: false
             runAsUser: 0
@@ -157,9 +154,6 @@ spec:
           resources:
             {{- include "agent.resources" . | nindent 12 }}
           securityContext:
-            capabilities:
-              drop:
-                - ALL
             privileged: true
             runAsNonRoot: false
             runAsUser: 0

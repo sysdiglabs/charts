@@ -63,9 +63,6 @@ spec:
           resources:
             {{ toYaml .Values.delegatedAgentDeployment.deployment.resources | nindent 12 }}
           securityContext:
-            capabilities:
-              drop:
-                - ALL
             privileged: true
             runAsNonRoot: false
             runAsUser: 0
