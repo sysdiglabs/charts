@@ -104,7 +104,7 @@ tolerations: []
 
 affinity: {}
 
-js:
+natsJS:
   user: "default-user"
   # Default uses a random password for each installation.
   # password: ""

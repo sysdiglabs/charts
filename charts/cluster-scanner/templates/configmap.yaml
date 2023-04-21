@@ -14,7 +14,7 @@ data:
   eve_integration_enabled: {{ .Values.eveIntegrationEnabled | quote }}
   logging_level: {{ .Values.global.loggingLevel }}
 {{- include "cluster-scanner.modeConfig" . | nindent 2 }}
-  js_server_user: {{ .Values.js.user }}
+  js_server_user: {{ .Values.natsJS.user }}
   js_server_url: "nats://{{- include "cluster-scanner.fullname" . }}:4222"
   rsi_leaderelection_lock_name: {{ .Values.leaderElectionLeaseNameOverride | default (include "cluster-scanner.fullname" .) }}
   rsi_leaderelection_lock_namespace: {{ .Values.leaderElectionLeaseNamespaceOverride | default .Release.Namespace }}
