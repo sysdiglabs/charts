@@ -49,7 +49,7 @@ runtimeStatusIntegrator:
   image:
     repository: quay.io/sysdig/runtime-status-integrator
     pullPolicy: IfNotPresent
-    tag: "0.1.2-vf589546"
+    tag: "0.1.2-v68f8e02"
   ports:
     metrics: 25000
     probes: 7000
@@ -64,7 +64,7 @@ imageSbomExtractor:
   image:
     repository: quay.io/sysdig/image-sbom-extractor
     pullPolicy: IfNotPresent
-    tag: "0.1.2-vae4fc61"
+    tag: "0.1.2-v808845a"
   ports:
     metrics: 25001
     probes: 7001

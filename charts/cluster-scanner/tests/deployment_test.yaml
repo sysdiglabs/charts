@@ -78,3 +78,9 @@ tests:
               secretKeyRef:
                 name: "my-secret"
                 key: .kubeconfig
+
+  - it: "has Recreate rollout strategy"
+    asserts:
+      - equal:
+          path: spec.strategy.type
+          value: Recreate
