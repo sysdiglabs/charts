@@ -71,10 +71,9 @@ Generates configmap data for mode-specific values
 {{- define "cluster-scanner.modeConfig" -}}
 {{- if eq .Values.global.scannerMode "local" }}
 rsi_mode: "sitting"
-{{- else if eq .Values.global.scannerMode "multi" }}
-rsi_mode: "mcm"
+{{/* NOTE: values.schema.json will rpevent any other non valid strings, so it's safe to assume it's "multi" */}}
 {{- else }}
-{{- fail "invalid scannerMode, accepted options [local, multi]" }}
+rsi_mode: "mcm"
 {{- end }}
 {{ end }}
 
