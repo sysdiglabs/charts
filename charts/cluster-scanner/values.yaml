@@ -3,10 +3,17 @@
 # Declare variables to be passed into your templates.
 
 global:
-  sysdigHost: ""
-  sysdigAccessKey: ""
-  clusterName: ""
-  sysdigSkipVerifyCertificate: false
+  clusterConfig:
+    name: ""
+  sysdig:
+    accessKey: ""
+    region: "us1"
+    # apiHost is used to manually set the Sysdig backend host
+    # when no region is suitable (e.g. on-premise installations)
+    # Must have the protocol (http:// or https://)
+    # apiHost: ""
+    # skipVerifyCertificate might be used in on-premise installations.
+    skipVerifyCertificate: false
 
   scannerMode: "local" # or "multi"
   loggingLevel: "INFO"

@@ -6,9 +6,9 @@ metadata:
   labels:
    {{- include "cluster-scanner.labels" . | nindent 4 }}
 data:
-  sysdig_host: {{ required "please provide a sysdig host" .Values.global.sysdigHost }}
-  sysdig_skip_verify_certificate: {{ .Values.global.sysdigSkipVerifyCertificate | quote }}
-  cluster_name: {{ .Values.global.clusterName }}
+  sysdig_host: {{ include "cluster-scanner.apiHost" . }}
+  sysdig_skip_verify_certificate: {{ .Values.global.sysdig.skipVerifyCertificate | quote }}
+  cluster_name: {{ .Values.global.clusterConfig.name }}
   root_namespace: {{ .Values.rootNamespace }}
   eve_enabled: {{ .Values.eveEnabled | quote}}
   eve_integration_enabled: {{ .Values.eveIntegrationEnabled | quote }}

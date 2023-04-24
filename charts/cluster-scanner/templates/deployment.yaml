@@ -38,9 +38,6 @@ spec:
             - name: metrics
               containerPort: {{ .ports.metrics }}
               protocol: TCP
-            - name: probes
-              containerPort: {{ .ports.probes }}
-              protocol: TCP
           env:
           - name: PROBES_PORT
             value: {{ .ports.probes | quote }}
@@ -192,15 +189,15 @@ spec:
               secretKeyRef:
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: js_server_password
+      {{- with .Values.runtimeStatusIntegrator }}
           livenessProbe:
             httpGet:
               path: /probes/liveness
-              port: probes
+              port: {{ .ports.probes }}
           readinessProbe:
             httpGet:
               path: /probes/readiness
-              port: probes
-      {{- with .Values.runtimeStatusIntegrator }}
+              port: {{ .ports.probes }}
           resources:
             {{- toYaml .resources | nindent 12 }}
       {{- end }}
@@ -213,9 +210,6 @@ spec:
           ports:
             - name: metrics
               containerPort: {{ .ports.metrics }}
-              protocol: TCP
-            - name: probes
-              containerPort: {{ .ports.probes }}
               protocol: TCP
           env:
           - name: PROBES_PORT
