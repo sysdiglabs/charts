@@ -91,13 +91,30 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: 'app_checks_enabled: false\njmx:\n {2}enabled: false\nprometheus:\n {2}enabled: false\nstatsd:\n {2}enabled: false'
+          pattern: |-
+            app_checks_enabled: false
+            jmx:
+              enabled: false
+            prometheus:
+              enabled: false
+            statsd:
+              enabled: false
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: 'security:\n {2}enabled: true'
+          pattern: |-
+            security:
+              enabled: true
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: 'commandlines_capture:\n\ {2}enabled:\ false\ndrift_killer:\n\ {2}enabled:\ false\nfalcobaseline:\n {2}enabled:\ false\nmemdump:\n\ {2}enabled:\ false\nnetwork_topology:\n\ {2}enabled:\ false\nsecure_audit_streams:\n\ {2}enabled:\ false'
+          pattern: |-
+            drift_killer:
+              enabled: false
+            falcobaseline:
+              enabled: false
+            memdump:
+              enabled: false
+            network_topology:
+              enabled: false
 
   - it: Test secure.enabled=false when specifying secure_light mode
     set:

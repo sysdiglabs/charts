@@ -414,7 +414,7 @@ agent config to prevent a backend push from enabling them after installation.
             {{- end }}
         {{- end }}
     {{- end }}
-    {{- if or (not .Values.secure.enabled) (and .Values.secure.enabled $secureLightMode) }}
+    {{- if (not .Values.secure.enabled) }}
         {{- range $secureFeature := (list
             "commandlines_capture"
             "drift_killer"
@@ -422,6 +422,14 @@ agent config to prevent a backend push from enabling them after installation.
             "memdump"
             "network_topology"
             "secure_audit_streams") }}
+            {{- $_ := set $secureConfig $secureFeature (dict "enabled" false) }}
+        {{- end }}
+    {{ else if $secureLightMode }}
+        {{- range $secureFeature := (list
+            "drift_killer"
+            "falcobaseline"
+            "memdump"
+            "network_topology") }}
             {{- $_ := set $secureConfig $secureFeature (dict "enabled" false) }}
         {{- end }}
     {{- end }}
