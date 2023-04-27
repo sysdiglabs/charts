@@ -97,7 +97,7 @@ tests:
         documentIndex: 2
   - it: "overrides lease name if set for Role"
     set:
-      leaderElectionLeaseNameOverride: my-override
+      runtimeStatusIntegrator.leaderElectionLeaseNameOverride: my-override
     asserts:
       - equal:
           path: rules[0].resourceNames[0]

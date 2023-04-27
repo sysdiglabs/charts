@@ -65,7 +65,7 @@ tests:
   - it: "sets kubeconfig env var if set"
     set:
       global.scannerMode: "multi"
-      multicluster.kubeconfigSecretName: "my-secret"
+      runtimeStatusIntegrator.multiCluster.kubeconfigSecretName: "my-secret"
     asserts:
       - not: true
         isEmpty:
