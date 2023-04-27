@@ -22,34 +22,34 @@ eveEnabled: false
 eveIntegrationEnabled: false
 rootNamespace: "kube-system"
 
-multicluster:
-  # kubeconfigSecretName: ""
-
-localcluster:
-  # restrict access to specific docker secrets to obtain pull credentials. Optional.
-  # Default behaviour is listing all secrets
-  # rbac:
-  #   allowedPullSecrets:
-  #     namespaceOneName:
-  #       - myDockerSecretOne
-  #       - myDockerSecretTwo
-  #     anotherNamespace:
-  #       - myOtherDockerSecretOne
-  #       - myOtherDockerSecretTwo
-
 replicaCount: 2
-
-# Params to manage leader election of rsi component.
-# Leader election is implemented leveraging the native capabilities of Kubernetes
-# see: https://kubernetes.io/blog/2016/01/simple-leader-election-with-kubernetes/
-# leaderElectionLeaseNameOverride: ""
-# leaderElectionLeaseNamespaceOverride: ""
 
 runtimeStatusIntegrator:
   image:
     repository: quay.io/sysdig/runtime-status-integrator
     pullPolicy: IfNotPresent
     tag: "0.1.2-v68f8e02"
+
+  # Params to manage leader election
+  # Leader election is implemented leveraging the native capabilities of Kubernetes
+  # see: https://kubernetes.io/blog/2016/01/simple-leader-election-with-kubernetes/
+  # leaderElectionLeaseNameOverride: ""
+  # leaderElectionLeaseNamespaceOverride: ""
+  multiCluster:
+    # kubeconfigSecretName: ""
+
+  localCluster:
+    # restrict access to specific docker secrets to obtain pull credentials. Optional.
+    # Default behaviour is listing all secrets
+    # rbac:
+    #   allowedPullSecrets:
+    #     namespaceOneName:
+    #       - myDockerSecretOne
+    #       - myDockerSecretTwo
+    #     anotherNamespace:
+    #       - myOtherDockerSecretOne
+    #       - myOtherDockerSecretTwo
+
   ports:
     metrics: 25000
     probes: 7000
@@ -60,6 +60,12 @@ runtimeStatusIntegrator:
     requests:
       cpu: "350m"
       memory: 350Mi
+
+  natsJS:
+    user: "default-user"
+    # Default uses a random password for each installation.
+    # password: ""
+
 imageSbomExtractor:
   image:
     repository: quay.io/sysdig/image-sbom-extractor
@@ -75,6 +81,20 @@ imageSbomExtractor:
     requests:
       cpu: "150m"
       memory: 350Mi
+
+  cache:
+    type: "local"  # other possible value is "redis"
+    prefix: "sysdig-cluster-scanner"
+    # redis:
+    #   address: ""
+    #   user: ""
+    #   password: ""
+    #   database: ""
+    #   tlsEnabled: false
+    #   tlsSkip: ""
+    #   tlsCa: ""
+    #   sentinelMaster: ""
+    #   sentinelAddress: ""
 
 imagePullSecrets: []
 nameOverride: ""
@@ -110,22 +130,3 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
-
-natsJS:
-  user: "default-user"
-  # Default uses a random password for each installation.
-  # password: ""
-
-cache:
-  type: "local"  # other possible value is "redis"
-  prefix: "sysdig-cluster-scanner"
-  # redis:
-  #   address: ""
-  #   user: ""
-  #   password: ""
-  #   database: ""
-  #   tlsEnabled: false
-  #   tlsSkip: ""
-  #   tlsCa: ""
-  #   sentinelMaster: ""
-  #   sentinelAddress: ""
