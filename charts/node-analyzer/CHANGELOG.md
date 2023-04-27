@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.8.50
+### Chores
+* **sysdig, node-analyzer** [a7564db](https://github.com/sysdiglabs/charts/commit/a7564dbac2f879064e000ef780b71ebc3d4463a7): bump sysdig/vuln-runtime-scanner to v1.4.11 ([#1061](https://github.com/sysdiglabs/charts/issues/1061))
 # v1.8.49
 ### Bug Fixes
 * **admission-controller,agent,node-analyzer,rapid-response,registry-scanner,sysdig** [0bf9682](https://github.com/sysdiglabs/charts/commit/0bf96827ebf80d76aab61b8fa3d26b3903df220b): Improve KubeVersion Comparisons ([#1040](https://github.com/sysdiglabs/charts/issues/1040))
