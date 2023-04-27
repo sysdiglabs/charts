@@ -1,14 +1,21 @@
-#basic Default values for cluster-scanner.
+# basic Default values for cluster-scanner.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 global:
-  sysdigHost: ""
-  sysdigAccessKey: ""
-  clusterName: ""
-  sysdigSkipVerifyCertificate: false
+  clusterConfig:
+    name: ""
+  sysdig:
+    accessKey: ""
+    region: "us1"
+    # apiHost is used to manually set the Sysdig backend host
+    # when no region is suitable (e.g. on-premise installations)
+    # Must have the protocol (http:// or https://)
+    # apiHost: ""
+    # skipVerifyCertificate might be used in on-premise installations.
+    skipVerifyCertificate: false
 
-  scannerMode: "local" # or "multi"
+  scannerMode: "local"  # or "multi"
   loggingLevel: "INFO"
 
 eveEnabled: false
@@ -38,11 +45,11 @@ replicaCount: 2
 # leaderElectionLeaseNameOverride: ""
 # leaderElectionLeaseNamespaceOverride: ""
 
-rsi:
+runtimeStatusIntegrator:
   image:
     repository: quay.io/sysdig/runtime-status-integrator
     pullPolicy: IfNotPresent
-    tag: "0.1.2-vf589546"
+    tag: "0.1.2-v68f8e02"
   ports:
     metrics: 25000
     probes: 7000
@@ -53,11 +60,11 @@ rsi:
     requests:
       cpu: "350m"
       memory: 350Mi
-ise:
+imageSbomExtractor:
   image:
     repository: quay.io/sysdig/image-sbom-extractor
     pullPolicy: IfNotPresent
-    tag: "0.1.2-vae4fc61"
+    tag: "0.1.2-v808845a"
   ports:
     metrics: 25001
     probes: 7001
@@ -104,13 +111,13 @@ tolerations: []
 
 affinity: {}
 
-js:
+natsJS:
   user: "default-user"
   # Default uses a random password for each installation.
   # password: ""
 
 cache:
-  type: "local" # other possible value is "redis"
+  type: "local"  # other possible value is "redis"
   prefix: "sysdig-cluster-scanner"
   # redis:
   #   address: ""
