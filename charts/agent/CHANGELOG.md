@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.7.2
+### Bug Fixes
+* **agent** [34bf2af](https://github.com/sysdiglabs/charts/commit/34bf2afd26f848507cd8edff148f6253620657a9): Adjust features available in secure_light mode ([#1062](https://github.com/sysdiglabs/charts/issues/1062))
 # v1.7.1
 ### Bug Fixes
 * **agent,sysdig** [0702edd](https://github.com/sysdiglabs/charts/commit/0702eddfc46c823b8362b5f0d42e7be9d3bfe1ac): do not mount /var/lib when GKE autopilot is enabled ([#1047](https://github.com/sysdiglabs/charts/issues/1047))
