@@ -42,6 +42,10 @@ rules:
   resourceNames:
     - {{ .Values.runtimeStatusIntegrator.leaderElectionLeaseNameOverride | default (include "cluster-scanner.fullname" .) }}
   verbs: ["*"]
+- apiGroups: ["", "coordination.k8s.io"]
+  resources:
+    - "leases"
+  verbs: ["create"]
 - apiGroups: ["*"]
   resources:
     - "endpoints"
@@ -64,5 +68,5 @@ roleRef:
   name: {{ include "cluster-scanner.fullname" . }}
 subjects:
   - kind: ServiceAccount
-    namespace: {{ .Release.Namespace }}
+    namespace: {{ include "cluster-scanner.namespace" . }}
     name: {{ include "cluster-scanner.serviceAccountName" . }}
