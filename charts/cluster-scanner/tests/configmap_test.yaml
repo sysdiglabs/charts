@@ -10,7 +10,7 @@ release:
 tests:
   - it: "is a configmap with the has correct name"
     set:
-      global.sysdigHost: "http://test.com"
+      global.sysdig.apiHost: "http://test.com"
     asserts:
       - isKind:
           of: ConfigMap
@@ -23,7 +23,7 @@ tests:
 
   - it: "has correct content"
     set:
-      global.sysdigHost: "http://test.com"
+      global.sysdig.apiHost: "http://test.com"
     asserts:
       - equal:
           path: data.sysdig_host
@@ -64,7 +64,7 @@ tests:
 
   - it: "has local mode as default"
     set:
-      global.sysdigHost: "http://test.com"
+      global.sysdig.apiHost: "http://test.com"
     asserts:
       - equal:
           path: data.rsi_mode
@@ -72,17 +72,29 @@ tests:
 
   - it: "can set multi mod"
     set:
-      global.sysdigHost: "http://test.com"
+      global.sysdig.apiHost: "http://test.com"
       global.scannerMode: "multi"
     asserts:
       - equal:
           path: data.rsi_mode
           value: "mcm"
 
+  - it: "can set local mod"
+    set:
+      global.sysdig.apiHost: "http://test.com"
+      global.scannerMode: "local"
+    asserts:
+      - equal:
+          path: data.rsi_mode
+          value: "sitting"
+
   - it: "raise error on unknown mod"
     set:
-      global.sysdigHost: "http://test.com"
+      global.sysdig.apiHost: "http://test.com"
       global.scannerMode: "foobar"
     asserts:
       - failedTemplate:
-          errorMessage: "invalid scannerMode, accepted options [local, multi]"
+          errorMessage: |
+            values don't meet the specifications of the schema(s) in the following chart(s):
+            cluster-scanner:
+            - global.scannerMode: global.scannerMode must be one of the following: "local", "multi"
