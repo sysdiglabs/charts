@@ -1,4 +1,4 @@
-#basic Default values for cluster-scanner.
+# basic Default values for cluster-scanner.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -15,7 +15,7 @@ global:
     # skipVerifyCertificate might be used in on-premise installations.
     skipVerifyCertificate: false
 
-  scannerMode: "local" # or "multi"
+  scannerMode: "local"  # or "multi"
   loggingLevel: "INFO"
 
 eveEnabled: false
@@ -117,7 +117,7 @@ natsJS:
   # password: ""
 
 cache:
-  type: "local" # other possible value is "redis"
+  type: "local"  # other possible value is "redis"
   prefix: "sysdig-cluster-scanner"
   # redis:
   #   address: ""
