@@ -71,10 +71,9 @@ Generates configmap data for mode-specific values
 {{- define "cluster-scanner.modeConfig" -}}
 {{- if eq .Values.global.scannerMode "local" }}
 rsi_mode: "sitting"
-{{- else if eq .Values.global.scannerMode "multi" }}
-rsi_mode: "mcm"
+{{/* NOTE: values.schema.json will prevent any other non valid strings, so it's safe to assume it's "multi" */}}
 {{- else }}
-{{- fail "invalid scannerMode, accepted options [local, multi]" }}
+rsi_mode: "mcm"
 {{- end }}
 {{ end }}
 
@@ -129,3 +128,37 @@ cache_redis_sentinel_address: {{ .sentinelAddress }}
 {{- end }}
 {{- end }}
 {{- end }}
+
+
+{{- define "cluster-scanner.configContent" }}
+{{ .Values.global }}
+{{ .Values.multicluster }}
+{{ .Values.localcluster }}
+{{ .Values.js }}
+{{ .Values.cache }}
+{{- end }}
+
+{{/*
+Determine sysdig secure endpoint based on provided region
+*/}}
+{{- define "cluster-scanner.apiHost" -}}
+    {{- if .Values.global.sysdig.apiHost -}}
+        {{- .Values.global.sysdig.apiHost -}}
+    {{- else if (eq .Values.global.sysdig.region "us1") -}}
+        {{- "https://secure.sysdig.com" -}}
+    {{- else if (eq .Values.global.sysdig.region "us2") -}}
+        {{- "https://us2.app.sysdig.com/secure" -}}
+    {{- else if (eq .Values.global.sysdig.region "us3") -}}
+        {{- "https://app.us3.sysdig.com/secure" -}}
+    {{- else if (eq .Values.global.sysdig.region "us4") -}}
+        {{- "https://app.us4.sysdig.com/secure" -}}
+    {{- else if (eq .Values.global.sysdig.region "eu1") -}}
+        {{- "https://eu1.app.sysdig.com/secure" -}}
+    {{- else if (eq .Values.global.sysdig.region "au1") -}}
+        {{- "https://app.au1.sysdig.com/secure" -}}
+    {{- else -}}
+        {{- if (ne .Values.global.sysdig.region "custom") -}}
+            {{- fail (printf "global.sysdig.region=%s provided is not recognized." .Values.global.sysdig.region ) -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
