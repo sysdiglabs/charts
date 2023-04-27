@@ -80,13 +80,21 @@ tests:
       - isSubset:
           path: rules[1]
           content:
+            apiGroups: ["", "coordination.k8s.io"]
+            resources:
+              - "leases"
+            verbs: ["create"]
+        documentIndex: 2
+      - isSubset:
+          path: rules[2]
+          content:
             apiGroups: ["*"]
             resources:
               - "endpoints"
             verbs: ["get", "watch", "list"]
         documentIndex: 2
       - isSubset:
-          path: rules[2]
+          path: rules[3]
           content:
             apiGroups: ["*"]
             resources:
