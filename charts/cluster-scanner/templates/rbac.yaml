@@ -16,6 +16,26 @@ rules:
     - "nodes"
     - "secrets"
   verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "cluster-scanner.fullname" . }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ include "cluster-scanner.fullname" . }}
+subjects:
+  - kind: ServiceAccount
+    namespace: {{ .Release.Namespace }}
+    name: {{ include "cluster-scanner.serviceAccountName" . }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ include "cluster-scanner.fullname" . }}
+  namespace: {{ include "cluster-scanner.namespace" . }}
+rules:
 - apiGroups: ["", "coordination.k8s.io"]
   resources:
     - "leases"
@@ -34,12 +54,13 @@ rules:
   verbs: ["*"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
   name: {{ include "cluster-scanner.fullname" . }}
+  namespace: {{ include "cluster-scanner.namespace" . }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
+  kind: Role
   name: {{ include "cluster-scanner.fullname" . }}
 subjects:
   - kind: ServiceAccount

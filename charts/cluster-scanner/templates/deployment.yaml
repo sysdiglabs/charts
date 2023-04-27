@@ -4,9 +4,12 @@ metadata:
   name: {{ include "cluster-scanner.fullname" . }}
   namespace: {{ include "cluster-scanner.namespace" . }}
   labels:
+    checksum/config: {{ include "cluster-scanner.configContent" . | sha256sum | trunc 63 | quote }}
    {{- include "cluster-scanner.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       {{- include "cluster-scanner.selectorLabels" . | nindent 6 }}
@@ -30,15 +33,12 @@ spec:
         - name: rsi
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-      {{- with .Values.rsi }}
+      {{- with .Values.runtimeStatusIntegrator }}
           image: "{{ .image.repository }}:{{ .image.tag }}"
           imagePullPolicy: {{ .image.pullPolicy }}
           ports:
             - name: metrics
               containerPort: {{ .ports.metrics }}
-              protocol: TCP
-            - name: probes
-              containerPort: {{ .ports.probes }}
               protocol: TCP
           env:
           - name: PROBES_PORT
@@ -191,30 +191,27 @@ spec:
               secretKeyRef:
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: js_server_password
+      {{- with .Values.runtimeStatusIntegrator }}
           livenessProbe:
             httpGet:
               path: /probes/liveness
-              port: probes
+              port: {{ .ports.probes }}
           readinessProbe:
             httpGet:
               path: /probes/readiness
-              port: probes
-      {{- with .Values.rsi }}
+              port: {{ .ports.probes }}
           resources:
             {{- toYaml .resources | nindent 12 }}
       {{- end }}
         - name: ise
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-      {{- with .Values.ise }}
+      {{- with .Values.imageSbomExtractor }}
           image: "{{ .image.repository }}:{{ .image.tag }}"
           imagePullPolicy: {{ .image.pullPolicy }}
           ports:
             - name: metrics
               containerPort: {{ .ports.metrics }}
-              protocol: TCP
-            - name: probes
-              containerPort: {{ .ports.probes }}
               protocol: TCP
           env:
           - name: PROBES_PORT
@@ -381,7 +378,7 @@ spec:
                 key: cache_redis_sentinel_address
                 optional: true
           {{- end }}
-      {{- with .Values.ise }}
+      {{- with .Values.imageSbomExtractor }}
           resources:
             {{- toYaml .resources | nindent 12 }}
       {{- end }}
