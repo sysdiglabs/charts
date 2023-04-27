@@ -40,7 +40,7 @@ rules:
   resources:
     - "leases"
   resourceNames:
-    - {{ .Values.leaderElectionLeaseNameOverride | default (include "cluster-scanner.fullname" .) }}
+    - {{ .Values.runtimeStatusIntegrator.leaderElectionLeaseNameOverride | default (include "cluster-scanner.fullname" .) }}
   verbs: ["*"]
 - apiGroups: ["*"]
   resources:

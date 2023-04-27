@@ -114,8 +114,8 @@ ise_js_producer_subject: "analysis.sboms"
 Generates config for Redis, if available
 */}}
 {{- define "cluster-scanner.redisCacheConfig" }}
-{{- if eq .Values.cache.type "redis" }}
-{{- with .Values.cache.redis }}
+{{- if eq .Values.imageSbomExtractor.cache.type "redis" }}
+{{- with .Values.imageSbomExtractor.cache.redis }}
 cache_redis_address: {{ .address }}
 cache_redis_user: {{ .user }}
 cache_redis_password: {{ .password }}
@@ -132,10 +132,10 @@ cache_redis_sentinel_address: {{ .sentinelAddress }}
 
 {{- define "cluster-scanner.configContent" }}
 {{ .Values.global }}
-{{ .Values.multicluster }}
-{{ .Values.localcluster }}
-{{ .Values.js }}
-{{ .Values.cache }}
+{{ .Values.runtimeStatusIntegrator.multiCluster }}
+{{ .Values.runtimeStatusIntegrator.localCluster }}
+{{ .Values.runtimeStatusIntegrator.natsJS }}
+{{ .Values.imageSbomExtractor.cache }}
 {{- end }}
 
 {{/*

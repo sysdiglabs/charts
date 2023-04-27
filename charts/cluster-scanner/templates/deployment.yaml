@@ -78,7 +78,7 @@ spec:
           - name: SYSDIG_KUBECONFIG_CONTENT
             valueFrom:
               secretKeyRef:
-                name: {{ .Values.multicluster.kubeconfigSecretName }}
+                name: {{ .Values.runtimeStatusIntegrator.multiCluster.kubeconfigSecretName }}
                 key: .kubeconfig
           {{- end }}
           - name: SYSDIG_API_URL
