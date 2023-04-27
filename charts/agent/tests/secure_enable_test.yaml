@@ -156,6 +156,16 @@ tests:
           pattern: |-
             network_topology:
               enabled: false
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            commandlines_capture:
+              enabled: false
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            secure_audit_streams:
+              enabled: false
 
   - it: Test secure.enabled=false when specifying secure_light mode
     set:
