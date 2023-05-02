@@ -28,7 +28,7 @@ runtimeStatusIntegrator:
   image:
     repository: quay.io/sysdig/runtime-status-integrator
     pullPolicy: IfNotPresent
-    tag: "0.1.2-v4085794"
+    tag: "0.1.2-v5e3dc4c"
 
   # Params to manage leader election
   # Leader election is implemented leveraging the native capabilities of Kubernetes
@@ -70,7 +70,7 @@ imageSbomExtractor:
   image:
     repository: quay.io/sysdig/image-sbom-extractor
     pullPolicy: IfNotPresent
-    tag: "0.1.2-v91beb12"
+    tag: "0.1.2-vb7fceb1"
   ports:
     metrics: 25001
     probes: 7001
