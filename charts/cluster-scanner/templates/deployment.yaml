@@ -171,6 +171,11 @@ spec:
               configMapKeyRef:
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: rsi_js_consumer_max_deliver
+          - name: NATS_JS_CONSUMER_DELIVER_POLICY_ALL
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: rsi_js_consumer_deliver_policy_all
           - name: NATS_JS_PRODUCER_SUBJECT_PREFIX
             valueFrom:
               configMapKeyRef:
@@ -305,6 +310,11 @@ spec:
               configMapKeyRef:
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: ise_js_consumer_max_deliver
+          - name: NATS_JS_CONSUMER_DELIVER_POLICY_ALL
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: ise_js_consumer_deliver_policy_all
           - name: NATS_JS_PRODUCER_SUBJECT
             valueFrom:
               configMapKeyRef:

@@ -91,6 +91,7 @@ rsi_js_consumer_subject_prefix: "analysis.sboms"
 rsi_js_consumer_max_in_flight: "256"
 rsi_js_consumer_ack_wait: "120s"
 rsi_js_consumer_max_deliver: "1"
+rsi_js_consumer_deliver_policy_all: "true"
 rsi_js_producer_subject_prefix: "analysis.requests"
 {{ end }}
 
@@ -107,6 +108,7 @@ ise_js_consumer_subject: "analysis.requests.>"
 ise_js_consumer_max_in_flight: "256"
 ise_js_consumer_ack_wait: "240s"
 ise_js_consumer_max_deliver: "1"
+ise_js_consumer_deliver_policy_all: "true"
 ise_js_producer_subject: "analysis.sboms"
 {{ end }}
 
