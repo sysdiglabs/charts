@@ -196,7 +196,6 @@ spec:
           {{- /* Always requested */}}
             - mountPath: /host/dev
               name: dev-vol
-              readOnly: false
             - mountPath: /host/proc
               name: proc-vol
               readOnly: true

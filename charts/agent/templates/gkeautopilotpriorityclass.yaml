@@ -1,4 +1,4 @@
-{{- if and (include "agent.gke.autopilot" .) (not .Values.slim.enabled) .Values.gke.createPriorityClass }}
+{{- if and (include "agent.gke.autopilot" .) .Values.gke.createPriorityClass }}
 apiVersion: scheduling.k8s.io/v1
 kind: PriorityClass
 metadata:
