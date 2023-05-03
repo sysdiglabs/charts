@@ -1,6 +1,6 @@
 # Sysdig Deploy
 
-Use the sysdig-deploy Helm chart to install Sysdig Secure and/or Sysdig Monitor in a Kubernetes environment.
+Use the `sysdig-deploy` Helm chart to install Sysdig Secure and/or Sysdig Monitor in a Kubernetes environment.
 
 ## Introduction
 
