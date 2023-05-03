@@ -12,10 +12,12 @@ $ pre-commit run -a
 
 -->
 
-# Cluster Scanner
+# Cluster Scanner - [Tech Preview]
 
 [Sysdig Cluster Scanner](https://docs.sysdig.com/en/docs/sysdig-secure/scanning) features Runtime Image scanning on Kubernetes.
 <br/>This chart deploys the Sysdig Cluster Scanner in your Kubernetes cluster.
+
+**NOTE: Sysdig Cluster Scanner is currently released in Tech Preview**
 
 ## TL;DR;
 
