@@ -55,9 +55,9 @@ Create the name of the service account to use
 */}}
 {{- define "cluster-scanner.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "cluster-scanner.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "cluster-scanner.fullname" .) .Values.serviceAccount.name | lower }}
 {{- else }}
-{{- default "default" .Values.serviceAccount.name }}
+{{- default "default" .Values.serviceAccount.name | lower }}
 {{- end }}
 {{- end }}
 
