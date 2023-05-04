@@ -26,7 +26,8 @@ replicaCount: 2
 
 runtimeStatusIntegrator:
   image:
-    repository: quay.io/sysdig/runtime-status-integrator
+    registry: quay.io
+    repository: sysdig/runtime-status-integrator
     pullPolicy: IfNotPresent
     tag: "0.1.2-v42d4ca4"
 
@@ -68,7 +69,8 @@ runtimeStatusIntegrator:
 
 imageSbomExtractor:
   image:
-    repository: quay.io/sysdig/image-sbom-extractor
+    registry: quay.io
+    repository: sysdig/image-sbom-extractor
     pullPolicy: IfNotPresent
     tag: "0.1.2-vb7fceb1"
   ports:
@@ -123,7 +125,6 @@ securityContext: {}
   # runAsUser: 1000
 
 selectorLabels: {}
-
 
 nodeSelector: {}
 

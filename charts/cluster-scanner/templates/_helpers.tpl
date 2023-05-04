@@ -166,3 +166,39 @@ Determine sysdig secure endpoint based on provided region
         {{- end -}}
     {{- end -}}
 {{- end -}}
+
+{{/*
+Define the proper imageRegistry to use for runtimeStatusIntegrator
+*/}}
+{{- define "cluster-scanner.runtimeStatusIntegrator.imageRegistry" -}}
+{{- if and .Values.global (hasKey (default .Values.global dict) "imageRegistry") -}}
+    {{- .Values.global.imageRegistry -}}
+{{- else -}}
+    {{- .Values.runtimeStatusIntegrator.image.registry -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Define the proper imageRegistry to use for imageSbomExtractor
+*/}}
+{{- define "cluster-scanner.imageSbomExtractor.imageRegistry" -}}
+{{- if and .Values.global (hasKey (default .Values.global dict) "imageRegistry") -}}
+    {{- .Values.global.imageRegistry -}}
+{{- else -}}
+    {{- .Values.imageSbomExtractor.image.registry -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Return the proper image name for the Runtime Status Integrator
+*/}}
+{{- define "cluster-scanner.runtimeStatusIntegrator.image" -}}
+    {{- include "cluster-scanner.runtimeStatusIntegrator.imageRegistry" . -}} / {{- .Values.runtimeStatusIntegrator.image.repository -}} : {{- .Values.runtimeStatusIntegrator.image.tag -}}
+{{- end -}}
+
+{{/*
+Return the proper image name for the Image Sbom Extractor
+*/}}
+{{- define "cluster-scanner.imageSbomExtractor.image" -}}
+    {{- include "cluster-scanner.imageSbomExtractor.imageRegistry" . -}} / {{- .Values.imageSbomExtractor.image.repository -}} : {{- .Values.imageSbomExtractor.image.tag -}}
+{{- end -}}

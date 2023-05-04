@@ -33,8 +33,8 @@ spec:
         - name: rsi
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
+          image: {{ template "cluster-scanner.runtimeStatusIntegrator.image" . }}
       {{- with .Values.runtimeStatusIntegrator }}
-          image: "{{ .image.repository }}:{{ .image.tag }}"
           imagePullPolicy: {{ .image.pullPolicy }}
           ports:
             - name: metrics
@@ -223,8 +223,8 @@ spec:
         - name: ise
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
+          image: {{ template "cluster-scanner.imageSbomExtractor.image" . }}
       {{- with .Values.imageSbomExtractor }}
-          image: "{{ .image.repository }}:{{ .image.tag }}"
           imagePullPolicy: {{ .image.pullPolicy }}
           ports:
             - name: metrics
