@@ -5,6 +5,7 @@ metadata:
 rules:
 - apiGroups: ["", "apps", "batch", "extensions"]
   resources:
+    {{- if ne .Values.global.scannerMode "multi" }}
     - "namespaces"
     - "deployments"
     - "replicasets"
@@ -14,6 +15,7 @@ rules:
     - "cronjobs"
     - "jobs"
     - "nodes"
+    {{- end }}
     - "secrets"
   verbs: ["get", "list", "watch"]
 ---
