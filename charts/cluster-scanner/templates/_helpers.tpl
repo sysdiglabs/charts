@@ -93,6 +93,8 @@ rsi_js_consumer_ack_wait: "120s"
 rsi_js_consumer_max_deliver: "1"
 rsi_js_consumer_deliver_policy_all: "true"
 rsi_js_producer_subject_prefix: "analysis.requests"
+rsi_js_server_metrics_enable: "true"
+rsi_js_server_metrics_port: "8222"
 {{ end }}
 
 {{/*

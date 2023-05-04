@@ -196,6 +196,18 @@ spec:
               secretKeyRef:
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: js_server_password
+          - name: NATS_JS_SERVER_METRICS_ENABLE
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: rsi_js_server_metrics_enable
+                optional: true
+          - name: NATS_JS_SERVER_METRICS_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: rsi_js_server_metrics_port
+                optional: true
       {{- with .Values.runtimeStatusIntegrator }}
           livenessProbe:
             httpGet:
