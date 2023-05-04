@@ -12,7 +12,7 @@ tests:
     asserts:
       - hasDocuments:
           count: 4
-  - it: "generates correct ClusterRole"
+  - it: "generates correct ClusterRole in local mode"
     asserts:
       - equal:
           path: metadata.name
@@ -32,6 +32,22 @@ tests:
               - "cronjobs"
               - "jobs"
               - "nodes"
+              - "secrets"
+            verbs: ["get", "list", "watch"]
+        documentIndex: 0
+  - it: "generates correct ClusterRole in multi scannerMode"
+    set:
+      global.scannerMode: "multi"
+    asserts:
+      - equal:
+          path: metadata.name
+          value: test-release-cluster-scanner
+        documentIndex: 0
+      - isSubset:
+          path: rules[0]
+          content:
+            apiGroups: ["", "apps", "batch", "extensions"]
+            resources:
               - "secrets"
             verbs: ["get", "list", "watch"]
         documentIndex: 0

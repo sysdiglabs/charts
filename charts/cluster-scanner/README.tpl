@@ -12,10 +12,12 @@ $ pre-commit run -a
 
 -->
 
-# Cluster Scanner
+# Cluster Scanner - [Tech Preview]
 
 [{{ .Project.Name }}]({{ .Project.URL }}) features Runtime Image scanning on Kubernetes.
 <br/>{{ .Project.Description }}
+
+**NOTE: {{ .Project.Name }} is currently released in Tech Preview**
 
 ## TL;DR;
 
