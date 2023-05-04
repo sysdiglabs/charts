@@ -50,17 +50,19 @@ tests:
 
   - it: "sets tag and repository"
     set:
+      runtimeStatusIntegrator.image.registry: registry-rsi.io
       runtimeStatusIntegrator.image.repository: test.com/repo
       runtimeStatusIntegrator.image.tag: rsi
-      imageSbomExtractor.image.repository: test.com/repo
+      imageSbomExtractor.image.registry: registry-ise.io
+      imageSbomExtractor.image.repository: test-ise.com/repo
       imageSbomExtractor.image.tag: ise
     asserts:
       - equal:
           path: spec.template.spec.containers[0].image
-          value: test.com/repo:rsi
+          value: registry-rsi.io/test.com/repo:rsi
       - equal:
           path: spec.template.spec.containers[1].image
-          value: test.com/repo:ise
+          value: registry-ise.io/test-ise.com/repo:ise
 
   - it: "sets kubeconfig env var if set"
     set:

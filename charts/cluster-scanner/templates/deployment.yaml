@@ -33,8 +33,8 @@ spec:
         - name: rsi
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
+          image: {{ template "cluster-scanner.runtimeStatusIntegrator.image" . }}
       {{- with .Values.runtimeStatusIntegrator }}
-          image: "{{ .image.repository }}:{{ .image.tag }}"
           imagePullPolicy: {{ .image.pullPolicy }}
           ports:
             - name: metrics
@@ -171,6 +171,11 @@ spec:
               configMapKeyRef:
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: rsi_js_consumer_max_deliver
+          - name: NATS_JS_CONSUMER_DELIVER_POLICY_ALL
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: rsi_js_consumer_deliver_policy_all
           - name: NATS_JS_PRODUCER_SUBJECT_PREFIX
             valueFrom:
               configMapKeyRef:
@@ -191,6 +196,18 @@ spec:
               secretKeyRef:
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: js_server_password
+          - name: NATS_JS_SERVER_METRICS_ENABLE
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: rsi_js_server_metrics_enable
+                optional: true
+          - name: NATS_JS_SERVER_METRICS_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: rsi_js_server_metrics_port
+                optional: true
       {{- with .Values.runtimeStatusIntegrator }}
           livenessProbe:
             httpGet:
@@ -206,8 +223,8 @@ spec:
         - name: ise
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
+          image: {{ template "cluster-scanner.imageSbomExtractor.image" . }}
       {{- with .Values.imageSbomExtractor }}
-          image: "{{ .image.repository }}:{{ .image.tag }}"
           imagePullPolicy: {{ .image.pullPolicy }}
           ports:
             - name: metrics
@@ -305,6 +322,11 @@ spec:
               configMapKeyRef:
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: ise_js_consumer_max_deliver
+          - name: NATS_JS_CONSUMER_DELIVER_POLICY_ALL
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: ise_js_consumer_deliver_policy_all
           - name: NATS_JS_PRODUCER_SUBJECT
             valueFrom:
               configMapKeyRef:

@@ -26,9 +26,10 @@ replicaCount: 2
 
 runtimeStatusIntegrator:
   image:
-    repository: quay.io/sysdig/runtime-status-integrator
+    registry: quay.io
+    repository: sysdig/runtime-status-integrator
     pullPolicy: IfNotPresent
-    tag: "0.1.2-v4085794"
+    tag: "0.1.2-v42d4ca4"
 
   # Params to manage leader election
   # Leader election is implemented leveraging the native capabilities of Kubernetes
@@ -68,9 +69,10 @@ runtimeStatusIntegrator:
 
 imageSbomExtractor:
   image:
-    repository: quay.io/sysdig/image-sbom-extractor
+    registry: quay.io
+    repository: sysdig/image-sbom-extractor
     pullPolicy: IfNotPresent
-    tag: "0.1.2-v91beb12"
+    tag: "0.1.2-vb7fceb1"
   ports:
     metrics: 25001
     probes: 7001
@@ -109,7 +111,10 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
-podAnnotations: {}
+podAnnotations:
+  prometheus.io/scrape: "true"
+  prometheus.io/path: "/metrics"
+  prometheus.io/port: "25000"
 
 podSecurityContext: {}
   # fsGroup: 2000
@@ -123,7 +128,6 @@ securityContext: {}
   # runAsUser: 1000
 
 selectorLabels: {}
-
 
 nodeSelector: {}
 
