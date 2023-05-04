@@ -1,17 +1,15 @@
-# Sysdig
+# Sysdig Deploy
 
-[Sysdig](https://sysdig.com/) is a unified platform for container and microservices monitoring, troubleshooting,
-security and forensics. Sysdig platform has been built on top of [Sysdig tool](https://sysdig.com/opensource/sysdig/)
-and [Sysdig Inspect](https://sysdig.com/blog/sysdig-inspect/) open-source technologies.
+Use the `sysdig-deploy` Helm chart to install Sysdig Secure and/or Sysdig Monitor in a Kubernetes environment.
 
 ## Introduction
 
 This chart deploys various Sysdig components into your Kubernetes cluster.
 
 Currently included components:
-- [Sysdig agent](https://github.com/sysdiglabs/charts/tree/master/charts/agent)
-- [Sysdig NodeAnalyzer](https://github.com/sysdiglabs/charts/tree/master/charts/node-analyzer)
+- [Sysdig Agent](https://github.com/sysdiglabs/charts/tree/master/charts/agent)
 - [Sysdig KSPM Collector](https://github.com/sysdiglabs/charts/tree/master/charts/kspm-collector)
+- [Sysdig Host Scanner](https://github.com/sysdiglabs/charts/tree/master/charts/node-analyzer#host-scanner)
 - [Sysdig Rapid Response](https://github.com/sysdiglabs/charts/tree/master/charts/rapid-response)
 - [Sysdig Admission Controller](https://github.com/sysdiglabs/charts/tree/master/charts/admission-controller)
 
@@ -21,6 +19,12 @@ Currently included components:
 - Helm v3.6+
 
 ## Installation
+
+
+> **_NOTE:_** Below are the legacy instructions for installing the `sysdig-deploy` chart.
+> For more detailed installation instructions go here:
+> * [Sysdig Monitor only](https://docs.sysdig.com/en/install-kubernetes-monitor)
+> * [Sysdig Secure, or Sysdig Secure and Sysdig Monitor](https://docs.sysdig.com/en/install-kubernetes-secure)
 
 
 1. Add the Sysdig Helm repo:
