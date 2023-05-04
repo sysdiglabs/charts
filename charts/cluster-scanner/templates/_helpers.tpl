@@ -12,13 +12,13 @@ If release name contains chart name it will be used as a full name.
 */}}
 {{- define "cluster-scanner.fullname" -}}
 {{- if .Values.fullnameOverride }}
-{{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
+{{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" | lower }}
 {{- else }}
 {{- $name := default .Chart.Name .Values.nameOverride }}
 {{- if contains $name .Release.Name }}
-{{- .Release.Name | trunc 63 | trimSuffix "-" }}
+{{- .Release.Name | trunc 63 | trimSuffix "-" | lower }}
 {{- else }}
-{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" }}
+{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" | lower }}
 {{- end }}
 {{- end }}
 {{- end }}
@@ -27,7 +27,7 @@ If release name contains chart name it will be used as a full name.
 Create chart name and version as used by the chart label.
 */}}
 {{- define "cluster-scanner.chart" -}}
-{{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
+{{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" | lower }}
 {{- end }}
 
 {{/*
@@ -55,9 +55,9 @@ Create the name of the service account to use
 */}}
 {{- define "cluster-scanner.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "cluster-scanner.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "cluster-scanner.fullname" .) .Values.serviceAccount.name | lower }}
 {{- else }}
-{{- default "default" .Values.serviceAccount.name }}
+{{- default "default" .Values.serviceAccount.name | lower }}
 {{- end }}
 {{- end }}
 
@@ -91,7 +91,10 @@ rsi_js_consumer_subject_prefix: "analysis.sboms"
 rsi_js_consumer_max_in_flight: "256"
 rsi_js_consumer_ack_wait: "120s"
 rsi_js_consumer_max_deliver: "1"
+rsi_js_consumer_deliver_policy_all: "true"
 rsi_js_producer_subject_prefix: "analysis.requests"
+rsi_js_server_metrics_enable: "true"
+rsi_js_server_metrics_port: "8222"
 {{ end }}
 
 {{/*
@@ -107,6 +110,7 @@ ise_js_consumer_subject: "analysis.requests.>"
 ise_js_consumer_max_in_flight: "256"
 ise_js_consumer_ack_wait: "240s"
 ise_js_consumer_max_deliver: "1"
+ise_js_consumer_deliver_policy_all: "true"
 ise_js_producer_subject: "analysis.sboms"
 {{ end }}
 
@@ -161,4 +165,40 @@ Determine sysdig secure endpoint based on provided region
             {{- fail (printf "global.sysdig.region=%s provided is not recognized." .Values.global.sysdig.region ) -}}
         {{- end -}}
     {{- end -}}
+{{- end -}}
+
+{{/*
+Define the proper imageRegistry to use for runtimeStatusIntegrator
+*/}}
+{{- define "cluster-scanner.runtimeStatusIntegrator.imageRegistry" -}}
+{{- if and .Values.global (hasKey (default .Values.global dict) "imageRegistry") -}}
+    {{- .Values.global.imageRegistry -}}
+{{- else -}}
+    {{- .Values.runtimeStatusIntegrator.image.registry -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Define the proper imageRegistry to use for imageSbomExtractor
+*/}}
+{{- define "cluster-scanner.imageSbomExtractor.imageRegistry" -}}
+{{- if and .Values.global (hasKey (default .Values.global dict) "imageRegistry") -}}
+    {{- .Values.global.imageRegistry -}}
+{{- else -}}
+    {{- .Values.imageSbomExtractor.image.registry -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Return the proper image name for the Runtime Status Integrator
+*/}}
+{{- define "cluster-scanner.runtimeStatusIntegrator.image" -}}
+    {{- include "cluster-scanner.runtimeStatusIntegrator.imageRegistry" . -}} / {{- .Values.runtimeStatusIntegrator.image.repository -}} : {{- .Values.runtimeStatusIntegrator.image.tag -}}
+{{- end -}}
+
+{{/*
+Return the proper image name for the Image Sbom Extractor
+*/}}
+{{- define "cluster-scanner.imageSbomExtractor.image" -}}
+    {{- include "cluster-scanner.imageSbomExtractor.imageRegistry" . -}} / {{- .Values.imageSbomExtractor.image.repository -}} : {{- .Values.imageSbomExtractor.image.tag -}}
 {{- end -}}
