@@ -15,7 +15,7 @@ exclusively to fix incorrect entries and not to add new ones.
 * **registry-scanner**  bumped inner component to v0.2.32
   - refactor: move code around in packages
   - feat: add support for http registries
-  - SSPROD-24675 fix: honor maxRepositoriesPerRegistry on aws org
+  - fix: honor maxRepositoriesPerRegistry on aws org
 
 # v1.0.4
 ### Chores
