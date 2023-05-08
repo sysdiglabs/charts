@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.7.3
+### Chores
+* **agent** [44f57ac](https://github.com/sysdiglabs/charts/commit/44f57ac7742edc044d5ce5a7fbddadf2d13c8846): bump agent version to 12.14.0 ([#1076](https://github.com/sysdiglabs/charts/issues/1076))
 # v1.7.2
 ### Bug Fixes
 * **agent** [34bf2af](https://github.com/sysdiglabs/charts/commit/34bf2afd26f848507cd8edff148f6253620657a9): Adjust features available in secure_light mode ([#1062](https://github.com/sysdiglabs/charts/issues/1062))
