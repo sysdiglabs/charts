@@ -21,3 +21,6 @@
 .idea/
 *.tmproj
 .vscode/
+# Unittests and CI
+ci/
+tests/
