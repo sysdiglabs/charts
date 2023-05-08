@@ -44,6 +44,35 @@ spec:
       hostNetwork: true
       {{- end }}
       containers:
+      {{- if .Values.webhook.v2.enabled}}
+        - name: {{.Values.webhook.v2.container.name}}
+          image: {{ .Values.webhook.v2.container.image }}
+        
+          env:
+            {{- if (or (include "webhook.httpProxy" .) (include "webhook.httpsProxy" .) (include "webhook.noProxy" .) )}}
+            - name: HTTP_PROXY
+              value: {{ include "webhook.httpProxy" . }}
+            - name: HTTPS_PROXY
+              value: {{ include "webhook.httpsProxy" . }}
+            - name: NO_PROXY
+              value: {{ include "webhook.noProxy" . }},{{ include "admissionController.scanner.fullname" . }}
+            {{- end }}
+            - name: ACCESS_KEY
+              value: {{.Values.global.sysdig.accessKey}}
+          ports:
+            - containerPort: {{ .Values.webhook.http.port }}
+              protocol: TCP
+
+          envFrom:
+            - configMapRef:
+                name: {{ include "admissionController.webhook.fullname" . }}
+          volumeMounts:
+            - name: cert
+              mountPath: /cert
+              readOnly: true
+          resources:
+            {{- toYaml .Values.webhook.resources | nindent 12 }}
+      {{- end}}
         - name: admission-controller
           image: "{{ include "admissionController.webhook.image" . }}"
           {{- if .Values.webhook.customEntryPoint }}

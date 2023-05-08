@@ -114,6 +114,18 @@ podMonitors:
     annotations: {}
 
 webhook:
+  v2:
+    enabled: true
+    denyOnError: true
+    timeoutSeconds: 30
+    nats:
+      natsInsecure: "true"
+      natsUrl: "wss://nats-external.sysdig.svc:443" #relplace in real prod
+    container: 
+      name: secure-admission-controller
+      port: 8443
+      image: docker.io/lioralafisysdig/vac:latest
+
   # Service name for Webhook deployment
   name: webhook
   # Amount of replicas for webhook. **Deprecated**, use `webhook.autoscaling.minReplicas` and `webhook.autoscaling.maxReplicas` instead.

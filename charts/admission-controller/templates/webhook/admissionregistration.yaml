@@ -13,6 +13,39 @@ metadata:
   annotations:
     "helm.sh/hook": "post-install, post-upgrade"
 webhooks:
+{{- if .Values.webhook.v2.enabled}}
+- name: vac.secure.sysdig.com
+  rules:
+  - apiGroups:
+    - ""
+    - apps
+    - batch
+    apiVersions: ["v1"]
+    operations: ["CREATE", "UPDATE"]
+    resources:
+    - "deployments"
+    - "replicasets"
+    - "statefulsets"
+    - "daemonsets"
+    - "jobs"
+    - "cronjobs"
+    scope: "Namespaced"
+  clientConfig:
+    service:
+      namespace: {{ include "admissionController.namespace" . }}
+      name: {{ include "admissionController.webhook.fullname" . }}
+      path: /validate
+      port: {{.Values.webhook.v2.container.port}}
+    caBundle: {{ $certList._2 }}
+  admissionReviewVersions: ["v1", "v1beta1"]
+  sideEffects: None
+  timeoutSeconds: {{ .Values.webhook.v2.timeoutSeconds }}
+  {{- if .Values.webhook.v2.denyOnError }}
+  failurePolicy: Fail
+  {{- else }}
+  failurePolicy: Ignore
+  {{- end }}
+{{- end }}
 {{- if .Values.scanner.enabled }}
 - name: scanning.secure.sysdig.com
   matchPolicy: Equivalent
