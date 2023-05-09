@@ -450,13 +450,13 @@ agent config to prevent a backend push from enabling them after installation.
     {{- end }}
     {{- if not .Values.sysdig.settings.k8s_coldstart }}
         {{- if not .Values.delegatedAgentDeployment.enabled }}
-            {{- $_ := set $k8sColdStartBlock "max_parallel_cold_starts" (include "agent.parallelStarts" . | int ) }}
+            {{- $_ := set $k8sColdStartBlock "max_parallel_cold_start" (include "agent.parallelStarts" . | int ) }}
         {{- else }}
-            {{- $_ := set $k8sColdStartBlock "max_parallel_cold_starts" 1 }}
+            {{- $_ := set $k8sColdStartBlock "max_parallel_cold_start" 1 }}
         {{- end }}
     {{- end }}
     {{- $completeBlock := dict "k8s_coldstart" $k8sColdStartBlock }}
-    {{- toYaml $completeBlock }}
+    {{- $_ := merge .Values.sysdig.settings $completeBlock }}
 {{- end }}
 
 {{ define "agent.connectionSettings" }}
