@@ -35,6 +35,7 @@ Common labels
 */}}
 {{- define "registry-scanner.labels" -}}
 helm.sh/chart: {{ include "registry-scanner.chart" . }}
+product-type: registry-scanner-orchestrator
 {{ include "registry-scanner.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}

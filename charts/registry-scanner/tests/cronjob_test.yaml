@@ -64,3 +64,12 @@ tests:
       - equal:
           path: apiVersion
           value: batch/v1
+
+  - it: sets default labels
+    asserts:
+      - equal:
+          path: metadata.labels['product-type']
+          value: registry-scanner-orchestrator
+      - equal:
+          path: spec.jobTemplate.spec.template.metadata.labels['product-type']
+          value: registry-scanner-orchestrator

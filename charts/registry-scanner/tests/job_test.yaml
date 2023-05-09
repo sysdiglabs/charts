@@ -32,3 +32,14 @@ tests:
           content:
             name: FOO
             value: bar
+  - it: sets default labels
+    set:
+      scanOnStart:
+        enabled: true
+    asserts:
+      - equal:
+          path: metadata.labels['product-type']
+          value: registry-scanner-orchestrator
+      - equal:
+          path: spec.template.metadata.labels['product-type']
+          value: registry-scanner-orchestrator
