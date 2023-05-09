@@ -21,3 +21,9 @@ unittest: deps-unittest
 		xargs -L1 dirname | \
 		xargs -I% sh -c \
 			"helm dependency build % ; helm unittest --strict %"
+
+unit-test-rs: deps-unittest
+	find ./charts/registry-scanner -name "Chart.yaml" | \
+		xargs -L1 dirname | \
+		xargs -I% sh -c \
+			"helm dependency build % ; helm unittest --strict %"
