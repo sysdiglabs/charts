@@ -86,3 +86,50 @@ tests:
       - equal:
           path: spec.strategy.type
           value: Recreate
+
+  - it: "sets the local registry secrets when in local mode"
+    set:
+      global.scannerMode: "local"
+      runtimeStatusIntegrator.localCluster:
+        rbac:
+          allowedPullSecrets:
+            namespaceOneName:
+              - myDockerSecretOne
+              - myDockerSecretTwo
+            anotherNamespace:
+              - myOtherDockerSecretOne
+              - myOtherDockerSecretTwo
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].env[13]
+          value:
+            name: LOCAL_REGISTRY_SECRETS
+            valueFrom:
+              configMapKeyRef:
+                key: local_registry_secrets
+                name: test-release-cluster-scanner
+                optional: true
+
+  - it: "does not set the local registry secrets when in multi mode"
+    set:
+      global.scannerMode: "multi"
+      runtimeStatusIntegrator.multiCluster.kubeconfigSecretName: "my-secret"
+      runtimeStatusIntegrator.localCluster:
+        rbac:
+          allowedPullSecrets:
+            namespaceOneName:
+              - myDockerSecretOne
+              - myDockerSecretTwo
+            anotherNamespace:
+              - myOtherDockerSecretOne
+              - myOtherDockerSecretTwo
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].env[14]
+          value:
+            name: EVE_ENABLED
+            valueFrom:
+              configMapKeyRef:
+                key: eve_enabled
+                name: test-release-cluster-scanner
+                optional: true

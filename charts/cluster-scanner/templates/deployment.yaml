@@ -109,6 +109,14 @@ spec:
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: logging_level
                 optional: true
+          {{- if  eq .Values.global.scannerMode "local" }}
+          - name: LOCAL_REGISTRY_SECRETS
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: local_registry_secrets
+                optional: true
+          {{- end }}
           - name: EVE_ENABLED
             valueFrom:
               configMapKeyRef:

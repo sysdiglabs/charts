@@ -8,7 +8,7 @@ release:
   namespace: test-ns
 
 tests:
-  - it: "is a configmap with the has correct name"
+  - it: "is a configmap with the correct name"
     set:
       global.sysdig.apiHost: "http://test.com"
     asserts:
@@ -98,3 +98,47 @@ tests:
             values don't meet the specifications of the schema(s) in the following chart(s):
             cluster-scanner:
             - global.scannerMode: global.scannerMode must be one of the following: "local", "multi"
+
+  - it: "has correct format for local_registry_secrets when they are provided"
+    set:
+      global.sysdig.apiHost: "http://test.com"
+      global.scannerMode: "local"
+      runtimeStatusIntegrator.localCluster:
+        rbac:
+          allowedPullSecrets:
+            namespaceOneName:
+              - myDockerSecretOne
+              - myDockerSecretTwo
+            anotherNamespace:
+              - myOtherDockerSecretOne
+              - myOtherDockerSecretTwo
+    asserts:
+      - equal:
+          path: data.local_registry_secrets
+          value: "anotherNamespace/myOtherDockerSecretOne,anotherNamespace/myOtherDockerSecretTwo,namespaceOneName/myDockerSecretOne,namespaceOneName/myDockerSecretTwo"
+
+  - it: "has correct format for local_registry_secrets when they are not provided"
+    set:
+      global.sysdig.apiHost: "http://test.com"
+      global.scannerMode: "local"
+    asserts:
+      - equal:
+          path: data.local_registry_secrets
+          value: ""
+
+  - it: "does not evaluate local_registry_secrets when in multi mode"
+    set:
+      global.sysdig.apiHost: "http://test.com"
+      global.scannerMode: "multi"
+      runtimeStatusIntegrator.localCluster:
+        rbac:
+          allowedPullSecrets:
+            namespaceOneName:
+              - myDockerSecretOne
+              - myDockerSecretTwo
+            anotherNamespace:
+              - myOtherDockerSecretOne
+              - myOtherDockerSecretTwo
+    asserts:
+      - isNull:
+          path: data.local_registry_secrets
