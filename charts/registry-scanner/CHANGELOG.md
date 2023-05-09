@@ -11,6 +11,11 @@ exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
 
+# v1.0.7
+* chore: adds label for orchestrator job
+* **registry-scanner**  bumped inner component to v0.2.34
+  - chore: add limits to waitgroups
+  - logs: clarify skip message and parallelization
 # v1.0.6
 * **registry-scanner**  bumped inner component to v0.2.33
   - chore: add limits to waitgroups
