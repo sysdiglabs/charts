@@ -11,7 +11,9 @@ data:
     new_k8s: true
 {{- include "agent.clusterName" . | trim | nindent 4 }}
 {{- if .Values.delegatedAgentDeployment.enabled }}
+  {{- if not (hasKey .Values.sysdig.settings "cointerface_enabled") }}
     cointerface_enabled: false
+  {{- end }}
 {{- end }}
 {{- include "agent.connectionSettings" . | trim | nindent 4 }}
 {{- include "agent.planSettings" . | trim | nindent 4 }}
