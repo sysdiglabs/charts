@@ -202,3 +202,16 @@ Return the proper image name for the Image Sbom Extractor
 {{- define "cluster-scanner.imageSbomExtractor.image" -}}
     {{- include "cluster-scanner.imageSbomExtractor.imageRegistry" . -}} / {{- .Values.imageSbomExtractor.image.repository -}} : {{- .Values.imageSbomExtractor.image.tag -}}
 {{- end -}}
+
+{{/*
+Return local registry secrets in the correct format: <namespace_name>/<secret_name>,<namespace_name>/<secret_name>
+*/}}
+{{- define "cluster-scanner.runtimeStatusIntegrator.localCluster.localSecrets" -}}
+    {{- $list := list -}}
+    {{- range $nsName, $secrets := ((.Values.runtimeStatusIntegrator.localCluster).rbac).allowedPullSecrets -}}
+        {{- range $secrets -}}
+            {{- $list = append $list (printf "%s/%s" $nsName .) -}}
+        {{- end -}}
+    {{- end -}}
+    '{{- join "," $list -}}'
+{{- end -}}
