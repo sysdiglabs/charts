@@ -491,3 +491,42 @@ tests:
           content:
             serviceAccountName: RELEASE-NAME-agent
         template: templates/deployment.yaml
+
+  - it: Validate override cointerface_enabled settings
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+      sysdig:
+        settings:
+          cointerface_enabled: true
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: 'cointerface_enabled: true'
+        template: templates/configmap.yaml
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: 'cointerface_enabled: false'
+        template: templates/configmap.yaml
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: 'cointerface_enabled: false'
+        template: templates/configmap-deployment.yaml
+
+  - it: Validate cointerface disabled normally
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: 'cointerface_enabled: false'
+        template: templates/configmap.yaml
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: 'cointerface_enabled: true'
+        template: templates/configmap.yaml
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: 'cointerface_enabled: false'
+        template: templates/configmap-deployment.yaml
