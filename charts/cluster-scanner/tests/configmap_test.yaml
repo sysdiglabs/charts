@@ -68,7 +68,7 @@ tests:
     asserts:
       - equal:
           path: data.rsi_mode
-          value: "sitting"
+          value: "local"
 
   - it: "can set multi mod"
     set:
@@ -77,7 +77,7 @@ tests:
     asserts:
       - equal:
           path: data.rsi_mode
-          value: "mcm"
+          value: "multi"
 
   - it: "can set local mod"
     set:
@@ -86,7 +86,7 @@ tests:
     asserts:
       - equal:
           path: data.rsi_mode
-          value: "sitting"
+          value: "local"
 
   - it: "raise error on unknown mod"
     set:

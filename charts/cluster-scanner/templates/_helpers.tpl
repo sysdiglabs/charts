@@ -69,12 +69,7 @@ Create the name of the service account to use
 Generates configmap data for mode-specific values
 */}}
 {{- define "cluster-scanner.modeConfig" -}}
-{{- if eq .Values.global.scannerMode "local" }}
-rsi_mode: "sitting"
-{{/* NOTE: values.schema.json will prevent any other non valid strings, so it's safe to assume it's "multi" */}}
-{{- else }}
-rsi_mode: "mcm"
-{{- end }}
+rsi_mode: {{ .Values.global.scannerMode }}
 {{ end }}
 
 {{/*
