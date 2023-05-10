@@ -68,8 +68,8 @@ tests:
   - it: sets default labels
     asserts:
       - equal:
-          path: metadata.labels['product-type']
+          path: metadata.labels['app.kubernetes.io/component']
           value: registry-scanner-orchestrator
       - equal:
-          path: spec.jobTemplate.spec.template.metadata.labels['product-type']
+          path: spec.jobTemplate.spec.template.metadata.labels['app.kubernetes.io/component']
           value: registry-scanner-orchestrator
