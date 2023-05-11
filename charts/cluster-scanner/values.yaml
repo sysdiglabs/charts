@@ -19,6 +19,10 @@ global:
   scannerMode: "local"  # or "multi"
   loggingLevel: "INFO"
 
+  # Optional parameter used to check the compatibility of cluster-scanner
+  # component versions with respect to the onprem version
+  onPremCompatibilityVersion: "6.2"
+
 eveEnabled: false
 eveIntegrationEnabled: false
 rootNamespace: "kube-system"
