@@ -77,22 +77,27 @@ Sysdig Agent resources
 */}}
 {{- define "agent.resources" -}}
 {{/* we have same values for both requests and limits */}}
-{{- $smallCpu := "1000m" -}}
-{{- $smallMemory := "1024Mi" -}}
-{{- $mediumCpu := "3000m" -}}
-{{- $mediumMemory := "3072Mi" -}}
-{{- $largeCpu := "5000m" -}}
-{{- $largeMemory := "6144Mi" -}}
+{{- $resourceProfiles := dict "small"  (dict "cpu" "1000m"
+                                             "memory" "1024Mi")
+                              "medium" (dict "cpu" "3000m"
+                                             "memory" "3072Mi")
+                              "large"  (dict "cpu" "5000m"
+                                             "memory" "6144Mi") }}
+{{- $resources := dict }}
 {{/* custom resource values are always first-class */}}
 {{- if .Values.resources }}
-{{- toYaml .Values.resources -}}
-{{- else if eq .Values.resourceProfile "small" -}}
-{{- printf "requests:\n  cpu: %s\n  memory: %s\nlimits:\n  cpu: %s\n  memory: %s" $smallCpu $smallMemory $smallCpu $smallMemory -}}
-{{- else if eq .Values.resourceProfile "medium" -}}
-{{- printf "requests:\n  cpu: %s\n  memory: %s\nlimits:\n  cpu: %s\n  memory: %s" $mediumCpu $mediumMemory $mediumCpu $mediumMemory -}}
-{{- else if eq .Values.resourceProfile "large" -}}
-{{- printf "requests:\n  cpu: %s\n  memory: %s\nlimits:\n  cpu: %s\n  memory: %s" $largeCpu $largeMemory $largeCpu $largeMemory -}}
-{{- end -}}
+    {{- toYaml .Values.resources -}}
+{{- else if not (hasKey $resourceProfiles .Values.resourceProfile) }}
+    {{- fail (printf "Invalid value for resourceProfile provided: %s" .Values.resourceProfile) }}
+{{- else if and (include "agent.gke.autopilot" .) (not .Values.slim.enabled) }}
+    {{- toYaml (dict "requests" (dict "cpu" "250m"
+                                      "ephemeral-storage" .Values.gke.ephemeralStorage
+                                      "memory" "512Mi")
+                     "limits"   (get $resourceProfiles .Values.resourceProfile)) }}
+{{- else }}
+    {{- toYaml (dict "requests" (get $resourceProfiles .Values.resourceProfile)
+                     "limits"   (get $resourceProfiles .Values.resourceProfile)) }}
+{{- end }}
 {{- end -}}
 
 {{/*

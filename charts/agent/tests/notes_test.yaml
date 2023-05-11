@@ -99,3 +99,41 @@ tests:
           pattern: |-
             The "drift_killer" feature in agent is not supported when running on GKE Autopilot.
     template: templates/NOTES.txt
+
+  - it: Test warning printed for GKE Autopilot environments without PriorityClass creation or existing name specified
+    set:
+      gke:
+        autopilot: true
+      slim:
+        enabled: false
+    asserts:
+      - matchRegexRaw:
+          pattern: |-
+            A PriorityClass is recommended for GKE Autopilot environments. Please set gke.createPriorityClass=true or provide the name of an existing PriorityClass by using the priorityClassName parameter.
+    template: templates/NOTES.txt
+
+  - it: Test warning not printed for GKE Autopilot environments when PriorityClass creation specified
+    set:
+      gke:
+        autopilot: true
+        createPriorityClass: true
+      slim:
+        enabled: false
+    asserts:
+      - notMatchRegexRaw:
+          pattern: |-
+            A PriorityClass is recommended for GKE Autopilot environments. Please set gke.createPriorityClass=true or provide the name of an existing PriorityClass by using the priorityClassName parameter.
+    template: templates/NOTES.txt
+
+  - it: Test warning not printed for GKE Autopilot environments when priorityClassName is specified
+    set:
+      gke:
+        autopilot: true
+      priorityClassName: my-pc-name
+      slim:
+        enabled: false
+    asserts:
+      - notMatchRegexRaw:
+          pattern: |-
+            A PriorityClass is recommended for GKE Autopilot environments. Please set gke.createPriorityClass=true or provide the name of an existing PriorityClass by using the priorityClassName parameter.
+    template: templates/NOTES.txt
