@@ -187,3 +187,4 @@ KSPM Collector nodeSelector
             (lt (.root.Capabilities.KubeVersion.Minor | trimSuffix "+" | int) .minor)) }}
 true
 {{- end }}
+{{- end }}
