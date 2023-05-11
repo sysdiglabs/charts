@@ -79,7 +79,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: ingest.au-syd.monitoring.cloud.ibm.com
 
   - it: Checking region 'br-sao-monitor'
@@ -91,7 +91,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: ingest.br-sao.monitoring.cloud.ibm.com
 
   - it: Checking region 'ca-tor-monitor'
@@ -103,7 +103,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: ingest.ca-tor.monitoring.cloud.ibm.com
 
   - it: Checking region 'eu-de-monitor'
@@ -115,7 +115,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: ingest.eu-de.monitoring.cloud.ibm.com
 
   - it: Checking region 'eu-gb-monitor'
@@ -127,7 +127,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: ingest.eu-gb.monitoring.cloud.ibm.com
 
   - it: Checking region 'jp-osa-monitor'
@@ -139,7 +139,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: ingest.jp-osa.monitoring.cloud.ibm.com
 
   - it: Checking region 'jp-tok-monitor'
@@ -151,7 +151,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: ingest.jp-tok.monitoring.cloud.ibm.com
 
   - it: Checking region 'us-east-monitor'
@@ -163,7 +163,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: ingest.us-east.monitoring.cloud.ibm.com
 
   - it: Checking region 'us-south-monitor'
@@ -175,7 +175,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: ingest.us-south.monitoring.cloud.ibm.com
 
   - it: Checking region 'au-syd-private-monitor'
@@ -187,7 +187,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: ingest.private.au-syd.monitoring.cloud.ibm.com
 
   - it: Checking region 'br-sao-private-monitor'
@@ -199,7 +199,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: ingest.private.br-sao.monitoring.cloud.ibm.com
 
   - it: Checking region 'ca-tor-private-monitor'
@@ -211,7 +211,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: ingest.private.ca-tor.monitoring.cloud.ibm.com
 
   - it: Checking region 'eu-de-private-monitor'
@@ -223,7 +223,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: ingest.private.eu-de.monitoring.cloud.ibm.com
 
   - it: Checking region 'eu-gb-private-monitor'
@@ -235,7 +235,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: ingest.private.eu-gb.monitoring.cloud.ibm.com
 
   - it: Checking region 'jp-osa-private-monitor'
@@ -247,7 +247,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: ingest.private.jp-osa.monitoring.cloud.ibm.com
 
   - it: Checking region 'jp-tok-private-monitor'
@@ -259,7 +259,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: ingest.private.jp-tok.monitoring.cloud.ibm.com
 
   - it: Checking region 'us-east-private-monitor'
@@ -271,7 +271,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: ingest.private.us-east.monitoring.cloud.ibm.com
 
   - it: Checking region 'us-south-private-monitor'
@@ -283,7 +283,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: ingest.private.us-south.monitoring.cloud.ibm.com
 
   - it: Checking region 'au-syd-secure'
@@ -295,7 +295,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: ingest.au-syd.sysdig-secure.cloud.ibm.com
 
   - it: Checking region 'br-sao-secure'
@@ -307,7 +307,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: ingest.br-sao.sysdig-secure.cloud.ibm.com
 
   - it: Checking region 'ca-tor-secure'
@@ -319,7 +319,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: ingest.ca-tor.sysdig-secure.cloud.ibm.com
 
   - it: Checking region 'eu-de-secure'
@@ -331,7 +331,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: ingest.eu-de.sysdig-secure.cloud.ibm.com
 
   - it: Checking region 'eu-gb-secure'
@@ -343,7 +343,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: ingest.eu-gb.sysdig-secure.cloud.ibm.com
 
   - it: Checking region 'jp-osa-secure'
@@ -355,7 +355,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: ingest.jp-osa.sysdig-secure.cloud.ibm.com
 
   - it: Checking region 'jp-tok-secure'
@@ -367,7 +367,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: ingest.jp-tok.sysdig-secure.cloud.ibm.com
 
   - it: Checking region 'us-east-secure'
@@ -379,7 +379,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: ingest.us-east.sysdig-secure.cloud.ibm.com
 
   - it: Checking region 'us-south-secure'
@@ -391,7 +391,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: ingest.us-south.sysdig-secure.cloud.ibm.com
 
   - it: Checking region 'au-syd-private-secure'
@@ -403,7 +403,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: ingest.private.au-syd.sysdig-secure.cloud.ibm.com
 
   - it: Checking region 'br-sao-private-secure'
@@ -415,7 +415,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: ingest.private.br-sao.sysdig-secure.cloud.ibm.com
 
   - it: Checking region 'ca-tor-private-secure'
@@ -427,7 +427,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: ingest.private.ca-tor.sysdig-secure.cloud.ibm.com
 
   - it: Checking region 'eu-de-private-secure'
@@ -439,7 +439,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: ingest.private.eu-de.sysdig-secure.cloud.ibm.com
 
   - it: Checking region 'eu-gb-private-secure'
@@ -451,7 +451,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: ingest.private.eu-gb.sysdig-secure.cloud.ibm.com
 
   - it: Checking region 'jp-osa-private-secure'
@@ -463,7 +463,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: ingest.private.jp-osa.sysdig-secure.cloud.ibm.com
 
   - it: Checking region 'jp-tok-private-secure'
@@ -475,7 +475,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: ingest.private.jp-tok.sysdig-secure.cloud.ibm.com
 
   - it: Checking region 'us-east-private-secure'
@@ -487,7 +487,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: ingest.private.us-east.sysdig-secure.cloud.ibm.com
 
   - it: Checking region 'us-south-private-secure'
@@ -499,7 +499,7 @@ tests:
       - isKind:
           of: ConfigMap
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: ingest.private.us-south.sysdig-secure.cloud.ibm.com
 
   - it: Checking wrong region input
