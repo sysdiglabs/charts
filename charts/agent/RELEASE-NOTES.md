@@ -1,6 +1,6 @@
 # What's Changed
 
-### Bug Fixes
-- **agent** [2024f12](https://github.com/sysdiglabs/charts/commit/2024f125f2bd049f63dc2309fde79afef1204dfe): Allow cointerface to be enabled in daemonset agents in delegated agent deployment ([#1079](https://github.com/sysdiglabs/charts/issues/1079))
+### New Features
+- **agent** [5c194ec](https://github.com/sysdiglabs/charts/commit/5c194ecb04f68f7819415c5d98bb1909b28c9189): Fix GKE Autopilot installation ([#975](https://github.com/sysdiglabs/charts/issues/975))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.7.4...agent-1.7.5
+#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.7.5...agent-1.8.0
