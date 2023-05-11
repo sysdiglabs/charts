@@ -62,6 +62,7 @@ The following table lists the configurable parameters of the Sysdig KSPM Collect
 | `affinity`                                | Node affinities. Overrides `arch` and `os` values                                       | `{}`                                                        |
 | `labels`                                  | KSPM collector specific labels (as a multi-line templated string map or as YAML)        | `{}`                                                        |
 | `port`                                    | KSPM collector port for health checks                                                   | `8080`                                                      |
+| `psp.create`                              | Create Pod Security Policy to allow the KSPM Collector running in clusters with PSP enabled                                                   | `true`                                                      |
 | `readinessProbe.enabled`                  | KSPM collector readinessProbe enablement                                                | `true`                                                      |
 | `livenessProbe.enabled`                   | KSPM collector livenessProbe enablement                                                 | `true`                                                      |
 | `scc.create`                              | Create OpenShift's Security Context Constraint                                          | `true`                                                      |
