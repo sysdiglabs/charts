@@ -7,16 +7,21 @@ global:
     name: ""
   sysdig:
     accessKey: ""
+    # When no region is suitable (e.g. on-premise installations) set the `apiHost:` parameter.
     region: "us1"
-    # apiHost is used to manually set the Sysdig backend host
-    # when no region is suitable (e.g. on-premise installations)
-    # Must have the protocol (http:// or https://)
     # apiHost: ""
+    # apiHost is used to manually set the Sysdig backend host
+    # Must have the protocol (http:// or https://)
+
     # skipVerifyCertificate might be used in on-premise installations.
     skipVerifyCertificate: false
 
   scannerMode: "local"  # or "multi"
   loggingLevel: "INFO"
+
+  # Optional parameter used to check the compatibility of cluster-scanner
+  # component versions with respect to the onprem version
+  onPremCompatibilityVersion: "6.2"
 
 eveEnabled: false
 eveIntegrationEnabled: false
@@ -30,12 +35,12 @@ runtimeStatusIntegrator:
     repository: sysdig/runtime-status-integrator
     pullPolicy: IfNotPresent
     tag: "0.1.0"
-
   # Params to manage leader election
   # Leader election is implemented leveraging the native capabilities of Kubernetes
   # see: https://kubernetes.io/blog/2016/01/simple-leader-election-with-kubernetes/
   # leaderElectionLeaseNameOverride: ""
   # leaderElectionLeaseNamespaceOverride: ""
+
   multiCluster:
     # kubeconfigSecretName: ""
 
