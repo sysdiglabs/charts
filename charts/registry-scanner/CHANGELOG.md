@@ -11,6 +11,8 @@ exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
 
+# v1.0.8
+* feat: hide sensitive data from logs
 # v1.0.7
 * chore: adds label for orchestrator job
 * **registry-scanner**  bumped inner component to v0.2.35
