@@ -41,3 +41,14 @@ tests:
     asserts:
       - hasDocuments:
           count: 0
+
+  - it: Ensure PSP is not created when disabled
+    capabilities:
+      majorVersion: 1
+      minorVersion: 24
+    set:
+      psp:
+        create: false
+    asserts:
+      - hasDocuments:
+          count: 0
