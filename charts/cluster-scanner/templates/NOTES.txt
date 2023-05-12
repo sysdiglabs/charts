@@ -4,6 +4,8 @@ It consists of the Runtime Status Integrator and Image Sbom Extractor components
 
 After successful installation you can access the Cluster Scanner features as follows:
 
-Log in to Sysdig Secure and check that the features are working as expected.
+Log in to Sysdig Secure (at the URL: {{ include "cluster-scanner.apiHost" . }}) and check that the features are working as expected.
   1. Select Scanning > Image Results.
   2. Check for scanned container image results that originate with the Sysdig Cluster Scanner.
+
+Please note that the first results will be available at least 15 minutes after Cluster Scanner has started.
