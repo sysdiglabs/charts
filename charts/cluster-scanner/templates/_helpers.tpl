@@ -190,9 +190,34 @@ Define the proper imageRegistry to use for imageSbomExtractor
 {{- end -}}
 
 {{/*
+Cluster scanner version compatibility check.
+
+If .Values.global.onPremCompatibilityVersion is set to 6.2, it checks whether
+the provided tag is < 1.0.0 .
+
+Otherwise, it checks if the provided tag is >= 1.0.0 .
+
+Version tags must be semver2-compatible otherwise it fails.
+*/}}
+{{- define "cluster-scanner.checkVersionCompatibility" -}}
+{{- $version := semver .Tag -}}
+{{- if and .Values.global (hasKey (default .Values.global dict) "onPremCompatibilityVersion") (eq .Values.global.onPremCompatibilityVersion "6.2") -}}
+    {{- if ne ($version | (semver "1.0.0").Compare) 1 -}}
+        {{- fail (printf "incompatible version for %s, set %s expected < 1.0.0" .Component .Tag) -}}
+    {{- end -}}
+{{- else -}}
+    {{- if eq ($version | (semver "1.0.0").Compare) 1 -}}
+        {{- fail (printf "incompatible version for %s, set %s expected >= 1.0.0" .Component .Tag) -}}
+    {{- end -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
 Return the proper image name for the Runtime Status Integrator
 */}}
 {{- define "cluster-scanner.runtimeStatusIntegrator.image" -}}
+    {{- $data := dict "Values" .Values "Tag" .Values.runtimeStatusIntegrator.image.tag "Component" "runtimeStatusIntegrator.image.tag" -}}
+    {{- include "cluster-scanner.checkVersionCompatibility" $data -}}
     {{- include "cluster-scanner.runtimeStatusIntegrator.imageRegistry" . -}} / {{- .Values.runtimeStatusIntegrator.image.repository -}} : {{- .Values.runtimeStatusIntegrator.image.tag -}}
 {{- end -}}
 
@@ -200,6 +225,9 @@ Return the proper image name for the Runtime Status Integrator
 Return the proper image name for the Image Sbom Extractor
 */}}
 {{- define "cluster-scanner.imageSbomExtractor.image" -}}
+    {{- $data := dict "Values" .Values "Tag" .Values.imageSbomExtractor.image.tag -}}
+    {{- $data := dict "Values" .Values "Tag" .Values.imageSbomExtractor.image.tag "Component" "imageSbomExtractor.image.tag" -}}
+    {{- include "cluster-scanner.checkVersionCompatibility" $data -}}
     {{- include "cluster-scanner.imageSbomExtractor.imageRegistry" . -}} / {{- .Values.imageSbomExtractor.image.repository -}} : {{- .Values.imageSbomExtractor.image.tag -}}
 {{- end -}}
 

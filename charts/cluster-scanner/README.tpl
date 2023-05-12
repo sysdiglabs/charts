@@ -12,12 +12,12 @@ $ pre-commit run -a
 
 -->
 
-# Cluster Scanner - [Tech Preview]
+# Cluster Scanner - [Controlled Availability]
 
 [{{ .Project.Name }}]({{ .Project.URL }}) features Runtime Image scanning on Kubernetes.
 <br/>{{ .Project.Description }}
 
-**NOTE: {{ .Project.Name }} is currently released in Tech Preview**
+**NOTE: {{ .Project.Name }} is released in Controlled Availability to selected customers. If you would like to use it, please contact your Sysdig Field Representative or our Support.**
 
 ## TL;DR;
 
