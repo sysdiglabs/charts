@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.8.1
+### Chores
+* **sysdig-deploy** [0cfe7db](https://github.com/sysdiglabs/charts/commit/0cfe7db21550c4398c713bc1ffbc26496745f684): Automatic version bump due to updated dependencies ([#1089](https://github.com/sysdiglabs/charts/issues/1089))
 # v1.8.0
 ### New Features
 * **agent** [5c194ec](https://github.com/sysdiglabs/charts/commit/5c194ecb04f68f7819415c5d98bb1909b28c9189): Fix GKE Autopilot installation ([#975](https://github.com/sysdiglabs/charts/issues/975))
