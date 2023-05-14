@@ -22,7 +22,7 @@ jobs:
 
       - name: Retrieve a list of updated charts
         id: updated-charts
-        uses: tj-actions/changed-files@v34
+        uses: tj-actions/changed-files@v35
         with:
           files: charts/*/Chart.yaml
 
@@ -78,7 +78,7 @@ jobs:
           done
 
       - name: Stash changelog files
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: generated-changelogs
           path: |
@@ -96,7 +96,7 @@ jobs:
           fetch-depth: 0
 
       - name: Unstash generated changelogs
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: generated-changelogs
           path: charts
@@ -107,7 +107,7 @@ jobs:
           git config user.email "$GITHUB_USER_EMAIL"
 
       - name: Run Chart Releaser
-        uses: helm/chart-releaser-action@v1.4.1
+        uses: helm/chart-releaser-action@v1.5.0
         with:
           config: cr.yaml
         env:
@@ -140,7 +140,7 @@ jobs:
           token: ${{ secrets.TOOLS_JENKINS_ADMIN_ACCESS_GITHUB_TOKEN }}
 
       - name: Unstash generated changelogs
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: generated-changelogs
           path: charts
