@@ -23,7 +23,6 @@ tests:
           content:
             apiGroups: ["", "apps", "batch", "extensions"]
             resources:
-              - "namespaces"
               - "deployments"
               - "replicasets"
               - "daemonsets"
@@ -32,10 +31,11 @@ tests:
               - "cronjobs"
               - "jobs"
               - "nodes"
+              - "namespaces"
               - "secrets"
             verbs: ["get", "list", "watch"]
         documentIndex: 0
-  - it: "generates correct ClusterRole in multi scannerMode"
+  - it: "generates correct ClusterRole in multi mode"
     set:
       global.scannerMode: "multi"
     asserts:
@@ -48,6 +48,7 @@ tests:
           content:
             apiGroups: ["", "apps", "batch", "extensions"]
             resources:
+              - "namespaces"
               - "secrets"
             verbs: ["get", "list", "watch"]
         documentIndex: 0
