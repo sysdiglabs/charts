@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.8.1
+### Bug Fixes
+* **agent** [c337ffb](https://github.com/sysdiglabs/charts/commit/c337ffb53abc3f9b17a6cb9e10f649a2434bba77): delegated agent volume name ([#1094](https://github.com/sysdiglabs/charts/issues/1094))
 # v1.8.0
 ### New Features
 * **agent** [5c194ec](https://github.com/sysdiglabs/charts/commit/5c194ecb04f68f7819415c5d98bb1909b28c9189): Fix GKE Autopilot installation ([#975](https://github.com/sysdiglabs/charts/issues/975))
