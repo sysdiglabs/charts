@@ -25,6 +25,10 @@ spec:
         app.kubernetes.io/name: {{ include "nodeAnalyzer.name" . }}
 {{ include "daemonset.labels" . | indent 8 }}
 {{ include "nodeAnalyzer.labels" . | indent 8 }}
+{{- if .Values.daemonset.annotations }}
+      annotations:
+{{ toYaml .Values.daemonset.annotations | indent 8 }}
+{{- end }}
     spec:
       volumes:
         {{- if include "nodeAnalyzer.deployBenchmarkRunner" . }}
