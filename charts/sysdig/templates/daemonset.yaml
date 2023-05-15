@@ -61,10 +61,10 @@ spec:
                 operator: In
                 values: {{- toYaml .Values.daemonset.os | nindent 18 }}
             - matchExpressions:
-              - key: beta.kubernetes.io/arch
+              - key: kubernetes.io/arch
                 operator: In
                 values: {{- toYaml .Values.daemonset.arch | nindent 18 }}
-              - key: beta.kubernetes.io/os
+              - key: kubernetes.io/os
                 operator: In
                 values: {{- toYaml .Values.daemonset.os | nindent 18 }}
       {{- end }}

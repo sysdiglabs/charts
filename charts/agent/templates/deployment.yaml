@@ -37,10 +37,10 @@ spec:
             nodeSelectorTerms:
             - matchExpressions:
               {{- if (include "agent.kubeVersionLessThan" (dict "root" . "major" 1 "minor" 14)) }}
-              - key: beta.kubernetes.io/arch
+              - key: kubernetes.io/arch
                 operator: In
                 values: {{- toYaml .Values.delegatedAgentDeployment.deployment.arch | nindent 18 }}
-              - key: beta.kubernetes.io/os
+              - key: kubernetes.io/os
                 operator: In
                 values: {{- toYaml .Values.delegatedAgentDeployment.deployment.os | nindent 18 }}
               {{- else }}

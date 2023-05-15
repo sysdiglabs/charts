@@ -13,13 +13,13 @@ tests:
           path: spec.template.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms
           content:
             matchExpressions:
-              - key: beta.kubernetes.io/arch
+              - key: kubernetes.io/arch
                 operator: In
                 values:
                   - amd64
                   - arm64
                   - s390x
-              - key: beta.kubernetes.io/os
+              - key: kubernetes.io/os
                 operator: In
                 values:
                   - linux

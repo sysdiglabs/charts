@@ -183,11 +183,11 @@ tests:
               requiredDuringSchedulingIgnoredDuringExecution:
                 nodeSelectorTerms:
                   - matchExpressions:
-                      - key: beta.kubernetes.io/arch
+                      - key: kubernetes.io/arch
                         operator: In
                         values:
                           - IA64
-                      - key: beta.kubernetes.io/os
+                      - key: kubernetes.io/os
                         operator: In
                         values:
                           - HP-UX
