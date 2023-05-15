@@ -11,7 +11,7 @@ jobs:
     if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
@@ -38,7 +38,7 @@ jobs:
           git clean -df .
 
       - name: Set up chart-testing
-        uses: helm/chart-testing-action@v2.3.1
+        uses: helm/chart-testing-action@v2.4.0
 
       - name: Expand templates for CI
         run: |
@@ -84,7 +84,7 @@ jobs:
       contains(github.event.client_payload.pull_request.head.sha, github.event.client_payload.slash_command.sha)
     steps:
       - name: Fork based /approve-test-run checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: "refs/pull/${{ github.event.client_payload.pull_request.number }}/merge"
           fetch-depth: 0
@@ -112,7 +112,7 @@ jobs:
           git clean -df .
 
       - name: Set up chart-testing
-        uses: helm/chart-testing-action@v2.3.1
+        uses: helm/chart-testing-action@v2.4.0
 
       - name: Expand templates for CI
         run: |
@@ -141,7 +141,7 @@ jobs:
       - name: Run chart-testing (install)
         run: ct install --upgrade --excluded-charts sysdig-stackdriver-bridge
 
-      - uses: actions/github-script@v5
+      - uses: actions/github-script@v6
         id: update-check-run
         if: ${{ always() }}
         env:
