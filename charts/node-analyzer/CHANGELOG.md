@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.8.51
+### Bug Fixes
+* **node-analyzer** [539e0a7](https://github.com/sysdiglabs/charts/commit/539e0a7b8641529e1276d0bca31a159256b4d720): Remove pullPolicy and pullSecrets duplicated entry ([#967](https://github.com/sysdiglabs/charts/issues/967))
 # v1.8.50
 ### Chores
 * **sysdig, node-analyzer** [a7564db](https://github.com/sysdiglabs/charts/commit/a7564dbac2f879064e000ef780b71ebc3d4463a7): bump sysdig/vuln-runtime-scanner to v1.4.11 ([#1061](https://github.com/sysdiglabs/charts/issues/1061))
