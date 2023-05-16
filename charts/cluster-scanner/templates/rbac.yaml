@@ -6,7 +6,6 @@ rules:
 - apiGroups: ["", "apps", "batch", "extensions"]
   resources:
     {{- if ne .Values.global.scannerMode "multi" }}
-    - "namespaces"
     - "deployments"
     - "replicasets"
     - "daemonsets"
@@ -16,6 +15,7 @@ rules:
     - "jobs"
     - "nodes"
     {{- end }}
+    - "namespaces"
     - "secrets"
   verbs: ["get", "list", "watch"]
 ---
