@@ -87,7 +87,7 @@ config:
       # ttl for orchestrator job. unset with empty value
       ttlSecondsAfterFinished: 3600
     jobs:
-      # ttl for scanner worker jobs. unset with empty value
+      # ttl for scanner worker jobs
       ttlSecondsAfterFinished: 600
       resources:
         requests:
