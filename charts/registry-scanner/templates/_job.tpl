@@ -1,6 +1,8 @@
 {{- define "registry-scanner.jobTemplate" }}
   backoffLimit: 0
-  ttlSecondsAfterFinished: 3600
+  {{- if .Values.config.scan.orchestrator.ttlSecondsAfterFinished }}
+  ttlSecondsAfterFinished: {{ .Values.config.scan.orchestrator.ttlSecondsAfterFinished }}
+  {{- end }}
   template:
     metadata:
       name: {{ include "registry-scanner.fullname" . }}
