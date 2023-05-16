@@ -1,7 +1,7 @@
-{{- if or (gt  (.Capabilities.KubeVersion.Major | atoi) 1 ) (ge (.Capabilities.KubeVersion.Minor | trimSuffix "+" | atoi) 21) }}
-apiVersion: batch/v1
-{{- else }}
+{{- if (include "registry-scanner.kubeVersionLessThan" (dict "root" . "major" 1 "minor" 21)) }}
 apiVersion: batch/v1beta1
+{{- else }}
+apiVersion: batch/v1
 {{- end }}
 kind: CronJob
 metadata:

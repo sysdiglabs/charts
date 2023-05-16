@@ -10,6 +10,12 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.1.44
+### New Features
+* **kspm-collector** [fe03214](https://github.com/sysdiglabs/charts/commit/fe0321465d12656a392c1e250e6c441af0a4c1d1): Added PSP policies for KSPM Collector ([#1088](https://github.com/sysdiglabs/charts/issues/1088))
+# v0.1.43
+### Chores
+* **admission-controller,agent,kspm-collector,node-analyzer,rapid-response,registry-scanner,sysdig-deploy** [7f35eb1](https://github.com/sysdiglabs/charts/commit/7f35eb1f88d93fa59c2839e7fbb756e50a378bea): update helm unittest plugin ([#996](https://github.com/sysdiglabs/charts/issues/996))
 # v0.1.42
 ### New Features
 * **kspm-collector,node-analyzer** [af66e68](https://github.com/sysdiglabs/charts/commit/af66e68abcc2d0345ec84c93b7cba1f65a8b0a97): bumped KSPM to latest version ([#1019](https://github.com/sysdiglabs/charts/issues/1019))

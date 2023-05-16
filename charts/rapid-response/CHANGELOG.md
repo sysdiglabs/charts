@@ -10,6 +10,15 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.4.11
+### Chores
+* **rapid-response** [f7c1db0](https://github.com/sysdiglabs/charts/commit/f7c1db03523d4a99eca3a04a8ffcedec15dbfbf0): bump rapid-response version to 0.3.9 ([#1045](https://github.com/sysdiglabs/charts/issues/1045))
+# v0.4.10
+### Bug Fixes
+* **admission-controller,agent,node-analyzer,rapid-response,registry-scanner,sysdig** [0bf9682](https://github.com/sysdiglabs/charts/commit/0bf96827ebf80d76aab61b8fa3d26b3903df220b): Improve KubeVersion Comparisons ([#1040](https://github.com/sysdiglabs/charts/issues/1040))
+# v0.4.9
+### Chores
+* **admission-controller,agent,kspm-collector,node-analyzer,rapid-response,registry-scanner,sysdig-deploy** [7f35eb1](https://github.com/sysdiglabs/charts/commit/7f35eb1f88d93fa59c2839e7fbb756e50a378bea): update helm unittest plugin ([#996](https://github.com/sysdiglabs/charts/issues/996))
 # v0.4.8
 ### New Features
 * **rapid-response** [d034b71](https://github.com/sysdiglabs/charts/commit/d034b710e27688c5f67fc441ee7b9af3e2f3cbdc): Add ServiceAccount and SecurityContextConstraint for Rapid Response ([#1006](https://github.com/sysdiglabs/charts/issues/1006))

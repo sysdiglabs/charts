@@ -10,6 +10,65 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+
+# v1.0.8
+* feat: hide sensitive data from logs
+# v1.0.7
+* chore: adds label for orchestrator job
+* **registry-scanner**  bumped inner component to v0.2.35
+  - add labels for worker job
+# v1.0.6
+* **registry-scanner**  bumped inner component to v0.2.33
+  - chore: add limits to waitgroups
+  - logs: clarify skip message and parallelization
+# v1.0.5
+* **registry-scanner**  bumped inner component to v0.2.32
+  - refactor: move code around in packages
+  - feat: add support for http registries
+  - fix: honor maxRepositoriesPerRegistry on aws org
+
+# v1.0.4
+### Chores
+* **registry-scanner** [a517e39](https://github.com/sysdiglabs/charts/commit/a517e39659d5449f9efac3bd454dc38a965dfc98): Update to v0.2.31 ([#1057](https://github.com/sysdiglabs/charts/issues/1057))
+# v1.0.3
+### Chores
+* **registry-scanner** [6308c44](https://github.com/sysdiglabs/charts/commit/6308c4431ddf60a20b8a2c6ea7ae210cf7feafe0): Update to v0.2.30 ([#1055](https://github.com/sysdiglabs/charts/issues/1055))
+# v1.0.2
+### Chores
+* **registry-scanner** [a2edae1](https://github.com/sysdiglabs/charts/commit/a2edae1be3045075f555bd02f2fb0e2bbf65ca08): maintenance 2023w16 ([#1051](https://github.com/sysdiglabs/charts/issues/1051))
+# v1.0.1
+### Chores
+* **registry-scanner** [ea54164](https://github.com/sysdiglabs/charts/commit/ea54164cfd96127823129065d750ab9c723884b4): update to v0.2.29 ([#1053](https://github.com/sysdiglabs/charts/issues/1053))
+# v1.0.0
+### New Features
+* **registry-scanner** [5848f76](https://github.com/sysdiglabs/charts/commit/5848f76accea44841bccef7702129b788aea7af9): release 1.0.0 ([#1049](https://github.com/sysdiglabs/charts/issues/1049))
+# v0.1.40
+### Chores
+* **registry-scanner** [fc0a81d](https://github.com/sysdiglabs/charts/commit/fc0a81d2350ae50bd9b5be257db56f1f7f0dabc3): Update to version v0.2.28 ([#1050](https://github.com/sysdiglabs/charts/issues/1050))
+# v0.1.39
+### New Features
+* **registry-scanner** [47eea09](https://github.com/sysdiglabs/charts/commit/47eea099f1dec7676d04d75fe765bd9772a71b72): Update README.md removing old content ([#1036](https://github.com/sysdiglabs/charts/issues/1036))
+# v0.1.38
+### Bug Fixes
+* **admission-controller,agent,node-analyzer,rapid-response,registry-scanner,sysdig** [0bf9682](https://github.com/sysdiglabs/charts/commit/0bf96827ebf80d76aab61b8fa3d26b3903df220b): Improve KubeVersion Comparisons ([#1040](https://github.com/sysdiglabs/charts/issues/1040))
+# v0.1.37
+### Chores
+* **registry-scanner** [7b4a28a](https://github.com/sysdiglabs/charts/commit/7b4a28a4254a68760af579a38bdfa0fede2fc5e0): update to v0.2.27 ([#1043](https://github.com/sysdiglabs/charts/issues/1043))
+# v0.1.36
+### Chores
+* **admission-controller,agent,kspm-collector,node-analyzer,rapid-response,registry-scanner,sysdig-deploy** [7f35eb1](https://github.com/sysdiglabs/charts/commit/7f35eb1f88d93fa59c2839e7fbb756e50a378bea): update helm unittest plugin ([#996](https://github.com/sysdiglabs/charts/issues/996))
+# v0.1.35
+### Chores
+* **registry-scanner** [ab283cb](https://github.com/sysdiglabs/charts/commit/ab283cb8c081841abf6257c030c1e08e33be6b9f): update to v0.2.26 ([#1032](https://github.com/sysdiglabs/charts/issues/1032))
+# v0.1.34
+### Chores
+* **registry-scanner** [2d4c185](https://github.com/sysdiglabs/charts/commit/2d4c185489ff17884b94fa465bd5a7353034d6ee): update to v0.2.25 ([#1030](https://github.com/sysdiglabs/charts/issues/1030))
+# v0.1.33
+### Chores
+* **registry-scanner** [3cd717f](https://github.com/sysdiglabs/charts/commit/3cd717f375203bb9224599a882b329b90bb23955): update to v0.2.24 ([#1028](https://github.com/sysdiglabs/charts/issues/1028))
+# v0.1.32
+### Chores
+* **registry-scanner** [ace6815](https://github.com/sysdiglabs/charts/commit/ace6815ec5f4bf6e628a434d9ffbee5bca716c4e): update to v0.2.23 ([#1027](https://github.com/sysdiglabs/charts/issues/1027))
 # v0.1.31
 ### New Features
 * **registry-scanner** [4d25160](https://github.com/sysdiglabs/charts/commit/4d2516082e24cabd4bd0c95c36652c6fa3eb46b0): Add possibility to use service account instead of creds ([#1025](https://github.com/sysdiglabs/charts/issues/1025))

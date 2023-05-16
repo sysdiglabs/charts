@@ -1,3 +1,5 @@
+.PHONY: unittest
+
 deps-docs:
 	go install kubepack.dev/chart-doc-gen@latest
 
@@ -5,16 +7,23 @@ docs: deps-docs
 	find . -name "doc.yaml" | \
 		xargs -L1 dirname | \
 		xargs -I% sh -c \
-			"cd %; chart-doc-gen -v values.yaml -d doc.yaml -t README.tpl > README.md"
+			"chart-doc-gen -c %/Chart.yaml -v %/values.yaml -d %/doc.yaml -t %/README.tpl > %/README.md"
 
 lint:
 	find . -name "Chart.lock" -type f -delete
 	docker run --rm -e CT_VALIDATE_MAINTAINERS=false -u $(shell id -u) -v $(PWD):/charts quay.io/helmpack/chart-testing:latest sh -c "cd /charts; ct lint --all"
 
-deps-helm:
-	helm plugin install https://github.com/quintush/helm-unittest  || true
+deps-unittest:
+	@helm plugin install https://github.com/helm-unittest/helm-unittest --version=0.3.0 || true
 
-test-unit-all: deps-helm test-registry-scanner
+unittest: deps-unittest
+	find ./charts -name "Chart.yaml" | \
+		xargs -L1 dirname | \
+		xargs -I% sh -c \
+			"helm dependency build % ; helm unittest --strict %"
 
-test-registry-scanner:
-	helm unittest --helm3 ./charts/registry-scanner
+unit-test-rs: deps-unittest
+	find ./charts/registry-scanner -name "Chart.yaml" | \
+		xargs -L1 dirname | \
+		xargs -I% sh -c \
+			"helm dependency build % ; helm unittest --strict %"

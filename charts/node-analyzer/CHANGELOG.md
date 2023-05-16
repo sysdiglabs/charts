@@ -10,6 +10,26 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.8.50
+### Chores
+* **sysdig, node-analyzer** [a7564db](https://github.com/sysdiglabs/charts/commit/a7564dbac2f879064e000ef780b71ebc3d4463a7): bump sysdig/vuln-runtime-scanner to v1.4.11 ([#1061](https://github.com/sysdiglabs/charts/issues/1061))
+# v1.8.49
+### Bug Fixes
+* **admission-controller,agent,node-analyzer,rapid-response,registry-scanner,sysdig** [0bf9682](https://github.com/sysdiglabs/charts/commit/0bf96827ebf80d76aab61b8fa3d26b3903df220b): Improve KubeVersion Comparisons ([#1040](https://github.com/sysdiglabs/charts/issues/1040))
+# v1.8.48
+### New Features
+* **node-analyzer** [138602f](https://github.com/sysdiglabs/charts/commit/138602f0bf30808240f86ed35bad61f5496d1073): Allow daemonset to have maxUnavailable setting configurable ([#1029](https://github.com/sysdiglabs/charts/issues/1029))
+# v1.8.47
+### Chores
+* **node-analyzer** [a8daf9c](https://github.com/sysdiglabs/charts/commit/a8daf9cb5776d1b154e4dfbf54a551c85bec1bcb): Release HostScanner and RuntimeScanner updates ([#1037](https://github.com/sysdiglabs/charts/issues/1037))
+
+    * * Hostscanner bumped to 0.3.9
+     * Support for .NET analyzer
+* Runtimescanner bumped to 1.4.10
+     * Support for .NET analyzer
+# v1.8.46
+### Chores
+* **admission-controller,agent,kspm-collector,node-analyzer,rapid-response,registry-scanner,sysdig-deploy** [7f35eb1](https://github.com/sysdiglabs/charts/commit/7f35eb1f88d93fa59c2839e7fbb756e50a378bea): update helm unittest plugin ([#996](https://github.com/sysdiglabs/charts/issues/996))
 # v1.8.45
 ### New Features
 * **kspm-collector,node-analyzer** [af66e68](https://github.com/sysdiglabs/charts/commit/af66e68abcc2d0345ec84c93b7cba1f65a8b0a97): bumped KSPM to latest version ([#1019](https://github.com/sysdiglabs/charts/issues/1019))

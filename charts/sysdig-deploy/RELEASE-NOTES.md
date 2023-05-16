@@ -1,6 +1,6 @@
 # What's Changed
 
-### Chores
-- **sysdig-deploy** [8dc3dd4](https://github.com/sysdiglabs/charts/commit/8dc3dd4a3105d8b4594eb0ea37d36ae042422513): Automatic version bump due to updated dependencies ([#1024](https://github.com/sysdiglabs/charts/issues/1024))
+### Bug Fixes
+- **agent** [c337ffb](https://github.com/sysdiglabs/charts/commit/c337ffb53abc3f9b17a6cb9e10f649a2434bba77): delegated agent volume name ([#1094](https://github.com/sysdiglabs/charts/issues/1094))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.6.7...sysdig-deploy-1.6.8
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.8.1...sysdig-deploy-1.8.2

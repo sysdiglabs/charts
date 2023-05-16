@@ -77,22 +77,27 @@ Sysdig Agent resources
 */}}
 {{- define "agent.resources" -}}
 {{/* we have same values for both requests and limits */}}
-{{- $smallCpu := "1000m" -}}
-{{- $smallMemory := "1024Mi" -}}
-{{- $mediumCpu := "3000m" -}}
-{{- $mediumMemory := "3072Mi" -}}
-{{- $largeCpu := "5000m" -}}
-{{- $largeMemory := "6144Mi" -}}
+{{- $resourceProfiles := dict "small"  (dict "cpu" "1000m"
+                                             "memory" "1024Mi")
+                              "medium" (dict "cpu" "3000m"
+                                             "memory" "3072Mi")
+                              "large"  (dict "cpu" "5000m"
+                                             "memory" "6144Mi") }}
+{{- $resources := dict }}
 {{/* custom resource values are always first-class */}}
 {{- if .Values.resources }}
-{{- toYaml .Values.resources -}}
-{{- else if eq .Values.resourceProfile "small" -}}
-{{- printf "requests:\n  cpu: %s\n  memory: %s\nlimits:\n  cpu: %s\n  memory: %s" $smallCpu $smallMemory $smallCpu $smallMemory -}}
-{{- else if eq .Values.resourceProfile "medium" -}}
-{{- printf "requests:\n  cpu: %s\n  memory: %s\nlimits:\n  cpu: %s\n  memory: %s" $mediumCpu $mediumMemory $mediumCpu $mediumMemory -}}
-{{- else if eq .Values.resourceProfile "large" -}}
-{{- printf "requests:\n  cpu: %s\n  memory: %s\nlimits:\n  cpu: %s\n  memory: %s" $largeCpu $largeMemory $largeCpu $largeMemory -}}
-{{- end -}}
+    {{- toYaml .Values.resources -}}
+{{- else if not (hasKey $resourceProfiles .Values.resourceProfile) }}
+    {{- fail (printf "Invalid value for resourceProfile provided: %s" .Values.resourceProfile) }}
+{{- else if and (include "agent.gke.autopilot" .) (not .Values.slim.enabled) }}
+    {{- toYaml (dict "requests" (dict "cpu" "250m"
+                                      "ephemeral-storage" .Values.gke.ephemeralStorage
+                                      "memory" "512Mi")
+                     "limits"   (get $resourceProfiles .Values.resourceProfile)) }}
+{{- else }}
+    {{- toYaml (dict "requests" (get $resourceProfiles .Values.resourceProfile)
+                     "limits"   (get $resourceProfiles .Values.resourceProfile)) }}
+{{- end }}
 {{- end -}}
 
 {{/*
@@ -337,6 +342,48 @@ Use global sysdig tags for agent
 {{- end -}}
 
 {{/*
+Determine the plan settings (monitor/secure) set in the sysdig-deploy chart
+and set the agent chart parameters accordingly
+*/}}
+{{- define "agent.planSettings" -}}
+    {{- $secureFeatProvided := false }}
+    {{/* Determine if secure or secure_light mode is being requested in Agent settings and store state */}}
+    {{- if hasKey .Values.sysdig.settings "feature" }}
+        {{- if hasKey .Values.sysdig.settings.feature "mode" }}
+            {{- $secureLight := (eq .Values.sysdig.settings.feature.mode "secure_light") }}
+            {{- $secureFeatProvided = (or $secureLight (eq .Values.sysdig.settings.feature.mode "secure")) }}
+        {{- end }}
+    {{- end }}
+    {{/* Basic plan sanity checks */}}
+    {{- if and (not .Values.secure.enabled) $secureFeatProvided }}
+        {{ fail "Set secure.enabled=true when specifying sysdig.settings.feature.mode is `secure` or `secure_light`" }}
+    {{- end }}
+
+{{ include "agent.monitorFeatures" . }}
+{{ include "agent.secureFeatures" . }}
+
+{{- end -}}
+
+{{/*
+Determine Sysdig Monitor features that need to be enabled/disabled.
+
+For monitor.enabled=true, don't render any content and take the Agent's defaults (which is monitor mode)
+For monitor.enabled=false, disable all Monitor specific extras (like app checks, prometheus, etc.)
+*/}}
+{{- define "agent.monitorFeatures" }}
+    {{- if not .Values.monitor.enabled }}
+        {{- $monitorBlock := dict "app_checks_enabled" false }}
+        {{- range $monitorFeature := (list
+            "jmx"
+            "prometheus"
+            "statsd") }}
+            {{- $_ := set $monitorBlock $monitorFeature (dict "enabled" false) }}
+        {{- end }}
+{{ toYaml $monitorBlock }}
+    {{- end -}}
+{{- end -}}
+
+{{/*
 Determine Sysdig Secure features that need to be enabled/disabled
 
 For secure.enabled=true, only security.enabled is set to true
@@ -350,18 +397,29 @@ secure.enabled=false we need to explicitly put those config entires in the
 agent config to prevent a backend push from enabling them after installation.
 */}}
 {{- define "agent.secureFeatures" }}
-    {{- $secureEnabled := ternary false .root.Values.secure.enabled (eq .force_secure_disabled true) }}
-    {{- $secureBlockConfig := dict "security" (dict
-        "enabled" $secureEnabled
-        "k8s_audit_server_enabled" .root.Values.auditLog.enabled) }}
-    {{- if .root.Values.auditLog.enabled }}
+    {{- $secureConfig := dict "security" (dict
+        "enabled" .Values.secure.enabled
+        "k8s_audit_server_enabled" .Values.auditLog.enabled
+    ) }}
+    {{- if .Values.auditLog.enabled }}
         {{- range $key, $val := (dict
-                 "k8s_audit_server_url" .root.Values.auditLog.auditServerUrl
-                 "k8s_audit_server_port" .root.Values.auditLog.auditServerPort) }}
-            {{- $_ := set $secureBlockConfig.security $key $val }}
+                "k8s_audit_server_url" .Values.auditLog.auditServerUrl
+                "k8s_audit_server_port" .Values.auditLog.auditServerPort
+        ) }}
+            {{- $_ := set $secureConfig.security $key $val }}
         {{- end }}
     {{- end }}
-    {{- if not $secureEnabled }}
+
+    {{- $secureLightMode := false }}
+    {{/* We can't evaluate all this contitions in one single operation untile we stop supporting helm version <3.9 */}}
+    {{- if hasKey .Values.sysdig.settings "feature" }}
+        {{- if hasKey .Values.sysdig.settings.feature "mode" }}
+            {{- if (eq .Values.sysdig.settings.feature.mode "secure_light") }}
+                {{- $secureLightMode = true }}
+            {{- end }}
+        {{- end }}
+    {{- end }}
+    {{- if (not .Values.secure.enabled) }}
         {{- range $secureFeature := (list
             "commandlines_capture"
             "drift_killer"
@@ -369,10 +427,21 @@ agent config to prevent a backend push from enabling them after installation.
             "memdump"
             "network_topology"
             "secure_audit_streams") }}
-            {{- $_ := set $secureBlockConfig $secureFeature (dict "enabled" false) }}
+            {{- $_ := set $secureConfig $secureFeature (dict "enabled" false) }}
+        {{- end }}
+    {{ else if $secureLightMode }}
+        {{- range $secureFeature := (list
+            "drift_killer"
+            "falcobaseline"
+            "memdump"
+            "network_topology") }}
+            {{- $_ := set $secureConfig $secureFeature (dict "enabled" false) }}
         {{- end }}
     {{- end }}
-    {{- toYaml $secureBlockConfig }}
+    {{- if include "agent.gke.autopilot" . }}
+        {{- $_ := set $secureConfig "drift_killer" (dict "enabled" false) }}
+    {{- end }}
+{{ toYaml $secureConfig }}
 {{- end }}
 
 {{ define "agent.k8sColdStart" }}
@@ -386,13 +455,13 @@ agent config to prevent a backend push from enabling them after installation.
     {{- end }}
     {{- if not .Values.sysdig.settings.k8s_coldstart }}
         {{- if not .Values.delegatedAgentDeployment.enabled }}
-            {{- $_ := set $k8sColdStartBlock "max_parallel_cold_starts" (include "agent.parallelStarts" . | int ) }}
+            {{- $_ := set $k8sColdStartBlock "max_parallel_cold_start" (include "agent.parallelStarts" . | int ) }}
         {{- else }}
-            {{- $_ := set $k8sColdStartBlock "max_parallel_cold_starts" 1 }}
+            {{- $_ := set $k8sColdStartBlock "max_parallel_cold_start" 1 }}
         {{- end }}
     {{- end }}
     {{- $completeBlock := dict "k8s_coldstart" $k8sColdStartBlock }}
-    {{- toYaml $completeBlock }}
+    {{- $_ := merge .Values.sysdig.settings $completeBlock }}
 {{- end }}
 
 {{ define "agent.connectionSettings" }}
@@ -414,17 +483,19 @@ ssl_verify_certificate: {{ $sslVerifyCertificate }}
 {{- end }}
 {{- end }}
 
+{{/*
+Check for log level sanity and skip this check if delegatedAgentDeployment
+is enabled because this will be run twice and the second check will error out.
+*/}}
 {{ define "agent.logSettings" }}
-{{/* check for log level sanity and skip this check if delegatedAgentDeployment
-     is enabled because this will be run twice and the second check will error out. */}}
-{{- if and .Values.logPriority
+    {{- if and .Values.logPriority
             (or (hasKey (default dict .Values.sysdig.settings.log) "console_priority") (hasKey (default dict .Values.sysdig.settings.log) "file_priority"))
             (not .Values.delegatedAgentDeployment.enabled) }}
-  {{- fail "Cannot set logPriority when either sysdig.settings.log.console_priority or sysdig.settings.log.file_priority are set" }}
-{{- end }}
-{{- if .Values.logPriority }}
-  {{- $_ := merge .Values.sysdig.settings (dict "log" (dict "console_priority" .Values.logPriority "file_priority" .Values.logPriority)) }}
-{{- end }}
+        {{- fail "Cannot set logPriority when either sysdig.settings.log.console_priority or sysdig.settings.log.file_priority are set" }}
+    {{- end }}
+    {{- if .Values.logPriority }}
+        {{- $_ := merge .Values.sysdig.settings (dict "log" (dict "console_priority" .Values.logPriority "file_priority" .Values.logPriority)) }}
+    {{- end }}
 {{- end }}
 
 {{ define "agent.containerProxyEnvVars" }}
@@ -443,15 +514,28 @@ ssl_verify_certificate: {{ $sslVerifyCertificate }}
 {{- end }}
 
 {{ define "agent.clusterName" }}
-{{- $clusterName := include "get_if_not_in_settings" (dict "root" . "default" (coalesce .Values.clusterName .Values.global.clusterConfig.name) "setting" "k8s_cluster_name") }}
-{{- if $clusterName }}
+    {{- $clusterName := include "get_if_not_in_settings" (dict "root" . "default" (coalesce .Values.clusterName .Values.global.clusterConfig.name) "setting" "k8s_cluster_name") }}
+    {{- if $clusterName }}
 k8s_cluster_name: {{ $clusterName }}
-{{- end }}
+    {{- end }}
 {{- end }}
 
 {{- define "agent.disableCaptures" }}
-{{- $disableCaptures := include "get_if_not_in_settings" (dict "root" . "default" .Values.sysdig.disableCaptures "setting" "sysdig_capture_enabled") }}
-{{- if eq $disableCaptures "true" }}
+    {{- $disableCaptures := include "get_if_not_in_settings" (dict "root" . "default" .Values.sysdig.disableCaptures "setting" "sysdig_capture_enabled") }}
+    {{- if eq $disableCaptures "true" }}
 sysdig_capture_enabled: false
+    {{- end }}
+{{- end }}
+
+{{/* Returns string 'true' if the cluster's kubeVersion is less than the parameter provided, or nothing otherwise
+     Use like: {{ include "agent.kubeVersionLessThan" (dict "root" . "major" <kube_major_to_compare> "minor" <kube_minor_to_compare>) }}
+
+     Note: The use of `"root" .` in the parameter dict is necessary as the .Capabilities fields are not provided in
+           helper functions when "helm template" is used.
+*/}}
+{{- define "agent.kubeVersionLessThan" }}
+{{- if (and (le (.root.Capabilities.KubeVersion.Major | int) .major)
+            (lt (.root.Capabilities.KubeVersion.Minor | trimSuffix "+" | int) .minor)) }}
+true
 {{- end }}
 {{- end }}

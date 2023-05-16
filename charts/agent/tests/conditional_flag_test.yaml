@@ -9,21 +9,15 @@ tests:
           autopilot: true
     asserts:
       - equal:
-          path: spec.template.metadata.annotations.autopilot\.gke\.io\/no\-connect
+          path: spec.template.metadata.annotations['autopilot.gke.io/no-connect']
           value: "true"
-      - equal:
+      - isNull:
           path: spec.template.spec.affinity
-          value: null
-      - contains:
-          path: spec.template.spec.initContainers[0].env
-          content:
-            name: SYSDIG_BPF_PROBE
-            value: null
-      - contains:
-          path: spec.template.spec.initContainers[0].volumeMounts
-          content:
-            mountPath: /root/.sysdig
-            name: bpf-probes
+      - isNull:
+          path: spec.template.spec.initContainers[0].env[?(@.name == "SYSDIG_BPF_PROBE")].value
+      - equal:
+          path: spec.template.spec.initContainers[*].volumeMounts[?(@.name == "bpf-probes")].mountPath
+          value: /root/.sysdig
 
   - it: Checking slim enabled
     set:
@@ -35,5 +29,5 @@ tests:
         repository: testing/agent-slim
     asserts:
       - equal:
-          path: spec.template.spec.containers[0].image
+          path: spec.template.spec.containers[*].image
           value: quay.io/sysdig/agent-slim:12.9.0

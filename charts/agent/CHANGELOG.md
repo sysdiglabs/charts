@@ -10,6 +10,54 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.8.2
+### Chores
+* **agent** [7be099e](https://github.com/sysdiglabs/charts/commit/7be099e7099fa5d6bfee0d6d9314bf4c1e3d0b03): add tests to better highlight the behaviour in the drift prevention feature ([#1087](https://github.com/sysdiglabs/charts/issues/1087))
+# v1.8.1
+### Bug Fixes
+* **agent** [c337ffb](https://github.com/sysdiglabs/charts/commit/c337ffb53abc3f9b17a6cb9e10f649a2434bba77): delegated agent volume name ([#1094](https://github.com/sysdiglabs/charts/issues/1094))
+# v1.8.0
+### New Features
+* **agent** [5c194ec](https://github.com/sysdiglabs/charts/commit/5c194ecb04f68f7819415c5d98bb1909b28c9189): Fix GKE Autopilot installation ([#975](https://github.com/sysdiglabs/charts/issues/975))
+# v1.7.5
+### Bug Fixes
+* **agent** [2024f12](https://github.com/sysdiglabs/charts/commit/2024f125f2bd049f63dc2309fde79afef1204dfe): Allow cointerface to be enabled in daemonset agents in delegated agent deployment ([#1079](https://github.com/sysdiglabs/charts/issues/1079))
+# v1.7.4
+### Bug Fixes
+* **agent** [d9cbbdd](https://github.com/sysdiglabs/charts/commit/d9cbbdde53843f11d64223b3110378f0047c8697): fix occasional k8s_coldstart block duplication and key name ([#1069](https://github.com/sysdiglabs/charts/issues/1069))
+# v1.7.3
+### Chores
+* **agent** [44f57ac](https://github.com/sysdiglabs/charts/commit/44f57ac7742edc044d5ce5a7fbddadf2d13c8846): bump agent version to 12.14.0 ([#1076](https://github.com/sysdiglabs/charts/issues/1076))
+# v1.7.2
+### Bug Fixes
+* **agent** [34bf2af](https://github.com/sysdiglabs/charts/commit/34bf2afd26f848507cd8edff148f6253620657a9): Adjust features available in secure_light mode ([#1062](https://github.com/sysdiglabs/charts/issues/1062))
+# v1.7.1
+### Bug Fixes
+* **agent,sysdig** [0702edd](https://github.com/sysdiglabs/charts/commit/0702eddfc46c823b8362b5f0d42e7be9d3bfe1ac): do not mount /var/lib when GKE autopilot is enabled ([#1047](https://github.com/sysdiglabs/charts/issues/1047))
+# v1.7.0
+### New Features
+* **agent** [a44de57](https://github.com/sysdiglabs/charts/commit/a44de570eb9f124e6df2087e76ff817198a77b14): Move Agent lease permissions ([#1041](https://github.com/sysdiglabs/charts/issues/1041))
+# v1.6.10
+### Bug Fixes
+* **agent,sysdig-deploy** [47651ab](https://github.com/sysdiglabs/charts/commit/47651ab557dd675a9daf0d3cdb0b758d63735e74): Reduce Agent mode misconfiguration from fail to NOTES output ([#1039](https://github.com/sysdiglabs/charts/issues/1039))
+# v1.6.9
+### Bug Fixes
+* **admission-controller,agent,node-analyzer,rapid-response,registry-scanner,sysdig** [0bf9682](https://github.com/sysdiglabs/charts/commit/0bf96827ebf80d76aab61b8fa3d26b3903df220b): Improve KubeVersion Comparisons ([#1040](https://github.com/sysdiglabs/charts/issues/1040))
+# v1.6.8
+### Bug Fixes
+* **agent** [6cefcd1](https://github.com/sysdiglabs/charts/commit/6cefcd1318c8054183afc72d8e76fd7075d0cc87): Fix dragent.yaml indentation for security block ([#1034](https://github.com/sysdiglabs/charts/issues/1034))
+# v1.6.7
+### Bug Fixes
+* **agent** [4049502](https://github.com/sysdiglabs/charts/commit/40495021ac9daa2317b90a610f3081a43471dc0e): remove inline multiple checks that are not supported by helm 3.7 ([#1033](https://github.com/sysdiglabs/charts/issues/1033))
+# v1.6.6
+### Chores
+* **admission-controller,agent,kspm-collector,node-analyzer,rapid-response,registry-scanner,sysdig-deploy** [7f35eb1](https://github.com/sysdiglabs/charts/commit/7f35eb1f88d93fa59c2839e7fbb756e50a378bea): update helm unittest plugin ([#996](https://github.com/sysdiglabs/charts/issues/996))
+# v1.6.5
+### New Features
+* **agent** [b97fbc8](https://github.com/sysdiglabs/charts/commit/b97fbc85a81f2d848230c63b6c49ae551551cd09): Add new monitor.enabled flag to agent chart ([#917](https://github.com/sysdiglabs/charts/issues/917))
+# v1.6.4
+### New Features
+* **agent** [99a4b36](https://github.com/sysdiglabs/charts/commit/99a4b36bfd535264766b30ce176f4e244da0eb1f): Include /var/libs host volume mount ([#1009](https://github.com/sysdiglabs/charts/issues/1009))
 # v1.6.3
 ### Chores
 * **agent** [dc2a37a](https://github.com/sysdiglabs/charts/commit/dc2a37a2f4d63967e14874ee11c788eb7cd7fba1): bump agent version to 12.13.0 ([#1022](https://github.com/sysdiglabs/charts/issues/1022))

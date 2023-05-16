@@ -1,0 +1,26 @@
+{{- if and .Values.psp.create (include "kspmCollector.kubeVersionLessThan" (dict "root" . "major" 1 "minor" 25)) }}
+apiVersion: policy/v1beta1
+kind: PodSecurityPolicy
+metadata:
+  name: {{ template "kspmCollector.fullname" . }}
+  namespace: {{ include "kspmCollector.namespace" . }}
+spec:
+  allowedCapabilities: []
+  fsGroup:
+    rule: RunAsAny
+  hostIPC: false
+  hostNetwork: false
+  hostPID: false
+  privileged: false
+  runAsUser:
+    rule: RunAsAny
+  seLinux:
+    rule: RunAsAny
+  supplementalGroups:
+    rule: RunAsAny
+  volumes:
+  - emptyDir
+  - secret
+  - configMap
+  - downwardAPI
+{{- end }}

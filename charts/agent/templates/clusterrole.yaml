@@ -73,16 +73,6 @@ rules:
       - get
       - list
       - watch
-  - apiGroups:
-    - coordination.k8s.io
-    resources:
-    - leases
-    verbs:
-    - get
-    - list
-    - create
-    - update
-    - watch
   - nonResourceURLs:
     - /metrics
     verbs:
@@ -111,7 +101,7 @@ rules:
     - get
     - list
     - watch
-{{- if and .Values.psp.create (lt (int .Capabilities.KubeVersion.Minor) 25) }}
+{{- if and .Values.psp.create (include "agent.kubeVersionLessThan" (dict "root" . "major" 1 "minor" 25)) }}
   - apiGroups:
       - "policy"
     resources:

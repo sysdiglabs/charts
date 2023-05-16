@@ -1,6 +1,6 @@
 # What's Changed
 
 ### Chores
-- **agent** [dc2a37a](https://github.com/sysdiglabs/charts/commit/dc2a37a2f4d63967e14874ee11c788eb7cd7fba1): bump agent version to 12.13.0 ([#1022](https://github.com/sysdiglabs/charts/issues/1022))
+- **agent** [7be099e](https://github.com/sysdiglabs/charts/commit/7be099e7099fa5d6bfee0d6d9314bf4c1e3d0b03): add tests to better highlight the behaviour in the drift prevention feature ([#1087](https://github.com/sysdiglabs/charts/issues/1087))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.6.2...agent-1.6.3
+#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.8.1...agent-1.8.2

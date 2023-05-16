@@ -69,7 +69,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `namespace`                                    | Overrides the global namespace setting and release namespace for components.                                                                            | `""`                                                        |
 | `image.registry`                               | Sysdig Agent image registry                                                                                                                             | `quay.io`                                                   |
 | `image.repository`                             | The image repository to pull from                                                                                                                       | `sysdig/agent`                                              |
-| `image.tag`                                    | The image tag to pull                                                                                                                                   | `12.13.0`                                                    |
+| `image.tag`                                    | The image tag to pull                                                                                                                                   | `12.14.0`                                                    |
 | `image.digest`                                 | The image digest to pull                                                                                                                                | ` `                                                         |
 | `image.pullPolicy`                             | The Image pull policy                                                                                                                                   | `IfNotPresent`                                              |
 | `image.pullSecrets`                            | Image pull secrets                                                                                                                                      | `nil`                                                       |
@@ -83,6 +83,8 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `collectorSettings.ssl`                        | The collector accepts SSL                                                                                                                               | `true`                                                      |
 | `collectorSettings.sslVerifyCertificate`       | Set to false if you don't want to verify SSL certificate                                                                                                | `true`                                                      |
 | `gke.autopilot`                                | If true, overrides the agent configuration to run on GKE Autopilot clusters                                                                             | `false`                                                     |
+| `gke.autopilot.createPriorityClass`            | If true, create the required PriorityClass to ensure Agent Pods are scheduled in GKE Autopilot. Uses the name provided by the `priorityClassName` parameter | `false`                                                 |
+| `gke.ephemeralStorage`                         | Amount of ephemeral storage to provide to the Agent container in GKE Autopilot clusters                                                                 | `500Mi`                                                     |
 | `rbac.create`                                  | If true, create & use RBAC resources                                                                                                                    | `true`                                                      |
 | `scc.create`                                   | Create OpenShift's Security Context Constraint                                                                                                          | `true`                                                      |
 | `psp.create`                                   | Create Pod Security Policy to allow the agent running in clusters with PSP enabled                                                                      | `true`                                                      |
@@ -118,6 +120,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `sysdig.settings`                              | Additional settings, directly included in the agent's configuration file `dragent.yaml`                                                                 | `{}`                                                        |
 | `logPriority`                                  | Use to directly set both Agent console and file logging priorities. Possible values: `"info"`, `"debug"`. Mutually exclusive with `sysdig.settings.log` | ` `                                                         |
 | `secure.enabled`                               | Enable Sysdig Secure                                                                                                                                    | `true`                                                      |
+| `monitor.enabled`                              | Enable Sysdig Monitor                                                                                                                                   | `true`                                                      |
 | `auditLog.enabled`                             | Enable K8s audit log support for Sysdig Secure                                                                                                          | `false`                                                     |
 | `auditLog.auditServerUrl`                      | The URL where Sysdig Agent listens for K8s audit log events                                                                                             | `0.0.0.0`                                                   |
 | `auditLog.auditServerPort`                     | Port where Sysdig Agent listens for K8s audit log events                                                                                                | `7765`                                                      |
@@ -283,7 +286,7 @@ The Sysdig agent uses a file called `dragent.yaml` to store the configuration.
 
 Using the Helm chart, the default configuration settings can be updated using `sysdig.settings` either
 via `--set sysdig.settings.key = value` or in the values YAML file. For example, to eanble Prometheus metrics scraping,
-you need this in your `values.yaml` file::
+you need this in your `values.yaml` file:
 
 ```yaml
 sysdig:
@@ -296,6 +299,19 @@ sysdig:
 
 ```bash
 $ helm install --namespace sysdig-agent sysdig-agent -f values.yaml sysdig/agent
+```
+
+### Agent Modes
+When directly specifying the agent mode by `sysdig.settitngs.feature.mode`, the values of `monitor.enabled` and
+`secure.enabled` must match the provided type. For example, setting `sysdig.settings.feature.mode=secure` would require
+the following:
+```yaml
+monitor:
+  enabled: false
+sysdig:
+  settings:
+    feature:
+      mode: secure
 ```
 
 ## Upgrading Sysdig agent configuration

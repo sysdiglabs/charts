@@ -15,7 +15,9 @@ spec:
       app.kubernetes.io/name: {{ include "nodeAnalyzer.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
   updateStrategy:
-    type: RollingUpdate
+    type: {{ .Values.daemonset.updateStrategy.type | default "RollingUpdate" }}
+    rollingUpdate:
+      maxUnavailable: {{ .Values.daemonset.updateStrategy.rollingUpdate.maxUnavailable | default 1 }}
   template:
     metadata:
       name: {{ .Release.Name }}-node-analyzer

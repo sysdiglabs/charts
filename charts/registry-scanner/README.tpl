@@ -14,15 +14,16 @@ $ pre-commit run -a
 
 # Registry Scanner
 
-{{ .Project.Name }} scan your images registry on a Kubernetes Cluster.
+{{ .Project.Name }} scan your images registry on a Kubernetes Cluster .
 <br/>{{ .Project.Description }}
+
+For more insight check Sysdig **Official Docs on Registry-Scanner** [feature](https://docs.sysdig.com/en/vuln-registry-scan) and [installation process guidelines](https://docs.sysdig.com/en/install-registry-scan)
 
 <br/>
 
 - [Installing the Chart](#installing-the-chart)
 - [Uninstalling the Chart](#uninstalling-the-chart)
 - [Configuration](#configuration)
-- [Supported vendor specific deployments](#supported-vendor-specific-deployments)
 
 <br/>
 
@@ -42,12 +43,16 @@ Add Sysdig Helm charts repository:
 
 ```bash
 $ helm repo add {{ .Repository.Name }} {{ .Repository.URL }}
+$ helm repo update
 ```
 
 Deploy the registry scanner specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
 ```bash
 $ helm upgrade --install {{ .Chart.Name }} \
+    {{- with .Chart.Version }}
+    --version={{.}} \
+    {{- end }}
     --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
     --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
     --set config.registryURL=<REGISTRY_URL> \
@@ -59,7 +64,7 @@ $ helm upgrade --install {{ .Chart.Name }} \
 Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
 
 ```bash
-$ helm install {{ .Chart.Name }} -f values.yaml sysdig/{{ .Chart.Name }}
+$ helm install {{ .Chart.Name }} -f values.yaml {{- with .Chart.Version }} --version={{.}} {{- end }} sysdig/{{ .Chart.Name }}
 ```
 
 
@@ -81,7 +86,7 @@ $ helm uninstall {{ .Chart.Name }}
 
 The command removes all the Kubernetes components associated with the chart and deletes the release.
 
-{{ if .Chart.Values -}}
+{{- if .Chart.Values }}
 
 ## Configuration
 
@@ -92,12 +97,22 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 {{- end }}
 
 
+## Other Options
+
+### I still want to use legacy scanning engine
+
+Chart version `1.*` relies on new Vulnerability Management scanning engine.
+<br/>If you still use the legacy scanning engine and want to keep running that version, pin the Helm chart version with  `--version=0.1.39`
+
 ### On-Prem deployment
 
 Use the following command to deploy in an on-prem:
 
 ```bash
 $ helm upgrade --install registry-scanner \
+    {{- with .Chart.Version }}
+    --version={{.}} \
+    {{- end }}
     --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
     --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
     --set config.secureSkipTLS=true \

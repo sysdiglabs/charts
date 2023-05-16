@@ -7,6 +7,7 @@ global:
   gke:
     # true here enables the deployment on gke autopilot clusters
     autopilot: false
+    ephemeralStorage: "500Mi"
 
 namespace: ""
 
@@ -19,7 +20,7 @@ image:
 
   registry: quay.io
   repository: sysdig/agent
-  tag: 12.13.0
+  tag: 12.14.0
   # Specify a imagePullPolicy
   # Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
   # ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -74,6 +75,8 @@ resourceProfile: small
 gke:
   # true here enables the deployment on gke autopilot clusters
   autopilot: false
+  createPriorityClass: false
+  ephemeralStorage: "500Mi"
 
 rbac:
   # true here enables creation of rbac resources
@@ -208,6 +211,10 @@ sysdig:
 
 secure:
   # true here enables Sysdig Secure: container run-time security & forensics
+  enabled: true
+
+monitor:
+  # true here enables Sysdig Monitor components
   enabled: true
 
 auditLog:

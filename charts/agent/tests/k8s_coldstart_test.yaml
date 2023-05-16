@@ -8,12 +8,12 @@ tests:
         enable: true
     asserts:
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: |-
             k8s_coldstart:
               enabled: true
               enforce_leader_election: true
-              max_parallel_cold_starts: 1
+              max_parallel_cold_start: 1
               namespace: NAMESPACE
     template: templates/configmap.yaml
 
@@ -24,11 +24,62 @@ tests:
       resourceProfile: large
     asserts:
       - matchRegex:
-          path: data.dragent\.yaml
+          path: data['dragent.yaml']
           pattern: |-
             k8s_coldstart:
               enabled: true
               enforce_leader_election: true
-              max_parallel_cold_starts: 10
+              max_parallel_cold_start: 10
               namespace: NAMESPACE
     template: templates/configmap.yaml
+
+  - it: Test manual setting of k8s_coldstart values
+    set:
+      sysdig:
+        settings:
+          k8s_coldstart:
+            max_parallel_cold_start: 1
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            k8s_coldstart:
+              max_parallel_cold_start: 1
+
+  - it: Test manual setting of k8s_coldstart values with leaderelection set
+    set:
+      leaderelection:
+        enable: true
+      sysdig:
+        settings:
+          k8s_coldstart:
+            max_parallel_cold_start: 2
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            k8s_coldstart:
+              enabled: true
+              enforce_leader_election: true
+              max_parallel_cold_start: 2
+              namespace: NAMESPACE
+
+  - it: Test manual setting of k8s_coldstart values with leaderelection and delegatedAgentDeployment set
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+      leaderelection:
+        enable: true
+      sysdig:
+        settings:
+          k8s_coldstart:
+            max_parallel_cold_start: 2
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            k8s_coldstart:
+              enabled: true
+              enforce_leader_election: true
+              max_parallel_cold_start: 2
+              namespace: NAMESPACE

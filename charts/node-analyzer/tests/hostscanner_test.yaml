@@ -15,16 +15,17 @@ tests:
       - isKind:
           of: DaemonSet
       - equal:
-          path: "spec.template.spec.containers[0].name"
+          path: spec.template.spec.containers[0].name
           value: "sysdig-image-analyzer"
       - equal:
-          path: "spec.template.spec.containers[1].name"
+          path: spec.template.spec.containers[1].name
           value: "sysdig-host-analyzer"
       - equal:
-          path: "spec.template.spec.containers[2].name"
+          path: spec.template.spec.containers[2].name
           value: "sysdig-benchmark-runner"
-      - isEmpty:
-          path: "spec.template.spec.containers[3]"
+      - lengthEqual:
+          path: spec.template.spec.containers
+          count: 3
   - it: "HS deployed if newEngineOnly is active but deploy unset"
     set:
       clusterName: "test"
@@ -43,8 +44,9 @@ tests:
       - equal:
           path: "spec.template.spec.containers[2].name"
           value: "sysdig-host-scanner"
-      - isEmpty:
-          path: "spec.template.spec.containers[3]"
+      - lengthEqual:
+          path: spec.template.spec.containers
+          count: 3
   - it: "HS deployed if newEngineOnly is true and deploy set to true"
     set:
       clusterName: "test"
@@ -64,8 +66,9 @@ tests:
       - equal:
           path: "spec.template.spec.containers[2].name"
           value: "sysdig-host-scanner"
-      - isEmpty:
-          path: "spec.template.spec.containers[3]"
+      - lengthEqual:
+          path: spec.template.spec.containers
+          count: 3
   - it: "HS not deployed if explicitly set to false while newEngineOnly is active"
     set:
       secure.vulnerabilityManagement.newEngineOnly: true
@@ -81,8 +84,9 @@ tests:
       - equal:
           path: "spec.template.spec.containers[1].name"
           value: "sysdig-runtime-scanner"
-      - isEmpty:
-          path: "spec.template.spec.containers[2]"
+      - lengthEqual:
+          path: spec.template.spec.containers
+          count: 2
   - it: "HS deployed if newEngineOnly is unset and deploy set to true"
     set:
       clusterName: "test"
@@ -104,8 +108,9 @@ tests:
       - equal:
           path: "spec.template.spec.containers[3].name"
           value: "sysdig-host-scanner"
-      - isEmpty:
-          path: "spec.template.spec.containers[4]"
+      - lengthEqual:
+          path: spec.template.spec.containers
+          count: 4
   - it: "HS not deployed if explicitly set to false"
     set:
       nodeAnalyzer.hostScanner.deploy: false
@@ -123,8 +128,9 @@ tests:
       - equal:
           path: "spec.template.spec.containers[2].name"
           value: "sysdig-benchmark-runner"
-      - isEmpty:
-          path: "spec.template.spec.containers[3]"
+      - lengthEqual:
+          path: spec.template.spec.containers
+          count: 3
 
   - it: "Additional dirs to scan is set"
     set:

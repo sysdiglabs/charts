@@ -347,3 +347,16 @@ an error if not.
 {{- $errorMsg := "The Sysdig Secure API Token was not provided with either the sysdig.secureAPIToken or sysdig.secureAPITokenSecret values." -}}
     {{- required $errorMsg (or (include "sysdig.secureAPIToken" .) (include "sysdig.secureAPITokenSecret" .)) -}}
 {{- end -}}
+
+{{/* Returns string 'true' if the cluster's kubeVersion is less than the parameter provided, or nothing otherwise
+     Use like: {{ include "admissionController.kubeVersionLessThan" (dict "root" . "major" <kube_major_to_compare> "minor" <kube_minor_to_compare>) }}
+
+     Note: The use of `"root" .` in the parameter dict is necessary as the .Capabilities fields are not provided in
+           helper functions when "helm template" is used.
+*/}}
+{{- define "admissionController.kubeVersionLessThan" }}
+{{- if (and (le (.root.Capabilities.KubeVersion.Major | int) .major)
+            (lt (.root.Capabilities.KubeVersion.Minor | trimSuffix "+" | int) .minor)) }}
+true
+{{- end }}
+{{- end }}

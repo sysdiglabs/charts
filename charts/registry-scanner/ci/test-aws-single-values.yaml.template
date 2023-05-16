@@ -1,6 +1,4 @@
 config:
-  scan:
-    newVmScanner: true
   secureAPIToken: ${SECURE_API_TOKEN}
   registryType: ecr
   registryURL: ${SYSDIG_AWS_QA_TARGET_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com

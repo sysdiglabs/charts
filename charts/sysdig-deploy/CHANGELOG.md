@@ -10,6 +10,67 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.8.2
+### Bug Fixes
+* **agent** [c337ffb](https://github.com/sysdiglabs/charts/commit/c337ffb53abc3f9b17a6cb9e10f649a2434bba77): delegated agent volume name ([#1094](https://github.com/sysdiglabs/charts/issues/1094))
+# v1.8.1
+### Chores
+* **sysdig-deploy** [0cfe7db](https://github.com/sysdiglabs/charts/commit/0cfe7db21550c4398c713bc1ffbc26496745f684): Automatic version bump due to updated dependencies ([#1089](https://github.com/sysdiglabs/charts/issues/1089))
+# v1.8.0
+### New Features
+* **agent** [5c194ec](https://github.com/sysdiglabs/charts/commit/5c194ecb04f68f7819415c5d98bb1909b28c9189): Fix GKE Autopilot installation ([#975](https://github.com/sysdiglabs/charts/issues/975))
+# v1.7.9
+### Chores
+* **sysdig-deploy** [54d7aaa](https://github.com/sysdiglabs/charts/commit/54d7aaa27303a049c6ca1d767b0d200bac61ae62): Automatic version bump due to updated dependencies ([#1084](https://github.com/sysdiglabs/charts/issues/1084))
+# v1.7.8
+### Chores
+* **sysdig-deploy** [6d552d8](https://github.com/sysdiglabs/charts/commit/6d552d80414de3aaf73d51a6f9a5b7990f77b839): Automatic version bump due to updated dependencies ([#1077](https://github.com/sysdiglabs/charts/issues/1077))
+# v1.7.7
+# v1.7.6
+### Chores
+* **sysdig-deploy** [2e58f3b](https://github.com/sysdiglabs/charts/commit/2e58f3bcd7d6ed2ff549d2cab6d8bf978776fec4): Automatic version bump due to updated dependencies ([#1064](https://github.com/sysdiglabs/charts/issues/1064))
+# v1.7.5
+### Chores
+* **sysdig-deploy** [a9acb37](https://github.com/sysdiglabs/charts/commit/a9acb377e7cc2786ae61e4d16202ae02aa017ccc): Automatic version bump due to updated dependencies ([#1063](https://github.com/sysdiglabs/charts/issues/1063))
+# v1.7.4
+### Bug Fixes
+* **sysdig-deploy** [c003852](https://github.com/sysdiglabs/charts/commit/c003852116a4b84fc8878a2894055efaa36f8b4a): nil pointer evaluating interface {}.autopilot ([#1052](https://github.com/sysdiglabs/charts/issues/1052))
+# v1.7.3
+### Chores
+* **sysdig-deploy** [1b5ab1b](https://github.com/sysdiglabs/charts/commit/1b5ab1b4f6fc461c75c5bc93ce2e718c2cabd49d): Automatic version bump due to updated dependencies ([#1048](https://github.com/sysdiglabs/charts/issues/1048))
+# v1.7.2
+### Bug Fixes
+* **agent,sysdig** [0702edd](https://github.com/sysdiglabs/charts/commit/0702eddfc46c823b8362b5f0d42e7be9d3bfe1ac): do not mount /var/lib when GKE autopilot is enabled ([#1047](https://github.com/sysdiglabs/charts/issues/1047))
+# v1.7.1
+### Chores
+* **sysdig-deploy** [951a984](https://github.com/sysdiglabs/charts/commit/951a984087b20f617b1e5452abb4293cc548fe01): Automatic version bump due to updated dependencies ([#1046](https://github.com/sysdiglabs/charts/issues/1046))
+# v1.7.0
+### New Features
+* **agent** [a44de57](https://github.com/sysdiglabs/charts/commit/a44de570eb9f124e6df2087e76ff817198a77b14): Move Agent lease permissions ([#1041](https://github.com/sysdiglabs/charts/issues/1041))
+# v1.6.16
+### Bug Fixes
+* **agent,sysdig-deploy** [47651ab](https://github.com/sysdiglabs/charts/commit/47651ab557dd675a9daf0d3cdb0b758d63735e74): Reduce Agent mode misconfiguration from fail to NOTES output ([#1039](https://github.com/sysdiglabs/charts/issues/1039))
+# v1.6.15
+### Chores
+* **sysdig-deploy** [0b2d76b](https://github.com/sysdiglabs/charts/commit/0b2d76b5e219287b07e5a3280d0a2cd90434c6a1): Automatic version bump due to updated dependencies ([#1044](https://github.com/sysdiglabs/charts/issues/1044))
+# v1.6.14
+### Chores
+* **sysdig-deploy** [da577e8](https://github.com/sysdiglabs/charts/commit/da577e811eb0b513f1d5310f2bf151c62872b3db): Automatic version bump due to updated dependencies ([#1042](https://github.com/sysdiglabs/charts/issues/1042))
+# v1.6.13
+### Chores
+* **sysdig-deploy** [31443f5](https://github.com/sysdiglabs/charts/commit/31443f56140cdc34bb9b8fd9b954620f006d2e4b): Automatic version bump due to updated dependencies ([#1038](https://github.com/sysdiglabs/charts/issues/1038))
+# v1.6.12
+### Chores
+* **sysdig-deploy** [cbf83a6](https://github.com/sysdiglabs/charts/commit/cbf83a6ed90fbb90991f24f10e9b8724d6c81cac): Automatic version bump due to updated dependencies ([#1035](https://github.com/sysdiglabs/charts/issues/1035))
+# v1.6.11
+### Chores
+* **sysdig-deploy** [71107ed](https://github.com/sysdiglabs/charts/commit/71107eda11de5b0c1029735b55a0390d21807ed8): Automatic version bump due to updated dependencies ([#1031](https://github.com/sysdiglabs/charts/issues/1031))
+# v1.6.10
+### Chores
+* **admission-controller,agent,kspm-collector,node-analyzer,rapid-response,registry-scanner,sysdig-deploy** [7f35eb1](https://github.com/sysdiglabs/charts/commit/7f35eb1f88d93fa59c2839e7fbb756e50a378bea): update helm unittest plugin ([#996](https://github.com/sysdiglabs/charts/issues/996))
+# v1.6.9
+### Chores
+* **sysdig-deploy** [a9b4786](https://github.com/sysdiglabs/charts/commit/a9b47869b627b371925a8159aaae57e8c866639d): Automatic version bump due to updated dependencies ([#1026](https://github.com/sysdiglabs/charts/issues/1026))
 # v1.6.8
 ### Chores
 * **sysdig-deploy** [8dc3dd4](https://github.com/sysdiglabs/charts/commit/8dc3dd4a3105d8b4594eb0ea37d36ae042422513): Automatic version bump due to updated dependencies ([#1024](https://github.com/sysdiglabs/charts/issues/1024))
