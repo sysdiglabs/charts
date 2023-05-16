@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.8.3
+### Chores
+* **sysdig-deploy** [8cf4ed9](https://github.com/sysdiglabs/charts/commit/8cf4ed952cce05c13ff2b729c09ad4ddce093c32): Automatic version bump due to updated dependencies ([#1101](https://github.com/sysdiglabs/charts/issues/1101))
 # v1.8.2
 ### Bug Fixes
 * **agent** [c337ffb](https://github.com/sysdiglabs/charts/commit/c337ffb53abc3f9b17a6cb9e10f649a2434bba77): delegated agent volume name ([#1094](https://github.com/sysdiglabs/charts/issues/1094))
