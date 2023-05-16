@@ -9,6 +9,7 @@ metadata:
 data:
   dragent.yaml: |
     new_k8s: true
+    enable_coolness: true
 {{- include "agent.clusterName" . | trim | nindent 4 }}
 {{- if .Values.delegatedAgentDeployment.enabled }}
   {{- if not (hasKey .Values.sysdig.settings "cointerface_enabled") }}
@@ -27,7 +28,7 @@ data:
 {{- if .Values.sysdig.settings }}
   {{- toYaml .Values.sysdig.settings | trim | nindent 4 }}
 {{- end }}
-{{- if .Values.prometheus.file }}
+    {{- if .Values.prometheus.file }}
   prometheus.yaml: |
 {{ toYaml .Values.prometheus.yaml | indent 4 }}
 {{- end }}
