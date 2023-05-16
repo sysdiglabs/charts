@@ -32,7 +32,7 @@ sysdig:
   # (and `AUTH_BEARER_TOKEN` if the scanner is enabled) environment variables.
   # Overrides `global.sysdig.secureAPIToken`
   secureAPIToken: ""
-
+  accessKey: ""
   # **required**
   # <br/>Existing secret with API Token to access Sysdig Secure
   # <br/>Alternatively, specify the name of a Kubernetes secret containing `SECURE_API_TOKEN` and
@@ -54,6 +54,9 @@ sysdig:
 features:
   # Enable K8s Audit detections with Falco rules
   k8sAuditDetections: true
+
+  # Enable iac secure admission controller
+  admissionController: false
 
   # [Admission Webhook Configuration rules](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#matching-requests-rules) for the Audit Detections
   k8sAuditDetectionsRules:  # +doc-gen:break

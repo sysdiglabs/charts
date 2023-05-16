@@ -44,7 +44,7 @@ spec:
       hostNetwork: true
       {{- end }}
       containers:
-      {{- if .Values.webhook.v2.enabled}}
+      {{- if .Values.features.admissionController}}
         - name: {{.Values.webhook.v2.container.name}}
           image: {{ .Values.webhook.v2.container.image }}
         
@@ -58,7 +58,7 @@ spec:
               value: {{ include "webhook.noProxy" . }},{{ include "admissionController.scanner.fullname" . }}
             {{- end }}
             - name: ACCESS_KEY
-              value: {{.Values.global.sysdig.accessKey}}
+              value: {{.Values.sysdig.accessKey | default .Values.global.sysdig.accessKey}}
           ports:
             - containerPort: {{ .Values.webhook.http.port }}
               protocol: TCP

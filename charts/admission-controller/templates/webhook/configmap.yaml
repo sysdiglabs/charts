@@ -19,10 +19,9 @@ data:
   DENY_ON_ERROR: "{{ .Values.webhook.denyOnError }}"
   DRY_RUN: "{{ .Values.webhook.dryRun }}"
   HTTP_TIMEOUT: "{{ .Values.webhook.timeoutSeconds }}s"
-  {{- if .Values.webhook.v2.enabled}}
+  {{- if .Values.features.admissionController}}
   SERVICE_PORT: "{{.Values.webhook.v2.container.port}}"
   CERT_LOCATION: /cert
   EXTERNAL_NATS_URL: {{.Values.webhook.v2.nats.natsUrl}}
   NATS_INSECURE: "{{.Values.webhook.v2.nats.natsInsecure}}"
-  SYSDIG_OUTSUBJECT: acScan
   {{- end}}
