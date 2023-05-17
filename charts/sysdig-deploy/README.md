@@ -7,11 +7,16 @@ Use the `sysdig-deploy` Helm chart to install Sysdig Secure and/or Sysdig Monito
 This chart deploys various Sysdig components into your Kubernetes cluster.
 
 Currently included components:
-- [Sysdig Agent](https://github.com/sysdiglabs/charts/tree/master/charts/agent)
-- [Sysdig KSPM Collector](https://github.com/sysdiglabs/charts/tree/master/charts/kspm-collector)
-- [Sysdig Host Scanner](https://github.com/sysdiglabs/charts/tree/master/charts/node-analyzer#host-scanner)
-- [Sysdig Rapid Response](https://github.com/sysdiglabs/charts/tree/master/charts/rapid-response)
 - [Sysdig Admission Controller](https://github.com/sysdiglabs/charts/tree/master/charts/admission-controller)
+- [Sysdig Agent](https://github.com/sysdiglabs/charts/tree/master/charts/agent)
+- [Sysdig Benchmark Runner (on premise only)](https://github.com/sysdiglabs/charts/tree/master/charts/node-analyzer#benchmark-runner)
+- [Sysdig Host Analyzer (on premise only)](https://github.com/sysdiglabs/charts/tree/master/charts/node-analyzer#host-analyzer-legacy)
+- [Sysdig Host Scanner](https://github.com/sysdiglabs/charts/tree/master/charts/node-analyzer#host-scanner)
+- [Sysdig KSPM Analyzer](https://github.com/sysdiglabs/charts/tree/master/charts/node-analyzer#kspm-analyzer-preview)
+- [Sysdig KSPM Collector](https://github.com/sysdiglabs/charts/tree/master/charts/kspm-collector)
+- [Sysdig Image Analyzer (on premise only)](https://github.com/sysdiglabs/charts/tree/master/charts/node-analyzer#node-image-analyzer)
+- [Sysdig Rapid Response](https://github.com/sysdiglabs/charts/tree/master/charts/rapid-response)
+- [Sysdig Runtime Scanner](https://github.com/sysdiglabs/charts/tree/master/charts/node-analyzer#runtime-scanner)
 
 ## Prerequisites
 
