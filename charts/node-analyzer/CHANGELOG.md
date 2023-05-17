@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.8.52
+### Bug Fixes
+* **node-analyzer** [fd461c10](https://github.com/sysdiglabs/charts/commit/fd461c107d0c6fe3847a920d9851cd55ae566625): allow custom annotations on node analyzer daemonset ([#1097](https://github.com/sysdiglabs/charts/issues/1097))
 # v1.8.51
 ### Bug Fixes
 * **node-analyzer** [539e0a7](https://github.com/sysdiglabs/charts/commit/539e0a7b8641529e1276d0bca31a159256b4d720): Remove pullPolicy and pullSecrets duplicated entry ([#967](https://github.com/sysdiglabs/charts/issues/967))
