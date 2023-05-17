@@ -1,6 +1,6 @@
 # What's Changed
 
-### Bug Fixes
-- **agent** [c337ffb](https://github.com/sysdiglabs/charts/commit/c337ffb53abc3f9b17a6cb9e10f649a2434bba77): delegated agent volume name ([#1094](https://github.com/sysdiglabs/charts/issues/1094))
+### Chores
+- **agent** [a55351db](https://github.com/sysdiglabs/charts/commit/a55351db97cde83da12d5bd4d1d921f735e8b9cf): bump agent version to 12.14.1 ([#1106](https://github.com/sysdiglabs/charts/issues/1106))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.8.0...agent-1.8.1
+#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.8.2...agent-1.8.3
