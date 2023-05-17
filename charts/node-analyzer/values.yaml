@@ -25,6 +25,8 @@ gke:
   autopilot: false
 
 daemonset:
+  # Specify custom annotations for the DaemonSet
+  annotations: {}
   # Allow the DaemonSet to set labels
   labels: {}
   # Perform rolling updates by default in the DaemonSet agent
