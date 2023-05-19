@@ -32,9 +32,9 @@ data:
   {{- end -}}
 
   {{- if .Values.nodeAnalyzer.runtimeScanner.settings.maxImageSizeAllowed }}
-  max_image_size_allowed: {{ .Values.nodeAnalyzer.runtimeScanner.settings.maxImageSizeAllowed | quote }}
+  max_image_size_allowed: {{ .Values.nodeAnalyzer.runtimeScanner.settings.maxImageSizeAllowed | int64 | quote }}
   {{- end -}}
   {{- if .Values.nodeAnalyzer.runtimeScanner.settings.maxFileSizeAllowed }}
-  analyzer.maxFileSizeAllowed: {{ .Values.nodeAnalyzer.runtimeScanner.settings.maxFileSizeAllowed | quote }}
+  analyzer.maxFileSizeAllowed: {{ .Values.nodeAnalyzer.runtimeScanner.settings.maxFileSizeAllowed | int64 | quote }}
   {{- end -}}
 {{- end }}
