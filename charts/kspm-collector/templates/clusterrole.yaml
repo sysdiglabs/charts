@@ -54,4 +54,14 @@ rules:
       - 'get'
       - 'list'
       - 'watch'
+{{- if and .Values.psp.create (include "kspmCollector.kubeVersionLessThan" (dict "root" . "major" 1 "minor" 25)) }}
+  - apiGroups:
+      - "policy"
+    resources:
+      - "podsecuritypolicies"
+    resourceNames:
+      - "{{ template "kspmCollector.fullname" .}}"
+    verbs:
+      - "use"
+{{- end }}
 {{- end }}

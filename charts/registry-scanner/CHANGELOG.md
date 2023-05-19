@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.0.9
+### New Features
+* **registry-scanner** [7242c48](https://github.com/sysdiglabs/charts/commit/7242c48f332020e8a2f6cad2b40dd2f1e2a080cb): ttl for orchestrator job ([#1102](https://github.com/sysdiglabs/charts/issues/1102))
 
 # v1.0.8
 * feat: hide sensitive data from logs

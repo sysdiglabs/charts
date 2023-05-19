@@ -10,6 +10,21 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.8.7
+### Chores
+* **sysdig-deploy** [ce9265df](https://github.com/sysdiglabs/charts/commit/ce9265df7fa4cabb24287b69c2aef2892e7e546d): Automatic version bump due to updated dependencies ([#1110](https://github.com/sysdiglabs/charts/issues/1110))
+# v1.8.6
+### Chores
+* **sysdig-deploy** [3908bc78](https://github.com/sysdiglabs/charts/commit/3908bc78b328b5a03a2cedb6542e5687ba2cea86): Automatic version bump due to updated dependencies ([#1108](https://github.com/sysdiglabs/charts/issues/1108))
+# v1.8.5
+### Documentation
+* **sysdig-deploy** [43429c5a](https://github.com/sysdiglabs/charts/commit/43429c5a202f1048a8f802d64708c27cad678f5a): update readme to include all node analyzer components ([#1100](https://github.com/sysdiglabs/charts/issues/1100))
+# v1.8.4
+### Chores
+* **sysdig-deploy** [c3e1d8e4](https://github.com/sysdiglabs/charts/commit/c3e1d8e4d8f1a9e6c277df4411a3ac11067a56bf): Automatic version bump due to updated dependencies ([#1107](https://github.com/sysdiglabs/charts/issues/1107))
+# v1.8.3
+### Chores
+* **sysdig-deploy** [8cf4ed9](https://github.com/sysdiglabs/charts/commit/8cf4ed952cce05c13ff2b729c09ad4ddce093c32): Automatic version bump due to updated dependencies ([#1101](https://github.com/sysdiglabs/charts/issues/1101))
 # v1.8.2
 ### Bug Fixes
 * **agent** [c337ffb](https://github.com/sysdiglabs/charts/commit/c337ffb53abc3f9b17a6cb9e10f649a2434bba77): delegated agent volume name ([#1094](https://github.com/sysdiglabs/charts/issues/1094))

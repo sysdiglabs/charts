@@ -1,0 +1,18 @@
+suite: Test specifying annotations to the Node Analyzer DaemonSet
+templates:
+  - templates/daemonset-node-analyzer.yaml
+tests:
+  - it: Test no annotations by default
+    asserts:
+      - isNull:
+          path: template.metadata.annotations
+
+  - it: Test annotations are added as expected
+    set:
+      daemonset:
+        annotations:
+          super: annotation
+    asserts:
+      - equal:
+          path: spec.template.metadata.annotations['super']
+          value: annotation

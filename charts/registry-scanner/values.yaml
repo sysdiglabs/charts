@@ -83,8 +83,11 @@ config:
       # readOnlyRootFilesystem: true
       # runAsNonRoot: true
       # runAsUser: 1000
+    orchestrator:
+      # ttl for orchestrator job. unset with empty value
+      ttlSecondsAfterFinished: 3600
     jobs:
-      # TTL for scanner jobs
+      # ttl for scanner worker jobs
       ttlSecondsAfterFinished: 600
       resources:
         requests:

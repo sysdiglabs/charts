@@ -1,6 +1,6 @@
 # What's Changed
 
 ### New Features
-- **registry-scanner** [8a59aa1](https://github.com/sysdiglabs/charts/commit/8a59aa17b9adf6abfacb8213fd5cd90085dcb87d): hide sensitive data from logs ([#1091](https://github.com/sysdiglabs/charts/issues/1091))
+- **registry-scanner** [7242c48](https://github.com/sysdiglabs/charts/commit/7242c48f332020e8a2f6cad2b40dd2f1e2a080cb): ttl for orchestrator job ([#1102](https://github.com/sysdiglabs/charts/issues/1102))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-1.0.7...registry-scanner-1.0.8
+#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-1.0.8...registry-scanner-1.0.9

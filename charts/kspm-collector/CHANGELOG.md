@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.1.45
+### Bug Fixes
+* **kspm-collector** [ac633130](https://github.com/sysdiglabs/charts/commit/ac6331304b82b2f22c01353b036696d2a92bb7b5): Add missing clusterrole for KSPM PSP ([#1109](https://github.com/sysdiglabs/charts/issues/1109))
 # v0.1.44
 ### New Features
 * **kspm-collector** [fe03214](https://github.com/sysdiglabs/charts/commit/fe0321465d12656a392c1e250e6c441af0a4c1d1): Added PSP policies for KSPM Collector ([#1088](https://github.com/sysdiglabs/charts/issues/1088))

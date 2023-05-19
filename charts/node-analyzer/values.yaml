@@ -19,22 +19,14 @@ image:
   overrideValue:
 
   registry: quay.io
-  # Specify a imagePullPolicy
-  # Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
-  # ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
-  pullPolicy: IfNotPresent
-  # Optionally specify an array of imagePullSecrets.
-  # Secrets must be manually created in the namespace.
-  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-  #
-  pullSecrets: {}
-  #   - name: myRegistrKeySecretName
 
 gke:
   # true here enables the deployment on gke autopilot clusters
   autopilot: false
 
 daemonset:
+  # Specify custom annotations for the DaemonSet
+  annotations: {}
   # Allow the DaemonSet to set labels
   labels: {}
   # Perform rolling updates by default in the DaemonSet agent
