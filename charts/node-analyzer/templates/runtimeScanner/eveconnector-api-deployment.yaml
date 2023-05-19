@@ -28,6 +28,9 @@ spec:
 {{ include "nodeAnalyzer.labels" . | indent 8 }}
     spec:
       serviceAccountName: {{ template "nodeAnalyzer.serviceAccountName" .}}
+      {{- if .Values.nodeAnalyzer.runtimeScanner.eveConnector.priorityClassName }}
+      priorityClassName: "{{ .Values.nodeAnalyzer.runtimeScanner.eveConnector.priorityClassName }}"
+      {{- end }}
       containers:
       - name: {{ include "nodeAnalyzer.name" . }}-eveconnector-api
         image: {{ template "nodeAnalyzer.image.eveConnector" . }}
