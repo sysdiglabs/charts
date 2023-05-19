@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.8.53
+### New Features
+* **node-analyzer** [729642d1](https://github.com/sysdiglabs/charts/commit/729642d13041aced698901d45f17ade57d109b9a): support settings passed as numbers ([#1093](https://github.com/sysdiglabs/charts/issues/1093))
 # v1.8.52
 ### Bug Fixes
 * **node-analyzer** [fd461c10](https://github.com/sysdiglabs/charts/commit/fd461c107d0c6fe3847a920d9851cd55ae566625): allow custom annotations on node analyzer daemonset ([#1097](https://github.com/sysdiglabs/charts/issues/1097))
