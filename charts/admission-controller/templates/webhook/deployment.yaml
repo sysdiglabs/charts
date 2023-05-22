@@ -57,10 +57,8 @@ spec:
             - name: NO_PROXY
               value: {{ include "webhook.noProxy" . }},{{ include "admissionController.scanner.fullname" . }}
             {{- end }}
-            - name: ACCESS_KEY
-              value: {{.Values.sysdig.accessKey | default .Values.global.sysdig.accessKey}}
           ports:
-            - containerPort: {{ .Values.webhook.http.port }}
+            - containerPort: {{ .Values.webhook.v2.container.port }}
               protocol: TCP
 
           envFrom:
@@ -69,6 +67,10 @@ spec:
           volumeMounts:
             - name: cert
               mountPath: /cert
+              readOnly: true
+
+            - name: configs
+              mountPath: /configs
               readOnly: true
           resources:
             {{- toYaml .Values.webhook.resources | nindent 12 }}
@@ -149,6 +151,9 @@ spec:
           resources:
             {{- toYaml .Values.webhook.resources | nindent 12 }}
       volumes:
+        - name: configs
+          secret:
+            secretName: {{ include "admissionController.webhook.fullname" . }}-secrets
         - name: cert
           secret:
             secretName: {{ include "admissionController.webhook.fullname" . }}-tls

@@ -127,7 +127,7 @@ webhook:
     container: 
       name: secure-admission-controller
       port: 8443
-      image: docker.io/lioralafisysdig/vac:latest
+      image:  docker.io/lioralafisysdig/vac:latest # quay.io/sysdig/secure-admission-controller:1.0.0-rc  #docker.io/lioralafisysdig/vac:latest
 
   # Service name for Webhook deployment
   name: webhook
@@ -222,7 +222,7 @@ webhook:
   # Dry Run request
   dryRun: false
   # Log Level - Valid Values are: error, info, debug, trace
-  logLevel: info
+  logLevel: DEBUG
 
   ssl:
     # Reuse existing TLS Secret during chart upgrade
