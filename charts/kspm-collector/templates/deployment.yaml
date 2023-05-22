@@ -54,7 +54,7 @@ spec:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}
       {{- end }}
       {{- if .Values.priorityClassName }}
-      priorityClassName: "{{ .Values.priorityClassName }}"
+      priorityClassName: {{ .Values.priorityClassName | quote }}
       {{- end }}
       containers:
       - name: {{ include "kspmCollector.name" . }}
