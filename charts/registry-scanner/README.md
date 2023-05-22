@@ -52,7 +52,7 @@ Deploy the registry scanner specify each parameter using the `--set key=value[,k
 
 ```bash
 $ helm upgrade --install registry-scanner \
-    --version=1.0.10 \
+    --version=1.0.11 \
     --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
     --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
     --set config.registryURL=<REGISTRY_URL> \
@@ -64,7 +64,7 @@ $ helm upgrade --install registry-scanner \
 Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
 
 ```bash
-$ helm install registry-scanner -f values.yaml --version=1.0.10 sysdig/registry-scanner
+$ helm install registry-scanner -f values.yaml --version=1.0.11 sysdig/registry-scanner
 ```
 
 
@@ -121,8 +121,8 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | config.filter.include                            | List of regular expressions.<br/>Images matching any of these expressions are *always* included when scanning.                                                                                                                              | <code>[]</code>                              |
 | config.filter.exclude                            | List of regular expressions.<br/>Images matching any of these expressions are excluded when scanning.                                                                                                                                       | <code>[]</code>                              |
 | config.filter.maxAgeDays                         | Based on its creation date, excludes images older than specified number of days.<br/>Maximum 365                                                                                                                                            | <code>90</code>                              |
-| config.filter.maxTagsPerRepository               | Based on its creation date, newer ones take precedence, maximum number of tags to scan per repository.<br/>Maximum 10                                                                                                                       | <code>5</code>                               |
-| config.filter.maxRepositoriesPerRegistry         | Number of repositories to scan per registry.<br/>Maximum Value 1000                                                                                                                                                                         | <code>500</code>                             |
+| config.filter.maxTagsPerRepository               | Based on its creation date, newer ones take precedence, maximum number of tags to scan per repository.<br/>Maximum 50                                                                                                                       | <code>5</code>                               |
+| config.filter.maxRepositoriesPerRegistry         | Number of repositories to scan per registry.<br/>Maximum Value 10000                                                                                                                                                                        | <code>500</code>                             |
 | config.scan.inlineScanImage                      | Override the default image for the inline scanner job.                                                                                                                                                                                      | <code>""</code>                              |
 | config.scan.securityContext                      | Security context for Inline Scanner container.                                                                                                                                                                                              | <code>{}</code>                              |
 | config.scan.orchestrator.ttlSecondsAfterFinished | ttl for orchestrator job. unset with empty value                                                                                                                                                                                            | <code>3600</code>                            |
@@ -174,7 +174,7 @@ Use the following command to deploy in an on-prem:
 
 ```bash
 $ helm upgrade --install registry-scanner \
-    --version=1.0.10 \
+    --version=1.0.11 \
     --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
     --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
     --set config.secureSkipTLS=true \
