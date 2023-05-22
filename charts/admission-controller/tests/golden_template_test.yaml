@@ -38,3 +38,18 @@ tests:
           path: data.CLUSTER_NAME
           value: test-k8s
         template: webhook/configmap.yaml
+  - it: check value of apiEndpoint override
+    documentIndex: 0
+    set:
+      sysdig:
+        apiEndpoint: my-endpoint.sysdig.com
+      clusterName: test-k8s
+    asserts:
+      - equal:
+          path: data.SECURE_BASE_URL
+          value: https://my-endpoint.sysdig.com
+        template: scanner/configmap.yaml
+      - equal:
+          path: data.SECURE_URL
+          value: https://my-endpoint.sysdig.com
+        template: webhook/configmap.yaml
