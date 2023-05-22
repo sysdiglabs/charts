@@ -305,6 +305,8 @@ nodeAnalyzer:
         digest:
         pullPolicy: IfNotPresent
 
+      priorityClassName:
+
       resources:
         requests:
           cpu: 100m
