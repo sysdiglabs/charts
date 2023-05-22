@@ -67,11 +67,11 @@ config:
     # List of regular expressions.<br/>Images matching any of these expressions are excluded when scanning.
     exclude: []
     # Based on its creation date, excludes images older than specified number of days.<br/>Maximum 365
-    maxAgeDays: 365
-    # Based on its creation date, newer ones take precedence, maximum number of tags to scan per repository.<br/>Maximum 10
-    maxTagsPerRepository: 50
-    # Number of repositories to scan per registry.<br/>Maximum Value 1000
-    maxRepositoriesPerRegistry: 10000
+    maxAgeDays: 90
+    # Based on its creation date, newer ones take precedence, maximum number of tags to scan per repository.<br/>Maximum 50
+    maxTagsPerRepository: 5
+    # Number of repositories to scan per registry.<br/>Maximum Value 10000
+    maxRepositoriesPerRegistry: 500
   scan:
     # Override the default image for the inline scanner job.
     inlineScanImage: ""

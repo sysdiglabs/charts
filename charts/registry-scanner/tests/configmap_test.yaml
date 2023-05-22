@@ -35,7 +35,7 @@ tests:
     asserts:
       - matchRegex:
           path: data['config.yaml']
-          pattern: "maxTagsPerRepository: 50"
+          pattern: "maxTagsPerRepository: 5"
   - it: maxTagsPerRepository wires if custom setup is given
     set:
       config:
@@ -50,7 +50,7 @@ tests:
     asserts:
       - matchRegex:
           path: data['config.yaml']
-          pattern: "maxAgeDays: 365"
+          pattern: "maxAgeDays: 90"
   - it: maxAgeDays wires if custom setup is given
     set:
       config:
@@ -65,7 +65,7 @@ tests:
     asserts:
       - matchRegex:
           path: data['config.yaml']
-          pattern: "maxRepositoriesPerRegistry: 10000"
+          pattern: "maxRepositoriesPerRegistry: 500"
   - it: maxRepositories wires if custom setup is given
     set:
       config:
