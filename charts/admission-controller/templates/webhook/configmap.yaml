@@ -22,6 +22,6 @@ data:
   {{- if .Values.features.admissionController}}
   SERVICE_PORT: "{{.Values.webhook.v2.container.port}}"
   CERT_LOCATION: /cert
-  EXTERNAL_NATS_URL: "wss://{{.Values.sysdig.url}}:443"
+  EXTERNAL_NATS_URL: {{.Values.natsURL}}
   NATS_INSECURE: "{{.Values.webhook.v2.nats.natsInsecure}}"
   {{- end}}

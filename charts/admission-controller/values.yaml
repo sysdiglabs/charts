@@ -115,7 +115,7 @@ podMonitors:
     labels: {}
     # Annotatons on the scanner PodMonitor
     annotations: {}
-
+natsURL: ""
 webhook:
   v2:
     enabled: true
@@ -216,6 +216,8 @@ webhook:
 
   # Configure affinity rules for webhook
   affinity: {}
+
+
 
   # Deny request when an error happened evaluating request
   denyOnError: false

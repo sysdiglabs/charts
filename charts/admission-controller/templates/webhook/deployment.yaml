@@ -60,6 +60,7 @@ spec:
           ports:
             - containerPort: {{ .Values.webhook.v2.container.port }}
               protocol: TCP
+              name: vac
 
           envFrom:
             - configMapRef:
