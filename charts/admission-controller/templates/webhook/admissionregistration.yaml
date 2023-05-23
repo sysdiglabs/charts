@@ -35,7 +35,7 @@ webhooks:
       namespace: {{ include "admissionController.namespace" . }}
       name: {{ include "admissionController.webhook.fullname" . }}
       path: /validate
-      port: 7443
+      port: {{ .Values.webhook.v2.registrationPort }}
     caBundle: {{ $certList._2 }}
 
   admissionReviewVersions: ["v1", "v1beta1"]

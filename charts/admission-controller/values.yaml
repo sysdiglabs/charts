@@ -118,6 +118,7 @@ podMonitors:
 natsURL: ""
 webhook:
   v2:
+    registrationPort: 7443
     enabled: true
     denyOnError: true
     timeoutSeconds: 30
