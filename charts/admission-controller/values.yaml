@@ -225,7 +225,7 @@ webhook:
   # Dry Run request
   dryRun: false
   # Log Level - Valid Values are: error, info, debug, trace
-  logLevel: DEBUG
+  logLevel: info
 
   ssl:
     # Reuse existing TLS Secret during chart upgrade
