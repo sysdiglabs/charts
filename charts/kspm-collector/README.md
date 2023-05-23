@@ -52,6 +52,8 @@ The following table lists the configurable parameters of the Sysdig KSPM Collect
 | `resources.requests.memory`               | KSPM collector memory requests                                                          | `256Mi`                                                     |
 | `resources.limits.cpu`                    | KSPM collector CPU limits                                                               | `500m`                                                      |
 | `resources.limits.memory`                 | KSPM collector memory limits                                                            | `1536Mi`                                                    |
+| `priorityClassName`                       | Name of an existing PriorityClass for the KSPM Collector to use                                                        | `{}`
+                 |
 | `apiEndpoint`                             | kspmCollector apiEndpoint                                                               | `""`                                                        |
 | `httpProxy`                               | Proxy configuration variables                                                           |                                                             |
 | `httpsProxy`                              | Proxy configuration variables                                                           |                                                             |
