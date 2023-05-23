@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.8.54
+### New Features
+* [19a5637d](https://github.com/sysdiglabs/charts/commit/19a5637d845bf05d06702955a8fb950f44d1aece): eve-connector priorityclassname added ([#1113](https://github.com/sysdiglabs/charts/issues/1113))
 # v1.8.53
 ### New Features
 * **node-analyzer** [729642d1](https://github.com/sysdiglabs/charts/commit/729642d13041aced698901d45f17ade57d109b9a): support settings passed as numbers ([#1093](https://github.com/sysdiglabs/charts/issues/1093))
