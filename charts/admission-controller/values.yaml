@@ -115,9 +115,10 @@ podMonitors:
     labels: {}
     # Annotatons on the scanner PodMonitor
     annotations: {}
-
+natsURL: ""
 webhook:
   v2:
+    registrationPort: 7443
     enabled: true
     denyOnError: true
     timeoutSeconds: 30
@@ -127,8 +128,7 @@ webhook:
     container: 
       name: secure-admission-controller
       port: 8443
-      image: docker.io/lioralafisysdig/vac:latest
-
+      image:   quay.io/sysdig/secure-admission-controller:1.0.0-rc  
   # Service name for Webhook deployment
   name: webhook
   # Amount of replicas for webhook. **Deprecated**, use `webhook.autoscaling.minReplicas` and `webhook.autoscaling.maxReplicas` instead.
@@ -216,6 +216,8 @@ webhook:
 
   # Configure affinity rules for webhook
   affinity: {}
+
+
 
   # Deny request when an error happened evaluating request
   denyOnError: false

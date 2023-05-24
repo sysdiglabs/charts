@@ -298,6 +298,14 @@ Allow overriding registry and repository for air-gapped environments
 {{- end -}}
 
 {{/*
+the following helper function designed to take the accessKey if specified locally and if it doesn't exist use the global one
+*/}}
+
+{{- define "sysdig.accessKey" -}}
+   {{- .Values.sysdig.accessKey | default .Values.global.sysdig.accessKey -}}
+{{- end -}}
+
+{{/*
 The following helper functions are all designed to use global values where
 possible, but accept overrides from the chart values.
 */}}
