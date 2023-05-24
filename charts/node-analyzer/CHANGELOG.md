@@ -10,6 +10,13 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.8.55
+### New Features
+* **node-analyzer** [930926ef](https://github.com/sysdiglabs/charts/commit/930926efe251bd171c555d136030f5916a4ba04e): Update legacy engine NIA with security updates ([#1124](https://github.com/sysdiglabs/charts/issues/1124))
+
+    * Security updates (May 2023) for NodeImageAnalyzer. Fixed 2 CVEs:
+	* CVE-2023-30861
+	* CVE-2023-28840
 # v1.8.54
 ### New Features
 * [19a5637d](https://github.com/sysdiglabs/charts/commit/19a5637d845bf05d06702955a8fb950f44d1aece): eve-connector priorityclassname added ([#1113](https://github.com/sysdiglabs/charts/issues/1113))
