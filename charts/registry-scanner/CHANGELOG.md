@@ -10,9 +10,16 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+
+# v1.0.12
+
+* feat: allow internal ENV var to allow pageSize setup on artifatory client
+* feat: inner vm-scanning library bump, to add vulnerability management support for .Net packages and centos OS
+
 # v1.0.11
 ### Documentation
 * **registry-scanner** [53b92bbd](https://github.com/sysdiglabs/charts/commit/53b92bbdd190f041996db20dd65d5a125c049a90): update filter values ([#1116](https://github.com/sysdiglabs/charts/issues/1116))
+
 # v1.0.10
 * chore: fix high severity vulnerability
 * docs: improve and clarify logs: filtering and scan duration
