@@ -1,6 +1,6 @@
 # What's Changed
 
-### Documentation
-- **registry-scanner** [53b92bbd](https://github.com/sysdiglabs/charts/commit/53b92bbdd190f041996db20dd65d5a125c049a90): update filter values ([#1116](https://github.com/sysdiglabs/charts/issues/1116))
+### New Features
+- **registry-scanner** [2ac10e3c](https://github.com/sysdiglabs/charts/commit/2ac10e3c3bb340076dddec30423305f51ac0e901): Update to v0.2.38 ([#1131](https://github.com/sysdiglabs/charts/issues/1131))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-1.0.10...registry-scanner-1.0.11
+#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-1.0.11...registry-scanner-1.0.12
