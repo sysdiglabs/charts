@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.8.57
+### Chores
+* **kspm-collector, node-analyzer** [2807ef4b](https://github.com/sysdiglabs/charts/commit/2807ef4b5e33c587008a84f03c1c26f18e48019b): bump KSPM to v1.23.0  ([#1132](https://github.com/sysdiglabs/charts/issues/1132))
 # v1.8.56
 ### New Features
 * **node-analyzer** [0e7f2534](https://github.com/sysdiglabs/charts/commit/0e7f2534b5f6726d275c76d307910f8d909d3749): Update legacy engine HostAnalyzer with security updates ([#1129](https://github.com/sysdiglabs/charts/issues/1129))
