@@ -24,7 +24,7 @@ global:
     skipVerifyCertificate: false
 
   # The scannerMode of the Cluster Scanner. Supported values are `local` or
-  # `multi`.
+  # `multi`. Please refer to docs.sysdig.com for further documentation.
   scannerMode: "local"
   # Set the logging level to use, useful for troubleshooting. Valid values,
   # sorted by increasing level of verbosity are: `PANIC`, `FATAL`, `ERROR`,

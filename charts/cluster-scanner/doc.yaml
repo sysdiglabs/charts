@@ -3,7 +3,7 @@ project:
   shortName: Cluster Scanner
   url: https://docs.sysdig.com/en/docs/sysdig-secure/scanning
   description: This chart deploys the Sysdig Cluster Scanner in your Kubernetes cluster.
-  app: the Sysdig Admission Controller
+  app: the Sysdig Cluster Scanner
 repository:
   url: https://charts.sysdig.com
   name: sysdig

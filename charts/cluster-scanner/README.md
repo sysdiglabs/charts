@@ -40,7 +40,7 @@ $ helm upgrade --install sysdig-cluster-scanner sysdig/cluster-scanner \
 
 ## Introduction
 
-This chart deploys the Sysdig Admission Controller as a Deployment on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
+This chart deploys the Sysdig Cluster Scanner as a Deployment on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
 
 
 ### Prerequisites
@@ -67,7 +67,7 @@ To find the values:
 - CLUSTER_NAME: The name to be used for the cluster. Make sure it is unique for all your clusters.
 - SYSDIG_REGION: The region of the Sysdig Backend to use. E.g.: `us1`, or `eu1`.
 
-The command deploys the Sysdig Admission Controller on the Kubernetes cluster in the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.
+The command deploys the Sysdig Cluster Scanner on the Kubernetes cluster in the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.
 
 > **Tip**: List all releases using `helm list`
 
@@ -92,7 +92,7 @@ The following table lists the configurable parameters of the `cluster-scanner` c
 | global.sysdig.accessKey                           | Your Sysdig Agent Access Key                                                                                                                                                                                                                                                                        | <code>""</code>                               |
 | global.sysdig.region                              | Region name for Sysdig. Valid options: `us1`, `us2`, `us3`, `us4`, `eu1`, `au1`. When no region is suitable (e.g. on-premise installations) set the `global.sysdig.apiHost: ""` parameter.                                                                                                          | <code>"us1"</code>                            |
 | global.sysdig.skipVerifyCertificate               | skipVerifyCertificate might be used in on-premise installations.                                                                                                                                                                                                                                    | <code>false</code>                            |
-| global.scannerMode                                | The scannerMode of the Cluster Scanner. Supported values are `local` or `multi`.                                                                                                                                                                                                                    | <code>"local"</code>                          |
+| global.scannerMode                                | The scannerMode of the Cluster Scanner. Supported values are `local` or `multi`. Please refer to docs.sysdig.com for further documentation.                                                                                                                                                         | <code>"local"</code>                          |
 | global.loggingLevel                               | Set the logging level to use, useful for troubleshooting. Valid values, sorted by increasing level of verbosity are: `PANIC`, `FATAL`, `ERROR`, `WARN`, `INFO`, `DEBUG`, `TRACE`.                                                                                                                   | <code>"INFO"</code>                           |
 | global.onPremCompatibilityVersion                 | Optional parameter used to check the compatibility of cluster-scanner component versions with respect to the onprem backend version. E.g. if `onPremCompatibilityVersion=6.2`, then we make sure that the image tag is < 1.0.0 for both the Runtime Status Integrator and the Image SBOM Extractor. | <code>"6.2"</code>                            |
 | eveEnabled                                        | Enables Sysdig Eve to retrieve the list of running packages.                                                                                                                                                                                                                                        | <code>false</code>                            |
