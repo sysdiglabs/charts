@@ -8003,6 +8003,30 @@ entries:
     version: 0.1.0
   kspm-collector:
   - apiVersion: v2
+    appVersion: 1.23.0
+    created: "2023-05-30T15:32:49.431326969Z"
+    description: Sysdig KSPM collector
+    digest: 88653a2cbf8805e336f474f404c1790fc925afa93852f1728b73e7f25c6a3aa9
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: chen.shmilovich@sysdig.com
+      name: chen-shmilovich-sysdig
+    name: kspm-collector
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/kspm-collector-0.1.47/kspm-collector-0.1.47.tgz
+    version: 0.1.47
+  - apiVersion: v2
     appVersion: 1.22.0
     created: "2023-05-22T18:57:14.776056913Z"
     description: Sysdig KSPM collector
@@ -9131,6 +9155,40 @@ entries:
     - https://github.com/sysdiglabs/charts/releases/download/kspm-collector-0.1.0/kspm-collector-0.1.0.tgz
     version: 0.1.0
   node-analyzer:
+  - apiVersion: v2
+    appVersion: 12.6.0
+    created: "2023-05-30T15:32:49.594732647Z"
+    description: Sysdig Node Analyzer
+    digest: 1c1b5693e7fcdba269637c6ed6c46ec174d59d4de671ce90f7f390a3292b90fa
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: lachlan@deis.com
+      name: lachie83
+    - email: jorge.salamero@sysdig.com
+      name: bencer
+    - email: nestor.salceda@sysdig.com
+      name: nestorsalceda
+    - email: alvaro.iradier@sysdig.com
+      name: airadier
+    - email: carlos.arilla@sysdig.com
+      name: carillan81
+    - email: yashgiri.goswami@sysdig.com
+      name: yashgiri
+    name: node-analyzer
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/node-analyzer-1.8.57/node-analyzer-1.8.57.tgz
+    version: 1.8.57
   - apiVersion: v2
     appVersion: 12.6.0
     created: "2023-05-25T09:14:28.825648685Z"
@@ -33284,4 +33342,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2023-05-29T13:51:38.252344452Z"
+generated: "2023-05-30T15:32:49.783172429Z"
