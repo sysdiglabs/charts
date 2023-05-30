@@ -17,7 +17,7 @@ data:
 {{- end }}
 {{- include "agent.connectionSettings" . | trim | nindent 4 }}
 {{- include "agent.planSettings" . | trim | nindent 4 }}
-{{- include "agent.k8sColdStart" . | nindent 4 }}
+{{- include "agent.leaderElection" . }}
 {{- include "agent.disableCaptures" . | nindent 4 }}
 {{- include "agent.logSettings" . }}
 {{- if .Values.global.sysdig.tags }}

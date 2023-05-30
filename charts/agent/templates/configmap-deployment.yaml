@@ -32,7 +32,7 @@ data:
       enabled: false
     statsd:
       enabled: false
-{{- include "agent.k8sColdStart" . | nindent 4 }}
+{{- include "agent.leaderElection" . }}
 {{ include "agent.disableCaptures" . | nindent 4 }}
 {{- $_ := mergeOverwrite .Values.secure (dict "enabled" false) }}
 {{- (include "agent.secureFeatures" .) | nindent 4 }}
