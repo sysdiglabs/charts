@@ -26,8 +26,9 @@ $ helm repo add {{ .Repository.Name }} {{ .Repository.URL }}
 $ helm repo update
 $ helm upgrade --install sysdig-{{ .Release.Name }} {{ .Repository.Name }}/{{ .Chart.Name }} \
       --create-namespace -n {{ .Release.Namespace }}{{ with .Chart.Version }} --version={{.}} {{ end }} \
-      --set global.clusterConfig=CLUSTER_NAME \
-      --set global.sysdig.region=SYSDIG_REGION
+      --set global.clusterConfig.name=CLUSTER_NAME \
+      --set global.sysdig.region=SYSDIG_REGION \
+      --set global.sysdig.accessKey=YOUR-KEY-HERE
 ```
 
 - [Configuration](#configuration)
@@ -39,7 +40,7 @@ $ helm upgrade --install sysdig-{{ .Release.Name }} {{ .Repository.Name }}/{{ .C
 
 ## Introduction
 
-This chart deploys {{ .Project.App }} on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
+This chart deploys {{ .Project.App }} as a Deployment on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
 
 
 ### Prerequisites
@@ -50,11 +51,21 @@ This chart deploys {{ .Project.App }} on a [Kubernetes](http://kubernetes.io) cl
 
 ###  Installing the Chart
 
-To install the chart with the release name `{{ .Release.Name }}`:
+To install the chart with the release name `{{ .Release.Name }}`, run:
 
 ```console
-$ helm upgrade --install sysdig-{{ .Release.Name }} {{ .Repository.Name }}/{{ .Chart.Name }} -n {{ .Release.Namespace }}{{ with .Chart.Version }} --version={{.}}{{ end }}
+$ helm upgrade --install sysdig-{{ .Release.Name }} {{ .Repository.Name }}/{{ .Chart.Name }} \
+       --create-namespace -n {{ .Release.Namespace }}{{ with .Chart.Version }} --version={{.}}{{ end }} \
+       --set global.clusterConfig.name=CLUSTER_NAME \
+       --set global.sysdig.region=SYSDIG_REGION \
+       --set global.sysdig.accessKey=YOUR-KEY-HERE
 ```
+
+To find the values:
+
+- YOUR-KEY-HERE: This is the sysdig access key.
+- CLUSTER_NAME: The name to be used for the cluster. Make sure it is unique for all your clusters.
+- SYSDIG_REGION: The region of the Sysdig Backend to use. E.g.: `us1`, or `eu1`.
 
 The command deploys {{ .Project.App }} on the Kubernetes cluster in the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.
 
