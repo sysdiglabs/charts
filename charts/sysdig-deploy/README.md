@@ -224,8 +224,7 @@ helm install sysdig sysdig/sysdig-deploy \
     --set global.sysdig.accessKey=ACCESS_KEY \
     --set global.sysdig.secureAPIToken=SECURE_API_TOKEN \
     --set global.clusterConfig.name=CLUSTER_NAME \
-    --set admissionController.enabled=true \
-    --set admissionController.sysdig.url=SECURE_URL
+    --set admissionController.enabled=true
 ```
 
 As a values file:
