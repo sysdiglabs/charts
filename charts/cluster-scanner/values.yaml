@@ -4,10 +4,17 @@
 
 global:
   clusterConfig:
+    # The name of the cluster. Make sure to set a unique value for all the
+    # clusters being inspected.
     name: ""
   sysdig:
+    # Your Sysdig Agent Access Key
     accessKey: ""
-    # When no region is suitable (e.g. on-premise installations) set the `apiHost:` parameter.
+    # Region name for Sysdig. Valid options: `us1`, `us2`, `us3`, `us4`, `eu1`,
+    # `au1`.
+    #
+    # When no region is suitable (e.g. on-premise installations) set the
+    # `global.sysdig.apiHost: ""` parameter.
     region: "us1"
     # apiHost: ""
     # apiHost is used to manually set the Sysdig backend host
@@ -16,37 +23,59 @@ global:
     # skipVerifyCertificate might be used in on-premise installations.
     skipVerifyCertificate: false
 
-  scannerMode: "local"  # or "multi"
+  # The scannerMode of the Cluster Scanner. Supported values are `local` or
+  # `multi`. Please refer to docs.sysdig.com for further documentation.
+  scannerMode: "local"
+  # Set the logging level to use, useful for troubleshooting. Valid values,
+  # sorted by increasing level of verbosity are: `PANIC`, `FATAL`, `ERROR`,
+  # `WARN`, `INFO`, `DEBUG`, `TRACE`.
   loggingLevel: "INFO"
 
   # Optional parameter used to check the compatibility of cluster-scanner
-  # component versions with respect to the onprem version
+  # component versions with respect to the onprem backend version.
+  # E.g. if `onPremCompatibilityVersion=6.2`, then we make sure that the image
+  # tag is < 1.0.0 for both the Runtime Status Integrator and the Image SBOM
+  # Extractor.
   onPremCompatibilityVersion: "6.2"
 
+# Enables Sysdig Eve to retrieve the list of running packages.
 eveEnabled: false
+# Enables the integration with Sysdig Eve. Stores the list of running packages
+# to Sysdig backend. It implies `eveEnabled: true`.
 eveIntegrationEnabled: false
+# The namespace to use to retrieve the cluster UID
 rootNamespace: "kube-system"
 
 replicaCount: 2
 
 runtimeStatusIntegrator:
   image:
+    # The image registry to use for the Runtime Status Integrator component of
+    # Cluster Scanner
     registry: quay.io
+    # The image repository to use for pulling the Runtime Status Integrator
+    # image
     repository: sysdig/runtime-status-integrator
+    # The Runtime Status Integrator image pull policy
     pullPolicy: IfNotPresent
+    # The image tag to pull for the Runtime Status Integrator
     tag: "0.1.0"
   # Params to manage leader election
-  # Leader election is implemented leveraging the native capabilities of Kubernetes
-  # see: https://kubernetes.io/blog/2016/01/simple-leader-election-with-kubernetes/
+  # Leader election is implemented leveraging the native capabilities of
+  # Kubernetes see: https://kubernetes.io/blog/2016/01/simple-leader-election-with-kubernetes/
   # leaderElectionLeaseNameOverride: ""
   # leaderElectionLeaseNamespaceOverride: ""
 
+  # When the Cluster Scanner is running in `multi` mode, set the secret name to
+  # be used to retrieve the kubeconfig configuration to connect to the clusters
+  # to inspect.
   multiCluster:
     # kubeconfigSecretName: ""
 
+  # Restrict access to specific Docker secrets when Cluster Scanner is running
+  # in `local` mode. The default behavior is listing all secrets. See
+  # `values.yaml` for an example. Optional.
   localCluster:
-    # restrict access to specific docker secrets to obtain pull credentials. Optional.
-    # Default behaviour is listing all secrets
     # rbac:
     #   allowedPullSecrets:
     #     namespaceOneName:
@@ -57,41 +86,66 @@ runtimeStatusIntegrator:
     #       - myOtherDockerSecretTwo
 
   ports:
+    # The port to be used to expose prometheus metrics for the Runtime Status
+    # Integrator
     metrics: 25000
+    # The port to be used for healthcheck probes for the Runtime Status
+    # Integrator
     probes: 7000
   resources:
     limits:
+      # Runtime Status Integrator CPU limit per replica
       cpu: "1"
+      # Runtime Status Integrator Memory limit per replica
       memory: 350Mi
     requests:
+      # Runtime Status Integrator CPU requests per replica
       cpu: "350m"
+      # Runtime Status Integrator Memory requests per replica
       memory: 350Mi
 
   natsJS:
+    # The username to be used in the NATS JetStream instance the Runtime Status
+    # Integrator is going to start
     user: "default-user"
     # Default uses a random password for each installation.
     # password: ""
 
 imageSbomExtractor:
   image:
+    # The image registry to use for the Image SBOM Extractor component of
+    # Cluster Scanner
     registry: quay.io
+    # The image repository to use for pulling the Image SBOM Extractor image
     repository: sysdig/image-sbom-extractor
+    # The Image SBOM Extractor image pull policy
     pullPolicy: IfNotPresent
+    # The image tag to pull for the Image SBOM Extractor
     tag: "0.1.0"
   ports:
+    # The port to be used to expose prometheus metrics for the Image SBOM
+    # Extractor
     metrics: 25001
+    # The port to be used for healthcheck probes for the Image SBOM Extractor
     probes: 7001
   resources:
     limits:
+      # Image SBOM Extractor CPU limit per replica
       cpu: "1"
+      # Image SBOM Extractor Memory limit per replica
       memory: 350Mi
     requests:
+      # Image SBOM Extractor CPU requests per replica
       cpu: "150m"
+      # Image SBOM Extractor Memory requests per replica
       memory: 350Mi
 
   cache:
-    type: "local"  # other possible value is "redis"
+    # The type of cache to use, either `local` or `redis`
+    type: "local"
+    # The prefix to use for cached items
     prefix: "sysdig-cluster-scanner"
+    # Redis connection details (to be provided if the cache type is "redis")
     # redis:
     #   address: ""
     #   user: ""
@@ -103,8 +157,11 @@ imageSbomExtractor:
     #   sentinelMaster: ""
     #   sentinelAddress: ""
 
+# The image pull secrets for Cluster Scanner
 imagePullSecrets: []
+# Chart name override
 nameOverride: ""
+# Chart full name override
 fullnameOverride: ""
 
 serviceAccount:
@@ -113,17 +170,21 @@ serviceAccount:
   # Annotations to add to the service account
   annotations: {}
   # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
+  # If not set and create is true, a name is generated using the fullname
+  # template
   name: ""
 
+# Set Cluster Scanner pod annotations
 podAnnotations:
   prometheus.io/scrape: "true"
   prometheus.io/path: "/metrics"
   prometheus.io/port: "25000"
 
+# Set Cluster Scanner pod security context
 podSecurityContext: {}
   # fsGroup: 2000
 
+# Set Cluster Scanner security context
 securityContext: {}
   # capabilities:
   #   drop:
@@ -132,10 +193,14 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
+# Set Cluster Scanner Selector Labels
 selectorLabels: {}
 
+# Set Cluster Scanner Node Selector
 nodeSelector: {}
 
+# Set Cluster Scanner scheduling tolerations
 tolerations: []
 
+# Set Cluster Scanner affinity
 affinity: {}
