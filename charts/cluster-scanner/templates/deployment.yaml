@@ -356,11 +356,19 @@ spec:
               configMapKeyRef:
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: ise_cache_type
-          - name: ANALYZER_CACHE_PREFIX
+          # Local cache parameters
+          - name: ANALYZER_CACHE_LOCAL_MAX_SIZE
             valueFrom:
               configMapKeyRef:
                 name: {{ include "cluster-scanner.fullname" . }}
-                key: ise_cache_prefix
+                key: ise_cache_local_max_size
+                optional: true
+          - name: ANALYZER_CACHE_LOCAL_TTL
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: ise_cache_local_ttl
+                optional: true
           {{- if eq .Values.imageSbomExtractor.cache.type "redis" }}
           # REDIS (optional)
           - name: ANALYZER_CACHE_REDIS_ADDRESS
@@ -386,6 +394,12 @@ spec:
               configMapKeyRef:
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: cache_redis_database
+                optional: true
+          - name: ANALYZER_CACHE_REDIS_PREFIX
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: cache_redis_prefix
                 optional: true
           - name: ANALYZER_CACHE_REDIS_TLS_ENABLED
             valueFrom:
@@ -416,6 +430,12 @@ spec:
               configMapKeyRef:
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: cache_redis_sentinel_address
+                optional: true
+          - name: ANALYZER_CACHE_REDIS_TTL
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: cache_redis_ttl
                 optional: true
           {{- end }}
       {{- with .Values.imageSbomExtractor }}
