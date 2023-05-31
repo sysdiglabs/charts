@@ -323,7 +323,7 @@ nodeAnalyzer:
     # but when not set, newEngineOnly will win. Desiderata examples in ./tests/hostscanner_test.yaml
     # deploy: false
 
-    # scanOnStart will make a scann happen at startup.
+    # scanOnStart will make a scan happen at startup.
     # scanOnStart: true
     #
     # dirsToScan is a comma-separated list absolute host paths that should analyzed.
@@ -339,7 +339,7 @@ nodeAnalyzer:
 
     image:
       repository: sysdig/vuln-host-scanner
-      tag: 0.3.9
+      tag: 0.3.10
       digest:
       pullPolicy: IfNotPresent
 
