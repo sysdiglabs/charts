@@ -61,6 +61,9 @@ tests:
       - equal:
           path: data.ise_cache_prefix
           value: sysdig-cluster-scanner
+      - equal:
+          path: data.sysdig_verify_certificate
+          value: "true"
 
   - it: "has local mode as default"
     set:
