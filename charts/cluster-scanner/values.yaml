@@ -20,8 +20,6 @@ global:
     # apiHost is used to manually set the Sysdig backend host
     # Must have the protocol (http:// or https://)
 
-    # skipVerifyCertificate might be used in on-premise installations.
-    skipVerifyCertificate: false
 
   # The scannerMode of the Cluster Scanner. Supported values are `local` or
   # `multi`. Please refer to docs.sysdig.com for further documentation.
@@ -47,6 +45,11 @@ eveIntegrationEnabled: false
 rootNamespace: "kube-system"
 
 replicaCount: 2
+
+# Can be set to false to allow insecure connections to the Sysdig backend,
+# such as for on-premise installs that use self-signed certificates.
+# By default, certificates are always verified.
+sslVerifyCertificate: true
 
 runtimeStatusIntegrator:
   image:
