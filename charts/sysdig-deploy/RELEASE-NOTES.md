@@ -1,6 +1,6 @@
 # What's Changed
 
-### New Features
-- **admission-controller** [ba5c9103](https://github.com/sysdiglabs/charts/commit/ba5c91037bbf06470c2e03c69d0bba33518fc3c4): Deprecate sysdig.url (keep for compatibility) and use apiEndpoint instead ([#1118](https://github.com/sysdiglabs/charts/issues/1118))
+### Chores
+- **sysdig-deploy** [5e3e098f](https://github.com/sysdiglabs/charts/commit/5e3e098f25b969b40626e155afc0f5488d0c15c5): Automatic version bump due to updated dependencies ([#1142](https://github.com/sysdiglabs/charts/issues/1142))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.8.13...sysdig-deploy-1.8.14
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.8.14...sysdig-deploy-1.8.15
