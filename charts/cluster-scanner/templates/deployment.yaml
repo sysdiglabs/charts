@@ -86,7 +86,7 @@ spec:
               configMapKeyRef:
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: sysdig_host
-          - name: SYSDIG_API_SKIP_VERIFY_CERTIFICATE
+          - name: SYSDIG_API_VERIFY_CERTIFICATE
             valueFrom:
               configMapKeyRef:
                 name: {{ include "cluster-scanner.fullname" . }}
@@ -361,7 +361,7 @@ spec:
               configMapKeyRef:
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: ise_cache_prefix
-          {{- if eq .Values.type "redis" }}
+          {{- if eq .Values.imageSbomExtractor.cache.type "redis" }}
           # REDIS (optional)
           - name: ANALYZER_CACHE_REDIS_ADDRESS
             valueFrom:
