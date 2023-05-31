@@ -43,13 +43,13 @@ sysdig:
   existingSecureAPITokenSecret: ""
 
   # Sysdig URL.<br/>
-  # - Default https://secure.sysdig.com is for the us-east region.<br/>
-  # - For us-west use https://us2.app.sysdig.com<br/>
-  # - For European Union, use https://eu1.app.sysdig.com<br/>
-  # - For APAC, use https://app.au1.sysdig.com<br/>
-  # - For US4 (our west Google cloud region) use https://app.us4.sysdig.com<br/>
+  # - Default secure.sysdig.com is for the us-east region.<br/>
+  # - For us-west use us2.app.sysdig.com<br/>
+  # - For European Union, use eu1.app.sysdig.com<br/>
+  # - For APAC, use app.au1.sysdig.com<br/>
+  # - For US4 (our west Google cloud region) use app.us4.sysdig.com<br/>
   # - For on-prem, your own enpoints<br/>
-  url: ""
+  apiEndpoint: ""
 
 features:
   # Enable K8s Audit detections with Falco rules

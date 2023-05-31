@@ -121,3 +121,20 @@ tests:
           path: spec.template.spec.containers[0].envFrom[0].secretRef.name
           value: override_token
         template: webhook/deployment.yaml
+
+  - it: uses the specified region
+    documentIndex: 0
+    set:
+      global:
+        sysdig:
+          region: eu1
+      clusterName: test-k8s
+    asserts:
+      - equal:
+          path: data.SECURE_BASE_URL
+          value: https://eu1.app.sysdig.com
+        template: scanner/configmap.yaml
+      - equal:
+          path: data.SECURE_URL
+          value: https://eu1.app.sysdig.com
+        template: webhook/configmap.yaml
