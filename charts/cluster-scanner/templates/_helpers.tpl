@@ -132,6 +132,9 @@ cache_redis_password: {{ .password }}
 {{- if .database }}
 cache_redis_database: {{ .database }}
 {{- end }}
+{{- if .prefix }}
+cache_redis_prefix: {{ .prefix }}
+{{- end }}
 {{- if .tlsEnabled }}
 cache_redis_tls_enabled: {{ .tlsEnabled | quote }}
 {{- end }}
@@ -146,6 +149,9 @@ cache_redis_sentinel_master: {{ .sentinelMaster }}
 {{- end }}
 {{- if .sentinelAddress }}
 cache_redis_sentinel_address: {{ .sentinelAddress }}
+{{- end }}
+{{- if .ttl }}
+cache_redis_ttl: {{ .ttl }}
 {{- end }}
 {{- end }}
 {{- end }}

@@ -142,21 +142,27 @@ imageSbomExtractor:
       memory: 350Mi
 
   cache:
-    # The type of cache to use, either `local` or `redis`
+    # The type of cache to use, either `local` or `redis`. When setting `redis`, both Redis and the local cache will be used.
     type: "local"
-    # The prefix to use for cached items
-    prefix: "sysdig-cluster-scanner"
+    # Additional configuration parameters for the local cache
+    local:
+      # The maximum size in bytes of the local cache. By default it is set to 35MB
+      maxSizeBytes: "36700160"
+      # The TTL for items in the local cache. By default it is set to 7 days.
+      ttl: "168h"
     # Redis connection details (to be provided if the cache type is "redis")
     # redis:
     #   address: ""
     #   user: ""
     #   password: ""
     #   database: ""
+    #   prefix: ""
     #   tlsEnabled: false
     #   tlsSkip: ""
     #   tlsCa: ""
     #   sentinelMaster: ""
     #   sentinelAddress: ""
+    #   ttl: "168h" # Default ttl is 7 days
 
 # The image pull secrets for Cluster Scanner
 imagePullSecrets: []

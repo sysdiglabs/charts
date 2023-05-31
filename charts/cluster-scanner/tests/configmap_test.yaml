@@ -59,8 +59,11 @@ tests:
           path: data.ise_cache_type
           value: local
       - equal:
-          path: data.ise_cache_prefix
-          value: sysdig-cluster-scanner
+          path: data.ise_cache_local_max_size
+          value: "36700160"
+      - equal:
+          path: data.ise_cache_local_ttl
+          value: 168h
       - equal:
           path: data.sysdig_verify_certificate
           value: "true"
@@ -145,3 +148,50 @@ tests:
     asserts:
       - isNull:
           path: data.local_registry_secrets
+
+  - it: "has correct content with redis caching"
+    set:
+      global.sysdig.apiHost: "http://test.com"
+      imageSbomExtractor.cache.type: "redis"
+      imageSbomExtractor.cache.local.maxSizeBytes: "666"
+      imageSbomExtractor.cache.local.ttl: "69h"
+      imageSbomExtractor.cache.redis.address: "localhost"
+      imageSbomExtractor.cache.redis.user: "foobar"
+      imageSbomExtractor.cache.redis.prefix: "gigi"
+      imageSbomExtractor.cache.redis.sentinelMaster: "sm"
+      imageSbomExtractor.cache.redis.ttl: "16h"
+    asserts:
+      - equal:
+          path: data.sysdig_host
+          value: "http://test.com"
+      - equal:
+          path: data.ise_cache_local_max_size
+          value: "666"
+      - equal:
+          path: data.ise_cache_local_ttl
+          value: 69h
+      - equal:
+          path: data.cache_redis_address
+          value: localhost
+      - equal:
+          path: data.cache_redis_user
+          value: foobar
+      - isNull:
+          path: data.cache_redis_password
+      - equal:
+          path: data.cache_redis_prefix
+          value: gigi
+      - isNull:
+          path: data.cache_redis_tls_enabled
+      - isNull:
+          path: data.cache_redis_tls_skip
+      - isNull:
+          path: data.cache_redis_tls_ca
+      - equal:
+          path: data.cache_redis_sentinel_master
+          value: sm
+      - isNull:
+          path: data.cache_redis_sentinel_address
+      - equal:
+          path: data.cache_redis_ttl
+          value: 16h
