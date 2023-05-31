@@ -90,7 +90,7 @@ spec:
             valueFrom:
               configMapKeyRef:
                 name: {{ include "cluster-scanner.fullname" . }}
-                key: sysdig_skip_verify_certificate
+                key: sysdig_verify_certificate
                 optional: true
           - name: CLUSTER_NAME
             valueFrom:
@@ -269,7 +269,7 @@ spec:
             valueFrom:
               configMapKeyRef:
                 name: {{ include "cluster-scanner.fullname" . }}
-                key: sysdig_skip_verify_certificate
+                key: sysdig_verify_certificate
                 optional: true
           - name: NATS_URL
             valueFrom:
