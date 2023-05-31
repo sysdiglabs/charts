@@ -56,7 +56,7 @@ features:
   k8sAuditDetections: true
 
   # Enable iac secure admission controller
-  admissionController: false
+  kspmAdmissionController: false
 
   # [Admission Webhook Configuration rules](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#matching-requests-rules) for the Audit Detections
   k8sAuditDetectionsRules:  # +doc-gen:break
