@@ -47,6 +47,8 @@ config:
     memberAccountsRoleName: "OrganizationAccountAccessRole"
     # Organization account ids in which to perform the registry scan. If not configured, the scan will be performed in all the member accounts of the organization.
     allowListMemberAccountIDs: []
+    # Organization regions where to perform the registry scan. If not configured, the scan will be performed in all available regions.
+    allowListRegions: []
   # Ignore registry TLS certificate errors (self-signed, etc.).
   registrySkipTLS: false
   # **required**
