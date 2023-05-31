@@ -154,6 +154,11 @@ spec:
               configMapKeyRef:
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: rsi_js_consumer_pull
+          - name: NATS_JS_CONSUMER_PULL_BATCH
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: rsi_js_consumer_pull_batch
           - name: NATS_JS_CONSUMER_SUBJECT
             valueFrom:
               configMapKeyRef:
@@ -310,6 +315,11 @@ spec:
               configMapKeyRef:
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: ise_js_consumer_pull
+          - name: NATS_JS_CONSUMER_PULL_BATCH
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: ise_js_consumer_pull_batch
           - name: NATS_JS_CONSUMER_SUBJECT
             valueFrom:
               configMapKeyRef:
