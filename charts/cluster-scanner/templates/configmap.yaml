@@ -24,6 +24,7 @@ data:
   rsi_service_name: {{ include "cluster-scanner.fullname" . }}
 {{- include "cluster-scanner.rsiJsConfig" . | nindent 2 }}
   ise_cache_type: {{ .Values.imageSbomExtractor.cache.type }}
-  ise_cache_prefix: {{ .Values.imageSbomExtractor.cache.prefix }}
+  ise_cache_local_max_size: {{ .Values.imageSbomExtractor.cache.local.maxSizeBytes | quote }}
+  ise_cache_local_ttl: {{ .Values.imageSbomExtractor.cache.local.ttl }}
 {{- include "cluster-scanner.iseJsConfig" . | nindent 2 }}
 {{- include "cluster-scanner.redisCacheConfig" . | nindent 2 }}
