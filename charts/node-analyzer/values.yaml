@@ -161,7 +161,7 @@ nodeAnalyzer:
     deploy: true
     image:
       repository: sysdig/node-image-analyzer
-      tag: 0.1.25
+      tag: 0.1.27
       digest:
       pullPolicy: IfNotPresent
 
@@ -214,7 +214,7 @@ nodeAnalyzer:
     deploy: true
     image:
       repository: sysdig/host-analyzer
-      tag: 0.1.15
+      tag: 0.1.16
       digest:
       pullPolicy: IfNotPresent
 
@@ -362,7 +362,7 @@ nodeAnalyzer:
     debug: false
     image:
       repository: sysdig/kspm-analyzer
-      tag: 1.22.0
+      tag: 1.23.0
       digest:
       pullPolicy: IfNotPresent
 

@@ -1,6 +1,6 @@
 # What's Changed
 
-### New Features
-- [19a5637d](https://github.com/sysdiglabs/charts/commit/19a5637d845bf05d06702955a8fb950f44d1aece): eve-connector priorityclassname added ([#1113](https://github.com/sysdiglabs/charts/issues/1113))
+### Chores
+- **kspm-collector, node-analyzer** [2807ef4b](https://github.com/sysdiglabs/charts/commit/2807ef4b5e33c587008a84f03c1c26f18e48019b): bump KSPM to v1.23.0  ([#1132](https://github.com/sysdiglabs/charts/issues/1132))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.8.53...node-analyzer-1.8.54
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.8.56...node-analyzer-1.8.57

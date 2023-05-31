@@ -1,6 +1,9 @@
 # What's Changed
 
-### Chores
-- **sysdig** [c8398346](https://github.com/sysdiglabs/charts/commit/c83983463b32841eef524f9cf2302a67088363d5): bump agent version to 12.14.1 ([#1105](https://github.com/sysdiglabs/charts/issues/1105))
+### New Features
+- **sysdig** [a1a22e4c](https://github.com/sysdiglabs/charts/commit/a1a22e4c0d439a1dc254a172e3d8fb4eaa801dd4): Update legacy engine HostAnalyzer with security updates ([#1128](https://github.com/sysdiglabs/charts/issues/1128))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.8.3...sysdig-1.15.88
+    * Security updates (May 2023) for HostAnalyzer. Fixed 1 CVE:
+	* CVE-2023-28840
+
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.8.11...sysdig-1.15.90
