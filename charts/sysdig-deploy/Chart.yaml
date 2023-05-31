@@ -29,6 +29,12 @@ dependencies:
     version: ~1.9.1
     alias: nodeAnalyzer
     condition: nodeAnalyzer.enabled
+  - name: cluster-scanner
+    # repository: https://charts.sysdig.com
+    repository: file://../cluster-scanner
+    version: ~0.1.0
+    alias: clusterScanner
+    condition: clusterScanner.enabled
   - name: kspm-collector
     # repository: https://charts.sysdig.com
     repository: file://../kspm-collector
