@@ -121,14 +121,30 @@ Generates config for Redis, if available
 {{- if eq .Values.imageSbomExtractor.cache.type "redis" }}
 {{- with .Values.imageSbomExtractor.cache.redis }}
 cache_redis_address: {{ .address }}
+{{- if .user }}
 cache_redis_user: {{ .user }}
+{{- end }}
+{{- if .password }}
 cache_redis_password: {{ .password }}
+{{- end }}
+{{- if .database }}
 cache_redis_database: {{ .database }}
+{{- end }}
+{{- if .tlsEnabled }}
 cache_redis_tls_enabled: {{ .tlsEnabled | quote }}
+{{- end }}
+{{- if .tlsSkip }}
 cache_redis_tls_skip: {{ .tlsSkip | quote }}
+{{- end }}
+{{- if .tlsCa }}
 cache_redis_tls_ca: {{ .tlsCa }}
+{{- end }}
+{{- if .sentinelMaster }}
 cache_redis_sentinel_master: {{ .sentinelMaster }}
+{{- end }}
+{{- if .sentinelAddress }}
 cache_redis_sentinel_address: {{ .sentinelAddress }}
+{{- end }}
 {{- end }}
 {{- end }}
 {{- end }}
