@@ -44,7 +44,7 @@ spec:
       hostNetwork: true
       {{- end }}
       containers:
-      {{- if .Values.features.admissionController}}
+      {{- if .Values.features.kspmAdmissionController}}
         - name: {{.Values.webhook.v2.container.name}}
           image: {{ .Values.webhook.v2.container.image }}
         

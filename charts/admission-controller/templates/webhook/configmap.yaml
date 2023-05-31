@@ -19,7 +19,7 @@ data:
   DENY_ON_ERROR: "{{ .Values.webhook.denyOnError }}"
   DRY_RUN: "{{ .Values.webhook.dryRun }}"
   HTTP_TIMEOUT: "{{ .Values.webhook.timeoutSeconds }}s"
-  {{- if .Values.features.admissionController}}
+  {{- if .Values.features.kspmAdmissionController}}
   SERVICE_PORT: "{{.Values.webhook.v2.container.port}}"
   CERT_LOCATION: /cert
   EXTERNAL_NATS_URL: {{.Values.natsURL}}

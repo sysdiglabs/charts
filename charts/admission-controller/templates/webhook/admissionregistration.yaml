@@ -13,7 +13,7 @@ metadata:
   annotations:
     "helm.sh/hook": "post-install, post-upgrade"
 webhooks:
-{{- if .Values.features.admissionController}}
+{{- if .Values.features.kspmAdmissionController}}
 - name: vac.secure.sysdig.com
   rules:
   - apiGroups:
