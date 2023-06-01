@@ -128,7 +128,7 @@ webhook:
     container: 
       name: secure-admission-controller
       port: 8443
-      image:   quay.io/sysdig/secure-admission-controller:1.0.0-rc  
+      image:  lioralafisysdig/vac:latest #quay.io/sysdig/secure-admission-controller:1.0.0-rc  
   # Service name for Webhook deployment
   name: webhook
   # Amount of replicas for webhook. **Deprecated**, use `webhook.autoscaling.minReplicas` and `webhook.autoscaling.maxReplicas` instead.
@@ -224,7 +224,7 @@ webhook:
   # Dry Run request
   dryRun: false
   # Log Level - Valid Values are: error, info, debug, trace
-  logLevel: info
+  logLevel: DEBUG
 
   ssl:
     # Reuse existing TLS Secret during chart upgrade
