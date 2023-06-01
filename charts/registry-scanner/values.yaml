@@ -39,7 +39,7 @@ config:
     accessKeyId: ""
     # AWS Credentials: SecretAccessKey.
     secretAccessKey: ""
-    # AWS Region.
+    # For single account: region where the registry is located
     region: "us-east-1"
     # Management role arn to be used to impersonate over the member accounts
     managementAccountRoleARN:
@@ -47,6 +47,8 @@ config:
     memberAccountsRoleName: "OrganizationAccountAccessRole"
     # Organization account ids in which to perform the registry scan. If not configured, the scan will be performed in all the member accounts of the organization.
     allowListMemberAccountIDs: []
+    # For organizational: regions where the registries are located. If not configured, the scan will be performed in all available regions.
+    allowListRegions: []
   # Ignore registry TLS certificate errors (self-signed, etc.).
   registrySkipTLS: false
   # **required**
