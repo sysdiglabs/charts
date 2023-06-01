@@ -7,7 +7,7 @@ metadata:
   labels:
     {{ include "admissionController.scanner.labels" . | nindent 4 }}
 data:
-  SECURE_BASE_URL: "{{ include "admissionController.apiEndpoint" . }}"
+  SECURE_BASE_URL: "{{ .Values.sysdig.url | default (printf "https://%s" (include "admissionController.apiEndpoint" .)) }}"
   SECURE_SKIP_TLS: "{{ not .Values.verifySSL }}"
   REGISTRY_SKIP_TLS: "{{ not .Values.scanner.verifyRegistryTLS }}"
   {{- if .Values.scanner.dockerCfgSecretName }}

@@ -37,7 +37,7 @@ The following table lists the configurable parameters of the Sysdig KSPM Collect
 | `clusterName`                             | Set a cluster name to identify events using *kubernetes.cluster.name* tag               | ` `                                                         |
 | `image.registry`                          | KSPM Collector image registry                                                           | `quay.io`                                                   |
 | `image.repository`                        | The image repository to pull from                                                       | `sysdig/kspm-collector`                                     |
-| `image.tag`                               | The image tag to pull                                                                   | `1.23.0`                                                    |
+| `image.tag`                               | The image tag to pull                                                                   | `1.24.0`                                                    |
 | `image.digest`                            | The image digest to pull                                                                | ` `                                                         |
 | `image.pullPolicy`                        | The Image pull policy                                                                   | `Always`                                                    |
 | `imagePullSecrets`                        | The Image pull secret                                                                   | `[]`                                                        |
