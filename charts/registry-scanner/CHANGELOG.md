@@ -10,7 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
-
+# v1.0.13
+### New Features
+* **registry-scanner** add filter for aws regions under aws org registry type installation
 # v1.0.12
 
 * feat: allow internal ENV var to allow pageSize setup on artifatory client
