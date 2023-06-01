@@ -119,3 +119,12 @@ tests:
       - matchRegex:
           path: data['config.yaml']
           pattern: "temporaryVolumeSizeLimit: 2Gi"
+  - it: listAllowRegions variable reach the configmap if is set
+    set:
+      config:
+        aws:
+          allowListRegions: ['us-west-1']
+    asserts:
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: allowListRegions:\n\s*- us-west-1
