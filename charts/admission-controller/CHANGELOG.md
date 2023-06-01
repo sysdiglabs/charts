@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.8.1
+### Chores
+* **admission-controller** include fix for high severity vulnerability Go package github.com/docker/docker CVE-2023-28840
 # v0.8.0
 ### New Features
 * **admission-controller** [ba5c9103](https://github.com/sysdiglabs/charts/commit/ba5c91037bbf06470c2e03c69d0bba33518fc3c4): Deprecate sysdig.url (keep for compatibility) and use apiEndpoint instead ([#1118](https://github.com/sysdiglabs/charts/issues/1118))
