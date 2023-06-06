@@ -1,5 +1,6 @@
 suite: Test GKE Specific config settings
 templates:
+  - templates/configmap.yaml
   - templates/daemonset.yaml
   - templates/gkeautopilotpriorityclass.yaml
 tests:
@@ -90,3 +91,17 @@ tests:
           kind: PriorityClass
           name: my-priority-class
     template: templates/gkeautopilotpriorityclass.yaml
+
+  - it: Ensure drift_control and drift_killer features are disabled
+    set:
+      gke:
+        autopilot: true
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            drift_control:
+              enabled: false
+            drift_killer:
+              enabled: false
+    template: templates/configmap.yaml

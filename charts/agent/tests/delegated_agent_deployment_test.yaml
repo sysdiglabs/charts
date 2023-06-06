@@ -354,8 +354,22 @@ tests:
     asserts:
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: "commandlines_capture:\n {2}enabled: false\ndrift_killer:\n {2}enabled: false\nfalcobaseline:\n {2}enabled: false\nmemdump:\n {2}enabled: false\nnetwork_topology:\n {2}enabled: false\nsecure_audit_streams:\n {2}enabled: false"
-        template: templates/configmap-deployment.yaml
+          pattern: |-
+            commandlines_capture:
+              enabled: false
+            drift_control:
+              enabled: false
+            drift_killer:
+              enabled: false
+            falcobaseline:
+              enabled: false
+            memdump:
+              enabled: false
+            network_topology:
+              enabled: false
+            secure_audit_streams:
+              enabled: false
+    template: templates/configmap-deployment.yaml
 
   - it: Ensure disabling secure still works for Daemonset too
     set:
@@ -366,7 +380,21 @@ tests:
     asserts:
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: "commandlines_capture:\n {2}enabled: false\ndrift_killer:\n {2}enabled: false\nfalcobaseline:\n {2}enabled: false\nmemdump:\n {2}enabled: false\nnetwork_topology:\n {2}enabled: false\nsecure_audit_streams:\n {2}enabled: false"
+          pattern: |-
+            commandlines_capture:
+              enabled: false
+            drift_control:
+              enabled: false
+            drift_killer:
+              enabled: false
+            falcobaseline:
+              enabled: false
+            memdump:
+              enabled: false
+            network_topology:
+              enabled: false
+            secure_audit_streams:
+              enabled: false
     templates:
       - templates/configmap.yaml
       - templates/configmap-deployment.yaml
