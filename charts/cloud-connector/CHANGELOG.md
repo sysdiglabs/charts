@@ -9,7 +9,13 @@ Please note that it's automatically updated vía github actions.
 Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
+
 ## Change Log
+
+# v0.7.25
+* fix: CVE-2023-2253
+* chore(internal): filter out non-related rules files from policies response
+
 # v0.7.24
 * chore: bump scanning/v2/pkg to latest version with correct cache import
 * chore: bump docker dependency, Including fix for github.com/docker/docker CVE-2023-28840 Go vulnerability

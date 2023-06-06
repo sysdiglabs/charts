@@ -10,6 +10,10 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.8.2
+* fix: CVE-2023-2253
+* chore(internal): filter out non-related rules files from policies response
+
 # v0.8.1
 ### Chores
 * **admission-controller** include fix for high severity vulnerability Go package github.com/docker/docker CVE-2023-28840
