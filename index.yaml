@@ -2,6 +2,29 @@ apiVersion: v1
 entries:
   admission-controller:
   - apiVersion: v2
+    appVersion: 3.9.20
+    created: "2023-06-06T08:47:22.6410979Z"
+    description: Sysdig Admission Controller using Sysdig Secure inline image scanner
+    digest: 3c0780cb96844fea87801bea919853006062ae41a2fd15d95c32918cda1d1034
+    home: https://sysdiglabs.github.io/admission-controller/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    maintainers:
+    - email: hayk.kocharyan@sysdig.com
+      name: hayk99
+    - email: irune.prado@sysdig.com
+      name: wideawakening
+    - email: fede.barcelona@sysdig.com
+      name: tembleking
+    - email: miguel.baztan@sysdig.com
+      name: miketnt
+    - email: javier.prieto@sysdig.com
+      name: jprieto92
+    name: admission-controller
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/admission-controller-0.8.2/admission-controller-0.8.2.tgz
+    version: 0.8.2
+  - apiVersion: v2
     appVersion: 3.9.18
     created: "2023-06-01T10:56:59.314405502Z"
     description: Sysdig Admission Controller using Sysdig Secure inline image scanner
@@ -6261,6 +6284,32 @@ entries:
     - https://github.com/sysdiglabs/charts/releases/download/cloud-bench-0.1.0/cloud-bench-0.1.0.tgz
     version: 0.1.0
   cloud-connector:
+  - apiVersion: v2
+    appVersion: 0.16.42
+    created: "2023-06-06T08:47:22.744357368Z"
+    description: Sysdig Cloud Connector
+    digest: f254c2c3a182c55bc0d7a196979dafb4aa103e2716c35748d29acfe4a65ddd8d
+    home: https://sysdiglabs.github.io/cloud-connector
+    maintainers:
+    - email: hayk.kocharyan@sysdig.com
+      name: hayk99
+    - email: fede.barcelona@sysdig.com
+      name: tembleking
+    - email: irune.prado@sysdig.com
+      name: wideawakening
+    - email: ruben.eguiluz@sysdig.com
+      name: regiluze
+    - email: david.gonzalez@sysdig.com
+      name: penguinjournals
+    - email: miguel.baztan@sysdig.com
+      name: miketnt
+    - email: javier.prieto@sysdig.com
+      name: jprieto92
+    name: cloud-connector
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/cloud-connector-0.7.25/cloud-connector-0.7.25.tgz
+    version: 0.7.25
   - apiVersion: v2
     appVersion: 0.16.39
     created: "2023-05-23T08:19:30.050872151Z"
@@ -14615,6 +14664,31 @@ entries:
     - https://github.com/sysdiglabs/charts/releases/download/rapid-response-0.1.0/rapid-response-0.1.0.tgz
     version: 0.1.0
   registry-scanner:
+  - apiVersion: v2
+    appVersion: 0.2.41
+    created: "2023-06-06T08:47:22.84439099Z"
+    description: Sysdig Registry Scanner
+    digest: 37d086ac74d83029ac1adeac83d9eb6714d2860192c17704d69b182d2309fea0
+    home: https://sysdiglabs.github.io/registry-scanner/
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    maintainers:
+    - email: alvaro.iradier@sysdig.com
+      name: airadier
+    - email: hayk.kocharyan@sysdig.com
+      name: hayk99
+    - email: irune.prado@sysdig.com
+      name: wideawakening
+    - email: fede.barcelona@sysdig.com
+      name: tembleking
+    - email: miguel.baztan@sysdig.com
+      name: miketnt
+    - email: javier.prieto@sysdig.com
+      name: jprieto92
+    name: registry-scanner
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/registry-scanner-1.0.14/registry-scanner-1.0.14.tgz
+    version: 1.0.14
   - apiVersion: v2
     appVersion: 0.2.40
     created: "2023-06-01T11:50:08.616062118Z"
@@ -33739,4 +33813,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2023-06-01T20:38:49.247482002Z"
+generated: "2023-06-06T08:47:22.970165377Z"
