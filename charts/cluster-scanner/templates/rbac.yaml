@@ -5,7 +5,7 @@ metadata:
 rules:
 - apiGroups: ["", "apps", "batch", "extensions"]
   resources:
-    {{- if ne .Values.global.scannerMode "multi" }}
+    {{- if ne .Values.scannerMode "multi" }}
     - "deployments"
     - "replicasets"
     - "daemonsets"
