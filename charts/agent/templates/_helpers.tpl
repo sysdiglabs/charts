@@ -422,6 +422,7 @@ agent config to prevent a backend push from enabling them after installation.
     {{- if (not .Values.secure.enabled) }}
         {{- range $secureFeature := (list
             "commandlines_capture"
+            "drift_control"
             "drift_killer"
             "falcobaseline"
             "memdump"
@@ -431,6 +432,7 @@ agent config to prevent a backend push from enabling them after installation.
         {{- end }}
     {{ else if $secureLightMode }}
         {{- range $secureFeature := (list
+            "drift_control"
             "drift_killer"
             "falcobaseline"
             "memdump"
@@ -439,6 +441,7 @@ agent config to prevent a backend push from enabling them after installation.
         {{- end }}
     {{- end }}
     {{- if include "agent.gke.autopilot" . }}
+        {{- $_ := set $secureConfig "drift_control" (dict "enabled" false) }}
         {{- $_ := set $secureConfig "drift_killer" (dict "enabled" false) }}
     {{- end }}
 {{ toYaml $secureConfig }}
