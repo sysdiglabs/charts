@@ -74,7 +74,7 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: status.podIP
-          {{- if  eq .Values.global.scannerMode "multi" }}
+          {{- if  eq .Values.scannerMode "multi" }}
           - name: SYSDIG_KUBECONFIG_CONTENT
             valueFrom:
               secretKeyRef:
@@ -109,7 +109,7 @@ spec:
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: logging_level
                 optional: true
-          {{- if  eq .Values.global.scannerMode "local" }}
+          {{- if  eq .Values.scannerMode "local" }}
           - name: LOCAL_REGISTRY_SECRETS
             valueFrom:
               configMapKeyRef:
