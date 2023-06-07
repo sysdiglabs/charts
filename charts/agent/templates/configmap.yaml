@@ -17,7 +17,10 @@ data:
 {{- end }}
 {{- include "agent.connectionSettings" . | trim | nindent 4 }}
 {{- include "agent.planSettings" . | trim | nindent 4 }}
-{{- include "agent.k8sColdStart" . | nindent 4 }}
+{{/* Calculate the leaderElection/k8s_colstart information.
+     The computed/combined results are merged with any overrides specified
+     in sysdig.settings and will be rendered with that block */}}
+{{- include "agent.leaderElection" . }}
 {{- include "agent.disableCaptures" . | nindent 4 }}
 {{- include "agent.logSettings" . }}
 {{- if .Values.global.sysdig.tags }}

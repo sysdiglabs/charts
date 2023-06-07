@@ -414,7 +414,6 @@ tests:
             k8s_coldstart:
               enabled: true
               enforce_leader_election: true
-              max_parallel_cold_start: 1
               namespace: NAMESPACE
     template: templates/configmap-deployment.yaml
 
@@ -424,6 +423,10 @@ tests:
         enabled: true
       leaderelection:
         enable: true
+      sysdig:
+        settings:
+          k8s_coldstart:
+            max_parallel_cold_start: 10
       resourceProfile: large
     asserts:
       - matchRegex:
@@ -432,7 +435,7 @@ tests:
             k8s_coldstart:
               enabled: true
               enforce_leader_election: true
-              max_parallel_cold_start: 1
+              max_parallel_cold_start: 10
               namespace: NAMESPACE
     template: templates/configmap-deployment.yaml
 

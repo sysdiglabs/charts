@@ -443,5 +443,5 @@ spec:
   updateStrategy:
     type: {{ .Values.daemonset.updateStrategy.type }}
     rollingUpdate:
-      maxUnavailable: {{ include "agent.parallelStarts" . }}
+      maxUnavailable: {{ include "agent.maxUnavailable" . }}
 {{- end }}

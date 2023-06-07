@@ -13,7 +13,6 @@ tests:
             k8s_coldstart:
               enabled: true
               enforce_leader_election: true
-              max_parallel_cold_start: 1
               namespace: NAMESPACE
     template: templates/configmap.yaml
 
@@ -29,7 +28,6 @@ tests:
             k8s_coldstart:
               enabled: true
               enforce_leader_election: true
-              max_parallel_cold_start: 10
               namespace: NAMESPACE
     template: templates/configmap.yaml
 

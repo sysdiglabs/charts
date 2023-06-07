@@ -220,9 +220,9 @@ it can act like a boolean
 {{- end -}}
 
 {{/*
-to help the maxUnavailable and max_parallel_cold_starts pick a reasonable value depending on the cluster size
+to help the maxUnavailable pick a reasonable value depending on the cluster size
 */}}
-{{- define "agent.parallelStarts" -}}
+{{- define "agent.maxUnavailable" -}}
 {{- if .Values.daemonset.updateStrategy.rollingUpdate.maxUnavailable -}}
     {{- .Values.daemonset.updateStrategy.rollingUpdate.maxUnavailable -}}
 {{- else if eq .Values.resourceProfile "small" -}}
@@ -444,24 +444,14 @@ agent config to prevent a backend push from enabling them after installation.
 {{ toYaml $secureConfig }}
 {{- end }}
 
-{{ define "agent.k8sColdStart" }}
-    {{- $k8sColdStartBlock := dict }}
+{{ define "agent.leaderElection" }}
     {{- if .Values.leaderelection.enable }}
-        {{- range $key, $val := (dict "enabled" true
-                                      "enforce_leader_election" true
-                                      "namespace" (include "agent.namespace" .)) }}
-            {{- $_ := set $k8sColdStartBlock $key $val }}
-        {{- end }}
+        {{- $leaderElectionBlock := (dict "enabled" true
+                                          "enforce_leader_election" true
+                                          "namespace" (include "agent.namespace" .)) }}
+
+        {{- $_ := merge .Values.sysdig.settings (dict "k8s_coldstart" $leaderElectionBlock) }}
     {{- end }}
-    {{- if not .Values.sysdig.settings.k8s_coldstart }}
-        {{- if not .Values.delegatedAgentDeployment.enabled }}
-            {{- $_ := set $k8sColdStartBlock "max_parallel_cold_start" (include "agent.parallelStarts" . | int ) }}
-        {{- else }}
-            {{- $_ := set $k8sColdStartBlock "max_parallel_cold_start" 1 }}
-        {{- end }}
-    {{- end }}
-    {{- $completeBlock := dict "k8s_coldstart" $k8sColdStartBlock }}
-    {{- $_ := merge .Values.sysdig.settings $completeBlock }}
 {{- end }}
 
 {{ define "agent.connectionSettings" }}
