@@ -32,6 +32,9 @@ data:
       enabled: false
     statsd:
       enabled: false
+{{/* Calculate the leaderElection/k8s_colstart information.
+     The computed/combined results are merged with any overrides specified
+     in sysdig.settings and will be rendered with that block */}}
 {{- include "agent.leaderElection" . }}
 {{ include "agent.disableCaptures" . | nindent 4 }}
 {{- $_ := mergeOverwrite .Values.secure (dict "enabled" false) }}
