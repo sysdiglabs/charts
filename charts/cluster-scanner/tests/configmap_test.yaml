@@ -74,41 +74,41 @@ tests:
     asserts:
       - equal:
           path: data.rsi_mode
-          value: "sitting"
+          value: "local"
 
   - it: "can set multi mod"
     set:
       global.sysdig.apiHost: "http://test.com"
-      global.scannerMode: "multi"
+      scannerMode: "multi"
     asserts:
       - equal:
           path: data.rsi_mode
-          value: "mcm"
+          value: "multi"
 
   - it: "can set local mod"
     set:
       global.sysdig.apiHost: "http://test.com"
-      global.scannerMode: "local"
+      scannerMode: "local"
     asserts:
       - equal:
           path: data.rsi_mode
-          value: "sitting"
+          value: "local"
 
   - it: "raise error on unknown mod"
     set:
       global.sysdig.apiHost: "http://test.com"
-      global.scannerMode: "foobar"
+      scannerMode: "foobar"
     asserts:
       - failedTemplate:
           errorMessage: |
             values don't meet the specifications of the schema(s) in the following chart(s):
             cluster-scanner:
-            - global.scannerMode: global.scannerMode must be one of the following: "local", "multi"
+            - scannerMode: scannerMode must be one of the following: "local", "multi"
 
   - it: "has correct format for local_registry_secrets when they are provided"
     set:
       global.sysdig.apiHost: "http://test.com"
-      global.scannerMode: "local"
+      scannerMode: "local"
       runtimeStatusIntegrator.localCluster:
         rbac:
           allowedPullSecrets:
@@ -126,7 +126,7 @@ tests:
   - it: "has correct format for local_registry_secrets when they are not provided"
     set:
       global.sysdig.apiHost: "http://test.com"
-      global.scannerMode: "local"
+      scannerMode: "local"
     asserts:
       - equal:
           path: data.local_registry_secrets
@@ -135,7 +135,7 @@ tests:
   - it: "does not evaluate local_registry_secrets when in multi mode"
     set:
       global.sysdig.apiHost: "http://test.com"
-      global.scannerMode: "multi"
+      scannerMode: "multi"
       runtimeStatusIntegrator.localCluster:
         rbac:
           allowedPullSecrets:
