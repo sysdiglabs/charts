@@ -223,7 +223,7 @@ Version tags must be semver2-compatible otherwise it fails.
 */}}
 {{- define "cluster-scanner.checkVersionCompatibility" -}}
 {{- $version := semver .Tag -}}
-{{- if and .Values.global (hasKey (default .Values dict) "onPremCompatibilityVersion") (eq .Values.onPremCompatibilityVersion "6.2") -}}
+{{- if and (hasKey (default .Values dict) "onPremCompatibilityVersion") (eq .Values.onPremCompatibilityVersion "6.2") -}}
     {{- if ne ($version | (semver "1.0.0").Compare) 1 -}}
         {{- fail (printf "incompatible version for %s, set %s expected < 1.0.0" .Component .Tag) -}}
     {{- end -}}
