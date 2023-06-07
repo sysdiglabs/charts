@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.8.5
+### New Features
+* **agent** [367456f5](https://github.com/sysdiglabs/charts/commit/367456f502af41c91432c996a42d9ff9ed1403ec): add drift_control to secure exclude lists when appropriate ([#1151](https://github.com/sysdiglabs/charts/issues/1151))
 # v1.8.4
 ### Bug Fixes
 * **agent** [e4da36a3](https://github.com/sysdiglabs/charts/commit/e4da36a3638c849b36660656f6e04dd5bb09fad2): Do not infer `max_parallel_cold_start` value ([#1133](https://github.com/sysdiglabs/charts/issues/1133))
