@@ -20,21 +20,10 @@ global:
     # apiHost is used to manually set the Sysdig backend host
     # Must have the protocol (http:// or https://)
 
-
-  # The scannerMode of the Cluster Scanner. Supported values are `local` or
-  # `multi`. Please refer to docs.sysdig.com for further documentation.
-  scannerMode: "local"
   # Set the logging level to use, useful for troubleshooting. Valid values,
   # sorted by increasing level of verbosity are: `PANIC`, `FATAL`, `ERROR`,
   # `WARN`, `INFO`, `DEBUG`, `TRACE`.
   loggingLevel: "INFO"
-
-  # Optional parameter used to check the compatibility of cluster-scanner
-  # component versions with respect to the onprem backend version.
-  # E.g. if `onPremCompatibilityVersion=6.2`, then we make sure that the image
-  # tag is < 1.0.0 for both the Runtime Status Integrator and the Image SBOM
-  # Extractor.
-  onPremCompatibilityVersion: "6.2"
 
 # Enables Sysdig Eve to retrieve the list of running packages.
 eveEnabled: false
@@ -45,6 +34,17 @@ eveIntegrationEnabled: false
 rootNamespace: "kube-system"
 
 replicaCount: 2
+
+# The scannerMode of the Cluster Scanner. Supported values are `local` or
+# `multi`. Please refer to docs.sysdig.com for further documentation.
+scannerMode: "local"
+
+# Optional parameter used to check the compatibility of cluster-scanner
+# component versions with respect to the onprem backend version.
+# E.g. if `onPremCompatibilityVersion=6.2`, then we make sure that the image
+# tag is < 1.0.0 for both the Runtime Status Integrator and the Image SBOM
+# Extractor.
+onPremCompatibilityVersion: "6.2"
 
 # Can be set to false to allow insecure connections to the Sysdig backend,
 # such as for on-premise installs that use self-signed certificates.
@@ -61,7 +61,7 @@ runtimeStatusIntegrator:
     repository: sysdig/runtime-status-integrator
     # The Runtime Status Integrator image pull policy
     pullPolicy: IfNotPresent
-    tag: "0.3.0"
+    tag: "0.3.1"
   # Params to manage leader election
   # Leader election is implemented leveraging the native capabilities of
   # Kubernetes see: https://kubernetes.io/blog/2016/01/simple-leader-election-with-kubernetes/
@@ -122,7 +122,7 @@ imageSbomExtractor:
     repository: sysdig/image-sbom-extractor
     # The Image SBOM Extractor image pull policy
     pullPolicy: IfNotPresent
-    tag: "0.3.0"
+    tag: "0.3.1"
   ports:
     # The port to be used to expose prometheus metrics for the Image SBOM
     # Extractor

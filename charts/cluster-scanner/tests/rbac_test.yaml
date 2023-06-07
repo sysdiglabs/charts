@@ -37,7 +37,7 @@ tests:
         documentIndex: 0
   - it: "generates correct ClusterRole in multi mode"
     set:
-      global.scannerMode: "multi"
+      scannerMode: "multi"
     asserts:
       - equal:
           path: metadata.name
