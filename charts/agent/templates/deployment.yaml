@@ -52,14 +52,17 @@ spec:
                 values: {{- toYaml .Values.delegatedAgentDeployment.deployment.os | nindent 18 }}
               {{- end }}
       {{- end }}
-      {{- if .Values.image.pullSecrets }}
+      {{- if .Values.global.image.pullSecrets }}
       imagePullSecrets:
-        {{ toYaml .Values.image.pullSecrets | nindent 8 }}
+        {{- toYaml .Values.global.image.pullSecrets | nindent 8 }}
+      {{- else if .Values.image.pullSecrets }}
+      imagePullSecrets:
+        {{- toYaml .Values.image.pullSecrets | nindent 8 }}
       {{- end }}
       containers:
         - name: sysdig-cointerface
           image: {{ template "agent.image" . }}
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.global.image.pullPolicy | default .Values.image.pullPolicy }}
           resources:
             {{ toYaml .Values.delegatedAgentDeployment.deployment.resources | nindent 12 }}
           securityContext:

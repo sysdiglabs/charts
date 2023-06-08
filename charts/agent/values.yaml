@@ -8,6 +8,9 @@ global:
     # true here enables the deployment on gke autopilot clusters
     autopilot: false
     ephemeralStorage: "500Mi"
+  image:
+    pullSecrets: []
+    pullPolicy: ""
 
 namespace: ""
 
