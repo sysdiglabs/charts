@@ -138,6 +138,7 @@ tests:
           path: data.SECURE_URL
           value: https://eu1.app.sysdig.com
         template: webhook/configmap.yaml
+
   - it: check imagePullSecrets with global
     documentIndex: 0
     set:
@@ -156,6 +157,7 @@ tests:
     templates:
       - scanner/deployment.yaml
       - webhook/deployment.yaml
+
   - it: check imagePullSecrets with legacy
     documentIndex: 0
     set:
