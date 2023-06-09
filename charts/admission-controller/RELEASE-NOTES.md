@@ -1,6 +1,6 @@
 # What's Changed
 
 ### Bug Fixes
-- **registry-scanner, cloud-connector, admission-controller** [c8436b7e](https://github.com/sysdiglabs/charts/commit/c8436b7e4e2e8cabe61a8261e0dda7e51e9c7c04): cve-2023-2253 ([#1148](https://github.com/sysdiglabs/charts/issues/1148))
+- **admission-controller** [23ba62db](https://github.com/sysdiglabs/charts/commit/23ba62db2289a76d212c269cf9456cad2811819a): fix for appending rule definitions error ([#1155](https://github.com/sysdiglabs/charts/issues/1155))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/admission-controller-0.8.1...admission-controller-0.8.2
+#### Full diff: https://github.com/sysdiglabs/charts/compare/admission-controller-0.8.2...admission-controller-0.8.3
