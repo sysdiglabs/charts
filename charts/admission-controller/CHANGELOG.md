@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.8.3
+* fix for "unable to create new engine due to append rule definitions error"
+
 # v0.8.2
 * fix: CVE-2023-2253
 * chore(internal): filter out non-related rules files from policies response
