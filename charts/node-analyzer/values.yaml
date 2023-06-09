@@ -10,6 +10,9 @@ global:
   gke:
     # true here enables the deployment on gke autopilot clusters
     autopilot: false
+  image:
+    pullSecrets: []
+    pullPolicy: ""
 
 image:
   # This is a hack to support RELATED_IMAGE_<identifier> feature in Helm based
