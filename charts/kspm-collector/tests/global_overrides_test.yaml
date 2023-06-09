@@ -124,3 +124,66 @@ tests:
           path: data.cluster_name
           value: override_cluster
         template: configmap.yaml
+
+  - it: check imagePullSecrets with global
+    set:
+      global:
+        clusterConfig:
+          name: standard_cluster
+        sysdig:
+          accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+        image:
+          pullSecrets:
+            - test: test
+    asserts:
+      - equal:
+          path: spec.template.spec.imagePullSecrets
+          value:
+            - test: test
+        template: deployment.yaml
+
+  - it: check imagePullSecrets with legacy
+    set:
+      global:
+        clusterConfig:
+          name: standard_cluster
+        sysdig:
+          accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+      imagePullSecrets:
+        - name: test
+    asserts:
+      - equal:
+          path: spec.template.spec.imagePullSecrets
+          value:
+            - name: test
+        template: deployment.yaml
+
+  - it: check imagePullPolicy with global
+    set:
+      global:
+        clusterConfig:
+          name: standard_cluster
+        image:
+          pullPolicy: Always
+        sysdig:
+          accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].imagePullPolicy
+          value: Always
+        template: deployment.yaml
+
+  - it: check imagePullPolicy with legacy
+    set:
+      global:
+        clusterConfig:
+          name: standard_cluster
+        sysdig:
+          accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE  
+      image:
+        pullPolicy: Always
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].imagePullPolicy
+          value: Always
+        template: deployment.yaml

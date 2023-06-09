@@ -17,6 +17,9 @@ global:
   proxy: {}
   kspm:
     deploy: true
+  image:
+    pullSecrets: []
+    pullPolicy: ""
 
 sysdig:
   # Required: You need your Sysdig access key before running agents, either specifying 'accessKey' here, or using 'existingAccessKeySecret'
