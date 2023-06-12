@@ -20,7 +20,7 @@ dependencies:
   - name: agent
     # repository: https://charts.sysdig.com
     repository: file://../agent
-    version: ~1.8.5
+    version: ~1.8.6
     alias: agent
     condition: agent.enabled
   - name: node-analyzer
@@ -32,12 +32,12 @@ dependencies:
   - name: kspm-collector
     # repository: https://charts.sysdig.com
     repository: file://../kspm-collector
-    version: ~0.1.49
+    version: ~0.1.50
     alias: kspmCollector
     condition: global.kspm.deploy
   - name: rapid-response
     # repository: https://charts.sysdig.com
     repository: file://../rapid-response
-    version: ~0.4.11
+    version: ~0.4.12
     alias: rapidResponse
     condition: rapidResponse.enabled
