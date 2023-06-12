@@ -291,3 +291,66 @@ tests:
               name: no_proxy
               value: overridenoProxy
         template: daemonset.yaml
+
+  - it: check imagePullSecrets with global
+    set:
+      global:
+        sysdig:
+          accessKeySecret: standard_key
+        image:
+          pullSecrets:
+            - test: test
+      rapidResponse:
+        passphrase: passcode
+    asserts:
+      - equal:
+          path: spec.template.spec.imagePullSecrets
+          value:
+            - test: test
+        template: daemonset.yaml
+
+  - it: check imagePullSecrets with legacy
+    set:
+      global:
+        sysdig:
+          accessKeySecret: standard_key
+      rapidResponse:
+        passphrase: passcode
+        imagePullSecrets:
+          - test: test
+    asserts:
+      - equal:
+          path: spec.template.spec.imagePullSecrets
+          value:
+            - test: test
+        template: daemonset.yaml
+
+  - it: check imagePullPolicy with global
+    set:
+      global:
+        sysdig:
+          accessKeySecret: standard_key
+        image:
+          pullPolicy: Always
+      rapidResponse:
+        passphrase: passcode
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].imagePullPolicy
+          value: Always
+        template: daemonset.yaml
+
+  - it: check imagePullPolicy with legacy
+    set:
+      global:
+        sysdig:
+          accessKeySecret: standard_key
+      rapidResponse:
+        passphrase: passcode
+        image:
+          pullPolicy: Always
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].imagePullPolicy
+          value: Always
+        template: daemonset.yaml

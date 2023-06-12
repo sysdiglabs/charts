@@ -57,14 +57,17 @@ spec:
                 values: {{- toYaml .Values.rapidResponse.os | nindent 18 }}
               {{- end }}
       {{- end }}
-      {{- if .Values.rapidResponse.imagePullSecrets }}
+      {{- if .Values.global.image.pullSecrets }}
       imagePullSecrets:
-{{ toYaml .Values.rapidResponse.imagePullSecrets | indent 8 }}
+        {{- toYaml .Values.global.image.pullSecrets | nindent 8 }}
+      {{- else if .Values.rapidResponse.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml .Values.rapidResponse.imagePullSecrets | nindent 8 }}
       {{- end }}
       containers:
         - name: rapid-response
           image: {{ template "rapidResponse.image" . }}
-          imagePullPolicy: {{ .Values.rapidResponse.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.global.image.pullPolicy | default .Values.rapidResponse.image.pullPolicy }}
           resources:
 {{ toYaml .Values.rapidResponse.resources | indent 12 }}
           {{- if .Values.rapidResponse.securityContext }}
