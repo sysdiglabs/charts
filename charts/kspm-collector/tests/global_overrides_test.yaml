@@ -179,7 +179,7 @@ tests:
         clusterConfig:
           name: standard_cluster
         sysdig:
-          accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE  
+          accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
       image:
         pullPolicy: Always
     asserts:
