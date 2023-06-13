@@ -19,7 +19,7 @@ global:
     deploy: true
   image:
     pullSecrets: []
-    pullPolicy: ""
+    pullPolicy: Always
 
 sysdig:
   # Required: You need your Sysdig access key before running agents, either specifying 'accessKey' here, or using 'existingAccessKeySecret'
@@ -45,7 +45,7 @@ image:
   tag: 1.24.0
   digest:
   registry: quay.io
-  pullPolicy: Always
+  pullPolicy:
 
 # Set image pull secret name
 # Example

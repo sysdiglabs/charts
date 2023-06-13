@@ -96,7 +96,9 @@ tests:
           path: spec.template.spec.imagePullSecrets
           value:
             - test: test
-        template: deployment.yaml
+    templates:
+      - deployment.yaml
+      - daemonset.yaml
 
   - it: check imagePullSecrets with legacy
     set:
@@ -113,7 +115,9 @@ tests:
           path: spec.template.spec.imagePullSecrets
           value:
             - name: test
-        template: deployment.yaml
+    templates:
+      - deployment.yaml
+      - daemonset.yaml
 
   - it: check imagePullPolicy with global
     set:
@@ -128,7 +132,9 @@ tests:
       - equal:
           path: spec.template.spec.containers[0].imagePullPolicy
           value: Always
-        template: deployment.yaml
+    templates:
+      - deployment.yaml
+      - daemonset.yaml
 
   - it: check imagePullPolicy with legacy
     set:
@@ -143,4 +149,6 @@ tests:
       - equal:
           path: spec.template.spec.containers[0].imagePullPolicy
           value: Always
-        template: deployment.yaml
+    templates:
+      - deployment.yaml
+      - daemonset.yaml

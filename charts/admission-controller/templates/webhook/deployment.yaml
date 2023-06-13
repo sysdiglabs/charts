@@ -29,12 +29,12 @@ spec:
                   matchLabels:
                     {{- include "admissionController.webhook.selectorLabels" . | nindent 20 }}
               weight: 10
-      {{- if .Values.global.image.pullSecrets }}
-      imagePullSecrets:
-        {{- toYaml .Values.global.image.pullSecrets | nindent 8 }}
-      {{- else if .Values.webhook.imagePullSecrets }}
+      {{- if .Values.webhook.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml .Values.webhook.imagePullSecrets | nindent 8 }}
+      {{- else if .Values.global.image.pullSecrets }}
+      imagePullSecrets:
+        {{- toYaml .Values.global.image.pullSecrets | nindent 8 }}
       {{- end }}
       serviceAccountName: {{ include "admissionController.webhook.serviceAccountName" . }}
       securityContext:
@@ -72,7 +72,7 @@ spec:
               drop:
                 - ALL
             {{- end }}
-          imagePullPolicy: {{ .Values.global.image.pullPolicy | default .Values.webhook.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.webhook.image.pullPolicy | default .Values.global.image.pullPolicy }}
           env:
             {{- if (or (include "webhook.httpProxy" .) (include "webhook.httpsProxy" .) (include "webhook.noProxy" .) )}}
             - name: HTTP_PROXY
