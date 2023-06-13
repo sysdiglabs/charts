@@ -339,7 +339,7 @@ nodeAnalyzer:
 
     image:
       repository: sysdig/vuln-host-scanner
-      tag: 0.3.10
+      tag: "0.4"
       digest:
       pullPolicy: IfNotPresent
 
