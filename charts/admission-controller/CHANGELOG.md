@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.8.4
+* fix prometheus.io/port annotation in webhook pod
+
 # v0.8.3
 * fix for "unable to create new engine due to append rule definitions error"
 

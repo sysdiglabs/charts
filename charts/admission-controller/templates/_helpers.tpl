@@ -91,7 +91,7 @@ If release name contains chart name it will be used as a full name.
 {{- end -}}
 
 {{- define "admissionController.webhook.defaultPodAnnotations" -}}
-{{- toYaml (dict "prometheus.io/path" "/metrics" "prometheus.io/port" (quote .Values.webhook.http.port) "prometheus.io/scheme" "https" "prometheus.io/scrape" "true" "sidecar.istio.io/inject" "false") -}}
+{{- toYaml (dict "prometheus.io/path" "/metrics" "prometheus.io/port" (cat .Values.webhook.http.port) "prometheus.io/scheme" "https" "prometheus.io/scrape" "true" "sidecar.istio.io/inject" "false") -}}
 {{- end -}}
 
 {{- define "admissionController.webhook.podAnnotations" -}}
