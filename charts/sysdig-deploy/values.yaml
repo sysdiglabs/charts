@@ -17,7 +17,7 @@ global:
     autopilot: false
   image:
     pullSecrets: []
-    pullPolicy: ""
+    pullPolicy: IfNotPresent
 
 admissionController:
   enabled: false
