@@ -1,474 +1,158 @@
 # Chart: Sysdig Agent
 
+## Overview
 
-[Sysdig](https://sysdig.com/) is a unified platform for container and microservices monitoring, troubleshooting,
-security and forensics. Sysdig platform has been built on top of [Sysdig tool](https://sysdig.com/opensource/sysdig/)
-and [Sysdig Inspect](https://sysdig.com/blog/sysdig-inspect/) open-source technologies.
+Use the [sysdig-deploy](./sysdig-deploy/README.md) parent chart to deploy the Sysdig Agent and any other subcomponents. Do not deploy subcharts directly. 
 
-## Introduction
+To deploy the Sysdig Agent, follow the installation instructions given on the Sysdig Documentation website:
 
-This chart adds the Sysdig agent for [Sysdig Monitor](https://sysdig.com/product/monitor/)
-and [Sysdig Secure](https://sysdig.com/product/secure/) to all nodes in your cluster via a DaemonSet.
+### Sysdig Monitor
 
-## Prerequisites
+- [Installation Requirements](https://docs.sysdig.com/en/docs/installation/sysdig-monitor/install-sysdig-agent/#installation-requirements)
+- [Installation Instructions](https://docs.sysdig.com/en/docs/installation/sysdig-monitor/install-sysdig-agent/kubernetes/) 
 
-- Kubernetes 1.9+ with Beta APIs enabled
-- Helm v3+
+### Sysdig Secure | Sysdig Secure + Sysdig Monitor 
 
-## Migrating from sysdig < v2.0.0
+- [Component Overview](https://docs.sysdig.com/en/docs/installation/sysdig-secure/install-agent-components/)
+- [Installation Requirements](https://docs.sysdig.com/en/docs/installation/sysdig-secure/install-agent-components/installation-requirements/sysdig-agent/)
+- [Installation Instructions](https://docs.sysdig.com/en/docs/installation/sysdig-secure/install-agent-components/kubernetes/) 
 
-The existing values file from a `sysdig` chart deployment can be used with the new `agent` chart. Certain keys such as `nodeAnalyzer` and `nodeImageAnalyzer` are no longer used, so those can be safely removed.
+### On-Premises 
 
-## Installing the Chart
-
-First of all you need to add the Sysdig Helm Charts repository:
-
-```bash
-$ helm repo add sysdig https://charts.sysdig.com/
-```
-
-To install the chart with the release name `sysdig-agent`, run:
-
-```bash
-$ helm install --namespace sysdig-agent sysdig-agent --set sysdig.accessKey=YOUR-KEY-HERE --set collectorSettings.collectorHost=COLLECTOR_HOST --set collectorSettings.collectorPort=COLLECTOR_PORT sysdig/agent
-```
-
-To find the values:
-
-- YOUR-KEY-HERE: This is the agent access key. You can retrieve this from Settings > Agent Installation in the Sysdig UI.
-- COLLECTOR_HOST and COLLECTOR_PORT: These values are region-dependent in SaaS and is auto-completed in install snippets in the UI. (They are custom values in on-prem installations.)
-
-After a few seconds, you should see hosts and containers appearing in Sysdig Monitor and Sysdig Secure.
-
-> **Tip**: List all releases using `helm list`
-
-## Uninstalling the Chart
-
-To uninstall/delete the `sysdig-agent` deployment:
-
-```bash
-$ helm delete --namespace sysdig-agent sysdig-agent
-```
-
-The command removes all the Kubernetes components associated with the chart and deletes the release.
+- [Install Sysdig Agent for a Sysdig On-Premises Deployment](https://docs.sysdig.com/en/docs/installation/on-premises/)
+- [Install Sysdig Agent in an Airgapped Environment](https://docs.sysdig.com/en/docs/installation/on-premises/airgapped-installation/)
+  
 
 ## Configuration
 
-The following table lists the configurable parameters of the Sysdig chart and their default values.
+The Sysdig Agent uses a configuration file called `dragent.yaml` to store the configuration.
 
-| Parameter                                      | Description                                                                                                                                             | Default                                                     |
-| ---------------------------------------------- |---------------------------------------------------------------------------------------------------------------------------------------------------------| ----------------------------------------------------------- |
-| `global.clusterConfig.name`                    | Set a cluster name to identify events using *kubernetes.cluster.name* tag                                                                               | `quay.io`                                                   |
-| `global.sysdig.accessKey`                      | Your Sysdig Agent Access Key                                                                                                                            | ` ` Either accessKey or existingAccessKeySecret is required |
-| `global.sysdig.existingAccessKeySecret`        | Alternatively, specify the name of a Kubernetes secret containing an 'access-key' entry                                                                 | ` ` Either accessKey or existingAccessKeySecret is required |
-| `global.sysdig.region`                         | The SaaS region for these agents. Possible values: `"us1"`, `"us2"`, `"us3"`, `"us4"`, `"eu1"`, `"au1"`, and `"custom"`                                 | `"us1"`                                                     |
-| `global.proxy.httpProxy`                       | Sets `http_proxy` on the Agent container                                                                                                                | `""`                                                        |
-| `global.proxy.httpsProxy`                      | Sets `https_proxy` on the Agent container                                                                                                               | `""`                                                        |
-| `global.proxy.noProxy`                         | Sets `no_proxy` on the Agent container                                                                                                                  | `""`                                                        |
-| `global.gke.autopilot`                         | If true, overrides the agent configuration to run on GKE Autopilot clusters                                                                             | `false`                                                     |
-| `global.image.pullSecrets`                                       | Global pull secrets.                                                                                                                                                                                                                                                                                                                                                                                                                                         | <code>[]</code>                                                                                                                                                                                    |
-| `global.image.pullPolicy`                                       | Global pull policy.                                                                                                                                                                                                                                                                                                                                                                                                                                         | <code>`IfNotPresent`</code>
-| `namespace`                                    | Overrides the global namespace setting and release namespace for components.                                                                            | `""`                                                        |
-| `image.registry`                               | Sysdig Agent image registry                                                                                                                             | `quay.io`                                                   |
-| `image.repository`                             | The image repository to pull from                                                                                                                       | `sysdig/agent`                                              |
-| `image.tag`                                    | The image tag to pull                                                                                                                                   | `12.14.1`                                                    |
-| `image.digest`                                 | The image digest to pull                                                                                                                                | ` `                                                         |
-| `image.pullPolicy`                             | The Image pull policy                                                                                                                                   | `""`                                              |
-| `image.pullSecrets`                            | Image pull secrets                                                                                                                                      | `nil`                                                       |
-| `resourceProfile`                              | Sysdig Agent resource profile (see [Resource profiles](#resource-profiles))                                                                             | `small`                                                     |
-| `resources.requests.cpu`                       | CPU requested for being run in a node                                                                                                                   | ` `                                                         |
-| `resources.requests.memory`                    | Memory requested for being run in a node                                                                                                                | ` `                                                         |
-| `resources.limits.cpu`                         | CPU limit                                                                                                                                               | ` `                                                         |
-| `resources.limits.memory`                      | Memory limit                                                                                                                                            | ` `                                                         |
-| `collectorSettings.collectorHost`              | The IP address or hostname of the collector                                                                                                             | ` `                                                         |
-| `collectorSettings.collectorPort`              | The port number for the TCP connection of the collector service                                                                                         | 6443                                                        |
-| `collectorSettings.ssl`                        | The collector accepts SSL                                                                                                                               | `true`                                                      |
-| `collectorSettings.sslVerifyCertificate`       | Set to false if you don't want to verify SSL certificate                                                                                                | `true`                                                      |
-| `gke.autopilot`                                | If true, overrides the agent configuration to run on GKE Autopilot clusters                                                                             | `false`                                                     |
-| `gke.autopilot.createPriorityClass`            | If true, create the required PriorityClass to ensure Agent Pods are scheduled in GKE Autopilot. Uses the name provided by the `priorityClassName` parameter | `false`                                                 |
-| `gke.ephemeralStorage`                         | Amount of ephemeral storage to provide to the Agent container in GKE Autopilot clusters                                                                 | `500Mi`                                                     |
-| `rbac.create`                                  | If true, create & use RBAC resources                                                                                                                    | `true`                                                      |
-| `scc.create`                                   | Create OpenShift's Security Context Constraint                                                                                                          | `true`                                                      |
-| `psp.create`                                   | Create Pod Security Policy to allow the agent running in clusters with PSP enabled                                                                      | `true`                                                      |
-| `serviceAccount.create`                        | Create serviceAccount                                                                                                                                   | `true`                                                      |
-| `serviceAccount.name`                          | Use this value as serviceAccountName                                                                                                                    | ` `                                                         |
-| `priorityClassName`                            | Set the priority class for the agent daemonset                                                                                                          | `""`                                                        |
-| `daemonset.deploy`                             | Deploy the agent daemonset                                                                                                                              | `true`                                                      |
-| `daemonset.env`                                | Environment variables for the agent container. Provide as map of `VAR: val`                                                                             | `{}`                                                        |
-| `daemonset.updateStrategy.type`                | The updateStrategy for updating the daemonset                                                                                                           | `RollingUpdate`                                             |
-| `daemonset.updateStrategy.rollingUpdate.maxUnavailable` | The maximum number of pods that can be unavailable during the update process                                                                            |                                                             |
-| `daemonset.updateStrategy.rollingUpdate.maxSurge` | The maximum number of nodes with an existing available DaemonSet pod that can have an updated DaemonSet pod during an update                                                                            |                                                             |
-| `daemonset.nodeSelector`                       | Node Selector                                                                                                                                           | `{}`                                                        |
-| `daemonset.arch`                               | Allowed architectures for scheduling                                                                                                                    | `[ amd64, arm64, s390x ]`                                   |
-| `daemonset.os`                                 | Allowed OSes for scheduling                                                                                                                             | `[ linux ]`                                                 |
-| `daemonset.affinity`                           | Node affinities. Overrides `daemonset.arch` and `daemonset.os` values                                                                                   | `{}`                                                        |
-| `daemonset.annotations`                        | Custom annotations for daemonset                                                                                                                        | `{}`                                                        |
-| `daemonset.labels`                             | Custom labels for daemonset (as a multi-line templated string map or as YAML)                                                                           |                                                             |
-| `daemonset.probes.initialDelay`                | Initial delay for liveness and readiness probes. daemonset                                                                                              | `{}`                                                        |
-| `daemonset.kmodule.env`                        | Environment variables for the kernel module image builder. Provide as map of `VAR: val`                                                                 | `{}`                                                        |
-| `slim.enabled`                                 | Use the slim based Sysdig Agent image                                                                                                                   | `true`                                                      |
-| `slim.image.repository`                        | The slim Agent image repository                                                                                                                         | `sysdig/agent-slim`                                         |
-| `slim.kmoduleImage.repository`                 | The kernel module image builder repository to pull from                                                                                                 | `sysdig/agent-kmodule`                                      |
-| `slim.kmoduleImage.digest`                     | The image digest to pull                                                                                                                                | ` `                                                         |
-| `slim.resources.requests.cpu`                  | CPU requested for building the kernel module                                                                                                            | `1000m`                                                     |
-| `slim.resources.requests.memory`               | Memory requested for building the kernel module                                                                                                         | `348Mi`                                                     |
-| `slim.resources.limits.cpu`                    | CPU limit for building the kernel module                                                                                                                | `1000m`                                                     |
-| `slim.resources.limits.memory`                 | Memory limit for building the kernel module                                                                                                             | `512Mi`                                                     |
-| `ebpf.enabled`                                 | Enable eBPF support for Sysdig instead of `sysdig-probe` kernel module                                                                                  | `false`                                                     |
-| `ebpf.settings.mountEtcVolume`                 | Needed to detect which kernel version are running in Google COS                                                                                         | `true`                                                      |
-| `clusterName`                                  | Set a cluster name to identify events using *kubernetes.cluster.name* tag. Overrides `global.clusterConfig.name`                                        | ` `                                                         |
-| `sysdig.accessKey`                             | Your Sysdig Agent Access Key. Overrides `global.sysdig.accessKey`                                                                                       | ` ` Either accessKey or existingAccessKeySecret is required |
-| `sysdig.existingAccessKeySecret`               | Alternatively, specify the name of a Kubernetes secret containing an 'access-key' entry. Overrides `global.sysdig.existingAccessKeySecret`              | ` ` Either accessKey or existingAccessKeySecret is required |
-| `sysdig.disableCaptures`                       | Disable capture functionality (see https://docs.sysdig.com/en/disable-captures.html)                                                                    | `false`                                                     |
-| `sysdig.settings`                              | Additional settings, directly included in the agent's configuration file `dragent.yaml`                                                                 | `{}`                                                        |
-| `logPriority`                                  | Use to directly set both Agent console and file logging priorities. Possible values: `"info"`, `"debug"`. Mutually exclusive with `sysdig.settings.log` | ` `                                                         |
-| `secure.enabled`                               | Enable Sysdig Secure                                                                                                                                    | `true`                                                      |
-| `monitor.enabled`                              | Enable Sysdig Monitor                                                                                                                                   | `true`                                                      |
-| `auditLog.enabled`                             | Enable K8s audit log support for Sysdig Secure                                                                                                          | `false`                                                     |
-| `auditLog.auditServerUrl`                      | The URL where Sysdig Agent listens for K8s audit log events                                                                                             | `0.0.0.0`                                                   |
-| `auditLog.auditServerPort`                     | Port where Sysdig Agent listens for K8s audit log events                                                                                                | `7765`                                                      |
-| `auditLog.dynamicBackend.enabled`              | Deploy the Audit Sink where Sysdig listens for K8s audit log events                                                                                     | `false`                                                     |
-| `tolerations`                                  | The tolerations for scheduling                                                                                                                          | `node-role.kubernetes.io/master:NoSchedule`                 |
-|                                                                                                                                                                                               `node-role.kubernetes.io/control-plane:NoSchedule`          |
-| `leaderelection.enable`                        | Use the agent leader election algorithm                                                                                                                 | `false`                                                     |
-| `prometheus.file`                              | Use file to configure promscrape                                                                                                                        | `false`                                                     |
-| `prometheus.yaml`                              | prometheus.yaml content to configure metric collection: relabelling and filtering                                                                       | ` `                                                         |
-| `extraVolumes.volumes`                         | Additional volumes to mount in the sysdig agent to pass new secrets or configmaps                                                                       | `[]`                                                        |
-| `extraVolumes.mounts`                          | Mount points for additional volumes                                                                                                                     | `[]`                                                        |
-| `extraSecrets`                                 | Allow passing extra secrets that can be mounted via extraVolumes                                                                                        | `[]`                                                        |
-| `proxy.httpProxy`                              | Sets `http_proxy` on the Agent container. Overrides the proxy setting from `global.proxy`                                                               | `""`                                                        |
-| `proxy.httpsProxy`                             | Sets `https_proxy` on the Agent container. Overrides the proxy setting from `global.proxy`                                                              | `""`                                                        |
-| `proxy.noProxy`                                | Sets `no_proxy` on the Agent container. Overrides the proxy setting from `global.proxy`                                                                 | `""`                                                        |
+Using the Helm chart, the default configuration settings can be updated with the `sysdig.settings` parameter by using either of the following:
 
-Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
+- Using the key-value pair: `--set sysdig.settings.key = value`
+- `values.yaml` file
 
-```bash
-$ helm install --namespace sysdig-agent sysdig-agent \
-    --set sysdig.accessKey=YOUR-KEY-HERE,sysdig.settings.tags="role:webserver\,location:europe" \
-    sysdig/agent
-```
+### Using the Key-Value Pair
 
-Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For
-example,
-
-```bash
-$ helm install --namespace sysdig-agent sysdig-agent -f values.yaml sysdig/agent
-```
-
-> **Tip**: You can use the default [values.yaml](values.yaml)
-
-## Resource profiles
-
-For ease of use, some predefined resource profiles are available:
-
-* small
-
-```yaml
-requests:
-  cpu: 1000m
-  memory: 1024Mi
-limits:
-  cpu: 1000m
-  memory: 1024Mi
-```
-
-* medium
-
-```yaml
-requests:
-  cpu: 3000m
-  memory: 3072Mi
-limits:
-  cpu: 3000m
-  memory: 3072Mi
-```
-
-* large
-
-```yaml
-requests:
-  cpu: 5000m
-  memory: 6144Mi
-limits:
-  cpu: 5000m
-  memory: 6144Mi
-```
-
-* custom
-
-If anything is set for your `resources`, that will be used instead of the resource profile.
-
-See [Tuning Sysdig Agent](https://docs.sysdig.com/en/tuning-sysdig-agent.html) for more info.
-
-## GKE Autopilot
- Autopilot is an operation mode for creating and managing clusters in GKE.
- With Autopilot, Google configures and manages the underlying node infrastructure for you.
-
- To deploy the Sysdig agent in GKE clusters running in Autopilot mode, run:
-
- ```bash
- $ helm install --namespace sysdig-agent sysdig-agent --set global.sysdig.accessKey=YOUR-KEY-HERE --set global.gke.autopilot=true sysdig/agent
- ```
-
- When the flag `global.gke.autopilot=true` gets `true`, the chart configuration is overridden as follows:
-  - `ebpf.enabled=true`
-  - `ebpf.settings.mountEtcVolume=false`
-  - `daemonset.annotations='autopilot\.gke\.io/no-connect="true"'`
-  - `daemonset.affinity=null'`
-
- So, on GKE Autopilot clusters:
-  - The ebpf is enabled and the etcVolume is not mounted,
-  - The daemonset affinity is set to `null`,
-  - The daemonset annotation is set to enable the Agent to run on autopilot (required from GKE).
-
-## On-Premise backend deployment settings
-
-Sysdig platform backend can be also deployed On-Premise in your own infrastructure.
-
-Installing the agent using the Helm chart is also possible in this scenario, and you can enable it with the following
-parameters:
-
-| Parameter                                | Description                                              | Default |
-| ---------------------------------------- | -------------------------------------------------------- | ------- |
-| `collectorSettings.collectorHost`        | The IP address or hostname of the collector              | ` `     |
-| `collectorSettings.collectorPort`        | The port where collector is listening                    | 6443    |
-| `collectorSettings.ssl`                  | The collector accepts SSL                                | `true`  |
-| `collectorSettings.sslVerifyCertificate` | Set to false if you don't want to verify SSL certificate | `true`  |
+Specify each parameter using the `--set key=value[,key=value]` argument to the `helm install`command. 
 
 For example:
 
 ```bash
 $ helm install --namespace sysdig-agent sysdig-agent \
-    --set sysdig.accessKey=YOUR-KEY-HERE \
-    --set collectorSettings.collectorHost=42.32.196.18 \
-    --set collectorSettings.collectorPort=6443 \
-    --set collectorSettings.sslVerifyCertificate=false \
+    --set sysdig.accessKey=<YOUR-ACCESS-KEY>,sysdig.settings.tags="role:webserver\,location:europe" \
     sysdig/agent
 ```
 
-## Using private Docker image registry
+### Using values.yaml
 
-If you pull the Sysdig agent Docker image from a private registry that requires authentication, some additional
-configuration is required.
+The `values.yaml` file specifies the values for the agent configuration parameters.  You can add the configuration to the `values.yaml` file, then use it in the `helm install` command. 
 
-First, create a secret that stores the registry credentials:
+For example, to enable Prometheus metrics scraping:
 
-```bash
-$ kubectl create secret docker-registry SECRET_NAME \
-  --docker-server=SERVER \
-  --docker-username=USERNAME \
-  --docker-password=TOKEN \
-  --docker-email=EMAIL
-```
+1. Add the following to the `values.yaml` file:
 
-Then, point to this secret in the values YAML file:
+   ```yaml
+   sysdig:
+     accessKey: <YOUR-ACCESS-KEY>
+     settings:
+       prometheus:
+         enabled: true
+         histograms: true
+   ```
 
-```yaml
-sysdig:
-  accessKey: YOUR-KEY-HERE
-image:
-  registry: myrepo.mydomain.tld
-  repository: sysdig-agent
-  tag: latest-tag
-  pullSecrets:
-    - name: SECRET_NAME
-```
+   **Tip**: You can use the default [values.yaml](values.yaml) file.
 
-Finally, set the accessKey value and you are ready to deploy the Sysdig agent using the Helm chart:
+2. Run the following:
 
-```bash
-$ helm install --namespace sysdig-agent sysdig-agent -f values.yaml sysdig/agent
-```
+   ```
+   helm install --namespace sysdig-agent sysdig-agent -f values.yaml sysdig/agent
+   ```
 
-You can read more details about this
-in [Kubernetes Documentation](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/).
+## Configuration Parameters
 
-## Modifying Sysdig agent configuration
+The following table lists the configurable parameters of the Sysdig chart and their default values.
 
-The Sysdig agent uses a file called `dragent.yaml` to store the configuration.
-
-Using the Helm chart, the default configuration settings can be updated using `sysdig.settings` either
-via `--set sysdig.settings.key = value` or in the values YAML file. For example, to eanble Prometheus metrics scraping,
-you need this in your `values.yaml` file:
-
-```yaml
-sysdig:
-  accessKey: YOUR-KEY-HERE
-  settings:
-    prometheus:
-      enabled: true
-      histograms: true
-```
-
-```bash
-$ helm install --namespace sysdig-agent sysdig-agent -f values.yaml sysdig/agent
-```
-
-### Agent Modes
-When directly specifying the agent mode by `sysdig.settitngs.feature.mode`, the values of `monitor.enabled` and
-`secure.enabled` must match the provided type. For example, setting `sysdig.settings.feature.mode=secure` would require
-the following:
-```yaml
-monitor:
-  enabled: false
-sysdig:
-  settings:
-    feature:
-      mode: secure
-```
-
-## Upgrading Sysdig agent configuration
-
-If you need to upgrade the agent configuration file, first modify the YAML file (in this case we are increasing the
-metrics limit scraping Prometheus metrics):
-
-```yaml
-sysdig:
-  accessKey: YOUR-KEY-HERE
-  settings:
-    prometheus:
-      enabled: true
-      histograms: true
-      max_metrics: 2000
-      max_metrics_per_process: 400
-```
-
-And then, upgrade Helm chart with:
-
-```bash
-$ helm upgrade --namespace sysdig-agent sysdig-agent -f values.yaml sysdig/agent
-```
-
-## How to upgrade to the last version
-
-First of all ensure you have the lastest chart version
-
-```bash
-$ helm repo update
-```
-
-In case you deployed the chart with a values.yaml file, you just need to modify (or add if it's missing) the `image.tag`
-field and execute:
-
-```bash
-$ helm upgrade --namespace sysdig-agent sysdig-agent -f values.yaml sysdig/agent
-```
-
-If you deployed the chart setting the values as CLI parameters, like for example:
-
-```bash
-$ helm install \
-    --namespace sysdig-agent \
-    sysdig-agent \
-    --set sysdig.accessKey=xxxx \
-    --set ebpf.enabled=true \
-    sysdig/agent
-```
-
-You will need to execute:
-
-```bash
-$ helm upgrade \
-    --namespace sysdig-agent \
-    sysdig-agent \
-    --set sysdig.accessKey=xxxx \
-    --set ebpf.enabled=true \
-    --set image.tag=<last_version> \
-    sysdig/agent
-```
-
-### Adding prometheus.yaml to configure promscrape
-
-Promscrape is the component used to collect Prometheus metrics from the sysdig agent. It is based on Prometheus and
-accepts the same configuration format.
-
-This file can contain relabelling rules and filters to remove certain metrics or add some configurations to the
-collection. An example of this file could be:
-
-```yaml
-global:
-  scrape_interval: 15s
-  evaluation_interval: 15s
-scrape_configs:
-  - job_name: 'prometheus' # config for federation
-    honor_labels: true
-    metrics_path: '/federate'
-    metric_relabel_configs:
-      - regex: 'kubernetes_pod_name'
-        action: labeldrop
-    params:
-      'match[]':
-        - '{sysdig="true"}'
-    sysdig_sd_configs:
-      - tags:
-          namespace: monitoring
-          deployment: prometheus-server
-```
-
-`sysdig_sd_configs` allows to select the targets obtained by Sysdig agents to apply the rules in the job.
-Check [how to configure filtering in sysdig documentation](https://docs.sysdig.com/en/filtering-prometheus-metrics.html)
-.
-
-### Adding additional volumes
-
-To add a new volume to the sysdig agent.
-
-In order to pass new config maps or secrets used for authentication (for example for Prometheus endpoints) you can mount
-additional secrets, configmaps or volumes. An example of this could be:
-
-```yaml
-extraVolumes:
-  volumes:
-    - name: sysdig-new-cm
-      configMap:
-        name: my-cm
-        optional: true
-    - name: sysdig-new-secret
-        secret:
-        secretName: my-secret
-  mounts:
-    - mountPath: /opt/draios/cm
-      name: sysdig-new-cm
-    - mountPath: /opt/draios/secret
-      name: sysdig-new-secret
-```
-
-### Adding additional secrets
-
-To add a new secret to the sysdig agent.
-
-You can create additional secrets (for example for Prometheus basic auth). The values are Opaque type secrets and must be in base64 encoded.
-An example of this could be:
-
-```yaml
-extraSecrets:
-  - name: sysdig-new-secret
-    data:
-      sysdig-new-password-key1: bXlwYXNzd29yZA==
-      sysdig-new-password-key2: bXlwYXNzd29yZA==
-```
-
-## Running helm unit tests
-
-The sysdiglabs/charts repository uses the following helm unittest plugin: https://github.com/quintush/helm-unittest
-
-You can test the changes to your chart by running the test suites as follows:
-
-```
-helm unittest --helm3 .
-```
-
-The helm unit tests are in the tests folder. It is recommended to add new tests as new features are added here.
-
-## Support
-
-For getting support from the Sysdig team, you should refer to the official
-[Sysdig Support page](https://sysdig.com/support).
-
-In addition to this, you can browse the documentation for the different components of the Sysdig Platform:
-
-* [Sysdig Monitor](https://app.sysdigcloud.com)
-* [Sysdig Secure](https://secure.sysdig.com)
-* [Platform Documentation](https://docs.sysdig.com/en/sysdig-platform.html)
-* [Monitor Documentation](https://docs.sysdig.com/en/sysdig-monitor.html)
-* [Secure Documentation](https://docs.sysdig.com/en/sysdig-secure.html)
+| Parameter                                          | Description                                                  | Default                                                      |
+| -------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| `global.clusterConfig.name`                        | Sets a unique name to the cluster. You can then use the cluster name to identify events using the `kubernetes.cluster.name` tag. | `quay.io`                                                    |
+| `global.sysdig.accessKey`                          | Specify your Sysdig Agent Access Key.                        | Either `accessKey` or `existingAccessKeySecret` is required  |
+| `global.sysdig.existingAccessKeySecret`            | An alternative to using the Sysdig Agent access key. Specify the name of a Kubernetes secret containing an `access-key` entry. | `Either `accessKey` or existingAccessKeySecret`  is required |
+| `global.sysdig.region`                             | The SaaS region for these agents. Possible values: `"us1"`, `"us2"`, `"us3"`, `"us4"`, `"eu1"`, `"au1"`, and `"custom"` | `"us1"`                                                      |
+| `global.proxy.httpProxy`                           | Sets `http_proxy` on the `agent` container.                  | `""`                                                         |
+| `global.proxy.httpsProxy`                          | Sets `https_proxy` on the `agent` container.                 | `""`                                                         |
+| `global.proxy.noProxy`                             | Sets `no_proxy` on the `agent` container.                    | `""`                                                         |
+| `global.gke.autopilot`                             | If true, overrides the agent configuration to run on GKE Autopilot clusters. | `false`                                                      |
+| `global.image.pullSecrets`                                       | Global pull secrets.                                                                                                                                                                                                                                                                                                                                                                                                                                         | <code>[]</code>                                                                                                                                                                                    |
+| `global.image.pullPolicy`                                       | Global pull policy.                                                                                                                                                                                                                                                                                                                                                                                                                                         | <code>`IfNotPresent`</code>|
+| `namespace`                                        | Overrides the global namespace setting and release namespace for components. | `""`                                                         |
+| `image.registry`                                   | Sysdig Agent image registry.                                 | `quay.io`                                                    |
+| `image.repository`                                 | Sets the image repository to pull the agent image from.      | `sysdig/agent`                                               |
+| `image.tag`                                        | Specifies the image tag to pull from the repository.         | `12.14.1`                                                    |
+| `image.digest`                                     | Specifies the image digest to pull from the repository.      | ` `                                                          |
+| `image.pullPolicy`                                 | Specifies the Image pull policy.                             | `IfNotPresent`                                               |
+| `image.pullSecrets`                                | Specifies the image pull secrets.                            | `nil`                                                        |
+| `resourceProfile`                                  | Specifies the Sysdig Agent resource profile.                 | `small`                                                      |
+| `resources.requests.cpu`                           | Specifies the CPU requested to run in a node                 | ` `                                                          |
+| `resources.requests.memory`                        | Specifies the memory requested to run in a node.             | ` `                                                          |
+| `resources.limits.cpu`                             | Specifies the CPU limit.                                     | ` `                                                          |
+| `resources.limits.memory`                          | Specifies the memory limit.                                  | ` `                                                          |
+| `collectorSettings.collectorHost`                  | Specifies the IP address or hostname of the collector.       | ` `                                                          |
+| `collectorSettings.collectorPort`                  | Specifies the port number for the TCP connection of the collector service. | 6443                                                         |
+| `collectorSettings.ssl`                            | Specifies whether the collector accepts SSL.                 | `true`                                                       |
+| `collectorSettings.sslVerifyCertificate`           | Set this parameter to `false` if you don't want to verify SSL certificate. | `true`                                                       |
+| `gke.autopilot`                                    | If true, overrides the agent configuration to run on GKE Autopilot clusters. | `false`                                                      |
+| `gke.autopilot.createPriorityClass`                | If true, required PriorityClass will be created to ensure that the agent pods are scheduled in GKE Autopilot. The parameter uses the name provided by the `priorityClassName` parameter. | `false`                                                      |
+| `gke.ephemeralStorage`                             | Specifies the amount of ephemeral storage to provide to the agent container in GKE Autopilot clusters. | `500Mi`                                                      |
+| `rbac.create`                                      | If true, RBAC resources will be created and used.            | `true`                                                       |
+| `scc.create`                                       | Creates OpenShift's Security Context constraint.             | `true`                                                       |
+| `psp.create`                                       | Creates Pod Security Policy to allow the agent running in clusters with PSP enabled. | `true`                                                       |
+| `serviceAccount.create`                            | Creates serviceAccount.                                      | `true`                                                       |
+| `serviceAccount.name`                              | Use this value as serviceAccountName.                        | ` `                                                          |
+| `priorityClassName`                                | Sets the priority class for the agent daemonset.             | `""`                                                         |
+| `daemonset.deploy`                                 | Deploys the agent daemonset.                                 | `true`                                                       |
+| `daemonset.env`                                    | Specifies the environment variables for the agent container. Provide as map of `VAR: val` | `{}`                                                         |
+| `daemonset.updateStrategy.type`                    | Specifies the updateStrategy for updating the daemonset.     | `RollingUpdate`                                              |
+| `daemonset.updateStrategy.rollingUpdate.maxUnavailable` | The maximum number of pods that can be unavailable during the update process                                                                            |                                                             |
+| `daemonset.updateStrategy.rollingUpdate.maxSurge` | The maximum number of nodes with an existing available DaemonSet pod that can have an updated DaemonSet pod during an update                                                                            |                                                             |
+| `daemonset.nodeSelector`                           | Specifies the Node Selector.                                 | `{}`                                                         |
+| `daemonset.arch`                                   | Specifies the allowed architectures for scheduling.          | `[ amd64, arm64, s390x ]`                                    |
+| `daemonset.os`                                     | Specifies the allowed operating systems for scheduling.      | `[ linux ]`                                                  |
+| `daemonset.affinity`                               | Specifies node affinities. Overrides `daemonset.arch` and `daemonset.os` values. | `{}`                                                         |
+| `daemonset.annotations`                            | Specifies the custom annotations for daemonset.              | `{}`                                                         |
+| `daemonset.labels`                                 | Specifies the custom labels for daemonset as a multi-line templated string map or as YAML. |                                                              |
+| `daemonset.probes.initialDelay`                    | Specifies the initial delay for liveness and readiness probes daemonset. | `{}`                                                         |
+| `daemonset.kmodule.env`                            | Sets the environment variables for the kernel module image builder. Provide as map of `VAR: val` | `{}`                                                         |
+| `slim.enabled`                                     | Uses the slim based Sysdig Agent image.                      | `true`                                                       |
+| `slim.image.repository`                            | Specifies the slim agent image repository.                   | `sysdig/agent-slim`                                          |
+| `slim.kmoduleImage.repository`                     | Specifies the repository to pull the kernel module image builder from. | `sysdig/agent-kmodule`                                       |
+| `slim.kmoduleImage.digest`                         | Specifies the image digest to pull.                          | ` `                                                          |
+| `slim.resources.requests.cpu`                      | Specifies the CPU requested for building the kernel module.  | `1000m`                                                      |
+| `slim.resources.requests.memory`                   | Specifies the memory requested for building the kernel module. | `348Mi`                                                      |
+| `slim.resources.limits.cpu`                        | Specifies the CPU limit for building the kernel module       | `1000m`                                                      |
+| `slim.resources.limits.memory`                     | Specifies the memory limit for building the kernel module.   | `512Mi`                                                      |
+| `ebpf.enabled`                                     | Enables eBPF support for Sysdig instead of `sysdig-probe` kernel module. | `false`                                                      |
+| `ebpf.settings.mountEtcVolume`                     | Detects which kernel version is running in Google COS.       | `true`                                                       |
+| `clusterName`                                      | Sets a unique cluster name which is used to identify events with the `kubernetes.cluster.name` tag. Overrides `global.clusterConfig.name`. | ` `                                                          |
+| `sysdig.accessKey`                                 | Your Sysdig Agent Access Key. Overrides `global.sysdig.accessKey` | ` ` Either accessKey or existingAccessKeySecret is required  |
+| `sysdig.existingAccessKeySecret`                   | Specifies the name of a Kubernetes secret containing an `access-key ` entry. Overrides `global.sysdig.existingAccessKeySecret` | ` ` Either accessKey or existingAccessKeySecret is required  |
+| `sysdig.disableCaptures`                           | Disables capture functionality. See https://docs.sysdig.com/en/disable-captures.html. | `false`                                                      |
+| `sysdig.settings`                                  | Provides additional settings that are given  in the `dragent.yaml`file. | `{}`                                                         |
+| `logPriority`                                      | Sets both agent console and file logging priorities. Possible values are: `"info"`, `"debug"`. Mutually exclusive with `sysdig.settings.log`. | ` `                                                          |
+| `secure.enabled`                                   | Enables Sysdig Secure.                                       | `true`                                                       |
+| `monitor.enabled`                                  | Enables Sysdig Monitor.                                      | `true`                                                       |
+| `auditLog.enabled`                                 | Enables Kubernetes audit log support for Sysdig Secure.      | `false`                                                      |
+| `auditLog.auditServerUrl`                          | Specifies the URL where Sysdig Agent listens for the Kubernetes audit log events. | `0.0.0.0`                                                    |
+| `auditLog.auditServerPort`                         | Specifies the port where Sysdig Agent listens for the Kubernetes audit log events. | `7765`                                                       |
+| `auditLog.dynamicBackend.enabled`                  | Deploys the Audit Sink where Sysdig listens for Kubernetes audit log events. | `false`                                                      |
+| `tolerations`                                      | Specifies the tolerations for scheduling.                    | `node-role.kubernetes.io/master:NoSchedule`                  |
+| `node-role.kubernetes.io/control-plane:NoSchedule` |                                                              |                                                              |
+| `leaderelection.enable`                            | Enables the agent leader election algorithm.                 | `false`                                                      |
+| `prometheus.file`                                  | Specifies the file to configure promscrape.                  | `false`                                                      |
+| `prometheus.yaml`                                  | Configures the Prometheus metric collection. Performs relabelling and filtering. | ` `                                                          |
+| `extraVolumes.volumes`                             | Specifies the additional volumes to mount in the sysdig agent to pass new secrets or configmaps | `[]`                                                         |
+| `extraVolumes.mounts`                              | Specifies the mount points for additional volumes            | `[]`                                                         |
+| `extraSecrets`                                     | Allows passing extra secrets that can be mounted via extraVolumes | `[]`                                                         |
+| `proxy.httpProxy`                                  | Sets `http_proxy` on the agent container. Overrides the proxy setting from `global.proxy`. | `""`                                                         |
+| `proxy.httpsProxy`                                 | Sets `https_proxy` on the agent container. Overrides the proxy setting from `global.proxy`. | `""`                                                         |
+| `proxy.noProxy`                                    | Sets `no_proxy` on the agent container. Overrides the proxy setting from `global.proxy`. | `""`                                                         |
