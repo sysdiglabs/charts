@@ -325,6 +325,25 @@ tests:
             - test: test
         template: daemonset.yaml
 
+  - it: check imagePullSecrets with local override
+    set:
+      global:
+        sysdig:
+          accessKeySecret: standard_key
+        image:
+          pullSecrets:
+            - test: test
+      rapidResponse:
+        passphrase: passcode
+        imagePullSecrets:
+          - test: test_override
+    asserts:
+      - equal:
+          path: spec.template.spec.imagePullSecrets
+          value:
+            - test: test_override
+        template: daemonset.yaml
+
   - it: check imagePullPolicy with global
     set:
       global:
@@ -353,4 +372,21 @@ tests:
       - equal:
           path: spec.template.spec.containers[0].imagePullPolicy
           value: Always
+        template: daemonset.yaml
+
+  - it: check imagePullPolicy with local override
+    set:
+      global:
+        sysdig:
+          accessKeySecret: standard_key
+        image:
+          pullPolicy: Always
+      rapidResponse:
+        passphrase: passcode
+        image:
+          pullPolicy: Never
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].imagePullPolicy
+          value: Never
         template: daemonset.yaml

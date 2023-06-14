@@ -158,6 +158,25 @@ tests:
             - name: test
         template: deployment.yaml
 
+  - it: check imagePullSecrets with local override
+    set:
+      global:
+        clusterConfig:
+          name: standard_cluster
+        sysdig:
+          accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+        image:
+          pullSecrets:
+            - test: test
+      imagePullSecrets:
+        - name: test_override
+    asserts:
+      - equal:
+          path: spec.template.spec.imagePullSecrets
+          value:
+            - name: test_override
+        template: deployment.yaml
+
   - it: check imagePullPolicy with global
     set:
       global:
@@ -186,4 +205,21 @@ tests:
       - equal:
           path: spec.template.spec.containers[0].imagePullPolicy
           value: Always
+        template: deployment.yaml
+
+  - it: check imagePullPolicy with local override
+    set:
+      global:
+        image:
+          pullPolicy: Always
+        clusterConfig:
+          name: standard_cluster
+        sysdig:
+          accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+      image:
+        pullPolicy: Never
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].imagePullPolicy
+          value: Never
         template: deployment.yaml
