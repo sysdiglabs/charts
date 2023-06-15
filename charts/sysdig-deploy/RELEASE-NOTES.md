@@ -1,6 +1,6 @@
 # What's Changed
 
-### Chores
-- **sysdig-deploy** [62284204](https://github.com/sysdiglabs/charts/commit/62284204d31ab7249290cba0a61670e2a1847b32): Automatic version bump due to updated dependencies ([#1164](https://github.com/sysdiglabs/charts/issues/1164))
+### New Features
+- **adminssion-controller,agent,node-analyzer,kspm-collector,rapid-response** [33cad895](https://github.com/sysdiglabs/charts/commit/33cad8952395800e2e453de6bbf81851bfe1c608): pull policy and secrets params uniformity ([#1158](https://github.com/sysdiglabs/charts/issues/1158))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.8.22...sysdig-deploy-1.8.23
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.8.23...sysdig-deploy-1.8.24

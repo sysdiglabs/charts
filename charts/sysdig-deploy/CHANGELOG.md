@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.8.24
+### New Features
+* **adminssion-controller,agent,node-analyzer,kspm-collector,rapid-response** [33cad895](https://github.com/sysdiglabs/charts/commit/33cad8952395800e2e453de6bbf81851bfe1c608): pull policy and secrets params uniformity ([#1158](https://github.com/sysdiglabs/charts/issues/1158))
 # v1.8.23
 ### Chores
 * **sysdig-deploy** [62284204](https://github.com/sysdiglabs/charts/commit/62284204d31ab7249290cba0a61670e2a1847b32): Automatic version bump due to updated dependencies ([#1164](https://github.com/sysdiglabs/charts/issues/1164))
