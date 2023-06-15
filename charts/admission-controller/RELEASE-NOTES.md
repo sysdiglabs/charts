@@ -1,6 +1,6 @@
 # What's Changed
 
-### Bug Fixes
-- **admission-controller** [fb9d6afd](https://github.com/sysdiglabs/charts/commit/fb9d6afd15f2305bda9f5fa2c13ff4c74cdea093): prometheus scrape port ([#1163](https://github.com/sysdiglabs/charts/issues/1163))
+### New Features
+- **adminssion-controller,agent,node-analyzer,kspm-collector,rapid-response** [33cad895](https://github.com/sysdiglabs/charts/commit/33cad8952395800e2e453de6bbf81851bfe1c608): pull policy and secrets params uniformity ([#1158](https://github.com/sysdiglabs/charts/issues/1158))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/admission-controller-0.8.3...admission-controller-0.8.4
+#### Full diff: https://github.com/sysdiglabs/charts/compare/admission-controller-0.8.4...admission-controller-0.8.5
