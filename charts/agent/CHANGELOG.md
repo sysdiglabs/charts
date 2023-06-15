@@ -10,6 +10,7 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.8.8
 # v1.8.7
 ### Bug Fixes
 * **agent,node-analyzer** [e0ef02c2](https://github.com/sysdiglabs/charts/commit/e0ef02c283df3d12cf5d8d2b1b89a61e1fc30807): updateStrategy maxSurge param ([#1166](https://github.com/sysdiglabs/charts/issues/1166))
