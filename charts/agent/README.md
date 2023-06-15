@@ -2,26 +2,26 @@
 
 ## Overview
 
-Use the [sysdig-deploy](../sysdig-deploy/README.md) parent chart to deploy the Sysdig Agent and any other subcomponents. Do not deploy subcharts directly. 
+Use the [sysdig-deploy](../sysdig-deploy/README.md) parent chart to deploy the Sysdig Agent and any other subcomponents. Do not deploy subcharts directly.
 
 To deploy the Sysdig Agent, follow the installation instructions given on the Sysdig Documentation website:
 
 ### Sysdig Monitor
 
 - [Installation Requirements](https://docs.sysdig.com/en/docs/installation/sysdig-monitor/install-sysdig-agent/#installation-requirements)
-- [Installation Instructions](https://docs.sysdig.com/en/docs/installation/sysdig-monitor/install-sysdig-agent/kubernetes/) 
+- [Installation Instructions](https://docs.sysdig.com/en/docs/installation/sysdig-monitor/install-sysdig-agent/kubernetes/)
 
-### Sysdig Secure | Sysdig Secure + Sysdig Monitor 
+### Sysdig Secure | Sysdig Secure + Sysdig Monitor
 
 - [Component Overview](https://docs.sysdig.com/en/docs/installation/sysdig-secure/install-agent-components/)
 - [Installation Requirements](https://docs.sysdig.com/en/docs/installation/sysdig-secure/install-agent-components/installation-requirements/sysdig-agent/)
-- [Installation Instructions](https://docs.sysdig.com/en/docs/installation/sysdig-secure/install-agent-components/kubernetes/) 
+- [Installation Instructions](https://docs.sysdig.com/en/docs/installation/sysdig-secure/install-agent-components/kubernetes/)
 
-### On-Premises 
+### On-Premises
 
 - [Install Sysdig Agent for a Sysdig On-Premises Deployment](https://docs.sysdig.com/en/docs/installation/on-premises/)
 - [Install Sysdig Agent in an Airgapped Environment](https://docs.sysdig.com/en/docs/installation/on-premises/airgapped-installation/)
-  
+
 
 ## Configuration
 
@@ -32,7 +32,7 @@ You can use the Helm chart to update the default agent configurations by using e
 
 ### Using the Key-Value Pair
 
-Specify each parameter using the `--set key=value[,key=value]` argument to the `helm install`command. 
+Specify each parameter using the `--set key=value[,key=value]` argument to the `helm install`command.
 
 For example:
 
@@ -44,7 +44,7 @@ $ helm install --namespace sysdig-agent sysdig-agent \
 
 ### Using values.yaml
 
-The `values.yaml` file specifies the values for the agent configuration parameters.  You can add the configuration to the `values.yaml` file, then use it in the `helm install` command. 
+The `values.yaml` file specifies the values for the agent configuration parameters.  You can add the configuration to the `values.yaml` file, then use it in the `helm install` command.
 
 For example, to enable Prometheus metrics scraping:
 
