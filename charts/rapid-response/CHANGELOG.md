@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.4.12
+### New Features
+* **adminssion-controller,agent,node-analyzer,kspm-collector,rapid-response** [33cad895](https://github.com/sysdiglabs/charts/commit/33cad8952395800e2e453de6bbf81851bfe1c608): pull policy and secrets params uniformity ([#1158](https://github.com/sysdiglabs/charts/issues/1158))
 # v0.4.11
 ### Chores
 * **rapid-response** [f7c1db0](https://github.com/sysdiglabs/charts/commit/f7c1db03523d4a99eca3a04a8ffcedec15dbfbf0): bump rapid-response version to 0.3.9 ([#1045](https://github.com/sysdiglabs/charts/issues/1045))
