@@ -447,4 +447,7 @@ spec:
     type: {{ .Values.daemonset.updateStrategy.type }}
     rollingUpdate:
       maxUnavailable: {{ include "agent.maxUnavailable" . }}
+      {{- if .Values.daemonset.updateStrategy.rollingUpdate.maxSurge }}
+      maxSurge: {{ .Values.daemonset.updateStrategy.rollingUpdate.maxSurge }}
+      {{- end }}
 {{- end }}

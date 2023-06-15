@@ -18,6 +18,9 @@ spec:
     type: {{ .Values.daemonset.updateStrategy.type | default "RollingUpdate" }}
     rollingUpdate:
       maxUnavailable: {{ .Values.daemonset.updateStrategy.rollingUpdate.maxUnavailable | default 1 }}
+      {{- if .Values.daemonset.updateStrategy.rollingUpdate.maxSurge }}
+      maxSurge: {{ .Values.daemonset.updateStrategy.rollingUpdate.maxSurge }}
+      {{- end }}
   template:
     metadata:
       name: {{ .Release.Name }}-node-analyzer

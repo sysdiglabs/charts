@@ -1,0 +1,51 @@
+suite: Test Daemonset Update Strategy
+templates:
+  - templates/daemonset-node-analyzer.yaml
+tests:
+  - it: set default updateStrategy
+    asserts:
+      - equal:
+          path: spec.updateStrategy
+          value:
+            rollingUpdate:
+              maxUnavailable: 1
+            type: RollingUpdate
+      - isNull:
+          path: spec.updateStrategy.rollingUpdate.maxSurge
+    templates:
+      - templates/daemonset-node-analyzer.yaml
+
+  - it: sets user defined updateStrategy without maxSurge
+    set:
+      daemonset:
+        updateStrategy:
+          type: RollingUpdate
+    asserts:
+      - equal:
+          path: spec.updateStrategy
+          value:
+            rollingUpdate:
+              maxUnavailable: 1
+            type: RollingUpdate
+      - isNull:
+          path: spec.updateStrategy.rollingUpdate.maxSurge
+    templates:
+      - templates/daemonset-node-analyzer.yaml
+
+  - it: sets user defined updateStrategy
+    set:
+      daemonset:
+        updateStrategy:
+          type: RollingUpdate
+          rollingUpdate:
+            maxUnavailable: 2
+            maxSurge: 1
+    asserts:
+      - equal:
+          path: spec.updateStrategy
+          value:
+            rollingUpdate:
+              maxSurge: 1
+              maxUnavailable: 2
+            type: RollingUpdate
+        template: templates/daemonset-node-analyzer.yaml
