@@ -105,6 +105,9 @@ spec:
       {{- if .Values.nodeAnalyzer.pullSecrets }}
       imagePullSecrets:
 {{ toYaml .Values.nodeAnalyzer.pullSecrets | indent 8 }}
+      {{- else if .Values.global.image.pullSecrets }}
+      imagePullSecrets:
+        {{- toYaml .Values.global.image.pullSecrets | nindent 8 }}
       {{- end }}
       terminationGracePeriodSeconds: 5
       {{- if or (include "nodeAnalyzer.deployBenchmarkRunner" .) (include "nodeAnalyzer.deployHostScanner" .) }}
@@ -139,7 +142,7 @@ spec:
           initialDelaySeconds: {{ .Values.nodeAnalyzer.kspmAnalyzer.livenessProbe.probe.initialDelaySeconds }}
           periodSeconds: {{ .Values.nodeAnalyzer.kspmAnalyzer.livenessProbe.probe.periodSeconds }}
         {{- end }}
-        imagePullPolicy: {{ .Values.nodeAnalyzer.kspmAnalyzer.image.pullPolicy }}
+        imagePullPolicy: {{ .Values.nodeAnalyzer.kspmAnalyzer.image.pullPolicy | default .Values.global.image.pullPolicy}}
         resources:
 {{ toYaml .Values.nodeAnalyzer.kspmAnalyzer.resources | indent 10 }}
         securityContext:
@@ -236,7 +239,7 @@ spec:
           # The privileged flag is necessary for OCP 4.x and other Kubernetes setups that deny host filesystem access to
           # running containers by default regardless of volume mounts. In those cases, access to the CRI socket would fail.
           privileged: true
-        imagePullPolicy: {{ .Values.nodeAnalyzer.imageAnalyzer.image.pullPolicy }}
+        imagePullPolicy: {{ .Values.nodeAnalyzer.imageAnalyzer.image.pullPolicy | default .Values.global.image.pullPolicy }}
         resources:
 {{ toYaml .Values.nodeAnalyzer.imageAnalyzer.resources | indent 10 }}
         volumeMounts:
@@ -369,7 +372,7 @@ spec:
           # running containers by default regardless of volume mounts. In those cases, access to any host related components
           # would fail
           privileged: true
-        imagePullPolicy: {{ .Values.nodeAnalyzer.hostAnalyzer.image.pullPolicy }}
+        imagePullPolicy: {{ .Values.nodeAnalyzer.hostAnalyzer.image.pullPolicy | default .Values.global.image.pullPolicy }}
         resources:
 {{ toYaml .Values.nodeAnalyzer.hostAnalyzer.resources | indent 10 }}
         volumeMounts:
@@ -463,7 +466,7 @@ spec:
       # benchmark-runner
       - name: sysdig-benchmark-runner
         image: {{ template "nodeAnalyzer.image.benchmarkRunner" . }}
-        imagePullPolicy: {{ .Values.nodeAnalyzer.benchmarkRunner.image.pullPolicy }}
+        imagePullPolicy: {{ .Values.nodeAnalyzer.benchmarkRunner.image.pullPolicy | default .Values.global.image.pullPolicy }}
         securityContext:
           # The privileged flag is necessary for OCP 4.x and other Kubernetes setups that deny host filesystem access to
           # running containers by default regardless of volume mounts. In those cases, the benchmark process would fail.
@@ -537,7 +540,7 @@ spec:
       # runtime-scanner
       - name: sysdig-runtime-scanner
         image: {{ template "nodeAnalyzer.image.runtimeScanner" . }}
-        imagePullPolicy: {{ .Values.nodeAnalyzer.runtimeScanner.image.pullPolicy }}
+        imagePullPolicy: {{ .Values.nodeAnalyzer.runtimeScanner.image.pullPolicy | default .Values.global.image.pullPolicy }}
         livenessProbe:
           httpGet:
             port: {{ .Values.nodeAnalyzer.runtimeScanner.probesPort }}
@@ -673,7 +676,7 @@ spec:
       # host-scanner
       - name: sysdig-host-scanner
         image: {{ template "nodeAnalyzer.image.hostScanner" . }}
-        imagePullPolicy: {{ .Values.nodeAnalyzer.hostScanner.image.pullPolicy }}
+        imagePullPolicy: {{ .Values.nodeAnalyzer.hostScanner.image.pullPolicy | default .Values.global.image.pullPolicy }}
         livenessProbe:
           httpGet:
             port: {{ .Values.nodeAnalyzer.hostScanner.probesPort }}

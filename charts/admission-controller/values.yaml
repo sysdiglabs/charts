@@ -14,6 +14,10 @@ global:
     region: "us1"
   # Global HTTP Proxy settings.
   proxy: {}
+  # Global image settings.
+  image:
+    pullSecrets: []
+    pullPolicy: IfNotPresent
 
 # **required**
 # <br/> Cluster Name which appear on Secure UI
@@ -125,7 +129,7 @@ webhook:
     # Webhook image registry
     repository: sysdig/admission-controller
     # PullPolicy for Webhook image
-    pullPolicy: IfNotPresent
+    pullPolicy:
     # Override the default image tag. If not specified, it defaults to appVersion in Chart.yaml
     tag:
     # Specify the image digest value.  If set, this value is used instead of the tag value.
@@ -262,7 +266,7 @@ scanner:
     # Scanner image repository
     repository: sysdig/inline-scan-service
     # PullPolicy for Scanner image
-    pullPolicy: IfNotPresent
+    pullPolicy:
     # Scanner image tag
     tag: 0.0.13
     # Specify the image digest value.  If set, this value is used instead of the tag value.

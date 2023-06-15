@@ -73,12 +73,15 @@ spec:
       {{- if .Values.image.pullSecrets }}
       imagePullSecrets:
         {{ toYaml .Values.image.pullSecrets | nindent 8 }}
+      {{- else if .Values.global.image.pullSecrets }}
+      imagePullSecrets:
+        {{ toYaml .Values.global.image.pullSecrets | nindent 8 }}
       {{- end }}
       {{- if .Values.slim.enabled }}
       initContainers:
         - name: sysdig-agent-kmodule
           image: {{ template "agent.image.kmodule" . }}
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.image.pullPolicy | default .Values.global.image.pullPolicy }}
           securityContext:
             privileged: true
             runAsNonRoot: false
@@ -150,7 +153,7 @@ spec:
       containers:
         - name: sysdig
           image: {{ template "agent.image" . }}
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.image.pullPolicy | default .Values.global.image.pullPolicy }}
           resources:
             {{- include "agent.resources" . | nindent 12 }}
           securityContext:

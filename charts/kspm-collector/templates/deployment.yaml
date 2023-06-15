@@ -51,7 +51,10 @@ spec:
 {{ toYaml .Values.tolerations | indent 8 }}
       {{- if .Values.imagePullSecrets }}
       imagePullSecrets:
-{{ toYaml .Values.imagePullSecrets | indent 8 }}
+        {{- toYaml .Values.imagePullSecrets | nindent 8 }}
+      {{- else if .Values.global.image.pullSecrets }}
+      imagePullSecrets:
+        {{- toYaml .Values.global.image.pullSecrets | nindent 8 }}
       {{- end }}
       {{- if .Values.priorityClassName }}
       priorityClassName: {{ .Values.priorityClassName | quote }}
@@ -59,7 +62,7 @@ spec:
       containers:
       - name: {{ include "kspmCollector.name" . }}
         image: {{ template "kspmCollector.image.kspmCollector" . }}
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        imagePullPolicy: {{ .Values.image.pullPolicy | default .Values.global.image.pullPolicy }}
         securityContext:
 {{- toYaml .Values.securityContext | nindent 10 }}
         {{- if .Values.readinessProbe.enabled }}

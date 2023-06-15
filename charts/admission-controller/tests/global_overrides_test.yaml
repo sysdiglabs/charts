@@ -138,3 +138,130 @@ tests:
           path: data.SECURE_URL
           value: https://eu1.app.sysdig.com
         template: webhook/configmap.yaml
+
+  - it: check imagePullSecrets with global
+    documentIndex: 0
+    set:
+      global:
+        image:
+          pullSecrets:
+          - test
+        sysdig:
+          secureAPITokenSecret: standard_token
+      clusterName: test-k8s
+    asserts:
+      - equal:
+          path: spec.template.spec.imagePullSecrets
+          value:
+            - test
+    templates:
+      - scanner/deployment.yaml
+      - webhook/deployment.yaml
+
+  - it: check imagePullSecrets with legacy
+    documentIndex: 0
+    set:
+      global:
+        sysdig:
+          secureAPITokenSecret: standard_token
+      clusterName: test-k8s
+      scanner:
+        imagePullSecrets:
+          - test
+      webhook:
+        imagePullSecrets:
+          - test
+    asserts:
+      - equal:
+          path: spec.template.spec.imagePullSecrets
+          value:
+            - test
+    templates:
+      - scanner/deployment.yaml
+      - webhook/deployment.yaml
+
+  - it: check imagePullSecrets with local override
+    documentIndex: 0
+    set:
+      global:
+        image:
+          pullSecrets:
+          - test
+        sysdig:
+          secureAPITokenSecret: standard_token
+      clusterName: test-k8s
+      scanner:
+        imagePullSecrets:
+          - test_override
+      webhook:
+        imagePullSecrets:
+          - test_override
+    asserts:
+      - equal:
+          path: spec.template.spec.imagePullSecrets
+          value:
+            - test_override
+    templates:
+      - scanner/deployment.yaml
+      - webhook/deployment.yaml
+
+  - it: check imagePullPolicy with global
+    documentIndex: 0
+    set:
+      global:
+        sysdig:
+          secureAPITokenSecret: standard_token
+        image:
+          pullPolicy: Always
+      clusterName: test-k8s
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].imagePullPolicy
+          value: Always
+    templates:
+      - scanner/deployment.yaml
+      - webhook/deployment.yaml
+
+  - it: check imagePullPolicy with legacy
+    documentIndex: 0
+    set:
+      global:
+        sysdig:
+          secureAPITokenSecret: standard_token
+      clusterName: test-k8s
+      scanner:
+        image:
+          pullPolicy: Always
+      webhook:
+        image:
+          pullPolicy: Always
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].imagePullPolicy
+          value: Always
+    templates:
+      - scanner/deployment.yaml
+      - webhook/deployment.yaml
+
+  - it: check imagePullPolicy with local override
+    documentIndex: 0
+    set:
+      global:
+        image:
+          pullPolicy: Always
+        sysdig:
+          secureAPITokenSecret: standard_token
+      clusterName: test-k8s
+      scanner:
+        image:
+          pullPolicy: Never
+      webhook:
+        image:
+          pullPolicy: Never
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].imagePullPolicy
+          value: Never
+    templates:
+      - scanner/deployment.yaml
+      - webhook/deployment.yaml
