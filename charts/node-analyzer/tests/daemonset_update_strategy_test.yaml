@@ -38,7 +38,7 @@ tests:
         updateStrategy:
           type: RollingUpdate
           rollingUpdate:
-            maxUnavailable: 1
+            maxUnavailable: 2
             maxSurge: 1
     asserts:
       - equal:
@@ -46,6 +46,6 @@ tests:
           value:
             rollingUpdate:
               maxSurge: 1
-              maxUnavailable: 1
+              maxUnavailable: 2
             type: RollingUpdate
         template: templates/daemonset-node-analyzer.yaml
