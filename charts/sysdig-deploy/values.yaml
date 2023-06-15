@@ -15,6 +15,9 @@ global:
   agentConfigmapName: "sysdig-agent"
   gke:
     autopilot: false
+  image:
+    pullSecrets: []
+    pullPolicy: IfNotPresent
 
 admissionController:
   enabled: false

@@ -10,6 +10,9 @@ global:
   gke:
     # true here enables the deployment on gke autopilot clusters
     autopilot: false
+  image:
+    pullSecrets: []
+    pullPolicy: IfNotPresent
 
 image:
   # This is a hack to support RELATED_IMAGE_<identifier> feature in Helm based
@@ -163,7 +166,7 @@ nodeAnalyzer:
       repository: sysdig/node-image-analyzer
       tag: 0.1.27
       digest:
-      pullPolicy: IfNotPresent
+      pullPolicy:
 
     # The Docker socket path.
     # If a custom path is specified, ensure it is correctly mounted from the host inside the container.
@@ -216,7 +219,7 @@ nodeAnalyzer:
       repository: sysdig/host-analyzer
       tag: 0.1.16
       digest:
-      pullPolicy: IfNotPresent
+      pullPolicy:
 
     # The scanning schedule specification for the host analyzer expressed as a crontab string such as “5 4 * * *”.
     # The default value of @dailydefault instructs the analyzer to automatically pick a schedule that will start
@@ -247,7 +250,7 @@ nodeAnalyzer:
       repository: sysdig/compliance-benchmark-runner
       tag: 1.1.0.8
       digest:
-      pullPolicy: IfNotPresent
+      pullPolicy:
 
     resources:
       requests:
@@ -266,7 +269,7 @@ nodeAnalyzer:
       repository: sysdig/vuln-runtime-scanner
       tag: "1.5"
       digest:
-      pullPolicy: IfNotPresent
+      pullPolicy:
     storageClassName:
     extraMounts: []
     # example for bottlerocket
@@ -303,7 +306,7 @@ nodeAnalyzer:
         repository: sysdig/eveclient-api
         tag: 1.1.0
         digest:
-        pullPolicy: IfNotPresent
+        pullPolicy:
 
       priorityClassName:
 
@@ -341,7 +344,7 @@ nodeAnalyzer:
       repository: sysdig/vuln-host-scanner
       tag: "0.4"
       digest:
-      pullPolicy: IfNotPresent
+      pullPolicy:
 
     resources:
       requests:
@@ -364,7 +367,7 @@ nodeAnalyzer:
       repository: sysdig/kspm-analyzer
       tag: 1.24.0
       digest:
-      pullPolicy: IfNotPresent
+      pullPolicy:
 
     resources:
       requests:

@@ -190,6 +190,8 @@ The following table lists the configurable parameters of the sysdig-deploy chart
 | `global.sysdig.region`                  | The SaaS region for these agents. Possible values: `"us1"`, `"us2"`, `"us3"`, `"us4"`, `"eu1"`, `"au1"`, and `"custom"`. See [Regions and IP Ranges](https://docs.sysdig.com/en/docs/administration/saas-regions-and-ip-ranges/) for more information  | `"us1"`   |
 | `global.sysdig.tags`                    | Sets the global tags which can override agent tags                                                                      | `{}`      |
 | `global.imageRegistry`                  | Container image registry                                                                                                | ``        |
+| `global.image.pullSecrets`                  | Global pull secrets                                                                                                | `[]`        |
+| `global.image.pullPolicy`                  | Global pull policy                                                                                                | `"`        |
 | `global.proxy.httpProxy`                | Sets `http_proxy` on the Agent container                                                                                | `""`      |
 | `global.proxy.httpsProxy`               | Sets `https_proxy` on the Agent container                                                                               | `""`      |
 | `global.proxy.noProxy`                  | Sets `no_proxy` on the Agent container                                                                                  | `""`      |

@@ -3,6 +3,9 @@ global:
   sysdig:
     region: "us1"
   proxy: {}
+  image:
+    pullSecrets: []
+    pullPolicy: IfNotPresent
 
 sysdig:
   # Required: You need your Sysdig access key before running agents, either specifying 'accessKey' here, or using 'existingAccessKeySecret'
@@ -24,7 +27,7 @@ rapidResponse:
 
   image:
     registry: quay.io
-    pullPolicy: IfNotPresent
+    pullPolicy:
     repository: sysdig/rapid-response-host-component
     # If unset, .Chart.AppVersion is used to create tag
     # Note: Image tag must be a string specified in double-quotes
