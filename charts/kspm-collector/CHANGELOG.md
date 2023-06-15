@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.1.50
+### New Features
+* **adminssion-controller,agent,node-analyzer,kspm-collector,rapid-response** [33cad895](https://github.com/sysdiglabs/charts/commit/33cad8952395800e2e453de6bbf81851bfe1c608): pull policy and secrets params uniformity ([#1158](https://github.com/sysdiglabs/charts/issues/1158))
 # v0.1.49
 ### Bug Fixes
 * **kspm-collector** [0e781267](https://github.com/sysdiglabs/charts/commit/0e781267813eb79070f28ac2afa22b5c18a80a84): readme formatting ([#1154](https://github.com/sysdiglabs/charts/issues/1154))
