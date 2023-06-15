@@ -25,7 +25,7 @@ To deploy the Sysdig Agent, follow the installation instructions given on the Sy
 
 ## Configuration
 
-Using the Helm chart, you can update the default configuration settings with the `sysdig.settings` parameter by using either of the following:
+You can use the Helm chart to update the default agent configurations by using either of the following:
 
 - Using the key-value pair: `--set sysdig.settings.key = value`
 - `values.yaml` file
