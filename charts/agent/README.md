@@ -25,9 +25,7 @@ To deploy the Sysdig Agent, follow the installation instructions given on the Sy
 
 ## Configuration
 
-The Sysdig Agent uses a configuration file called `dragent.yaml` to store the configuration.
-
-Using the Helm chart, the default configuration settings can be updated with the `sysdig.settings` parameter by using either of the following:
+Using the Helm chart, you can update the default configuration settings with the `sysdig.settings` parameter by using either of the following:
 
 - Using the key-value pair: `--set sysdig.settings.key = value`
 - `values.yaml` file
