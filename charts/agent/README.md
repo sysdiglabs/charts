@@ -2,7 +2,7 @@
 
 ## Overview
 
-Use the [sysdig-deploy](./sysdig-deploy/README.md) parent chart to deploy the Sysdig Agent and any other subcomponents. Do not deploy subcharts directly. 
+Use the [sysdig-deploy](../sysdig-deploy/README.md) parent chart to deploy the Sysdig Agent and any other subcomponents. Do not deploy subcharts directly. 
 
 To deploy the Sysdig Agent, follow the installation instructions given on the Sysdig Documentation website:
 
