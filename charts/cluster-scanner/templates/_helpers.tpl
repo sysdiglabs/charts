@@ -219,17 +219,19 @@ the provided tag is < 1.0.0 .
 
 Otherwise, it checks if the provided tag is >= 1.0.0 .
 
-Version tags must be semver2-compatible otherwise it fails.
+Version tags must be semver2-compatible otherwise no check will be performed.
 */}}
 {{- define "cluster-scanner.checkVersionCompatibility" -}}
-{{- $version := semver .Tag -}}
-{{- if and (hasKey (default .Values dict) "onPremCompatibilityVersion") (eq .Values.onPremCompatibilityVersion "6.2") -}}
-    {{- if ne ($version | (semver "1.0.0").Compare) 1 -}}
-        {{- fail (printf "incompatible version for %s, set %s expected < 1.0.0" .Component .Tag) -}}
-    {{- end -}}
-{{- else -}}
-    {{- if eq ($version | (semver "1.0.0").Compare) 1 -}}
-        {{- fail (printf "incompatible version for %s, set %s expected >= 1.0.0" .Component .Tag) -}}
+{{- if regexMatch "^[0-9]+\\.[0-9]+\\.[0-9]+.*" .Tag -}}
+    {{- $version := semver .Tag -}}
+    {{- if and (hasKey (default .Values dict) "onPremCompatibilityVersion") (eq .Values.onPremCompatibilityVersion "6.2") -}}
+        {{- if ne ($version | (semver "1.0.0").Compare) 1 -}}
+            {{- fail (printf "incompatible version for %s, set %s expected < 1.0.0" .Component .Tag) -}}
+        {{- end -}}
+    {{- else -}}
+        {{- if eq ($version | (semver "1.0.0").Compare) 1 -}}
+            {{- fail (printf "incompatible version for %s, set %s expected >= 1.0.0" .Component .Tag) -}}
+        {{- end -}}
     {{- end -}}
 {{- end -}}
 {{- end -}}
