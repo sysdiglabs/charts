@@ -128,7 +128,7 @@ webhook:
     container: 
       name: secure-admission-controller
       port: 8443
-      image:  lioralafisysdig/vac:latest #quay.io/sysdig/secure-admission-controller:1.0.0-rc  
+      image: quay.io/sysdig/secure-admission-controller:1.25.0-rc
   # Service name for Webhook deployment
   name: webhook
   # Amount of replicas for webhook. **Deprecated**, use `webhook.autoscaling.minReplicas` and `webhook.autoscaling.maxReplicas` instead.
