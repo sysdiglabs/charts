@@ -106,12 +106,27 @@ jobs:
           git config user.name "$GITHUB_USERNAME"
           git config user.email "$GITHUB_USER_EMAIL"
 
+      - name: Import GPG key
+        run: |
+          GPG_DIR=".helm-gpg"
+          mkdir "$GPG_DIR"
+          KEYRING_FILE="$GPG_DIR/keyring.gpg"
+          echo "${GPG_PRIVATE_KEY}" | gpg --dearmor --output "${KEYRING_FILE}"
+          PASSPHRASE_FILE="$GPG_DIR/passphrase"
+          echo "${GPG_PASSPHRASE}" > "${PASSPHRASE_FILE}"
+          echo "CR_PASSPHRASE_FILE=$PASSPHRASE_FILE" >> "$GITHUB_ENV"
+          echo "CR_KEYRING=$KEYRING_FILE" >> "$GITHUB_ENV"
+        env:
+          GPG_PASSPHRASE: "${{ secrets.GPG_PASSPHRASE }}"
+          GPG_PRIVATE_KEY: "${{ secrets.GPG_PRIVATE_KEY }}"
+
       - name: Run Chart Releaser
         uses: helm/chart-releaser-action@v1.5.0
         with:
           config: cr.yaml
         env:
           CR_TOKEN: "${{ secrets.TOOLS_JENKINS_ADMIN_ACCESS_GITHUB_TOKEN }}"
+          CR_KEY: "${{ secrets.GPG_KEY_NAME }}"
 
       - name: Copy README.md files to gh-pages
         run: |
