@@ -10,6 +10,11 @@ The Node Analyzer (NA) provides a method for deploying the components for the fo
 
 This chart adds the Sysdig Node Analyzer to all nodes in your cluster via a DaemonSet. The Node Analyzer is deployed by default unless you set the value `nodeAnalyzer.deploy` to `false`.
 
+Use the [sysdig-deploy](../sysdig-deploy/README.md) parent chart to deploy Node Analyzer. Do not deploy subcharts directly.
+
+For installation instructions, see [Install Agent Components on Kubernetes](https://docs.sysdig.com/en/docs/installation/sysdig-secure/install-agent-components/kubernetes/).
+
+
 ## Prerequisites
 
 - Kubernetes 1.9+ with beta APIs enabled
