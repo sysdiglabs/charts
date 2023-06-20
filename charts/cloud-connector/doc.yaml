@@ -12,7 +12,7 @@ chart:
   name: cloud-connector
 #  version: v0.9.0-rc.0
 #  values: "-- generate from values file --"
-  valuesExample: "sysdig.secureAPIToken=YOUR-KEY-HERE"
+  valuesExample: "sysdig.secureAPIToken=<YOUR-SECURE-KEY>"
 prerequisites:
 - "Helm 3"
 - "Sysdig Secure API Token"
