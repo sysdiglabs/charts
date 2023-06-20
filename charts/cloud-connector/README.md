@@ -16,9 +16,11 @@ $ pre-commit run -a
 
 ## Overview
 
-This chart deploys the [Sysdig Cloud Connector](https://docs.sysdig.com/en/docs/installation/sysdig-secure-for-cloud/) on your Kubernetes cluster, enabling threat-detection and image scanning for the  AWS, GCP, and Azure cloud providers.  
+This chart deploys Sysdig Cloud Connector on your Kubernetes cluster, enabling Threat Detection and Image Scanning for the  AWS, GCP, and Azure Cloud providers.  
 
-Use this method only if your Sysdig representative recommends to you.
+Use this method only if your Sysdig representative recommends it to you.
+
+For the official installation instruction, see [Install Sysdig Secure for Cloud ](https://docs.sysdig.com/en/docs/installation/sysdig-secure-for-cloud/). 
 
 ### Prerequisites
 
@@ -34,7 +36,7 @@ helm repo add sysdig https://charts.sysdig.com
 helm repo update
 helm upgrade --install cloud-connector sysdig/cloud-connector \
       --create-namespace -n cloud-connector --version=0.7.25  \
-      --set sysdig.secureAPIToken=SECURE_API_TOKEN
+      --set sysdig.secureAPIToken=<SECURE_API_TOKEN>
 ```
 
 This command deploys the Sysdig Cloud Connector on the Kubernetes cluster with the default configuration. The [configuration](#configuration) section provides the additional parameters that can be configured during installation.
@@ -57,7 +59,7 @@ For example:
 ```bash
 helm upgrade --install cloud-connector sysdig/cloud-connector \
     --create-namespace -n cloud-connector --version=0.7.25 \
-    --set sysdig.secureAPIToken=<Sysdig-API-Token>
+    --set sysdig.secureAPIToken=<SECURE-API-TOKEN>
 ```
 
 ### Using values.yaml
@@ -72,7 +74,7 @@ helm upgrade --install cloud-connector sysdig/cloud-connector \
     --values values.yaml
 ```
 
-See the default [`values.yaml`](./values.yaml) for more information.
+See the default [`values.yaml`](./values.yaml) file for more information.
 
 ## Configuration Parameters
 
@@ -209,7 +211,7 @@ scanners:
 #      containerRegistry: sfccontainerregistry # container registry name where to run the scan
 ```
 
-### Usage examples
+### Usage Examples
 
 See additional examples in the Terraform modules:
 
@@ -236,7 +238,7 @@ To uninstall the `cloud-connector`:
 helm uninstall cloud-connector -n cloud-connector
 ```
 
-The command removes all the Kubernetes components associated with the chart and deletes the release.
+The command removes all the Kubernetes components associated with the chart and deletes the release artifacts.
 
 <!--
 Q: Helm v2 usage

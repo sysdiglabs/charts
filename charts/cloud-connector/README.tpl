@@ -14,92 +14,85 @@ $ pre-commit run -a
 
 # Cloud Connector
 
-[{{ .Project.Name }}]({{ .Project.URL }}) - {{ .Project.Description }}
+## Overview
 
-## TL;DR;
+This chart deploys the [Sysdig Cloud Connector](https://docs.sysdig.com/en/docs/installation/sysdig-secure-for-cloud/) on your Kubernetes cluster, enabling threat-detection and image scanning for the  AWS, GCP, and Azure cloud providers.
 
-```
-$ helm repo add {{ .Repository.Name }} {{ .Repository.URL }}
-$ helm repo update
-$ helm upgrade --install {{ .Release.Name }} {{ .Repository.Name }}/{{ .Chart.Name }} \
-      --create-namespace -n {{ .Release.Namespace }}{{ with .Chart.Version }} --version={{.}} {{ end }} \
-      --set sysdig.secureAPIToken=SECURE_API_TOKEN
-```
-
-- [Configuration](#configuration)
-- [Configuration Detail](#configuration-detail)
-- [Usage examples](#usage-examples)
-- [Troubleshooting](#troubleshooting)
-
-
-## Introduction
-
-This chart deploys {{ .Project.App }} on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager
-to enable threat-detection and image scanning capabilities for the main three providers: AWS, GCP and Azure.
+Use this method only if your Sysdig representative recommends to you.
 
 ### Prerequisites
+
 {{ range .Prerequisites }}
 - {{ . }}
 {{- end }}
 
-###  Installing the Chart
-
-To install the chart with the release name `{{ .Release.Name }}`:
-
-```console
-$ helm upgrade --install {{ .Release.Name }} {{ .Repository.Name }}/{{ .Chart.Name }} -n {{ .Release.Namespace }}{{ with .Chart.Version }} --version={{.}}{{ end }}
-```
-
-The command deploys {{ .Project.App }} on the Kubernetes cluster in the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.
-
-> **Tip**: List all releases using `helm list -A`
 
 
-### Uninstalling the Chart
+###  Installation
 
-To uninstall/delete the `{{ .Release.Name }}`:
+To install the chart:
 
 ```console
-$ helm uninstall {{ .Release.Name }} -n {{ .Release.Namespace }}
+helm repo add sysdig https://charts.sysdig.com
+helm repo update
+helm upgrade --install {{ .Release.Name }} {{ .Repository.Name }}/{{ .Chart.Name }} \
+     --create-namespace -n {{ .Release.Namespace }}{{ with .Chart.Version }} --version={{.}} {{ end }} \
+     --set sysdig.secureAPIToken=<SECURE_API_TOKEN>
 ```
 
-The command removes all the Kubernetes components associated with the chart and deletes the release.
+The command deploys {{ .Project.App }} on the Kubernetes cluster with the default configuration. The [configuration](#configuration) section lists the additional parameters that can be configured during installation.
+
+> **Tip**: Use `helm list -A` to list all the releases.
+
+
+## Configuration
+
+You can use the Helm chart to update the default Cloud Connector configurations by using either of the following:
+
+- Using the key-value pair: `--set sysdig.settings.key = value`
+- `values.yaml` file
+
+### Using the Key-Value Pair
+
+Specify each parameter using the `--set key=value[,key=value]` argument to the `helm install`command.
+
+For example:
+
+```bash
+helm upgrade --install {{ .Release.Name }} {{ .Repository.Name }}/{{ .Chart.Name }} \
+     --create-namespace -n {{ .Release.Namespace }}{{ with .Chart.Version }} --version={{.}} {{ end }} \
+     --set sysdig.secureAPIToken=<SECURE_API_TOKEN>
+```
+
+### Using values.yaml
+
+The `values.yaml` file specifies the values for the agent configuration parameters.  You can add the configuration to the `values.yaml` file, then use it in the `helm install` command.
+
+For example:
+
+```bash
+helm upgrade --install {{ .Release.Name }} {{ .Repository.Name }}/{{ .Chart.Name }} \
+     --create-namespace -n {{ .Release.Namespace }}{{ with .Chart.Version }} --version={{.}} {{ end }} \
+    --values values.yaml
+```
+
+See the default [`values.yaml`](./values.yaml) file for more information.
 
 {{ if .Chart.Values -}}
 
-## Configuration
+## Configuration Parameters
 
 The following table lists the configurable parameters of the `{{ .Chart.Name }}` chart and their default values.
 
 {{ .Chart.Values }}
 
-Specify each parameter using the **`--set key=value[,key=value]`** argument to `helm upgrade --install`. For example:
-
-```console
-$ helm upgrade --install {{ .Release.Name }} {{ .Repository.Name }}/{{ .Chart.Name }} \
-    --create-namespace -n {{ .Release.Namespace }}{{ with .Chart.Version }} --version={{.}}{{ end }} \
-    --set {{ .Chart.ValuesExample }}
-```
-
-**Alternatively, a YAML file** that specifies the values for the parameters can be provided while
-installing the chart. For example:
-
-```console
-$ helm upgrade --install {{ .Release.Name }} {{ .Repository.Name }}/{{ .Chart.Name }} \
-    --create-namespace -n {{ .Release.Namespace }}{{ with .Chart.Version }} --version={{.}}{{ end }} \
-    --values values.yaml
-```
-
-## Examples
-- [Default `values.yaml`](./values.yaml)
-
 {{- end }}
 
-## Configuration Detail
+## Examples
 
 ### Ingestors
 
-Where to ingest events from
+Specifies where to ingest the events:
 
 ```yaml
 ingestors:
@@ -147,7 +140,7 @@ ingestors:
 
 ### Scanners
 
-Trigger scanners when a new image is detected
+Specifies the trigger scanners when a new image is detected:
 
 ```yaml
 scanners:
@@ -181,9 +174,9 @@ scanners:
 #      containerRegistry: sfccontainerregistry # container registry name where to run the scan
 ```
 
-### Usage examples
+### Usage Examples
 
-Check live examples present in our different Terraform Modules:
+See additional examples in the Terraform modules:
 
 * [Single Account Deployment for AWS in K8s](https://github.com/sysdiglabs/terraform-aws-secure-for-cloud/blob/master/examples/single-account-k8s/cloud-connector.tf#L27)
 * [Single Project Deployment for GCP in K8s](https://github.com/sysdiglabs/terraform-google-secure-for-cloud/blob/master/examples/single-project-k8s/cloud-connector.tf#L32)
@@ -192,14 +185,27 @@ Check live examples present in our different Terraform Modules:
 
 ### Troubleshooting
 
-#### Q: How do I enable `debug` logs?
-A: By editing the configmap and killing pod(s)/deployment so it restart
+#### Enable `debug` Logs
+
+To enable `debug logs`, edit the ConfigMap and terminate the pod or deployment.
+
 ```yaml
   data:
     cloud-connector.yaml: |
   <    logging: info
   >    logging: debug
 ```
+
+## Uninstall the Chart
+
+To uninstall the `{{ .Release.Name }}`:
+
+```console
+$ helm uninstall {{ .Release.Name }} -n {{ .Release.Namespace }}
+```
+
+The command removes all the Kubernetes components associated with the chart and deletes the release artifacts.
+
 
 
 
