@@ -120,16 +120,16 @@ existingSecretName: ""
 # Specifies the Rules Section for Cloud Connector.
 rules: []
 
-# Thread-Detection event ingestion configuration ([config](#ingestors))
+# Specifies configuration for the threat detection event ingestion. See [ingestors](#ingestors) for more information.
 ingestors: []
 
-# Scanning capabilities configuration ([config](#scanners))
+# Specifies configuration for scanning capabilities. See [scanners](#scanners) for more information.
 scanners: []
 
 bruteForceDetection:
-  # Enable Brute Force detection
+  # Enables Brute Force detection.
   enabled: true
-  # Time window for a bruteforce attack try
+  # Specifies a time window for a bruteforce attack try.
   duration: 24h
-  # Maximum number of tries for given time window
+  # Specifies the maximum number of tries for a given time window.
   maximumTries: 10
