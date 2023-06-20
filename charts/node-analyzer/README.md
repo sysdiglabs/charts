@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Node Analyzer (NA) provides a method for deploying the components for the following Sysdig Secure features:
+The Node Analyzer provides a method for deploying the components for the following Sysdig Secure features:
 
 - [Runtime Scanning](https://docs.sysdig.com/en/docs/installation/sysdig-secure/#runtime-scanning)
 - [Host Scanning](https://docs.sysdig.com/en/docs/installation/sysdig-secure/#vulnerability-host-scanning)
