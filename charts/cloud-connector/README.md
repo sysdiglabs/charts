@@ -82,7 +82,7 @@ The following table lists the configurable parameters of the `cloud-connector` c
 
 | Parameter                               | Description                                                  | Default                                                      |
 | --------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| replicaCount                            | Specifies the amount of replicas for the Cloud Connector.    | <code>1</code>                                               |
+| replicaCount                            | Specifies the number of replicas for the Cloud Connector.    | <code>1</code>                                               |
 | image.repository                        | Specifies the image repository to pull from.                 | <code>quay.io/sysdig/cloud-connector</code>                  |
 | image.pullPolicy                        | Specifies the image pull policy.                             | <code>IfNotPresent</code>                                    |
 | image.tag                               | Specifies the image tag. Immutable tags are recommended. Overrides the image tag whose default is the chart appVersion. | <code></code>                                                |
