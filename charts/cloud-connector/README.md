@@ -87,7 +87,7 @@ The following table lists the configurable parameters of the `cloud-connector` c
 | image.pullPolicy                        | Specifies the image pull policy.                             | <code>IfNotPresent</code>                                    |
 | image.tag                               | Specifies the image tag. Immutable tags are recommended. Overrides the image tag whose default is the chart appVersion. | <code></code>                                                |
 | imagePullSecrets                        | Specifies the image pull secrets.                            | <code>[]</code>                                              |
-| nameOverride                            | Specifies the Chart name override.                           | <code>""</code>                                              |
+| nameOverride                            | Specifies the chart name override.                           | <code>""</code>                                              |
 | fullnameOverride                        | Specifies the chart full name override.                      | <code>""</code>                                              |
 | serviceAccount.create                   | Creates the service account.                                 | <code>true</code>                                            |
 | serviceAccount.annotations              | Specifies the extra annotations for serviceAccount.          | <code>{}</code>                                              |
