@@ -3,7 +3,7 @@ project:
   shortName: Cloud Connector
   url: https://docs.sysdig.com/en/docs/installation/sysdig-secure-for-cloud/
   description: |
-    This chart deploys the Sysdig Cloud connector on your Kubernetes cluster to enable threat-detection and image scanning.
+    This chart deploys Sysdig Cloud Connector on your Kubernetes cluster, enabling Threat Detection and Image Scanning for the  AWS, GCP, and Azure Cloud providers. Use this method only if your Sysdig representative recommends it to you. For the official installation instruction, see [Install Sysdig Secure for Cloud ](https://docs.sysdig.com/en/docs/installation/sysdig-secure-for-cloud/). 
   app: the Sysdig Cloud Connector
 repository:
   url: https://charts.sysdig.com
