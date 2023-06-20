@@ -2,31 +2,31 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-# Amount of replicas for Cloud Connector
+# The number of replicas for the Cloud Connector.
 replicaCount: 1
 
 image:
-  # The image repository to pull from.
+  # Sets the image repository to pull from.
   repository: quay.io/sysdig/cloud-connector
-  # The image pull policy.
+  # Sets the image pull policy.
   pullPolicy: IfNotPresent
-  # The image tag (immutable tags are recommended). Overrides the image tag whose default is the chart appVersion.
+  # Sets the image tag. Immutable tags are recommended. Overrides the image tag whose default is the chart appVersion.
   tag:
 
-# The image pull secrets
+# Specifies the image pull secrets.
 imagePullSecrets: []
-# Chart name override
+# Specifies the chart name override.
 nameOverride: ""
-# Chart full name override
+# Specifies the chart full name override.
 fullnameOverride: ""
 
 serviceAccount:
-  # Create the service account
+  # Creates the service account
   create: true
-  # Extra annotations for serviceAccount
+  # Specifies the additional annotations for serviceAccount.
   annotations: {}
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
+  # Sets the name of the service account to use.
+  # If not set and create is `true`, a name is generated using the fullname template.
   name: ""
 
 # Pod annotations
@@ -35,10 +35,10 @@ podAnnotations:  # +doc-gen:break
   prometheus.io/path: "/metrics"
   prometheus.io/port: "5000"
 
-# Configure deployment PSP's
+# Configures deployment PSPs.
 podSecurityContext: {}
 
-# Configure securityContext
+# Configures securityContext.
 securityContext:  # +doc-gen:break
   capabilities:
     drop:
@@ -47,29 +47,29 @@ securityContext:  # +doc-gen:break
   runAsNonRoot: true
 
 service:
-  # Use this type as service
+  # Uses this type as a service.
   type: ClusterIP
-  # Configure port for the service
+  # Configures the port for the service.
   port: 80
-  # Additional labels to specify for the service
+  # Specifies the additional labels for the service.
   labels: {}
 
-# Configure resource requests and limits
+# Configures resource requests and limits.
 resources: {}
 
-# Configure nodeSelector for scheduling
+# Configures nodeSelector for scheduling.
 nodeSelector: {}
 
-# Tolerations for scheduling
+# Sets tolerations for scheduling.
 tolerations: []
 
-# Configure affinity rules
+# Configures affinity rules.
 affinity: {}
 
-# Configure deployment source for inner telemetry
+# Configures deployment source for inner telemetry.
 telemetryDeploymentMethod: "helm"
 
-# Extra environment variables to be set
+# Specifies additional environment variables to be set.
 extraEnvVars: []
 #   - name: HTTP_PROXY
 #     value: http://user:password@host:port/
@@ -82,42 +82,42 @@ extraEnvVars: []
 ## Secret values
 
 aws:
-  # AWS Credentials AccessKeyID
+  # Specifies the AWS Credentials AccessKeyID.
   accessKeyId: ""
-  # AWS Credentials: SecretAccessKey
+  # Specifies the AWS Credentials: `SecretAccessKey`
   secretAccessKey: ""
-  # AWS Region
+  # Specifies the AWS Region.
   region: ""
 
-# GCP Credentials JSON
+# Specifies the GCP credentials in JSON
 gcpCredentials: ""
 
 azure:
-  # Azure EventHub Connection String
+  # Specifies the Azure EventHub connection string.
   eventHubConnectionString: ""
-  # Azure Event Grid EventHub Connection String
+  # Specifies the Azure Event Grid EventHub connection string.
   eventGridEventHubConnectionString: ""
-  # Azure service principal tenant id
+  # Specifies the Azure service principal tenant ID.
   tenantId: ""
-  # Azure service principal client id
+  # Specifies the Azure service principal client ID.
   clientId: ""
-  # Azure service principal client secret
+  # Specifies the Azure service principal client secret.
   clientSecret: ""
-  # Azure region
+  # Specifies the Azure region.
   region: ""
 
 sysdig:
-  # Sysdig Secure URL
+  # Specifies the Sysdig Secure URL.
   url: "https://secure.sysdig.com"
-  # API Token to access Sysdig Secure
+  # Specifies the API Token to access Sysdig Secure.
   secureAPIToken: ""
-  # Verify SSL certificate
+  # Verifies SSL certificate
   verifySSL: true
 
-# Provide an existing secret name (see details in 'templates/secret.yaml') for the entries it uses.
+# Provides an existing secret name for the entries it uses. See `templates/secret.yaml` for more information.
 existingSecretName: ""
 
-# Rules Section for Cloud Connector
+# Specifies the Rules Section for Cloud Connector.
 rules: []
 
 # Thread-Detection event ingestion configuration ([config](#ingestors))
