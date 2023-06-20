@@ -6,7 +6,7 @@ Rapid Response allows security teams to connect to a remote shell within your en
 
 Use the [sysdig-deploy](../sysdig-deploy/README.md) parent chart to deploy the Rapid Response. Do not deploy subcharts directly.
 
-For installation instructions, see [Install Agent Components on Kubernetes](https://docs.sysdig.com/en/docs/installation/sysdig-secure/install-agent-components/kubernetes/).
+For installation instructions, see [Install Rapid Response](https://docs.sysdig.com/en/install-rapid-response-k8s/).
 
 ## Configuration
 
