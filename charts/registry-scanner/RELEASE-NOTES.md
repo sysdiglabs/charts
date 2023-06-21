@@ -1,6 +1,6 @@
 # What's Changed
 
-### Bug Fixes
-- **registry-scanner, cloud-connector, admission-controller** [c8436b7e](https://github.com/sysdiglabs/charts/commit/c8436b7e4e2e8cabe61a8261e0dda7e51e9c7c04): cve-2023-2253 ([#1148](https://github.com/sysdiglabs/charts/issues/1148))
+### Documentation
+- **registry-scanner** [7cbece92](https://github.com/sysdiglabs/charts/commit/7cbece92e90b12b784568c082ba6d11ba55b5f07): Clarify some descriptions ([#1175](https://github.com/sysdiglabs/charts/issues/1175))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-1.0.13...registry-scanner-1.0.14
+#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-1.0.14...registry-scanner-1.0.15
