@@ -16,32 +16,34 @@ $ pre-commit run -a
 
 ## Overview
 
-This chart deploys Sysdig Cloud Connector on your Kubernetes cluster, enabling Threat Detection and Image Scanning for the  AWS, GCP, and Azure Cloud providers.  
+This chart deploys the Sysdig Cloud Connector on your Kubernetes cluster, enabling Threat Detection and Image Scanning capabilities for the  AWS, GCP, and Azure Cloud providers.
 
 Use this method only if your Sysdig representative recommends it to you.
 
-For the official installation instruction, see [Install Sysdig Secure for Cloud ](https://docs.sysdig.com/en/docs/installation/sysdig-secure-for-cloud/). 
+For the official installation instruction, see [Install Sysdig Secure for Cloud ](https://docs.sysdig.com/en/docs/installation/sysdig-secure-for-cloud/).
 
 ### Prerequisites
 
-- Helm 3
+
+- Helm v3
 - Sysdig Secure API Token
 
-## Installation
+###  Installation
 
 To install the chart:
 
-```
+```console
 helm repo add sysdig https://charts.sysdig.com
 helm repo update
 helm upgrade --install cloud-connector sysdig/cloud-connector \
-      --create-namespace -n cloud-connector --version=0.7.25  \
-      --set sysdig.secureAPIToken=<SECURE_API_TOKEN>
+     --create-namespace -n cloud-connector --version=0.7.26  \
+     --set sysdig.secureAPIToken=<SECURE_API_TOKEN>
 ```
 
-This command deploys the Sysdig Cloud Connector on the Kubernetes cluster with the default configuration. The [configuration](#configuration) section provides the additional parameters that can be configured during installation.
+The command deploys the Sysdig Cloud Connector on the Kubernetes cluster with the default configuration. The [configuration](#configuration) section lists the additional parameters that can be configured during installation.
 
 > **Tip**: Use `helm list -A` to list all the releases.
+
 
 ## Configuration
 
@@ -58,8 +60,8 @@ For example:
 
 ```bash
 helm upgrade --install cloud-connector sysdig/cloud-connector \
-    --create-namespace -n cloud-connector --version=0.7.25 \
-    --set sysdig.secureAPIToken=<SECURE-API-TOKEN>
+     --create-namespace -n cloud-connector --version=0.7.26  \
+     --set sysdig.secureAPIToken=<SECURE_API_TOKEN>
 ```
 
 ### Using values.yaml
@@ -70,7 +72,7 @@ For example:
 
 ```bash
 helm upgrade --install cloud-connector sysdig/cloud-connector \
-    --create-namespace -n cloud-connector --version=0.7.25 \
+     --create-namespace -n cloud-connector --version=0.7.26  \
     --values values.yaml
 ```
 
@@ -80,56 +82,57 @@ See the default [`values.yaml`](./values.yaml) file for more information.
 
 The following table lists the configurable parameters of the `cloud-connector` chart and their default values.
 
-| Parameter                               | Description                                                  | Default                                                      |
-| --------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| replicaCount                            | Specifies the number of replicas for the Cloud Connector.    | <code>1</code>                                               |
-| image.repository                        | Specifies the image repository to pull from.                 | <code>quay.io/sysdig/cloud-connector</code>                  |
-| image.pullPolicy                        | Specifies the image pull policy.                             | <code>IfNotPresent</code>                                    |
-| image.tag                               | Specifies the image tag. Immutable tags are recommended. Overrides the image tag whose default is the chart appVersion. | <code></code>                                                |
-| imagePullSecrets                        | Specifies the image pull secrets.                            | <code>[]</code>                                              |
-| nameOverride                            | Specifies the chart name override.                           | <code>""</code>                                              |
-| fullnameOverride                        | Specifies the chart full name override.                      | <code>""</code>                                              |
-| serviceAccount.create                   | Creates the service account.                                 | <code>true</code>                                            |
-| serviceAccount.annotations              | Specifies the extra annotations for serviceAccount.          | <code>{}</code>                                              |
-| serviceAccount.name                     | Specifies the name of the service account to use. If not set and create is `true`, a name is generated using the fullname template. | <code>""</code>                                              |
-| podAnnotations                          | Specifies the pod annotations.                               | <code>{"prometheus.io/path":"/metrics","prometheus.io/port":"5000","prometheus.io/scrape":"true"}</code> |
-| podSecurityContext                      | Configures deployment PSPs.                                  | <code>{}</code>                                              |
-| securityContext                         | Configures securityContext.                                  | <code>{"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":true,"runAsNonRoot":true}</code> |
-| service.type                            | Uses the specified type as service.                          | <code>ClusterIP</code>                                       |
-| service.port                            | Configurse port for the service.                             | <code>80</code>                                              |
-| service.labels                          | Sets additional labels to specify for the service.           | <code>{}</code>                                              |
-| resources                               | Configure resource requests and limits                       | <code>{}</code>                                              |
-| nodeSelector                            | Configures nodeSelector for scheduling.                      | <code>{}</code>                                              |
-| tolerations                             | Specifies the tolerations for scheduling.                    | <code>[]</code>                                              |
-| affinity                                | Configures affinity rules.                                   | <code>{}</code>                                              |
-| telemetryDeploymentMethod               | Configures deployment source for inner telemetry.            | <code>"helm"</code>                                          |
-| extraEnvVars                            | Specifies the additional environment variables to be set.    | <code>[]</code>                                              |
-| aws.accessKeyId                         | Specifies the AWS credentials: `AccessKeyID`.                | <code>""</code>                                              |
-| aws.secretAccessKey                     | Specifies the AWS credentials: `SecretAccessKey`             | <code>""</code>                                              |
-| aws.region                              | Specifies the AWS region.                                    | <code>""</code>                                              |
-| gcpCredentials                          | Specifies the GCP credentials in JSON.                       | <code>""</code>                                              |
-| azure.eventHubConnectionString          | Specifies the Azure EventHub connection string.              | <code>""</code>                                              |
-| azure.eventGridEventHubConnectionString | Specifies the Azure Event Grid EventHub connection string    | <code>""</code>                                              |
-| azure.tenantId                          | Specifies the Azure service principal tenant ID.             | <code>""</code>                                              |
-| azure.clientId                          | Specifies the Azure service principal client ID.             | <code>""</code>                                              |
-| azure.clientSecret                      | Specifies the Azure service principal client secret.         | <code>""</code>                                              |
-| azure.region                            | Specifies the Azure region.                                  | <code>""</code>                                              |
-| sysdig.url                              | Specifies the Sysdig Secure URL.                             | <code>"https://secure.sysdig.com"</code>                     |
-| sysdig.secureAPIToken                   | Specifies the API Token to access Sysdig Secure.             | <code>""</code>                                              |
-| sysdig.verifySSL                        | Verifies SSL certificate                                     | <code>true</code>                                            |
-| existingSecretName                      | Provides an existing secret name. See `templates/secret.yaml` for the entries it uses. | <code>""</code>                                              |
-| rules                                   | Specifies the Rules Section for the Cloud Connector.         | <code>[]</code>                                              |
-| ingestors                               | Specifies the Threat-Detection event ingestion configuration. See [ingestors](#ingestors). | <code>[]</code>                                              |
-| scanners                                | Specifies the Scanning capabilities configuration. See [scanners](#scanners). | <code>[]</code>                                              |
-| bruteForceDetection.enabled             | Enables Brute Force detection.                               | <code>true</code>                                            |
-| bruteForceDetection.duration            | Specifies the time window for a bruteforce attack try.       | <code>24h</code>                                             |
-| bruteForceDetection.maximumTries        | Specifies the maximum number of tries for the given time window. | <code>10</code>                                              |
+|                Parameter                |                                                          Description                                                           |                                                 Default                                                  |
+|-----------------------------------------|--------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------|
+| replicaCount                            | The number of replicas for the Cloud Connector.                                                                                | <code>1</code>                                                                                           |
+| image.repository                        | Sets the image repository to pull from.                                                                                        | <code>quay.io/sysdig/cloud-connector</code>                                                              |
+| image.pullPolicy                        | Sets the image pull policy.                                                                                                    | <code>IfNotPresent</code>                                                                                |
+| image.tag                               | Sets the image tag. Immutable tags are recommended. Overrides the image tag whose default is the chart appVersion.             | <code></code>                                                                                            |
+| imagePullSecrets                        | Specifies the image pull secrets.                                                                                              | <code>[]</code>                                                                                          |
+| nameOverride                            | Specifies the chart name override.                                                                                             | <code>""</code>                                                                                          |
+| fullnameOverride                        | Specifies the chart full name override.                                                                                        | <code>""</code>                                                                                          |
+| serviceAccount.create                   | Creates the service account.                                                                                                   | <code>true</code>                                                                                        |
+| serviceAccount.annotations              | Specifies the additional annotations for serviceAccount.                                                                       | <code>{}</code>                                                                                          |
+| serviceAccount.name                     | Sets the name of the service account to use. If not set and create is `true`, a name is generated using the fullname template. | <code>""</code>                                                                                          |
+| podAnnotations                          | Pod annotations                                                                                                                | <code>{"prometheus.io/path":"/metrics","prometheus.io/port":"5000","prometheus.io/scrape":"true"}</code> |
+| podSecurityContext                      | Enables deployment PSPs.                                                                                                       | <code>{}</code>                                                                                          |
+| securityContext                         | Enables securityContext.                                                                                                       | <code>{"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":true,"runAsNonRoot":true}</code>         |
+| service.type                            | Uses this type as a service.                                                                                                   | <code>ClusterIP</code>                                                                                   |
+| service.port                            | Enables the port for the service.                                                                                              | <code>80</code>                                                                                          |
+| service.labels                          | Specifies the additional labels for the service.                                                                               | <code>{}</code>                                                                                          |
+| resources                               | Enables resource requests and limits.                                                                                          | <code>{}</code>                                                                                          |
+| nodeSelector                            | Enables nodeSelector for scheduling.                                                                                           | <code>{}</code>                                                                                          |
+| tolerations                             | Sets tolerations for scheduling.                                                                                               | <code>[]</code>                                                                                          |
+| affinity                                | Enables affinity rules.                                                                                                        | <code>{}</code>                                                                                          |
+| telemetryDeploymentMethod               | Enables deployment source for inner telemetry.                                                                                 | <code>"helm"</code>                                                                                      |
+| extraEnvVars                            | Specifies additional environment variables to be set.                                                                          | <code>[]</code>                                                                                          |
+| aws.accessKeyId                         | Specifies the AWS Credentials AccessKeyID.                                                                                     | <code>""</code>                                                                                          |
+| aws.secretAccessKey                     | Specifies the AWS Credentials: `SecretAccessKey`.                                                                              | <code>""</code>                                                                                          |
+| aws.region                              | Specifies the AWS Region.                                                                                                      | <code>""</code>                                                                                          |
+| gcpCredentials                          | Specifies the GCP credentials in JSON.                                                                                         | <code>""</code>                                                                                          |
+| azure.eventHubConnectionString          | Specifies the Azure EventHub connection string.                                                                                | <code>""</code>                                                                                          |
+| azure.eventGridEventHubConnectionString | Specifies the Azure Event Grid EventHub connection string.                                                                     | <code>""</code>                                                                                          |
+| azure.tenantId                          | Specifies the Azure service principal tenant ID.                                                                               | <code>""</code>                                                                                          |
+| azure.clientId                          | Specifies the Azure service principal client ID.                                                                               | <code>""</code>                                                                                          |
+| azure.clientSecret                      | Specifies the Azure service principal client secret.                                                                           | <code>""</code>                                                                                          |
+| azure.region                            | Specifies the Azure region.                                                                                                    | <code>""</code>                                                                                          |
+| sysdig.url                              | Specifies the Sysdig Secure URL.                                                                                               | <code>"https://secure.sysdig.com"</code>                                                                 |
+| sysdig.secureAPIToken                   | Specifies the API Token to access Sysdig Secure.                                                                               | <code>""</code>                                                                                          |
+| sysdig.verifySSL                        | Verifies the SSL certificate.                                                                                                  | <code>true</code>                                                                                        |
+| existingSecretName                      | Provides an existing secret name for the entries it uses. See `templates/secret.yaml` for more information.                    | <code>""</code>                                                                                          |
+| rules                                   | Specifies the Rules Section for Cloud Connector.                                                                               | <code>[]</code>                                                                                          |
+| ingestors                               | Specifies configuration for the threat detection event ingestion. See [ingestors](#ingestors) for more information.            | <code>[]</code>                                                                                          |
+| scanners                                | Specifies configuration for scanning capabilities. See [scanners](#scanners) for more information.                             | <code>[]</code>                                                                                          |
+| bruteForceDetection.enabled             | Enables Brute Force detection.                                                                                                 | <code>true</code>                                                                                        |
+| bruteForceDetection.duration            | Specifies a time window for a bruteforce attack try.                                                                           | <code>24h</code>                                                                                         |
+| bruteForceDetection.maximumTries        | Specifies the maximum number of tries for a given time window.                                                                 | <code>10</code>                                                                                          |
+
 
 ## Examples
 
 ### Ingestors
 
-Specifies where to ingest the events.
+Specifies where to ingest the events:
 
 ```yaml
 ingestors:
@@ -215,14 +218,17 @@ scanners:
 
 See additional examples in the Terraform modules:
 
-* [Single Account Deployment for AWS in Kubernetes](https://github.com/sysdiglabs/terraform-aws-secure-for-cloud/blob/master/examples/single-account-k8s/cloud-connector.tf#L27)
-* [Single Project Deployment for GCP in Kubernetes](https://github.com/sysdiglabs/terraform-google-secure-for-cloud/blob/master/examples/single-project-k8s/cloud-connector.tf#L32)
-* [Single Subscription Deployment for Azure in Kubernetes](https://github.com/sysdiglabs/terraform-azurerm-secure-for-cloud/blob/master/examples/single-subscription-k8s/cloud-connector.tf#L1)
+* [Single Account Deployment for AWS in K8s](https://github.com/sysdiglabs/terraform-aws-secure-for-cloud/blob/master/examples/single-account-k8s/cloud-connector.tf#L27)
+* [Single Project Deployment for GCP in K8s](https://github.com/sysdiglabs/terraform-google-secure-for-cloud/blob/master/examples/single-project-k8s/cloud-connector.tf#L32)
+* [Single Subscription Deployment for Azure in K8s](https://github.com/sysdiglabs/terraform-azurerm-secure-for-cloud/blob/master/examples/single-subscription-k8s/cloud-connector.tf#L1)
 
-## Troubleshooting
 
-#### Enable `debug` logs
+### Troubleshooting
+
+#### Enable `debug` Logs
+
 To enable `debug logs`, edit the ConfigMap and terminate the pod or deployment.
+
 ```yaml
   data:
     cloud-connector.yaml: |
@@ -234,16 +240,18 @@ To enable `debug logs`, edit the ConfigMap and terminate the pod or deployment.
 
 To uninstall the `cloud-connector`:
 
-```bash
-helm uninstall cloud-connector -n cloud-connector
+```console
+$ helm uninstall cloud-connector -n cloud-connector
 ```
 
 The command removes all the Kubernetes components associated with the chart and deletes the release artifacts.
 
+
+
+
 <!--
 Q: Helm v2 usage
 should work with minor changes
-
 1. Removed the option "--create-namespace" since not supported in v2. I don't see particular problem in creating the namespace manually before the execution of the chart
 2. Added "--name" since required by v2 to specify the chart name
 3. Changed Chart.yaml apiVersion: from v2 to v1. It seems that the difference is only related to dependencies and types, and I didn't find any of those in the chart (by default chats are considered as apps)

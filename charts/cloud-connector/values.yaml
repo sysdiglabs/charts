@@ -21,7 +21,7 @@ nameOverride: ""
 fullnameOverride: ""
 
 serviceAccount:
-  # Creates the service account
+  # Creates the service account.
   create: true
   # Specifies the additional annotations for serviceAccount.
   annotations: {}
@@ -35,10 +35,10 @@ podAnnotations:  # +doc-gen:break
   prometheus.io/path: "/metrics"
   prometheus.io/port: "5000"
 
-# Configures deployment PSPs.
+# Enables deployment PSPs.
 podSecurityContext: {}
 
-# Configures securityContext.
+# Enables securityContext.
 securityContext:  # +doc-gen:break
   capabilities:
     drop:
@@ -49,24 +49,24 @@ securityContext:  # +doc-gen:break
 service:
   # Uses this type as a service.
   type: ClusterIP
-  # Configures the port for the service.
+  # Enables the port for the service.
   port: 80
   # Specifies the additional labels for the service.
   labels: {}
 
-# Configures resource requests and limits.
+# Enables resource requests and limits.
 resources: {}
 
-# Configures nodeSelector for scheduling.
+# Enables nodeSelector for scheduling.
 nodeSelector: {}
 
 # Sets tolerations for scheduling.
 tolerations: []
 
-# Configures affinity rules.
+# Enables affinity rules.
 affinity: {}
 
-# Configures deployment source for inner telemetry.
+# Enables deployment source for inner telemetry.
 telemetryDeploymentMethod: "helm"
 
 # Specifies additional environment variables to be set.
@@ -84,12 +84,12 @@ extraEnvVars: []
 aws:
   # Specifies the AWS Credentials AccessKeyID.
   accessKeyId: ""
-  # Specifies the AWS Credentials: `SecretAccessKey`
+  # Specifies the AWS Credentials: `SecretAccessKey`.
   secretAccessKey: ""
   # Specifies the AWS Region.
   region: ""
 
-# Specifies the GCP credentials in JSON
+# Specifies the GCP credentials in JSON.
 gcpCredentials: ""
 
 azure:
@@ -111,7 +111,7 @@ sysdig:
   url: "https://secure.sysdig.com"
   # Specifies the API Token to access Sysdig Secure.
   secureAPIToken: ""
-  # Verifies SSL certificate
+  # Verifies the SSL certificate.
   verifySSL: true
 
 # Provides an existing secret name for the entries it uses. See `templates/secret.yaml` for more information.
