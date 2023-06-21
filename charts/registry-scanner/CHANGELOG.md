@@ -11,6 +11,9 @@ exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
 
+# v1.0.15
+* docs: update some descriptions to camel case to avoid confusion
+
 # v1.0.14
 * fix: CVE-2023-2253
 
