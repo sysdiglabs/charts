@@ -1,78 +1,81 @@
 # Chart: Harbor Scanner Adapter for Sysdig Secure
 
-This chart deploys the Harbor Scanner Adapter for Sysdig Secure on your
-Kubernetes cluster.
+This chart deploys the [Harbor Scanner Adapter](https://github.com/sysdiglabs/harbor-scanner-sysdig-secure) for Sysdig Secure on your Kubernetes cluster.
 
-## Installing the Chart
+## Prerequisites
 
-1. Ensure you are passing the **sysdig.secure.apiToken** value. This one is
-   mandatory to connect with the backend and perform scanning analysis
-2. Create a namespace for the deployment:
+- Helm 3
+- [Sysdig Secure API Token](https://docs.sysdig.com/en/docs/administration/administration-settings/user-profile-and-password/retrieve-the-sysdig-api-token/)
 
-```
-$ kubectl create ns harbor-scanner-sysdig-secure
-```
+## Installation
 
-3. Add Sysdig Helm charts repository:
+To install the chart:
 
-```
-$ helm repo add sysdig https://charts.sysdig.com
-```
-
-4. Deploy the scanner adapter
-
-```
-$ helm install -n sharbor-scanner-sysdig-secure harbor-scanner-sysdig-secure -f values.yaml sysdig/harbor-scanner-sysdig-secure
+```console
+helm repo add sysdig https://charts.sysdig.com
+helm repo update
+helm install sharbor-scanner-sysdig-secure --namespace sharbor-scanner-sysdig-secure --create-namespace -f values.yaml sysdig/harbor-scanner-sysdig-secure
 ```
 
 ## Configuration
 
-The following table lists the configurable parameters of the Harbor Scanner
-Sysdig Secure chart and their default values:
+You can use the Helm chart to update the default agent configurations by using either of the following:
 
-| Parameter                                     | Description                                                                                                                 | Default                                   |
-| ---                                           | ---                                                                                                                         | ---                                       |
-| `customEntryPoint`                            | Ovverride container entrypoint                                                                                              | `[]`                                      |
-| `replicaCount`                                | Amount of replicas for Scanner Adapter                                                                                      | `1`                                       |
-| `image.repository`                            | The image repository to pull from                                                                                           | `sysdiglabs/harbor-scanner-sysdig-secure` |
-| `image.pullPolicy`                            | The image pull policy                                                                                                       | `IfNotPresent`                            |
-| `imagePullSecrets`                            | The image pull secrets                                                                                                      | `[]`                                      |
-| `nameOverride`                                | Chart name override                                                                                                         | ` `                                       |
-| `fullnameOverride`                            | Chart full name override                                                                                                    | ` `                                       |
-| `serviceAccount.create`                       | Create the service account                                                                                                  | `true`                                    |
-| `serviceAccount.annotations`                  | Extra annotations for serviceAccount                                                                                        | `{}`                                      |
-| `serviceAccount.name`                         | Use this value as serviceAccount Name                                                                                       | ` `                                       |
-| `rbac.create`                                 | Create and use RBAC resources                                                                                               | `true`                                    |
-| `podAnnotations`                              | Custom pod annotations                                                                                                      | `{}`                                      |
-| `podSecurityContext`                          | Configure deployment PSP's                                                                                                  | `{}`                                      |
-| `securityContext`                             | Configure securityContext                                                                                                   | `{}`                                      |
-| `service.type`                                | Use this type as service                                                                                                    | `ClusterIP`                               |
-| `service.port`                                | Configure port for the service                                                                                              | `5000`                                    |
-| `nodeSelector`                                | Configure nodeSelector for scheduling                                                                                       | `{}`                                      |
-| `tolerations`                                 | Tolerations for scheduling                                                                                                  | `[]`                                      |
-| `affinity`                                    | Configure affinity rules                                                                                                    | `{}`                                      |
-| `sysdig.secure.apiToken`                      | API Token to access Sysdig Secure. This value is **mandatory**.                                                             | ` `                                       |
-| `sysdig.secure.existingSecureAPITokenSecret`  | Existing secret name with API Token to access Sysdig Secure <br/>Alternatively, specify the name of a Kubernetes secret containing `sysdig_secure_api_token` entry. <br/><br/>If neither this value nor `sysdig.secure.apiToken` are configured, the user will be required to provide the deployment the `SECURE_API_TOKEN` environment variables. | ` ` |
-| `sysdig.secure.url`                           | Sysdig Secure endpoint                                                                                                      | `https://secure.sysdig.com`               |
-| `sysdig.secure.verifySSL`                     | Verify SSL certificate when connecting to Sysdig Secure endpoint                                                            | `true`                                    |
-| `proxy.httpProxy`                             | URL of the proxy for HTTP connections, or empty if not using proxy (sets the http_proxy environment variable)               | ` `                                       |
-| `proxy.httpsProxy`                            | URL of the proxy for HTTPS connections, or empty if not using proxy (sets the https_proxy environment variable)             | ` `                                       |
-| `proxy.noProxy`                               | Comma-separated list of domain extensions proxy should not be used for. Include the internal IP of the kubeapi server.      | ` `                                       |
-| `inlineScanning.enabled`                      | Enable Inline Scanning feature                                                                                              | `true`                                    |
-| `asyncMode.enabled`                           | Enable Async-Mode feature                                                                                                   | `false`                                   |
+- Using the key-value pair: `--set sysdig.settings.key = value`
+- `values.yaml` file
 
-Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
+### Using the Key-Value Pair
 
-```bash
-$ helm install my-release \
-    --set sysdig.secure.apiToken=YOUR-KEY-HERE \
+Specify each parameter using the `--set key=value[,key=value]` argument to the `helm install`command.
+
+For example:
+
+```console
+helm install harborscanner-release \
+    --set sysdig.secure.apiToken=<SECURE-API-TOKEN> \
     sysdig/harbor-scanner-sysdig-secure
 ```
 
-Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
+### Using values.yaml
 
-```bash
-$ helm install my-release -f values.yaml sysdig/harbor-scanner-sysdig-secure
+The `values.yaml` file specifies the values for the configuration parameters.  You can add the configuration to the `values.yaml` file, then use it in the `helm install` command.
+
+```console
+$ helm install harborscanner-release -f values.yaml sysdig/harbor-scanner-sysdig-secure
 ```
 
-> **Tip**: You can use the default [values.yaml](https://raw.githubusercontent.com/sysdiglabs/charts/master/charts/harbor-scanner-sysdig-secure/values.yaml)
+## Configuration Parameters
+
+The following table lists the configurable parameters of the Harbor Scanner
+Sysdig Secure chart and their default values:
+
+| Parameter                                    | Description                                                  | Default                                   |
+| -------------------------------------------- | ------------------------------------------------------------ | ----------------------------------------- |
+| `customEntryPoint`                           | Overrides the container entrypoint.                          | `[]`                                      |
+| `replicaCount`                               | Specifies the number of replicas for the Scanner Adapter.    | `1`                                       |
+| `image.repository`                           | Specifies the image repository to pull the image from.       | `sysdiglabs/harbor-scanner-sysdig-secure` |
+| `image.pullPolicy`                           | Specifies the image pull policy.                             | `IfNotPresent`                            |
+| `imagePullSecrets`                           | Specifies the image pull secrets.                            | `[]`                                      |
+| `nameOverride`                               | Specifies the chart name override.                           | ` `                                       |
+| `fullnameOverride`                           | Specifies the chart full name override                       | ` `                                       |
+| `serviceAccount.create`                      | Creates the service account.                                 | `true`                                    |
+| `serviceAccount.annotations`                 | Specifies the extra annotations for serviceAccount.          | `{}`                                      |
+| `serviceAccount.name`                        | Specifies the serviceAccount name.                           | ` `                                       |
+| `rbac.create`                                | Creates and uses RBAC resources.                             | `true`                                    |
+| `podAnnotations`                             | Specifies the custom pod annotations.                        | `{}`                                      |
+| `podSecurityContext`                         | Enables deployment PSPs.                                     | `{}`                                      |
+| `securityContext`                            | Enables securityContext.                                     | `{}`                                      |
+| `service.type`                               | Specifies the service type.                                  | `ClusterIP`                               |
+| `service.port`                               | Specifies the port for the service.                          | `5000`                                    |
+| `nodeSelector`                               | Specifies the nodeSelector for scheduling.                   | `{}`                                      |
+| `tolerations`                                | Specifies the tolerations for scheduling.                    | `[]`                                      |
+| `affinity`                                   | Enables affinity rules                                       | `{}`                                      |
+| `sysdig.secure.apiToken`                     | Specifies the API Token to access Sysdig Secure. This value is **mandatory**. | ` `                                       |
+| `sysdig.secure.existingSecureAPITokenSecret` | Specifies the existing secret name with API Token to access Sysdig Secure <br/>Alternatively, you can specify the name of a Kubernetes secret containing `sysdig_secure_api_token` entry. <br/><br/>If both are not configured, you must  provide the deployment with the `SECURE_API_TOKEN` environment variables. | ` `                                       |
+| `sysdig.secure.url`                          | Specifies the Sysdig Secure endpoint.                        | `https://secure.sysdig.com`               |
+| `sysdig.secure.verifySSL`                    | Verifies whether SSL certificate when connecting to Sysdig Secure endpoint. | `true`                                    |
+| `proxy.httpProxy`                            | Specifies the URL of the proxy for HTTP connections. Leave empty if not using proxy. It sets the `http_proxy` environment variable. | ` `                                       |
+| `proxy.httpsProxy`                           | Specifies the URL of the proxy for HTTPS connections. Leave empty if not using proxy.  It sets the `https_proxy` environment variable. | ` `                                       |
+| `proxy.noProxy`                              | Specifies the comma-separated list of domain extensions proxy should not be used for. Includes the internal IP of the kube API server. | ` `                                       |
+| `inlineScanning.enabled`                     | Enables the Inline Scanning feature.                         | `true`                                    |
+| `asyncMode.enabled`                          | Enables the Async-Mode feature.                              | `false`                                   |
