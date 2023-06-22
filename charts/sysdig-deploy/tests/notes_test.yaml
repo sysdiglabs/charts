@@ -209,3 +209,21 @@ tests:
       - notMatchRegexRaw:
           pattern: |-
             A PriorityClass is recommended for GKE Autopilot environments. Please set agent.gke.createPriorityClass=true or provide the name of an existing PriorityClass by using the agent.priorityClassName parameter.
+
+  - it: Test PSA note is printed on k8s >=1.25
+    capabilities:
+      majorVersion: 1
+      minorVersion: 25
+    asserts:
+      - matchRegexRaw:
+          pattern: |-
+            Pod Security Admission now replaces Pod Security Policies.
+
+  - it: Test PSA note is not printed on k8s <=1.24
+    capabilities:
+      majorVersion: 1
+      minorVersion: 24
+    asserts:
+      - notMatchRegexRaw:
+          pattern: |-
+            Pod Security Admission now replaces Pod Security Policies.
