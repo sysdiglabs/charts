@@ -13,6 +13,8 @@ data:
   eve_enabled: {{ .Values.eveEnabled | quote}}
   eve_integration_enabled: {{ .Values.eveIntegrationEnabled | quote }}
   logging_level: {{ .Values.global.loggingLevel }}
+  rsi_pprof_enabled: {{ .Values.runtimeStatusIntegrator.pprofEnabled | quote }}
+  ise_pprof_enabled: {{ .Values.imageSbomExtractor.pprofEnabled | quote }}
 {{- include "cluster-scanner.modeConfig" . | nindent 2 }}
   js_server_user: {{ .Values.runtimeStatusIntegrator.natsJS.user }}
   js_server_url: "nats://{{- include "cluster-scanner.fullname" . }}:4222"
