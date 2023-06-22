@@ -43,3 +43,16 @@ Determine sysdig secure endpoint based on provided region
         {{- end -}}
     {{- end -}}
 {{- end -}}
+
+{{/* Returns string 'true' if the cluster's kubeVersion is greater than the parameter provided, or nothing otherwise
+     Use like: {{ include "kubeVersionGreaterThan" (dict "root" . "major" <kube_major_to_compare> "minor" <kube_minor_to_compare>) }}
+
+     Note: The use of `"root" .` in the parameter dict is necessary as the .Capabilities fields are not provided in
+           helper functions when "helm template" is used.
+*/}}
+{{- define "kubeVersionGreaterThan" }}
+{{- if (and (ge (.root.Capabilities.KubeVersion.Major | int) .major)
+            (gt (.root.Capabilities.KubeVersion.Minor | trimSuffix "+" | int) .minor)) }}
+true
+{{- end }}
+{{- end }}
