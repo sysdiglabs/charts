@@ -10,7 +10,7 @@ data:
   sysdig_verify_certificate: {{ .Values.sslVerifyCertificate | quote }}
   cluster_name: {{ .Values.global.clusterConfig.name }}
   root_namespace: {{ .Values.rootNamespace }}
-  eve_enabled: {{ .Values.eveEnabled | quote}}
+  eve_enabled: {{ .Values.eveEnabled | quote }}
   eve_integration_enabled: {{ .Values.eveIntegrationEnabled | quote }}
   logging_level: {{ .Values.global.loggingLevel }}
   rsi_pprof_enabled: {{ .Values.runtimeStatusIntegrator.pprofEnabled | quote }}

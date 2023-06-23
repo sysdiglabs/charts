@@ -61,7 +61,7 @@ runtimeStatusIntegrator:
     repository: sysdig/runtime-status-integrator
     # The Runtime Status Integrator image pull policy
     pullPolicy: IfNotPresent
-    tag: "0.3.2"
+    tag: "0.3.3"
   # Params to manage leader election
   # Leader election is implemented leveraging the native capabilities of
   # Kubernetes see: https://kubernetes.io/blog/2016/01/simple-leader-election-with-kubernetes/
@@ -129,7 +129,7 @@ imageSbomExtractor:
     repository: sysdig/image-sbom-extractor
     # The Image SBOM Extractor image pull policy
     pullPolicy: IfNotPresent
-    tag: "0.3.2"
+    tag: "0.3.3"
   ports:
     # The port to be used to expose prometheus metrics for the Image SBOM
     # Extractor
