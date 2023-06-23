@@ -45,6 +45,8 @@ spec:
             value: {{ .ports.probes | quote }}
           - name: PROM_PORT
             value: {{ .ports.metrics | quote }}
+          - name: PPROF_PORT
+            value: {{ .ports.pprof | quote }}
       {{- end }}
           - name: MODE
             valueFrom:
@@ -109,6 +111,12 @@ spec:
               configMapKeyRef:
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: logging_level
+                optional: true
+          - name: PPROF_ENABLED
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: rsi_pprof_enabled
                 optional: true
           {{- if  eq .Values.scannerMode "local" }}
           - name: LOCAL_REGISTRY_SECRETS
@@ -249,12 +257,20 @@ spec:
             value: {{ .ports.probes | quote }}
           - name: PROM_PORT
             value: {{ .ports.metrics | quote }}
+          - name: PPROF_PORT
+            value: {{ .ports.pprof | quote }}
       {{- end }}
           - name: LOGGING_LEVEL
             valueFrom:
               configMapKeyRef:
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: logging_level
+                optional: true
+          - name: PPROF_ENABLED
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: ise_pprof_enabled
                 optional: true
           - name: SYSDIG_ACCESS_KEY
             valueFrom:

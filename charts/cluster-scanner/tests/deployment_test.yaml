@@ -71,9 +71,9 @@ tests:
     asserts:
       - not: true
         isEmpty:
-          path: spec.template.spec.containers[0].env[8]
+          path: spec.template.spec.containers[0].env[9]
       - isSubset:
-          path: spec.template.spec.containers[0].env[8]
+          path: spec.template.spec.containers[0].env[9]
           content:
             name: SYSDIG_KUBECONFIG_CONTENT
             valueFrom:
@@ -87,9 +87,9 @@ tests:
     asserts:
       - not: true
         isEmpty:
-          path: spec.template.spec.containers[1].env[34]
+          path: spec.template.spec.containers[1].env[36]
       - isSubset:
-          path: spec.template.spec.containers[1].env[34]
+          path: spec.template.spec.containers[1].env[36]
           content:
             name: ANALYZER_CACHE_REDIS_TTL
             valueFrom:
@@ -118,7 +118,7 @@ tests:
               - myOtherDockerSecretTwo
     asserts:
       - equal:
-          path: spec.template.spec.containers[0].env[13]
+          path: spec.template.spec.containers[0].env[15]
           value:
             name: LOCAL_REGISTRY_SECRETS
             valueFrom:
@@ -142,7 +142,7 @@ tests:
               - myOtherDockerSecretTwo
     asserts:
       - equal:
-          path: spec.template.spec.containers[0].env[14]
+          path: spec.template.spec.containers[0].env[16]
           value:
             name: EVE_ENABLED
             valueFrom:
