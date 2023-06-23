@@ -15,7 +15,7 @@ chart:
 prerequisites:
   - "Helm 3"
   - "Kubernetes v1.16+"
-  - "Cluster Name (pick one to identify your Kubernetes Cluster)"
+  - "Unique name to identify your Kubernetes cluster"
   - "Sysdig Secure API Token"
 
 release:
