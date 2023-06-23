@@ -98,7 +98,6 @@ spec:
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: cluster_name
                 optional: true
-          - name: SYSDIG_KUBECONFIG_CONTENT
           - name: K8S_ROOT_NAMESPACE
             valueFrom:
               configMapKeyRef:
