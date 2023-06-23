@@ -97,6 +97,7 @@ spec:
               configMapKeyRef:
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: cluster_name
+                optional: true
           - name: K8S_ROOT_NAMESPACE
             valueFrom:
               configMapKeyRef:
