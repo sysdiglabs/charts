@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.8.65
+### New Features
+* **kspm-collector,node-analyzer** [fb71c5a1](https://github.com/sysdiglabs/charts/commit/fb71c5a1bb49b29b441550fcfc53a52a1a6826de): Add account ID to Posture. bump kspm-collector & node-analyzer to v1.25.0 ([#1166](https://github.com/sysdiglabs/charts/issues/1185))
 # v1.8.64
 ### Bug Fixes
 * **agent,node-analyzer** [e0ef02c2](https://github.com/sysdiglabs/charts/commit/e0ef02c283df3d12cf5d8d2b1b89a61e1fc30807): updateStrategy maxSurge param ([#1166](https://github.com/sysdiglabs/charts/issues/1166))
