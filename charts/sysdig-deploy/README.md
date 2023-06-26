@@ -1,226 +1,58 @@
 # Sysdig Deploy
 
-Use the `sysdig-deploy` Helm chart to install Sysdig Secure and/or Sysdig Monitor in a Kubernetes environment.
+Use the `sysdig-deploy` Helm chart to install Sysdig Secure and Sysdig Monitor in a Kubernetes environment.
 
-## Introduction
+## Overview
 
-This chart deploys various Sysdig components into your Kubernetes cluster.
+This chart deploys the following Sysdig components into your Kubernetes cluster:
 
-Currently included components:
 - [Sysdig Admission Controller](https://github.com/sysdiglabs/charts/tree/master/charts/admission-controller)
 - [Sysdig Agent](https://github.com/sysdiglabs/charts/tree/master/charts/agent)
-- [Sysdig Benchmark Runner (on premise only)](https://github.com/sysdiglabs/charts/tree/master/charts/node-analyzer#benchmark-runner)
-- [Sysdig Host Analyzer (on premise only)](https://github.com/sysdiglabs/charts/tree/master/charts/node-analyzer#host-analyzer-legacy)
+- [Sysdig Benchmark Runner (on-premises only)](https://github.com/sysdiglabs/charts/tree/master/charts/node-analyzer#benchmark-runner)
+- [Sysdig Host Analyzer (on-premises only)](https://github.com/sysdiglabs/charts/tree/master/charts/node-analyzer#host-analyzer-legacy)
 - [Sysdig Host Scanner](https://github.com/sysdiglabs/charts/tree/master/charts/node-analyzer#host-scanner)
 - [Sysdig KSPM Analyzer](https://github.com/sysdiglabs/charts/tree/master/charts/node-analyzer#kspm-analyzer-preview)
 - [Sysdig KSPM Collector](https://github.com/sysdiglabs/charts/tree/master/charts/kspm-collector)
-- [Sysdig Image Analyzer (on premise only)](https://github.com/sysdiglabs/charts/tree/master/charts/node-analyzer#node-image-analyzer)
+- [Sysdig Image Analyzer (on-premises only)](https://github.com/sysdiglabs/charts/tree/master/charts/node-analyzer#node-image-analyzer)
 - [Sysdig Rapid Response](https://github.com/sysdiglabs/charts/tree/master/charts/rapid-response)
 - [Sysdig Runtime Scanner](https://github.com/sysdiglabs/charts/tree/master/charts/node-analyzer#runtime-scanner)
 
-## Prerequisites
+To deploy `sysdig-deploy`, follow the installation instructions given on the Sysdig Documentation website:
 
-- Kubernetes 1.9+ with Beta APIs enabled
-- Helm v3.6+
+### Sysdig Monitor
 
-## Installation
+- [Installation Requirements](https://docs.sysdig.com/en/docs/installation/sysdig-monitor/install-sysdig-agent/#installation-requirements)
+- [Installation Instructions](https://docs.sysdig.com/en/docs/installation/sysdig-monitor/install-sysdig-agent/kubernetes/)
 
+### Sysdig Secure | Sysdig Secure + Sysdig Monitor
 
-> **_NOTE:_** Below are the legacy instructions for installing the `sysdig-deploy` chart.
-> For more detailed installation instructions go here:
-> * [Sysdig Monitor only](https://docs.sysdig.com/en/install-kubernetes-monitor)
-> * [Sysdig Secure, or Sysdig Secure and Sysdig Monitor](https://docs.sysdig.com/en/install-kubernetes-secure)
+- [Component Overview](https://docs.sysdig.com/en/docs/installation/sysdig-secure/install-agent-components/)
+- [Installation Requirements](https://docs.sysdig.com/en/docs/installation/sysdig-secure/install-agent-components/installation-requirements/sysdig-agent/)
+- [Installation Instructions](https://docs.sysdig.com/en/docs/installation/sysdig-secure/install-agent-components/kubernetes/)
 
+### On-Premises
 
-1. Add the Sysdig Helm repo:
+- [Install Sysdig Agent for a Sysdig On-Premises Deployment](https://docs.sysdig.com/en/docs/installation/on-premises/)
+- [Install Sysdig Agent in an Airgapped Environment](https://docs.sysdig.com/en/docs/installation/on-premises/airgapped-installation/)
 
-   ```bash
-   helm repo add sysdig https://charts.sysdig.com/
-   ```
-
-2. Collect the following values:
-
-   - ACCESS_KEY: This is your Sysdig access key
-   - SAAS_REGION: The Sysdig SAAS region the agents will connect to. Use one of the following values:
-     - `"us1"`
-     - `"us2"`
-     - `"us3"`
-     - `"us4"`
-     - `"eu1"`
-     - `"au1"`
-     - `"custom"`: For on-prem installations, use `custom` and override the endpoints for each component. For more information, see [Configuration](#configuration).
-   - CLUSTER_NAME: An identifier for your cluster
-
-3. Create a namespace for the Sysdig agent:
-
-   ```bash
-   kubectl create ns sysdig-agent
-   ```
-
-4. Do one of the following:
-
-    - Using the release name `sysdig-agent`, run the following snippet to install the release into the namespace `sysdig-agent`:
-
-      ```bash
-      helm install sysdig-agent --namespace sysdig-agent \
-      --set global.sysdig.accessKey=<ACCESS_KEY> \
-      --set global.sysdig.region=<SAAS_REGION> \
-      --set nodeAnalyzer.secure.vulnerabilityManagement.newEngineOnly=true \
-      --set global.kspm.deploy=true \
-      --set nodeAnalyzer.nodeAnalyzer.benchmarkRunner.deploy=false \
-      --set global.clusterConfig.name=<CLUSTER_NAME> \
-      sysdig/sysdig-deploy
-        ```
-
-      **GKE Autopilot**: GKE Autopilot environments require an additional configuration parameter, `agent.gke.autopilot=true`, to install the Sysdig agent:
-
-      ```bash
-      helm install sysdig-agent --namespace sysdig-agent \
-      --set global.sysdig.accessKey=<ACCESS_KEY> \
-      --set global.sysdig.region=<SAAS_REGION> \
-      --set nodeAnalyzer.secure.vulnerabilityManagement.newEngineOnly=true \
-      --set global.kspm.deploy=true \
-      --set nodeAnalyzer.nodeAnalyzer.benchmarkRunner.deploy=false \
-      --set global.clusterConfig.name=<CLUSTER_NAME> \
-      --set agent.gke.autopilot=true \
-      sysdig/sysdig-deploy
-      ```
-
-
-    - Install with a values file.
-
-      To do so, create a new file `values.sysdig.yaml`:
-
-       ```yaml
-       global:
-         sysdig:
-           accessKey: ACCESS_KEY
-           region: SAAS_REGION
-         clusterConfig:
-           name: CLUSTER_NAME
-       ```
-
-       and install it with:
-
-       ```bash
-       helm install -n sysdig-agent sysdig sysdig/sysdig-deploy -f values.sysdig.yaml
-       ```
-
-
-
-## Migrating from `sysdig` chart
-
-To easily migrate from the previous `sysdig` chart to the new unified `sysdig-deploy` chart, use the [migration helper script](https://raw.githubusercontent.com/sysdiglabs/charts/master/charts/sysdig-deploy/scripts/migrate_values.py) from this repo. This script will help re-map your existing values from the `sysdig` chart, allowing you to deploy this chart with the exact same configuration.
-
-*Note*: unlike the previous chart, this chart only supports Helm 3. If you have not already done so, please upgrade your Helm version to 3.x to use this chart.
-
-Requirements:
-- Python 3.x
-- PyYAML
-
-Save the user-values from the currently deployed version of the `sysdig` chart:
-
-```bash
-helm get values -n sysdig-agent sysdig-agent -o yaml > values.old.yaml
-```
-
-Note: the migration script has a dependency on `pyyaml`, which can be installed with
-
-```bash
-pip install pyyaml
-```
-
-Run the migration script and redirect the output to a new file. For example, if the old values were saved to `values.old.yaml`:
-
-```bash
-python scripts/migrate_values.py values.old.yaml > values.new.yaml
-```
-
-Now the `sysdig` chart can be removed and replaced with the `sysdig-deploy` chart.
-
-```bash
-helm delete -n sysdig-agent sysdig-agent
-
-helm repo update
-helm install -n sysdig-agent sysdig sysdig/sysdig-deploy -f values.new.yaml
-```
-
-### Differences between `sysdig` and `sysdig-deploy`
-
-There are several differences in the agent and node-analyzer components in the new chart compared to the old one. The majority of the differences are in the metadata names and labels.
-
-- `helm.sh/chart: sysdig-<version>` -> `helm.sh.chart: nodeAnalyzer-<version>` or `helm.sh.chart: agent-<version>`
-- label `app.kubernetes.io/name: agent` for the agent daemonset and pods
-- label `app.kubernetes.io/name: nodeanalyzer` for the nodeAnalyzer daemonset and pods
-- new configmap and secret for nodeAnalyzer named `<release-name>-nodeanalyzer`
-- label `app: sysdig-agent` is no longer on nodeAnalyzer components
-
-## Upgrading
-
-Refresh the `sysdig` helm repo to get the latest chart.
-
-```bash
-helm repo update
-```
-
-Get the currently deployed values and save them to `values.sysdig.yaml`.
-
-```bash
-helm get values -n sysdig-agent sysdig-agent -o yaml > values.sysdig.yaml
-```
-
-Upgrade to the latest version of the chart:
-
-```bash
-helm upgrade -n sysdig-agent sysdig-agent sysdig/sysdig-deploy -f values.sysdig.yaml
-```
 
 ## Configuration
 
+For the configuration values of the each sub-component, see the respective chart readme. To apply a specific configuration of a sub-component, prefix the configuration parameter with the name of the sub-chart. 
 
-The following table lists the configurable parameters of the sysdig-deploy chart and their default values. The sysdig-deploy chart itself only has select parameters that are used by multiple subcharts, and those are used to enable/disable selected subcharts. If you need additional configuration values, those are available in the various READMEs of the individual subcharts ([admission-controller](https://charts.sysdig.com/charts/admission-controller/), [agent](https://charts.sysdig.com/charts/agent/), [node-analyzer](https://charts.sysdig.com/charts/node-analyzer/), [kspm-collector](https://charts.sysdig.com/charts/kspm-collector/) and [rapid-response](https://charts.sysdig.com/charts/rapid-response/)).
+You can update the configurations by using either of the following:
 
-| Parameter                               | Description                                                                                                             | Default   |
-| --------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | --------- |
-| `global.clusterConfig.name`             | Identifier for this cluster                                                                                             | `""`      |
-| `global.sysdig.accessKey`               | Sysdig Agent Access Key                                                                                                 | `""`      |
-| `global.sysdig.accessKeySecret`         | The name of a Kubernetes secret containing an 'access-key' entry                                                        | `""`      |
-| `global.sysdig.secureAPIToken`          | API Token to access Sysdig Secure                                                                                       | `""`      |
-| `global.sysdig.secureAPITokenSecret`    | The name of a Kubernetes secret containing API Token to access Sysdig Secure                                            | `""`      |
-| `global.sysdig.region`                  | The SaaS region for these agents. Possible values: `"us1"`, `"us2"`, `"us3"`, `"us4"`, `"eu1"`, `"au1"`, and `"custom"`. See [Regions and IP Ranges](https://docs.sysdig.com/en/docs/administration/saas-regions-and-ip-ranges/) for more information  | `"us1"`   |
-| `global.sysdig.tags`                    | Sets the global tags which can override agent tags                                                                      | `{}`      |
-| `global.imageRegistry`                  | Container image registry                                                                                                | ``        |
-| `global.image.pullSecrets`                  | Global pull secrets                                                                                                | `[]`        |
-| `global.image.pullPolicy`                  | Global pull policy                                                                                                | `"`        |
-| `global.proxy.httpProxy`                | Sets `http_proxy` on the Agent container                                                                                | `""`      |
-| `global.proxy.httpsProxy`               | Sets `https_proxy` on the Agent container                                                                               | `""`      |
-| `global.proxy.noProxy`                  | Sets `no_proxy` on the Agent container                                                                                  | `""`      |
-| `global.kspm.deploy`                    | Enables Sysdig KSPM node analyzer & KSPM collector                                                                      | `false`   |
-| `global.agentConfigmapName`             | Sets a configmap name that is used to mount the agent configmap to fetch the cluster name and agent tags                | `"sysdig-agent"`      |
-| `global.gke.autopilot`                  | If true, overrides the configuration to values for GKE Autopilot clusters                                               | `false`   |
-| `admissionController`                   | Config specific to the [Sysdig AdmissionController](#admissioncontroller)                                               | `{}`      |
-| `admissionController.enabled`           | Enable the admission controller component in this chart                                                                 | `false`   |
-| `agent`                                 | Config specific to the [Sysdig Agent](#agent)                                                                           | `{}`      |
-| `agent.enabled`                         | Enable the agent component in this chart                                                                                | `true`    |
-| `nodeAnalyzer`                          | Config specific to the [Sysdig nodeAnalyzer](#nodeanalyzer)                                                             | `{}`      |
-| `nodeAnalyzer.enabled`                  | Enable the nodeAnalyzer component in this chart                                                                         | `true`    |
-| `nodeAnalyzer.secure.enabled`           | Enable Sysdig Secure                                                                                                    | `true`    |
-| `nodeAnalyzer.secure.vulnerabilityManagement.newEngineOnly` | Enable only the new vulnerability management engine                                                 | `false`   |
-| `nodeAnalyzer.nodeAnalyzer.apiEndpoint` | nodeAnalyzer apiEndpoint                                                                                                | `""`      |
-| `nodeAnalyzer.nodeAnalyzer.benchmarkRunner.deploy` | Deploy the Benchmark Runner Scanner                                                                          | `true`   |
-| `nodeAnalyzer.nodeAnalyzer.runtimeScanner.deploy` | Deploy the Runtime Scanner                                                                                    | `false`   |
-| `kspmCollector`                         | Config specific to the [Sysdig KSPM Collector](#kspm-collector)                                                         | `{}`      |
-| `kspmCollector.apiEndpoint`             | kspmCollector apiEndpoint                                                                                               | `""`      |
-| `rapidResponse`                         | Config specific to [Sysdig Rapid Response](#rapid-response)                                                             | `{}`      |
-| `rapidResponse.enabled`                 | Enable Rapid Response component in this chart                                                                           | `""`      |
+- Using the key-value pair: `--set sysdig.settings.key = value`
+- `values.yaml` file
 
-## AdmissionController
+### Example: Admission Controller
 
-For configuration values of the `admission-controller`, see the `admission-controller` subchart [README](https://github.com/sysdiglabs/charts/tree/master/charts/admission-controller/README.md). Prefix all the specific configurations with `admissionController.` to apply them to the chart.
+See the `admission-controller` [README](https://github.com/sysdiglabs/charts/tree/master/charts/admission-controller/README.md) for the configuration values of the `admission-controller`. To override the Sysdig URL variable for the Admission Controller chart:
 
-Example: override sysdig url variable for admissionController chart
+#### Using the Key-Value Pair
 
-As a command line parameter:
+Specify each parameter using the `--set key=value[,key=value]` argument to the `helm install`command.
+
 ```bash
 helm install sysdig sysdig/sysdig-deploy \
     --set global.sysdig.accessKey=ACCESS_KEY \
@@ -229,60 +61,39 @@ helm install sysdig sysdig/sysdig-deploy \
     --set admissionController.enabled=true
 ```
 
-As a values file:
-```yaml
-global:
-  clusterConfig:
-    name: CLUSTER_NAME
-  sysdig:
-    accessKey: ACCESS_KEY
-    secureAPIToken: SECURE_API_TOKEN
-admissionController:
-  enabled: true
-  sysdig:
-    url: URL
-```
+#### Using values.yaml
 
-## Agent
+The `values.yaml` file specifies the values for the configuration parameters.  You can add the configuration to the `values.yaml` file, then use it in the `helm install` command.
 
-For configuration values of the `agent`, see the Agent subchart [README](https://github.com/sysdiglabs/charts/tree/master/charts/agent/README.md). Prefix all the specific configurations with `agent.` to apply them to the chart.
+1. Add the following to the `values.yaml` file:
 
-Example: override proxy variable for Agent chart
+   ```yaml
+   global:
+     clusterConfig:
+       name: CLUSTER_NAME
+     sysdig:
+       accessKey: ACCESS_KEY
+       secureAPIToken: SECURE_API_TOKEN
+   admissionController:
+     enabled: true
+     sysdig:
+       url: URL
+   ```
 
-As a command line parameter:
-```bash
-helm install sysdig sysdig/sysdig-deploy \
-    --namespace sysdig-agent \
-    --set global.sysdig.accessKey=ACCESS_KEY \
-    --set global.sysdig.region=SAAS_REGION \
-    --set global.clusterConfig.name=CLUSTER_NAME \
-    --set global.proxy.httpProxy=PROXY_URL \
-    --set agent.proxy.httpProxy=OVERRIDE_PROXY_URL
-```
+2. Run the following:
 
-As a values file:
-```yaml
-global:
-  sysdig:
-    accessKey: ACCESS_KEY
-    region: SAAS_REGION
-  clusterConfig:
-    name: CLUSTER_NAME
-  proxy:
-    httpProxy: PROXY_URL
+   ```console
+   helm install --namespace sysdig-agent sysdig-agent -f values.yaml sysdig/sysdig-deploy
+   ```
 
-agent:
-  proxy:
-    httpProxy: OVERRIDE_PROXY_URL
-```
+### Example: NodeAnalyzer
 
-## NodeAnalyzer
+See the `node-analyzer` subchart [README](https://github.com/sysdiglabs/charts/tree/master/charts/node-analyzer/README.md) for the configuration values of the `nodeAnalyzer`. To override the API endpoint variable:
 
-For configuration values of the `node-analyzer`, see the `node-analyzer` subchart [README](https://github.com/sysdiglabs/charts/tree/master/charts/node-analyzer/README.md). Prefix all the specific configurations with `nodeAnalyzer.` to apply them to the chart.
+#### Using the Key-Value Pair
 
-Example: override apiEndpoint variable for nodeAnalyzer chart
+Specify each parameter using the `--set key=value[,key=value]` argument to the `helm install`command
 
-As a command line parameter:
 ```bash
 helm install sysdig sysdig/sysdig-deploy \
     --set global.sysdig.accessKey=ACCESS_KEY \
@@ -290,85 +101,101 @@ helm install sysdig sysdig/sysdig-deploy \
     --set nodeAnalyzer.nodeAnalyzer.apiEndpoint=API_ENDPOINT
 ```
 
-As a values file:
-```yaml
-global:
-  sysdig:
-    accessKey: ACCESS_KEY
+#### Using values.yaml
 
-agent:
-  enabled: false
-  collectorSettings:
-    collectorHost: COLLECTOR_ENDPOINT
+The `values.yaml` file specifies the values for the configuration parameters.  You can add the configuration to the `values.yaml` file, then use it in the `helm install` command.
 
-nodeAnalyzer:
-  nodeAnalyzer:
-    apiEndpoint: API_ENDPOINT
-```
+1. Add the following to the `values.yaml` file:
 
-## KSPM Collector
+   ```yaml
+   global:
+     sysdig:
+       accessKey: ACCESS_KEY
+   
+   agent:
+     enabled: false
+     collectorSettings:
+       collectorHost: COLLECTOR_ENDPOINT
+   
+   nodeAnalyzer:
+     nodeAnalyzer:
+       apiEndpoint: API_ENDPOINT
+   ```
 
-For configuration values of the `kspm-collector`, see the `kspm-collector` subchart [README](https://github.com/sysdiglabs/charts/tree/master/charts/kspm-collector/README.md). Prefix all the specific configurations with `kspmCollector.` to apply them to the chart.
+2. Run the following:
 
-Example: override apiEndpoint variable for kspmCollector chart
+   ```console
+   helm install --namespace sysdig-agent sysdig-agent -f values.yaml sysdig/sysdig-deploy
+   ```
 
-As a command line parameter:
-```bash
-helm install sysdig sysdig/sysdig-deploy \
-    --set global.sysdig.accessKey=ACCESS_KEY \
-    --set kspmCollector.apiEndpoint=API_ENDPOINT
-```
+## Configuration Parameters
 
-As a values file:
-```yaml
-global:
-  sysdig:
-    accessKey: ACCESS_KEY
+The following table lists the configurable parameters of the sysdig-deploy chart and their default values. The `sysdig-deploy` chart itself only has select parameters that are used by multiple subcharts, and those are used to enable or disable selected subcharts. For additional configuration values see the READMEs of the individual subcharts.
 
-kspmCollector:
-  apiEndpoint: API_ENDPOINT
-```
+| Parameter                               | Description                                                                                                             | Default   |
+| --------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | --------- |
+| `global.clusterConfig.name`             | Unique identifier for this cluster.                                                                                    | `""`      |
+| `global.sysdig.accessKey`               | Sysdig Agent Access Key.                                                                                                | `""`      |
+| `global.sysdig.accessKeySecret`         | The name of a Kubernetes secret containing an `access-key` entry.                                                     | `""`      |
+| `global.sysdig.secureAPIToken`          | The API Token to access Sysdig Secure.                                                                                  | `""`      |
+| `global.sysdig.secureAPITokenSecret`    | The name of a Kubernetes secret containing API Token to access Sysdig Secure.                                           | `""`      |
+| `global.sysdig.region`                  | The SaaS region for these agents. Possible values: `"us1"`, `"us2"`, `"us3"`, `"us4"`, `"eu1"`, `"au1"`, and `"custom"`. See [Regions and IP Ranges](https://docs.sysdig.com/en/docs/administration/saas-regions-and-ip-ranges/) for more information  | `"us1"`   |
+| `global.sysdig.tags`                    | Sets the global tags which can override agent tags.                                                                     | `{}`      |
+| `global.imageRegistry`                  | The container image registry.                                                                                          | ``        |
+| `global.image.pullSecrets`                  | The global pull secrets.                                                                                          | `[]`        |
+| `global.image.pullPolicy`                  | The global pull policy.                                                                                          | `"`        |
+| `global.proxy.httpProxy`                | Sets `http_proxy` on the agent container.                                                                              | `""`      |
+| `global.proxy.httpsProxy`               | Sets `https_proxy` on the agent container.                                                                             | `""`      |
+| `global.proxy.noProxy`                  | Sets `no_proxy` on the agent container.                                                                                | `""`      |
+| `global.kspm.deploy`                    | Enables Sysdig KSPM node analyzer and  KSPM collector.                                                                  | `false`   |
+| `global.agentConfigmapName`             | Sets a ConfigMap name that is used to mount the agent ConfigMap to fetch the cluster name and agent tags.          | `"sysdig-agent"`      |
+| `global.gke.autopilot`                  | If set to `true`, the configuration to values for GKE Autopilot clusters will be overridden.                | `false`   |
+| `admissionController`                   | The configurations specific to the Sysdig Admission Controller.                              | `{}`      |
+| `admissionController.enabled`           | Enable the admission controller component in this chart.                                                                | `false`   |
+| `agent`                                 | The configuration specific to the Sysdig Agent.                                                              | `{}`      |
+| `agent.enabled`                         | Enable the agent component in this chart.                                                                               | `true`    |
+| `nodeAnalyzer`                          | The configuration specific to the Sysdig Node Analyzer.                                             | `{}`      |
+| `nodeAnalyzer.enabled`                  | Enable the `nodeAnalyzer` component in this chart.                                                                      | `true`    |
+| `nodeAnalyzer.secure.enabled`           | Enable Sysdig Secure.                                                                                                   | `true`    |
+| `nodeAnalyzer.secure.vulnerabilityManagement.newEngineOnly` | Enable only the new vulnerability management engine.                                                | `false`   |
+| `nodeAnalyzer.nodeAnalyzer.apiEndpoint` | The API endpoint for `nodeAnalyzer`..                                                               | `""`      |
+| `nodeAnalyzer.nodeAnalyzer.benchmarkRunner.deploy` | Deploy the Benchmark Runner Scanner.                                                                         | `true`   |
+| `nodeAnalyzer.nodeAnalyzer.runtimeScanner.deploy` | Deploy the Runtime Scanner.                                                                                   | `false`   |
+| `kspmCollector`                         | The configuration specific to the Sysdig KSPM Collector.     | `{}`      |
+| `kspmCollector.apiEndpoint`             | The API endpoint for `kspmCollector`.                                                                       | `""`      |
+| `rapidResponse`                         | The configuration specific  to Sysdig Rapid Response.                                 | `{}`      |
+| `rapidResponse.enabled`                 | Enable Rapid Response component in this chart.                                                                          | `""`      |
 
-## Rapid Response
+## Upgrading
 
-For configuration values of `rapid-response`, see the `rapid-response` subchart [README](https://github.com/sysdiglabs/charts/tree/master/charts/rapid-response/README.md). Prefix all the specific configurations with `rapidResponse.` to apply them to the chart.
+1. Refresh the `sysdig` helm repo to get the latest chart.
 
-Example: Enable the Rapid Response component and define the passphrase for it
+   ```console
+   helm repo update
+   ```
 
-As a command line parameter:
-```bash
-helm install sysdig sysdig/sysdig-deploy \
-    --set global.sysdig.accessKey=ACCESS_KEY \
-    --set rapidResponse.enabled=true \
-    --set rapidResponse.rapidResponse.passphrase=THIS_IS_A_SECRET_PASSPHRASE
-```
+2. Get the currently deployed values and save them to `values.sysdig.yaml`.
 
-As a values file:
-```yaml
-global:
-  sysdig:
-    accessKey: ACCESS_KEY
+   ```console
+   helm get values -n sysdig-agent sysdig-agent -o yaml > values.sysdig.yaml
+   ```
 
-rapidResponse:
-  enabled: true
-  rapidResponse:
-    passphrase: THIS_IS_A_SECRET_PASSPHRASE
-```
+3. Upgrade to the latest version of the chart:
+
+   ```console
+   helm upgrade -n sysdig-agent sysdig-agent sysdig/sysdig-deploy -f values.sysdig.yaml
+   ```
 
 ## Pod Security Policy & Pod Security Admission
 
-- Some Sysdig components pods require privileged access in order to run, (e.g. agent, admission-controller(scanner), node-analyzer).\
-We used to ship a Pod Security Policy by default on every installation.\
-However, Pod Security Policy has been deprecated since Kubernetes v1.21 and removed since Kubernetes v1.25, [link](https://kubernetes.io/docs/concepts/security/pod-security-policy/).\
-Therefore we introduced a [check](https://github.com/sysdiglabs/charts/blob/607573107af04dd070fd7204f094d886415796db/charts/agent/templates/psp.yaml#L1)
-in order to deploy the policy only if the k8s version detected by helm is < 1.25.
+- Some Sysdig components pods require privileged access in order to run. For example,  `agent`, `admission-controller`(scanner), `node-analyzer`. Sysdig ships a Pod Security Policy by default on every installation.
+However, [Pod Security Policy](https://kubernetes.io/docs/concepts/security/pod-security-policy) has been deprecated since Kubernetes v1.21 and removed since Kubernetes v1.25.
+Therefore,  Sysdig introduced a [check](https://github.com/sysdiglabs/charts/blob/607573107af04dd070fd7204f094d886415796db/charts/agent/templates/psp.yaml#L1) in order to deploy the policy for the Kubernetes version detected by helm is < `1.25`.
 
-- As a replacement for Pod Security Policy, Kubernetes provides a new mechanism, [Pod Security Admission](https://kubernetes.io/docs/concepts/security/pod-security-admission/).\
-In a cluster using Pod Security Admission controller, enforcing a lower than priviliged [level](https://kubernetes.io/docs/concepts/security/pod-security-admission/#pod-security-levels)\
-will prevent the pods from working as intended, in order to avoid such issue the correct labels must be set in the namespace where the pods run.\
-(This step cannot be done by the helm chart itself during the installation due to helm limitations)
+- As a replacement for Pod Security Policy, Kubernetes provides a new mechanism, [Pod Security Admission](https://kubernetes.io/docs/concepts/security/pod-security-admission/). In a cluster using the Pod Security Admission controller, enforcing a lower than priviliged [level](https://kubernetes.io/docs/concepts/security/pod-security-admission/#pod-security-levels) will prevent the pods from working as intended, in order to avoid such issue the correct labels must be set in the namespace where the pods run.
 
-For example, adding the following labels to the namespace that is running Agent pods:
+For example, adding the following labels to the namespace that is running the Agent pods:
+
 ```yaml
 apiVersion: v1
 kind: Namespace
@@ -383,18 +210,5 @@ metadata:
     pod-security.kubernetes.io/warn-version: latest
 ```
 
-## Running helm unit tests
+This procedure cannot be done by the helm chart itself during the installation due to helm limitations
 
-The sysdiglabs/charts repository uses the following helm unittest plugin: https://github.com/quintush/helm-unittest
-
-Before running the tests make sure the chart dependencies are updated
-```
-helm dependency update
-```
-
-You can test the changes to your chart by running the test suites as follows:
-```
-helm unittest --helm3 .
-```
-
-The helm unit tests are in the tests folder. It is recommended to add new tests as new features are added here.
