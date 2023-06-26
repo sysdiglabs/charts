@@ -237,7 +237,8 @@ true
 {{- end -}}
 
 {{- define "nodeAnalyzer.deployRuntimeScanner" -}}
-{{- if or ((.Values.secure).vulnerabilityManagement).newEngineOnly (not (hasKey ((.Values.nodeAnalyzer).runtimeScanner) "deploy")) .Values.nodeAnalyzer.runtimeScanner.deploy }}
+{{- if and (hasKey ((.Values.nodeAnalyzer).runtimeScanner) "deploy") (not .Values.nodeAnalyzer.runtimeScanner.deploy ) }}
+{{- else if or ((.Values.secure).vulnerabilityManagement).newEngineOnly (and (hasKey ((.Values.nodeAnalyzer).runtimeScanner) "deploy") .Values.nodeAnalyzer.runtimeScanner.deploy) -}}
 true
 {{- end -}}
 {{- end -}}
