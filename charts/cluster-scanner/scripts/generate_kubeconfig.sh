@@ -2,11 +2,12 @@
 set pipefail
 
 # Update these to match your environment
+
 SERVICE_ACCOUNT_NAME=${SERVICE_ACCOUNT_NAME:-sysdig-cluster-scanner}
 CONTEXT=$(kubectl config current-context)
 NAMESPACE=${NAMESPACE:-sysdig-cluster-scanner}
 
-NEW_CONTEXT=$(kubectl config view --minify -o jsonpath='{.clusters[].name}')
+NEW_CONTEXT=${CLUSTER_NAME_OVERRIDE:-$(kubectl config view --minify -o jsonpath='{.clusters[].name}')}
 KUBECONFIG_FILE=${KUBECONFIG_FILE:-"${NEW_CONTEXT}.kubeconfig"}
 
 SECRET_NAME=sysdig-cluster-scanner
@@ -32,9 +33,12 @@ if [[ ! -z "${CLUSTER_NAME_OVERRIDE}" ]]; then
   yq e -i ".clusters[0].name = \"${CLUSTER_NAME_OVERRIDE}\"" ${KUBECONFIG_FILE}.tmp
 fi
 
-# Rename context
-kubectl config --kubeconfig ${KUBECONFIG_FILE}.tmp \
-  rename-context ${CONTEXT} ${NEW_CONTEXT}
+# Optional, rename context if differs
+if [[ "$CONTEXT" != "$NEW_CONTEXT" ]]; then
+  kubectl config --kubeconfig ${KUBECONFIG_FILE}.tmp \
+    rename-context ${CONTEXT} ${NEW_CONTEXT}
+fi
+
 # Create token user
 kubectl config --kubeconfig ${KUBECONFIG_FILE}.tmp \
   set-credentials ${CONTEXT}-${NAMESPACE}-token-user \
