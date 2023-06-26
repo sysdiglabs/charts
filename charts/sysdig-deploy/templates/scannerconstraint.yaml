@@ -1,3 +1,0 @@
-{{- if and .Values.clusterScanner.enabled .Values.nodeAnalyzer.enabled ( include "nodeAnalyzer.deployRuntimeScanner" . ) -}}
-{{- fail "Cannot enable both the clusterScanner and runtimeScanner at the same time" -}}
-{{- end -}}
