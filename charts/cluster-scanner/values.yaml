@@ -168,7 +168,7 @@ imageSbomExtractor:
       maxSizeBytes: "36700160"
       # The TTL for items in the local cache. By default it is set to 7 days.
       ttl: "168h"
-    # Redis connection details (to be provided if the cache type is "redis")
+    # Redis connection details (to be provided if the cache type is "distributed")
     # redis:
     #   address: ""
     #   user: ""
