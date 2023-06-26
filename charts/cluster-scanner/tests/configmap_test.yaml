@@ -152,7 +152,7 @@ tests:
   - it: "has correct content with redis caching"
     set:
       global.sysdig.apiHost: "http://test.com"
-      imageSbomExtractor.cache.type: "redis"
+      imageSbomExtractor.cache.type: "distributed"
       imageSbomExtractor.cache.local.maxSizeBytes: "666"
       imageSbomExtractor.cache.local.ttl: "69h"
       imageSbomExtractor.cache.redis.address: "localhost"
