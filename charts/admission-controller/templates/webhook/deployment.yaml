@@ -49,6 +49,8 @@ spec:
           image: {{ .Values.webhook.v2.container.image }}
         
           env:
+            - name: DRY_RUN
+              value: "{{.Values.webhook.v2.dryRun}}"            
             {{- if (or (include "webhook.httpProxy" .) (include "webhook.httpsProxy" .) (include "webhook.noProxy" .) )}}
             - name: HTTP_PROXY
               value: {{ include "webhook.httpProxy" . }}
@@ -58,10 +60,9 @@ spec:
               value: {{ include "webhook.noProxy" . }},{{ include "admissionController.scanner.fullname" . }}
             {{- end }}
           ports:
-            - containerPort: {{ .Values.webhook.v2.container.port }}
+            - containerPort: 7443
               protocol: TCP
               name: vac
-
           envFrom:
             - configMapRef:
                 name: {{ include "admissionController.webhook.fullname" . }}

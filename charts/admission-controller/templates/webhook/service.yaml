@@ -9,7 +9,7 @@ spec:
   type: {{ .Values.webhook.service.type }}
   ports:
   - name: vac
-    port: {{ .Values.webhook.v2.registrationPort }}
+    port: 7443
     targetPort: vac
   - name: http
     port: {{ .Values.webhook.service.port }}

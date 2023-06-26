@@ -118,16 +118,17 @@ podMonitors:
 natsURL: ""
 webhook:
   v2:
+    dryRun: true
     registrationPort: 7443
     enabled: true
-    denyOnError: true
-    timeoutSeconds: 30
+    denyOnError: false
+    timeoutSeconds: 5
     nats:
       natsInsecure: "true"
       natsUrl: "wss://nats-external.sysdig.svc:443" #relplace in real prod
     container: 
       name: secure-admission-controller
-      port: 8443
+      port: 7443
       image: quay.io/sysdig/secure-admission-controller:1.25.1-rc
   # Service name for Webhook deployment
   name: webhook
@@ -196,7 +197,7 @@ webhook:
 
   autoscaling:
     # Min replicas to use while autoscaling the webhook
-    minReplicas: 2
+    minReplicas: 1
     # Max replicas to use while autoscaling the webhook
     maxReplicas: 5
     # Target CPU to use when the number of replicas must be increased
