@@ -83,7 +83,8 @@ tests:
 
   - it: "sets redis caching env vars when cache type is redis"
     set:
-      imageSbomExtractor.cache.type: "redis"
+      imageSbomExtractor.cache.type: "distributed"
+      imageSbomExtractor.cache.redis.address: "redis://redis:6379"
     asserts:
       - not: true
         isEmpty:
