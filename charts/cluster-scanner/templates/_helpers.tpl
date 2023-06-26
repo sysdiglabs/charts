@@ -118,7 +118,7 @@ ise_js_producer_subject: "analysis.sboms"
 Generates config for Redis, if available
 */}}
 {{- define "cluster-scanner.redisCacheConfig" }}
-{{- if eq .Values.imageSbomExtractor.cache.type "redis" }}
+{{- if and (contains "distributed" .Values.imageSbomExtractor.cache.type) (.Values.imageSbomExtractor.cache.redis) }}
 {{- with .Values.imageSbomExtractor.cache.redis }}
 cache_redis_address: {{ .address }}
 {{- if .user }}

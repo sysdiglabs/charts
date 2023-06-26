@@ -61,7 +61,7 @@ runtimeStatusIntegrator:
     repository: sysdig/runtime-status-integrator
     # The Runtime Status Integrator image pull policy
     pullPolicy: IfNotPresent
-    tag: "0.3.3"
+    tag: "0.4.0"
   # Params to manage leader election
   # Leader election is implemented leveraging the native capabilities of
   # Kubernetes see: https://kubernetes.io/blog/2016/01/simple-leader-election-with-kubernetes/
@@ -129,7 +129,7 @@ imageSbomExtractor:
     repository: sysdig/image-sbom-extractor
     # The Image SBOM Extractor image pull policy
     pullPolicy: IfNotPresent
-    tag: "0.3.3"
+    tag: "0.4.0"
   ports:
     # The port to be used to expose prometheus metrics for the Image SBOM
     # Extractor
@@ -156,7 +156,11 @@ imageSbomExtractor:
   pprofEnabled: false
 
   cache:
-    # The type of cache to use, either `local` or `redis`. When setting `redis`, both Redis and the local cache will be used.
+    # The type of cache to use.
+    # Allowed values are `local`, `distributed` and `distributed,local`.
+    # When specified more than one, the cache precedence will be applied from right to left.
+    # Eg: `distributed,local` will try to hit the local one first, than fallback to distributed one (redis)
+    # When setting `distributed`, you should also setup redis settings below accordingly with your redis installation.
     type: "local"
     # Additional configuration parameters for the local cache
     local:
@@ -164,7 +168,7 @@ imageSbomExtractor:
       maxSizeBytes: "36700160"
       # The TTL for items in the local cache. By default it is set to 7 days.
       ttl: "168h"
-    # Redis connection details (to be provided if the cache type is "redis")
+    # Redis connection details (to be provided if the cache type is "distributed")
     # redis:
     #   address: ""
     #   user: ""
