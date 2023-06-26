@@ -157,10 +157,10 @@ imageSbomExtractor:
 
   cache:
     # The type of cache to use.
-    # Allowed values are `local`, `distributed` and `local,distributed`.
-    # When specified both, the former will take precedence and the latter will be used as fallback.
-    # When setting `distributed`, you should also setup redis settings below accordingly
-    # with your redis installation.
+    # Allowed values are `local`, `distributed` and `distributed,local`.
+    # When specified more than one, the cache precedence will be applied from the left to the right.
+    # Eg: `distributed,local` will try to hit the local one first, than fallback to distributed one (redis)
+    # When setting `distributed`, you should also setup redis settings below accordingly with your redis installation.
     type: "local"
     # Additional configuration parameters for the local cache
     local:
