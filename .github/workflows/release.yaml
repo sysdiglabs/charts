@@ -128,7 +128,7 @@ jobs:
           CR_TOKEN: "${{ secrets.TOOLS_JENKINS_ADMIN_ACCESS_GITHUB_TOKEN }}"
           CR_KEY: "${{ secrets.GPG_KEY_NAME }}"
 
-      - name: Copy README.md files to gh-pages
+      - name: Copy README.md files and GPG public key to gh-pages
         run: |
           existing_worktree=$(git worktree list --porcelain | grep -B 2 "branch refs/heads/gh-pages" | head -n 1 | cut -d ' ' -f 2)
           if [[ $existing_worktree != "" ]]; then git worktree remove -f $existing_worktree; fi
