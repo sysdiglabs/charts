@@ -4,7 +4,6 @@ metadata:
   name: {{ include "cluster-scanner.fullname" . }}
   namespace: {{ include "cluster-scanner.namespace" . }}
   labels:
-    checksum/config: {{ include "cluster-scanner.configContent" . | sha256sum | trunc 63 | quote }}
    {{- include "cluster-scanner.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
@@ -15,8 +14,11 @@ spec:
       {{- include "cluster-scanner.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
       annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum | trunc 63 | quote  }}
+        checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum | trunc 63 | quote  }}
+        checksum/rbac: {{ include (print $.Template.BasePath "/rbac.yaml") . | sha256sum | trunc 63 | quote  }}
+      {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
