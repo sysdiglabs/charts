@@ -15,9 +15,9 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum | trunc 63 | quote  }}
-        checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum | trunc 63 | quote  }}
-        checksum/rbac: {{ include (print $.Template.BasePath "/rbac.yaml") . | sha256sum | trunc 63 | quote  }}
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum | quote  }}
+        checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum | quote  }}
+        checksum/rbac: {{ include (print $.Template.BasePath "/rbac.yaml") . | sha256sum | quote  }}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
