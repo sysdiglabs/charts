@@ -10,6 +10,15 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.8.29
+### Chores
+* **sysdig-deploy** [9e140f8e](https://github.com/sysdiglabs/charts/commit/9e140f8ea2c0165c10f0557e8215be01f40d36db): add notes for Pod Security Admission ([#1177](https://github.com/sysdiglabs/charts/issues/1177))
+# v1.8.28
+### Chores
+* **sysdig-deploy** [8ef4e5d5](https://github.com/sysdiglabs/charts/commit/8ef4e5d5ab8d8f4191f88045b7ea8f3e3dcf63c0): Automatic version bump due to updated dependencies ([#1188](https://github.com/sysdiglabs/charts/issues/1188))
+# v1.8.27
+### Chores
+* **sysdig-deploy** [9f08f20c](https://github.com/sysdiglabs/charts/commit/9f08f20cf33b1addecfbe2f4efcbd0eb4729accf): Automatic version bump due to updated dependencies ([#1182](https://github.com/sysdiglabs/charts/issues/1182))
 # v1.8.26
 ### Chores
 * **sysdig-deploy** [64058299](https://github.com/sysdiglabs/charts/commit/640582993aaf1b94f4dbd5e3e9e311106f0ef177): Automatic version bump due to updated dependencies ([#1167](https://github.com/sysdiglabs/charts/issues/1167))

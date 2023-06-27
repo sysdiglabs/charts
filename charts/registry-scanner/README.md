@@ -52,7 +52,7 @@ Deploy the registry scanner specify each parameter using the `--set key=value[,k
 
 ```bash
 $ helm upgrade --install registry-scanner \
-    --version=1.0.14 \
+    --version=1.0.15 \
     --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
     --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
     --set config.registryURL=<REGISTRY_URL> \
@@ -64,7 +64,7 @@ $ helm upgrade --install registry-scanner \
 Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
 
 ```bash
-$ helm install registry-scanner -f values.yaml --version=1.0.14 sysdig/registry-scanner
+$ helm install registry-scanner -f values.yaml --version=1.0.15 sysdig/registry-scanner
 ```
 
 
@@ -103,10 +103,10 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | config.registryUser                              | Username for registry authentication.                                                                                                                                                                                                       | <code>""</code>                              |
 | config.registryPassword                          | Password for registry authentication.                                                                                                                                                                                                       | <code>""</code>                              |
 | config.registryType                              | Mandatory.<br/>Registry Type. Supported types: artifactory, ecr, icr, acr, quay, harbor, and dockerv2.                                                                                                                                      | <code>""</code>                              |
-| config.registryAccountId                         | AccountID - Only for ICR registry type.                                                                                                                                                                                                     | <code>""</code>                              |
+| config.registryAccountId                         | AccountId - Only for ICR registry type.                                                                                                                                                                                                     | <code>""</code>                              |
 | config.icrIamApi                                 | ICR IAM API - Only for ICR registry type.                                                                                                                                                                                                   | <code>""</code>                              |
 | config.icrIamApiSkipTLS                          | Ignore TLS certificate for IAM API - Only for ICR registry type.                                                                                                                                                                            | <code>false</code>                           |
-| config.aws.accessKeyId                           | AWS Credentials AccessKeyID.                                                                                                                                                                                                                | <code>""</code>                              |
+| config.aws.accessKeyId                           | AWS Credentials AccessKeyId.                                                                                                                                                                                                                | <code>""</code>                              |
 | config.aws.secretAccessKey                       | AWS Credentials: SecretAccessKey.                                                                                                                                                                                                           | <code>""</code>                              |
 | config.aws.region                                | For single account: region where the registry is located                                                                                                                                                                                    | <code>"us-east-1"</code>                     |
 | config.aws.managementAccountRoleARN              | Management role arn to be used to impersonate over the member accounts                                                                                                                                                                      | <code></code>                                |
@@ -175,7 +175,7 @@ Use the following command to deploy in an on-prem:
 
 ```bash
 $ helm upgrade --install registry-scanner \
-    --version=1.0.14 \
+    --version=1.0.15 \
     --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
     --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
     --set config.secureSkipTLS=true \

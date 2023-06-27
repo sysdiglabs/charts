@@ -10,6 +10,12 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.1.52
+### Documentation
+* **kspm-collector** [fdd7baec](https://github.com/sysdiglabs/charts/commit/fdd7baecf2e5283fd30ef25ad444c37d1082a327): kspm-collector readme formatting ([#1192](https://github.com/sysdiglabs/charts/issues/1192))
+# v0.1.51
+### New Features
+* **kspm-collector,node-analyzer** [880cbc98](https://github.com/sysdiglabs/charts/commit/880cbc9840cacd4c66f939ba1d52a70181408a17): add account ID to Posture ([#1185](https://github.com/sysdiglabs/charts/issues/1185))
 # v0.1.50
 ### New Features
 * **adminssion-controller,agent,node-analyzer,kspm-collector,rapid-response** [33cad895](https://github.com/sysdiglabs/charts/commit/33cad8952395800e2e453de6bbf81851bfe1c608): pull policy and secrets params uniformity ([#1158](https://github.com/sysdiglabs/charts/issues/1158))
