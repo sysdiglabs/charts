@@ -124,9 +124,6 @@ cache_redis_address: {{ .address }}
 {{- if .user }}
 cache_redis_user: {{ .user }}
 {{- end }}
-{{- if .password }}
-cache_redis_password: {{ .password }}
-{{- end }}
 {{- if .database }}
 cache_redis_database: {{ .database }}
 {{- end }}
