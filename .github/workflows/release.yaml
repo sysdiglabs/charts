@@ -139,8 +139,14 @@ jobs:
           pushd ${tmp_folder}
           git add -A "charts/**/README.md"
           git add -A "charts/**/values.yaml"
-          git pull && git commit -m "github_actions_ci: Update README.md and values files" && git push
+          echo "${GPG_PUBLIC_KEY}" > public.gpg
+          git add public.gpg
+          if ! git diff-index --quiet HEAD; then
+            git pull && git commit -m "github_actions_ci: Update public key" && git push
+          fi
           popd
+        env:
+          GPG_PUBLIC_KEY: "${{ secrets.GPG_PUBLIC_KEY }}"
 
   commit-changelogs:
     needs:
