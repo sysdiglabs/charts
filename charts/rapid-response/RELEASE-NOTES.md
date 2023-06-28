@@ -1,6 +1,6 @@
 # What's Changed
 
-### New Features
-- **admission-controller,agent,cloud-bench,cloud-connector,cloud-scanning,harbor-scanner-sysdig-secure,kspm-collector,node-analyzer,rapid-response,registry-scanner,sysdig,sysdig-deploy,sysdig-mcm-navmenu,sysdig-stackdriver-bridge** [5d99a03d](https://github.com/sysdiglabs/charts/commit/5d99a03dced132b4771dde1ce5b90b63c518b408): use a PGP private key to sign charts on release ([#1170](https://github.com/sysdiglabs/charts/issues/1170))
+### Documentation
+- **rapid-response** [b0318af9](https://github.com/sysdiglabs/charts/commit/b0318af99efbc579d15cbe9a081f542255a47316): DOC-3216 - update for clarity and correctness ([#1173](https://github.com/sysdiglabs/charts/issues/1173))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/rapid-response-0.4.12...rapid-response-0.5.0
+#### Full diff: https://github.com/sysdiglabs/charts/compare/rapid-response-0.5.0...rapid-response-0.5.1
