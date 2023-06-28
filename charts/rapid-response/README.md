@@ -91,7 +91,7 @@ The following table lists the configurable parameters of the Sysdig Rapid Respon
 
 ### Add Volumes to Rapid Response
 
-Rapid response is an isolated container when used out of the box. In order to access other volumes this chart supports, specify them through `rapidResponse.extraVolumes.volumes` and `rapidResponse.extraVolumes.mounts`. 
+Rapid response is an isolated container when used out of the box. In order to access other volumes this chart supports, specify them through `rapidResponse.extraVolumes.volumes` and `rapidResponse.extraVolumes.mounts`.
 
 In this example, the host root is mounted under `/host`:
 
@@ -118,11 +118,11 @@ Additionally, when you pull the image from a private repository, follow your reg
 
 ### Use a Custom ServiceAccount
 
-To use a ServiceAccount that is different from the default one, 
+To use a ServiceAccount that is different from the default one,
 
 1. Ensure that the ServiceAccount is already created.
 
-2. Install or upgrade the chart with the `rapidResponse.existingServiceAccount` parameter.  
+2. Install or upgrade the chart with the `rapidResponse.existingServiceAccount` parameter.
 
    For example:
 
@@ -132,6 +132,6 @@ To use a ServiceAccount that is different from the default one,
        sysdig/rapid-response
    ```
 
-   It takes the name of a ServiceAccount to be used in pods. 
+   It takes the name of a ServiceAccount to be used in pods.
 
  This configuration helps you perform specific operations on the Kubernetes control plane.
