@@ -20,6 +20,20 @@ Deploy Rapid Response
 $ helm install --create-namespace -n rapid-response rapid-response -f values.yaml sysdig/rapid-response
 ```
 
+## Verify the integrity and origin
+Sysdig Helm Charts are signed so users can verify the integrity and origin of each chart, the steps are as follows:
+
+### Import the Public Key
+
+```console
+$ curl -o "/tmp/sysdig_public.gpg" "https://charts.sysdig.com/public.gpg"
+$ gpg --import /tmp/sysdig_public.gpg
+```
+
+### Verify the chart
+
+To check the integrity and the origin of the charts you can now append the `--verify` flag to the `install`, `upgrade` and `pull` helm commands.
+
 ## Configuration
 
 The following table lists the configurable parameters of the Sysdig Rapid Response chart and their default values:
