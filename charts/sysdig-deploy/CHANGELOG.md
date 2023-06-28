@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.9.1
+### Chores
+* **sysdig-deploy** [4d023fe3](https://github.com/sysdiglabs/charts/commit/4d023fe36de2a8e6f0a5d1b209fcd50c0b89e1de): Automatic version bump due to updated dependencies ([#1198](https://github.com/sysdiglabs/charts/issues/1198))
 # v1.9.0
 ### New Features
 * **admission-controller,agent,cloud-bench,cloud-connector,cloud-scanning,harbor-scanner-sysdig-secure,kspm-collector,node-analyzer,rapid-response,registry-scanner,sysdig,sysdig-deploy,sysdig-mcm-navmenu,sysdig-stackdriver-bridge** [5d99a03d](https://github.com/sysdiglabs/charts/commit/5d99a03dced132b4771dde1ce5b90b63c518b408): use a PGP private key to sign charts on release ([#1170](https://github.com/sysdiglabs/charts/issues/1170))
