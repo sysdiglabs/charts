@@ -36,7 +36,7 @@ To deploy the Sysdig installation components, follow the installation instructio
 
 ## Difference Between `sysdig` and `sysdig-deploy`
 
-The majority of the differences are in the metadata names and labels in the `agent` and `node-analyzer` components in the `sysdig-deploy` chart. 
+The majority of the differences are in the metadata names and labels in the `agent` and `node-analyzer` components in the `sysdig-deploy` chart.
 
 - `helm.sh/chart: sysdig-<version>` has been changed to  `helm.sh.chart: nodeAnalyzer-<version>` or `helm.sh.chart: agent-<version>`
 - Added the`app.kubernetes.io/name: agent` label  to the `agent` daemonset and pods.
@@ -79,7 +79,7 @@ Unlike the `sysdig` chart, `sysdig-deploy` only supports Helm v3. If you have no
 
    ```console
    helm delete -n sysdig-agent sysdig-agent
-   
+
    helm repo update
    helm install -n sysdig-agent sysdig sysdig/sysdig-deploy -f values.new.yaml
    ```
@@ -364,7 +364,7 @@ Therefore, on GKE Autopilot clusters:
  - The daemonset annotation is set to enable the Agent to run on autopilot (required from GKE).
 
 
-## Install Agent Components in On-Prem 
+## Install Agent Components in On-Prem
 
 Sysdig agent can be deployed in your on-premise infrastructure.
 
@@ -602,7 +602,7 @@ See [Tuning Sysdig Agent](https://docs.sysdig.com/en/tuning-sysdig-agent.html) f
 
 ## Upgrade Sysdig Agent Configuration
 
-If you need to upgrade the agent configuration file, 
+If you need to upgrade the agent configuration file,
 
 1. Modify the YAML file if you are increasing the metrics limit scraping Prometheus metrics:
 
