@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.5.0
+### New Features
+* **admission-controller,agent,cloud-bench,cloud-connector,cloud-scanning,harbor-scanner-sysdig-secure,kspm-collector,node-analyzer,rapid-response,registry-scanner,sysdig,sysdig-deploy,sysdig-mcm-navmenu,sysdig-stackdriver-bridge** [5d99a03d](https://github.com/sysdiglabs/charts/commit/5d99a03dced132b4771dde1ce5b90b63c518b408): use a PGP private key to sign charts on release ([#1170](https://github.com/sysdiglabs/charts/issues/1170))
 # v0.4.0
 ### New Features
 * **harbor-scanner-sysdig-secure** [496a0b0](https://github.com/sysdiglabs/charts/commit/496a0b02f7d7cb024aad3cdd4b994e698eb679c8): Adds config parameter to enable new async-mode ([#1011](https://github.com/sysdiglabs/charts/issues/1011))
