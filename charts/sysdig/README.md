@@ -84,6 +84,20 @@ Unlike the `sysdig` chart, `sysdig-deploy` only supports Helm v3. If you have no
    helm install -n sysdig-agent sysdig sysdig/sysdig-deploy -f values.new.yaml
    ```
 
+## Verify the integrity and origin
+Sysdig Helm Charts are signed so users can verify the integrity and origin of each chart, the steps are as follows:
+
+### Import the Public Key
+
+```console
+$ curl -o "/tmp/sysdig_public.gpg" "https://charts.sysdig.com/public.gpg"
+$ gpg --import /tmp/sysdig_public.gpg
+```
+
+### Verify the chart
+
+To check the integrity and the origin of the charts you can now append the `--verify` flag to the `install`, `upgrade` and `pull` helm commands.
+
 ## Configuration
 
 You can use the Helm chart to update the default `sysdig` configurations by using either of the following:
@@ -648,5 +662,3 @@ If you need to upgrade the agent configuration file,
          --set image.tag=<last_version> \
          sysdig/sysdig
      ```
-
-   
