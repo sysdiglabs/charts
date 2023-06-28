@@ -8039,6 +8039,25 @@ entries:
   harbor-scanner-sysdig-secure:
   - apiVersion: v2
     appVersion: 0.6.0
+    created: "2023-06-28T17:41:09.246703447Z"
+    description: Harbor Scanner for Sysdig Secure
+    digest: 35fd1e411cfa21ddfa55d9444e2e586a9e3d6235c3a3d3740025a5f75f0c973e
+    home: https://github.com/sysdiglabs/harbor-scanner-sysdig-secure
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    maintainers:
+    - email: nestor.salceda@sysdig.com
+      name: nestorsalceda
+    - email: alvaro.iradier@sysdig.com
+      name: airadier
+    - email: marco.mancuso@sysdig.com
+      name: marcuzzuu
+    name: harbor-scanner-sysdig-secure
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/harbor-scanner-sysdig-secure-0.5.1/harbor-scanner-sysdig-secure-0.5.1.tgz
+    version: 0.5.1
+  - apiVersion: v2
+    appVersion: 0.6.0
     created: "2023-06-28T13:10:44.074575531Z"
     description: Harbor Scanner for Sysdig Secure
     digest: f6770817f435b954984a6a1bc0a389f937daed6cd67e19541f8c09e8e540eebd
@@ -35320,4 +35339,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2023-06-28T13:10:45.251185819Z"
+generated: "2023-06-28T17:41:10.156031065Z"
