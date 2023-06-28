@@ -3092,6 +3092,33 @@ entries:
     version: 0.1.0
   agent:
   - apiVersion: v2
+    appVersion: 12.15.0
+    created: "2023-06-28T21:12:48.182836444Z"
+    description: Sysdig Monitor and Secure agent
+    digest: e022f806225078490c35c800e774480df1201e3237aeeafe140f613208797aa1
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: adam.roberts@sysdig.com
+      name: aroberts87
+    - email: zhongcheng.xiao@sysdig.com
+      name: lilx1ao
+    name: agent
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/agent-1.9.1/agent-1.9.1.tgz
+    version: 1.9.1
+  - apiVersion: v2
     appVersion: 12.14.1
     created: "2023-06-28T13:10:43.538585915Z"
     description: Sysdig Monitor and Secure agent
@@ -35471,4 +35498,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2023-06-28T21:04:50.713014193Z"
+generated: "2023-06-28T21:12:48.302667296Z"
