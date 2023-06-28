@@ -10,8 +10,6 @@ For installation instructions, see [Install Rapid Response](https://docs.sysdig.
 
 ## Configuration
 
-## Configuration
-
 You can use the Helm chart to update the default Rapid Response configurations by using either of the following:
 
 - Using the key-value pair: `--set sysdig.settings.key = value`
