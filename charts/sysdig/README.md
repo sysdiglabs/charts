@@ -76,6 +76,20 @@ $ helm delete --namespace sysdig-agent sysdig-agent
 
 The command removes all the Kubernetes components associated with the chart and deletes the release.
 
+## Verify the integrity and origin
+Sysdig Helm Charts are signed so users can verify the integrity and origin of each chart, the steps are as follows:
+
+### Import the Public Key
+
+```console
+$ curl -o "/tmp/sysdig_public.gpg" "https://charts.sysdig.com/public.gpg"
+$ gpg --import /tmp/sysdig_public.gpg
+```
+
+### Verify the chart
+
+To check the integrity and the origin of the charts you can now append the `--verify` flag to the `install`, `upgrade` and `pull` helm commands.
+
 ## Configuration
 
 The following table lists the configurable parameters of the Sysdig chart and their default values.
@@ -194,7 +208,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `nodeAnalyzer.runtimeScanner.deploy`                                 | Deploy the Runtime Scanner                                                               | `false`                                                                        |
 | `nodeAnalyzer.runtimeScanner.extraMounts`                            | Specify a container engine custom socket path (docker, containerd, CRI-O)                |                                                                                |
 | `nodeAnalyzer.runtimeScanner.image.repository`                       | The image repository to pull the Runtime Scanner from                                    | `sysdig/vuln-runtime-scanner`                                                  |
-| `nodeAnalyzer.runtimeScanner.image.tag`                              | The image tag to pull the Runtime Scanner                                                | `1.5`                                                                          |
+| `nodeAnalyzer.runtimeScanner.image.tag`                              | The image tag to pull the Runtime Scanner                                                | `1.5.1`                                                                        |
 | `nodeAnalyzer.runtimeScanner.image.digest`                           | The image digest to pull                                                                 | ` `                                                                            |
 | `nodeAnalyzer.runtimeScanner.image.pullPolicy`                       | The image pull policy for the Runtime Scanner                                            | `IfNotPresent`                                                                 |
 | `nodeAnalyzer.runtimeScanner.resources.requests.cpu`                 | Runtime Scanner CPU requests per node                                                    | `250m`                                                                         |
