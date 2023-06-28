@@ -143,14 +143,14 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `image.pullPolicy`                                           | The Image pull policy.                                       | `IfNotPresent`                                               |
 | `image.pullSecrets`                                          | Image pull secrets.                                          | `nil`                                                        |
 | `resourceProfile`                                            | Sysdig Agent resource profile. See [Resource profiles](#resource-profiles). | `small`                                                      |
-| `resources.requests.cpu`                                     | CPU requested for being run in a node.                       | ` `                                                          |
-| `resources.requests.memory`                                  | Memory requested for being run in a node                     | ` `                                                          |
+| `resources.requests.cpu`                                     | The CPU requested to be run in a node.                       | ` `                                                          |
+| `resources.requests.memory`                                  | The memory requested to be run in a node.                     | ` `                                                          |
 | `resources.limits.cpu`                                       | The CPU limit.                                               | ` `                                                          |
 | `resources.limits.memory`                                    | The memory limit.                                            | ` `                                                          |
 | `gke.autopilot`                                              | If set to `true`,  the agent configuration will be overridden to run on GKE Autopilot clusters. | `false`                                                      |
 | `rbac.create`                                                | If set to `true`,  RBAC resources are created and used.      | `true`                                                       |
 | `scc.create`                                                 | Creates OpenShift's Security Context constrain.t             | `true`                                                       |
-| `psp.create`                                                 | Creates Pod Security Policy to allow the agent running in clusters with PSP enabled. | `true`                                                       |
+| `psp.create`                                                 | Creates Pod Security Policy to allow the agent that is running in clusters with PSP enabled. | `true`                                                       |
 | `serviceAccount.create`                                      | Creates the serviceAccount.                                  | `true`                                                       |
 | `serviceAccount.name`                                        | The value you specify will be used as the `serviceAccountName`. | ` `                                                          |
 | `priorityClassName`                                          | Sets the priority class for the agent daemonset.             | `""`                                                         |
