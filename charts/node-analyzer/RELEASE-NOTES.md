@@ -1,9 +1,7 @@
 # What's Changed
 
-### Chores
-- **sysdig, node-analyzer** [706d562f](https://github.com/sysdiglabs/charts/commit/706d562f3d473f88fd1d257974cd3a127d672a2a): bump sysdig/vuln-runtime-scanner to v1.5.1 ([#1187](https://github.com/sysdiglabs/charts/issues/1187))
+### New Features
+- **admission-controller,agent,cloud-bench,cloud-connector,cloud-scanning,harbor-scanner-sysdig-secure,kspm-collector,node-analyzer,rapid-response,registry-scanner,sysdig,sysdig-deploy,sysdig-mcm-navmenu,sysdig-stackdriver-bridge** [5d99a03d](https://github.com/sysdiglabs/charts/commit/5d99a03dced132b4771dde1ce5b90b63c518b408): use a PGP private key to sign charts on release ([#1170](https://github.com/sysdiglabs/charts/issues/1170))
+- **kspm-collector,node-analyzer** [880cbc98](https://github.com/sysdiglabs/charts/commit/880cbc9840cacd4c66f939ba1d52a70181408a17): add account ID to Posture ([#1185](https://github.com/sysdiglabs/charts/issues/1185))
 
-    * Runtimescanner bumped to 1.5.1
-- Fix for CVE-2023-2253
-
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.8.64...node-analyzer-1.8.65
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.8.65...node-analyzer-1.9.0
