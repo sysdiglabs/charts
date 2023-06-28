@@ -34,7 +34,8 @@ For example:
 
 ```bash
 helm install sysdig-agent --namespace sysdig-agent --create-namespace \
---set global.sysdig.accessKey=<ACCESS_KEY>, sysdig.settings.tags="role:webserver\,location:europe" \ 
+--set global.sysdig.accessKey=<ACCESS_KEY> \
+--set sysdig.settings.tags="role:webserver\,location:europe" \
 --set global.sysdig.region=<SAAS_REGION> \
 --set nodeAnalyzer.secure.vulnerabilityManagement.newEngineOnly=true \
 --set global.kspm.deploy=true \
