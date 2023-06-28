@@ -28,14 +28,14 @@ config:
   registryPassword: ""
   # Mandatory.<br/>Registry Type. Supported types: artifactory, ecr, icr, acr, quay, harbor, and dockerv2.
   registryType: ""
-  # AccountID - Only for ICR registry type.
+  # AccountId - Only for ICR registry type.
   registryAccountId: ""
   # ICR IAM API - Only for ICR registry type.
   icrIamApi: ""
   # Ignore TLS certificate for IAM API - Only for ICR registry type.
   icrIamApiSkipTLS: false
   aws:
-    # AWS Credentials AccessKeyID.
+    # AWS Credentials AccessKeyId.
     accessKeyId: ""
     # AWS Credentials: SecretAccessKey.
     secretAccessKey: ""
