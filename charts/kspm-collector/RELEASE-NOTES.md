@@ -1,6 +1,6 @@
 # What's Changed
 
 ### New Features
-- **adminssion-controller,agent,node-analyzer,kspm-collector,rapid-response** [33cad895](https://github.com/sysdiglabs/charts/commit/33cad8952395800e2e453de6bbf81851bfe1c608): pull policy and secrets params uniformity ([#1158](https://github.com/sysdiglabs/charts/issues/1158))
+- **admission-controller,agent,cloud-bench,cloud-connector,cloud-scanning,harbor-scanner-sysdig-secure,kspm-collector,node-analyzer,rapid-response,registry-scanner,sysdig,sysdig-deploy,sysdig-mcm-navmenu,sysdig-stackdriver-bridge** [5d99a03d](https://github.com/sysdiglabs/charts/commit/5d99a03dced132b4771dde1ce5b90b63c518b408): use a PGP private key to sign charts on release ([#1170](https://github.com/sysdiglabs/charts/issues/1170))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.1.49...kspm-collector-0.1.50
+#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.1.52...kspm-collector-0.2.0

@@ -97,6 +97,20 @@ $ helm upgrade --install sysdig-{{ .Release.Name }} {{ .Repository.Name }}/{{ .C
     --values values.yaml
 ```
 
+### Verify the integrity and origin
+Sysdig Helm Charts are signed so users can verify the integrity and origin of each chart, the steps are as follows:
+
+#### Import the Public Key
+
+```console
+$ curl -o "/tmp/sysdig_public.gpg" "https://charts.sysdig.com/public.gpg"
+$ gpg --import /tmp/sysdig_public.gpg
+```
+
+#### Verify the chart
+
+To check the integrity and the origin of the charts you can now append the `--verify` flag to the `install`, `upgrade` and `pull` helm commands.
+
 ## Examples
 - [Default `values.yaml`](https://github.com/sysdiglabs/charts/blob/master/charts/admission-controller/values.yaml)
 - Find some [examples of these values](https://github.com/sysdiglabs/charts/tree/master/charts/admission-controller/ci)

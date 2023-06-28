@@ -22,6 +22,19 @@ To deploy the Sysdig Agent, follow the installation instructions given on the Sy
 - [Install Sysdig Agent for a Sysdig On-Premises Deployment](https://docs.sysdig.com/en/docs/installation/on-premises/)
 - [Install Sysdig Agent in an Airgapped Environment](https://docs.sysdig.com/en/docs/installation/on-premises/airgapped-installation/)
 
+## Verify the integrity and origin
+Sysdig Helm Charts are signed so users can verify the integrity and origin of each chart, the steps are as follows:
+
+### Import the Public Key
+
+```console
+$ curl -o "/tmp/sysdig_public.gpg" "https://charts.sysdig.com/public.gpg"
+$ gpg --import /tmp/sysdig_public.gpg
+```
+
+### Verify the chart
+
+To check the integrity and the origin of the charts you can now append the `--verify` flag to the `install`, `upgrade` and `pull` helm commands.
 
 ## Configuration
 
