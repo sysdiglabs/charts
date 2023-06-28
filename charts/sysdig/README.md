@@ -11,13 +11,13 @@ This chart is being deprecated. Please use the [sydig-deploy chart](https://gith
 
 `sysdig` chart adds the Sysdig installation components for [Sysdig Monitor](https://sysdig.com/product/monitor/) and [Sysdig Secure](https://sysdig.com/product/secure/) to all  the nodes in your Kubernetes cluster via a DaemonSet. This chart deploys the following Sysdig components into your Kubernetes cluster.
 
-- [Sysdig Agent](https://github.com/sysdiglabs/charts/tree/master/charts/agent)
-- [Node Analyzer](https://github.com/sysdiglabs/charts/tree/master/charts/node-analyzer)
-  - [Sysdig Benchmark Runner ](https://github.com/sysdiglabs/charts/tree/master/charts/node-analyzer#benchmark-runner)
-  - [Sysdig Host Analyzer](https://github.com/sysdiglabs/charts/tree/master/charts/node-analyzer#host-analyzer-legacy)
-  - [Sysdig Image Analyzer](https://github.com/sysdiglabs/charts/tree/master/charts/node-analyzer#node-image-analyzer)
-  - [Sysdig KSPM Analyzer](https://github.com/sysdiglabs/charts/tree/master/charts/node-analyzer#kspm-analyzer-preview)
-- [Sysdig KSPM Collector](https://github.com/sysdiglabs/charts/tree/master/charts/kspm-collector)
+- Sysdig Agent
+- Node Analyzer
+  - Sysdig Benchmark Runner
+  - Sysdig Host Analyzer
+  - Sysdig Image Analyzer
+  - Sysdig KSPM Analyzer
+- Sysdig KSPM Collector
 
 ## Installation
 
