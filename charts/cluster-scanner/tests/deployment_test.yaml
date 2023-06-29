@@ -108,9 +108,9 @@ tests:
     asserts:
       - not: true
         isEmpty:
-          path: spec.template.spec.containers[1].env[36]
+          path: spec.template.spec.containers[1].env[37]
       - isSubset:
-          path: spec.template.spec.containers[1].env[36]
+          path: spec.template.spec.containers[1].env[37]
           content:
             name: ANALYZER_CACHE_REDIS_TTL
             valueFrom:
