@@ -184,6 +184,7 @@ webhook:
       memory: 256Mi
 
   autoscaling:
+    # Enable horizontal pod autoscaling
     enabled: true
     # Min replicas to use while autoscaling the webhook
     minReplicas: 2
