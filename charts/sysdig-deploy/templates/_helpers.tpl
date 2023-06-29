@@ -56,3 +56,12 @@ Determine sysdig secure endpoint based on provided region
 true
 {{- end }}
 {{- end }}
+
+{{/*
+Determine whether runtime scanner shall run by including the helper from nodeAnalyzer chart.
+
+Based on: https://github.com/helm/helm/issues/4535#issuecomment-416022809
+*/}}
+{{- define "deployRuntimeScanner" }}
+{{- include "nodeAnalyzer.deployRuntimeScanner" (dict "Chart" (dict "Name" "nodeAnalyzer") "Values" (index .Values "nodeAnalyzer") "Release" .Release "Capabilities" .Capabilities) }}
+{{- end }}
