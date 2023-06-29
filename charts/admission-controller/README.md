@@ -12,69 +12,61 @@ $ pre-commit run -a
 
 -->
 
-# Admission Controller
+# Chart: Admission Controller
 
-[Sysdig Admission Controller](https://docs.sysdig.com/en/docs/sysdig-secure/scanning/admission-controller/) features ActivityAudit and ImageScanning on a Kubernetes Cluster.
-<br/>This chart deploys the Sysdig Admission Controller in your Kubernetes cluster.
+## Overview
 
-## TL;DR;
+Sysdig Admission Controller provides Image Scanning and Audit Logging capabilities to secure your Kubernetes environment. 
 
-```
-$ helm repo add sysdig https://charts.sysdig.com
-$ helm repo update
-$ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-      --create-namespace -n sysdig-admission-controller --version=0.9.0  \
-      --set clusterName=CLUSTER_NAME \
-      --set sysdig.secureAPIToken=SECURE_API_TOKEN
-```
+Use the [sysdig-deploy](../sysdig-deploy/README.md) parent chart to deploy the Admission Controller and any other subcomponents. Do not deploy subcharts directly. 
 
-- [Configuration](#configuration)
-- [Usages](#usages)
-- [Confirm Working Status](#confirm-working-status)
-- [Troubleshooting](#troubleshooting)
+To deploy the Admission Controller, follow the installation instructions given in  [Install Kubernetes Auditing](https://docs.sysdig.com/en/docs/installation/sysdig-secure/install-agent-components/kubernetes/install-kubernetes-audit-logging/).
 
-<br/><br/>
+## Verify the Integrity and Origin
 
-## Introduction
+Sysdig Helm charts are signed so you can confirm the integrity and origin of each chart. To do so:
 
-This chart deploys the Sysdig Admission Controller on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
+1. Import the Public Key:
 
+   ```bash
+   $ curl -o "/tmp/sysdig_public.gpg" "https://charts.sysdig.com/public.gpg"
+   $ gpg --import /tmp/sysdig_public.gpg
+   ```
 
-
-### Prerequisites
-
-- Helm 3
-- Kubernetes v1.16+
-- Cluster Name (pick one to identify your Kubernetes Cluster)
-- Sysdig Secure API Token
-
-
-
-###  Installing the Chart
-
-To install the chart with the release name `admission-controller`:
-
-```console
-$ helm upgrade --install sysdig-admission-controller sysdig/admission-controller -n sysdig-admission-controller --version=0.9.0
-```
-
-The command deploys the Sysdig Admission Controller on the Kubernetes cluster in the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.
-
-> **Tip**: List all releases using `helm list`
-
-
-
-### Uninstalling the Chart
-
-To uninstall/delete the `admission-controller`:
-
-```console
-$ helm uninstall sysdig-admission-controller -n sysdig-admission-controller
-```
-
-The command removes all the Kubernetes components associated with the chart and deletes the release.
+2. Verify the chart by appending the `--verify` flag to the `install`, `upgrade`, and `pull` helm commands
 
 ## Configuration
+
+You can use the Helm chart to update the default Admission Controller configurations by using either of the following:
+
+- Using the key-value pair: `--set sysdig.settings.key = value`
+- `values.yaml` file
+
+### Using the Key-Value Pair
+
+Specify each parameter using the `--set key=value[,key=value]` argument to the `helm install`command.
+
+For example:
+
+```bash
+$ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
+    --create-namespace -n sysdig-admission-controller --version=0.9.0 \
+    --set sysdig.secureAPIToken=YOUR-KEY-HERE,clusterName=YOUR-CLUSTER-NAME
+```
+
+### Using values.yaml
+
+The `values.yaml` file specifies the values for the configuration parameters.  You can add the configuration to the `values.yaml` file, then use it in the `helm install` command.
+
+For example:
+
+```bash
+$ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
+    --create-namespace -n sysdig-admission-controller --version=0.9.0 \
+    --values values.yaml
+```
+
+## Configuration Parameters
 
 The following table lists the configurable parameters of the `admission-controller` chart and their default values.
 
@@ -179,36 +171,6 @@ The following table lists the configurable parameters of the `admission-controll
 | scanner.customEntryPoint                           | Custom entrypoint for the scanner. <br/>Remember to provide the scanner valid arguments with `--server_port` and optionally `--auth_secure_token` <br/>default: /inline-scan-service --server_port=8080                                                                                                                                                                                                                                                             | <code>[]</code>                                                                                                                                                                                    |
 
 
-Specify each parameter using the **`--set key=value[,key=value]`** argument to `helm upgrade --install`. For example:
-
-```console
-$ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-    --create-namespace -n sysdig-admission-controller --version=0.9.0 \
-    --set sysdig.secureAPIToken=YOUR-KEY-HERE,clusterName=YOUR-CLUSTER-NAME
-```
-
-**Alternatively, a YAML file** that specifies the values for the parameters can be provided while
-installing the chart. For example:
-
-```console
-$ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-    --create-namespace -n sysdig-admission-controller --version=0.9.0 \
-    --values values.yaml
-```
-
-### Verify the integrity and origin
-Sysdig Helm Charts are signed so users can verify the integrity and origin of each chart, the steps are as follows:
-
-#### Import the Public Key
-
-```console
-$ curl -o "/tmp/sysdig_public.gpg" "https://charts.sysdig.com/public.gpg"
-$ gpg --import /tmp/sysdig_public.gpg
-```
-
-#### Verify the chart
-
-To check the integrity and the origin of the charts you can now append the `--verify` flag to the `install`, `upgrade` and `pull` helm commands.
 
 ## Examples
 - [Default `values.yaml`](https://github.com/sysdiglabs/charts/blob/master/charts/admission-controller/values.yaml)
@@ -383,7 +345,7 @@ Either way, you should see some logs in Admission Controller tail
     {"level":"info","component":"scanning-evaluator","message":"evaluating container with name=nginx and image=nginx"}
     {"level":"info","component":"scanning-evaluator","time":"","message":"matched policy=Allow always for namespace=default and image=nginx"}
     {"level":"info","component":"scanning-evaluator","message":"allowing container with name=nginx and image=nginx"}
-
+    
     -- reject assignment result
     {"level":"info","component":"scanning-evaluator","message":"checking pod=nginx in namespace=default"}
     {"level":"info","component":"scanning-evaluator","message":"evaluating container with name=nginx and image=nginx"}
@@ -475,7 +437,7 @@ A: [HorizontalAutoScaller](https://github.com/sysdiglabs/charts/blob/master/char
 ```
  $ minikube addons list | grep metrics-server
  $  minikube addons enable metrics-server
- ```
+```
 
 ### Q: Getting error "x509: certificate signed by unknown authority"
 
