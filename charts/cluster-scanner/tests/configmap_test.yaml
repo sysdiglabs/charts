@@ -62,11 +62,11 @@ tests:
           path: data.ise_cache_local_max_size
           value: "36700160"
       - equal:
+          path: data.ise_cache_local_max_element_size
+          value: "102400"
+      - equal:
           path: data.ise_cache_local_ttl
           value: 168h
-      - equal:
-          path: data.ise_cache_local_lru_max_element_size
-          value: "102400"
       - equal:
           path: data.sysdig_verify_certificate
           value: "true"

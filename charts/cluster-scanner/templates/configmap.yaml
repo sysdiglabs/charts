@@ -25,6 +25,6 @@ data:
   ise_cache_type: {{ .Values.imageSbomExtractor.cache.type }}
   ise_cache_local_max_size: {{ .Values.imageSbomExtractor.cache.local.maxSizeBytes | quote }}
   ise_cache_local_ttl: {{ .Values.imageSbomExtractor.cache.local.ttl }}
-  ise_cache_local_lru_max_element_size: {{ .Values.imageSbomExtractor.cache.local.lruMaxElementSize | quote }}
+  ise_cache_local_max_element_size: {{ .Values.imageSbomExtractor.cache.local.maxElementSizeBytes | quote }}
 {{- include "cluster-scanner.iseJsConfig" . | nindent 2 }}
 {{- include "cluster-scanner.redisCacheConfig" . | nindent 2 }}

@@ -41,7 +41,11 @@ scannerMode: "local"
 
 # Optional parameter used to check the compatibility of cluster-scanner
 # component versions with respect to the onprem backend version.
-# E.g. if `onPremCompatibilityVersion=6.2`, then we make sure that the image
+#
+# If you are running an on-prem version of Sysdig Backend make sure to set
+# this parameter with the version of Sysdig Backend you are using.
+#
+# E.g. if `onPremCompatibilityVersion=6.2`, we make sure that the image
 # tag is < 1.0.0 for both the Runtime Status Integrator and the Image SBOM
 # Extractor.
 onPremCompatibilityVersion: "6.2"
@@ -61,7 +65,7 @@ runtimeStatusIntegrator:
     repository: sysdig/runtime-status-integrator
     # The Runtime Status Integrator image pull policy
     pullPolicy: IfNotPresent
-    tag: "0.4.1"
+    tag: "0.4.2"
   # Params to manage leader election
   # Leader election is implemented leveraging the native capabilities of
   # Kubernetes see: https://kubernetes.io/blog/2016/01/simple-leader-election-with-kubernetes/
@@ -129,7 +133,7 @@ imageSbomExtractor:
     repository: sysdig/image-sbom-extractor
     # The Image SBOM Extractor image pull policy
     pullPolicy: IfNotPresent
-    tag: "0.4.1"
+    tag: "0.4.2"
   ports:
     # The port to be used to expose prometheus metrics for the Image SBOM
     # Extractor
@@ -166,11 +170,11 @@ imageSbomExtractor:
     local:
       # The maximum size in bytes of the local cache. By default it is set to 35MB
       maxSizeBytes: "36700160"
+      # When using `local` as cache type, restrict the maximum size of elements to be cached.
+      # By default it is set to 100KB
+      maxElementSizeBytes: "102400"
       # The TTL for items in the local cache. By default it is set to 7 days.
       ttl: "168h"
-      # When using `local[lru]` as cache type, restrict the maximum size of elements to be cached.
-      # By default it is set to 100KB
-      lruMaxElementSize: "102400"
     # Redis connection details (to be provided if the cache type is "distributed")
     # redis:
     #   address: ""
