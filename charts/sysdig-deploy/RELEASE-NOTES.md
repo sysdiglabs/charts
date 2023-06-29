@@ -1,6 +1,6 @@
 # What's Changed
 
 ### Chores
-- **sysdig-deploy** [9e140f8e](https://github.com/sysdiglabs/charts/commit/9e140f8ea2c0165c10f0557e8215be01f40d36db): add notes for Pod Security Admission ([#1177](https://github.com/sysdiglabs/charts/issues/1177))
+- **sysdig-deploy** [7ba147a9](https://github.com/sysdiglabs/charts/commit/7ba147a986d7fd96c67a460ef1cfe97de0d1b008): Automatic version bump due to updated dependencies ([#1201](https://github.com/sysdiglabs/charts/issues/1201))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.8.28...sysdig-deploy-1.8.29
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.9.1...sysdig-deploy-1.9.2

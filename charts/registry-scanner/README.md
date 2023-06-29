@@ -52,7 +52,7 @@ Deploy the registry scanner specify each parameter using the `--set key=value[,k
 
 ```bash
 $ helm upgrade --install registry-scanner \
-    --version=1.0.15 \
+    --version=1.1.0 \
     --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
     --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
     --set config.registryURL=<REGISTRY_URL> \
@@ -64,7 +64,7 @@ $ helm upgrade --install registry-scanner \
 Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
 
 ```bash
-$ helm install registry-scanner -f values.yaml --version=1.0.15 sysdig/registry-scanner
+$ helm install registry-scanner -f values.yaml --version=1.1.0 sysdig/registry-scanner
 ```
 
 
@@ -85,6 +85,20 @@ $ helm uninstall registry-scanner
 ```
 
 The command removes all the Kubernetes components associated with the chart and deletes the release.
+
+## Verify the integrity and origin
+Sysdig Helm Charts are signed so users can verify the integrity and origin of each chart, the steps are as follows:
+
+### Import the Public Key
+
+```console
+$ curl -o "/tmp/sysdig_public.gpg" "https://charts.sysdig.com/public.gpg"
+$ gpg --import /tmp/sysdig_public.gpg
+```
+
+### Verify the chart
+
+To check the integrity and the origin of the charts you can now append the `--verify` flag to the `install`, `upgrade` and `pull` helm commands.
 
 ## Configuration
 
@@ -175,7 +189,7 @@ Use the following command to deploy in an on-prem:
 
 ```bash
 $ helm upgrade --install registry-scanner \
-    --version=1.0.15 \
+    --version=1.1.0 \
     --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
     --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
     --set config.secureSkipTLS=true \

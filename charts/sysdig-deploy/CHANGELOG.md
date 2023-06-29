@@ -10,6 +10,15 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.9.2
+### Chores
+* **sysdig-deploy** [7ba147a9](https://github.com/sysdiglabs/charts/commit/7ba147a986d7fd96c67a460ef1cfe97de0d1b008): Automatic version bump due to updated dependencies ([#1201](https://github.com/sysdiglabs/charts/issues/1201))
+# v1.9.1
+### Chores
+* **sysdig-deploy** [4d023fe3](https://github.com/sysdiglabs/charts/commit/4d023fe36de2a8e6f0a5d1b209fcd50c0b89e1de): Automatic version bump due to updated dependencies ([#1198](https://github.com/sysdiglabs/charts/issues/1198))
+# v1.9.0
+### New Features
+* **admission-controller,agent,cloud-bench,cloud-connector,cloud-scanning,harbor-scanner-sysdig-secure,kspm-collector,node-analyzer,rapid-response,registry-scanner,sysdig,sysdig-deploy,sysdig-mcm-navmenu,sysdig-stackdriver-bridge** [5d99a03d](https://github.com/sysdiglabs/charts/commit/5d99a03dced132b4771dde1ce5b90b63c518b408): use a PGP private key to sign charts on release ([#1170](https://github.com/sysdiglabs/charts/issues/1170))
 # v1.8.29
 ### Chores
 * **sysdig-deploy** [9e140f8e](https://github.com/sysdiglabs/charts/commit/9e140f8ea2c0165c10f0557e8215be01f40d36db): add notes for Pod Security Admission ([#1177](https://github.com/sysdiglabs/charts/issues/1177))
