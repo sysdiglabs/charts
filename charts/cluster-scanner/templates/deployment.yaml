@@ -388,6 +388,12 @@ spec:
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: ise_cache_local_ttl
                 optional: true
+          - name: ANALYZER_CACHE_LRU_MAX_ELEMENT_SIZE
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: ise_cache_local_lru_max_element_size
+                optional: true
           {{- if and (contains "distributed" .Values.imageSbomExtractor.cache.type) (.Values.imageSbomExtractor.cache.redis) }}
           # REDIS (optional)
           - name: ANALYZER_CACHE_REDIS_ADDRESS
