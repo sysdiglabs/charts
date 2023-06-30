@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.2.1
+### Documentation
+* **kspm-collector** [b10cd1ec](https://github.com/sysdiglabs/charts/commit/b10cd1ec4c3a3e44a27c2948c2bc8a462dbfa84c): DOC-3209 - update the helm readme for clarity and correctness ([#1168](https://github.com/sysdiglabs/charts/issues/1168))
 # v0.2.0
 ### New Features
 * **admission-controller,agent,cloud-bench,cloud-connector,cloud-scanning,harbor-scanner-sysdig-secure,kspm-collector,node-analyzer,rapid-response,registry-scanner,sysdig,sysdig-deploy,sysdig-mcm-navmenu,sysdig-stackdriver-bridge** [5d99a03d](https://github.com/sysdiglabs/charts/commit/5d99a03dced132b4771dde1ce5b90b63c518b408): use a PGP private key to sign charts on release ([#1170](https://github.com/sysdiglabs/charts/issues/1170))
