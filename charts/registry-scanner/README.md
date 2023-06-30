@@ -117,3 +117,7 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | scanOnStart.jobName                              | The name of the job created for the post-install scanner job | <code>"registry-scanner-start-test"</code>   |
 | scanOnStart.asPostInstallHook                    | Specify whether to launch the job as a post-install helm hook. <br/>Used for testing purpose | <code>false</code>                           |
 | extraEnvVars                                     | The additional environment variables to be set.              | <code>[]</code>                              |
+
+## Using Legacy Scanning Engine
+
+The chart version 1.* relies on the new Vulnerability Management scanning engine. If you are still using the legacy scanning engine and want to keep running that version, pin the Helm chart version with --version=0.1.39.
