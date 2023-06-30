@@ -22,6 +22,20 @@ To deploy the Sysdig Agent, follow the installation instructions given on the Sy
 - [Install Sysdig Agent for a Sysdig On-Premises Deployment](https://docs.sysdig.com/en/docs/installation/on-premises/)
 - [Install Sysdig Agent in an Airgapped Environment](https://docs.sysdig.com/en/docs/installation/on-premises/airgapped-installation/)
 
+## Verify the Integrity and Origin
+
+Sysdig Helm Charts are signed so you can verify the integrity and origin of each chart. To verify the chart:
+
+### Import the Public Key
+
+```console
+$ curl -o "/tmp/sysdig_public.gpg" "https://charts.sysdig.com/public.gpg"
+$ gpg --import /tmp/sysdig_public.gpg
+```
+
+### Verify the Chart
+
+To check the integrity and the origin of the charts you can now append the `--verify` flag to the `install`, `upgrade`, and `pull` helm commands.
 
 ## Configuration
 
@@ -86,7 +100,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `namespace`                                             | Overrides the global namespace setting and release namespace for components.                                                                                                             | `""`                                                                                                      |
 | `image.registry`                                        | Sysdig Agent image registry.                                                                                                                                                             | `quay.io`                                                                                                 |
 | `image.repository`                                      | Sets the image repository to pull the agent image from.                                                                                                                                  | `sysdig/agent`                                                                                            |
-| `image.tag`                                             | Specifies the image tag to pull from the repository.                                                                                                                                     | `12.14.1`                                                                                                 |
+| `image.tag`                                             | Specifies the image tag to pull from the repository.                                                                                                                                     | `12.15.0`                                                                                                 |
 | `image.digest`                                          | Specifies the image digest to pull from the repository.                                                                                                                                  | ` `                                                                                                       |
 | `image.pullPolicy`                                      | Specifies the Image pull policy.                                                                                                                                                         | `IfNotPresent`                                                                                            |
 | `image.pullSecrets`                                     | Specifies the image pull secrets.                                                                                                                                                        | `nil`                                                                                                     |
