@@ -1,7 +1,10 @@
 suite: deployment
 templates:
   - ../templates/deployment.yaml
-  - ../templates/rbac.yaml
+  - ../templates/clusterrole.yaml
+  - ../templates/clusterrolebinding.yaml
+  - ../templates/role.yaml
+  - ../templates/rolebinding.yaml
   - ../templates/configmap.yaml
   - ../templates/secret.yaml
 values:
