@@ -12,24 +12,29 @@ $ pre-commit run -a
 
 -->
 
-# Registry Scanner
+# Chart: Registry Scanner
 
-{{ .Project.Name }} scan your images registry on a Kubernetes Cluster .
-<br/>{{ .Project.Description }}
+## Overview
 
-For more insight check Sysdig **Official Docs on Registry-Scanner** [feature](https://docs.sysdig.com/en/vuln-registry-scan) and [installation process guidelines](https://docs.sysdig.com/en/install-registry-scan)
+{{ .Project.Name }} scans your images registry on a Kubernetes cluster .
+{{ .Project.Description }}
 
-<br/>
+Registry scanning provides an extra layer of defense between pipeline and runtime by checking:
 
-- [Installing the Chart](#installing-the-chart)
-- [Uninstalling the Chart](#uninstalling-the-chart)
-- [Configuration](#configuration)
+- Newly discovered vulnerabilities in the software before being deployed.
+- Third-party software that might  have been installed without going through pipeline scanning.
 
-<br/>
 
-## Introduction
+Follow the instructions in [Install Registry Scanner](https://docs.sysdig.com/en/docs/installation/sysdig-secure/install-registry-scanner/#installation) to deploy the Helm chart.  They include specific use cases for:
 
-This chart deploys {{ .Project.App }} on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
+- JFrog Artifactory
+- AWS ECR
+- Harbor
+- Quay IO
+- IBM ICR
+- Azure ACR
+
+Once installed, you can view the scan results in the [Vulnerabilities UI](https://docs.sysdig.com/en/docs/sysdig-secure/vulnerabilities/registry/) of Sysdig Secure.
 
 
 ### Prerequisites
@@ -37,103 +42,11 @@ This chart deploys {{ .Project.App }} on a [Kubernetes](http://kubernetes.io) cl
 - {{ . }}
 {{- end }}
 
-## Installing the Chart
-
-Add Sysdig Helm charts repository:
-
-```bash
-$ helm repo add {{ .Repository.Name }} {{ .Repository.URL }}
-$ helm repo update
-```
-
-Deploy the registry scanner specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
-
-```bash
-$ helm upgrade --install {{ .Chart.Name }} \
-    {{- with .Chart.Version }}
-    --version={{.}} \
-    {{- end }}
-    --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
-    --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
-    --set config.registryURL=<REGISTRY_URL> \
-    --set config.registryUser=admin \
-    --set config.registryPassword=<REGISTRY_PASSWORD> \
-    sysdig/{{ .Chart.Name }}
-```
-
-Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
-
-```bash
-$ helm install {{ .Chart.Name }} -f values.yaml {{- with .Chart.Version }} --version={{.}} {{- end }} sysdig/{{ .Chart.Name }}
-```
-
-
-By default the created CronJob, scheduled at the default time: 6:00 am.
-For testing purpose you can launch a manual job:
-
-```bash
-$ kubectl create job --from=cronjob/{{ .Chart.Name }} registry-scanner-manual
-```
-
-
-## Uninstalling the Chart
-
-To uninstall/delete
-
-```bash
-$ helm uninstall {{ .Chart.Name }}
-```
-
-The command removes all the Kubernetes components associated with the chart and deletes the release.
-
-## Verify the integrity and origin
-Sysdig Helm Charts are signed so users can verify the integrity and origin of each chart, the steps are as follows:
-
-### Import the Public Key
-
-```console
-$ curl -o "/tmp/sysdig_public.gpg" "https://charts.sysdig.com/public.gpg"
-$ gpg --import /tmp/sysdig_public.gpg
-```
-
-### Verify the chart
-
-To check the integrity and the origin of the charts you can now append the `--verify` flag to the `install`, `upgrade` and `pull` helm commands.
-
 {{- if .Chart.Values }}
 
-## Configuration
+## Configuration Parameters
 
 The following table lists the configurable parameters of the Sysdig Registry Scanner chart and their default values:
 
 {{ .Chart.Values }}
-
-{{- end }}
-
-
-## Other Options
-
-### I still want to use legacy scanning engine
-
-Chart version `1.*` relies on new Vulnerability Management scanning engine.
-<br/>If you still use the legacy scanning engine and want to keep running that version, pin the Helm chart version with  `--version=0.1.39`
-
-### On-Prem deployment
-
-Use the following command to deploy in an on-prem:
-
-```bash
-$ helm upgrade --install registry-scanner \
-    {{- with .Chart.Version }}
-    --version={{.}} \
-    {{- end }}
-    --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
-    --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
-    --set config.secureSkipTLS=true \
-    --set config.registryURL=<REGISTRY_URL> \
-    --set config.registryUser=admin \
-    --set config.registryPassword=<REGISTRY_PASSWORD> \
-    sysdig/registry-scanner
-```
-
-Use `config.secureSkipTLS=true` if you are using self signed certificates.
+{{- end -}}
