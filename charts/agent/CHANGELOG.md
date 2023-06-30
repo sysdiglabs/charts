@@ -10,6 +10,7 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.9.2
 # v1.9.1
 ### Chores
 * **agent** [15cfecb9](https://github.com/sysdiglabs/charts/commit/15cfecb905c931f3288907dd4223702536884b01): bump agent version to 12.15.0 ([#1200](https://github.com/sysdiglabs/charts/issues/1200))
