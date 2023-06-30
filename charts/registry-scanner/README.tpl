@@ -42,11 +42,11 @@ Once installed, you can view the scan results in the [Vulnerabilities UI](https:
 - {{ . }}
 {{- end }}
 
+{{- if .Chart.Values }}
 
 ## Configuration Parameters
 
 The following table lists the configurable parameters of the Sysdig Registry Scanner chart and their default values:
 
 {{ .Chart.Values }}
-
-{{- end }}
+{{- end -}}
