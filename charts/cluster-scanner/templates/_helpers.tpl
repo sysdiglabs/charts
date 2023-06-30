@@ -152,6 +152,15 @@ cache_redis_ttl: {{ .ttl }}
 {{- end }}
 {{- end }}
 
+{{- define "cluster-scanner.localCacheConfig" }}
+{{- if and (contains "local" .Values.imageSbomExtractor.cache.type) (hasKey .Values.imageSbomExtractor.cache "local") }}
+{{- with .Values.imageSbomExtractor.cache.local }}
+ise_cache_local_max_size: {{ .maxSizeBytes | quote }}
+ise_cache_local_max_element_size: {{ .maxElementSizeBytes | quote }}
+ise_cache_local_ttl: {{ .ttl }}
+{{- end }}
+{{- end }}
+{{- end }}
 
 {{- define "cluster-scanner.configContent" }}
 {{ .Values.global }}
