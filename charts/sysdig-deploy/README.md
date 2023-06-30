@@ -110,11 +110,18 @@ The `values.yaml` file specifies the values for the configuration parameters.  Y
    ```yaml
    global:
      sysdig:
-       accessKey: ACCESS_KEY
+        accessKey: <ACCESS_KEY>
+        region: <SAAS_REGION>
    
    nodeAnalyzer:
-     nodeAnalyzer:
-       apiEndpoint: API_ENDPOINT
+      secure:
+        vulnerabilityManagement:
+          newEngineOnly: true
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: false
+        hostScanner:
+          deploy: true
    ```
 
 2. Run the following:
