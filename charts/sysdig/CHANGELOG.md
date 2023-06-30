@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.16.2
+### Chores
+* **sysdig** [f32bc89b](https://github.com/sysdiglabs/charts/commit/f32bc89be0587f6337a41b56cc5f7de715447d7d): bump agent version to 12.15.0 ([#1199](https://github.com/sysdiglabs/charts/issues/1199))
 # v1.16.1
 ### Documentation
 * **sysdig** [91306238](https://github.com/sysdiglabs/charts/commit/91306238bbcb7317f854f6efc8b13f0a517f19aa): DOC-3236 - clean up for consistency and clarity ([#1178](https://github.com/sysdiglabs/charts/issues/1178))
