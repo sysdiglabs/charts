@@ -38,7 +38,7 @@ To deploy `sysdig-deploy`, follow the installation instructions given on the Sys
 
 ## Configuration
 
-For the configuration values of the each sub-component, see the respective chart readme. To apply a specific configuration of a sub-component, prefix the configuration parameter with the name of the sub-chart. 
+For the configuration values of the each sub-component, see the respective chart readme. To apply a specific configuration of a sub-component, prefix the configuration parameter with the name of the sub-chart.
 
 You can update the configurations by using either of the following:
 
@@ -112,7 +112,7 @@ The `values.yaml` file specifies the values for the configuration parameters.  Y
      sysdig:
         accessKey: <ACCESS_KEY>
         region: <SAAS_REGION>
-   
+
    nodeAnalyzer:
       secure:
         vulnerabilityManagement:
