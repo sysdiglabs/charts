@@ -93,14 +93,14 @@ config:
       ttlSecondsAfterFinished: 600
       resources:
         requests:
-          # Resource request memory for scanner job.
+          # The memory request for the scanner job.
           memory: 500Mi
-          # Resource request CPU for scanner job.
+          # The CPU request for the scanner job.
           cpu: 500m
         limits:
-          # Resource limit memory for scanner job.
+          # The memory limit for the scanner job.
           memory: 2Gi
-      # Size limit for the emptyDir volume used by the scanner job.<br/>
+      # The size limit for the emptyDir volume used by the scanner job.<br/>
       # This volume is used to store both the vulnerability database and the image to scan.
       temporaryVolumeSizeLimit: 2Gi
 ssl:
@@ -139,7 +139,7 @@ proxy:
   #  The URL of the proxy for HTTPS connections. Leave it empty if not using proxy, which sets the `https_proxy` environment variable.
   httpsProxy:
   # The comma-separated list of domain extensions proxy should not be used for.
-  # Include the internal IP of the kubeapi server in noProxy configuration.
+  # Include the internal IP of the Kube API server in noProxy configuration.
   # You probably need to add your registry if it is inside the cluster.
   noProxy:
 
