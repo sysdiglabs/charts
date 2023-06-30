@@ -27,7 +27,7 @@ spec:
       labels:
         {{- include "cluster-scanner.selectorLabels" . | nindent 8 }}
     spec:
-      {{- with .Values.imagePullSecrets }}
+      {{- with .Values.global.image.pullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
@@ -39,8 +39,8 @@ spec:
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: {{ template "cluster-scanner.runtimeStatusIntegrator.image" . }}
+          imagePullPolicy: {{ .Values.global.image.pullPolicy }}
       {{- with .Values.runtimeStatusIntegrator }}
-          imagePullPolicy: {{ .image.pullPolicy }}
           ports:
             - name: metrics
               containerPort: {{ .ports.metrics }}
@@ -251,8 +251,8 @@ spec:
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: {{ template "cluster-scanner.imageSbomExtractor.image" . }}
+          imagePullPolicy: {{ .Values.global.image.pullPolicy }}
       {{- with .Values.imageSbomExtractor }}
-          imagePullPolicy: {{ .image.pullPolicy }}
           ports:
             - name: metrics
               containerPort: {{ .ports.metrics }}
