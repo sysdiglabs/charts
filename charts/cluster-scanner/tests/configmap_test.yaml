@@ -62,11 +62,11 @@ tests:
           path: data.ise_cache_local_max_size
           value: "36700160"
       - equal:
-          path: data.ise_cache_local_max_element_size
-          value: "102400"
-      - equal:
           path: data.ise_cache_local_ttl
           value: 168h
+      - equal:
+          path: data.ise_cache_local_max_element_size
+          value: "102400"
       - equal:
           path: data.sysdig_verify_certificate
           value: "true"
@@ -155,8 +155,9 @@ tests:
   - it: "has correct content with redis caching"
     set:
       global.sysdig.apiHost: "http://test.com"
-      imageSbomExtractor.cache.type: "distributed"
+      imageSbomExtractor.cache.type: "distributed,local"
       imageSbomExtractor.cache.local.maxSizeBytes: "666"
+      imageSbomExtractor.cache.local.maxElementSizeBytes: "420"
       imageSbomExtractor.cache.local.ttl: "69h"
       imageSbomExtractor.cache.redis.address: "localhost"
       imageSbomExtractor.cache.redis.user: "foobar"
@@ -170,6 +171,9 @@ tests:
       - equal:
           path: data.ise_cache_local_max_size
           value: "666"
+      - equal:
+          path: data.ise_cache_local_max_element_size
+          value: "420"
       - equal:
           path: data.ise_cache_local_ttl
           value: 69h
@@ -198,3 +202,92 @@ tests:
       - equal:
           path: data.cache_redis_ttl
           value: 16h
+
+  - it: "does not require local caching parameters if distributed"
+    set:
+      global.sysdig.apiHost: "http://test.com"
+      imageSbomExtractor.cache.type: "distributed"
+      imageSbomExtractor.cache.redis.address: "localhost"
+      imageSbomExtractor.cache.redis.user: "foobar"
+      imageSbomExtractor.cache.redis.prefix: "gigi"
+      imageSbomExtractor.cache.redis.sentinelMaster: "sm"
+      imageSbomExtractor.cache.redis.ttl: "16h"
+      imageSbomExtractor.cache.local.maxSizeBytes: "666"
+      imageSbomExtractor.cache.local.maxElementSizeBytes: "420"
+      imageSbomExtractor.cache.local.ttl: "69h"
+    asserts:
+      - equal:
+          path: data.sysdig_host
+          value: "http://test.com"
+      - isNull:
+          path: data.ise_cache_local_max_size
+      - isNull:
+          path: data.ise_cache_local_max_element_size
+      - isNull:
+          path: data.ise_cache_local_ttl
+      - equal:
+          path: data.cache_redis_address
+          value: localhost
+      - equal:
+          path: data.cache_redis_user
+          value: foobar
+      - isNull:
+          path: data.cache_redis_password
+      - equal:
+          path: data.cache_redis_prefix
+          value: gigi
+      - isNull:
+          path: data.cache_redis_tls_enabled
+      - isNull:
+          path: data.cache_redis_tls_skip
+      - isNull:
+          path: data.cache_redis_tls_ca
+      - equal:
+          path: data.cache_redis_sentinel_master
+          value: sm
+      - isNull:
+          path: data.cache_redis_sentinel_address
+      - equal:
+          path: data.cache_redis_ttl
+          value: 16h
+
+  - it: "local caching parameters are optional"
+    set:
+      global.sysdig.apiHost: "http://test.com"
+      imageSbomExtractor.cache.type: "local"
+      imageSbomExtractor.cache.redis.address: "localhost"
+      imageSbomExtractor.cache.redis.user: "foobar"
+      imageSbomExtractor.cache.redis.prefix: "gigi"
+      imageSbomExtractor.cache.redis.sentinelMaster: "sm"
+      imageSbomExtractor.cache.redis.ttl: "16h"
+      imageSbomExtractor.cache.local: null
+    asserts:
+      - equal:
+          path: data.sysdig_host
+          value: "http://test.com"
+      - isNull:
+          path: data.ise_cache_local_max_size
+      - isNull:
+          path: data.ise_cache_local_max_element_size
+      - isNull:
+          path: data.ise_cache_local_ttl
+      - isNull:
+          path: data.cache_redis_address
+      - isNull:
+          path: data.cache_redis_user
+      - isNull:
+          path: data.cache_redis_password
+      - isNull:
+          path: data.cache_redis_prefix
+      - isNull:
+          path: data.cache_redis_tls_enabled
+      - isNull:
+          path: data.cache_redis_tls_skip
+      - isNull:
+          path: data.cache_redis_tls_ca
+      - isNull:
+          path: data.cache_redis_sentinel_master
+      - isNull:
+          path: data.cache_redis_sentinel_address
+      - isNull:
+          path: data.cache_redis_ttl
