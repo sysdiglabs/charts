@@ -1,6 +1,6 @@
 # What's Changed
 
-### Documentation
-- **kspm-collector** [fdd7baec](https://github.com/sysdiglabs/charts/commit/fdd7baecf2e5283fd30ef25ad444c37d1082a327): kspm-collector readme formatting ([#1192](https://github.com/sysdiglabs/charts/issues/1192))
+### New Features
+- **admission-controller,agent,cloud-bench,cloud-connector,cloud-scanning,harbor-scanner-sysdig-secure,kspm-collector,node-analyzer,rapid-response,registry-scanner,sysdig,sysdig-deploy,sysdig-mcm-navmenu,sysdig-stackdriver-bridge** [5d99a03d](https://github.com/sysdiglabs/charts/commit/5d99a03dced132b4771dde1ce5b90b63c518b408): use a PGP private key to sign charts on release ([#1170](https://github.com/sysdiglabs/charts/issues/1170))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.1.51...kspm-collector-0.1.52
+#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.1.52...kspm-collector-0.2.0
