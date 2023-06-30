@@ -112,11 +112,6 @@ The `values.yaml` file specifies the values for the configuration parameters.  Y
      sysdig:
        accessKey: ACCESS_KEY
    
-   agent:
-     enabled: false
-     collectorSettings:
-       collectorHost: COLLECTOR_ENDPOINT
-   
    nodeAnalyzer:
      nodeAnalyzer:
        apiEndpoint: API_ENDPOINT
