@@ -12,14 +12,14 @@ $ pre-commit run -a
 
 -->
 
-# Registry Scanner
+# Chart: Registry Scanner
+
+## Overview
 
 {{ .Project.Name }} scans your images registry on a Kubernetes cluster .
 {{ .Project.Description }}
 
-## Overview
-
-The Container Registry Scanner allows you to integrate Sysdig Secure with different image registries. Registry scanning provides an extra layer of defense between pipeline and runtime by checking:
+Registry scanning provides an extra layer of defense between pipeline and runtime by checking:
 
 - Newly discovered vulnerabilities in the software before being deployed.
 - Third-party software that might  have been installed without going through pipeline scanning.
