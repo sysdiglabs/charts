@@ -228,4 +228,3 @@ $ gpg --import /tmp/sysdig_public.gpg
 ### Verify the Chart
 
 To check the integrity and the origin of the charts you can now append the `--verify` flag to the `install`, `upgrade`, and `pull` helm commands.
-
