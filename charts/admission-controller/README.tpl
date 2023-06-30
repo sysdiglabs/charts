@@ -1,9 +1,9 @@
 <!--
+TODO: Correct content is now in README.md, being refactories. We will copy back to README.tpl once finished
 
+DO NOT MODIFY README.md MANUALLY!! CHANGE README.tpl instead!!
 
-DO NOT MODIFY THIS FILE MANUALLY!!
-
-IT'S AUTO-GENERATED vía README.tpl with pre-comit plugin
+README.md IS AUTO-GENERATED vía README.tpl with pre-comit plugin
 this is under construction so it must be launched manually
 
 in the project root, run:
@@ -11,6 +11,7 @@ $ pre-commit install
 $ pre-commit run -a
 
 -->
+
 
 # Admission Controller
 
