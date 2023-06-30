@@ -1,7 +1,6 @@
 # What's Changed
 
-### New Features
-- **admission-controller,agent,cloud-bench,cloud-connector,cloud-scanning,harbor-scanner-sysdig-secure,kspm-collector,node-analyzer,rapid-response,registry-scanner,sysdig,sysdig-deploy,sysdig-mcm-navmenu,sysdig-stackdriver-bridge** [5d99a03d](https://github.com/sysdiglabs/charts/commit/5d99a03dced132b4771dde1ce5b90b63c518b408): use a PGP private key to sign charts on release ([#1170](https://github.com/sysdiglabs/charts/issues/1170))
-- **kspm-collector,node-analyzer** [880cbc98](https://github.com/sysdiglabs/charts/commit/880cbc9840cacd4c66f939ba1d52a70181408a17): add account ID to Posture ([#1185](https://github.com/sysdiglabs/charts/issues/1185))
+### Documentation
+- **node-analyzer** [d43443a7](https://github.com/sysdiglabs/charts/commit/d43443a732bdbf710e094ea8ad8173d36c2fdc02): DOC-3214 - update for clarity ([#1171](https://github.com/sysdiglabs/charts/issues/1171))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.8.65...node-analyzer-1.9.0
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.9.0...node-analyzer-1.9.1
