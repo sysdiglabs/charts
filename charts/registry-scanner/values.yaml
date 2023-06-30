@@ -28,7 +28,7 @@ config:
   registryPassword: ""
   # Mandatory.<br/>The registry Type. Supported types: artifactory, ecr, icr, acr, quay, harbor, and dockerv2.
   registryType: ""
-  # The AccountId. Applicable only for ICR registry type.
+  # The account ID. Applicable only for ICR registry type.
   registryAccountId: ""
   # The ICR IAM API. Applicable only for ICR registry type.
   icrIamApi: ""
@@ -39,15 +39,15 @@ config:
     accessKeyId: ""
     # The AWS credentials: `SecretAccessKey`.
     secretAccessKey: ""
-    # For single account. It is region where the registry is located.
+    # For single account. It is the region where the registry is located.
     region: "us-east-1"
-    # The Management role arn to be used to impersonate the member accounts.
+    # The management role ARN to be used to impersonate the member accounts.
     managementAccountRoleARN:
-    # The Member account role name (available in all member accounts) to dig into their registries.
+    # The member account role name (available in all member accounts) to dig into their registries.
     memberAccountsRoleName: "OrganizationAccountAccessRole"
-    # The Organization account IDs in which the registry scan is performed. If not configured, the scan will be performed in all the member accounts of the organization.
+    # The organization account IDs in which the registry scan is performed. If not configured, the scan will be performed in all the member accounts of the organization.
     allowListMemberAccountIDs: []
-    # For organizational accounts. It is the regions where the registries are located. If not configured, the scan will be performed in all available regions.
+    # For organizational accounts. It is the AWS regions where the registries are located. If not configured, the scan will be performed in all available regions.
     allowListRegions: []
   # Ignore registry TLS certificate errors (self-signed, etc.).
   registrySkipTLS: false
