@@ -2,7 +2,7 @@ apiVersion: v2
 name: sysdig-deploy
 description: A chart with various Sysdig components for Kubernetes
 type: application
-version: 1.9.4
+version: 1.9.5
 maintainers:
   - name: aroberts87
     email: adam.roberts@sysdig.com
@@ -26,7 +26,7 @@ dependencies:
   - name: node-analyzer
     # repository: https://charts.sysdig.com
     repository: file://../node-analyzer
-    version: ~1.9.0
+    version: ~1.9.1
     alias: nodeAnalyzer
     condition: nodeAnalyzer.enabled
   - name: kspm-collector
