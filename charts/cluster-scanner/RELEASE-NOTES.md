@@ -5,4 +5,3 @@
 ### New Features
 - **cluster-scanner** [f9d0dc59](https://github.com/sysdiglabs/charts/commit/f9d0dc595b6c7e926021e7be4b02e0a5c9f6a46b): init chart with minimal templates and configuration ([#1056](https://github.com/sysdiglabs/charts/issues/1056))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.9.7...sysdig-deploy-1.10.1
