@@ -17,14 +17,17 @@ spec:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum | quote  }}
         checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum | quote  }}
-        checksum/rbac: {{ include (print $.Template.BasePath "/rbac.yaml") . | sha256sum | quote  }}
+        checksum/clusterrole: {{ include (print $.Template.BasePath "/clusterrole.yaml") . | sha256sum | quote  }}
+        checksum/clusterrolebinding: {{ include (print $.Template.BasePath "/clusterrolebinding.yaml") . | sha256sum | quote  }}
+        checksum/role: {{ include (print $.Template.BasePath "/role.yaml") . | sha256sum | quote  }}
+        checksum/rolebinding: {{ include (print $.Template.BasePath "/rolebinding.yaml") . | sha256sum | quote  }}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
         {{- include "cluster-scanner.selectorLabels" . | nindent 8 }}
     spec:
-      {{- with .Values.imagePullSecrets }}
+      {{- with .Values.global.image.pullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
@@ -36,8 +39,8 @@ spec:
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: {{ template "cluster-scanner.runtimeStatusIntegrator.image" . }}
+          imagePullPolicy: {{ .Values.global.image.pullPolicy }}
       {{- with .Values.runtimeStatusIntegrator }}
-          imagePullPolicy: {{ .image.pullPolicy }}
           ports:
             - name: metrics
               containerPort: {{ .ports.metrics }}
@@ -248,8 +251,8 @@ spec:
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: {{ template "cluster-scanner.imageSbomExtractor.image" . }}
+          imagePullPolicy: {{ .Values.global.image.pullPolicy }}
       {{- with .Values.imageSbomExtractor }}
-          imagePullPolicy: {{ .image.pullPolicy }}
           ports:
             - name: metrics
               containerPort: {{ .ports.metrics }}
