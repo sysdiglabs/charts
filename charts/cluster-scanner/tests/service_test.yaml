@@ -1,0 +1,30 @@
+suite: service
+templates:
+  - ../templates/service.yaml
+values:
+  - ../values.yaml
+release:
+  name: test-release
+  namespace: test-ns
+
+tests:
+  - it: "has not selector"
+    asserts:
+      - isNull:
+          path: spec.selector
+
+  - it: "has correct name and namespace"
+    asserts:
+      - equal:
+          path: metadata.name
+          value: test-release-cluster-scanner
+      - equal:
+          path: metadata.namespace
+          value: test-ns
+
+  - it: "generates a service resource"
+    set:
+      global.sysdigAccessKey: "secret"
+    asserts:
+      - isKind:
+          of: Service

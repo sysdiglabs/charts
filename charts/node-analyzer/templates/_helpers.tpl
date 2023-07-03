@@ -230,14 +230,15 @@ nodeAnalyzer agentConfigmapName
 {{- end -}}
 
 {{- define "nodeAnalyzer.deployHostScanner" -}}
-{{- if and (hasKey .Values.nodeAnalyzer.hostScanner "deploy") (not .Values.nodeAnalyzer.hostScanner.deploy ) }}
-{{- else if or .Values.secure.vulnerabilityManagement.newEngineOnly (and (hasKey .Values.nodeAnalyzer.hostScanner "deploy") .Values.nodeAnalyzer.hostScanner.deploy) -}}
+{{- if and (hasKey ((.Values.nodeAnalyzer).hostScanner) "deploy") (not .Values.nodeAnalyzer.hostScanner.deploy ) }}
+{{- else if or ((.Values.secure).vulnerabilityManagement).newEngineOnly (and (hasKey ((.Values.nodeAnalyzer).hostScanner) "deploy") .Values.nodeAnalyzer.hostScanner.deploy) -}}
 true
 {{- end -}}
 {{- end -}}
 
 {{- define "nodeAnalyzer.deployRuntimeScanner" -}}
-{{- if or .Values.secure.vulnerabilityManagement.newEngineOnly (not (hasKey .Values.nodeAnalyzer.runtimeScanner "deploy")) .Values.nodeAnalyzer.runtimeScanner.deploy }}
+{{- if and (hasKey ((.Values.nodeAnalyzer).runtimeScanner) "deploy") (not .Values.nodeAnalyzer.runtimeScanner.deploy ) }}
+{{- else if or ((.Values.secure).vulnerabilityManagement).newEngineOnly (and (hasKey ((.Values.nodeAnalyzer).runtimeScanner) "deploy") .Values.nodeAnalyzer.runtimeScanner.deploy) -}}
 true
 {{- end -}}
 {{- end -}}

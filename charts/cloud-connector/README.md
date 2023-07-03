@@ -23,7 +23,7 @@ $ pre-commit run -a
 $ helm repo add sysdig https://charts.sysdig.com
 $ helm repo update
 $ helm upgrade --install cloud-connector sysdig/cloud-connector \
-      --create-namespace -n cloud-connector --version=0.8.0  \
+      --create-namespace -n cloud-connector --version=0.8.1  \
       --set sysdig.secureAPIToken=SECURE_API_TOKEN
 ```
 
@@ -48,7 +48,7 @@ to enable threat-detection and image scanning capabilities for the main three pr
 To install the chart with the release name `cloud-connector`:
 
 ```console
-$ helm upgrade --install cloud-connector sysdig/cloud-connector -n cloud-connector --version=0.8.0
+$ helm upgrade --install cloud-connector sysdig/cloud-connector -n cloud-connector --version=0.8.1
 ```
 
 The command deploys the Sysdig Cloud Connector on the Kubernetes cluster in the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.
@@ -134,7 +134,7 @@ Specify each parameter using the **`--set key=value[,key=value]`** argument to `
 
 ```console
 $ helm upgrade --install cloud-connector sysdig/cloud-connector \
-    --create-namespace -n cloud-connector --version=0.8.0 \
+    --create-namespace -n cloud-connector --version=0.8.1 \
     --set sysdig.secureAPIToken=YOUR-KEY-HERE
 ```
 
@@ -143,7 +143,7 @@ installing the chart. For example:
 
 ```console
 $ helm upgrade --install cloud-connector sysdig/cloud-connector \
-    --create-namespace -n cloud-connector --version=0.8.0 \
+    --create-namespace -n cloud-connector --version=0.8.1 \
     --values values.yaml
 ```
 

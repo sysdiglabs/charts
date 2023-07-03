@@ -1,0 +1,312 @@
+suite: configmap
+templates:
+  - ../templates/configmap.yaml
+values:
+  - ../values.yaml
+release:
+  name: test-release
+  namespace: test-ns
+
+tests:
+  - it: "is a configmap with the correct name"
+    set:
+      global.sysdig.apiHost: "http://test.com"
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - equal:
+          path: metadata.name
+          value: test-release-cluster-scanner
+      - equal:
+          path: metadata.namespace
+          value: test-ns
+
+  - it: "has correct content"
+    set:
+      global.sysdig.apiHost: "http://test.com"
+    asserts:
+      - equal:
+          path: data.sysdig_host
+          value: "http://test.com"
+      - equal:
+          path: data.root_namespace
+          value: kube-system
+      - equal:
+          path: data.eve_enabled
+          value: "false"
+      - equal:
+          path: data.eve_integration_enabled
+          value: "false"
+      - equal:
+          path: data.logging_level
+          value: "INFO"
+      - not: true
+        isEmpty:
+          path: data.js_server_user
+      - not: true
+        isEmpty:
+          path: data.js_server_url
+      - equal:
+          path: data.rsi_pprof_enabled
+          value: "false"
+      - equal:
+          path: data.ise_pprof_enabled
+          value: "false"
+      - equal:
+          path: data.rsi_leaderelection_lock_name
+          value: test-release-cluster-scanner
+      - equal:
+          path: data.rsi_leaderelection_lock_namespace
+          value: test-ns
+      - equal:
+          path: data.rsi_service_name
+          value: test-release-cluster-scanner
+      - equal:
+          path: data.ise_cache_type
+          value: local
+      - equal:
+          path: data.ise_cache_local_max_size
+          value: "36700160"
+      - equal:
+          path: data.ise_cache_local_ttl
+          value: 168h
+      - equal:
+          path: data.ise_cache_local_max_element_size
+          value: "102400"
+      - equal:
+          path: data.sysdig_verify_certificate
+          value: "true"
+
+  - it: "has local mode as default"
+    set:
+      global.sysdig.apiHost: "http://test.com"
+    asserts:
+      - equal:
+          path: data.rsi_mode
+          value: "local"
+
+  - it: "can set multi mod"
+    set:
+      global.sysdig.apiHost: "http://test.com"
+      scannerMode: "multi"
+    asserts:
+      - equal:
+          path: data.rsi_mode
+          value: "multi"
+
+  - it: "can set local mod"
+    set:
+      global.sysdig.apiHost: "http://test.com"
+      scannerMode: "local"
+    asserts:
+      - equal:
+          path: data.rsi_mode
+          value: "local"
+
+  - it: "raise error on unknown mod"
+    set:
+      global.sysdig.apiHost: "http://test.com"
+      scannerMode: "foobar"
+    asserts:
+      - failedTemplate:
+          errorMessage: |
+            values don't meet the specifications of the schema(s) in the following chart(s):
+            cluster-scanner:
+            - scannerMode: scannerMode must be one of the following: "local", "multi"
+
+  - it: "has correct format for local_registry_secrets when they are provided"
+    set:
+      global.sysdig.apiHost: "http://test.com"
+      scannerMode: "local"
+      runtimeStatusIntegrator.localCluster:
+        rbac:
+          allowedPullSecrets:
+            namespaceOneName:
+              - myDockerSecretOne
+              - myDockerSecretTwo
+            anotherNamespace:
+              - myOtherDockerSecretOne
+              - myOtherDockerSecretTwo
+    asserts:
+      - equal:
+          path: data.local_registry_secrets
+          value: "anotherNamespace/myOtherDockerSecretOne,anotherNamespace/myOtherDockerSecretTwo,namespaceOneName/myDockerSecretOne,namespaceOneName/myDockerSecretTwo"
+
+  - it: "has correct format for local_registry_secrets when they are not provided"
+    set:
+      global.sysdig.apiHost: "http://test.com"
+      scannerMode: "local"
+    asserts:
+      - equal:
+          path: data.local_registry_secrets
+          value: ""
+
+  - it: "does not evaluate local_registry_secrets when in multi mode"
+    set:
+      global.sysdig.apiHost: "http://test.com"
+      scannerMode: "multi"
+      runtimeStatusIntegrator.localCluster:
+        rbac:
+          allowedPullSecrets:
+            namespaceOneName:
+              - myDockerSecretOne
+              - myDockerSecretTwo
+            anotherNamespace:
+              - myOtherDockerSecretOne
+              - myOtherDockerSecretTwo
+    asserts:
+      - isNull:
+          path: data.local_registry_secrets
+
+  - it: "has correct content with redis caching"
+    set:
+      global.sysdig.apiHost: "http://test.com"
+      imageSbomExtractor.cache.type: "distributed,local"
+      imageSbomExtractor.cache.local.maxSizeBytes: "666"
+      imageSbomExtractor.cache.local.maxElementSizeBytes: "420"
+      imageSbomExtractor.cache.local.ttl: "69h"
+      imageSbomExtractor.cache.redis.address: "localhost"
+      imageSbomExtractor.cache.redis.user: "foobar"
+      imageSbomExtractor.cache.redis.prefix: "gigi"
+      imageSbomExtractor.cache.redis.sentinelMaster: "sm"
+      imageSbomExtractor.cache.redis.ttl: "16h"
+    asserts:
+      - equal:
+          path: data.sysdig_host
+          value: "http://test.com"
+      - equal:
+          path: data.ise_cache_local_max_size
+          value: "666"
+      - equal:
+          path: data.ise_cache_local_max_element_size
+          value: "420"
+      - equal:
+          path: data.ise_cache_local_ttl
+          value: 69h
+      - equal:
+          path: data.cache_redis_address
+          value: localhost
+      - equal:
+          path: data.cache_redis_user
+          value: foobar
+      - isNull:
+          path: data.cache_redis_password
+      - equal:
+          path: data.cache_redis_prefix
+          value: gigi
+      - isNull:
+          path: data.cache_redis_tls_enabled
+      - isNull:
+          path: data.cache_redis_tls_skip
+      - isNull:
+          path: data.cache_redis_tls_ca
+      - equal:
+          path: data.cache_redis_sentinel_master
+          value: sm
+      - isNull:
+          path: data.cache_redis_sentinel_address
+      - equal:
+          path: data.cache_redis_ttl
+          value: 16h
+
+  - it: "does not require local caching parameters if distributed"
+    set:
+      global.sysdig.apiHost: "http://test.com"
+      imageSbomExtractor.cache.type: "distributed"
+      imageSbomExtractor.cache.redis.address: "localhost"
+      imageSbomExtractor.cache.redis.user: "foobar"
+      imageSbomExtractor.cache.redis.prefix: "gigi"
+      imageSbomExtractor.cache.redis.sentinelMaster: "sm"
+      imageSbomExtractor.cache.redis.ttl: "16h"
+      imageSbomExtractor.cache.local.maxSizeBytes: "666"
+      imageSbomExtractor.cache.local.maxElementSizeBytes: "420"
+      imageSbomExtractor.cache.local.ttl: "69h"
+    asserts:
+      - equal:
+          path: data.sysdig_host
+          value: "http://test.com"
+      - isNull:
+          path: data.ise_cache_local_max_size
+      - isNull:
+          path: data.ise_cache_local_max_element_size
+      - isNull:
+          path: data.ise_cache_local_ttl
+      - equal:
+          path: data.cache_redis_address
+          value: localhost
+      - equal:
+          path: data.cache_redis_user
+          value: foobar
+      - isNull:
+          path: data.cache_redis_password
+      - equal:
+          path: data.cache_redis_prefix
+          value: gigi
+      - isNull:
+          path: data.cache_redis_tls_enabled
+      - isNull:
+          path: data.cache_redis_tls_skip
+      - isNull:
+          path: data.cache_redis_tls_ca
+      - equal:
+          path: data.cache_redis_sentinel_master
+          value: sm
+      - isNull:
+          path: data.cache_redis_sentinel_address
+      - equal:
+          path: data.cache_redis_ttl
+          value: 16h
+
+  - it: "local caching parameters are optional"
+    set:
+      global.sysdig.apiHost: "http://test.com"
+      imageSbomExtractor.cache.type: "local"
+      imageSbomExtractor.cache.redis.address: "localhost"
+      imageSbomExtractor.cache.redis.user: "foobar"
+      imageSbomExtractor.cache.redis.prefix: "gigi"
+      imageSbomExtractor.cache.redis.sentinelMaster: "sm"
+      imageSbomExtractor.cache.redis.ttl: "16h"
+      imageSbomExtractor.cache.local: null
+    asserts:
+      - equal:
+          path: data.sysdig_host
+          value: "http://test.com"
+      - isNull:
+          path: data.ise_cache_local_max_size
+      - isNull:
+          path: data.ise_cache_local_max_element_size
+      - isNull:
+          path: data.ise_cache_local_ttl
+      - isNull:
+          path: data.cache_redis_address
+      - isNull:
+          path: data.cache_redis_user
+      - isNull:
+          path: data.cache_redis_password
+      - isNull:
+          path: data.cache_redis_prefix
+      - isNull:
+          path: data.cache_redis_tls_enabled
+      - isNull:
+          path: data.cache_redis_tls_skip
+      - isNull:
+          path: data.cache_redis_tls_ca
+      - isNull:
+          path: data.cache_redis_sentinel_master
+      - isNull:
+          path: data.cache_redis_sentinel_address
+      - isNull:
+          path: data.cache_redis_ttl
+
+  - it: "has correct value for pprof_enabled flags when provided"
+    set:
+      global.sysdig.apiHost: "http://test.com"
+      runtimeStatusIntegrator.pprofEnabled: "gigi"
+      imageSbomExtractor.pprofEnabled: "marzullo"
+    asserts:
+      - equal:
+          path: data.rsi_pprof_enabled
+          value: "gigi"
+      - equal:
+          path: data.ise_pprof_enabled
+          value: "marzullo"

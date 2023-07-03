@@ -10,6 +10,7 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.2.2
 # v0.2.1
 ### Documentation
 * **kspm-collector** [b10cd1ec](https://github.com/sysdiglabs/charts/commit/b10cd1ec4c3a3e44a27c2948c2bc8a462dbfa84c): DOC-3209 - update the helm readme for clarity and correctness ([#1168](https://github.com/sysdiglabs/charts/issues/1168))
