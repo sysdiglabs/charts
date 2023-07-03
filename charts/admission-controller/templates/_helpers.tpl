@@ -131,6 +131,17 @@ Determine Secure endpoint based on provided region or .Values.sysdig.apiEndpoint
     {{- end -}}
 {{- end -}}
 
+{{/*
+Sysdig NATS service URL
+*/}}
+{{- define "admissionController.natsUrl" -}}
+{{- if .Values.webhook.v2.nats.url -}}
+    {{- .Values.webhook.v2.nats.url -}}
+{{- else -}}
+    wss://{{ include "admissionController.apiEndpoint" . }}:443
+{{- end -}}
+{{- end -}}
+
 
 {{/*
 Common labels
