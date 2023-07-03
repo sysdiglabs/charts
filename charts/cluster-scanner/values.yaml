@@ -228,7 +228,9 @@ securityContext: {}
 selectorLabels: {}
 
 # Set Cluster Scanner Node Selector
-nodeSelector: {}
+nodeSelector:
+  # Cluster Scanner is only supported on nodes with amd64 architecture
+  kubernetes.io/arch: amd64
 
 # Set Cluster Scanner scheduling tolerations
 tolerations: []
