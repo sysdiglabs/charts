@@ -47,3 +47,62 @@ tests:
             name: docker-sock
             hostPath:
               path: /var/run/docker.sock
+
+  - it: "is disabled if explicit flag is set, should override newEngineOnly"
+    set:
+      secure.vulnerabilityManagement.newEngineOnly: true
+      nodeAnalyzer.runtimeScanner.deploy: false
+    templates:
+      - ../templates/daemonset-node-analyzer.yaml
+    asserts:
+      - isKind:
+          of: DaemonSet
+      - equal:
+          path: "spec.template.spec.containers[0].name"
+          value: "sysdig-benchmark-runner"
+      - equal:
+          path: "spec.template.spec.containers[1].name"
+          value: "sysdig-host-scanner"
+      - lengthEqual:
+          path: spec.template.spec.containers
+          count: 2
+
+  - it: "is disabled by default, legacy will be deployed"
+    templates:
+      - ../templates/daemonset-node-analyzer.yaml
+    asserts:
+      - isKind:
+          of: DaemonSet
+      - equal:
+          path: "spec.template.spec.containers[0].name"
+          value: "sysdig-image-analyzer"
+      - equal:
+          path: "spec.template.spec.containers[1].name"
+          value: "sysdig-host-analyzer"
+      - equal:
+          path: "spec.template.spec.containers[2].name"
+          value: "sysdig-benchmark-runner"
+      - lengthEqual:
+          path: spec.template.spec.containers
+          count: 3
+
+  - it: "is enabled when newEngineOnly is set"
+    set:
+      secure.vulnerabilityManagement.newEngineOnly: true
+    templates:
+      - ../templates/daemonset-node-analyzer.yaml
+    asserts:
+      - isKind:
+          of: DaemonSet
+      - equal:
+          path: "spec.template.spec.containers[0].name"
+          value: "sysdig-benchmark-runner"
+      - equal:
+          path: "spec.template.spec.containers[1].name"
+          value: "sysdig-runtime-scanner"
+      - equal:
+          path: "spec.template.spec.containers[2].name"
+          value: "sysdig-host-scanner"
+      - lengthEqual:
+          path: spec.template.spec.containers
+          count: 3

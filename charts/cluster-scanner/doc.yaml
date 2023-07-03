@@ -1,0 +1,18 @@
+project:
+  name: Sysdig Cluster Scanner
+  shortName: Cluster Scanner
+  url: https://docs.sysdig.com/en/docs/sysdig-secure/scanning
+  description: This chart deploys the Sysdig Cluster Scanner in your Kubernetes cluster.
+  app: the Sysdig Cluster Scanner
+repository:
+  url: https://charts.sysdig.com
+  name: sysdig
+chart:
+  name: admission-controller
+prerequisites:
+  - "Helm 3"
+  - "Sysdig AccessKey"
+
+release:
+  name: cluster-scanner
+  namespace: sysdig

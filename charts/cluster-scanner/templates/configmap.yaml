@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "cluster-scanner.fullname" . }}
+  namespace: {{ include "cluster-scanner.namespace" . }}
+  labels:
+   {{- include "cluster-scanner.labels" . | nindent 4 }}
+data:
+  sysdig_host: {{ include "cluster-scanner.apiHost" . }}
+  sysdig_verify_certificate: {{ .Values.sslVerifyCertificate | quote }}
+  cluster_name: {{ .Values.global.clusterConfig.name }}
+  root_namespace: {{ .Values.rootNamespace }}
+  eve_enabled: {{ .Values.eveEnabled | quote }}
+  eve_integration_enabled: {{ .Values.eveIntegrationEnabled | quote }}
+  logging_level: {{ .Values.global.loggingLevel }}
+  rsi_pprof_enabled: {{ .Values.runtimeStatusIntegrator.pprofEnabled | quote }}
+  ise_pprof_enabled: {{ .Values.imageSbomExtractor.pprofEnabled | quote }}
+{{- include "cluster-scanner.modeConfig" . | nindent 2 }}
+  js_server_user: {{ .Values.runtimeStatusIntegrator.natsJS.user }}
+  js_server_url: "nats://{{- include "cluster-scanner.fullname" . }}:4222"
+  rsi_leaderelection_lock_name: {{ .Values.runtimeStatusIntegrator.leaderElectionLeaseNameOverride | default (include "cluster-scanner.fullname" .) }}
+  rsi_leaderelection_lock_namespace: {{ .Values.runtimeStatusIntegrator.leaderElectionLeaseNamespaceOverride | default .Release.Namespace }}
+  rsi_service_name: {{ include "cluster-scanner.fullname" . }}
+{{- include "cluster-scanner.rsiJsConfig" . | nindent 2 }}
+{{- include "cluster-scanner.iseJsConfig" . | nindent 2 }}
+  ise_cache_type: {{ .Values.imageSbomExtractor.cache.type }}
+{{- include "cluster-scanner.redisCacheConfig" . | nindent 2 }}
+{{- include "cluster-scanner.localCacheConfig" . | nindent 2 }}
