@@ -321,3 +321,48 @@ tests:
       - equal:
           path: spec.template.spec.containers[1].image
           value: quay.io/sysdig/image-sbom-extractor:3bc59a4958d15dfa6afed20dfd2459e268b4cda8
+
+  - it: "has default RSI and ISE pprof ports"
+    templates:
+      - ../templates/deployment.yaml
+    asserts:
+      - not: true
+        isEmpty:
+          path: spec.template.spec.containers[0].env[2]
+      - isSubset:
+          path: spec.template.spec.containers[0].env[2]
+          content:
+            name: PPROF_PORT
+            value: "6060"
+      - not: true
+        isEmpty:
+          path: spec.template.spec.containers[1].env[2]
+      - isSubset:
+          path: spec.template.spec.containers[1].env[2]
+          content:
+            name: PPROF_PORT
+            value: "6061"
+
+  - it: "has correct RSI and ISE pprof ports when provided"
+    templates:
+      - ../templates/deployment.yaml
+    set:
+      runtimeStatusIntegrator.ports.pprof: "1010"
+      imageSbomExtractor.ports.pprof: "666"
+    asserts:
+      - not: true
+        isEmpty:
+          path: spec.template.spec.containers[0].env[2]
+      - isSubset:
+          path: spec.template.spec.containers[0].env[2]
+          content:
+            name: PPROF_PORT
+            value: "1010"
+      - not: true
+        isEmpty:
+          path: spec.template.spec.containers[1].env[2]
+      - isSubset:
+          path: spec.template.spec.containers[1].env[2]
+          content:
+            name: PPROF_PORT
+            value: "666"
