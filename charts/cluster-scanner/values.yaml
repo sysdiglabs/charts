@@ -45,12 +45,12 @@ replicaCount: 2
 scannerMode: "local"
 
 # Optional parameter used to check the compatibility of cluster-scanner
-# component versions with respect to the onprem backend version.
+# component versions with the on-premised backend version.
 #
-# If you are running an on-prem version of Sysdig Backend make sure to set
-# this parameter with the version of Sysdig Backend you are using.
+# If you are running an on-prem version of the Sysdig backend, set
+# this parameter with the version of Sysdig backend you are using.
 #
-# E.g. if `onPremCompatibilityVersion=6.2`, we make sure that the image
+# E.g. if `onPremCompatibilityVersion=6.2`, we ensure that the image
 # tag is < 1.0.0 for both the Runtime Status Integrator and the Image SBOM
 # Extractor.
 onPremCompatibilityVersion: "6.2"
