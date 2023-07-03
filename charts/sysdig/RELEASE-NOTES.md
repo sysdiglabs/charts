@@ -1,6 +1,6 @@
 # What's Changed
 
-### New Features
-- **sysdig** [727f9f8](https://github.com/sysdiglabs/charts/commit/727f9f836b38daf91090e843895dd4ea07126ec5): Update legacy engine NIA component with security updates ([#1065](https://github.com/sysdiglabs/charts/issues/1065))
+### Chores
+- **sysdig** [f32bc89b](https://github.com/sysdiglabs/charts/commit/f32bc89be0587f6337a41b56cc5f7de715447d7d): bump agent version to 12.15.0 ([#1199](https://github.com/sysdiglabs/charts/issues/1199))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.7.6...sysdig-1.15.86
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.9.1...sysdig-1.16.2

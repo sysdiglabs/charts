@@ -1,109 +1,83 @@
-# KSPM Collector
+# Chart: KSPM Collector
 
-See the [Actionable Compliance documentation](https://docs.sysdig.com/en/docs/sysdig-secure/posture/compliance/actionable-compliance/) for details on the Actionable Compliance feature. The
-KSPM Collector collects Kubernetes resource manifests and sends them to be evaluated against compliance policies.
-The scan results are displayed in Sysdig Secure's Actionable Compliance screens.
+## Overview
 
-## Installing the Chart
+The KSPM Collector collects Kubernetes resource manifests and sends them to be evaluated against Sysdig compliance policies. The scan results are displayed on the [Compliance UI](https://docs.sysdig.com/en/docs/sysdig-secure/posture/compliance/) in Sysdig Secure.
 
-Add Sysdig Helm charts repository:
+Use the [sysdig-deploy](../sysdig-deploy/README.md) parent chart to deploy the KSPM collector. Do not deploy subcharts directly.
 
+For installation instructions, see [Install Agent Components on Kubernetes](https://docs.sysdig.com/en/docs/installation/sysdig-secure/install-agent-components/kubernetes/).
+
+## Verify the Integrity and Origin
+
+Sysdig Helm Charts are signed so you can verify the integrity and origin of each chart. To verify the chart:
+
+### Import the Public Key
+
+```console
+$ curl -o "/tmp/sysdig_public.gpg" "https://charts.sysdig.com/public.gpg"
+$ gpg --import /tmp/sysdig_public.gpg
 ```
-$ helm repo add sysdig https://charts.sysdig.com
-```
 
-Deploy the kspm collector
+### Verify the Chart
 
-```
-$ helm install --create-namespace -n kspm-collector kspm-collector -f values.yaml sysdig/kspm-collector
-```
+To check the integrity and the origin of the charts you can now append the `--verify` flag to the `install`, `upgrade`, and `pull` helm commands.
 
 ## Configuration
 
-The following table lists the configurable parameters of the Sysdig KSPM Collector chart and their default values:
+The following table lists the configurable parameters of the Sysdig KSPM Collector chart and their default values.
 
-| Parameter                                 | Description                                                                             | Default                                                     |
-|-------------------------------------------|-----------------------------------------------------------------------------------------|-------------------------------------------------------------|
-| `global.proxy.httpProxy`                  | Sets `HTTP_PROXY` on the KSPM Collector containers                                      | `""`                                                        |
-| `global.proxy.httpsProxy`                 | Sets `HTTPS_PROXY` on the KSPM Collector containers                                     | `""`                                                        |
-| `global.proxy.noProxy`                    | Sets `NO_PROXY` on the KSPM Collector containers                                        | `""`                                                        |
-| `global.sslVerifyCertificate`             | Sets `NATS_INSECURE` env variable on the KSPM Collector Containers                      |                                                             |
-| `global.kspm.deploy`                      | Enables Sysdig KSPM node analyzer & KSPM collector                                      | `true`                                                      |
-| `sysdig.accessKey`                        | Your Sysdig Access Key                                                                  | ` ` Either accessKey or existingAccessKeySecret is required |
-| `sysdig.existingAccessKeySecret`          | Alternatively, specify the name of a Kubernetes secret containing an 'access-key' entry | ` ` Either accessKey or existingAccessKeySecret is required |
-| `rbac.create`                             | If true, create & use RBAC resources                                                    | `true`                                                      |
-| `serviceAccount.create`                   | Create serviceAccount                                                                   | `true`                                                      |
-| `serviceAccount.name`                     | Use this value as serviceAccountName                                                    | `kspm-collector`                                            |
-| `clusterName`                             | Set a cluster name to identify events using *kubernetes.cluster.name* tag               | ` `                                                         |
-| `image.registry`                          | KSPM Collector image registry                                                           | `quay.io`                                                   |
-| `image.repository`                        | The image repository to pull from                                                       | `sysdig/kspm-collector`                                     |
-| `image.tag`                               | The image tag to pull                                                                   | `1.22.0`                                                    |
-| `image.digest`                            | The image digest to pull                                                                | ` `                                                         |
-| `image.pullPolicy`                        | The Image pull policy                                                                   | `Always`                                                    |
-| `imagePullSecrets`                        | The Image pull secret                                                                   | `[]`                                                        |
-| `replicas`                                | KSPM collector deployment replicas                                                      | `1`                                                         |
-| `namespaces.included`                     | Namespaces to include in the KSPM collector scans, when empty scans all                 | ``                                                          |
-| `namespaces.excluded`                     | Namespaces to exclude in the KSPM collector scans                                       | ``                                                          |
-| `nodeSelector`                            | Node Selector                                                                           | `{}`                                                        |
-| `workloads.included`                      | Workloads to include in the KSPM collector scans, when empty scans all                  | ``                                                          |
-| `workloads.excluded`                      | Workloads to exclude in the KSPM collector scans, when empty scans all                  | ``                                                          |
-| `healthIntervalMin`                       | Minutes interval for KSPM collector health status messages                              | `5`                                                         |
-| `resources.requests.cpu`                  | KSPM collector CPU requests                                                             | `150m`                                                      |
-| `resources.requests.memory`               | KSPM collector memory requests                                                          | `256Mi`                                                     |
-| `resources.limits.cpu`                    | KSPM collector CPU limits                                                               | `500m`                                                      |
-| `resources.limits.memory`                 | KSPM collector memory limits                                                            | `1536Mi`                                                    |
-| `apiEndpoint`                             | kspmCollector apiEndpoint                                                               | `""`                                                        |
-| `httpProxy`                               | Proxy configuration variables                                                           |                                                             |
-| `httpsProxy`                              | Proxy configuration variables                                                           |                                                             |
-| `noProxy`                                 | Proxy configuration variables                                                           |                                                             |
-| `sslVerifyCertificate`                    | Sets `NATS_INSECURE` env variable on the KSPM Collector Containers                      |                                                             |
-| `arch`                                    | Allowed architectures for scheduling                                                    | `[ amd64, arm64 ]`                                          |
-| `os`                                      | Allowed OSes for scheduling                                                             | `[ linux ]`                                                 |
-| `affinity`                                | Node affinities. Overrides `arch` and `os` values                                       | `{}`                                                        |
-| `labels`                                  | KSPM collector specific labels (as a multi-line templated string map or as YAML)        | `{}`                                                        |
-| `port`                                    | KSPM collector port for health checks                                                   | `8080`                                                      |
-| `readinessProbe.enabled`                  | KSPM collector readinessProbe enablement                                                | `true`                                                      |
-| `livenessProbe.enabled`                   | KSPM collector livenessProbe enablement                                                 | `true`                                                      |
-| `scc.create`                              | Create OpenShift's Security Context Constraint                                          | `true`                                                      |
-| `securityContext.runAsNonRoot`            | make KSPM collector run as non root                                                     | `true`                                                      |
-| `securityContext.runAsUser`               | make KSPM collector run as user with this ID                                            | `10001`                                                     |
-| `securityContext.runAsGroup`              | make KSPM collector run as group with this ID                                           | `10001`                                                     |
-| `securityContext.readOnlyRootFilesystem`  | make KSPM collector root file system read only                                          | `true`                                                      |
-| `securityContext.allowPrivilegeEscalation`| allow KSPM collector apps to gain priviledges stronger than their parent process        | `false`                                                     |
-| `securityContext.capabilities.drop`       | Linux capabilities to be taken from KSPM collector                                      | `['all']`                                                   |
-| `tolerations`                             | The tolerations for scheduling                                                          | `kubernetes.io/arch=arm64:NoSchedule`                       |
-
-
-
-Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
-
-```bash
-$ helm install --namespace kspmcollector kspm-collector \
-    --set sysdig.accessKey=YOUR-KEY-HERE, \
-    sysdig/kspm-collector
-```
-
-Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For
-example,
-
-```bash
-$ helm install --namespace kspmcollector kspm-collector -f values.yaml sysdig/kspm-collector
-```
-
-Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
-
-```bash
-$ helm install my-release-name -f values.yaml sysdig/kspm-collector
-```
-
-## Running helm unit tests
-
-The sysdiglabs/charts repository uses the following helm unittest plugin: https://github.com/quintush/helm-unittest
-
-You can test the changes to your chart by running the test suites as follows:
-
-```
-helm unittest --helm3 .
-```
-
-The helm unit tests are in the tests folder. It is recommended to add new tests as new features are added here.
+| Parameter                                  | Description                                                  | Default                                                     |
+| ------------------------------------------ | ------------------------------------------------------------ | ----------------------------------------------------------- |
+| `global.proxy.httpProxy`                   | Sets `HTTP_PROXY` on the KSPM collector containers.          | `""`                                                        |
+| `global.proxy.httpsProxy`                  | Sets `HTTPS_PROXY` on the KSPM collector containers.         | `""`                                                        |
+| `global.proxy.noProxy`                     | Sets `NO_PROXY` on the KSPM collector containers.            | `""`                                                        |
+| `global.sslVerifyCertificate`              | Sets `NATS_INSECURE` environment variable on the KSPM collector containers. |                                                             |
+| `global.kspm.deploy`                       | Enables Sysdig KSPM node analyzer & KSPM collector.          | `true`                                                      |
+| `global.image.pullSecrets`                 | Specifies the global pull secrets.                           | <code>[]</code>                                             |
+| `global.image.pullPolicy`                  | Specifies the global pull policy.                            | <code>`Always`</code>                                       |
+| `sysdig.accessKey`                         | Specifies your Sysdig Access Key.                            | ` ` Either accessKey or existingAccessKeySecret is required |
+| `sysdig.existingAccessKeySecret`           | Specifies the name of a Kubernetes secret containing an `access-key` entry.  Alternative to using Sysdig Access Key. | ` ` Either accessKey or existingAccessKeySecret is required |
+| `rbac.create`                              | If sets to true,  RBAC resources will be created and used.   | `true`                                                      |
+| `serviceAccount.create`                    | Creates serviceAccount.                                      | `true`                                                      |
+| `serviceAccount.name`                      | The value you specify will be used as `serviceAccountName`.  | `kspm-collector`                                            |
+| `clusterName`                              | Sets a unique cluster name. This name will be used to identify events using the `kubernetes.cluster.name` tag. | ` `                                                         |
+| `image.registry`                           | Specifies the KSPM collector image registry.                 | `quay.io`                                                   |
+| `image.repository`                         | Specifies the image repository to pull from.                 | `sysdig/kspm-collector`                                     |
+| `image.tag`                                | Specifies the image tag to pull from the image repository.   | `1.24.0`                                                    |
+| `image.digest`                             | Specifies the image digest to pull from the image repository. | ` `                                                         |
+| `image.pullPolicy`                         | Specifies theImage pull policy.                              | `""`                                                        |
+| `imagePullSecrets`                         | Specifies the Image pull secret.                             | `[]`                                                        |
+| `replicas`                                 | Specifies the KSPM collector deployment replicas.            | `1`                                                         |
+| `namespaces.included`                      | Specifies the namespaces to include in the KSPM collector scans. If left empty, all the namesapces will be scanned. | ``                                                          |
+| `namespaces.excluded`                      | Specifies the namespaces to exclude in the KSPM collector scans. | ``                                                          |
+| `nodeSelector`                             | Specifies the Node Selector.                                 | `{}`                                                        |
+| `workloads.included`                       | Specifies the workloads to include in the KSPM collector scans. If left empty, all the workloads will be scanned. | ``                                                          |
+| `workloads.excluded`                       | Specifies the workloads to exclude in the KSPM collector scans.  If left empty, all the workloads will be scanned. | ``                                                          |
+| `healthIntervalMin`                        | Specifies the minutes interval for KSPM collector health status messages. | `5`                                                         |
+| `resources.requests.cpu`                   | Specifies the KSPM collector CPU requests.                   | `150m`                                                      |
+| `resources.requests.memory`                | Specifies the KSPM collector memory requests.                | `256Mi`                                                     |
+| `resources.limits.cpu`                     | Specifies the KSPM collector CPU limits.                     | `500m`                                                      |
+| `resources.limits.memory`                  | Specifies the KSPM collector memory limits                   | `1536Mi`                                                    |
+| `priorityClassName`                        | Specifies the name of an existing PriorityClass for the KSPM collector to use. | `{}`                                                        |
+| `apiEndpoint`                              | Specifies the API end point of the KSPM collector.           | `""`                                                        |
+| `httpProxy`                                | Specifies the proxy configuration variables.                 |                                                             |
+| `httpsProxy`                               | Specifies the proxy configuration variables.                 |                                                             |
+| `noProxy`                                  | Specifies the proxy configuration variables.                 |                                                             |
+| `sslVerifyCertificate`                     | Sets `NATS_INSECURE` env variable on the KSPM collector containers. |                                                             |
+| `arch`                                     | Specifies the allowed architectures for scheduling.          | `[ amd64, arm64 ]`                                          |
+| `os`                                       | Specifies the allowed operating systems for scheduling.      | `[ linux ]`                                                 |
+| `affinity`                                 | Specifies the node affinities. Overrides `arch` and `os` values. | `{}`                                                        |
+| `labels`                                   | Specifies the KSPM collector specific labels as a multi-line templated string map or as YAML. | `{}`                                                        |
+| `port`                                     | Specifies the KSPM collector port for health checks.         | `8080`                                                      |
+| `psp.create`                               | Creates Pod Security Policy to allow the KSPM collector running in PSP-enabled clusters. | `true`                                                      |
+| `readinessProbe.enabled`                   | Specifies whether KSPM collector readinessProbe is enabled or not. | `true`                                                      |
+| `livenessProbe.enabled`                    | Specifies whether KSPM collector livenessProbe is enabled or not. | `true`                                                      |
+| `scc.create`                               | Creates OpenShift's Security Context constraint.             | `true`                                                      |
+| `securityContext.runAsNonRoot`             | Makes KSPM collector run as a non-root container.            | `true`                                                      |
+| `securityContext.runAsUser`                | The user ID you specify will be used to run the KSPM collector. | `10001`                                                     |
+| `securityContext.runAsGroup`               | The group ID you specify will be used to run the KSPM collector. | `10001`                                                     |
+| `securityContext.readOnlyRootFilesystem`   | Changes the root file system of the KSPM collector to read only | `true`                                                      |
+| `securityContext.allowPrivilegeEscalation` | Allows KSPM collector apps to gain priviledges stronger than their parent process. | `false`                                                     |
+| `securityContext.capabilities.drop`        | Specifies the Linux capabilities to be taken from KSPM collector. | `['all']`                                                   |
+| `tolerations`                              | Specifies the tolerations for scheduling.                    | `kubernetes.io/arch=arm64:NoSchedule`                       |

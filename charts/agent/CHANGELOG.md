@@ -10,6 +10,47 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.9.2
+# v1.9.1
+### Chores
+* **agent** [15cfecb9](https://github.com/sysdiglabs/charts/commit/15cfecb905c931f3288907dd4223702536884b01): bump agent version to 12.15.0 ([#1200](https://github.com/sysdiglabs/charts/issues/1200))
+# v1.9.0
+### New Features
+* **admission-controller,agent,cloud-bench,cloud-connector,cloud-scanning,harbor-scanner-sysdig-secure,kspm-collector,node-analyzer,rapid-response,registry-scanner,sysdig,sysdig-deploy,sysdig-mcm-navmenu,sysdig-stackdriver-bridge** [5d99a03d](https://github.com/sysdiglabs/charts/commit/5d99a03dced132b4771dde1ce5b90b63c518b408): use a PGP private key to sign charts on release ([#1170](https://github.com/sysdiglabs/charts/issues/1170))
+# v1.8.8
+# v1.8.7
+### Bug Fixes
+* **agent,node-analyzer** [e0ef02c2](https://github.com/sysdiglabs/charts/commit/e0ef02c283df3d12cf5d8d2b1b89a61e1fc30807): updateStrategy maxSurge param ([#1166](https://github.com/sysdiglabs/charts/issues/1166))
+# v1.8.6
+### New Features
+* **adminssion-controller,agent,node-analyzer,kspm-collector,rapid-response** [33cad895](https://github.com/sysdiglabs/charts/commit/33cad8952395800e2e453de6bbf81851bfe1c608): pull policy and secrets params uniformity ([#1158](https://github.com/sysdiglabs/charts/issues/1158))
+# v1.8.5
+### New Features
+* **agent** [367456f5](https://github.com/sysdiglabs/charts/commit/367456f502af41c91432c996a42d9ff9ed1403ec): add drift_control to secure exclude lists when appropriate ([#1151](https://github.com/sysdiglabs/charts/issues/1151))
+# v1.8.4
+### Bug Fixes
+* **agent** [e4da36a3](https://github.com/sysdiglabs/charts/commit/e4da36a3638c849b36660656f6e04dd5bb09fad2): Do not infer `max_parallel_cold_start` value ([#1133](https://github.com/sysdiglabs/charts/issues/1133))
+# v1.8.3
+### Chores
+* **agent** [a55351db](https://github.com/sysdiglabs/charts/commit/a55351db97cde83da12d5bd4d1d921f735e8b9cf): bump agent version to 12.14.1 ([#1106](https://github.com/sysdiglabs/charts/issues/1106))
+# v1.8.2
+### Chores
+* **agent** [7be099e](https://github.com/sysdiglabs/charts/commit/7be099e7099fa5d6bfee0d6d9314bf4c1e3d0b03): add tests to better highlight the behaviour in the drift prevention feature ([#1087](https://github.com/sysdiglabs/charts/issues/1087))
+# v1.8.1
+### Bug Fixes
+* **agent** [c337ffb](https://github.com/sysdiglabs/charts/commit/c337ffb53abc3f9b17a6cb9e10f649a2434bba77): delegated agent volume name ([#1094](https://github.com/sysdiglabs/charts/issues/1094))
+# v1.8.0
+### New Features
+* **agent** [5c194ec](https://github.com/sysdiglabs/charts/commit/5c194ecb04f68f7819415c5d98bb1909b28c9189): Fix GKE Autopilot installation ([#975](https://github.com/sysdiglabs/charts/issues/975))
+# v1.7.5
+### Bug Fixes
+* **agent** [2024f12](https://github.com/sysdiglabs/charts/commit/2024f125f2bd049f63dc2309fde79afef1204dfe): Allow cointerface to be enabled in daemonset agents in delegated agent deployment ([#1079](https://github.com/sysdiglabs/charts/issues/1079))
+# v1.7.4
+### Bug Fixes
+* **agent** [d9cbbdd](https://github.com/sysdiglabs/charts/commit/d9cbbdde53843f11d64223b3110378f0047c8697): fix occasional k8s_coldstart block duplication and key name ([#1069](https://github.com/sysdiglabs/charts/issues/1069))
+# v1.7.3
+### Chores
+* **agent** [44f57ac](https://github.com/sysdiglabs/charts/commit/44f57ac7742edc044d5ce5a7fbddadf2d13c8846): bump agent version to 12.14.0 ([#1076](https://github.com/sysdiglabs/charts/issues/1076))
 # v1.7.2
 ### Bug Fixes
 * **agent** [34bf2af](https://github.com/sysdiglabs/charts/commit/34bf2afd26f848507cd8edff148f6253620657a9): Adjust features available in secure_light mode ([#1062](https://github.com/sysdiglabs/charts/issues/1062))

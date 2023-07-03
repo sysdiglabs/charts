@@ -10,6 +10,50 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.16.2
+### Chores
+* **sysdig** [f32bc89b](https://github.com/sysdiglabs/charts/commit/f32bc89be0587f6337a41b56cc5f7de715447d7d): bump agent version to 12.15.0 ([#1199](https://github.com/sysdiglabs/charts/issues/1199))
+# v1.16.1
+### Documentation
+* **sysdig** [91306238](https://github.com/sysdiglabs/charts/commit/91306238bbcb7317f854f6efc8b13f0a517f19aa): DOC-3236 - clean up for consistency and clarity ([#1178](https://github.com/sysdiglabs/charts/issues/1178))
+# v1.16.0
+### New Features
+* **admission-controller,agent,cloud-bench,cloud-connector,cloud-scanning,harbor-scanner-sysdig-secure,kspm-collector,node-analyzer,rapid-response,registry-scanner,sysdig,sysdig-deploy,sysdig-mcm-navmenu,sysdig-stackdriver-bridge** [5d99a03d](https://github.com/sysdiglabs/charts/commit/5d99a03dced132b4771dde1ce5b90b63c518b408): use a PGP private key to sign charts on release ([#1170](https://github.com/sysdiglabs/charts/issues/1170))
+# v1.15.93
+### Chores
+* **sysdig, node-analyzer** [706d562f](https://github.com/sysdiglabs/charts/commit/706d562f3d473f88fd1d257974cd3a127d672a2a): bump sysdig/vuln-runtime-scanner to v1.5.1 ([#1187](https://github.com/sysdiglabs/charts/issues/1187))
+
+    * Runtimescanner bumped to 1.5.1
+- Fix for CVE-2023-2253
+# v1.15.92
+### Chores
+* **sysdig, node-analyzer** [f9c8e102](https://github.com/sysdiglabs/charts/commit/f9c8e1028b4b4e79aba10e72f762f14956d54273): bump sysdig/vuln-runtime-scanner to v1.5 ([#1160](https://github.com/sysdiglabs/charts/issues/1160))
+
+    * * Runtimescanner bumped to 1.5
+     * Updated the analyzer to inspects also vendor paths
+     * Added support to apply image based accepts for all versions of the image, that image in a specific registry & repository, as well as a contain string for customized subsets of the environment
+# v1.15.91
+### Chores
+* **sysdig, node-analyzer** [601a0685](https://github.com/sysdiglabs/charts/commit/601a0685639cefc10ec9120c74153f4bb2ac2473): bump sysdig/vuln-runtime-scanner to v1.4.12 ([#1127](https://github.com/sysdiglabs/charts/issues/1127))
+# v1.15.90
+### New Features
+* **sysdig** [a1a22e4c](https://github.com/sysdiglabs/charts/commit/a1a22e4c0d439a1dc254a172e3d8fb4eaa801dd4): Update legacy engine HostAnalyzer with security updates ([#1128](https://github.com/sysdiglabs/charts/issues/1128))
+
+    * Security updates (May 2023) for HostAnalyzer. Fixed 1 CVE:
+	* CVE-2023-28840
+# v1.15.89
+### New Features
+* **sysdig** [a6d4b61e](https://github.com/sysdiglabs/charts/commit/a6d4b61e484b9c07df3fb195a6243f37cd4c9410): Update legacy engine NIA with security updates ([#1123](https://github.com/sysdiglabs/charts/issues/1123))
+
+    * Security updates (May 2023) for NodeImageAnalyzer. Fixed 2 CVEs:
+	* CVE-2023-30861
+	* CVE-2023-28840
+# v1.15.88
+### Chores
+* **sysdig** [c8398346](https://github.com/sysdiglabs/charts/commit/c83983463b32841eef524f9cf2302a67088363d5): bump agent version to 12.14.1 ([#1105](https://github.com/sysdiglabs/charts/issues/1105))
+# v1.15.87
+### Chores
+* **sysdig** [82bedb7](https://github.com/sysdiglabs/charts/commit/82bedb791cc03edd950e96fb973531add97ad47c): bump agent version to 12.14.0 ([#1075](https://github.com/sysdiglabs/charts/issues/1075))
 # v1.15.86
 ### New Features
 * **sysdig** [727f9f8](https://github.com/sysdiglabs/charts/commit/727f9f836b38daf91090e843895dd4ea07126ec5): Update legacy engine NIA component with security updates ([#1065](https://github.com/sysdiglabs/charts/issues/1065))

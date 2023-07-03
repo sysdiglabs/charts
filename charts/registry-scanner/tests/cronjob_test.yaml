@@ -64,3 +64,31 @@ tests:
       - equal:
           path: apiVersion
           value: batch/v1
+
+  - it: sets default labels
+    asserts:
+      - equal:
+          path: metadata.labels['app.kubernetes.io/component']
+          value: registry-scanner-orchestrator
+      - equal:
+          path: spec.jobTemplate.spec.template.metadata.labels['app.kubernetes.io/component']
+          value: registry-scanner-orchestrator
+
+  - it: ttlSecondsAfterFinished default value is set
+    asserts:
+      - equal:
+          path: spec.jobTemplate.spec.ttlSecondsAfterFinished
+          value: 3600
+  - it: ttlSecondsAfterFinished is set
+    set:
+      config.scan.orchestrator.ttlSecondsAfterFinished: '0'
+    asserts:
+      - equal:
+          path: spec.jobTemplate.spec.ttlSecondsAfterFinished
+          value: 0
+  - it: ttlSecondsAfterFinished is unset
+    set:
+      config.scan.orchestrator.ttlSecondsAfterFinished: ''
+    asserts:
+      - isNull:
+          path: spec.jobTemplate.spec.ttlSecondsAfterFinished

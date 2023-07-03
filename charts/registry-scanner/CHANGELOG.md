@@ -10,7 +10,48 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.1.1
+### Documentation
+* **registry-scanner** [bafbaba2](https://github.com/sysdiglabs/charts/commit/bafbaba2d54d0f52ef965ddd3505efd439a6a2c0): DOC-3229 - update for clarity, consistency, correctness ([#1184](https://github.com/sysdiglabs/charts/issues/1184))
+# v1.1.0
+### New Features
+* **admission-controller,agent,cloud-bench,cloud-connector,cloud-scanning,harbor-scanner-sysdig-secure,kspm-collector,node-analyzer,rapid-response,registry-scanner,sysdig,sysdig-deploy,sysdig-mcm-navmenu,sysdig-stackdriver-bridge** [5d99a03d](https://github.com/sysdiglabs/charts/commit/5d99a03dced132b4771dde1ce5b90b63c518b408): use a PGP private key to sign charts on release ([#1170](https://github.com/sysdiglabs/charts/issues/1170))
 
+# v1.0.15
+* docs: update some descriptions to camel case to avoid confusion
+
+# v1.0.14
+* fix: CVE-2023-2253
+
+# v1.0.13
+* chore: adds a filter for aws regions under aws org registry type installation
+
+# v1.0.12
+* feat: allow internal ENV var to allow pageSize setup on artifatory client
+* feat: inner vm-scanning library bump, to add vulnerability management support for .Net packages and centos OS
+
+# v1.0.11
+### Documentation
+* **registry-scanner** [53b92bbd](https://github.com/sysdiglabs/charts/commit/53b92bbdd190f041996db20dd65d5a125c049a90): update filter values ([#1116](https://github.com/sysdiglabs/charts/issues/1116))
+
+# v1.0.10
+* chore: fix high severity vulnerability
+* docs: improve and clarify logs: filtering and scan duration
+
+# v1.0.9
+### New Features
+* **registry-scanner** [7242c48](https://github.com/sysdiglabs/charts/commit/7242c48f332020e8a2f6cad2b40dd2f1e2a080cb): ttl for orchestrator job ([#1102](https://github.com/sysdiglabs/charts/issues/1102))
+
+# v1.0.8
+* feat: hide sensitive data from logs
+# v1.0.7
+* chore: adds label for orchestrator job
+* **registry-scanner**  bumped inner component to v0.2.35
+  - add labels for worker job
+# v1.0.6
+* **registry-scanner**  bumped inner component to v0.2.33
+  - chore: add limits to waitgroups
+  - logs: clarify skip message and parallelization
 # v1.0.5
 * **registry-scanner**  bumped inner component to v0.2.32
   - refactor: move code around in packages

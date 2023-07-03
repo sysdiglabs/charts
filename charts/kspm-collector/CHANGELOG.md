@@ -10,6 +10,40 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.2.2
+# v0.2.1
+### Documentation
+* **kspm-collector** [b10cd1ec](https://github.com/sysdiglabs/charts/commit/b10cd1ec4c3a3e44a27c2948c2bc8a462dbfa84c): DOC-3209 - update the helm readme for clarity and correctness ([#1168](https://github.com/sysdiglabs/charts/issues/1168))
+# v0.2.0
+### New Features
+* **admission-controller,agent,cloud-bench,cloud-connector,cloud-scanning,harbor-scanner-sysdig-secure,kspm-collector,node-analyzer,rapid-response,registry-scanner,sysdig,sysdig-deploy,sysdig-mcm-navmenu,sysdig-stackdriver-bridge** [5d99a03d](https://github.com/sysdiglabs/charts/commit/5d99a03dced132b4771dde1ce5b90b63c518b408): use a PGP private key to sign charts on release ([#1170](https://github.com/sysdiglabs/charts/issues/1170))
+# v0.1.52
+### Documentation
+* **kspm-collector** [fdd7baec](https://github.com/sysdiglabs/charts/commit/fdd7baecf2e5283fd30ef25ad444c37d1082a327): kspm-collector readme formatting ([#1192](https://github.com/sysdiglabs/charts/issues/1192))
+# v0.1.51
+### New Features
+* **kspm-collector,node-analyzer** [880cbc98](https://github.com/sysdiglabs/charts/commit/880cbc9840cacd4c66f939ba1d52a70181408a17): add account ID to Posture ([#1185](https://github.com/sysdiglabs/charts/issues/1185))
+# v0.1.50
+### New Features
+* **adminssion-controller,agent,node-analyzer,kspm-collector,rapid-response** [33cad895](https://github.com/sysdiglabs/charts/commit/33cad8952395800e2e453de6bbf81851bfe1c608): pull policy and secrets params uniformity ([#1158](https://github.com/sysdiglabs/charts/issues/1158))
+# v0.1.49
+### Bug Fixes
+* **kspm-collector** [0e781267](https://github.com/sysdiglabs/charts/commit/0e781267813eb79070f28ac2afa22b5c18a80a84): readme formatting ([#1154](https://github.com/sysdiglabs/charts/issues/1154))
+# v0.1.48
+### Chores
+* **kspm-collector, node-analyzer** [1b347fe8](https://github.com/sysdiglabs/charts/commit/1b347fe80da79b95bfc7b0c4f51dd3cc12a6d0dc): bump KSPM to v1.24.0 ([#1144](https://github.com/sysdiglabs/charts/issues/1144))
+# v0.1.47
+### Chores
+* **kspm-collector, node-analyzer** [2807ef4b](https://github.com/sysdiglabs/charts/commit/2807ef4b5e33c587008a84f03c1c26f18e48019b): bump KSPM to v1.23.0  ([#1132](https://github.com/sysdiglabs/charts/issues/1132))
+# v0.1.46
+### New Features
+* **kspm-collector** [f0defb2b](https://github.com/sysdiglabs/charts/commit/f0defb2b4a81d67bf0f3426179cc8d45ddd20f7b): priorityclassname added ([#1114](https://github.com/sysdiglabs/charts/issues/1114))
+# v0.1.45
+### Bug Fixes
+* **kspm-collector** [ac633130](https://github.com/sysdiglabs/charts/commit/ac6331304b82b2f22c01353b036696d2a92bb7b5): Add missing clusterrole for KSPM PSP ([#1109](https://github.com/sysdiglabs/charts/issues/1109))
+# v0.1.44
+### New Features
+* **kspm-collector** [fe03214](https://github.com/sysdiglabs/charts/commit/fe0321465d12656a392c1e250e6c441af0a4c1d1): Added PSP policies for KSPM Collector ([#1088](https://github.com/sysdiglabs/charts/issues/1088))
 # v0.1.43
 ### Chores
 * **admission-controller,agent,kspm-collector,node-analyzer,rapid-response,registry-scanner,sysdig-deploy** [7f35eb1](https://github.com/sysdiglabs/charts/commit/7f35eb1f88d93fa59c2839e7fbb756e50a378bea): update helm unittest plugin ([#996](https://github.com/sysdiglabs/charts/issues/996))

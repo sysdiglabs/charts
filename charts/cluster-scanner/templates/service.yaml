@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "cluster-scanner.fullname" . }}
+  namespace: {{ include "cluster-scanner.namespace" . }}
+  labels:
+    {{- include "cluster-scanner.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+    - port: 4222
+      targetPort: 4222
+      protocol: TCP
+      name: nats
+  # NOTE: selector is intentionally left empty, the RSI component will implement a controller to handle the Endpoints resource associated with this service

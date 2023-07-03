@@ -17,6 +17,9 @@ global:
   proxy: {}
   kspm:
     deploy: true
+  image:
+    pullSecrets: []
+    pullPolicy: IfNotPresent
 
 sysdig:
   # Required: You need your Sysdig access key before running agents, either specifying 'accessKey' here, or using 'existingAccessKeySecret'
@@ -39,10 +42,10 @@ clusterName: ""
 
 image:
   repository: sysdig/kspm-collector
-  tag: 1.22.0
+  tag: 1.25.0
   digest:
   registry: quay.io
-  pullPolicy: Always
+  pullPolicy:
 
 # Set image pull secret name
 # Example
@@ -56,6 +59,10 @@ rbac:
 
 scc:
   # true here enables creation of Security Context Constraints in Openshift
+  create: true
+
+psp:
+  # true here enables creation of Pod Security Policy to allow the agent run with the required permissions
   create: true
 
 serviceAccount:
@@ -114,6 +121,8 @@ tolerations:
     operator: Equal
     value: arm64
     effect: NoSchedule
+
+priorityClassName:
 
 # arch and os will be used to template out a node affinity block matching everything in each list. If affinity is
 # defined, these fields will be ignored

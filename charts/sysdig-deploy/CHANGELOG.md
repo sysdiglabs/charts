@@ -10,6 +10,129 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.10.1
+### Chores
+* **cluster-scanner** [c952eb44](https://github.com/sysdiglabs/charts/commit/c952eb44af7a45d9a09ed447eebc7cc54b5d1f21): added missing CHANGELOG.md, improved cluster scanner chart. ([#1215](https://github.com/sysdiglabs/charts/issues/1215))
+### New Features
+* **cluster-scanner** [f9d0dc59](https://github.com/sysdiglabs/charts/commit/f9d0dc595b6c7e926021e7be4b02e0a5c9f6a46b): init chart with minimal templates and configuration ([#1056](https://github.com/sysdiglabs/charts/issues/1056))
+# v1.9.7
+### Chores
+* **sysdig-deploy** [73b48090](https://github.com/sysdiglabs/charts/commit/73b48090c6a3209db51ad63fedc9fccbfddc01c4): Automatic version bump due to updated dependencies ([#1211](https://github.com/sysdiglabs/charts/issues/1211))
+# v1.9.6
+### Chores
+* **sysdig-deploy** [7072b226](https://github.com/sysdiglabs/charts/commit/7072b22641a7698c49b9d80f1b50c68efda18d61): Automatic version bump due to updated dependencies ([#1209](https://github.com/sysdiglabs/charts/issues/1209))
+# v1.9.5
+### Chores
+* **sysdig-deploy** [dd28a174](https://github.com/sysdiglabs/charts/commit/dd28a1742e5027d195446732f4494586b2680247): Automatic version bump due to updated dependencies ([#1208](https://github.com/sysdiglabs/charts/issues/1208))
+# v1.9.4
+# v1.9.3
+### Chores
+* **sysdig-deploy** [b5d61f4d](https://github.com/sysdiglabs/charts/commit/b5d61f4d3e84a928994626ea6eaa47df82afc9dd): Automatic version bump due to updated dependencies ([#1207](https://github.com/sysdiglabs/charts/issues/1207))
+# v1.9.2
+### Chores
+* **sysdig-deploy** [7ba147a9](https://github.com/sysdiglabs/charts/commit/7ba147a986d7fd96c67a460ef1cfe97de0d1b008): Automatic version bump due to updated dependencies ([#1201](https://github.com/sysdiglabs/charts/issues/1201))
+# v1.9.1
+### Chores
+* **sysdig-deploy** [4d023fe3](https://github.com/sysdiglabs/charts/commit/4d023fe36de2a8e6f0a5d1b209fcd50c0b89e1de): Automatic version bump due to updated dependencies ([#1198](https://github.com/sysdiglabs/charts/issues/1198))
+# v1.9.0
+### New Features
+* **admission-controller,agent,cloud-bench,cloud-connector,cloud-scanning,harbor-scanner-sysdig-secure,kspm-collector,node-analyzer,rapid-response,registry-scanner,sysdig,sysdig-deploy,sysdig-mcm-navmenu,sysdig-stackdriver-bridge** [5d99a03d](https://github.com/sysdiglabs/charts/commit/5d99a03dced132b4771dde1ce5b90b63c518b408): use a PGP private key to sign charts on release ([#1170](https://github.com/sysdiglabs/charts/issues/1170))
+# v1.8.29
+### Chores
+* **sysdig-deploy** [9e140f8e](https://github.com/sysdiglabs/charts/commit/9e140f8ea2c0165c10f0557e8215be01f40d36db): add notes for Pod Security Admission ([#1177](https://github.com/sysdiglabs/charts/issues/1177))
+# v1.8.28
+### Chores
+* **sysdig-deploy** [8ef4e5d5](https://github.com/sysdiglabs/charts/commit/8ef4e5d5ab8d8f4191f88045b7ea8f3e3dcf63c0): Automatic version bump due to updated dependencies ([#1188](https://github.com/sysdiglabs/charts/issues/1188))
+# v1.8.27
+### Chores
+* **sysdig-deploy** [9f08f20c](https://github.com/sysdiglabs/charts/commit/9f08f20cf33b1addecfbe2f4efcbd0eb4729accf): Automatic version bump due to updated dependencies ([#1182](https://github.com/sysdiglabs/charts/issues/1182))
+# v1.8.26
+### Chores
+* **sysdig-deploy** [64058299](https://github.com/sysdiglabs/charts/commit/640582993aaf1b94f4dbd5e3e9e311106f0ef177): Automatic version bump due to updated dependencies ([#1167](https://github.com/sysdiglabs/charts/issues/1167))
+# v1.8.25
+### Bug Fixes
+* **agent,node-analyzer** [e0ef02c2](https://github.com/sysdiglabs/charts/commit/e0ef02c283df3d12cf5d8d2b1b89a61e1fc30807): updateStrategy maxSurge param ([#1166](https://github.com/sysdiglabs/charts/issues/1166))
+# v1.8.24
+### New Features
+* **adminssion-controller,agent,node-analyzer,kspm-collector,rapid-response** [33cad895](https://github.com/sysdiglabs/charts/commit/33cad8952395800e2e453de6bbf81851bfe1c608): pull policy and secrets params uniformity ([#1158](https://github.com/sysdiglabs/charts/issues/1158))
+# v1.8.23
+### Chores
+* **sysdig-deploy** [62284204](https://github.com/sysdiglabs/charts/commit/62284204d31ab7249290cba0a61670e2a1847b32): Automatic version bump due to updated dependencies ([#1164](https://github.com/sysdiglabs/charts/issues/1164))
+# v1.8.22
+### Chores
+* **sysdig-deploy** [e005cfac](https://github.com/sysdiglabs/charts/commit/e005cfac4713751eaf40d91507d8cde8e77baa7e): Automatic version bump due to updated dependencies ([#1161](https://github.com/sysdiglabs/charts/issues/1161))
+# v1.8.21
+### Chores
+* **sysdig-deploy** [36be8368](https://github.com/sysdiglabs/charts/commit/36be83683b3a2078317badb67db6c7d8ee60cbb9): Automatic version bump due to updated dependencies ([#1157](https://github.com/sysdiglabs/charts/issues/1157))
+# v1.8.20
+### Chores
+* **sysdig-deploy** [da420975](https://github.com/sysdiglabs/charts/commit/da4209753d5eeae4f0838c3485c45202d17ebfe7): Automatic version bump due to updated dependencies ([#1156](https://github.com/sysdiglabs/charts/issues/1156))
+# v1.8.19
+### Chores
+* **sysdig-deploy** [13c5d43d](https://github.com/sysdiglabs/charts/commit/13c5d43d250037be5495308f5ee7d5618e6bdc07): Automatic version bump due to updated dependencies ([#1153](https://github.com/sysdiglabs/charts/issues/1153))
+# v1.8.18
+### Chores
+* **sysdig-deploy** [6e235ddc](https://github.com/sysdiglabs/charts/commit/6e235ddc1102d43fddbc6f61055947289ec0444d): Automatic version bump due to updated dependencies ([#1152](https://github.com/sysdiglabs/charts/issues/1152))
+# v1.8.17
+### Chores
+* **sysdig-deploy** [b7795710](https://github.com/sysdiglabs/charts/commit/b7795710356459a437cc9b3f9cb52ab7899bc72c): Automatic version bump due to updated dependencies ([#1150](https://github.com/sysdiglabs/charts/issues/1150))
+# v1.8.16
+### Chores
+* **sysdig-deploy** [d33845e4](https://github.com/sysdiglabs/charts/commit/d33845e4eab1d918af5fa4e9e870004cb719a4f0): Automatic version bump due to updated dependencies ([#1145](https://github.com/sysdiglabs/charts/issues/1145))
+# v1.8.15
+### Chores
+* **sysdig-deploy** [5e3e098f](https://github.com/sysdiglabs/charts/commit/5e3e098f25b969b40626e155afc0f5488d0c15c5): Automatic version bump due to updated dependencies ([#1142](https://github.com/sysdiglabs/charts/issues/1142))
+# v1.8.14
+### New Features
+* **admission-controller** [ba5c9103](https://github.com/sysdiglabs/charts/commit/ba5c91037bbf06470c2e03c69d0bba33518fc3c4): Deprecate sysdig.url (keep for compatibility) and use apiEndpoint instead ([#1118](https://github.com/sysdiglabs/charts/issues/1118))
+# v1.8.13
+### Chores
+* **sysdig-deploy** [6b375786](https://github.com/sysdiglabs/charts/commit/6b375786e6b6f0e4972d73fd5c617398e10fb587): Automatic version bump due to updated dependencies ([#1134](https://github.com/sysdiglabs/charts/issues/1134))
+# v1.8.12
+### Chores
+* **sysdig-deploy** [6e1846a8](https://github.com/sysdiglabs/charts/commit/6e1846a83903de9c67dd4d767475f94256085f0a): Automatic version bump due to updated dependencies ([#1130](https://github.com/sysdiglabs/charts/issues/1130))
+# v1.8.11
+### Chores
+* **sysdig-deploy** [f626fd9b](https://github.com/sysdiglabs/charts/commit/f626fd9be8f0c13c45ffeeedd28e6af6859dfe85): Automatic version bump due to updated dependencies ([#1125](https://github.com/sysdiglabs/charts/issues/1125))
+# v1.8.10
+### Chores
+* **sysdig-deploy** [c3c29e57](https://github.com/sysdiglabs/charts/commit/c3c29e57a00d09b9b7e7d77c51e55a87b1316809): Automatic version bump due to updated dependencies ([#1120](https://github.com/sysdiglabs/charts/issues/1120))
+# v1.8.9
+### Chores
+* **sysdig-deploy** [d6b5e508](https://github.com/sysdiglabs/charts/commit/d6b5e508c26b01e04ba891158175861e6b44f98a): Automatic version bump due to updated dependencies ([#1119](https://github.com/sysdiglabs/charts/issues/1119))
+# v1.8.8
+### Chores
+* **sysdig-deploy** [0fa6a5ce](https://github.com/sysdiglabs/charts/commit/0fa6a5ce4dfed11d92042db2e3ab69bda7a96eeb): Automatic version bump due to updated dependencies ([#1112](https://github.com/sysdiglabs/charts/issues/1112))
+# v1.8.7
+### Chores
+* **sysdig-deploy** [ce9265df](https://github.com/sysdiglabs/charts/commit/ce9265df7fa4cabb24287b69c2aef2892e7e546d): Automatic version bump due to updated dependencies ([#1110](https://github.com/sysdiglabs/charts/issues/1110))
+# v1.8.6
+### Chores
+* **sysdig-deploy** [3908bc78](https://github.com/sysdiglabs/charts/commit/3908bc78b328b5a03a2cedb6542e5687ba2cea86): Automatic version bump due to updated dependencies ([#1108](https://github.com/sysdiglabs/charts/issues/1108))
+# v1.8.5
+### Documentation
+* **sysdig-deploy** [43429c5a](https://github.com/sysdiglabs/charts/commit/43429c5a202f1048a8f802d64708c27cad678f5a): update readme to include all node analyzer components ([#1100](https://github.com/sysdiglabs/charts/issues/1100))
+# v1.8.4
+### Chores
+* **sysdig-deploy** [c3e1d8e4](https://github.com/sysdiglabs/charts/commit/c3e1d8e4d8f1a9e6c277df4411a3ac11067a56bf): Automatic version bump due to updated dependencies ([#1107](https://github.com/sysdiglabs/charts/issues/1107))
+# v1.8.3
+### Chores
+* **sysdig-deploy** [8cf4ed9](https://github.com/sysdiglabs/charts/commit/8cf4ed952cce05c13ff2b729c09ad4ddce093c32): Automatic version bump due to updated dependencies ([#1101](https://github.com/sysdiglabs/charts/issues/1101))
+# v1.8.2
+### Bug Fixes
+* **agent** [c337ffb](https://github.com/sysdiglabs/charts/commit/c337ffb53abc3f9b17a6cb9e10f649a2434bba77): delegated agent volume name ([#1094](https://github.com/sysdiglabs/charts/issues/1094))
+# v1.8.1
+### Chores
+* **sysdig-deploy** [0cfe7db](https://github.com/sysdiglabs/charts/commit/0cfe7db21550c4398c713bc1ffbc26496745f684): Automatic version bump due to updated dependencies ([#1089](https://github.com/sysdiglabs/charts/issues/1089))
+# v1.8.0
+### New Features
+* **agent** [5c194ec](https://github.com/sysdiglabs/charts/commit/5c194ecb04f68f7819415c5d98bb1909b28c9189): Fix GKE Autopilot installation ([#975](https://github.com/sysdiglabs/charts/issues/975))
+# v1.7.9
+### Chores
+* **sysdig-deploy** [54d7aaa](https://github.com/sysdiglabs/charts/commit/54d7aaa27303a049c6ca1d767b0d200bac61ae62): Automatic version bump due to updated dependencies ([#1084](https://github.com/sysdiglabs/charts/issues/1084))
+# v1.7.8
+### Chores
+* **sysdig-deploy** [6d552d8](https://github.com/sysdiglabs/charts/commit/6d552d80414de3aaf73d51a6f9a5b7990f77b839): Automatic version bump due to updated dependencies ([#1077](https://github.com/sysdiglabs/charts/issues/1077))
 # v1.7.7
 # v1.7.6
 ### Chores

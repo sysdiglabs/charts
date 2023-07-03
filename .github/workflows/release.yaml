@@ -22,7 +22,7 @@ jobs:
 
       - name: Retrieve a list of updated charts
         id: updated-charts
-        uses: tj-actions/changed-files@v34
+        uses: tj-actions/changed-files@v35
         with:
           files: charts/*/Chart.yaml
 
@@ -78,7 +78,7 @@ jobs:
           done
 
       - name: Stash changelog files
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: generated-changelogs
           path: |
@@ -96,7 +96,7 @@ jobs:
           fetch-depth: 0
 
       - name: Unstash generated changelogs
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: generated-changelogs
           path: charts
@@ -106,14 +106,29 @@ jobs:
           git config user.name "$GITHUB_USERNAME"
           git config user.email "$GITHUB_USER_EMAIL"
 
+      - name: Import GPG key
+        run: |
+          GPG_DIR=".helm-gpg"
+          mkdir "$GPG_DIR"
+          KEYRING_FILE="$GPG_DIR/keyring.gpg"
+          echo "${GPG_PRIVATE_KEY}" | gpg --dearmor --output "${KEYRING_FILE}"
+          PASSPHRASE_FILE="$GPG_DIR/passphrase"
+          echo "${GPG_PASSPHRASE}" > "${PASSPHRASE_FILE}"
+          echo "CR_PASSPHRASE_FILE=$PASSPHRASE_FILE" >> "$GITHUB_ENV"
+          echo "CR_KEYRING=$KEYRING_FILE" >> "$GITHUB_ENV"
+        env:
+          GPG_PASSPHRASE: "${{ secrets.GPG_PASSPHRASE }}"
+          GPG_PRIVATE_KEY: "${{ secrets.GPG_PRIVATE_KEY }}"
+
       - name: Run Chart Releaser
-        uses: helm/chart-releaser-action@v1.4.1
+        uses: helm/chart-releaser-action@v1.5.0
         with:
           config: cr.yaml
         env:
           CR_TOKEN: "${{ secrets.TOOLS_JENKINS_ADMIN_ACCESS_GITHUB_TOKEN }}"
+          CR_KEY: "${{ secrets.GPG_KEY_NAME }}"
 
-      - name: Copy README.md files to gh-pages
+      - name: Copy README.md files and GPG public key to gh-pages
         run: |
           existing_worktree=$(git worktree list --porcelain | grep -B 2 "branch refs/heads/gh-pages" | head -n 1 | cut -d ' ' -f 2)
           if [[ $existing_worktree != "" ]]; then git worktree remove -f $existing_worktree; fi
@@ -124,8 +139,14 @@ jobs:
           pushd ${tmp_folder}
           git add -A "charts/**/README.md"
           git add -A "charts/**/values.yaml"
-          git pull && git commit -m "github_actions_ci: Update README.md and values files" && git push
+          echo "${GPG_PUBLIC_KEY}" > public.gpg
+          git add public.gpg
+          if ! git diff-index --quiet HEAD; then
+            git pull && git commit -m "github_actions_ci: Update public key" && git push
+          fi
           popd
+        env:
+          GPG_PUBLIC_KEY: "${{ secrets.GPG_PUBLIC_KEY }}"
 
   commit-changelogs:
     needs:
@@ -140,7 +161,7 @@ jobs:
           token: ${{ secrets.TOOLS_JENKINS_ADMIN_ACCESS_GITHUB_TOKEN }}
 
       - name: Unstash generated changelogs
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: generated-changelogs
           path: charts

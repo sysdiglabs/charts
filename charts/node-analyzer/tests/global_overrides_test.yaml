@@ -2,6 +2,9 @@ suite: Test subchart overrides of global values
 templates:
   - secrets.yaml
   - daemonset-node-analyzer.yaml
+  - runtimeScanner/eveconnector-api-deployment.yaml
+  - runtimeScanner/eveconnector-api-configmap.yaml
+  - runtimeScanner/sysdig-eve-secret.yaml
 tests:
   - it: check value of accessKey without local chart override - local value provided
     set:
@@ -70,3 +73,290 @@ tests:
           path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.name
           value: override_key
         template: daemonset-node-analyzer.yaml
+
+  - it: check imagePullSecrets with global
+    set:
+      global:
+        sysdig:
+          accessKeySecret: standard_key
+        image:
+          pullSecrets:
+            - name: test
+    asserts:
+      - equal:
+          path: spec.template.spec.imagePullSecrets
+          value:
+            - name: test
+        template: daemonset-node-analyzer.yaml
+
+  - it: check imagePullSecrets with legacy
+    set:
+      global:
+        sysdig:
+          accessKeySecret: standard_key
+      nodeAnalyzer:
+        pullSecrets:
+          - name: test
+    asserts:
+      - equal:
+          path: spec.template.spec.imagePullSecrets
+          value:
+            - name: test
+        template: daemonset-node-analyzer.yaml
+
+  - it: check imagePullSecrets with local override
+    set:
+      global:
+        sysdig:
+          accessKeySecret: standard_key
+        image:
+          pullSecrets:
+            - name: test
+      nodeAnalyzer:
+        pullSecrets:
+          - name: test_override
+    asserts:
+      - equal:
+          path: spec.template.spec.imagePullSecrets
+          value:
+            - name: test_override
+        template: daemonset-node-analyzer.yaml
+
+  - it: check imagePullPolicy for eveconnector-api-deployment with global
+    set:
+      global:
+        kspm:
+          deploy: true
+        sysdig:
+          accessKeySecret: standard_key
+        image:
+          pullPolicy: Always
+      sysdig:
+        existingAccessKeySecret: override_key
+      clusterName: test-k8s
+      nodeAnalyzer:
+        deploy: true
+        runtimeScanner:
+          deploy: true
+          eveConnector:
+            deploy: true
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "node-analyzer-eveconnector-api")].imagePullPolicy
+          value: Always
+    templates:
+      - runtimeScanner/eveconnector-api-deployment.yaml
+
+  - it: check imagePullPolicy for daemonset-node-analyzer with global
+    set:
+      global:
+        kspm:
+          deploy: true
+        sysdig:
+          accessKeySecret: standard_key
+        image:
+          pullPolicy: Always
+      sysdig:
+        existingAccessKeySecret: override_key
+      clusterName: test-k8s
+      nodeAnalyzer:
+        deploy: true
+        runtimeScanner:
+          deploy: true
+        benchmarkRunner:
+          deploy: true
+        hostAnalyzer:
+          deploy: true
+        hostScanner:
+          deploy: true
+        imageAnalyzer:
+          deploy: true
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-kspm-analyzer")].imagePullPolicy
+          value: Always
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-image-analyzer")].imagePullPolicy
+          value: Always
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-analyzer")].imagePullPolicy
+          value: Always
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-benchmark-runner")].imagePullPolicy
+          value: Always
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-runtime-scanner")].imagePullPolicy
+          value: Always
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-scanner")].imagePullPolicy
+          value: Always
+    templates:
+      - daemonset-node-analyzer.yaml
+
+  - it: check imagePullPolicy for eveconnector-api-deployment with legacy
+    set:
+      global:
+        kspm:
+          deploy: true
+        sysdig:
+          accessKeySecret: standard_key
+      sysdig:
+        existingAccessKeySecret: override_key
+      clusterName: test-k8s
+      nodeAnalyzer:
+        deploy: true
+        runtimeScanner:
+          deploy: true
+          eveConnector:
+            deploy: true
+            image:
+              pullPolicy: Always
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "node-analyzer-eveconnector-api")].imagePullPolicy
+          value: Always
+    templates:
+      - runtimeScanner/eveconnector-api-deployment.yaml
+
+  - it: check imagePullPolicy for eveconnector-api-deployment with local override
+    set:
+      global:
+        kspm:
+          deploy: true
+        sysdig:
+          accessKeySecret: standard_key
+        image:
+          pullPolicy: Always
+      sysdig:
+        existingAccessKeySecret: override_key
+      clusterName: test-k8s
+      nodeAnalyzer:
+        deploy: true
+        runtimeScanner:
+          deploy: true
+          eveConnector:
+            deploy: true
+            image:
+              pullPolicy: Never
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "node-analyzer-eveconnector-api")].imagePullPolicy
+          value: Never
+    templates:
+      - runtimeScanner/eveconnector-api-deployment.yaml
+
+  - it: check imagePullPolicy for daemonset-node-analyzer with legacy
+    set:
+      global:
+        kspm:
+          deploy: true
+        sysdig:
+          accessKeySecret: standard_key
+      sysdig:
+        existingAccessKeySecret: override_key
+      clusterName: test-k8s
+      nodeAnalyzer:
+        deploy: true
+        runtimeScanner:
+          deploy: true
+          image:
+            pullPolicy: Always
+        benchmarkRunner:
+          deploy: true
+          image:
+            pullPolicy: Always
+        hostAnalyzer:
+          deploy: true
+          image:
+            pullPolicy: Always
+        hostScanner:
+          deploy: true
+          image:
+            pullPolicy: Always
+        kspmAnalyzer:
+          image:
+            pullPolicy: Always
+        imageAnalyzer:
+          deploy: true
+          image:
+            pullPolicy: Always
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-kspm-analyzer")].imagePullPolicy
+          value: Always
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-image-analyzer")].imagePullPolicy
+          value: Always
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-analyzer")].imagePullPolicy
+          value: Always
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-benchmark-runner")].imagePullPolicy
+          value: Always
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-runtime-scanner")].imagePullPolicy
+          value: Always
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-scanner")].imagePullPolicy
+          value: Always
+    templates:
+      - daemonset-node-analyzer.yaml
+
+  - it: check imagePullPolicy for daemonset-node-analyzer with local override
+    set:
+      global:
+        kspm:
+          deploy: true
+        sysdig:
+          accessKeySecret: standard_key
+        image:
+          pullPolicy: Always
+      sysdig:
+        existingAccessKeySecret: override_key
+      clusterName: test-k8s
+      nodeAnalyzer:
+        deploy: true
+        runtimeScanner:
+          deploy: true
+          image:
+            pullPolicy: Never
+        benchmarkRunner:
+          deploy: true
+          image:
+            pullPolicy: Never
+        hostAnalyzer:
+          deploy: true
+          image:
+            pullPolicy: Never
+        hostScanner:
+          deploy: true
+          image:
+            pullPolicy: Never
+        kspmAnalyzer:
+          image:
+            pullPolicy: Never
+        imageAnalyzer:
+          deploy: true
+          image:
+            pullPolicy: Never
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-kspm-analyzer")].imagePullPolicy
+          value: Never
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-image-analyzer")].imagePullPolicy
+          value: Never
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-analyzer")].imagePullPolicy
+          value: Never
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-benchmark-runner")].imagePullPolicy
+          value: Never
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-runtime-scanner")].imagePullPolicy
+          value: Never
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-scanner")].imagePullPolicy
+          value: Never
+    templates:
+      - daemonset-node-analyzer.yaml

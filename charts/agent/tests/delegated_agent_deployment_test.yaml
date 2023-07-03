@@ -354,8 +354,22 @@ tests:
     asserts:
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: "commandlines_capture:\n {2}enabled: false\ndrift_killer:\n {2}enabled: false\nfalcobaseline:\n {2}enabled: false\nmemdump:\n {2}enabled: false\nnetwork_topology:\n {2}enabled: false\nsecure_audit_streams:\n {2}enabled: false"
-        template: templates/configmap-deployment.yaml
+          pattern: |-
+            commandlines_capture:
+              enabled: false
+            drift_control:
+              enabled: false
+            drift_killer:
+              enabled: false
+            falcobaseline:
+              enabled: false
+            memdump:
+              enabled: false
+            network_topology:
+              enabled: false
+            secure_audit_streams:
+              enabled: false
+    template: templates/configmap-deployment.yaml
 
   - it: Ensure disabling secure still works for Daemonset too
     set:
@@ -366,7 +380,21 @@ tests:
     asserts:
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: "commandlines_capture:\n {2}enabled: false\ndrift_killer:\n {2}enabled: false\nfalcobaseline:\n {2}enabled: false\nmemdump:\n {2}enabled: false\nnetwork_topology:\n {2}enabled: false\nsecure_audit_streams:\n {2}enabled: false"
+          pattern: |-
+            commandlines_capture:
+              enabled: false
+            drift_control:
+              enabled: false
+            drift_killer:
+              enabled: false
+            falcobaseline:
+              enabled: false
+            memdump:
+              enabled: false
+            network_topology:
+              enabled: false
+            secure_audit_streams:
+              enabled: false
     templates:
       - templates/configmap.yaml
       - templates/configmap-deployment.yaml
@@ -414,7 +442,6 @@ tests:
             k8s_coldstart:
               enabled: true
               enforce_leader_election: true
-              max_parallel_cold_starts: 1
               namespace: NAMESPACE
     template: templates/configmap-deployment.yaml
 
@@ -424,6 +451,10 @@ tests:
         enabled: true
       leaderelection:
         enable: true
+      sysdig:
+        settings:
+          k8s_coldstart:
+            max_parallel_cold_start: 10
       resourceProfile: large
     asserts:
       - matchRegex:
@@ -432,7 +463,7 @@ tests:
             k8s_coldstart:
               enabled: true
               enforce_leader_election: true
-              max_parallel_cold_starts: 1
+              max_parallel_cold_start: 10
               namespace: NAMESPACE
     template: templates/configmap-deployment.yaml
 
@@ -491,3 +522,42 @@ tests:
           content:
             serviceAccountName: RELEASE-NAME-agent
         template: templates/deployment.yaml
+
+  - it: Validate override cointerface_enabled settings
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+      sysdig:
+        settings:
+          cointerface_enabled: true
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: 'cointerface_enabled: true'
+        template: templates/configmap.yaml
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: 'cointerface_enabled: false'
+        template: templates/configmap.yaml
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: 'cointerface_enabled: false'
+        template: templates/configmap-deployment.yaml
+
+  - it: Validate cointerface disabled normally
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: 'cointerface_enabled: false'
+        template: templates/configmap.yaml
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: 'cointerface_enabled: true'
+        template: templates/configmap.yaml
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: 'cointerface_enabled: false'
+        template: templates/configmap-deployment.yaml

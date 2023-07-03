@@ -45,6 +45,11 @@ tests:
       - matchRegex:
           path: data['dragent.yaml']
           pattern: |-
+            drift_control:
+              enabled: false
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
             drift_killer:
               enabled: false
       - matchRegex:
@@ -135,6 +140,11 @@ tests:
           path: data['dragent.yaml']
           pattern: |-
             statsd:
+              enabled: false
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            drift_control:
               enabled: false
       - matchRegex:
           path: data['dragent.yaml']

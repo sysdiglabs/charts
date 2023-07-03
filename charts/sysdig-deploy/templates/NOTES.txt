@@ -22,6 +22,11 @@ The "drift_killer" feature in agent is not supported when running on GKE Autopil
         {{- end }}
     {{- end }}
 
+    {{- if and (or .Values.agent.gke.autopilot .Values.global.gke.autopilot) (not .Values.agent.gke.createPriorityClass) (not .Values.agent.priorityClassName) }}
+
+A PriorityClass is recommended for GKE Autopilot environments. Please set agent.gke.createPriorityClass=true or provide the name of an existing PriorityClass by using the agent.priorityClassName parameter.
+    {{- end }}
+
     {{- $agentSecureFeatProvided := false }}
     {{- if hasKey .Values.agent.sysdig.settings "feature" }}
         {{- if hasKey .Values.agent.sysdig.settings.feature "mode" }}
@@ -34,4 +39,11 @@ The agent.monitor.enabled parameter is true while using agent.sysdig.settings.fe
 secure or secure_light mode. Please set agent.monitor.enabled=false to ensure all Sysdig Monitor components are disabled
 when running the Agent in secure or secure_light modes.
     {{ end }}
+{{ end }}
+
+{{- if include "kubeVersionGreaterThan" (dict "root" . "major" 1 "minor" 24) }}
+Pod Security Admission now replaces Pod Security Policies.
+Be aware that if you enforce "baseline" or "restricted" policies in your cluster, you need to enforce "privileged" policy to this namespace:
+    kubectl label --overwrite ns <sysdig-namespace> pod-security.kubernetes.io/enforce=privileged
+Otherwise you're ok to go.
 {{ end }}

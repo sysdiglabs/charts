@@ -7,6 +7,10 @@ global:
   gke:
     # true here enables the deployment on gke autopilot clusters
     autopilot: false
+    ephemeralStorage: "500Mi"
+  image:
+    pullSecrets: []
+    pullPolicy: IfNotPresent
 
 namespace: ""
 
@@ -19,11 +23,11 @@ image:
 
   registry: quay.io
   repository: sysdig/agent
-  tag: 12.13.0
+  tag: 12.15.0
   # Specify a imagePullPolicy
   # Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
   # ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
-  pullPolicy: IfNotPresent
+  pullPolicy:
   # Optionally specify an array of imagePullSecrets.
   # Secrets must be manually created in the namespace.
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -74,6 +78,8 @@ resourceProfile: small
 gke:
   # true here enables the deployment on gke autopilot clusters
   autopilot: false
+  createPriorityClass: false
+  ephemeralStorage: "500Mi"
 
 rbac:
   # true here enables creation of rbac resources

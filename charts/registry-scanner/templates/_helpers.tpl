@@ -46,8 +46,9 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 Selector labels
 */}}
 {{- define "registry-scanner.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "registry-scanner.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/name: {{ include "registry-scanner.name" . }}
+app.kubernetes.io/component: {{ include "registry-scanner.name" . }}-orchestrator
 {{- end }}
 
 {{/*

@@ -39,6 +39,10 @@ data:
       allowListMemberAccountIDs:
         {{- toYaml .Values.config.aws.allowListMemberAccountIDs | nindent 8}}
       {{- end }}
+      {{- if .Values.config.aws.allowListRegions }}
+      allowListRegions:
+        {{- toYaml .Values.config.aws.allowListRegions | nindent 8}}
+      {{- end }}
     secure:
       baseUrl: {{ default "https://secure.sysdig.com" .Values.config.secureBaseURL }}
       apiToken: from-secret

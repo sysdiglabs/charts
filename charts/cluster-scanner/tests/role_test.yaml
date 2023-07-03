@@ -1,0 +1,57 @@
+suite: deployment
+templates:
+  - ../templates/role.yaml
+values:
+  - ../values.yaml
+release:
+  name: test-release
+  namespace: test-ns
+
+tests:
+  - it: "generates correct Role"
+    asserts:
+      - equal:
+          path: metadata.name
+          value: test-release-cluster-scanner
+      - equal:
+          path: metadata.namespace
+          value: test-ns
+      - isSubset:
+          path: rules[0]
+          content:
+            apiGroups: ["", "coordination.k8s.io"]
+            resources:
+              - "leases"
+            resourceNames:
+              - test-release-cluster-scanner
+            verbs: ["*"]
+      - isSubset:
+          path: rules[1]
+          content:
+            apiGroups: ["", "coordination.k8s.io"]
+            resources:
+              - "leases"
+            verbs: ["create"]
+      - isSubset:
+          path: rules[2]
+          content:
+            apiGroups: ["*"]
+            resources:
+              - "endpoints"
+            verbs: ["get", "watch", "list"]
+      - isSubset:
+          path: rules[3]
+          content:
+            apiGroups: ["*"]
+            resources:
+              - "endpoints"
+            resourceNames:
+              - test-release-cluster-scanner
+            verbs: ["*"]
+  - it: "overrides lease name if set for Role"
+    set:
+      runtimeStatusIntegrator.leaderElectionLeaseNameOverride: my-override
+    asserts:
+      - equal:
+          path: rules[0].resourceNames[0]
+          value: my-override

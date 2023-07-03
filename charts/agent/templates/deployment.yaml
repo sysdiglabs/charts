@@ -5,8 +5,8 @@ metadata:
   name: {{ template "agent.fullname" . }}
   namespace: {{ include "agent.namespace" . }}
   labels:
-{{ include "agent.labels" . | indent 4 }}
-{{ include "agent.deploymentLabels" . | indent 4 }}
+    {{- include "agent.labels" . | nindent 4 }}
+    {{- include "agent.deploymentLabels" . | nindent 4 }}
 spec:
   progressDeadlineSeconds: {{ .Values.delegatedAgentDeployment.deployment.progressDeadlineSeconds }}
   replicas: {{ .Values.delegatedAgentDeployment.deployment.replicas}}
@@ -19,10 +19,10 @@ spec:
 {{ toYaml .Values.delegatedAgentDeployment.deployment.updateStrategy | indent 4 }}
   template:
     metadata:
-      labels:
-{{ include "agent.labels" . | indent 8 }}
-{{ include "agent.deploymentLabels" . | indent 8 }}
       name: {{ include "agent.fullname" . }}
+      labels:
+        {{- include "agent.labels" . | nindent 8 }}
+        {{- include "agent.deploymentLabels" . | nindent 8 }}
     spec:
       {{- if .Values.delegatedAgentDeployment.deployment.nodeSelector }}
       nodeSelector:
@@ -30,7 +30,7 @@ spec:
       {{- end }}
       affinity:
       {{- if .Values.delegatedAgentDeployment.deployment.affinity }}
-{{ toYaml .Values.delegatedAgentDeployment.deployment.affinity | nindent 8 }}
+        {{ toYaml .Values.delegatedAgentDeployment.deployment.affinity | nindent 8 }}
       {{- else }}
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -54,18 +54,18 @@ spec:
       {{- end }}
       {{- if .Values.image.pullSecrets }}
       imagePullSecrets:
-      {{ toYaml .Values.image.pullSecrets }}
+        {{- toYaml .Values.image.pullSecrets | nindent 8 }}
+      {{- else if .Values.global.image.pullSecrets }}
+      imagePullSecrets:
+        {{- toYaml .Values.global.image.pullSecrets | nindent 8 }}
       {{- end }}
       containers:
         - name: sysdig-cointerface
           image: {{ template "agent.image" . }}
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.image.pullPolicy | default .Values.global.image.pullPolicy }}
           resources:
-{{ toYaml .Values.delegatedAgentDeployment.deployment.resources | indent 12 }}
+            {{ toYaml .Values.delegatedAgentDeployment.deployment.resources | nindent 12 }}
           securityContext:
-            capabilities:
-              drop:
-                - ALL
             privileged: true
             runAsNonRoot: false
             runAsUser: 0
@@ -83,8 +83,8 @@ spec:
             value: {{ .Values.timezone }}
             {{- end }}
           {{- range $key, $value := .Values.delegatedAgentDeployment.deployment.env }}
-          - name: "{{ $key }}"
-            value: "{{ $value }}"
+          - name: {{ $key | quote }}
+            value: {{ $value | quote }}
           {{- end }}
           {{- if (.Values.proxy.httpProxy | default .Values.global.proxy.httpProxy) }}
           - name: http_proxy
@@ -105,28 +105,12 @@ spec:
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
           volumeMounts:
-            {{- if include "agent.gke.autopilot" . }}
-            - mountPath: /host/etc/os-release
-              name: osrel
-              readOnly: true
-            {{- else }}
-            - mountPath: /host/etc
-              name: etc-vol
-              readOnly: true
-            {{- end }}
+          {{- /* Always requested */}}
             - mountPath: /host/dev
               name: dev-vol
             - mountPath: /host/proc
               name: proc-vol
               readOnly: true
-            - mountPath: /host/run
-              name: run-vol
-            - mountPath: /host/var/run
-              name: varrun-vol
-            {{- if not (include "agent.gke.autopilot" .) }}
-            - mountPath: /host/var/lib
-              name: varlib-vol
-            {{- end}}
             - mountPath: /dev/shm
               name: dshm
             - mountPath: /opt/draios/etc/kubernetes/config
@@ -135,9 +119,93 @@ spec:
               name: sysdig-agent-secrets
             - mountPath: /etc/podinfo
               name: podinfo
-            {{- if .Values.extraVolumes.mounts }}
-{{ toYaml .Values.extraVolumes.mounts | indent 12 }}
+
+          {{- /* Slim = false, Autopilot = false */}}
+          {{- if and (not .Values.slim.enabled) (not (include "agent.gke.autopilot" .)) }}
+            - mountPath: /etc/modprobe.d
+              name: modprobe-d
+              readOnly: true
+            - mountPath: /host/etc
+              name: etc-vol
+              readOnly: true
+            - mountPath: /host/boot
+              name: boot-vol
+              readOnly: true
+            - mountPath: /host/lib/modules
+              name: modules-vol
+              readOnly: true
+            - mountPath: /host/usr
+              name: usr-vol
+              readOnly: true
+            - mountPath: /host/var/lib
+              name: varlib-vol
+            - mountPath: /host/run
+              name: run-vol
+            - mountPath: /host/var/run
+              name: varrun-vol
+            {{- if (include "agent.ebpfEnabled" .) }}
+            - mountPath: /root/.sysdig
+              name: bpf-probes
+            - mountPath: /sys/kernel/debug
+              name: sys-tracing
+              readOnly: true
             {{- end }}
+          {{- end }}
+
+          {{- /* Slim = true, Autopilot = false */}}
+          {{- if and (.Values.slim.enabled) (not (include "agent.gke.autopilot" .)) }}
+            - mountPath: /host/etc
+              name: etc-vol
+              readOnly: true
+            - mountPath: /host/var/lib
+              name: varlib-vol
+            - mountPath: /host/run
+              name: run-vol
+            - mountPath: /host/var/run
+              name: varrun-vol
+            {{- if (include "agent.ebpfEnabled" .) }}
+            - mountPath: /root/.sysdig
+              name: bpf-probes
+            - mountPath: /sys/kernel/debug
+              name: sys-tracing
+              readOnly: true
+            {{- end }}
+          {{- end }}
+
+          {{- /* Slim = false, Autopilot = true */}}
+          {{- if and (not .Values.slim.enabled) (include "agent.gke.autopilot" .) }}
+            - mountPath: /host/etc/os-release
+              name: osrel
+              readOnly: true
+            - mountPath: /host/boot
+              name: boot-vol
+              readOnly: true
+            - mountPath: /host/lib/modules
+              name: modules-vol
+              readOnly: true
+            - mountPath: /host/usr
+              name: usr-vol
+              readOnly: true
+            - mountPath: /host/run
+              name: run-vol
+            - mountPath: /host/var/run
+              name: varrun-vol
+          {{- end }}
+
+          {{- /* Slim = true, Autopilot = true */}}
+          {{- if and (.Values.slim.enabled) (include "agent.gke.autopilot" .) }}
+            - mountPath: /host/etc/os-release
+              name: osrel
+              readOnly: true
+            - mountPath: /host/var/run/containerd/containerd.sock
+              name: containerdsock-vol
+            - mountPath: /root/.sysdig
+              name: bpf-probes
+          {{- end }}
+
+          {{- if .Values.extraVolumes.mounts }}
+            {{ toYaml .Values.extraVolumes.mounts | nindent 12 }}
+          {{- end }}
       hostPID: true
       schedulerName: default-scheduler
       dnsPolicy: ClusterFirstWithHostNet
@@ -145,79 +213,135 @@ spec:
       serviceAccountName: {{ template "agent.serviceAccountName" .}}
       terminationGracePeriodSeconds: 5
       tolerations:
-{{ toYaml .Values.tolerations | indent 8 }}
+        {{ toYaml .Values.tolerations | nindent 8 }}
       volumes:
-        - hostPath:
-            path: /etc/modprobe.d
-            type: ""
-          name: modprobe-d
-        - hostPath:
-            path: /etc/os-release
-            type: FileOrCreate
-          name: osrel
-        - emptyDir:
-            medium: Memory
-          name: dshm
-        - hostPath:
-            path: /etc
-            type: ""
-          name: etc-vol
-        - hostPath:
+      {{- /* Always requested */}}
+        - name: dev-vol
+          hostPath:
             path: /dev
-            type: ""
-          name: dev-vol
-        - hostPath:
+        - name: proc-vol
+          hostPath:
             path: /proc
-            type: ""
-          name: proc-vol
-        - hostPath:
-            path: /boot
-            type: ""
-          name: boot-vol
-        - hostPath:
-            path: /lib/modules
-            type: ""
-          name: modules-vol
-        - hostPath:
-            path: /usr
-            type: ""
-          name: usr-vol
-        - hostPath:
-            path: /run
-            type: ""
-          name: run-vol
-        - hostPath:
-            path: /var/run
-            type: ""
-          name: varrun-vol
-        {{- if not (include "agent.gke.autopilot" .) }}
-        - hostPath:
-            path: /var/lib
-            type: ""
-          name: varlib-vol
-        {{- end }}
-        {{- if .Values.extraVolumes.volumes }}
-{{ toYaml .Values.extraVolumes.volumes | indent 8 }}
-        {{- end }}
-        - configMap:
-            defaultMode: 420
+        - name: dshm
+          emptyDir:
+            medium: Memory
+        - name: sysdig-agent-config
+          configMap:
             name: {{ printf "%s-deployment" (include "agent.configmapName" . ) | trunc 63 | trimSuffix "-" }}
             optional: true
-          name: sysdig-agent-config
         - name: sysdig-agent-secrets
           secret:
-            defaultMode: 420
-            secretName: sysdig-agent
-        - downwardAPI:
+            {{- if not ( include "agent.accessKeySecret" . ) }}
+            secretName: {{ template "agent.fullname" . }}
+            {{- else }}
+            secretName: {{ include "agent.accessKeySecret" . }}
+            {{- end }}
+        - name: podinfo
+          downwardAPI:
             defaultMode: 420
             items:
-              - fieldRef:
-                  apiVersion: v1
-                  fieldPath: metadata.namespace
-                path: namespace
-              - fieldRef:
-                  apiVersion: v1
-                  fieldPath: metadata.name
-                path: name
-          name: podinfo
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.name
+              path: name
+
+      {{- /* Slim = false, Autopilot = false */}}
+      {{- if and (not .Values.slim.enabled) (not (include "agent.gke.autopilot" .)) }}
+        - name: modprobe-d
+          hostPath:
+            path: /etc/modprobe.d
+        - name: etc-vol
+          hostPath:
+            path: /etc
+        - name: boot-vol
+          hostPath:
+            path: /boot
+        - name: modules-vol
+          hostPath:
+            path: /lib/modules
+        - name: usr-vol
+          hostPath:
+            path: /usr
+        - name: varlib-vol
+          hostPath:
+            path: /var/lib
+        - name: run-vol
+          hostPath:
+            path: /run
+        - name: varrun-vol
+          hostPath:
+            path: /var/run
+        {{- if (include "agent.ebpfEnabled" .) }}
+        - name: bpf-probes
+          emptyDir: {}
+        - name: sys-tracing
+          hostPath:
+            path: /sys/kernel/debug
+        {{- end }}
+      {{- end }}
+
+      {{- /* Slim = true, Autopilot = false */}}
+      {{- if and (.Values.slim.enabled) (not (include "agent.gke.autopilot" .)) }}
+        - name: etc-vol
+          hostPath:
+            path: /etc
+        - name: varlib-vol
+          hostPath:
+            path: /var/lib
+        - name: run-vol
+          hostPath:
+            path: /run
+        - name: varrun-vol
+          hostPath:
+            path: /var/run
+        {{- if (include "agent.ebpfEnabled" .) }}
+        - name: bpf-probes
+          emptyDir: {}
+        - name: sys-tracing
+          hostPath:
+            path: /sys/kernel/debug
+        {{- end }}
+      {{- end }}
+
+      {{- /* Slim = false, Autopilot = true */}}
+      {{- if and (not .Values.slim.enabled) (include "agent.gke.autopilot" .) }}
+        - name: osrel
+          hostPath:
+            path: /etc/os-release
+        - name: boot-vol
+          hostPath:
+            path: /boot
+        - name: modules-vol
+          hostPath:
+            path: /lib/modules
+        - name: usr-vol
+          hostPath:
+            path: /usr
+        - name: run-vol
+          hostPath:
+            path: /run
+        - name: varrun-vol
+          hostPath:
+            path: /var/run
+      {{- end }}
+
+      {{- /* Slim = true, Autopilot = true */}}
+      {{- if and (.Values.slim.enabled) (include "agent.gke.autopilot" .) }}
+        - name: osrel
+          hostPath:
+            path: /etc/os-release
+        - name: containerdsock-vol
+          hostPath:
+            path: /var/run/containerd/containerd.sock
+        - name: bpf-probes
+          emptyDir: {}
+      {{- end }}
+
+      {{- if .Values.extraVolumes.volumes }}
+        {{ toYaml .Values.extraVolumes.volumes | nindent 8 }}
+      {{- end }}
 {{- end }}

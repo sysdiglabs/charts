@@ -32,3 +32,39 @@ tests:
           content:
             name: FOO
             value: bar
+  - it: sets default labels
+    set:
+      scanOnStart:
+        enabled: true
+    asserts:
+      - equal:
+          path: metadata.labels['app.kubernetes.io/component']
+          value: registry-scanner-orchestrator
+      - equal:
+          path: spec.template.metadata.labels['app.kubernetes.io/component']
+          value: registry-scanner-orchestrator
+  - it: ttlSecondsAfterFinished default value is set
+    set:
+      scanOnStart:
+        enabled: true
+    asserts:
+      - equal:
+          path: spec.ttlSecondsAfterFinished
+          value: 3600
+  - it: ttlSecondsAfterFinished is set
+    set:
+      config.scan.orchestrator.ttlSecondsAfterFinished: '0'
+      scanOnStart:
+        enabled: true
+    asserts:
+      - equal:
+          path: spec.ttlSecondsAfterFinished
+          value: 0
+  - it: ttlSecondsAfterFinished is unset
+    set:
+      config.scan.orchestrator.ttlSecondsAfterFinished: ''
+      scanOnStart:
+        enabled: true
+    asserts:
+      - isNull:
+          path: spec.ttlSecondsAfterFinished

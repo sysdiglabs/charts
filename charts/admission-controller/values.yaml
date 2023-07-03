@@ -14,6 +14,10 @@ global:
     region: "us1"
   # Global HTTP Proxy settings.
   proxy: {}
+  # Global image settings.
+  image:
+    pullSecrets: []
+    pullPolicy: IfNotPresent
 
 # **required**
 # <br/> Cluster Name which appear on Secure UI
@@ -49,13 +53,13 @@ sysdig:
   existingSecureAPITokenSecret: ""
 
   # Sysdig URL.<br/>
-  # - Default https://secure.sysdig.com is for the us-east region.<br/>
-  # - For us-west use https://us2.app.sysdig.com<br/>
-  # - For European Union, use https://eu1.app.sysdig.com<br/>
-  # - For APAC, use https://app.au1.sysdig.com<br/>
-  # - For US4 (our west Google cloud region) use https://app.us4.sysdig.com<br/>
+  # - Default secure.sysdig.com is for the us-east region.<br/>
+  # - For us-west use us2.app.sysdig.com<br/>
+  # - For European Union, use eu1.app.sysdig.com<br/>
+  # - For APAC, use app.au1.sysdig.com<br/>
+  # - For US4 (our west Google cloud region) use app.us4.sysdig.com<br/>
   # - For on-prem, your own enpoints<br/>
-  url: ""
+  apiEndpoint: ""
 
 features:
   # Enable K8s Audit detections with Falco rules
@@ -147,7 +151,7 @@ webhook:
     # Webhook image registry
     repository: sysdig/admission-controller
     # PullPolicy for Webhook image
-    pullPolicy: IfNotPresent
+    pullPolicy:
     # Override the default image tag. If not specified, it defaults to appVersion in Chart.yaml
     tag:
     # Specify the image digest value.  If set, this value is used instead of the tag value.
@@ -284,7 +288,7 @@ scanner:
     # Scanner image repository
     repository: sysdig/inline-scan-service
     # PullPolicy for Scanner image
-    pullPolicy: IfNotPresent
+    pullPolicy:
     # Scanner image tag
     tag: 0.0.13
     # Specify the image digest value.  If set, this value is used instead of the tag value.

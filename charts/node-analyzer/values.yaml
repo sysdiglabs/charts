@@ -10,6 +10,9 @@ global:
   gke:
     # true here enables the deployment on gke autopilot clusters
     autopilot: false
+  image:
+    pullSecrets: []
+    pullPolicy: IfNotPresent
 
 image:
   # This is a hack to support RELATED_IMAGE_<identifier> feature in Helm based
@@ -19,22 +22,14 @@ image:
   overrideValue:
 
   registry: quay.io
-  # Specify a imagePullPolicy
-  # Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
-  # ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
-  pullPolicy: IfNotPresent
-  # Optionally specify an array of imagePullSecrets.
-  # Secrets must be manually created in the namespace.
-  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-  #
-  pullSecrets: {}
-  #   - name: myRegistrKeySecretName
 
 gke:
   # true here enables the deployment on gke autopilot clusters
   autopilot: false
 
 daemonset:
+  # Specify custom annotations for the DaemonSet
+  annotations: {}
   # Allow the DaemonSet to set labels
   labels: {}
   # Perform rolling updates by default in the DaemonSet agent
@@ -45,6 +40,7 @@ daemonset:
     # You can also customize maxUnavailable
     rollingUpdate:
       maxUnavailable: 1
+      maxSurge:
 
 rbac:
   # true here enables creation of rbac resources
@@ -169,9 +165,9 @@ nodeAnalyzer:
     deploy: true
     image:
       repository: sysdig/node-image-analyzer
-      tag: 0.1.25
+      tag: 0.1.27
       digest:
-      pullPolicy: IfNotPresent
+      pullPolicy:
 
     # The Docker socket path.
     # If a custom path is specified, ensure it is correctly mounted from the host inside the container.
@@ -222,9 +218,9 @@ nodeAnalyzer:
     deploy: true
     image:
       repository: sysdig/host-analyzer
-      tag: 0.1.15
+      tag: 0.1.16
       digest:
-      pullPolicy: IfNotPresent
+      pullPolicy:
 
     # The scanning schedule specification for the host analyzer expressed as a crontab string such as “5 4 * * *”.
     # The default value of @dailydefault instructs the analyzer to automatically pick a schedule that will start
@@ -255,7 +251,7 @@ nodeAnalyzer:
       repository: sysdig/compliance-benchmark-runner
       tag: 1.1.0.8
       digest:
-      pullPolicy: IfNotPresent
+      pullPolicy:
 
     resources:
       requests:
@@ -268,13 +264,15 @@ nodeAnalyzer:
     env: {}
 
   runtimeScanner:
-    deploy: false
+    # Note: deploy has been commented so that it will be used as hard override to newEngineOnly flag
+    # but when not set, newEngineOnly will win. Desiderata examples in ./tests/runtimescanner_test.yaml
+    # deploy: false
     probesPort: 7002
     image:
       repository: sysdig/vuln-runtime-scanner
-      tag: 1.4.11
+      tag: "1.5.1"
       digest:
-      pullPolicy: IfNotPresent
+      pullPolicy:
     storageClassName:
     extraMounts: []
     # example for bottlerocket
@@ -311,7 +309,9 @@ nodeAnalyzer:
         repository: sysdig/eveclient-api
         tag: 1.1.0
         digest:
-        pullPolicy: IfNotPresent
+        pullPolicy:
+
+      priorityClassName:
 
       resources:
         requests:
@@ -329,7 +329,7 @@ nodeAnalyzer:
     # but when not set, newEngineOnly will win. Desiderata examples in ./tests/hostscanner_test.yaml
     # deploy: false
 
-    # scanOnStart will make a scann happen at startup.
+    # scanOnStart will make a scan happen at startup.
     # scanOnStart: true
     #
     # dirsToScan is a comma-separated list absolute host paths that should analyzed.
@@ -345,9 +345,9 @@ nodeAnalyzer:
 
     image:
       repository: sysdig/vuln-host-scanner
-      tag: 0.3.9
+      tag: "0.4"
       digest:
-      pullPolicy: IfNotPresent
+      pullPolicy:
 
     resources:
       requests:
@@ -368,9 +368,9 @@ nodeAnalyzer:
     debug: false
     image:
       repository: sysdig/kspm-analyzer
-      tag: 1.22.0
+      tag: 1.25.0
       digest:
-      pullPolicy: IfNotPresent
+      pullPolicy:
 
     resources:
       requests:

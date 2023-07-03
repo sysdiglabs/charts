@@ -28,10 +28,13 @@ spec:
 {{ include "nodeAnalyzer.labels" . | indent 8 }}
     spec:
       serviceAccountName: {{ template "nodeAnalyzer.serviceAccountName" .}}
+      {{- if .Values.nodeAnalyzer.runtimeScanner.eveConnector.priorityClassName }}
+      priorityClassName: {{ .Values.nodeAnalyzer.runtimeScanner.eveConnector.priorityClassName | quote }}
+      {{- end }}
       containers:
       - name: {{ include "nodeAnalyzer.name" . }}-eveconnector-api
         image: {{ template "nodeAnalyzer.image.eveConnector" . }}
-        imagePullPolicy: {{ .Values.nodeAnalyzer.runtimeScanner.eveConnector.image.pullPolicy }}
+        imagePullPolicy: {{ .Values.nodeAnalyzer.runtimeScanner.eveConnector.image.pullPolicy | default .Values.global.image.pullPolicy }}
         ports:
           - name: api
             containerPort: 7000

@@ -9,7 +9,35 @@ Please note that it's automatically updated vía github actions.
 Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
+
 ## Change Log
+# v0.8.1
+* fix for "found definition of rule called <rule> in append mode before the definition of the actual rule"
+
+# v0.8.0
+### New Features
+* **admission-controller,agent,cloud-bench,cloud-connector,cloud-scanning,harbor-scanner-sysdig-secure,kspm-collector,node-analyzer,rapid-response,registry-scanner,sysdig,sysdig-deploy,sysdig-mcm-navmenu,sysdig-stackdriver-bridge** [5d99a03d](https://github.com/sysdiglabs/charts/commit/5d99a03dced132b4771dde1ce5b90b63c518b408): use a PGP private key to sign charts on release ([#1170](https://github.com/sysdiglabs/charts/issues/1170))
+
+# v0.7.25
+* fix: CVE-2023-2253
+* chore(internal): filter out non-related rules files from policies response
+
+# v0.7.24
+* chore: bump scanning/v2/pkg to latest version with correct cache import
+* chore: bump docker dependency, Including fix for github.com/docker/docker CVE-2023-28840 Go vulnerability
+* fix: exceptions for falco engine
+* fix: gcp resourceMgr instantiation
+* feat: compile rules binary statically
+* feat: add query parameter to include preview rules data
+* feat: conform scan result labels to what reporting expects
+* feat: feat: enable retrier for registry
+* fix: make loader append exceptions even if the original did not contain one
+* fix: use insecure skip tls flag in image fetcher, if provided
+* feat: add support for reverse falco exception appending
+* docs: logs for registry-scanner
+* chore: remove xnet vulns
+* chore: remove unused eks/k8s image scanner
+* feat: return the account when authenticating on ecr
 # v0.7.23
 # v0.7.22
 ### Chores

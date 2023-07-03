@@ -10,6 +10,76 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.9.1
+### Documentation
+* **node-analyzer** [d43443a7](https://github.com/sysdiglabs/charts/commit/d43443a732bdbf710e094ea8ad8173d36c2fdc02): DOC-3214 - update for clarity ([#1171](https://github.com/sysdiglabs/charts/issues/1171))
+# v1.9.0
+### New Features
+* **admission-controller,agent,cloud-bench,cloud-connector,cloud-scanning,harbor-scanner-sysdig-secure,kspm-collector,node-analyzer,rapid-response,registry-scanner,sysdig,sysdig-deploy,sysdig-mcm-navmenu,sysdig-stackdriver-bridge** [5d99a03d](https://github.com/sysdiglabs/charts/commit/5d99a03dced132b4771dde1ce5b90b63c518b408): use a PGP private key to sign charts on release ([#1170](https://github.com/sysdiglabs/charts/issues/1170))
+* **kspm-collector,node-analyzer** [880cbc98](https://github.com/sysdiglabs/charts/commit/880cbc9840cacd4c66f939ba1d52a70181408a17): add account ID to Posture ([#1185](https://github.com/sysdiglabs/charts/issues/1185))
+# v1.8.65
+### Chores
+* **sysdig, node-analyzer** [706d562f](https://github.com/sysdiglabs/charts/commit/706d562f3d473f88fd1d257974cd3a127d672a2a): bump sysdig/vuln-runtime-scanner to v1.5.1 ([#1187](https://github.com/sysdiglabs/charts/issues/1187))
+
+    * Runtimescanner bumped to 1.5.1
+- Fix for CVE-2023-2253
+# v1.8.64
+### Bug Fixes
+* **agent,node-analyzer** [e0ef02c2](https://github.com/sysdiglabs/charts/commit/e0ef02c283df3d12cf5d8d2b1b89a61e1fc30807): updateStrategy maxSurge param ([#1166](https://github.com/sysdiglabs/charts/issues/1166))
+# v1.8.63
+### New Features
+* **adminssion-controller,agent,node-analyzer,kspm-collector,rapid-response** [33cad895](https://github.com/sysdiglabs/charts/commit/33cad8952395800e2e453de6bbf81851bfe1c608): pull policy and secrets params uniformity ([#1158](https://github.com/sysdiglabs/charts/issues/1158))
+# v1.8.62
+### Chores
+* **node-analyzer** [9ed5c468](https://github.com/sysdiglabs/charts/commit/9ed5c468d40f8c64f4bc7710996261e9e40e3ec1): bump sysdig/vuln-host-scanner to v0.4 ([#1162](https://github.com/sysdiglabs/charts/issues/1162))
+
+    * * Hostscanner bumped to 0.4
+     * Updated the analyzer to inspect also vendor paths
+     * Added support to apply image based accepts for all versions of the image, that image in a specific registry & repository, as well as a contain string for customized subsets of the environment
+# v1.8.61
+### Chores
+* **sysdig, node-analyzer** [f9c8e102](https://github.com/sysdiglabs/charts/commit/f9c8e1028b4b4e79aba10e72f762f14956d54273): bump sysdig/vuln-runtime-scanner to v1.5 ([#1160](https://github.com/sysdiglabs/charts/issues/1160))
+
+    * * Runtimescanner bumped to 1.5
+     * Updated the analyzer to inspects also vendor paths
+     * Added support to apply image based accepts for all versions of the image, that image in a specific registry & repository, as well as a contain string for customized subsets of the environment
+# v1.8.60
+### Chores
+* **kspm-collector, node-analyzer** [1b347fe8](https://github.com/sysdiglabs/charts/commit/1b347fe80da79b95bfc7b0c4f51dd3cc12a6d0dc): bump KSPM to v1.24.0 ([#1144](https://github.com/sysdiglabs/charts/issues/1144))
+# v1.8.59
+### Chores
+* **node-analyzer** [bf0b4fb4](https://github.com/sysdiglabs/charts/commit/bf0b4fb4f8100daac5fca312fd9622fbae87499d): bump sysdig/vuln-host-scanner to v0.3.10 ([#1126](https://github.com/sysdiglabs/charts/issues/1126))
+# v1.8.58
+### Chores
+* **sysdig, node-analyzer** [601a0685](https://github.com/sysdiglabs/charts/commit/601a0685639cefc10ec9120c74153f4bb2ac2473): bump sysdig/vuln-runtime-scanner to v1.4.12 ([#1127](https://github.com/sysdiglabs/charts/issues/1127))
+# v1.8.57
+### Chores
+* **kspm-collector, node-analyzer** [2807ef4b](https://github.com/sysdiglabs/charts/commit/2807ef4b5e33c587008a84f03c1c26f18e48019b): bump KSPM to v1.23.0  ([#1132](https://github.com/sysdiglabs/charts/issues/1132))
+# v1.8.56
+### New Features
+* **node-analyzer** [0e7f2534](https://github.com/sysdiglabs/charts/commit/0e7f2534b5f6726d275c76d307910f8d909d3749): Update legacy engine HostAnalyzer with security updates ([#1129](https://github.com/sysdiglabs/charts/issues/1129))
+
+    * Security updates (May 2023) for HostAnalyzer. Fixed 1 CVE:
+	* CVE-2023-28840
+# v1.8.55
+### New Features
+* **node-analyzer** [930926ef](https://github.com/sysdiglabs/charts/commit/930926efe251bd171c555d136030f5916a4ba04e): Update legacy engine NIA with security updates ([#1124](https://github.com/sysdiglabs/charts/issues/1124))
+
+    * Security updates (May 2023) for NodeImageAnalyzer. Fixed 2 CVEs:
+	* CVE-2023-30861
+	* CVE-2023-28840
+# v1.8.54
+### New Features
+* [19a5637d](https://github.com/sysdiglabs/charts/commit/19a5637d845bf05d06702955a8fb950f44d1aece): eve-connector priorityclassname added ([#1113](https://github.com/sysdiglabs/charts/issues/1113))
+# v1.8.53
+### New Features
+* **node-analyzer** [729642d1](https://github.com/sysdiglabs/charts/commit/729642d13041aced698901d45f17ade57d109b9a): support settings passed as numbers ([#1093](https://github.com/sysdiglabs/charts/issues/1093))
+# v1.8.52
+### Bug Fixes
+* **node-analyzer** [fd461c10](https://github.com/sysdiglabs/charts/commit/fd461c107d0c6fe3847a920d9851cd55ae566625): allow custom annotations on node analyzer daemonset ([#1097](https://github.com/sysdiglabs/charts/issues/1097))
+# v1.8.51
+### Bug Fixes
+* **node-analyzer** [539e0a7](https://github.com/sysdiglabs/charts/commit/539e0a7b8641529e1276d0bca31a159256b4d720): Remove pullPolicy and pullSecrets duplicated entry ([#967](https://github.com/sysdiglabs/charts/issues/967))
 # v1.8.50
 ### Chores
 * **sysdig, node-analyzer** [a7564db](https://github.com/sysdiglabs/charts/commit/a7564dbac2f879064e000ef780b71ebc3d4463a7): bump sysdig/vuln-runtime-scanner to v1.4.11 ([#1061](https://github.com/sysdiglabs/charts/issues/1061))

@@ -3,79 +3,81 @@
 # Declare variables to be passed into your templates.
 
 cronjob:
-  # Cronjob expression for registry scan scheduling (you can check https://crontab.guru/ for help)
+  # The cronjob expression for registry scan scheduling. See https://crontab.guru/ for help.
   schedule: "0 6 * * 6"
-  # Number of failed job history to keep on the cluster.
+  # The number of failed job history to keep on the cluster.
   failedJobsHistoryLimit: 5
-  # Number of successful job history to keep on the cluster.
+  # The number of successful job history to keep on the cluster.
   successfulJobsHistoryLimit: 2
-  # Restart policy for a failed registry-scan execution.
+  # The restart policy for a failed registry scan execution.
   restartPolicy: Never
 
 # Specify a volume claim to write the final JSON report there instead of standard output.
 reportToPersistentVolumeClaim: ""
 
 config:
-  # log level. use either trace,debug,info,error
+  # The log level. Use one of the following: trace, debug, info, error.
   logging: "info"
-  # URL of the registry to scan.
+  # The URL of the registry to scan.
   registryURL: ""
-  # API URL of the registry to scan. This is required if your registry type is Artifactory.
+  # The API URL of the registry to scan. This is required if your registry type is Artifactory.
   registryApiUrl: ""
-  # Username for registry authentication.
+  # The username for registry authentication.
   registryUser: ""
-  # Password for registry authentication.
+  # The password for registry authentication.
   registryPassword: ""
-  # Mandatory.<br/>Registry Type. Supported types: artifactory, ecr, icr, acr, quay, harbor, and dockerv2.
+  # Mandatory.<br/>The registry Type. Supported types: artifactory, ecr, icr, acr, quay, harbor, and dockerv2.
   registryType: ""
-  # AccountID - Only for ICR registry type.
+  # The account ID. Applicable only for ICR registry type.
   registryAccountId: ""
-  # ICR IAM API - Only for ICR registry type.
+  # The ICR IAM API. Applicable only for ICR registry type.
   icrIamApi: ""
-  # Ignore TLS certificate for IAM API - Only for ICR registry type.
+  # Ignore TLS certificate for IAM API. Applicable only for ICR registry type.
   icrIamApiSkipTLS: false
   aws:
-    # AWS Credentials AccessKeyID.
+    # The AWS credentials: `AccessKeyId`.
     accessKeyId: ""
-    # AWS Credentials: SecretAccessKey.
+    # The AWS credentials: `SecretAccessKey`.
     secretAccessKey: ""
-    # AWS Region.
+    # For single account. It is the region where the registry is located.
     region: "us-east-1"
-    # Management role arn to be used to impersonate over the member accounts
+    # The management role ARN to be used to impersonate the member accounts.
     managementAccountRoleARN:
-    # Member account role name (available in all member accounts) to dig into their registries
+    # The member account role name (available in all member accounts) to dig into their registries.
     memberAccountsRoleName: "OrganizationAccountAccessRole"
-    # Organization account ids in which to perform the registry scan. If not configured, the scan will be performed in all the member accounts of the organization.
+    # The organization account IDs in which the registry scan is performed. If not configured, the scan will be performed in all the member accounts of the organization.
     allowListMemberAccountIDs: []
+    # For organizational accounts. It is the AWS regions where the registries are located. If not configured, the scan will be performed in all available regions.
+    allowListRegions: []
   # Ignore registry TLS certificate errors (self-signed, etc.).
   registrySkipTLS: false
   # **required**
-  # <br/> Sysdig Secure Base URL
+  # <br/> The Sysdig Secure Base URL.
   secureBaseURL: https://secure.sysdig.com
   # **required**
-  # <br/> API Token to access Sysdig Secure.
+  # <br/> The API Token to access Sysdig Secure.
   secureAPIToken: ""
-  # Sysdig Secure is on-prem installation (vs SaaS).
+  # Specify that Sysdig Secure installation is on-prem.
   secureOnPrem: false
   # Ignore Sysdig Secure TLS certificate errors.
   secureSkipTLS: false
-  # Max number of parallel job scan workers to spawn
+  # The maximum number of parallel job scan workers to spawn.
   maxWorkers: 5
   filter:
-    # List of regular expressions.<br/>Images matching any of these expressions are *always* included when scanning.
+    # The list of regular expressions.<br/>Images matching any of these expressions are *always* included when scanning.
     include: []
-    # List of regular expressions.<br/>Images matching any of these expressions are excluded when scanning.
+    # The list of regular expressions.<br/>Images matching any of these expressions are excluded when scanning.
     exclude: []
-    # Based on its creation date, excludes images older than specified number of days.<br/>Maximum 365
+    # Based on its creation date, excludes images older than the specified number of days.<br/>The maximum is 365 days.
     maxAgeDays: 90
-    # Based on its creation date, newer ones take precedence, maximum number of tags to scan per repository.<br/>Maximum 10
+    # Based on its creation date, newer ones take precedence, the maximum number of tags to scan per repository.<br/>The maximum is 50.
     maxTagsPerRepository: 5
-    # Number of repositories to scan per registry.<br/>Maximum Value 1000
+    # The number of repositories to scan per registry.<br/>The maximum is 10000.
     maxRepositoriesPerRegistry: 500
   scan:
     # Override the default image for the inline scanner job.
     inlineScanImage: ""
-    # Security context for Inline Scanner container.
+    # The security context for the Inline Scanner container.
     securityContext: {}
       # capabilities:
       #   drop:
@@ -83,24 +85,27 @@ config:
       # readOnlyRootFilesystem: true
       # runAsNonRoot: true
       # runAsUser: 1000
+    orchestrator:
+      # The Time to Live (ttl) value for the orchestrator job. Provide an empty value to accept the default.
+      ttlSecondsAfterFinished: 3600
     jobs:
-      # TTL for scanner jobs
+      # The ttl value for scanner worker jobs.
       ttlSecondsAfterFinished: 600
       resources:
         requests:
-          # Resource request memory for scanner job
+          # The memory request for the scanner job.
           memory: 500Mi
-          # Resource request CPU for scanner job
+          # The CPU request for the scanner job.
           cpu: 500m
         limits:
-          # Resource limit memory for scanner job
+          # The memory limit for the scanner job.
           memory: 2Gi
-      # Size limit for the emptyDir volume used by the scanner job.<br/>
+      # The size limit for the emptyDir volume used by the scanner job.<br/>
       # This volume is used to store both the vulnerability database and the image to scan.
       temporaryVolumeSizeLimit: 2Gi
 ssl:
   ca:
-    # For outbound connections
+    # For outbound connections.
     # <br/>List of PEM-encoded x509 certificate authority.
     certs: []
       # Example of certificate
@@ -125,57 +130,57 @@ ssl:
       #     MMNlTAQ9fvdNOTzZntye0PQYR5SR13E=
       #     -----END CERTIFICATE-----
 
-# Additional labels to add to CronJob and Scanning Jobs. Custom labels to be added to kubernetes manifests of all resources created.
+# The additional labels to add to CronJob and Scanning Jobs. The custom labels to be added to kubernetes manifests of all the resources created.
 customLabels: {}
 
 proxy:
-  # URL of the proxy for HTTP connections, or empty if not using proxy (sets the http_proxy environment variable).
+  # The URL of the proxy for HTTP connections. Leave it empty if not using proxy, which sets the `http_proxy` environment variable.
   httpProxy:
-  #  URL of the proxy for HTTPS connections, or empty if not using proxy (sets the https_proxy environment variable).
+  #  The URL of the proxy for HTTPS connections. Leave it empty if not using proxy, which sets the `https_proxy` environment variable.
   httpsProxy:
-  # Comma-separated list of domain extensions proxy should not be used for.
-  # Include in noProxy the internal IP of the kubeapi server,
-  # and you probably need to add your registry if it is inside the cluster
+  # The comma-separated list of domain extensions proxy should not be used for.
+  # Include the internal IP of the Kube API server in noProxy configuration.
+  # You probably need to add your registry if it is inside the cluster.
   noProxy:
 
 image:
-  # Sysdig Registry Scanner image registry.
+  # The Sysdig Registry Scanner image registry.
   registry: quay.io
-  # Sysdig Registry Scanner image repository
+  # The Sysdig Registry Scanner image repository.
   repository: sysdig/registry-scanner
-  # Registry Scanner image tag. If empty, default to appVersion in Chart.yaml.
+  # The Registry Scanner image tag. If empty, default to appVersion in `Chart.yaml`.
   tag:
-  # PullPolicy for Registry Scanner image.
+  # The PullPolicy for Registry Scanner image.
   pullPolicy: Always
 
 serviceAccount:
-  # Specifies whether a service account should be created
+  # Specifies whether a service account should be created.
   create: true
-  # Extra annotations to add to the service account
+  # The additional annotations to add to the service account.
   annotations: {}
   # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
+  # If the value is not set and create is set to `true`, a name is generated using the fullname template.
   name: ""
 
 # The image pull secrets.
 imagePullSecrets: []
-# Chart name override
+# The chart name override
 nameOverride: ""
-# Chart fullname override
+# The chart fullname override
 fullnameOverride: ""
 
-# Specify the name of a Kubernetes secret containing 'secureAPIToken', 'registryUser', and 'registryPassword' entries or
-# if you are using ecr as registryType, add also 'accessKeyId', 'secretAccessKey' and 'region' entries.
+# Specify the name of a Kubernetes secret containing 'secureAPIToken', 'registryUser', and 'registryPassword' entries.
+# If you are using `ecr` as `registryType`, ensure that you add 'accessKeyId', 'secretAccessKey', and 'region' entries.
 existingSecretName: ""
 
-# Registry scanner pod annotations
+# Pod annotations for the Registry scanner.
 podAnnotations: {}
 
-# Security context for Registry Scanner pod
+# Security context for Registry Scanner pod.
 podSecurityContext: {}
   # fsGroup: 2000
 
-# Security context for Registry Scanner container
+# Security context for Registry Scanner container.
 securityContext: {}
   # capabilities:
   #   drop:
@@ -184,10 +189,10 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
-# Resource limits for main registry scanner orchestrator.<br/>For scanner job resources use `config.scan.jobs.resources`
+# Resource limits for the main registry scanner orchestrator.<br/>For scanner job resources, use `config.scan.jobs.resources`.
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
+  # choice for the user. This choice supports the environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
   # limits:
@@ -197,7 +202,7 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
 
-# Configure nodeSelector for scheduling the registry scanner pod.
+# Configure `nodeSelector` for scheduling the registry scanner pod.
 nodeSelector: {}
 # Configure tolerations for scheduling the registry scanner pod.
 tolerations: []
@@ -205,17 +210,17 @@ tolerations: []
 affinity: {}
 
 scanOnStart:
-  # true/false on whether to start the post-install scanner job, in addition to the cronjob.
-  # <br/>beware that concurrencyPolicy does not work on jobs (only cronjobs).
-  # <br/>always check if there is any scanning running and if so, remove it.
+  # Specify whether to start the post-install scanner job, in addition to the cronjob.
+  # <br/>Beware that `concurrencyPolicy` does not work on jobs (only cronjobs).
+  # <br/>Always check for active scanning and if so, remove it.
   enabled: false
-  # Name of the job created for the post-install scanner job
+  # The name of the job created for the post-install scanner job
   jobName: "registry-scanner-start-test"
-  # true/false on whether to launch the job as a post-install helm hook.
-  # <br/>mainly for testing purpose
+  # Specify whether to launch the job as a post-install helm hook.
+  # <br/>Used for testing purpose.
   asPostInstallHook: false
 
-# Extra environment variables to be set
+# The additional environment variables to be set.
 extraEnvVars: []
 #  - name: FOO
 #    value: bar

@@ -1,0 +1,184 @@
+suite: Test the drift prevention configuration
+templates:
+  - templates/configmap.yaml
+  - templates/NOTES.txt
+tests:
+  - it: Drift prevention must not be overridden by default
+    asserts:
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            drift_killer
+    template: templates/configmap.yaml
+
+  - it: Drift prevention must be false when is monitor only
+    set:
+      secure:
+        enabled: false
+      monitor:
+        enabled: true
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            drift_killer:
+              enabled: false
+    template: templates/configmap.yaml
+
+  - it: Drift prevention must be false when is secure_light
+    set:
+      sysdig:
+        settings:
+          feature:
+            mode: secure_light
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            drift_killer:
+              enabled: false
+    template: templates/configmap.yaml
+
+  - it: Drift prevention must be false when is running on GKE Autopilot
+    set:
+      gke:
+        autopilot: true
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            drift_killer:
+              enabled: false
+    template: templates/configmap.yaml
+
+  - it: Drift prevention must be enabled when explicitally set
+    set:
+      sysdig:
+        settings:
+          drift_killer:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            drift_killer:
+              enabled: true
+    template: templates/configmap.yaml
+
+  - it: Test "drift_killer" feature message is visible when enabled and we run in GKE with autopilot enabled
+    set:
+      sysdig:
+        settings:
+          drift_killer:
+            enabled: true
+      gke:
+        autopilot: true
+    asserts:
+      - matchRegexRaw:
+          pattern: |-
+            The "drift_killer" feature in agent is not supported when running on GKE Autopilot.
+    template: templates/NOTES.txt
+
+  - it: Test "drift_killer" feature message is not visible when run with gke.autopilot=false
+    set:
+      sysdig:
+        settings:
+          drift_killer:
+            enabled: true
+      gke:
+        autopilot: false
+    asserts:
+      - notMatchRegexRaw:
+          pattern: |-
+            The "drift_killer" feature in agent is not supported when running on GKE Autopilot.
+    template: templates/NOTES.txt
+
+  - it: Drift control must not be overridden by default
+    asserts:
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            drift_control
+    template: templates/configmap.yaml
+
+  - it: Drift control must be false when is monitor only
+    set:
+      secure:
+        enabled: false
+      monitor:
+        enabled: true
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            drift_control:
+              enabled: false
+    template: templates/configmap.yaml
+
+  - it: Drift control must be false when is secure_light
+    set:
+      sysdig:
+        settings:
+          feature:
+            mode: secure_light
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            drift_control:
+              enabled: false
+    template: templates/configmap.yaml
+
+  - it: Drift control must be false when is running on GKE Autopilot
+    set:
+      gke:
+        autopilot: true
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            drift_control:
+              enabled: false
+    template: templates/configmap.yaml
+
+  - it: Drift control must be enabled when explicitally set
+    set:
+      sysdig:
+        settings:
+          drift_control:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            drift_control:
+              enabled: true
+    template: templates/configmap.yaml
+
+  - it: Test "drift_control" feature message is visible when enabled and we run in GKE with autopilot enabled
+    set:
+      sysdig:
+        settings:
+          drift_control:
+            enabled: true
+      gke:
+        autopilot: true
+    asserts:
+      - matchRegexRaw:
+          pattern: |-
+            The "drift_control" feature in agent is not supported when running on GKE Autopilot.
+    template: templates/NOTES.txt
+
+  - it: Test "drift_control" feature message is not visible when run with gke.autopilot=false
+    set:
+      sysdig:
+        settings:
+          drift_control:
+            enabled: true
+      gke:
+        autopilot: false
+    asserts:
+      - notMatchRegexRaw:
+          pattern: |-
+            The "drift_control" feature in agent is not supported when running on GKE Autopilot.
+    template: templates/NOTES.txt

@@ -22,9 +22,12 @@ spec:
       labels:
         {{- include "admissionController.scanner.labels" . | nindent 8 }}
     spec:
-      {{- with .Values.scanner.imagePullSecrets }}
+      {{- if .Values.scanner.imagePullSecrets }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
+        {{- toYaml .Values.scanner.imagePullSecrets | nindent 8 }}
+      {{- else if .Values.global.image.pullSecrets }}
+      imagePullSecrets:
+        {{- toYaml .Values.global.image.pullSecrets | nindent 8 }}
       {{- end }}
       serviceAccountName: {{ include "admissionController.scanner.serviceAccountName" . }}
       securityContext:
@@ -70,7 +73,7 @@ spec:
             - --auth_secure_token
             {{- end }}
           {{- end }}
-          imagePullPolicy: {{ .Values.scanner.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.scanner.image.pullPolicy | default .Values.global.image.pullPolicy }}
           env:
             {{- if (or (include "scanner.httpProxy" .) (include "scanner.httpsProxy" .) (include "scanner.noProxy" .) )}}
             - name: HTTP_PROXY

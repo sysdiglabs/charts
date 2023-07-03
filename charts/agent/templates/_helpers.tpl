@@ -77,22 +77,27 @@ Sysdig Agent resources
 */}}
 {{- define "agent.resources" -}}
 {{/* we have same values for both requests and limits */}}
-{{- $smallCpu := "1000m" -}}
-{{- $smallMemory := "1024Mi" -}}
-{{- $mediumCpu := "3000m" -}}
-{{- $mediumMemory := "3072Mi" -}}
-{{- $largeCpu := "5000m" -}}
-{{- $largeMemory := "6144Mi" -}}
+{{- $resourceProfiles := dict "small"  (dict "cpu" "1000m"
+                                             "memory" "1024Mi")
+                              "medium" (dict "cpu" "3000m"
+                                             "memory" "3072Mi")
+                              "large"  (dict "cpu" "5000m"
+                                             "memory" "6144Mi") }}
+{{- $resources := dict }}
 {{/* custom resource values are always first-class */}}
 {{- if .Values.resources }}
-{{- toYaml .Values.resources -}}
-{{- else if eq .Values.resourceProfile "small" -}}
-{{- printf "requests:\n  cpu: %s\n  memory: %s\nlimits:\n  cpu: %s\n  memory: %s" $smallCpu $smallMemory $smallCpu $smallMemory -}}
-{{- else if eq .Values.resourceProfile "medium" -}}
-{{- printf "requests:\n  cpu: %s\n  memory: %s\nlimits:\n  cpu: %s\n  memory: %s" $mediumCpu $mediumMemory $mediumCpu $mediumMemory -}}
-{{- else if eq .Values.resourceProfile "large" -}}
-{{- printf "requests:\n  cpu: %s\n  memory: %s\nlimits:\n  cpu: %s\n  memory: %s" $largeCpu $largeMemory $largeCpu $largeMemory -}}
-{{- end -}}
+    {{- toYaml .Values.resources -}}
+{{- else if not (hasKey $resourceProfiles .Values.resourceProfile) }}
+    {{- fail (printf "Invalid value for resourceProfile provided: %s" .Values.resourceProfile) }}
+{{- else if and (include "agent.gke.autopilot" .) (not .Values.slim.enabled) }}
+    {{- toYaml (dict "requests" (dict "cpu" "250m"
+                                      "ephemeral-storage" .Values.gke.ephemeralStorage
+                                      "memory" "512Mi")
+                     "limits"   (get $resourceProfiles .Values.resourceProfile)) }}
+{{- else }}
+    {{- toYaml (dict "requests" (get $resourceProfiles .Values.resourceProfile)
+                     "limits"   (get $resourceProfiles .Values.resourceProfile)) }}
+{{- end }}
 {{- end -}}
 
 {{/*
@@ -215,9 +220,9 @@ it can act like a boolean
 {{- end -}}
 
 {{/*
-to help the maxUnavailable and max_parallel_cold_starts pick a reasonable value depending on the cluster size
+to help the maxUnavailable pick a reasonable value depending on the cluster size
 */}}
-{{- define "agent.parallelStarts" -}}
+{{- define "agent.maxUnavailable" -}}
 {{- if .Values.daemonset.updateStrategy.rollingUpdate.maxUnavailable -}}
     {{- .Values.daemonset.updateStrategy.rollingUpdate.maxUnavailable -}}
 {{- else if eq .Values.resourceProfile "small" -}}
@@ -417,6 +422,7 @@ agent config to prevent a backend push from enabling them after installation.
     {{- if (not .Values.secure.enabled) }}
         {{- range $secureFeature := (list
             "commandlines_capture"
+            "drift_control"
             "drift_killer"
             "falcobaseline"
             "memdump"
@@ -426,6 +432,7 @@ agent config to prevent a backend push from enabling them after installation.
         {{- end }}
     {{ else if $secureLightMode }}
         {{- range $secureFeature := (list
+            "drift_control"
             "drift_killer"
             "falcobaseline"
             "memdump"
@@ -434,29 +441,20 @@ agent config to prevent a backend push from enabling them after installation.
         {{- end }}
     {{- end }}
     {{- if include "agent.gke.autopilot" . }}
+        {{- $_ := set $secureConfig "drift_control" (dict "enabled" false) }}
         {{- $_ := set $secureConfig "drift_killer" (dict "enabled" false) }}
     {{- end }}
 {{ toYaml $secureConfig }}
 {{- end }}
 
-{{ define "agent.k8sColdStart" }}
-    {{- $k8sColdStartBlock := dict }}
+{{ define "agent.leaderElection" }}
     {{- if .Values.leaderelection.enable }}
-        {{- range $key, $val := (dict "enabled" true
-                                      "enforce_leader_election" true
-                                      "namespace" (include "agent.namespace" .)) }}
-            {{- $_ := set $k8sColdStartBlock $key $val }}
-        {{- end }}
+        {{- $leaderElectionBlock := (dict "enabled" true
+                                          "enforce_leader_election" true
+                                          "namespace" (include "agent.namespace" .)) }}
+
+        {{- $_ := merge .Values.sysdig.settings (dict "k8s_coldstart" $leaderElectionBlock) }}
     {{- end }}
-    {{- if not .Values.sysdig.settings.k8s_coldstart }}
-        {{- if not .Values.delegatedAgentDeployment.enabled }}
-            {{- $_ := set $k8sColdStartBlock "max_parallel_cold_starts" (include "agent.parallelStarts" . | int ) }}
-        {{- else }}
-            {{- $_ := set $k8sColdStartBlock "max_parallel_cold_starts" 1 }}
-        {{- end }}
-    {{- end }}
-    {{- $completeBlock := dict "k8s_coldstart" $k8sColdStartBlock }}
-    {{- toYaml $completeBlock }}
 {{- end }}
 
 {{ define "agent.connectionSettings" }}

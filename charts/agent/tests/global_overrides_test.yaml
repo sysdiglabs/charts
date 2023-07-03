@@ -2,6 +2,7 @@ suite: Test subchart overrides of global values
 templates:
   - secrets.yaml
   - daemonset.yaml
+  - deployment.yaml
 tests:
   - it: check value of accessKey without local chart override - local value provided
     set:
@@ -79,3 +80,116 @@ tests:
             secret:
               secretName: override_key
         template: daemonset.yaml
+
+  - it: check imagePullSecrets with global
+    set:
+      global:
+        image:
+          pullSecrets:
+            - test: test
+        sysdig:
+          accessKeySecret: standard_key
+      delegatedAgentDeployment:
+        enabled: true
+    asserts:
+      - equal:
+          path: spec.template.spec.imagePullSecrets
+          value:
+            - test: test
+    templates:
+      - deployment.yaml
+      - daemonset.yaml
+
+  - it: check imagePullSecrets with legacy
+    set:
+      global:
+        sysdig:
+          accessKeySecret: standard_key
+      image:
+        pullSecrets:
+          - name: test
+      delegatedAgentDeployment:
+        enabled: true
+    asserts:
+      - equal:
+          path: spec.template.spec.imagePullSecrets
+          value:
+            - name: test
+    templates:
+      - deployment.yaml
+      - daemonset.yaml
+
+  - it: check imagePullSecrets with local override
+    set:
+      global:
+        image:
+          pullSecrets:
+            - test: test
+        sysdig:
+          accessKeySecret: standard_key
+      image:
+        pullSecrets:
+          - name: test_override
+      delegatedAgentDeployment:
+        enabled: true
+    asserts:
+      - equal:
+          path: spec.template.spec.imagePullSecrets
+          value:
+            - name: test_override
+    templates:
+      - deployment.yaml
+      - daemonset.yaml
+
+  - it: check imagePullPolicy with global
+    set:
+      global:
+        sysdig:
+          accessKeySecret: standard_key
+        image:
+          pullPolicy: Always
+      delegatedAgentDeployment:
+        enabled: true
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].imagePullPolicy
+          value: Always
+    templates:
+      - deployment.yaml
+      - daemonset.yaml
+
+  - it: check imagePullPolicy with legacy
+    set:
+      global:
+        sysdig:
+          accessKeySecret: standard_key
+      image:
+        pullPolicy: Always
+      delegatedAgentDeployment:
+        enabled: true
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].imagePullPolicy
+          value: Always
+    templates:
+      - deployment.yaml
+      - daemonset.yaml
+
+  - it: check imagePullPolicy with local override
+    set:
+      global:
+        image:
+          pullPolicy: Always
+        sysdig:
+          accessKeySecret: standard_key
+      image:
+        pullPolicy: Never
+      delegatedAgentDeployment:
+        enabled: true
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].imagePullPolicy
+          value: Never
+    templates:
+      - deployment.yaml
+      - daemonset.yaml

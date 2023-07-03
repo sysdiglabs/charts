@@ -3,3 +3,6 @@
 
 docs:
   make docs
+
+unit-test-rs:
+    make unit-test-rs
