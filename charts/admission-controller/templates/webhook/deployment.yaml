@@ -47,10 +47,9 @@ spec:
       {{- if .Values.features.kspmAdmissionController}}
         - name: {{.Values.webhook.v2.container.name}}
           image: {{ .Values.webhook.v2.container.image }}
-        
           env:
             - name: DRY_RUN
-              value: "{{.Values.webhook.v2.dryRun}}"            
+              value: "{{.Values.webhook.v2.dryRun}}"
             {{- if (or (include "webhook.httpProxy" .) (include "webhook.httpsProxy" .) (include "webhook.noProxy" .) )}}
             - name: HTTP_PROXY
               value: {{ include "webhook.httpProxy" . }}
@@ -70,7 +69,6 @@ spec:
             - name: cert
               mountPath: /cert
               readOnly: true
-
             - name: configs
               mountPath: /configs
               readOnly: true

@@ -32,7 +32,13 @@ sysdig:
   # (and `AUTH_BEARER_TOKEN` if the scanner is enabled) environment variables.
   # Overrides `global.sysdig.secureAPIToken`
   secureAPIToken: ""
+
+  # **required for KSPM AC**
+  # <br/>Access Key to access Sysdig Secure.
+  # <br/><br/>Either this value or `sysdig.existingAccessKeySecret` is required
+  # Overrides `global.sysdig.accessKey`
   accessKey: ""
+
   # **required**
   # <br/>Existing secret with API Token to access Sysdig Secure
   # <br/>Alternatively, specify the name of a Kubernetes secret containing `SECURE_API_TOKEN` and
@@ -115,7 +121,7 @@ podMonitors:
     labels: {}
     # Annotatons on the scanner PodMonitor
     annotations: {}
-natsURL: ""
+
 webhook:
   v2:
     dryRun: true
@@ -124,9 +130,9 @@ webhook:
     denyOnError: false
     timeoutSeconds: 5
     nats:
-      natsInsecure: "true"
-      natsUrl: "wss://nats-external.sysdig.svc:443" #relplace in real prod
-    container: 
+      insecure: "true"
+      url: ""
+    container:
       name: secure-admission-controller
       port: 7443
       image: quay.io/sysdig/secure-admission-controller:1.25.1-rc
@@ -225,7 +231,7 @@ webhook:
   # Dry Run request
   dryRun: false
   # Log Level - Valid Values are: error, info, debug, trace
-  logLevel: DEBUG
+  logLevel: info
 
   ssl:
     # Reuse existing TLS Secret during chart upgrade
