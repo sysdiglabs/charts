@@ -47,6 +47,12 @@ tests:
         isEmpty:
           path: data.js_server_url
       - equal:
+          path: data.rsi_pprof_enabled
+          value: "false"
+      - equal:
+          path: data.ise_pprof_enabled
+          value: "false"
+      - equal:
           path: data.rsi_leaderelection_lock_name
           value: test-release-cluster-scanner
       - equal:
@@ -291,3 +297,16 @@ tests:
           path: data.cache_redis_sentinel_address
       - isNull:
           path: data.cache_redis_ttl
+
+  - it: "has correct value for pprof_enabled flags when provided"
+    set:
+      global.sysdig.apiHost: "http://test.com"
+      runtimeStatusIntegrator.pprofEnabled: "gigi"
+      imageSbomExtractor.pprofEnabled: "marzullo"
+    asserts:
+      - equal:
+          path: data.rsi_pprof_enabled
+          value: "gigi"
+      - equal:
+          path: data.ise_pprof_enabled
+          value: "marzullo"

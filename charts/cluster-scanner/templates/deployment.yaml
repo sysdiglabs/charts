@@ -51,7 +51,7 @@ spec:
           - name: PROM_PORT
             value: {{ .ports.metrics | quote }}
           - name: PPROF_PORT
-            value: {{ .ports.pprof | quote }}
+            value: {{ .ports.pprof | default "6060" | quote }}
       {{- end }}
           - name: MODE
             valueFrom:
@@ -263,7 +263,7 @@ spec:
           - name: PROM_PORT
             value: {{ .ports.metrics | quote }}
           - name: PPROF_PORT
-            value: {{ .ports.pprof | quote }}
+            value: {{ .ports.pprof | default "6061" | quote }}
       {{- end }}
           - name: LOGGING_LEVEL
             valueFrom:
