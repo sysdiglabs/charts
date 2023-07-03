@@ -203,7 +203,7 @@ webhook:
 
   autoscaling:
     # Min replicas to use while autoscaling the webhook
-    minReplicas: 1
+    minReplicas: 2
     # Max replicas to use while autoscaling the webhook
     maxReplicas: 5
     # Target CPU to use when the number of replicas must be increased
