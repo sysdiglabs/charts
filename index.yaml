@@ -8045,6 +8045,28 @@ entries:
   cluster-scanner:
   - apiVersion: v2
     appVersion: 0.1.0
+    created: "2023-07-04T15:31:06.069652815Z"
+    description: A Helm chart for Kubernetes
+    digest: b0395382f24f98e71b2d9e7c4c6ed0abbdc83bc4e23f0ebc551a53f12276110e
+    home: https://www.sysdig.com/
+    maintainers:
+    - email: lachlan@deis.com
+      name: lachie83
+    - email: jorge.salamero@sysdig.com
+      name: bencer
+    - email: carlos.arilla@sysdig.com
+      name: carillan81
+    - email: yashgiri.goswami@sysdig.com
+      name: yashgiri
+    - email: vittorio.camisa@sysdig.com
+      name: provok
+    name: cluster-scanner
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/cluster-scanner-0.1.2/cluster-scanner-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: 0.1.0
     created: "2023-07-03T14:13:41.661360268Z"
     description: A Helm chart for Kubernetes
     digest: eeebd020b8d4b6fc7ee8ed5c6ee38210217d20a20f2c9472be865609994b069d
@@ -36084,4 +36106,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2023-07-04T08:54:22.663285247Z"
+generated: "2023-07-04T15:31:06.274822007Z"
