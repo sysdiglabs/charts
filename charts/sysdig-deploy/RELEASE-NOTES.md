@@ -1,8 +1,6 @@
 # What's Changed
 
-### Chores
-- **cluster-scanner** [c952eb44](https://github.com/sysdiglabs/charts/commit/c952eb44af7a45d9a09ed447eebc7cc54b5d1f21): added missing CHANGELOG.md, improved cluster scanner chart. ([#1215](https://github.com/sysdiglabs/charts/issues/1215))
 ### New Features
-- **cluster-scanner** [f9d0dc59](https://github.com/sysdiglabs/charts/commit/f9d0dc595b6c7e926021e7be4b02e0a5c9f6a46b): init chart with minimal templates and configuration ([#1056](https://github.com/sysdiglabs/charts/issues/1056))
+- **admission-controller, sysdig-deploy** [120a3676](https://github.com/sysdiglabs/charts/commit/120a3676b81af7c22e21517ddca3be6039b7aa6c): Add logic to toggle enable/disable HPA and set replica count based on that value. ([#1204](https://github.com/sysdiglabs/charts/issues/1204))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.9.7...sysdig-deploy-1.10.1
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.10.1...sysdig-deploy-1.11.0
