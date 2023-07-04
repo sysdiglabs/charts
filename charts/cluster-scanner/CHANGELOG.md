@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.1.2
+### Bug Fixes
+* [72021049](https://github.com/sysdiglabs/charts/commit/720210497940ddd2119491d28dde163f2bdcb55e): adjust RELEASE-NOTES template to avoid extra new lines at the end of the file ([#1216](https://github.com/sysdiglabs/charts/issues/1216))
 # v0.1.1
 ### Chores
 * **cluster-scanner** [c952eb44](https://github.com/sysdiglabs/charts/commit/c952eb44af7a45d9a09ed447eebc7cc54b5d1f21): added missing CHANGELOG.md, improved cluster scanner chart. ([#1215](https://github.com/sysdiglabs/charts/issues/1215))
