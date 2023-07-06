@@ -1,0 +1,86 @@
+suite: Test proxy settings
+templates:
+  - templates/configmap.yaml
+  - templates/daemonset.yaml
+tests:
+  - it: Test container proxy settings
+    set:
+      proxy:
+        httpProxy: 192.168.10.2
+        httpsProxy: 192.168.10.3
+        noProxy: 192.168.10.4
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: http_proxy
+            value: 192.168.10.2
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: https_proxy
+            value: 192.168.10.3
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: no_proxy
+            value: 192.168.10.4
+    templates:
+      - templates/daemonset.yaml
+
+  - it: Test dragent proxy settings
+    set:
+      proxy:
+        httpProxy: https://192.168.10.2:3128
+        httpsProxy: https://192.168.10.2:3128
+    asserts:
+      - matchRegex:
+          path: data["dragent.yaml"]
+          pattern: "proxy_host: 192.168.10.2"
+      - matchRegex:
+          path: data["dragent.yaml"]
+          pattern: "proxy_port: 3128"
+      - matchRegex:
+          path: data["dragent.yaml"]
+          pattern: "ssl: true"
+    templates:
+      - templates/configmap.yaml
+
+  - it: Test dragent proxy settings without SSL
+    set:
+      proxy:
+        httpProxy: http://192.168.10.2:3128
+        httpsProxy: http://192.168.10.2:3128
+    asserts:
+      - matchRegex:
+          path: data["dragent.yaml"]
+          pattern: "proxy_host: 192.168.10.2"
+      - matchRegex:
+          path: data["dragent.yaml"]
+          pattern: "proxy_port: 3128"
+      - matchRegex:
+          path: data["dragent.yaml"]
+          pattern: "ssl: false"
+    templates:
+      - templates/configmap.yaml
+
+  - it: Test dragent proxy settings from sysdig.settings options
+    set:
+      sysdig:
+        settings:
+          http_proxy:
+            proxy_host: 192.168.10.2
+            proxy_port: 3128
+            ssl: false
+    asserts:
+      - matchRegex:
+          path: data["dragent.yaml"]
+          pattern: "proxy_host: 192.168.10.2"
+      - matchRegex:
+          path: data["dragent.yaml"]
+          pattern: "proxy_port: 3128"
+      - matchRegex:
+          path: data["dragent.yaml"]
+          pattern: "ssl: false"
+    templates:
+      - templates/configmap.yaml

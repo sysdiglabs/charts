@@ -43,6 +43,18 @@ data:
 {{- if .Values.global.sysdig.tags }}
     tags: {{ include "agent.tags" . }}
 {{- end }}
+{{- if and (or (.Values.proxy.httpProxy | default .Values.global.proxy.httpProxy) (.Values.proxy.httpsProxy | default .Values.global.proxy.httpsProxy)) (not .Values.sysdig.settings.http_proxy) }}
+    proxy:
+      {{- if contains "https" (.Values.proxy.httpProxy | default .Values.global.proxy.httpProxy) }}
+      proxy_host: {{ .Values.proxy.httpProxy | default .Values.global.proxy.httpProxy | trimPrefix "https://" | splitList ":" | first }}
+      proxy_port: {{ .Values.proxy.httpProxy | default .Values.global.proxy.httpProxy | trimPrefix "https://" | splitList ":" | last }}
+      ssl: true
+      {{- else }}
+      proxy_host: {{ .Values.proxy.httpProxy | default .Values.global.proxy.httpProxy | trimPrefix "http://" | splitList ":" | first }}
+      proxy_port: {{ .Values.proxy.httpProxy | default .Values.global.proxy.httpProxy | trimPrefix "http://" | splitList ":" | last }}
+      ssl: false
+      {{- end }}
+{{- end }}
 {{/* add in the remaining items from sysdig.settings */}}
 {{- if .Values.sysdig.settings }}
 {{- toYaml .Values.sysdig.settings | nindent 4 }}

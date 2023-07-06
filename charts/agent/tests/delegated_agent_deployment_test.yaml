@@ -308,6 +308,48 @@ tests:
       - templates/daemonset.yaml
       - templates/deployment.yaml
 
+  - it: Test dragent proxy settings
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+      proxy:
+        httpProxy: https://192.168.10.2:3128
+        httpsProxy: https://192.168.10.2:3128
+    asserts:
+      - matchRegex:
+          path: data["dragent.yaml"]
+          pattern: "proxy_host: 192.168.10.2"
+      - matchRegex:
+          path: data["dragent.yaml"]
+          pattern: "proxy_port: 3128"
+      - matchRegex:
+          path: data["dragent.yaml"]
+          pattern: "ssl: true"
+    templates:
+      - templates/configmap-deployment.yaml
+      - templates/configmap.yaml
+
+  - it: Test dragent proxy settings without SSL
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+      proxy:
+        httpProxy: http://192.168.10.2:3128
+        httpsProxy: http://192.168.10.2:3128
+    asserts:
+      - matchRegex:
+          path: data["dragent.yaml"]
+          pattern: "proxy_host: 192.168.10.2"
+      - matchRegex:
+          path: data["dragent.yaml"]
+          pattern: "proxy_port: 3128"
+      - matchRegex:
+          path: data["dragent.yaml"]
+          pattern: "ssl: false"
+    templates:
+      - templates/configmap-deployment.yaml
+      - templates/configmap.yaml
+
   - it: Check Deployment and Daemonset labels
     set:
       delegatedAgentDeployment:
