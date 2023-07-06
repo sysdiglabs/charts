@@ -64,8 +64,51 @@ tests:
     templates:
       - templates/configmap.yaml
 
+  - it: Test dragent global proxy settings
+    set:
+      global:
+        proxy:
+          httpProxy: https://192.168.10.102:8080
+          httpsProxy: https://192.168.10.1022:8080
+    asserts:
+      - matchRegex:
+          path: data["dragent.yaml"]
+          pattern: "proxy_host: 192.168.10.102"
+      - matchRegex:
+          path: data["dragent.yaml"]
+          pattern: "proxy_port: 8080"
+      - matchRegex:
+          path: data["dragent.yaml"]
+          pattern: "ssl: true"
+    templates:
+      - templates/configmap.yaml
+
+  - it: Test dragent global proxy settings without SSL
+    set:
+      global:
+        proxy:
+          httpProxy: http://192.168.10.102:8080
+          httpsProxy: http://192.168.10.1022:8080
+    asserts:
+      - matchRegex:
+          path: data["dragent.yaml"]
+          pattern: "proxy_host: 192.168.10.102"
+      - matchRegex:
+          path: data["dragent.yaml"]
+          pattern: "proxy_port: 8080"
+      - matchRegex:
+          path: data["dragent.yaml"]
+          pattern: "ssl: false"
+    templates:
+      - templates/configmap.yaml
+
+
   - it: Test dragent proxy settings from sysdig.settings options
     set:
+      global:
+        proxy:
+          httpProxy: http://192.168.10.102:8080
+          httpsProxy: http://192.168.10.1022:8080
       sysdig:
         settings:
           http_proxy:
