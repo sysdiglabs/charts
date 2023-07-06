@@ -16,11 +16,10 @@ $ pre-commit run -a
 
 ## Overview
 
-This chart deploys the Sysdig Cloud Connector on your Kubernetes cluster, enabling Threat Detection and Image Scanning capabilities for the  AWS, GCP, and Azure Cloud providers.
+{{ .Project.Description }}
 
-Use this method only if your Sysdig representative recommends it to you.
+Use {{ .Project.Name }}]({{ .Project.URL }}) only if your Sysdig representative recommends it to you. For the official installation instruction, see [Install Sysdig Secure for Cloud ](https://docs.sysdig.com/en/docs/installation/sysdig-secure-for-cloud/).
 
-For the official installation instruction, see [Install Sysdig Secure for Cloud ](https://docs.sysdig.com/en/docs/installation/sysdig-secure-for-cloud/).
 
 ### Prerequisites
 
