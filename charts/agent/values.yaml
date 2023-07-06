@@ -205,12 +205,17 @@ sysdig:
     {}
     ### Example: Agent tags
     # tags: linux:ubuntu,dept:dev,local:nyc
-    ### Example: Proxy configuration (see https://docs.sysdig.com/en/enable-http-proxy-for-agents.html)
     # ssl: false
+    ### In general proxy.httpProxy, proxy.httpsProxy or global.proxy.httpProxy, global.proxy.httpsProxy settings would add required proxy settings to dragent.yaml file of the agent as well. For more advanced configuration following proxy settings should be used.
+    ### Example: Advanced Proxy configuration (see https://docs.sysdig.com/en/enable-http-proxy-for-agents.html)
     # http_proxy:
     #   proxy_host: squid.yourdomain.com
     #   proxy_port: 3128
-    #   ssl: false
+    #   proxy_user: sysdig_customer
+    #   proxy_password: 12345
+    #   ssl: true
+    #   ssl_verify_certificate: true
+    #   ca_certificate: /usr/proxy/proxy_cert.crt
 
 secure:
   # true here enables Sysdig Secure: container run-time security & forensics
