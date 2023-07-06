@@ -58,10 +58,13 @@ true
 {{- end }}
 
 {{/*
-Determine whether runtime scanner shall run by including the helper from nodeAnalyzer chart.
-
-Based on: https://github.com/helm/helm/issues/4535#issuecomment-416022809
+Determine whether runtime scanner shall run
 */}}
 {{- define "deployRuntimeScanner" }}
-{{- include "nodeAnalyzer.deployRuntimeScanner" (dict "Chart" (dict "Name" "nodeAnalyzer") "Values" (index .Values "nodeAnalyzer") "Release" .Release "Capabilities" .Capabilities) }}
-{{- end }}
+{{- if (hasKey (.Values.nodeAnalyzer.nodeAnalyzer) "runtimeScanner") }}
+    {{- if and (hasKey .Values.nodeAnalyzer.nodeAnalyzer.runtimeScanner "deploy") (not .Values.nodeAnalyzer.nodeAnalyzer.runtimeScanner.deploy ) }}
+    {{- else if or .Values.nodeAnalyzer.secure.vulnerabilityManagement.newEngineOnly (and (hasKey .Values.nodeAnalyzer.nodeAnalyzer.runtimeScanner "deploy") .Values.nodeAnalyzer.nodeAnalyzer.runtimeScanner.deploy) -}}
+true
+    {{- end -}}
+{{- end -}}
+{{- end -}}
