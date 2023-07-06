@@ -18,7 +18,7 @@ $ pre-commit run -a
 
 {{ .Project.Description }}
 
-Use {{ .Project.Name }}]({{ .Project.URL }}) only if your Sysdig representative recommends it to you. For the official installation instruction, see [Install Sysdig Secure for Cloud ](https://docs.sysdig.com/en/docs/installation/sysdig-secure-for-cloud/).
+Use [{{ .Project.Name }}]({{ .Project.URL }}) only if your Sysdig representative recommends it to you. For the official installation instruction, see [Install Sysdig Secure for Cloud ](https://docs.sysdig.com/en/docs/installation/sysdig-secure-for-cloud/).
 
 
 ### Prerequisites
