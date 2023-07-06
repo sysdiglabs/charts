@@ -26,7 +26,7 @@ data:
 {{- if .Values.global.sysdig.tags }}
     tags: {{ include "agent.tags" . }}
 {{- end }}
-{{- if or (.Values.proxy.httpProxy | default .Values.global.proxy.httpProxy) (.Values.proxy.httpsProxy | default .Values.global.proxy.httpsProxy) }}
+{{- if and (or (.Values.proxy.httpProxy | default .Values.global.proxy.httpProxy) (.Values.proxy.httpsProxy | default .Values.global.proxy.httpsProxy)) (not .Values.sysdig.settings.http_proxy) }}
     proxy:
       {{- if contains "https" (.Values.proxy.httpProxy | default .Values.global.proxy.httpProxy) }}
       proxy_host: {{ .Values.proxy.httpProxy | default .Values.global.proxy.httpProxy | trimPrefix "https://" | splitList ":" | first }}

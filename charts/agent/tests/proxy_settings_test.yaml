@@ -103,7 +103,7 @@ tests:
       - templates/configmap.yaml
 
 
-  - it: Test dragent proxy settings from sysdig.settings options
+  - it: Test dragent proxy settings from sysdig.settings options and not from global settings
     set:
       global:
         proxy:
@@ -114,7 +114,7 @@ tests:
           http_proxy:
             proxy_host: 192.168.10.2
             proxy_port: 3128
-            ssl: false
+            ssl: true
     asserts:
       - matchRegex:
           path: data["dragent.yaml"]
@@ -123,6 +123,48 @@ tests:
           path: data["dragent.yaml"]
           pattern: "proxy_port: 3128"
       - matchRegex:
+          path: data["dragent.yaml"]
+          pattern: "ssl: true"
+      - notMatchRegex:
+          path: data["dragent.yaml"]
+          pattern: "proxy_host: 192.168.10.102"
+      - notMatchRegex:
+          path: data["dragent.yaml"]
+          pattern: "proxy_port: 8080"
+      - notMatchRegex:
+          path: data["dragent.yaml"]
+          pattern: "ssl: false"
+    templates:
+      - templates/configmap.yaml
+
+  - it: Test dragent proxy settings from sysdig.settings options and not from local settings
+    set:
+      proxy:
+        httpProxy: http://192.168.10.102:8080
+        httpsProxy: http://192.168.10.1022:8080
+      sysdig:
+        settings:
+          http_proxy:
+            proxy_host: 192.168.10.2
+            proxy_port: 3128
+            ssl: true
+    asserts:
+      - matchRegex:
+          path: data["dragent.yaml"]
+          pattern: "proxy_host: 192.168.10.2"
+      - matchRegex:
+          path: data["dragent.yaml"]
+          pattern: "proxy_port: 3128"
+      - matchRegex:
+          path: data["dragent.yaml"]
+          pattern: "ssl: true"
+      - notMatchRegex:
+          path: data["dragent.yaml"]
+          pattern: "proxy_host: 192.168.10.102"
+      - notMatchRegex:
+          path: data["dragent.yaml"]
+          pattern: "proxy_port: 8080"
+      - notMatchRegex:
           path: data["dragent.yaml"]
           pattern: "ssl: false"
     templates:
