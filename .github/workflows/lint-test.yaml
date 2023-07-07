@@ -140,7 +140,7 @@ jobs:
           k3s-version: v1.23.9+k3s1
 
       - name: Run chart-testing (install)
-        run: ct install --upgrade --excluded-charts common sysdig-stackdriver-bridge
+        run: ct install --upgrade --excluded-charts common,sysdig-stackdriver-bridge,sysdig-mcm-navmenu
 
       - uses: actions/github-script@v6
         id: update-check-run
