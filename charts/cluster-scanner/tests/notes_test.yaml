@@ -1,0 +1,386 @@
+suite: Test links in the notes section for regions
+templates:
+  - templates/NOTES.txt
+tests:
+  - it: Checking default value no region specified (us1)
+    asserts:
+      - matchRegexRaw:
+          pattern: https://secure.sysdig.com
+
+  - it: Checking region 'us2'
+    set:
+      global:
+        sysdig:
+          region: us2
+    asserts:
+      - matchRegexRaw:
+          pattern: https://us2.app.sysdig.com
+
+  - it: Checking region 'us3'
+    set:
+      global:
+        sysdig:
+          region: us3
+    asserts:
+      - matchRegexRaw:
+          pattern: https://app.us3.sysdig.com
+
+  - it: Checking region 'us4'
+    set:
+      global:
+        sysdig:
+          region: us4
+    asserts:
+      - matchRegexRaw:
+          pattern: https://app.us4.sysdig.com
+
+  - it: Checking region 'eu1'
+    set:
+      global:
+        sysdig:
+          region: eu1
+    asserts:
+      - matchRegexRaw:
+          pattern: https://eu1.app.sysdig.com
+
+  - it: Checking region 'au1'
+    set:
+      global:
+        sysdig:
+          region: au1
+    asserts:
+      - matchRegexRaw:
+          pattern: https://app.au1.sysdig.com
+
+  - it: Checking region 'au-syd-monitor'
+    set:
+      global:
+        sysdig:
+          region: au-syd-monitor
+    asserts:
+      - matchRegexRaw:
+          pattern: https://au-syd.security-compliance-secure.cloud.ibm.com
+
+  - it: Checking region 'br-sao-monitor'
+    set:
+      global:
+        sysdig:
+          region: br-sao-monitor
+    asserts:
+      - matchRegexRaw:
+          pattern: https://br-sao.security-compliance-secure.cloud.ibm.com
+
+  - it: Checking region 'ca-tor-monitor'
+    set:
+      global:
+        sysdig:
+          region: ca-tor-monitor
+    asserts:
+      - matchRegexRaw:
+          pattern: https://ca-tor.security-compliance-secure.cloud.ibm.com
+
+  - it: Checking region 'eu-de-monitor'
+    set:
+      global:
+        sysdig:
+          region: eu-de-monitor
+    asserts:
+      - matchRegexRaw:
+          pattern: https://eu-de.security-compliance-secure.cloud.ibm.com
+
+  - it: Checking region 'eu-gb-monitor'
+    set:
+      global:
+        sysdig:
+          region: eu-gb-monitor
+    asserts:
+      - matchRegexRaw:
+          pattern: https://eu-gb.security-compliance-secure.cloud.ibm.com
+
+  - it: Checking region 'jp-osa-monitor'
+    set:
+      global:
+        sysdig:
+          region: jp-osa-monitor
+    asserts:
+      - matchRegexRaw:
+          pattern: https://jp-osa.security-compliance-secure.cloud.ibm.com
+
+  - it: Checking region 'jp-tok-monitor'
+    set:
+      global:
+        sysdig:
+          region: jp-tok-monitor
+    asserts:
+      - matchRegexRaw:
+          pattern: https://jp-tok.security-compliance-secure.cloud.ibm.com
+
+  - it: Checking region 'us-east-monitor'
+    set:
+      global:
+        sysdig:
+          region: us-east-monitor
+    asserts:
+      - matchRegexRaw:
+          pattern: https://us-east.security-compliance-secure.cloud.ibm.com
+
+  - it: Checking region 'us-south-monitor'
+    set:
+      global:
+        sysdig:
+          region: us-south-monitor
+    asserts:
+      - matchRegexRaw:
+          pattern: https://us-south.security-compliance-secure.cloud.ibm.com
+
+  - it: Checking region 'au-syd-private-monitor'
+    set:
+      global:
+        sysdig:
+          region: au-syd-private-monitor
+    asserts:
+      - matchRegexRaw:
+          pattern: https://private.au-syd.security-compliance-secure.cloud.ibm.com
+
+  - it: Checking region 'br-sao-private-monitor'
+    set:
+      global:
+        sysdig:
+          region: br-sao-private-monitor
+    asserts:
+      - matchRegexRaw:
+          pattern: https://private.br-sao.security-compliance-secure.cloud.ibm.com
+
+  - it: Checking region 'ca-tor-private-monitor'
+    set:
+      global:
+        sysdig:
+          region: ca-tor-private-monitor
+    asserts:
+      - matchRegexRaw:
+          pattern: https://private.ca-tor.security-compliance-secure.cloud.ibm.com
+
+  - it: Checking region 'eu-de-private-monitor'
+    set:
+      global:
+        sysdig:
+          region: eu-de-private-monitor
+    asserts:
+      - matchRegexRaw:
+          pattern: https://private.eu-de.security-compliance-secure.cloud.ibm.com
+
+  - it: Checking region 'eu-gb-private-monitor'
+    set:
+      global:
+        sysdig:
+          region: eu-gb-private-monitor
+    asserts:
+      - matchRegexRaw:
+          pattern: https://private.eu-gb.security-compliance-secure.cloud.ibm.com
+
+  - it: Checking region 'jp-osa-private-monitor'
+    set:
+      global:
+        sysdig:
+          region: jp-osa-private-monitor
+    asserts:
+      - matchRegexRaw:
+          pattern: https://private.jp-osa.security-compliance-secure.cloud.ibm.com
+
+  - it: Checking region 'jp-tok-private-monitor'
+    set:
+      global:
+        sysdig:
+          region: jp-tok-private-monitor
+    asserts:
+      - matchRegexRaw:
+          pattern: https://private.jp-tok.security-compliance-secure.cloud.ibm.com
+
+  - it: Checking region 'us-east-private-monitor'
+    set:
+      global:
+        sysdig:
+          region: us-east-private-monitor
+    asserts:
+      - matchRegexRaw:
+          pattern: https://private.us-east.security-compliance-secure.cloud.ibm.com
+
+  - it: Checking region 'us-south-private-monitor'
+    set:
+      global:
+        sysdig:
+          region: us-south-private-monitor
+    asserts:
+      - matchRegexRaw:
+          pattern: https://private.us-south.security-compliance-secure.cloud.ibm.com
+
+  - it: Checking region 'au-syd-secure'
+    set:
+      global:
+        sysdig:
+          region: au-syd-secure
+    asserts:
+      - matchRegexRaw:
+          pattern: https://au-syd.security-compliance-secure.cloud.ibm.com
+
+  - it: Checking region 'br-sao-secure'
+    set:
+      global:
+        sysdig:
+          region: br-sao-secure
+    asserts:
+      - matchRegexRaw:
+          pattern: https://br-sao.security-compliance-secure.cloud.ibm.com
+
+  - it: Checking region 'ca-tor-secure'
+    set:
+      global:
+        sysdig:
+          region: ca-tor-secure
+    asserts:
+      - matchRegexRaw:
+          pattern: https://ca-tor.security-compliance-secure.cloud.ibm.com
+
+  - it: Checking region 'eu-de-secure'
+    set:
+      global:
+        sysdig:
+          region: eu-de-secure
+    asserts:
+      - matchRegexRaw:
+          pattern: https://eu-de.security-compliance-secure.cloud.ibm.com
+
+  - it: Checking region 'eu-gb-secure'
+    set:
+      global:
+        sysdig:
+          region: eu-gb-secure
+    asserts:
+      - matchRegexRaw:
+          pattern: https://eu-gb.security-compliance-secure.cloud.ibm.com
+
+  - it: Checking region 'jp-osa-secure'
+    set:
+      global:
+        sysdig:
+          region: jp-osa-secure
+    asserts:
+      - matchRegexRaw:
+          pattern: https://jp-osa.security-compliance-secure.cloud.ibm.com
+
+  - it: Checking region 'jp-tok-secure'
+    set:
+      global:
+        sysdig:
+          region: jp-tok-secure
+    asserts:
+      - matchRegexRaw:
+          pattern: https://jp-tok.security-compliance-secure.cloud.ibm.com
+
+  - it: Checking region 'us-east-secure'
+    set:
+      global:
+        sysdig:
+          region: us-east-secure
+    asserts:
+      - matchRegexRaw:
+          pattern: https://us-east.security-compliance-secure.cloud.ibm.com
+
+  - it: Checking region 'us-south-secure'
+    set:
+      global:
+        sysdig:
+          region: us-south-secure
+    asserts:
+      - matchRegexRaw:
+          pattern: https://us-south.security-compliance-secure.cloud.ibm.com
+
+  - it: Checking region 'au-syd-private-secure'
+    set:
+      global:
+        sysdig:
+          region: au-syd-private-secure
+    asserts:
+      - matchRegexRaw:
+          pattern: https://private.au-syd.security-compliance-secure.cloud.ibm.com
+
+  - it: Checking region 'br-sao-private-secure'
+    set:
+      global:
+        sysdig:
+          region: br-sao-private-secure
+    asserts:
+      - matchRegexRaw:
+          pattern: https://private.br-sao.security-compliance-secure.cloud.ibm.com
+
+  - it: Checking region 'ca-tor-private-secure'
+    set:
+      global:
+        sysdig:
+          region: ca-tor-private-secure
+    asserts:
+      - matchRegexRaw:
+          pattern: https://private.ca-tor.security-compliance-secure.cloud.ibm.com
+
+  - it: Checking region 'eu-de-private-secure'
+    set:
+      global:
+        sysdig:
+          region: eu-de-private-secure
+    asserts:
+      - matchRegexRaw:
+          pattern: https://private.eu-de.security-compliance-secure.cloud.ibm.com
+
+  - it: Checking region 'eu-gb-private-secure'
+    set:
+      global:
+        sysdig:
+          region: eu-gb-private-secure
+    asserts:
+      - matchRegexRaw:
+          pattern: https://private.eu-gb.security-compliance-secure.cloud.ibm.com
+
+  - it: Checking region 'jp-osa-private-secure'
+    set:
+      global:
+        sysdig:
+          region: jp-osa-private-secure
+    asserts:
+      - matchRegexRaw:
+          pattern: https://private.jp-osa.security-compliance-secure.cloud.ibm.com
+
+  - it: Checking region 'jp-tok-private-secure'
+    set:
+      global:
+        sysdig:
+          region: jp-tok-private-secure
+    asserts:
+      - matchRegexRaw:
+          pattern: https://private.jp-tok.security-compliance-secure.cloud.ibm.com
+
+  - it: Checking region 'us-east-private-secure'
+    set:
+      global:
+        sysdig:
+          region: us-east-private-secure
+    asserts:
+      - matchRegexRaw:
+          pattern: https://private.us-east.security-compliance-secure.cloud.ibm.com
+
+  - it: Checking region 'us-south-private-secure'
+    set:
+      global:
+        sysdig:
+          region: us-south-private-secure
+    asserts:
+      - matchRegexRaw:
+          pattern: https://private.us-south.security-compliance-secure.cloud.ibm.com
+
+  - it: Checking incorrect region 'ap3' should fail
+    set:
+      global:
+        sysdig:
+          region: ap3
+    asserts:
+      - failedTemplate:
+          errorMessage: "raw: global.sysdig.region=ap3 provided is not recognized."

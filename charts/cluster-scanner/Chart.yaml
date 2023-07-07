@@ -4,7 +4,7 @@ description: A Helm chart for Kubernetes
 
 type: application
 
-version: 0.1.3
+version: 0.2.0
 
 appVersion: "0.1.0"
 home: https://www.sysdig.com/
@@ -20,4 +20,8 @@ maintainers:
     email: yashgiri.goswami@sysdig.com
   - name: provok
     email: vittorio.camisa@sysdig.com
-dependencies: []
+dependencies:
+  - name: common
+    # repository: https://charts.sysdig.com
+    repository: file://../common
+    version: ~1.0.0
