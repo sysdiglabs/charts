@@ -80,7 +80,7 @@ tests:
           of: ConfigMap
       - equal:
           path: data.collector_endpoint
-          value: https://au-syd.sysdig-secure.cloud.ibm.com
+          value: https://au-syd.security-compliance-secure.cloud.ibm.com
 
   - it: Checking region 'br-sao-monitor'
     set:
@@ -92,7 +92,7 @@ tests:
           of: ConfigMap
       - equal:
           path: data.collector_endpoint
-          value: https://br-sao.sysdig-secure.cloud.ibm.com
+          value: https://br-sao.security-compliance-secure.cloud.ibm.com
 
   - it: Checking region 'ca-tor-monitor'
     set:
@@ -104,7 +104,7 @@ tests:
           of: ConfigMap
       - equal:
           path: data.collector_endpoint
-          value: https://ca-tor.sysdig-secure.cloud.ibm.com
+          value: https://ca-tor.security-compliance-secure.cloud.ibm.com
 
   - it: Checking region 'eu-de-monitor'
     set:
@@ -116,7 +116,7 @@ tests:
           of: ConfigMap
       - equal:
           path: data.collector_endpoint
-          value: https://eu-de.sysdig-secure.cloud.ibm.com
+          value: https://eu-de.security-compliance-secure.cloud.ibm.com
 
   - it: Checking region 'eu-gb-monitor'
     set:
@@ -128,7 +128,7 @@ tests:
           of: ConfigMap
       - equal:
           path: data.collector_endpoint
-          value: https://eu-gb.sysdig-secure.cloud.ibm.com
+          value: https://eu-gb.security-compliance-secure.cloud.ibm.com
 
   - it: Checking region 'jp-osa-monitor'
     set:
@@ -140,7 +140,7 @@ tests:
           of: ConfigMap
       - equal:
           path: data.collector_endpoint
-          value: https://jp-osa.sysdig-secure.cloud.ibm.com
+          value: https://jp-osa.security-compliance-secure.cloud.ibm.com
 
   - it: Checking region 'jp-tok-monitor'
     set:
@@ -152,7 +152,7 @@ tests:
           of: ConfigMap
       - equal:
           path: data.collector_endpoint
-          value: https://jp-tok.sysdig-secure.cloud.ibm.com
+          value: https://jp-tok.security-compliance-secure.cloud.ibm.com
 
   - it: Checking region 'us-east-monitor'
     set:
@@ -164,7 +164,7 @@ tests:
           of: ConfigMap
       - equal:
           path: data.collector_endpoint
-          value: https://us-east.sysdig-secure.cloud.ibm.com
+          value: https://us-east.security-compliance-secure.cloud.ibm.com
 
   - it: Checking region 'us-south-monitor'
     set:
@@ -176,7 +176,7 @@ tests:
           of: ConfigMap
       - equal:
           path: data.collector_endpoint
-          value: https://us-south.sysdig-secure.cloud.ibm.com
+          value: https://us-south.security-compliance-secure.cloud.ibm.com
 
   - it: Checking region 'au-syd-private-monitor'
     set:
@@ -188,7 +188,7 @@ tests:
           of: ConfigMap
       - equal:
           path: data.collector_endpoint
-          value: https://private.au-syd.sysdig-secure.cloud.ibm.com
+          value: https://private.au-syd.security-compliance-secure.cloud.ibm.com
 
   - it: Checking region 'br-sao-private-monitor'
     set:
@@ -200,7 +200,7 @@ tests:
           of: ConfigMap
       - equal:
           path: data.collector_endpoint
-          value: https://private.br-sao.sysdig-secure.cloud.ibm.com
+          value: https://private.br-sao.security-compliance-secure.cloud.ibm.com
 
   - it: Checking region 'ca-tor-private-monitor'
     set:
@@ -212,7 +212,7 @@ tests:
           of: ConfigMap
       - equal:
           path: data.collector_endpoint
-          value: https://private.ca-tor.sysdig-secure.cloud.ibm.com
+          value: https://private.ca-tor.security-compliance-secure.cloud.ibm.com
 
   - it: Checking region 'eu-de-private-monitor'
     set:
@@ -224,7 +224,7 @@ tests:
           of: ConfigMap
       - equal:
           path: data.collector_endpoint
-          value: https://private.eu-de.sysdig-secure.cloud.ibm.com
+          value: https://private.eu-de.security-compliance-secure.cloud.ibm.com
 
   - it: Checking region 'eu-gb-private-monitor'
     set:
@@ -236,7 +236,7 @@ tests:
           of: ConfigMap
       - equal:
           path: data.collector_endpoint
-          value: https://private.eu-gb.sysdig-secure.cloud.ibm.com
+          value: https://private.eu-gb.security-compliance-secure.cloud.ibm.com
 
   - it: Checking region 'jp-osa-private-monitor'
     set:
@@ -248,7 +248,7 @@ tests:
           of: ConfigMap
       - equal:
           path: data.collector_endpoint
-          value: https://private.jp-osa.sysdig-secure.cloud.ibm.com
+          value: https://private.jp-osa.security-compliance-secure.cloud.ibm.com
 
   - it: Checking region 'jp-tok-private-monitor'
     set:
@@ -260,7 +260,7 @@ tests:
           of: ConfigMap
       - equal:
           path: data.collector_endpoint
-          value: https://private.jp-tok.sysdig-secure.cloud.ibm.com
+          value: https://private.jp-tok.security-compliance-secure.cloud.ibm.com
 
   - it: Checking region 'us-east-private-monitor'
     set:
@@ -272,7 +272,7 @@ tests:
           of: ConfigMap
       - equal:
           path: data.collector_endpoint
-          value: https://private.us-east.sysdig-secure.cloud.ibm.com
+          value: https://private.us-east.security-compliance-secure.cloud.ibm.com
 
   - it: Checking region 'us-south-private-monitor'
     set:
@@ -284,7 +284,7 @@ tests:
           of: ConfigMap
       - equal:
           path: data.collector_endpoint
-          value: https://private.us-south.sysdig-secure.cloud.ibm.com
+          value: https://private.us-south.security-compliance-secure.cloud.ibm.com
 
   - it: Checking region 'au-syd-secure'
     set:
@@ -296,7 +296,7 @@ tests:
           of: ConfigMap
       - equal:
           path: data.collector_endpoint
-          value: https://au-syd.sysdig-secure.cloud.ibm.com
+          value: https://au-syd.security-compliance-secure.cloud.ibm.com
 
   - it: Checking region 'br-sao-secure'
     set:
@@ -308,7 +308,7 @@ tests:
           of: ConfigMap
       - equal:
           path: data.collector_endpoint
-          value: https://br-sao.sysdig-secure.cloud.ibm.com
+          value: https://br-sao.security-compliance-secure.cloud.ibm.com
 
   - it: Checking region 'ca-tor-secure'
     set:
@@ -320,7 +320,7 @@ tests:
           of: ConfigMap
       - equal:
           path: data.collector_endpoint
-          value: https://ca-tor.sysdig-secure.cloud.ibm.com
+          value: https://ca-tor.security-compliance-secure.cloud.ibm.com
 
   - it: Checking region 'eu-de-secure'
     set:
@@ -332,7 +332,7 @@ tests:
           of: ConfigMap
       - equal:
           path: data.collector_endpoint
-          value: https://eu-de.sysdig-secure.cloud.ibm.com
+          value: https://eu-de.security-compliance-secure.cloud.ibm.com
 
   - it: Checking region 'eu-gb-secure'
     set:
@@ -344,7 +344,7 @@ tests:
           of: ConfigMap
       - equal:
           path: data.collector_endpoint
-          value: https://eu-gb.sysdig-secure.cloud.ibm.com
+          value: https://eu-gb.security-compliance-secure.cloud.ibm.com
 
   - it: Checking region 'jp-osa-secure'
     set:
@@ -356,7 +356,7 @@ tests:
           of: ConfigMap
       - equal:
           path: data.collector_endpoint
-          value: https://jp-osa.sysdig-secure.cloud.ibm.com
+          value: https://jp-osa.security-compliance-secure.cloud.ibm.com
 
   - it: Checking region 'jp-tok-secure'
     set:
@@ -368,7 +368,7 @@ tests:
           of: ConfigMap
       - equal:
           path: data.collector_endpoint
-          value: https://jp-tok.sysdig-secure.cloud.ibm.com
+          value: https://jp-tok.security-compliance-secure.cloud.ibm.com
 
   - it: Checking region 'us-east-secure'
     set:
@@ -380,7 +380,7 @@ tests:
           of: ConfigMap
       - equal:
           path: data.collector_endpoint
-          value: https://us-east.sysdig-secure.cloud.ibm.com
+          value: https://us-east.security-compliance-secure.cloud.ibm.com
 
   - it: Checking region 'us-south-secure'
     set:
@@ -392,7 +392,7 @@ tests:
           of: ConfigMap
       - equal:
           path: data.collector_endpoint
-          value: https://us-south.sysdig-secure.cloud.ibm.com
+          value: https://us-south.security-compliance-secure.cloud.ibm.com
 
   - it: Checking region 'au-syd-private-secure'
     set:
@@ -404,7 +404,7 @@ tests:
           of: ConfigMap
       - equal:
           path: data.collector_endpoint
-          value: https://private.au-syd.sysdig-secure.cloud.ibm.com
+          value: https://private.au-syd.security-compliance-secure.cloud.ibm.com
 
   - it: Checking region 'br-sao-private-secure'
     set:
@@ -416,7 +416,7 @@ tests:
           of: ConfigMap
       - equal:
           path: data.collector_endpoint
-          value: https://private.br-sao.sysdig-secure.cloud.ibm.com
+          value: https://private.br-sao.security-compliance-secure.cloud.ibm.com
 
   - it: Checking region 'ca-tor-private-secure'
     set:
@@ -428,7 +428,7 @@ tests:
           of: ConfigMap
       - equal:
           path: data.collector_endpoint
-          value: https://private.ca-tor.sysdig-secure.cloud.ibm.com
+          value: https://private.ca-tor.security-compliance-secure.cloud.ibm.com
 
   - it: Checking region 'eu-de-private-secure'
     set:
@@ -440,7 +440,7 @@ tests:
           of: ConfigMap
       - equal:
           path: data.collector_endpoint
-          value: https://private.eu-de.sysdig-secure.cloud.ibm.com
+          value: https://private.eu-de.security-compliance-secure.cloud.ibm.com
 
   - it: Checking region 'eu-gb-private-secure'
     set:
@@ -452,7 +452,7 @@ tests:
           of: ConfigMap
       - equal:
           path: data.collector_endpoint
-          value: https://private.eu-gb.sysdig-secure.cloud.ibm.com
+          value: https://private.eu-gb.security-compliance-secure.cloud.ibm.com
 
   - it: Checking region 'jp-osa-private-secure'
     set:
@@ -464,7 +464,7 @@ tests:
           of: ConfigMap
       - equal:
           path: data.collector_endpoint
-          value: https://private.jp-osa.sysdig-secure.cloud.ibm.com
+          value: https://private.jp-osa.security-compliance-secure.cloud.ibm.com
 
   - it: Checking region 'jp-tok-private-secure'
     set:
@@ -476,7 +476,7 @@ tests:
           of: ConfigMap
       - equal:
           path: data.collector_endpoint
-          value: https://private.jp-tok.sysdig-secure.cloud.ibm.com
+          value: https://private.jp-tok.security-compliance-secure.cloud.ibm.com
 
   - it: Checking region 'us-east-private-secure'
     set:
@@ -488,7 +488,7 @@ tests:
           of: ConfigMap
       - equal:
           path: data.collector_endpoint
-          value: https://private.us-east.sysdig-secure.cloud.ibm.com
+          value: https://private.us-east.security-compliance-secure.cloud.ibm.com
 
   - it: Checking region 'us-south-private-secure'
     set:
@@ -500,7 +500,7 @@ tests:
           of: ConfigMap
       - equal:
           path: data.collector_endpoint
-          value: https://private.us-south.sysdig-secure.cloud.ibm.com
+          value: https://private.us-south.security-compliance-secure.cloud.ibm.com
 
   - it: Checking wrong region input
     set:
