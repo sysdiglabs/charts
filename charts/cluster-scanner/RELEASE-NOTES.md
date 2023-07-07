@@ -1,5 +1,5 @@
 # What's Changed
 
 ### Bug Fixes
-- [72021049](https://github.com/sysdiglabs/charts/commit/720210497940ddd2119491d28dde163f2bdcb55e): adjust RELEASE-NOTES template to avoid extra new lines at the end of the file ([#1216](https://github.com/sysdiglabs/charts/issues/1216))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/cluster-scanner-0.1.1...cluster-scanner-0.1.2
+- **cluster-scanner** [8c17f6d8](https://github.com/sysdiglabs/charts/commit/8c17f6d895fcce3f3fa6d35e74c8b9a43530f60b): updated ISE minimum CPU request ([#1222](https://github.com/sysdiglabs/charts/issues/1222))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/cluster-scanner-0.1.2...cluster-scanner-0.1.3
