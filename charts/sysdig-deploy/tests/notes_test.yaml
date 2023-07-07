@@ -1,4 +1,4 @@
-suite: Test NOTES.txt content
+suite: Test links in the notes section for regions
 templates:
   - templates/NOTES.txt
 tests:
@@ -63,6 +63,402 @@ tests:
           pattern: https://app.au1.sysdig.com/#/dashboard-template/view.sysdig.agents\?last=10
       - matchRegexRaw:
           pattern: https://app.au1.sysdig.com/secure/#/data-sources/agents
+
+  - it: Checking region 'au-syd-monitor'
+    set:
+      global:
+        sysdig:
+          region: au-syd-monitor
+    asserts:
+      - matchRegexRaw:
+          pattern: https://au-syd.monitoring.cloud.ibm.com/#/dashboard-template/view.sysdig.agents\?last=10
+      - matchRegexRaw:
+          pattern: https://au-syd.security-compliance-secure.cloud.ibm.com/#/data-sources/agents
+
+  - it: Checking region 'br-sao-monitor'
+    set:
+      global:
+        sysdig:
+          region: br-sao-monitor
+    asserts:
+      - matchRegexRaw:
+          pattern: https://br-sao.monitoring.cloud.ibm.com/#/dashboard-template/view.sysdig.agents\?last=10
+      - matchRegexRaw:
+          pattern: https://br-sao.security-compliance-secure.cloud.ibm.com/#/data-sources/agents
+
+  - it: Checking region 'ca-tor-monitor'
+    set:
+      global:
+        sysdig:
+          region: ca-tor-monitor
+    asserts:
+      - matchRegexRaw:
+          pattern: https://ca-tor.monitoring.cloud.ibm.com/#/dashboard-template/view.sysdig.agents\?last=10
+      - matchRegexRaw:
+          pattern: https://ca-tor.security-compliance-secure.cloud.ibm.com/#/data-sources/agents
+
+  - it: Checking region 'eu-de-monitor'
+    set:
+      global:
+        sysdig:
+          region: eu-de-monitor
+    asserts:
+      - matchRegexRaw:
+          pattern: https://eu-de.monitoring.cloud.ibm.com/#/dashboard-template/view.sysdig.agents\?last=10
+      - matchRegexRaw:
+          pattern: https://eu-de.security-compliance-secure.cloud.ibm.com/#/data-sources/agents
+
+  - it: Checking region 'eu-gb-monitor'
+    set:
+      global:
+        sysdig:
+          region: eu-gb-monitor
+    asserts:
+      - matchRegexRaw:
+          pattern: https://eu-gb.monitoring.cloud.ibm.com/#/dashboard-template/view.sysdig.agents\?last=10
+      - matchRegexRaw:
+          pattern: https://eu-gb.security-compliance-secure.cloud.ibm.com/#/data-sources/agents
+
+  - it: Checking region 'jp-osa-monitor'
+    set:
+      global:
+        sysdig:
+          region: jp-osa-monitor
+    asserts:
+      - matchRegexRaw:
+          pattern: https://jp-osa.monitoring.cloud.ibm.com/#/dashboard-template/view.sysdig.agents\?last=10
+      - matchRegexRaw:
+          pattern: https://jp-osa.security-compliance-secure.cloud.ibm.com/#/data-sources/agents
+
+  - it: Checking region 'jp-tok-monitor'
+    set:
+      global:
+        sysdig:
+          region: jp-tok-monitor
+    asserts:
+      - matchRegexRaw:
+          pattern: https://jp-tok.monitoring.cloud.ibm.com/#/dashboard-template/view.sysdig.agents\?last=10
+      - matchRegexRaw:
+          pattern: https://jp-tok.security-compliance-secure.cloud.ibm.com/#/data-sources/agents
+
+  - it: Checking region 'us-east-monitor'
+    set:
+      global:
+        sysdig:
+          region: us-east-monitor
+    asserts:
+      - matchRegexRaw:
+          pattern: https://us-east.monitoring.cloud.ibm.com/#/dashboard-template/view.sysdig.agents\?last=10
+      - matchRegexRaw:
+          pattern: https://us-east.security-compliance-secure.cloud.ibm.com/#/data-sources/agents
+
+  - it: Checking region 'us-south-monitor'
+    set:
+      global:
+        sysdig:
+          region: us-south-monitor
+    asserts:
+      - matchRegexRaw:
+          pattern: https://us-south.monitoring.cloud.ibm.com/#/dashboard-template/view.sysdig.agents\?last=10
+      - matchRegexRaw:
+          pattern: https://us-south.security-compliance-secure.cloud.ibm.com/#/data-sources/agents
+
+  - it: Checking region 'au-syd-private-monitor'
+    set:
+      global:
+        sysdig:
+          region: au-syd-private-monitor
+    asserts:
+      - matchRegexRaw:
+          pattern: https://private.au-syd.monitoring.cloud.ibm.com/#/dashboard-template/view.sysdig.agents\?last=10
+      - matchRegexRaw:
+          pattern: https://private.au-syd.security-compliance-secure.cloud.ibm.com/#/data-sources/agents
+
+  - it: Checking region 'br-sao-private-monitor'
+    set:
+      global:
+        sysdig:
+          region: br-sao-private-monitor
+    asserts:
+      - matchRegexRaw:
+          pattern: https://private.br-sao.monitoring.cloud.ibm.com/#/dashboard-template/view.sysdig.agents\?last=10
+      - matchRegexRaw:
+          pattern: https://private.br-sao.security-compliance-secure.cloud.ibm.com/#/data-sources/agents
+
+  - it: Checking region 'ca-tor-private-monitor'
+    set:
+      global:
+        sysdig:
+          region: ca-tor-private-monitor
+    asserts:
+      - matchRegexRaw:
+          pattern: https://private.ca-tor.monitoring.cloud.ibm.com/#/dashboard-template/view.sysdig.agents\?last=10
+      - matchRegexRaw:
+          pattern: https://private.ca-tor.security-compliance-secure.cloud.ibm.com/#/data-sources/agents
+
+  - it: Checking region 'eu-de-private-monitor'
+    set:
+      global:
+        sysdig:
+          region: eu-de-private-monitor
+    asserts:
+      - matchRegexRaw:
+          pattern: https://private.eu-de.monitoring.cloud.ibm.com/#/dashboard-template/view.sysdig.agents\?last=10
+      - matchRegexRaw:
+          pattern: https://private.eu-de.security-compliance-secure.cloud.ibm.com/#/data-sources/agents
+
+  - it: Checking region 'eu-gb-private-monitor'
+    set:
+      global:
+        sysdig:
+          region: eu-gb-private-monitor
+    asserts:
+      - matchRegexRaw:
+          pattern: https://private.eu-gb.monitoring.cloud.ibm.com/#/dashboard-template/view.sysdig.agents\?last=10
+      - matchRegexRaw:
+          pattern: https://private.eu-gb.security-compliance-secure.cloud.ibm.com/#/data-sources/agents
+
+  - it: Checking region 'jp-osa-private-monitor'
+    set:
+      global:
+        sysdig:
+          region: jp-osa-private-monitor
+    asserts:
+      - matchRegexRaw:
+          pattern: https://private.jp-osa.monitoring.cloud.ibm.com/#/dashboard-template/view.sysdig.agents\?last=10
+      - matchRegexRaw:
+          pattern: https://private.jp-osa.security-compliance-secure.cloud.ibm.com/#/data-sources/agents
+
+  - it: Checking region 'jp-tok-private-monitor'
+    set:
+      global:
+        sysdig:
+          region: jp-tok-private-monitor
+    asserts:
+      - matchRegexRaw:
+          pattern: https://private.jp-tok.monitoring.cloud.ibm.com/#/dashboard-template/view.sysdig.agents\?last=10
+      - matchRegexRaw:
+          pattern: https://private.jp-tok.security-compliance-secure.cloud.ibm.com/#/data-sources/agents
+
+  - it: Checking region 'us-east-private-monitor'
+    set:
+      global:
+        sysdig:
+          region: us-east-private-monitor
+    asserts:
+      - matchRegexRaw:
+          pattern: https://private.us-east.monitoring.cloud.ibm.com/#/dashboard-template/view.sysdig.agents\?last=10
+      - matchRegexRaw:
+          pattern: https://private.us-east.security-compliance-secure.cloud.ibm.com/#/data-sources/agents
+
+  - it: Checking region 'us-south-private-monitor'
+    set:
+      global:
+        sysdig:
+          region: us-south-private-monitor
+    asserts:
+      - matchRegexRaw:
+          pattern: https://private.us-south.monitoring.cloud.ibm.com/#/dashboard-template/view.sysdig.agents\?last=10
+      - matchRegexRaw:
+          pattern: https://private.us-south.security-compliance-secure.cloud.ibm.com/#/data-sources/agents
+
+  - it: Checking region 'au-syd-secure'
+    set:
+      global:
+        sysdig:
+          region: au-syd-secure
+    asserts:
+      - matchRegexRaw:
+          pattern: https://au-syd.monitoring.cloud.ibm.com/#/dashboard-template/view.sysdig.agents\?last=10
+      - matchRegexRaw:
+          pattern: https://au-syd.security-compliance-secure.cloud.ibm.com/#/data-sources/agents
+
+  - it: Checking region 'br-sao-secure'
+    set:
+      global:
+        sysdig:
+          region: br-sao-secure
+    asserts:
+      - matchRegexRaw:
+          pattern: https://br-sao.monitoring.cloud.ibm.com/#/dashboard-template/view.sysdig.agents\?last=10
+      - matchRegexRaw:
+          pattern: https://br-sao.security-compliance-secure.cloud.ibm.com/#/data-sources/agents
+
+  - it: Checking region 'ca-tor-secure'
+    set:
+      global:
+        sysdig:
+          region: ca-tor-secure
+    asserts:
+      - matchRegexRaw:
+          pattern: https://ca-tor.monitoring.cloud.ibm.com/#/dashboard-template/view.sysdig.agents\?last=10
+      - matchRegexRaw:
+          pattern: https://ca-tor.security-compliance-secure.cloud.ibm.com/#/data-sources/agents
+
+  - it: Checking region 'eu-de-secure'
+    set:
+      global:
+        sysdig:
+          region: eu-de-secure
+    asserts:
+      - matchRegexRaw:
+          pattern: https://eu-de.monitoring.cloud.ibm.com/#/dashboard-template/view.sysdig.agents\?last=10
+      - matchRegexRaw:
+          pattern: https://eu-de.security-compliance-secure.cloud.ibm.com/#/data-sources/agents
+
+  - it: Checking region 'eu-gb-secure'
+    set:
+      global:
+        sysdig:
+          region: eu-gb-secure
+    asserts:
+      - matchRegexRaw:
+          pattern: https://eu-gb.monitoring.cloud.ibm.com/#/dashboard-template/view.sysdig.agents\?last=10
+      - matchRegexRaw:
+          pattern: https://eu-gb.security-compliance-secure.cloud.ibm.com/#/data-sources/agents
+
+  - it: Checking region 'jp-osa-secure'
+    set:
+      global:
+        sysdig:
+          region: jp-osa-secure
+    asserts:
+      - matchRegexRaw:
+          pattern: https://jp-osa.monitoring.cloud.ibm.com/#/dashboard-template/view.sysdig.agents\?last=10
+      - matchRegexRaw:
+          pattern: https://jp-osa.security-compliance-secure.cloud.ibm.com/#/data-sources/agents
+
+  - it: Checking region 'jp-tok-secure'
+    set:
+      global:
+        sysdig:
+          region: jp-tok-secure
+    asserts:
+      - matchRegexRaw:
+          pattern: https://jp-tok.monitoring.cloud.ibm.com/#/dashboard-template/view.sysdig.agents\?last=10
+      - matchRegexRaw:
+          pattern: https://jp-tok.security-compliance-secure.cloud.ibm.com/#/data-sources/agents
+
+  - it: Checking region 'us-east-secure'
+    set:
+      global:
+        sysdig:
+          region: us-east-secure
+    asserts:
+      - matchRegexRaw:
+          pattern: https://us-east.monitoring.cloud.ibm.com/#/dashboard-template/view.sysdig.agents\?last=10
+      - matchRegexRaw:
+          pattern: https://us-east.security-compliance-secure.cloud.ibm.com/#/data-sources/agents
+
+  - it: Checking region 'us-south-secure'
+    set:
+      global:
+        sysdig:
+          region: us-south-secure
+    asserts:
+      - matchRegexRaw:
+          pattern: https://us-south.monitoring.cloud.ibm.com/#/dashboard-template/view.sysdig.agents\?last=10
+      - matchRegexRaw:
+          pattern: https://us-south.security-compliance-secure.cloud.ibm.com/#/data-sources/agents
+
+  - it: Checking region 'au-syd-private-secure'
+    set:
+      global:
+        sysdig:
+          region: au-syd-private-secure
+    asserts:
+      - matchRegexRaw:
+          pattern: https://private.au-syd.monitoring.cloud.ibm.com/#/dashboard-template/view.sysdig.agents\?last=10
+      - matchRegexRaw:
+          pattern: https://private.au-syd.security-compliance-secure.cloud.ibm.com/#/data-sources/agents
+
+  - it: Checking region 'br-sao-private-secure'
+    set:
+      global:
+        sysdig:
+          region: br-sao-private-secure
+    asserts:
+      - matchRegexRaw:
+          pattern: https://private.br-sao.monitoring.cloud.ibm.com/#/dashboard-template/view.sysdig.agents\?last=10
+      - matchRegexRaw:
+          pattern: https://private.br-sao.security-compliance-secure.cloud.ibm.com/#/data-sources/agents
+
+  - it: Checking region 'ca-tor-private-secure'
+    set:
+      global:
+        sysdig:
+          region: ca-tor-private-secure
+    asserts:
+      - matchRegexRaw:
+          pattern: https://private.ca-tor.monitoring.cloud.ibm.com/#/dashboard-template/view.sysdig.agents\?last=10
+      - matchRegexRaw:
+          pattern: https://private.ca-tor.security-compliance-secure.cloud.ibm.com/#/data-sources/agents
+
+  - it: Checking region 'eu-de-private-secure'
+    set:
+      global:
+        sysdig:
+          region: eu-de-private-secure
+    asserts:
+      - matchRegexRaw:
+          pattern: https://private.eu-de.monitoring.cloud.ibm.com/#/dashboard-template/view.sysdig.agents\?last=10
+      - matchRegexRaw:
+          pattern: https://private.eu-de.security-compliance-secure.cloud.ibm.com/#/data-sources/agents
+
+  - it: Checking region 'eu-gb-private-secure'
+    set:
+      global:
+        sysdig:
+          region: eu-gb-private-secure
+    asserts:
+      - matchRegexRaw:
+          pattern: https://private.eu-gb.monitoring.cloud.ibm.com/#/dashboard-template/view.sysdig.agents\?last=10
+      - matchRegexRaw:
+          pattern: https://private.eu-gb.security-compliance-secure.cloud.ibm.com/#/data-sources/agents
+
+  - it: Checking region 'jp-osa-private-secure'
+    set:
+      global:
+        sysdig:
+          region: jp-osa-private-secure
+    asserts:
+      - matchRegexRaw:
+          pattern: https://private.jp-osa.monitoring.cloud.ibm.com/#/dashboard-template/view.sysdig.agents\?last=10
+      - matchRegexRaw:
+          pattern: https://private.jp-osa.security-compliance-secure.cloud.ibm.com/#/data-sources/agents
+
+  - it: Checking region 'jp-tok-private-secure'
+    set:
+      global:
+        sysdig:
+          region: jp-tok-private-secure
+    asserts:
+      - matchRegexRaw:
+          pattern: https://private.jp-tok.monitoring.cloud.ibm.com/#/dashboard-template/view.sysdig.agents\?last=10
+      - matchRegexRaw:
+          pattern: https://private.jp-tok.security-compliance-secure.cloud.ibm.com/#/data-sources/agents
+
+  - it: Checking region 'us-east-private-secure'
+    set:
+      global:
+        sysdig:
+          region: us-east-private-secure
+    asserts:
+      - matchRegexRaw:
+          pattern: https://private.us-east.monitoring.cloud.ibm.com/#/dashboard-template/view.sysdig.agents\?last=10
+      - matchRegexRaw:
+          pattern: https://private.us-east.security-compliance-secure.cloud.ibm.com/#/data-sources/agents
+
+  - it: Checking region 'us-south-private-secure'
+    set:
+      global:
+        sysdig:
+          region: us-south-private-secure
+    asserts:
+      - matchRegexRaw:
+          pattern: https://private.us-south.monitoring.cloud.ibm.com/#/dashboard-template/view.sysdig.agents\?last=10
+      - matchRegexRaw:
+          pattern: https://private.us-south.security-compliance-secure.cloud.ibm.com/#/data-sources/agents
 
   - it: Checking incorrect region 'ap3' should fail
     set:
