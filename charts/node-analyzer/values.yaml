@@ -264,11 +264,13 @@ nodeAnalyzer:
     env: {}
 
   runtimeScanner:
-    deploy: false
+    # Note: deploy has been commented so that it will be used as hard override to newEngineOnly flag
+    # but when not set, newEngineOnly will win. Desiderata examples in ./tests/runtimescanner_test.yaml
+    # deploy: false
     probesPort: 7002
     image:
       repository: sysdig/vuln-runtime-scanner
-      tag: "1.5"
+      tag: "1.5.1"
       digest:
       pullPolicy:
     storageClassName:
@@ -366,7 +368,7 @@ nodeAnalyzer:
     debug: false
     image:
       repository: sysdig/kspm-analyzer
-      tag: 1.24.0
+      tag: 1.25.0
       digest:
       pullPolicy:
 

@@ -1,3 +1,4 @@
+{{- if .Values.webhook.autoscaling.enabled }}
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
@@ -11,3 +12,4 @@ spec:
     kind: Deployment
     name: {{ include "admissionController.webhook.fullname" . }}
   targetCPUUtilizationPercentage: {{ .Values.webhook.autoscaling.targetCPUUtilizationPercentage }}
+{{- end }}

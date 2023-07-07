@@ -1,6 +1,4 @@
 # What's Changed
 
-### New Features
-- **adminssion-controller,agent,node-analyzer,kspm-collector,rapid-response** [33cad895](https://github.com/sysdiglabs/charts/commit/33cad8952395800e2e453de6bbf81851bfe1c608): pull policy and secrets params uniformity ([#1158](https://github.com/sysdiglabs/charts/issues/1158))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.1.49...kspm-collector-0.1.50
+#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.2.1...kspm-collector-0.2.2

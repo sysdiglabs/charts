@@ -1,6 +1,6 @@
 # What's Changed
 
 ### New Features
-- **adminssion-controller,agent,node-analyzer,kspm-collector,rapid-response** [33cad895](https://github.com/sysdiglabs/charts/commit/33cad8952395800e2e453de6bbf81851bfe1c608): pull policy and secrets params uniformity ([#1158](https://github.com/sysdiglabs/charts/issues/1158))
+- **admission-controller, sysdig-deploy** [120a3676](https://github.com/sysdiglabs/charts/commit/120a3676b81af7c22e21517ddca3be6039b7aa6c): Add logic to toggle enable/disable HPA and set replica count based on that value. ([#1204](https://github.com/sysdiglabs/charts/issues/1204))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/admission-controller-0.8.4...admission-controller-0.8.5
+#### Full diff: https://github.com/sysdiglabs/charts/compare/admission-controller-0.9.0...admission-controller-0.10.0

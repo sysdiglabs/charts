@@ -1,6 +1,6 @@
 # What's Changed
 
-### Bug Fixes
-- **agent,node-analyzer** [e0ef02c2](https://github.com/sysdiglabs/charts/commit/e0ef02c283df3d12cf5d8d2b1b89a61e1fc30807): updateStrategy maxSurge param ([#1166](https://github.com/sysdiglabs/charts/issues/1166))
+### Documentation
+- **node-analyzer** [d43443a7](https://github.com/sysdiglabs/charts/commit/d43443a732bdbf710e094ea8ad8173d36c2fdc02): DOC-3214 - update for clarity ([#1171](https://github.com/sysdiglabs/charts/issues/1171))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.8.63...node-analyzer-1.8.64
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.9.0...node-analyzer-1.9.1

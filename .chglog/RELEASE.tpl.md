@@ -2,7 +2,7 @@
 {{ if .Versions -}}
 {{ range .Versions }}
 {{ range .CommitGroups -}}
-{{- if not (eq "Ignored" .Title ) -}}
+{{ if not (eq "Ignored" .Title ) -}}
 ### {{ .Title }}
 {{ range .Commits -}}
 - {{ if .Scope }}**{{ .Scope }}** {{ end }}[{{.Hash.Short}}]({{ $.Info.RepositoryURL }}/commit/{{ .Hash.Long }}): {{ .Subject }}
@@ -14,17 +14,15 @@
 {{ end -}}
 {{ end -}}
 {{ end -}}
-
-{{- if .OtherCommits -}}
+{{ if .OtherCommits -}}
 ### Others
-{{ range .OtherCommits -}}
+{{- range .OtherCommits -}}
 - [{{.Hash.Short}}]({{ $.Info.RepositoryURL  }}/commit/{{ .Hash.Long }})
 {{ end -}}
 {{ end -}}
 {{ end -}}
-
 {{- if .Versions }}
-{{ range .Versions -}}
+{{- range .Versions -}}
 {{ if .Tag.Previous -}}
 #### Full diff: {{ $.Info.RepositoryURL }}/compare/{{ .Tag.Previous.Name }}...{{ .Tag.Name }}
 {{ end -}}

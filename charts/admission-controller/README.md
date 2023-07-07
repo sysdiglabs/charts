@@ -23,7 +23,7 @@ $ pre-commit run -a
 $ helm repo add sysdig https://charts.sysdig.com
 $ helm repo update
 $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-      --create-namespace -n sysdig-admission-controller --version=0.8.5  \
+      --create-namespace -n sysdig-admission-controller --version=0.10.0  \
       --set clusterName=CLUSTER_NAME \
       --set sysdig.secureAPIToken=SECURE_API_TOKEN
 ```
@@ -55,7 +55,7 @@ This chart deploys the Sysdig Admission Controller on a [Kubernetes](http://kube
 To install the chart with the release name `admission-controller`:
 
 ```console
-$ helm upgrade --install sysdig-admission-controller sysdig/admission-controller -n sysdig-admission-controller --version=0.8.5
+$ helm upgrade --install sysdig-admission-controller sysdig/admission-controller -n sysdig-admission-controller --version=0.10.0
 ```
 
 The command deploys the Sysdig Admission Controller on the Kubernetes cluster in the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.
@@ -130,6 +130,7 @@ The following table lists the configurable parameters of the `admission-controll
 | webhook.hostNetwork                                | Specifies if the webhook should be started in hostNetwork mode. <br/>This is required if using a custom CNI where the managed control plane nodes are unable to initiate network connections to the pods, for example using Calico CNI plugin on EKS. <br/>This is not required or recommended in most contexts.                                                                                                                                                    | <code>false</code>                                                                                                                                                                                 |
 | webhook.imagePullSecrets                           | The image pull secrets for webhook                                                                                                                                                                                                                                                                                                                                                                                                                                  | <code>[]</code>                                                                                                                                                                                    |
 | webhook.resources                                  | Resource request and limits for webhook                                                                                                                                                                                                                                                                                                                                                                                                                             | <code>{"limits":{"cpu":"250m","memory":"256Mi"},"requests":{"cpu":"100m","memory":"256Mi"}}</code>                                                                                                 |
+| webhook.autoscaling.enabled                        | Enable horizontal pod autoscaling                                                                                                                                                                                                                                                                                                                                                                                                                                   | <code>true</code>                                                                                                                                                                                  |
 | webhook.autoscaling.minReplicas                    | Min replicas to use while autoscaling the webhook                                                                                                                                                                                                                                                                                                                                                                                                                   | <code>2</code>                                                                                                                                                                                     |
 | webhook.autoscaling.maxReplicas                    | Max replicas to use while autoscaling the webhook                                                                                                                                                                                                                                                                                                                                                                                                                   | <code>5</code>                                                                                                                                                                                     |
 | webhook.autoscaling.targetCPUUtilizationPercentage | Target CPU to use when the number of replicas must be increased                                                                                                                                                                                                                                                                                                                                                                                                     | <code>80</code>                                                                                                                                                                                    |
@@ -183,7 +184,7 @@ Specify each parameter using the **`--set key=value[,key=value]`** argument to `
 
 ```console
 $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-    --create-namespace -n sysdig-admission-controller --version=0.8.5 \
+    --create-namespace -n sysdig-admission-controller --version=0.10.0 \
     --set sysdig.secureAPIToken=YOUR-KEY-HERE,clusterName=YOUR-CLUSTER-NAME
 ```
 
@@ -192,9 +193,23 @@ installing the chart. For example:
 
 ```console
 $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-    --create-namespace -n sysdig-admission-controller --version=0.8.5 \
+    --create-namespace -n sysdig-admission-controller --version=0.10.0 \
     --values values.yaml
 ```
+
+### Verify the integrity and origin
+Sysdig Helm Charts are signed so users can verify the integrity and origin of each chart, the steps are as follows:
+
+#### Import the Public Key
+
+```console
+$ curl -o "/tmp/sysdig_public.gpg" "https://charts.sysdig.com/public.gpg"
+$ gpg --import /tmp/sysdig_public.gpg
+```
+
+#### Verify the chart
+
+To check the integrity and the origin of the charts you can now append the `--verify` flag to the `install`, `upgrade` and `pull` helm commands.
 
 ## Examples
 - [Default `values.yaml`](https://github.com/sysdiglabs/charts/blob/master/charts/admission-controller/values.yaml)

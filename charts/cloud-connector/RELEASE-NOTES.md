@@ -1,6 +1,6 @@
 # What's Changed
 
 ### Bug Fixes
-- **registry-scanner, cloud-connector, admission-controller** [c8436b7e](https://github.com/sysdiglabs/charts/commit/c8436b7e4e2e8cabe61a8261e0dda7e51e9c7c04): cve-2023-2253 ([#1148](https://github.com/sysdiglabs/charts/issues/1148))
+- **cloud-connector** [59a5fdf3](https://github.com/sysdiglabs/charts/commit/59a5fdf35cd4da68e2f7d1b5fd3a96a577a0cde9): fix falco rules append ([#1213](https://github.com/sysdiglabs/charts/issues/1213))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/cloud-connector-0.7.24...cloud-connector-0.7.25
+#### Full diff: https://github.com/sysdiglabs/charts/compare/cloud-connector-0.8.0...cloud-connector-0.8.1

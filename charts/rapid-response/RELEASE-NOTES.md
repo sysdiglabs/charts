@@ -1,6 +1,6 @@
 # What's Changed
 
-### New Features
-- **adminssion-controller,agent,node-analyzer,kspm-collector,rapid-response** [33cad895](https://github.com/sysdiglabs/charts/commit/33cad8952395800e2e453de6bbf81851bfe1c608): pull policy and secrets params uniformity ([#1158](https://github.com/sysdiglabs/charts/issues/1158))
+### Documentation
+- **rapid-response** [b0318af9](https://github.com/sysdiglabs/charts/commit/b0318af99efbc579d15cbe9a081f542255a47316): DOC-3216 - update for clarity and correctness ([#1173](https://github.com/sysdiglabs/charts/issues/1173))
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/rapid-response-0.4.11...rapid-response-0.4.12
+#### Full diff: https://github.com/sysdiglabs/charts/compare/rapid-response-0.5.0...rapid-response-0.5.1

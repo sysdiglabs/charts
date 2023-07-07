@@ -36,7 +36,7 @@ To install the chart:
 helm repo add sysdig https://charts.sysdig.com
 helm repo update
 helm upgrade --install cloud-connector sysdig/cloud-connector \
-     --create-namespace -n cloud-connector --version=0.7.26  \
+     --create-namespace -n cloud-connector --version=0.8.2  \
      --set sysdig.secureAPIToken=<SECURE_API_TOKEN>
 ```
 
@@ -60,7 +60,7 @@ For example:
 
 ```bash
 helm upgrade --install cloud-connector sysdig/cloud-connector \
-     --create-namespace -n cloud-connector --version=0.7.26  \
+     --create-namespace -n cloud-connector --version=0.8.2  \
      --set sysdig.secureAPIToken=<SECURE_API_TOKEN>
 ```
 
@@ -72,11 +72,25 @@ For example:
 
 ```bash
 helm upgrade --install cloud-connector sysdig/cloud-connector \
-     --create-namespace -n cloud-connector --version=0.7.26  \
+     --create-namespace -n cloud-connector --version=0.8.2  \
     --values values.yaml
 ```
 
 See the default [`values.yaml`](./values.yaml) file for more information.
+
+### Verify the integrity and origin
+Sysdig Helm Charts are signed so users can verify the integrity and origin of each chart, the steps are as follows:
+
+#### Import the Public Key
+
+```console
+$ curl -o "/tmp/sysdig_public.gpg" "https://charts.sysdig.com/public.gpg"
+$ gpg --import /tmp/sysdig_public.gpg
+```
+
+#### Verify the chart
+
+To check the integrity and the origin of the charts you can now append the `--verify` flag to the `install`, `upgrade` and `pull` helm commands.
 
 ## Configuration Parameters
 
