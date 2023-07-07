@@ -1,6 +1,5 @@
 # What's Changed
 
-### New Features
-- **admission-controller, sysdig-deploy** [120a3676](https://github.com/sysdiglabs/charts/commit/120a3676b81af7c22e21517ddca3be6039b7aa6c): Add logic to toggle enable/disable HPA and set replica count based on that value. ([#1204](https://github.com/sysdiglabs/charts/issues/1204))
-
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.10.1...sysdig-deploy-1.11.0
+### Bug Fixes
+- **cluster-scanner** [8c17f6d8](https://github.com/sysdiglabs/charts/commit/8c17f6d895fcce3f3fa6d35e74c8b9a43530f60b): updated ISE minimum CPU request ([#1222](https://github.com/sysdiglabs/charts/issues/1222))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.11.0...sysdig-deploy-1.11.1

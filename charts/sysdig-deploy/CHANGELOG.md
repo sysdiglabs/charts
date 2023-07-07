@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.11.1
+### Bug Fixes
+* **cluster-scanner** [8c17f6d8](https://github.com/sysdiglabs/charts/commit/8c17f6d895fcce3f3fa6d35e74c8b9a43530f60b): updated ISE minimum CPU request ([#1222](https://github.com/sysdiglabs/charts/issues/1222))
 # v1.11.0
 ### New Features
 * **admission-controller, sysdig-deploy** [120a3676](https://github.com/sysdiglabs/charts/commit/120a3676b81af7c22e21517ddca3be6039b7aa6c): Add logic to toggle enable/disable HPA and set replica count based on that value. ([#1204](https://github.com/sysdiglabs/charts/issues/1204))
