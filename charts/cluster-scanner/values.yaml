@@ -142,7 +142,7 @@ imageSbomExtractor:
       memory: 350Mi
     requests:
       # Image SBOM Extractor CPU requests per replica
-      cpu: "150m"
+      cpu: "350m"
       # Image SBOM Extractor Memory requests per replica
       memory: 350Mi
 
