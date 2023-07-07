@@ -376,6 +376,36 @@ tests:
       - matchRegexRaw:
           pattern: https://private.us-south.security-compliance-secure.cloud.ibm.com
 
+  - it: Checking custom region without protocol specified
+    set:
+      global:
+        sysdig:
+          region: custom
+          apiHost: test.endpoint.tbd
+    asserts:
+      - matchRegexRaw:
+          pattern: https://test.endpoint.tbd
+
+  - it: Checking custom region with HTTPS protocol specified
+    set:
+      global:
+        sysdig:
+          region: custom
+          apiHost: https://test.endpoint.tbd
+    asserts:
+      - matchRegexRaw:
+          pattern: https://test.endpoint.tbd
+
+  - it: Checking custom region with HTTP protocol specified
+    set:
+      global:
+        sysdig:
+          region: custom
+          apiHost: http://test.endpoint.tbd
+    asserts:
+      - matchRegexRaw:
+          pattern: http://test.endpoint.tbd
+
   - it: Checking incorrect region 'ap3' should fail
     set:
       global:
