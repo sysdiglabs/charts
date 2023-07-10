@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.11.2
+### Bug Fixes
+* **admission-controller** [d03dc2ce](https://github.com/sysdiglabs/charts/commit/d03dc2ce1d7056304b7a1f803bb1dd92e4feb9d4): Make ValidatingWebhookConfiguration part of the resource lifecycle ([#1217](https://github.com/sysdiglabs/charts/issues/1217))
 # v0.11.1
 ### Bug Fixes
 * **common** [0e37805f](https://github.com/sysdiglabs/charts/commit/0e37805f0190b74b53f7d9b47e5528009f58aa4b): add missing CHANGELOG file and bump version ([#1223](https://github.com/sysdiglabs/charts/issues/1223))

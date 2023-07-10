@@ -1,7 +1,5 @@
 # What's Changed
 
 ### Bug Fixes
-- **common** [0e37805f](https://github.com/sysdiglabs/charts/commit/0e37805f0190b74b53f7d9b47e5528009f58aa4b): add missing CHANGELOG file and bump version ([#1223](https://github.com/sysdiglabs/charts/issues/1223))
-### New Features
-- **admission-controller,agent,common,kspm-collector,node-analyzer,rapid-response,sysdig-deploy** [47483bc0](https://github.com/sysdiglabs/charts/commit/47483bc0d5f872bc6d406a48491ac930d1d75f8f): Improve region resolution in all charts ([#946](https://github.com/sysdiglabs/charts/issues/946))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/admission-controller-0.10.0...admission-controller-0.11.1
+- **admission-controller** [d03dc2ce](https://github.com/sysdiglabs/charts/commit/d03dc2ce1d7056304b7a1f803bb1dd92e4feb9d4): Make ValidatingWebhookConfiguration part of the resource lifecycle ([#1217](https://github.com/sysdiglabs/charts/issues/1217))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/admission-controller-0.11.1...admission-controller-0.11.2
