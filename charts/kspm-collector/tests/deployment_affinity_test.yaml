@@ -1,0 +1,71 @@
+suite: Test specifying affinity settings to the KSPM Collector Deployment
+templates:
+  - templates/deployment.yaml
+tests:
+  - it: Test the default affinity annotations (<1.14)
+    capabilities:
+      majorVersion: '1'
+      minorVersion: '13'
+    asserts:
+      - equal:
+          path: spec.template.spec['affinity']
+          value:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                    - key: beta.kubernetes.io/arch
+                      operator: In
+                      values:
+                        - amd64
+                        - arm64
+                    - key: beta.kubernetes.io/os
+                      operator: In
+                      values:
+                        - linux
+
+  - it: Test the default affinity annotations (>=1.14)
+    capabilities:
+      majorVersion: '1'
+      minorVersion: '14'
+    asserts:
+      - equal:
+          path: spec.template.spec['affinity']
+          value:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                    - key: kubernetes.io/arch
+                      operator: In
+                      values:
+                        - amd64
+                        - arm64
+                    - key: kubernetes.io/os
+                      operator: In
+                      values:
+                        - linux
+
+  - it: Test adding custom affinity settings
+    set:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/arch
+                  operator: In
+                  values:
+                    - IA64
+    asserts:
+      - equal:
+          path: spec.template.spec['affinity']
+          value:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                    - key: kubernetes.io/arch
+                      operator: In
+                      values:
+                        - IA64

@@ -132,30 +132,7 @@ nodeAnalyzer:
 
   # Allow the DaemonSet to schedule using affinity rules
   # Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-          - matchExpressions:
-              - key: kubernetes.io/arch
-                operator: In
-                values:
-                  - amd64
-                  - arm64
-              - key: kubernetes.io/os
-                operator: In
-                values:
-                  - linux
-          - matchExpressions:
-              - key: beta.kubernetes.io/arch
-                operator: In
-                values:
-                  - amd64
-                  - arm64
-              - key: beta.kubernetes.io/os
-                operator: In
-                values:
-                  - linux
+  affinity: {}
 
   # Allow passing extra volumes to the Node Analyzer to mount docker socket, cri-o socket, etc.
   extraVolumes:
