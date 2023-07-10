@@ -8793,6 +8793,34 @@ entries:
   kspm-collector:
   - apiVersion: v2
     appVersion: 1.25.0
+    created: "2023-07-10T18:32:12.394155189Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      version: ~1.0.1
+    description: Sysdig KSPM collector
+    digest: 267f3cda4c47193eb73e012222c43ccc8810ed581a87521de7a74cf112d12aa9
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: chen.shmilovich@sysdig.com
+      name: chen-shmilovich-sysdig
+    name: kspm-collector
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/kspm-collector-0.3.2/kspm-collector-0.3.2.tgz
+    version: 0.3.2
+  - apiVersion: v2
+    appVersion: 1.25.0
     created: "2023-07-07T18:36:57.058525588Z"
     dependencies:
     - name: common
@@ -10164,6 +10192,44 @@ entries:
     - https://github.com/sysdiglabs/charts/releases/download/kspm-collector-0.1.0/kspm-collector-0.1.0.tgz
     version: 0.1.0
   node-analyzer:
+  - apiVersion: v2
+    appVersion: 12.6.0
+    created: "2023-07-10T18:32:12.542657255Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      version: ~1.0.1
+    description: Sysdig Node Analyzer
+    digest: 3ff4e256087649d68399dd2f89366b913b1db56cfad1174d1a6ad9ab874b0938
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: lachlan@deis.com
+      name: lachie83
+    - email: jorge.salamero@sysdig.com
+      name: bencer
+    - email: nestor.salceda@sysdig.com
+      name: nestorsalceda
+    - email: alvaro.iradier@sysdig.com
+      name: airadier
+    - email: carlos.arilla@sysdig.com
+      name: carillan81
+    - email: yashgiri.goswami@sysdig.com
+      name: yashgiri
+    name: node-analyzer
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/node-analyzer-1.10.2/node-analyzer-1.10.2.tgz
+    version: 1.10.2
   - apiVersion: v2
     appVersion: 12.6.0
     created: "2023-07-07T18:36:57.597160419Z"
@@ -36596,4 +36662,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2023-07-10T17:52:40.546293978Z"
+generated: "2023-07-10T18:32:12.749359404Z"
