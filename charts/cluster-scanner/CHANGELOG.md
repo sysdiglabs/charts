@@ -10,6 +10,14 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.3.1
+### Bug Fixes
+* **common** [0e37805f](https://github.com/sysdiglabs/charts/commit/0e37805f0190b74b53f7d9b47e5528009f58aa4b): add missing CHANGELOG file and bump version ([#1223](https://github.com/sysdiglabs/charts/issues/1223))
+### New Features
+* **admission-controller,agent,common,kspm-collector,node-analyzer,rapid-response,sysdig-deploy** [47483bc0](https://github.com/sysdiglabs/charts/commit/47483bc0d5f872bc6d406a48491ac930d1d75f8f): Improve region resolution in all charts ([#946](https://github.com/sysdiglabs/charts/issues/946))
+# v0.1.3
+### Bug Fixes
+* **cluster-scanner** [8c17f6d8](https://github.com/sysdiglabs/charts/commit/8c17f6d895fcce3f3fa6d35e74c8b9a43530f60b): updated ISE minimum CPU request ([#1222](https://github.com/sysdiglabs/charts/issues/1222))
 # v0.1.2
 ### Bug Fixes
 * [72021049](https://github.com/sysdiglabs/charts/commit/720210497940ddd2119491d28dde163f2bdcb55e): adjust RELEASE-NOTES template to avoid extra new lines at the end of the file ([#1216](https://github.com/sysdiglabs/charts/issues/1216))

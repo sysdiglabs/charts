@@ -6,7 +6,11 @@ metadata:
   labels:
    {{- include "cluster-scanner.labels" . | nindent 4 }}
 data:
+  {{- if or (hasPrefix "https://" (include "cluster-scanner.apiHost" .)) (hasPrefix "http://" (include "cluster-scanner.apiHost" .)) }}
   sysdig_host: {{ include "cluster-scanner.apiHost" . }}
+  {{ else }}
+  sysdig_host: https://{{ include "cluster-scanner.apiHost" . }}
+  {{ end -}}
   sysdig_verify_certificate: {{ .Values.sslVerifyCertificate | quote }}
   cluster_name: {{ .Values.global.clusterConfig.name }}
   root_namespace: {{ .Values.rootNamespace }}
