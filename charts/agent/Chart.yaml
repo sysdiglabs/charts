@@ -5,7 +5,7 @@ description: Sysdig Monitor and Secure agent
 type: application
 
 # currently matching sysdig 1.14.32
-version: 1.9.2
+version: 1.10.1
 
 appVersion: 12.15.0
 
@@ -26,4 +26,8 @@ maintainers:
     email: adam.roberts@sysdig.com
   - name: lilx1ao
     email: zhongcheng.xiao@sysdig.com
-dependencies: []
+dependencies:
+  - name: common
+    # repository: https://charts.sysdig.com
+    repository: file://../common
+    version: ~1.0.1

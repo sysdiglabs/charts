@@ -111,18 +111,8 @@ Determine collector endpoint based on provided region or .Values.apiEndpoint
 {{- define "kspmCollector.apiEndpoint" -}}
     {{- if .Values.apiEndpoint -}}
         {{- .Values.apiEndpoint -}}
-    {{- else if (eq .Values.global.sysdig.region "us1") -}}
-        {{- "secure.sysdig.com" -}}
-    {{- else if (eq .Values.global.sysdig.region "us2") -}}
-        {{- "us2.app.sysdig.com" -}}
-    {{- else if (eq .Values.global.sysdig.region "us3") -}}
-        {{- "app.us3.sysdig.com" -}}
-    {{- else if (eq .Values.global.sysdig.region "us4") -}}
-        {{- "app.us4.sysdig.com" -}}
-    {{- else if (eq .Values.global.sysdig.region "eu1") -}}
-        {{- "eu1.app.sysdig.com" -}}
-    {{- else if (eq .Values.global.sysdig.region "au1") -}}
-        {{- "app.au1.sysdig.com" -}}
+    {{- else if hasKey ((include "sysdig.regions" .) | fromYaml) .Values.global.sysdig.region }}
+        {{- include "sysdig.secureApiEndpoint" . }}
     {{- end -}}
 {{- end -}}
 

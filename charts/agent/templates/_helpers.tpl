@@ -247,19 +247,9 @@ Determine collector endpoint based on provided region
 {{- define "agent.collectorEndpoint" -}}
     {{- if (or .Values.collectorSettings.collectorHost (eq .Values.global.sysdig.region "custom")) -}}
         {{- required "collectorSettings.collectorHost is required for custom regions" (.Values.collectorSettings.collectorHost) -}}
-    {{- else if (eq .Values.global.sysdig.region "us1") -}}
-        {{- "collector.sysdigcloud.com" -}}
-    {{- else if (eq .Values.global.sysdig.region "us2") -}}
-        {{- "ingest-us2.app.sysdig.com" -}}
-    {{- else if (eq .Values.global.sysdig.region "us3") -}}
-        {{- "ingest.us3.sysdig.com" -}}
-    {{- else if (eq .Values.global.sysdig.region "us4") -}}
-        {{- "ingest.us4.sysdig.com" -}}
-    {{- else if (eq .Values.global.sysdig.region "eu1") -}}
-        {{- "ingest-eu1.app.sysdig.com" -}}
-    {{- else if (eq .Values.global.sysdig.region "au1") -}}
-        {{- "ingest.au1.sysdig.com" -}}
-    {{- else -}}
+    {{- else if hasKey ((include "sysdig.regions" .) | fromYaml) .Values.global.sysdig.region }}
+        {{- include "sysdig.collectorEndpoint" . }}
+    {{- else }}
         {{- fail (printf "global.sysdig.region=%s provided is not recognized." .Values.global.sysdig.region ) -}}
     {{- end -}}
 {{- end -}}
@@ -270,18 +260,8 @@ Determine sysdig monitor endpoint based on provided region
 {{- define "monitorUrl" -}}
     {{- if (or .Values.collectorSettings.collectorHost (eq .Values.global.sysdig.region "custom")) -}}
         {{- required "collectorSettings.collectorHost is required for custom regions" (.Values.collectorSettings.collectorHost) -}}
-    {{- else if (eq .Values.global.sysdig.region "us1") -}}
-        {{- "app.sysdigcloud.com" -}}
-    {{- else if (eq .Values.global.sysdig.region "us2") -}}
-        {{- "us2.app.sysdig.com" -}}
-    {{- else if (eq .Values.global.sysdig.region "us3") -}}
-        {{- "app.us3.sysdig.com" -}}
-    {{- else if (eq .Values.global.sysdig.region "us4") -}}
-        {{- "app.us4.sysdig.com" -}}
-    {{- else if (eq .Values.global.sysdig.region "eu1") -}}
-        {{- "eu1.app.sysdig.com" -}}
-    {{- else if (eq .Values.global.sysdig.region "au1") -}}
-        {{- "app.au1.sysdig.com" -}}
+    {{- else if hasKey ((include "sysdig.regions" .) | fromYaml) .Values.global.sysdig.region }}
+        {{- include "sysdig.monitorApiEndpoint" . }}
     {{- else -}}
         {{- fail (printf "global.sysdig.region=%s provided is not recognized." .Values.global.sysdig.region ) -}}
     {{- end -}}
@@ -293,18 +273,8 @@ Determine sysdig secure endpoint based on provided region
 {{- define "secureUrl" -}}
     {{- if (or .Values.collectorSettings.collectorHost (eq .Values.global.sysdig.region "custom")) -}}
         {{- required "collectorSettings.collectorHost is required for custom regions" (.Values.collectorSettings.collectorHost) -}}
-    {{- else if (eq .Values.global.sysdig.region "us1") -}}
-        {{- "secure.sysdig.com" -}}
-    {{- else if (eq .Values.global.sysdig.region "us2") -}}
-        {{- "us2.app.sysdig.com/secure" -}}
-    {{- else if (eq .Values.global.sysdig.region "us3") -}}
-        {{- "app.us3.sysdig.com/secure" -}}
-    {{- else if (eq .Values.global.sysdig.region "us4") -}}
-        {{- "app.us4.sysdig.com/secure" -}}
-    {{- else if (eq .Values.global.sysdig.region "eu1") -}}
-        {{- "eu1.app.sysdig.com/secure" -}}
-    {{- else if (eq .Values.global.sysdig.region "au1") -}}
-        {{- "app.au1.sysdig.com/secure" -}}
+    {{- else if hasKey ((include "sysdig.regions" .) | fromYaml) .Values.global.sysdig.region -}}
+        {{- include "sysdig.secureUi" . }}
     {{- else -}}
         {{- fail (printf "global.sysdig.region=%s provided is not recognized." .Values.global.sysdig.region ) -}}
     {{- end -}}

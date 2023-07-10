@@ -11,6 +11,9 @@ exclusively to fix incorrect entries and not to add new ones.
 
 
 ## Change Log
+# v0.8.2
+### Documentation
+* **cloud-connector** [6ad0ef92](https://github.com/sysdiglabs/charts/commit/6ad0ef926ebf7600ba7730c43219036eb1d0b57c): DOC-3215- Update Cloud connector Readme for clarity and correctness ([#1172](https://github.com/sysdiglabs/charts/issues/1172))
 # v0.8.1
 * fix for "found definition of rule called <rule> in append mode before the definition of the actual rule"
 
