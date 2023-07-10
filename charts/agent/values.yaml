@@ -175,7 +175,7 @@ slim:
     # a sane defaults ones, but you can tweak or ask Sysdig Support for more
     # info about this
     requests:
-      cpu: 1000m
+      cpu: 250m
       memory: 348Mi
     limits:
       cpu: 1000m
