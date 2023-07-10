@@ -10,6 +10,20 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.12.3
+### Bug Fixes
+* **sysdig-deploy** [fddce561](https://github.com/sysdiglabs/charts/commit/fddce56188f99448f57a4a8049d16fef0d06b074): redo deployRuntimeScanner check to remove helm version constraint ([#1221](https://github.com/sysdiglabs/charts/issues/1221))
+# v1.12.2
+### Chores
+* **sysdig-deploy** [8bb5a0f3](https://github.com/sysdiglabs/charts/commit/8bb5a0f3d091ccff4603979bc4db7fa6b0feb4f9): Automatic version bump due to updated dependencies ([#1227](https://github.com/sysdiglabs/charts/issues/1227))
+# v1.12.1
+### Bug Fixes
+* **common** [0e37805f](https://github.com/sysdiglabs/charts/commit/0e37805f0190b74b53f7d9b47e5528009f58aa4b): add missing CHANGELOG file and bump version ([#1223](https://github.com/sysdiglabs/charts/issues/1223))
+### New Features
+* **admission-controller,agent,common,kspm-collector,node-analyzer,rapid-response,sysdig-deploy** [47483bc0](https://github.com/sysdiglabs/charts/commit/47483bc0d5f872bc6d406a48491ac930d1d75f8f): Improve region resolution in all charts ([#946](https://github.com/sysdiglabs/charts/issues/946))
+# v1.11.1
+### Bug Fixes
+* **cluster-scanner** [8c17f6d8](https://github.com/sysdiglabs/charts/commit/8c17f6d895fcce3f3fa6d35e74c8b9a43530f60b): updated ISE minimum CPU request ([#1222](https://github.com/sysdiglabs/charts/issues/1222))
 # v1.11.0
 ### New Features
 * **admission-controller, sysdig-deploy** [120a3676](https://github.com/sysdiglabs/charts/commit/120a3676b81af7c22e21517ddca3be6039b7aa6c): Add logic to toggle enable/disable HPA and set replica count based on that value. ([#1204](https://github.com/sysdiglabs/charts/issues/1204))

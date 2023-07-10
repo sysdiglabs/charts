@@ -25,7 +25,7 @@ $ pre-commit run -a
 $ helm repo add sysdig https://charts.sysdig.com
 $ helm repo update
 $ helm upgrade --install sysdig-cluster-scanner sysdig/cluster-scanner \
-      --create-namespace -n sysdig --version=0.1.2  \
+      --create-namespace -n sysdig --version=0.3.1  \
       --set global.clusterConfig.name=CLUSTER_NAME \
       --set global.sysdig.region=SYSDIG_REGION \
       --set global.sysdig.accessKey=YOUR-KEY-HERE
@@ -55,7 +55,7 @@ To install the chart with the release name `cluster-scanner`, run:
 
 ```console
 $ helm upgrade --install sysdig-cluster-scanner sysdig/cluster-scanner \
-       --create-namespace -n sysdig --version=0.1.2 \
+       --create-namespace -n sysdig --version=0.3.1 \
        --set global.clusterConfig.name=CLUSTER_NAME \
        --set global.sysdig.region=SYSDIG_REGION \
        --set global.sysdig.accessKey=YOUR-KEY-HERE
@@ -120,7 +120,7 @@ The following table lists the configurable parameters of the `cluster-scanner` c
 | imageSbomExtractor.ports.probes                    | The port to be used for healthcheck probes for the Image SBOM Extractor                                                                                                                                                                                                                                                                                                                                                 | <code>7001</code>                             |
 | imageSbomExtractor.resources.limits.cpu            | Image SBOM Extractor CPU limit per replica                                                                                                                                                                                                                                                                                                                                                                              | <code>"1"</code>                              |
 | imageSbomExtractor.resources.limits.memory         | Image SBOM Extractor Memory limit per replica                                                                                                                                                                                                                                                                                                                                                                           | <code>350Mi</code>                            |
-| imageSbomExtractor.resources.requests.cpu          | Image SBOM Extractor CPU requests per replica                                                                                                                                                                                                                                                                                                                                                                           | <code>"150m"</code>                           |
+| imageSbomExtractor.resources.requests.cpu          | Image SBOM Extractor CPU requests per replica                                                                                                                                                                                                                                                                                                                                                                           | <code>"350m"</code>                           |
 | imageSbomExtractor.resources.requests.memory       | Image SBOM Extractor Memory requests per replica                                                                                                                                                                                                                                                                                                                                                                        | <code>350Mi</code>                            |
 | imageSbomExtractor.cache.type                      | The type of cache to use. Allowed values are `local`, `distributed` and `distributed,local`. When specified more than one, the cache precedence will be applied from right to left. Eg: `distributed,local` will try to hit the local one first, than fallback to distributed one (redis) When setting `distributed`, you should also setup redis settings below accordingly with your redis installation.              | <code>"local"</code>                          |
 | imageSbomExtractor.cache.local.maxSizeBytes        | The maximum size in bytes of the local cache. By default it is set to 35MB                                                                                                                                                                                                                                                                                                                                              | <code>"36700160"</code>                       |
@@ -146,7 +146,7 @@ Specify each parameter using the **`--set key=value[,key=value]`** argument to `
 
 ```console
 $ helm upgrade --install sysdig-cluster-scanner sysdig/cluster-scanner \
-    --create-namespace -n sysdig --version=0.1.2 \
+    --create-namespace -n sysdig --version=0.3.1 \
     --set global.sysdig.region="us1"
 ```
 
@@ -155,7 +155,7 @@ installing the chart. For example:
 
 ```console
 $ helm upgrade --install sysdig-cluster-scanner sysdig/cluster-scanner \
-    --create-namespace -n sysdig --version=0.1.2 \
+    --create-namespace -n sysdig --version=0.3.1 \
     --values values.yaml
 ```
 

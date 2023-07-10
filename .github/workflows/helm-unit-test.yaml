@@ -19,8 +19,8 @@ jobs:
       - name: Set up helm unit test plugin
         run: helm plugin install https://github.com/helm-unittest/helm-unittest --version=0.3.0
 
-      - name: Bundle sysdig-deploy dependencies
-        run: helm dependency build ./charts/sysdig-deploy
+      - name: Bundle chart dependencies
+        run: make deps
 
       - name: Test admission-controller
         run: helm unittest --strict ./charts/admission-controller
