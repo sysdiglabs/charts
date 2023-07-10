@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.10.2
+### Bug Fixes
+* **agent** [0eee32a2](https://github.com/sysdiglabs/charts/commit/0eee32a2d85d65924df2c964e431b2bb1a78b5fc): trim newlines when applying nodeSelectors in delegatedAgentDeployments ([#1159](https://github.com/sysdiglabs/charts/issues/1159))
 # v1.10.1
 ### Bug Fixes
 * **common** [0e37805f](https://github.com/sysdiglabs/charts/commit/0e37805f0190b74b53f7d9b47e5528009f58aa4b): add missing CHANGELOG file and bump version ([#1223](https://github.com/sysdiglabs/charts/issues/1223))
