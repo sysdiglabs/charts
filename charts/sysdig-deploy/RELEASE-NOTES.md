@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **sysdig-deploy** [8bb5a0f3](https://github.com/sysdiglabs/charts/commit/8bb5a0f3d091ccff4603979bc4db7fa6b0feb4f9): Automatic version bump due to updated dependencies ([#1227](https://github.com/sysdiglabs/charts/issues/1227))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.12.1...sysdig-deploy-1.12.2
+### Bug Fixes
+- **sysdig-deploy** [fddce561](https://github.com/sysdiglabs/charts/commit/fddce56188f99448f57a4a8049d16fef0d06b074): redo deployRuntimeScanner check to remove helm version constraint ([#1221](https://github.com/sysdiglabs/charts/issues/1221))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.12.2...sysdig-deploy-1.12.3
