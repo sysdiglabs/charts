@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.10.3
+### New Features
+* **agent** [07b8704c](https://github.com/sysdiglabs/charts/commit/07b8704cafb51b2dab6e99cac0e3fd6b4ad2449f): lower default cpu requests for kmodule container ([#1230](https://github.com/sysdiglabs/charts/issues/1230))
 # v1.10.2
 ### Bug Fixes
 * **agent** [0eee32a2](https://github.com/sysdiglabs/charts/commit/0eee32a2d85d65924df2c964e431b2bb1a78b5fc): trim newlines when applying nodeSelectors in delegatedAgentDeployments ([#1159](https://github.com/sysdiglabs/charts/issues/1159))
