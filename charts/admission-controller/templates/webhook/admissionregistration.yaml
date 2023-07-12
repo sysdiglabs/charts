@@ -48,11 +48,7 @@ webhooks:
   admissionReviewVersions: ["v1", "v1beta1"]
   sideEffects: None
   timeoutSeconds: {{ .Values.webhook.v2.timeoutSeconds }}
-  {{- if .Values.webhook.v2.denyOnError }}
-  failurePolicy: Fail
-  {{- else }}
   failurePolicy: Ignore
-  {{- end }}
 {{- end }}
 {{- if .Values.scanner.enabled }}
 - name: scanning.secure.sysdig.com

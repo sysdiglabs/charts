@@ -65,7 +65,7 @@ features:
   # Enable K8s Audit detections with Falco rules
   k8sAuditDetections: true
 
-  # Enable iac secure admission controller
+  # Enable KSPM Admission Controller
   kspmAdmissionController: false
 
   # [Admission Webhook Configuration rules](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#matching-requests-rules) for the Audit Detections
@@ -128,13 +128,12 @@ podMonitors:
 
 webhook:
   v2:
-    dryRun: true
-    registrationPort: 7443
-    enabled: true
-    denyOnError: false
+    # Number of seconds for the request to time out
     timeoutSeconds: 5
     nats:
+      # Allow insecure TLS certificates in backend connection to NATS service
       insecure: false
+      # Override the NATS service connection URL
       url: ""
     service:
       # Use this type as webhook service
@@ -144,9 +143,8 @@ webhook:
     http:
       # HTTP serve port where the requests will be served from
       port: 7443
-    container:
-      name: secure-admission-controller
-      image: quay.io/sysdig/secure-admission-controller:1.26.0-rc
+      # KSPM Admission Controller container image
+    image: quay.io/sysdig/secure-admission-controller:1.26.0-rc
   # Service name for Webhook deployment
   name: webhook
   # Amount of replicas for webhook. **Deprecated**, use `webhook.autoscaling.minReplicas` and `webhook.autoscaling.maxReplicas` instead.
