@@ -156,9 +156,11 @@ spec:
           resources:
             {{- toYaml .Values.webhook.resources | nindent 12 }}
       volumes:
+        {{- if .Values.features.kspmAdmissionController }}
         - name: configs
           secret:
-            secretName: {{ include "admissionController.webhook.fullname" . }}-secrets
+            secretName: {{ include "admissionController.webhook.fullname" . }}-access-key
+        {{- end }}
         - name: cert
           secret:
             secretName: {{ include "admissionController.webhook.fullname" . }}-tls
