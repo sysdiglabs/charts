@@ -20,7 +20,7 @@ data:
   DRY_RUN: "{{ .Values.webhook.dryRun }}"
   HTTP_TIMEOUT: "{{ .Values.webhook.timeoutSeconds }}s"
   {{- if .Values.features.kspmAdmissionController}}
-  SERVICE_PORT: "{{.Values.webhook.v2.container.port}}"
+  SERVICE_PORT: "{{ .Values.webhook.v2.http.port }}"
   CERT_LOCATION: /cert
   EXTERNAL_NATS_URL:  {{ include "admissionController.natsUrl" . }}
   NATS_INSECURE: "{{.Values.webhook.v2.nats.insecure}}"

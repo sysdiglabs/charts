@@ -64,7 +64,7 @@ spec:
               value: {{ include "webhook.noProxy" . }},{{ include "admissionController.scanner.fullname" . }}
             {{- end }}
           ports:
-            - containerPort: 7443
+            - containerPort: {{ .Values.webhook.v2.http.port }}
               protocol: TCP
               name: vac
           envFrom:

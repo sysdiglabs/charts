@@ -134,11 +134,18 @@ webhook:
     denyOnError: false
     timeoutSeconds: 5
     nats:
-      insecure: "true"
+      insecure: false
       url: ""
+    service:
+      # Use this type as webhook service
+      type: ClusterIP
+      # Configure port for the V2 webhook service
+      port: 7443
+    http:
+      # HTTP serve port where the requests will be served from
+      port: 7443
     container:
       name: secure-admission-controller
-      port: 7443
       image: quay.io/sysdig/secure-admission-controller:1.26.0-rc
   # Service name for Webhook deployment
   name: webhook
