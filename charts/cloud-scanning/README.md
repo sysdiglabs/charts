@@ -1,13 +1,13 @@
 # Cloud Scanning
 
-This chart deploys the Sysdig Cloud scanning on your Kubernetes cluster.
+This chart deploys the Sysdig Cloud scanning on your Kubernetes cluster. See Cloud Scanning configuration on [Cloud Scanning documentation](https://sysdiglabs.github.io/cloud-connector/scanning.html) for more information.
 
 >  ⚠️ **Deprecated Module**
 > <br>Use [Cloud-Connector `scanning`](https://charts.sysdig.com/charts/cloud-connector/#scanners) configuration instead of this module
 
 ## Installing the Chart
 
-Add Sysdig Helm charts repository and deploy the chart:
+Add the Sysdig Helm charts repository and deploy the chart:
 
 ```
 $ helm repo add sysdig https://charts.sysdig.com
@@ -25,11 +25,38 @@ $ curl -o "/tmp/sysdig_public.gpg" "https://charts.sysdig.com/public.gpg"
 $ gpg --import /tmp/sysdig_public.gpg
 ```
 
-### Verify the chart
+### Verify the Chart
 
-To check the integrity and the origin of the charts you can now append the `--verify` flag to the `install`, `upgrade` and `pull` helm commands.
+To check the integrity and the origin of the charts, append the `--verify` flag to the `install`, `upgrade`, and `pull` helm commands.
 
 ## Configuration
+
+You can use the Helm chart to update the default Cloud Scanning configurations by using either of the following:
+
+- Using the key-value pair: `--set sysdig.settings.key = value`
+- `values.yaml` file
+
+### Using the Key-Value Pair
+
+Specify each parameter using the `--set key=value[,key=value]` argument to the `helm install` command.
+
+For example:
+
+```bash
+$ helm install my-release \
+    --set sysdig.secureAPIToken=YOUR-KEY-HERE \
+    sysdig/cloud-scanning
+```
+
+### Using values.yaml
+
+The `values.yaml` file specifies the values for the Cloud Scanning configuration parameters.  You can add the configuration to the `values.yaml` file, then use it in the `helm install` command.
+
+```bash
+$ helm install my-release -f values.yaml sysdig/cloud-scanning
+```
+
+## Configuration Parameters
 
 The following table lists the configurable parameters of the Sysdig Cloud Scanning
 chart and their default values:
@@ -72,20 +99,3 @@ chart and their default values:
 | `codeBuildProject`           | Name of the CodeBuild exeuting the scanner                                                                      | ` `                                                                             |
 | `sqsQueueUrl`                | URL of the SQS queue for CloudTrail events                                                                      | ` `                                                                             |
 | `secureAPITokenSecret`       | Secret name that contains the API Token for Secure (required to inline-scan without leaking the secret)         | ` `                                                                             |
-
-
-Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
-
-```bash
-$ helm install my-release \
-    --set sysdig.secureAPIToken=YOUR-KEY-HERE \
-    sysdig/cloud-scanning
-```
-
-Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
-
-```bash
-$ helm install my-release -f values.yaml sysdig/cloud-scanning
-```
-
-You have more details about Cloud Scanning configuration on [Cloud Scanning documentation](https://sysdiglabs.github.io/cloud-connector/scanning.html)
