@@ -6,7 +6,9 @@ metadata:
   labels:
     {{- include "admissionController.webhook.labels" . | nindent 4 }}
 spec:
+  {{- if not .Values.webhook.autoscaling.enabled }}
   replicas: {{ .Values.webhook.replicaCount }}
+  {{- end }}
   selector:
     matchLabels:
       {{- include "admissionController.webhook.selectorLabels" . | nindent 6 }}

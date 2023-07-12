@@ -1,4 +1,5 @@
 # What's Changed
 
-
-#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.2.1...kspm-collector-0.2.2
+### Bug Fixes
+- **kspm-collector,node-analyzer** [96da2bf6](https://github.com/sysdiglabs/charts/commit/96da2bf6a09a306e2e801ed6358080956130adc0): properly handle affinity beta annotations ([#1196](https://github.com/sysdiglabs/charts/issues/1196))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.3.1...kspm-collector-0.3.2

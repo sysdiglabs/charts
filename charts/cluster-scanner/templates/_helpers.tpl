@@ -174,24 +174,12 @@ ise_cache_local_ttl: {{ .ttl }}
 Determine sysdig secure endpoint based on provided region
 */}}
 {{- define "cluster-scanner.apiHost" -}}
-    {{- if .Values.global.sysdig.apiHost -}}
-        {{- .Values.global.sysdig.apiHost -}}
-    {{- else if (eq .Values.global.sysdig.region "us1") -}}
-        {{- "https://secure.sysdig.com" -}}
-    {{- else if (eq .Values.global.sysdig.region "us2") -}}
-        {{- "https://us2.app.sysdig.com/secure" -}}
-    {{- else if (eq .Values.global.sysdig.region "us3") -}}
-        {{- "https://app.us3.sysdig.com/secure" -}}
-    {{- else if (eq .Values.global.sysdig.region "us4") -}}
-        {{- "https://app.us4.sysdig.com/secure" -}}
-    {{- else if (eq .Values.global.sysdig.region "eu1") -}}
-        {{- "https://eu1.app.sysdig.com/secure" -}}
-    {{- else if (eq .Values.global.sysdig.region "au1") -}}
-        {{- "https://app.au1.sysdig.com/secure" -}}
-    {{- else -}}
-        {{- if (ne .Values.global.sysdig.region "custom") -}}
-            {{- fail (printf "global.sysdig.region=%s provided is not recognized." .Values.global.sysdig.region ) -}}
-        {{- end -}}
+    {{- if (or .Values.global.sysdig.apiHost (eq .Values.global.sysdig.region "custom"))  -}}
+        {{- required "A valid Sysdig API endpoint (.global.sysdig.apiHost) is required" .Values.global.sysdig.apiHost -}}
+    {{- else if hasKey ((include "sysdig.regions" .) | fromYaml) .Values.global.sysdig.region }}
+        {{- include "sysdig.secureApiEndpoint" . }}
+    {{- else }}
+        {{- fail (printf "global.sysdig.region=%s provided is not recognized." .Values.global.sysdig.region ) -}}
     {{- end -}}
 {{- end -}}
 

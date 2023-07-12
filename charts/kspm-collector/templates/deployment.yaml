@@ -33,19 +33,21 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
             - matchExpressions:
-              - key: kubernetes.io/arch
-                operator: In
-                values: {{- toYaml .Values.arch | nindent 18 }}
-              - key: kubernetes.io/os
-                operator: In
-                values: {{- toYaml .Values.os | nindent 18 }}
-            - matchExpressions:
+              {{- if (include "kspmCollector.kubeVersionLessThan" (dict "root" . "major" 1 "minor" 14)) }}
               - key: beta.kubernetes.io/arch
                 operator: In
                 values: {{- toYaml .Values.arch | nindent 18 }}
               - key: beta.kubernetes.io/os
                 operator: In
                 values: {{- toYaml .Values.os | nindent 18 }}
+              {{- else }}
+              - key: kubernetes.io/arch
+                operator: In
+                values: {{- toYaml .Values.arch | nindent 18 }}
+              - key: kubernetes.io/os
+                operator: In
+                values: {{- toYaml .Values.os | nindent 18 }}
+              {{- end }}
       {{- end }}
       tolerations:
 {{ toYaml .Values.tolerations | indent 8 }}

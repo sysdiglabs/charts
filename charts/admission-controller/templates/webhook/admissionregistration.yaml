@@ -10,6 +10,13 @@ kind: ValidatingWebhookConfiguration
 metadata:
   name: {{ include "admissionController.webhook.fullname" . }}
   namespace: {{ include "admissionController.namespace" . }}
+webhooks: []
+---
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingWebhookConfiguration
+metadata:
+  name: {{ include "admissionController.webhook.fullname" . }}
+  namespace: {{ include "admissionController.namespace" . }}
   annotations:
     "helm.sh/hook": "post-install, post-upgrade"
 webhooks:

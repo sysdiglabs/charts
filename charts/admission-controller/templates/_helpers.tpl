@@ -116,18 +116,8 @@ Determine Secure endpoint based on provided region or .Values.sysdig.apiEndpoint
 {{- define "admissionController.apiEndpoint" -}}
     {{- if (or .Values.sysdig.apiEndpoint (eq .Values.global.sysdig.region "custom"))  -}}
         {{- required "A valid Sysdig API endpoint (.sysdig.apiEndpoint) is required" .Values.sysdig.apiEndpoint -}}
-    {{- else if (eq .Values.global.sysdig.region "us1") -}}
-        {{- "secure.sysdig.com" -}}
-    {{- else if (eq .Values.global.sysdig.region "us2") -}}
-        {{- "us2.app.sysdig.com" -}}
-    {{- else if (eq .Values.global.sysdig.region "us3") -}}
-        {{- "app.us3.sysdig.com" -}}
-    {{- else if (eq .Values.global.sysdig.region "us4") -}}
-        {{- "app.us4.sysdig.com" -}}
-    {{- else if (eq .Values.global.sysdig.region "eu1") -}}
-        {{- "eu1.app.sysdig.com" -}}
-    {{- else if (eq .Values.global.sysdig.region "au1") -}}
-        {{- "app.au1.sysdig.com" -}}
+    {{- else if hasKey ((include "sysdig.regions" .) | fromYaml) .Values.global.sysdig.region }}
+        {{- include "sysdig.secureApiEndpoint" . }}
     {{- end -}}
 {{- end -}}
 
