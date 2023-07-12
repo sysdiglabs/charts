@@ -99,4 +99,3 @@ chart and their default values:
 | `codeBuildProject`           | Name of the CodeBuild exeuting the scanner                                                                      | ` `                                                                             |
 | `sqsQueueUrl`                | URL of the SQS queue for CloudTrail events                                                                      | ` `                                                                             |
 | `secureAPITokenSecret`       | Secret name that contains the API Token for Secure (required to inline-scan without leaking the secret)         | ` `                                                                             |
-
