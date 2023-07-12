@@ -20,7 +20,7 @@ $ gpg --import /tmp/sysdig_public.gpg
 
 ### Verify the chart
 
-To check the integrity and the origin of the charts you can now append the `--verify` flag to the `install`, `upgrade` and `pull` helm commands.
+To check the integrity and the origin of the charts, append the `--verify` flag to the `install`, `upgrade`, and `pull` helm commands.
 
 ## Configuration
 
@@ -31,7 +31,7 @@ You can use the Helm chart to update the default Rapid Response configurations b
 
 ### Using the Key-Value Pair
 
-Specify each parameter using the `--set key=value[,key=value]` argument to the `helm install`command.
+Specify each parameter using the `--set key=value[,key=value]` argument to the `helm install` command.
 
 For example:
 
@@ -43,7 +43,7 @@ helm install --create-namespace -n rapid-response rapid-response \
 
 ### Using values.yaml
 
-The `values.yaml` file specifies the values for the agent configuration parameters.  You can add the configuration to the `values.yaml` file, then use it in the `helm install` command.
+The `values.yaml` file specifies the values for the Rapid Response configuration parameters.  You can add the configuration to the `values.yaml` file, then use it in the `helm install` command.
 
 ```bash
 helm install --create-namespace -n rapid-response rapid-response \
