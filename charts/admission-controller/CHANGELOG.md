@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.11.3
+* feat: remove workload name from scanning secure events for both dry run and real secure events
+
 # v0.11.2
 ### Bug Fixes
 * **admission-controller** [d03dc2ce](https://github.com/sysdiglabs/charts/commit/d03dc2ce1d7056304b7a1f803bb1dd92e4feb9d4): Make ValidatingWebhookConfiguration part of the resource lifecycle ([#1217](https://github.com/sysdiglabs/charts/issues/1217))
