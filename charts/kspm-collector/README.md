@@ -28,7 +28,7 @@ To check the integrity and the origin of the charts you can now append the `--ve
 The following table lists the configurable parameters of the Sysdig KSPM Collector chart and their default values.
 
 | Parameter                                  | Description                                                  | Default                                                     |
-| ------------------------------------------ | ------------------------------------------------------------ | ----------------------------------------------------------- |
+| ------------------------------------------ | ------------------------------------------------------------ |-------------------------------------------------------------|
 | `global.proxy.httpProxy`                   | Sets `HTTP_PROXY` on the KSPM collector containers.          | `""`                                                        |
 | `global.proxy.httpsProxy`                  | Sets `HTTPS_PROXY` on the KSPM collector containers.         | `""`                                                        |
 | `global.proxy.noProxy`                     | Sets `NO_PROXY` on the KSPM collector containers.            | `""`                                                        |
@@ -44,7 +44,7 @@ The following table lists the configurable parameters of the Sysdig KSPM Collect
 | `clusterName`                              | Sets a unique cluster name. This name will be used to identify events using the `kubernetes.cluster.name` tag. | ` `                                                         |
 | `image.registry`                           | Specifies the KSPM collector image registry.                 | `quay.io`                                                   |
 | `image.repository`                         | Specifies the image repository to pull from.                 | `sysdig/kspm-collector`                                     |
-| `image.tag`                                | Specifies the image tag to pull from the image repository.   | `1.24.0`                                                    |
+| `image.tag`                                | Specifies the image tag to pull from the image repository.   | `1.26.0`                                                    |
 | `image.digest`                             | Specifies the image digest to pull from the image repository. | ` `                                                         |
 | `image.pullPolicy`                         | Specifies theImage pull policy.                              | `""`                                                        |
 | `imagePullSecrets`                         | Specifies the Image pull secret.                             | `[]`                                                        |
