@@ -11,6 +11,10 @@ exclusively to fix incorrect entries and not to add new ones.
 
 
 ## Change Log
+# v0.8.3
+* fix: add aws-cloudtrail-s3-sns-sqs ingestor type for CIEM
+* fix: falco rules error on appending exceptions
+
 # v0.8.2
 ### Documentation
 * **cloud-connector** [6ad0ef92](https://github.com/sysdiglabs/charts/commit/6ad0ef926ebf7600ba7730c43219036eb1d0b57c): DOC-3215- Update Cloud connector Readme for clarity and correctness ([#1172](https://github.com/sysdiglabs/charts/issues/1172))

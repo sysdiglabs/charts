@@ -10,6 +10,7 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.10.3
 # v1.10.2
 ### Bug Fixes
 * **kspm-collector,node-analyzer** [96da2bf6](https://github.com/sysdiglabs/charts/commit/96da2bf6a09a306e2e801ed6358080956130adc0): properly handle affinity beta annotations ([#1196](https://github.com/sysdiglabs/charts/issues/1196))

@@ -47,9 +47,7 @@ sysdig/sysdig-deploy
 
 ### Using values.yaml
 
-The `values.yaml` file specifies the values for the agent configuration parameters.  You can add the configuration to the `values.yaml` file, then use it in the `helm install` command.
-
-For example, to enable Prometheus metrics scraping:
+The `values.yaml` file specifies the values for the `node-analyzer` configuration parameters.  You can add the configuration to the `values.yaml` file, then use it in the `helm install` command.
 
 1. Add the following to the `values.yaml` file:
 
@@ -82,7 +80,6 @@ For example, to enable Prometheus metrics scraping:
    ```
 
 
-
 ## Verify the integrity and origin
 Sysdig Helm Charts are signed so users can verify the integrity and origin of each chart, the steps are as follows:
 
@@ -93,9 +90,9 @@ $ curl -o "/tmp/sysdig_public.gpg" "https://charts.sysdig.com/public.gpg"
 $ gpg --import /tmp/sysdig_public.gpg
 ```
 
-### Verify the chart
+### Verify the Chart
 
-To check the integrity and the origin of the charts you can now append the `--verify` flag to the `install`, `upgrade` and `pull` helm commands.
+To check the integrity and the origin of the charts,  append the `--verify` flag to the `install`, `upgrade` and `pull` helm commands.
 
 ## Configuration Parameters
 

@@ -23,7 +23,7 @@ $ pre-commit run -a
 $ helm repo add sysdig https://charts.sysdig.com
 $ helm repo update
 $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-      --create-namespace -n sysdig-admission-controller --version=0.11.2  \
+      --create-namespace -n sysdig-admission-controller --version=0.11.3  \
       --set clusterName=CLUSTER_NAME \
       --set sysdig.secureAPIToken=SECURE_API_TOKEN
 ```
@@ -55,7 +55,7 @@ This chart deploys the Sysdig Admission Controller on a [Kubernetes](http://kube
 To install the chart with the release name `admission-controller`:
 
 ```console
-$ helm upgrade --install sysdig-admission-controller sysdig/admission-controller -n sysdig-admission-controller --version=0.11.2
+$ helm upgrade --install sysdig-admission-controller sysdig/admission-controller -n sysdig-admission-controller --version=0.11.3
 ```
 
 The command deploys the Sysdig Admission Controller on the Kubernetes cluster in the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.
@@ -184,7 +184,7 @@ Specify each parameter using the **`--set key=value[,key=value]`** argument to `
 
 ```console
 $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-    --create-namespace -n sysdig-admission-controller --version=0.11.2 \
+    --create-namespace -n sysdig-admission-controller --version=0.11.3 \
     --set sysdig.secureAPIToken=YOUR-KEY-HERE,clusterName=YOUR-CLUSTER-NAME
 ```
 
@@ -193,7 +193,7 @@ installing the chart. For example:
 
 ```console
 $ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
-    --create-namespace -n sysdig-admission-controller --version=0.11.2 \
+    --create-namespace -n sysdig-admission-controller --version=0.11.3 \
     --values values.yaml
 ```
 
