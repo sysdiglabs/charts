@@ -5,12 +5,15 @@ so the template is executed just once
 {{- $certString := include "admissionController.webhook.gen-certs" . -}}
 {{- $certList := split "$" $certString -}}
 ---
+{{- $existingVac := (lookup "admissionregistration.k8s.io/v1" "ValidatingWebhookConfiguration" (include "admissionController.namespace" .) (include "admissionController.webhook.fullname" .))}}
+{{- if (or (not $existingVac) (and $existingVac (eq (index $existingVac.metadata.annotations "meta.helm.sh/release-name") .Release.Name ) (eq (index $existingVac.metadata.annotations "meta.helm.sh/release-namespace") .Release.Namespace ))) }}
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
 metadata:
   name: {{ include "admissionController.webhook.fullname" . }}
   namespace: {{ include "admissionController.namespace" . }}
 webhooks: []
+{{- end}}
 ---
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
@@ -19,6 +22,10 @@ metadata:
   namespace: {{ include "admissionController.namespace" . }}
   annotations:
     "helm.sh/hook": "post-install, post-upgrade"
+    meta.helm.sh/release-name: {{ .Release.Name }}
+    meta.helm.sh/release-namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/managed-by: Helm
 webhooks:
 {{- if .Values.scanner.enabled }}
 - name: scanning.secure.sysdig.com
