@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.11.4
+### New Features
+* **admission-controller** [03f5b13a](https://github.com/sysdiglabs/charts/commit/03f5b13a47cd4f57a938daf1a2cd4aeb671251d1): Add labels to VAC webhook to adopt existing one ([#1238](https://github.com/sysdiglabs/charts/issues/1238))
 # v0.11.3
 * feat: remove workload name from scanning secure events for both dry run and real secure events
 
