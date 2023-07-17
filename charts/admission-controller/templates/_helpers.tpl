@@ -303,7 +303,7 @@ the following helper function designed to take the accessKey if specified locall
 */}}
 
 {{- define "sysdig.accessKey" -}}
-    {{- required "Sysdig Access Key is required" (.Values.sysdig.accessKey | default .Values.global.sysdig.accessKe) -}}
+    {{- required "Sysdig Access Key is required" (.Values.sysdig.accessKey | default .Values.global.sysdig.accessKey) -}}
 {{- end -}}
 
 {{/*
