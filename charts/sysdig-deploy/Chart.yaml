@@ -30,7 +30,7 @@ dependencies:
   - name: node-analyzer
     # repository: https://charts.sysdig.com
     repository: file://../node-analyzer
-    version: ~1.10.3
+    version: ~1.10.4
     alias: nodeAnalyzer
     condition: nodeAnalyzer.enabled
   - name: cluster-scanner
@@ -42,7 +42,7 @@ dependencies:
   - name: kspm-collector
     # repository: https://charts.sysdig.com
     repository: file://../kspm-collector
-    version: ~0.3.2
+    version: ~0.3.3
     alias: kspmCollector
     condition: global.kspm.deploy
   - name: rapid-response
