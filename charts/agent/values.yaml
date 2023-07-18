@@ -146,8 +146,14 @@ proxy:
 # Set daemonset timezone
 timezone:
 
+# Create the priorityClass defined below
+createPriorityClass: false
+
 # Set daemonset priorityClassName
 priorityClassName:
+
+# Set daemonset priorityClassValue
+priorityClassValue: 10
 
 ebpf:
   # Enable eBPF support for Sysdig Agent
