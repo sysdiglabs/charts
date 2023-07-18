@@ -16,7 +16,7 @@ This chart adds the Sysdig Stackdriver Bridge application into a cluster using a
 
 To install the chart with the release name `my-release`:
 
-1. Add the `sysdiglabs` Helm chart repository. 
+1. Add the `sysdiglabs` Helm chart repository.
 
     ```bash
     $ helm repo add sysdiglabs https://sysdiglabs.github.io/charts/
