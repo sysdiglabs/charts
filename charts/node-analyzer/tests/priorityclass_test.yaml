@@ -1,0 +1,75 @@
+suite: Node Analyzer PriorityClass tests
+templates:
+  - templates/daemonset-node-analyzer.yaml
+  - templates/priorityclass.yaml
+tests:
+  - it: Check PriorityClass limits are correctly set
+    set:
+      nodeAnalyzer:
+        createPriorityClass: true
+        priorityClassName: test-prio
+        priorityClassValue: "800000000"
+    asserts:
+      - equal:
+          path: value
+          value: 800000000
+        template: templates/priorityclass.yaml
+      - equal:
+          path: metadata.name
+          value: test-prio
+        template: templates/priorityclass.yaml
+      - equal:
+          path: spec.template.spec.priorityClassName
+          value: test-prio
+        template: templates/daemonset-node-analyzer.yaml
+
+  - it: Check not passing name and value
+    set:
+      nodeAnalyzer:
+        createPriorityClass: true
+    asserts:
+      - failedTemplate:
+          errorMessage: "priorityClassName is required when specifying createPriorityClass"
+        template: templates/priorityclass.yaml
+
+  - it: Check not passing name
+    set:
+      nodeAnalyzer:
+        createPriorityClass: true
+        priorityClassValue: 100
+    asserts:
+      - failedTemplate:
+          errorMessage: "priorityClassName is required when specifying createPriorityClass"
+        template: templates/priorityclass.yaml
+
+  - it: Check not passing value
+    set:
+      nodeAnalyzer:
+        createPriorityClass: true
+        priorityClassName: top-priority
+    asserts:
+      - failedTemplate:
+          errorMessage: "priorityClassValue is required when specifying createPriorityClass"
+        template: templates/priorityclass.yaml
+
+  - it: Check not creating the PriorityClass
+    asserts:
+      - isNull:
+          path: spec.template.spec.priorityClassName
+        template: templates/daemonset-node-analyzer.yaml
+      - hasDocuments:
+          count: 0
+        template: templates/priorityclass.yaml
+
+  - it: Check specifying existing PriorityClass name
+    set:
+      nodeAnalyzer:
+        priorityClassName: top-priority
+    asserts:
+      - hasDocuments:
+          count: 0
+        template: templates/priorityclass.yaml
+      - equal:
+          path: spec.template.spec.priorityClassName
+          value: top-priority
+        template: templates/daemonset-node-analyzer.yaml
