@@ -115,5 +115,3 @@ The command removes all the Kubernetes components associated with the chart and 
 ## Support
 
 For getting support from the Sysdig team, see [Sysdig Support page](https://sysdig.com/support).
-
-
