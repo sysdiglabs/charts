@@ -21,6 +21,8 @@ rules:
 - apiGroups: ["*"]
   resources:
     - "endpoints"
+    # Following is required for OpenShift. See https://docs.openshift.com/container-platform/3.11/architecture/core_concepts/pods_and_services.html#endpoints
+    - "endpoints/restricted"
   resourceNames:
     - {{ include "cluster-scanner.fullname" . }}
   verbs: ["*"]
