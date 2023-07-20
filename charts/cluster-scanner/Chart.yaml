@@ -1,10 +1,10 @@
 apiVersion: v2
 name: cluster-scanner
-description: A Helm chart for Kubernetes
+description: Sysdig Cluster Scanner
 
 type: application
 
-version: 0.3.1
+version: 0.3.3
 
 appVersion: "0.1.0"
 home: https://www.sysdig.com/

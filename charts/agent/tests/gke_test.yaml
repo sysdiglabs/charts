@@ -2,7 +2,7 @@ suite: Test GKE Specific config settings
 templates:
   - templates/configmap.yaml
   - templates/daemonset.yaml
-  - templates/gkeautopilotpriorityclass.yaml
+  - templates/priorityclass.yaml
 tests:
   - it: Enable GKE Autopilot
     set:
@@ -75,7 +75,7 @@ tests:
       - equal:
           path: globalDefault
           value: false
-    template: templates/gkeautopilotpriorityclass.yaml
+    template: templates/priorityclass.yaml
 
   - it: Check PriorityClass name override
     set:
@@ -90,7 +90,7 @@ tests:
           apiVersion: scheduling.k8s.io/v1
           kind: PriorityClass
           name: my-priority-class
-    template: templates/gkeautopilotpriorityclass.yaml
+    template: templates/priorityclass.yaml
 
   - it: Ensure drift_control and drift_killer features are disabled
     set:

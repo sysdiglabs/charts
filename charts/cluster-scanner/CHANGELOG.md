@@ -10,6 +10,12 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.3.3
+### Bug Fixes
+* **cluster-scanner** [cd8ebe99](https://github.com/sysdiglabs/charts/commit/cd8ebe99dd5313465b5a6cc1cf096cefea71df07): corrected role to support OKD4 ([#1247](https://github.com/sysdiglabs/charts/issues/1247))
+# v0.3.2
+### Bug Fixes
+* **cluster-scanner** [8b44c94f](https://github.com/sysdiglabs/charts/commit/8b44c94fe9e1bdeb21f8815ebcfdd60f6cf8f802): corrected description ([#1243](https://github.com/sysdiglabs/charts/issues/1243))
 # v0.3.1
 ### Bug Fixes
 * **common** [0e37805f](https://github.com/sysdiglabs/charts/commit/0e37805f0190b74b53f7d9b47e5528009f58aa4b): add missing CHANGELOG file and bump version ([#1223](https://github.com/sysdiglabs/charts/issues/1223))

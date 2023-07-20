@@ -45,6 +45,7 @@ tests:
             apiGroups: ["*"]
             resources:
               - "endpoints"
+              - "endpoints/restricted"
             resourceNames:
               - test-release-cluster-scanner
             verbs: ["*"]
