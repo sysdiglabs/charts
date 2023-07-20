@@ -99,10 +99,10 @@ tests:
       labels: "my.label/key1: "
       clusterName: test-k8s
     asserts:
-    - isNull:
+    - isEmpty:
         path: metadata.labels['my.label/key1']
       template: scanner/deployment.yaml
-    - isNull:
+    - isEmpty:
         path: metadata.labels['my.label/key1']
       template: webhook/deployment.yaml
 
@@ -161,7 +161,7 @@ tests:
       clusterName: test-k8s
     template: scanner/deployment.yaml
     asserts:
-    - isNull:
+    - isEmpty:
         path: metadata.labels['my.label/key1']
 
   - it: check application of incorrect admission controller scanner labels with yaml
@@ -221,7 +221,7 @@ tests:
       clusterName: test-k8s
     template: webhook/deployment.yaml
     asserts:
-    - isNull:
+    - isEmpty:
         path: metadata.labels['my.label/key1']
 
   - it: check application of incorrect admission controller webhook labels with yaml
