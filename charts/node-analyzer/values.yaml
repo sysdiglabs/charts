@@ -119,8 +119,14 @@ nodeAnalyzer:
       operator: Equal
       value: "true"
 
+  # Specify if the Priority Class needs to be created
+  createPriorityClass: false
+
   # Set nodeAnalyzer daemonset priorityClassName
   priorityClassName:
+
+  # Set the value for the Priority Class (if it is to be created)
+  priorityClassValue:
 
   # Allow the DaemonSet to set labels
   labels: {}
