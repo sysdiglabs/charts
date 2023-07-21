@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.10.7
+### Documentation
+* **node-analyzer** [799649c4](https://github.com/sysdiglabs/charts/commit/799649c48c21b33083ee5a4a24642a010873d463): remove additional column from the configurations table ([#1251](https://github.com/sysdiglabs/charts/issues/1251))
 # v1.10.6
 ### Documentation
 * **node-analyzer** [8f952ad4](https://github.com/sysdiglabs/charts/commit/8f952ad43045ddcffa3fdbd346ed129f8da2f0fb): fix configuration table rendering ([#1249](https://github.com/sysdiglabs/charts/issues/1249))
