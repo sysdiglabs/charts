@@ -165,3 +165,27 @@ spec:
                 key: agent_port
                 name: {{ template "kspmCollector.fullname" . }}
                 optional: true
+          {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
+          - name: SSL_CERT_FILE
+            value: /ca-certs/{{- include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.ssl) -}}
+          {{- end }}
+        volumeMounts:
+          {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
+          - mountPath: /ca-certs
+            name: ca-cert
+            readOnly: true
+          {{- end }}
+      volumes:
+        {{- if eq (include "sysdig.custom_ca.useValues"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
+        - name: ca-cert
+          secret:
+            secretName: {{ include "kspmCollector.fullname" . }}-ca
+        {{- else if eq (include "sysdig.custom_ca.useExistingSecret"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
+        - name: ca-cert
+          secret:
+            secretName: {{ include "sysdig.custom_ca.existingSecret" (dict "global" .Values.global.ssl "component" .Values.ssl) }}
+        {{- else if eq (include "sysdig.custom_ca.useExistingConfigMap" (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
+        - name: ca-cert
+          configMap:
+            name: {{ include "sysdig.custom_ca.existingConfigMap" (dict "global" .Values.global.ssl "component" .Values.ssl) }}
+        {{- end }}

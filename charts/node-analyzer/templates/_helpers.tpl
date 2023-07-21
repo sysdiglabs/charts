@@ -215,7 +215,7 @@ Sysdig NATS service URL
 {{/*
 nodeAnalyzer agentConfigmapName
 */}}
-{{- define "agent.configmapName" -}}
+{{- define "nodeAnalyzer.configmapName" -}}
     {{- default .Values.global.agentConfigmapName | default "sysdig-agent" -}}
 {{- end -}}
 

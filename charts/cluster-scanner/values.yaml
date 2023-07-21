@@ -29,7 +29,39 @@ global:
   # sorted by increasing level of verbosity are: `PANIC`, `FATAL`, `ERROR`,
   # `WARN`, `INFO`, `DEBUG`, `TRACE`.
   loggingLevel: "INFO"
+  ssl:
+    ca:
+      # For outbound connections (secure backend, proxy,...)
+      # A PEM-encoded x509 certificate.  This can also be a bundle with multiple certificates.
+      certs: []
+      # Example of certificate
+      # certs:
+      #   - |
+      #       -----BEGIN CERTIFICATE-----
+      #       MIIDEzCCAfugAwIBAgIQKiv9U+KxPJzu1adXwC06RzANBgkqhkiG9w0BAQsFADAU
+      #       MRIwEAYDVQQDEwloYXJib3ItY2EwHhcNMjIwMjIzMDY1NjExWhcNMjMwMjIzMDY1
+      #       NjExWjAUMRIwEAYDVQQDEwloYXJib3ItY2EwggEiMA0GCSqGSIb3DQEBAQUAA4IB
+      #       MMNlTAQ9fvdNOTzZntye0PQYR5SR13E=
+      #       -----END CERTIFICATE-----
+      #   - |
+      #       -----BEGIN CERTIFICATE-----
+      #       MIIDEzCCAfugAwIBAgIQKiv9U+KxPJzu1adXwC06RzANBgkqhkiG9w0BAQsFADAU
+      #       MRIwEAYDVQQDEwloYXJib3ItY2EwHhcNMjIwMjIzMDY1NjExWhcNMjMwMjIzMDY1
+      #       NjExWjAUMRIwEAYDVQQDEwloYXJib3ItY2EwggEiMA0GCSqGSIb3DQEBAQUAA4IB
+      #       MMNlTAQ9fvdNOTzZntye0PQYRTTS34D=
+      #       -----END CERTIFICATE-----
 
+      # Filename that is used when creating the secret.  Required if cert is provided.
+      keyName:
+
+      # Provide the name of an existing Secret that contains the CA required
+      existingCaSecret:
+      # Provide the filename that is defined inside the existing Secret
+      existingCaSecretKeyName:
+      # Provide the name of an existing ConfigMap that contains the CA required
+      existingCaConfigMap:
+      # Provide the filename that is defined inside the existing ConfigMap
+      existingCaConfigMapKeyName:
 # Enables Sysdig Eve to retrieve the list of running packages.
 eveEnabled: false
 # Enables the integration with Sysdig Eve. Stores the list of running packages
@@ -223,3 +255,37 @@ tolerations: []
 
 # Set Cluster Scanner affinity
 affinity: {}
+
+ssl:
+  ca:
+    # For outbound connections (secure backend, proxy,...)
+    # A PEM-encoded x509 certificate.  This can also be a bundle with multiple certificates.
+    certs: []
+    # Example of certificate
+    # certs:
+    #   - |
+    #       -----BEGIN CERTIFICATE-----
+    #       MIIDEzCCAfugAwIBAgIQKiv9U+KxPJzu1adXwC06RzANBgkqhkiG9w0BAQsFADAU
+    #       MRIwEAYDVQQDEwloYXJib3ItY2EwHhcNMjIwMjIzMDY1NjExWhcNMjMwMjIzMDY1
+    #       NjExWjAUMRIwEAYDVQQDEwloYXJib3ItY2EwggEiMA0GCSqGSIb3DQEBAQUAA4IB
+    #       MMNlTAQ9fvdNOTzZntye0PQYR5SR13E=
+    #       -----END CERTIFICATE-----
+    #   - |
+    #       -----BEGIN CERTIFICATE-----
+    #       MIIDEzCCAfugAwIBAgIQKiv9U+KxPJzu1adXwC06RzANBgkqhkiG9w0BAQsFADAU
+    #       MRIwEAYDVQQDEwloYXJib3ItY2EwHhcNMjIwMjIzMDY1NjExWhcNMjMwMjIzMDY1
+    #       NjExWjAUMRIwEAYDVQQDEwloYXJib3ItY2EwggEiMA0GCSqGSIb3DQEBAQUAA4IB
+    #       MMNlTAQ9fvdNOTzZntye0PQYRTTS34D=
+    #       -----END CERTIFICATE-----
+
+    # Filename that is used when creating the secret.  Required if cert is provided.
+    keyName:
+
+    # Provide the name of an existing Secret that contains the CA required
+    existingCaSecret:
+    # Provide the filename that is defined inside the existing Secret
+    existingCaSecretKeyName:
+    # Provide the name of an existing ConfigMap that contains the CA required
+    existingCaConfigMap:
+    # Provide the filename that is defined inside the existing ConfigMap
+    existingCaConfigMapKeyName:

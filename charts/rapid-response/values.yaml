@@ -6,6 +6,40 @@ global:
   image:
     pullSecrets: []
     pullPolicy: IfNotPresent
+  ssl:
+    ca:
+      # For outbound connections (secure backend, proxy,...)
+      # A PEM-encoded x509 certificate.  This can also be a bundle with multiple certificates.
+      # See below in the rapidResponse.ssl.ca.cert key for an example
+      cert:
+
+      # Example of a certificate
+      # cert: |
+      #   -----BEGIN CERTIFICATE-----
+      #   MIIDEzCCAfugAwIBAgIQKiv9U+KxPJzu1adXwC06RzANBgkqhkiG9w0BAQsFADAU
+      #   MRIwEAYDVQQDEwloYXJib3ItY2EwHhcNMjIwMjIzMDY1NjExWhcNMjMwMjIzMDY1
+      #   NjExWjAUMRIwEAYDVQQDEwloYXJib3ItY2EwggEiMA0GCSqGSIb3DQEBAQUAA4IB
+      #   MMNlTAQ9fvdNOTzZntye0PQYR5SR13E=
+      #   -----END CERTIFICATE-----
+      #   -----BEGIN CERTIFICATE-----
+      #   MIIDEzCCAfugAwIBAgIQKiv9U+KxPJzu1adXwC06RzANBgkqhkiG9w0BAQsFADAU
+      #   MRIwEAYDVQQDEwloYXJib3ItY2EwHhcNMjIwMjIzMDY1NjExWhcNMjMwMjIzMDY1
+      #   NjExWjAUMRIwEAYDVQQDEwloYXJib3ItY2EwggEiMA0GCSqGSIb3DQEBAQUAA4IB
+      #   MMNlTAQ9fvdNOTzZntye0PQYRTTS34D=
+      #   -----END CERTIFICATE-----
+
+      # Filename that is used when creating the secret.  Required if cert is provided.
+      keyName: root_ca_file.crt
+
+      # Provide the name of an existing Secret that contains the CA required
+      existingCaSecret:
+      # Provide the filename that is defined inside the existing Secret.  Required if existingCaSecret is set.
+      existingCaSecretKeyName:
+
+      # Provide the name of an existing ConfigMap that contains the CA required
+      existingCaConfigMap:
+      # Provide the filename that is defined inside the existing ConfigMap.  Required if existingCaConfigMap is set.
+      existingCaConfigMapKeyName:
 
 sysdig:
   # Required: You need your Sysdig access key before running agents, either specifying 'accessKey' here, or using 'existingAccessKeySecret'
@@ -74,49 +108,38 @@ rapidResponse:
   # Import custom CA certificates
   ssl:
     ca:
-      certs:
-        []
-        # Example of certificate
-        # - |
-        #     -----BEGIN CERTIFICATE-----
-        #     MIIDEzCCAfugAwIBAgIQKiv9U+KxPJzu1adXwC06RzANBgkqhkiG9w0BAQsFADAU
-        #     MRIwEAYDVQQDEwloYXJib3ItY2EwHhcNMjIwMjIzMDY1NjExWhcNMjMwMjIzMDY1
-        #     NjExWjAUMRIwEAYDVQQDEwloYXJib3ItY2EwggEiMA0GCSqGSIb3DQEBAQUAA4IB
-        #     DwAwggEKAoIBAQCqiqSoGHDbQhULBpkS+4Ip4VLF36DZpT8CJ4rOBA5+8Cnjd3XY
-        #     I+n1g6ta/s/6QMEy46rHUysGrmtb/G5+dDAzfNUuAJh2vJEb3Yt8ysihxPwxLie+
-        #     85dgEQirruyruvR7zczRo1BVoa7Q5M9kMPnM6a+M5mEjnVoqwdD3g4QigkSQ2ewD
-        #     7AwwOALgDd4duuUUoCz+IKr+8PWBHvCpRrgwSoVNjw8fckWb4fMLaChiyr9SZfpq
-        #     qjR8rRq65Yb7etmpRew61czWMv2Tv45bz6xigdB/zWe6+qAFiHqXaHDyxytkji3C
-        #     ZuBxa8Xl7xYfpcczEa1qh8ByAQyWzKN5xRY1AgMBAAGjYTBfMA4GA1UdDwEB/wQE
-        #     AwICpDAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwDwYDVR0TAQH/BAUw
-        #     AwEB/zAdBgNVHQ4EFgQUslz034d5FUO+jSzlsgWlFeP/ogwwDQYJKoZIhvcNAQEL
-        #     BQADggEBAJH3MIVEnnjB3XLA6cw61dWTtigLcA5caT5yEJALf126dBaPwFsOn0mi
-        #     ehxdSRh+LrDzEN1MP9NJRpKQxMCy694sAzZGJggBhBGE6P0InLM56lBHlmqN2Cfy
-        #     apwtueUtXm/GoB+3FEsRnjl7qzi40oadosdu0pIrqvviTjmbfm6CfxaW4crAu6Ev
-        #     3fl41WW/2WWzFU7KV7ApfRfzJUZ82vo8n6CXv2ogt7DOrAE4l27KS5oqNu8K5STh
-        #     FdNM4fBjDhoRhwIrurHDGabsIJa+0yThwRQSSafereqredfafLOHqV/ar6S63BGe
-        #     MMNlTAQ9fvdNOTzZntye0PQYR5SR13E=
-        #     -----END CERTIFICATE-----
-        # - |
-        #     -----BEGIN CERTIFICATE-----
-        #     MIIDEzXXAguhgAwIBAgIQKiv9U+KxPJzu1adXwC06RzANBgkqhkiG9w0BAQsFADAU
-        #     MRIwEAYDVQQDEwloYXJib3ItY2EwHhcNMjIwMjIzMDY1NjExWhcNMjMwMjIzMDY1
-        #     NjExWjAUMRIwEAYDVQQDEwloYXJib3ItY2EwggEiMA0GCSqGSIb3DQEBAQUAA4IB
-        #     DwAwggEKAoIBAQCqiqSoGHDbQhULBpkS+4Ip4VLF36DZpT8CJ4rOBA5+8Cnjd3XY
-        #     I+n1g6ta/s/6QMEy46rHUysGrmtb/G5+dDAzfNUuAJh2vJEb3Yt8ysihxPwxLie+
-        #     85dgEQirruyruvR7zczRo1BVoa7Q5M9kMPnM6a+M5mEjnVoqwdD3g4QigkSQ2ewD
-        #     7AwwOALgDd4duuUUoCz+IKr+8PWBHvCpRrgwSoVNjw8fckWb4fMLaChiyr9SZfpq
-        #     qjR8rRq65Yb7etmpRew61czWMv2Tv45bz6xigdB/zWe6+qAFiHqXaHDyxytkji3C
-        #     ZuBxa8Xl7xYfpcczEa1qh8ByAQyWzKN5xRY1AgMBAAGjYTBfMA4GA1UdDwEB/wQE
-        #     AwICpDAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwDwYDVR0TAQH/BAUw
-        #     AwEB/zAdBgNVHQ4EFgQUslz034d5FUO+jSzlsgWlFeP/ogwwDQYJKoZIhvcNAQEL
-        #     BQADggEBAJH3MIVEnnjB3XLA6cw61dWTtigLcA5caT5yEJALf126dBaPwFsOn0mi
-        #     ehxdSRh+LrDzEN1MP9NJRpKQxMCy694sAzZGJggBhBGE6P0InLM56lBHlmqN2Cfy
-        #     apwtueUtXm/GoB+3FEsRnjl7qzi40oadosdu0pIrqvviTjmbfm6CfxaW4crAu6Ev
-        #     3fl41WW/2WWzFU7KV7ApfRfzJUZ82vo8n6CXv2ogt7DOrAE4l27KS5oqNu8K5STh
-        #     FdNM4fBjDhoRhwIrurHDGabsIJa+0yThwRQSSafereqredfafLOHqV/ar6S63BGe
-        #     MMNlTAQ9fvdNOTzZntye0ZZZR5SG13E=
-        #     -----END CERTIFICATE-----
+      # For outbound connections (secure backend, proxy,...)
+      # A PEM-encoded x509 certificate.  This can also be a bundle with multiple certificates.
+      certs: []
+      # Example of certificate
+      # certs:
+      #   - |
+      #       -----BEGIN CERTIFICATE-----
+      #       MIIDEzCCAfugAwIBAgIQKiv9U+KxPJzu1adXwC06RzANBgkqhkiG9w0BAQsFADAU
+      #       MRIwEAYDVQQDEwloYXJib3ItY2EwHhcNMjIwMjIzMDY1NjExWhcNMjMwMjIzMDY1
+      #       NjExWjAUMRIwEAYDVQQDEwloYXJib3ItY2EwggEiMA0GCSqGSIb3DQEBAQUAA4IB
+      #       MMNlTAQ9fvdNOTzZntye0PQYR5SR13E=
+      #       -----END CERTIFICATE-----
+      #   - |
+      #       -----BEGIN CERTIFICATE-----
+      #       MIIDEzCCAfugAwIBAgIQKiv9U+KxPJzu1adXwC06RzANBgkqhkiG9w0BAQsFADAU
+      #       MRIwEAYDVQQDEwloYXJib3ItY2EwHhcNMjIwMjIzMDY1NjExWhcNMjMwMjIzMDY1
+      #       NjExWjAUMRIwEAYDVQQDEwloYXJib3ItY2EwggEiMA0GCSqGSIb3DQEBAQUAA4IB
+      #       MMNlTAQ9fvdNOTzZntye0PQYRTTS34D=
+      #       -----END CERTIFICATE-----
+
+      # Filename that is used when creating the secret.  Required if cert is provided.
+      keyName:
+
+      # Provide the name of an existing Secret that contains the CA required
+      existingCaSecret:
+      # Provide the filename that is defined inside the existing Secret.  Required if existingCaSecret is set.
+      existingCaSecretKeyName:
+
+      # Provide the name of an existing ConfigMap that contains the CA required
+      existingCaConfigMap:
+      # Provide the filename that is defined inside the existing ConfigMap.  Required if existingCaConfigMap is set.
+      existingCaConfigMapKeyName:
 
   # The privileged flag is necessary for OCP 4.x and other Kubernetes setups that deny host filesystem access to
   # running containers by default regardless of volume mounts. In those cases, access to the CRI socket would fail.

@@ -8,7 +8,7 @@ tests:
       sysdig:
         accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
       nodeAnalyzer:
-        apiEndpoint: secure.apiendpoint.com
+        apiEndpoint: secure.sysdig.com
     asserts:
       - equal:
           path: data.access-key
@@ -16,7 +16,7 @@ tests:
         template: secrets.yaml
       - equal:
           path: data.collector_endpoint
-          value: https://secure.apiendpoint.com
+          value: https://secure.sysdig.com
         template: configmap-benchmark-runner.yaml
 
   - it: check Readme install command showing options usage example
