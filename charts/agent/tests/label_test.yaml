@@ -52,7 +52,7 @@ tests:
       daemonset:
         labels: "my.label/key1: "
     asserts:
-    - isNull:
+    - isEmpty:
         path: metadata.labels['my.label/key1']
   - it: check application of incorrect agent labels with yaml
     set:

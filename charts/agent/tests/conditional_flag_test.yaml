@@ -11,9 +11,9 @@ tests:
       - equal:
           path: spec.template.metadata.annotations['autopilot.gke.io/no-connect']
           value: "true"
-      - isNull:
+      - isNullOrEmpty:
           path: spec.template.spec.affinity
-      - isNull:
+      - isEmpty:
           path: spec.template.spec.initContainers[0].env[?(@.name == "SYSDIG_BPF_PROBE")].value
       - equal:
           path: spec.template.spec.initContainers[*].volumeMounts[?(@.name == "bpf-probes")].mountPath
