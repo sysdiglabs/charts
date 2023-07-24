@@ -479,7 +479,6 @@ tests:
       - matchRegexRaw:
           pattern: |-
             A PriorityClass is recommended for GKE Autopilot environments. Please set gke.createPriorityClass=true or provide the name of an existing PriorityClass by using the priorityClassName parameter.
-    template: templates/NOTES.txt
 
   - it: Test warning not printed for GKE Autopilot environments when PriorityClass creation specified
     set:
@@ -492,7 +491,6 @@ tests:
       - notMatchRegexRaw:
           pattern: |-
             A PriorityClass is recommended for GKE Autopilot environments. Please set gke.createPriorityClass=true or provide the name of an existing PriorityClass by using the priorityClassName parameter.
-    template: templates/NOTES.txt
 
   - it: Test warning not printed for GKE Autopilot environments when priorityClassName is specified
     set:
@@ -505,4 +503,3 @@ tests:
       - notMatchRegexRaw:
           pattern: |-
             A PriorityClass is recommended for GKE Autopilot environments. Please set gke.createPriorityClass=true or provide the name of an existing PriorityClass by using the priorityClassName parameter.
-    template: templates/NOTES.txt
