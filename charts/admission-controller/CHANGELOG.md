@@ -10,7 +10,7 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
-# v0.11.6
+# v0.11.7
 * feat: fix rules provider processing customer appends when there is no base rule.
 # v0.11.5
 ### New Features
