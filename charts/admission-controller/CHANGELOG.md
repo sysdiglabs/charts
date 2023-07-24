@@ -11,6 +11,7 @@ exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
 # v0.11.6
+* feat: fix rules provider processing customer appends when there is no base rule.
 # v0.11.5
 ### New Features
 * **admission-controller** [346004b2](https://github.com/sysdiglabs/charts/commit/346004b28dbbc426df63f92835cac23205cee3d6): simplify CA and certificate options ([#1246](https://github.com/sysdiglabs/charts/issues/1246))
