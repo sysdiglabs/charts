@@ -18,7 +18,6 @@ $ pre-commit run -a
 [{{ .Project.Name }}]({{ .Project.URL }}) features ActivityAudit and ImageScanning on a Kubernetes Cluster.
 <br/>{{ .Project.Description }}
 
-## TL;DR;
 
 ```
 $ helm repo add {{ .Repository.Name }} {{ .Repository.URL }}
