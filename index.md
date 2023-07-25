@@ -1,47 +1,41 @@
 ---
 title: Sysdig Helm Charts
-description: Repository for Sysdig's Helm charts.
+description: The repository for Sysdig Helm charts.
 ---
 
-Helm is an open-source package manager for Kubernetes applications. Using a helm chart you can describe, install, configure, and upgrade applications automatically.
+## Install Sysdig Using Helm
 
-To simplify your deployment experience, Sysdig provides helm charts to install and configure Sysdig installation components in your Kubernetes environment.
+Sysdig leverages the power of the Helm open-source package manager for Kubernetes applications. 
 
+If you are installing, configuring, or upgrading Sysdig components on a Kubernetes environment, use the Helm charts in this repository. 
 
-## Sysdig Chart Repository
+## Core Component Charts
 
-The Sysdig Chart Repository includes the following charts:
+To install the core components of Sysdig Monitor and Sysdig Secure, use the **sysdig-deploy** parent chart, which invokes a variety of child charts as needed. 
 
-| Charts          | Description |
-| :---------------| ----------- |
-|[`sysdig-deploy`](/charts/sysdig-deploy)    | Deploys the following components in your Kubernetes cluster:<br>`kspm-collector`:  Enables collecting and sendin Kubernetes resource manifests to be evaluated against compliance policies. The scan results are displayed by Sysdig Secure's Actionable Compliance.<br>`node-analyzer`: Enables  Image Analyzer, Benchmarks, and Host Scanning features.<br>`rapid-response`:  Allows designated advance users to investigate and troubleshoot events from a remote shell.<br>`agent`: Processes syscall events and metrics, creates [capture](https://docs.sysdig.com/en/docs/sysdig-secure/investigate/captures/#captures) files, and performs auditing and compliance. |
-|[`admission-controller`](/charts/admission-controller) | Deploys the [Sysdig Admission Controller](https://docs.sysdig.com/en/docs/sysdig-secure/scanning/admission-controller/) in your Kubernetes cluster to enable image scanning and audit logging. |
-|[`cloud-connector`](/charts/cloud-connector) | Deploys the [Sysdig Cloud Connector](https://docs.sysdig.com/en/docs/installation/sysdig-secure-for-cloud/) in your Kubernetes cluster to enable threat-detection and image scanning. |
-|[`harbor-scanner-sysdig-secure`](/charts/harbor-scanner-sysdig-secure) | Deploys the Harbor Scanner Adapter to enable Harbor to use Sysdig Secure scanning engine to analyze the container images managed by the platform. |
-|[`registry-scanner`](/charts/registry-scanner) | Deploys the Sysdig Registry Scanner as a scheduled cronjob in your Kubernetes cluster. |
-|[`sysdig-mcm-navmenu`](/charts/sysdig-mcm-navmenu) | Deploys services and ingress required to create Multi-Cloud Management menu in Sysdig. |
-|[`sysdig-stackdriver-bridge`](/charts/sysdig-stackdriver-bridge) | Deploys the the Sysdig Stackdriver Bridge application to enable reading and sending audit logs from Stackdriver to Sysdig agent. |
+Additional Sysdig Secure components provide scanning for vulnerabilities in various parts of the environment and the CI/CD lifecycle.
 
+| Parent Chart                                   | Subcharts                                              | Description                                                  |
+| ---------------------------------------------- | :----------------------------------------------------- | ------------------------------------------------------------ |
+| [`sysdig-deploy`](/charts/sysdig-deploy)       |                                                        | Installs, configures, and upgrades the Sysdig Agent and a variety of Sysdig Secure components. The parent chart deploys multiple child charts. |
+|                                                | [`sysdig-agent`](/charts/agent)                        | Processes syscall events, metrics and creates capture files. It provides detailed visibility into container and host activity, helping to detect and prevent threats. |
+|                                                | [`node-analyzer`](/charts/node-analyzer)               | The `node-analyzer` deploys the following as one daemonset in a cluster: <br>`host-scanner`<br>`runtime-scanner`<br>`kspm-analyzer` |
+|                                                | [`kspm-collector`](/charts/kspm-collector)             | Collects Kubernetes resource manifests and sends them to be evaluated against Sysdig compliance policies. The scan results are displayed in Sysdig Secure [Compliance](https://docs.sysdig.com/en/compliance/) and [Inventory ](https://docs.sysdig.com/en/docs/sysdig-secure/inventory/)UI. |
+|                                                | [`host-scanner`](/charts/node-analyzer)                | Scan [hosts](https://docs.sysdig.com/en/docs/sysdig-secure/vulnerabilities/runtime/host-scanning/) to identify and prioritize vulnerabilities with rich context. |
+|                                                | [`runtime-scanner`](/charts/node-analyzer)             | Scan Kubernetes [workloads](https://docs.sysdig.com/en/docs/sysdig-secure/vulnerabilities/runtime/) in runtime to identify and prioritize vulnerabilities with rich context. |
+|                                                | [`admission-controller`](/charts/admission-controller) | Intercept creation and modification of Kubernetes resources for auditing, and, for legacy scanning engine, allows blocking requests based on image vulnerabilities and misconfigurations. |
+|                                                | [`rapid-response`](/charts/rapid-response)             | Allows designated advance users to investigate and troubleshoot events from a remote shell. |
+| [`registry-scanner`](/charts/registry-scanner) |                                                        | Scan images in [container registries](https://docs.sysdig.com/en/docs/sysdig-secure/vulnerabilities/registry/) to identify and prioritize vulnerabilities with rich context. |
+| [`cloud-connector`](/charts/cloud-connector)   |                                                        | Used only in special cases when the standard way of [connecting cloud accounts to Sysdig Secure](https://docs.sysdig.com/en/cloud-accounts-secure/) using Terraform or CloudFormation Templates will not work. <br/>Use this method only if recommended by your Sysdig account manager. |
 
-## Add Sysdig Chart Repository 
+## Legacy Charts
 
-To start using Sysdig charts, add the Sysdig chart repository to your local helm :
+The following charts are kept in the repository for existing users but are in legacy status and are not recommended for fresh deployments.
 
-```bash
-# Add sysdig charts to helm
-$ helm repo add sysdig https://charts.sysdig.com
-
-# Update list of charts from all registered charts repositories
-$ helm repo update
-```
-
-## Use Sysdig Chart Repository
-
-Once you have added the chart repository to your local `helm`, you can start using it:
-
-```bash
-# List all charts:
-$ helm search repo sysdig
-```
-
-Continue with installing the desired components given in [Sysdig Chart Repository](#sysdig-chart-repository).
+| Charts                                                       | Description                                                  |
+| :----------------------------------------------------------- | ------------------------------------------------------------ |
+| [`cloud-scanning`](https://github.com/sysdiglabs/charts/tree/master/charts/cloud-scanning) | Deprecated. Deploys the Sysdig Cloud scanning on your Kubernetes cluster. |
+| [`harbor-scanner-sysdig-secure`](/charts/harbor-scanner-sysdig-secure) | Deploys the Harbor Scanner Adapter to enable Harbor to use Sysdig Secure scanning engine to analyze the container images managed by the platform. |
+| [`cloud-bench`]()                                            | Deprecated. Deploys the Sysdig Cloud Bench on your Kubernetes cluster. |
+| [`sysdig-mcm-navmenu`](/charts/sysdig-mcm-navmenu)           | Deploys services and ingress required to create multi-cloud management menu in Sysdig. |
+| [`sysdig-stackdriver-bridge`](/charts/sysdig-stackdriver-bridge) | Deploys the Sysdig Stackdriver Bridge application to read and send audit logs from Stackdriver to Sysdig Agent. |
