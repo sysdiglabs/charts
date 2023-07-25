@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **sysdig-deploy** [d6354376](https://github.com/sysdiglabs/charts/commit/d63543767f6ddbffb515e13ea78fc5e404a67944): Automatic version bump due to updated dependencies ([#1258](https://github.com/sysdiglabs/charts/issues/1258))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.14.2...sysdig-deploy-1.14.3
+### New Features
+- **agent,rapid-response** [13dc488a](https://github.com/sysdiglabs/charts/commit/13dc488a6c1cbbfda114f90deeef91a43572a54e): set metadata.namespace on all namespaced items ([#1259](https://github.com/sysdiglabs/charts/issues/1259))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.14.3...sysdig-deploy-1.15.0
