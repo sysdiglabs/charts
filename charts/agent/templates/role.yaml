@@ -3,6 +3,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: {{ include "agent.fullname" . }}
+  namespace: {{ include "agent.namespace" . }}
 rules:
 - apiGroups:
     - coordination.k8s.io
