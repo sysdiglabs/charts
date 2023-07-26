@@ -232,7 +232,7 @@ nodeAnalyzer:
 
     image:
       repository: sysdig/compliance-benchmark-runner
-      tag: 1.1.0.8
+      tag: 1.1.0.9
       digest:
       pullPolicy:
 
