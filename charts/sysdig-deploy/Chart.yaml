@@ -2,12 +2,18 @@ apiVersion: v2
 name: sysdig-deploy
 description: A chart with various Sysdig components for Kubernetes
 type: application
-version: 1.15.2
+version: 1.15.3
 maintainers:
+  - name: AlbertoBarba
+    email: alberto.barba@sysdig.com
   - name: aroberts87
     email: adam.roberts@sysdig.com
-  - name: lilx1ao
-    email: zhongcheng.xiao@sysdig.com
+  - name: francesco-furlan
+    email: francesco.furlan@sysdig.com
+  - name: iurly
+    email: gerlando.falauto@sysdig.com
+  - name: mavimo
+    email: marcovito.moscaritolo@sysdig.com
 home: https://www.sysdig.com/
 icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
 dependencies:
