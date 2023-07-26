@@ -148,7 +148,7 @@ nodeAnalyzer:
     deploy: true
     image:
       repository: sysdig/node-image-analyzer
-      tag: 0.1.27
+      tag: 0.1.28
       digest:
       pullPolicy:
 
