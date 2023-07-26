@@ -10,6 +10,7 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.12.1
 # v1.12.0
 ### New Features
 * **agent,rapid-response** [13dc488a](https://github.com/sysdiglabs/charts/commit/13dc488a6c1cbbfda114f90deeef91a43572a54e): set metadata.namespace on all namespaced items ([#1259](https://github.com/sysdiglabs/charts/issues/1259))
