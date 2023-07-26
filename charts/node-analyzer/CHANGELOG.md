@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.11.2
+### New Features
+* **node-analyzer** [76af97ed](https://github.com/sysdiglabs/charts/commit/76af97edaae471525d78fd1115a0a6689223cfbb): updated legacy engine NIA compoment with latest release ([#1265](https://github.com/sysdiglabs/charts/issues/1265))
 # v1.11.1
 # v1.11.0
 ### New Features
