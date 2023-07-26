@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.11.3
+### Chores
+* **node-analyzer** [a22538b0](https://github.com/sysdiglabs/charts/commit/a22538b0455c4f1a6f2be577cbd0aaf904f3aad6): Bump benchmark runner ([#1269](https://github.com/sysdiglabs/charts/issues/1269))
 # v1.11.2
 ### New Features
 * **node-analyzer** [76af97ed](https://github.com/sysdiglabs/charts/commit/76af97edaae471525d78fd1115a0a6689223cfbb): updated legacy engine NIA compoment with latest release ([#1265](https://github.com/sysdiglabs/charts/issues/1265))
