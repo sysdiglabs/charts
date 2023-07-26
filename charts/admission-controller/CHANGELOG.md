@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.11.9
+### New Features
+* **admission-controller** [3d4304d0](https://github.com/sysdiglabs/charts/commit/3d4304d03483f23371f74541102b4cf1036bdfc0): update README with latest CA certificate changes ([#1263](https://github.com/sysdiglabs/charts/issues/1263))
 # v0.11.8
 * feat: change format publishing scanning events and fix bug using quick filters in the UI.
 
