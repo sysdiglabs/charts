@@ -242,7 +242,7 @@ true
 {{- define "nodeAnalyzer.useHostPID" -}}
 {{- if (include "nodeAnalyzer.deployBenchmarkRunner" .) }}
 true
-{{ else if and ((hasKey .Values.global.kspm "deploy") .Values.global.kspm.deploy) }}
+{{ else if or (not (hasKey .Values.global.kspm "deploy")) .Values.global.kspm.deploy }}
 true
 {{- end -}}
 {{- end -}}
