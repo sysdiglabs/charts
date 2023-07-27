@@ -239,6 +239,14 @@ true
 {{- end -}}
 {{- end -}}
 
+{{- define "nodeAnalyzer.useHostPID" -}}
+{{- if (include "nodeAnalyzer.deployBenchmarkRunner" .) }}
+true
+{{ else if and ((hasKey .Values.global.kspm "deploy") .Values.global.kspm.deploy) }}
+true
+{{- end -}}
+{{- end -}}
+
 {{- define "nodeAnalyzer.deployImageAnalyzer" -}}
 {{- if and (not .Values.secure.vulnerabilityManagement.newEngineOnly) (or (not (hasKey .Values.nodeAnalyzer.imageAnalyzer "deploy")) .Values.nodeAnalyzer.imageAnalyzer.deploy) }}
 true
