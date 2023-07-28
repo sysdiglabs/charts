@@ -96,10 +96,7 @@ spec:
             - name: SYSDIG_BPF_PROBE
               value:
           {{- end }}
-          {{- if (include "agent.universalEbpfEnforced" .) }}
-            - name: SYSDIG_AGENT_DRIVER
-              value: universal_bpf
-          {{- else if (include "agent.legacyEbpfEnforced" .) }}
+          {{- if (include "agent.legacyEbpfEnforced" .) }}
             - name: SYSDIG_AGENT_DRIVER
               value: legacy_bpf
           {{- end }}
