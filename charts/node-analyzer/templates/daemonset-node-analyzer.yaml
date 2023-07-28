@@ -40,6 +40,7 @@ spec:
             name: {{ include "nodeAnalyzer.configmapName" . }}
             optional: true
         {{- end }}
+        {{- if include "nodeAnalyzer.deployRuntimeScanner" . }}
         # Needed for cri-o image inspection.
         # cri-o and especially OCP 4.x by default use containers/storage to handle images, and this makes sure that the
         # analyzer has access to the configuration. This file is mounted read-only.
@@ -66,6 +67,7 @@ spec:
           configMap:
             name: {{ .Release.Name }}-image-analyzer
             optional: true
+        {{- end }}
         {{- if or (include "nodeAnalyzer.deployHostScanner" .) (include "nodeAnalyzer.deployBenchmarkRunner" .) (include "nodeAnalyzer.deployHostAnalyzer" .) .Values.global.kspm.deploy }}
         # Needed to run Benchmarks and Host Analyzer/Scanner. This mount is read-only.
         # Benchmarks include numerous checks that run tests against config files in the host filesystem. There are also
