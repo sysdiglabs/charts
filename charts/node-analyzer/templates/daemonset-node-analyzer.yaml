@@ -118,7 +118,7 @@ spec:
       # This is required by the Benchmark and the HostScanner containers to determine the hostname and host mac address
       hostNetwork: true
       {{- end }}
-      {{- if include "nodeAnalyzer.deployBenchmarkRunner" . }}
+      {{- if include "nodeAnalyzer.useHostPID" . }}
       # Use the Host PID namespace.
       # This is required for Kubernetes benchmarks, as they contain tests that check Kubernetes processes running on
       # the host
