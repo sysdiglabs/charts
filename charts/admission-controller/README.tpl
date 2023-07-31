@@ -98,8 +98,6 @@ The following table lists the configurable parameters of the `{{ .Chart.Name }}`
 
 {{ .Chart.Values }}
 
-{{- end }}
-
 
 ## Examples
 - [Default `values.yaml`](https://github.com/sysdiglabs/charts/blob/master/charts/admission-controller/values.yaml)
