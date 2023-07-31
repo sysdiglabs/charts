@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **sysdig-deploy** [b2e7e829](https://github.com/sysdiglabs/charts/commit/b2e7e82905a2f8fd78e93d1295671eebfdce2b88): Automatic version bump due to updated dependencies ([#1268](https://github.com/sysdiglabs/charts/issues/1268))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.15.3...sysdig-deploy-1.15.4
+### Bug Fixes
+- **node-analyzer** [6dcb0a0a](https://github.com/sysdiglabs/charts/commit/6dcb0a0a5c32edc9aaa8c4821e3dfd2ce0888fe6): enable hostPID in node-analyzer ([#1271](https://github.com/sysdiglabs/charts/issues/1271))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.15.4...sysdig-deploy-1.15.5

@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.15.5
+### Bug Fixes
+* **node-analyzer** [6dcb0a0a](https://github.com/sysdiglabs/charts/commit/6dcb0a0a5c32edc9aaa8c4821e3dfd2ce0888fe6): enable hostPID in node-analyzer ([#1271](https://github.com/sysdiglabs/charts/issues/1271))
 # v1.15.4
 ### Chores
 * **sysdig-deploy** [b2e7e829](https://github.com/sysdiglabs/charts/commit/b2e7e82905a2f8fd78e93d1295671eebfdce2b88): Automatic version bump due to updated dependencies ([#1268](https://github.com/sysdiglabs/charts/issues/1268))
