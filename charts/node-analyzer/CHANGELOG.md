@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.12.0
+### Bug Fixes
+* **node-analyzer** [6dcb0a0a](https://github.com/sysdiglabs/charts/commit/6dcb0a0a5c32edc9aaa8c4821e3dfd2ce0888fe6): enable hostPID in node-analyzer ([#1271](https://github.com/sysdiglabs/charts/issues/1271))
 # v1.11.3
 ### Chores
 * **node-analyzer** [a22538b0](https://github.com/sysdiglabs/charts/commit/a22538b0455c4f1a6f2be577cbd0aaf904f3aad6): Bump benchmark runner ([#1269](https://github.com/sysdiglabs/charts/issues/1269))
