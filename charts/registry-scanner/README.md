@@ -117,14 +117,13 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | scanOnStart.jobName                              | The name of the job created for the post-install scanner job                                                                                                                                                                               | <code>"registry-scanner-start-test"</code>   |
 | scanOnStart.asPostInstallHook                    | Specify whether to launch the job as a post-install helm hook. <br/>Used for testing purpose.                                                                                                                                              | <code>false</code>                           |
 | extraEnvVars                                     | The additional environment variables to be set.                                                                                                                                                                                            | <code>[]</code>                              |
-
 ## On-Prem Deployment
 
-If you are using a Sysdig on-prem version greater than 6.2, you need to configure the legacy VM engine while setting up the registry scanner.
+If you are using a Sysdig on-prem version greater than 6.2, you need to configure legacy VM engine while setting up registry scanner.
 
-Use the following command to deploy :
+Use the following command to deploy:
 
-```bash
+```
 helm upgrade --install registry-scanner \
    --version=0.1.39 \
    --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
@@ -135,6 +134,5 @@ helm upgrade --install registry-scanner \
    --set config.registryPassword=<REGISTRY_PASSWORD> \
   sysdig/registry-scanner
 ```
-On versions prior to v6.2, the legacy engine is enabled by default.
 
 Use `config.secureSkipTLS=true` if you are using self-signed certificates.
