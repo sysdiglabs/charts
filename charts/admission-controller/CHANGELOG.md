@@ -10,25 +10,36 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.11.9
+### New Features
+* **admission-controller** [3d4304d0](https://github.com/sysdiglabs/charts/commit/3d4304d03483f23371f74541102b4cf1036bdfc0): update README with latest CA certificate changes ([#1263](https://github.com/sysdiglabs/charts/issues/1263))
+# v0.11.8
+* feat: change format publishing scanning events and fix bug using quick filters in the UI.
+
 # v0.11.7
 * feat: fix rules provider processing customer appends when there is no base rule.
+
 # v0.11.5
 ### New Features
 * **admission-controller** [346004b2](https://github.com/sysdiglabs/charts/commit/346004b28dbbc426df63f92835cac23205cee3d6): simplify CA and certificate options ([#1246](https://github.com/sysdiglabs/charts/issues/1246))
+
 # v0.11.4
 ### New Features
 * **admission-controller** [03f5b13a](https://github.com/sysdiglabs/charts/commit/03f5b13a47cd4f57a938daf1a2cd4aeb671251d1): Add labels to VAC webhook to adopt existing one ([#1238](https://github.com/sysdiglabs/charts/issues/1238))
+
 # v0.11.3
 * feat: remove workload name from scanning secure events for both dry run and real secure events
 
 # v0.11.2
 ### Bug Fixes
 * **admission-controller** [d03dc2ce](https://github.com/sysdiglabs/charts/commit/d03dc2ce1d7056304b7a1f803bb1dd92e4feb9d4): Make ValidatingWebhookConfiguration part of the resource lifecycle ([#1217](https://github.com/sysdiglabs/charts/issues/1217))
+
 # v0.11.1
 ### Bug Fixes
 * **common** [0e37805f](https://github.com/sysdiglabs/charts/commit/0e37805f0190b74b53f7d9b47e5528009f58aa4b): add missing CHANGELOG file and bump version ([#1223](https://github.com/sysdiglabs/charts/issues/1223))
 ### New Features
 * **admission-controller,agent,common,kspm-collector,node-analyzer,rapid-response,sysdig-deploy** [47483bc0](https://github.com/sysdiglabs/charts/commit/47483bc0d5f872bc6d406a48491ac930d1d75f8f): Improve region resolution in all charts ([#946](https://github.com/sysdiglabs/charts/issues/946))
+
 # v0.10.0
 ### New Features
 * **admission-controller, sysdig-deploy** [120a3676](https://github.com/sysdiglabs/charts/commit/120a3676b81af7c22e21517ddca3be6039b7aa6c): Add logic to toggle enable/disable HPA and set replica count based on that value. ([#1204](https://github.com/sysdiglabs/charts/issues/1204))

@@ -5,7 +5,7 @@ description: Sysdig Monitor and Secure agent
 type: application
 
 # currently matching sysdig 1.14.32
-version: 1.11.1
+version: 1.12.1
 
 appVersion: 12.15.0
 
@@ -22,10 +22,16 @@ sources:
   - https://app.sysdigcloud.com/#/settings/user
   - https://github.com/draios/sysdig
 maintainers:
+  - name: AlbertoBarba
+    email: alberto.barba@sysdig.com
   - name: aroberts87
     email: adam.roberts@sysdig.com
-  - name: lilx1ao
-    email: zhongcheng.xiao@sysdig.com
+  - name: francesco-furlan
+    email: francesco.furlan@sysdig.com
+  - name: iurly
+    email: gerlando.falauto@sysdig.com
+  - name: mavimo
+    email: marcovito.moscaritolo@sysdig.com
 dependencies:
   - name: common
     # repository: https://charts.sysdig.com

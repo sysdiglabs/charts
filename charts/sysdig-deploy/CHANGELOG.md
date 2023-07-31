@@ -10,6 +10,22 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.15.5
+### Bug Fixes
+* **node-analyzer** [6dcb0a0a](https://github.com/sysdiglabs/charts/commit/6dcb0a0a5c32edc9aaa8c4821e3dfd2ce0888fe6): enable hostPID in node-analyzer ([#1271](https://github.com/sysdiglabs/charts/issues/1271))
+# v1.15.4
+### Chores
+* **sysdig-deploy** [b2e7e829](https://github.com/sysdiglabs/charts/commit/b2e7e82905a2f8fd78e93d1295671eebfdce2b88): Automatic version bump due to updated dependencies ([#1268](https://github.com/sysdiglabs/charts/issues/1268))
+# v1.15.3
+# v1.15.2
+### Chores
+* **sysdig-deploy** [e16f9879](https://github.com/sysdiglabs/charts/commit/e16f9879cd5352d0ab7e630a3a3c755bb6d06092): Automatic version bump due to updated dependencies ([#1267](https://github.com/sysdiglabs/charts/issues/1267))
+# v1.15.1
+### Chores
+* **sysdig-deploy** [9d7251f0](https://github.com/sysdiglabs/charts/commit/9d7251f091061cf6cd991fe46b6a0e4062e70867): Automatic version bump due to updated dependencies ([#1262](https://github.com/sysdiglabs/charts/issues/1262))
+# v1.15.0
+### New Features
+* **agent,rapid-response** [13dc488a](https://github.com/sysdiglabs/charts/commit/13dc488a6c1cbbfda114f90deeef91a43572a54e): set metadata.namespace on all namespaced items ([#1259](https://github.com/sysdiglabs/charts/issues/1259))
 # v1.14.3
 ### Chores
 * **sysdig-deploy** [d6354376](https://github.com/sysdiglabs/charts/commit/d63543767f6ddbffb515e13ea78fc5e404a67944): Automatic version bump due to updated dependencies ([#1258](https://github.com/sysdiglabs/charts/issues/1258))
