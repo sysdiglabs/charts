@@ -11,22 +11,23 @@ global:
       # For outbound connections (secure backend, proxy,...)
       # A PEM-encoded x509 certificate.  This can also be a bundle with multiple certificates.
       # See below in the rapidResponse.ssl.ca.cert key for an example
-      cert:
-
-      # Example of a certificate
-      # cert: |
-      #   -----BEGIN CERTIFICATE-----
-      #   MIIDEzCCAfugAwIBAgIQKiv9U+KxPJzu1adXwC06RzANBgkqhkiG9w0BAQsFADAU
-      #   MRIwEAYDVQQDEwloYXJib3ItY2EwHhcNMjIwMjIzMDY1NjExWhcNMjMwMjIzMDY1
-      #   NjExWjAUMRIwEAYDVQQDEwloYXJib3ItY2EwggEiMA0GCSqGSIb3DQEBAQUAA4IB
-      #   MMNlTAQ9fvdNOTzZntye0PQYR5SR13E=
-      #   -----END CERTIFICATE-----
-      #   -----BEGIN CERTIFICATE-----
-      #   MIIDEzCCAfugAwIBAgIQKiv9U+KxPJzu1adXwC06RzANBgkqhkiG9w0BAQsFADAU
-      #   MRIwEAYDVQQDEwloYXJib3ItY2EwHhcNMjIwMjIzMDY1NjExWhcNMjMwMjIzMDY1
-      #   NjExWjAUMRIwEAYDVQQDEwloYXJib3ItY2EwggEiMA0GCSqGSIb3DQEBAQUAA4IB
-      #   MMNlTAQ9fvdNOTzZntye0PQYRTTS34D=
-      #   -----END CERTIFICATE-----
+      certs: []
+      # Example of certificate
+      # certs:
+      #   - |
+      #       -----BEGIN CERTIFICATE-----
+      #       MIIDEzCCAfugAwIBAgIQKiv9U+KxPJzu1adXwC06RzANBgkqhkiG9w0BAQsFADAU
+      #       MRIwEAYDVQQDEwloYXJib3ItY2EwHhcNMjIwMjIzMDY1NjExWhcNMjMwMjIzMDY1
+      #       NjExWjAUMRIwEAYDVQQDEwloYXJib3ItY2EwggEiMA0GCSqGSIb3DQEBAQUAA4IB
+      #       MMNlTAQ9fvdNOTzZntye0PQYR5SR13E=
+      #       -----END CERTIFICATE-----
+      #   - |
+      #       -----BEGIN CERTIFICATE-----
+      #       MIIDEzCCAfugAwIBAgIQKiv9U+KxPJzu1adXwC06RzANBgkqhkiG9w0BAQsFADAU
+      #       MRIwEAYDVQQDEwloYXJib3ItY2EwHhcNMjIwMjIzMDY1NjExWhcNMjMwMjIzMDY1
+      #       NjExWjAUMRIwEAYDVQQDEwloYXJib3ItY2EwggEiMA0GCSqGSIb3DQEBAQUAA4IB
+      #       MMNlTAQ9fvdNOTzZntye0PQYRTTS34D=
+      #       -----END CERTIFICATE-----
 
       # Filename that is used when creating the secret.  Required if cert is provided.
       keyName: root_ca_file.crt
