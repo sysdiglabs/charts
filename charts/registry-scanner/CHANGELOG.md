@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.1.3
+### New Features
+* **doc** [2ed2f684](https://github.com/sysdiglabs/charts/commit/2ed2f684eeb573707a0515cafeb053ebb4a3f9d3): Move On-prem deployment instruction to the registry scanner chart ([#1260](https://github.com/sysdiglabs/charts/issues/1260))
 # v1.1.2
 * feat: Add the ability to work behind a proxy to the new VM Scanner k8s job
 
