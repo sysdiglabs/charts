@@ -17,10 +17,10 @@ jobs:
           version: v3.4.0
 
       - name: Set up helm unit test plugin
-        run: helm plugin install https://github.com/helm-unittest/helm-unittest --version=0.3.0
+        run: helm plugin install https://github.com/helm-unittest/helm-unittest --version=0.3.3
 
-      - name: Bundle sysdig-deploy dependencies
-        run: helm dependency build ./charts/sysdig-deploy
+      - name: Bundle chart dependencies
+        run: make deps
 
       - name: Test admission-controller
         run: helm unittest --strict ./charts/admission-controller
@@ -64,3 +64,6 @@ jobs:
 
       - name: Test sysdig-stackdriver-bridge
         run: helm unittest --strict ./charts/sysdig-stackdriver-bridge
+
+      - name: Test cluster-scanner
+        run: helm unittest --strict ./charts/cluster-scanner

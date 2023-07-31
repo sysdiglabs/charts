@@ -116,18 +116,8 @@ Determine Secure endpoint based on provided region or .Values.sysdig.apiEndpoint
 {{- define "admissionController.apiEndpoint" -}}
     {{- if (or .Values.sysdig.apiEndpoint (eq .Values.global.sysdig.region "custom"))  -}}
         {{- required "A valid Sysdig API endpoint (.sysdig.apiEndpoint) is required" .Values.sysdig.apiEndpoint -}}
-    {{- else if (eq .Values.global.sysdig.region "us1") -}}
-        {{- "secure.sysdig.com" -}}
-    {{- else if (eq .Values.global.sysdig.region "us2") -}}
-        {{- "us2.app.sysdig.com" -}}
-    {{- else if (eq .Values.global.sysdig.region "us3") -}}
-        {{- "app.us3.sysdig.com" -}}
-    {{- else if (eq .Values.global.sysdig.region "us4") -}}
-        {{- "app.us4.sysdig.com" -}}
-    {{- else if (eq .Values.global.sysdig.region "eu1") -}}
-        {{- "eu1.app.sysdig.com" -}}
-    {{- else if (eq .Values.global.sysdig.region "au1") -}}
-        {{- "app.au1.sysdig.com" -}}
+    {{- else if hasKey ((include "sysdig.regions" .) | fromYaml) .Values.global.sysdig.region }}
+        {{- include "sysdig.secureApiEndpoint" . }}
     {{- end -}}
 {{- end -}}
 
@@ -171,25 +161,17 @@ Create the name of the service account to use
 Generate certificates for aggregated api server
 */}}
 
-{{- $cert := genCA ( printf "%s.%s.svc" (include "admissionController.webhook.fullname" .) .Release.Namespace ) 3650 -}}
-
 {{- define "admissionController.webhook.gen-certs" -}}
     {{- $secretName := printf "%s-tls" (include "admissionController.webhook.fullname" .) -}}
     {{- $secret := lookup "v1" "Secret" .Release.Namespace $secretName -}}
-    {{- $ca := genCA (include "admissionController.webhook.fullname" .) 3650 -}}
-    {{- if (and .Values.webhook.ssl.ca.cert .Values.webhook.ssl.ca.key) -}}
-        {{- $ca = buildCustomCert (.Values.webhook.ssl.ca.cert | b64enc) (.Values.webhook.ssl.ca.key | b64enc) -}}
-    {{- end -}}
 
-    {{- $cn := printf "%s.%s.svc" (include "admissionController.webhook.fullname" .) .Release.Namespace -}}
-    {{- $san := list $cn -}}
-    {{- $cert := genSignedCert $cn nil $san 3650 $ca -}}
-
-    {{- if (and .Values.webhook.ssl.cert .Values.webhook.ssl.key) -}}
-        {{- printf "%s$%s$%s" (.Values.webhook.ssl.cert | b64enc) (.Values.webhook.ssl.key | b64enc) ($ca.Cert | b64enc) -}}
-    {{- else if and .Values.webhook.ssl.reuseTLSSecret $secret -}}
+    {{- if and .Values.webhook.ssl.reuseTLSSecret $secret -}}
         {{- printf "%s$%s$%s" (index $secret.data "tls.crt") (index $secret.data "tls.key") (index $secret.data "ca.crt") -}}
     {{- else -}}
+        {{- $ca := genCA (include "admissionController.webhook.fullname" .) 3650 -}}
+        {{- $cn := printf "%s.%s.svc" (include "admissionController.webhook.fullname" .) .Release.Namespace -}}
+        {{- $san := list $cn -}}
+        {{- $cert := genSignedCert $cn nil $san 3650 $ca -}}
         {{- printf "%s$%s$%s" ($cert.Cert | b64enc) ($cert.Key | b64enc) ($ca.Cert | b64enc) -}}
     {{- end -}}
 {{- end -}}
@@ -265,20 +247,6 @@ Create the name of the service account to use
 */}}
 {{- define "admissionController.scanner.serviceAccountName" -}}
     {{ default (include "admissionController.scanner.fullname" .) .Values.serviceAccounts.scanner.name }}
-{{- end -}}
-
-{{/*
-Generate certificates for aggregated api server
-*/}}
-
-{{- $cert := genCA ( printf "%s.%s.svc" (include "admissionController.scanner.fullname" .) .Release.Namespace ) 3650 -}}
-
-{{- define "admissionController.scanner.gen-certs" -}}
-{{- $ca := genCA (include "admissionController.scanner.fullname" .) 3650 -}}
-{{- $cn := printf "%s.%s.svc" (include "admissionController.scanner.fullname" .) .Release.Namespace -}}
-{{- $san := list $cn -}}
-{{- $cert := genSignedCert $cn nil $san 3650 $ca -}}
-{{- printf "%s$%s$%s" ($cert.Cert | b64enc) ($cert.Key | b64enc) ($ca.Cert | b64enc) -}}
 {{- end -}}
 
 {{/*

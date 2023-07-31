@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: {{ template "rapidResponse.fullname" . }}
+  namespace: {{ .Release.Namespace }}
   labels:
 {{ include "rapidResponse.labels" . | indent 4 }}
 {{ include "rapidResponse.daemonSetLabels" . | indent 4 }}

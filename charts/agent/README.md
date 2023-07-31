@@ -22,8 +22,9 @@ To deploy the Sysdig Agent, follow the installation instructions given on the Sy
 - [Install Sysdig Agent for a Sysdig On-Premises Deployment](https://docs.sysdig.com/en/docs/installation/on-premises/)
 - [Install Sysdig Agent in an Airgapped Environment](https://docs.sysdig.com/en/docs/installation/on-premises/airgapped-installation/)
 
-## Verify the integrity and origin
-Sysdig Helm Charts are signed so users can verify the integrity and origin of each chart, the steps are as follows:
+## Verify the Integrity and Origin
+
+Sysdig Helm Charts are signed so you can verify the integrity and origin of each chart. To verify the chart:
 
 ### Import the Public Key
 
@@ -32,9 +33,9 @@ $ curl -o "/tmp/sysdig_public.gpg" "https://charts.sysdig.com/public.gpg"
 $ gpg --import /tmp/sysdig_public.gpg
 ```
 
-### Verify the chart
+### Verify the Chart
 
-To check the integrity and the origin of the charts you can now append the `--verify` flag to the `install`, `upgrade` and `pull` helm commands.
+To check the integrity and the origin of the charts you can now append the `--verify` flag to the `install`, `upgrade`, and `pull` helm commands.
 
 ## Configuration
 
@@ -120,7 +121,9 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `psp.create`                                            | Creates Pod Security Policy to allow the agent running in clusters with PSP enabled.                                                                                                     | `true`                                                                                                    |
 | `serviceAccount.create`                                 | Creates serviceAccount.                                                                                                                                                                  | `true`                                                                                                    |
 | `serviceAccount.name`                                   | Use this value as serviceAccountName.                                                                                                                                                    | ` `                                                                                                       |
+| `createPriorityClass`                                   | Specify whether or not to create a priority class for the agent.                                                                                                                         | `false`                                                                                                   |
 | `priorityClassName`                                     | Sets the priority class for the agent daemonset.                                                                                                                                         | `""`                                                                                                      |
+| `priorityClassValue`                                    | Sets the priority class value for the agent daemonset.                                                                                                                                   | `10`                                                                                                      |
 | `daemonset.deploy`                                      | Deploys the agent daemonset.                                                                                                                                                             | `true`                                                                                                    |
 | `daemonset.env`                                         | Specifies the environment variables for the agent container. Provide as map of `VAR: val`                                                                                                | `{}`                                                                                                      |
 | `daemonset.updateStrategy.type`                         | Specifies the updateStrategy for updating the daemonset.                                                                                                                                 | `RollingUpdate`                                                                                           |
@@ -138,12 +141,11 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `slim.image.repository`                                 | Specifies the slim agent image repository.                                                                                                                                               | `sysdig/agent-slim`                                                                                       |
 | `slim.kmoduleImage.repository`                          | Specifies the repository to pull the kernel module image builder from.                                                                                                                   | `sysdig/agent-kmodule`                                                                                    |
 | `slim.kmoduleImage.digest`                              | Specifies the image digest to pull.                                                                                                                                                      | ` `                                                                                                       |
-| `slim.resources.requests.cpu`                           | Specifies the CPU requested for building the kernel module.                                                                                                                              | `1000m`                                                                                                   |
+| `slim.resources.requests.cpu`                           | Specifies the CPU requested for building the kernel module.                                                                                                                              | `250m`                                                                                                    |
 | `slim.resources.requests.memory`                        | Specifies the memory requested for building the kernel module.                                                                                                                           | `348Mi`                                                                                                   |
 | `slim.resources.limits.cpu`                             | Specifies the CPU limit for building the kernel module                                                                                                                                   | `1000m`                                                                                                   |
 | `slim.resources.limits.memory`                          | Specifies the memory limit for building the kernel module.                                                                                                                               | `512Mi`                                                                                                   |
 | `ebpf.enabled`                                          | Enables eBPF support for Sysdig instead of `sysdig-probe` kernel module.                                                                                                                 | `false`                                                                                                   |
-| `ebpf.settings.mountEtcVolume`                          | Detects which kernel version is running in Google COS.                                                                                                                                   | `true`                                                                                                    |
 | `clusterName`                                           | Sets a unique cluster name which is used to identify events with the `kubernetes.cluster.name` tag. Overrides `global.clusterConfig.name`.                                               | ` `                                                                                                       |
 | `sysdig.accessKey`                                      | Your Sysdig Agent Access Key. Overrides `global.sysdig.accessKey`                                                                                                                        | Either `accessKey` or `existingAccessKeySecret` is required                                               |
 | `sysdig.existingAccessKeySecret`                        | Specifies the name of a Kubernetes secret containing an `access-key ` entry. Overrides `global.sysdig.existingAccessKeySecret`                                                           | Either `accessKey` or `existingAccessKeySecret` is required                                               |

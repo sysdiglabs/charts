@@ -11,6 +11,19 @@ exclusively to fix incorrect entries and not to add new ones.
 
 
 ## Change Log
+# v0.8.4
+* feat: fix rules provider processing customer appends when there is no base rule.
+
+# v0.8.3
+* fix: add aws-cloudtrail-s3-sns-sqs ingestor type for CIEM
+* fix: falco rules error on appending exceptions
+
+# v0.8.2
+### Documentation
+* **cloud-connector** [6ad0ef92](https://github.com/sysdiglabs/charts/commit/6ad0ef926ebf7600ba7730c43219036eb1d0b57c): DOC-3215- Update Cloud connector Readme for clarity and correctness ([#1172](https://github.com/sysdiglabs/charts/issues/1172))
+# v0.8.1
+* fix for "found definition of rule called <rule> in append mode before the definition of the actual rule"
+
 # v0.8.0
 ### New Features
 * **admission-controller,agent,cloud-bench,cloud-connector,cloud-scanning,harbor-scanner-sysdig-secure,kspm-collector,node-analyzer,rapid-response,registry-scanner,sysdig,sysdig-deploy,sysdig-mcm-navmenu,sysdig-stackdriver-bridge** [5d99a03d](https://github.com/sysdiglabs/charts/commit/5d99a03dced132b4771dde1ce5b90b63c518b408): use a PGP private key to sign charts on release ([#1170](https://github.com/sysdiglabs/charts/issues/1170))

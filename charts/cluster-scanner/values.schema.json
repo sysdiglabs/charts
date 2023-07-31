@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "type": "object",
+  "required": [
+    "global",
+    "scannerMode"
+  ],
+  "properties": {
+    "scannerMode": {
+      "type": "string",
+      "enum": [
+        "local",
+        "multi"
+      ]
+    },
+    "global": {
+      "type": "object",
+      "required": [
+        "clusterConfig",
+        "sysdig"
+      ],
+      "properties": {
+        "clusterConfig": {
+          "type": "object",
+          "required": [
+            "name"
+          ],
+          "properties": {
+            "name": {
+              "type": "string"
+            }
+          }
+        },
+        "sysdig": {
+          "type": "object",
+          "required": [
+            "accessKey"
+          ],
+          "properties": {
+            "accessKey": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

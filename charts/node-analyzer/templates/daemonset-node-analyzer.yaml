@@ -118,7 +118,7 @@ spec:
       # This is required by the Benchmark and the HostScanner containers to determine the hostname and host mac address
       hostNetwork: true
       {{- end }}
-      {{- if include "nodeAnalyzer.deployBenchmarkRunner" . }}
+      {{- if include "nodeAnalyzer.useHostPID" . }}
       # Use the Host PID namespace.
       # This is required for Kubernetes benchmarks, as they contain tests that check Kubernetes processes running on
       # the host
@@ -806,8 +806,35 @@ spec:
       {{- with .Values.nodeAnalyzer.nodeSelector }}
       nodeSelector: {{ toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.nodeAnalyzer.affinity }}
-      affinity: {{ toYaml . | nindent 8 }}
+      affinity:
+      {{- if .Values.nodeAnalyzer.affinity }}
+{{ toYaml .Values.nodeAnalyzer.affinity | indent 8 }}
+      {{- else }}
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+              {{- if (include "nodeAnalyzer.kubeVersionLessThan" (dict "root" . "major" 1 "minor" 14)) }}
+                - key: beta.kubernetes.io/arch
+                  operator: In
+                  values:
+                    - amd64
+                    - arm64
+                - key: beta.kubernetes.io/os
+                  operator: In
+                  values:
+                    - linux
+              {{- else }}
+                - key: kubernetes.io/arch
+                  operator: In
+                  values:
+                    - amd64
+                    - arm64
+                - key: kubernetes.io/os
+                  operator: In
+                  values:
+                    - linux
+              {{- end }}
       {{- end }}
 {{- end }}
 {{- end }}

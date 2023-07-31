@@ -1,0 +1,83 @@
+suite: Testing cluster scanner and runtime scanner should not be both enabled
+templates:
+  - templates/cluster-scanner-runtime-scanner-check.yaml
+tests:
+  - it: Should fail if cluster scanner and new engine are both enabled
+    set:
+      nodeAnalyzer:
+        enabled: true
+        secure:
+          vulnerabilityManagement:
+            newEngineOnly: true
+        nodeAnalyzer:
+          runtimeScanner:
+            deploy: true
+      clusterScanner:
+        enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: "Cannot enable both the Runtime Scanner and the Cluster Scanner at the same time"
+
+  - it: Should fail if cluster scanner and runtime scanner are both enabled
+    set:
+      nodeAnalyzer:
+        enabled: true
+        secure:
+          vulnerabilityManagement:
+            newEngineOnly: false
+        nodeAnalyzer:
+          runtimeScanner:
+            deploy: true
+      clusterScanner:
+        enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: "Cannot enable both the Runtime Scanner and the Cluster Scanner at the same time"
+
+  - it: Should not fail if node analyzer chart is disabled
+    set:
+      nodeAnalyzer:
+        enabled: false
+        secure:
+          vulnerabilityManagement:
+            newEngineOnly: true
+        nodeAnalyzer:
+          runtimeScanner:
+            deploy: true
+      clusterScanner:
+        enabled: true
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: Should not fail if runtime scanner is disabled
+    set:
+      nodeAnalyzer:
+        enabled: true
+        secure:
+          vulnerabilityManagement:
+            newEngineOnly: true
+        nodeAnalyzer:
+          runtimeScanner:
+            deploy: false
+      clusterScanner:
+        enabled: true
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: Should not fail if cluster scanner is disabled
+    set:
+      nodeAnalyzer:
+        enabled: true
+        secure:
+          vulnerabilityManagement:
+            newEngineOnly: true
+        nodeAnalyzer:
+          runtimeScanner:
+            deploy: true
+      clusterScanner:
+        enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0

@@ -188,18 +188,8 @@ Determine collector endpoint based on provided region or .Values.nodeAnalyzer.ap
 {{- define "nodeAnalyzer.apiEndpoint" -}}
     {{- if (or .Values.nodeAnalyzer.apiEndpoint (eq .Values.global.sysdig.region "custom"))  -}}
         {{- required "A valid apiEndpoint is required" .Values.nodeAnalyzer.apiEndpoint -}}
-    {{- else if (eq .Values.global.sysdig.region "us1") -}}
-        {{- "secure.sysdig.com" -}}
-    {{- else if (eq .Values.global.sysdig.region "us2") -}}
-        {{- "us2.app.sysdig.com" -}}
-    {{- else if (eq .Values.global.sysdig.region "us3") -}}
-        {{- "app.us3.sysdig.com" -}}
-    {{- else if (eq .Values.global.sysdig.region "us4") -}}
-        {{- "app.us4.sysdig.com" -}}
-    {{- else if (eq .Values.global.sysdig.region "eu1") -}}
-        {{- "eu1.app.sysdig.com" -}}
-    {{- else if (eq .Values.global.sysdig.region "au1") -}}
-        {{- "app.au1.sysdig.com" -}}
+    {{- else if hasKey ((include "sysdig.regions" .) | fromYaml) .Values.global.sysdig.region }}
+        {{- include "sysdig.secureApiEndpoint" . }}
     {{- else -}}
         {{- fail (printf "global.sysdig.region=%s provided is not recognized." .Values.global.sysdig.region ) -}}
     {{- end -}}
@@ -230,20 +220,29 @@ nodeAnalyzer agentConfigmapName
 {{- end -}}
 
 {{- define "nodeAnalyzer.deployHostScanner" -}}
-{{- if and (hasKey .Values.nodeAnalyzer.hostScanner "deploy") (not .Values.nodeAnalyzer.hostScanner.deploy ) }}
-{{- else if or .Values.secure.vulnerabilityManagement.newEngineOnly (and (hasKey .Values.nodeAnalyzer.hostScanner "deploy") .Values.nodeAnalyzer.hostScanner.deploy) -}}
+{{- if and (hasKey ((.Values.nodeAnalyzer).hostScanner) "deploy") (not .Values.nodeAnalyzer.hostScanner.deploy ) }}
+{{- else if or ((.Values.secure).vulnerabilityManagement).newEngineOnly (and (hasKey ((.Values.nodeAnalyzer).hostScanner) "deploy") .Values.nodeAnalyzer.hostScanner.deploy) -}}
 true
 {{- end -}}
 {{- end -}}
 
 {{- define "nodeAnalyzer.deployRuntimeScanner" -}}
-{{- if or .Values.secure.vulnerabilityManagement.newEngineOnly (not (hasKey .Values.nodeAnalyzer.runtimeScanner "deploy")) .Values.nodeAnalyzer.runtimeScanner.deploy }}
+{{- if and (hasKey ((.Values.nodeAnalyzer).runtimeScanner) "deploy") (not .Values.nodeAnalyzer.runtimeScanner.deploy ) }}
+{{- else if or ((.Values.secure).vulnerabilityManagement).newEngineOnly (and (hasKey ((.Values.nodeAnalyzer).runtimeScanner) "deploy") .Values.nodeAnalyzer.runtimeScanner.deploy) -}}
 true
 {{- end -}}
 {{- end -}}
 
 {{- define "nodeAnalyzer.deployBenchmarkRunner" -}}
 {{- if or (not (hasKey .Values.nodeAnalyzer.benchmarkRunner "deploy")) .Values.nodeAnalyzer.benchmarkRunner.deploy }}
+true
+{{- end -}}
+{{- end -}}
+
+{{- define "nodeAnalyzer.useHostPID" -}}
+{{- if (include "nodeAnalyzer.deployBenchmarkRunner" .) }}
+true
+{{ else if or (not (hasKey .Values.global.kspm "deploy")) .Values.global.kspm.deploy }}
 true
 {{- end -}}
 {{- end -}}

@@ -10,6 +10,27 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.12.1
+# v1.12.0
+### New Features
+* **agent,rapid-response** [13dc488a](https://github.com/sysdiglabs/charts/commit/13dc488a6c1cbbfda114f90deeef91a43572a54e): set metadata.namespace on all namespaced items ([#1259](https://github.com/sysdiglabs/charts/issues/1259))
+# v1.11.1
+# v1.11.0
+### New Features
+* **agent** [cbc50cae](https://github.com/sysdiglabs/charts/commit/cbc50caebb117449796f7bb023c05d3acca6f796): decouple agent priorityclass creation from gke autopilot ([#1241](https://github.com/sysdiglabs/charts/issues/1241))
+# v1.10.4
+# v1.10.3
+### New Features
+* **agent** [07b8704c](https://github.com/sysdiglabs/charts/commit/07b8704cafb51b2dab6e99cac0e3fd6b4ad2449f): lower default cpu requests for kmodule container ([#1230](https://github.com/sysdiglabs/charts/issues/1230))
+# v1.10.2
+### Bug Fixes
+* **agent** [0eee32a2](https://github.com/sysdiglabs/charts/commit/0eee32a2d85d65924df2c964e431b2bb1a78b5fc): trim newlines when applying nodeSelectors in delegatedAgentDeployments ([#1159](https://github.com/sysdiglabs/charts/issues/1159))
+# v1.10.1
+### Bug Fixes
+* **common** [0e37805f](https://github.com/sysdiglabs/charts/commit/0e37805f0190b74b53f7d9b47e5528009f58aa4b): add missing CHANGELOG file and bump version ([#1223](https://github.com/sysdiglabs/charts/issues/1223))
+### New Features
+* **admission-controller,agent,common,kspm-collector,node-analyzer,rapid-response,sysdig-deploy** [47483bc0](https://github.com/sysdiglabs/charts/commit/47483bc0d5f872bc6d406a48491ac930d1d75f8f): Improve region resolution in all charts ([#946](https://github.com/sysdiglabs/charts/issues/946))
+# v1.9.2
 # v1.9.1
 ### Chores
 * **agent** [15cfecb9](https://github.com/sysdiglabs/charts/commit/15cfecb905c931f3288907dd4223702536884b01): bump agent version to 12.15.0 ([#1200](https://github.com/sysdiglabs/charts/issues/1200))

@@ -14,7 +14,7 @@ lint:
 	docker run --rm -e CT_VALIDATE_MAINTAINERS=false -u $(shell id -u) -v $(PWD):/charts quay.io/helmpack/chart-testing:latest sh -c "cd /charts; ct lint --all"
 
 deps-unittest:
-	@helm plugin install https://github.com/helm-unittest/helm-unittest --version=0.3.0 || true
+	@helm plugin install https://github.com/helm-unittest/helm-unittest --version=0.3.3 || true
 
 unittest: deps-unittest
 	find ./charts -name "Chart.yaml" | \
@@ -27,3 +27,9 @@ unit-test-rs: deps-unittest
 		xargs -L1 dirname | \
 		xargs -I% sh -c \
 			"helm dependency build % ; helm unittest --strict %"
+
+deps:
+	find ./charts -name "Chart.yaml" | \
+		xargs -L1 dirname | \
+		xargs -I% sh -c \
+			"helm dependency build %"

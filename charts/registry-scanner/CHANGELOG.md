@@ -10,6 +10,16 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.1.3
+### New Features
+* **doc** [2ed2f684](https://github.com/sysdiglabs/charts/commit/2ed2f684eeb573707a0515cafeb053ebb4a3f9d3): Move On-prem deployment instruction to the registry scanner chart ([#1260](https://github.com/sysdiglabs/charts/issues/1260))
+# v1.1.2
+* feat: Add the ability to work behind a proxy to the new VM Scanner k8s job
+
+# v1.1.1
+### Documentation
+* **registry-scanner** [bafbaba2](https://github.com/sysdiglabs/charts/commit/bafbaba2d54d0f52ef965ddd3505efd439a6a2c0): DOC-3229 - update for clarity, consistency, correctness ([#1184](https://github.com/sysdiglabs/charts/issues/1184))
+
 # v1.1.0
 ### New Features
 * **admission-controller,agent,cloud-bench,cloud-connector,cloud-scanning,harbor-scanner-sysdig-secure,kspm-collector,node-analyzer,rapid-response,registry-scanner,sysdig,sysdig-deploy,sysdig-mcm-navmenu,sysdig-stackdriver-bridge** [5d99a03d](https://github.com/sysdiglabs/charts/commit/5d99a03dced132b4771dde1ce5b90b63c518b408): use a PGP private key to sign charts on release ([#1170](https://github.com/sysdiglabs/charts/issues/1170))

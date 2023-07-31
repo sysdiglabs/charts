@@ -1,6 +1,5 @@
 # What's Changed
 
-### Documentation
-- **rapid-response** [b0318af9](https://github.com/sysdiglabs/charts/commit/b0318af99efbc579d15cbe9a081f542255a47316): DOC-3216 - update for clarity and correctness ([#1173](https://github.com/sysdiglabs/charts/issues/1173))
-
-#### Full diff: https://github.com/sysdiglabs/charts/compare/rapid-response-0.5.0...rapid-response-0.5.1
+### New Features
+- **agent,rapid-response** [13dc488a](https://github.com/sysdiglabs/charts/commit/13dc488a6c1cbbfda114f90deeef91a43572a54e): set metadata.namespace on all namespaced items ([#1259](https://github.com/sysdiglabs/charts/issues/1259))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/rapid-response-0.6.3...rapid-response-0.7.0

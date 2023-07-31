@@ -119,8 +119,14 @@ nodeAnalyzer:
       operator: Equal
       value: "true"
 
+  # Specify if the Priority Class needs to be created
+  createPriorityClass: false
+
   # Set nodeAnalyzer daemonset priorityClassName
   priorityClassName:
+
+  # Set the value for the Priority Class (if it is to be created)
+  priorityClassValue:
 
   # Allow the DaemonSet to set labels
   labels: {}
@@ -132,30 +138,7 @@ nodeAnalyzer:
 
   # Allow the DaemonSet to schedule using affinity rules
   # Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-          - matchExpressions:
-              - key: kubernetes.io/arch
-                operator: In
-                values:
-                  - amd64
-                  - arm64
-              - key: kubernetes.io/os
-                operator: In
-                values:
-                  - linux
-          - matchExpressions:
-              - key: beta.kubernetes.io/arch
-                operator: In
-                values:
-                  - amd64
-                  - arm64
-              - key: beta.kubernetes.io/os
-                operator: In
-                values:
-                  - linux
+  affinity: {}
 
   # Allow passing extra volumes to the Node Analyzer to mount docker socket, cri-o socket, etc.
   extraVolumes:
@@ -165,7 +148,7 @@ nodeAnalyzer:
     deploy: true
     image:
       repository: sysdig/node-image-analyzer
-      tag: 0.1.27
+      tag: 0.1.28
       digest:
       pullPolicy:
 
@@ -249,7 +232,7 @@ nodeAnalyzer:
 
     image:
       repository: sysdig/compliance-benchmark-runner
-      tag: 1.1.0.8
+      tag: 1.1.0.9
       digest:
       pullPolicy:
 
@@ -264,7 +247,9 @@ nodeAnalyzer:
     env: {}
 
   runtimeScanner:
-    deploy: false
+    # Note: deploy has been commented so that it will be used as hard override to newEngineOnly flag
+    # but when not set, newEngineOnly will win. Desiderata examples in ./tests/runtimescanner_test.yaml
+    # deploy: false
     probesPort: 7002
     image:
       repository: sysdig/vuln-runtime-scanner
@@ -366,7 +351,7 @@ nodeAnalyzer:
     debug: false
     image:
       repository: sysdig/kspm-analyzer
-      tag: 1.25.0
+      tag: 1.26.0
       digest:
       pullPolicy:
 

@@ -10,6 +10,41 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.12.0
+### Bug Fixes
+* **node-analyzer** [6dcb0a0a](https://github.com/sysdiglabs/charts/commit/6dcb0a0a5c32edc9aaa8c4821e3dfd2ce0888fe6): enable hostPID in node-analyzer ([#1271](https://github.com/sysdiglabs/charts/issues/1271))
+# v1.11.3
+### Chores
+* **node-analyzer** [a22538b0](https://github.com/sysdiglabs/charts/commit/a22538b0455c4f1a6f2be577cbd0aaf904f3aad6): Bump benchmark runner ([#1269](https://github.com/sysdiglabs/charts/issues/1269))
+# v1.11.2
+### New Features
+* **node-analyzer** [76af97ed](https://github.com/sysdiglabs/charts/commit/76af97edaae471525d78fd1115a0a6689223cfbb): updated legacy engine NIA compoment with latest release ([#1265](https://github.com/sysdiglabs/charts/issues/1265))
+# v1.11.1
+# v1.11.0
+### New Features
+* **node-analyzer** [6c0b1e6d](https://github.com/sysdiglabs/charts/commit/6c0b1e6d883c8372a142a4a4cf955f3ecda0fe24): allow node-analyzer chart to create its own priority class ([#1252](https://github.com/sysdiglabs/charts/issues/1252))
+# v1.10.7
+### Documentation
+* **node-analyzer** [799649c4](https://github.com/sysdiglabs/charts/commit/799649c48c21b33083ee5a4a24642a010873d463): remove additional column from the configurations table ([#1251](https://github.com/sysdiglabs/charts/issues/1251))
+# v1.10.6
+### Documentation
+* **node-analyzer** [8f952ad4](https://github.com/sysdiglabs/charts/commit/8f952ad43045ddcffa3fdbd346ed129f8da2f0fb): fix configuration table rendering ([#1249](https://github.com/sysdiglabs/charts/issues/1249))
+# v1.10.5
+# v1.10.4
+### New Features
+* **kspm-collector,node-analyzer** [b95c0dac](https://github.com/sysdiglabs/charts/commit/b95c0dac7dc7cf9feb64a824bd415bb34f708e99): add resource ID to Posture ([#1231](https://github.com/sysdiglabs/charts/issues/1231))
+# v1.10.3
+# v1.10.2
+### Bug Fixes
+* **kspm-collector,node-analyzer** [96da2bf6](https://github.com/sysdiglabs/charts/commit/96da2bf6a09a306e2e801ed6358080956130adc0): properly handle affinity beta annotations ([#1196](https://github.com/sysdiglabs/charts/issues/1196))
+# v1.10.1
+### Bug Fixes
+* **common** [0e37805f](https://github.com/sysdiglabs/charts/commit/0e37805f0190b74b53f7d9b47e5528009f58aa4b): add missing CHANGELOG file and bump version ([#1223](https://github.com/sysdiglabs/charts/issues/1223))
+### New Features
+* **admission-controller,agent,common,kspm-collector,node-analyzer,rapid-response,sysdig-deploy** [47483bc0](https://github.com/sysdiglabs/charts/commit/47483bc0d5f872bc6d406a48491ac930d1d75f8f): Improve region resolution in all charts ([#946](https://github.com/sysdiglabs/charts/issues/946))
+# v1.9.1
+### Documentation
+* **node-analyzer** [d43443a7](https://github.com/sysdiglabs/charts/commit/d43443a732bdbf710e094ea8ad8173d36c2fdc02): DOC-3214 - update for clarity ([#1171](https://github.com/sysdiglabs/charts/issues/1171))
 # v1.9.0
 ### New Features
 * **admission-controller,agent,cloud-bench,cloud-connector,cloud-scanning,harbor-scanner-sysdig-secure,kspm-collector,node-analyzer,rapid-response,registry-scanner,sysdig,sysdig-deploy,sysdig-mcm-navmenu,sysdig-stackdriver-bridge** [5d99a03d](https://github.com/sysdiglabs/charts/commit/5d99a03dced132b4771dde1ce5b90b63c518b408): use a PGP private key to sign charts on release ([#1170](https://github.com/sysdiglabs/charts/issues/1170))

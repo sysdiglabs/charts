@@ -28,6 +28,9 @@ agent:
 nodeAnalyzer:
   enabled: true
 
+clusterScanner:
+  enabled: false
+
 rapidResponse:
   enabled: false
   rapidResponse:

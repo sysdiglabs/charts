@@ -3,7 +3,7 @@ name: node-analyzer
 description: Sysdig Node Analyzer
 
 # currently matching Sysdig's appVersion 1.14.34
-version: 1.9.0
+version: 1.12.0
 appVersion: 12.6.0
 keywords:
   - monitoring
@@ -30,4 +30,8 @@ maintainers:
     email: carlos.arilla@sysdig.com
   - name: yashgiri
     email: yashgiri.goswami@sysdig.com
-dependencies: []
+dependencies:
+  - name: common
+    # repository: https://charts.sysdig.com
+    repository: file://../common
+    version: ~1.0.1

@@ -1,6 +1,5 @@
 # What's Changed
 
 ### New Features
-- **admission-controller,agent,cloud-bench,cloud-connector,cloud-scanning,harbor-scanner-sysdig-secure,kspm-collector,node-analyzer,rapid-response,registry-scanner,sysdig,sysdig-deploy,sysdig-mcm-navmenu,sysdig-stackdriver-bridge** [5d99a03d](https://github.com/sysdiglabs/charts/commit/5d99a03dced132b4771dde1ce5b90b63c518b408): use a PGP private key to sign charts on release ([#1170](https://github.com/sysdiglabs/charts/issues/1170))
-
-#### Full diff: https://github.com/sysdiglabs/charts/compare/cloud-connector-0.7.25...cloud-connector-0.8.0
+- **cloud-connector** [cae5dbb3](https://github.com/sysdiglabs/charts/commit/cae5dbb31cdf2aafa208a03b118e86ef97dadc14): fix processing customer appends but not base rule ([#1257](https://github.com/sysdiglabs/charts/issues/1257))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/cloud-connector-0.8.3...cloud-connector-0.8.4

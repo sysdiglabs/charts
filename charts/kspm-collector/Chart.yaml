@@ -2,8 +2,9 @@ apiVersion: v2
 name: kspm-collector
 description: Sysdig KSPM collector
 
-version: 0.2.0
-appVersion: 1.25.0
+version: 0.3.4
+appVersion: 1.26.0
+
 keywords:
   - monitoring
   - security
@@ -19,4 +20,8 @@ sources:
 maintainers:
   - name: chen-shmilovich-sysdig
     email: chen.shmilovich@sysdig.com
-dependencies: []
+dependencies:
+  - name: common
+    # repository: https://charts.sysdig.com
+    repository: file://../common
+    version: ~1.0.1

@@ -57,12 +57,8 @@ Sysdig Helm charts are signed so you can confirm the integrity and origin of eac
 
 2. Verify the chart by appending the `--verify` flag to the `install`, `upgrade`, and `pull` helm commands.
 
+
 ## Configuration
-
-You can use the Helm chart to update the default Cloud Connector configurations by using either of the following:
-
-- Using the key-value pair: `--set sysdig.settings.key = value`
-- `values.yaml` file
 
 ### Using the Key-Value Pair
 

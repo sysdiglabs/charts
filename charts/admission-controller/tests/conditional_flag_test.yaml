@@ -65,3 +65,29 @@ tests:
           kind: PodMonitor
           apiVersion: monitoring.coreos.com/v1
         template: webhook/podmonitor.yaml
+
+  - it: Checking if replica count is not set when HPA is enabled
+    set:
+      webhook:
+        autoscaling:
+          enabled: true
+      clusterName: test-k8s
+      sysdig:
+        secureAPIToken: standard_token
+    asserts:
+      - isNull:
+          path: spec.replicas
+        template: webhook/deployment.yaml
+
+  - it: Checking if replica count is set when HPA is disabled
+    set:
+      webhook:
+        autoscaling:
+          enabled: false
+      clusterName: test-k8s
+      sysdig:
+        secureAPIToken: standard_token
+    asserts:
+      - isNotNull:
+          path: spec.replicas
+        template: webhook/deployment.yaml

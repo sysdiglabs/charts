@@ -2,7 +2,7 @@ project:
   name: Sysdig Registry Scanner
   shortName: Registry Scanner
   url: https://docs.sysdig.com/en/docs/sysdig-secure/scanning/registry-scanner/
-  description: This chart deploys the Sysdig Registry Scanner as a scheduled Cronjob in your Kubernetes cluster.
+  description: This chart deploys the Sysdig Registry Scanner as a scheduled Cronjob in your Kubernetes cluster and allows you to integrate Sysdig Secure with different image registries.
   app: the Sysdig Registry Scanner
 repository:
   url: https://charts.sysdig.com
@@ -15,7 +15,7 @@ chart:
 prerequisites:
   - "Helm 3"
   - "Kubernetes v1.16+"
-  - "Cluster Name (pick one to identify your Kubernetes Cluster)"
+  - "Unique name to identify your Kubernetes cluster"
   - "Sysdig Secure API Token"
 
 release:
