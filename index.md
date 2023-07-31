@@ -34,7 +34,7 @@ The following charts are kept in the repository for existing users but are in le
 
 | Charts                                                       | Description                                                  |
 | :----------------------------------------------------------- | ------------------------------------------------------------ |
-| [`sysdig`](/charts/sysdig)       |                                                        | Installs, configures, and upgrades the Sysdig Agent and a variety of Sysdig Secure components. |
+| [`sysdig`](/charts/sysdig)         | Installs, configures, and upgrades the Sysdig Agent and a variety of Sysdig Secure components. |
 | [`cloud-scanning`](/charts/tree/master/charts/cloud-scanning) | Deprecated. Deploys the Sysdig Cloud scanning on your Kubernetes cluster. |
 | [`harbor-scanner-sysdig-secure`](/charts/harbor-scanner-sysdig-secure) | Deploys the Harbor Scanner Adapter to enable Harbor to use Sysdig Secure scanning engine to analyze the container images managed by the platform. |
 | [`cloud-bench`]()                                            | Deprecated. Deploys the Sysdig Cloud Bench on your Kubernetes cluster. |
