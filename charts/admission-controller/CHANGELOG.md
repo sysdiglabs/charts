@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.12.0
+### New Features
+* **sysdig-agent,node-analyzer,kspm-collector,rapid-response,admission-controller** [2dca8e7c](https://github.com/sysdiglabs/charts/commit/2dca8e7c5308e76c2da63c974ae75c4ad510c201): Global Custom CA Bundle Support ([#961](https://github.com/sysdiglabs/charts/issues/961))
 # v0.11.9
 ### New Features
 * **admission-controller** [3d4304d0](https://github.com/sysdiglabs/charts/commit/3d4304d03483f23371f74541102b4cf1036bdfc0): update README with latest CA certificate changes ([#1263](https://github.com/sysdiglabs/charts/issues/1263))
