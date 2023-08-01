@@ -1,5 +1,5 @@
 # What's Changed
 
-### Bug Fixes
-- **cluster-scanner** [cd8ebe99](https://github.com/sysdiglabs/charts/commit/cd8ebe99dd5313465b5a6cc1cf096cefea71df07): corrected role to support OKD4 ([#1247](https://github.com/sysdiglabs/charts/issues/1247))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/cluster-scanner-0.3.2...cluster-scanner-0.3.3
+### New Features
+- **sysdig-agent,node-analyzer,kspm-collector,rapid-response,admission-controller** [2dca8e7c](https://github.com/sysdiglabs/charts/commit/2dca8e7c5308e76c2da63c974ae75c4ad510c201): Global Custom CA Bundle Support ([#961](https://github.com/sysdiglabs/charts/issues/961))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/cluster-scanner-0.3.3...cluster-scanner-0.4.0
