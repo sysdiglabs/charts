@@ -1,0 +1,245 @@
+suite: Test admission-controller CA cert
+templates:
+  - scanner/serviceaccount.yaml
+  - scanner/deployment.yaml
+  - scanner/podmonitor.yaml
+  - scanner/secret.yaml
+  - scanner/service.yaml
+  - scanner/configmap.yaml
+  - webhook/serviceaccount.yaml
+  - webhook/deployment.yaml
+  - webhook/configmap.yaml
+  - webhook/secret.yaml
+  - webhook/admissionregistration.yaml
+  - webhook/podmonitor.yaml
+tests:
+  - it: Check Custsom CA Cert Disabled
+    documentIndex: 0
+    set:
+      clusterName: "test-k8s"
+      scanner:
+        enabled: true
+      webhook:
+        enabled: true
+      sysdig:
+        accessKey: standard-key
+        secureAPIToken: standard-token
+    asserts:
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SSL_CERT_DIR
+            value: "/ca-certs"
+        template: webhook/deployment.yaml
+      - notContains:
+          path: spec.template.spec.volumes
+          content:
+            name: ca-cert
+            secret:
+              secretName: release-name-admission-controller-webhook-ca
+        template: webhook/deployment.yaml
+      - notContains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: ca-cert
+            mountPath: /ca-certs
+            readOnly: true
+        template: webhook/deployment.yaml
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SSL_CERT_DIR
+            value: "/ca-certs"
+        template: scanner/deployment.yaml
+      - notContains:
+          path: spec.template.spec.volumes
+          content:
+            name: ca-cert
+            secret:
+              secretName: release-name-admission-controller-scanner-ca
+        template: scanner/deployment.yaml
+      - notContains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: ca-cert
+            mountPath: /ca-certs
+            readOnly: true
+        template: scanner/deployment.yaml
+
+  - it: Check Custsom CA Cert defined with Values
+    documentIndex: 0
+    set:
+      clusterName: "test-k8s"
+      scanner:
+        enabled: true
+      webhook:
+        enabled: true
+      global:
+        ssl:
+          ca:
+            certs:
+              - |
+                -----BEGIN CERTIFICATE-----
+                my-test-cert
+                -----END CERTIFICATE-----
+            keyName: "global_root_ca.crt"
+      sysdig:
+        accessKey: standard-key
+        secureAPIToken: standard-token
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SSL_CERT_DIR
+            value: "/ca-certs"
+        template: webhook/deployment.yaml
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: ca-cert
+            secret:
+              secretName: release-name-admission-controller-webhook-ca
+        template: webhook/deployment.yaml
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: ca-cert
+            mountPath: /ca-certs
+            readOnly: true
+        template: webhook/deployment.yaml
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SSL_CERT_DIR
+            value: "/ca-certs"
+        template: scanner/deployment.yaml
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: ca-cert
+            secret:
+              secretName: release-name-admission-controller-scanner-ca
+        template: scanner/deployment.yaml
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: ca-cert
+            mountPath: /ca-certs
+            readOnly: true
+        template: scanner/deployment.yaml
+
+  - it: Check Custsom CA Cert defined with Existing Secret
+    documentIndex: 0
+    set:
+      clusterName: "test-k8s"
+      scanner:
+        enabled: true
+      webhook:
+        enabled: true
+      global:
+        ssl:
+          ca:
+            existingCaSecret: "test-fake-ca-secret-name"
+            existingCaSecretKeyName: "test-fake-ca-secret-key.crt"
+      sysdig:
+        accessKey: standard-key
+        secureAPIToken: standard-token
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SSL_CERT_DIR
+            value: "/ca-certs"
+        template: webhook/deployment.yaml
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: ca-cert
+            secret:
+              secretName: test-fake-ca-secret-name
+        template: webhook/deployment.yaml
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: ca-cert
+            mountPath: /ca-certs
+            readOnly: true
+        template: webhook/deployment.yaml
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SSL_CERT_DIR
+            value: "/ca-certs"
+        template: scanner/deployment.yaml
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: ca-cert
+            secret:
+              secretName: test-fake-ca-secret-name
+        template: scanner/deployment.yaml
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: ca-cert
+            mountPath: /ca-certs
+            readOnly: true
+        template: scanner/deployment.yaml
+
+  - it: Check Custsom CA Cert defined with Existing ConfigMap
+    documentIndex: 0
+    set:
+      clusterName: "test-k8s"
+      scanner:
+        enabled: true
+      webhook:
+        enabled: true
+      global:
+        ssl:
+          ca:
+            existingCaConfigMap: "test-fake-ca-configmap-name"
+            existingCaConfigMapKeyName: "test-fake-ca-configmap-key.crt"
+      sysdig:
+        accessKey: standard-key
+        secureAPIToken: standard-token
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SSL_CERT_DIR
+            value: "/ca-certs"
+        template: webhook/deployment.yaml
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: ca-cert
+            configMap:
+              name: test-fake-ca-configmap-name
+        template: webhook/deployment.yaml
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: ca-cert
+            mountPath: /ca-certs
+            readOnly: true
+        template: webhook/deployment.yaml
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SSL_CERT_DIR
+            value: "/ca-certs"
+        template: scanner/deployment.yaml
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: ca-cert
+            configMap:
+              name: test-fake-ca-configmap-name
+        template: scanner/deployment.yaml
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: ca-cert
+            mountPath: /ca-certs
+            readOnly: true
+        template: scanner/deployment.yaml

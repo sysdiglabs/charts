@@ -18,6 +18,40 @@ global:
   image:
     pullSecrets: []
     pullPolicy: IfNotPresent
+  ssl:
+    ca:
+      # For outbound connections (secure backend, proxy,...)
+      # A PEM-encoded x509 certificate.  This can also be a bundle with multiple certificates.
+      certs: []
+      # Example of certificate
+      # certs:
+      #   - |
+      #       -----BEGIN CERTIFICATE-----
+      #       MIIDEzCCAfugAwIBAgIQKiv9U+KxPJzu1adXwC06RzANBgkqhkiG9w0BAQsFADAU
+      #       MRIwEAYDVQQDEwloYXJib3ItY2EwHhcNMjIwMjIzMDY1NjExWhcNMjMwMjIzMDY1
+      #       NjExWjAUMRIwEAYDVQQDEwloYXJib3ItY2EwggEiMA0GCSqGSIb3DQEBAQUAA4IB
+      #       MMNlTAQ9fvdNOTzZntye0PQYR5SR13E=
+      #       -----END CERTIFICATE-----
+      #   - |
+      #       -----BEGIN CERTIFICATE-----
+      #       MIIDEzCCAfugAwIBAgIQKiv9U+KxPJzu1adXwC06RzANBgkqhkiG9w0BAQsFADAU
+      #       MRIwEAYDVQQDEwloYXJib3ItY2EwHhcNMjIwMjIzMDY1NjExWhcNMjMwMjIzMDY1
+      #       NjExWjAUMRIwEAYDVQQDEwloYXJib3ItY2EwggEiMA0GCSqGSIb3DQEBAQUAA4IB
+      #       MMNlTAQ9fvdNOTzZntye0PQYRTTS34D=
+      #       -----END CERTIFICATE-----
+
+      # Filename that is used when creating the secret.  Required if cert is provided.
+      keyName:
+
+      # Provide the name of an existing Secret that contains the CA required
+      existingCaSecret:
+      # Provide the filename that is defined inside the existing Secret.  Required if existingCaSecret is set.
+      existingCaSecretKeyName:
+
+      # Provide the name of an existing ConfigMap that contains the CA required
+      existingCaConfigMap:
+      # Provide the filename that is defined inside the existing ConfigMap.  Required if existingCaConfigMap is set.
+      existingCaConfigMapKeyName:
 
 # **required**
 # <br/> Cluster Name which appear on Secure UI
@@ -222,6 +256,38 @@ webhook:
       # For outbound connections (secure backend, proxy,...)
       # <br/>A PEM-encoded x509 certificate authority.
       cert: ""
+      # For outbound connections (secure backend, proxy,...)
+      # A PEM-encoded x509 certificate.  This can also be a bundle with multiple certificates.
+      certs: []
+      # Example of certificate
+      # certs:
+      #   - |
+      #       -----BEGIN CERTIFICATE-----
+      #       MIIDEzCCAfugAwIBAgIQKiv9U+KxPJzu1adXwC06RzANBgkqhkiG9w0BAQsFADAU
+      #       MRIwEAYDVQQDEwloYXJib3ItY2EwHhcNMjIwMjIzMDY1NjExWhcNMjMwMjIzMDY1
+      #       NjExWjAUMRIwEAYDVQQDEwloYXJib3ItY2EwggEiMA0GCSqGSIb3DQEBAQUAA4IB
+      #       MMNlTAQ9fvdNOTzZntye0PQYR5SR13E=
+      #       -----END CERTIFICATE-----
+      #   - |
+      #       -----BEGIN CERTIFICATE-----
+      #       MIIDEzCCAfugAwIBAgIQKiv9U+KxPJzu1adXwC06RzANBgkqhkiG9w0BAQsFADAU
+      #       MRIwEAYDVQQDEwloYXJib3ItY2EwHhcNMjIwMjIzMDY1NjExWhcNMjMwMjIzMDY1
+      #       NjExWjAUMRIwEAYDVQQDEwloYXJib3ItY2EwggEiMA0GCSqGSIb3DQEBAQUAA4IB
+      #       MMNlTAQ9fvdNOTzZntye0PQYRTTS34D=
+      #       -----END CERTIFICATE-----
+
+      # Filename that is used when creating the secret. Required if cert is provided.
+      keyName:
+      # Provide the name of an existing Secret that contains the CA required
+      existingCaSecret:
+      # Provide the filename that is defined inside the existing Secret.  Required if existingCaSecret is set.
+      existingCaSecretKeyName:
+
+      # Provide the name of an existing ConfigMap that contains the CA required
+      existingCaConfigMap:
+      # Provide the filename that is defined inside the existing ConfigMap.  Required if existingCaConfigMap is set.
+      existingCaConfigMapKeyName:
+
 
   # Custom entrypoint for the webhook
   # <br/>Remember to provide the webhook valid arguments with `--tls_cert_file` and `--tls_private_key_file`.
@@ -331,6 +397,39 @@ scanner:
       # For outbound connections (secure backend, proxy,...).
       # <br/>A PEM-encoded x509 certificate authority.
       cert: ""
+
+      # For outbound connections (secure backend, proxy,...)
+      # A PEM-encoded x509 certificate.  This can also be a bundle with multiple certificates.
+      certs: []
+      # Example of certificate
+      # certs:
+      #   - |
+      #       -----BEGIN CERTIFICATE-----
+      #       MIIDEzCCAfugAwIBAgIQKiv9U+KxPJzu1adXwC06RzANBgkqhkiG9w0BAQsFADAU
+      #       MRIwEAYDVQQDEwloYXJib3ItY2EwHhcNMjIwMjIzMDY1NjExWhcNMjMwMjIzMDY1
+      #       NjExWjAUMRIwEAYDVQQDEwloYXJib3ItY2EwggEiMA0GCSqGSIb3DQEBAQUAA4IB
+      #       MMNlTAQ9fvdNOTzZntye0PQYR5SR13E=
+      #       -----END CERTIFICATE-----
+      #   - |
+      #       -----BEGIN CERTIFICATE-----
+      #       MIIDEzCCAfugAwIBAgIQKiv9U+KxPJzu1adXwC06RzANBgkqhkiG9w0BAQsFADAU
+      #       MRIwEAYDVQQDEwloYXJib3ItY2EwHhcNMjIwMjIzMDY1NjExWhcNMjMwMjIzMDY1
+      #       NjExWjAUMRIwEAYDVQQDEwloYXJib3ItY2EwggEiMA0GCSqGSIb3DQEBAQUAA4IB
+      #       MMNlTAQ9fvdNOTzZntye0PQYRTTS34D=
+      #       -----END CERTIFICATE-----
+
+      # Filename that is used when creating the secret. Required if cert is provided.
+      keyName:
+
+      # Provide the name of an existing Secret that contains the CA required
+      existingCaSecret:
+      # Provide the filename that is defined inside the existing Secret.  Required if existingCaSecret is set.
+      existingCaSecretKeyName:
+
+      # Provide the name of an existing ConfigMap that contains the CA required
+      existingCaConfigMap:
+      # Provide the filename that is defined inside the existing ConfigMap.  Required if existingCaConfigMap is set.
+      existingCaConfigMapKeyName:
 
   # Custom entrypoint for the scanner.
   # <br/>Remember to provide the scanner valid arguments with `--server_port` and optionally `--auth_secure_token`

@@ -44,5 +44,13 @@ The monitor.enabled parameter is true while using sysdig.settings.feature.mode t
 secure or secure_light mode. Please set monitor.enabled=false to ensure all Sysdig Monitor components are disabled
 when running the Agent in secure or secure_light modes.
 {{ else }}
+{{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
+
+We have appended the Sysdig Public CA to the CA bundle that you have provided.
+This is to handle edge cases for on-premise installations that might need a Custom CA to verify the Collector and still download
+the pre-compiled probe from https://download.sysdig.com.
+
+{{- end }}
+
 No further action should be required.
 {{ end }}

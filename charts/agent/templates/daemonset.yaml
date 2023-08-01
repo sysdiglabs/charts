@@ -111,7 +111,18 @@ spec:
             - name: no_proxy
               value: {{ .Values.proxy.noProxy | default .Values.global.proxy.noProxy }}
           {{- end }}
+          {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
+            - name: SSL_CERT_FILE
+              value: /opt/draios/etc/ca-certs/{{- include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.ssl) -}}
+          {{- end }}
           volumeMounts:
+          {{- /* Always requested */}}
+            {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
+            - name: ca-cert
+              mountPath: /opt/draios/etc/ca-certs
+              readOnly: true
+            {{- end }}
+
           {{- /* Slim = true, Autopilot = false */}}
           {{- if not (include "agent.gke.autopilot" .) }}
             - mountPath: /etc/modprobe.d
@@ -191,6 +202,10 @@ spec:
             - name: {{ $key | quote }}
               value: {{ $value | quote }}
             {{- end }}
+            {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
+            - name: SSL_CERT_FILE
+              value: /opt/draios/etc/ca-certs/{{- include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.ssl) -}}
+            {{- end }}
           readinessProbe:
             exec:
               command: [ "test", "-e", "/opt/draios/logs/running" ]
@@ -210,6 +225,12 @@ spec:
               name: sysdig-agent-secrets
             - mountPath: /etc/podinfo
               name: podinfo
+
+          {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
+            - name: ca-cert
+              mountPath: /opt/draios/etc/ca-certs
+              readOnly: true
+          {{- end }}
 
           {{- /* Slim = false, Autopilot = false */}}
           {{- if and (not .Values.slim.enabled) (not (include "agent.gke.autopilot" .)) }}
@@ -297,7 +318,6 @@ spec:
           {{- if .Values.extraVolumes.mounts }}
             {{ toYaml .Values.extraVolumes.mounts | nindent 12 }}
           {{- end }}
-
       volumes:
       {{- /* Always requested */}}
         - name: dev-vol
@@ -332,6 +352,19 @@ spec:
                 apiVersion: v1
                 fieldPath: metadata.name
               path: name
+        {{- if eq (include "sysdig.custom_ca.useValues"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
+        - name: ca-cert
+          secret:
+            secretName: {{ include "agent.fullname" . }}-ca
+        {{- else if eq (include "sysdig.custom_ca.useExistingSecret"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
+        - name: ca-cert
+          secret:
+            secretName: {{ include "sysdig.custom_ca.existingSecret" (dict "global" .Values.global.ssl "component" .Values.ssl) }}
+        {{- else if eq (include "sysdig.custom_ca.useExistingConfigMap" (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
+        - name: ca-cert
+          configMap:
+            name: {{ include "sysdig.custom_ca.existingConfigMap" (dict "global" .Values.global.ssl "component" .Values.ssl) }}
+        {{- end }}
 
       {{- /* Slim = false, Autopilot = false */}}
       {{- if and (not .Values.slim.enabled) (not (include "agent.gke.autopilot" .)) }}

@@ -1,0 +1,189 @@
+suite: Test node-analyzer CA cert
+templates:
+  - secrets.yaml
+  - daemonset-node-analyzer.yaml
+  - runtimeScanner/eveconnector-api-deployment.yaml
+  - runtimeScanner/sysdig-eve-secret.yaml
+  - runtimeScanner/eveconnector-api-configmap.yaml
+tests:
+  - it: Checking node-analyzer CA Cert Secret
+    set:
+      clusterName: "test"
+      documentIndex: 0
+      secure:
+        vulnerabilityManagement:
+          newEngineOnly: true
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+      nodeAnalyzer:
+        benchmarkRunner: { deploy: false }
+        imageAnalyzer: { deploy: false }
+        hostAnalyzer: { deploy: false }
+        hostScanner: { deploy: false }
+        runtimeScanner: { deploy: true }
+        ssl:
+          ca:
+            certs:
+              - |
+                -----BEGIN CERTIFICATE-----
+                my-test-cert
+                -----END CERTIFICATE-----
+            keyName: "root_ca.crt"
+    asserts:
+      - isKind:
+          of: Secret
+        template: secrets.yaml
+  - it: Check Local CA Cert
+    set:
+      clusterName: "test"
+      documentIndex: 0
+      secure:
+        vulnerabilityManagement:
+          newEngineOnly: true
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+      nodeAnalyzer:
+        benchmarkRunner: { deploy: false }
+        imageAnalyzer: { deploy: true }
+        hostAnalyzer: { deploy: true }
+        hostScanner: { deploy: true }
+        runtimeScanner:
+          deploy: true
+          eveConnector:
+            deploy:
+              true
+        ssl:
+          ca:
+            certs:
+              - |
+                -----BEGIN CERTIFICATE-----
+                my-test-cert
+                -----END CERTIFICATE-----
+            keyName: "root_ca.crt"
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SSL_CERT_FILE
+            value: "/ca-certs/root_ca.crt"
+        template: daemonset-node-analyzer.yaml
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: ca-cert
+            secret:
+              secretName: release-name-node-analyzer-ca
+        template: daemonset-node-analyzer.yaml
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: ca-cert
+            mountPath: /ca-certs
+            readOnly: true
+        template: daemonset-node-analyzer.yaml
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SSL_CERT_FILE
+            value: "/ca-certs/root_ca.crt"
+        template: runtimeScanner/eveconnector-api-deployment.yaml
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: ca-cert
+            mountPath: /ca-certs
+            readOnly: true
+        template: runtimeScanner/eveconnector-api-deployment.yaml
+
+  - it: Check Global CA Cert New Engine Only
+    set:
+      documentIndex: 0
+      nodeAnalyzer:
+        benchmarkRunner: { deploy: false }
+        imageAnalyzer: { deploy: false }
+        hostAnalyzer: { deploy: false }
+        hostScanner: { deploy: true }
+        runtimeScanner: { deploy: true }
+      secure:
+        vulnerabilityManagement:
+          newEngineOnly: true
+      global:
+        kspm:
+          deploy: false
+        ssl:
+          ca:
+            certs:
+              - |
+                -----BEGIN CERTIFICATE-----
+                my-test-cert
+                -----END CERTIFICATE-----
+            keyName: "global_root_ca.crt"
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SSL_CERT_FILE
+            value: "/ca-certs/global_root_ca.crt"
+        template: daemonset-node-analyzer.yaml
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: ca-cert
+            secret:
+              secretName: release-name-node-analyzer-ca
+        template: daemonset-node-analyzer.yaml
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: ca-cert
+            mountPath: /ca-certs
+            readOnly: true
+        template: daemonset-node-analyzer.yaml
+  - it: Check Global CA Cert Old Engine
+    set:
+      documentIndex: 0
+      nodeAnalyzer:
+        enchmarkRunner: { deploy: true }
+        imageAnalyzer: { deploy: true }
+        hostAnalyzer: { deploy: true }
+        hostScanner: { deploy: false }
+        runtimeScanner: { deploy: false }
+      secure:
+        vulnerabilityManagement:
+          newEngineOnly: false
+      global:
+        kspm:
+          deploy: false
+        ssl:
+          ca:
+            certs:
+              - |
+                -----BEGIN CERTIFICATE-----
+                my-test-cert
+                -----END CERTIFICATE-----
+            keyName: "global_root_ca.crt"
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SSL_CERT_FILE
+            value: "/ca-certs/global_root_ca.crt"
+        template: daemonset-node-analyzer.yaml
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: ca-cert
+            secret:
+              secretName: release-name-node-analyzer-ca
+        template: daemonset-node-analyzer.yaml
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: ca-cert
+            mountPath: /ca-certs
+            readOnly: true
+        template: daemonset-node-analyzer.yaml
