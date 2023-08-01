@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.16.0
+### New Features
+* **sysdig-agent,node-analyzer,kspm-collector,rapid-response,admission-controller** [2dca8e7c](https://github.com/sysdiglabs/charts/commit/2dca8e7c5308e76c2da63c974ae75c4ad510c201): Global Custom CA Bundle Support ([#961](https://github.com/sysdiglabs/charts/issues/961))
 # v1.15.6
 ### Chores
 * **sysdig-deploy** [e9df82e5](https://github.com/sysdiglabs/charts/commit/e9df82e57a98cf5a8fffda06ce539424ff47155f): Automatic version bump due to updated dependencies ([#1276](https://github.com/sysdiglabs/charts/issues/1276))
