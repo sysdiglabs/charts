@@ -4,7 +4,7 @@ description: Sysdig Node Analyzer
 
 # currently matching Sysdig's appVersion 1.14.34
 version: 1.12.1
-appVersion: 12.6.1
+appVersion: 12.6.0
 keywords:
   - monitoring
   - security
