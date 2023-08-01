@@ -118,26 +118,35 @@ spec:
                   name: {{ ( include "rapidResponse.passphraseSecret" . ) }}
                   {{- end }}
                   key: passphrase
-            {{- if .Values.rapidResponse.ssl.ca.certs }}
-            - name: SSL_CERT_DIR
-              value: /ca-certs
+            {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.rapidResponse.ssl)) "true" }}
+            - name: SSL_CERT_FILE
+              value: /ca-certs/{{- include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.rapidResponse.ssl) -}}
             {{- end }}
           volumeMounts:
             {{- if .Values.rapidResponse.extraVolumes.mounts }}
 {{ toYaml .Values.rapidResponse.extraVolumes.mounts | indent 12 }}
             {{- end }}
-            {{- if .Values.rapidResponse.ssl.ca.certs }}
-            - mountPath: /ca-certs
-              name: ca-cert
+            {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.rapidResponse.ssl)) "true" }}
+            - name: ca-cert
+              mountPath: /ca-certs
+              readOnly: true
             {{- end }}
       volumes:
         {{- if .Values.rapidResponse.extraVolumes.volumes }}
 {{ toYaml .Values.rapidResponse.extraVolumes.volumes | indent 8 }}
         {{- end }}
-        {{- if .Values.rapidResponse.ssl.ca.certs }}
+        {{- if eq (include "sysdig.custom_ca.useValues"  (dict "global" .Values.global.ssl "component" .Values.rapidResponse.ssl)) "true" }}
         - name: ca-cert
           secret:
-            secretName: {{ template "rapidResponse.fullname" . }}-additionalca
+            secretName: {{ include "rapidResponse.fullname" . }}-ca
+        {{- else if eq (include "sysdig.custom_ca.useExistingSecret"  (dict "global" .Values.global.ssl "component" .Values.rapidResponse.ssl)) "true" }}
+        - name: ca-cert
+          secret:
+            secretName: {{ include "sysdig.custom_ca.existingSecret" (dict "global" .Values.global.ssl "component" .Values.rapidResponse.ssl) }}
+        {{- else if eq (include "sysdig.custom_ca.useExistingConfigMap" (dict "global" .Values.global.ssl "component" .Values.rapidResponse.ssl)) "true" }}
+        - name: ca-cert
+          configMap:
+            name: {{ include "sysdig.custom_ca.existingConfigMap" (dict "global" .Values.global.ssl "component" .Values.rapidResponse.ssl) }}
         {{- end }}
   updateStrategy:
     type: {{ .Values.rapidResponse.updateStrategy.type }}

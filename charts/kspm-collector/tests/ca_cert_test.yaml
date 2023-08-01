@@ -1,0 +1,147 @@
+suite: Test kspm-collector CA cert
+templates:
+  - secret.yaml
+  - deployment.yaml
+tests:
+  - it: Check Custsom CA Cert Disabled
+    documentIndex: 0
+    set:
+      clusterName: "test-k8s"
+      scanner:
+        enabled: true
+      webhook:
+        enabled: true
+      sysdig:
+        accessKey: standard-key
+        secureAPIToken: standard-token
+    asserts:
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SSL_CERT_FILE
+            value: "/ca-certs/global_root_ca.crt"
+        template: deployment.yaml
+      - isEmpty:
+          path: spec.template.spec.volumes
+        template: deployment.yaml
+      - isEmpty:
+          path: spec.template.spec.containers[0].volumeMounts
+        template: deployment.yaml
+
+  - it: Check Custsom CA Cert defined with Values
+    documentIndex: 0
+    set:
+      clusterName: "test-k8s"
+      scanner:
+        enabled: true
+      webhook:
+        enabled: true
+      global:
+        ssl:
+          ca:
+            certs:
+              - |
+                -----BEGIN CERTIFICATE-----
+                my-test-cert
+                -----END CERTIFICATE-----
+            keyName: "global_root_ca.crt"
+      sysdig:
+        accessKey: standard-key
+        secureAPIToken: standard-token
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SSL_CERT_FILE
+            value: "/ca-certs/global_root_ca.crt"
+        template: deployment.yaml
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: ca-cert
+            secret:
+              secretName: release-name-kspm-collector-ca
+        template: deployment.yaml
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: ca-cert
+            mountPath: /ca-certs
+            readOnly: true
+        template: deployment.yaml
+
+  - it: Check Custsom CA Cert defined with Existing Secret
+    documentIndex: 0
+    set:
+      clusterName: "test-k8s"
+      scanner:
+        enabled: true
+      webhook:
+        enabled: true
+      global:
+        ssl:
+          ca:
+            existingCaSecret: "test-fake-ca-secret-name"
+            existingCaSecretKeyName: "test-fake-ca-secret-key.crt"
+      sysdig:
+        accessKey: standard-key
+        secureAPIToken: standard-token
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SSL_CERT_FILE
+            value: "/ca-certs/test-fake-ca-secret-key.crt"
+        template: deployment.yaml
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: ca-cert
+            secret:
+              secretName: test-fake-ca-secret-name
+        template: deployment.yaml
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: ca-cert
+            mountPath: /ca-certs
+            readOnly: true
+        template: deployment.yaml
+
+  - it: Check Custsom CA Cert defined with Existing ConfigMap
+    documentIndex: 0
+    set:
+      clusterName: "test-k8s"
+      scanner:
+        enabled: true
+      webhook:
+        enabled: true
+      global:
+        ssl:
+          ca:
+            existingCaConfigMap: "test-fake-ca-configmap-name"
+            existingCaConfigMapKeyName: "test-fake-ca-configmap-key.crt"
+      sysdig:
+        accessKey: standard-key
+        secureAPIToken: standard-token
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SSL_CERT_FILE
+            value: "/ca-certs/test-fake-ca-configmap-key.crt"
+        template: deployment.yaml
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: ca-cert
+            configMap:
+              name: test-fake-ca-configmap-name
+        template: deployment.yaml
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: ca-cert
+            mountPath: /ca-certs
+            readOnly: true
+        template: deployment.yaml

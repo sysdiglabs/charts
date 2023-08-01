@@ -1,10 +1,5 @@
 # What's Changed
 
-### Chores
-- **sysdig,node-analyzer** [00316d04](https://github.com/sysdiglabs/charts/commit/00316d042378fa75ac0ed9277b547236766ce816): bumped RuntimeScanner to 1.5.2 version ([#1275](https://github.com/sysdiglabs/charts/issues/1275))
-
-    * * Added env var flag for internal timeout on scheduled operations
-* Added fallback when connection to detected container runtime fails
-* Security updates (July 2023). Fixed CVE
-  *  CVE-2023-33199
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.12.0...node-analyzer-1.12.1
+### New Features
+- **sysdig-agent,node-analyzer,kspm-collector,rapid-response,admission-controller** [2dca8e7c](https://github.com/sysdiglabs/charts/commit/2dca8e7c5308e76c2da63c974ae75c4ad510c201): Global Custom CA Bundle Support ([#961](https://github.com/sysdiglabs/charts/issues/961))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.12.1...node-analyzer-1.13.0

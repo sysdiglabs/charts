@@ -41,10 +41,18 @@ spec:
             defaultMode: 420
             secretName: {{ .Values.scanner.dockerCfgSecretName }}
         {{- end }}
-        {{- if .Values.scanner.ssl.ca.cert }}
+        {{- if or .Values.scanner.ssl.ca.cert (eq (include "sysdig.custom_ca.useValues"  (dict "global" .Values.global.ssl "component" .Values.scanner.ssl)) "true") }}
         - name: ca-cert
           secret:
             secretName: {{ include "admissionController.scanner.fullname" . }}-ca
+        {{- else if eq (include "sysdig.custom_ca.useExistingSecret"  (dict "global" .Values.global.ssl "component" .Values.scanner.ssl)) "true" }}
+        - name: ca-cert
+          secret:
+            secretName: {{ include "sysdig.custom_ca.existingSecret" (dict "global" .Values.global.ssl "component" .Values.scanner.ssl) }}
+        {{- else if eq (include "sysdig.custom_ca.useExistingConfigMap" (dict "global" .Values.global.ssl "component" .Values.scanner.ssl)) "true" }}
+        - name: ca-cert
+          configMap:
+            name: {{ include "sysdig.custom_ca.existingConfigMap" (dict "global" .Values.global.ssl "component" .Values.scanner.ssl) }}
         {{- end }}
       containers:
         - name: inline-scanner
@@ -59,9 +67,9 @@ spec:
               name: dockercfg
               readOnly: true
             {{- end }}
-            {{- if .Values.scanner.ssl.ca.cert }}
+            {{- if or .Values.scanner.ssl.ca.cert (eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.scanner.ssl)) "true") }}
             - name: ca-cert
-              mountPath: /ca-cert
+              mountPath: /ca-certs
               readOnly: true
             {{- end }}
           {{- if .Values.scanner.customEntryPoint }}
@@ -83,9 +91,9 @@ spec:
             - name: NO_PROXY
               value: {{ include "scanner.noProxy" . }}
             {{- end }}
-            {{- if .Values.scanner.ssl.ca.cert }}
-            - name: SSL_CERT_FILE
-              value: /ca-cert/root_ca_file.crt # mounted from the secret
+            {{- if or .Values.scanner.ssl.ca.cert (eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.scanner.ssl)) "true") }}
+            - name: SSL_CERT_DIR
+              value: /ca-certs
             {{- end }}
           envFrom:
             - configMapRef:

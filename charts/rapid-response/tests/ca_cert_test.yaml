@@ -1,0 +1,170 @@
+suite: Test rapid-response CA cert
+templates:
+  - secrets.yaml
+  - daemonset.yaml
+tests:
+  - it: Checking rapid-response CA Cert Secret
+    set:
+      documentIndex: 0
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+      rapidResponse:
+        passphrase: "THIS_IS_SUPER_SECRET"
+        ssl:
+          ca:
+            certs:
+              - |
+                -----BEGIN CERTIFICATE-----
+                my-test-cert
+                -----END CERTIFICATE-----
+            keyName: root_ca_file.crt
+    asserts:
+      - containsDocument:
+          apiVersion: v1
+          kind: Secret
+          name: release-name-rapid-response-ca
+        template: secrets.yaml
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SSL_CERT_FILE
+            value: "/ca-certs/root_ca_file.crt"
+        template: daemonset.yaml
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: ca-cert
+            secret:
+              secretName: release-name-rapid-response-ca
+        template: daemonset.yaml
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: ca-cert
+            mountPath: /ca-certs
+            readOnly: true
+        template: daemonset.yaml
+
+  - it: Check Local CA Cert
+    set:
+      documentIndex: 0
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+      rapidResponse:
+        passphrase: "THIS_IS_SUPER_SECRET"
+        ssl:
+          ca:
+            certs:
+              - |
+                -----BEGIN CERTIFICATE-----
+                my-test-cert
+                -----END CERTIFICATE-----
+            keyName: root.crt
+    asserts:
+      - containsDocument:
+          apiVersion: v1
+          kind: Secret
+          name: release-name-rapid-response-ca
+        template: secrets.yaml
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SSL_CERT_FILE
+            value: "/ca-certs/root.crt"
+        template: daemonset.yaml
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: ca-cert
+            secret:
+              secretName: release-name-rapid-response-ca
+        template: daemonset.yaml
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: ca-cert
+            mountPath: /ca-certs
+            readOnly: true
+        template: daemonset.yaml
+  - it: Check Global CA Cert with local CA cert override
+    set:
+      documentIndex: 0
+      global:
+        ssl:
+          ca:
+            certs:
+              - |
+                -----BEGIN CERTIFICATE-----
+                my-test-cert
+                -----END CERTIFICATE-----
+            keyName: "global_root_ca.crt"
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+      rapidResponse:
+        passphrase: "THIS_IS_SUPER_SECRET"
+        ssl:
+          ca:
+            certs:
+              - |
+                -----BEGIN CERTIFICATE-----
+                my-test-cert
+                -----END CERTIFICATE-----
+            keyName: "override_root_ca.crt"
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SSL_CERT_FILE
+            value: "/ca-certs/override_root_ca.crt"
+        template: daemonset.yaml
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: ca-cert
+            secret:
+              secretName: release-name-rapid-response-ca
+        template: daemonset.yaml
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: ca-cert
+            mountPath: /ca-certs
+            readOnly: true
+        template: daemonset.yaml
+  - it: Check Global CA Cert
+    set:
+      documentIndex: 0
+      global:
+        ssl:
+          ca:
+            certs:
+              - |
+                -----BEGIN CERTIFICATE-----
+                my-test-cert
+                -----END CERTIFICATE-----
+            keyName: "global_root_ca.crt"
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+      rapidResponse:
+        passphrase: "THIS_IS_SUPER_SECRET"
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SSL_CERT_FILE
+            value: "/ca-certs/global_root_ca.crt"
+        template: daemonset.yaml
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: ca-cert
+            secret:
+              secretName: release-name-rapid-response-ca
+        template: daemonset.yaml
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: ca-cert
+            mountPath: /ca-certs
+            readOnly: true
+        template: daemonset.yaml

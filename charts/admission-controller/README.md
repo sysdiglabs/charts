@@ -14,7 +14,9 @@ $ pre-commit run -a
 
 # Admission Controller
 
+
 This chart deploys the Sysdig Admission Controller on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
+
 
 ## Overview
 
@@ -41,6 +43,10 @@ For deployment instructions, including common deployment configurations related 
 
 If you use the [Legacy Scanning Engine](https://docs.sysdig.com/en/docs/sysdig-secure/scanning/) instead of the new Vulnerability Management engine in Sysdig Secure, you can deploy the `admission-controller` chart with old scanning options enabled and use [admission controller policies](https://docs.sysdig.com/en/docs/sysdig-secure/scanning/admission-controller/) to reject container images that do not fulfill the policy requirements from the cluster before being scheduled.
 
+```console
+$ helm upgrade --install sysdig-admission-controller sysdig/admission-controller -n sysdig-admission-controller --version=0.12.0
+```
+
 This option is enabled by default unless you specify  `--scanner.enabled=false` .
 
 
@@ -64,9 +70,10 @@ Specify each parameter using the `--set key=value[,key=value]` argument to the `
 
 For example:
 
-```bash
-helm upgrade --install admission-controller sysdig/admission-controller \
-    --create-namespace -n sysdig-admission-controller --version=0.9.0  \
+
+```console
+$ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
+    --create-namespace -n sysdig-admission-controller --version=0.12.0 \
     --set sysdig.secureAPIToken=YOUR-KEY-HERE,clusterName=YOUR-CLUSTER-NAME
 ```
 
@@ -74,13 +81,10 @@ helm upgrade --install admission-controller sysdig/admission-controller \
 
 The `values.yaml` file specifies the values for the admission controller configuration parameters.  You can add the configuration to the `values.yaml` file, then use it in the `helm install` command.
 
-For example:
-
-```bash
-helm upgrade --install admission-controller sysdig/admission-controller \
-     --create-namespace -n sysdig-admission-controller --version=0.9.0  \
+```console
+$ helm upgrade --install sysdig-admission-controller sysdig/admission-controller \
+    --create-namespace -n sysdig-admission-controller --version=0.12.0 \
     --values values.yaml
-
 ```
 See the default [`values.yaml`](./values.yaml) file for more information.
 

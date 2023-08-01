@@ -26,9 +26,27 @@ data:
 {{- if .Values.global.sysdig.tags }}
     tags: {{ include "agent.tags" . }}
 {{- end }}
-{{/* add in the remaining items from sysdig.settings */}}
-{{- if .Values.sysdig.settings }}
-  {{- toYaml .Values.sysdig.settings | trim | nindent 4 }}
+{{/*
+  Checking here the user is using Custom CA and if http_proxy.ssl = true
+  If these conditions are true, then we use the agent.sslCaFileName for the http_proxy.ca_certificate
+*/}}
+{{- if and (eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true") (.Values.sysdig.settings) (hasKey .Values.sysdig.settings "http_proxy") (hasKey .Values.sysdig.settings.http_proxy "ssl") (eq (get .Values.sysdig.settings.http_proxy "ssl") true) }}
+  {{- $baseSettings := .Values.sysdig.settings -}}
+  {{- $caFilePath := printf "%s%s" "/etc/ca-certs/" (include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.ssl)) }}
+  {{- $mergedSettings := mergeOverwrite $baseSettings (dict "http_proxy" (dict "ca_certificate" $caFilePath)) -}}
+  {{ toYaml $mergedSettings | indent 4 }}
+{{- else if .Values.sysdig.settings }}
+  {{ toYaml .Values.sysdig.settings | indent 4 }}
+{{- end }}
+{{- if .Values.leaderelection.enable }}
+    k8s_delegation_election: true
+    k8s_coldstart:
+      enabled: true
+      enforce_leader_election: true
+      namespace: {{ include "agent.namespace" . }}
+{{- end }}
+{{- if .Values.global.sysdig.tags }}
+    tags: {{ include "agent.tags" . }}
 {{- end }}
 {{- if .Values.prometheus.file }}
   prometheus.yaml: |
