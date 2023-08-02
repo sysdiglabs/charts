@@ -1,5 +1,5 @@
 # What's Changed
 
 ### New Features
-- **sysdig-agent,node-analyzer,kspm-collector,rapid-response,admission-controller** [2dca8e7c](https://github.com/sysdiglabs/charts/commit/2dca8e7c5308e76c2da63c974ae75c4ad510c201): Global Custom CA Bundle Support ([#961](https://github.com/sysdiglabs/charts/issues/961))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.15.6...sysdig-deploy-1.16.0
+- **kspm-collector,node-analyzer** [b302524f](https://github.com/sysdiglabs/charts/commit/b302524f75098299644ef541d71876180f61ed01): release agents v1.27.0 with RKE2 suport ([#1274](https://github.com/sysdiglabs/charts/issues/1274))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.16.0...sysdig-deploy-1.17.0
