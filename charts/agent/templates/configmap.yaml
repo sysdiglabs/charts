@@ -34,9 +34,9 @@ data:
   {{- $baseSettings := .Values.sysdig.settings -}}
   {{- $caFilePath := printf "%s%s" "/etc/ca-certs/" (include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.ssl)) }}
   {{- $mergedSettings := mergeOverwrite $baseSettings (dict "http_proxy" (dict "ca_certificate" $caFilePath)) -}}
-  {{ toYaml $mergedSettings | indent 4 }}
+  {{ toYaml $mergedSettings | nindent 4 }}
 {{- else if .Values.sysdig.settings }}
-  {{ toYaml .Values.sysdig.settings | indent 4 }}
+  {{ toYaml .Values.sysdig.settings | nindent 4 }}
 {{- end }}
 {{- if .Values.leaderelection.enable }}
     k8s_delegation_election: true
