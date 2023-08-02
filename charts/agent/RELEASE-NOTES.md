@@ -1,3 +1,5 @@
 # What's Changed
 
-#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.12.0...agent-1.12.1
+### New Features
+- **sysdig-agent,node-analyzer,kspm-collector,rapid-response,admission-controller** [2dca8e7c](https://github.com/sysdiglabs/charts/commit/2dca8e7c5308e76c2da63c974ae75c4ad510c201): Global Custom CA Bundle Support ([#961](https://github.com/sysdiglabs/charts/issues/961))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.12.1...agent-1.13.0
