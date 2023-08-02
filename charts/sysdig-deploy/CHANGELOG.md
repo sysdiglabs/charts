@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.17.1
+### Chores
+* **sysdig-deploy** [9f3f0599](https://github.com/sysdiglabs/charts/commit/9f3f0599b46853aa7963a2874c70c2e3c9cdb951): Automatic version bump due to updated dependencies ([#1278](https://github.com/sysdiglabs/charts/issues/1278))
 # v1.17.0
 ### New Features
 * **kspm-collector,node-analyzer** [b302524f](https://github.com/sysdiglabs/charts/commit/b302524f75098299644ef541d71876180f61ed01): release agents v1.27.0 with RKE2 suport ([#1274](https://github.com/sysdiglabs/charts/issues/1274))
