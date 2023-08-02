@@ -40,7 +40,7 @@ spec:
             name: {{ include "nodeAnalyzer.configmapName" . }}
             optional: true
         {{- end }}
-        {{- if include "nodeAnalyzer.deployRuntimeScanner" . }}
+        {{- if or (include "nodeAnalyzer.deployRuntimeScanner" .) (include "nodeAnalyzer.deployImageAnalyzer" .)}}
         # Needed for cri-o image inspection.
         # cri-o and especially OCP 4.x by default use containers/storage to handle images, and this makes sure that the
         # analyzer has access to the configuration. This file is mounted read-only.
