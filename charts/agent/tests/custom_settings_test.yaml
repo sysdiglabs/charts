@@ -49,8 +49,7 @@ tests:
             .*
     template: configmap.yaml
 
-
-  - it: Testing custom settings in deployment 
+  - it: Testing custom settings in deployment
     set:
       delegatedAgentDeployment:
         enabled: true
