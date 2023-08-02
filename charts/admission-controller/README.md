@@ -19,7 +19,7 @@ This chart deploys the Sysdig Admission Controller on a [Kubernetes](http://kube
 
 ## Overview
 
-[Sysdig Admission Controller](https://docs.sysdig.com/en/docs/sysdig-secure/scanning/admission-controller/) provides Audit Logging and optional Image Scanning capabilities to secure your Kubernetes environment.
+[Sysdig Admission Controller](https://docs.sysdig.com/en/docs/installation/sysdig-secure/install-agent-components/kubernetes/install-kubernetes-audit-logging/) provides Audit Logging and optional Image Scanning capabilities to secure your Kubernetes environment.
 
 Use the [sysdig-deploy](../sysdig-deploy/README.md) parent chart to deploy the Admission Controller and any other subcomponents. Do not deploy subcharts directly.
 
