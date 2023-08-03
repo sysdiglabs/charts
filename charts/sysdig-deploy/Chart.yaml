@@ -20,7 +20,7 @@ dependencies:
   - name: admission-controller
     # repository: https://charts.sysdig.com
     repository: file://../admission-controller
-    version: ~0.12.0
+    version: ~0.12.1
     alias: admissionController
     condition: admissionController.enabled
   - name: agent
