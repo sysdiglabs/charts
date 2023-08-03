@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.14.2
+### New Features
+* **node-analyzer** [0ad8696a](https://github.com/sysdiglabs/charts/commit/0ad8696a0b38d2564121e6e798589f568e3547a8): Release eveconnector 1.1.2 ([#1280](https://github.com/sysdiglabs/charts/issues/1280))
 # v1.14.1
 ### Chores
 * **node-analyzer** [d59b8c97](https://github.com/sysdiglabs/charts/commit/d59b8c97488c9277885c203e0db39665625aa5ea): toggle volumes used by runtimeScanner and imageAnalyzer ([#1273](https://github.com/sysdiglabs/charts/issues/1273))
