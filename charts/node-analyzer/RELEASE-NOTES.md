@@ -1,5 +1,5 @@
 # What's Changed
 
 ### New Features
-- **sysdig-agent,node-analyzer,kspm-collector,rapid-response,admission-controller** [2dca8e7c](https://github.com/sysdiglabs/charts/commit/2dca8e7c5308e76c2da63c974ae75c4ad510c201): Global Custom CA Bundle Support ([#961](https://github.com/sysdiglabs/charts/issues/961))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.12.1...node-analyzer-1.13.0
+- **node-analyzer** [0ad8696a](https://github.com/sysdiglabs/charts/commit/0ad8696a0b38d2564121e6e798589f568e3547a8): Release eveconnector 1.1.2 ([#1280](https://github.com/sysdiglabs/charts/issues/1280))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.14.1...node-analyzer-1.14.2

@@ -10,6 +10,15 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.14.2
+### New Features
+* **node-analyzer** [0ad8696a](https://github.com/sysdiglabs/charts/commit/0ad8696a0b38d2564121e6e798589f568e3547a8): Release eveconnector 1.1.2 ([#1280](https://github.com/sysdiglabs/charts/issues/1280))
+# v1.14.1
+### Chores
+* **node-analyzer** [d59b8c97](https://github.com/sysdiglabs/charts/commit/d59b8c97488c9277885c203e0db39665625aa5ea): toggle volumes used by runtimeScanner and imageAnalyzer ([#1273](https://github.com/sysdiglabs/charts/issues/1273))
+# v1.14.0
+### New Features
+* **kspm-collector,node-analyzer** [b302524f](https://github.com/sysdiglabs/charts/commit/b302524f75098299644ef541d71876180f61ed01): release agents v1.27.0 with RKE2 suport ([#1274](https://github.com/sysdiglabs/charts/issues/1274))
 # v1.13.0
 ### New Features
 * **sysdig-agent,node-analyzer,kspm-collector,rapid-response,admission-controller** [2dca8e7c](https://github.com/sysdiglabs/charts/commit/2dca8e7c5308e76c2da63c974ae75c4ad510c201): Global Custom CA Bundle Support ([#961](https://github.com/sysdiglabs/charts/issues/961))
