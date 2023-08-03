@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **node-analyzer** [d59b8c97](https://github.com/sysdiglabs/charts/commit/d59b8c97488c9277885c203e0db39665625aa5ea): toggle volumes used by runtimeScanner and imageAnalyzer ([#1273](https://github.com/sysdiglabs/charts/issues/1273))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.17.1...sysdig-deploy-1.17.2
+### New Features
+- **node-analyzer** [0ad8696a](https://github.com/sysdiglabs/charts/commit/0ad8696a0b38d2564121e6e798589f568e3547a8): Release eveconnector 1.1.2 ([#1280](https://github.com/sysdiglabs/charts/issues/1280))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.17.2...sysdig-deploy-1.17.3
