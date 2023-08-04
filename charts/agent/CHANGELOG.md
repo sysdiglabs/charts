@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.13.2
+### Bug Fixes
+* **admission-controller,agent,sysdig-deploy** [bdf6c21f](https://github.com/sysdiglabs/charts/commit/bdf6c21f6322aaa8417fe8a763f01f5127601094): fix incompatibility errors on older helm versions ([#1281](https://github.com/sysdiglabs/charts/issues/1281))
 # v1.13.1
 ### Bug Fixes
 * **agent** [9e8d863e](https://github.com/sysdiglabs/charts/commit/9e8d863e39682aa17654c2a1a4a3554667789015): fix indentation for custom settings ([#1277](https://github.com/sysdiglabs/charts/issues/1277))
