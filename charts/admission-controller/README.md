@@ -12,7 +12,6 @@ $ pre-commit run -a
 
 -->
 
-
 # Admission Controller
 
 This chart deploys the Sysdig Admission Controller on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
@@ -42,7 +41,6 @@ For deployment instructions, including common deployment configurations related 
 If you use the [Legacy Scanning Engine](https://docs.sysdig.com/en/docs/sysdig-secure/scanning/) instead of the new Vulnerability Management engine in Sysdig Secure, you can [deploy the `admission-controller` chart](https://docs.sysdig.com/en/docs/sysdig-secure/scanning/admission-controller/#installation) with old scanning options enabled and use [admission controller policies](https://docs.sysdig.com/en/docs/sysdig-secure/scanning/admission-controller/#create-admission-controller-policies) to reject container images that do not fulfill the policy requirements from the cluster before being scheduled.
 
 This option is enabled by default unless you specify  `--scanner.enabled=false` .
-
 
 ## Verify the Integrity and Origin
 
