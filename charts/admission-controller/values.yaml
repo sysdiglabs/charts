@@ -3,18 +3,18 @@
 # Declare variables to be passed into your templates.
 
 global:
-  # Global cluster config options.
+  # The global cluster configuration options.
   clusterConfig: {}
   sysdig:
-    # Global API token to access Sysdig Secure.
+    # The global API token to access Sysdig Secure.
     secureAPIToken: ""
-    # Global secret with API Token to access Sysdig Secure.
+    # The global secret with API Token to access Sysdig Secure.
     secureAPITokenSecret: ""
-    # Global Sysdig Secure region
+    # The global Sysdig Secure region.
     region: "us1"
   # Global HTTP Proxy settings.
   proxy: {}
-  # Global image settings.
+  # The global image settings.
   image:
     pullSecrets: []
     pullPolicy: IfNotPresent
@@ -54,34 +54,34 @@ global:
       existingCaConfigMapKeyName:
 
 # **required**
-# <br/> Cluster Name which appear on Secure UI
+# <br/> The cluster Name which appear on Secure UI
 clusterName: ""
 
-# Namespace to install components (Optional, will default to release namespace).
-# <br/><br/> IMPORTANT: If a namespace is specified this way it must already exist
+# The namespace to install components. An optional field. If not specified, it will default to the release namespace.
+# <br/>IMPORTANT: Ensure that a namespace is already exist,
 # otherwise installation will fail.
 namespace: ""
 
 sysdig:
   # **required**
-  # <br/> API Token to access Sysdig Secure.
-  # <br/><br/>If neither this value nor `sysdig.existingSecureAPITokenSecret` are configured, the
-  # user will be required to provide the deployment the `SECURE_API_TOKEN`
-  # (and `AUTH_BEARER_TOKEN` if the scanner is enabled) environment variables.
-  # Overrides `global.sysdig.secureAPIToken`
+  # <br/> The API Token to access Sysdig Secure.
+  # <br/><br/>If neither this value nor `sysdig.existingSecureAPITokenSecret` is configured, you
+  # are required to provide the deployment with the `SECURE_API_TOKEN`
+  # (and `AUTH_BEARER_TOKEN` if the scanner is enabled) environment variable.
+  # Overrides the `global.sysdig.secureAPIToken` parameter.
   secureAPIToken: ""
 
   # **required**
-  # <br/>Existing secret with API Token to access Sysdig Secure
+  # <br/>TheeExisting secret with API Token to access Sysdig Secure.
   # <br/>Alternatively, specify the name of a Kubernetes secret containing `SECURE_API_TOKEN` and
   # `AUTH_BEARER_TOKEN` entry if you're also enabling scanner.
-  # <br/><br/>If neither this value nor `sysdig.secureAPIToken` are configured, the
-  # user will be required to provide the deployment the `SECURE_API_TOKEN`
-  # (and `AUTH_BEARER_TOKEN` if the scanner is enabled) environment variables.
+  # <br/>If neither this value nor `sysdig.secureAPIToken` is configured, you
+  # are required to provide the deployment with the `SECURE_API_TOKEN`
+  # (and `AUTH_BEARER_TOKEN` if the scanner is enabled) environment variable.
   existingSecureAPITokenSecret: ""
 
   # Sysdig URL.<br/>
-  # - Default secure.sysdig.com is for the us-east region.<br/>
+  # - The default for the us-east region is secure.sysdig.com.<br/>
   # - For us-west use us2.app.sysdig.com<br/>
   # - For European Union, use eu1.app.sysdig.com<br/>
   # - For APAC, use app.au1.sysdig.com<br/>
@@ -90,7 +90,7 @@ sysdig:
   apiEndpoint: ""
 
 features:
-  # Enable K8s Audit detections with Falco rules
+  # Enable Kubernetes Audit detections with Falco rules.
   k8sAuditDetections: true
 
   # [Admission Webhook Configuration rules](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#matching-requests-rules) for the Audit Detections
@@ -108,107 +108,107 @@ features:
       resources: ["*/*"]
       scope: "*"
 
-# For outbound connections (secure backend, proxy,...)
-# <br/>Whether to verify SSL on HTTPS connections
+# Used for outbound connections, such as Secure backend and proxy.
+# <br/>Specifies whether to verify SSL on HTTPS connections.
 verifySSL: true
 
-# Chart name override
+# The chart name override.
 nameOverride: ""
-# Chart full name override
+# The chart full name override.
 fullnameOverride: ""
-# Additional labels, applies to both scanner and webhook
+# Additional labels. It applies to both scanner and webhook.
 labels: {}
 
 serviceAccounts:
   webhook:
-    # Create the service account
+    # Creates the service account.
     create: true
-    # Extra annotations for serviceAccount
+    # The additional annotations for serviceAccount.
     annotations: {}
-    # Use this value as serviceAccount Name
+    # Use this value as serviceAccount Name.
     name: ""
   scanner:
-    # Create the service account
+    # Creates the service account.
     create: true
-    # Extra annotations for serviceAccount
+    # The additional annotations for serviceAccount.
     annotations: {}
-    # Use this value as serviceAccount Name
+    # Use this value as serviceAccount Name.
     name: ""
 
 podMonitors:
   webhook:
-    # Enable the webhook PodMonitor to scrape metrics
+    # Enable the webhook PodMonitor to scrape metrics.
     enabled: false
-    # Labels on the webhook PodMonitor
+    # Specifies the labels on the webhook PodMonitor.
     labels: {}
-    # Annotations on the webhook PodMonitor
+    # The annotations on the webhook PodMonitor.
     annotations: {}
   scanner:
-    # Enable the scanner PodMonitor to scrape metrics
+    # Enable the scanner PodMonitor to scrape metrics.
     enabled: false
-    # Labels on the scanner PodMonitor
+    # Specifies the labels on the scanner PodMonitor.
     labels: {}
-    # Annotatons on the scanner PodMonitor
+    # The annotatons on the scanner PodMonitor
     annotations: {}
 
 webhook:
-  # Service name for Webhook deployment
+  # The service name for Webhook deployment
   name: webhook
-  # Amount of replicas for webhook. **Deprecated**, use `webhook.autoscaling.minReplicas` and `webhook.autoscaling.maxReplicas` instead.
+  # The number of replicas for webhook. **Deprecated**, use `webhook.autoscaling.minReplicas` and `webhook.autoscaling.maxReplicas` instead.
   replicaCount: 1
 
   image:
-    # Webhook image registry
+    # The webhook image registry.
     registry: quay.io
-    # Webhook image registry
+    # The webhook image registry.
     repository: sysdig/admission-controller
-    # PullPolicy for Webhook image
+    # The PullPolicy for Webhook image.
     pullPolicy:
-    # Override the default image tag. If not specified, it defaults to appVersion in Chart.yaml
+    # Overrides the default image tag. If not specified, it defaults to appVersion in Chart.yaml
     tag:
-    # Specify the image digest value.  If set, this value is used instead of the tag value.
+    # Specifies the image digest value.  If set, this value is used instead of the tag value.
     digest:
 
-  # Additional labels, applies to webhook only
+  # Specifies the additional labels; applies to webhook only.
   labels: {}
 
   service:
-    # Use this type as webhook service
+    # Use this type as webhook service.
     type: ClusterIP
-    # Configure port for the webhook service
+    # Configure port for the webhook service.
     port: 443
 
   rbac:
-    # Enable the creation of ClusterRoles and the binding of these roles
+    # Enable the creation of ClusterRoles and the binding of these roles.
     create: true
 
-  # HTTP Proxy settings for webhook.
-  # <br/>Set to http(s)://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy
+  # The HTTP Proxy settings for webhook.
+  # <br/>Set to http(s)://proxyIp:proxyPort if the connections to Sysdig Secure requires a proxy.
   httpProxy: ""
-  # HTTPS Proxy settings for webhook.
-  # <br/>Set to http(s)://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy
+  # The HTTPS Proxy settings for webhook.
+  # <br/>Set to http(s)://proxyIp:proxyPort if the  connection to Sysdig Secure requires a proxy.
   httpsProxy: ""
-  # List of hosts, IPs, or IPs in CIDR format that should not go through the proxy. We include "kubernetes" service and typical 10.0.0.0/8 services
+  # List of hosts, IPs, or IPs in CIDR format that should not go through the proxy. Sysdig includes "kubernetes" service and typical 10.0.0.0/8 services.
   noProxy: kubernetes,10.0.0.0/8
 
-  # Webhook pod annotations. If empty, some annotations are automatically generated for prometheus scraping.
+  # The webhook pod annotations. If empty, some annotations are automatically generated for prometheus scraping.
   podAnnotations: {}
 
-  # Pod Security context for webhook.If empty, some security context are automatically generated.
+  # The Pod Security context for webhook.If empty, some security context are automatically generated.
   podSecurityContext: {}
 
   # Configure securityContext for webhook. If empty, some security context are automatically generated.
   securityContext: {}
 
   # Specifies if the webhook should be started in hostNetwork mode.
-  # <br/>This is required if using a custom CNI where the managed control plane nodes are unable to initiate
-  # network connections to the pods, for example using Calico CNI plugin on EKS.
+  # <br/>This field is required if you are using a custom CNI where the managed control plane nodes are unable to initiate
+  # network connections to the pods, for example, using Calico CNI plugin on EKS.
   # <br/>This is not required or recommended in most contexts.
   hostNetwork: false
 
-  # The image pull secrets for webhook
+  # The image pull secrets for webhook.
   imagePullSecrets: []
-  # Resource request and limits for webhook
+  # Resource request and limits for webhook.
   resources:  # +doc-gen:break
     limits:
       cpu: 250m
@@ -218,42 +218,43 @@ webhook:
       memory: 256Mi
 
   autoscaling:
-    # Enable horizontal pod autoscaling
-    enabled: true
-    # Min replicas to use while autoscaling the webhook
+
+    # The minimum replicas to use while autoscaling the webhook.
     minReplicas: 2
-    # Max replicas to use while autoscaling the webhook
+    # The maximum replicas to use while autoscaling the webhook.
     maxReplicas: 5
-    # Target CPU to use when the number of replicas must be increased
+    # The target CPU to use when the number of replicas must be increased.
     targetCPUUtilizationPercentage: 80
 
-  # Number of seconds for the request to time out
+  # The number of seconds for the request to time out.
   timeoutSeconds: 5
 
-  # Configure nodeSelector for scheduling for webhook
+  # Configure nodeSelector for scheduling for webhook.
   nodeSelector: {}
 
-  # priorityClassName config for the webhook
+  # The priorityClassName configuration for the webhook.
   priorityClassName:
 
-  # Tolerations for scheduling for webhook
+  # Tolerations for scheduling for webhook.
   tolerations: []
 
-  # Configure affinity rules for webhook
+  # Configure affinity rules for webhook.
   affinity: {}
 
-  # Deny request when an error happened evaluating request
+  # Deny request when an error happened evaluating request.
   denyOnError: false
   # Dry Run request
   dryRun: false
-  # Log Level - Valid Values are: error, info, debug, trace
+  # Specifies the log level. The valid values are error, info, debug, trace.
   logLevel: info
 
   ssl:
-    # Reuse existing TLS Secret during chart upgrade
+    # Reuse existing TLS Secret during chart upgrade.
     reuseTLSSecret: false
     ca:
-      # For outbound connections (secure backend, proxy,...)
+
+      # Used for outbound connections, such as Secure backend and proxy.
+      # <br/>Used also for inbound connections to serve HttpRequests as Kubernetes Webhook.
       # <br/>A PEM-encoded x509 certificate authority.
       cert: ""
       # For outbound connections (secure backend, proxy,...)
@@ -289,78 +290,78 @@ webhook:
       existingCaConfigMapKeyName:
 
 
-  # Custom entrypoint for the webhook
+  # The custom entrypoint for the webhook
   # <br/>Remember to provide the webhook valid arguments with `--tls_cert_file` and `--tls_private_key_file`.
-  # <br/>default: /bin/webhook --tls_cert_file /cert/tls.crt --tls_private_key_file /cert/tls.key
+  # <br/>default: `/bin/webhook --tls_cert_file /cert/tls.crt --tls_private_key_file /cert/tls.key`
   customEntryPoint: []
 
   http:
-    # HTTP serve port where the requests will be served from
+    # The HTTP serve port where the requests will be served from.
     port: 5000
 
 scc:
-  # Enable the creation of Security Context Constraints in Openshift
+  # Enable the creation of Security Context Constraints in Openshift.
   create: true
 
 scanner:
-  # If you only want the Kubernetes Audit Log functionality then disable this, and it will disable the Admission Controller Scanning Policy functionality.
+  # If you only want the Kubernetes Audit Log functionality then disable this option and it will disable the Admission Controller Scanning Policy functionality.
   enabled: true
-  # Service name for Scanner deployment
+  # The service name for Scanner deployment.
   name: scanner
-  # Amount of replicas for scanner
+  # The amount of replicas for scanner.
   replicaCount: 1
 
   image:
-    # Scanner image registry
+    # The Scanner image registry.
     registry: quay.io
-    # Scanner image repository
+    # The Scanner image repository.
     repository: sysdig/inline-scan-service
-    # PullPolicy for Scanner image
+    # The PullPolicy for Scanner image.
     pullPolicy:
-    # Scanner image tag
+    # The Scanner image tag.
     tag: 0.0.13
     # Specify the image digest value.  If set, this value is used instead of the tag value.
     digest:
 
-  # Additional labels, applies to scanner only
+  # Specifies additional labels. It applies to Scanner only.
   labels: {}
 
   service:
-    # Configure port for the webhook service
+    # Configure port for the webhook service.
     port: 8080
 
-  # Authenticate with Secure token
+  # Authenticate with Secure token.
   authWithSecureToken: false
 
-  # HTTP Proxy settings for scanner.
-  # <br/>Set to http(s)://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy
+  # The HTTP Proxy settings for Scanner.
+  # <br/>Set to `http(s)://proxyIp:proxyPort` if the connection to Sysdig Secure requires a proxy.
   httpProxy: ""
-  # HTTPS Proxy settings for scanner.
-  # <br/>Set to http(s)://proxyIp:proxyPort in case connection to Sysdig Secure requires a proxy
+  # The HTTPS Proxy settings for Scanner.
+  # <br/>Set to `http(s)://proxyIp:proxyPort` if connection to Sysdig Secure requires a proxy.
   httpsProxy: ""
-  # List of hosts, IPs, or IPs in CIDR format that should not go through the proxy. We include "kubernetes" service and typical 10.0.0.0/8 services
+  # Specifies the list of hosts, IPs, or IPs in CIDR format that should not go through the proxy. Sysdig includes "kubernetes" service and typical 10.0.0.0/8 services.
   noProxy: kubernetes,10.0.0.0/8
 
-  # Scanner pod annotations
+  # Specifies the Scanner pod annotations.
   podAnnotations:  # +doc-gen:break
     prometheus.io/scrape: "true"
     prometheus.io/path: "/metrics"
     prometheus.io/port: "8080"
 
   psp:
-    # Whether to create a psp policy and role / role-binding
+    # Specifies whether to create a psp policy and role / role-binding.
     create: false
 
-  # PSP's for scanner
+  # The PSPs for scanner
   podSecurityContext: {}
 
-  # Verify TLS on image pull from registries
+  # Verify the TLS on image pull from registries.
   verifyRegistryTLS: true
 
-  # Docker config secret. Use a provided secret containing a .dockercfg for registry authentication (i.e. Openshift internal registry)
+  # The Docker config secret. Use a provided secret containing a `.dockercfg` for registry authentication (i.e. Openshift internal registry).
   dockerCfgSecretName: ""
 
-  # Configure securityContext for scanner
+  # Configure securityContext for scanner.
   securityContext:  # +doc-gen:break
     capabilities:
       drop:
@@ -368,10 +369,10 @@ scanner:
     readOnlyRootFilesystem: true
     runAsNonRoot: true
 
-  # The image pull secrets for scanner
+  # The image pull secrets for Scanner.
   imagePullSecrets: []
 
-  # Resource requests and limits for scanner
+  # Specifies resource requests and limits for Scanner.
   resources: {}
   #    limits:
   #      cpu: 250m
@@ -380,25 +381,24 @@ scanner:
   #      cpu: 250m
   #      memory: 256Mi
 
-  # Configure nodeSelector for scheduling for the scanner
+  # Configure nodeSelector for scheduling for the Scanner.
   nodeSelector: {}
 
-  # priorityClassName config for the scanner
+  # Specifies the priorityClassName configuration for the Scanner.
   priorityClassName:
 
-  # Tolerations for scheduling for the scanner
+  # Specifies the sheduling tolerations for the Scanner.
   tolerations: []
 
-  # Configure affinity rules for the scanner
+  # Configure affinity rules for the Scanner.
   affinity: {}
 
   ssl:
     ca:
-      # For outbound connections (secure backend, proxy,...).
+      # For outbound connections, such as Secure backend and  proxy.
       # <br/>A PEM-encoded x509 certificate authority.
       cert: ""
-
-      # For outbound connections (secure backend, proxy,...)
+      # For outbound connections, for example, the Secure backend and proxy.
       # A PEM-encoded x509 certificate.  This can also be a bundle with multiple certificates.
       certs: []
       # Example of certificate
@@ -418,7 +418,7 @@ scanner:
       #       MMNlTAQ9fvdNOTzZntye0PQYRTTS34D=
       #       -----END CERTIFICATE-----
 
-      # Filename that is used when creating the secret. Required if cert is provided.
+      # A filename that is used when creating the secret. Required if cert is provided.
       keyName:
 
       # Provide the name of an existing Secret that contains the CA required
@@ -433,5 +433,5 @@ scanner:
 
   # Custom entrypoint for the scanner.
   # <br/>Remember to provide the scanner valid arguments with `--server_port` and optionally `--auth_secure_token`
-  # <br/>default: /inline-scan-service --server_port=8080
+  # <br/>default: `/inline-scan-service --server_port=8080`
   customEntryPoint: []
