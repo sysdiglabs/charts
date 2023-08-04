@@ -87,7 +87,7 @@ rules:
   verbs:
     - get
     - list
-{{- if or .Values.nodeAnalyzer.benchmarkRunner.includeSensitivePermissions .Values.nodeAnalyzer.benchmarkRunner.deploy }}
+{{- if and .Values.nodeAnalyzer.benchmarkRunner.includeSensitivePermissions .Values.nodeAnalyzer.benchmarkRunner.deploy }}
 - apiGroups:
     - ""
   resources:
