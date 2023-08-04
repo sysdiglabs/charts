@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.17.5
+### Chores
+* **sysdig-deploy** [1d3ca002](https://github.com/sysdiglabs/charts/commit/1d3ca0020094d978c4cf1ac0f185d6d7dde918be): Automatic version bump due to updated dependencies ([#1284](https://github.com/sysdiglabs/charts/issues/1284))
 # v1.17.4
 ### Bug Fixes
 * **admission-controller,agent,sysdig-deploy** [bdf6c21f](https://github.com/sysdiglabs/charts/commit/bdf6c21f6322aaa8417fe8a763f01f5127601094): fix incompatibility errors on older helm versions ([#1281](https://github.com/sysdiglabs/charts/issues/1281))
