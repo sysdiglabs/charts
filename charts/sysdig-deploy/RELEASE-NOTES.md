@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **node-analyzer** [0ad8696a](https://github.com/sysdiglabs/charts/commit/0ad8696a0b38d2564121e6e798589f568e3547a8): Release eveconnector 1.1.2 ([#1280](https://github.com/sysdiglabs/charts/issues/1280))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.17.2...sysdig-deploy-1.17.3
+### Bug Fixes
+- **admission-controller,agent,sysdig-deploy** [bdf6c21f](https://github.com/sysdiglabs/charts/commit/bdf6c21f6322aaa8417fe8a763f01f5127601094): fix incompatibility errors on older helm versions ([#1281](https://github.com/sysdiglabs/charts/issues/1281))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.17.3...sysdig-deploy-1.17.4
