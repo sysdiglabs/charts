@@ -39,7 +39,7 @@ For deployment instructions, including common deployment configurations related 
 
 ### (Legacy Option) Image Scanning Using Scanning Engine V1
 
-If you use the [Legacy Scanning Engine](https://docs.sysdig.com/en/docs/sysdig-secure/scanning/) instead of the new Vulnerability Management engine in Sysdig Secure, you can deploy the `admission-controller` chart with old scanning options enabled and use [admission controller policies](https://docs.sysdig.com/en/docs/sysdig-secure/scanning/admission-controller/) to reject container images that do not fulfill the policy requirements from the cluster before being scheduled.
+If you use the [Legacy Scanning Engine](https://docs.sysdig.com/en/docs/sysdig-secure/scanning/) instead of the new Vulnerability Management engine in Sysdig Secure, you can [deploy the `admission-controller` chart](https://docs.sysdig.com/en/docs/sysdig-secure/scanning/admission-controller/#installation) with old scanning options enabled and use [admission controller policies](https://docs.sysdig.com/en/docs/sysdig-secure/scanning/admission-controller/#create-admission-controller-policies) to reject container images that do not fulfill the policy requirements from the cluster before being scheduled.
 
 This option is enabled by default unless you specify  `--scanner.enabled=false` .
 
