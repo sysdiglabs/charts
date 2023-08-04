@@ -444,6 +444,9 @@ ssl: {{ $ssl }}
 {{- if $sslVerifyCertificate }}
 ssl_verify_certificate: {{ $sslVerifyCertificate }}
 {{- end }}
+{{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
+ca_certificate: /etc/ca-certs/{{ include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.ssl) }}
+{{- end }}
 {{- end }}
 
 {{/*

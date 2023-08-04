@@ -31,6 +31,20 @@ spec:
       {{- if .Values.nodeAnalyzer.runtimeScanner.eveConnector.priorityClassName }}
       priorityClassName: {{ .Values.nodeAnalyzer.runtimeScanner.eveConnector.priorityClassName | quote }}
       {{- end }}
+      volumes:
+        {{- if eq (include "sysdig.custom_ca.useValues"  (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl)) "true" }}
+        - name: ca-cert
+          secret:
+            secretName: {{ include "nodeAnalyzer.fullname" . }}-eveconnector-ca
+        {{- else if eq (include "sysdig.custom_ca.useExistingSecret"  (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl)) "true" }}
+        - name: ca-cert
+          secret:
+            secretName: {{ include "sysdig.custom_ca.existingSecret" (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl) }}
+        {{- else if eq (include "sysdig.custom_ca.useExistingConfigMap" (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl)) "true" }}
+        - name: ca-cert
+          configMap:
+            name: {{ include "sysdig.custom_ca.existingConfigMap" (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl) }}
+        {{- end }}
       containers:
       - name: {{ include "nodeAnalyzer.name" . }}-eveconnector-api
         image: {{ template "nodeAnalyzer.image.eveConnector" . }}
@@ -102,4 +116,14 @@ spec:
                 name: {{ template "nodeAnalyzer.fullname" . }}-eveconnector
                 key: no_proxy
                 optional: true
+          {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl)) "true" }}
+          - name: SSL_CERT_FILE
+            value: /ca-certs/{{- include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl) -}}
+          {{- end }}
+        volumeMounts:
+          {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl)) "true" }}
+          - name: ca-cert
+            mountPath: /ca-certs
+            readOnly: true
+          {{- end }}
 {{- end }}

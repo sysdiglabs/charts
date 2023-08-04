@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **sysdig-deploy** [b2e7e829](https://github.com/sysdiglabs/charts/commit/b2e7e82905a2f8fd78e93d1295671eebfdce2b88): Automatic version bump due to updated dependencies ([#1268](https://github.com/sysdiglabs/charts/issues/1268))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.15.3...sysdig-deploy-1.15.4
+### Bug Fixes
+- **admission-controller,agent,sysdig-deploy** [bdf6c21f](https://github.com/sysdiglabs/charts/commit/bdf6c21f6322aaa8417fe8a763f01f5127601094): fix incompatibility errors on older helm versions ([#1281](https://github.com/sysdiglabs/charts/issues/1281))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.17.3...sysdig-deploy-1.17.4

@@ -37,9 +37,10 @@ spec:
         {{- if include "nodeAnalyzer.deployBenchmarkRunner" . }}
         - name: sysdig-agent-config
           configMap:
-            name: {{ include "agent.configmapName" . }}
+            name: {{ include "nodeAnalyzer.configmapName" . }}
             optional: true
         {{- end }}
+        {{- if or (include "nodeAnalyzer.deployRuntimeScanner" .) (include "nodeAnalyzer.deployImageAnalyzer" .)}}
         # Needed for cri-o image inspection.
         # cri-o and especially OCP 4.x by default use containers/storage to handle images, and this makes sure that the
         # analyzer has access to the configuration. This file is mounted read-only.
@@ -66,6 +67,7 @@ spec:
           configMap:
             name: {{ .Release.Name }}-image-analyzer
             optional: true
+        {{- end }}
         {{- if or (include "nodeAnalyzer.deployHostScanner" .) (include "nodeAnalyzer.deployBenchmarkRunner" .) (include "nodeAnalyzer.deployHostAnalyzer" .) .Values.global.kspm.deploy }}
         # Needed to run Benchmarks and Host Analyzer/Scanner. This mount is read-only.
         # Benchmarks include numerous checks that run tests against config files in the host filesystem. There are also
@@ -92,6 +94,19 @@ spec:
           {{- else }}
           emptyDir: {}
           {{- end }}
+        {{- if eq (include "sysdig.custom_ca.useValues"  (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl)) "true" }}
+        - name: ca-cert
+          secret:
+            secretName: {{ include "nodeAnalyzer.fullname" . }}-ca
+        {{- else if eq (include "sysdig.custom_ca.useExistingSecret"  (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl)) "true" }}
+        - name: ca-cert
+          secret:
+            secretName: {{ include "sysdig.custom_ca.existingSecret" (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl) }}
+        {{- else if eq (include "sysdig.custom_ca.useExistingConfigMap" (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl)) "true" }}
+        - name: ca-cert
+          configMap:
+            name: {{ include "sysdig.custom_ca.existingConfigMap" (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl) }}
+        {{- end }}
         {{- with .Values.nodeAnalyzer.imageAnalyzer.extraVolumes.volumes }}
 {{ toYaml . | indent 8 }}
         {{- end }}
@@ -118,7 +133,7 @@ spec:
       # This is required by the Benchmark and the HostScanner containers to determine the hostname and host mac address
       hostNetwork: true
       {{- end }}
-      {{- if include "nodeAnalyzer.deployBenchmarkRunner" . }}
+      {{- if include "nodeAnalyzer.useHostPID" . }}
       # Use the Host PID namespace.
       # This is required for Kubernetes benchmarks, as they contain tests that check Kubernetes processes running on
       # the host
@@ -222,6 +237,10 @@ spec:
                 name: {{ .Release.Name }}-kspm-analyzer
                 key: agent_port
                 optional: true
+          {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl)) "true" }}
+          - name: SSL_CERT_FILE
+            value: /ca-certs/{{- include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl) -}}
+          {{- end }}
           {{- range $key, $value := .Values.nodeAnalyzer.kspmAnalyzer.env }}
           - name: "{{ $key }}"
             value: "{{ $value }}"
@@ -232,6 +251,11 @@ spec:
             readOnly: true
           - name: tmp-vol
             mountPath: /host/tmp
+          {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl)) "true" }}
+          - name: ca-cert
+            mountPath: /ca-certs
+            readOnly: true
+          {{- end }}
       # kspm-analyzer
       {{- end }}
       {{- if include "nodeAnalyzer.deployImageAnalyzer" . }}
@@ -256,6 +280,11 @@ spec:
             readOnly: true
           - mountPath: /var/lib/containers
             name: var-lib-containers-vol
+          {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl)) "true" }}
+          - name: ca-cert
+            mountPath: /ca-certs
+            readOnly: true
+          {{- end }}
           # Custom volume mount here
           {{- if .Values.nodeAnalyzer.imageAnalyzer.extraVolumes.mounts }}
 {{ toYaml .Values.nodeAnalyzer.imageAnalyzer.extraVolumes.mounts | indent 10 }}
@@ -360,6 +389,10 @@ spec:
               name: {{ .Release.Name }}-image-analyzer
               key: no_proxy
               optional: true
+        {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl)) "true" }}
+        - name: SSL_CERT_FILE
+          value: /ca-certs/{{- include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl) -}}
+        {{- end }}
         {{- range $key, $value := .Values.nodeAnalyzer.imageAnalyzer.env }}
         - name: "{{ $key }}"
           value: "{{ $value }}"
@@ -382,6 +415,11 @@ spec:
           - mountPath: /host
             name: root-vol
             readOnly: true
+          {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl)) "true" }}
+          - name: ca-cert
+            mountPath: /ca-certs
+            readOnly: true
+          {{- end }}
         env:
         - name: ACCESS_KEY
           valueFrom:
@@ -459,6 +497,10 @@ spec:
               key: no_proxy
               name: {{ .Release.Name }}-host-analyzer
               optional: true
+        {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl)) "true" }}
+        - name: SSL_CERT_FILE
+          value: /ca-certs/{{- include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl) -}}
+        {{- end }}
         {{- range $key, $value := .Values.nodeAnalyzer.hostAnalyzer.env }}
         - name: "{{ $key }}"
           value: "{{ $value }}"
@@ -484,6 +526,11 @@ spec:
             readOnly: true
           - mountPath: /host/tmp
             name: tmp-vol
+          {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl)) "true" }}
+          - name: ca-cert
+            mountPath: /ca-certs
+            readOnly: true
+          {{- end }}
         env:
         - name: ACCESS_KEY
           valueFrom:
@@ -533,6 +580,10 @@ spec:
               key: no_proxy
               name: {{ .Release.Name }}-benchmark-runner
               optional: true
+        {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl)) "true" }}
+        - name: SSL_CERT_FILE
+          value: /ca-certs/{{- include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl) -}}
+        {{- end }}
         {{- range $key, $value := .Values.nodeAnalyzer.benchmarkRunner.env }}
         - name: "{{ $key }}"
           value: "{{ $value }}"
@@ -637,6 +688,10 @@ spec:
                 name: {{ .Release.Name }}-runtime-scanner
                 key: no_proxy
                 optional: true
+          {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl)) "true" }}
+          - name: SSL_CERT_FILE
+            value: /ca-certs/{{- include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl) -}}
+          {{- end }}
           {{- range $key, $value := .Values.nodeAnalyzer.runtimeScanner.env }}
           - name: "{{ $key }}"
             value: "{{ $value }}"
@@ -670,6 +725,11 @@ spec:
             name: var-lib-containers-vol
           - mountPath: /tmp
             name: tmp-vol
+          {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl)) "true" }}
+          - name: ca-cert
+            mountPath: /ca-certs
+            readOnly: true
+          {{- end }}
           {{- if .Values.nodeAnalyzer.runtimeScanner.extraMounts }}
 {{ toYaml .Values.nodeAnalyzer.runtimeScanner.extraMounts | indent 10 }}
           {{- end }}
@@ -788,6 +848,10 @@ spec:
             value: "/tmp"
           - name: PROBES_PORT
             value: {{ .Values.nodeAnalyzer.hostScanner.probesPort | quote }}
+          {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl)) "true" }}
+          - name: SSL_CERT_FILE
+            value: /ca-certs/{{- include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl) -}}
+          {{- end }}
           {{- range $key, $value := .Values.nodeAnalyzer.hostScanner.env }}
           - name: "{{ $key }}"
             value: "{{ $value }}"
@@ -798,6 +862,11 @@ spec:
           - mountPath: /host
             name: root-vol
             readOnly: true
+          {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl)) "true" }}
+          - name: ca-cert
+            mountPath: /ca-certs
+            readOnly: true
+          {{- end }}
           {{- if .Values.nodeAnalyzer.hostScanner.extraMounts }}
 {{ toYaml .Values.nodeAnalyzer.hostScanner.extraMounts | indent 10 }}
           {{- end }}

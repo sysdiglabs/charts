@@ -34,12 +34,32 @@ spec:
       serviceAccountName: {{ include "cluster-scanner.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      volumes:
+        {{- if eq (include "sysdig.custom_ca.useValues"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
+        - name: ca-cert
+          secret:
+            secretName: {{ include "cluster-scanner.fullname" . }}-ca
+        {{- else if eq (include "sysdig.custom_ca.useExistingSecret"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
+        - name: ca-cert
+          secret:
+            secretName: {{ include "sysdig.custom_ca.existingSecret" (dict "global" .Values.global.ssl "component" .Values.ssl) }}
+        {{- else if eq (include "sysdig.custom_ca.useExistingConfigMap" (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
+        - name: ca-cert
+          configMap:
+            name: {{ include "sysdig.custom_ca.existingConfigMap" (dict "global" .Values.global.ssl "component" .Values.ssl) }}
+        {{- end }}
       containers:
         - name: rsi
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: {{ template "cluster-scanner.runtimeStatusIntegrator.image" . }}
           imagePullPolicy: {{ .Values.global.image.pullPolicy }}
+          volumeMounts:
+            {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
+            - name: ca-cert
+              mountPath: /ca-certs
+              readOnly: true
+            {{- end }}
       {{- with .Values.runtimeStatusIntegrator }}
           ports:
             - name: metrics
@@ -53,6 +73,10 @@ spec:
           - name: PPROF_PORT
             value: {{ .ports.pprof | default "6060" | quote }}
       {{- end }}
+          {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
+          - name: SSL_CERT_FILE
+            value: /ca-certs/{{- include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.ssl) -}}
+          {{- end }}
           - name: MODE
             valueFrom:
               configMapKeyRef:
@@ -252,6 +276,12 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: {{ template "cluster-scanner.imageSbomExtractor.image" . }}
           imagePullPolicy: {{ .Values.global.image.pullPolicy }}
+          volumeMounts:
+            {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
+            - name: ca-cert
+              mountPath: /ca-certs
+              readOnly: true
+            {{- end }}
       {{- with .Values.imageSbomExtractor }}
           ports:
             - name: metrics
@@ -265,6 +295,10 @@ spec:
           - name: PPROF_PORT
             value: {{ .ports.pprof | default "6061" | quote }}
       {{- end }}
+          {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
+          - name: SSL_CERT_FILE
+            value: /ca-certs/{{- include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.ssl) -}}
+          {{- end }}
           - name: LOGGING_LEVEL
             valueFrom:
               configMapKeyRef:
