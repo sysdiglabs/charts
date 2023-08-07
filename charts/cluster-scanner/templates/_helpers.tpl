@@ -261,3 +261,12 @@ Return local registry secrets in the correct format: <namespace_name>/<secret_na
     {{- end -}}
     '{{- join "," $list -}}'
 {{- end -}}
+
+{{- define "cluster-scanner.accessKeySecret" -}}
+    {{/*
+    Note: the last default function call is to avoid some weirdness when either
+    argument is nil. If .Values.global.sysdig.accessKeySecret was undefined, the
+    returned empty string does not evaluate to empty on Helm Version:"v3.8.0"
+    */}}
+    {{- .Values.global.sysdig.accessKeySecret | default "" -}}
+{{- end -}}

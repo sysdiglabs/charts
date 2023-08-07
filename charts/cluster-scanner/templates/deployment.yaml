@@ -240,8 +240,13 @@ spec:
           - name: SYSDIG_ACCESS_KEY
             valueFrom:
               secretKeyRef:
+                {{- if not ( include "cluster-scanner.accessKeySecret" . ) }}
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: sysdig_access_key
+                {{- else }}
+                name: {{ ( include "cluster-scanner.accessKeySecret" . ) }}
+                key: access-key
+                {{- end }}
           - name: NATS_JS_SERVER_PASSWORD
             valueFrom:
               secretKeyRef:
@@ -314,8 +319,13 @@ spec:
           - name: SYSDIG_ACCESS_KEY
             valueFrom:
               secretKeyRef:
+                {{- if not ( include "cluster-scanner.accessKeySecret" . ) }}
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: sysdig_access_key
+                {{- else }}
+                name: {{ ( include "cluster-scanner.accessKeySecret" . ) }}
+                key: access-key
+                {{- end }}
           - name: SYSDIG_API_URL
             valueFrom:
               configMapKeyRef:
