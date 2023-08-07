@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.14.3
+### Bug Fixes
+* **node-analyzer** [d5c2fffa](https://github.com/sysdiglabs/charts/commit/d5c2fffa9e9223ee6aea451f1ecdcee7610f02b8): permissions fix for CR sysdig-agent-node-analyzer ([#1272](https://github.com/sysdiglabs/charts/issues/1272))
 # v1.14.2
 ### New Features
 * **node-analyzer** [0ad8696a](https://github.com/sysdiglabs/charts/commit/0ad8696a0b38d2564121e6e798589f568e3547a8): Release eveconnector 1.1.2 ([#1280](https://github.com/sysdiglabs/charts/issues/1280))
