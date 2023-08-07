@@ -49,8 +49,7 @@ Once installed, you can view the scan results in the [Vulnerabilities UI](https:
 The following table lists the configurable parameters of the Sysdig Registry Scanner chart and their default values:
 
 {{ .Chart.Values }}
-{{- end -}}
-
+{{- end }}
 ## On-Prem Deployment
 
 If you are using a Sysdig on-prem version greater than 6.2, you need to configure legacy VM engine while setting up registry scanner.
