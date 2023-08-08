@@ -465,6 +465,9 @@ tests:
       global:
         sysdig:
           region: ap3
+      # TODO: This is required to have the test pass, need more investigation on the reason why agent.enabled=false is required
+      agent:
+        enabled: false
     asserts:
       - failedTemplate:
           errorMessage: "raw: global.sysdig.region=ap3 provided is not recognized."

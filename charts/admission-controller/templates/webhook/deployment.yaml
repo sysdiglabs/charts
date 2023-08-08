@@ -115,9 +115,9 @@ spec:
             - name: NO_PROXY
               value: {{ include "webhook.noProxy" . }},{{ include "admissionController.scanner.fullname" . }}
             {{- end }}
-            {{- if .Values.webhook.ssl.ca.cert }}
-            - name: SSL_CERT_FILE
-              value: /ca-cert/root_ca_file.crt # mounted from the secret
+            {{- if or .Values.webhook.ssl.ca.cert (eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.webhook.ssl)) "true") }}
+            - name: SSL_CERT_DIR
+              value: /ca-certs
             {{- end }}
           ports:
             - name: http
@@ -148,9 +148,9 @@ spec:
             - name: cert
               mountPath: /cert
               readOnly: true
-            {{- if .Values.webhook.ssl.ca.cert }}
+            {{- if or .Values.webhook.ssl.ca.cert (eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.webhook.ssl)) "true") }}
             - name: ca-cert
-              mountPath: /ca-cert
+              mountPath: /ca-certs
               readOnly: true
             {{- end }}
           resources:
@@ -164,11 +164,19 @@ spec:
         - name: cert
           secret:
             secretName: {{ include "admissionController.webhook.fullname" . }}-tls
-      {{- if .Values.webhook.ssl.ca.cert }}
+        {{- if or .Values.webhook.ssl.ca.cert (eq (include "sysdig.custom_ca.useValues"  (dict "global" .Values.global.ssl "component" .Values.webhook.ssl)) "true") }}
         - name: ca-cert
           secret:
             secretName: {{ include "admissionController.webhook.fullname" . }}-ca
-      {{- end }}
+        {{- else if eq (include "sysdig.custom_ca.useExistingSecret"  (dict "global" .Values.global.ssl "component" .Values.webhook.ssl)) "true" }}
+        - name: ca-cert
+          secret:
+            secretName: {{ include "sysdig.custom_ca.existingSecret" (dict "global" .Values.global.ssl "component" .Values.scanner.ssl) }}
+        {{- else if eq (include "sysdig.custom_ca.useExistingConfigMap"  (dict "global" .Values.global.ssl "component" .Values.webhook.ssl)) "true" }}
+        - name: ca-cert
+          configMap:
+            name: {{ include "sysdig.custom_ca.existingConfigMap" (dict "global" .Values.global.ssl "component" .Values.scanner.ssl) }}
+        {{- end }}
     {{- with .Values.webhook.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

@@ -20,6 +20,30 @@ tests:
           apiVersion: v1
         template: configmap-kspm-analyzer.yaml
 
+  - it: Check hostPID is true if global.kspm.deploy is true
+    set:
+      global:
+        kspm:
+          deploy: true
+      clusterName: test-cluster
+    template: daemonset-node-analyzer.yaml
+    asserts:
+      - equal:
+          path: spec.template.spec.hostPID
+          value: true
+
+  - it: Check hostPID is true if nodeAnalyzer.benchmarkRunner.deploy is true
+    set:
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
+      clusterName: test-cluster
+    template: daemonset-node-analyzer.yaml
+    asserts:
+      - equal:
+          path: spec.template.spec.hostPID
+          value: true
+
   - it: Check global kspm deploy without clusterName
     set:
       global:

@@ -10,6 +10,13 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.5.0
+### New Features
+* **kspm-collector,node-analyzer** [b302524f](https://github.com/sysdiglabs/charts/commit/b302524f75098299644ef541d71876180f61ed01): release agents v1.27.0 with RKE2 suport ([#1274](https://github.com/sysdiglabs/charts/issues/1274))
+# v0.4.0
+### New Features
+* **sysdig-agent,node-analyzer,kspm-collector,rapid-response,admission-controller** [2dca8e7c](https://github.com/sysdiglabs/charts/commit/2dca8e7c5308e76c2da63c974ae75c4ad510c201): Global Custom CA Bundle Support ([#961](https://github.com/sysdiglabs/charts/issues/961))
+# v0.3.4
 # v0.3.3
 ### New Features
 * **kspm-collector,node-analyzer** [b95c0dac](https://github.com/sysdiglabs/charts/commit/b95c0dac7dc7cf9feb64a824bd415bb34f708e99): add resource ID to Posture ([#1231](https://github.com/sysdiglabs/charts/issues/1231))

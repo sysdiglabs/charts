@@ -1,0 +1,100 @@
+suite: Testing pre-generated values and best-known edge cases
+templates:
+  - configmap.yaml
+  - configmap-deployment.yaml
+tests:
+  - it: Testing custom settings
+    set:
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+        settings:
+          first:
+            value: 1
+          second: example
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            .*
+            first:
+              value: 1
+            second: example
+            .*
+    template: configmap.yaml
+
+  - it: Testing custom settings when custom CA is in place
+    set:
+      ssl:
+        ca:
+          certs:
+            - |
+              -----BEGIN CERTIFICATE-----
+              my-test-cert
+              -----END CERTIFICATE-----
+          keyName: "root_ca.crt"
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+        settings:
+          first:
+            value: 1
+          second: example
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            .*
+            first:
+              value: 1
+            second: example
+            .*
+    template: configmap.yaml
+
+  - it: Testing custom settings in deployment
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+        settings:
+          first:
+            value: 1
+          second: example
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            .*
+            first:
+              value: 1
+            second: example
+            .*
+    template: configmap-deployment.yaml
+
+  - it: Testing custom settings in deployment when custom CA is in place
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+      ssl:
+        ca:
+          certs:
+            - |
+              -----BEGIN CERTIFICATE-----
+              my-test-cert
+              -----END CERTIFICATE-----
+          keyName: "root_ca.crt"
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+        settings:
+          first:
+            value: 1
+          second: example
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            .*
+            first:
+              value: 1
+            second: example
+            .*
+    template: configmap-deployment.yaml

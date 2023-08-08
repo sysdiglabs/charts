@@ -10,6 +10,24 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.13.2
+### Bug Fixes
+* **admission-controller,agent,sysdig-deploy** [bdf6c21f](https://github.com/sysdiglabs/charts/commit/bdf6c21f6322aaa8417fe8a763f01f5127601094): fix incompatibility errors on older helm versions ([#1281](https://github.com/sysdiglabs/charts/issues/1281))
+# v1.13.1
+### Bug Fixes
+* **agent** [9e8d863e](https://github.com/sysdiglabs/charts/commit/9e8d863e39682aa17654c2a1a4a3554667789015): fix indentation for custom settings ([#1277](https://github.com/sysdiglabs/charts/issues/1277))
+# v1.13.0
+### New Features
+* **sysdig-agent,node-analyzer,kspm-collector,rapid-response,admission-controller** [2dca8e7c](https://github.com/sysdiglabs/charts/commit/2dca8e7c5308e76c2da63c974ae75c4ad510c201): Global Custom CA Bundle Support ([#961](https://github.com/sysdiglabs/charts/issues/961))
+# v1.12.1
+# v1.12.0
+### New Features
+* **agent,rapid-response** [13dc488a](https://github.com/sysdiglabs/charts/commit/13dc488a6c1cbbfda114f90deeef91a43572a54e): set metadata.namespace on all namespaced items ([#1259](https://github.com/sysdiglabs/charts/issues/1259))
+# v1.11.1
+# v1.11.0
+### New Features
+* **agent** [cbc50cae](https://github.com/sysdiglabs/charts/commit/cbc50caebb117449796f7bb023c05d3acca6f796): decouple agent priorityclass creation from gke autopilot ([#1241](https://github.com/sysdiglabs/charts/issues/1241))
+# v1.10.4
 # v1.10.3
 ### New Features
 * **agent** [07b8704c](https://github.com/sysdiglabs/charts/commit/07b8704cafb51b2dab6e99cac0e3fd6b4ad2449f): lower default cpu requests for kmodule container ([#1230](https://github.com/sysdiglabs/charts/issues/1230))

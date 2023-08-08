@@ -16,8 +16,16 @@ type: library
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 1.0.1
+version: 1.1.0
 
 maintainers:
+  - name: AlbertoBarba
+    email: alberto.barba@sysdig.com
   - name: aroberts87
     email: adam.roberts@sysdig.com
+  - name: francesco-furlan
+    email: francesco.furlan@sysdig.com
+  - name: iurly
+    email: gerlando.falauto@sysdig.com
+  - name: mavimo
+    email: marcovito.moscaritolo@sysdig.com

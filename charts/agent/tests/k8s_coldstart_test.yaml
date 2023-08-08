@@ -14,7 +14,6 @@ tests:
               enabled: true
               enforce_leader_election: true
               namespace: NAMESPACE
-    template: templates/configmap.yaml
 
   - it: Enable leaderelection and specify custom cold start number
     set:
@@ -29,7 +28,6 @@ tests:
               enabled: true
               enforce_leader_election: true
               namespace: NAMESPACE
-    template: templates/configmap.yaml
 
   - it: Test manual setting of k8s_coldstart values
     set:

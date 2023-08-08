@@ -10,6 +10,32 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.16.6
+### New Features
+* **node-analyzer** [0ad8696a](https://github.com/sysdiglabs/charts/commit/0ad8696a0b38d2564121e6e798589f568e3547a8): Release eveconnector 1.1.2 ([#1280](https://github.com/sysdiglabs/charts/issues/1280))
+# v1.16.5
+### Chores
+* **sysdig,node-analyzer** [00316d04](https://github.com/sysdiglabs/charts/commit/00316d042378fa75ac0ed9277b547236766ce816): bumped RuntimeScanner to 1.5.2 version ([#1275](https://github.com/sysdiglabs/charts/issues/1275))
+
+    * * Added env var flag for internal timeout on scheduled operations
+* Added fallback when connection to detected container runtime fails
+* Security updates (July 2023). Fixed CVE
+  *  CVE-2023-33199
+# v1.16.4
+# v1.16.3
+### New Features
+* **sysdig** [ec78a545](https://github.com/sysdiglabs/charts/commit/ec78a545637a86aa98c5cef41010c8012bccdfc7): updated legacy engine NIA compoment with latest release. ([#1266](https://github.com/sysdiglabs/charts/issues/1266))
+
+    * * Resolves possible compatibility issues with Kubernetes 1.26+ (CRI-O container runtime)
+* Security updates (July 2023). Fixed CVEs
+  *  CVE-2020-24736
+  *  CVE-2023-1667
+  *  CVE-2023-1667
+  *  CVE-2023-2283
+  *  CVE-2023-2283
+  *  CVE-2023-26604
+  *  CVE-2023-26604
+  *  CVE-2023-26604
 # v1.16.2
 ### Chores
 * **sysdig** [f32bc89b](https://github.com/sysdiglabs/charts/commit/f32bc89be0587f6337a41b56cc5f7de715447d7d): bump agent version to 12.15.0 ([#1199](https://github.com/sysdiglabs/charts/issues/1199))

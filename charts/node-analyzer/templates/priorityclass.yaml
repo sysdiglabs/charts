@@ -1,0 +1,10 @@
+{{- if .Values.nodeAnalyzer.createPriorityClass }}
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: {{ required "priorityClassName is required when specifying createPriorityClass" .Values.nodeAnalyzer.priorityClassName }}
+value: {{ required "priorityClassValue is required when specifying createPriorityClass" .Values.nodeAnalyzer.priorityClassValue }}
+preemptionPolicy: PreemptLowerPriority
+globalDefault: false
+description: "Sysdig Node Analyzer DaemonSet PriorityClass"
+{{- end }}

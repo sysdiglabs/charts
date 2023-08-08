@@ -25,4 +25,3 @@ tests:
                 memory: 1500Mi
           any: true
           count: 1
-        template: daemonset.yaml

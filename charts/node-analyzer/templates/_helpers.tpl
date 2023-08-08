@@ -215,7 +215,7 @@ Sysdig NATS service URL
 {{/*
 nodeAnalyzer agentConfigmapName
 */}}
-{{- define "agent.configmapName" -}}
+{{- define "nodeAnalyzer.configmapName" -}}
     {{- default .Values.global.agentConfigmapName | default "sysdig-agent" -}}
 {{- end -}}
 
@@ -235,6 +235,14 @@ true
 
 {{- define "nodeAnalyzer.deployBenchmarkRunner" -}}
 {{- if or (not (hasKey .Values.nodeAnalyzer.benchmarkRunner "deploy")) .Values.nodeAnalyzer.benchmarkRunner.deploy }}
+true
+{{- end -}}
+{{- end -}}
+
+{{- define "nodeAnalyzer.useHostPID" -}}
+{{- if (include "nodeAnalyzer.deployBenchmarkRunner" .) }}
+true
+{{ else if or (not (hasKey .Values.global.kspm "deploy")) .Values.global.kspm.deploy }}
 true
 {{- end -}}
 {{- end -}}

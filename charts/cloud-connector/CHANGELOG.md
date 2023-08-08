@@ -11,6 +11,12 @@ exclusively to fix incorrect entries and not to add new ones.
 
 
 ## Change Log
+# v0.8.5
+* feat: set falco jevt extract errors log to debug level
+
+# v0.8.4
+* feat: fix rules provider processing customer appends when there is no base rule.
+
 # v0.8.3
 * fix: add aws-cloudtrail-s3-sns-sqs ingestor type for CIEM
 * fix: falco rules error on appending exceptions

@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **kspm-collector,node-analyzer** [b95c0dac](https://github.com/sysdiglabs/charts/commit/b95c0dac7dc7cf9feb64a824bd415bb34f708e99): add resource ID to Posture ([#1231](https://github.com/sysdiglabs/charts/issues/1231))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.10.3...node-analyzer-1.10.4
+### Bug Fixes
+- **node-analyzer** [d5c2fffa](https://github.com/sysdiglabs/charts/commit/d5c2fffa9e9223ee6aea451f1ecdcee7610f02b8): permissions fix for CR sysdig-agent-node-analyzer ([#1272](https://github.com/sysdiglabs/charts/issues/1272))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.14.2...node-analyzer-1.14.3

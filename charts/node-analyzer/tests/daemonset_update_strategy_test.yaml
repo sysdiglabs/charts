@@ -48,4 +48,3 @@ tests:
               maxSurge: 1
               maxUnavailable: 2
             type: RollingUpdate
-        template: templates/daemonset-node-analyzer.yaml
