@@ -12,6 +12,8 @@ global:
     secureAPITokenSecret: ""
     # The global Sysdig Secure region.
     region: "us1"
+    # The global Access Key to access Sysdig Secure.
+    accessKey: ""
   # Global HTTP Proxy settings.
   proxy: {}
   # The global image settings.

@@ -66,6 +66,64 @@ tests:
           value: override_token
         template: webhook/secret.yaml
 
+  - it: check value of secure_API_TOKEN without local chart override - local value provided
+    documentIndex: 0
+    set:
+      sysdig:
+        secureAPIToken: standard_token
+        url: secure.sysdigcloud.com
+      clusterName: test-k8s
+      version: 0.7.3
+    asserts:
+      - equal:
+          path: stringData.SECURE_API_TOKEN
+          value: standard_token
+        template: scanner/secret.yaml
+      - equal:
+          path: stringData.SECURE_API_TOKEN
+          value: standard_token
+        template: webhook/secret.yaml
+
+  - it: check value of Access Key without local chart override - global value provided
+    documentIndex: 0
+    set:
+      global:
+        sysdig:
+          accessKey: standard_key
+      sysdig:
+        url: secure.sysdigcloud.com
+      features:
+        kspmAdmissionController: true
+        k8sAuditDetections: false
+      clusterName: test-k8s
+      version: 0.7.3
+    asserts:
+      - equal:
+          path: data.access_key
+          value: standard_key
+          decodeBase64: true
+        template: webhook/secret.yaml
+
+  - it: check value of Access Key with local chart override
+    documentIndex: 0
+    set:
+      global:
+        sysdig:
+          accessKey: standard_key
+      clusterName: test-k8s
+      sysdig:
+        url: secure_url.com
+        accessKey: override_key
+      features:
+        kspmAdmissionController: true
+        k8sAuditDetections: false
+    asserts:
+      - equal:
+          path: data.access_key
+          value: override_key
+          decodeBase64: true
+        template: webhook/secret.yaml
+
   - it: check value of secureAPITokenSecret without local chart override - local value provided
     documentIndex: 0
     set:
@@ -128,7 +186,11 @@ tests:
       global:
         sysdig:
           region: eu1
+      sysdig:
+        accessKey: some_access_key
       clusterName: test-k8s
+      features:
+        kspmAdmissionController: true
     asserts:
       - equal:
           path: data.SECURE_BASE_URL
@@ -137,6 +199,10 @@ tests:
       - equal:
           path: data.SECURE_URL
           value: https://eu1.app.sysdig.com
+        template: webhook/configmap.yaml
+      - equal:
+          path: data.EXTERNAL_NATS_URL
+          value: wss://eu1.app.sysdig.com:443
         template: webhook/configmap.yaml
 
   - it: check imagePullSecrets with global
