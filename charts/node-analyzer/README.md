@@ -79,20 +79,19 @@ The `values.yaml` file specifies the values for the `node-analyzer` configuratio
    helm install -n sysdig-agent sysdig sysdig/sysdig-deploy -f values.sysdig.yaml
    ```
 
+## Verify the Integrity and Origin
 
-## Verify the integrity and origin
-Sysdig Helm Charts are signed so users can verify the integrity and origin of each chart, the steps are as follows:
+Sysdig Helm charts are signed so you can confirm the integrity and origin of each chart. To do so:
 
-### Import the Public Key
+1. Import the Public Key:
 
-```console
-$ curl -o "/tmp/sysdig_public.gpg" "https://charts.sysdig.com/public.gpg"
-$ gpg --import /tmp/sysdig_public.gpg
-```
+   ```bash
+   $ curl -o "/tmp/sysdig_public.gpg" "https://charts.sysdig.com/public.gpg"
+   $ gpg --import /tmp/sysdig_public.gpg
+   ```
 
-### Verify the Chart
+2. Verify the chart by appending the `--verify` flag to the `install`, `upgrade`, and `pull` helm commands.
 
-To check the integrity and the origin of the charts,  append the `--verify` flag to the `install`, `upgrade` and `pull` helm commands.
 
 ## Configuration Parameters
 
