@@ -73,7 +73,7 @@ sysdig:
   # Overrides the `global.sysdig.secureAPIToken` parameter.
   secureAPIToken: ""
 
-  # **required for KSPM AC**
+  # **required for KSPM Admission Controller**
   # <br/>Access Key to access Sysdig Secure.
   # <br/><br/>Either this value or `sysdig.existingAccessKeySecret` is required
   # Overrides `global.sysdig.accessKey`
