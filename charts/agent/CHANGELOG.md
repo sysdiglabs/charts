@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.13.5
+### Others
+* [b99f852c](https://github.com/sysdiglabs/charts/commit/b99f852c4176d570b0b3d342234cc14d95ab48c5)
 # v1.13.4
 ### Bug Fixes
 * **agent** [2de3cf99](https://github.com/sysdiglabs/charts/commit/2de3cf999b582f59bc11be923c4a407a0719036a): fix Chart.yaml field ([#1293](https://github.com/sysdiglabs/charts/issues/1293))
