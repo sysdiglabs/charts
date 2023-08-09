@@ -66,22 +66,22 @@ tests:
           value: override_token
         template: webhook/secret.yaml
 
-  - it: check value of secure_API_TOKEN without local chart override - local value provided
+  - it: check value of Access Key without local chart override - local value provided
     documentIndex: 0
     set:
       sysdig:
-        secureAPIToken: standard_token
+        accessKey: standard_key
         url: secure.sysdigcloud.com
+      features:
+        kspmAdmissionController: true
+        k8sAuditDetections: false
       clusterName: test-k8s
       version: 0.7.3
     asserts:
       - equal:
-          path: stringData.SECURE_API_TOKEN
-          value: standard_token
-        template: scanner/secret.yaml
-      - equal:
-          path: stringData.SECURE_API_TOKEN
-          value: standard_token
+          path: data.access_key
+          value: standard_key
+          decodeBase64: true
         template: webhook/secret.yaml
 
   - it: check value of Access Key without local chart override - global value provided
