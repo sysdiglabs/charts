@@ -180,7 +180,7 @@ webhook:
       # HTTP serve port where the requests will be served from
       port: 7443
       # KSPM Admission Controller container image
-    image: quay.io/sysdig/secure-admission-controller:1.25.5-rc
+    image: quay.io/sysdig/secure-admission-controller:1.0.0
   # The service name for Webhook deployment
   name: webhook
   # The number of replicas for webhook. **Deprecated**, use `webhook.autoscaling.minReplicas` and `webhook.autoscaling.maxReplicas` instead.
