@@ -88,6 +88,9 @@ spec:
             - name: SSL_CERT_DIR
               value: /ca-certs
             {{- end }}
+            {{- if .Values.extraEnvVars }}
+            {{- toYaml .Values.extraEnvVars | nindent 12 }}
+            {{- end }}
           ports:
             - name: http
               containerPort: {{ .Values.webhook.http.port }}
