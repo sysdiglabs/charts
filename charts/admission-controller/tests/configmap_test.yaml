@@ -1,0 +1,15 @@
+suite: Test admissioncontrollerconfigmap
+templates:
+  - webhook/admissioncontrollerconfigmap.yaml
+tests:
+  - it: Creates the configmap if webhook.acConfig is present
+    set:
+      webhook:
+        acConfig: |
+          foo: bar
+          fizz: buzz
+    asserts:
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          template: webhook/admissioncontrollerconfigmap.yaml
