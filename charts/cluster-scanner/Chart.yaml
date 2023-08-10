@@ -4,22 +4,14 @@ description: Sysdig Cluster Scanner
 
 type: application
 
-version: 0.4.0
+version: 0.4.1
 
 appVersion: "0.1.0"
 home: https://www.sysdig.com/
 
 maintainers:
-  - name: lachie83
-    email: lachlan@deis.com
-  - name: bencer
-    email: jorge.salamero@sysdig.com
-  - name: carillan81
-    email: carlos.arilla@sysdig.com
-  - name: yashgiri
-    email: yashgiri.goswami@sysdig.com
-  - name: provok
-    email: vittorio.camisa@sysdig.com
+  - name: giuse-sysdig
+    email: giuseppe.esposito@sysdig.com
 dependencies:
   - name: common
     # repository: https://charts.sysdig.com
