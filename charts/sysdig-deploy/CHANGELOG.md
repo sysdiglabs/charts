@@ -10,6 +10,30 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.17.9
+### Documentation
+* **admission-controller, cluster-scanner, registry-scanner, cloud-connector, node-analyzer, rapid-response, sysdig-deploy, agent** [df733e62](https://github.com/sysdiglabs/charts/commit/df733e6294eae1967197e3521473a5fab0282b67): update maintainers list ([#1283](https://github.com/sysdiglabs/charts/issues/1283))
+# v1.17.8
+### Others
+* [b99f852c](https://github.com/sysdiglabs/charts/commit/b99f852c4176d570b0b3d342234cc14d95ab48c5)
+# v1.17.7
+### Chores
+* **sysdig-deploy** [a70348f9](https://github.com/sysdiglabs/charts/commit/a70348f9ef2a13d375d41f36334e52da0fbef06d): Automatic version bump due to updated dependencies ([#1294](https://github.com/sysdiglabs/charts/issues/1294))
+# v1.17.6
+### Chores
+* **sysdig-deploy** [3515ca48](https://github.com/sysdiglabs/charts/commit/3515ca4826c7c5645a312ba1c48f516972231d64): Automatic version bump due to updated dependencies ([#1289](https://github.com/sysdiglabs/charts/issues/1289))
+# v1.17.5
+### Chores
+* **sysdig-deploy** [1d3ca002](https://github.com/sysdiglabs/charts/commit/1d3ca0020094d978c4cf1ac0f185d6d7dde918be): Automatic version bump due to updated dependencies ([#1284](https://github.com/sysdiglabs/charts/issues/1284))
+# v1.17.4
+### Bug Fixes
+* **admission-controller,agent,sysdig-deploy** [bdf6c21f](https://github.com/sysdiglabs/charts/commit/bdf6c21f6322aaa8417fe8a763f01f5127601094): fix incompatibility errors on older helm versions ([#1281](https://github.com/sysdiglabs/charts/issues/1281))
+# v1.17.3
+### New Features
+* **node-analyzer** [0ad8696a](https://github.com/sysdiglabs/charts/commit/0ad8696a0b38d2564121e6e798589f568e3547a8): Release eveconnector 1.1.2 ([#1280](https://github.com/sysdiglabs/charts/issues/1280))
+# v1.17.2
+### Chores
+* **node-analyzer** [d59b8c97](https://github.com/sysdiglabs/charts/commit/d59b8c97488c9277885c203e0db39665625aa5ea): toggle volumes used by runtimeScanner and imageAnalyzer ([#1273](https://github.com/sysdiglabs/charts/issues/1273))
 # v1.17.1
 ### Chores
 * **sysdig-deploy** [9f3f0599](https://github.com/sysdiglabs/charts/commit/9f3f0599b46853aa7963a2874c70c2e3c9cdb951): Automatic version bump due to updated dependencies ([#1278](https://github.com/sysdiglabs/charts/issues/1278))

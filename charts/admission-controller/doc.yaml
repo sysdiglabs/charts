@@ -1,7 +1,7 @@
 project:
   name: Sysdig Admission Controller
   shortName: Admission Controller
-  url: https://docs.sysdig.com/en/docs/sysdig-secure/scanning/admission-controller/
+  url: https://docs.sysdig.com/en/docs/installation/sysdig-secure/install-agent-components/kubernetes/install-kubernetes-audit-logging/
   description: This chart deploys the Sysdig Admission Controller in your Kubernetes cluster.
   app: the Sysdig Admission Controller
 repository:
