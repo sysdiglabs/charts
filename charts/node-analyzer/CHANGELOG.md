@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.14.4
+### Documentation
+* **admission-controller, cluster-scanner, registry-scanner, cloud-connector, node-analyzer, rapid-response, sysdig-deploy, agent** [df733e62](https://github.com/sysdiglabs/charts/commit/df733e6294eae1967197e3521473a5fab0282b67): update maintainers list ([#1283](https://github.com/sysdiglabs/charts/issues/1283))
 # v1.14.3
 ### Bug Fixes
 * **node-analyzer** [d5c2fffa](https://github.com/sysdiglabs/charts/commit/d5c2fffa9e9223ee6aea451f1ecdcee7610f02b8): permissions fix for CR sysdig-agent-node-analyzer ([#1272](https://github.com/sysdiglabs/charts/issues/1272))
