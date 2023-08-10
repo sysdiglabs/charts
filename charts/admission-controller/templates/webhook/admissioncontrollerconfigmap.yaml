@@ -1,9 +1,4 @@
-{{- if .Values.extraEnvVars }}
-{{- range .Values.extraEnvVars  }}
-{{- if ne .name "CONFIG_FROM_FILE" }}
-{{- end }}
-{{- end }}
-
+{{- if .Values.webhook.acConfig }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -12,13 +7,6 @@ metadata:
   labels:
     {{ include "admissionController.webhook.labels" . | nindent 4 }}
 data:
-  {{-  if .Values.webhook.acConfig }}
   acConfig: |
     {{ .Values.webhook.acConfig | nindent 4 }}
-  {{- else }}
-  acConfig: |
-    enabled: true
-    defaultBehaviour: "allow"
-    assignments: []
-  {{- end }}
 {{- end }}
