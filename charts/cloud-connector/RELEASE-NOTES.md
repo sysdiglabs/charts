@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **cloud-connector** [0edb4e04](https://github.com/sysdiglabs/charts/commit/0edb4e0419f28bed7d3dbd95f6c72a07f20a5d6e): set jvet extract error logs to debug level ([#1288](https://github.com/sysdiglabs/charts/issues/1288))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/cloud-connector-0.8.4...cloud-connector-0.8.5
+### Documentation
+- **admission-controller, cluster-scanner, registry-scanner, cloud-connector, node-analyzer, rapid-response, sysdig-deploy, agent** [df733e62](https://github.com/sysdiglabs/charts/commit/df733e6294eae1967197e3521473a5fab0282b67): update maintainers list ([#1283](https://github.com/sysdiglabs/charts/issues/1283))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/cloud-connector-0.8.5...cloud-connector-0.8.6
