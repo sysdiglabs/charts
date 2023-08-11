@@ -36,19 +36,6 @@ rules:
 - apiGroups:
     - ""
   resources:
-    - "pods"
-    - "pods/exec"
-  verbs:
-    - "create"
-- apiGroups:
-    - ""
-  resources:
-    - "pods"
-  verbs:
-    - "delete"
-- apiGroups:
-    - ""
-  resources:
     - configmaps
     - endpoints
     - nodes
@@ -87,6 +74,10 @@ rules:
     - config.openshift.io
   resources:
     - clusteroperators
+    - apiservers
+    - oauths
+    - networks
+    - images
   verbs:
     - get
 - apiGroups:
@@ -96,7 +87,7 @@ rules:
   verbs:
     - get
     - list
-{{- if .Values.nodeAnalyzer.benchmarkRunner.includeSensitivePermissions  }}
+{{- if and .Values.nodeAnalyzer.benchmarkRunner.includeSensitivePermissions .Values.nodeAnalyzer.benchmarkRunner.deploy }}
 - apiGroups:
     - ""
   resources:

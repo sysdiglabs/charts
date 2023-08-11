@@ -10,6 +10,12 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.1.5
+### Documentation
+* **admission-controller, cluster-scanner, registry-scanner, cloud-connector, node-analyzer, rapid-response, sysdig-deploy, agent** [df733e62](https://github.com/sysdiglabs/charts/commit/df733e6294eae1967197e3521473a5fab0282b67): update maintainers list ([#1283](https://github.com/sysdiglabs/charts/issues/1283))
+# v1.1.4
+### Documentation
+* **registry-scanner** [ea551160](https://github.com/sysdiglabs/charts/commit/ea5511600a50333049584da6a565486dbbd424b8): fix configuration table rendering ([#1282](https://github.com/sysdiglabs/charts/issues/1282))
 # v1.1.3
 ### New Features
 * **doc** [2ed2f684](https://github.com/sysdiglabs/charts/commit/2ed2f684eeb573707a0515cafeb053ebb4a3f9d3): Move On-prem deployment instruction to the registry scanner chart ([#1260](https://github.com/sysdiglabs/charts/issues/1260))
