@@ -13,3 +13,10 @@ tests:
           kind: ConfigMap
           apiVersion: v1
           template: webhook/admissioncontrollerconfigmap.yaml
+#  - it: Creates the configmap if webhook.acConfig is present
+#    asserts:
+#      - containsDocument:
+#          kind: ConfigMap
+#          apiVersion: v1
+#          template: webhook/admissioncontrollerconfigmap.yaml
+#        not: true
