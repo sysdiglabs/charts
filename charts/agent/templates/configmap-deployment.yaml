@@ -52,7 +52,7 @@ data:
   {{- $caFilePath := printf "%s%s" "/etc/ca-certs/" (include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.ssl)) }}
   {{- $mergedSettings := mergeOverwrite $baseSettings (dict "http_proxy" (dict "ca_certificate" $caFilePath)) -}}
   {{ toYaml $mergedSettings | nindent 4 }}
-{{- else if .Values.sysdig.settings }}
-  {{ toYaml .Values.sysdig.settings | nindent 4 }}
+{{- else if (omit .Values.sysdig.settings "cointerface_enabled") }}
+  {{ toYaml (omit .Values.sysdig.settings "cointerface_enabled") | nindent 4 }}
 {{- end }}
 {{- end }}
