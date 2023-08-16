@@ -1,6 +1,7 @@
 suite: Test admissioncontrollerconfigmap
 templates:
-  - webhook/admissioncontrollerconfigmap.yaml
+  - templates/webhook/admissioncontrollerconfigmap.yaml
+  - templates/webhook/clusterrole.yaml
 tests:
   - it: Creates the configmap if webhook.acConfig is present
     set:
@@ -12,11 +13,23 @@ tests:
       - containsDocument:
           kind: ConfigMap
           apiVersion: v1
-          template: webhook/admissioncontrollerconfigmap.yaml
-#  - it: Does not create the configmap if webhook.acConfig is not present
+        template: templates/webhook/admissioncontrollerconfigmap.yaml
+      - contains:
+          path: rules
+          content:
+            apiGroups: ["batch"]
+          any: true
+        template: templates/webhook/clusterrole.yaml
+  - it: Does not create the configmap if webhook.acConfig is not present
+    set: {}
+    asserts:
+      - notContains:
+          path: rules
+          content:
+            apiGroups: [ "batch" ]
+          any: true
+        template: templates/webhook/clusterrole.yaml
 #    asserts:
-#      - containsDocument:
-#          kind: ConfigMap
-#          apiVersion: v1
-#          template: webhook/admissioncontrollerconfigmap.yaml
-#        not: true
+#      - isNullOrEmpty:
+#          path: data
+#        template: templates/webhook/admissioncontrollerconfigmap.yaml

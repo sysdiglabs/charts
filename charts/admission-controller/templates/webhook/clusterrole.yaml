@@ -19,6 +19,16 @@ rules:
   - configmaps
   verbs:
   - get
+{{- if .Values.webhook.acConfig }}
+- apiGroups:
+  - "batch"
+  resources:
+  - jobs
+  verbs:
+  - create
+  - get
+  - delete
+{{- end }}
 - apiGroups:
   - "apps"
   resources:
