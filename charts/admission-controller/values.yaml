@@ -209,7 +209,7 @@ webhook:
   # The image pull secrets for webhook.
   imagePullSecrets: []
 
-  # Resource request and limits for webhook
+  # Resource request and limits for webhook.
   resources:  # +doc-gen:break
     limits:
       cpu: 250m
