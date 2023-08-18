@@ -180,22 +180,32 @@ webhook:
       # HTTP serve port where the requests will be served from
       port: 7443
       # KSPM Admission Controller container image
-    image: quay.io/sysdig/secure-admission-controller:1.0.0
+    image:
+      # The KSPM Admission Controller image registry
+      registry: quay.io
+      # The KSPM Admission Controller image repository
+      repository: sysdig/secure-admission-controller
+      # The KSPM Admission Controller image tag
+      tag: 1.0.0
+      # Specifies the image digest value.  If set, this value is used instead of the tag value
+      digest:
+      # The PullPolicy for KSPM Admission Controller image
+      pullPolicy:
   # The service name for Webhook deployment
   name: webhook
   # The number of replicas for webhook. **Deprecated**, use `webhook.autoscaling.minReplicas` and `webhook.autoscaling.maxReplicas` instead.
   replicaCount: 1
 
   image:
-    # The webhook image registry.
+    # The webhook image registry
     registry: quay.io
-    # The webhook image registry.
+    # The webhook image repository
     repository: sysdig/admission-controller
-    # The PullPolicy for Webhook image.
+    # The PullPolicy for Webhook image
     pullPolicy:
     # Overrides the default image tag. If not specified, it defaults to appVersion in Chart.yaml
     tag:
-    # Specifies the image digest value.  If set, this value is used instead of the tag value.
+    # Specifies the image digest value.  If set, this value is used instead of the tag value
     digest:
 
   # Specifies the additional labels; applies to webhook only.

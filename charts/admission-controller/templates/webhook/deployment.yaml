@@ -51,7 +51,8 @@ spec:
       containers:
       {{- if .Values.features.kspmAdmissionController}}
         - name: kspm-admission-controller
-          image: {{ .Values.webhook.v2.image }}
+          image: {{ include "admissionController.kspm.image" . }}
+          imagePullPolicy: {{ .Values.webhook.v2.image.pullPolicy | default .Values.global.image.pullPolicy }}
           env:
             - name: DRY_RUN
               value: "true"

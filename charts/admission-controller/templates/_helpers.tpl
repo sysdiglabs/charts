@@ -203,6 +203,19 @@ Allow overriding registry and repository for air-gapped environments
 {{- end -}}
 {{- end -}}
 
+{{- define "admissionController.kspm.image" -}}
+{{- if .Values.webhook.v2.image.overrideValue -}}
+    {{- .Values.webhook.v2.image.overrideValue -}}
+{{- else -}}
+    {{- $imageRegistry := .Values.webhook.v2.image.registry -}}
+    {{- $imageRepository := .Values.webhook.v2.image.repository -}}
+    {{- $imageTag := .Values.webhook.v2.image.tag -}}
+    {{- $imageDigest := .Values.webhook.v2.image.digest -}}
+    {{- $globalRegistry := (default .Values.global dict).imageRegistry -}}
+    {{- $globalRegistry | default $imageRegistry | default "docker.io" -}} / {{- $imageRepository -}} {{- if $imageDigest -}} @ {{- $imageDigest -}} {{- else -}} : {{- $imageTag -}} {{- end -}}
+{{- end -}}
+{{- end -}}
+
 {{/*
 Inline Scanner Service
 */}}
