@@ -81,6 +81,7 @@ spec:
           resources:
             {{- toYaml .Values.webhook.resources | nindent 12 }}
       {{- end}}
+      {{- if (or .Values.features.k8sAuditDetections .Values.scanner.enabled) }}
         - name: admission-controller
           image: "{{ include "admissionController.webhook.image" . }}"
           {{- if .Values.webhook.customEntryPoint }}
@@ -156,6 +157,7 @@ spec:
             {{- end }}
           resources:
             {{- toYaml .Values.webhook.resources | nindent 12 }}
+      {{- end}}
       volumes:
         {{- if .Values.features.kspmAdmissionController }}
         - name: configs

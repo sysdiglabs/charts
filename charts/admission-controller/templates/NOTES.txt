@@ -1,6 +1,11 @@
 Validating Admission Controller Secure API Token configuration:
-{{- if and (include "admissionController.validTokenConfig" .) (include "admissionController.validAccessKeyConfig" .) }}
+{{- if .Values.features.kspmAdmissionController }}
+{{- include "admissionController.validAccessKeyConfig" . }}
+{{- end }}
+{{- if (or .Values.features.k8sAuditDetections .Values.scanner.enabled) }}
+{{- if include "admissionController.validTokenConfig" . }}
 Success!
+{{- end }}
 {{- end }}
 
 Sysdig Admission Controller is now installed!
