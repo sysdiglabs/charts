@@ -8,35 +8,34 @@ metadata:
 {{ include "agent.labels" . | indent 4 }}
 data:
   dragent.yaml: |
-    new_k8s: true
 {{- include "agent.clusterName" . | trim | nindent 4 }}
 {{- include "agent.connectionSettings" . | trim | nindent 4 }}
-    feature:
-      mode: monitor_light
-    cointerface_enabled: true
-    k8s_delegated_nodes: {{ .Values.delegatedAgentDeployment.delegated_nodes | int }}
-    top_processes_in_sample: 0
-    container_engines:
-      bpm: false
-      cri: false
-      docker: false
-      libvirt_lxc: false
-      lxc: false
-      mesos: false
-      podman: false
-      rkt: false
-    app_checks_enabled: false
-    jmx:
-      enabled: false
-    prometheus:
-      enabled: false
-    statsd:
-      enabled: false
+{{- $requiredOverrides := (dict
+  "new_k8s" true
+  "feature" (dict "mode" "monitor_light")
+  "cointerface_enabled" true
+  "k8s_delegated_nodes" (.Values.delegatedAgentDeployment.delegated_nodes | int)
+  "top_processes_in_sample" 0
+  "container_engines" (dict
+    "bpm" false
+    "cri" false
+    "docker" false
+    "libvirt_lxc" false
+    "lxc" false
+    "mesos" false
+    "podman" false
+    "rkt" false
+  )
+  "app_checks_enabled" false
+  "jmx" (dict "enabled" false)
+  "prometheus" (dict "enabled" false)
+  "statsd" (dict "enabled" false)
+) }}
 {{/* Calculate the leaderElection/k8s_colstart information.
      The computed/combined results are merged with any overrides specified
      in sysdig.settings and will be rendered with that block */}}
 {{- include "agent.leaderElection" . }}
-{{ include "agent.disableCaptures" . | nindent 4 }}
+{{- include "agent.disableCaptures" . | nindent 4 }}
 {{- $_ := mergeOverwrite .Values.secure (dict "enabled" false) }}
 {{- (include "agent.secureFeatures" .) | nindent 4 }}
 {{- include "agent.logSettings" . }}
@@ -47,12 +46,13 @@ data:
   Checking here the user is using Custom CA and if http_proxy.ssl = true
   If these conditions are true, then we use the agent.sslCaFileName for the http_proxy.ca_certificate
 */}}
+{{- $baseSettings := .Values.sysdig.settings -}}
 {{- if and (eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true") (.Values.sysdig.settings) (hasKey .Values.sysdig.settings "http_proxy") (hasKey .Values.sysdig.settings.http_proxy "ssl") (eq (get .Values.sysdig.settings.http_proxy "ssl") true) }}
-  {{- $baseSettings := .Values.sysdig.settings -}}
   {{- $caFilePath := printf "%s%s" "/etc/ca-certs/" (include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.ssl)) }}
   {{- $mergedSettings := mergeOverwrite $baseSettings (dict "http_proxy" (dict "ca_certificate" $caFilePath)) -}}
-  {{ toYaml $mergedSettings | nindent 4 }}
-{{- else if (omit .Values.sysdig.settings "cointerface_enabled") }}
-  {{ toYaml (omit .Values.sysdig.settings "cointerface_enabled") | nindent 4 }}
+  {{- $finalSettings := mergeOverwrite $mergedSettings $requiredOverrides -}}
+  {{ toYaml $finalSettings | nindent 4 }}
 {{- end }}
+  {{- $finalSettings := mergeOverwrite $baseSettings $requiredOverrides -}}
+  {{ toYaml $finalSettings | nindent 4 }}
 {{- end }}
