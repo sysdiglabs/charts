@@ -10,6 +10,12 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.17.9
+### Documentation
+* **admission-controller, cluster-scanner, registry-scanner, cloud-connector, node-analyzer, rapid-response, sysdig-deploy, agent** [df733e62](https://github.com/sysdiglabs/charts/commit/df733e6294eae1967197e3521473a5fab0282b67): update maintainers list ([#1283](https://github.com/sysdiglabs/charts/issues/1283))
+# v1.17.8
+### Others
+* [b99f852c](https://github.com/sysdiglabs/charts/commit/b99f852c4176d570b0b3d342234cc14d95ab48c5)
 # v1.17.7
 ### Chores
 * **sysdig-deploy** [a70348f9](https://github.com/sysdiglabs/charts/commit/a70348f9ef2a13d375d41f36334e52da0fbef06d): Automatic version bump due to updated dependencies ([#1294](https://github.com/sysdiglabs/charts/issues/1294))
