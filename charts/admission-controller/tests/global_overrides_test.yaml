@@ -193,7 +193,7 @@ tests:
       version: 0.7.3
     asserts:
       - equal:
-          path: spec.template.spec.volumes[0].secret.secretName
+          path: spec.template.spec.volumes[0].projected.sources[0].secret.name
           value: some-secret
         template: webhook/deployment.yaml
 
@@ -213,7 +213,7 @@ tests:
       version: 0.7.3
     asserts:
       - equal:
-          path: spec.template.spec.volumes[0].secret.secretName
+          path: spec.template.spec.volumes[0].projected.sources[0].secret.name
           value: override-secret
         template: webhook/deployment.yaml
 
@@ -232,7 +232,7 @@ tests:
       version: 0.7.3
     asserts:
       - equal:
-          path: spec.template.spec.volumes[0].secret.secretName
+          path: spec.template.spec.volumes[0].projected.sources[0].secret.name
           value: some-secret
         template: webhook/deployment.yaml
 
