@@ -1,5 +1,5 @@
 Validating Admission Controller Secure API Token configuration:
-{{- if (include "admissionController.validTokenConfig" .) }}
+{{- if and (include "admissionController.validTokenConfig" .) (include "admissionController.validAccessKeyConfig" .) }}
 Success!
 {{- end }}
 

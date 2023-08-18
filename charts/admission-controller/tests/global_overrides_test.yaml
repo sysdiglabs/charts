@@ -180,6 +180,62 @@ tests:
           value: override_token
         template: webhook/deployment.yaml
 
+  - it: check value of existingAccessKeySecret without local chart override - local value provided
+    documentIndex: 0
+    set:
+      sysdig:
+        existingAccessKeySecret: some-secret
+        url: secure.sysdigcloud.com
+      features:
+        kspmAdmissionController: true
+        k8sAuditDetections: false
+      clusterName: test-k8s
+      version: 0.7.3
+    asserts:
+      - equal:
+          path: spec.template.spec.volumes[0].secret.secretName
+          value: some-secret
+        template: webhook/deployment.yaml
+
+  - it: check value of existingAccessKeySecret without local chart override - global value provided
+    documentIndex: 0
+    set:
+      global:
+        sysdig:
+          existingAccessKeySecret: some-secret
+      sysdig:
+        url: secure.sysdigcloud.com
+        existingAccessKeySecret: override-secret
+      features:
+        kspmAdmissionController: true
+        k8sAuditDetections: false
+      clusterName: test-k8s
+      version: 0.7.3
+    asserts:
+      - equal:
+          path: spec.template.spec.volumes[0].secret.secretName
+          value: override-secret
+        template: webhook/deployment.yaml
+
+  - it: check value of existingAccessKeySecret with local chart override
+    documentIndex: 0
+    set:
+      global:
+        sysdig:
+          existingAccessKeySecret: some-secret
+      sysdig:
+        url: secure.sysdigcloud.com
+      features:
+        kspmAdmissionController: true
+        k8sAuditDetections: false
+      clusterName: test-k8s
+      version: 0.7.3
+    asserts:
+      - equal:
+          path: spec.template.spec.volumes[0].secret.secretName
+          value: some-secret
+        template: webhook/deployment.yaml
+
   - it: uses the specified region
     documentIndex: 0
     set:

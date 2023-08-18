@@ -160,7 +160,11 @@ spec:
         {{- if .Values.features.kspmAdmissionController }}
         - name: configs
           secret:
+            {{- if (include "sysdig.accessKey" .) }}
             secretName: {{ include "admissionController.webhook.fullname" . }}-access-key
+            {{- else }}
+            secretName: {{ include "sysdig.existingAccessKeySecret" . }}
+            {{- end }}
         {{- end }}
         - name: cert
           secret:

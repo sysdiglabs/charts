@@ -73,20 +73,24 @@ sysdig:
   # Overrides the `global.sysdig.secureAPIToken` parameter.
   secureAPIToken: ""
 
-  # **required for KSPM Admission Controller**
-  # <br/>Access Key to access Sysdig Secure.
-  # <br/><br/>Either this value or `sysdig.existingAccessKeySecret` is required
-  # Overrides `global.sysdig.accessKey`
-  accessKey: ""
-
   # **required**
-  # <br/>TheeExisting secret with API Token to access Sysdig Secure.
+  # <br/>The existing secret with API Token to access Sysdig Secure.
   # <br/>Alternatively, specify the name of a Kubernetes secret containing `SECURE_API_TOKEN` and
   # `AUTH_BEARER_TOKEN` entry if you're also enabling scanner.
   # <br/>If neither this value nor `sysdig.secureAPIToken` is configured, you
   # are required to provide the deployment with the `SECURE_API_TOKEN`
   # (and `AUTH_BEARER_TOKEN` if the scanner is enabled) environment variable.
   existingSecureAPITokenSecret: ""
+
+  # **required for KSPM Admission Controller**
+  # <br/>Access Key to access Sysdig Secure.
+  # <br/><br/>Either this value or `sysdig.existingAccessKeySecret` is required
+  # Overrides `global.sysdig.accessKey`
+  accessKey: ""
+
+  # Alternatively, specify the name of a Kubernetes secret containing an 'access-key' entry.
+  # Overrides `global.sysdig.existingAccessKeySecret`
+  existingAccessKeySecret: ""
 
   # Sysdig URL.<br/>
   # - The default for the us-east region is secure.sysdig.com.<br/>

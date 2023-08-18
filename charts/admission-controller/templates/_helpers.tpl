@@ -294,7 +294,11 @@ the following helper function designed to take the accessKey if specified locall
 */}}
 
 {{- define "sysdig.accessKey" -}}
-    {{- required "Sysdig Access Key is required" (.Values.sysdig.accessKey | default .Values.global.sysdig.accessKey) -}}
+    {{- .Values.sysdig.accessKey | default .Values.global.sysdig.accessKey | default "" -}}
+{{- end -}}
+
+{{- define "sysdig.existingAccessKeySecret" -}}
+    {{- .Values.sysdig.existingAccessKeySecret | default .Values.global.sysdig.existingAccessKeySecret | default "" -}}
 {{- end -}}
 
 {{/*
@@ -346,6 +350,18 @@ an error if not.
 {{- define "admissionController.validTokenConfig" -}}
 {{- $errorMsg := "The Sysdig Secure API Token was not provided with either the sysdig.secureAPIToken or sysdig.secureAPITokenSecret values." -}}
     {{- required $errorMsg (or (include "sysdig.secureAPIToken" .) (include "sysdig.secureAPITokenSecret" .)) -}}
+{{- end -}}
+
+
+{{/*
+Validate Secure Access Key Config
+The follwoing named template is not used in the chart itself, it is used to
+check whether at least one of the required parameters was specified and return
+an error if not.
+*/}}
+{{- define "admissionController.validAccessKeyConfig" -}}
+{{- $errorMsg := "The Sysdig Secure Access Key was not provided with either the sysdig.accessKey or sysdig.existingAccessKeySecret values." -}}
+    {{- required $errorMsg (or (include "sysdig.accessKey" .) (include "sysdig.existingAccessKeySecret" .)) -}}
 {{- end -}}
 
 {{/* Returns string 'true' if the cluster's kubeVersion is less than the parameter provided, or nothing otherwise
