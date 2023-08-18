@@ -92,7 +92,7 @@ spec:
             {{- end }}
             {{- if .Values.webhook.acConfig }}
             - name: VM_ENGINE_V2_ENABLED
-              value: true
+              value: "true"
             {{- end }}
           ports:
             - name: http
