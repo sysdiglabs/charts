@@ -79,7 +79,7 @@ tests:
       version: 0.7.3
     asserts:
       - equal:
-          path: data.access_key
+          path: data.access-key
           value: standard_key
           decodeBase64: true
         template: webhook/secret.yaml
@@ -99,7 +99,7 @@ tests:
       version: 0.7.3
     asserts:
       - equal:
-          path: data.access_key
+          path: data.access-key
           value: standard_key
           decodeBase64: true
         template: webhook/secret.yaml
@@ -119,7 +119,7 @@ tests:
         k8sAuditDetections: false
     asserts:
       - equal:
-          path: data.access_key
+          path: data.access-key
           value: override_key
           decodeBase64: true
         template: webhook/secret.yaml
@@ -193,7 +193,7 @@ tests:
       version: 0.7.3
     asserts:
       - equal:
-          path: spec.template.spec.volumes[0].projected.sources[0].secret.name
+          path: spec.template.spec.volumes[0].secret.secretName
           value: some-secret
         template: webhook/deployment.yaml
 
@@ -213,7 +213,7 @@ tests:
       version: 0.7.3
     asserts:
       - equal:
-          path: spec.template.spec.volumes[0].projected.sources[0].secret.name
+          path: spec.template.spec.volumes[0].secret.secretName
           value: override-secret
         template: webhook/deployment.yaml
 
@@ -232,7 +232,7 @@ tests:
       version: 0.7.3
     asserts:
       - equal:
-          path: spec.template.spec.volumes[0].projected.sources[0].secret.name
+          path: spec.template.spec.volumes[0].secret.secretName
           value: some-secret
         template: webhook/deployment.yaml
 

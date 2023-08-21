@@ -161,19 +161,13 @@ spec:
       volumes:
         {{- if .Values.features.kspmAdmissionController }}
         - name: configs
-          {{- if (include "sysdig.accessKey" .) }}
           secret:
+            {{- if (include "sysdig.accessKey" .) }}
             secretName: {{ include "admissionController.webhook.fullname" . }}-access-key
-          {{- else }}
-          projected:
-            sources:
-            - secret:
-                name: {{ include "sysdig.existingAccessKeySecret" . }}
-                items:
-                - key: access-key
-                  path: access_key
-          {{- end }}
-        {{- end }}
+            {{- else }}
+            secretName: {{ include "sysdig.existingAccessKeySecret" . }}
+            {{- end}}
+        {{- end}}
         - name: cert
           secret:
             secretName: {{ include "admissionController.webhook.fullname" . }}-tls
