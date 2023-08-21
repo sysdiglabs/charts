@@ -60,7 +60,7 @@ webhooks:
   timeoutSeconds: {{ .Values.webhook.v2.timeoutSeconds }}
   failurePolicy: Ignore
 {{- end }}
-{{- if .Values.scanner.enabled }}
+{{- if or .Values.scanner.enabled .Values.webhook.acConfig }}
 - name: scanning.secure.sysdig.com
   matchPolicy: Equivalent
   rules:
