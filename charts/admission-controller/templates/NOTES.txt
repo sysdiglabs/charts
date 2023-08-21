@@ -1,15 +1,13 @@
-Validating Admission Controller Secure API Token configuration:
 {{- if .Values.features.kspmAdmissionController }}
-{{- include "admissionController.validAccessKeyConfig" . }}
+{{- if include "admissionController.validAccessKeyConfig" . }}{{- end}}
 {{- end }}
 {{- if (or .Values.features.k8sAuditDetections .Values.scanner.enabled) }}
-{{- if include "admissionController.validTokenConfig" . }}
-Success!
+{{- if include "admissionController.validTokenConfig" . }}{{- end }}
 {{- end }}
-{{- end }}
-
 Sysdig Admission Controller is now installed!
-Confirm its working status https://charts.sysdig.com/charts/admission-controller/#confirm-working-status
+
+Confirm its working status:
+https://docs.sysdig.com/en/docs/installation/sysdig-secure/install-agent-components/kubernetes/install-kubernetes-audit-logging/#verify-the-installation
 ================================================================================================
 
 {{- if .Values.scanner.enabled }}
