@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.17.10
+### Chores
+* **sysdig-deploy** [51c13b69](https://github.com/sysdiglabs/charts/commit/51c13b690f991588930c61cef61427b60db55091): Automatic version bump due to updated dependencies ([#1300](https://github.com/sysdiglabs/charts/issues/1300))
 # v1.17.9
 ### Documentation
 * **admission-controller, cluster-scanner, registry-scanner, cloud-connector, node-analyzer, rapid-response, sysdig-deploy, agent** [df733e62](https://github.com/sysdiglabs/charts/commit/df733e6294eae1967197e3521473a5fab0282b67): update maintainers list ([#1283](https://github.com/sysdiglabs/charts/issues/1283))
