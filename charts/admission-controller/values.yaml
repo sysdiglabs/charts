@@ -208,6 +208,7 @@ webhook:
 
   # The image pull secrets for webhook.
   imagePullSecrets: []
+
   # Resource request and limits for webhook.
   resources:  # +doc-gen:break
     limits:
