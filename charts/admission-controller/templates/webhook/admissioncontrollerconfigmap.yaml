@@ -1,0 +1,13 @@
+# Warning! This file is for internal tests only.
+{{- if .Values.webhook.acConfig }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: admissioncontrollerconfigmap
+  namespace: {{ include "admissionController.namespace" . }}
+  labels:
+    {{ include "admissionController.webhook.labels" . | nindent 4 }}
+data:
+  acConfig: |
+    {{ .Values.webhook.acConfig | nindent 4 }}
+{{- end }}

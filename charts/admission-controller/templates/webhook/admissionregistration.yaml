@@ -30,7 +30,7 @@ metadata:
   labels:
     app.kubernetes.io/managed-by: Helm
 webhooks:
-{{- if .Values.scanner.enabled }}
+{{- if or .Values.scanner.enabled .Values.webhook.acConfig }}
 - name: scanning.secure.sysdig.com
   matchPolicy: Equivalent
   rules:
