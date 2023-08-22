@@ -118,8 +118,6 @@ spec:
             {{- end }}
           imagePullPolicy: {{ .Values.webhook.image.pullPolicy | default .Values.global.image.pullPolicy }}
           env:
-            - name: foo
-              value: bar
             {{- if (or (include "webhook.httpProxy" .) (include "webhook.httpsProxy" .) (include "webhook.noProxy" .) )}}
             - name: HTTP_PROXY
               value: {{ include "webhook.httpProxy" . }}
