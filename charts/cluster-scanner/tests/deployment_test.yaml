@@ -92,9 +92,9 @@ tests:
     asserts:
       - not: true
         isEmpty:
-          path: spec.template.spec.containers[0].env[9]
+          path: spec.template.spec.containers[0].env[?(@.name == "SYSDIG_KUBECONFIG_CONTENT")]
       - isSubset:
-          path: spec.template.spec.containers[0].env[9]
+          path: spec.template.spec.containers[0].env[?(@.name == "SYSDIG_KUBECONFIG_CONTENT")]
           content:
             name: SYSDIG_KUBECONFIG_CONTENT
             valueFrom:
@@ -111,9 +111,9 @@ tests:
     asserts:
       - not: true
         isEmpty:
-          path: spec.template.spec.containers[1].env[37]
+          path: spec.template.spec.containers[1].env[?(@.name == "ANALYZER_CACHE_REDIS_TTL")]
       - isSubset:
-          path: spec.template.spec.containers[1].env[37]
+          path: spec.template.spec.containers[1].env[?(@.name == "ANALYZER_CACHE_REDIS_TTL")]
           content:
             name: ANALYZER_CACHE_REDIS_TTL
             valueFrom:
@@ -146,7 +146,7 @@ tests:
               - myOtherDockerSecretTwo
     asserts:
       - equal:
-          path: spec.template.spec.containers[0].env[15]
+          path: spec.template.spec.containers[0].env[?(@.name == "LOCAL_REGISTRY_SECRETS")]
           value:
             name: LOCAL_REGISTRY_SECRETS
             valueFrom:
@@ -172,7 +172,7 @@ tests:
               - myOtherDockerSecretTwo
     asserts:
       - equal:
-          path: spec.template.spec.containers[0].env[16]
+          path: spec.template.spec.containers[0].env[?(@.name == "EVE_ENABLED")]
           value:
             name: EVE_ENABLED
             valueFrom:
@@ -328,17 +328,17 @@ tests:
     asserts:
       - not: true
         isEmpty:
-          path: spec.template.spec.containers[0].env[2]
+          path: spec.template.spec.containers[0].env[?(@.name == "PPROF_PORT")]
       - isSubset:
-          path: spec.template.spec.containers[0].env[2]
+          path: spec.template.spec.containers[0].env[?(@.name == "PPROF_PORT")]
           content:
             name: PPROF_PORT
             value: "6060"
       - not: true
         isEmpty:
-          path: spec.template.spec.containers[1].env[2]
+          path: spec.template.spec.containers[1].env[?(@.name == "PPROF_PORT")]
       - isSubset:
-          path: spec.template.spec.containers[1].env[2]
+          path: spec.template.spec.containers[1].env[?(@.name == "PPROF_PORT")]
           content:
             name: PPROF_PORT
             value: "6061"
@@ -352,17 +352,17 @@ tests:
     asserts:
       - not: true
         isEmpty:
-          path: spec.template.spec.containers[0].env[2]
+          path: spec.template.spec.containers[0].env[?(@.name == "PPROF_PORT")]
       - isSubset:
-          path: spec.template.spec.containers[0].env[2]
+          path: spec.template.spec.containers[0].env[?(@.name == "PPROF_PORT")]
           content:
             name: PPROF_PORT
             value: "1010"
       - not: true
         isEmpty:
-          path: spec.template.spec.containers[1].env[2]
+          path: spec.template.spec.containers[1].env[?(@.name == "PPROF_PORT")]
       - isSubset:
-          path: spec.template.spec.containers[1].env[2]
+          path: spec.template.spec.containers[1].env[?(@.name == "PPROF_PORT")]
           content:
             name: PPROF_PORT
             value: "666"
