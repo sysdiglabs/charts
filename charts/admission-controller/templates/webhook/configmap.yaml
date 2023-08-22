@@ -17,6 +17,7 @@ data:
   VERIFY_SSL: "{{ .Values.verifySSL }}"
   K8S_AUDIT_DETECTIONS: "{{ .Values.features.k8sAuditDetections }}"
   DENY_ON_ERROR: "{{ .Values.webhook.denyOnError }}"
+  DRY_RUN: "{{ .Values.webhook.dryRun }}"
   HTTP_TIMEOUT: "{{ .Values.webhook.timeoutSeconds }}s"
   {{- if .Values.features.kspmAdmissionController}}
   SERVICE_PORT: "{{ .Values.webhook.v2.http.port }}"

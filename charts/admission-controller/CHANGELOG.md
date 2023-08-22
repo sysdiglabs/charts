@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.13.1
+### Bug Fixes
+* **admission-controller** [616cad33](https://github.com/sysdiglabs/charts/commit/616cad33605006718b729187bbf621e5546d5fe1): Restore DRY_RUN env in config map, used by legacy AC ([#1304](https://github.com/sysdiglabs/charts/issues/1304))
 # v0.13.0
 ### New Features
 * **admission-controller** [b9ab5aee](https://github.com/sysdiglabs/charts/commit/b9ab5aee6521d95aaba8b004b17807c811117122): Add KSPM Admission Controller to helm chart ([#1214](https://github.com/sysdiglabs/charts/issues/1214))

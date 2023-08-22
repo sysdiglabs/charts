@@ -1,5 +1,5 @@
 # What's Changed
 
 ### New Features
-- **admission-controller** [b9ab5aee](https://github.com/sysdiglabs/charts/commit/b9ab5aee6521d95aaba8b004b17807c811117122): Add KSPM Admission Controller to helm chart ([#1214](https://github.com/sysdiglabs/charts/issues/1214))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.17.11...sysdig-deploy-1.18.0
+- **cluster-scanner** [f9db25eb](https://github.com/sysdiglabs/charts/commit/f9db25eb77d6f648adefbf01ad3df983c41ddf70): allow to configure http proxy ([#1302](https://github.com/sysdiglabs/charts/issues/1302))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.18.1...sysdig-deploy-1.19.0

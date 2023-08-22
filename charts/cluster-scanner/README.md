@@ -25,7 +25,7 @@ $ pre-commit run -a
 $ helm repo add sysdig https://charts.sysdig.com
 $ helm repo update
 $ helm upgrade --install sysdig-cluster-scanner sysdig/cluster-scanner \
-      --create-namespace -n sysdig --version=0.4.1  \
+      --create-namespace -n sysdig --version=0.5.0  \
       --set global.clusterConfig.name=CLUSTER_NAME \
       --set global.sysdig.region=SYSDIG_REGION \
       --set global.sysdig.accessKey=YOUR-KEY-HERE
@@ -55,7 +55,7 @@ To install the chart with the release name `cluster-scanner`, run:
 
 ```console
 $ helm upgrade --install sysdig-cluster-scanner sysdig/cluster-scanner \
-       --create-namespace -n sysdig --version=0.4.1 \
+       --create-namespace -n sysdig --version=0.5.0 \
        --set global.clusterConfig.name=CLUSTER_NAME \
        --set global.sysdig.region=SYSDIG_REGION \
        --set global.sysdig.accessKey=YOUR-KEY-HERE
@@ -93,6 +93,7 @@ The following table lists the configurable parameters of the `cluster-scanner` c
 | global.sysdig.region                               | Region name for Sysdig. Valid options: `us1`, `us2`, `us3`, `us4`, `eu1`, `au1`. When no region is suitable (e.g. on-premise installations) set the `global.sysdig.apiHost: ""` parameter.                                                                                                                                                                                                                              | <code>"us1"</code>                            |
 | global.image.pullSecrets                           | The pull secrets for Cluster Scanner                                                                                                                                                                                                                                                                                                                                                                                    | <code>[]</code>                               |
 | global.image.pullPolicy                            | The pull policy for Cluster Scanner                                                                                                                                                                                                                                                                                                                                                                                     | <code>IfNotPresent</code>                     |
+| global.proxy                                       | Global HTTP Proxy settings.                                                                                                                                                                                                                                                                                                                                                                                             | <code>{}</code>                               |
 | global.loggingLevel                                | Set the logging level to use, useful for troubleshooting. Valid values, sorted by increasing level of verbosity are: `PANIC`, `FATAL`, `ERROR`, `WARN`, `INFO`, `DEBUG`, `TRACE`.                                                                                                                                                                                                                                       | <code>"INFO"</code>                           |
 | global.ssl.ca.certs                                | For outbound connections (secure backend, proxy,...) A PEM-encoded x509 certificate.  This can also be a bundle with multiple certificates.                                                                                                                                                                                                                                                                             | <code>[]</code>                               |
 | global.ssl.ca.keyName                              | Filename that is used when creating the secret.  Required if cert is provided.                                                                                                                                                                                                                                                                                                                                          | <code></code>                                 |
@@ -158,7 +159,7 @@ Specify each parameter using the **`--set key=value[,key=value]`** argument to `
 
 ```console
 $ helm upgrade --install sysdig-cluster-scanner sysdig/cluster-scanner \
-    --create-namespace -n sysdig --version=0.4.1 \
+    --create-namespace -n sysdig --version=0.5.0 \
     --set global.sysdig.region="us1"
 ```
 
@@ -167,7 +168,7 @@ installing the chart. For example:
 
 ```console
 $ helm upgrade --install sysdig-cluster-scanner sysdig/cluster-scanner \
-    --create-namespace -n sysdig --version=0.4.1 \
+    --create-namespace -n sysdig --version=0.5.0 \
     --values values.yaml
 ```
 
