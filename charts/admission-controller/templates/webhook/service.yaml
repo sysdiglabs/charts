@@ -8,6 +8,9 @@ metadata:
 spec:
   type: {{ .Values.webhook.service.type }}
   ports:
+  - name: vac
+    port: {{ .Values.webhook.v2.service.port }}
+    targetPort: vac
   - name: http
     port: {{ .Values.webhook.service.port }}
     targetPort: http

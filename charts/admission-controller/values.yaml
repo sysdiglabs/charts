@@ -12,6 +12,8 @@ global:
     secureAPITokenSecret: ""
     # The global Sysdig Secure region.
     region: "us1"
+    # The global Access Key to access Sysdig Secure.
+    accessKey: ""
   # Global HTTP Proxy settings.
   proxy: {}
   # The global image settings.
@@ -72,13 +74,23 @@ sysdig:
   secureAPIToken: ""
 
   # **required**
-  # <br/>TheeExisting secret with API Token to access Sysdig Secure.
+  # <br/>The existing secret with API Token to access Sysdig Secure.
   # <br/>Alternatively, specify the name of a Kubernetes secret containing `SECURE_API_TOKEN` and
   # `AUTH_BEARER_TOKEN` entry if you're also enabling scanner.
   # <br/>If neither this value nor `sysdig.secureAPIToken` is configured, you
   # are required to provide the deployment with the `SECURE_API_TOKEN`
   # (and `AUTH_BEARER_TOKEN` if the scanner is enabled) environment variable.
   existingSecureAPITokenSecret: ""
+
+  # **required for KSPM Admission Controller**
+  # <br/>Access Key to access Sysdig Secure.
+  # <br/><br/>Either this value or `sysdig.existingAccessKeySecret` is required
+  # Overrides `global.sysdig.accessKey`
+  accessKey: ""
+
+  # Alternatively, specify the name of a Kubernetes secret containing an 'access-key' entry.
+  # Overrides `global.sysdig.existingAccessKeySecret`
+  existingAccessKeySecret: ""
 
   # Sysdig URL.<br/>
   # - The default for the us-east region is secure.sysdig.com.<br/>
@@ -92,6 +104,9 @@ sysdig:
 features:
   # Enable Kubernetes Audit detections with Falco rules.
   k8sAuditDetections: true
+
+  # Enable KSPM Admission Controller
+  kspmAdmissionController: false
 
   # [Admission Webhook Configuration rules](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#matching-requests-rules) for the Audit Detections
   k8sAuditDetectionsRules:  # +doc-gen:break
@@ -152,21 +167,49 @@ podMonitors:
     annotations: {}
 
 webhook:
+  v2:
+    # Number of seconds for the request to time out
+    timeoutSeconds: 5
+    nats:
+      # Allow insecure TLS certificates in backend connection to NATS service
+      insecure: false
+      # Override the NATS service connection URL
+      url: ""
+    service:
+      # Use this type as webhook service
+      type: ClusterIP
+      # Configure port for the V2 webhook service
+      port: 7443
+    http:
+      # HTTP serve port where the requests will be served from
+      port: 7443
+      # KSPM Admission Controller container image
+    image:
+      # The KSPM Admission Controller image registry
+      registry: quay.io
+      # The KSPM Admission Controller image repository
+      repository: sysdig/secure-admission-controller
+      # The KSPM Admission Controller image tag
+      tag: 1.0.1
+      # Specifies the image digest value.  If set, this value is used instead of the tag value
+      digest:
+      # The PullPolicy for KSPM Admission Controller image
+      pullPolicy:
   # The service name for Webhook deployment
   name: webhook
   # The number of replicas for webhook. **Deprecated**, use `webhook.autoscaling.minReplicas` and `webhook.autoscaling.maxReplicas` instead.
   replicaCount: 1
 
   image:
-    # The webhook image registry.
+    # The webhook image registry
     registry: quay.io
-    # The webhook image registry.
+    # The webhook image repository
     repository: sysdig/admission-controller
-    # The PullPolicy for Webhook image.
+    # The PullPolicy for Webhook image
     pullPolicy:
     # Overrides the default image tag. If not specified, it defaults to appVersion in Chart.yaml
     tag:
-    # Specifies the image digest value.  If set, this value is used instead of the tag value.
+    # Specifies the image digest value.  If set, this value is used instead of the tag value
     digest:
 
   # Specifies the additional labels; applies to webhook only.
