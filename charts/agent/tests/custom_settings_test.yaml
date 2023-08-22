@@ -18,6 +18,11 @@ tests:
             .*
             first:
               value: 1
+            .*
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            .*
             second: example
             .*
     template: configmap.yaml
@@ -45,6 +50,11 @@ tests:
             .*
             first:
               value: 1
+            .*
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            .*
             second: example
             .*
     template: configmap.yaml
@@ -66,6 +76,11 @@ tests:
             .*
             first:
               value: 1
+            .*
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            .*
             second: example
             .*
     template: configmap-deployment.yaml
@@ -95,6 +110,11 @@ tests:
             .*
             first:
               value: 1
+            .*
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            .*
             second: example
             .*
     template: configmap-deployment.yaml
