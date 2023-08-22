@@ -30,6 +30,7 @@ rules:
   - create
   - get
   - delete
+  - watch
 {{- end }}
 - apiGroups:
   - "apps"
