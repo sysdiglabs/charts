@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.5.0
+### New Features
+* **cluster-scanner** [f9db25eb](https://github.com/sysdiglabs/charts/commit/f9db25eb77d6f648adefbf01ad3df983c41ddf70): allow to configure http proxy ([#1302](https://github.com/sysdiglabs/charts/issues/1302))
 # v0.4.1
 ### Documentation
 * **admission-controller, cluster-scanner, registry-scanner, cloud-connector, node-analyzer, rapid-response, sysdig-deploy, agent** [df733e62](https://github.com/sysdiglabs/charts/commit/df733e6294eae1967197e3521473a5fab0282b67): update maintainers list ([#1283](https://github.com/sysdiglabs/charts/issues/1283))
