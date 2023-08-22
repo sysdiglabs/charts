@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.19.0
+### New Features
+* **cluster-scanner** [f9db25eb](https://github.com/sysdiglabs/charts/commit/f9db25eb77d6f648adefbf01ad3df983c41ddf70): allow to configure http proxy ([#1302](https://github.com/sysdiglabs/charts/issues/1302))
 # v1.18.1
 ### Chores
 * **sysdig-deploy** [23e2c873](https://github.com/sysdiglabs/charts/commit/23e2c8737856d6c59842e042b27cf09c68ec6402): Automatic version bump due to updated dependencies ([#1306](https://github.com/sysdiglabs/charts/issues/1306))
