@@ -26,7 +26,7 @@ tests:
           content:
             apiGroups: ["batch"]
             resources: ["jobs"]
-            verbs: ["create", "get", "delete"]
+            verbs: ["create", "get", "delete", "watch"]
         template: templates/webhook/clusterrole.yaml
       - isSubset:
           path: rules[1]
