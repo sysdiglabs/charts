@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.13.0
+### New Features
+* **admission-controller** [b9ab5aee](https://github.com/sysdiglabs/charts/commit/b9ab5aee6521d95aaba8b004b17807c811117122): Add KSPM Admission Controller to helm chart ([#1214](https://github.com/sysdiglabs/charts/issues/1214))
 # v0.12.4
 ### New Features
 * **admission-controller** [ffa2c439](https://github.com/sysdiglabs/charts/commit/ffa2c439bd0a1a76443dc41439f048a2fc41e016): internal test ([#1297](https://github.com/sysdiglabs/charts/issues/1297))
