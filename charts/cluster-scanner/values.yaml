@@ -24,6 +24,8 @@ global:
     pullSecrets: []
     # The pull policy for Cluster Scanner
     pullPolicy: IfNotPresent
+  # Global HTTP Proxy settings.
+  proxy: {}
 
   # Set the logging level to use, useful for troubleshooting. Valid values,
   # sorted by increasing level of verbosity are: `PANIC`, `FATAL`, `ERROR`,
