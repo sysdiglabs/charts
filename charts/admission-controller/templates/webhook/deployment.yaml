@@ -90,7 +90,7 @@ spec:
           resources:
             {{- toYaml .Values.webhook.resources | nindent 12 }}
       {{- end}}
-      {{- if (or .Values.features.k8sAuditDetections .Values.scanner.enabled) }}
+      {{- if (or .Values.features.k8sAuditDetections .Values.scanner.enabled .Values.webhook.acConfig) }}
         - name: admission-controller
           image: "{{ include "admissionController.webhook.image" . }}"
           {{- if .Values.webhook.customEntryPoint }}
