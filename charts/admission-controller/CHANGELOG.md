@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.13.2
+### New Features
+* **admission-controller** [36e87076](https://github.com/sysdiglabs/charts/commit/36e87076af520a0b6becfdf8eeff15b46bed6803): Add watch permission for AC ([#1303](https://github.com/sysdiglabs/charts/issues/1303))
 # v0.13.1
 ### Bug Fixes
 * **admission-controller** [616cad33](https://github.com/sysdiglabs/charts/commit/616cad33605006718b729187bbf621e5546d5fe1): Restore DRY_RUN env in config map, used by legacy AC ([#1304](https://github.com/sysdiglabs/charts/issues/1304))
