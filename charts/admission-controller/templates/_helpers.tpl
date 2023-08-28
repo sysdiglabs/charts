@@ -132,6 +132,20 @@ Sysdig NATS service URL
 {{- end -}}
 {{- end -}}
 
+{{/*
+Define excluded namespaces for admissionController webhook
+*/}}
+{{- define "admissionController.webhook.namespaceSelector" -}}
+{{- if .Values.webhook.namespaceSelector }}
+{{ toYaml .Values.webhook.namespaceSelector }}
+{{- else }}
+matchExpressions:
+  - key: kubernetes.io/metadata.name
+    operator: NotIn
+    values:
+      - {{ .Release.Namespace }}
+{{- end -}}
+{{- end -}}
 
 {{/*
 Common labels

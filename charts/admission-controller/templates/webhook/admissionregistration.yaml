@@ -19,6 +19,8 @@ metadata:
 webhooks:
 {{- if .Values.features.kspmAdmissionController}}
 - name: vac.secure.sysdig.com
+  namespaceSelector:
+{{- include "admissionController.webhook.namespaceSelector" . | indent 4 }}
   rules:
   - apiGroups:
     - ""
@@ -49,6 +51,8 @@ webhooks:
 {{- end }}
 {{- if or .Values.scanner.enabled .Values.webhook.acConfig }}
 - name: scanning.secure.sysdig.com
+  namespaceSelector:
+{{- include "admissionController.webhook.namespaceSelector" . | indent 4 }}
   matchPolicy: Equivalent
   rules:
   - apiGroups:
@@ -84,6 +88,8 @@ webhooks:
 {{- end }}
 {{- if .Values.features.k8sAuditDetections }}
 - name: audit.secure.sysdig.com
+  namespaceSelector:
+{{- include "admissionController.webhook.namespaceSelector" . | indent 4 }}
   matchPolicy: Equivalent
   rules:
   {{- with .Values.features.k8sAuditDetectionsRules }}
