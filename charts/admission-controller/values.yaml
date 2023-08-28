@@ -341,7 +341,7 @@ webhook:
 
   http:
     # The HTTP serve port where the requests will be served from.
-    port: 8443
+    port: 5000
 
 scc:
   # Enable the creation of Security Context Constraints in Openshift.
