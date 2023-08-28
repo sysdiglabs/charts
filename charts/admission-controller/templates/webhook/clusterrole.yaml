@@ -18,6 +18,7 @@ rules:
   - pods
 {{- if .Values.webhook.acConfig }}
   - configmaps
+  - secrets
 {{- end }}
   verbs:
   - get
