@@ -143,7 +143,7 @@ matchExpressions:
   - key: kubernetes.io/metadata.name
     operator: NotIn
     values:
-      - {{ .Release.Namespace }}
+      - {{ .admissionController.namespace }}
 {{- end -}}
 {{- end -}}
 
