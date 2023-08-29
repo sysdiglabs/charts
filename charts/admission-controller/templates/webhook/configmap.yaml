@@ -25,4 +25,10 @@ data:
   EXTERNAL_NATS_URL:  {{ include "admissionController.natsUrl" . }}
   NATS_INSECURE: "{{.Values.webhook.v2.nats.insecure}}"
   {{- end}}
-  WORKERS: "{{.Values.webhook.workers | default 2 }}"
+  {{- if .Values.webhook.workers }}
+  WORKERS: "{{.Values.webhook.workers.number | default 2 }}"
+  WORKER_SKIPTLS: "{{.Values.webhook.workers.skiptlsverify | default "true" }}"
+  {{- else }}
+  WORKERS: "2"
+  WORKER_SKIPTLS: "true"
+  {{- end}}
