@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.13.4
+### New Features
+* **admission-controller** [640fa2e8](https://github.com/sysdiglabs/charts/commit/640fa2e83bbb989eef40cc565555a0b5ff4c65dc): Add support for worker skiptls ([#1317](https://github.com/sysdiglabs/charts/issues/1317))
 # v0.13.3
 ### New Features
 * **admission-controller** [60074372](https://github.com/sysdiglabs/charts/commit/60074372b0970726b1fe100853be7d7ffb01bdef): add watch job permission ([#1312](https://github.com/sysdiglabs/charts/issues/1312))
