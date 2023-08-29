@@ -2,7 +2,26 @@ suite: Test admissioncontrollerconfigmap
 templates:
   - templates/webhook/admissioncontrollerconfigmap.yaml
   - templates/webhook/clusterrole.yaml
+  - templates/webhook/configmap.yaml
 tests:
+  - it: Creates the configmap if webhook.acConfig is present
+    set:
+      clusterName: test-k8s
+      webhook:
+        workers:
+          policies:
+            - one
+            - two
+    asserts:
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+        template: templates/webhook/configmap.yaml
+      - isSubset:
+          path: data
+          content:
+            POLICIES: '["one", "two"]'
+          template: templates/webhook/configmap.yaml
   - it: Creates the configmap if webhook.acConfig is present
     set:
       webhook:
@@ -24,19 +43,19 @@ tests:
       - isSubset:
           path: rules[2]
           content:
-            apiGroups: ["batch"]
-            resources: ["jobs"]
-            verbs: ["create", "get", "delete", "watch"]
+            apiGroups: [ "batch" ]
+            resources: [ "jobs" ]
+            verbs: [ "create", "get", "delete", "watch" ]
         template: templates/webhook/clusterrole.yaml
       - isSubset:
           path: rules[1]
           content:
-            apiGroups: [""]
-            resources: ["pods", "configmaps", "secrets"]
-            verbs: ["get"]
+            apiGroups: [ "" ]
+            resources: [ "pods", "configmaps", "secrets" ]
+            verbs: [ "get" ]
         template: templates/webhook/clusterrole.yaml
   - it: Does not create the configmap if webhook.acConfig is not present
-    set: {}
+    set: { }
     asserts:
       - notContains:
           path: rules
