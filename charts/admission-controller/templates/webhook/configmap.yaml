@@ -28,6 +28,7 @@ data:
   {{- if .Values.webhook.workers }}
   WORKERS: "{{.Values.webhook.workers.number | default 2 }}"
   WORKER_SKIPTLS: "{{.Values.webhook.workers.skiptlsverify | default "true" }}"
+  POLICIES: {{ toJson .Values.webhook.workers.scanningPolicies | quote }}
   {{- else }}
   WORKERS: "2"
   WORKER_SKIPTLS: "true"
