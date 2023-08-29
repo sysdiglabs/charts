@@ -29,6 +29,6 @@ data:
   WORKERS: "{{.Values.webhook.workers.number | default 2 }}"
   WORKER_SKIPTLS: "{{.Values.webhook.workers.skiptlsverify | default "true" }}"
   {{- else }}
-  WORKERS: 2
+  WORKERS: "2"
   WORKER_SKIPTLS: "true"
   {{- end}}
