@@ -178,16 +178,3 @@ KSPM Collector nodeSelector
 true
 {{- end }}
 {{- end }}
-
-{{/*
-Return agent tags if available
-*/}}
-{{- define "agent.tags" }}
-{{- if hasKey .Values.global "settings" }}
-{{- if hasKey .Values.global.settings "tags" }}
-{{- .Values.global.settings.tags }}
-{{- end }}
-{{- else if hasKey .Values.agent.sysdig.settings "tags" }}
-{{- .Values.agent.sysdig.settings.tags }}
-{{- end }}
-{{- end }}

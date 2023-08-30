@@ -165,9 +165,9 @@ spec:
                 key: agent_port
                 name: {{ template "kspmCollector.fullname" . }}
                 optional: true
-          {{- if ne (include "agent.tags" .) "" }}
+          {{- if and (hasKey .Values.global "settings") (hasKey .Values.global.settings "tags") }}
           - name: TAGS
-            value: {{ include "agent.tags" . }}
+            value: {{ .Values.global.settings.tags }}
           {{- end }}
           {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
           - name: SSL_CERT_FILE

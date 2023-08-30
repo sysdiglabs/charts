@@ -16,36 +16,15 @@ tests:
             name: TAGS
             value: tag:value
         template: daemonset-node-analyzer.yaml
-  - it: Check agent tags are set from agent.sysdig.settings.tags
-    documentIndex: 0
-    set:
-      global:
-        kspm:
-          deploy: true
-      agent:
-        sysdig:
-          settings:
-            tags: tag:value
-    asserts:
-      - contains:
-          path: spec.template.spec.containers[0].env
-          content:
-            name: TAGS
-            value: tag:value
-        template: daemonset-node-analyzer.yaml
   - it: Check agent tags are not set
     documentIndex: 0
     set:
       global:
         kspm:
           deploy: true
-      agent:
-        sysdig:
-          settings: {}
     asserts:
       - notContains:
           path: spec.template.spec.containers[0].env
           content:
             name: TAGS
-            value: tag:value
         template: daemonset-node-analyzer.yaml
