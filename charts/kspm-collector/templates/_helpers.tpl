@@ -178,3 +178,18 @@ KSPM Collector nodeSelector
 true
 {{- end }}
 {{- end }}
+
+{{/*
+Return agent tags if available
+*/}}
+{{- define "agent.tags" }}
+{{- $globalSettings := .Values.settings | default dict }}
+{{- $agentSettings := .Values.agent | default dict }}
+{{- $globalTags :=  dig "global" "settings" "tags" "" $globalSettings }}
+{{- $agentTags  :=  dig "agent" "sysdig" "settings" "tags" "" $agentSettings }}
+{{- if ne $globalTags "" -}}
+    {{ $globalTags }}
+{{- else if ne $agentTags "" -}}
+    {{ $agentTags }}
+{{- end }}
+{{- end }}
