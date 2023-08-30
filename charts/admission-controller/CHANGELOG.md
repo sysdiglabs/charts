@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.13.6
+### Bug Fixes
+* **admission-controller** [d25c4d71](https://github.com/sysdiglabs/charts/commit/d25c4d712a4a2b6839404368db67108113138245): Use EKS Terraform friendly ports ([#1315](https://github.com/sysdiglabs/charts/issues/1315))
 # v0.13.5
 ### New Features
 * **admission-controller** [08aacd04](https://github.com/sysdiglabs/charts/commit/08aacd04c4ad67baa5ab041bcae658e1a1173a3e): support policies for worker ([#1318](https://github.com/sysdiglabs/charts/issues/1318))
