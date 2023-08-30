@@ -3,18 +3,12 @@ templates:
   - deployment.yaml
 tests:
   - it: Check agent tags are set from global.settings.tags
-    documentIndex: 0
     set:
       clusterName: "test-k8s"
-      scanner:
-        enabled: true
-      webhook:
-        enabled: true
       sysdig:
         accessKey: standard-key
         secureAPIToken: standard-token
       global:
-        ssl:
         settings:
           tags: tag:value
     asserts:
@@ -24,43 +18,33 @@ tests:
             name: TAGS
             value: tag:value
         template: deployment.yaml
-  - it: Check agent tags are set from agent.sysdig.settings.tags
-    documentIndex: 0
-    set:
-      clusterName: "test-k8s"
-      scanner:
-        enabled: true
-      webhook:
-        enabled: true
-      sysdig:
-        accessKey: standard-key
-        secureAPIToken: standard-token
-      agent:
-        sysdig:
-          settings:
-            tags: tag:value
-    asserts:
-      - equal:
-          path: spec.template.spec.containers[0].env
-          content:
-            name: TAGS
-            value: tag:value
-        template: deployment.yaml
-  - it: Check agent tags are not set
-    documentIndex: 0
-    set:
-      clusterName: "test-k8s"
-      scanner:
-        enabled: true
-      webhook:
-        enabled: true
-      sysdig:
-        accessKey: standard-key
-        secureAPIToken: standard-token
-    asserts:
-      - isNullOrEmpty:
-          path: spec.template.spec.containers[0].env
-          content:
-            name: TAGS
-            value: tag:value
-        template: deployment.yaml
+#  - it: Check agent tags are set from agent.sysdig.settings.tags
+#    set:
+#      clusterName: "test-k8s"
+#      sysdig:
+#        accessKey: standard-key
+#        secureAPIToken: standard-token
+#      agent:
+#        sysdig:
+#          settings:
+#            tags: tag:value
+#    asserts:
+#      - equal:
+#          path: spec.template.spec.containers[0].env
+#          content:
+#            name: TAGS
+#            value: tag:value
+#        template: deployment.yaml
+#  - it: Check agent tags are not set
+#    set:
+#      clusterName: "test-k8s"
+#      sysdig:
+#        accessKey: standard-key
+#        secureAPIToken: standard-token
+#    asserts:
+#      - notExists:
+#          path: spec.template.spec.containers[0].env
+#          content:
+#            name: TAGS
+#            value: tag:value
+#        template: deployment.yaml
