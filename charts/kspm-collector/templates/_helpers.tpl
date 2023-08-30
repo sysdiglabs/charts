@@ -188,6 +188,6 @@ Return agent tags if available
 {{- .Values.global.settings.tags }}
 {{- end }}
 {{- else if hasKey .Values.agent.sysdig.settings "tags" }}
-{{ .Values.agent.sysdig.settings.tags }}
+{{- .Values.agent.sysdig.settings.tags }}
 {{- end }}
 {{- end }}

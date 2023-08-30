@@ -1,41 +1,51 @@
-suite: Test kspm-collector Agent Tags
+suite: Test node-analyzer Agent Tags
 templates:
   - daemonset-node-analyzer.yaml
 tests:
   - it: Check agent tags are set from global.settings.tags
-    documentIndex: 0
     set:
       global:
-        ssl:
         settings:
           tags: tag:value
+        kspm:
+          deploy: true
     asserts:
       - contains:
           path: spec.template.spec.containers[0].env
           content:
             name: TAGS
             value: tag:value
-        template: deployment.yaml
+        template: daemonset-node-analyzer.yaml
   - it: Check agent tags are set from agent.sysdig.settings.tags
     documentIndex: 0
     set:
+      global:
+        kspm:
+          deploy: true
       agent:
         sysdig:
           settings:
             tags: tag:value
     asserts:
-      - equal:
+      - contains:
           path: spec.template.spec.containers[0].env
           content:
             name: TAGS
             value: tag:value
-        template: deployment.yaml
+        template: daemonset-node-analyzer.yaml
   - it: Check agent tags are not set
     documentIndex: 0
+    set:
+      global:
+        kspm:
+          deploy: true
+      agent:
+        sysdig:
+          settings: {}
     asserts:
-      - isNullOrEmpty:
+      - notContains:
           path: spec.template.spec.containers[0].env
           content:
             name: TAGS
             value: tag:value
-        template: deployment.yaml
+        template: daemonset-node-analyzer.yaml

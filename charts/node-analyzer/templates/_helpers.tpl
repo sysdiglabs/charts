@@ -294,13 +294,11 @@ true
 Return agent tags if available
 */}}
 {{- define "agent.tags" }}
-{{- $globalSettings := .Values.settings | default dict }}
-{{- $agentSettings := .Values.agent | default dict }}
-{{- $globalTags :=  dig "global" "settings" "tags" "" $globalSettings }}
-{{- $agentTags  :=  dig "agent" "sysdig" "settings" "tags" "" $agentSettings }}
-{{- if ne $globalTags "" -}}
-    {{ $globalTags }}
-{{- else if ne $agentTags "" -}}
-    {{ $agentTags }}
+{{- if hasKey .Values.global "settings" }}
+{{- if hasKey .Values.global.settings "tags" }}
+{{- .Values.global.settings.tags }}
+{{- end }}
+{{- else if hasKey .Values.agent.sysdig.settings "tags" }}
+{{- .Values.agent.sysdig.settings.tags }}
 {{- end }}
 {{- end }}
