@@ -1,5 +1,5 @@
 # What's Changed
 
-### Bug Fixes
-- **admission-controller** [d25c4d71](https://github.com/sysdiglabs/charts/commit/d25c4d712a4a2b6839404368db67108113138245): Use EKS Terraform friendly ports ([#1315](https://github.com/sysdiglabs/charts/issues/1315))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.19.3...sysdig-deploy-1.19.4
+### Chores
+- **sysdig-deploy** [d7fcfe3d](https://github.com/sysdiglabs/charts/commit/d7fcfe3de636b68decf7c7b8e95653b0c6098a28): Automatic version bump due to updated dependencies ([#1321](https://github.com/sysdiglabs/charts/issues/1321))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.19.4...sysdig-deploy-1.19.5
