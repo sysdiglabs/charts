@@ -1,8 +1,5 @@
 # What's Changed
 
 ### Chores
-- **sysdig, node-analyzer** [0ba5baa3](https://github.com/sysdiglabs/charts/commit/0ba5baa3e690be1c2c3a92c4928558efffb33539): bump sysdig/vuln-runtime-scanner to v1.5.5 ([#1320](https://github.com/sysdiglabs/charts/issues/1320))
-
-    * * Runtime Scanner bumped to 1.5.5
-     * Fixed a bug that could cause the Runtime Scanner to perform unneeded rescans
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.14.6...node-analyzer-1.14.7
+- **kspm-collector,node-analyzer** [96e039bb](https://github.com/sysdiglabs/charts/commit/96e039bbe88e2284c99da30e3612efde00e9d2ac): KSPM v1.30.0 ([#1322](https://github.com/sysdiglabs/charts/issues/1322))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.14.7...node-analyzer-1.15.0
