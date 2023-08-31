@@ -6,7 +6,7 @@ on:
       - master
 jobs:
   update-sysdig-deploy-version:
-    runs-on: ubuntu-latest
+    runs-on: tools-runner-small
     steps:
       - name: Git checkout
         uses: actions/checkout@v3

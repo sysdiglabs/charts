@@ -7,7 +7,7 @@ on:
 
 jobs:
   lint-test-branch:
-    runs-on: ubuntu-latest
+    runs-on: tools-runner-large
     if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
     steps:
       - name: Checkout
@@ -77,7 +77,7 @@ jobs:
 
 
   lint-test-fork:
-    runs-on: ubuntu-latest
+    runs-on: tools-runner-large
     permissions:
       checks: write
     if: github.event_name == 'repository_dispatch' &&

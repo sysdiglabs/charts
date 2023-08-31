@@ -9,7 +9,7 @@ jobs:
     permissions:
       pull-requests: write
     name: Greeting comment upon PR from fork
-    runs-on: ubuntu-latest
+    runs-on: tools-runner-small
     if: github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.full_name != 'sysdiglabs/charts'
 
     steps:

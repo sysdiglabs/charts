@@ -11,7 +11,7 @@ env:
 
 jobs:
   charts-to-release:
-    runs-on: ubuntu-latest
+    runs-on: tools-runner-small
     outputs:
       modified-charts-files: ${{ steps.updated-charts.outputs.all_modified_files }}
     steps:
@@ -29,7 +29,7 @@ jobs:
   generate-changelog:
     needs: charts-to-release
     if: needs.charts-to-release.outputs.modified-charts-files
-    runs-on: ubuntu-latest
+    runs-on: tools-runner-small
     container: quay.io/sysdig/git-chglog:0.15.1-3-g6e4e27d
     steps:
       - name: Checkout
@@ -88,7 +88,7 @@ jobs:
   release-charts:
     needs:
       - generate-changelog
-    runs-on: ubuntu-latest
+    runs-on: tools-runner-small
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -160,7 +160,7 @@ jobs:
     needs:
       - charts-to-release
       - release-charts
-    runs-on: ubuntu-latest
+    runs-on: tools-runner-small
     steps:
       - name: Checkout
         uses: actions/checkout@v3

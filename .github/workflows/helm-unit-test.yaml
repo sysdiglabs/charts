@@ -4,7 +4,7 @@ on: pull_request
 
 jobs:
   Unit-tests:
-    runs-on: ubuntu-latest
+    runs-on: tools-runner-small
     steps:
       - name: Checkout
         uses: actions/checkout@v3

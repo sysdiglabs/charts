@@ -10,7 +10,7 @@ env:
 
 jobs:
   publish-chart:
-    runs-on: ubuntu-latest
+    runs-on: tools-runner-small
     steps:
     - name: Get name from tag
       id: tag_name

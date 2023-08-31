@@ -8,7 +8,7 @@ jobs:
   pr-lint:
     permissions:
       pull-requests: write
-    runs-on: ubuntu-latest
+    runs-on: tools-runner-small
     steps:
       - uses: morrisoncole/pr-lint-action@v1.7.0
         with:

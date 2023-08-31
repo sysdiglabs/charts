@@ -6,7 +6,7 @@ on:
 
 jobs:
   dispatch:
-    runs-on: ubuntu-latest
+    runs-on: tools-runner-small
     steps:
       - name: filter release tag
         id: filter_tag

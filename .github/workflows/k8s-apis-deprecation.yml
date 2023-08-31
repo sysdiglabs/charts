@@ -13,7 +13,7 @@ on: workflow_dispatch
 jobs:
 
   charts:
-    runs-on: ubuntu-latest
+    runs-on: tools-runner-small
     # Parallel builds
     strategy:
       # Don't stop the pipeline in case one of parallel jobs fails

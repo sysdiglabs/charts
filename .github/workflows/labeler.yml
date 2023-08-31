@@ -8,7 +8,7 @@ jobs:
     permissions:
       contents: read
       pull-requests: write
-    runs-on: ubuntu-latest
+    runs-on: tools-runner-small
     steps:
       - uses: actions/labeler@v4.0.3
         with:
