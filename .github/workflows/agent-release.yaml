@@ -10,7 +10,7 @@ permissions:
   pull-requests: write
 
 jobs:
-  handleAgentRelease:
+  agent-release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
