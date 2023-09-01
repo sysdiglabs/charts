@@ -2,7 +2,8 @@
 name: Update charts for Agent release
 
 on:
-  workflow_dispatch:
+  repository_dispatch:
+    types: [agent-release]
 
 permissions:
   contents: read
