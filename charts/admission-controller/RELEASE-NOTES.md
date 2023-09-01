@@ -1,5 +1,5 @@
 # What's Changed
 
-### Bug Fixes
-- **admission-controller** [d25c4d71](https://github.com/sysdiglabs/charts/commit/d25c4d712a4a2b6839404368db67108113138245): Use EKS Terraform friendly ports ([#1315](https://github.com/sysdiglabs/charts/issues/1315))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/admission-controller-0.13.5...admission-controller-0.13.6
+### Chores
+- **admission-controller** [ee16dabf](https://github.com/sysdiglabs/charts/commit/ee16dabfdca8128699794e3a0028fc24c519e41d): bump version to v3.9.27 ([#1325](https://github.com/sysdiglabs/charts/issues/1325))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/admission-controller-0.13.6...admission-controller-0.13.7
