@@ -12,6 +12,18 @@ scms:
       username: draios-jenkins
       branch: "master"
 
+actions:
+  github:
+    kind: "github/pullrequest"
+    scmid: "github"
+    spec:
+      automerge: true
+      description: 'bump agent image tags for `agent` and `sysdig` charts to {{ requiredEnv "AGENT_RELEASE" }}'
+      labels:
+        - "automated PR"
+      mergemethod: squash
+      title: 'feat: release agent {{ requiredEnv "AGENT_RELEASE" }}'
+
 sources:
   agentRelease:
     kind: dockerimage
