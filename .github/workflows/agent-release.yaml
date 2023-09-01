@@ -22,4 +22,5 @@ jobs:
       - name: Run Updatecli in apply mode
         run: "updatecli apply --config .github/updatecli.d/config-agent-release.yaml"
         env:
+          AGENT_RELEASE: "${{ github.event.client_payload.release }}"
           GITHUB_TOKEN: "${{ secrets.TOOLS_JENKINS_ADMIN_ACCESS_GITHUB_TOKEN }}"

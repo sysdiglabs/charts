@@ -13,12 +13,13 @@ scms:
       branch: "master"
 
 sources:
-  quay:
-    kind: dockerimage
+  checkAgentReleaseEnv:
+    kind: shell
     spec:
-      image: "quay.io/sysdig/agent"
-      versionFilter:
-        kind: semver
+      command: echo $AGENT_RELEASE
+      environments:
+        - name: AGENT_RELEASE
+          value: '{{ requiredEnv "AGENT_RELEASE" }}'
 
 targets:
   updateAgentChartValues:
