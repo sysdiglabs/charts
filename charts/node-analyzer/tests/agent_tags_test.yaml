@@ -5,8 +5,9 @@ tests:
   - it: Check agent tags are set from global.settings.tags
     set:
       global:
-        settings:
-          tags: tag:value
+        sysdig:
+          tags:
+            tag: value
         kspm:
           deploy: true
     asserts:

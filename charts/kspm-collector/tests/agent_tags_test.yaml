@@ -9,8 +9,9 @@ tests:
         accessKey: standard-key
         secureAPIToken: standard-token
       global:
-        settings:
-          tags: tag:value
+        sysdig:
+          tags:
+            tag: value
     asserts:
       - contains:
           path: spec.template.spec.containers[0].env

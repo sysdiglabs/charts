@@ -36,6 +36,7 @@ The following table lists the configurable parameters of the Sysdig KSPM Collect
 | `global.kspm.deploy`                       | Enables Sysdig KSPM node analyzer & KSPM collector.          | `true`                                                      |
 | `global.image.pullSecrets`                 | Specifies the global pull secrets.                           | <code>[]</code>                                             |
 | `global.image.pullPolicy`                  | Specifies the global pull policy.                            | <code>`Always`</code>                                       |
+| `global.sysdig.tags`                       | The list of custom tags to be assigned to the components.    | `{}`                                                        |
 | `sysdig.accessKey`                         | Specifies your Sysdig Access Key.                            | ` ` Either accessKey or existingAccessKeySecret is required |
 | `sysdig.existingAccessKeySecret`           | Specifies the name of a Kubernetes secret containing an `access-key` entry.  Alternative to using Sysdig Access Key. | ` ` Either accessKey or existingAccessKeySecret is required |
 | `rbac.create`                              | If sets to true,  RBAC resources will be created and used.   | `true`                                                      |

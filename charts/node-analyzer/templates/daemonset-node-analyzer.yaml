@@ -237,9 +237,9 @@ spec:
                 name: {{ .Release.Name }}-kspm-analyzer
                 key: agent_port
                 optional: true
-          {{- if and (hasKey .Values.global "settings") (hasKey .Values.global.settings "tags") }}
+          {{- if .Values.global.sysdig.tags }}
           - name: TAGS
-            value: {{ .Values.global.settings.tags }}
+            value: {{ include "agent.tags" . }}
           {{- end }}
           {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl)) "true" }}
           - name: SSL_CERT_FILE

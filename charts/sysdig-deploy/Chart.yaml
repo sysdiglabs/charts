@@ -32,7 +32,7 @@ dependencies:
   - name: common
     # repository: https://charts.sysdig.com
     repository: file://../common
-    version: ~1.1.0
+    version: ~1.2.0
   - name: node-analyzer
     # repository: https://charts.sysdig.com
     repository: file://../node-analyzer
