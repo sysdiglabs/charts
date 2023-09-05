@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.1.8
+* **registry-scanner** Update doc, removing nodeSelector param
+
 # v1.1.7
 ### Chores
 * **registry-scanner** [4b760bf0](https://github.com/sysdiglabs/charts/commit/4b760bf0dcfd7e108f99be3f2eec4eef81a05b74): Update to v0.2.46 ([#1330](https://github.com/sysdiglabs/charts/issues/1330))

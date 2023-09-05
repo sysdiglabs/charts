@@ -201,9 +201,9 @@ resources: {}
   # requests:
   #   cpu: 100m
   #   memory: 128Mi
-
 # Configure `nodeSelector` for scheduling the registry scanner pod.
-nodeSelector: {}
+# nodeSelector: {}
+
 # Configure tolerations for scheduling the registry scanner pod.
 tolerations: []
 # Configure affinity for scheduling the registry scanner pod.
