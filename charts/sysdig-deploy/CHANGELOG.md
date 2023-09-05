@@ -10,6 +10,21 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.20.3
+### Chores
+* **sysdig-deploy** [d44c3bf8](https://github.com/sysdiglabs/charts/commit/d44c3bf8599278a657dd8f1bb63fa5713d5b7373): Automatic version bump due to updated dependencies ([#1332](https://github.com/sysdiglabs/charts/issues/1332))
+# v1.20.2
+### Chores
+* **cluster-scanner** [16569cfe](https://github.com/sysdiglabs/charts/commit/16569cfe19ee5880bf67f1f7933fefde170582da): bumped RSI and ISE to latest version 0.4.3 ([#1329](https://github.com/sysdiglabs/charts/issues/1329))
+# v1.20.1
+### Chores
+* **sysdig-deploy** [e7095642](https://github.com/sysdiglabs/charts/commit/e7095642f65dcf3b1a3f7f72af8e5cd29df4f546): Automatic version bump due to updated dependencies ([#1326](https://github.com/sysdiglabs/charts/issues/1326))
+# v1.20.0
+### Chores
+* **kspm-collector,node-analyzer** [96e039bb](https://github.com/sysdiglabs/charts/commit/96e039bbe88e2284c99da30e3612efde00e9d2ac): KSPM v1.30.0 ([#1322](https://github.com/sysdiglabs/charts/issues/1322))
+# v1.19.5
+### Chores
+* **sysdig-deploy** [d7fcfe3d](https://github.com/sysdiglabs/charts/commit/d7fcfe3de636b68decf7c7b8e95653b0c6098a28): Automatic version bump due to updated dependencies ([#1321](https://github.com/sysdiglabs/charts/issues/1321))
 # v1.19.4
 ### Bug Fixes
 * **admission-controller** [d25c4d71](https://github.com/sysdiglabs/charts/commit/d25c4d712a4a2b6839404368db67108113138245): Use EKS Terraform friendly ports ([#1315](https://github.com/sysdiglabs/charts/issues/1315))

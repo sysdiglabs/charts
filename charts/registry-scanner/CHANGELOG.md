@@ -10,6 +10,11 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.1.7
+### Chores
+* **registry-scanner** [4b760bf0](https://github.com/sysdiglabs/charts/commit/4b760bf0dcfd7e108f99be3f2eec4eef81a05b74): Update to v0.2.46 ([#1330](https://github.com/sysdiglabs/charts/issues/1330))
+# v1.1.6
+* **registry-scanner** Add special param to max images
 # v1.1.5
 ### Documentation
 * **admission-controller, cluster-scanner, registry-scanner, cloud-connector, node-analyzer, rapid-response, sysdig-deploy, agent** [df733e62](https://github.com/sysdiglabs/charts/commit/df733e6294eae1967197e3521473a5fab0282b67): update maintainers list ([#1283](https://github.com/sysdiglabs/charts/issues/1283))
