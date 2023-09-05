@@ -10,6 +10,15 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.16.0
+### New Features
+* **admission-controller,agent,cluster-scanner,kspm-collector,node-analyzer,rapid-response** [32231059](https://github.com/sysdiglabs/charts/commit/322310597ffbf9e47b5755be8f2f65a6e68296a2): pass agent tags to kspm components ([#1333](https://github.com/sysdiglabs/charts/issues/1333))
+# v1.15.2
+### Chores
+* **node-analyzer** [de62a50b](https://github.com/sysdiglabs/charts/commit/de62a50b5e2e706157c564d9614688fe63d8da87): bump sysdig/vuln-host-scanner to v0.5 ([#1334](https://github.com/sysdiglabs/charts/issues/1334))
+# v1.15.1
+### Chores
+* **sysdig, node-analyzer** [6b2c2efd](https://github.com/sysdiglabs/charts/commit/6b2c2efd7eccb16ad74df29d75daef664e2df9f7): bump sysdig/vuln-runtime-scanner to v1.5.6 ([#1331](https://github.com/sysdiglabs/charts/issues/1331))
 # v1.15.0
 ### Chores
 * **kspm-collector,node-analyzer** [96e039bb](https://github.com/sysdiglabs/charts/commit/96e039bbe88e2284c99da30e3612efde00e9d2ac): KSPM v1.30.0 ([#1322](https://github.com/sysdiglabs/charts/issues/1322))

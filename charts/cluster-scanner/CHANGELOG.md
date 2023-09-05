@@ -10,6 +10,15 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.5.3
+### New Features
+* **admission-controller,agent,cluster-scanner,kspm-collector,node-analyzer,rapid-response** [32231059](https://github.com/sysdiglabs/charts/commit/322310597ffbf9e47b5755be8f2f65a6e68296a2): pass agent tags to kspm components ([#1333](https://github.com/sysdiglabs/charts/issues/1333))
+# v0.5.2
+### Chores
+* **cluster-scanner** [16569cfe](https://github.com/sysdiglabs/charts/commit/16569cfe19ee5880bf67f1f7933fefde170582da): bumped RSI and ISE to latest version 0.4.3 ([#1329](https://github.com/sysdiglabs/charts/issues/1329))
+# v0.5.1
+### Bug Fixes
+* **cluster-scanner** [89d49754](https://github.com/sysdiglabs/charts/commit/89d49754c08f2597157fbe53a0be9faf708a0de3): corrected parsing of onPremCompatibilityVersion param ([#1323](https://github.com/sysdiglabs/charts/issues/1323))
 # v0.5.0
 ### New Features
 * **cluster-scanner** [f9db25eb](https://github.com/sysdiglabs/charts/commit/f9db25eb77d6f648adefbf01ad3df983c41ddf70): allow to configure http proxy ([#1302](https://github.com/sysdiglabs/charts/issues/1302))

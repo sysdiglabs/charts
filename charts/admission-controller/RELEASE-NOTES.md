@@ -1,5 +1,5 @@
 # What's Changed
 
-### Bug Fixes
-- **admission-controller** [d25c4d71](https://github.com/sysdiglabs/charts/commit/d25c4d712a4a2b6839404368db67108113138245): Use EKS Terraform friendly ports ([#1315](https://github.com/sysdiglabs/charts/issues/1315))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/admission-controller-0.13.5...admission-controller-0.13.6
+### New Features
+- **admission-controller,agent,cluster-scanner,kspm-collector,node-analyzer,rapid-response** [32231059](https://github.com/sysdiglabs/charts/commit/322310597ffbf9e47b5755be8f2f65a6e68296a2): pass agent tags to kspm components ([#1333](https://github.com/sysdiglabs/charts/issues/1333))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/admission-controller-0.13.8...admission-controller-0.13.9
