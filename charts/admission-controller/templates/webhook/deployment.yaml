@@ -125,8 +125,6 @@ spec:
               value: {{ include "webhook.httpsProxy" . }}
             - name: NO_PROXY
               value: {{ include "webhook.noProxy" . }},{{ include "admissionController.scanner.fullname" . }}
-            - name: AC_NAMESPACE
-              value: {{ include "admissionController.namespace" . }}
             {{- end }}
             {{- if or .Values.webhook.ssl.ca.cert (eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.webhook.ssl)) "true") }}
             - name: SSL_CERT_DIR
