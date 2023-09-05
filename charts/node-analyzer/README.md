@@ -35,7 +35,7 @@ For example:
 ```bash
 helm install sysdig-agent --namespace sysdig-agent --create-namespace \
 --set global.sysdig.accessKey=<ACCESS_KEY> \
---set sysdig.settings.tags="role:webserver\,location:europe" \
+--set global.sysdig.tags.role=webserver --set global.sysdig.tags.location=europe \
 --set global.sysdig.region=<SAAS_REGION> \
 --set nodeAnalyzer.secure.vulnerabilityManagement.newEngineOnly=true \
 --set global.kspm.deploy=true \
@@ -218,7 +218,7 @@ The following table lists the configurable parameters of the Sysdig Node Analyze
 | `nodeAnalyzer.tolerations`                                           | Specifies the  tolerations for scheduling.                                                                                         | <pre>node-role.kubernetes.io/master:NoSchedule,<br>node-role.kubernetes.io/control-plane:NoSchedule</pre>                                                             |
 | `nodeAnalyzer.kspmAnalyzer.debug`                                    | Set to true to show KSPM node analyzer debug logging, which is useful for troubleshooting.                                         | `false`                                                                                                                                                               |
 | `nodeAnalyzer.kspmAnalyzer.image.repository`                         | Specifies the image repository to pull the  KSPM node analyzer from.                                                               | `sysdig/kspm-analyzer`                                                                                                                                                |
-| `nodeAnalyzer.kspmAnalyzer.image.tag`                                | Specifies the image tag for the KSPM node analyzer image to be pulled.                                                             | `1.30.0`                                                                                                                                                              |
+| `nodeAnalyzer.kspmAnalyzer.image.tag`                                | Specifies the image tag for the KSPM node analyzer image to be pulled.                                                             | `1.31.0`                                                                                                                                                              |
 | `nodeAnalyzer.kspmAnalyzer.image.digest`                             | Specifies the image digest to pull.                                                                                                | ` `                                                                                                                                                                   |
 | `nodeAnalyzer.kspmAnalyzer.image.pullPolicy`                         | Specifies the The image pull policy for the  KSPM node analyzer.                                                                   | `""`                                                                                                                                                                  |
 | `nodeAnalyzer.kspmAnalyzer.resources.requests.cpu`                   | Specifies the KSPM node analyzer CPU requests per node.                                                                            | `150m`                                                                                                                                                                |
