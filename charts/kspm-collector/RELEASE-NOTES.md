@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **kspm-collector,node-analyzer** [96e039bb](https://github.com/sysdiglabs/charts/commit/96e039bbe88e2284c99da30e3612efde00e9d2ac): KSPM v1.30.0 ([#1322](https://github.com/sysdiglabs/charts/issues/1322))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.6.0...kspm-collector-0.7.0
+### New Features
+- **admission-controller,agent,cluster-scanner,kspm-collector,node-analyzer,rapid-response** [32231059](https://github.com/sysdiglabs/charts/commit/322310597ffbf9e47b5755be8f2f65a6e68296a2): pass agent tags to kspm components ([#1333](https://github.com/sysdiglabs/charts/issues/1333))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.7.0...kspm-collector-0.8.0

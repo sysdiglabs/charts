@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **admission-controller** [ee16dabf](https://github.com/sysdiglabs/charts/commit/ee16dabfdca8128699794e3a0028fc24c519e41d): bump version to v3.9.27 ([#1325](https://github.com/sysdiglabs/charts/issues/1325))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/admission-controller-0.13.6...admission-controller-0.13.7
+### New Features
+- **admission-controller,agent,cluster-scanner,kspm-collector,node-analyzer,rapid-response** [32231059](https://github.com/sysdiglabs/charts/commit/322310597ffbf9e47b5755be8f2f65a6e68296a2): pass agent tags to kspm components ([#1333](https://github.com/sysdiglabs/charts/issues/1333))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/admission-controller-0.13.8...admission-controller-0.13.9

@@ -362,7 +362,7 @@ nodeAnalyzer:
 
     image:
       repository: sysdig/vuln-host-scanner
-      tag: "0.4"
+      tag: "0.5"
       digest:
       pullPolicy:
 
@@ -385,7 +385,7 @@ nodeAnalyzer:
     debug: false
     image:
       repository: sysdig/kspm-analyzer
-      tag: 1.30.0
+      tag: 1.31.0
       digest:
       pullPolicy:
 
