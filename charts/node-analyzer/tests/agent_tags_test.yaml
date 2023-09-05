@@ -1,0 +1,31 @@
+suite: Test node-analyzer Agent Tags
+templates:
+  - daemonset-node-analyzer.yaml
+tests:
+  - it: Check agent tags are set from global.settings.tags
+    set:
+      global:
+        sysdig:
+          tags:
+            tag: value
+        kspm:
+          deploy: true
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: TAGS
+            value: tag:value
+        template: daemonset-node-analyzer.yaml
+  - it: Check agent tags are not set
+    documentIndex: 0
+    set:
+      global:
+        kspm:
+          deploy: true
+    asserts:
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: TAGS
+        template: daemonset-node-analyzer.yaml
