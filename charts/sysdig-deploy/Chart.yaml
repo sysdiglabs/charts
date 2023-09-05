@@ -20,13 +20,13 @@ dependencies:
   - name: admission-controller
     # repository: https://charts.sysdig.com
     repository: file://../admission-controller
-    version: ~0.13.7
+    version: ~0.13.8
     alias: admissionController
     condition: admissionController.enabled
   - name: agent
     # repository: https://charts.sysdig.com
     repository: file://../agent
-    version: ~1.13.6
+    version: ~1.13.7
     alias: agent
     condition: agent.enabled
   - name: common
@@ -42,7 +42,7 @@ dependencies:
   - name: cluster-scanner
     # repository: https://charts.sysdig.com
     repository: file://../cluster-scanner
-    version: ~0.5.2
+    version: ~0.5.3
     alias: clusterScanner
     condition: clusterScanner.enabled
   - name: kspm-collector
@@ -54,6 +54,6 @@ dependencies:
   - name: rapid-response
     # repository: https://charts.sysdig.com
     repository: file://../rapid-response
-    version: ~0.8.1
+    version: ~0.8.2
     alias: rapidResponse
     condition: rapidResponse.enabled
