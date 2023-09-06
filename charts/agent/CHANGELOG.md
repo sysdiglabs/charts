@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.13.7
+### New Features
+* **admission-controller,agent,cluster-scanner,kspm-collector,node-analyzer,rapid-response** [32231059](https://github.com/sysdiglabs/charts/commit/322310597ffbf9e47b5755be8f2f65a6e68296a2): pass agent tags to kspm components ([#1333](https://github.com/sysdiglabs/charts/issues/1333))
 # v1.13.6
 ### Bug Fixes
 * **agent** [877a0bb0](https://github.com/sysdiglabs/charts/commit/877a0bb04a0af18ec4ce3609b52c47e54ae3ba6b): don't duplicate `cointerface_enabled` field in deployment agent configmaps ([#1299](https://github.com/sysdiglabs/charts/issues/1299))

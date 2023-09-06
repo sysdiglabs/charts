@@ -1,5 +1,5 @@
 # What's Changed
 
 ### New Features
-- **admission-controller** [5a096d3b](https://github.com/sysdiglabs/charts/commit/5a096d3b025cff5bc14aac0d6abac540393749e4): support new env vars ([#1335](https://github.com/sysdiglabs/charts/issues/1335))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/admission-controller-0.13.7...admission-controller-0.13.8
+- **admission-controller,agent,cluster-scanner,kspm-collector,node-analyzer,rapid-response** [32231059](https://github.com/sysdiglabs/charts/commit/322310597ffbf9e47b5755be8f2f65a6e68296a2): pass agent tags to kspm components ([#1333](https://github.com/sysdiglabs/charts/issues/1333))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/admission-controller-0.13.8...admission-controller-0.13.9
