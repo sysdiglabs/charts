@@ -36,6 +36,7 @@ sources:
 
 targets:
   updateAgentChartValues:
+    name: "update agent tag in agent chart"
     kind: yaml
     scmid: github
     spec:
@@ -43,6 +44,7 @@ targets:
       key: "$.image.tag"
 
   bumpAgentChart:
+    name: "bump the chart version of the agent chart"
     kind: helmchart
     scmid: github
     dependson:
@@ -54,6 +56,7 @@ targets:
       versionincrement: patch
 
   updateSysdigChartValues:
+    name: "update agent tag in sysdig chart"
     kind: yaml
     scmid: github
     spec:
@@ -61,6 +64,7 @@ targets:
       key: "$.image.tag"
 
   bumpSysdigChart:
+    name: "bump the chart version of the sysdig chart"
     kind: helmchart
     scmid: github
     dependson:
