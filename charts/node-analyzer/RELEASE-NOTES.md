@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **node-analyzer** [de62a50b](https://github.com/sysdiglabs/charts/commit/de62a50b5e2e706157c564d9614688fe63d8da87): bump sysdig/vuln-host-scanner to v0.5 ([#1334](https://github.com/sysdiglabs/charts/issues/1334))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.15.1...node-analyzer-1.15.2
+### New Features
+- **admission-controller,agent,cluster-scanner,kspm-collector,node-analyzer,rapid-response** [32231059](https://github.com/sysdiglabs/charts/commit/322310597ffbf9e47b5755be8f2f65a6e68296a2): pass agent tags to kspm components ([#1333](https://github.com/sysdiglabs/charts/issues/1333))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.15.2...node-analyzer-1.16.0
