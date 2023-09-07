@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **sysdig-deploy** [35c3e3f0](https://github.com/sysdiglabs/charts/commit/35c3e3f0dc61682062f389b851f2758ab7175e71): Automatic version bump due to updated dependencies ([#1344](https://github.com/sysdiglabs/charts/issues/1344))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.22.2...sysdig-deploy-1.22.3
+### Bug Fixes
+- **node-analyzer** [340a9344](https://github.com/sysdiglabs/charts/commit/340a93448d0f3f1d4d7dbb830da7335266640835): node-analyzer jq/yq installation fix ([#1347](https://github.com/sysdiglabs/charts/issues/1347))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.22.3...sysdig-deploy-1.22.4
