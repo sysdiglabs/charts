@@ -1,5 +1,5 @@
 # What's Changed
 
 ### New Features
-- **admission-controller,agent,cluster-scanner,kspm-collector,node-analyzer,rapid-response** [32231059](https://github.com/sysdiglabs/charts/commit/322310597ffbf9e47b5755be8f2f65a6e68296a2): pass agent tags to kspm components ([#1333](https://github.com/sysdiglabs/charts/issues/1333))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/admission-controller-0.13.8...admission-controller-0.13.9
+- **admission-controller** [c36098f2](https://github.com/sysdiglabs/charts/commit/c36098f237678642533ab609ec114060521341c1): add workers memory limits [Internal] ([#1342](https://github.com/sysdiglabs/charts/issues/1342))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/admission-controller-0.14.1...admission-controller-0.14.2
