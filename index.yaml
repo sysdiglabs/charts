@@ -3,6 +3,27 @@ entries:
   admission-controller:
   - apiVersion: v2
     appVersion: 3.9.28
+    created: "2023-09-07T07:42:06.605450149Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      version: ~1.2.0
+    description: Sysdig Admission Controller using Sysdig Secure inline image scanner
+    digest: 280130a592af9f30475f0902ba1ef998f7d9223785fa42aa2b68be1c8c347c9f
+    home: https://sysdiglabs.github.io/admission-controller/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    maintainers:
+    - email: giuseppe.esposito@sysdig.com
+      name: giuse-sysdig
+    - email: hayk.kocharyan@sysdig.com
+      name: hayk
+    name: admission-controller
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/admission-controller-0.14.2/admission-controller-0.14.2.tgz
+    version: 0.14.2
+  - apiVersion: v2
+    appVersion: 3.9.28
     created: "2023-09-06T16:03:51.709732772Z"
     dependencies:
     - name: common
@@ -42466,4 +42487,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2023-09-06T19:52:36.043931774Z"
+generated: "2023-09-07T07:42:06.766397735Z"
