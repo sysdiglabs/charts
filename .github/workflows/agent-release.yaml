@@ -1,0 +1,29 @@
+---
+name: Update charts for Agent release
+
+on:
+  workflow_dispatch:
+    inputs:
+      release:
+        description: 'Agent Version'
+        required: true
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  agent-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Updatecli in the runner
+        uses: updatecli/updatecli-action@v2.32.0
+
+      - name: Run Updatecli in apply mode
+        run: "updatecli apply --config .github/updatecli.d/config-agent-release.yaml"
+        env:
+          AGENT_RELEASE: "${{ inputs.release }}"
+          GITHUB_TOKEN: "${{ secrets.TOOLS_JENKINS_ADMIN_ACCESS_GITHUB_TOKEN }}"
