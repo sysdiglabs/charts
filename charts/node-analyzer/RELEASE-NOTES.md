@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **admission-controller,agent,cluster-scanner,kspm-collector,node-analyzer,rapid-response** [32231059](https://github.com/sysdiglabs/charts/commit/322310597ffbf9e47b5755be8f2f65a6e68296a2): pass agent tags to kspm components ([#1333](https://github.com/sysdiglabs/charts/issues/1333))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.15.2...node-analyzer-1.16.0
+### Bug Fixes
+- **node-analyzer** [340a9344](https://github.com/sysdiglabs/charts/commit/340a93448d0f3f1d4d7dbb830da7335266640835): node-analyzer jq/yq installation fix ([#1347](https://github.com/sysdiglabs/charts/issues/1347))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.16.1...node-analyzer-1.17.0
