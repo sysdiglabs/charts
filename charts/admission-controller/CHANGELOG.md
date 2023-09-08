@@ -10,6 +10,7 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.14.3
 # v0.14.2
 ### New Features
 * **admission-controller** [c36098f2](https://github.com/sysdiglabs/charts/commit/c36098f237678642533ab609ec114060521341c1): add workers memory limits [Internal] ([#1342](https://github.com/sysdiglabs/charts/issues/1342))
