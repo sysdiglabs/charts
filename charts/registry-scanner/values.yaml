@@ -175,9 +175,8 @@ existingSecretName: ""
 
 # Pod annotations for the Registry scanner.
 podAnnotations: {}
-
 # Security context for Registry Scanner pod.
-podSecurityContext: {}
+# podSecurityContext: {}
   # fsGroup: 2000
 
 # Security context for Registry Scanner container.
@@ -203,11 +202,10 @@ resources: {}
   #   memory: 128Mi
 # Configure `nodeSelector` for scheduling the registry scanner pod.
 # nodeSelector: {}
-
 # Configure tolerations for scheduling the registry scanner pod.
-tolerations: []
+# tolerations: []
 # Configure affinity for scheduling the registry scanner pod.
-affinity: {}
+# affinity: {}
 
 scanOnStart:
   # Specify whether to start the post-install scanner job, in addition to the cronjob.
