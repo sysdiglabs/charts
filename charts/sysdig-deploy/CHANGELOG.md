@@ -10,6 +10,18 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.22.4
+### Bug Fixes
+* **node-analyzer** [340a9344](https://github.com/sysdiglabs/charts/commit/340a93448d0f3f1d4d7dbb830da7335266640835): node-analyzer jq/yq installation fix ([#1347](https://github.com/sysdiglabs/charts/issues/1347))
+# v1.22.3
+### Chores
+* **sysdig-deploy** [35c3e3f0](https://github.com/sysdiglabs/charts/commit/35c3e3f0dc61682062f389b851f2758ab7175e71): Automatic version bump due to updated dependencies ([#1344](https://github.com/sysdiglabs/charts/issues/1344))
+# v1.22.2
+### Chores
+* **sysdig-deploy** [236ca58f](https://github.com/sysdiglabs/charts/commit/236ca58fd2888402f520a084da987aa0c09d4a6b): Automatic version bump due to updated dependencies ([#1343](https://github.com/sysdiglabs/charts/issues/1343))
+# v1.21.0
+### New Features
+* **admission-controller,agent,cluster-scanner,kspm-collector,node-analyzer,rapid-response** [32231059](https://github.com/sysdiglabs/charts/commit/322310597ffbf9e47b5755be8f2f65a6e68296a2): pass agent tags to kspm components ([#1333](https://github.com/sysdiglabs/charts/issues/1333))
 # v1.20.3
 ### Chores
 * **sysdig-deploy** [d44c3bf8](https://github.com/sysdiglabs/charts/commit/d44c3bf8599278a657dd8f1bb63fa5713d5b7373): Automatic version bump due to updated dependencies ([#1332](https://github.com/sysdiglabs/charts/issues/1332))

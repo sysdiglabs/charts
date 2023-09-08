@@ -10,6 +10,12 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.14.2
+### New Features
+* **admission-controller** [c36098f2](https://github.com/sysdiglabs/charts/commit/c36098f237678642533ab609ec114060521341c1): add workers memory limits [Internal] ([#1342](https://github.com/sysdiglabs/charts/issues/1342))
+# v0.13.9
+### New Features
+* **admission-controller,agent,cluster-scanner,kspm-collector,node-analyzer,rapid-response** [32231059](https://github.com/sysdiglabs/charts/commit/322310597ffbf9e47b5755be8f2f65a6e68296a2): pass agent tags to kspm components ([#1333](https://github.com/sysdiglabs/charts/issues/1333))
 # v0.13.8
 ### New Features
 * **admission-controller** [5a096d3b](https://github.com/sysdiglabs/charts/commit/5a096d3b025cff5bc14aac0d6abac540393749e4): support new env vars ([#1335](https://github.com/sysdiglabs/charts/issues/1335))

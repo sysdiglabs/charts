@@ -376,3 +376,109 @@ an error if not.
 true
 {{- end }}
 {{- end }}
+
+{{- define "admissionController.webhookTemplate" }}
+webhooks:
+{{- if .Values.features.kspmAdmissionController}}
+- name: vac.secure.sysdig.com
+  namespaceSelector:
+    matchExpressions:
+    - key: kubernetes.io/metadata.name
+      operator: NotIn
+      values:
+        - {{ include "admissionController.namespace" . }}
+  rules:
+  - apiGroups:
+    - ""
+    - apps
+    - batch
+    apiVersions: ["v1"]
+    operations: ["CREATE", "UPDATE"]
+    resources:
+    - "deployments"
+    - "replicasets"
+    - "statefulsets"
+    - "daemonsets"
+    - "jobs"
+    - "cronjobs"
+    scope: "Namespaced"
+  clientConfig:
+    service:
+      namespace: {{ include "admissionController.namespace" . }}
+      name: {{ include "admissionController.webhook.fullname" . }}
+      path: /validate
+      port:  {{ .Values.webhook.v2.service.port }}
+    caBundle: {{ .Cert }}
+
+  admissionReviewVersions: ["v1", "v1beta1"]
+  sideEffects: None
+  timeoutSeconds: {{ .Values.webhook.v2.timeoutSeconds }}
+  failurePolicy: Ignore
+{{- end }}
+{{- if or .Values.scanner.enabled .Values.webhook.acConfig }}
+- name: scanning.secure.sysdig.com
+  namespaceSelector:
+    matchExpressions:
+    - key: kubernetes.io/metadata.name
+      operator: NotIn
+      values:
+        - {{ include "admissionController.namespace" . }}
+  matchPolicy: Equivalent
+  rules:
+  - apiGroups:
+    - ""
+    - apps
+    - batch
+    apiVersions: ["v1"]
+    operations: ["CREATE", "UPDATE"]
+    resources:
+    - "pods"
+    - "deployments"
+    - "replicasets"
+    - "statefulsets"
+    - "daemonsets"
+    - "jobs"
+    - "cronjobs"
+    scope: "*"
+  clientConfig:
+    service:
+      namespace: {{ include "admissionController.namespace" . }}
+      name: {{ include "admissionController.webhook.fullname" . }}
+      path: /allow-pod
+      port:  {{ .Values.webhook.service.port }}
+    caBundle: {{ .Cert }}
+  admissionReviewVersions: ["v1", "v1beta1"]
+  sideEffects: None
+  timeoutSeconds: {{ .Values.webhook.timeoutSeconds }}
+  {{- if .Values.webhook.denyOnError }}
+  failurePolicy: Fail
+  {{- else }}
+  failurePolicy: Ignore
+  {{- end }}
+{{- end }}
+{{- if .Values.features.k8sAuditDetections }}
+- name: audit.secure.sysdig.com
+  namespaceSelector:
+    matchExpressions:
+    - key: kubernetes.io/metadata.name
+      operator: NotIn
+      values:
+        - {{ include "admissionController.namespace" . }}
+  matchPolicy: Equivalent
+  rules:
+  {{- with .Values.features.k8sAuditDetectionsRules }}
+    {{- toYaml . | nindent 2 }}
+  {{- end }}
+  clientConfig:
+    service:
+      namespace: {{ include "admissionController.namespace" . }}
+      name: {{ include "admissionController.webhook.fullname" . }}
+      path: /k8s-audit
+      port:  {{ .Values.webhook.service.port }}
+    caBundle: {{ .Cert }}
+  admissionReviewVersions: ["v1", "v1beta1"]
+  sideEffects: None
+  timeoutSeconds: {{ .Values.webhook.timeoutSeconds }}
+  failurePolicy: Ignore
+{{- end }}
+{{- end }}

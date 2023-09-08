@@ -34,6 +34,9 @@ data:
   WORKERS: "{{.Values.webhook.workers.number | default 2 }}"
   WORKER_SKIPTLS: "{{.Values.webhook.workers.skiptlsverify | default "true" }}"
   POLICIES: {{ toJson .Values.webhook.workers.scanningPolicies | quote }}
+  WORKER_MEMORY_LIMIT: "{{.Values.webhook.workers.memoryLimit | default "2Gi" }}"
+  TTL_SECONDS_AFTER_FINISHED: "{{.Values.webhook.workers.ttlSecondsAfterFinished | default 1000 }}"
+  ACTIVE_DEADLINE_SECONDS: "{{.Values.webhook.workers.activeDeadlineSeconds | default 2000 }}"
   {{- else }}
   WORKERS: "2"
   WORKER_SKIPTLS: "true"

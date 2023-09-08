@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **node-analyzer** [de62a50b](https://github.com/sysdiglabs/charts/commit/de62a50b5e2e706157c564d9614688fe63d8da87): bump sysdig/vuln-host-scanner to v0.5 ([#1334](https://github.com/sysdiglabs/charts/issues/1334))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.15.1...node-analyzer-1.15.2
+### Bug Fixes
+- **node-analyzer** [340a9344](https://github.com/sysdiglabs/charts/commit/340a93448d0f3f1d4d7dbb830da7335266640835): node-analyzer jq/yq installation fix ([#1347](https://github.com/sysdiglabs/charts/issues/1347))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.16.1...node-analyzer-1.17.0
