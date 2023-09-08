@@ -26,7 +26,7 @@ data:
   NATS_INSECURE: "{{.Values.webhook.v2.nats.insecure}}"
   {{- end}}
   {{- if .Values.webhook.acConfig }}
-  CACHE_FLUSH_PERIOD: "{{ .Values.webhook.cacheFlushPeriod | default "1h" }}"
+  CACHE_FLUSH_PERIOD: "{{ .Values.webhook.cacheFlushPeriod | default "24h" }}"
   AC_SERVICE_ACCOUNT_NAME: {{ include "admissionController.webhook.serviceAccountName" . }}
   AC_NAMESPACE:  {{ include "admissionController.namespace" . }}
   {{- end}}
