@@ -2,7 +2,7 @@ suite: Test kspm-collector Agent Tags
 templates:
   - deployment.yaml
 tests:
-  - it: Check agent tags are set from global.settings.tags
+  - it: Check agent tags are set from global.sysdig.tags
     set:
       clusterName: "test-k8s"
       sysdig:
@@ -12,12 +12,24 @@ tests:
         sysdig:
           tags:
             tag: value
+  - it: Check nested agent tags are set from global.sysdig.tags
+    set:
+      clusterName: "test-k8s"
+      sysdig:
+        accessKey: standard-key
+        secureAPIToken: standard-token
+      global:
+        sysdig:
+          tags:
+            nested:
+              value:
+                level: two
     asserts:
       - contains:
           path: spec.template.spec.containers[0].env
           content:
             name: TAGS
-            value: tag:value
+            value: nested.value.level:two
         template: deployment.yaml
   - it: Check agent tags are not set
     set:
