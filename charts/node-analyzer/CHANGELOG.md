@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.17.1
+### Bug Fixes
+* **common,agent,node-analyzer,kspm-collector** [0806635e](https://github.com/sysdiglabs/charts/commit/0806635e5824365adb8ab3d8fd31811477c8918e): support multi-level map in agent.tags ([#1351](https://github.com/sysdiglabs/charts/issues/1351))
 # v1.17.0
 ### Bug Fixes
 * **node-analyzer** [340a9344](https://github.com/sysdiglabs/charts/commit/340a93448d0f3f1d4d7dbb830da7335266640835): node-analyzer jq/yq installation fix ([#1347](https://github.com/sysdiglabs/charts/issues/1347))
