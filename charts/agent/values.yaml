@@ -32,7 +32,6 @@ global:
       #       NjExWjAUMRIwEAYDVQQDEwloYXJib3ItY2EwggEiMA0GCSqGSIb3DQEBAQUAA4IB
       #       MMNlTAQ9fvdNOTzZntye0PQYRTTS34D=
       #       -----END CERTIFICATE-----
-
       # Filename that is used when creating the secret.  Required if cert is provided.
       keyName:
       # Provide the name of an existing Secret that contains the CA required
@@ -42,7 +41,7 @@ global:
       # Provide the name of an existing ConfigMap that contains the CA required
       existingCaConfigMap:
       # Provide the filename that is defined inside the existing ConfigMap
-      existingCaConfigMapKeyName:
+      existingCaConfigMapKeyName: null
 namespace: ""
 image:
   # This is a hack to support RELATED_IMAGE_<identifier> feature in Helm based
@@ -52,7 +51,7 @@ image:
   overrideValue: null
   registry: quay.io
   repository: sysdig/agent
-  tag: 12.16.0
+  tag: 12.16.1
   # Specify a imagePullPolicy
   # Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
   # ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -208,14 +207,14 @@ sysdig:
   disableCaptures: false
   # Advanced settings. Any option in here will be directly translated into dragent.yaml in the Configmap
   settings: {}
-    ### Example: Agent tags
-    # tags: linux:ubuntu,dept:dev,local:nyc
-    ### Example: Proxy configuration (see https://docs.sysdig.com/en/enable-http-proxy-for-agents.html)
-    # ssl: false
-    # http_proxy:
-    #   proxy_host: squid.yourdomain.com
-    #   proxy_port: 3128
-    #   ssl: false
+  ### Example: Agent tags
+  # tags: linux:ubuntu,dept:dev,local:nyc
+  ### Example: Proxy configuration (see https://docs.sysdig.com/en/enable-http-proxy-for-agents.html)
+  # ssl: false
+  # http_proxy:
+  #   proxy_host: squid.yourdomain.com
+  #   proxy_port: 3128
+  #   ssl: false
 secure:
   # true here enables Sysdig Secure: container run-time security & forensics
   enabled: true
@@ -256,13 +255,13 @@ extraVolumes:
   #     - mountPath: /opt/draios/secret
   #       name: sysdig-new-secret
 extraSecrets: []
-  # Allow passing extra secrets that can be mounted via extraVolumes
-  #
-  # extraSecrets:
-  #   - name: sysdig-new-secret
-  #     data:
-  #       sysdig-new-password-key1: bXlwYXNzd29yZA==
-  #       sysdig-new-password-key2: bXlwYXNzd29yZA==
+# Allow passing extra secrets that can be mounted via extraVolumes
+#
+# extraSecrets:
+#   - name: sysdig-new-secret
+#     data:
+#       sysdig-new-password-key1: bXlwYXNzd29yZA==
+#       sysdig-new-password-key2: bXlwYXNzd29yZA==
 # Allow sysdig to run on Kubernetes 1.6 masters.
 tolerations:
   - effect: NoSchedule
@@ -336,10 +335,8 @@ ssl:
     #       NjExWjAUMRIwEAYDVQQDEwloYXJib3ItY2EwggEiMA0GCSqGSIb3DQEBAQUAA4IB
     #       MMNlTAQ9fvdNOTzZntye0PQYRTTS34D=
     #       -----END CERTIFICATE-----
-
     # Filename that is used when creating the secret.  Required if cert is provided.
     keyName: null
-
     # Provide the name of an existing Secret that contains the CA required
     existingCaSecret: null
     # Provide the filename that is defined inside the existing Secret
