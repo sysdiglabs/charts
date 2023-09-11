@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.22.6
+### Chores
+* **sysdig-deploy** [ba08769f](https://github.com/sysdiglabs/charts/commit/ba08769f47ec7bd2e34aecb7c602d4d340dc1f81): Automatic version bump due to updated dependencies ([#1345](https://github.com/sysdiglabs/charts/issues/1345))
 # v1.22.5
 ### Bug Fixes
 * **common,agent,node-analyzer,kspm-collector** [0806635e](https://github.com/sysdiglabs/charts/commit/0806635e5824365adb8ab3d8fd31811477c8918e): support multi-level map in agent.tags ([#1351](https://github.com/sysdiglabs/charts/issues/1351))
