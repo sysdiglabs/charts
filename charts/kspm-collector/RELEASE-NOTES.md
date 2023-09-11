@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **admission-controller,agent,cluster-scanner,kspm-collector,node-analyzer,rapid-response** [32231059](https://github.com/sysdiglabs/charts/commit/322310597ffbf9e47b5755be8f2f65a6e68296a2): pass agent tags to kspm components ([#1333](https://github.com/sysdiglabs/charts/issues/1333))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.7.0...kspm-collector-0.8.0
+### Bug Fixes
+- **common,agent,node-analyzer,kspm-collector** [0806635e](https://github.com/sysdiglabs/charts/commit/0806635e5824365adb8ab3d8fd31811477c8918e): support multi-level map in agent.tags ([#1351](https://github.com/sysdiglabs/charts/issues/1351))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.8.0...kspm-collector-0.8.1
