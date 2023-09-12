@@ -1,3 +1,109 @@
+{{- if eq .Values.config.registryType "gar" }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "registry-scanner.fullname" . }}
+  labels:
+{{ include "registry-scanner.labels" . | indent 4 }}
+data:
+  config.yaml: |
+    logging: {{ .Values.config.logging }}
+
+    # Registry configuration
+    registry:
+      user: from-secret
+      pass: from-secret
+      {{- if .Values.config.registryType }}
+      type: {{ .Values.config.registryType }}
+      {{- end }}
+      {{- if .Values.config.registryAccountId }}
+      accountId: {{ .Values.config.registryAccountId }}
+      {{- end }}
+      {{- if .Values.config.icrIamApi }}
+      icrIamApi: {{ .Values.config.icrIamApi }}
+      {{- end }}
+      {{- if .Values.config.icrIamApiSkipTLS }}
+      icrIamApiSkipTLS: {{ .Values.config.icrIamApiSkipTLS }}
+      {{- end }}
+      skipTLS: {{ .Values.config.registrySkipTLS }}
+      {{- if .Values.config.registryApiUrl }}
+      api: {{ .Values.config.registryApiUrl }}
+      {{- end }}
+      {{- if .Values.config.aws.managementAccountRoleARN }}
+      managementAccountRoleARN: {{ .Values.config.aws.managementAccountRoleARN }}
+      {{- end }}
+      {{- if .Values.config.aws.memberAccountsRoleName }}
+      memberAccountsRoleName: {{ .Values.config.aws.memberAccountsRoleName }}
+      {{- end }}
+      {{- if .Values.config.aws.allowListMemberAccountIDs }}
+      allowListMemberAccountIDs:
+        {{- toYaml .Values.config.aws.allowListMemberAccountIDs | nindent 8}}
+      {{- end }}
+      {{- if .Values.config.aws.allowListRegions }}
+      allowListRegions:
+        {{- toYaml .Values.config.aws.allowListRegions | nindent 8}}
+      {{- end }}
+    secure:
+      baseUrl: {{ default "https://secure.sysdig.com" .Values.config.secureBaseURL }}
+      apiToken: from-secret
+      onPrem: {{ default false .Values.config.secureOnPrem }}
+      skipTLS: {{ default false .Values.config.secureSkipTLS }}
+
+    scan:
+      runner: k8sjob
+      k8sInCluster: true
+      namespace: {{ .Release.Namespace }}
+      workers: {{ .Values.config.maxWorkers }}
+      jobs:
+        ttlSecondsAfterFinished: {{ .Values.config.scan.jobs.ttlSecondsAfterFinished }}
+        serviceAccountName: {{ include "registry-scanner.serviceAccountName" . }}
+        resources:
+          requests:
+            memory: {{ .Values.config.scan.jobs.resources.requests.memory }}
+            cpu: {{ .Values.config.scan.jobs.resources.requests.cpu }}
+          limits:
+            memory: {{ .Values.config.scan.jobs.resources.limits.memory }}
+        temporaryVolumeSizeLimit: {{ .Values.config.scan.jobs.temporaryVolumeSizeLimit }}
+      {{- if .Values.config.scan.inlineScanImage }}
+      inlineScanImage: {{ .Values.config.scan.inlineScanImage }}
+      {{- end }}
+      {{- if .Values.imagePullSecrets }}
+      pullSecrets: {{ include "registry-scanner.pullSecretList" . }}
+      {{- end }}
+      {{- if .Values.customLabels }}
+      labels:
+        {{- include "registry-scanner.customLabels" . | nindent 8}}
+      {{- end }}
+      {{- if .Values.config.scan.securityContext }}
+      securityContext:
+        {{- include "registry-scanner.scan.securityContext" . | nindent 8}}
+      {{- end }}
+      {{- if .Values.ssl.ca.certs }}
+      rootCASecrets:
+      {{- range $index, $cert := .Values.ssl.ca.certs }}
+        - {{ include "registry-scanner.fullname" $ }}-ca-{{$index}}
+      {{- end }}
+      {{- end }}
+
+    filter:
+      {{- if .Values.config.filter.include }}
+      include:
+        {{- toYaml .Values.config.filter.include | nindent 8 }}
+      {{- end }}
+      {{- if .Values.config.filter.exclude }}
+      exclude:
+        {{- toYaml .Values.config.filter.exclude | nindent 8 }}
+      {{- end }}
+      maxAgeDays: {{ .Values.config.filter.maxAgeDays }}
+      maxTagsPerRepository: {{ .Values.config.filter.maxTagsPerRepository }}
+      maxRepositoriesPerRegistry: {{ .Values.config.filter.maxRepositoriesPerRegistry }}
+
+    {{- if .Values.reportToPersistentVolumeClaim }}
+    reportPath: /output/registry-scanner-{DATE}.json
+    {{- end }}
+{{- else }}
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -101,3 +207,4 @@ data:
     {{- if .Values.reportToPersistentVolumeClaim }}
     reportPath: /output/registry-scanner-{DATE}.json
     {{- end }}
+{{- end }}
