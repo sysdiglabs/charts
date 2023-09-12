@@ -3,6 +3,8 @@ apiVersion: batch/v1beta1
 {{- else }}
 apiVersion: batch/v1
 {{- end }}
+{{- if .Values.config.registryType eq "gar" }}
+
 kind: CronJob
 metadata:
   name: {{ include "registry-scanner.fullname" . }}
@@ -20,3 +22,23 @@ spec:
         {{- include "registry-scanner.customLabels" . | nindent 8 }}
     spec:
       {{- include "registry-scanner.jobTemplate" . | indent 6}}
+
+{{- else }}
+kind: CronJob
+metadata:
+  name: {{ include "registry-scanner.fullname" . }}
+  labels:
+{{ include "registry-scanner.labels" . | indent 4 }}
+{{- include "registry-scanner.customLabels" . | nindent 4 }}
+spec:
+  schedule: {{ .Values.cronjob.schedule | quote }}
+  failedJobsHistoryLimit: {{ .Values.cronjob.failedJobsHistoryLimit }}
+  successfulJobsHistoryLimit: {{ .Values.cronjob.successfulJobsHistoryLimit }}
+  concurrencyPolicy:  Forbid
+  jobTemplate:
+    metadata:
+      labels:
+        {{- include "registry-scanner.customLabels" . | nindent 8 }}
+    spec:
+      {{- include "registry-scanner.jobTemplate" . | indent 6}}
+{{- end }}
