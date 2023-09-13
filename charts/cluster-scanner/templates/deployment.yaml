@@ -277,6 +277,14 @@ spec:
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: rsi_js_server_metrics_port
                 optional: true
+          {{- range $key, $value := .Values.runtimeStatusIntegrator.env }}
+          - name: "{{ $key }}"
+            value: "{{ $value }}"
+          {{- end }}
+          {{- range $key, $value := .Values.imageSbomExtractor.env }}
+          - name: "{{ $key }}"
+            value: "{{ $value }}"
+          {{- end }}
       {{- with .Values.runtimeStatusIntegrator }}
           livenessProbe:
             httpGet:

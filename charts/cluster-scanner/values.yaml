@@ -147,6 +147,8 @@ runtimeStatusIntegrator:
       # Runtime Status Integrator Memory requests per replica
       memory: 350Mi
 
+  env: {}
+
   natsJS:
     # The username to be used in the NATS JetStream instance the Runtime Status
     # Integrator is going to start
@@ -179,6 +181,8 @@ imageSbomExtractor:
       cpu: "350m"
       # Image SBOM Extractor Memory requests per replica
       memory: 350Mi
+
+  env: {}
 
   cache:
     # The type of cache to use.
