@@ -1,4 +1,23 @@
 {{- if eq .Values.scanOnStart.enabled true }}
+{{- if eq .Values.config.registryType "gar" }}
+{{- range .Values.config.gar.regions }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{ $.Values.scanOnStart.jobName }}-gar-{{ . }}"
+  labels:
+{{ include "registry-scanner.labels" $ | indent 4 }}
+{{- include "registry-scanner.customLabels" $ | nindent 4 }}
+  {{- if $.Values.scanOnStart.asPostInstallHook}}
+  annotations:
+    "helm.sh/hook": post-install
+  {{- end }}
+spec:
+  {{- include "registry-scanner.jobTemplateGar" (list $ . ) | indent 2}}
+{{- end }}
+{{- else }}
+---
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -12,4 +31,5 @@ metadata:
   {{- end }}
 spec:
   {{- include "registry-scanner.jobTemplate" . | indent 2}}
-{{- end}}
+{{- end }}
+{{- end }}
