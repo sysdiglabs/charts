@@ -182,7 +182,7 @@
         securityContext:
           {{- toYaml $top.Values.securityContext | nindent 14 }}
         image: {{ include "registry-scanner.image" $top }}
-        args: [ "--scan_runner=new-vm-scanner-k8s-job","--registry_url {{ $context }}-docker.pkg.dev"]
+        args: [ "--scan_runner=new-vm-scanner-k8s-job","--registry_url={{ $context }}-docker.pkg.dev"]
         imagePullPolicy: {{ $top.Values.image.pullPolicy }}
         resources:
           {{- toYaml $top.Values.resources | nindent 14 }}
