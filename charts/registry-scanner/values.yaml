@@ -34,8 +34,8 @@ config:
   icrIamApi: ""
   # Ignore TLS certificate for IAM API. Applicable only for ICR registry type.
   icrIamApiSkipTLS: false
-  # Setting Google Artifact Registries regions. Default is us-central1.
   gar:
+    # List of Google Artifact Registry regions where registries are located.
     regions:
     - us-central1
   aws:
