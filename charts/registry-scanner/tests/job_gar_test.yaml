@@ -1,11 +1,10 @@
-suite: Registry Scanner - scanOnStart Job
+suite: Registry Scanner - scanOnStart Job GAR
 templates:
   - templates/job.yaml
+values:
+  - values-gar.yaml
 tests:
   - it: checks job manifest is available when scanOnStart is enabled
-    set:
-      scanOnStart:
-        enabled: true
     asserts:
       - containsDocument:
           kind: Job
@@ -13,16 +12,13 @@ tests:
   - it: checks job name is same as scanOnStart.jobName
     set:
       scanOnStart:
-        enabled: true
         jobName: foo
     asserts:
       - equal:
           path: metadata.name
-          value: foo
+          value: foo-gar-us-east1
   - it: sets extraEnvVars on job
     set:
-      scanOnStart:
-        enabled: true
       extraEnvVars:
         - name: FOO
           value: bar
@@ -33,9 +29,6 @@ tests:
             name: FOO
             value: bar
   - it: sets default labels
-    set:
-      scanOnStart:
-        enabled: true
     asserts:
       - equal:
           path: metadata.labels['app.kubernetes.io/component']
@@ -44,9 +37,6 @@ tests:
           path: spec.template.metadata.labels['app.kubernetes.io/component']
           value: registry-scanner-orchestrator
   - it: ttlSecondsAfterFinished default value is set
-    set:
-      scanOnStart:
-        enabled: true
     asserts:
       - equal:
           path: spec.ttlSecondsAfterFinished
@@ -54,8 +44,6 @@ tests:
   - it: ttlSecondsAfterFinished is set
     set:
       config.scan.orchestrator.ttlSecondsAfterFinished: '0'
-      scanOnStart:
-        enabled: true
     asserts:
       - equal:
           path: spec.ttlSecondsAfterFinished
@@ -63,16 +51,12 @@ tests:
   - it: ttlSecondsAfterFinished is unset
     set:
       config.scan.orchestrator.ttlSecondsAfterFinished: ''
-      scanOnStart:
-        enabled: true
     asserts:
       - isNull:
           path: spec.ttlSecondsAfterFinished
 
   - it: multiple jobs created if registry type gar and config gar regions are set
     set:
-      scanOnStart:
-        enabled: true
       config:
         registryType: gar
         gar:
@@ -96,8 +80,6 @@ tests:
 
   - it: command arguments are properly set if registry type gar and config gar regions are set
     set:
-      scanOnStart:
-        enabled: true
       config:
         registryType: gar
         gar:

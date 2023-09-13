@@ -1,0 +1,127 @@
+suite: Registry Scanner - cronjob GAR
+templates:
+  - templates/cronjob.yaml
+values:
+  - values-gar.yaml
+tests:
+  - it: Check currency policy is set to Forbid
+    asserts:
+      - equal:
+          path: spec.concurrencyPolicy
+          value: Forbid
+  - it: sets extraEnvVars on job
+    set:
+      extraEnvVars:
+        - name: FOO
+          value: bar
+    asserts:
+      - contains:
+          path: spec.jobTemplate.spec.template.spec.containers[0].env
+          content:
+            name: FOO
+            value: bar
+  - it: sets the service account for the jobs
+    asserts:
+    - equal:
+        path: spec.jobTemplate.spec.template.spec.serviceAccountName
+        value: RELEASE-NAME-registry-scanner
+  - it: sets the backoff limit to 0
+    asserts:
+    - equal:
+        path: spec.jobTemplate.spec.backoffLimit
+        value: 0
+
+  - it: Check apiVersion for Kube <1.21
+    capabilities:
+      majorVersion: 1
+      minorVersion: 20
+    asserts:
+      - equal:
+          path: apiVersion
+          value: batch/v1beta1
+
+  - it: Check apiVersion for Kube >=1.21
+    capabilities:
+      majorVersion: 1
+      minorVersion: 21
+    asserts:
+      - equal:
+          path: apiVersion
+          value: batch/v1
+
+  - it: Check apiVersion for Kube <1.21 with '+' character in minor version
+    capabilities:
+      majorVersion: 1
+      minorVersion: "20+"
+    asserts:
+      - equal:
+          path: apiVersion
+          value: batch/v1beta1
+
+  - it: Check apiVersion for Kube >=1.21 with '+' character in minor version
+    capabilities:
+      majorVersion: 1
+      minorVersion: "21+"
+    asserts:
+      - equal:
+          path: apiVersion
+          value: batch/v1
+
+  - it: sets default labels
+    asserts:
+      - equal:
+          path: metadata.labels['app.kubernetes.io/component']
+          value: registry-scanner-orchestrator
+      - equal:
+          path: spec.jobTemplate.spec.template.metadata.labels['app.kubernetes.io/component']
+          value: registry-scanner-orchestrator
+
+  - it: ttlSecondsAfterFinished default value is set
+    asserts:
+      - equal:
+          path: spec.jobTemplate.spec.ttlSecondsAfterFinished
+          value: 3600
+  - it: ttlSecondsAfterFinished is set
+    set:
+      config.scan.orchestrator.ttlSecondsAfterFinished: '0'
+    asserts:
+      - equal:
+          path: spec.jobTemplate.spec.ttlSecondsAfterFinished
+          value: 0
+  - it: ttlSecondsAfterFinished is unset
+    set:
+      config.scan.orchestrator.ttlSecondsAfterFinished: ''
+    asserts:
+      - isNull:
+          path: spec.jobTemplate.spec.ttlSecondsAfterFinished
+
+  - it: multiple cronjobs created if registry type gar and config gar regions are set
+    capabilities:
+      majorVersion: 1
+      minorVersion: "21+"
+    set:
+      config:
+        gar:
+          regions:
+          - us-east1
+          - us-central
+    asserts:
+      - containsDocument:
+          kind: CronJob
+          apiVersion: batch/v1
+          name: RELEASE-NAME-registry-scanner-gar-us-east1
+      - containsDocument:
+          kind: CronJob
+          apiVersion: batch/v1
+          name: RELEASE-NAME-registry-scanner-gar-us-central
+      - hasDocuments:
+          count: 2
+      - matchRegex:
+          path: spec.jobTemplate.spec.template.spec.containers[0].args[1]
+          pattern: -docker.pkg.dev
+
+  - it: command arguments are properly set if registry type gar and config gar regions are set
+    asserts:
+      - matchRegex:
+          path: spec.jobTemplate.spec.template.spec.containers[0].args[1]
+          pattern: us-east1-docker.pkg.dev
