@@ -12028,6 +12028,36 @@ entries:
   node-analyzer:
   - apiVersion: v2
     appVersion: 12.8.0
+    created: "2023-09-14T15:15:24.72995228Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      version: ~1.2.1
+    description: Sysdig Node Analyzer
+    digest: 6bcaa131aa005ef8564d8079204ce5dd8793737c9a553f0ef77e0a5f433b1efa
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: chen.shmilovich@sysdig.com
+      name: chen-shmilovich-sysdig
+    - email: giuseppe.esposito@sysdig.com
+      name: giuse-sysdig
+    name: node-analyzer
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/node-analyzer-1.17.4/node-analyzer-1.17.4.tgz
+    version: 1.17.4
+  - apiVersion: v2
+    appVersion: 12.8.0
     created: "2023-09-14T15:04:12.877609241Z"
     dependencies:
     - name: common
@@ -43154,4 +43184,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2023-09-14T15:04:13.143830168Z"
+generated: "2023-09-14T15:15:24.86316788Z"
