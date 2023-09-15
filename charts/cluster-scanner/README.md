@@ -25,7 +25,7 @@ $ pre-commit run -a
 $ helm repo add sysdig https://charts.sysdig.com
 $ helm repo update
 $ helm upgrade --install sysdig-cluster-scanner sysdig/cluster-scanner \
-      --create-namespace -n sysdig --version=0.5.4  \
+      --create-namespace -n sysdig --version=0.5.5  \
       --set global.clusterConfig.name=CLUSTER_NAME \
       --set global.sysdig.region=SYSDIG_REGION \
       --set global.sysdig.accessKey=YOUR-KEY-HERE
@@ -55,7 +55,7 @@ To install the chart with the release name `cluster-scanner`, run:
 
 ```console
 $ helm upgrade --install sysdig-cluster-scanner sysdig/cluster-scanner \
-       --create-namespace -n sysdig --version=0.5.4 \
+       --create-namespace -n sysdig --version=0.5.5 \
        --set global.clusterConfig.name=CLUSTER_NAME \
        --set global.sysdig.region=SYSDIG_REGION \
        --set global.sysdig.accessKey=YOUR-KEY-HERE
@@ -119,6 +119,7 @@ The following table lists the configurable parameters of the `cluster-scanner` c
 | runtimeStatusIntegrator.resources.limits.memory    | Runtime Status Integrator Memory limit per replica                                                                                                                                                                                                                                                                                                                                                                      | <code>350Mi</code>                            |
 | runtimeStatusIntegrator.resources.requests.cpu     | Runtime Status Integrator CPU requests per replica                                                                                                                                                                                                                                                                                                                                                                      | <code>"350m"</code>                           |
 | runtimeStatusIntegrator.resources.requests.memory  | Runtime Status Integrator Memory requests per replica                                                                                                                                                                                                                                                                                                                                                                   | <code>350Mi</code>                            |
+| runtimeStatusIntegrator.env                        | Runtime Status Integrator env allows the definition of environment variables                                                                                                                                                                                                                                                                                                                                            | <code>{}</code>                               |
 | runtimeStatusIntegrator.natsJS.user                | The username to be used in the NATS JetStream instance the Runtime Status Integrator is going to start                                                                                                                                                                                                                                                                                                                  | <code>"default-user"</code>                   |
 | imageSbomExtractor.image.registry                  | The image registry to use for the Image SBOM Extractor component of Cluster Scanner                                                                                                                                                                                                                                                                                                                                     | <code>quay.io</code>                          |
 | imageSbomExtractor.image.repository                | The image repository to use for pulling the Image SBOM Extractor image                                                                                                                                                                                                                                                                                                                                                  | <code>sysdig/image-sbom-extractor</code>      |
@@ -129,6 +130,7 @@ The following table lists the configurable parameters of the `cluster-scanner` c
 | imageSbomExtractor.resources.limits.memory         | Image SBOM Extractor Memory limit per replica                                                                                                                                                                                                                                                                                                                                                                           | <code>350Mi</code>                            |
 | imageSbomExtractor.resources.requests.cpu          | Image SBOM Extractor CPU requests per replica                                                                                                                                                                                                                                                                                                                                                                           | <code>"350m"</code>                           |
 | imageSbomExtractor.resources.requests.memory       | Image SBOM Extractor Memory requests per replica                                                                                                                                                                                                                                                                                                                                                                        | <code>350Mi</code>                            |
+| imageSbomExtractor.env                             | Image SBOM Extractor env allows the definition of environment variables                                                                                                                                                                                                                                                                                                                                                 | <code>{}</code>                               |
 | imageSbomExtractor.cache.type                      | The type of cache to use. Allowed values are `local`, `distributed` and `distributed,local`. When specified more than one, the cache precedence will be applied from right to left. Eg: `distributed,local` will try to hit the local one first, than fallback to distributed one (redis) When setting `distributed`, you should also setup redis settings below accordingly with your redis installation.              | <code>"local"</code>                          |
 | imageSbomExtractor.cache.local.maxSizeBytes        | The maximum size in bytes of the local cache. By default it is set to 35MB                                                                                                                                                                                                                                                                                                                                              | <code>"36700160"</code>                       |
 | imageSbomExtractor.cache.local.maxElementSizeBytes | When using `local` as cache type, restrict the maximum size of elements to be cached. By default it is set to 100KB                                                                                                                                                                                                                                                                                                     | <code>"102400"</code>                         |
@@ -159,7 +161,7 @@ Specify each parameter using the **`--set key=value[,key=value]`** argument to `
 
 ```console
 $ helm upgrade --install sysdig-cluster-scanner sysdig/cluster-scanner \
-    --create-namespace -n sysdig --version=0.5.4 \
+    --create-namespace -n sysdig --version=0.5.5 \
     --set global.sysdig.region="us1"
 ```
 
@@ -168,7 +170,7 @@ installing the chart. For example:
 
 ```console
 $ helm upgrade --install sysdig-cluster-scanner sysdig/cluster-scanner \
-    --create-namespace -n sysdig --version=0.5.4 \
+    --create-namespace -n sysdig --version=0.5.5 \
     --values values.yaml
 ```
 
