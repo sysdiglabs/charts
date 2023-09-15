@@ -281,10 +281,6 @@ spec:
           - name: "{{ $key }}"
             value: "{{ $value }}"
           {{- end }}
-          {{- range $key, $value := .Values.imageSbomExtractor.env }}
-          - name: "{{ $key }}"
-            value: "{{ $value }}"
-          {{- end }}
       {{- with .Values.runtimeStatusIntegrator }}
           livenessProbe:
             httpGet:
@@ -543,6 +539,10 @@ spec:
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: cache_redis_ttl
                 optional: true
+          {{- end }}
+          {{- range $key, $value := .Values.imageSbomExtractor.env }}
+          - name: "{{ $key }}"
+            value: "{{ $value }}"
           {{- end }}
       {{- with .Values.imageSbomExtractor }}
           resources:
