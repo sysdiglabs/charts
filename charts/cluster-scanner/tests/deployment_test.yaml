@@ -440,3 +440,35 @@ tests:
           content:
             name: PPROF_PORT
             value: "666"
+
+  - it: "sets optional envs"
+    templates:
+      - ../templates/deployment.yaml
+    set:
+      runtimeStatusIntegrator.env: { ENV_VAR_STRING: "test", ENV_VAR_NUM: 15 }
+      imageSbomExtractor.env: { ENV_VAR_BOOL: true }
+    asserts:
+      - not: true
+        isEmpty:
+          path: spec.template.spec.containers[0].env[?(@.name == "ENV_VAR_STRING")]
+      - isSubset:
+          path: spec.template.spec.containers[0].env[?(@.name == "ENV_VAR_STRING")]
+          content:
+            name: ENV_VAR_STRING
+            value: "test"
+      - not: true
+        isEmpty:
+          path: spec.template.spec.containers[0].env[?(@.name == "ENV_VAR_NUM")]
+      - isSubset:
+          path: spec.template.spec.containers[0].env[?(@.name == "ENV_VAR_NUM")]
+          content:
+            name: ENV_VAR_NUM
+            value: "15"
+      - not: true
+        isEmpty:
+          path: spec.template.spec.containers[1].env[?(@.name == "ENV_VAR_BOOL")]
+      - isSubset:
+          path: spec.template.spec.containers[1].env[?(@.name == "ENV_VAR_BOOL")]
+          content:
+            name: ENV_VAR_BOOL
+            value: "true"
