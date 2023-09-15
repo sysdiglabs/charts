@@ -147,6 +147,7 @@ runtimeStatusIntegrator:
       # Runtime Status Integrator Memory requests per replica
       memory: 350Mi
 
+  # Runtime Status Integrator env allows the definition of environment variables
   env: {}
 
   natsJS:
@@ -182,6 +183,7 @@ imageSbomExtractor:
       # Image SBOM Extractor Memory requests per replica
       memory: 350Mi
 
+  # Image SBOM Extractor env allows the definition of environment variables
   env: {}
 
   cache:
