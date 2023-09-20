@@ -22,6 +22,7 @@ data:
 {{- include "cluster-scanner.modeConfig" . | nindent 2 }}
   js_server_user: {{ .Values.runtimeStatusIntegrator.natsJS.user }}
   js_server_url: "nats://{{- include "cluster-scanner.fullname" . }}:4222"
+  js_server_tls_enabled: {{ .Values.runtimeStatusIntegrator.natsJS.tls.enabled | default "true" | quote }}
   rsi_leaderelection_lock_name: {{ .Values.runtimeStatusIntegrator.leaderElectionLeaseNameOverride | default (include "cluster-scanner.fullname" .) }}
   rsi_leaderelection_lock_namespace: {{ .Values.runtimeStatusIntegrator.leaderElectionLeaseNamespaceOverride | default .Release.Namespace }}
   rsi_service_name: {{ include "cluster-scanner.fullname" . }}

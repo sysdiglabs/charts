@@ -48,6 +48,22 @@ spec:
           configMap:
             name: {{ include "sysdig.custom_ca.existingConfigMap" (dict "global" .Values.global.ssl "component" .Values.ssl) }}
         {{- end }}
+        {{- if .Values.runtimeStatusIntegrator.natsJS.tls.enabled -}}
+        {{ if eq (include "cluster-scanner.nats.tls.customTLS" .) "false" }}
+        - name: nats-js-ca-cert
+          secret:
+            secretName: {{ include "cluster-scanner.fullname" . }}
+            items:
+              - key: js_tls_key
+                path: key.pem
+              - key: js_tls_cert
+                path: cert.pem
+              {{- if not .Values.imageSbomExtractor.natsJS.tls.skipVerify }}
+              - key: js_tls_ca
+                path: ca.pem
+              {{ end }}
+        {{- end }}
+        {{- end }}
       containers:
         - name: rsi
           securityContext:
@@ -59,6 +75,13 @@ spec:
             - name: ca-cert
               mountPath: /ca-certs
               readOnly: true
+            {{- end }}
+            {{- if .Values.runtimeStatusIntegrator.natsJS.tls.enabled -}}
+            {{- if "cluster-scanner.nats.tls.customTLS" }}
+            - name: nats-js-ca-cert
+              mountPath: {{ include "cluster-scanner.nats.tls.volumePath" . | quote }}
+              readOnly: true
+            {{- end }}
             {{- end }}
       {{- with .Values.runtimeStatusIntegrator }}
           ports:
@@ -184,6 +207,30 @@ spec:
               configMapKeyRef:
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: eve_integration_enabled
+                optional: true
+          - name: NATS_JS_TLS_ENABLED
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: js_server_tls_enabled
+                optional: true
+          - name: NATS_JS_TLS_CERT_PATH
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: js_tls_cert_path
+                optional: true
+          - name: NATS_JS_TLS_KEY_PATH
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: js_tls_key_path
+                optional: true
+          - name: NATS_JS_TLS_CA_PATHS
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: js_tls_cert_path
                 optional: true
           - name: NATS_JS_CLIENT_NAME
             valueFrom:
@@ -315,6 +362,13 @@ spec:
               mountPath: /ca-certs
               readOnly: true
             {{- end }}
+            {{- if .Values.runtimeStatusIntegrator.natsJS.tls.enabled -}}
+            {{- if "cluster-scanner.nats.tls.customTLS" }}
+            - name: nats-js-ca-cert
+              mountPath: {{ include "cluster-scanner.nats.tls.volumePath" . | quote }}
+              readOnly: true
+            {{- end }}
+            {{- end }}
       {{- with .Values.imageSbomExtractor }}
           ports:
             - name: metrics
@@ -400,6 +454,24 @@ spec:
               secretKeyRef:
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: js_server_password
+                optional: true
+          - name: NATS_TLS_ENABLED
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: js_server_tls_enabled
+                optional: true
+          - name: NATS_TLS_SKIP
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: ise_js_tls_skip_verify
+                optional: true
+          - name: NATS_TLS_CA
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: ise_js_tls_ca_paths
                 optional: true
           - name: NATS_CLIENT_NAME
             valueFrom:

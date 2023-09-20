@@ -112,6 +112,16 @@ ise_js_consumer_ack_wait: "240s"
 ise_js_consumer_max_deliver: "1"
 ise_js_consumer_deliver_policy_all: "true"
 ise_js_producer_subject: "analysis.sboms"
+{{- if .Values.runtimeStatusIntegrator.natsJS.tls.enabled }}
+ise_js_tls_skip_verify: {{ .Values.imageSbomExtractor.natsJS.tls.skipVerify | default "false" | quote }}
+{{- if not .Values.imageSbomExtractor.natsJS.tls.skipVerify }}
+{{- if eq (include "cluster-scanner.nats.tls.customTLS" .) "true" }}
+ise_js_tls_ca_paths: {{ required "please provide a TLS ca or skip cert verification" .Values.runtimeStatusIntegrator.natsJS.tls.ca | default "" | quote }}
+{{ else }}
+ise_js_tls_ca_paths: {{ include "cluster-scanner.nats.tls.ca.path" . | quote}}
+{{ end }}
+{{ end }}
+{{- end }}
 {{ end }}
 
 {{/*
@@ -278,4 +288,55 @@ Return local registry secrets in the correct format: <namespace_name>/<secret_na
     returned empty string does not evaluate to empty on Helm Version:"v3.8.0"
     */}}
     {{- .Values.global.sysdig.accessKeySecret | default "" -}}
+{{- end -}}
+
+{{- define "cluster-scanner.nats.tls.volumePath" -}}
+/opt/kubernetes_secrets/custom_cert
+{{- end -}}
+
+{{/*
+Return true if any of TLS CA, private Key and certificate have been provided.
+*/}}
+{{- define "cluster-scanner.nats.tls.customTLS" -}}
+    {{- if or (not (empty .Values.runtimeStatusIntegrator.natsJS.tls.key)) (not (empty .Values.runtimeStatusIntegrator.natsJS.tls.cert)) -}}
+        {{- true -}}
+    {{- else -}}
+        {{- false -}}
+    {{- end -}}
+{{- end -}}
+
+{{/*
+Define the default Nats JetStraeam TLS certificate and key paths
+*/}}
+{{- define "cluster-scanner.nats.tls.key.path" -}}
+{{ include "cluster-scanner.nats.tls.volumePath" . }}/key.pem
+{{- end -}}
+{{- define "cluster-scanner.nats.tls.cert.path" -}}
+{{ include "cluster-scanner.nats.tls.volumePath" . }}/cert.pem
+{{- end -}}
+{{- define "cluster-scanner.nats.tls.ca.path" -}}
+{{ include "cluster-scanner.nats.tls.volumePath" . }}/ca.pem
+{{- end -}}
+
+{{/*
+Produce self-signed TLS certificate and key to secure NATS JetStream communication
+and define all necessary vars.
+*/}}
+{{- define "cluster-scanner.nats.tls.certificate" -}}
+ {{- $svcName := include "cluster-scanner.fullname" . -}}
+ {{- $dnsNames := list -}}
+ {{- $dnsNames = append $dnsNames (printf "%s.%s.svc.cluster.local" $svcName .Release.Namespace) -}}
+ {{- $dnsNames = append $dnsNames (printf "*.%s.%s.svc.cluster.local" $svcName .Release.Namespace) -}}
+ {{- $dnsNames = append $dnsNames (printf "%s.%s.svc" $svcName .Release.Namespace) -}}
+ {{- $dnsNames = append $dnsNames (printf "*.%s.%s.svc" $svcName .Release.Namespace) -}}
+ {{- $dnsNames = append $dnsNames (printf "*.%s" $svcName ) -}}
+ {{- $dnsNames = append $dnsNames $svcName -}}
+ {{- $dnsNames = append $dnsNames "localhost" -}}
+ {{- $ca := genCA "ClusterScannerCert-ca" 36500 -}}
+ {{- $tlsCert := genSignedCertWithKey "ClusterScannerCert" (list "127.0.0.1") ($dnsNames) 36500 $ca (genPrivateKey "ed25519") }}
+  js_tls_key: {{ printf "%s" $tlsCert.Key | b64enc | quote }}
+  js_tls_cert: {{ printf "%s" $tlsCert.Cert | b64enc | quote }}
+  js_tls_ca: {{ printf "%s" $ca.Cert | b64enc | quote }}
+  js_tls_key_path: {{ include "cluster-scanner.nats.tls.key.path" . | b64enc | quote }}
+  js_tls_cert_path: {{ include "cluster-scanner.nats.tls.cert.path" . | b64enc | quote }}
 {{- end -}}

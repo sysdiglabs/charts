@@ -158,6 +158,13 @@ runtimeStatusIntegrator:
     user: "default-user"
     # Default uses a random password for each installation.
     # password: ""
+    tls:
+      enabled: true
+      # By default, a self-signed certificate is generated when tls is enabled.
+      # Nevertheless, using a custom TLS certificate is still possible.
+      # key: /var/ssl/tls.key
+      # cert: /var/ssl/tls.cert
+      # ca: /var/ssl/ca.cert
 
 imageSbomExtractor:
   image:
@@ -184,6 +191,11 @@ imageSbomExtractor:
       cpu: "350m"
       # Image SBOM Extractor Memory requests per replica
       memory: 350Mi
+  natsJS:
+    tls:
+      # When set to false, the CA verifying NATS JetStream TLS certificate is the one
+      # defined in runtimeStatusIntegrator (natsJS.tls.ca).
+      skipVerify: false
 
   # Image SBOM Extractor env allows the definition of environment variables
   env: {}
