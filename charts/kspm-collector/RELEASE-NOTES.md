@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **kspm-collector,node-analyzer** [b302524f](https://github.com/sysdiglabs/charts/commit/b302524f75098299644ef541d71876180f61ed01): release agents v1.27.0 with RKE2 suport ([#1274](https://github.com/sysdiglabs/charts/issues/1274))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.4.0...kspm-collector-0.5.0
+### Bug Fixes
+- **common,agent,node-analyzer,kspm-collector** [0806635e](https://github.com/sysdiglabs/charts/commit/0806635e5824365adb8ab3d8fd31811477c8918e): support multi-level map in agent.tags ([#1351](https://github.com/sysdiglabs/charts/issues/1351))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.8.0...kspm-collector-0.8.1

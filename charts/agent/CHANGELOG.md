@@ -10,6 +10,29 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.13.10
+### New Features
+* [b2146b31](https://github.com/sysdiglabs/charts/commit/b2146b31e56eb00a6dc270bbb9bb530a3ee69f4c): release agent 12.16.1 ([#1353](https://github.com/sysdiglabs/charts/issues/1353))
+# v1.13.9
+### Bug Fixes
+* **common,agent,node-analyzer,kspm-collector** [0806635e](https://github.com/sysdiglabs/charts/commit/0806635e5824365adb8ab3d8fd31811477c8918e): support multi-level map in agent.tags ([#1351](https://github.com/sysdiglabs/charts/issues/1351))
+# v1.13.8
+### New Features
+* **agent,sysdig** [8aff7e6a](https://github.com/sysdiglabs/charts/commit/8aff7e6adcccd7ebbebabff7f7d89e5125fb8f46): use `updatecli` for agent version bumps during release ([#1338](https://github.com/sysdiglabs/charts/issues/1338))
+# v1.13.7
+### New Features
+* **admission-controller,agent,cluster-scanner,kspm-collector,node-analyzer,rapid-response** [32231059](https://github.com/sysdiglabs/charts/commit/322310597ffbf9e47b5755be8f2f65a6e68296a2): pass agent tags to kspm components ([#1333](https://github.com/sysdiglabs/charts/issues/1333))
+# v1.13.6
+### Bug Fixes
+* **agent** [877a0bb0](https://github.com/sysdiglabs/charts/commit/877a0bb04a0af18ec4ce3609b52c47e54ae3ba6b): don't duplicate `cointerface_enabled` field in deployment agent configmaps ([#1299](https://github.com/sysdiglabs/charts/issues/1299))
+# v1.13.5
+### Others
+* [b99f852c](https://github.com/sysdiglabs/charts/commit/b99f852c4176d570b0b3d342234cc14d95ab48c5)
+# v1.13.4
+### Bug Fixes
+* **agent** [2de3cf99](https://github.com/sysdiglabs/charts/commit/2de3cf999b582f59bc11be923c4a407a0719036a): fix Chart.yaml field ([#1293](https://github.com/sysdiglabs/charts/issues/1293))
+### Chores
+* **agent** [924b96c1](https://github.com/sysdiglabs/charts/commit/924b96c1c98a5006fab4d4f71c91f9df9dbe639e): bump agent version to 12.16.0 ([#1292](https://github.com/sysdiglabs/charts/issues/1292))
 # v1.13.2
 ### Bug Fixes
 * **admission-controller,agent,sysdig-deploy** [bdf6c21f](https://github.com/sysdiglabs/charts/commit/bdf6c21f6322aaa8417fe8a763f01f5127601094): fix incompatibility errors on older helm versions ([#1281](https://github.com/sysdiglabs/charts/issues/1281))

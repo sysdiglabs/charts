@@ -1,0 +1,119 @@
+suite: Test admissioncontrollerconfigmap
+templates:
+  - templates/webhook/configmap.yaml
+tests:
+  - it: Creates the configmap if webhook.acConfig is present
+    set:
+      clusterName: test-k8s
+      webhook:
+        acConfig: |
+          test
+        workers:
+          scanningPolicies:
+            - one
+            - two
+    asserts:
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+        template: templates/webhook/configmap.yaml
+      - isSubset:
+          path: data
+          content:
+            WORKER_POLICIES: '["one","two"]'
+          template: templates/webhook/configmap.yaml
+      - isSubset:
+          path: data
+          content:
+            CACHE_FLUSH_PERIOD: "24h"
+          template: templates/webhook/configmap.yaml
+  - it: Created the configmap
+    set:
+      clusterName: test-k8s
+      webhook:
+        workers:
+          scanningPolicies:
+            - one
+            - two
+    asserts:
+        - containsDocument:
+            kind: ConfigMap
+            apiVersion: v1
+            template: templates/webhook/configmap.yaml
+        - isSubset:
+            path: data
+            content:
+              WORKER_POLICIES: '["one","two"]'
+            template: templates/webhook/configmap.yaml
+        - notExists:
+            path: data.CACHE_FLUSH_PERIOD
+            template: templates/webhook/configmap.yaml
+  - it: Created the configmap with ac stop gap values
+    set:
+      clusterName: test-k8s
+      namespace: cocotero
+      webhook:
+        name: "webhook"
+        acConfig: |
+          test
+      serviceAccounts:
+        webhook:
+          # Creates the service account.
+          create: true
+          # The additional annotations for serviceAccount.
+          annotations: { }
+          # Use this value as serviceAccount Name.
+          name: "foobar"
+    asserts:
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          template: templates/webhook/configmap.yaml
+      - isSubset:
+          path: data
+          content:
+            AC_NAMESPACE: "cocotero"
+            AC_SERVICE_ACCOUNT_NAME: "foobar"
+            WORKERS: "2"
+            WORKER_VERIFYSSL: "true"
+          template: templates/webhook/configmap.yaml
+  - it: Created the configmap with verifyssl to false
+    set:
+      clusterName: test-k8s
+      webhook:
+        name: "webhook"
+        acConfig: |
+          test
+        workers:
+          verifySSL: false
+    asserts:
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          template: templates/webhook/configmap.yaml
+      - isSubset:
+          path: data
+          content:
+            WORKERS: "2"
+            WORKER_VERIFYSSL: "false"
+          template: templates/webhook/configmap.yaml
+  - it: Created the configmap with verifyssl to true
+    set:
+      clusterName: test-k8s
+      webhook:
+        name: "webhook"
+        acConfig: |
+          test
+        workers:
+          verifySSL: true
+    asserts:
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          template: templates/webhook/configmap.yaml
+      - isSubset:
+          path: data
+          content:
+            WORKERS: "2"
+            WORKER_VERIFYSSL: "true"
+          template: templates/webhook/configmap.yaml

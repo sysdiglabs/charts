@@ -38,6 +38,23 @@ tests:
           apiVersion: v1
         template: scanner/service.yaml
 
+  - it: Checking KSPM AC enabled
+    set:
+      features:
+        kspmAdmissionController: true
+        k8sAuditDetections: false
+      scanner:
+        enabled: false
+      clusterName: test-k8s
+      sysdig:
+        secureAPIToken: standard_token
+        accessKey: some_access_key
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].name
+          value: kspm-admission-controller
+        template: webhook/deployment.yaml
+
   - it: Checking podmonitors scanner enabled
     set:
       podMonitors:

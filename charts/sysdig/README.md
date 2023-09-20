@@ -152,7 +152,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | `image.registry`                                             | Sysdig Agent image registry.                                 | `quay.io`                                                    |
 | `image.repository`                                           | The image repository to pull from.                           | `sysdig/agent`                                               |
-| `image.tag`                                                  | The image tag to pull                                        | `12.15.0`                                                    |
+| `image.tag`                                                  | The image tag to pull                                        | `12.16.0`                                                    |
 | `image.digest`                                               | The image digest to pull.                                    | ` `                                                          |
 | `image.pullPolicy`                                           | The Image pull policy.                                       | `IfNotPresent`                                               |
 | `image.pullSecrets`                                          | Image pull secrets.                                          | `nil`                                                        |
@@ -262,7 +262,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `nodeAnalyzer.runtimeScanner.deploy`                         | Deploys the Runtime Scanner.                                 | `false`                                                      |
 | `nodeAnalyzer.runtimeScanner.extraMounts`                    | Specifies a container engine custom socket path (docker, containerd, CRI-O). |                                                              |
 | `nodeAnalyzer.runtimeScanner.image.repository`               | The image repository to pull the Runtime Scanner from.       | `sysdig/vuln-runtime-scanner`                                |
-| `nodeAnalyzer.runtimeScanner.image.tag`                      | The image tag to pull the Runtime Scanner.                   | `1.5.2`                                                      |
+| `nodeAnalyzer.runtimeScanner.image.tag`                      | The image tag to pull the Runtime Scanner.                   | `1.5.7`                                                      |
 | `nodeAnalyzer.runtimeScanner.image.digest`                   | The image digest to pull.                                    | ` `                                                          |
 | `nodeAnalyzer.runtimeScanner.image.pullPolicy`               | The image pull policy for the Runtime Scanner.               | `IfNotPresent`                                               |
 | `nodeAnalyzer.runtimeScanner.resources.requests.cpu`         | Runtime Scanner CPU requests per node.                       | `250m`                                                       |

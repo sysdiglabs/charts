@@ -1,5 +1,5 @@
 # What's Changed
 
 ### Documentation
-- **registry-scanner** [ea551160](https://github.com/sysdiglabs/charts/commit/ea5511600a50333049584da6a565486dbbd424b8): fix configuration table rendering ([#1282](https://github.com/sysdiglabs/charts/issues/1282))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-1.1.3...registry-scanner-1.1.4
+- **registry-scanner** [7fef1a33](https://github.com/sysdiglabs/charts/commit/7fef1a33e1652a7b578e4d97eaf0f9382b1fea66): remove nodeSelector from docs ([#1337](https://github.com/sysdiglabs/charts/issues/1337))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-1.1.7...registry-scanner-1.1.8

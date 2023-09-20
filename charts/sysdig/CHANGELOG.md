@@ -10,6 +10,33 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.16.13
+### Chores
+* **sysdig, nodel-analyzer** [44e1c6a3](https://github.com/sysdiglabs/charts/commit/44e1c6a385faf3bdcdd0cb8427254338c68254c7): bump sysdig/vuln-runtime-scanner to v1.5.7 ([#1361](https://github.com/sysdiglabs/charts/issues/1361))
+# v1.16.12
+### New Features
+* [b2146b31](https://github.com/sysdiglabs/charts/commit/b2146b31e56eb00a6dc270bbb9bb530a3ee69f4c): release agent 12.16.1 ([#1353](https://github.com/sysdiglabs/charts/issues/1353))
+# v1.16.11
+### New Features
+* **agent,sysdig** [8aff7e6a](https://github.com/sysdiglabs/charts/commit/8aff7e6adcccd7ebbebabff7f7d89e5125fb8f46): use `updatecli` for agent version bumps during release ([#1338](https://github.com/sysdiglabs/charts/issues/1338))
+# v1.16.10
+### Chores
+* **sysdig, node-analyzer** [6b2c2efd](https://github.com/sysdiglabs/charts/commit/6b2c2efd7eccb16ad74df29d75daef664e2df9f7): bump sysdig/vuln-runtime-scanner to v1.5.6 ([#1331](https://github.com/sysdiglabs/charts/issues/1331))
+# v1.16.9
+### Chores
+* **sysdig, node-analyzer** [0ba5baa3](https://github.com/sysdiglabs/charts/commit/0ba5baa3e690be1c2c3a92c4928558efffb33539): bump sysdig/vuln-runtime-scanner to v1.5.5 ([#1320](https://github.com/sysdiglabs/charts/issues/1320))
+
+    * * Runtime Scanner bumped to 1.5.5
+     * Fixed a bug that could cause the Runtime Scanner to perform unneeded rescans
+# v1.16.8
+### Chores
+* **sysdig, node-analyzer** [17d2e503](https://github.com/sysdiglabs/charts/commit/17d2e50326f587b154f43beb706627416ca6a4b6): bump sysdig/vuln-runtime-scanner to v1.5.4 ([#1305](https://github.com/sysdiglabs/charts/issues/1305))
+
+    * * Runtime Scanner bumped to 1.5.4
+     * Fixed a misbehavior of the image layer analyzer, which could lead to non-existing software artifacts being reported in the SBOM as a result of incorrect handling of opaque directories (ESC-3511).
+# v1.16.7
+### Chores
+* **sysdig** [b38bf394](https://github.com/sysdiglabs/charts/commit/b38bf394fc121bffe546def326a5aaf019f0ebd7): bump agent version to 12.16.0 ([#1291](https://github.com/sysdiglabs/charts/issues/1291))
 # v1.16.6
 ### New Features
 * **node-analyzer** [0ad8696a](https://github.com/sysdiglabs/charts/commit/0ad8696a0b38d2564121e6e798589f568e3547a8): Release eveconnector 1.1.2 ([#1280](https://github.com/sysdiglabs/charts/issues/1280))

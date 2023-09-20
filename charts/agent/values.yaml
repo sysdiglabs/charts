@@ -32,10 +32,8 @@ global:
       #       NjExWjAUMRIwEAYDVQQDEwloYXJib3ItY2EwggEiMA0GCSqGSIb3DQEBAQUAA4IB
       #       MMNlTAQ9fvdNOTzZntye0PQYRTTS34D=
       #       -----END CERTIFICATE-----
-
       # Filename that is used when creating the secret.  Required if cert is provided.
       keyName:
-
       # Provide the name of an existing Secret that contains the CA required
       existingCaSecret:
       # Provide the filename that is defined inside the existing Secret
@@ -43,31 +41,27 @@ global:
       # Provide the name of an existing ConfigMap that contains the CA required
       existingCaConfigMap:
       # Provide the filename that is defined inside the existing ConfigMap
-      existingCaConfigMapKeyName:
-
+      existingCaConfigMapKeyName: null
 namespace: ""
-
 image:
   # This is a hack to support RELATED_IMAGE_<identifier> feature in Helm based
   # Operators
   #
   # As long as I don't want to people to use this, I will keep it undocumented
-  overrideValue:
-
+  overrideValue: null
   registry: quay.io
   repository: sysdig/agent
-  tag: 12.15.0
+  tag: 12.16.1
   # Specify a imagePullPolicy
   # Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
   # ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
-  pullPolicy:
+  pullPolicy: []
   # Optionally specify an array of imagePullSecrets.
   # Secrets must be manually created in the namespace.
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
   #
   # pullSecrets:
   #   - name: myRegistrKeySecretName
-
 # Specify a predefined resource profile.
 #
 # Available options are:
@@ -97,9 +91,7 @@ image:
 #   limits:
 #     cpu: 5000m
 #     memory: 6144Mi
-
 resourceProfile: small
-
 # resources:
 #   requests:
 #     cpu: <cpu requests>m
@@ -107,34 +99,27 @@ resourceProfile: small
 #   limits:
 #     cpu: <cpu limits>m
 #     memory: <memory limits>Mi
-
 gke:
   # true here enables the deployment on gke autopilot clusters
   autopilot: false
   createPriorityClass: false
   ephemeralStorage: "500Mi"
-
 rbac:
   # true here enables creation of rbac resources
   create: true
-
 scc:
   # true here enables creation of Security Context Constraints in Openshift
   create: true
-
 psp:
   # true here enables creation of Pod Security Policy to allow the agent run with the required permissions
   create: true
-
 serviceAccount:
   # Create and use serviceAccount resources
   create: true
   # Use this value as serviceAccountName
-  name:
-
+  name: null
 daemonset:
   deploy: true
-
   # Perform rolling updates by default in the DaemonSet agent
   # ref: https://kubernetes.io/docs/tasks/manage-daemon/update-daemon-set/
   updateStrategy:
@@ -163,36 +148,27 @@ daemonset:
   # Liveness and readiness probes initial delay (in seconds)
   probes:
     initialDelay: 90
-
   kmodule:
     env: {}
-
 # If is behind a proxy you can set the proxy server
 # This proxy settings apply for the App-Checks.
 # If you need to configure the agent to allow it to communicate with the Sysdig collector through an HTTP proxy check:
 # https://docs.sysdig.com/en/enable-http-proxy-for-agents.html
 proxy:
-  httpProxy:
-  httpsProxy:
-  noProxy:
-
+  httpProxy: null
+  httpsProxy: null
+  noProxy: null
 # Set daemonset timezone
-timezone:
-
+timezone: null
 # Create the priorityClass defined below
 createPriorityClass: false
-
 # Set daemonset priorityClassName
-priorityClassName:
-
+priorityClassName: null
 # Set daemonset priorityClassValue
 priorityClassValue: 10
-
 ebpf:
   # Enable eBPF support for Sysdig Agent
   enabled: false
-
-
 slim:
   # Uses a slim version of the Sysdig Agent
   enabled: true
@@ -203,8 +179,7 @@ slim:
   # contains the toolchain required to build the kernel module.
   kmoduleImage:
     repository: sysdig/agent-kmodule
-    digest:
-
+    digest: null
   resources:
     # Resources required by the kernel module builder image. These are some
     # a sane defaults ones, but you can tweak or ask Sysdig Support for more
@@ -215,61 +190,49 @@ slim:
     limits:
       cpu: 1000m
       memory: 512Mi
-
 # For Sysdig On-Prem installations or for custom collector settings, set the following fields
 collectorSettings:
-  collectorHost:
-  collectorPort:
-  ssl:
-  sslVerifyCertificate:
-
+  collectorHost: null
+  collectorPort: null
+  ssl: null
+  sslVerifyCertificate: null
 # Setting a cluster name allows you to filter events from this cluster using kubernetes.cluster.name
 clusterName: ""
-
 sysdig:
   # Required: You need your Sysdig Agent access key before running agents, either specifying 'accessKey' here, or using 'existingAccessKeySecret'
   accessKey: ""
   # Alternatively, specify the name of a Kubernetes secret containing an 'access-key' entry
   existingAccessKeySecret: ""
-
   # Disable capture functionality (see https://docs.sysdig.com/en/disable-captures.html)
   disableCaptures: false
-
   # Advanced settings. Any option in here will be directly translated into dragent.yaml in the Configmap
-  settings:
-    {}
-    ### Example: Agent tags
-    # tags: linux:ubuntu,dept:dev,local:nyc
-    ### Example: Proxy configuration (see https://docs.sysdig.com/en/enable-http-proxy-for-agents.html)
-    # ssl: false
-    # http_proxy:
-    #   proxy_host: squid.yourdomain.com
-    #   proxy_port: 3128
-    #   ssl: false
-
+  settings: {}
+  ### Example: Agent tags
+  # tags: linux:ubuntu,dept:dev,local:nyc
+  ### Example: Proxy configuration (see https://docs.sysdig.com/en/enable-http-proxy-for-agents.html)
+  # ssl: false
+  # http_proxy:
+  #   proxy_host: squid.yourdomain.com
+  #   proxy_port: 3128
+  #   ssl: false
 secure:
   # true here enables Sysdig Secure: container run-time security & forensics
   enabled: true
-
 monitor:
   # true here enables Sysdig Monitor components
   enabled: true
-
 auditLog:
   # true here activates the K8s Audit Log feature for Sysdig Secure
   enabled: true
   auditServerUrl: 0.0.0.0
   auditServerPort: 7765
-
   dynamicBackend:
     # true here configures an AuditSink who will receive the K8s audit logs
     enabled: false
-
 # Promscrape prometheus.yaml not configured by default
 prometheus:
   file: false
   yaml: {}
-
 extraVolumes:
   volumes: []
   mounts: []
@@ -291,17 +254,14 @@ extraVolumes:
   #       name: sysdig-new-cm
   #     - mountPath: /opt/draios/secret
   #       name: sysdig-new-secret
-
-extraSecrets:
-  []
-  # Allow passing extra secrets that can be mounted via extraVolumes
-  #
-  # extraSecrets:
-  #   - name: sysdig-new-secret
-  #     data:
-  #       sysdig-new-password-key1: bXlwYXNzd29yZA==
-  #       sysdig-new-password-key2: bXlwYXNzd29yZA==
-
+extraSecrets: []
+# Allow passing extra secrets that can be mounted via extraVolumes
+#
+# extraSecrets:
+#   - name: sysdig-new-secret
+#     data:
+#       sysdig-new-password-key1: bXlwYXNzd29yZA==
+#       sysdig-new-password-key2: bXlwYXNzd29yZA==
 # Allow sysdig to run on Kubernetes 1.6 masters.
 tolerations:
   - effect: NoSchedule
@@ -316,10 +276,8 @@ tolerations:
     key: node-role.kubernetes.io/etcd
     operator: Equal
     value: "true"
-
 leaderelection:
   enable: false
-
 delegatedAgentDeployment:
   # Enable a specialized installation where an Agent Deployment is installed
   # in addition to the traditional DaemonSet. The DaemonSet Agents will not
@@ -328,9 +286,7 @@ delegatedAgentDeployment:
   # installation type to reduce load on the Kubernetes API servers on clusters
   # with very large node counts.
   enabled: false
-
   delegated_nodes: -1
-
   deployment:
     # affinity: {}
     arch:
@@ -356,10 +312,8 @@ delegatedAgentDeployment:
         maxSurge: 25%
         maxUnavailable: 25%
       type: RollingUpdate
-
 # Allow direct setting of Agent log priority levels for console and file logs (info|debug)
-logPriority:
-
+logPriority: null
 ssl:
   ca:
     # For outbound connections (secure backend, proxy,...)
@@ -381,18 +335,16 @@ ssl:
     #       NjExWjAUMRIwEAYDVQQDEwloYXJib3ItY2EwggEiMA0GCSqGSIb3DQEBAQUAA4IB
     #       MMNlTAQ9fvdNOTzZntye0PQYRTTS34D=
     #       -----END CERTIFICATE-----
-
     # Filename that is used when creating the secret.  Required if cert is provided.
-    keyName:
-
+    keyName: null
     # Provide the name of an existing Secret that contains the CA required
-    existingCaSecret:
+    existingCaSecret: null
     # Provide the filename that is defined inside the existing Secret
-    existingCaSecretKeyName:
+    existingCaSecretKeyName: null
     # Provide the name of an existing ConfigMap that contains the CA required
-    existingCaConfigMap:
+    existingCaConfigMap: null
     # Provide the filename that is defined inside the existing ConfigMap
-    existingCaConfigMapKeyName:
+    existingCaConfigMapKeyName: null
 tests:
   timeout: 300s
   image:

@@ -1,5 +1,5 @@
 # What's Changed
 
-### Bug Fixes
-- **admission-controller,agent,sysdig-deploy** [bdf6c21f](https://github.com/sysdiglabs/charts/commit/bdf6c21f6322aaa8417fe8a763f01f5127601094): fix incompatibility errors on older helm versions ([#1281](https://github.com/sysdiglabs/charts/issues/1281))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.13.1...agent-1.13.2
+### New Features
+- [b2146b31](https://github.com/sysdiglabs/charts/commit/b2146b31e56eb00a6dc270bbb9bb530a3ee69f4c): release agent 12.16.1 ([#1353](https://github.com/sysdiglabs/charts/issues/1353))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.13.9...agent-1.13.10

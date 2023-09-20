@@ -561,3 +561,71 @@ tests:
           path: data['dragent.yaml']
           pattern: 'cointerface_enabled: false'
         template: templates/configmap-deployment.yaml
+
+  - it: Validate cointerface_enabled keys are not duplicated
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+      sysdig:
+        settings:
+          cointerface_enabled: false
+    asserts:
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: 'cointerface_enabled: false'
+        template: templates/configmap-deployment.yaml
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: 'cointerface_enabled: true'
+        template: templates/configmap-deployment.yaml
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: 'cointerface_enabled: true'
+        template: templates/configmap.yaml
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: 'cointerface_enabled: false'
+        template: templates/configmap.yaml
+
+  - it: Validate cointerface_enabled keys are not duplicated
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+      sysdig:
+        settings:
+          cointerface_enabled: true
+    asserts:
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: 'cointerface_enabled: false'
+        template: templates/configmap-deployment.yaml
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: 'cointerface_enabled: true'
+        template: templates/configmap-deployment.yaml
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: 'cointerface_enabled: false'
+        template: templates/configmap.yaml
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: 'cointerface_enabled: true'
+        template: templates/configmap.yaml
+
+  - it: Ensure settings overrides are still provided to deployment configmap
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+      sysdig:
+        settings:
+          logs:
+            console_priority: debug
+          cointerface_enabled: false
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: 'logs:\n  console_priority: debug'
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: 'cointerface_enabled: false'
+    template: templates/configmap-deployment.yaml

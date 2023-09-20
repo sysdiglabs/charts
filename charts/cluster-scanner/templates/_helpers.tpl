@@ -208,7 +208,7 @@ Define the proper imageRegistry to use for imageSbomExtractor
 {{/*
 Cluster scanner version compatibility check.
 
-If .Values.onPremCompatibilityVersion is set to 6.2, it checks whether
+If .Values.onPremCompatibilityVersion is set to 6.5.0 or below, it checks whether
 the provided tag is < 1.0.0 .
 
 Otherwise, it checks if the provided tag is >= 1.0.0 .
@@ -218,7 +218,7 @@ Version tags must be semver2-compatible otherwise no check will be performed.
 {{- define "cluster-scanner.checkVersionCompatibility" -}}
 {{- if regexMatch "^[0-9]+\\.[0-9]+\\.[0-9]+.*" .Tag -}}
     {{- $version := semver .Tag -}}
-    {{- if and (hasKey (default .Values dict) "onPremCompatibilityVersion") (eq .Values.onPremCompatibilityVersion "6.2") -}}
+    {{- if and (hasKey (default .Values dict) "onPremCompatibilityVersion") (eq (semver .Values.onPremCompatibilityVersion | (semver "6.5.0").Compare) 1) -}}
         {{- if ne ($version | (semver "1.0.0").Compare) 1 -}}
             {{- fail (printf "incompatible version for %s, set %s expected < 1.0.0" .Component .Tag) -}}
         {{- end -}}

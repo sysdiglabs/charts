@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **node-analyzer** [0ad8696a](https://github.com/sysdiglabs/charts/commit/0ad8696a0b38d2564121e6e798589f568e3547a8): Release eveconnector 1.1.2 ([#1280](https://github.com/sysdiglabs/charts/issues/1280))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.17.2...sysdig-1.16.6
+### Chores
+- **sysdig, nodel-analyzer** [44e1c6a3](https://github.com/sysdiglabs/charts/commit/44e1c6a385faf3bdcdd0cb8427254338c68254c7): bump sysdig/vuln-runtime-scanner to v1.5.7 ([#1361](https://github.com/sysdiglabs/charts/issues/1361))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.22.8...sysdig-1.16.13

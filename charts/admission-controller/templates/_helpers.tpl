@@ -121,6 +121,17 @@ Determine Secure endpoint based on provided region or .Values.sysdig.apiEndpoint
     {{- end -}}
 {{- end -}}
 
+{{/*
+Sysdig NATS service URL
+*/}}
+{{- define "admissionController.natsUrl" -}}
+{{- if .Values.webhook.v2.nats.url -}}
+    {{- .Values.webhook.v2.nats.url -}}
+{{- else -}}
+    wss://{{ include "admissionController.apiEndpoint" . }}:443
+{{- end -}}
+{{- end -}}
+
 
 {{/*
 Common labels
@@ -187,6 +198,19 @@ Allow overriding registry and repository for air-gapped environments
     {{- $imageRepository := .Values.webhook.image.repository -}}
     {{- $imageTag := .Values.webhook.image.tag | default .Chart.AppVersion -}}
     {{- $imageDigest := .Values.webhook.image.digest -}}
+    {{- $globalRegistry := (default .Values.global dict).imageRegistry -}}
+    {{- $globalRegistry | default $imageRegistry | default "docker.io" -}} / {{- $imageRepository -}} {{- if $imageDigest -}} @ {{- $imageDigest -}} {{- else -}} : {{- $imageTag -}} {{- end -}}
+{{- end -}}
+{{- end -}}
+
+{{- define "admissionController.kspm.image" -}}
+{{- if .Values.webhook.v2.image.overrideValue -}}
+    {{- .Values.webhook.v2.image.overrideValue -}}
+{{- else -}}
+    {{- $imageRegistry := .Values.webhook.v2.image.registry -}}
+    {{- $imageRepository := .Values.webhook.v2.image.repository -}}
+    {{- $imageTag := .Values.webhook.v2.image.tag -}}
+    {{- $imageDigest := .Values.webhook.v2.image.digest -}}
     {{- $globalRegistry := (default .Values.global dict).imageRegistry -}}
     {{- $globalRegistry | default $imageRegistry | default "docker.io" -}} / {{- $imageRepository -}} {{- if $imageDigest -}} @ {{- $imageDigest -}} {{- else -}} : {{- $imageTag -}} {{- end -}}
 {{- end -}}
@@ -266,6 +290,18 @@ Allow overriding registry and repository for air-gapped environments
 {{- end -}}
 
 {{/*
+the following helper function designed to take the accessKey if specified locally and if it doesn't exist use the global one
+*/}}
+
+{{- define "sysdig.accessKey" -}}
+    {{- .Values.sysdig.accessKey | default .Values.global.sysdig.accessKey | default "" -}}
+{{- end -}}
+
+{{- define "sysdig.existingAccessKeySecret" -}}
+    {{- .Values.sysdig.existingAccessKeySecret | default .Values.global.sysdig.accessKeySecret | default .Values.global.sysdig.existingAccessKeySecret | default "" -}}
+{{- end -}}
+
+{{/*
 The following helper functions are all designed to use global values where
 possible, but accept overrides from the chart values.
 */}}
@@ -316,6 +352,18 @@ an error if not.
     {{- required $errorMsg (or (include "sysdig.secureAPIToken" .) (include "sysdig.secureAPITokenSecret" .)) -}}
 {{- end -}}
 
+
+{{/*
+Validate Secure Access Key Config
+The follwoing named template is not used in the chart itself, it is used to
+check whether at least one of the required parameters was specified and return
+an error if not.
+*/}}
+{{- define "admissionController.validAccessKeyConfig" -}}
+{{- $errorMsg := "The Sysdig Secure Access Key was not provided with either the sysdig.accessKey or sysdig.existingAccessKeySecret values." -}}
+    {{- required $errorMsg (or (include "sysdig.accessKey" .) (include "sysdig.existingAccessKeySecret" .)) -}}
+{{- end -}}
+
 {{/* Returns string 'true' if the cluster's kubeVersion is less than the parameter provided, or nothing otherwise
      Use like: {{ include "admissionController.kubeVersionLessThan" (dict "root" . "major" <kube_major_to_compare> "minor" <kube_minor_to_compare>) }}
 
@@ -326,5 +374,111 @@ an error if not.
 {{- if (and (le (.root.Capabilities.KubeVersion.Major | int) .major)
             (lt (.root.Capabilities.KubeVersion.Minor | trimSuffix "+" | int) .minor)) }}
 true
+{{- end }}
+{{- end }}
+
+{{- define "admissionController.webhookTemplate" }}
+webhooks:
+{{- if .Values.features.kspmAdmissionController}}
+- name: vac.secure.sysdig.com
+  namespaceSelector:
+    matchExpressions:
+    - key: kubernetes.io/metadata.name
+      operator: NotIn
+      values:
+        - {{ include "admissionController.namespace" . }}
+  rules:
+  - apiGroups:
+    - ""
+    - apps
+    - batch
+    apiVersions: ["v1"]
+    operations: ["CREATE", "UPDATE"]
+    resources:
+    - "deployments"
+    - "replicasets"
+    - "statefulsets"
+    - "daemonsets"
+    - "jobs"
+    - "cronjobs"
+    scope: "Namespaced"
+  clientConfig:
+    service:
+      namespace: {{ include "admissionController.namespace" . }}
+      name: {{ include "admissionController.webhook.fullname" . }}
+      path: /validate
+      port:  {{ .Values.webhook.v2.service.port }}
+    caBundle: {{ .Cert }}
+
+  admissionReviewVersions: ["v1", "v1beta1"]
+  sideEffects: None
+  timeoutSeconds: {{ .Values.webhook.v2.timeoutSeconds }}
+  failurePolicy: Ignore
+{{- end }}
+{{- if or .Values.scanner.enabled .Values.webhook.acConfig }}
+- name: scanning.secure.sysdig.com
+  namespaceSelector:
+    matchExpressions:
+    - key: kubernetes.io/metadata.name
+      operator: NotIn
+      values:
+        - {{ include "admissionController.namespace" . }}
+  matchPolicy: Equivalent
+  rules:
+  - apiGroups:
+    - ""
+    - apps
+    - batch
+    apiVersions: ["v1"]
+    operations: ["CREATE", "UPDATE"]
+    resources:
+    - "pods"
+    - "deployments"
+    - "replicasets"
+    - "statefulsets"
+    - "daemonsets"
+    - "jobs"
+    - "cronjobs"
+    scope: "*"
+  clientConfig:
+    service:
+      namespace: {{ include "admissionController.namespace" . }}
+      name: {{ include "admissionController.webhook.fullname" . }}
+      path: /allow-pod
+      port:  {{ .Values.webhook.service.port }}
+    caBundle: {{ .Cert }}
+  admissionReviewVersions: ["v1", "v1beta1"]
+  sideEffects: None
+  timeoutSeconds: {{ .Values.webhook.timeoutSeconds }}
+  {{- if .Values.webhook.denyOnError }}
+  failurePolicy: Fail
+  {{- else }}
+  failurePolicy: Ignore
+  {{- end }}
+{{- end }}
+{{- if .Values.features.k8sAuditDetections }}
+- name: audit.secure.sysdig.com
+  namespaceSelector:
+    matchExpressions:
+    - key: kubernetes.io/metadata.name
+      operator: NotIn
+      values:
+        - {{ include "admissionController.namespace" . }}
+  matchPolicy: Equivalent
+  rules:
+  {{- with .Values.features.k8sAuditDetectionsRules }}
+    {{- toYaml . | nindent 2 }}
+  {{- end }}
+  clientConfig:
+    service:
+      namespace: {{ include "admissionController.namespace" . }}
+      name: {{ include "admissionController.webhook.fullname" . }}
+      path: /k8s-audit
+      port:  {{ .Values.webhook.service.port }}
+    caBundle: {{ .Cert }}
+  admissionReviewVersions: ["v1", "v1beta1"]
+  sideEffects: None
+  timeoutSeconds: {{ .Values.webhook.timeoutSeconds }}
+  failurePolicy: Ignore
 {{- end }}
 {{- end }}

@@ -49,6 +49,48 @@ spec:
       hostNetwork: true
       {{- end }}
       containers:
+      {{- if .Values.features.kspmAdmissionController}}
+        - name: kspm-admission-controller
+          image: {{ include "admissionController.kspm.image" . }}
+          imagePullPolicy: {{ .Values.webhook.v2.image.pullPolicy | default .Values.global.image.pullPolicy }}
+          env:
+            - name: DRY_RUN
+              value: "true"
+            {{- if (or (include "webhook.httpProxy" .) (include "webhook.httpsProxy" .) (include "webhook.noProxy" .) )}}
+            - name: HTTP_PROXY
+              value: {{ include "webhook.httpProxy" . }}
+            - name: HTTPS_PROXY
+              value: {{ include "webhook.httpsProxy" . }}
+            - name: NO_PROXY
+              value: {{ include "webhook.noProxy" . }},{{ include "admissionController.scanner.fullname" . }}
+            {{- end }}
+            {{- if or .Values.webhook.ssl.ca.cert (eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.webhook.ssl)) "true") }}
+            - name: SSL_CERT_DIR
+              value: /ca-certs
+            {{- end }}
+          ports:
+            - containerPort: {{ .Values.webhook.v2.http.port }}
+              protocol: TCP
+              name: vac
+          envFrom:
+            - configMapRef:
+                name: {{ include "admissionController.webhook.fullname" . }}
+          volumeMounts:
+            - name: cert
+              mountPath: /cert
+              readOnly: true
+            - name: configs
+              mountPath: /configs
+              readOnly: true
+            {{- if or .Values.webhook.ssl.ca.cert (eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.webhook.ssl)) "true") }}
+            - name: ca-cert
+              mountPath: /ca-certs
+              readOnly: true
+            {{- end }}
+          resources:
+            {{- toYaml .Values.webhook.resources | nindent 12 }}
+      {{- end}}
+      {{- if (or .Values.features.k8sAuditDetections .Values.scanner.enabled .Values.webhook.acConfig) }}
         - name: admission-controller
           image: "{{ include "admissionController.webhook.image" . }}"
           {{- if .Values.webhook.customEntryPoint }}
@@ -88,6 +130,10 @@ spec:
             - name: SSL_CERT_DIR
               value: /ca-certs
             {{- end }}
+            {{- if .Values.webhook.acConfig }}
+            - name: VM_ENGINE_V2_ENABLED
+              value: "true"
+            {{- end }}
           ports:
             - name: http
               containerPort: {{ .Values.webhook.http.port }}
@@ -124,7 +170,17 @@ spec:
             {{- end }}
           resources:
             {{- toYaml .Values.webhook.resources | nindent 12 }}
+      {{- end}}
       volumes:
+        {{- if .Values.features.kspmAdmissionController }}
+        - name: configs
+          secret:
+            {{- if (include "sysdig.accessKey" .) }}
+            secretName: {{ include "admissionController.webhook.fullname" . }}-access-key
+            {{- else }}
+            secretName: {{ include "sysdig.existingAccessKeySecret" . }}
+            {{- end}}
+        {{- end}}
         - name: cert
           secret:
             secretName: {{ include "admissionController.webhook.fullname" . }}-tls

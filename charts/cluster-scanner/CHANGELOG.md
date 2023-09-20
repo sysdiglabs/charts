@@ -10,6 +10,27 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.5.5
+### New Features
+* **cluster-scanner** [b4b4e295](https://github.com/sysdiglabs/charts/commit/b4b4e295bc056c1abccaf5dba8cfdd717b433d12): Add dynamic envs to values ([#1358](https://github.com/sysdiglabs/charts/issues/1358))
+# v0.5.4
+### Chores
+* **cluster-scanner** [7b06c377](https://github.com/sysdiglabs/charts/commit/7b06c3779a3c2a5b2c30a0afaef0ea33ceeb236c): bump RSI and ISE to v0.4.4 ([#1357](https://github.com/sysdiglabs/charts/issues/1357))
+# v0.5.3
+### New Features
+* **admission-controller,agent,cluster-scanner,kspm-collector,node-analyzer,rapid-response** [32231059](https://github.com/sysdiglabs/charts/commit/322310597ffbf9e47b5755be8f2f65a6e68296a2): pass agent tags to kspm components ([#1333](https://github.com/sysdiglabs/charts/issues/1333))
+# v0.5.2
+### Chores
+* **cluster-scanner** [16569cfe](https://github.com/sysdiglabs/charts/commit/16569cfe19ee5880bf67f1f7933fefde170582da): bumped RSI and ISE to latest version 0.4.3 ([#1329](https://github.com/sysdiglabs/charts/issues/1329))
+# v0.5.1
+### Bug Fixes
+* **cluster-scanner** [89d49754](https://github.com/sysdiglabs/charts/commit/89d49754c08f2597157fbe53a0be9faf708a0de3): corrected parsing of onPremCompatibilityVersion param ([#1323](https://github.com/sysdiglabs/charts/issues/1323))
+# v0.5.0
+### New Features
+* **cluster-scanner** [f9db25eb](https://github.com/sysdiglabs/charts/commit/f9db25eb77d6f648adefbf01ad3df983c41ddf70): allow to configure http proxy ([#1302](https://github.com/sysdiglabs/charts/issues/1302))
+# v0.4.1
+### Documentation
+* **admission-controller, cluster-scanner, registry-scanner, cloud-connector, node-analyzer, rapid-response, sysdig-deploy, agent** [df733e62](https://github.com/sysdiglabs/charts/commit/df733e6294eae1967197e3521473a5fab0282b67): update maintainers list ([#1283](https://github.com/sysdiglabs/charts/issues/1283))
 # v0.4.0
 ### New Features
 * **sysdig-agent,node-analyzer,kspm-collector,rapid-response,admission-controller** [2dca8e7c](https://github.com/sysdiglabs/charts/commit/2dca8e7c5308e76c2da63c974ae75c4ad510c201): Global Custom CA Bundle Support ([#961](https://github.com/sysdiglabs/charts/issues/961))
