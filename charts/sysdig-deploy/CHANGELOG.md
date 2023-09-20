@@ -10,6 +10,24 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.22.11
+### Chores
+* **sysdig-deploy** [0b8ab484](https://github.com/sysdiglabs/charts/commit/0b8ab4840f2ed7ab0e4bd9023afa948127064796): bump sysdig-deploy cluster scanner 0.5.6 ([#1365](https://github.com/sysdiglabs/charts/issues/1365))
+# v1.22.10
+### Chores
+* **sysdig-deploy** [580a23fa](https://github.com/sysdiglabs/charts/commit/580a23fab14c7d1bc2f16887123c13d5be5ed951): Automatic version bump due to updated dependencies ([#1362](https://github.com/sysdiglabs/charts/issues/1362))
+# v1.22.9
+### Chores
+* **cluster-scanner** [7b06c377](https://github.com/sysdiglabs/charts/commit/7b06c3779a3c2a5b2c30a0afaef0ea33ceeb236c): bump RSI and ISE to v0.4.4 ([#1357](https://github.com/sysdiglabs/charts/issues/1357))
+# v1.22.8
+### Chores
+* **sysdig-deploy** [3c4e24d2](https://github.com/sysdiglabs/charts/commit/3c4e24d2cbc84a317d45af1ce4e48b4ed361934f): Automatic version bump due to updated dependencies ([#1360](https://github.com/sysdiglabs/charts/issues/1360))
+# v1.22.7
+### Chores
+* **sysdig-deploy** [45efa423](https://github.com/sysdiglabs/charts/commit/45efa42384d186ce8a3573699b63641e922a3d30): Automatic version bump due to updated dependencies ([#1356](https://github.com/sysdiglabs/charts/issues/1356))
+# v1.22.6
+### Chores
+* **sysdig-deploy** [ba08769f](https://github.com/sysdiglabs/charts/commit/ba08769f47ec7bd2e34aecb7c602d4d340dc1f81): Automatic version bump due to updated dependencies ([#1345](https://github.com/sysdiglabs/charts/issues/1345))
 # v1.22.5
 ### Bug Fixes
 * **common,agent,node-analyzer,kspm-collector** [0806635e](https://github.com/sysdiglabs/charts/commit/0806635e5824365adb8ab3d8fd31811477c8918e): support multi-level map in agent.tags ([#1351](https://github.com/sysdiglabs/charts/issues/1351))

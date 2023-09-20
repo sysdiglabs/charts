@@ -1,5 +1,5 @@
 # What's Changed
 
-### Bug Fixes
-- **common,agent,node-analyzer,kspm-collector** [0806635e](https://github.com/sysdiglabs/charts/commit/0806635e5824365adb8ab3d8fd31811477c8918e): support multi-level map in agent.tags ([#1351](https://github.com/sysdiglabs/charts/issues/1351))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.17.0...node-analyzer-1.17.1
+### Chores
+- **node-analyzer** [fc65fee4](https://github.com/sysdiglabs/charts/commit/fc65fee45ac31030885407a7dbadd078096620ab): bump sysdig/vuln-host-scanner to v0.5.2 ([#1363](https://github.com/sysdiglabs/charts/issues/1363))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.17.3...node-analyzer-1.17.4

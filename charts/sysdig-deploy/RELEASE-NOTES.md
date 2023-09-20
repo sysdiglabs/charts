@@ -1,5 +1,5 @@
 # What's Changed
 
-### Bug Fixes
-- **common,agent,node-analyzer,kspm-collector** [0806635e](https://github.com/sysdiglabs/charts/commit/0806635e5824365adb8ab3d8fd31811477c8918e): support multi-level map in agent.tags ([#1351](https://github.com/sysdiglabs/charts/issues/1351))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.22.4...sysdig-deploy-1.22.5
+### Chores
+- **sysdig-deploy** [0b8ab484](https://github.com/sysdiglabs/charts/commit/0b8ab4840f2ed7ab0e4bd9023afa948127064796): bump sysdig-deploy cluster scanner 0.5.6 ([#1365](https://github.com/sysdiglabs/charts/issues/1365))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.22.10...sysdig-deploy-1.22.11

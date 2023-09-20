@@ -298,7 +298,7 @@ the following helper function designed to take the accessKey if specified locall
 {{- end -}}
 
 {{- define "sysdig.existingAccessKeySecret" -}}
-    {{- .Values.sysdig.existingAccessKeySecret | default .Values.global.sysdig.existingAccessKeySecret | default "" -}}
+    {{- .Values.sysdig.existingAccessKeySecret | default .Values.global.sysdig.accessKeySecret | default .Values.global.sysdig.existingAccessKeySecret | default "" -}}
 {{- end -}}
 
 {{/*

@@ -102,7 +102,7 @@ runtimeStatusIntegrator:
     # The image repository to use for pulling the Runtime Status Integrator
     # image
     repository: sysdig/runtime-status-integrator
-    tag: "0.4.3"
+    tag: "0.4.4"
   # Params to manage leader election
   # Leader election is implemented leveraging the native capabilities of
   # Kubernetes see: https://kubernetes.io/blog/2016/01/simple-leader-election-with-kubernetes/
@@ -147,6 +147,9 @@ runtimeStatusIntegrator:
       # Runtime Status Integrator Memory requests per replica
       memory: 350Mi
 
+  # Runtime Status Integrator env allows the definition of environment variables
+  env: {}
+
   natsJS:
     # The username to be used in the NATS JetStream instance the Runtime Status
     # Integrator is going to start
@@ -161,7 +164,7 @@ imageSbomExtractor:
     registry: quay.io
     # The image repository to use for pulling the Image SBOM Extractor image
     repository: sysdig/image-sbom-extractor
-    tag: "0.4.3"
+    tag: "0.4.4"
   ports:
     # The port to be used to expose prometheus metrics for the Image SBOM
     # Extractor
@@ -179,6 +182,9 @@ imageSbomExtractor:
       cpu: "350m"
       # Image SBOM Extractor Memory requests per replica
       memory: 350Mi
+
+  # Image SBOM Extractor env allows the definition of environment variables
+  env: {}
 
   cache:
     # The type of cache to use.

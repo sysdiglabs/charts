@@ -1,14 +1,10 @@
 apiVersion: v2
 name: agent
 description: Sysdig Monitor and Secure agent
-
 type: application
-
 # currently matching sysdig 1.14.32
-version: 1.13.9
-
-appVersion: 12.16.0
-
+version: 1.13.10
+appVersion: 12.16.1
 keywords:
   - monitoring
   - security
