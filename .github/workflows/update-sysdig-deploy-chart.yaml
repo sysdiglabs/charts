@@ -18,11 +18,13 @@ jobs:
         id: dependent_files
         with:
           files: |
-            charts/node-analyzer/*
-            charts/agent/*
-            charts/kspm-collector/*
-            charts/rapid-response/*
             charts/admission-controller/*
+            charts/agent/*
+            charts/cluster-scanner/*
+            charts/common/*
+            charts/kspm-collector/*
+            charts/node-analyzer/*
+            charts/rapid-response/*
 
       - name: Install YQ
         if: steps.dependent_files.outputs.any_changed == 'true'

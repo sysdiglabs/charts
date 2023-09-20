@@ -2,12 +2,15 @@
 
 set -e
 
-node_analyzer_chart_path="node-analyzer"
-agent_chart_path="agent"
-kspm_collector_chart_path="kspm-collector"
-rapid_response_chart_path="rapid-response"
-admission_controller_chart_path="admission-controller"
 sysdig_deploy_path="sysdig-deploy"
+
+admission_controller_chart_path="admission-controller"
+agent_chart_path="agent"
+cluster_scanner_chart_path="cluster-scanner"
+common_chart_path="common"
+kspm_collector_chart_path="kspm-collector"
+node_analyzer_chart_path="node-analyzer"
+rapid_response_chart_path="rapid-response"
 
 minor=0
 major=0
@@ -66,7 +69,7 @@ check_update_needed () {
     fi
 }
 
-charts=( "$node_analyzer_chart_path" "$agent_chart_path" "$kspm_collector_chart_path" "$rapid_response_chart_path" "$admission_controller_chart_path" )
+charts=( "$node_analyzer_chart_path" "$agent_chart_path" "$kspm_collector_chart_path" "$rapid_response_chart_path" "$admission_controller_chart_path" "$common_chart_path" "$cluster_scanner_chart_path")
 for chart in "${charts[@]}"
 do
     check_update_needed "$chart"
