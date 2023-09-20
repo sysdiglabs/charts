@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.5.6
+### New Features
+* **cluster-scanner** [d44e1f6f](https://github.com/sysdiglabs/charts/commit/d44e1f6fbb46a9565ed5a6da5b4732e11a03ecef): Introduce support to external secrets accessKeySecret ([#1287](https://github.com/sysdiglabs/charts/issues/1287))
 # v0.5.5
 ### New Features
 * **cluster-scanner** [b4b4e295](https://github.com/sysdiglabs/charts/commit/b4b4e295bc056c1abccaf5dba8cfdd717b433d12): Add dynamic envs to values ([#1358](https://github.com/sysdiglabs/charts/issues/1358))
