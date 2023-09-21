@@ -1,7 +1,0 @@
-config:
-  registryType: gar
-  gar:
-    regions:
-    - us-east1
-scanOnStart:
-  enabled: true

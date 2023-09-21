@@ -1,31 +1,3 @@
-{{- if eq .Values.config.registryType "gar" }}
-{{- range .Values.config.gar.regions }}
----
-{{- if (include "registry-scanner.kubeVersionLessThan" (dict "root" $ "major" 1 "minor" 21)) }}
-apiVersion: batch/v1beta1
-{{- else }}
-apiVersion: batch/v1
-{{- end }}
-kind: CronJob
-metadata:
-  name: {{ include "registry-scanner.fullname" $ }}-gar-{{ . }}
-  labels:
-{{ include "registry-scanner.labels" $ | indent 4 }}
-{{- include "registry-scanner.customLabels" $ | nindent 4 }}
-spec:
-  schedule: {{ $.Values.cronjob.schedule | quote }}
-  failedJobsHistoryLimit: {{ $.Values.cronjob.failedJobsHistoryLimit }}
-  successfulJobsHistoryLimit: {{ $.Values.cronjob.successfulJobsHistoryLimit }}
-  concurrencyPolicy:  Forbid
-  jobTemplate:
-    metadata:
-      labels:
-        {{- include "registry-scanner.customLabels" $ | nindent 8 }}
-    spec:
-      {{- include "registry-scanner.jobTemplateGar" (list $ . ) | indent 6}}
-{{- end }}
-{{- else }}
----
 {{- if (include "registry-scanner.kubeVersionLessThan" (dict "root" . "major" 1 "minor" 21)) }}
 apiVersion: batch/v1beta1
 {{- else }}
@@ -48,4 +20,3 @@ spec:
         {{- include "registry-scanner.customLabels" . | nindent 8 }}
     spec:
       {{- include "registry-scanner.jobTemplate" . | indent 6}}
-{{- end }}

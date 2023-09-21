@@ -26,7 +26,7 @@ config:
   registryUser: ""
   # The password for registry authentication.
   registryPassword: ""
-  # Mandatory.<br/>The registry Type. Supported types: artifactory, ecr, icr, acr, quay, harbor, gar, gcr, nexus, cloudsmith and dockerv2.
+  # Mandatory.<br/>The registry Type. Supported types: artifactory, ecr, icr, acr, quay, harbor, gar, gcr, nexus and dockerv2.
   registryType: ""
   # The account ID. Applicable only for ICR registry type.
   registryAccountId: ""
@@ -34,10 +34,6 @@ config:
   icrIamApi: ""
   # Ignore TLS certificate for IAM API. Applicable only for ICR registry type.
   icrIamApiSkipTLS: false
-  gar:
-    # List of Google Artifact Registry regions where registries are located.
-    regions: []
-    # - us-central1
   aws:
     # The AWS credentials: `AccessKeyId`.
     accessKeyId: ""

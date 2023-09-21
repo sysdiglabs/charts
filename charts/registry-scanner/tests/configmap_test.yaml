@@ -139,12 +139,3 @@ tests:
       - matchRegex:
           path: data['config.yaml']
           pattern: allowListMemberAccountIDs:\n\s*- 123456789
-
-  - it: registry url if registry type gar
-    set:
-      config:
-        registryType: gar
-    asserts:
-      - notMatchRegex:
-          path: data['config.yaml']
-          pattern: "url:.*$"
