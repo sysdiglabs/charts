@@ -1,0 +1,47 @@
+suite: registrymirror
+templates:
+  - ../templates/registrymirror.yaml
+values:
+  - ../values.yaml
+release:
+  name: test-release
+  namespace: test-ns
+
+tests:
+  - it: "does not have mirrors, if they are not provided"
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: "has mirrors ConfigMap, when registryMirrorsConfig is set"
+    set:
+      imageSbomExtractor.registryMirrorsConfig: |-
+        {
+          "registry-mirrors": [
+            "insecure.mirror.acme.com",
+            "secure.mirror.acme.com"
+          ],
+          "insecure-registries": [
+            "insecure.mirror.acme.com"
+          ]
+        }
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: test-release-cluster-scanner-registry-mirrors
+          namespace: test-ns
+      - equal:
+          path: data["daemon.json"]
+          value: |-
+            {
+              "registry-mirrors": [
+                "insecure.mirror.acme.com",
+                "secure.mirror.acme.com"
+              ],
+              "insecure-registries": [
+                "insecure.mirror.acme.com"
+              ]
+            }

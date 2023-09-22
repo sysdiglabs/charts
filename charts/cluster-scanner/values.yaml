@@ -218,6 +218,27 @@ imageSbomExtractor:
     #   sentinelAddress: ""
     #   ttl: "168h" # Default ttl is 7 days
 
+  # Provide optional mirrors configuration to be used by Image SBOM Extractor to pull images.
+  # [Only Docker HUB images](https://docs.docker.com/registry/recipes/mirror/#gotcha) are going to be pulled from
+  # the provided mirrors.
+  #
+  # When provided, the parameter must be a string in docker-daemon configuration file format
+  # (see: https://docs.docker.com/registry/recipes/mirror/#configure-the-docker-daemon).
+  #
+  # Example:
+  #
+  # registryMirrorsConfig: \|-
+  #   {
+  #     "registry-mirrors": [
+  #       "insecure.mirror.acme.com",
+  #       "secure.mirror.acme.com"
+  #     ],
+  #     "insecure-registries": [
+  #       "insecure.mirror.acme.com"
+  #     ]
+  #   }
+  registryMirrorsConfig:
+
 # Chart name override
 nameOverride: ""
 # Chart full name override
