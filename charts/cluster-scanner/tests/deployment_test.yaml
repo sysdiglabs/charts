@@ -71,17 +71,17 @@ tests:
     set:
       runtimeStatusIntegrator.image.registry: registry-rsi.io
       runtimeStatusIntegrator.image.repository: test.com/repo
-      runtimeStatusIntegrator.image.tag: "0.3.4"
+      runtimeStatusIntegrator.image.tag: "0.5.4"
       imageSbomExtractor.image.registry: registry-ise.io
       imageSbomExtractor.image.repository: test-ise.com/repo
-      imageSbomExtractor.image.tag: "0.0.1"
+      imageSbomExtractor.image.tag: "9.0.1"
     asserts:
       - equal:
           path: spec.template.spec.containers[0].image
-          value: registry-rsi.io/test.com/repo:0.3.4
+          value: registry-rsi.io/test.com/repo:0.5.4
       - equal:
           path: spec.template.spec.containers[1].image
-          value: registry-ise.io/test-ise.com/repo:0.0.1
+          value: registry-ise.io/test-ise.com/repo:9.0.1
 
   - it: "sets kubeconfig env var if set"
     templates:
@@ -185,23 +185,21 @@ tests:
     templates:
       - ../templates/deployment.yaml
     set:
-      onPremCompatibilityVersion: null
       runtimeStatusIntegrator.image.tag: "0.3.4"
       imageSbomExtractor.image.tag: "1.3.4"
     asserts:
       - failedTemplate:
-          errorMessage: "incompatible version for runtimeStatusIntegrator.image.tag, set 0.3.4 expected >= 1.0.0"
+          errorMessage: "incompatible version for runtimeStatusIntegrator.image.tag, set 0.3.4 expected >= 0.5.0"
 
   - it: "fails if the onPremCompatibilityVersion is not set and the imageSbomExtractor version is incorrect"
     templates:
       - ../templates/deployment.yaml
     set:
-      onPremCompatibilityVersion: null
       runtimeStatusIntegrator.image.tag: "1.3.4"
       imageSbomExtractor.image.tag: "0.1.0"
     asserts:
       - failedTemplate:
-          errorMessage: "incompatible version for imageSbomExtractor.image.tag, set 0.1.0 expected >= 1.0.0"
+          errorMessage: "incompatible version for imageSbomExtractor.image.tag, set 0.1.0 expected >= 0.5.0"
 
   - it: "fails if the onPremCompatibilityVersion is set to 6.2 and the runtimeStatusIntegrator version is incorrect"
     templates:
@@ -212,7 +210,7 @@ tests:
       imageSbomExtractor.image.tag: "0.3.4"
     asserts:
       - failedTemplate:
-          errorMessage: "incompatible version for runtimeStatusIntegrator.image.tag, set 4.3.4 expected < 1.0.0"
+          errorMessage: "incompatible version for runtimeStatusIntegrator.image.tag, set 4.3.4 expected < 0.5.0"
 
   - it: "fails if the onPremCompatibilityVersion is set to 6.2 and the imageSbomExtractor version is incorrect"
     templates:
@@ -223,7 +221,7 @@ tests:
       imageSbomExtractor.image.tag: "6.1.0"
     asserts:
       - failedTemplate:
-          errorMessage: "incompatible version for imageSbomExtractor.image.tag, set 6.1.0 expected < 1.0.0"
+          errorMessage: "incompatible version for imageSbomExtractor.image.tag, set 6.1.0 expected < 0.5.0"
 
   - it: "fails if the onPremCompatibilityVersion is set to 6.3 and the runtimeStatusIntegrator version is incorrect"
     templates:
@@ -234,7 +232,7 @@ tests:
       imageSbomExtractor.image.tag: "0.3.4"
     asserts:
       - failedTemplate:
-          errorMessage: "incompatible version for runtimeStatusIntegrator.image.tag, set 4.3.4 expected < 1.0.0"
+          errorMessage: "incompatible version for runtimeStatusIntegrator.image.tag, set 4.3.4 expected < 0.5.0"
 
   - it: "fails if the onPremCompatibilityVersion is set to 6.3 and the imageSbomExtractor version is incorrect"
     templates:
@@ -245,7 +243,7 @@ tests:
       imageSbomExtractor.image.tag: "6.1.0"
     asserts:
       - failedTemplate:
-          errorMessage: "incompatible version for imageSbomExtractor.image.tag, set 6.1.0 expected < 1.0.0"
+          errorMessage: "incompatible version for imageSbomExtractor.image.tag, set 6.1.0 expected < 0.5.0"
 
   - it: "fails if the onPremCompatibilityVersion is set to 6.5 and the runtimeStatusIntegrator version is incorrect"
     templates:
@@ -256,7 +254,7 @@ tests:
       imageSbomExtractor.image.tag: "1.3.4"
     asserts:
       - failedTemplate:
-          errorMessage: "incompatible version for runtimeStatusIntegrator.image.tag, set 0.3.4 expected >= 1.0.0"
+          errorMessage: "incompatible version for runtimeStatusIntegrator.image.tag, set 0.3.4 expected >= 0.5.0"
 
   - it: "fails if the onPremCompatibilityVersion is set to 6.5 and the imageSbomExtractor version is incorrect"
     templates:
@@ -267,7 +265,7 @@ tests:
       imageSbomExtractor.image.tag: "0.1.0"
     asserts:
       - failedTemplate:
-          errorMessage: "incompatible version for imageSbomExtractor.image.tag, set 0.1.0 expected >= 1.0.0"
+          errorMessage: "incompatible version for imageSbomExtractor.image.tag, set 0.1.0 expected >= 0.5.0"
 
   - it: "fails if the onPremCompatibilityVersion is set to 6.6 and the runtimeStatusIntegrator version is incorrect"
     templates:
@@ -278,7 +276,7 @@ tests:
       imageSbomExtractor.image.tag: "1.3.4"
     asserts:
       - failedTemplate:
-          errorMessage: "incompatible version for runtimeStatusIntegrator.image.tag, set 0.3.4 expected >= 1.0.0"
+          errorMessage: "incompatible version for runtimeStatusIntegrator.image.tag, set 0.3.4 expected >= 0.5.0"
 
   - it: "fails if the onPremCompatibilityVersion is set to 6.6 and the imageSbomExtractor version is incorrect"
     templates:
@@ -289,22 +287,21 @@ tests:
       imageSbomExtractor.image.tag: "0.1.0"
     asserts:
       - failedTemplate:
-          errorMessage: "incompatible version for imageSbomExtractor.image.tag, set 0.1.0 expected >= 1.0.0"
+          errorMessage: "incompatible version for imageSbomExtractor.image.tag, set 0.1.0 expected >= 0.5.0"
 
   - it: "succeeds if the onPremCompatibilityVersion is not set and the runtimeStatusIntegrator and imageSbomExtractor versions are correct"
     templates:
       - ../templates/deployment.yaml
     set:
-      onPremCompatibilityVersion: null
       runtimeStatusIntegrator.image.tag: "2.3.4"
-      imageSbomExtractor.image.tag: "1.0.0"
+      imageSbomExtractor.image.tag: "0.5.0"
     asserts:
       - equal:
           path: spec.template.spec.containers[0].image
           value: quay.io/sysdig/runtime-status-integrator:2.3.4
       - equal:
           path: spec.template.spec.containers[1].image
-          value: quay.io/sysdig/image-sbom-extractor:1.0.0
+          value: quay.io/sysdig/image-sbom-extractor:0.5.0
 
   - it: "succeeds if the onPremCompatibilityVersion is set to 6.2 and the runtimeStatusIntegrator and imageSbomExtractor versions are correct"
     templates:
@@ -312,14 +309,14 @@ tests:
     set:
       onPremCompatibilityVersion: "6.2"
       runtimeStatusIntegrator.image.tag: "0.3.4"
-      imageSbomExtractor.image.tag: "0.9.10"
+      imageSbomExtractor.image.tag: "0.4.10"
     asserts:
       - equal:
           path: spec.template.spec.containers[0].image
           value: quay.io/sysdig/runtime-status-integrator:0.3.4
       - equal:
           path: spec.template.spec.containers[1].image
-          value: quay.io/sysdig/image-sbom-extractor:0.9.10
+          value: quay.io/sysdig/image-sbom-extractor:0.4.10
 
   - it: "succeeds if the onPremCompatibilityVersion is set to 6.3 and the runtimeStatusIntegrator and imageSbomExtractor versions are correct"
     templates:
@@ -327,14 +324,14 @@ tests:
     set:
       onPremCompatibilityVersion: "6.3"
       runtimeStatusIntegrator.image.tag: "0.3.4"
-      imageSbomExtractor.image.tag: "0.9.10"
+      imageSbomExtractor.image.tag: "0.4.10"
     asserts:
       - equal:
           path: spec.template.spec.containers[0].image
           value: quay.io/sysdig/runtime-status-integrator:0.3.4
       - equal:
           path: spec.template.spec.containers[1].image
-          value: quay.io/sysdig/image-sbom-extractor:0.9.10
+          value: quay.io/sysdig/image-sbom-extractor:0.4.10
 
   - it: "succeeds if the onPremCompatibilityVersion is set to 6.5 and the runtimeStatusIntegrator and imageSbomExtractor versions are correct"
     templates:
@@ -342,14 +339,14 @@ tests:
     set:
       onPremCompatibilityVersion: "6.5"
       runtimeStatusIntegrator.image.tag: "2.3.4"
-      imageSbomExtractor.image.tag: "1.0.0"
+      imageSbomExtractor.image.tag: "0.5.0"
     asserts:
       - equal:
           path: spec.template.spec.containers[0].image
           value: quay.io/sysdig/runtime-status-integrator:2.3.4
       - equal:
           path: spec.template.spec.containers[1].image
-          value: quay.io/sysdig/image-sbom-extractor:1.0.0
+          value: quay.io/sysdig/image-sbom-extractor:0.5.0
 
   - it: "succeeds if the onPremCompatibilityVersion is set to 6.6 and the runtimeStatusIntegrator and imageSbomExtractor versions are correct"
     templates:
@@ -357,14 +354,14 @@ tests:
     set:
       onPremCompatibilityVersion: "6.6"
       runtimeStatusIntegrator.image.tag: "2.3.4"
-      imageSbomExtractor.image.tag: "1.0.0"
+      imageSbomExtractor.image.tag: "0.5.0"
     asserts:
       - equal:
           path: spec.template.spec.containers[0].image
           value: quay.io/sysdig/runtime-status-integrator:2.3.4
       - equal:
           path: spec.template.spec.containers[1].image
-          value: quay.io/sysdig/image-sbom-extractor:1.0.0
+          value: quay.io/sysdig/image-sbom-extractor:0.5.0
 
   - it: "succeeds if the runtimeStatusIntegrator version is not a semver and the onPremCompatibilityVersion is 6.4"
     templates:
@@ -372,14 +369,14 @@ tests:
     set:
       onPremCompatibilityVersion: "6.4"
       runtimeStatusIntegrator.image.tag: "unstable-rc"
-      imageSbomExtractor.image.tag: "0.9.0"
+      imageSbomExtractor.image.tag: "0.4.9"
     asserts:
       - equal:
           path: spec.template.spec.containers[0].image
           value: quay.io/sysdig/runtime-status-integrator:unstable-rc
       - equal:
           path: spec.template.spec.containers[1].image
-          value: quay.io/sysdig/image-sbom-extractor:0.9.0
+          value: quay.io/sysdig/image-sbom-extractor:0.4.9
 
   - it: "succeeds if the imageSbomExtractor version is not a semver and the onPremCompatibilityVersion is 6.5"
     templates:
@@ -395,6 +392,29 @@ tests:
       - equal:
           path: spec.template.spec.containers[1].image
           value: quay.io/sysdig/image-sbom-extractor:3bc59a4958d15dfa6afed20dfd2459e268b4cda8
+
+  - it: "correctly sets the CLUSTERSCANNER_PLATFORM_ENABLED env var"
+    templates:
+      - ../templates/deployment.yaml
+    asserts:
+      - isSubset:
+          path: spec.template.spec.containers[0].env[?(@.name == "CLUSTERSCANNER_PLATFORM_ENABLED")]
+          content:
+            name: CLUSTERSCANNER_PLATFORM_ENABLED
+            valueFrom:
+              configMapKeyRef:
+                name: test-release-cluster-scanner
+                key: enable_platform_services
+                optional: true
+      - isSubset:
+          path: spec.template.spec.containers[1].env[?(@.name == "CLUSTERSCANNER_PLATFORM_ENABLED")]
+          content:
+            name: CLUSTERSCANNER_PLATFORM_ENABLED
+            valueFrom:
+              configMapKeyRef:
+                name: test-release-cluster-scanner
+                key: enable_platform_services
+                optional: true
 
   - it: "has default RSI and ISE pprof ports"
     templates:

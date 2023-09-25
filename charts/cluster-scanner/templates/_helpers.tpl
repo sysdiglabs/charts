@@ -209,9 +209,9 @@ Define the proper imageRegistry to use for imageSbomExtractor
 Cluster scanner version compatibility check.
 
 If .Values.onPremCompatibilityVersion is set to 6.5.0 or below, it checks whether
-the provided tag is < 1.0.0 .
+the provided tag is < 0.5.0 .
 
-Otherwise, it checks if the provided tag is >= 1.0.0 .
+Otherwise, it checks if the provided tag is >= 0.5.0 .
 
 Version tags must be semver2-compatible otherwise no check will be performed.
 */}}
@@ -219,16 +219,25 @@ Version tags must be semver2-compatible otherwise no check will be performed.
 {{- if regexMatch "^[0-9]+\\.[0-9]+\\.[0-9]+.*" .Tag -}}
     {{- $version := semver .Tag -}}
     {{- if and (hasKey (default .Values dict) "onPremCompatibilityVersion") (eq (semver .Values.onPremCompatibilityVersion | (semver "6.5.0").Compare) 1) -}}
-        {{- if ne ($version | (semver "1.0.0").Compare) 1 -}}
-            {{- fail (printf "incompatible version for %s, set %s expected < 1.0.0" .Component .Tag) -}}
+        {{- if ne ($version | (semver "0.5.0").Compare) 1 -}}
+            {{- fail (printf "incompatible version for %s, set %s expected < 0.5.0" .Component .Tag) -}}
         {{- end -}}
     {{- else -}}
-        {{- if eq ($version | (semver "1.0.0").Compare) 1 -}}
-            {{- fail (printf "incompatible version for %s, set %s expected >= 1.0.0" .Component .Tag) -}}
+        {{- if eq ($version | (semver "0.5.0").Compare) 1 -}}
+            {{- fail (printf "incompatible version for %s, set %s expected >= 0.5.0" .Component .Tag) -}}
         {{- end -}}
     {{- end -}}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Generates configmap data to enable platform services if onPremCompatibility version is not set, or it is greater than 6.5.0
+*/}}
+{{- define "cluster-scanner.enablePlatformServicesConfig" -}}
+{{- if not ( and (hasKey (default .Values dict) "onPremCompatibilityVersion") (eq (semver .Values.onPremCompatibilityVersion | (semver "6.5.0").Compare) 1)) -}}
+enable_platform_services: "true"
+{{- end }}
+{{- end }}
 
 {{/*
 Return the proper image name for the Runtime Status Integrator
