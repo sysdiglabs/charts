@@ -341,3 +341,37 @@ tests:
       - equal:
           path: data.no_proxy
           value: "fake-no-proxy"
+
+  - it: "has correct platform services value when onPremCompatibilityVersion is NOT provided"
+    set:
+      global.sysdig.apiHost: "http://test.com"
+    asserts:
+      - equal:
+          path: data.enable_platform_services
+          value: "true"
+
+  - it: "has correct platform services value when onPremCompatibilityVersion is < 6.6"
+    set:
+      global.sysdig.apiHost: "http://test.com"
+      onPremCompatibilityVersion: "6.5.99"
+    asserts:
+      - isNull:
+          path: data.enable_platform_services
+
+  - it: "has correct platform services value when onPremCompatibilityVersion is = 6.6.0"
+    set:
+      global.sysdig.apiHost: "http://test.com"
+      onPremCompatibilityVersion: "6.6.0"
+    asserts:
+      - equal:
+          path: data.enable_platform_services
+          value: "true"
+
+  - it: "has correct platform services value when onPremCompatibilityVersion is > 6.6.0"
+    set:
+      global.sysdig.apiHost: "http://test.com"
+      onPremCompatibilityVersion: "6.6.1"
+    asserts:
+      - equal:
+          path: data.enable_platform_services
+          value: "true"

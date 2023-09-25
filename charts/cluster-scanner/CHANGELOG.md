@@ -10,6 +10,18 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.6.0
+### New Features
+* **cluster-scanner** [e902c74b](https://github.com/sysdiglabs/charts/commit/e902c74bf1f3ae5c52a19f811bb05acd23bbbb27): enable backend scanning with platform services ([#1369](https://github.com/sysdiglabs/charts/issues/1369))
+# v0.5.6
+### New Features
+* **cluster-scanner** [d44e1f6f](https://github.com/sysdiglabs/charts/commit/d44e1f6fbb46a9565ed5a6da5b4732e11a03ecef): Introduce support to external secrets accessKeySecret ([#1287](https://github.com/sysdiglabs/charts/issues/1287))
+# v0.5.5
+### New Features
+* **cluster-scanner** [b4b4e295](https://github.com/sysdiglabs/charts/commit/b4b4e295bc056c1abccaf5dba8cfdd717b433d12): Add dynamic envs to values ([#1358](https://github.com/sysdiglabs/charts/issues/1358))
+# v0.5.4
+### Chores
+* **cluster-scanner** [7b06c377](https://github.com/sysdiglabs/charts/commit/7b06c3779a3c2a5b2c30a0afaef0ea33ceeb236c): bump RSI and ISE to v0.4.4 ([#1357](https://github.com/sysdiglabs/charts/issues/1357))
 # v0.5.3
 ### New Features
 * **admission-controller,agent,cluster-scanner,kspm-collector,node-analyzer,rapid-response** [32231059](https://github.com/sysdiglabs/charts/commit/322310597ffbf9e47b5755be8f2f65a6e68296a2): pass agent tags to kspm components ([#1333](https://github.com/sysdiglabs/charts/issues/1333))

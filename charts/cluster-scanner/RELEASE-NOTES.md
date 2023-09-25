@@ -1,5 +1,5 @@
 # What's Changed
 
 ### New Features
-- **admission-controller,agent,cluster-scanner,kspm-collector,node-analyzer,rapid-response** [32231059](https://github.com/sysdiglabs/charts/commit/322310597ffbf9e47b5755be8f2f65a6e68296a2): pass agent tags to kspm components ([#1333](https://github.com/sysdiglabs/charts/issues/1333))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/cluster-scanner-0.5.2...cluster-scanner-0.5.3
+- **cluster-scanner** [e902c74b](https://github.com/sysdiglabs/charts/commit/e902c74bf1f3ae5c52a19f811bb05acd23bbbb27): enable backend scanning with platform services ([#1369](https://github.com/sysdiglabs/charts/issues/1369))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/cluster-scanner-0.5.6...cluster-scanner-0.6.0

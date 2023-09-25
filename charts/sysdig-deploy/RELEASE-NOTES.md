@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **sysdig-deploy** [ba08769f](https://github.com/sysdiglabs/charts/commit/ba08769f47ec7bd2e34aecb7c602d4d340dc1f81): Automatic version bump due to updated dependencies ([#1345](https://github.com/sysdiglabs/charts/issues/1345))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.22.5...sysdig-deploy-1.22.6
+### New Features
+- **cluster-scanner** [e902c74b](https://github.com/sysdiglabs/charts/commit/e902c74bf1f3ae5c52a19f811bb05acd23bbbb27): enable backend scanning with platform services ([#1369](https://github.com/sysdiglabs/charts/issues/1369))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.22.11...sysdig-deploy-1.23.0

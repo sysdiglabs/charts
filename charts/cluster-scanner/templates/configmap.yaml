@@ -39,3 +39,4 @@ data:
   ise_cache_type: {{ .Values.imageSbomExtractor.cache.type }}
 {{- include "cluster-scanner.redisCacheConfig" . | nindent 2 }}
 {{- include "cluster-scanner.localCacheConfig" . | nindent 2 }}
+{{- include "cluster-scanner.enablePlatformServicesConfig" . | nindent 2 }}

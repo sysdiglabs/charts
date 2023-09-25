@@ -10,6 +10,15 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.17.4
+### Chores
+* **node-analyzer** [fc65fee4](https://github.com/sysdiglabs/charts/commit/fc65fee45ac31030885407a7dbadd078096620ab): bump sysdig/vuln-host-scanner to v0.5.2 ([#1363](https://github.com/sysdiglabs/charts/issues/1363))
+# v1.17.3
+### Chores
+* **sysdig, nodel-analyzer** [44e1c6a3](https://github.com/sysdiglabs/charts/commit/44e1c6a385faf3bdcdd0cb8427254338c68254c7): bump sysdig/vuln-runtime-scanner to v1.5.7 ([#1361](https://github.com/sysdiglabs/charts/issues/1361))
+# v1.17.2
+### Bug Fixes
+* **node-analyzer** [58970c62](https://github.com/sysdiglabs/charts/commit/58970c62a7148f5bfbaaecfc2aa4f524d89657a4): prevent `custom_tags` from being set to `nil` ([#1355](https://github.com/sysdiglabs/charts/issues/1355))
 # v1.17.1
 ### Bug Fixes
 * **common,agent,node-analyzer,kspm-collector** [0806635e](https://github.com/sysdiglabs/charts/commit/0806635e5824365adb8ab3d8fd31811477c8918e): support multi-level map in agent.tags ([#1351](https://github.com/sysdiglabs/charts/issues/1351))

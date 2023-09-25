@@ -258,8 +258,13 @@ spec:
           - name: SYSDIG_ACCESS_KEY
             valueFrom:
               secretKeyRef:
+                {{- if not ( include "cluster-scanner.accessKeySecret" . ) }}
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: sysdig_access_key
+                {{- else }}
+                name: {{ ( include "cluster-scanner.accessKeySecret" . ) }}
+                key: access-key
+                {{- end }}
           - name: NATS_JS_SERVER_PASSWORD
             valueFrom:
               secretKeyRef:
@@ -277,6 +282,16 @@ spec:
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: rsi_js_server_metrics_port
                 optional: true
+          - name: CLUSTERSCANNER_PLATFORM_ENABLED
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: enable_platform_services
+                optional: true
+          {{- range $key, $value := .Values.runtimeStatusIntegrator.env }}
+          - name: "{{ $key }}"
+            value: "{{ $value }}"
+          {{- end }}
       {{- with .Values.runtimeStatusIntegrator }}
           livenessProbe:
             httpGet:
@@ -350,8 +365,13 @@ spec:
           - name: SYSDIG_ACCESS_KEY
             valueFrom:
               secretKeyRef:
+                {{- if not ( include "cluster-scanner.accessKeySecret" . ) }}
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: sysdig_access_key
+                {{- else }}
+                name: {{ ( include "cluster-scanner.accessKeySecret" . ) }}
+                key: access-key
+                {{- end }}
           - name: SYSDIG_API_URL
             valueFrom:
               configMapKeyRef:
@@ -535,6 +555,16 @@ spec:
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: cache_redis_ttl
                 optional: true
+          {{- end }}
+          - name: CLUSTERSCANNER_PLATFORM_ENABLED
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: enable_platform_services
+                optional: true
+          {{- range $key, $value := .Values.imageSbomExtractor.env }}
+          - name: "{{ $key }}"
+            value: "{{ $value }}"
           {{- end }}
       {{- with .Values.imageSbomExtractor }}
           resources:
