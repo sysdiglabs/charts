@@ -81,13 +81,15 @@ scannerMode: "local"
 # Optional parameter used to check the compatibility of cluster-scanner
 # component versions with the on-premised backend version.
 #
-# If you are running an on-prem version of the Sysdig backend, set
+# If you are running an on-prem version of the Sysdig backend, you MUST set
 # this parameter with the version of Sysdig backend you are using.
 #
+# If you are runinng on SaaS, do NOT provide this parameter.
+#
 # E.g. if `onPremCompatibilityVersion=6.2`, we ensure that the image
-# tag is < 1.0.0 for both the Runtime Status Integrator and the Image SBOM
+# tag is < 0.5.0 for both the Runtime Status Integrator and the Image SBOM
 # Extractor.
-onPremCompatibilityVersion: "6.2"
+# onPremCompatibilityVersion: "6.2"
 
 # Can be set to false to allow insecure connections to the Sysdig backend,
 # such as for on-premise installs that use self-signed certificates.
@@ -102,7 +104,7 @@ runtimeStatusIntegrator:
     # The image repository to use for pulling the Runtime Status Integrator
     # image
     repository: sysdig/runtime-status-integrator
-    tag: "0.4.4"
+    tag: "0.5.0"
   # Params to manage leader election
   # Leader election is implemented leveraging the native capabilities of
   # Kubernetes see: https://kubernetes.io/blog/2016/01/simple-leader-election-with-kubernetes/
@@ -164,7 +166,7 @@ imageSbomExtractor:
     registry: quay.io
     # The image repository to use for pulling the Image SBOM Extractor image
     repository: sysdig/image-sbom-extractor
-    tag: "0.4.4"
+    tag: "0.5.0"
   ports:
     # The port to be used to expose prometheus metrics for the Image SBOM
     # Extractor
