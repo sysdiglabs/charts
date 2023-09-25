@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.23.0
+### New Features
+* **cluster-scanner** [e902c74b](https://github.com/sysdiglabs/charts/commit/e902c74bf1f3ae5c52a19f811bb05acd23bbbb27): enable backend scanning with platform services ([#1369](https://github.com/sysdiglabs/charts/issues/1369))
 # v1.22.11
 ### Chores
 * **sysdig-deploy** [0b8ab484](https://github.com/sysdiglabs/charts/commit/0b8ab4840f2ed7ab0e4bd9023afa948127064796): bump sysdig-deploy cluster scanner 0.5.6 ([#1365](https://github.com/sysdiglabs/charts/issues/1365))
