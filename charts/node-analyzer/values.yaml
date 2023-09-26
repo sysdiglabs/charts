@@ -133,7 +133,7 @@ nodeAnalyzer:
   # Can be set to true to show debug logging, useful for troubleshooting.
   debug: false
 
-  # Proxy configuration variables. See also: [Running Node Analyzer Behind a Proxy](https://docs.sysdig.com/en/node-analyzer--multi-feature-installation.html#UUID-35c14c46-b327-c2a8-ed9c-82a2af995218_section-idm51621039128136)
+  # Proxy configuration variables
   httpProxy:
   httpsProxy:
   noProxy:
