@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.6.0
+### New Features
+* **cluster-scanner** [e902c74b](https://github.com/sysdiglabs/charts/commit/e902c74bf1f3ae5c52a19f811bb05acd23bbbb27): enable backend scanning with platform services ([#1369](https://github.com/sysdiglabs/charts/issues/1369))
 # v0.5.6
 ### New Features
 * **cluster-scanner** [d44e1f6f](https://github.com/sysdiglabs/charts/commit/d44e1f6fbb46a9565ed5a6da5b4732e11a03ecef): Introduce support to external secrets accessKeySecret ([#1287](https://github.com/sysdiglabs/charts/issues/1287))

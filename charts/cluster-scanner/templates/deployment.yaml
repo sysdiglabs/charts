@@ -282,6 +282,12 @@ spec:
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: rsi_js_server_metrics_port
                 optional: true
+          - name: CLUSTERSCANNER_PLATFORM_ENABLED
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: enable_platform_services
+                optional: true
           {{- range $key, $value := .Values.runtimeStatusIntegrator.env }}
           - name: "{{ $key }}"
             value: "{{ $value }}"
@@ -550,6 +556,12 @@ spec:
                 key: cache_redis_ttl
                 optional: true
           {{- end }}
+          - name: CLUSTERSCANNER_PLATFORM_ENABLED
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: enable_platform_services
+                optional: true
           {{- range $key, $value := .Values.imageSbomExtractor.env }}
           - name: "{{ $key }}"
             value: "{{ $value }}"
