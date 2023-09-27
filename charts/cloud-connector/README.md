@@ -64,6 +64,17 @@ helm upgrade --install cloud-connector sysdig/cloud-connector \
      --set sysdig.secureAPIToken=<SECURE_API_TOKEN>
 ```
 
+#### Setting Arrays
+
+Both [ingestors](#ingestors) and [scanners](#scanners) configurations expect an array structure. When setting values for these configurations, ensure that this array structure in is reflected in your key-value pairs.
+
+For instance, to set values for the first element of the ingestors array, use the [0] index:
+
+```bash
+--set 'ingestors[0].azure-event-hub.subscriptionID=<SUBSCRIPTION_ID>'
+```
+Omitting the index causes Helm to interpret the setting as a plain map, leading to errors.
+
 ### Using values.yaml
 
 The `values.yaml` file specifies the values for the agent configuration parameters.  You can add the configuration to the `values.yaml` file, then use it in the `helm install` command.
@@ -77,6 +88,8 @@ helm upgrade --install cloud-connector sysdig/cloud-connector \
 ```
 
 See the default [`values.yaml`](./values.yaml) file for more information.
+
+
 
 ### Verify the integrity and origin
 Sysdig Helm Charts are signed so users can verify the integrity and origin of each chart, the steps are as follows:
