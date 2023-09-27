@@ -101,3 +101,5 @@ data:
     {{- if .Values.reportToPersistentVolumeClaim }}
     reportPath: /output/registry-scanner-{DATE}.json
     {{- end }}
+
+    useMainDbV2: {{ .Values.config.useMainDbV2 }}
