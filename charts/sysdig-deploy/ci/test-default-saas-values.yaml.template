@@ -1,0 +1,36 @@
+global:
+  clusterConfig:
+    name: "test-cluster"
+    namespace: ""
+  sysdig:
+    accessKey: ${SECURE_AGENT_TOKEN}
+    secureAPIToken: ${SECURE_API_TOKEN}
+  kspm:
+    deploy: true
+agent:
+  resources:
+    requests:
+      cpu: 25m
+      memory: 200Mi
+kspmCollector:
+  resources:
+    requests:
+      cpu: 25m
+      memory: 200Mi
+nodeAnalyzer:
+  secure:
+    vulnerabilityManagement:
+      newEngineOnly: true
+  nodeAnalyzer:
+    benchmarkRunner:
+      deploy: false
+    imageAnalyzer:
+      resources:
+        requests:
+          cpu: 25m
+          memory: 200Mi
+    hostAnalyzer:
+      resources:
+        requests:
+          cpu: 25m
+          memory: 200Mi
