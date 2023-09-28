@@ -129,8 +129,3 @@ Allow overriding registry and repository for air-gapped environments
 true
 {{- end }}
 {{- end }}
-
-{{- define "registry-scanner.sanitizeJSON" -}}
-{{- $sanitizedJSON := . | replace "\n" " " -}}
-{{- printf "%s" (replace "[" "{" (replace "]" "}" $sanitizedJSON)) -}}
-{{- end -}}
