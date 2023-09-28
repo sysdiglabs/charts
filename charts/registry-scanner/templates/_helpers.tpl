@@ -129,3 +129,7 @@ Allow overriding registry and repository for air-gapped environments
 true
 {{- end }}
 {{- end }}
+
+{{- define "registry-scanner.sanitizeJSON" -}}
+{{- . | replace "\n" " " -}}
+{{- end -}}
