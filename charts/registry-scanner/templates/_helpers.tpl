@@ -131,5 +131,6 @@ true
 {{- end }}
 
 {{- define "registry-scanner.sanitizeJSON" -}}
-{{- . | replace "\n" " " -}}
+{{- $sanitizedJSON := . | replace "\n" " " -}}
+{{- printf "%s" (replace "[" "{" (replace "]" "}" $sanitizedJSON)) -}}
 {{- end -}}
