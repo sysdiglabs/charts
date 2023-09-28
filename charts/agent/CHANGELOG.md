@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.13.12
+### New Features
+* [45e2f7a9](https://github.com/sysdiglabs/charts/commit/45e2f7a96c565bfe0687acaacf350e81f94a23bb): release agent 12.16.2 ([#1381](https://github.com/sysdiglabs/charts/issues/1381))
 # v1.13.11
 ### Bug Fixes
 * **agent** [4f8ca5c1](https://github.com/sysdiglabs/charts/commit/4f8ca5c1fec1af3d9b70e5860a307518b115e48a): add mount for host's `/run` vol for all deployment types ([#1373](https://github.com/sysdiglabs/charts/issues/1373))
