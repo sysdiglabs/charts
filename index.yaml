@@ -3893,6 +3893,43 @@ entries:
     version: 0.1.0
   agent:
   - apiVersion: v2
+    appVersion: 12.16.2
+    created: "2023-09-28T16:13:57.506689971Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      version: ~1.2.1
+    description: Sysdig Monitor and Secure agent
+    digest: f626e3e75bf8250680260275f9ece059b415dc20aac0e896bdd7e55a90ab5fd4
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: alberto.barba@sysdig.com
+      name: AlbertoBarba
+    - email: adam.roberts@sysdig.com
+      name: aroberts87
+    - email: francesco.furlan@sysdig.com
+      name: francesco-furlan
+    - email: gerlando.falauto@sysdig.com
+      name: iurly
+    - email: marcovito.moscaritolo@sysdig.com
+      name: mavimo
+    name: agent
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/agent-1.13.12/agent-1.13.12.tgz
+    version: 1.13.12
+  - apiVersion: v2
     appVersion: 12.16.1
     created: "2023-09-27T16:33:57.327941008Z"
     dependencies:
@@ -21504,6 +21541,28 @@ entries:
     - https://github.com/sysdiglabs/charts/releases/download/registry-scanner-0.0.1/registry-scanner-0.0.1.tgz
     version: 0.0.1
   sysdig:
+  - apiVersion: v1
+    appVersion: 12.16.2
+    created: "2023-09-28T16:13:57.763900905Z"
+    deprecated: true
+    description: Sysdig Monitor and Secure agent
+    digest: 3be58872bf2874797a12826683ff5c677fa01e23a995ca3cafb9ed8193d9ee04
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    name: sysdig
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/sysdig-1.16.14/sysdig-1.16.14.tgz
+    version: 1.16.14
   - apiVersion: v1
     appVersion: 12.16.1
     created: "2023-09-14T15:04:13.007967981Z"
@@ -43963,4 +44022,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2023-09-28T13:53:27.380874415Z"
+generated: "2023-09-28T16:13:58.00688596Z"
