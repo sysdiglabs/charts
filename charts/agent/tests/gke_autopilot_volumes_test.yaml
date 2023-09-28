@@ -53,6 +53,8 @@ tests:
       - isNotNull:
           path: spec.template.spec.volumes[?(@.hostPath.path == "/boot")]
       - isNotNull:
+          path: spec.template.spec.volumes[?(@.hostPath.path == "/run")]
+      - isNotNull:
           path: spec.template.spec.volumes[?(@.hostPath.path == "/var/run/containerd/containerd.sock")]
       # This seems not work as expected, need deeper investigation
       # - lengthEqual:
@@ -60,7 +62,7 @@ tests:
       #     count: 5
       # We are going to use this "workaround" until we found a proper solution
       - isNull:
-          path: spec.template.spec.volumes[?(@.hostPath.path =~ /\/.*/ && @.hostPath.path != "/dev" && @.hostPath.path != "/proc" && @.hostPath.path != "/etc/os-release" && @.hostPath.path != "/boot" && @.hostPath.path != "/var/run/containerd/containerd.sock")]
+          path: spec.template.spec.volumes[?(@.hostPath.path =~ /\/.*/ && @.hostPath.path != "/run" && @.hostPath.path != "/dev" && @.hostPath.path != "/proc" && @.hostPath.path != "/etc/os-release" && @.hostPath.path != "/boot" && @.hostPath.path != "/var/run/containerd/containerd.sock")]
 
   - it: Ensure only the right volumes are mounted when running on GKE Autopilot, the agent is slim mode with eBPF
     set:
@@ -109,6 +111,8 @@ tests:
       - isNotNull:
           path: spec.template.spec.volumes[?(@.hostPath.path == "/proc")]
       - isNotNull:
+          path: spec.template.spec.volumes[?(@.hostPath.path == "/run")]
+      - isNotNull:
           path: spec.template.spec.volumes[?(@.hostPath.path == "/etc/os-release")]
       - isNotNull:
           path: spec.template.spec.volumes[?(@.hostPath.path == "/boot")]
@@ -120,4 +124,4 @@ tests:
       #     count: 5
       # We are going to use this "workaround" until we found a proper solution
       - isNull:
-          path: spec.template.spec.volumes[?(@.hostPath.path =~ /\/.*/ && @.hostPath.path != "/dev" && @.hostPath.path != "/proc" && @.hostPath.path != "/etc/os-release" && @.hostPath.path != "/boot" && @.hostPath.path != "/var/run/containerd/containerd.sock")]
+          path: spec.template.spec.volumes[?(@.hostPath.path =~ /\/.*/ && @.hostPath.path != "/run" && @.hostPath.path != "/dev" && @.hostPath.path != "/proc" && @.hostPath.path != "/etc/os-release" && @.hostPath.path != "/boot" && @.hostPath.path != "/var/run/containerd/containerd.sock")]
