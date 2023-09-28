@@ -1,5 +1,5 @@
 # What's Changed
 
-### Documentation
-- **registry-scanner** [7fef1a33](https://github.com/sysdiglabs/charts/commit/7fef1a33e1652a7b578e4d97eaf0f9382b1fea66): remove nodeSelector from docs ([#1337](https://github.com/sysdiglabs/charts/issues/1337))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-1.1.7...registry-scanner-1.1.8
+### Chores
+- **registry-scanner** [b9f6b22f](https://github.com/sysdiglabs/charts/commit/b9f6b22fa7743d5f8ef9537c3e408f65a407dd07): Update to v0.2.48 ([#1374](https://github.com/sysdiglabs/charts/issues/1374))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-1.1.8...registry-scanner-1.1.9

@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **admission-controller** [c7db0f7d](https://github.com/sysdiglabs/charts/commit/c7db0f7dab2b6fe2984a4b02620069d94504edd8): add worker volume size limit as configurable parameter ([#1352](https://github.com/sysdiglabs/charts/issues/1352))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/admission-controller-0.14.6...admission-controller-0.14.7
+### Bug Fixes
+- **admission-controller** [4aa15cc1](https://github.com/sysdiglabs/charts/commit/4aa15cc1899ae29eb280e31fbeffa54c066d3937): not detecting events in its own namespace ([#1379](https://github.com/sysdiglabs/charts/issues/1379))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/admission-controller-0.14.8...admission-controller-0.14.9
