@@ -458,12 +458,6 @@ webhooks:
 {{- end }}
 {{- if .Values.features.k8sAuditDetections }}
 - name: audit.secure.sysdig.com
-  namespaceSelector:
-    matchExpressions:
-    - key: kubernetes.io/metadata.name
-      operator: NotIn
-      values:
-        - {{ include "admissionController.namespace" . }}
   matchPolicy: Equivalent
   rules:
   {{- with .Values.features.k8sAuditDetectionsRules }}
