@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.23.8
+### Bug Fixes
+* **cluster-scanner** [3fe6f6e6](https://github.com/sysdiglabs/charts/commit/3fe6f6e659e43dfdaaf5211b34f32025283c2b18): corrected incompatibility with helm 3.9 ([#1383](https://github.com/sysdiglabs/charts/issues/1383))
 # v1.23.7
 ### Chores
 * **sysdig-deploy** [4ef0ade6](https://github.com/sysdiglabs/charts/commit/4ef0ade645d13150390befde57b740a18099f9e8): Automatic version bump due to updated dependencies ([#1382](https://github.com/sysdiglabs/charts/issues/1382))
