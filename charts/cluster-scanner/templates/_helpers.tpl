@@ -217,13 +217,13 @@ Version tags must be semver2-compatible otherwise no check will be performed.
 */}}
 {{- define "cluster-scanner.checkVersionCompatibility" -}}
 {{- if regexMatch "^[0-9]+\\.[0-9]+\\.[0-9]+.*" .Tag -}}
-    {{- $version := semver .Tag -}}
-    {{- if and (hasKey (default .Values dict) "onPremCompatibilityVersion") (eq (semver .Values.onPremCompatibilityVersion | (semver "6.6.0").Compare) 1) -}}
-        {{- if ne ($version | (semver "0.5.0").Compare) 1 -}}
+    {{- $version := .Tag -}}
+    {{- if ( semverCompare "< 6.6.0" ( .Values.onPremCompatibilityVersion | default "6.6.0" )) -}}
+        {{- if not ( semverCompare "< 0.5.0" $version ) -}}
             {{- fail (printf "incompatible version for %s, set %s expected < 0.5.0" .Component .Tag) -}}
         {{- end -}}
     {{- else -}}
-        {{- if eq ($version | (semver "0.5.0").Compare) 1 -}}
+        {{- if not ( semverCompare ">= 0.5.0" $version ) -}}
             {{- fail (printf "incompatible version for %s, set %s expected >= 0.5.0" .Component .Tag) -}}
         {{- end -}}
     {{- end -}}
@@ -234,10 +234,10 @@ Version tags must be semver2-compatible otherwise no check will be performed.
 Generates configmap data to enable platform services if onPremCompatibility version is not set, or it is greater than 6.6.0
 */}}
 {{- define "cluster-scanner.enablePlatformServicesConfig" -}}
-{{- if not ( and (hasKey (default .Values dict) "onPremCompatibilityVersion") (eq (semver .Values.onPremCompatibilityVersion | (semver "6.6.0").Compare) 1)) -}}
+{{- if ( semverCompare ">= 6.6.0" (.Values.onPremCompatibilityVersion | default "6.6.0" )) -}}
 enable_platform_services: "true"
-{{- end }}
-{{- end }}
+{{- end -}}
+{{- end -}}
 
 {{/*
 Return the proper image name for the Runtime Status Integrator
