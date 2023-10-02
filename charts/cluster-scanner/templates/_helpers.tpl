@@ -234,9 +234,7 @@ Version tags must be semver2-compatible otherwise no check will be performed.
 Generates configmap data to enable platform services if onPremCompatibility version is not set, or it is greater than 6.6.0
 */}}
 {{- define "cluster-scanner.enablePlatformServicesConfig" -}}
-{{- if ( semverCompare ">= 6.6.0" (.Values.onPremCompatibilityVersion | default "6.6.0" )) -}}
-enable_platform_services: "true"
-{{- end -}}
+enable_platform_services: "false"
 {{- end -}}
 
 {{/*
