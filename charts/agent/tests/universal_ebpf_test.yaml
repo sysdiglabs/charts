@@ -40,12 +40,12 @@ tests:
           path: spec.template.spec.initContainers[*].env[?(@.name == "SYSDIG_BPF_PROBE")].value
       - equal:
           path: spec.template.spec.initContainers[*].env[?(@.name == "SYSDIG_AGENT_DRIVER")].value
-          value: legacy_bpf
+          value: legacy_ebpf
       - isEmpty:
           path: spec.template.spec.containers[*].env[?(@.name == "SYSDIG_BPF_PROBE")].value
       - equal:
           path: spec.template.spec.containers[*].env[?(@.name == "SYSDIG_AGENT_DRIVER")].value
-          value: legacy_bpf
+          value: legacy_ebpf
 
   - it: Ensure that when the eBPF is enabled and we specify to use the "universal" driver we create the sysdig container without the SYSDIG_BPF_PROBE and with the SYSDIG_AGENT_DRIVER environment variables
     set:
@@ -57,7 +57,7 @@ tests:
           path: spec.template.spec.containers[*].env[?(@.name == "SYSDIG_BPF_PROBE")]
       - equal:
           path: spec.template.spec.containers[*].env[?(@.name == "SYSDIG_AGENT_DRIVER")].value
-          value: universal_bpf
+          value: universal_ebpf
 
   - it: Ensure that when the eBPF is enabled and we specify to use the "universal" driver we don't create the init container
     set:
