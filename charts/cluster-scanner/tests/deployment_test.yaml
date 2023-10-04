@@ -493,7 +493,7 @@ tests:
             name: ENV_VAR_BOOL
             value: "true"
 
-  - it: "does not have registry volume nor volumeMounts if registryMirrorsConfig is empty"
+  - it: "does not have registry volume nor volumeMounts if mirrors is empty"
     templates:
       - ../templates/deployment.yaml
     asserts:
@@ -502,10 +502,11 @@ tests:
       - isEmpty:
           path: spec.template.spec.containers[1].volumeMounts
 
-  - it: "has registry volume mount if registryMirrorsConfig is configured"
+  - it: "has registry volume mount if mirrors are configured"
     set:
-      imageSbomExtractor.registryMirrorsConfig: |-
-        testdata
+      imageSbomExtractor.mirrors:
+        registryMirrors:
+          - "foobar"
     templates:
       - ../templates/deployment.yaml
     asserts:

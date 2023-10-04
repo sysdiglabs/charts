@@ -1,4 +1,4 @@
-{{- if .Values.imageSbomExtractor.registryMirrorsConfig -}}
+{{- if .Values.imageSbomExtractor.mirrors -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -7,5 +7,9 @@ metadata:
   labels:
    {{- include "cluster-scanner.labels" . | nindent 4 }}
 data:
-  daemon.json: {{ .Values.imageSbomExtractor.registryMirrorsConfig | toJson | nindent 6 }}
+  daemon.json: |-
+    {
+      "registry-mirrors": {{ .Values.imageSbomExtractor.mirrors.registryMirrors | default list | toJson }},
+      "insecure-registries": {{ .Values.imageSbomExtractor.mirrors.insecureRegistries | default list | toJson }}
+    }
 {{- end -}}

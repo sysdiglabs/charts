@@ -43,6 +43,30 @@
           }
         }
       }
+    },
+    "imageSbomExtractor": {
+      "type": "object",
+      "properties": {
+        "mirrors": {
+          "type": "object",
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "properties": {
+            "registryMirrors": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "insecureRegistries": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
