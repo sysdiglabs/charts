@@ -235,7 +235,7 @@ imageSbomExtractor:
   #     - secure.mirror.acme.com
   #   insecureRegistries:
   #     - insecure.mirror.acme.com
-  mirrors:
+  mirrors: {}
 
 # Chart name override
 nameOverride: ""

@@ -10,7 +10,7 @@ release:
 tests:
   - it: "does not have mirrors, if they are not provided"
     set:
-      imageSbomExtractor.mirrors:
+      imageSbomExtractor.mirrors: {}
     asserts:
       - hasDocuments:
           count: 0
@@ -105,7 +105,7 @@ tests:
       imageSbomExtractor.mirrors: 18
     asserts:
       - failedTemplate:
-          errorMessage: "values don't meet the specifications of the schema(s) in the following chart(s):\ncluster-scanner:\n- imageSbomExtractor.mirrors: Invalid type. Expected: [object,null], given: integer\n"
+          errorMessage: "values don't meet the specifications of the schema(s) in the following chart(s):\ncluster-scanner:\n- imageSbomExtractor.mirrors: Invalid type. Expected: object, given: integer\n"
 
   - it: "fails if mirrors contains unexpeceted property"
     set:
