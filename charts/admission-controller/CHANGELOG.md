@@ -10,6 +10,12 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.14.11
+### Chores
+* **admission-controller** [684e44a1](https://github.com/sysdiglabs/charts/commit/684e44a18df462051a9a81ba2cdfb421d31d20f7): Update to v3.9.33 ([#1390](https://github.com/sysdiglabs/charts/issues/1390))
+# v0.14.10
+### Chores
+* **admission-controller** [f706afc4](https://github.com/sysdiglabs/charts/commit/f706afc47a69d3471845ca2edfecf455a1452696): Update to v3.9.32 ([#1386](https://github.com/sysdiglabs/charts/issues/1386))
 # v0.14.9
 ### Bug Fixes
 * **admission-controller** [4aa15cc1](https://github.com/sysdiglabs/charts/commit/4aa15cc1899ae29eb280e31fbeffa54c066d3937): not detecting events in its own namespace ([#1379](https://github.com/sysdiglabs/charts/issues/1379))

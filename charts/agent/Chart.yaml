@@ -1,35 +1,33 @@
 apiVersion: v2
-name: agent
+appVersion: 12.16.2
+dependencies:
+- name: common
+  repository: file://../common
+  version: ~1.2.1
 description: Sysdig Monitor and Secure agent
-type: application
-# currently matching sysdig 1.14.32
-version: 1.13.11
-appVersion: 12.16.1
-keywords:
-  - monitoring
-  - security
-  - alerting
-  - metric
-  - troubleshooting
-  - run-time
 home: https://www.sysdig.com/
 icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
-sources:
-  - https://app.sysdigcloud.com/#/settings/user
-  - https://github.com/draios/sysdig
+keywords:
+- monitoring
+- security
+- alerting
+- metric
+- troubleshooting
+- run-time
 maintainers:
-  - name: AlbertoBarba
-    email: alberto.barba@sysdig.com
-  - name: aroberts87
-    email: adam.roberts@sysdig.com
-  - name: francesco-furlan
-    email: francesco.furlan@sysdig.com
-  - name: iurly
-    email: gerlando.falauto@sysdig.com
-  - name: mavimo
-    email: marcovito.moscaritolo@sysdig.com
-dependencies:
-  - name: common
-    # repository: https://charts.sysdig.com
-    repository: file://../common
-    version: ~1.2.1
+- email: alberto.barba@sysdig.com
+  name: AlbertoBarba
+- email: adam.roberts@sysdig.com
+  name: aroberts87
+- email: francesco.furlan@sysdig.com
+  name: francesco-furlan
+- email: gerlando.falauto@sysdig.com
+  name: iurly
+- email: marcovito.moscaritolo@sysdig.com
+  name: mavimo
+name: agent
+sources:
+- https://app.sysdigcloud.com/#/settings/user
+- https://github.com/draios/sysdig
+type: application
+version: 1.13.12

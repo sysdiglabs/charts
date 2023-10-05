@@ -10,6 +10,21 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.23.10
+### Chores
+* **sysdig-deploy** [92591ea5](https://github.com/sysdiglabs/charts/commit/92591ea579138af67a5dfe816433ee363494bf5f): Automatic version bump due to updated dependencies ([#1391](https://github.com/sysdiglabs/charts/issues/1391))
+# v1.23.9
+### Chores
+* **sysdig-deploy** [a22de9d6](https://github.com/sysdiglabs/charts/commit/a22de9d6b1c94f8f0d4e5b0fdafccfa820c1bccb): Automatic version bump due to updated dependencies ([#1387](https://github.com/sysdiglabs/charts/issues/1387))
+# v1.23.8
+### Bug Fixes
+* **cluster-scanner** [3fe6f6e6](https://github.com/sysdiglabs/charts/commit/3fe6f6e659e43dfdaaf5211b34f32025283c2b18): corrected incompatibility with helm 3.9 ([#1383](https://github.com/sysdiglabs/charts/issues/1383))
+# v1.23.7
+### Chores
+* **sysdig-deploy** [4ef0ade6](https://github.com/sysdiglabs/charts/commit/4ef0ade645d13150390befde57b740a18099f9e8): Automatic version bump due to updated dependencies ([#1382](https://github.com/sysdiglabs/charts/issues/1382))
+# v1.23.6
+### Chores
+* **sysdig-deploy** [bc73814a](https://github.com/sysdiglabs/charts/commit/bc73814a4346d4d8347a9ac2b7677fc11f9e7a68): Automatic version bump due to updated dependencies ([#1380](https://github.com/sysdiglabs/charts/issues/1380))
 # v1.23.5
 ### Chores
 * **sysdig-deploy** [17fdba5e](https://github.com/sysdiglabs/charts/commit/17fdba5e36a57f2ada812baabb55288ba9c34a6b): Automatic version bump due to updated dependencies ([#1377](https://github.com/sysdiglabs/charts/issues/1377))
