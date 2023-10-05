@@ -1,0 +1,35 @@
+suite: Agent Events Tests
+templates:
+  - templates/clusterrole.yaml
+tests:
+  - it: Test events information included in k8s
+    capabilities:
+      majorVersion: 1
+      minorVersion: 25
+    asserts:
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - "events"
+            verbs:
+              - "create"
+              - "patch"
+
+  - it: Test events information included in k8s with '+' character in minor version
+    capabilities:
+      majorVersion: 1
+      minorVersion: "25+"
+    asserts:
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - "events"
+            verbs:
+              - "create"
+              - "patch"
