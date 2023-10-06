@@ -3,7 +3,7 @@ name: node-analyzer
 description: Sysdig Node Analyzer
 
 # currently matching Sysdig's appVersion 1.14.34
-version: 1.17.5
+version: 1.17.6
 appVersion: 12.8.0
 keywords:
   - monitoring
@@ -26,4 +26,4 @@ dependencies:
   - name: common
     # repository: https://charts.sysdig.com
     repository: file://../common
-    version: ~1.2.1
+    version: ~1.2.2
