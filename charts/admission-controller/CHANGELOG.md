@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.14.12
+### Bug Fixes
+* **common,agent,admission-controller,cluster-scanner,kspm-collector,node-analyzer,rapid-response** [e76f1c17](https://github.com/sysdiglabs/charts/commit/e76f1c17e48491dd8ea21293ec1fed2619eed204): Update Sysdig CA ([#1393](https://github.com/sysdiglabs/charts/issues/1393))
 # v0.14.11
 ### Chores
 * **admission-controller** [684e44a1](https://github.com/sysdiglabs/charts/commit/684e44a18df462051a9a81ba2cdfb421d31d20f7): Update to v3.9.33 ([#1390](https://github.com/sysdiglabs/charts/issues/1390))
