@@ -1,5 +1,5 @@
 # What's Changed
 
-### Bug Fixes
-- **cluster-scanner** [3fe6f6e6](https://github.com/sysdiglabs/charts/commit/3fe6f6e659e43dfdaaf5211b34f32025283c2b18): corrected incompatibility with helm 3.9 ([#1383](https://github.com/sysdiglabs/charts/issues/1383))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/cluster-scanner-0.6.0...cluster-scanner-0.6.1
+### New Features
+- **cluster-scanner** [5b1e9649](https://github.com/sysdiglabs/charts/commit/5b1e96497ef50342055f3f43bc9ff5f41f7cfea1): added configuration for docker registry mirrors ([#1372](https://github.com/sysdiglabs/charts/issues/1372))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/cluster-scanner-0.6.1...cluster-scanner-0.7.0

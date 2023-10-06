@@ -492,3 +492,34 @@ tests:
           content:
             name: ENV_VAR_BOOL
             value: "true"
+
+  - it: "does not have registry volume nor volumeMounts if mirrors is empty"
+    templates:
+      - ../templates/deployment.yaml
+    asserts:
+      - isEmpty:
+          path: spec.template.spec.volumes
+      - isEmpty:
+          path: spec.template.spec.containers[1].volumeMounts
+
+  - it: "has registry volume mount if mirrors are configured"
+    set:
+      imageSbomExtractor.mirrors:
+        registryMirrors:
+          - "foobar"
+    templates:
+      - ../templates/deployment.yaml
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: registry-mirrors-config
+            configMap:
+              name: test-release-cluster-scanner-registry-mirrors
+      - contains:
+          path: spec.template.spec.containers[1].volumeMounts
+          content:
+            name: registry-mirrors-config
+            mountPath: /etc/docker/daemon.json
+            subPath: daemon.json
+            readOnly: true

@@ -48,6 +48,11 @@ spec:
           configMap:
             name: {{ include "sysdig.custom_ca.existingConfigMap" (dict "global" .Values.global.ssl "component" .Values.ssl) }}
         {{- end }}
+        {{- if .Values.imageSbomExtractor.mirrors }}
+        - name: registry-mirrors-config
+          configMap:
+            name: {{ include "cluster-scanner.fullname" . }}-registry-mirrors
+        {{- end }}
       containers:
         - name: rsi
           securityContext:
@@ -313,6 +318,12 @@ spec:
             {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
             - name: ca-cert
               mountPath: /ca-certs
+              readOnly: true
+            {{- end }}
+            {{- if .Values.imageSbomExtractor.mirrors }}
+            - name: registry-mirrors-config
+              mountPath: /etc/docker/daemon.json
+              subPath: daemon.json
               readOnly: true
             {{- end }}
       {{- with .Values.imageSbomExtractor }}
