@@ -25,7 +25,7 @@ $ pre-commit run -a
 $ helm repo add sysdig https://charts.sysdig.com
 $ helm repo update
 $ helm upgrade --install sysdig-cluster-scanner sysdig/cluster-scanner \
-      --create-namespace -n sysdig --version=0.6.1  \
+      --create-namespace -n sysdig --version=0.7.0  \
       --set global.clusterConfig.name=CLUSTER_NAME \
       --set global.sysdig.region=SYSDIG_REGION \
       --set global.sysdig.accessKey=YOUR-KEY-HERE
@@ -55,7 +55,7 @@ To install the chart with the release name `cluster-scanner`, run:
 
 ```console
 $ helm upgrade --install sysdig-cluster-scanner sysdig/cluster-scanner \
-       --create-namespace -n sysdig --version=0.6.1 \
+       --create-namespace -n sysdig --version=0.7.0 \
        --set global.clusterConfig.name=CLUSTER_NAME \
        --set global.sysdig.region=SYSDIG_REGION \
        --set global.sysdig.accessKey=YOUR-KEY-HERE
@@ -134,6 +134,7 @@ The following table lists the configurable parameters of the `cluster-scanner` c
 | imageSbomExtractor.cache.local.maxSizeBytes        | The maximum size in bytes of the local cache. By default it is set to 35MB                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | <code>"36700160"</code>                       |
 | imageSbomExtractor.cache.local.maxElementSizeBytes | When using `local` as cache type, restrict the maximum size of elements to be cached. By default it is set to 100KB                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | <code>"102400"</code>                         |
 | imageSbomExtractor.cache.local.ttl                 | The TTL for items in the local cache. By default it is set to 7 days.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | <code>"168h"</code>                           |
+| imageSbomExtractor.mirrors                         | Provide optional registry mirrors configuration to be used by Image SBOM Extractor to pull images. [Only Docker HUB images](https://docs.docker.com/registry/recipes/mirror/#gotcha) are going to be pulled from the provided mirrors. The configuration is similar to the one currently supported by the docker-daemon where multiple mirrors (potentially insecure), can be specified. See https://docs.docker.com/registry/recipes/mirror/#configure-the-docker-daemon and https://docs.docker.com/registry/insecure/ . <br> Example: <br> `mirrors:` <br> `registryMirrors:` <br> `- insecure.mirror.acme.com` <br> `- secure.mirror.acme.com` <br> `insecureRegistries:` <br> `- insecure.mirror.acme.com`         | <code>{}</code>                               |
 | nameOverride                                       | Chart name override                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | <code>""</code>                               |
 | fullnameOverride                                   | Chart full name override                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                | <code>""</code>                               |
 | serviceAccount.create                              | Specifies whether a service account should be created                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | <code>true</code>                             |
@@ -160,7 +161,7 @@ Specify each parameter using the **`--set key=value[,key=value]`** argument to `
 
 ```console
 $ helm upgrade --install sysdig-cluster-scanner sysdig/cluster-scanner \
-    --create-namespace -n sysdig --version=0.6.1 \
+    --create-namespace -n sysdig --version=0.7.0 \
     --set global.sysdig.region="us1"
 ```
 
@@ -169,7 +170,7 @@ installing the chart. For example:
 
 ```console
 $ helm upgrade --install sysdig-cluster-scanner sysdig/cluster-scanner \
-    --create-namespace -n sysdig --version=0.6.1 \
+    --create-namespace -n sysdig --version=0.7.0 \
     --values values.yaml
 ```
 
