@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **cluster-scanner** [5b1e9649](https://github.com/sysdiglabs/charts/commit/5b1e96497ef50342055f3f43bc9ff5f41f7cfea1): added configuration for docker registry mirrors ([#1372](https://github.com/sysdiglabs/charts/issues/1372))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/cluster-scanner-0.6.1...cluster-scanner-0.7.0
+### Bug Fixes
+- **common,agent,admission-controller,cluster-scanner,kspm-collector,node-analyzer,rapid-response** [e76f1c17](https://github.com/sysdiglabs/charts/commit/e76f1c17e48491dd8ea21293ec1fed2619eed204): Update Sysdig CA ([#1393](https://github.com/sysdiglabs/charts/issues/1393))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/cluster-scanner-0.7.0...cluster-scanner-0.7.1
