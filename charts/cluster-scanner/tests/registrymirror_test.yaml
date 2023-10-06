@@ -1,0 +1,120 @@
+suite: registrymirror
+templates:
+  - ../templates/registrymirror.yaml
+values:
+  - ../values.yaml
+release:
+  name: test-release
+  namespace: test-ns
+
+tests:
+  - it: "does not have mirrors, if they are not provided"
+    set:
+      imageSbomExtractor.mirrors: {}
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: "has mirrors ConfigMap, when mirrors are set"
+    set:
+      imageSbomExtractor.mirrors:
+        registryMirrors:
+          - "insecure.mirror.acme.com"
+          - "secure.mirror.acme.com"
+        insecureRegistries:
+          - "insecure.mirror.acme.com"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: test-release-cluster-scanner-registry-mirrors
+          namespace: test-ns
+      - equal:
+          path: data["daemon.json"]
+          value: |-
+            {
+              "registry-mirrors": ["insecure.mirror.acme.com","secure.mirror.acme.com"],
+              "insecure-registries": ["insecure.mirror.acme.com"]
+            }
+
+  - it: "has correct empty registry mirrors"
+    set:
+      imageSbomExtractor.mirrors:
+        insecureRegistries:
+          - "insecure.mirror.acme.com"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: test-release-cluster-scanner-registry-mirrors
+          namespace: test-ns
+      - equal:
+          path: data["daemon.json"]
+          value: |-
+            {
+              "registry-mirrors": [],
+              "insecure-registries": ["insecure.mirror.acme.com"]
+            }
+
+  - it: "has correct empty insecure registries mirrors"
+    set:
+      imageSbomExtractor.mirrors:
+        registryMirrors:
+          - "insecure.mirror.acme.com"
+          - "secure.mirror.acme.com"
+          - "one more mirror"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: test-release-cluster-scanner-registry-mirrors
+          namespace: test-ns
+      - equal:
+          path: data["daemon.json"]
+          value: |-
+            {
+              "registry-mirrors": ["insecure.mirror.acme.com","secure.mirror.acme.com","one more mirror"],
+              "insecure-registries": []
+            }
+
+  - it: "fails if format of registry mirrors is wrong"
+    set:
+      imageSbomExtractor.mirrors:
+        registryMirrors:
+          nested: "object"
+    asserts:
+      - failedTemplate:
+          errorMessage: "values don't meet the specifications of the schema(s) in the following chart(s):\ncluster-scanner:\n- imageSbomExtractor.mirrors.registryMirrors: Invalid type. Expected: array, given: object\n"
+
+  - it: "fails if format of insecure registries is wrong"
+    set:
+      imageSbomExtractor.mirrors:
+        insecureRegistries: 18
+    asserts:
+      - failedTemplate:
+          errorMessage: "values don't meet the specifications of the schema(s) in the following chart(s):\ncluster-scanner:\n- imageSbomExtractor.mirrors.insecureRegistries: Invalid type. Expected: array, given: integer\n"
+
+  - it: "fails if format of mirrors is wrong"
+    set:
+      imageSbomExtractor.mirrors: 18
+    asserts:
+      - failedTemplate:
+          errorMessage: "values don't meet the specifications of the schema(s) in the following chart(s):\ncluster-scanner:\n- imageSbomExtractor.mirrors: Invalid type. Expected: object, given: integer\n"
+
+  - it: "fails if mirrors contains unexpeceted property"
+    set:
+      imageSbomExtractor.mirrors:
+        gigi:
+          - "insecure.mirror.acme.com"
+          - "secure.mirror.acme.com"
+        insecureRegistries:
+          - "insecure.mirror.acme.com"
+    asserts:
+      - failedTemplate:
+          errorMessage: "values don't meet the specifications of the schema(s) in the following chart(s):\ncluster-scanner:\n- imageSbomExtractor.mirrors: Additional property gigi is not allowed\n"
