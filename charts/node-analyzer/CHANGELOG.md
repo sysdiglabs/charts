@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.17.6
+### Bug Fixes
+* **common,agent,admission-controller,cluster-scanner,kspm-collector,node-analyzer,rapid-response** [e76f1c17](https://github.com/sysdiglabs/charts/commit/e76f1c17e48491dd8ea21293ec1fed2619eed204): Update Sysdig CA ([#1393](https://github.com/sysdiglabs/charts/issues/1393))
 # v1.17.5
 ### Chores
 * **node-analyzer** [a66360df](https://github.com/sysdiglabs/charts/commit/a66360dfbd00f1d82ab5da6f8b70a5e1d77440cf): remove broken link from values.yaml ([#1370](https://github.com/sysdiglabs/charts/issues/1370))
