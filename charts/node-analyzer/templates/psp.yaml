@@ -1,5 +1,4 @@
-{{- if not (include "nodeAnalyzer.gke.autopilot" .) }}
-{{- if and .Values.psp.create (include "nodeAnalyzer.kubeVersionLessThan" (dict "root" . "major" 1 "minor" 25)) }}
+{{- if and (include "deploy-na" .) .Values.psp.create (include "nodeAnalyzer.kubeVersionLessThan" (dict "root" . "major" 1 "minor" 25)) }}
 apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:
@@ -25,5 +24,4 @@ spec:
     rule: RunAsAny
   volumes:
   - '*'
-{{- end }}
 {{- end }}

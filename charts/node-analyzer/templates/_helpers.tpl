@@ -196,7 +196,7 @@ Determine collector endpoint based on provided region or .Values.nodeAnalyzer.ap
 {{- end -}}
 
 {{- define "deploy-na" -}}
-{{- if .Values.nodeAnalyzer.deploy -}}
+{{- if and .Values.nodeAnalyzer.deploy (or (include "nodeAnalyzer.deployRuntimeScanner" .) (include "nodeAnalyzer.deployHostScanner" .) (include "nodeAnalyzer.deployBenchmarkRunner" .) (include "nodeAnalyzer.deployHostAnalyzer" .) (include "nodeAnalyzer.deployImageAnalyzer" .) .Values.global.kspm.deploy) -}}
 true
 {{- end -}}
 {{- end -}}
@@ -219,6 +219,9 @@ nodeAnalyzer agentConfigmapName
     {{- default .Values.global.agentConfigmapName | default "sysdig-agent" -}}
 {{- end -}}
 
+{{/*
+Deploy nodeAnalyzer components
+*/}}
 {{- define "nodeAnalyzer.deployHostScanner" -}}
 {{- if and (hasKey ((.Values.nodeAnalyzer).hostScanner) "deploy") (not .Values.nodeAnalyzer.hostScanner.deploy ) }}
 {{- else if or ((.Values.secure).vulnerabilityManagement).newEngineOnly (and (hasKey ((.Values.nodeAnalyzer).hostScanner) "deploy") .Values.nodeAnalyzer.hostScanner.deploy) -}}
@@ -227,14 +230,14 @@ true
 {{- end -}}
 
 {{- define "nodeAnalyzer.deployRuntimeScanner" -}}
-{{- if and (hasKey ((.Values.nodeAnalyzer).runtimeScanner) "deploy") (not .Values.nodeAnalyzer.runtimeScanner.deploy ) }}
-{{- else if or ((.Values.secure).vulnerabilityManagement).newEngineOnly (and (hasKey ((.Values.nodeAnalyzer).runtimeScanner) "deploy") .Values.nodeAnalyzer.runtimeScanner.deploy) -}}
+{{- if or (and (hasKey ((.Values.nodeAnalyzer).runtimeScanner) "deploy") (not .Values.nodeAnalyzer.runtimeScanner.deploy )) (include "nodeAnalyzer.gke.autopilot" .) }}
+{{- else if and (not (include "nodeAnalyzer.gke.autopilot" .)) (or ((.Values.secure).vulnerabilityManagement).newEngineOnly (and (hasKey ((.Values.nodeAnalyzer).runtimeScanner) "deploy") .Values.nodeAnalyzer.runtimeScanner.deploy)) -}}
 true
 {{- end -}}
 {{- end -}}
 
 {{- define "nodeAnalyzer.deployBenchmarkRunner" -}}
-{{- if or (not (hasKey .Values.nodeAnalyzer.benchmarkRunner "deploy")) .Values.nodeAnalyzer.benchmarkRunner.deploy }}
+{{- if and (not (include "nodeAnalyzer.gke.autopilot" .)) (or (not (hasKey .Values.nodeAnalyzer.benchmarkRunner "deploy")) .Values.nodeAnalyzer.benchmarkRunner.deploy) }}
 true
 {{- end -}}
 {{- end -}}
@@ -248,14 +251,14 @@ true
 {{- end -}}
 
 {{- define "nodeAnalyzer.deployImageAnalyzer" -}}
-{{- if and (not .Values.secure.vulnerabilityManagement.newEngineOnly) (or (not (hasKey .Values.nodeAnalyzer.imageAnalyzer "deploy")) .Values.nodeAnalyzer.imageAnalyzer.deploy) }}
+{{- if and (not .Values.secure.vulnerabilityManagement.newEngineOnly) (or (not (hasKey .Values.nodeAnalyzer.imageAnalyzer "deploy")) .Values.nodeAnalyzer.imageAnalyzer.deploy) (not (include "nodeAnalyzer.gke.autopilot" .)) }}
 true
 {{- end -}}
 {{- end -}}
 
 # Legacy components #
 {{- define "nodeAnalyzer.deployHostAnalyzer" -}}
-{{- if and (not .Values.secure.vulnerabilityManagement.newEngineOnly) (or (not (hasKey .Values.nodeAnalyzer.hostAnalyzer "deploy")) .Values.nodeAnalyzer.hostAnalyzer.deploy) }}
+{{- if and (not .Values.secure.vulnerabilityManagement.newEngineOnly) (or (not (hasKey .Values.nodeAnalyzer.hostAnalyzer "deploy")) .Values.nodeAnalyzer.hostAnalyzer.deploy) (not (include "nodeAnalyzer.gke.autopilot" .)) }}
 true
 {{- end -}}
 {{- end -}}

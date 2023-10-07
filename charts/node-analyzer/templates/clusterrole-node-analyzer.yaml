@@ -1,4 +1,3 @@
-{{- if not (include "nodeAnalyzer.gke.autopilot" .) }}
 {{- if and (include "deploy-na" .) .Values.rbac.create }}
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
@@ -111,6 +110,5 @@ rules:
     - "{{ .Release.Name }}-node-analyzer"
   verbs:
     - "use"
-{{- end }}
 {{- end }}
 {{- end }}

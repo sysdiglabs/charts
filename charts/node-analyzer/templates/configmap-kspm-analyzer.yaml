@@ -1,4 +1,3 @@
-{{- if not (include "nodeAnalyzer.gke.autopilot" .) }}
 {{ if .Values.global.kspm.deploy }}
 apiVersion: v1
 kind: ConfigMap
@@ -31,5 +30,4 @@ data:
   {{- if .Values.nodeAnalyzer.kspmAnalyzer.port }}
   agent_port: {{ .Values.nodeAnalyzer.kspmAnalyzer.port | quote }}
   {{- end -}}
-{{- end -}}
 {{- end -}}

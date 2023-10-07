@@ -1,4 +1,4 @@
-{{ if and .Values.nodeAnalyzer.deploy (not .Values.secure.vulnerabilityManagement.newEngineOnly) (not (include "nodeAnalyzer.gke.autopilot" .)) (include "nodeAnalyzer.deployImageAnalyzer" .) }}
+{{ if and .Values.nodeAnalyzer.deploy (not .Values.secure.vulnerabilityManagement.newEngineOnly) (include "nodeAnalyzer.deployImageAnalyzer" .) }}
 apiVersion: v1
 kind: ConfigMap
 metadata:

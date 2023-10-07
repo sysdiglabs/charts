@@ -1,0 +1,68 @@
+# requires unittest plugin: https://github.com/quintush/helm-unittest
+# Run "helm unittest -3 -f ./tests/hostscanner_test.yaml ." from within the `charts/node-analyzer` folder
+suite: Test Node Analyzer configuration when global.GKE.autopilot set to true
+templates:
+  - ../templates/daemonset-node-analyzer.yaml
+
+tests:
+  - it: "HS is deployed if newEngineOnly is active but deploy unset"
+    set:
+      clusterName: "test"
+      secure.vulnerabilityManagement.newEngineOnly: true
+      global.gke.autopilot: true
+    asserts:
+      - isKind:
+          of: DaemonSet
+      - equal:
+          path: "spec.template.spec.containers[0].name"
+          value: "sysdig-host-scanner"
+      - lengthEqual:
+          path: spec.template.spec.containers
+          count: 1
+  - it: "HS is deployed if newEngineOnly is true and deploy set to true"
+    set:
+      clusterName: "test"
+      secure.vulnerabilityManagement.newEngineOnly: true
+      nodeAnalyzer.hostScanner.deploy: true
+      global.gke.autopilot: true
+    asserts:
+      - isKind:
+          of: DaemonSet
+      - equal:
+          path: "spec.template.spec.containers[0].name"
+          value: "sysdig-host-scanner"
+      - lengthEqual:
+          path: spec.template.spec.containers
+          count: 1
+  - it: "HS is deployed if newEngineOnly is unset and deploy set to true"
+    set:
+      clusterName: "test"
+      nodeAnalyzer.hostScanner.deploy: true
+      global.gke.autopilot: true
+    asserts:
+      - isKind:
+          of: DaemonSet
+      - equal:
+          path: "spec.template.spec.containers[0].name"
+          value: "sysdig-host-scanner"
+      - lengthEqual:
+          path: spec.template.spec.containers
+          count: 1
+  - it: "HS and KSPM Analyzer are deployed if newEngineOnly is active and global.kspm.deploy set to true"
+    set:
+      clusterName: "test"
+      secure.vulnerabilityManagement.newEngineOnly: true
+      global.gke.autopilot: true
+      global.kspm.deploy: true
+    asserts:
+      - isKind:
+          of: DaemonSet
+      - equal:
+          path: "spec.template.spec.containers[0].name"
+          value: "sysdig-kspm-analyzer"
+      - equal:
+          path: "spec.template.spec.containers[1].name"
+          value: "sysdig-host-scanner"
+      - lengthEqual:
+          path: spec.template.spec.containers
+          count: 2

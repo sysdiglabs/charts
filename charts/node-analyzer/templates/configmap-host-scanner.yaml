@@ -1,4 +1,4 @@
-{{- if and .Values.nodeAnalyzer.deploy (not .Values.gke.autopilot) (include "nodeAnalyzer.deployHostScanner" .) }}
+{{- if and .Values.nodeAnalyzer.deploy (include "nodeAnalyzer.deployHostScanner" .) }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
