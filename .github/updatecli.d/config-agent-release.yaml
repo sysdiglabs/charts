@@ -1,0 +1,76 @@
+name: update sysdig and agent charts for new agent release
+
+scms:
+  github:
+    kind: "github"
+    spec:
+      user: "updatecli"
+      email: "updatecli@sysdig.com"
+      owner: "sysdiglabs"
+      repository: "charts"
+      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
+      username: draios-jenkins
+      branch: "master"
+
+actions:
+  github:
+    kind: "github/pullrequest"
+    scmid: "github"
+    spec:
+      automerge: true
+      description: 'bump agent image tags for `agent` and `sysdig` charts to {{ requiredEnv "AGENT_RELEASE" }}'
+      labels:
+        - "automated PR"
+      mergemethod: squash
+      title: 'feat: release agent {{ requiredEnv "AGENT_RELEASE" }}'
+
+sources:
+  agentRelease:
+    kind: dockerimage
+    spec:
+      image: quay.io/sysdig/agent
+      tagfilter: '{{ requiredEnv "AGENT_RELEASE" }}'
+      versionfilter:
+        kind: regex
+        pattern: '[0-9]+\.[0-9]+\.[0-9]+$'
+
+targets:
+  updateAgentChartValues:
+    name: "update agent tag in agent chart"
+    kind: yaml
+    scmid: github
+    spec:
+      file: "charts/agent/values.yaml"
+      key: "$.image.tag"
+
+  bumpAgentChart:
+    name: "bump the chart version of the agent chart"
+    kind: helmchart
+    scmid: github
+    dependson:
+      - updateAgentChartValues
+    spec:
+      name: "charts/agent"
+      file: Chart.yaml
+      key: "$.appVersion"
+      versionincrement: patch
+
+  updateSysdigChartValues:
+    name: "update agent tag in sysdig chart"
+    kind: yaml
+    scmid: github
+    spec:
+      file: "charts/sysdig/values.yaml"
+      key: "$.image.tag"
+
+  bumpSysdigChart:
+    name: "bump the chart version of the sysdig chart"
+    kind: helmchart
+    scmid: github
+    dependson:
+      - updateSysdigChartValues
+    spec:
+      name: "charts/sysdig/"
+      file: Chart.yaml
+      key: "$.appVersion"
+      versionincrement: patch

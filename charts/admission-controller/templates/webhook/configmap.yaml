@@ -19,3 +19,26 @@ data:
   DENY_ON_ERROR: "{{ .Values.webhook.denyOnError }}"
   DRY_RUN: "{{ .Values.webhook.dryRun }}"
   HTTP_TIMEOUT: "{{ .Values.webhook.timeoutSeconds }}s"
+  {{- if .Values.features.kspmAdmissionController}}
+  SERVICE_PORT: "{{ .Values.webhook.v2.http.port }}"
+  CERT_LOCATION: /cert
+  EXTERNAL_NATS_URL:  {{ include "admissionController.natsUrl" . }}
+  NATS_INSECURE: "{{.Values.webhook.v2.nats.insecure}}"
+  {{- end}}
+  {{- if .Values.webhook.acConfig }}
+  CACHE_FLUSH_PERIOD: "{{ .Values.webhook.cacheFlushPeriod | default "24h" }}"
+  AC_SERVICE_ACCOUNT_NAME: {{ include "admissionController.webhook.serviceAccountName" . }}
+  AC_NAMESPACE:  {{ include "admissionController.namespace" . }}
+  {{- end}}
+  {{- if .Values.webhook.workers }}
+  WORKERS: "{{.Values.webhook.workers.number | default 2 }}"
+  WORKER_VERIFYSSL: "{{.Values.webhook.workers.verifySSL }}"
+  WORKER_POLICIES: {{ toJson .Values.webhook.workers.scanningPolicies | quote }}
+  WORKER_MEMORY_LIMIT: "{{.Values.webhook.workers.memoryLimit | default "2Gi" }}"
+  WORKER_VOLUME_SIZE_LIMIT: "{{.Values.webhook.workers.volumeSizeLimit | default "2Gi" }}"
+  TTL_SECONDS_AFTER_FINISHED: "{{.Values.webhook.workers.ttlSecondsAfterFinished | default 1000 }}"
+  ACTIVE_DEADLINE_SECONDS: "{{.Values.webhook.workers.activeDeadlineSeconds | default 2000 }}"
+  {{- else }}
+  WORKERS: "2"
+  WORKER_VERIFYSSL: "true"
+  {{- end}}

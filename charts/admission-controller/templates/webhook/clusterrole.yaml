@@ -16,8 +16,23 @@ rules:
   - ""
   resources:
   - pods
+{{- if .Values.webhook.acConfig }}
+  - configmaps
+  - secrets
+{{- end }}
   verbs:
   - get
+{{- if .Values.webhook.acConfig }}
+- apiGroups:
+  - "batch"
+  resources:
+  - jobs
+  verbs:
+  - create
+  - get
+  - delete
+  - watch
+{{- end }}
 - apiGroups:
   - "apps"
   resources:

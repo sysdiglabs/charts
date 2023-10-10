@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **admission-controller docs** [85b74e1a](https://github.com/sysdiglabs/charts/commit/85b74e1a2eace0a37b0cb24a671821c8e43cd450): Edit chart for clarity, consistency and correctness  ([#1206](https://github.com/sysdiglabs/charts/issues/1206))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/admission-controller-0.12.1...admission-controller-0.12.2
+### Bug Fixes
+- **common,agent,admission-controller,cluster-scanner,kspm-collector,node-analyzer,rapid-response** [e76f1c17](https://github.com/sysdiglabs/charts/commit/e76f1c17e48491dd8ea21293ec1fed2619eed204): Update Sysdig CA ([#1393](https://github.com/sysdiglabs/charts/issues/1393))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/admission-controller-0.14.11...admission-controller-0.14.12

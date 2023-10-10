@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **sysdig-agent,node-analyzer,kspm-collector,rapid-response,admission-controller** [2dca8e7c](https://github.com/sysdiglabs/charts/commit/2dca8e7c5308e76c2da63c974ae75c4ad510c201): Global Custom CA Bundle Support ([#961](https://github.com/sysdiglabs/charts/issues/961))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/common-1.0.2...common-1.1.0
+### Bug Fixes
+- **common,agent,admission-controller,cluster-scanner,kspm-collector,node-analyzer,rapid-response** [e76f1c17](https://github.com/sysdiglabs/charts/commit/e76f1c17e48491dd8ea21293ec1fed2619eed204): Update Sysdig CA ([#1393](https://github.com/sysdiglabs/charts/issues/1393))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/common-1.2.1...common-1.2.2

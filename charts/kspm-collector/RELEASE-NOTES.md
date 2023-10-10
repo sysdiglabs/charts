@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **kspm-collector,node-analyzer** [b302524f](https://github.com/sysdiglabs/charts/commit/b302524f75098299644ef541d71876180f61ed01): release agents v1.27.0 with RKE2 suport ([#1274](https://github.com/sysdiglabs/charts/issues/1274))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.4.0...kspm-collector-0.5.0
+### Bug Fixes
+- **common,agent,admission-controller,cluster-scanner,kspm-collector,node-analyzer,rapid-response** [e76f1c17](https://github.com/sysdiglabs/charts/commit/e76f1c17e48491dd8ea21293ec1fed2619eed204): Update Sysdig CA ([#1393](https://github.com/sysdiglabs/charts/issues/1393))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.8.1...kspm-collector-0.8.2

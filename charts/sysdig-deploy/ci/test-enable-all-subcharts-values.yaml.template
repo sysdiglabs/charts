@@ -1,0 +1,65 @@
+global:
+  clusterConfig:
+    name: "test-cluster"
+    namespace: ""
+  sysdig:
+    accessKey: ${SECURE_AGENT_TOKEN}
+    secureAPIToken: ${SECURE_API_TOKEN}
+  kspm:
+    deploy: true
+admissionController:
+  enabled: true
+  webhook:
+    resources:
+      requests:
+        cpu: 25m
+        memory: 200Mi
+agent:
+  resources:
+    requests:
+      cpu: 25m
+      memory: 200Mi
+clusterScanner:
+  enabled: true
+  imageSbomExtractor:
+    resources:
+      requests:
+        cpu: 25m
+        memory: 200Mi
+  runtimeStatusIntegrator:
+    resources:
+      requests:
+        cpu: 25m
+        memory: 200Mi
+kspmCollector:
+  resources:
+    requests:
+      cpu: 25m
+      memory: 200Mi
+nodeAnalyzer:
+  nodeAnalyzer:
+    benchmarkRunner:
+      deploy: false
+    imageAnalyzer:
+      resources:
+        requests:
+          cpu: 25m
+          memory: 200Mi
+    hostAnalyzer:
+      resources:
+        requests:
+          cpu: 25m
+          memory: 200Mi
+    kspmAnalyzer:
+      resources:
+        requests:
+          cpu: 25m
+          memory: 200Mi
+rapidResponse:
+  enabled: true
+  rapidResponse:
+    passphrase: "abcd"
+    resources:
+      requests:
+        cpu: 25m
+        memory: 200Mi

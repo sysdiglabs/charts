@@ -48,6 +48,11 @@ spec:
           configMap:
             name: {{ include "sysdig.custom_ca.existingConfigMap" (dict "global" .Values.global.ssl "component" .Values.ssl) }}
         {{- end }}
+        {{- if .Values.imageSbomExtractor.mirrors }}
+        - name: registry-mirrors-config
+          configMap:
+            name: {{ include "cluster-scanner.fullname" . }}-registry-mirrors
+        {{- end }}
       containers:
         - name: rsi
           securityContext:
@@ -73,6 +78,24 @@ spec:
           - name: PPROF_PORT
             value: {{ .ports.pprof | default "6060" | quote }}
       {{- end }}
+          - name: HTTP_PROXY
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: http_proxy
+                optional: true
+          - name: HTTPS_PROXY
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: https_proxy
+                optional: true
+          - name: NO_PROXY
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: no_proxy
+                optional: true
           {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
           - name: SSL_CERT_FILE
             value: /ca-certs/{{- include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.ssl) -}}
@@ -240,8 +263,13 @@ spec:
           - name: SYSDIG_ACCESS_KEY
             valueFrom:
               secretKeyRef:
+                {{- if not ( include "cluster-scanner.accessKeySecret" . ) }}
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: sysdig_access_key
+                {{- else }}
+                name: {{ ( include "cluster-scanner.accessKeySecret" . ) }}
+                key: access-key
+                {{- end }}
           - name: NATS_JS_SERVER_PASSWORD
             valueFrom:
               secretKeyRef:
@@ -259,6 +287,16 @@ spec:
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: rsi_js_server_metrics_port
                 optional: true
+          - name: CLUSTERSCANNER_PLATFORM_ENABLED
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: enable_platform_services
+                optional: true
+          {{- range $key, $value := .Values.runtimeStatusIntegrator.env }}
+          - name: "{{ $key }}"
+            value: "{{ $value }}"
+          {{- end }}
       {{- with .Values.runtimeStatusIntegrator }}
           livenessProbe:
             httpGet:
@@ -282,6 +320,12 @@ spec:
               mountPath: /ca-certs
               readOnly: true
             {{- end }}
+            {{- if .Values.imageSbomExtractor.mirrors }}
+            - name: registry-mirrors-config
+              mountPath: /etc/docker/daemon.json
+              subPath: daemon.json
+              readOnly: true
+            {{- end }}
       {{- with .Values.imageSbomExtractor }}
           ports:
             - name: metrics
@@ -295,6 +339,24 @@ spec:
           - name: PPROF_PORT
             value: {{ .ports.pprof | default "6061" | quote }}
       {{- end }}
+          - name: HTTP_PROXY
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: http_proxy
+                optional: true
+          - name: HTTPS_PROXY
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: https_proxy
+                optional: true
+          - name: NO_PROXY
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: no_proxy
+                optional: true
           {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
           - name: SSL_CERT_FILE
             value: /ca-certs/{{- include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.ssl) -}}
@@ -314,8 +376,13 @@ spec:
           - name: SYSDIG_ACCESS_KEY
             valueFrom:
               secretKeyRef:
+                {{- if not ( include "cluster-scanner.accessKeySecret" . ) }}
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: sysdig_access_key
+                {{- else }}
+                name: {{ ( include "cluster-scanner.accessKeySecret" . ) }}
+                key: access-key
+                {{- end }}
           - name: SYSDIG_API_URL
             valueFrom:
               configMapKeyRef:
@@ -499,6 +566,16 @@ spec:
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: cache_redis_ttl
                 optional: true
+          {{- end }}
+          - name: CLUSTERSCANNER_PLATFORM_ENABLED
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: enable_platform_services
+                optional: true
+          {{- range $key, $value := .Values.imageSbomExtractor.env }}
+          - name: "{{ $key }}"
+            value: "{{ $value }}"
           {{- end }}
       {{- with .Values.imageSbomExtractor }}
           resources:

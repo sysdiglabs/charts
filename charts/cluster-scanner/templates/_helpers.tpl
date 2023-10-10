@@ -208,25 +208,34 @@ Define the proper imageRegistry to use for imageSbomExtractor
 {{/*
 Cluster scanner version compatibility check.
 
-If .Values.onPremCompatibilityVersion is set to 6.2, it checks whether
-the provided tag is < 1.0.0 .
+If .Values.onPremCompatibilityVersion is set to a version below 6.6.0, it checks whether
+the provided tag is < 0.5.0 .
 
-Otherwise, it checks if the provided tag is >= 1.0.0 .
+Otherwise, it checks if the provided tag is >= 0.5.0 .
 
 Version tags must be semver2-compatible otherwise no check will be performed.
 */}}
 {{- define "cluster-scanner.checkVersionCompatibility" -}}
 {{- if regexMatch "^[0-9]+\\.[0-9]+\\.[0-9]+.*" .Tag -}}
-    {{- $version := semver .Tag -}}
-    {{- if and (hasKey (default .Values dict) "onPremCompatibilityVersion") (eq .Values.onPremCompatibilityVersion "6.2") -}}
-        {{- if ne ($version | (semver "1.0.0").Compare) 1 -}}
-            {{- fail (printf "incompatible version for %s, set %s expected < 1.0.0" .Component .Tag) -}}
+    {{- $version := .Tag -}}
+    {{- if ( semverCompare "< 6.6.0" ( .Values.onPremCompatibilityVersion | default "6.6.0" )) -}}
+        {{- if not ( semverCompare "< 0.5.0" $version ) -}}
+            {{- fail (printf "incompatible version for %s, set %s expected < 0.5.0" .Component .Tag) -}}
         {{- end -}}
     {{- else -}}
-        {{- if eq ($version | (semver "1.0.0").Compare) 1 -}}
-            {{- fail (printf "incompatible version for %s, set %s expected >= 1.0.0" .Component .Tag) -}}
+        {{- if not ( semverCompare ">= 0.5.0" $version ) -}}
+            {{- fail (printf "incompatible version for %s, set %s expected >= 0.5.0" .Component .Tag) -}}
         {{- end -}}
     {{- end -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Generates configmap data to enable platform services if onPremCompatibility version is not set, or it is greater than 6.6.0
+*/}}
+{{- define "cluster-scanner.enablePlatformServicesConfig" -}}
+{{- if ( semverCompare ">= 6.6.0" (.Values.onPremCompatibilityVersion | default "6.6.0" )) -}}
+enable_platform_services: "true"
 {{- end -}}
 {{- end -}}
 
@@ -260,4 +269,13 @@ Return local registry secrets in the correct format: <namespace_name>/<secret_na
         {{- end -}}
     {{- end -}}
     '{{- join "," $list -}}'
+{{- end -}}
+
+{{- define "cluster-scanner.accessKeySecret" -}}
+    {{/*
+    Note: the last default function call is to avoid some weirdness when either
+    argument is nil. If .Values.global.sysdig.accessKeySecret was undefined, the
+    returned empty string does not evaluate to empty on Helm Version:"v3.8.0"
+    */}}
+    {{- .Values.global.sysdig.accessKeySecret | default "" -}}
 {{- end -}}

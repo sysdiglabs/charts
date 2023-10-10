@@ -10,6 +10,20 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.1.9
+### Chores
+* **registry-scanner** [b9f6b22f](https://github.com/sysdiglabs/charts/commit/b9f6b22fa7743d5f8ef9537c3e408f65a407dd07): Update to v0.2.48 ([#1374](https://github.com/sysdiglabs/charts/issues/1374))
+# v1.1.8
+* **registry-scanner** Update doc, removing nodeSelector param
+
+# v1.1.7
+### Chores
+* **registry-scanner** [4b760bf0](https://github.com/sysdiglabs/charts/commit/4b760bf0dcfd7e108f99be3f2eec4eef81a05b74): Update to v0.2.46 ([#1330](https://github.com/sysdiglabs/charts/issues/1330))
+# v1.1.6
+* **registry-scanner** Add special param to max images
+# v1.1.5
+### Documentation
+* **admission-controller, cluster-scanner, registry-scanner, cloud-connector, node-analyzer, rapid-response, sysdig-deploy, agent** [df733e62](https://github.com/sysdiglabs/charts/commit/df733e6294eae1967197e3521473a5fab0282b67): update maintainers list ([#1283](https://github.com/sysdiglabs/charts/issues/1283))
 # v1.1.4
 ### Documentation
 * **registry-scanner** [ea551160](https://github.com/sysdiglabs/charts/commit/ea5511600a50333049584da6a565486dbbd424b8): fix configuration table rendering ([#1282](https://github.com/sysdiglabs/charts/issues/1282))

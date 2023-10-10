@@ -103,6 +103,8 @@ config:
       # The size limit for the emptyDir volume used by the scanner job.<br/>
       # This volume is used to store both the vulnerability database and the image to scan.
       temporaryVolumeSizeLimit: 2Gi
+  # Enable vulnerability MainDB V2
+  useMainDbV2: false
 ssl:
   ca:
     # For outbound connections.
@@ -175,9 +177,8 @@ existingSecretName: ""
 
 # Pod annotations for the Registry scanner.
 podAnnotations: {}
-
 # Security context for Registry Scanner pod.
-podSecurityContext: {}
+# podSecurityContext: {}
   # fsGroup: 2000
 
 # Security context for Registry Scanner container.
@@ -201,13 +202,12 @@ resources: {}
   # requests:
   #   cpu: 100m
   #   memory: 128Mi
-
 # Configure `nodeSelector` for scheduling the registry scanner pod.
-nodeSelector: {}
+# nodeSelector: {}
 # Configure tolerations for scheduling the registry scanner pod.
-tolerations: []
+# tolerations: []
 # Configure affinity for scheduling the registry scanner pod.
-affinity: {}
+# affinity: {}
 
 scanOnStart:
   # Specify whether to start the post-install scanner job, in addition to the cronjob.

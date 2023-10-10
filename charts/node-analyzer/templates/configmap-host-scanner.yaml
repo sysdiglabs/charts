@@ -10,12 +10,9 @@ data:
   api_endpoint: https://{{ include "nodeAnalyzer.apiEndpoint" . }}
   cluster_name: {{ required "A valid clusterName is required" (include "nodeAnalyzer.clusterName" . ) }}
   {{- if hasKey .Values.global.sysdig "tags" }}
-    {{- $customTags := list -}}
-    {{ range $key, $val := .Values.global.sysdig.tags }}
-      {{- $entry := list $key $val | join ":" -}}
-      {{- $customTags = append $customTags $entry -}}
-    {{ end }}
-  custom_tags: {{ join "," $customTags | quote }}
+  {{- if .Values.global.sysdig.tags }}
+  custom_tags: {{ include "agent.tags" . }}
+  {{- end }}
   {{- end }}
   {{- if hasKey .Values.nodeAnalyzer.hostScanner "scanOnStart" }}
   scan_on_start: "{{ .Values.nodeAnalyzer.hostScanner.scanOnStart }}"

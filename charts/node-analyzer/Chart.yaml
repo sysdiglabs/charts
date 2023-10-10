@@ -3,8 +3,8 @@ name: node-analyzer
 description: Sysdig Node Analyzer
 
 # currently matching Sysdig's appVersion 1.14.34
-version: 1.14.4
-appVersion: 12.6.0
+version: 1.17.6
+appVersion: 12.8.0
 keywords:
   - monitoring
   - security
@@ -18,20 +18,12 @@ sources:
   - https://app.sysdigcloud.com/#/settings/user
   - https://github.com/draios/sysdig
 maintainers:
-  - name: lachie83
-    email: lachlan@deis.com
-  - name: bencer
-    email: jorge.salamero@sysdig.com
-  - name: nestorsalceda
-    email: nestor.salceda@sysdig.com
-  - name: airadier
-    email: alvaro.iradier@sysdig.com
-  - name: carillan81
-    email: carlos.arilla@sysdig.com
-  - name: yashgiri
-    email: yashgiri.goswami@sysdig.com
+  - name: chen-shmilovich-sysdig
+    email: chen.shmilovich@sysdig.com
+  - name: giuse-sysdig
+    email: giuseppe.esposito@sysdig.com
 dependencies:
   - name: common
     # repository: https://charts.sysdig.com
     repository: file://../common
-    version: ~1.1.0
+    version: ~1.2.2

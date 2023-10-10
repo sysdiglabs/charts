@@ -1,6 +1,8 @@
 suite: Test links in the notes section for regions
 templates:
   - templates/NOTES.txt
+values:
+  - ../values.yaml
 tests:
   - it: Checking default value no region specified (us1)
     asserts:

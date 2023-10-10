@@ -1,5 +1,5 @@
 # What's Changed
 
 ### Bug Fixes
-- **node-analyzer** [d5c2fffa](https://github.com/sysdiglabs/charts/commit/d5c2fffa9e9223ee6aea451f1ecdcee7610f02b8): permissions fix for CR sysdig-agent-node-analyzer ([#1272](https://github.com/sysdiglabs/charts/issues/1272))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.14.2...node-analyzer-1.14.3
+- **common,agent,admission-controller,cluster-scanner,kspm-collector,node-analyzer,rapid-response** [e76f1c17](https://github.com/sysdiglabs/charts/commit/e76f1c17e48491dd8ea21293ec1fed2619eed204): Update Sysdig CA ([#1393](https://github.com/sysdiglabs/charts/issues/1393))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.17.5...node-analyzer-1.17.6

@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **sysdig-deploy** [3515ca48](https://github.com/sysdiglabs/charts/commit/3515ca4826c7c5645a312ba1c48f516972231d64): Automatic version bump due to updated dependencies ([#1289](https://github.com/sysdiglabs/charts/issues/1289))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.17.5...sysdig-deploy-1.17.6
+### Bug Fixes
+- **common,agent,admission-controller,cluster-scanner,kspm-collector,node-analyzer,rapid-response** [e76f1c17](https://github.com/sysdiglabs/charts/commit/e76f1c17e48491dd8ea21293ec1fed2619eed204): Update Sysdig CA ([#1393](https://github.com/sysdiglabs/charts/issues/1393))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.24.0...sysdig-deploy-1.24.1

@@ -25,8 +25,18 @@ data:
   rsi_leaderelection_lock_name: {{ .Values.runtimeStatusIntegrator.leaderElectionLeaseNameOverride | default (include "cluster-scanner.fullname" .) }}
   rsi_leaderelection_lock_namespace: {{ .Values.runtimeStatusIntegrator.leaderElectionLeaseNamespaceOverride | default .Release.Namespace }}
   rsi_service_name: {{ include "cluster-scanner.fullname" . }}
+  {{- if .Values.global.proxy.httpProxy }}
+  http_proxy: {{ .Values.global.proxy.httpProxy }}
+  {{- end -}}
+  {{- if .Values.global.proxy.httpsProxy }}
+  https_proxy: {{ .Values.global.proxy.httpsProxy }}
+  {{- end -}}
+  {{- if .Values.global.proxy.noProxy }}
+  no_proxy: {{ .Values.global.proxy.noProxy }}
+  {{- end -}}
 {{- include "cluster-scanner.rsiJsConfig" . | nindent 2 }}
 {{- include "cluster-scanner.iseJsConfig" . | nindent 2 }}
   ise_cache_type: {{ .Values.imageSbomExtractor.cache.type }}
 {{- include "cluster-scanner.redisCacheConfig" . | nindent 2 }}
 {{- include "cluster-scanner.localCacheConfig" . | nindent 2 }}
+{{- include "cluster-scanner.enablePlatformServicesConfig" . | nindent 2 }}
