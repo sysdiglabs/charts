@@ -79,7 +79,7 @@ The `values.yaml` file specifies the values for the `node-analyzer` configuratio
    helm install -n sysdig-agent sysdig sysdig/sysdig-deploy -f values.sysdig.yaml
    ```
 
-## Verify the Integrity and Origin
+## Verify the integrity and origin
 
 Sysdig Helm charts are signed so you can confirm the integrity and origin of each chart. To do so:
 
