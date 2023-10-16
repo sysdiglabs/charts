@@ -286,6 +286,10 @@ nodeAnalyzer:
     # Note: deploy has been commented so that it will be used as hard override to newEngineOnly flag
     # but when not set, newEngineOnly will win. Desiderata examples in ./tests/runtimescanner_test.yaml
     # deploy: false
+
+    # Can be set to "true" to show debug logging or "trace" to show trace logging, useful for troubleshooting.
+    debug: false
+
     probesPort: 7002
     image:
       repository: sysdig/vuln-runtime-scanner
@@ -347,6 +351,9 @@ nodeAnalyzer:
     # Note: deploy has been commented so that it will be used as hard override to newEngineOnly flag
     # but when not set, newEngineOnly will win. Desiderata examples in ./tests/hostscanner_test.yaml
     # deploy: false
+
+    # Can be set to "true" to show debug logging or "trace" to show trace logging, useful for troubleshooting.
+    debug: false
 
     # scanOnStart will make a scan happen at startup.
     # scanOnStart: true

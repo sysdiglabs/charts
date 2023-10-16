@@ -26,7 +26,9 @@ data:
   {{- if hasKey .Values.nodeAnalyzer "sslVerifyCertificate" }}
   ssl_verify_certificate: "{{ .Values.nodeAnalyzer.sslVerifyCertificate }}"
   {{- end }}
-  debug: "{{ .Values.nodeAnalyzer.debug | default false }}"
+  {{- if (.Values.nodeAnalyzer.hostScanner.debug | default .Values.nodeAnalyzer.debug) }}
+  debug: "{{ .Values.nodeAnalyzer.hostScanner.debug | default .Values.nodeAnalyzer.debug }}"
+  {{- end }}
   {{- if (.Values.nodeAnalyzer.httpProxy | default .Values.global.proxy.httpProxy) }}
   http_proxy: {{ .Values.nodeAnalyzer.httpProxy | default .Values.global.proxy.httpProxy }}
   {{- end -}}
