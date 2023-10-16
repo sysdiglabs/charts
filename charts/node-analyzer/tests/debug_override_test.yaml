@@ -1,0 +1,90 @@
+suite: Test overrides of global nodeAnalyzer.debug flag
+templates:
+  - configmap-host-scanner.yaml
+  - configmap-kspm-analyzer.yaml
+  - runtimeScanner/runtime-scanner-configmap.yaml
+tests:
+  - it: check value of debug for runtimeScanner - local value provided
+    set:
+      nodeAnalyzer:
+        runtimeScanner:
+          debug: true
+    asserts:
+      - equal:
+          path: data.debug
+          value: "true"
+        template: runtimeScanner/runtime-scanner-configmap.yaml
+
+  - it: check value of debug (trace level) for runtimeScanner - local value provided
+    set:
+      nodeAnalyzer:
+        runtimeScanner:
+          debug: trace
+    asserts:
+      - equal:
+          path: data.debug
+          value: "trace"
+        template: runtimeScanner/runtime-scanner-configmap.yaml
+
+  - it: check value of debug for runtimeScanner - global (nodeAnalyzer.debug) value provided
+    set:
+      nodeAnalyzer:
+        debug: true
+    asserts:
+      - equal:
+          path: data.debug
+          value: "true"
+        template: runtimeScanner/runtime-scanner-configmap.yaml
+
+  - it: check value of debug for hostScanner - local value provided
+    set:
+      nodeAnalyzer:
+        hostScanner:
+          debug: true
+    asserts:
+      - equal:
+          path: data.debug
+          value: "true"
+        template: configmap-host-scanner.yaml
+
+  - it: check value of debug (trace level) for hostScanner - local value provided
+    set:
+      nodeAnalyzer:
+        hostScanner:
+          debug: trace
+    asserts:
+      - equal:
+          path: data.debug
+          value: "trace"
+        template: configmap-host-scanner.yaml
+
+  - it: check value of debug for hostScanner - global (nodeAnalyzer.debug) value provided
+    set:
+      nodeAnalyzer:
+        debug: true
+    asserts:
+      - equal:
+          path: data.debug
+          value: "true"
+        template: configmap-host-scanner.yaml
+
+  - it: check value of debug for kspmAnalyzer - local value provided
+    set:
+      nodeAnalyzer:
+        kspmAnalyzer:
+          debug: true
+    asserts:
+      - equal:
+          path: data.environment
+          value: "DEVELOPMENT"
+        template: configmap-kspm-analyzer.yaml
+
+  - it: check value of debug for kspmAnalyzer - global (nodeAnalyzer.debug) value provided
+    set:
+      nodeAnalyzer:
+        debug: true
+    asserts:
+      - equal:
+          path: data.environment
+          value: "DEVELOPMENT"
+        template: configmap-kspm-analyzer.yaml
