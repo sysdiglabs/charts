@@ -224,13 +224,13 @@ it can act like a boolean
 {{- end -}}
 
 {{- define "agent.universalEbpfEnforced" -}}
-  {{- if (and (eq "true" (include "agent.ebpfEnabled" .)) (eq "universal" .Values.ebpf.kind )) -}}
+  {{- if (and (eq "true" (include "agent.ebpfEnabled" .)) (or (eq "universal" .Values.ebpf.kind ) (eq "universal_ebpf" .Values.ebpf.kind ))) -}}
     true
   {{- end -}}
 {{- end -}}
 
 {{- define "agent.legacyEbpfEnforced" -}}
-  {{- if (and (eq "true" (include "agent.ebpfEnabled" .)) (eq "legacy" .Values.ebpf.kind )) -}}
+  {{- if (and (eq "true" (include "agent.ebpfEnabled" .)) (or (eq "legacy" .Values.ebpf.kind ) (eq "legacy_ebpf" .Values.ebpf.kind ))) -}}
     true
   {{- end -}}
 {{- end -}}

@@ -20,7 +20,9 @@
           "enum": [
             "auto",
             "legacy",
-            "universal"
+            "universal",
+            "legacy_ebpf",
+            "universal_ebpf"
           ]
         }
       }
