@@ -103,8 +103,9 @@ config:
       # The size limit for the emptyDir volume used by the scanner job.<br/>
       # This volume is used to store both the vulnerability database and the image to scan.
       temporaryVolumeSizeLimit: 2Gi
-  # The vulnerability database version to use. Supported versions: v1, v2. Default is v2.
-  # vulnerabilityDBVersion: "v1"
+  # The vulnerability database version to use. Supported versions: v1, v2.
+  # If not configured default will be v2.
+  vulnerabilityDBVersion: "v2"
 ssl:
   ca:
     # For outbound connections.
