@@ -17,6 +17,7 @@ data:
   excluded_workloads: {{ .Values.workloads.excluded | quote }}
   health_interval_minutes: {{ .Values.healthIntervalMin | default 5 | quote }}
   external_nats_url: {{ include "kspmCollector.natsUrl" . }}
+  nats_max_reconnect: {{ .Values.natsMaxReconnect | default 0 }}
   cluster_name: {{ required "A valid clusterName is required" (include "kspmCollector.clusterName" .) }}
   nats_insecure: {{ include "kspmCollector.natsInsecure" . }}
   {{- if (.Values.httpProxy | default .Values.global.proxy.httpProxy) }}
@@ -28,7 +29,6 @@ data:
   {{- if (.Values.noProxy | default .Values.global.proxy.noProxy) }}
   no_proxy: {{ .Values.noProxy | default .Values.global.proxy.noProxy }}
   {{- end -}}
-  nats_max_reconnect: {{ .Values.natsMaxReconnect | default 0 }}
   {{- if .Values.port }}
   agent_port: {{ .Values.port | quote }}
   {{- end -}}
