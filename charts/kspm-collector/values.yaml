@@ -5,6 +5,7 @@ httpProxy:
 httpsProxy:
 noProxy:
 sslVerifyCertificate:
+natsMaxReconnect: 0
 # Namespace to deploy to (Optional: Will default to release namespace)
 namespace:
 
@@ -76,7 +77,7 @@ clusterName: ""
 
 image:
   repository: sysdig/kspm-collector
-  tag: 1.32.0
+  tag: 1.33.0
   digest:
   registry: quay.io
   pullPolicy:
