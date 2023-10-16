@@ -237,6 +237,12 @@ spec:
                 name: {{ .Release.Name }}-kspm-analyzer
                 key: agent_port
                 optional: true
+          - name: NATS_MAX_RECONNECT
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-kspm-analyzer
+                key: nats_max_reconnect
+                optional: true
           {{- if .Values.global.sysdig.tags }}
           - name: TAGS
             value: {{ include "agent.tags" . }}

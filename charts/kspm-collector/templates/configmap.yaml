@@ -28,6 +28,7 @@ data:
   {{- if (.Values.noProxy | default .Values.global.proxy.noProxy) }}
   no_proxy: {{ .Values.noProxy | default .Values.global.proxy.noProxy }}
   {{- end -}}
+  nats_max_reconnect: {{ .Values.natsMaxReconnect | default 0 }}
   {{- if .Values.port }}
   agent_port: {{ .Values.port | quote }}
   {{- end -}}
