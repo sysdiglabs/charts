@@ -102,7 +102,7 @@ exclusively to fix incorrect entries and not to add new ones.
 # v0.1.35
 ### New Features
 * **kspm-collector** [d1328c0](https://github.com/sysdiglabs/charts/commit/d1328c02976901a64d91f4e86a2a26035045496c): bumped KSPM Collector to latest version ([#921](https://github.com/sysdiglabs/charts/issues/921))
-# v0.1.34
+# v0.1.33
 ### Bug Fixes
 * **node-analyzer,kspm-collector** [59543e8](https://github.com/sysdiglabs/charts/commit/59543e8da45e1e61f21b2489500fe5452906bca0): Fix security context permission for KSPM components ([#907](https://github.com/sysdiglabs/charts/issues/907))
 # v0.1.33
