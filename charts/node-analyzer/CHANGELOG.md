@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.17.8
+### New Features
+* **kspm-collector,node-analyzer** [660e610d](https://github.com/sysdiglabs/charts/commit/660e610d475cdac3b9d2c51da4af0a01abce31f6): add support for NATS_MAX_RECONNECT variable ([#1400](https://github.com/sysdiglabs/charts/issues/1400))
 # v1.17.7
 ### Bug Fixes
 * **kspm-collector,node-analyzer** [67f042fd](https://github.com/sysdiglabs/charts/commit/67f042fd9ebb72cd121751d46fb96f7c3ad539ba): add debug logs to cloud platform metadata loading ([#1398](https://github.com/sysdiglabs/charts/issues/1398))
