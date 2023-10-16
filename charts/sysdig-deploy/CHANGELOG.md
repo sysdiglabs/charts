@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.24.3
+### Bug Fixes
+* **kspm-collector,node-analyzer** [67f042fd](https://github.com/sysdiglabs/charts/commit/67f042fd9ebb72cd121751d46fb96f7c3ad539ba): add debug logs to cloud platform metadata loading ([#1398](https://github.com/sysdiglabs/charts/issues/1398))
 # v1.24.2
 ### Chores
 * **sysdig-deploy** [cec55804](https://github.com/sysdiglabs/charts/commit/cec55804dd45827f316d6f9e5c85fe9ff1eca11f): Automatic version bump due to updated dependencies ([#1397](https://github.com/sysdiglabs/charts/issues/1397))
