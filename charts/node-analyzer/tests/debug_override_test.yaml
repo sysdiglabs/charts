@@ -1,8 +1,8 @@
 suite: Test overrides of global nodeAnalyzer.debug flag
 templates:
-  - configmap-host-scanner.yaml
-  - configmap-kspm-analyzer.yaml
-  - runtimeScanner/runtime-scanner-configmap.yaml
+  - templates/configmap-host-scanner.yaml
+  - templates/configmap-kspm-analyzer.yaml
+  - templates/runtimeScanner/runtime-scanner-configmap.yaml
 tests:
   - it: check value of debug for runtimeScanner - local value provided
     set:
