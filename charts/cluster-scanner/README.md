@@ -25,7 +25,7 @@ $ pre-commit run -a
 $ helm repo add sysdig https://charts.sysdig.com
 $ helm repo update
 $ helm upgrade --install sysdig-cluster-scanner sysdig/cluster-scanner \
-      --create-namespace -n sysdig --version=0.7.1  \
+      --create-namespace -n sysdig --version=0.7.2  \
       --set global.clusterConfig.name=CLUSTER_NAME \
       --set global.sysdig.region=SYSDIG_REGION \
       --set global.sysdig.accessKey=YOUR-KEY-HERE
@@ -55,7 +55,7 @@ To install the chart with the release name `cluster-scanner`, run:
 
 ```console
 $ helm upgrade --install sysdig-cluster-scanner sysdig/cluster-scanner \
-       --create-namespace -n sysdig --version=0.7.1 \
+       --create-namespace -n sysdig --version=0.7.2 \
        --set global.clusterConfig.name=CLUSTER_NAME \
        --set global.sysdig.region=SYSDIG_REGION \
        --set global.sysdig.accessKey=YOUR-KEY-HERE
@@ -161,7 +161,7 @@ Specify each parameter using the **`--set key=value[,key=value]`** argument to `
 
 ```console
 $ helm upgrade --install sysdig-cluster-scanner sysdig/cluster-scanner \
-    --create-namespace -n sysdig --version=0.7.1 \
+    --create-namespace -n sysdig --version=0.7.2 \
     --set global.sysdig.region="us1"
 ```
 
@@ -170,7 +170,7 @@ installing the chart. For example:
 
 ```console
 $ helm upgrade --install sysdig-cluster-scanner sysdig/cluster-scanner \
-    --create-namespace -n sysdig --version=0.7.1 \
+    --create-namespace -n sysdig --version=0.7.2 \
     --values values.yaml
 ```
 
