@@ -12550,6 +12550,36 @@ entries:
   node-analyzer:
   - apiVersion: v2
     appVersion: 12.8.0
+    created: "2023-10-17T12:51:19.546677764Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      version: ~1.2.2
+    description: Sysdig Node Analyzer
+    digest: 7fc39b1a6ffbbae5cc42b7ff64b76c324da94fb4ae6103d4801fef90fa24fa83
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: chen.shmilovich@sysdig.com
+      name: chen-shmilovich-sysdig
+    - email: giuseppe.esposito@sysdig.com
+      name: giuse-sysdig
+    name: node-analyzer
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/node-analyzer-1.17.9/node-analyzer-1.17.9.tgz
+    version: 1.17.9
+  - apiVersion: v2
+    appVersion: 12.8.0
     created: "2023-10-16T14:35:47.130627104Z"
     dependencies:
     - name: common
@@ -21974,6 +22004,28 @@ entries:
     - https://github.com/sysdiglabs/charts/releases/download/registry-scanner-0.0.1/registry-scanner-0.0.1.tgz
     version: 0.0.1
   sysdig:
+  - apiVersion: v1
+    appVersion: 12.16.3
+    created: "2023-10-17T12:51:19.720038879Z"
+    deprecated: true
+    description: Sysdig Monitor and Secure agent
+    digest: c11c39ea2551fbed8e4435b54ca76cd65082e63fa4bbba0b591f973ba9f333d4
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    name: sysdig
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/sysdig-1.16.16/sysdig-1.16.16.tgz
+    version: 1.16.16
   - apiVersion: v1
     appVersion: 12.16.3
     created: "2023-10-14T14:30:02.115305252Z"
@@ -45037,4 +45089,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2023-10-17T07:09:00.140097131Z"
+generated: "2023-10-17T12:51:19.924095722Z"
