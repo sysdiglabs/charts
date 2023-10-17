@@ -18,7 +18,6 @@
         "kind": {
           "type": "string",
           "enum": [
-            "auto",
             "legacy",
             "universal",
             "legacy_ebpf",

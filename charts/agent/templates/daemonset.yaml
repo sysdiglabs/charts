@@ -190,7 +190,7 @@ spec:
             {{- if (include "agent.universalEbpfEnforced" .) }}
             - name: SYSDIG_AGENT_DRIVER
               value: universal_ebpf
-            {{- else if (and (include "agent.ebpfEnabled" .) (eq "legacy" .Values.ebpf.kind )) }}
+            {{- else if (include "agent.legacyEbpfEnforced" .) }}
             - name: SYSDIG_AGENT_DRIVER
               value: legacy_ebpf
             {{- end }}

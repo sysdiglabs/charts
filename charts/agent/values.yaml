@@ -170,8 +170,8 @@ ebpf:
   # Enable eBPF support for Sysdig Agent
   enabled: false
 
-  # Define the kind of eBPF driver that can be used in the agent. Can be `auto`, `legacy_ebpf` or `universal_ebpf`
-  kind: auto
+  # Define the kind of eBPF driver that can be used in the agent. Can be `legacy_ebpf` or `universal_ebpf`
+  kind: legacy_ebpf
 
 slim:
   # Uses a slim version of the Sysdig Agent
