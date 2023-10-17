@@ -358,10 +358,27 @@ tests:
       - isNull:
           path: data.enable_platform_services
 
+  - it: "has correct platform services value when onPremCompatibilityVersion is = 6.5"
+    set:
+      global.sysdig.apiHost: "http://test.com"
+      onPremCompatibilityVersion: "6.5"
+    asserts:
+      - isNull:
+          path: data.enable_platform_services
+
   - it: "has correct platform services value when onPremCompatibilityVersion is = 6.6.0"
     set:
       global.sysdig.apiHost: "http://test.com"
       onPremCompatibilityVersion: "6.6.0"
+    asserts:
+      - equal:
+          path: data.enable_platform_services
+          value: "true"
+
+  - it: "has correct platform services value when onPremCompatibilityVersion is just a major.minor version"
+    set:
+      global.sysdig.apiHost: "http://test.com"
+      onPremCompatibilityVersion: "6.6"
     asserts:
       - equal:
           path: data.enable_platform_services
@@ -375,3 +392,12 @@ tests:
       - equal:
           path: data.enable_platform_services
           value: "true"
+
+
+  - it: "fails if onPremCompatibilityVersion is not a valid semver"
+    set:
+      global.sysdig.apiHost: "http://test.com"
+      onPremCompatibilityVersion: "gigimarzullo"
+    asserts:
+      - failedTemplate:
+          errorMessage: "Invalid Semantic Version"
