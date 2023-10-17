@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- [9fc9ddd4](https://github.com/sysdiglabs/charts/commit/9fc9ddd48e6cb2c3ea334bfc10048ffc15646fd2): release agent 12.16.3 ([#1395](https://github.com/sysdiglabs/charts/issues/1395))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.24.1...sysdig-1.16.15
+### Chores
+- **sysdig, node-analyzer** [84cfe9a5](https://github.com/sysdiglabs/charts/commit/84cfe9a5e6f989a9a42b14b3d16597436f23b4b1): update legacy nodeImageAnalyzer (0.1.29) and hostImageAnalyzer (0.1.17) ([#1407](https://github.com/sysdiglabs/charts/issues/1407))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.24.5...sysdig-1.16.16
