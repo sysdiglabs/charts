@@ -2,7 +2,7 @@ apiVersion: v2
 name: kspm-collector
 description: Sysdig KSPM collector
 
-version: 0.8.1
+version: 0.8.4
 appVersion: 1.30.0
 
 keywords:
@@ -24,4 +24,4 @@ dependencies:
   - name: common
     # repository: https://charts.sysdig.com
     repository: file://../common
-    version: ~1.2.1
+    version: ~1.2.2

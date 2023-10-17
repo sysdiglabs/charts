@@ -14,6 +14,7 @@ data:
 {{ end}}
   environment: {{ $env }}
   external_nats_url: {{ include "nodeAnalyzer.natsUrl" . }}
+  nats_max_reconnect: {{ .Values.nodeAnalyzer.natsMaxReconnect | default 0 | quote }}
   cluster_name: {{ required "A valid clusterName is required" (include "nodeAnalyzer.clusterName" .) }}
   agent_app_name: {{ include "nodeAnalyzer.name" . }}
   {{- if hasKey .Values.nodeAnalyzer "sslVerifyCertificate" }}

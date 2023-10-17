@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **cluster-scanner** [5b1e9649](https://github.com/sysdiglabs/charts/commit/5b1e96497ef50342055f3f43bc9ff5f41f7cfea1): added configuration for docker registry mirrors ([#1372](https://github.com/sysdiglabs/charts/issues/1372))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.23.10...sysdig-deploy-1.24.0
+### Bug Fixes
+- **cluster-scanner** [9b3864ff](https://github.com/sysdiglabs/charts/commit/9b3864fffdc9e8b7e8fdc96f8ed4902f945c34c7): removed unneeded version compatibility checks ([#1404](https://github.com/sysdiglabs/charts/issues/1404))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.24.4...sysdig-deploy-1.24.5

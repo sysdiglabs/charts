@@ -159,6 +159,12 @@ spec:
                 key: nats_insecure
                 name: {{ template "kspmCollector.fullname" . }}
                 optional: true
+          - name: NATS_MAX_RECONNECT
+            valueFrom:
+              configMapKeyRef:
+                key: nats_max_reconnect
+                name: {{ template "kspmCollector.fullname" . }}
+                optional: true
           - name: AGENT_PORT
             valueFrom:
               configMapKeyRef:

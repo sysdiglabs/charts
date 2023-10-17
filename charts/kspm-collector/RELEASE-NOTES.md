@@ -1,5 +1,5 @@
 # What's Changed
 
-### Bug Fixes
-- **common,agent,node-analyzer,kspm-collector** [0806635e](https://github.com/sysdiglabs/charts/commit/0806635e5824365adb8ab3d8fd31811477c8918e): support multi-level map in agent.tags ([#1351](https://github.com/sysdiglabs/charts/issues/1351))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.8.0...kspm-collector-0.8.1
+### New Features
+- **kspm-collector,node-analyzer** [660e610d](https://github.com/sysdiglabs/charts/commit/660e610d475cdac3b9d2c51da4af0a01abce31f6): add support for NATS_MAX_RECONNECT variable ([#1400](https://github.com/sysdiglabs/charts/issues/1400))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.8.3...kspm-collector-0.8.4

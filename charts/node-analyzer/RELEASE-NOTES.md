@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **node-analyzer** [a66360df](https://github.com/sysdiglabs/charts/commit/a66360dfbd00f1d82ab5da6f8b70a5e1d77440cf): remove broken link from values.yaml ([#1370](https://github.com/sysdiglabs/charts/issues/1370))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.17.4...node-analyzer-1.17.5
+### New Features
+- **kspm-collector,node-analyzer** [660e610d](https://github.com/sysdiglabs/charts/commit/660e610d475cdac3b9d2c51da4af0a01abce31f6): add support for NATS_MAX_RECONNECT variable ([#1400](https://github.com/sysdiglabs/charts/issues/1400))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.17.7...node-analyzer-1.17.8

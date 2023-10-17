@@ -1,7 +1,7 @@
 .PHONY: unittest
 
 deps-docs:
-	go install kubepack.dev/chart-doc-gen@latest
+	go install kubepack.dev/chart-doc-gen@v0.4.7
 
 docs: deps-docs
 	find . -name "doc.yaml" | \
