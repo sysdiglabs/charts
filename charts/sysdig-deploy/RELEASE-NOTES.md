@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **kspm-collector,node-analyzer** [660e610d](https://github.com/sysdiglabs/charts/commit/660e610d475cdac3b9d2c51da4af0a01abce31f6): add support for NATS_MAX_RECONNECT variable ([#1400](https://github.com/sysdiglabs/charts/issues/1400))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.24.3...sysdig-deploy-1.24.4
+### Bug Fixes
+- **cluster-scanner** [9b3864ff](https://github.com/sysdiglabs/charts/commit/9b3864fffdc9e8b7e8fdc96f8ed4902f945c34c7): removed unneeded version compatibility checks ([#1404](https://github.com/sysdiglabs/charts/issues/1404))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.24.4...sysdig-deploy-1.24.5
