@@ -207,10 +207,14 @@ Define the proper imageRegistry to use for imageSbomExtractor
 
 {{/*
 Generates configmap data to enable platform services if onPremCompatibility version is not set, or it is greater than 6.6.0
+It also makes sure that the platform services are enabled in regions which support them when onPremCompatibility is not defined.
 */}}
 {{- define "cluster-scanner.enablePlatformServicesConfig" -}}
 {{- if ( semverCompare ">= 6.6.0" (.Values.onPremCompatibilityVersion | default "6.6.0" )) -}}
+    {{- $regionsPlatformEnabled := list "us1" "us2" "us3" "au1" "eu1" -}}
+    {{- if or (has .Values.global.sysdig.region $regionsPlatformEnabled) .Values.onPremCompatibilityVersion -}}
 enable_platform_services: "true"
+    {{- end -}}
 {{- end -}}
 {{- end -}}
 
