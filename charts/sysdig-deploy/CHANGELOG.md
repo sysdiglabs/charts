@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.26.0
+### New Features
+* **cluster-scanner** [23b421c6](https://github.com/sysdiglabs/charts/commit/23b421c60dafe24c2e777f38c490e7f88c2c42a4): Enable platform services only in regions which support them ([#1413](https://github.com/sysdiglabs/charts/issues/1413))
 # v1.25.0
 # v1.24.7
 ### Chores
