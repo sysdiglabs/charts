@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "type": "object",
+  "required": [
+    "ebpf"
+  ],
+  "properties": {
+    "ebpf": {
+      "type": "object",
+      "required": [
+        "enabled",
+        "kind"
+      ],
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "legacy_ebpf",
+            "universal_ebpf"
+          ]
+        }
+      }
+    }
+  }
+}

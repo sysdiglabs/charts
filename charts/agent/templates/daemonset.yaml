@@ -77,7 +77,8 @@ spec:
       imagePullSecrets:
         {{ toYaml .Values.global.image.pullSecrets | nindent 8 }}
       {{- end }}
-      {{- if .Values.slim.enabled }}
+      {{/* When the Universal eBPF is enforced by customer choice there is no reason to start the init container to build the driver */}}
+      {{- if and .Values.slim.enabled (not (include "agent.universalEbpfEnforced" . )) }}
       initContainers:
         - name: sysdig-agent-kmodule
           image: {{ template "agent.image.kmodule" . }}
@@ -94,6 +95,10 @@ spec:
           {{- if or (include "agent.ebpfEnabled" .) (include "agent.gke.autopilot" .) }}
             - name: SYSDIG_BPF_PROBE
               value:
+          {{- end }}
+          {{- if (include "agent.legacyEbpfEnforced" .) }}
+            - name: SYSDIG_AGENT_DRIVER
+              value: legacy_ebpf
           {{- end }}
           {{- range $key, $value := .Values.daemonset.kmodule.env }}
             - name: {{ $key | quote }}
@@ -178,9 +183,16 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: spec.nodeName
-            {{- if or (include "agent.ebpfEnabled" .) (include "agent.gke.autopilot" .)}}
+            {{- if and (or (include "agent.ebpfEnabled" .) (include "agent.gke.autopilot" .)) (not (include "agent.universalEbpfEnforced" . )) }}
             - name: SYSDIG_BPF_PROBE
               value:
+            {{- end }}
+            {{- if (include "agent.universalEbpfEnforced" .) }}
+            - name: SYSDIG_AGENT_DRIVER
+              value: universal_ebpf
+            {{- else if (include "agent.legacyEbpfEnforced" .) }}
+            - name: SYSDIG_AGENT_DRIVER
+              value: legacy_ebpf
             {{- end }}
             {{- if (.Values.proxy.httpProxy | default .Values.global.proxy.httpProxy) }}
             - name: http_proxy
