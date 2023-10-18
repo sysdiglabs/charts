@@ -1,0 +1,13 @@
+config:
+  secureAPIToken: ${SECURE_API_TOKEN}
+  registryType: artifactory
+  registryURL: ${SYSDIG_JFROG_SAAS_QA_URL}
+  registryApiUrl: ${SYSDIG_JFROG_SAAS_QA_API_URL}
+  registryUser: ${SYSDIG_JFROG_SAAS_QA_USER}
+  registryPassword: ${SYSDIG_JFROG_SAAS_QA_TOKEN}
+  filter:
+    include: 'alpine:3.1'
+    exclude: '.*'
+scanOnStart:
+  enabled: true
+  asPostInstallHook: true
