@@ -116,6 +116,10 @@
                 {{- end }}
                 key: registryPassword
           {{- end }}
+          {{ if .Values.config.parallelGoRoutines }}
+          - name: GROUP_LIMIT
+            value: "{{ .Values.config.parallelGoRoutines }}"
+          {{- end }}
           {{- if .Values.extraEnvVars }}
           {{- toYaml .Values.extraEnvVars | nindent 10 }}
           {{- end }}
