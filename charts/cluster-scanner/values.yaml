@@ -104,7 +104,7 @@ runtimeStatusIntegrator:
     # The image repository to use for pulling the Runtime Status Integrator
     # image
     repository: sysdig/runtime-status-integrator
-    tag: "0.5.0"
+    tag: "0.5.1"
   # Params to manage leader election
   # Leader election is implemented leveraging the native capabilities of
   # Kubernetes see: https://kubernetes.io/blog/2016/01/simple-leader-election-with-kubernetes/
@@ -166,7 +166,7 @@ imageSbomExtractor:
     registry: quay.io
     # The image repository to use for pulling the Image SBOM Extractor image
     repository: sysdig/image-sbom-extractor
-    tag: "0.5.0"
+    tag: "0.5.1"
   ports:
     # The port to be used to expose prometheus metrics for the Image SBOM
     # Extractor
