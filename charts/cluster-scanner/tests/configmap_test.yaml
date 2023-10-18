@@ -401,8 +401,9 @@ tests:
       onPremCompatibilityVersion: "6.6.0"
       global.sysdig.region: ""
     asserts:
-      - isNull:
+      - equal:
           path: data.enable_platform_services
+          value: "true"
 
   - it: "has correct platform services value when onPremCompatibilityVersion is = 6.6.0 and region supports platform services"
     set:
