@@ -54,10 +54,14 @@ Define the proper imageRegistry to use for agent and kmodule image
 {{- end -}}
 
 {{/*
-Return the proper Sysdig Agent image name
+Return the proper Sysdig Agent repository name
+
+Force the slim version if customer specify enable the slim mode or if the Universal eBPF driver is enforced
 */}}
 {{- define "agent.repositoryName" -}}
 {{- if .Values.slim.enabled -}}
+    {{- .Values.slim.image.repository -}}
+{{- else if (include "agent.universalEbpfEnforced" . ) -}}
     {{- .Values.slim.image.repository -}}
 {{- else -}}
     {{- .Values.image.repository -}}
@@ -215,6 +219,18 @@ it can act like a boolean
 */}}
 {{- define "agent.ebpfEnabled" -}}
   {{- if (or (eq "true" (include "agent.isAllCos" .)) .Values.ebpf.enabled) -}}
+    true
+  {{- end -}}
+{{- end -}}
+
+{{- define "agent.universalEbpfEnforced" -}}
+  {{- if (and (eq "true" (include "agent.ebpfEnabled" .)) (eq "universal_ebpf" .Values.ebpf.kind )) -}}
+    true
+  {{- end -}}
+{{- end -}}
+
+{{- define "agent.legacyEbpfEnforced" -}}
+  {{- if (and (eq "true" (include "agent.ebpfEnabled" .)) (eq "legacy_ebpf" .Values.ebpf.kind )) -}}
     true
   {{- end -}}
 {{- end -}}
