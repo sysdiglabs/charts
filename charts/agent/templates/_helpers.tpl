@@ -56,7 +56,7 @@ Define the proper imageRegistry to use for agent and kmodule image
 {{/*
 Return the proper Sysdig Agent repository name
 
-Force the slim version if customer specify enable the slim mode or if the Universal eBPF driver is is enforced
+Force the slim version if customer specify enable the slim mode or if the Universal eBPF driver is enforced
 */}}
 {{- define "agent.repositoryName" -}}
 {{- if .Values.slim.enabled -}}

@@ -2,7 +2,7 @@ suite: Universal eBPF tests
 templates:
   - templates/daemonset.yaml
 tests:
-  - it: Ensure that when the eBPF is disabled we create the sysdig container wihtout SYSDIG_BPF_PROBE and SYSDIG_AGENT_DRIVER environment variables
+  - it: Ensure that when the eBPF is disabled we create the sysdig container without SYSDIG_BPF_PROBE and SYSDIG_AGENT_DRIVER environment variables
     set:
       ebpf:
         enabled: false
