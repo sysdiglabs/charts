@@ -105,6 +105,8 @@ config:
       temporaryVolumeSizeLimit: 2Gi
   # Enable vulnerability MainDB V2
   useMainDbV2: false
+  # Number of goroutines running in parallel in metadata phase for ECR Org setup.
+  parallelGoRoutines: 100
 ssl:
   ca:
     # For outbound connections.
