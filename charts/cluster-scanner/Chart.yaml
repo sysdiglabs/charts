@@ -4,7 +4,7 @@ description: Sysdig Cluster Scanner
 
 type: application
 
-version: 0.8.0
+version: 0.8.1
 
 appVersion: "0.1.0"
 home: https://www.sysdig.com/
