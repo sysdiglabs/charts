@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.1.11
+### New Features
+* **registry-scanner** [e948b71d](https://github.com/sysdiglabs/charts/commit/e948b71d4a222a5559306b728e6832af2901d4a2): add gar, gcr and nexus support ([#1354](https://github.com/sysdiglabs/charts/issues/1354))
 # v1.1.10
 # v1.1.9
 ### Chores
