@@ -643,6 +643,12 @@ spec:
                 name: {{ .Release.Name }}-runtime-scanner
                 key: max_image_size_allowed
                 optional: true
+          - name: VULNERABILITY_DB_VERSION
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-runtime-scanner
+                key: vuln_db_version
+                optional: true
           - name: SYSDIG_API_URL
             valueFrom:
               configMapKeyRef:
@@ -853,6 +859,12 @@ spec:
               configMapKeyRef:
                 name: {{ .Release.Name }}-host-scanner
                 key: analyzer.maxFileSizeAllowed
+                optional: true
+          - name: VULNERABILITY_DB_VERSION
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-host-scanner
+                key: vuln_db_version
                 optional: true
           - name: TMPDIR
             value: "/tmp"
