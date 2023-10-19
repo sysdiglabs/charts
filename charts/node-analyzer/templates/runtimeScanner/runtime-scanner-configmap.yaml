@@ -38,6 +38,6 @@ data:
   analyzer.maxFileSizeAllowed: {{ .Values.nodeAnalyzer.runtimeScanner.settings.maxFileSizeAllowed | int64 | quote }}
   {{- end -}}
   {{- if .Values.nodeAnalyzer.runtimeScanner.settings.vulnerabilityDBVersion }}
-  vuln_db_version: {{ .Values.nodeAnalyzer.runtimeScanner.settings.vulnerabilityDBVersion | int64 | quote }}
+  vuln_db_version: {{ .Values.nodeAnalyzer.runtimeScanner.settings.vulnerabilityDBVersion | quote }}
   {{- end -}}
 {{- end }}

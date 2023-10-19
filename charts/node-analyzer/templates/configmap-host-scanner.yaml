@@ -37,6 +37,6 @@ data:
   no_proxy: {{ .Values.nodeAnalyzer.noProxy | default .Values.global.proxy.noProxy }}
   {{- end -}}
   {{- if .Values.nodeAnalyzer.hostScanner.vulnerabilityDBVersion }}
-  vuln_db_version: {{ .Values.nodeAnalyzer.hostScanner.vulnerabilityDBVersion }}
+  vuln_db_version: {{ .Values.nodeAnalyzer.hostScanner.vulnerabilityDBVersion | quote }}
   {{- end }}
 {{- end }}
