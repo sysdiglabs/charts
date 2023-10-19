@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.17.10
+### New Features
+* **node-analyzer** [02c55d84](https://github.com/sysdiglabs/charts/commit/02c55d84b746c0d136b0818d4d29df077c5576e5): enable DB V2 by default in Host and Runtime scanner ([#1416](https://github.com/sysdiglabs/charts/issues/1416))
 # v1.17.9
 ### Chores
 * **sysdig, node-analyzer** [84cfe9a5](https://github.com/sysdiglabs/charts/commit/84cfe9a5e6f989a9a42b14b3d16597436f23b4b1): update legacy nodeImageAnalyzer (0.1.29) and hostImageAnalyzer (0.1.17) ([#1407](https://github.com/sysdiglabs/charts/issues/1407))
