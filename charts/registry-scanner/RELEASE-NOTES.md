@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **registry-scanner** [e948b71d](https://github.com/sysdiglabs/charts/commit/e948b71d4a222a5559306b728e6832af2901d4a2): add gar, gcr and nexus support ([#1354](https://github.com/sysdiglabs/charts/issues/1354))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-1.1.10...registry-scanner-1.1.11
+### Bug Fixes
+- **registry-scanner** [95340f9b](https://github.com/sysdiglabs/charts/commit/95340f9b730ce58de5e3ec18b190f0e97634c597): properly set vulnerability DB config ([#1417](https://github.com/sysdiglabs/charts/issues/1417))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-1.1.11...registry-scanner-1.1.12
