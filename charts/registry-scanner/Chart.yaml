@@ -4,7 +4,7 @@ description: Sysdig Registry Scanner
 type: application
 home: https://sysdiglabs.github.io/registry-scanner/
 icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
-version: 1.1.11
+version: 1.1.12
 appVersion: 0.2.50
 maintainers:
   - name: giuse-sysdig

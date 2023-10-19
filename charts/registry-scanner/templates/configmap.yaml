@@ -102,4 +102,4 @@ data:
     reportPath: /output/registry-scanner-{DATE}.json
     {{- end }}
 
-    useMainDbV2: {{ .Values.config.useMainDbV2 }}
+    vulnerabilityDBVersion: {{ .Values.config.vulnerabilityDBVersion | default "v2" | quote }}
