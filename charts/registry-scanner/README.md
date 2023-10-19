@@ -33,6 +33,7 @@ Follow the instructions in [Install Registry Scanner](https://docs.sysdig.com/en
 - Quay IO
 - IBM ICR
 - Azure ACR
+- Google GAR
 
 Once installed, you can view the scan results in the [Vulnerabilities UI](https://docs.sysdig.com/en/docs/sysdig-secure/vulnerabilities/registry/) of Sysdig Secure.
 
@@ -60,7 +61,7 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | config.registryApiUrl                            | The API URL of the registry to scan. This is required if your registry type is Artifactory.                                                                                                                                                | <code>""</code>                              |
 | config.registryUser                              | The username for registry authentication.                                                                                                                                                                                                  | <code>""</code>                              |
 | config.registryPassword                          | The password for registry authentication.                                                                                                                                                                                                  | <code>""</code>                              |
-| config.registryType                              | Mandatory.<br/>The registry Type. Supported types: artifactory, ecr, icr, acr, quay, harbor, and dockerv2.                                                                                                                                 | <code>""</code>                              |
+| config.registryType                              | Mandatory.<br/>The registry Type. Supported types: artifactory, ecr, icr, acr, quay, harbor, gar, nexus and dockerv2.                                                                                                                      | <code>""</code>                              |
 | config.registryAccountId                         | The account ID. Applicable only for ICR registry type.                                                                                                                                                                                     | <code>""</code>                              |
 | config.icrIamApi                                 | The ICR IAM API. Applicable only for ICR registry type.                                                                                                                                                                                    | <code>""</code>                              |
 | config.icrIamApiSkipTLS                          | Ignore TLS certificate for IAM API. Applicable only for ICR registry type.                                                                                                                                                                 | <code>false</code>                           |

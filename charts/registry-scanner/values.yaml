@@ -26,7 +26,7 @@ config:
   registryUser: ""
   # The password for registry authentication.
   registryPassword: ""
-  # Mandatory.<br/>The registry Type. Supported types: artifactory, ecr, icr, acr, quay, harbor, and dockerv2.
+  # Mandatory.<br/>The registry Type. Supported types: artifactory, ecr, icr, acr, quay, harbor, gar, nexus and dockerv2.
   registryType: ""
   # The account ID. Applicable only for ICR registry type.
   registryAccountId: ""
