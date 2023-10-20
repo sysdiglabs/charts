@@ -1,5 +1,5 @@
 # What's Changed
 
-### Bug Fixes
-- **registry-scanner** [95340f9b](https://github.com/sysdiglabs/charts/commit/95340f9b730ce58de5e3ec18b190f0e97634c597): properly set vulnerability DB config ([#1417](https://github.com/sysdiglabs/charts/issues/1417))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-1.1.11...registry-scanner-1.1.12
+### Chores
+- **registry-scanner** [9f3aee7d](https://github.com/sysdiglabs/charts/commit/9f3aee7d85bd420fa61239b965d528be9a583aef): Update to v0.2.51 ([#1419](https://github.com/sysdiglabs/charts/issues/1419))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-1.1.12...registry-scanner-1.1.13
