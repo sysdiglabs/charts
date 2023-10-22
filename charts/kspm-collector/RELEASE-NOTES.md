@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **kspm-collector,node-analyzer** [660e610d](https://github.com/sysdiglabs/charts/commit/660e610d475cdac3b9d2c51da4af0a01abce31f6): add support for NATS_MAX_RECONNECT variable ([#1400](https://github.com/sysdiglabs/charts/issues/1400))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.8.3...kspm-collector-0.8.4
+### Chores
+- **kspm-collector,node-analyzer** [201126cf](https://github.com/sysdiglabs/charts/commit/201126cf8abb51996ee001665c17545210058ff9): KSPM v1.34.0 ([#1422](https://github.com/sysdiglabs/charts/issues/1422))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.8.4...kspm-collector-0.8.5
