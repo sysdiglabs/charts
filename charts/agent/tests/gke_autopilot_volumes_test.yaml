@@ -125,3 +125,14 @@ tests:
       # We are going to use this "workaround" until we found a proper solution
       - isNull:
           path: spec.template.spec.volumes[?(@.hostPath.path =~ /\/.*/ && @.hostPath.path != "/run" && @.hostPath.path != "/dev" && @.hostPath.path != "/proc" && @.hostPath.path != "/etc/os-release" && @.hostPath.path != "/boot" && @.hostPath.path != "/var/run/containerd/containerd.sock")]
+
+  - it: Ensure the SYSDIG_AGENT_DRIVER env var is not set
+    set:
+      gke:
+        autopilot:
+          enabled: true
+    asserts:
+      - isNull:
+          path: spec.template.spec.initContainer[0].env[?(@.name != "SYSDIG_BPF_PROBE")]
+      - isNull:
+          path: spec.template.spec.containers[0].env[?(@.name != "SYSDIG_BPF_PROBE" && @.name != "K8S_NODE")]
