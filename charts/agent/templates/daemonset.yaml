@@ -96,7 +96,7 @@ spec:
             - name: SYSDIG_BPF_PROBE
               value:
           {{- end }}
-          {{- if (include "agent.legacyEbpfEnforced" .) }}
+          {{- if and (include "agent.legacyEbpfEnforced" .) (not (include "agent.gke.autopilot" .)) }}
             - name: SYSDIG_AGENT_DRIVER
               value: legacy_ebpf
           {{- end }}
@@ -187,10 +187,10 @@ spec:
             - name: SYSDIG_BPF_PROBE
               value:
             {{- end }}
-            {{- if (include "agent.universalEbpfEnforced" .) }}
+            {{- if and (include "agent.universalEbpfEnforced" .) (not (include "agent.gke.autopilot" .)) }}
             - name: SYSDIG_AGENT_DRIVER
               value: universal_ebpf
-            {{- else if (include "agent.legacyEbpfEnforced" .) }}
+            {{- else if and (include "agent.legacyEbpfEnforced" .) (not (include "agent.gke.autopilot" .)) }}
             - name: SYSDIG_AGENT_DRIVER
               value: legacy_ebpf
             {{- end }}
