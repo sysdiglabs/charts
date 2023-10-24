@@ -59,7 +59,9 @@ Use the following command to deploy:
 
 ```
 helm upgrade --install registry-scanner \
-   --version=0.1.39 \
+   --namespace sysdig-agent \
+   --create-namespace \
+   {{ with .Chart.Version }}--version={{.}} {{ end }} \
    --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
    --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
    --set config.secureSkipTLS=true \
