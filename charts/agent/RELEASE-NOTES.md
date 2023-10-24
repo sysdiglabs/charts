@@ -1,5 +1,5 @@
 # What's Changed
 
-### Bug Fixes
-- **agent** [e2a99859](https://github.com/sysdiglabs/charts/commit/e2a99859f5737d2023bac322b6e97ab85a0988a3): do not render universal ebpf env vars in gke autopilot ([#1426](https://github.com/sysdiglabs/charts/issues/1426))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.14.0...agent-1.14.1
+### New Features
+- [629c5f06](https://github.com/sysdiglabs/charts/commit/629c5f06ccab168b9460ec1fa6564aed1a54c015): release agent 12.17.1 ([#1430](https://github.com/sysdiglabs/charts/issues/1430))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.14.1...agent-1.14.2
