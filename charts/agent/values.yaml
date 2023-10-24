@@ -51,7 +51,7 @@ image:
   overrideValue: null
   registry: quay.io
   repository: sysdig/agent
-  tag: 12.17.0
+  tag: 12.17.1
   # Specify a imagePullPolicy
   # Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
   # ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -169,10 +169,8 @@ priorityClassValue: 10
 ebpf:
   # Enable eBPF support for Sysdig Agent
   enabled: false
-
   # Define the kind of eBPF driver that will be used by the agent. Can be `legacy_ebpf` or `universal_ebpf`
   kind: legacy_ebpf
-
 slim:
   # Uses a slim version of the Sysdig Agent
   enabled: true
