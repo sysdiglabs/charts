@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.26.8
+### New Features
+* **agent** [8d368847](https://github.com/sysdiglabs/charts/commit/8d368847e664dd793022ebaf5092d323ba3b202a): change ClusterScanner instalation condition based on nodeAnalyzer.runtimeScanner ([#1427](https://github.com/sysdiglabs/charts/issues/1427))
 # v1.26.7
 ### Chores
 * **sysdig-deploy** [c5f77b38](https://github.com/sysdiglabs/charts/commit/c5f77b3803b692a24702081f858bace0f55da0ba): Automatic version bump due to updated dependencies ([#1431](https://github.com/sysdiglabs/charts/issues/1431))
