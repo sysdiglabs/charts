@@ -17,9 +17,7 @@ data:
   nats_max_reconnect: {{ .Values.nodeAnalyzer.natsMaxReconnect | default 0 | quote }}
   cluster_name: {{ required "A valid clusterName is required" (include "nodeAnalyzer.clusterName" .) }}
   agent_app_name: {{ include "nodeAnalyzer.name" . }}
-  {{- if hasKey .Values.nodeAnalyzer "sslVerifyCertificate" }}
-  nats_insecure: "{{ not .Values.nodeAnalyzer.sslVerifyCertificate }}"
-  {{- end }}
+  nats_insecure: {{ include "kspmAnalyzer.natsInsecure" . }}
   {{- if (.Values.nodeAnalyzer.kspmAnalyzer.httpProxy | default .Values.nodeAnalyzer.httpProxy | default .Values.global.proxy.httpProxy) }}
   http_proxy: {{ .Values.nodeAnalyzer.kspmAnalyzer.httpProxy | default .Values.nodeAnalyzer.httpProxy | default .Values.global.proxy.httpProxy }}
   {{- end -}}

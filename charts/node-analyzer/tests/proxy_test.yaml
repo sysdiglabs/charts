@@ -1,4 +1,4 @@
-suite: Node Analyzer PriorityClass tests
+suite: Node Analyzer Proxy tests
 templates:
   - templates/configmap-host-analyzer.yaml
   - templates/configmap-host-scanner.yaml

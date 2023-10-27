@@ -18,7 +18,6 @@ tests:
   - it: "Global SSL certificate validation disabled"
     set:
       clusterName: "test"
-      nodeAnalyzer.hostScanner.deploy: true
       global:
         kspm:
           deploy: true
