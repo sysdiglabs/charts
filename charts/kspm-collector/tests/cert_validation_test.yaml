@@ -1,0 +1,45 @@
+suite: KSPM Collector Skip certificate tests
+templates:
+  - templates/configmap.yaml
+tests:
+  - it: "SSL certificate validation enabled"
+    set:
+      clusterName: "test"
+      global:
+        kspm:
+          deploy: true
+    templates:
+      - templates/configmap.yaml
+    asserts:
+      - equal:
+          path: data.nats_insecure
+          value: "false"
+
+  - it: "Global SSL certificate validation disabled"
+    set:
+      clusterName: "test"
+      nodeAnalyzer.hostScanner.deploy: true
+      global:
+        kspm:
+          deploy: true
+        sslVerifyCertificate: false
+    templates:
+      - templates/configmap.yaml
+    asserts:
+      - equal:
+          path: data.nats_insecure
+          value: "true"
+
+  - it: "SSL certificate validation disabled"
+    set:
+      clusterName: "test"
+      global:
+        kspm:
+          deploy: true
+      sslVerifyCertificate: false
+    templates:
+      - templates/configmap.yaml
+    asserts:
+      - equal:
+          path: data.nats_insecure
+          value: "true"

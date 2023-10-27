@@ -1,0 +1,68 @@
+suite: KSPM Collector Proxy tests
+templates:
+  - templates/configmap.yaml
+tests:
+  - it: "No proxy configured"
+    set:
+      clusterName: "test"
+      global:
+        kspm:
+          deploy: true
+    templates:
+      - templates/configmap.yaml
+    asserts:
+      - notExists:
+          path: data.http_proxy
+      - notExists:
+          path: data.https_proxy
+      - notExists:
+          path: data.no_proxy
+
+  - it: "Global proxy settings are set"
+    set:
+      clusterName: "test"
+      global:
+        kspm:
+          deploy: true
+        proxy:
+          httpProxy: "http://squid.domain.local:3128"
+          httpsProxy: "http://squid.domain.local:3128"
+          noProxy: "100.64.0.0/10"
+    templates:
+      - templates/configmap.yaml
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - equal:
+          path: data.http_proxy
+          value: "http://squid.domain.local:3128"
+      - equal:
+          path: data.https_proxy
+          value: "http://squid.domain.local:3128"
+      - equal:
+          path: data.no_proxy
+          value: "100.64.0.0/10"
+
+  - it: "Proxy settings are set"
+    set:
+      clusterName: "test"
+      global:
+        kspm:
+          deploy: true
+      httpProxy: "http://squid.domain.local:3128"
+      httpsProxy: "http://squid.domain.local:3128"
+      noProxy: "100.64.0.0/10"
+    templates:
+      - templates/configmap.yaml
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - equal:
+          path: data.http_proxy
+          value: "http://squid.domain.local:3128"
+      - equal:
+          path: data.https_proxy
+          value: "http://squid.domain.local:3128"
+      - equal:
+          path: data.no_proxy
+          value: "100.64.0.0/10"
