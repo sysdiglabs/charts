@@ -1,0 +1,37 @@
+suite: Pod annotation test
+templates:
+  - deployment.yaml
+tests:
+  - it: check that the deployment do not have any custom annotation in the pod if not specified
+    set:
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+    asserts:
+    - isNull:
+        path: spec.template.metadata.annotations
+
+  - it: check that the deployment include the pod annotation
+    set:
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+      podAnnotations:
+        my-annotation: my-value
+    asserts:
+    - exists:
+        path: spec.template.metadata.annotations
+
+  - it: check that the deployment include the pod annotation match the value we specified
+    set:
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+      podAnnotations:
+        my-annotation-1: my-value-1
+        my-annotation-2: my-value-2
+    asserts:
+    - equal:
+        path: spec.template.metadata.annotations['my-annotation-1']
+        value: my-value-1
+
+    - equal:
+        path: spec.template.metadata.annotations['my-annotation-2']
+        value: my-value-2
