@@ -188,6 +188,11 @@ nodeAnalyzer:
       digest:
       pullPolicy:
 
+    # Proxy configuration variables
+    httpProxy:
+    httpsProxy:
+    noProxy:
+
     # The Docker socket path.
     # If a custom path is specified, ensure it is correctly mounted from the host inside the container.
     # dockerSocketPath: unix:///var/run/docker.sock
@@ -241,6 +246,11 @@ nodeAnalyzer:
       digest:
       pullPolicy:
 
+    # Proxy configuration variables
+    httpProxy:
+    httpsProxy:
+    noProxy:
+
     # The scanning schedule specification for the host analyzer expressed as a crontab string such as “5 4 * * *”.
     # The default value of @dailydefault instructs the analyzer to automatically pick a schedule that will start
     # shortly after it is deployed and will perform a scan every 24 hours.
@@ -272,6 +282,11 @@ nodeAnalyzer:
       digest:
       pullPolicy:
 
+    # Proxy configuration variables
+    httpProxy:
+    httpsProxy:
+    noProxy:
+
     resources:
       requests:
         cpu: 150m
@@ -292,6 +307,12 @@ nodeAnalyzer:
       tag: "1.6.3"
       digest:
       pullPolicy:
+
+    # Proxy configuration variables
+    httpProxy:
+    httpsProxy:
+    noProxy:
+
     storageClassName:
     extraMounts: []
     # example for bottlerocket
@@ -368,6 +389,11 @@ nodeAnalyzer:
       digest:
       pullPolicy:
 
+    # Proxy configuration variables
+    httpProxy:
+    httpsProxy:
+    noProxy:
+
     resources:
       requests:
         cpu: 150m
@@ -390,6 +416,11 @@ nodeAnalyzer:
       tag: 1.35.0
       digest:
       pullPolicy:
+
+    # Proxy configuration variables
+    httpProxy:
+    httpsProxy:
+    noProxy:
 
     resources:
       requests:
