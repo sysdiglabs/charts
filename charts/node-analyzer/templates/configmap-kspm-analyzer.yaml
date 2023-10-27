@@ -20,14 +20,14 @@ data:
   {{- if hasKey .Values.nodeAnalyzer "sslVerifyCertificate" }}
   nats_insecure: "{{ not .Values.nodeAnalyzer.sslVerifyCertificate }}"
   {{- end }}
-  {{- if (.Values.nodeAnalyzer.httpProxy | default .Values.global.proxy.httpProxy) }}
-  http_proxy: {{ .Values.nodeAnalyzer.httpProxy | default .Values.global.proxy.httpProxy }}
+  {{- if (.Values.nodeAnalyzer.kspmAnalyzer.httpProxy | default .Values.nodeAnalyzer.httpProxy | default .Values.global.proxy.httpProxy) }}
+  http_proxy: {{ .Values.nodeAnalyzer.kspmAnalyzer.httpProxy | default .Values.nodeAnalyzer.httpProxy | default .Values.global.proxy.httpProxy }}
   {{- end -}}
-  {{- if (.Values.nodeAnalyzer.httpsProxy | default .Values.global.proxy.httpsProxy) }}
-  https_proxy: {{ .Values.nodeAnalyzer.httpsProxy | default .Values.global.proxy.httpsProxy }}
+  {{- if (.Values.nodeAnalyzer.kspmAnalyzer.httpsProxy | default .Values.nodeAnalyzer.httpsProxy | default .Values.global.proxy.httpsProxy) }}
+  https_proxy: {{ .Values.nodeAnalyzer.kspmAnalyzer.httpsProxy | default .Values.nodeAnalyzer.httpsProxy | default .Values.global.proxy.httpsProxy }}
   {{- end -}}
-  {{- if (.Values.nodeAnalyzer.noProxy | default .Values.global.proxy.noProxy) }}
-  no_proxy: {{ .Values.nodeAnalyzer.noProxy | default .Values.global.proxy.noProxy }}
+  {{- if (.Values.nodeAnalyzer.kspmAnalyzer.noProxy | default .Values.nodeAnalyzer.noProxy | default .Values.global.proxy.noProxy) }}
+  no_proxy: {{ .Values.nodeAnalyzer.kspmAnalyzer.noProxy | default .Values.nodeAnalyzer.noProxy | default .Values.global.proxy.noProxy }}
   {{- end -}}
   {{- if .Values.nodeAnalyzer.kspmAnalyzer.port }}
   agent_port: {{ .Values.nodeAnalyzer.kspmAnalyzer.port | quote }}
