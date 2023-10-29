@@ -9,8 +9,8 @@ templates:
 tests:
   - it: "No proxy configured"
     set:
-      global: 
-        kspm: 
+      global:
+        kspm:
           deploy: true
       clusterName: "test"
       nodeAnalyzer:
@@ -45,7 +45,7 @@ tests:
           httpProxy: "http://squid.domain.local:3128"
           httpsProxy: "http://squid.domain.local:3128"
           noProxy: "100.64.0.0/10"
-        kspm: 
+        kspm:
           deploy: true
       nodeAnalyzer:
         hostAnalyzer:
@@ -80,7 +80,7 @@ tests:
     set:
       clusterName: "test"
       global:
-        kspm: 
+        kspm:
           deploy: true
       nodeAnalyzer:
         httpProxy: "http://squid.domain.local:3128"
@@ -118,8 +118,8 @@ tests:
 
   - it: "Proxy settings are set ONLY for host analyzer"
     set:
-      global: 
-        kspm: 
+      global:
+        kspm:
           deploy: true
       clusterName: "test"
       nodeAnalyzer:
@@ -162,7 +162,7 @@ tests:
       - notExists:
           path: data.no_proxy
         template: templates/configmap-host-scanner.yaml
-      
+
       - notExists:
           path: data.http_proxy
         template: templates/configmap-image-analyzer.yaml
@@ -205,8 +205,8 @@ tests:
 
   - it: "Proxy settings are set ONLY for image analyzer"
     set:
-      global: 
-        kspm: 
+      global:
+        kspm:
           deploy: true
       clusterName: "test"
       nodeAnalyzer:
@@ -249,7 +249,7 @@ tests:
       - notExists:
           path: data.no_proxy
         template: templates/configmap-host-scanner.yaml
-      
+
       - notExists:
           path: data.http_proxy
         template: templates/configmap-host-analyzer.yaml
@@ -292,8 +292,8 @@ tests:
 
   - it: "Proxy settings are set ONLY for kspm analyzer"
     set:
-      global: 
-        kspm: 
+      global:
+        kspm:
           deploy: true
       clusterName: "test"
       nodeAnalyzer:
@@ -337,7 +337,7 @@ tests:
       - notExists:
           path: data.no_proxy
         template: templates/configmap-host-scanner.yaml
-      
+
       - notExists:
           path: data.http_proxy
         template: templates/configmap-host-analyzer.yaml
@@ -380,8 +380,8 @@ tests:
 
   - it: "Proxy settings are set ONLY for benchmark runner"
     set:
-      global: 
-        kspm: 
+      global:
+        kspm:
           deploy: true
       clusterName: "test"
       nodeAnalyzer:
@@ -424,7 +424,7 @@ tests:
       - notExists:
           path: data.no_proxy
         template: templates/configmap-host-scanner.yaml
-      
+
       - notExists:
           path: data.http_proxy
         template: templates/configmap-host-analyzer.yaml
@@ -467,8 +467,8 @@ tests:
 
   - it: "Proxy settings are set ONLY for host scanner"
     set:
-      global: 
-        kspm: 
+      global:
+        kspm:
           deploy: true
       clusterName: "test"
       nodeAnalyzer:
@@ -511,7 +511,7 @@ tests:
       - notExists:
           path: data.no_proxy
         template: templates/configmap-benchmark-runner.yaml
-      
+
       - notExists:
           path: data.http_proxy
         template: templates/configmap-host-analyzer.yaml
@@ -554,8 +554,8 @@ tests:
 
   - it: "Proxy settings are set ONLY for runtime scanner"
     set:
-      global: 
-        kspm: 
+      global:
+        kspm:
           deploy: true
       clusterName: "test"
       nodeAnalyzer:
@@ -598,7 +598,7 @@ tests:
       - notExists:
           path: data.no_proxy
         template: templates/configmap-benchmark-runner.yaml
-      
+
       - notExists:
           path: data.http_proxy
         template: templates/configmap-host-analyzer.yaml
