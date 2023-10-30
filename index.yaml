@@ -11046,6 +11046,34 @@ entries:
   kspm-collector:
   - apiVersion: v2
     appVersion: 1.34.0
+    created: "2023-10-30T19:40:38.128362191Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      version: ~1.2.2
+    description: Sysdig KSPM collector
+    digest: f327a27b5d49a92e62138db81b69a7c3b8e78057079e785a1a6ac878fce72e00
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: chen.shmilovich@sysdig.com
+      name: chen-shmilovich-sysdig
+    name: kspm-collector
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/kspm-collector-0.9.0/kspm-collector-0.9.0.tgz
+    version: 0.9.0
+  - apiVersion: v2
+    appVersion: 1.34.0
     created: "2023-10-22T13:59:39.58971383Z"
     dependencies:
     - name: common
@@ -30104,6 +30132,62 @@ entries:
     version: 1.7.15
   sysdig-deploy:
   - apiVersion: v2
+    created: "2023-10-30T19:40:38.418137865Z"
+    dependencies:
+    - alias: admissionController
+      condition: admissionController.enabled
+      name: admission-controller
+      repository: file://../admission-controller
+      version: ~0.14.13
+    - alias: agent
+      condition: agent.enabled
+      name: agent
+      repository: file://../agent
+      version: ~1.14.2
+    - name: common
+      repository: file://../common
+      version: ~1.2.2
+    - alias: nodeAnalyzer
+      condition: nodeAnalyzer.enabled
+      name: node-analyzer
+      repository: file://../node-analyzer
+      version: ~1.17.13
+    - alias: clusterScanner
+      condition: clusterScanner.enabled
+      name: cluster-scanner
+      repository: file://../cluster-scanner
+      version: ~0.8.1
+    - alias: kspmCollector
+      condition: global.kspm.deploy
+      name: kspm-collector
+      repository: file://../kspm-collector
+      version: ~0.9.0
+    - alias: rapidResponse
+      condition: rapidResponse.enabled
+      name: rapid-response
+      repository: file://../rapid-response
+      version: ~0.8.3
+    description: A chart with various Sysdig components for Kubernetes
+    digest: c83572991f755401d8264627a8b7b58b6aae36c75f1f285c7abf420169375ed4
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    maintainers:
+    - email: alberto.barba@sysdig.com
+      name: AlbertoBarba
+    - email: adam.roberts@sysdig.com
+      name: aroberts87
+    - email: francesco.furlan@sysdig.com
+      name: francesco-furlan
+    - email: gerlando.falauto@sysdig.com
+      name: iurly
+    - email: marcovito.moscaritolo@sysdig.com
+      name: mavimo
+    name: sysdig-deploy
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/sysdig-deploy-1.27.0/sysdig-deploy-1.27.0.tgz
+    version: 1.27.0
+  - apiVersion: v2
     created: "2023-10-25T13:41:06.520395258Z"
     dependencies:
     - alias: admissionController
@@ -46299,4 +46383,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2023-10-27T15:05:17.912683535Z"
+generated: "2023-10-30T19:40:38.421742078Z"
