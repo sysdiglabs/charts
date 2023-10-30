@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **agent** [8d368847](https://github.com/sysdiglabs/charts/commit/8d368847e664dd793022ebaf5092d323ba3b202a): change ClusterScanner instalation condition based on nodeAnalyzer.runtimeScanner ([#1427](https://github.com/sysdiglabs/charts/issues/1427))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.26.7...sysdig-deploy-1.26.8
+### Chores
+- **sysdig-deploy** [56b4ee3f](https://github.com/sysdiglabs/charts/commit/56b4ee3fb111f7354c3f8b5e7ef42416bd996e63): Automatic version bump due to updated dependencies ([#1434](https://github.com/sysdiglabs/charts/issues/1434))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.26.8...sysdig-deploy-1.27.0
