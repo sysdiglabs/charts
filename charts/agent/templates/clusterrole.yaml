@@ -27,7 +27,7 @@ rules:
       - list
       - watch
   - apiGroups:
-    - ""
+      - ""
     resources:
       - events
     verbs:
