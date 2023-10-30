@@ -69,3 +69,16 @@ tests:
               - RELEASE-NAME-agent
             verbs:
               - "use"
+
+  - it: Test Events can be created in kubernetes
+    asserts:
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - "events"
+            verbs:
+              - "create"
+              - "patch"
