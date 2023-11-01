@@ -1,0 +1,104 @@
+suite: Test enabling the agent local forwarder
+templates:
+  - configmap.yaml
+  - configmap-local-forwarder.yaml
+  - daemonset.yaml
+tests:
+  - it: Check the enabling the forwarder
+    set:
+      localForwarder:
+        enabled: true
+        integrations:
+          - channels:
+              - SECURE_EVENTS_POLICIES
+              - ACTIVITY_AUDIT
+            configuration:
+              output: stdout
+            type: LOCAL
+    asserts:
+      - equal:
+          path: data["local_forwarder_config.yaml"]
+          value: |
+            integrations:
+              - channels:
+                - SECURE_EVENTS_POLICIES
+                - ACTIVITY_AUDIT
+                configuration:
+                  output: stdout
+                type: LOCAL
+        template: configmap-local-forwarder.yaml
+      - matchRegex:
+          path: data["dragent.yaml"]
+          pattern: |
+            local_forwarder:
+              enabled: true
+              transmit_message_types:
+                - POLICY_EVENTS
+                - SECURE_AUDIT
+        template: configmap.yaml
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: local-forwarder-config
+            configMap:
+              name: sysdig-agent-local-forwarder
+              optional: true
+        template: daemonset.yaml
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            mountPath: /opt/draios/etc/local_forwarder_config.yaml
+            subPath: local_forwarder_config.yaml
+            name: local-forwarder-config
+        template: daemonset.yaml
+  - it: Ensure items are absent if local forwarder is disabled
+    set:
+      localForwarder:
+        enabled: false
+    asserts:
+      - notMatchRegex:
+          path: data["dragent.yaml"]
+          pattern: |
+            local_forwarder:
+              enabled: true
+              transmit_message_types:
+                - POLICY_EVENTS
+                - SECURE_AUDIT
+        template: configmap.yaml
+      - notContains:
+          path: spec.template.spec.volumes
+          content:
+            name: local-forwarder-config
+            configMap:
+              name: sysdig-agent-local-forwarder
+              optional: true
+        template: daemonset.yaml
+      - notContains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            mountPath: /opt/draios/etc/local_forwarder_config.yaml
+            subPath: local_forwarder_config.yaml
+            name: local-forwarder-config
+        template: daemonset.yaml
+  - it: Customize the forwarded message types
+    set:
+      localForwarder:
+        enabled: true
+        transmitMessageTypes:
+          - POLICY_EVENTS
+        integrations:
+          - channels:
+              - SECURE_EVENTS_POLICIES
+              - ACTIVITY_AUDIT
+            configuration:
+              output: stdout
+            type: LOCAL
+    asserts:
+      - matchRegex:
+          path: data["dragent.yaml"]
+          pattern: |
+            local_forwarder:
+              enabled: true
+              transmit_message_types:
+                - POLICY_EVENTS
+        template: configmap.yaml

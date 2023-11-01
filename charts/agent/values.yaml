@@ -280,6 +280,12 @@ tolerations:
     value: "true"
 leaderelection:
   enable: false
+localForwarder:
+  enabled: false
+  transmitMessageTypes:
+    - POLICY_EVENTS
+    - SECURE_AUDIT
+  integrations: []
 delegatedAgentDeployment:
   # Enable a specialized installation where an Agent Deployment is installed
   # in addition to the traditional DaemonSet. The DaemonSet Agents will not
