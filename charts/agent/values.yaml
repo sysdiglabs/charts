@@ -145,9 +145,10 @@ daemonset:
   annotations: {}
   # Allow the DaemonSet to set labels
   labels: {}
-  # Liveness and readiness probes initial delay (in seconds)
+  # readiness probe delays
   probes:
     initialDelay: 90
+    periodDelay: 3
   kmodule:
     env: {}
 # If is behind a proxy you can set the proxy server
@@ -305,6 +306,10 @@ delegatedAgentDeployment:
     os:
       - linux
     labels: {}
+    # readiness probes delays
+    probes:
+      initialDelay: 90
+      periodDelay: 3
     progressDeadlineSeconds: 600
     replicas: 1
     resources:

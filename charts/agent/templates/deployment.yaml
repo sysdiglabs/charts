@@ -103,9 +103,16 @@ spec:
             value: /opt/draios/etc/ca-certs/{{- include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.ssl) -}}
           {{- end }}
           readinessProbe:
+            {{- if ge (semver "12.18.0" | (semver .Values.image.tag).Compare) 0 }}
+            httpGet:
+              path: /healthz
+              port: 24483
+            {{- else }}
             exec:
               command: [ "test", "-e", "/opt/draios/logs/running" ]
-            failureThreshold: 3
+            {{- end }}
+            initialDelaySeconds: {{ .Values.delegatedAgentDeployment.deployment.probes.initialDelay }}
+            periodSeconds: {{ .Values.delegatedAgentDeployment.deployment.probes.periodDelay }}
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
           volumeMounts:
