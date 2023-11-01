@@ -38,7 +38,7 @@ jobs:
           git clean -df .
 
       - name: Set up chart-testing
-        uses: helm/chart-testing-action@v2.4.0
+        uses: helm/chart-testing-action@v2.6.0
 
       - name: Expand templates for CI
         run: |
@@ -113,7 +113,7 @@ jobs:
           git clean -df .
 
       - name: Set up chart-testing
-        uses: helm/chart-testing-action@v2.4.0
+        uses: helm/chart-testing-action@v2.6.0
 
       - name: Expand templates for CI
         run: |
