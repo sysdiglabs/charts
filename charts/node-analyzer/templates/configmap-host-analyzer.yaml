@@ -13,9 +13,7 @@ data:
   {{- if .Values.nodeAnalyzer.collectorTimeout }}
   collector_timeout: {{ .Values.nodeAnalyzer.collectorTimeout }}
   {{- end }}
-  {{- if hasKey .Values.nodeAnalyzer "sslVerifyCertificate" }}
-  ssl_verify_certificate: "{{ .Values.nodeAnalyzer.sslVerifyCertificate }}"
-  {{- end }}
+  ssl_verify_certificate: {{ include "hostAnalyzer.sslVerifyCertificate" . }}
   debug: "{{ .Values.nodeAnalyzer.debug | default false }}"
   {{- if .Values.nodeAnalyzer.hostAnalyzer.schedule }}
   schedule: {{ .Values.nodeAnalyzer.hostAnalyzer.schedule | quote }}

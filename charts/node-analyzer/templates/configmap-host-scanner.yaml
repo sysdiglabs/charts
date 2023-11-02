@@ -23,9 +23,7 @@ data:
   {{- if .Values.nodeAnalyzer.hostScanner.additionalDirsToScan }}
   additional_dirs_to_scan: {{ .Values.nodeAnalyzer.hostScanner.additionalDirsToScan }}
   {{- end }}
-  {{- if hasKey .Values.nodeAnalyzer "sslVerifyCertificate" }}
-  ssl_verify_certificate: "{{ .Values.nodeAnalyzer.sslVerifyCertificate }}"
-  {{- end }}
+  ssl_verify_certificate: {{ include "hostScanner.sslVerifyCertificate" . }}
   {{- if (.Values.nodeAnalyzer.hostScanner.debug | default .Values.nodeAnalyzer.debug) }}
   debug: "{{ .Values.nodeAnalyzer.hostScanner.debug | default .Values.nodeAnalyzer.debug }}"
   {{- end }}

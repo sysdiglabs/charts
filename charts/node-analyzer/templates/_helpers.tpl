@@ -114,6 +114,61 @@ Return the proper image name for the CSPM Analyzer
 {{- end -}}
 
 {{/*
+ Helper to define skip of SSL Certificate for Runtime Scanner and Eve Connector
+*/}}
+{{- define "runtimeScanner.sslVerifyCertificate" -}}
+{{- if or (eq .Values.nodeAnalyzer.runtimeScanner.sslVerifyCertificate false) (eq .Values.nodeAnalyzer.sslVerifyCertificate false) (eq .Values.global.sslVerifyCertificate false) -}}
+    "false"
+{{- else -}}
+    "true"
+{{- end -}}
+{{- end -}}
+
+{{/*
+ Helper to define skip of SSL Certificate for Host Scanner
+*/}}
+{{- define "hostScanner.sslVerifyCertificate" -}}
+{{- if or (eq .Values.nodeAnalyzer.hostScanner.sslVerifyCertificate false) (eq .Values.nodeAnalyzer.sslVerifyCertificate false) (eq .Values.global.sslVerifyCertificate false) -}}
+    "false"
+{{- else -}}
+    "true"
+{{- end -}}
+{{- end -}}
+
+{{/*
+ Helper to define skip of SSL Certificate for Host Analyzer
+*/}}
+{{- define "hostAnalyzer.sslVerifyCertificate" -}}
+{{- if or (eq .Values.nodeAnalyzer.hostAnalyzer.sslVerifyCertificate false) (eq .Values.nodeAnalyzer.sslVerifyCertificate false) (eq .Values.global.sslVerifyCertificate false) -}}
+    "false"
+{{- else -}}
+    "true"
+{{- end -}}
+{{- end -}}
+
+{{/*
+ Helper to define skip of SSL Certificate for Image Analyzer
+*/}}
+{{- define "imageAnalyzer.sslVerifyCertificate" -}}
+{{- if or (eq .Values.nodeAnalyzer.imageAnalyzer.sslVerifyCertificate false) (eq .Values.nodeAnalyzer.sslVerifyCertificate false) (eq .Values.global.sslVerifyCertificate false) -}}
+    "false"
+{{- else -}}
+    "true"
+{{- end -}}
+{{- end -}}
+
+{{/*
+ Helper to define skip of SSL Certificate for Benchmark Runner
+*/}}
+{{- define "benchmarkRunner.sslVerifyCertificate" -}}
+{{- if or (eq .Values.nodeAnalyzer.benchmarkRunner.sslVerifyCertificate false) (eq .Values.nodeAnalyzer.sslVerifyCertificate false) (eq .Values.global.sslVerifyCertificate false) -}}
+    "false"
+{{- else -}}
+    "true"
+{{- end -}}
+{{- end -}}
+
+{{/*
  Helper to define if to enable nats_insecure
 */}}
 {{- define "kspmAnalyzer.natsInsecure" -}}

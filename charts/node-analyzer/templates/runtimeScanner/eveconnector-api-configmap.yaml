@@ -8,9 +8,7 @@ metadata:
 data:
   api_endpoint: https://{{ include "nodeAnalyzer.apiEndpoint" . }}
   cluster_name: {{ required "A valid clusterName is required" (include "nodeAnalyzer.clusterName" . ) }}
-  {{- if hasKey .Values.nodeAnalyzer "sslVerifyCertificate" }}
-  ssl_verify_certificate: "{{ .Values.nodeAnalyzer.sslVerifyCertificate }}"
-  {{- end }}
+  ssl_verify_certificate: {{ include "runtimeScanner.sslVerifyCertificate" . }}
   {{- if hasKey .Values.nodeAnalyzer.runtimeScanner "eveConnector" }}
   cert_dns_name: {{ include "eveconnector.host" . | quote }}
   {{- end }}
