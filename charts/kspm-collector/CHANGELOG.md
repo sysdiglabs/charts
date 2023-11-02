@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.9.1
+### New Features
+* **node-analyzer,kspm-collector,sysdig-deploy** [f6f68ff0](https://github.com/sysdiglabs/charts/commit/f6f68ff0cd31693aaf26e0f3de53bb70a42182ad): allow custom proxy for individual containers in node analyzer ([#1432](https://github.com/sysdiglabs/charts/issues/1432))
 # v0.8.5
 ### Chores
 * **kspm-collector,node-analyzer** [201126cf](https://github.com/sysdiglabs/charts/commit/201126cf8abb51996ee001665c17545210058ff9): KSPM v1.34.0 ([#1422](https://github.com/sysdiglabs/charts/issues/1422))
