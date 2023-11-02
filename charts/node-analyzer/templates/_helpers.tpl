@@ -114,6 +114,19 @@ Return the proper image name for the CSPM Analyzer
 {{- end -}}
 
 {{/*
+ Helper to define if to enable nats_insecure
+*/}}
+{{- define "kspmAnalyzer.natsInsecure" -}}
+{{- if (.Values.nodeAnalyzer.kspmAnalyzer.sslVerifyCertificate | default .Values.nodeAnalyzer.sslVerifyCertificate | default .Values.global.sslVerifyCertificate) -}}
+    "false"
+{{- else if or (eq .Values.nodeAnalyzer.kspmAnalyzer.sslVerifyCertificate false) (eq .Values.nodeAnalyzer.sslVerifyCertificate false) (eq .Values.global.sslVerifyCertificate false) -}}
+    "true"
+{{- else -}}
+    "false"
+{{- end -}}
+{{- end -}}
+
+{{/*
 Node Analyzer labels
 */}}
 {{- define "nodeAnalyzer.labels" -}}

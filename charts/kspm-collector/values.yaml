@@ -172,6 +172,8 @@ affinity: {}
 
 labels: {}
 
+podAnnotations: {}
+
 ssl:
   ca:
     # For outbound connections (secure backend, proxy,...)
