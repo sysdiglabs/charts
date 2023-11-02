@@ -28,7 +28,7 @@ jobs:
 
       - name: Install YQ
         if: steps.dependent_files.outputs.any_changed == 'true'
-        uses: dcarbone/install-yq-action@v1.1.0
+        uses: dcarbone/install-yq-action@v1.1.1
 
       - name: run the script
         if: steps.dependent_files.outputs.any_changed == 'true'
