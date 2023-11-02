@@ -9,7 +9,7 @@ metadata:
 {{ include "nodeAnalyzer.labels" . | indent 4 }}
 data:
 {{- $env := "PRODUCTION" -}}
-{{ if .Values.nodeAnalyzer.kspmAnalyzer.debug }}
+{{ if (.Values.nodeAnalyzer.kspmAnalyzer.debug | default .Values.nodeAnalyzer.debug) }}
   {{- $env = "DEVELOPMENT" -}}
 {{ end}}
   environment: {{ $env }}
