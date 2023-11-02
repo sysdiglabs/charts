@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.18.2
+### Bug Fixes
+* **agent,kspm-collector,node-analyzer,sysdig** [f378d192](https://github.com/sysdiglabs/charts/commit/f378d1922d0f21f5936c6ed872e6538536ccf1f2): whitespace errors ([#1436](https://github.com/sysdiglabs/charts/issues/1436))
 # v1.18.1
 ### New Features
 * **node-analyzer** [efa8afe4](https://github.com/sysdiglabs/charts/commit/efa8afe4483629350de8647277c6778896aafd09): Enable debug flag per single VM component(new engine only) and KSPM ([#1401](https://github.com/sysdiglabs/charts/issues/1401))

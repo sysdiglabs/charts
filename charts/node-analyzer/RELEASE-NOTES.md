@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **node-analyzer** [efa8afe4](https://github.com/sysdiglabs/charts/commit/efa8afe4483629350de8647277c6778896aafd09): Enable debug flag per single VM component(new engine only) and KSPM ([#1401](https://github.com/sysdiglabs/charts/issues/1401))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.18.0...node-analyzer-1.18.1
+### Bug Fixes
+- **agent,kspm-collector,node-analyzer,sysdig** [f378d192](https://github.com/sysdiglabs/charts/commit/f378d1922d0f21f5936c6ed872e6538536ccf1f2): whitespace errors ([#1436](https://github.com/sysdiglabs/charts/issues/1436))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.18.1...node-analyzer-1.18.2
