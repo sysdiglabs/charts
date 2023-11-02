@@ -29,14 +29,14 @@ data:
   {{- if .Values.nodeAnalyzer.hostAnalyzer.maxSendAttempts }}
   max_send_attempts: {{ .Values.nodeAnalyzer.hostAnalyzer.maxSendAttempts }}
   {{- end }}
-  {{- if (.Values.nodeAnalyzer.httpProxy | default .Values.global.proxy.httpProxy) }}
-  http_proxy: {{ .Values.nodeAnalyzer.httpProxy | default .Values.global.proxy.httpProxy }}
+  {{- if (.Values.nodeAnalyzer.hostAnalyzer.httpProxy | default .Values.nodeAnalyzer.httpProxy | default .Values.global.proxy.httpProxy) }}
+  http_proxy: {{ .Values.nodeAnalyzer.hostAnalyzer.httpProxy | default .Values.nodeAnalyzer.httpProxy | default .Values.global.proxy.httpProxy }}
   {{- end -}}
-  {{- if (.Values.nodeAnalyzer.httpsProxy | default .Values.global.proxy.httpsProxy) }}
-  https_proxy: {{ .Values.nodeAnalyzer.httpsProxy | default .Values.global.proxy.httpsProxy }}
+  {{- if (.Values.nodeAnalyzer.hostAnalyzer.httpsProxy | default .Values.nodeAnalyzer.httpsProxy | default .Values.global.proxy.httpsProxy) }}
+  https_proxy: {{ .Values.nodeAnalyzer.hostAnalyzer.httpsProxy | default .Values.nodeAnalyzer.httpsProxy | default .Values.global.proxy.httpsProxy }}
   {{- end -}}
-  {{- if (.Values.nodeAnalyzer.noProxy | default .Values.global.proxy.noProxy) }}
-  no_proxy: {{ .Values.nodeAnalyzer.noProxy | default .Values.global.proxy.noProxy }}
+  {{- if (.Values.nodeAnalyzer.hostAnalyzer.noProxy | default .Values.nodeAnalyzer.noProxy | default .Values.global.proxy.noProxy) }}
+  no_proxy: {{ .Values.nodeAnalyzer.hostAnalyzer.noProxy | default .Values.nodeAnalyzer.noProxy | default .Values.global.proxy.noProxy }}
   {{- end -}}
 {{- end }}
 {{- end }}

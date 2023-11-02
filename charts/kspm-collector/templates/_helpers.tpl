@@ -132,12 +132,12 @@ Sysdig NATS service URL
  Helper to define if to enable nats_insecure
 */}}
 {{- define "kspmCollector.natsInsecure" -}}
-{{- if and (hasKey .Values "sslVerifyCertificate") ( .Values.sslVerifyCertificate ) -}}
+{{- if (.Values.sslVerifyCertificate | default .Values.global.sslVerifyCertificate) -}}
     "false"
-{{- else if and (hasKey .Values.global "sslVerifyCertificate") ( .Values.global.sslVerifyCertificate ) -}}
-    "false"
-{{- else -}}
+{{- else if or (eq .Values.sslVerifyCertificate false) (eq .Values.global.sslVerifyCertificate false) -}}
     "true"
+{{- else -}}
+    "false"
 {{- end -}}
 {{- end -}}
 
