@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.9.2
+### Bug Fixes
+* **agent,kspm-collector,node-analyzer,sysdig** [f378d192](https://github.com/sysdiglabs/charts/commit/f378d1922d0f21f5936c6ed872e6538536ccf1f2): whitespace errors ([#1436](https://github.com/sysdiglabs/charts/issues/1436))
 # v0.9.1
 ### New Features
 * **node-analyzer,kspm-collector,sysdig-deploy** [f6f68ff0](https://github.com/sysdiglabs/charts/commit/f6f68ff0cd31693aaf26e0f3de53bb70a42182ad): allow custom proxy for individual containers in node analyzer ([#1432](https://github.com/sysdiglabs/charts/issues/1432))
