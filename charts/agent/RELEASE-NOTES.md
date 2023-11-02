@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **sysdig-deploy** [f3fe1283](https://github.com/sysdiglabs/charts/commit/f3fe12830eac8fff05c556ef970313615c7fafb5): Automatic version bump due to updated dependencies ([#1435](https://github.com/sysdiglabs/charts/issues/1435))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.14.2...agent-1.15.1
+### Bug Fixes
+- **agent,kspm-collector,node-analyzer,sysdig** [f378d192](https://github.com/sysdiglabs/charts/commit/f378d1922d0f21f5936c6ed872e6538536ccf1f2): whitespace errors ([#1436](https://github.com/sysdiglabs/charts/issues/1436))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.15.1...agent-1.15.2
