@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.18.0
+### New Features
+* **node-analyzer,kspm-collector,sysdig-deploy** [f6f68ff0](https://github.com/sysdiglabs/charts/commit/f6f68ff0cd31693aaf26e0f3de53bb70a42182ad): allow custom proxy for individual containers in node analyzer ([#1432](https://github.com/sysdiglabs/charts/issues/1432))
 # v1.17.13
 ### Chores
 * **sysdig, node-analyzer** [2c6d3d0b](https://github.com/sysdiglabs/charts/commit/2c6d3d0bd9d1750d6f34c0bd7b3e2689482515b6): bump sysdig/vuln-runtime-scanner to v1.6.3 ([#1428](https://github.com/sysdiglabs/charts/issues/1428))
