@@ -117,55 +117,40 @@ Return the proper image name for the CSPM Analyzer
  Helper to define skip of SSL Certificate for Runtime Scanner and Eve Connector
 */}}
 {{- define "runtimeScanner.sslVerifyCertificate" -}}
-{{- if or (eq .Values.nodeAnalyzer.runtimeScanner.sslVerifyCertificate false) (eq .Values.nodeAnalyzer.sslVerifyCertificate false) (eq .Values.global.sslVerifyCertificate false) -}}
-    "false"
-{{- else -}}
-    "true"
-{{- end -}}
+{{- $sslVerifyCertificate := coalesce (.Values.nodeAnalyzer.runtimeScanner.sslVerifyCertificate | quote) (.Values.nodeAnalyzer.sslVerifyCertificate | quote) (.Values.global.sslVerifyCertificate | quote) ("true" | quote) -}}
+{{ $sslVerifyCertificate }}
 {{- end -}}
 
 {{/*
  Helper to define skip of SSL Certificate for Host Scanner
 */}}
 {{- define "hostScanner.sslVerifyCertificate" -}}
-{{- if or (eq .Values.nodeAnalyzer.hostScanner.sslVerifyCertificate false) (eq .Values.nodeAnalyzer.sslVerifyCertificate false) (eq .Values.global.sslVerifyCertificate false) -}}
-    "false"
-{{- else -}}
-    "true"
-{{- end -}}
+{{- $sslVerifyCertificate := coalesce (.Values.nodeAnalyzer.hostScanner.sslVerifyCertificate | quote) (.Values.nodeAnalyzer.sslVerifyCertificate | quote) (.Values.global.sslVerifyCertificate | quote) ("true" | quote) -}}
+{{ $sslVerifyCertificate }}
 {{- end -}}
 
 {{/*
  Helper to define skip of SSL Certificate for Host Analyzer
 */}}
 {{- define "hostAnalyzer.sslVerifyCertificate" -}}
-{{- if or (eq .Values.nodeAnalyzer.hostAnalyzer.sslVerifyCertificate false) (eq .Values.nodeAnalyzer.sslVerifyCertificate false) (eq .Values.global.sslVerifyCertificate false) -}}
-    "false"
-{{- else -}}
-    "true"
-{{- end -}}
+{{- $sslVerifyCertificate := coalesce (.Values.nodeAnalyzer.hostAnalyzer.sslVerifyCertificate | quote) (.Values.nodeAnalyzer.sslVerifyCertificate | quote) (.Values.global.sslVerifyCertificate | quote) ("true" | quote) -}}
+{{ $sslVerifyCertificate }}
 {{- end -}}
 
 {{/*
  Helper to define skip of SSL Certificate for Image Analyzer
 */}}
 {{- define "imageAnalyzer.sslVerifyCertificate" -}}
-{{- if or (eq .Values.nodeAnalyzer.imageAnalyzer.sslVerifyCertificate false) (eq .Values.nodeAnalyzer.sslVerifyCertificate false) (eq .Values.global.sslVerifyCertificate false) -}}
-    "false"
-{{- else -}}
-    "true"
-{{- end -}}
+{{- $sslVerifyCertificate := coalesce (.Values.nodeAnalyzer.imageAnalyzer.sslVerifyCertificate | quote) (.Values.nodeAnalyzer.sslVerifyCertificate | quote) (.Values.global.sslVerifyCertificate | quote) ("true" | quote) -}}
+{{ $sslVerifyCertificate }}
 {{- end -}}
 
 {{/*
  Helper to define skip of SSL Certificate for Benchmark Runner
 */}}
 {{- define "benchmarkRunner.sslVerifyCertificate" -}}
-{{- if or (eq .Values.nodeAnalyzer.benchmarkRunner.sslVerifyCertificate false) (eq .Values.nodeAnalyzer.sslVerifyCertificate false) (eq .Values.global.sslVerifyCertificate false) -}}
-    "false"
-{{- else -}}
-    "true"
-{{- end -}}
+{{- $sslVerifyCertificate := coalesce (.Values.nodeAnalyzer.benchmarkRunner.sslVerifyCertificate | quote) (.Values.nodeAnalyzer.sslVerifyCertificate | quote) (.Values.global.sslVerifyCertificate | quote) ("true" | quote) -}}
+{{ $sslVerifyCertificate }}
 {{- end -}}
 
 {{/*
