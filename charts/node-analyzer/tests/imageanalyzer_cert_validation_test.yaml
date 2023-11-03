@@ -2,9 +2,23 @@ suite: Image Analyzer Skip certificate tests
 templates:
   - templates/configmap-image-analyzer.yaml
 tests:
-  - it: "SSL certificate validation enabled"
+  - it: "Global SSL certificate validation enabled (default value)"
     set:
       clusterName: "test"
+      nodeAnalyzer:
+        deploy: true
+    templates:
+      - templates/configmap-image-analyzer.yaml
+    asserts:
+      - equal:
+          path: data.ssl_verify_certificate
+          value: "true"
+
+  - it: "Global SSL certificate validation enabled (sslVerifyCertificate: true explicitly set)"
+    set:
+      clusterName: "test"
+      global:
+        sslVerifyCertificate: true
       nodeAnalyzer:
         deploy: true
     templates:
@@ -28,6 +42,19 @@ tests:
           path: data.ssl_verify_certificate
           value: "false"
 
+  - it: "SSL certificate validation enabled (sslVerifyCertificate: true explicitly set) [Node Analyzer POD]"
+    set:
+      clusterName: "test"
+      nodeAnalyzer:
+        deploy: true
+        sslVerifyCertificate: true
+    templates:
+      - templates/configmap-image-analyzer.yaml
+    asserts:
+      - equal:
+          path: data.ssl_verify_certificate
+          value: "true"
+
   - it: "SSL certificate validation disabled [Node Analyzer POD]"
     set:
       clusterName: "test"
@@ -41,11 +68,75 @@ tests:
           path: data.ssl_verify_certificate
           value: "false"
 
-  - it: "SSL certificate validation disabled [Node Analyzer container]"
+  - it: "SSL certificate validation enabled (sslVerifyCertificate: true explicitly set) [imageAnalyzer container]"
     set:
       clusterName: "test"
       nodeAnalyzer:
         deploy: true
+        imageAnalyzer:
+          sslVerifyCertificate: true
+    templates:
+      - templates/configmap-image-analyzer.yaml
+    asserts:
+      - equal:
+          path: data.ssl_verify_certificate
+          value: "true"
+
+  - it: "SSL certificate validation disabled [imageAnalyzer container]"
+    set:
+      clusterName: "test"
+      nodeAnalyzer:
+        deploy: true
+        imageAnalyzer:
+          sslVerifyCertificate: false
+    templates:
+      - templates/configmap-image-analyzer.yaml
+    asserts:
+      - equal:
+          path: data.ssl_verify_certificate
+          value: "false"
+
+  - it: "SSL certificate validation disabled [Global + Node Analyzer POD]"
+    set:
+      global:
+        sslVerifyCertificate: false
+      clusterName: "test"
+      nodeAnalyzer:
+        deploy: true
+        sslVerifyCertificate: false
+        imageAnalyzer:
+          deploy: true
+    templates:
+      - templates/configmap-image-analyzer.yaml
+    asserts:
+      - equal:
+          path: data.ssl_verify_certificate
+          value: "false"
+
+  - it: "SSL certificate validation disabled [Node Analyzer POD + Container]"
+    set:
+      clusterName: "test"
+      nodeAnalyzer:
+        deploy: true
+        sslVerifyCertificate: false
+        imageAnalyzer:
+          deploy: true
+          sslVerifyCertificate: false
+    templates:
+      - templates/configmap-image-analyzer.yaml
+    asserts:
+      - equal:
+          path: data.ssl_verify_certificate
+          value: "false"
+
+  - it: "SSL certificate validation disabled [Global + Node Analyzer POD + Container]"
+    set:
+      global:
+        sslVerifyCertificate: false
+      clusterName: "test"
+      nodeAnalyzer:
+        deploy: true
+        sslVerifyCertificate: false
         imageAnalyzer:
           sslVerifyCertificate: false
     templates:
