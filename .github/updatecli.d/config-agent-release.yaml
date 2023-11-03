@@ -54,23 +54,3 @@ targets:
       file: Chart.yaml
       key: "$.appVersion"
       versionincrement: patch
-
-  updateSysdigChartValues:
-    name: "update agent tag in sysdig chart"
-    kind: yaml
-    scmid: github
-    spec:
-      file: "charts/sysdig/values.yaml"
-      key: "$.image.tag"
-
-  bumpSysdigChart:
-    name: "bump the chart version of the sysdig chart"
-    kind: helmchart
-    scmid: github
-    dependson:
-      - updateSysdigChartValues
-    spec:
-      name: "charts/sysdig/"
-      file: Chart.yaml
-      key: "$.appVersion"
-      versionincrement: patch
