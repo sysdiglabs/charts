@@ -224,3 +224,6 @@ scanOnStart:
 extraEnvVars: []
 #  - name: FOO
 #    value: bar
+
+# Write memory profile dumps to Persistent Volume Claim (provide PVC name)
+memProfileToPersistentVolumeClaim: ""
