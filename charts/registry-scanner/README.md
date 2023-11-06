@@ -115,6 +115,7 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | scanOnStart.jobName                              | The name of the job created for the post-install scanner job                                                                                                                                                                               | <code>"registry-scanner-start-test"</code>   |
 | scanOnStart.asPostInstallHook                    | Specify whether to launch the job as a post-install helm hook. <br/>Used for testing purpose.                                                                                                                                              | <code>false</code>                           |
 | extraEnvVars                                     | The additional environment variables to be set.                                                                                                                                                                                            | <code>[]</code>                              |
+| memProfileToPersistentVolumeClaim                | Write memory profile dumps to Persistent Volume Claim (provide PVC name)                                                                                                                                                                   | <code>""</code>                              |
 
 ## On-Prem Deployment
 
@@ -126,7 +127,7 @@ Use the following command to deploy:
 helm upgrade --install registry-scanner \
    --namespace sysdig-agent \
    --create-namespace \
-   --version=1.1.16  \
+   --version=1.1.17  \
    --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
    --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
    --set config.secureSkipTLS=true \
