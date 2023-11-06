@@ -129,7 +129,7 @@ jobs:
         run: make deps
 
       - name: Run Chart Releaser
-        uses: helm/chart-releaser-action@v1.5.0
+        uses: helm/chart-releaser-action@v1.6.0
         with:
           config: cr.yaml
         env:
