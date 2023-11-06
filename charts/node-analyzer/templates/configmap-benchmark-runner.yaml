@@ -9,9 +9,7 @@ metadata:
 {{ include "nodeAnalyzer.labels" . | indent 4 }}
 data:
   collector_endpoint: "https://{{ include "nodeAnalyzer.apiEndpoint" . }}"
-  {{- if hasKey .Values.nodeAnalyzer "sslVerifyCertificate" }}
-  ssl_verify_certificate: "{{ .Values.nodeAnalyzer.sslVerifyCertificate }}"
-  {{- end }}
+  ssl_verify_certificate: {{ include "benchmarkRunner.sslVerifyCertificate" . }}
   debug: "{{ .Values.nodeAnalyzer.debug | default false }}"
   {{- if (.Values.nodeAnalyzer.benchmarkRunner.httpProxy | default .Values.nodeAnalyzer.httpProxy | default .Values.global.proxy.httpProxy) }}
   http_proxy: {{ .Values.nodeAnalyzer.benchmarkRunner.httpProxy | default .Values.nodeAnalyzer.httpProxy | default .Values.global.proxy.httpProxy }}
