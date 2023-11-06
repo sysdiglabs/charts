@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.18.3
+### Bug Fixes
+* **node-analyzer,sysdig-deploy** [5ea89862](https://github.com/sysdiglabs/charts/commit/5ea898622331b94947c0982261ca8d07971f48cf): Ability to disable sslVerifyCertificate per container on node-analyzer ([#1445](https://github.com/sysdiglabs/charts/issues/1445))
 # v1.18.2
 ### Bug Fixes
 * **agent,kspm-collector,node-analyzer,sysdig** [f378d192](https://github.com/sysdiglabs/charts/commit/f378d1922d0f21f5936c6ed872e6538536ccf1f2): whitespace errors ([#1436](https://github.com/sysdiglabs/charts/issues/1436))
