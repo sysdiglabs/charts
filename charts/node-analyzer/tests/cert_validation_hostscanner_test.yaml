@@ -1,20 +1,16 @@
-suite: Runtime Scanner Skip certificate tests
+suite: Host Scanner Skip certificate tests
 templates:
-  - templates/runtimeScanner/runtime-scanner-configmap.yaml
-  - templates/runtimeScanner/eveconnector-api-configmap.yaml
+  - templates/configmap-host-scanner.yaml
 tests:
   - it: "Global SSL certificate validation enabled (default value)"
     set:
       clusterName: "test"
       nodeAnalyzer:
         deploy: true
-        runtimeScanner:
+        hostScanner:
           deploy: true
-          eveConnector:
-            deploy: true
     templates:
-      - templates/runtimeScanner/runtime-scanner-configmap.yaml
-      - templates/runtimeScanner/eveconnector-api-configmap.yaml
+      - templates/configmap-host-scanner.yaml
     asserts:
       - equal:
           path: data.ssl_verify_certificate
@@ -22,18 +18,15 @@ tests:
 
   - it: "Global SSL certificate validation enabled (sslVerifyCertificate: true explicitly set)"
     set:
-      clusterName: "test"
       global:
-        sslVerifyCertificate: true
+        ssl_verify_certificate: true
+      clusterName: "test"
       nodeAnalyzer:
         deploy: true
-        runtimeScanner:
+        hostScanner:
           deploy: true
-          eveConnector:
-            deploy: true
     templates:
-      - templates/runtimeScanner/runtime-scanner-configmap.yaml
-      - templates/runtimeScanner/eveconnector-api-configmap.yaml
+      - templates/configmap-host-scanner.yaml
     asserts:
       - equal:
           path: data.ssl_verify_certificate
@@ -46,13 +39,10 @@ tests:
         sslVerifyCertificate: false
       nodeAnalyzer:
         deploy: true
-        runtimeScanner:
+        hostScanner:
           deploy: true
-          eveConnector:
-            deploy: true
     templates:
-      - templates/runtimeScanner/runtime-scanner-configmap.yaml
-      - templates/runtimeScanner/eveconnector-api-configmap.yaml
+      - templates/configmap-host-scanner.yaml
     asserts:
       - equal:
           path: data.ssl_verify_certificate
@@ -64,13 +54,10 @@ tests:
       nodeAnalyzer:
         deploy: true
         sslVerifyCertificate: true
-        runtimeScanner:
+        hostScanner:
           deploy: true
-          eveConnector:
-            deploy: true
     templates:
-      - templates/runtimeScanner/runtime-scanner-configmap.yaml
-      - templates/runtimeScanner/eveconnector-api-configmap.yaml
+      - templates/configmap-host-scanner.yaml
     asserts:
       - equal:
           path: data.ssl_verify_certificate
@@ -82,49 +69,40 @@ tests:
       nodeAnalyzer:
         deploy: true
         sslVerifyCertificate: false
-        runtimeScanner:
+        hostScanner:
           deploy: true
-          eveConnector:
-            deploy: true
     templates:
-      - templates/runtimeScanner/runtime-scanner-configmap.yaml
-      - templates/runtimeScanner/eveconnector-api-configmap.yaml
+      - templates/configmap-host-scanner.yaml
     asserts:
       - equal:
           path: data.ssl_verify_certificate
           value: "false"
 
-  - it: "SSL certificate validation enabled (sslVerifyCertificate: true explicitly set) [runtimeScanner container]"
+  - it: "SSL certificate validation enabled (sslVerifyCertificate: true explicitly set) [hostScanner container]"
     set:
       clusterName: "test"
       nodeAnalyzer:
         deploy: true
-        runtimeScanner:
+        hostScanner:
           deploy: true
           sslVerifyCertificate: true
-          eveConnector:
-            deploy: true
     templates:
-      - templates/runtimeScanner/runtime-scanner-configmap.yaml
-      - templates/runtimeScanner/eveconnector-api-configmap.yaml
+      - templates/configmap-host-scanner.yaml
     asserts:
       - equal:
           path: data.ssl_verify_certificate
           value: "true"
 
-  - it: "SSL certificate validation disabled [runtimeScanner container]"
+  - it: "SSL certificate validation disabled [hostScanner container]"
     set:
       clusterName: "test"
       nodeAnalyzer:
         deploy: true
-        runtimeScanner:
+        hostScanner:
           deploy: true
           sslVerifyCertificate: false
-          eveConnector:
-            deploy: true
     templates:
-      - templates/runtimeScanner/runtime-scanner-configmap.yaml
-      - templates/runtimeScanner/eveconnector-api-configmap.yaml
+      - templates/configmap-host-scanner.yaml
     asserts:
       - equal:
           path: data.ssl_verify_certificate
@@ -133,43 +111,88 @@ tests:
   - it: "SSL certificate validation disabled [Global + Node Analyzer POD]"
     set:
       global:
-        sslVerifyCertificate: false
+        sslVerifyCertificate: true
       clusterName: "test"
       nodeAnalyzer:
         deploy: true
         sslVerifyCertificate: false
-        runtimeScanner:
+        hostScanner:
           deploy: true
-          eveConnector:
-            deploy: true
     templates:
-      - templates/runtimeScanner/runtime-scanner-configmap.yaml
-      - templates/runtimeScanner/eveconnector-api-configmap.yaml
+      - templates/configmap-host-scanner.yaml
     asserts:
       - equal:
           path: data.ssl_verify_certificate
           value: "false"
+
+  - it: "SSL certificate validation enabled [Global + Node Analyzer POD]"
+    set:
+      global:
+        sslVerifyCertificate: false
+      clusterName: "test"
+      nodeAnalyzer:
+        deploy: true
+        sslVerifyCertificate: true
+        hostScanner:
+          deploy: true
+    templates:
+      - templates/configmap-host-scanner.yaml
+    asserts:
+      - equal:
+          path: data.ssl_verify_certificate
+          value: "true"
 
   - it: "SSL certificate validation disabled [Node Analyzer POD + Container]"
     set:
       clusterName: "test"
       nodeAnalyzer:
         deploy: true
-        sslVerifyCertificate: false
-        runtimeScanner:
+        sslVerifyCertificate: true
+        hostScanner:
           deploy: true
           sslVerifyCertificate: false
-          eveConnector:
-            deploy: true
     templates:
-      - templates/runtimeScanner/runtime-scanner-configmap.yaml
-      - templates/runtimeScanner/eveconnector-api-configmap.yaml
+      - templates/configmap-host-scanner.yaml
     asserts:
       - equal:
           path: data.ssl_verify_certificate
           value: "false"
 
+  - it: "SSL certificate validation enabled [Node Analyzer POD + Container]"
+    set:
+      clusterName: "test"
+      nodeAnalyzer:
+        deploy: true
+        sslVerifyCertificate: false
+        hostScanner:
+          deploy: true
+          sslVerifyCertificate: true
+    templates:
+      - templates/configmap-host-scanner.yaml
+    asserts:
+      - equal:
+          path: data.ssl_verify_certificate
+          value: "true"
+
   - it: "SSL certificate validation disabled [Global + Node Analyzer POD + Container]"
+    set:
+      global:
+        sslVerifyCertificate: true
+      clusterName: "test"
+      nodeAnalyzer:
+        deploy: true
+        sslVerifyCertificate: true
+        hostScanner:
+          deploy: true
+          sslVerifyCertificate: false
+    templates:
+      - templates/configmap-host-scanner.yaml
+    asserts:
+      - equal:
+          path: data.ssl_verify_certificate
+          value: "false"
+
+  - it: "SSL certificate validation enabled [Global + Node Analyzer POD + Container]"
     set:
       global:
         sslVerifyCertificate: false
@@ -177,15 +200,12 @@ tests:
       nodeAnalyzer:
         deploy: true
         sslVerifyCertificate: false
-        runtimeScanner:
+        hostScanner:
           deploy: true
-          sslVerifyCertificate: false
-          eveConnector:
-            deploy: true
+          sslVerifyCertificate: true
     templates:
-      - templates/runtimeScanner/runtime-scanner-configmap.yaml
-      - templates/runtimeScanner/eveconnector-api-configmap.yaml
+      - templates/configmap-host-scanner.yaml
     asserts:
       - equal:
           path: data.ssl_verify_certificate
-          value: "false"
+          value: "true"
