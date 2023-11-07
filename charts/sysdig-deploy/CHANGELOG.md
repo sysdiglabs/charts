@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.29.4
+### Chores
+* **sysdig-deploy** [300e22e0](https://github.com/sysdiglabs/charts/commit/300e22e0bdbcdc5fcbe4cd2bf31fdb72d98d6bb7): Automatic version bump due to updated dependencies ([#1457](https://github.com/sysdiglabs/charts/issues/1457))
 # v1.29.3
 ### Bug Fixes
 * **node-analyzer,sysdig-deploy** [5ea89862](https://github.com/sysdiglabs/charts/commit/5ea898622331b94947c0982261ca8d07971f48cf): Ability to disable sslVerifyCertificate per container on node-analyzer ([#1445](https://github.com/sysdiglabs/charts/issues/1445))

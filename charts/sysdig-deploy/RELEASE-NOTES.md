@@ -1,5 +1,5 @@
 # What's Changed
 
-### Bug Fixes
-- **node-analyzer,sysdig-deploy** [5ea89862](https://github.com/sysdiglabs/charts/commit/5ea898622331b94947c0982261ca8d07971f48cf): Ability to disable sslVerifyCertificate per container on node-analyzer ([#1445](https://github.com/sysdiglabs/charts/issues/1445))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.29.2...sysdig-deploy-1.29.3
+### Chores
+- **sysdig-deploy** [300e22e0](https://github.com/sysdiglabs/charts/commit/300e22e0bdbcdc5fcbe4cd2bf31fdb72d98d6bb7): Automatic version bump due to updated dependencies ([#1457](https://github.com/sysdiglabs/charts/issues/1457))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.29.3...sysdig-deploy-1.29.4
