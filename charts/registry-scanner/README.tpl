@@ -34,6 +34,7 @@ Follow the instructions in [Install Registry Scanner](https://docs.sysdig.com/en
 - IBM ICR
 - Azure ACR
 - Google GAR
+- Google GCR
 
 Once installed, you can view the scan results in the [Vulnerabilities UI](https://docs.sysdig.com/en/docs/sysdig-secure/vulnerabilities/registry/) of Sysdig Secure.
 
