@@ -273,7 +273,7 @@ nodeAnalyzer:
     env: {}
 
   benchmarkRunner:
-    deploy: true
+    deploy: false
     includeSensitivePermissions: false
 
     image:

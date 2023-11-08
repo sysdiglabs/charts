@@ -1,0 +1,90 @@
+suite: Test BenchmarkRunner configuration
+templates:
+  - daemonset-node-analyzer.yaml
+  - configmap-benchmark-runner.yaml
+tests:
+  - it: "By deafult the benchmark runner is not enabled"
+    template: daemonset-node-analyzer.yaml
+    asserts:
+      - isKind:
+          of: DaemonSet
+      - isNull:
+          path: 'spec.template.spec.containers[?(@.name == "sysdig-benchmark-runner")]'
+
+  - it: "Once enabled the benchmark runner container is available"
+    template: daemonset-node-analyzer.yaml
+    set:
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
+    asserts:
+      - isKind:
+          of: DaemonSet
+      - isNotNull:
+          path: 'spec.template.spec.containers[?(@.name == "sysdig-benchmark-runner")]'
+
+  - it: "By deafult we don't create the benchamark runner configmap"
+    template: configmap-benchmark-runner.yaml
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: "By benchmark runner configmap is create when benchmark runner is enabled"
+    set:
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
+    template: configmap-benchmark-runner.yaml
+    asserts:
+      - isKind:
+          of: ConfigMap
+
+  - it: "Pod don'thave the host network when benchmark runner id disabled"
+    set:
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: false
+    template: daemonset-node-analyzer.yaml
+    asserts:
+      - isNull:
+          path: 'spec.template.spec.hostNetwork'
+
+  - it: "Pod have the host network when benchmark runner is enabled"
+    set:
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
+    template: daemonset-node-analyzer.yaml
+    asserts:
+      - equal:
+          path: 'spec.template.spec.hostNetwork'
+          value: true
+
+  - it: "Pod don't mount the root volume when benchmark runner is disabled"
+    set:
+      nodeAnalyzer:
+        hostAnalyzer:
+          deploy: false
+        hostScanner:
+          deploy: false
+        benchmarkRunner:
+          deploy: false
+    template: daemonset-node-analyzer.yaml
+    asserts:
+      - isNull:
+          path: 'spec.template.spec.volumes[*].hostPath[?(@.path == "/")]'
+
+  - it: "Pod mount the root volume when benchmark runner is disabled"
+    set:
+      nodeAnalyzer:
+        hostAnalyzer:
+          deploy: false
+        hostScanner:
+          deploy: false
+        benchmarkRunner:
+          deploy: true
+    template: daemonset-node-analyzer.yaml
+    asserts:
+      - equal:
+          path: 'spec.template.spec.volumes[?(@.name == "root-vol")].hostPath.path'
+          value: '/'
