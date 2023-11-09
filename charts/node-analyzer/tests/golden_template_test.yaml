@@ -8,6 +8,8 @@ tests:
       sysdig:
         accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
       nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
         imageAnalyzer:
           resources:
             requests:

@@ -14,18 +14,13 @@ tests:
     asserts:
       - isKind:
           of: DaemonSet
-      - equal:
-          path: spec.template.spec.containers[0].name
-          value: "sysdig-image-analyzer"
-      - equal:
-          path: spec.template.spec.containers[1].name
-          value: "sysdig-host-analyzer"
-      - equal:
-          path: spec.template.spec.containers[2].name
-          value: "sysdig-benchmark-runner"
+      - isNotNull:
+          path: "spec.template.spec.containers[?(@.name == 'sysdig-image-analyzer')]"
+      - isNotNull:
+          path: "spec.template.spec.containers[?(@.name == 'sysdig-host-analyzer')]"
       - lengthEqual:
           path: spec.template.spec.containers
-          count: 3
+          count: 2
   - it: "HS deployed if newEngineOnly is active but deploy unset"
     set:
       clusterName: "test"
@@ -37,18 +32,13 @@ tests:
     asserts:
       - isKind:
           of: DaemonSet
-      - equal:
-          path: "spec.template.spec.containers[0].name"
-          value: "sysdig-benchmark-runner"
-      - equal:
-          path: "spec.template.spec.containers[1].name"
-          value: "sysdig-runtime-scanner"
-      - equal:
-          path: "spec.template.spec.containers[2].name"
-          value: "sysdig-host-scanner"
+      - isNotNull:
+          path: "spec.template.spec.containers[?(@.name == 'sysdig-runtime-scanner')]"
+      - isNotNull:
+          path: "spec.template.spec.containers[?(@.name == 'sysdig-host-scanner')]"
       - lengthEqual:
           path: spec.template.spec.containers
-          count: 3
+          count: 2
   - it: "HS deployed if newEngineOnly is true and deploy set to true"
     set:
       clusterName: "test"
@@ -63,18 +53,13 @@ tests:
     asserts:
       - isKind:
           of: DaemonSet
-      - equal:
-          path: "spec.template.spec.containers[0].name"
-          value: "sysdig-benchmark-runner"
-      - equal:
-          path: "spec.template.spec.containers[1].name"
-          value: "sysdig-runtime-scanner"
-      - equal:
-          path: "spec.template.spec.containers[2].name"
-          value: "sysdig-host-scanner"
+      - isNotNull:
+          path: "spec.template.spec.containers[?(@.name == 'sysdig-runtime-scanner')]"
+      - isNotNull:
+          path: "spec.template.spec.containers[?(@.name == 'sysdig-host-scanner')]"
       - lengthEqual:
           path: spec.template.spec.containers
-          count: 3
+          count: 2
   - it: "HS not deployed if explicitly set to false while newEngineOnly is active"
     set:
       secure:
@@ -88,15 +73,11 @@ tests:
     asserts:
       - isKind:
           of: DaemonSet
-      - equal:
-          path: "spec.template.spec.containers[0].name"
-          value: "sysdig-benchmark-runner"
-      - equal:
-          path: "spec.template.spec.containers[1].name"
-          value: "sysdig-runtime-scanner"
+      - isNotNull:
+          path: "spec.template.spec.containers[?(@.name == 'sysdig-runtime-scanner')]"
       - lengthEqual:
           path: spec.template.spec.containers
-          count: 2
+          count: 1
   - it: "HS deployed if newEngineOnly is unset and deploy set to true"
     set:
       clusterName: "test"
@@ -108,21 +89,16 @@ tests:
     asserts:
       - isKind:
           of: DaemonSet
-      - equal:
-          path: "spec.template.spec.containers[0].name"
-          value: "sysdig-image-analyzer"
-      - equal:
-          path: "spec.template.spec.containers[1].name"
-          value: "sysdig-host-analyzer"
-      - equal:
-          path: "spec.template.spec.containers[2].name"
-          value: "sysdig-benchmark-runner"
-      - equal:
-          path: "spec.template.spec.containers[3].name"
-          value: "sysdig-host-scanner"
+      - isNotNull:
+          path: "spec.template.spec.containers[?(@.name == 'sysdig-image-analyzer')]"
+      - isNotNull:
+          path: "spec.template.spec.containers[?(@.name == 'sysdig-host-analyzer')]"
+      - isNotNull:
+          path: "spec.template.spec.containers[?(@.name == 'sysdig-host-scanner')]"
       - lengthEqual:
           path: spec.template.spec.containers
-          count: 4
+          count: 3
+
   - it: "HS not deployed if explicitly set to false"
     set:
       nodeAnalyzer:
@@ -133,18 +109,13 @@ tests:
     asserts:
       - isKind:
           of: DaemonSet
-      - equal:
-          path: "spec.template.spec.containers[0].name"
-          value: "sysdig-image-analyzer"
-      - equal:
-          path: "spec.template.spec.containers[1].name"
-          value: "sysdig-host-analyzer"
-      - equal:
-          path: "spec.template.spec.containers[2].name"
-          value: "sysdig-benchmark-runner"
+      - isNotNull:
+          path: "spec.template.spec.containers[?(@.name == 'sysdig-image-analyzer')]"
+      - isNotNull:
+          path: "spec.template.spec.containers[?(@.name == 'sysdig-host-analyzer')]"
       - lengthEqual:
           path: spec.template.spec.containers
-          count: 3
+          count: 2
 
   - it: "Additional dirs to scan is set"
     set:

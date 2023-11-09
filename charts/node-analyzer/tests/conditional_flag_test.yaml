@@ -119,12 +119,8 @@ tests:
             deploy: true
       clusterName: test-k8s
     asserts:
-      - contains:
-          path: spec.template.spec.containers[3].env
-          content:
-            name: EVE_INTEGRATION_ENABLED
-          count: 1
-          any: true
+      - isNotNull:
+          path: "spec.template.spec.containers[?(@.name == 'sysdig-runtime-scanner')].env[?(@.name == 'EVE_INTEGRATION_ENABLED')]"
         template: daemonset-node-analyzer.yaml
       - containsDocument:
           kind: ConfigMap
@@ -204,10 +200,6 @@ tests:
             deploy: false
       clusterName: test-k8s
     asserts:
-      - notContains:
-          path: spec.template.spec.containers[3].env
-          content:
-            name: EVE_INTEGRATION_ENABLED
-          count: 1
-          any: true
+      - isNull:
+          path: "spec.template.spec.containers[?(@.name == 'sysdig-runtime-scanner')].env[?(@.name == 'EVE_INTEGRATION_ENABLED')]"
         template: daemonset-node-analyzer.yaml

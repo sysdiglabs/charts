@@ -3,6 +3,10 @@ templates:
   - templates/configmap-benchmark-runner.yaml
 tests:
   - it: Checking default value no region specified (us1)
+    set:
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - isKind:
           of: ConfigMap
@@ -15,6 +19,9 @@ tests:
       global:
         sysdig:
           region: us2
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - isKind:
           of: ConfigMap
@@ -27,6 +34,9 @@ tests:
       global:
         sysdig:
           region: us3
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - isKind:
           of: ConfigMap
@@ -39,6 +49,9 @@ tests:
       global:
         sysdig:
           region: us4
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - isKind:
           of: ConfigMap
@@ -51,6 +64,9 @@ tests:
       global:
         sysdig:
           region: eu1
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - isKind:
           of: ConfigMap
@@ -63,6 +79,9 @@ tests:
       global:
         sysdig:
           region: au1
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - isKind:
           of: ConfigMap
@@ -75,6 +94,9 @@ tests:
       global:
         sysdig:
           region: au-syd-monitor
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - isKind:
           of: ConfigMap
@@ -87,6 +109,9 @@ tests:
       global:
         sysdig:
           region: br-sao-monitor
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - isKind:
           of: ConfigMap
@@ -99,6 +124,9 @@ tests:
       global:
         sysdig:
           region: ca-tor-monitor
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - isKind:
           of: ConfigMap
@@ -111,6 +139,9 @@ tests:
       global:
         sysdig:
           region: eu-de-monitor
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - isKind:
           of: ConfigMap
@@ -123,6 +154,9 @@ tests:
       global:
         sysdig:
           region: eu-gb-monitor
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - isKind:
           of: ConfigMap
@@ -135,6 +169,9 @@ tests:
       global:
         sysdig:
           region: jp-osa-monitor
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - isKind:
           of: ConfigMap
@@ -147,6 +184,9 @@ tests:
       global:
         sysdig:
           region: jp-tok-monitor
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - isKind:
           of: ConfigMap
@@ -159,6 +199,9 @@ tests:
       global:
         sysdig:
           region: us-east-monitor
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - isKind:
           of: ConfigMap
@@ -171,6 +214,9 @@ tests:
       global:
         sysdig:
           region: us-south-monitor
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - isKind:
           of: ConfigMap
@@ -183,6 +229,9 @@ tests:
       global:
         sysdig:
           region: au-syd-private-monitor
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - isKind:
           of: ConfigMap
@@ -195,6 +244,9 @@ tests:
       global:
         sysdig:
           region: br-sao-private-monitor
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - isKind:
           of: ConfigMap
@@ -207,6 +259,9 @@ tests:
       global:
         sysdig:
           region: ca-tor-private-monitor
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - isKind:
           of: ConfigMap
@@ -219,6 +274,9 @@ tests:
       global:
         sysdig:
           region: eu-de-private-monitor
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - isKind:
           of: ConfigMap
@@ -231,6 +289,9 @@ tests:
       global:
         sysdig:
           region: eu-gb-private-monitor
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - isKind:
           of: ConfigMap
@@ -243,6 +304,9 @@ tests:
       global:
         sysdig:
           region: jp-osa-private-monitor
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - isKind:
           of: ConfigMap
@@ -255,6 +319,9 @@ tests:
       global:
         sysdig:
           region: jp-tok-private-monitor
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - isKind:
           of: ConfigMap
@@ -267,6 +334,9 @@ tests:
       global:
         sysdig:
           region: us-east-private-monitor
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - isKind:
           of: ConfigMap
@@ -279,6 +349,9 @@ tests:
       global:
         sysdig:
           region: us-south-private-monitor
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - isKind:
           of: ConfigMap
@@ -291,6 +364,9 @@ tests:
       global:
         sysdig:
           region: au-syd-secure
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - isKind:
           of: ConfigMap
@@ -303,6 +379,9 @@ tests:
       global:
         sysdig:
           region: br-sao-secure
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - isKind:
           of: ConfigMap
@@ -315,6 +394,9 @@ tests:
       global:
         sysdig:
           region: ca-tor-secure
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - isKind:
           of: ConfigMap
@@ -327,6 +409,9 @@ tests:
       global:
         sysdig:
           region: eu-de-secure
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - isKind:
           of: ConfigMap
@@ -339,6 +424,9 @@ tests:
       global:
         sysdig:
           region: eu-gb-secure
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - isKind:
           of: ConfigMap
@@ -351,6 +439,9 @@ tests:
       global:
         sysdig:
           region: jp-osa-secure
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - isKind:
           of: ConfigMap
@@ -363,6 +454,9 @@ tests:
       global:
         sysdig:
           region: jp-tok-secure
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - isKind:
           of: ConfigMap
@@ -375,6 +469,9 @@ tests:
       global:
         sysdig:
           region: us-east-secure
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - isKind:
           of: ConfigMap
@@ -387,6 +484,9 @@ tests:
       global:
         sysdig:
           region: us-south-secure
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - isKind:
           of: ConfigMap
@@ -399,6 +499,9 @@ tests:
       global:
         sysdig:
           region: au-syd-private-secure
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - isKind:
           of: ConfigMap
@@ -411,6 +514,9 @@ tests:
       global:
         sysdig:
           region: br-sao-private-secure
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - isKind:
           of: ConfigMap
@@ -423,6 +529,9 @@ tests:
       global:
         sysdig:
           region: ca-tor-private-secure
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - isKind:
           of: ConfigMap
@@ -435,6 +544,9 @@ tests:
       global:
         sysdig:
           region: eu-de-private-secure
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - isKind:
           of: ConfigMap
@@ -447,6 +559,9 @@ tests:
       global:
         sysdig:
           region: eu-gb-private-secure
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - isKind:
           of: ConfigMap
@@ -459,6 +574,9 @@ tests:
       global:
         sysdig:
           region: jp-osa-private-secure
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - isKind:
           of: ConfigMap
@@ -471,6 +589,9 @@ tests:
       global:
         sysdig:
           region: jp-tok-private-secure
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - isKind:
           of: ConfigMap
@@ -483,6 +604,9 @@ tests:
       global:
         sysdig:
           region: us-east-private-secure
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - isKind:
           of: ConfigMap
@@ -495,6 +619,9 @@ tests:
       global:
         sysdig:
           region: us-south-private-secure
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - isKind:
           of: ConfigMap
@@ -507,6 +634,9 @@ tests:
       global:
         sysdig:
           region: us7
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: true
     asserts:
       - failedTemplate:
           errorMessage: "global.sysdig.region=us7 provided is not recognized."

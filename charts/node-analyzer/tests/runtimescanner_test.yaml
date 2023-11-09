@@ -61,15 +61,11 @@ tests:
     asserts:
       - isKind:
           of: DaemonSet
-      - equal:
-          path: "spec.template.spec.containers[0].name"
-          value: "sysdig-benchmark-runner"
-      - equal:
-          path: "spec.template.spec.containers[1].name"
-          value: "sysdig-host-scanner"
+      - isNotNull:
+          path: "spec.template.spec.containers[?(@.name == 'sysdig-host-scanner')]"
       - lengthEqual:
           path: spec.template.spec.containers
-          count: 2
+          count: 1
 
   - it: "is disabled by default, legacy will be deployed"
     templates:
@@ -77,18 +73,13 @@ tests:
     asserts:
       - isKind:
           of: DaemonSet
-      - equal:
-          path: "spec.template.spec.containers[0].name"
-          value: "sysdig-image-analyzer"
-      - equal:
-          path: "spec.template.spec.containers[1].name"
-          value: "sysdig-host-analyzer"
-      - equal:
-          path: "spec.template.spec.containers[2].name"
-          value: "sysdig-benchmark-runner"
+      - isNotNull:
+          path: "spec.template.spec.containers[?(@.name == 'sysdig-image-analyzer')]"
+      - isNotNull:
+          path: "spec.template.spec.containers[?(@.name == 'sysdig-host-analyzer')]"
       - lengthEqual:
           path: spec.template.spec.containers
-          count: 3
+          count: 2
 
   - it: "is enabled when newEngineOnly is set"
     set:
@@ -100,15 +91,10 @@ tests:
     asserts:
       - isKind:
           of: DaemonSet
-      - equal:
-          path: "spec.template.spec.containers[0].name"
-          value: "sysdig-benchmark-runner"
-      - equal:
-          path: "spec.template.spec.containers[1].name"
-          value: "sysdig-runtime-scanner"
-      - equal:
-          path: "spec.template.spec.containers[2].name"
-          value: "sysdig-host-scanner"
+      - isNotNull:
+          path: "spec.template.spec.containers[?(@.name == 'sysdig-runtime-scanner')]"
+      - isNotNull:
+          path: "spec.template.spec.containers[?(@.name == 'sysdig-host-scanner')]"
       - lengthEqual:
           path: spec.template.spec.containers
-          count: 3
+          count: 2

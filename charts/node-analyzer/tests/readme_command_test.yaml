@@ -9,6 +9,9 @@ tests:
         accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
       nodeAnalyzer:
         apiEndpoint: secure.sysdig.com
+
+        benchmarkRunner:
+          deploy: true
     asserts:
       - equal:
           path: data.access-key

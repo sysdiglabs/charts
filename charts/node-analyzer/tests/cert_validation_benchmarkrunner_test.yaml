@@ -7,6 +7,8 @@ tests:
       clusterName: "test"
       nodeAnalyzer:
         deploy: true
+        benchmarkRunner:
+          deploy: true
     templates:
       - templates/configmap-benchmark-runner.yaml
     asserts:
@@ -21,6 +23,8 @@ tests:
         sslVerifyCertificate: true
       nodeAnalyzer:
         deploy: true
+        benchmarkRunner:
+          deploy: true
     templates:
       - templates/configmap-benchmark-runner.yaml
     asserts:
@@ -35,6 +39,8 @@ tests:
         sslVerifyCertificate: false
       nodeAnalyzer:
         deploy: true
+        benchmarkRunner:
+          deploy: true
     templates:
       - templates/configmap-benchmark-runner.yaml
     asserts:
@@ -48,6 +54,8 @@ tests:
       nodeAnalyzer:
         deploy: true
         sslVerifyCertificate: true
+        benchmarkRunner:
+          deploy: true
     templates:
       - templates/configmap-benchmark-runner.yaml
     asserts:
@@ -61,6 +69,8 @@ tests:
       nodeAnalyzer:
         deploy: true
         sslVerifyCertificate: false
+        benchmarkRunner:
+          deploy: true
     templates:
       - templates/configmap-benchmark-runner.yaml
     asserts:
@@ -74,6 +84,7 @@ tests:
       nodeAnalyzer:
         deploy: true
         benchmarkRunner:
+          deploy: true
           sslVerifyCertificate: true
     templates:
       - templates/configmap-benchmark-runner.yaml
@@ -88,6 +99,7 @@ tests:
       nodeAnalyzer:
         deploy: true
         benchmarkRunner:
+          deploy: true
           sslVerifyCertificate: false
     templates:
       - templates/configmap-benchmark-runner.yaml
