@@ -29,7 +29,9 @@ tests:
   - it: "HS deployed if newEngineOnly is active but deploy unset"
     set:
       clusterName: "test"
-      secure.vulnerabilityManagement.newEngineOnly: true
+      secure:
+        vulnerabilityManagement:
+          newEngineOnly: true
     templates:
       - ../templates/daemonset-node-analyzer.yaml
     asserts:
@@ -50,8 +52,12 @@ tests:
   - it: "HS deployed if newEngineOnly is true and deploy set to true"
     set:
       clusterName: "test"
-      secure.vulnerabilityManagement.newEngineOnly: true
-      nodeAnalyzer.hostScanner.deploy: true
+      secure:
+        vulnerabilityManagement:
+          newEngineOnly: true
+      nodeAnalyzer:
+        hostScanner:
+          deploy: true
     templates:
       - ../templates/daemonset-node-analyzer.yaml
     asserts:
@@ -71,8 +77,12 @@ tests:
           count: 3
   - it: "HS not deployed if explicitly set to false while newEngineOnly is active"
     set:
-      secure.vulnerabilityManagement.newEngineOnly: true
-      nodeAnalyzer.hostScanner.deploy: false
+      secure:
+        vulnerabilityManagement:
+          newEngineOnly: true
+      nodeAnalyzer:
+        hostScanner:
+          deploy: false
     templates:
       - ../templates/daemonset-node-analyzer.yaml
     asserts:
@@ -90,7 +100,9 @@ tests:
   - it: "HS deployed if newEngineOnly is unset and deploy set to true"
     set:
       clusterName: "test"
-      nodeAnalyzer.hostScanner.deploy: true
+      nodeAnalyzer:
+        hostScanner:
+          deploy: true
     templates:
       - ../templates/daemonset-node-analyzer.yaml
     asserts:
@@ -113,7 +125,9 @@ tests:
           count: 4
   - it: "HS not deployed if explicitly set to false"
     set:
-      nodeAnalyzer.hostScanner.deploy: false
+      nodeAnalyzer:
+        hostScanner:
+          deploy: false
     templates:
       - ../templates/daemonset-node-analyzer.yaml
     asserts:
@@ -135,8 +149,10 @@ tests:
   - it: "Additional dirs to scan is set"
     set:
       clusterName: "test"
-      nodeAnalyzer.hostScanner.additionalDirsToScan: "/hello,/world"
-      nodeAnalyzer.hostScanner.deploy: true
+      nodeAnalyzer:
+        hostScanner:
+          deploy: true
+          additionalDirsToScan: "/hello,/world"
     templates:
       - ../templates/configmap-host-scanner.yaml
     asserts:
@@ -148,7 +164,9 @@ tests:
   - it: "Additional dirs to scan is unset by default"
     set:
       clusterName: "test"
-      nodeAnalyzer.hostScanner.deploy: true
+      nodeAnalyzer:
+        hostScanner:
+          deploy: true
     templates:
       - ../templates/configmap-host-scanner.yaml
     asserts:

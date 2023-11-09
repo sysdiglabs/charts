@@ -50,8 +50,12 @@ tests:
 
   - it: "is disabled if explicit flag is set, should override newEngineOnly"
     set:
-      secure.vulnerabilityManagement.newEngineOnly: true
-      nodeAnalyzer.runtimeScanner.deploy: false
+      secure:
+        vulnerabilityManagement:
+          newEngineOnly: true
+      nodeAnalyzer:
+        runtimeScanner:
+          deploy: false
     templates:
       - ../templates/daemonset-node-analyzer.yaml
     asserts:
@@ -88,7 +92,9 @@ tests:
 
   - it: "is enabled when newEngineOnly is set"
     set:
-      secure.vulnerabilityManagement.newEngineOnly: true
+      secure:
+        vulnerabilityManagement:
+          newEngineOnly: true
     templates:
       - ../templates/daemonset-node-analyzer.yaml
     asserts:
