@@ -60,6 +60,9 @@ agent:
 
 nodeAnalyzer:
   enabled: true
+  nodeAnalyzer:
+    benchmarkRunner:
+      deploy: false
 
 clusterScanner:
   enabled: false
