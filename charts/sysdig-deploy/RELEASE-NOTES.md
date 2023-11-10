@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **sysdig-deploy** [300e22e0](https://github.com/sysdiglabs/charts/commit/300e22e0bdbcdc5fcbe4cd2bf31fdb72d98d6bb7): Automatic version bump due to updated dependencies ([#1457](https://github.com/sysdiglabs/charts/issues/1457))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.29.3...sysdig-deploy-1.29.4
+### Bug Fixes
+- **cluster-scanner** [09c0c714](https://github.com/sysdiglabs/charts/commit/09c0c714333f9ba7c28954b5a688a22092e5db88): corrected onPremCompatibilityVersion to 7.0.0 ([#1466](https://github.com/sysdiglabs/charts/issues/1466))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.29.5...sysdig-deploy-1.29.6
