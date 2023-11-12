@@ -1,5 +1,5 @@
 # What's Changed
 
-### Bug Fixes
-- **node-analyzer,sysdig-deploy** [5ea89862](https://github.com/sysdiglabs/charts/commit/5ea898622331b94947c0982261ca8d07971f48cf): Ability to disable sslVerifyCertificate per container on node-analyzer ([#1445](https://github.com/sysdiglabs/charts/issues/1445))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.18.2...node-analyzer-1.18.3
+### Chores
+- **kspm-collector,node-analyzer** [0b43cdef](https://github.com/sysdiglabs/charts/commit/0b43cdef544b2a5d553479027c9065964c6c4829): update cspm agents to UBI image 1.5.8 ([#1469](https://github.com/sysdiglabs/charts/issues/1469))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.18.3...node-analyzer-1.18.4
