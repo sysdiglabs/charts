@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.29.7
+### Chores
+* **kspm-collector,node-analyzer** [0b43cdef](https://github.com/sysdiglabs/charts/commit/0b43cdef544b2a5d553479027c9065964c6c4829): update cspm agents to UBI image 1.5.8 ([#1469](https://github.com/sysdiglabs/charts/issues/1469))
 # v1.29.6
 ### Bug Fixes
 * **cluster-scanner** [09c0c714](https://github.com/sysdiglabs/charts/commit/09c0c714333f9ba7c28954b5a688a22092e5db88): corrected onPremCompatibilityVersion to 7.0.0 ([#1466](https://github.com/sysdiglabs/charts/issues/1466))
