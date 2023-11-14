@@ -45,7 +45,7 @@ This chart deploys the Sysdig Cluster Scanner as a Deployment on a [Kubernetes](
 
 ### Prerequisites
 
-- Helm 3
+- Helm 3.6
 - Sysdig AccessKey
 
 

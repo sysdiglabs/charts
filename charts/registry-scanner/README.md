@@ -41,7 +41,7 @@ Once installed, you can view the scan results in the [Vulnerabilities UI](https:
 
 ### Prerequisites
 
-- Helm 3
+- Helm 3.6
 - Kubernetes v1.16+
 - Unique name to identify your Kubernetes cluster
 - Sysdig Secure API Token

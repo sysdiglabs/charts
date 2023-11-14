@@ -25,7 +25,7 @@ Use [Cloud Connector](https://docs.sysdig.com/en/docs/installation/sysdig-secure
 ### Prerequisites
 
 
-- Helm v3
+- Helm v3.6
 - Sysdig Secure API Token
 
 ###  Installation

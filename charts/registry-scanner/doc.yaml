@@ -13,7 +13,7 @@ chart:
   #  values: "-- generate from values file --"
   valuesExample: "config.secureAPIToken=YOUR-KEY-HERE,config.secureBaseURL=SECURE_URL"
 prerequisites:
-  - "Helm 3"
+  - "Helm 3.6"
   - "Kubernetes v1.16+"
   - "Unique name to identify your Kubernetes cluster"
   - "Sysdig Secure API Token"
