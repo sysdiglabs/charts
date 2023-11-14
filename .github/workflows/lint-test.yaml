@@ -142,7 +142,7 @@ jobs:
       - name: Run chart-testing (install)
         run: ct install --upgrade --excluded-charts common,sysdig-stackdriver-bridge,sysdig-mcm-navmenu
 
-      - uses: actions/github-script@v6
+      - uses: actions/github-script@v7
         id: update-check-run
         if: ${{ always() }}
         env:
