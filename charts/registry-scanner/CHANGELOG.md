@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.1.18
+### Bug Fixes
+* Properly handle `securityContext` configuration for scan worker
 # v1.1.17
 ### New Features
 * **registry-scanner** [022c547f](https://github.com/sysdiglabs/charts/commit/022c547f0a871a22e2e7035745765189edc5697f): Add flag to enable mem profile dumps on a PVC ([#1455](https://github.com/sysdiglabs/charts/issues/1455))
