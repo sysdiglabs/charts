@@ -50,6 +50,27 @@ tests:
       - hasDocuments:
           count: 0
 
+  - it: Should not fail if node analyzer is entirely disabled and nested nodeAnalyzer object is not set
+    set:
+      nodeAnalyzer:
+        enabled: false
+      clusterScanner:
+        enabled: true
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: Should not fail if node analyzer is entirely disabled and nested nodeAnalyzer.runtimeScanner object is not set
+    set:
+      nodeAnalyzer:
+        enabled: false
+        nodeAnalyzer:
+      clusterScanner:
+        enabled: true
+    asserts:
+      - hasDocuments:
+          count: 0
+
   - it: Should not fail if runtime scanner is disabled
     set:
       nodeAnalyzer:
