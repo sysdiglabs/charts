@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.18.5
+### Chores
+* **node-analyzer** [18e72be6](https://github.com/sysdiglabs/charts/commit/18e72be61f86f9d1851152c32919ff46dacc2066): bump sysdig/vuln-host-scanner to v0.6.8 [SSPROD-32850] ([#1474](https://github.com/sysdiglabs/charts/issues/1474))
 # v1.18.4
 ### Chores
 * **kspm-collector,node-analyzer** [0b43cdef](https://github.com/sysdiglabs/charts/commit/0b43cdef544b2a5d553479027c9065964c6c4829): update cspm agents to UBI image 1.5.8 ([#1469](https://github.com/sysdiglabs/charts/issues/1469))
