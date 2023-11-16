@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.1.19
+### Chores
+* **registry-scanner** [aff94d0f](https://github.com/sysdiglabs/charts/commit/aff94d0f5cf26c1e755050797329c73837bf2fb5): Update to v0.2.58 ([#1482](https://github.com/sysdiglabs/charts/issues/1482))
 # v1.1.18
 ### Bug Fixes
 * Properly handle `securityContext` configuration for scan worker
