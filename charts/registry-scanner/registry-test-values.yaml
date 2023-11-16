@@ -1,0 +1,17 @@
+config:
+  secureBaseURL: https://app.us4.sysdig.com
+  secureAPIToken: dd169707-9a2e-4bc0-92d7-577fcc2099c4
+  registryType: ecr
+  registryURL: 835596177334.dkr.ecr.us-east-1.amazonaws.com
+  logging: debug
+  aws:
+    region: us-east-1
+  scan:
+    inlineScanImage: 835596177334.dkr.ecr.us-east-1.amazonaws.com/sysdig:job-0.2.53
+image: 
+  registry: 835596177334.dkr.ecr.us-east-1.amazonaws.com
+  repository: sysdig
+scanOnStart:
+  enabled: true
+cronjob:
+  schedule: "0 6 * * 6"
