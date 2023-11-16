@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.29.10
+### Bug Fixes
+* [16386ec1](https://github.com/sysdiglabs/charts/commit/16386ec18d4e76f0744926ead627ada28eca1e4b): feat(node-analyzer,cluster-scanner): resolving bug with nodeAnalyzer and clusterScanner condition. ([#1479](https://github.com/sysdiglabs/charts/issues/1479))
 # v1.29.9
 ### Chores
 * **sysdig-deploy** [7673743f](https://github.com/sysdiglabs/charts/commit/7673743f25e9a80fc92c90d2ef972e285622f635): Automatic version bump due to updated dependencies ([#1478](https://github.com/sysdiglabs/charts/issues/1478))
