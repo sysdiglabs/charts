@@ -1,0 +1,56 @@
+global:
+  sysdig:
+    accessKey: 4ea6e4ba-8bf5-45d3-8410-d79df0fdea09
+    region: us4
+    secureAPIToken: dd169707-9a2e-4bc0-92d7-577fcc2099c4
+  clusterConfig:
+    name: sysdig-eks
+  kspm:
+    deploy: false
+agent:
+  enabled: true
+  monitor:
+    enabled: false
+  ebpf:
+    enabled: true
+  auditLog:
+    enabled: true
+  slim:
+    enabled: true
+    resources:
+      requests:
+        cpu: 500m
+        memory: 512Mi
+      limits:
+        cpu: 500m # changed CPU from 1000m to 500m because my node is small
+        memory: 1024Mi
+    # for tuning purposes. a rule of thumb is 5% available CPU for request, and 10% available CPU for limits
+  sysdig:
+    settings:
+      enrich_with_process_lineage: true
+      drift_killer:
+        enabled: true
+  daemonset:
+    # nodeSelector: # for multiple daemonsets, to match resource profile to node sizing, in heterogeneous environments
+nodeAnalyzer:
+  enabled: false
+  secure:
+    vulnerabilityManagement:
+      newEngineOnly: true
+  nodeAnalyzer:
+    runtimeScanner:
+      settings:
+        eveEnabled: true
+      eveConnector:
+        enabled: true
+    hostScanner:
+      deploy: true
+admissionController:
+  enabled: true
+  sysdig:
+    url: https://app.us4.sysdig.com/
+    secureAPIToken: dd169707-9a2e-4bc0-92d7-577fcc2099c4
+  features:
+    k8sAuditDetections: true
+  scanner:
+    enabled: false
