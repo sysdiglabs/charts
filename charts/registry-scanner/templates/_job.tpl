@@ -125,7 +125,7 @@
             value: "{{ .Values.config.parallelGoRoutines }}"
           {{- end }}
           {{- if .Values.memProfileToPersistentVolumeClaim }}
-          - name: PROFILING_ENABLED
+          - name: REGISTRYSCANNER_PROFILING_ENABLED
             value: /profiling
           {{- end }}
           {{- if .Values.extraEnvVars }}
