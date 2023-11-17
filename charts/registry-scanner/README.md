@@ -34,6 +34,7 @@ Follow the instructions in [Install Registry Scanner](https://docs.sysdig.com/en
 - IBM ICR
 - Azure ACR
 - Google GAR
+- Google GCR
 
 Once installed, you can view the scan results in the [Vulnerabilities UI](https://docs.sysdig.com/en/docs/sysdig-secure/vulnerabilities/registry/) of Sysdig Secure.
 
@@ -62,7 +63,7 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | config.registryApiUrl                            | The API URL of the registry to scan. This is required if your registry type is Artifactory.                                                                                                                                                | <code>""</code>                              |
 | config.registryUser                              | The username for registry authentication.                                                                                                                                                                                                  | <code>""</code>                              |
 | config.registryPassword                          | The password for registry authentication.                                                                                                                                                                                                  | <code>""</code>                              |
-| config.registryType                              | Mandatory.<br/>The registry Type. Supported types: artifactory, ecr, icr, acr, quay, harbor, gar, nexus and dockerv2.                                                                                                                      | <code>""</code>                              |
+| config.registryType                              | Mandatory.<br/>The registry Type. Supported types: artifactory, ecr, icr, acr, quay, harbor, gar, gcr, nexus and dockerv2.                                                                                                                 | <code>""</code>                              |
 | config.registryAccountId                         | The account ID. Applicable only for ICR registry type.                                                                                                                                                                                     | <code>""</code>                              |
 | config.icrIamApi                                 | The ICR IAM API. Applicable only for ICR registry type.                                                                                                                                                                                    | <code>""</code>                              |
 | config.icrIamApiSkipTLS                          | Ignore TLS certificate for IAM API. Applicable only for ICR registry type.                                                                                                                                                                 | <code>false</code>                           |
@@ -128,7 +129,7 @@ Use the following command to deploy:
 helm upgrade --install registry-scanner \
    --namespace sysdig-agent \
    --create-namespace \
-   --version=1.1.20  \
+   --version=1.1.21  \
    --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
    --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
    --set config.secureSkipTLS=true \
