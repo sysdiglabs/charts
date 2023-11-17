@@ -55,6 +55,7 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | cronjob.failedJobsHistoryLimit                   | The number of failed job history to keep on the cluster.                                                                                                                                                                                   | <code>5</code>                               |
 | cronjob.successfulJobsHistoryLimit               | The number of successful job history to keep on the cluster.                                                                                                                                                                               | <code>2</code>                               |
 | cronjob.restartPolicy                            | The restart policy for a failed registry scan execution.                                                                                                                                                                                   | <code>Never</code>                           |
+| cronjob.timeZone                                 | Timezone settings for the cronjob. Value default will be null to guarantee we only set the timezone if the user provides it.                                                                                                               | <code>""</code>                              |
 | reportToPersistentVolumeClaim                    | Specify a volume claim to write the final JSON report there instead of standard output.                                                                                                                                                    | <code>""</code>                              |
 | config.logging                                   | The log level. Use one of the following: trace, debug, info, error.                                                                                                                                                                        | <code>"info"</code>                          |
 | config.registryURL                               | The URL of the registry to scan.                                                                                                                                                                                                           | <code>""</code>                              |
@@ -127,7 +128,7 @@ Use the following command to deploy:
 helm upgrade --install registry-scanner \
    --namespace sysdig-agent \
    --create-namespace \
-   --version=1.1.19  \
+   --version=1.1.20  \
    --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
    --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
    --set config.secureSkipTLS=true \

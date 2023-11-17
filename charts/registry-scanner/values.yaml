@@ -11,6 +11,8 @@ cronjob:
   successfulJobsHistoryLimit: 2
   # The restart policy for a failed registry scan execution.
   restartPolicy: Never
+  # Timezone settings for the cronjob. Value default will be null to guarantee we only set the timezone if the user provides it.
+  timeZone: ""
 
 # Specify a volume claim to write the final JSON report there instead of standard output.
 reportToPersistentVolumeClaim: ""

@@ -92,3 +92,32 @@ tests:
     asserts:
       - isNull:
           path: spec.jobTemplate.spec.ttlSecondsAfterFinished
+
+  - it: sets timeZone when specified and Kube >=1.24
+    set:
+      cronjob.timeZone: "America/New_York"
+    capabilities:
+      majorVersion: 1
+      minorVersion: 24
+    asserts:
+      - equal:
+          path: spec.timeZone
+          value: "America/New_York"
+
+  - it: do not set timeZone
+    set:
+      cronjob.timeZone: ""
+    asserts:
+      - isNull:
+          path: spec.timeZone
+
+  - it: sets timeZone when specified and Kube <1.24
+    set:
+      cronjob.timeZone: "America/New_York"
+    capabilities:
+      majorVersion: 1
+      minorVersion: 23
+    asserts:
+      - failedTemplate:
+          # errorMessage: spec.timeZone
+          errorMessage: "cronjob.timeZone was specified but kubernetes version is smaller than 1.24."
