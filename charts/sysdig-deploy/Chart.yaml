@@ -2,7 +2,7 @@ apiVersion: v2
 name: sysdig-deploy
 description: A chart with various Sysdig components for Kubernetes
 type: application
-version: 1.29.10
+version: 1.29.11
 maintainers:
   - name: AlbertoBarba
     email: alberto.barba@sysdig.com
@@ -54,6 +54,6 @@ dependencies:
   - name: rapid-response
     # repository: https://charts.sysdig.com
     repository: file://../rapid-response
-    version: ~0.8.3
+    version: ~0.8.4
     alias: rapidResponse
     condition: rapidResponse.enabled
