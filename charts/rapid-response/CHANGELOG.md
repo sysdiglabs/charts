@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.8.4
+### Chores
+* **rapid-response** [50a90678](https://github.com/sysdiglabs/charts/commit/50a9067882a4b441188cd4f8149528a892a29455): bump rapid-response version to 0.4.0 ([#1476](https://github.com/sysdiglabs/charts/issues/1476))
 # v0.8.3
 ### Bug Fixes
 * **common,agent,admission-controller,cluster-scanner,kspm-collector,node-analyzer,rapid-response** [e76f1c17](https://github.com/sysdiglabs/charts/commit/e76f1c17e48491dd8ea21293ec1fed2619eed204): Update Sysdig CA ([#1393](https://github.com/sysdiglabs/charts/issues/1393))

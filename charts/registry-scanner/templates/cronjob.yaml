@@ -1,3 +1,4 @@
+{{- include "registry-scanner.validateTimeZone" . }}
 {{- if (include "registry-scanner.kubeVersionLessThan" (dict "root" . "major" 1 "minor" 21)) }}
 apiVersion: batch/v1beta1
 {{- else }}
@@ -11,6 +12,9 @@ metadata:
 {{- include "registry-scanner.customLabels" . | nindent 4 }}
 spec:
   schedule: {{ .Values.cronjob.schedule | quote }}
+  {{- if .Values.cronjob.timeZone }}
+  timeZone: {{ .Values.cronjob.timeZone | quote }}
+  {{- end }}
   failedJobsHistoryLimit: {{ .Values.cronjob.failedJobsHistoryLimit }}
   successfulJobsHistoryLimit: {{ .Values.cronjob.successfulJobsHistoryLimit }}
   concurrencyPolicy:  Forbid
