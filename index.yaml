@@ -23076,6 +23076,28 @@ entries:
   sysdig:
   - apiVersion: v1
     appVersion: 12.17.1
+    created: "2023-11-22T17:41:30.001728715Z"
+    deprecated: true
+    description: Sysdig Monitor and Secure agent
+    digest: 23815d21b0f95a84ebab023ca46f83682b4dc85dbed75dbb973b1a65989a93e7
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    name: sysdig
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/sysdig-1.16.23/sysdig-1.16.23.tgz
+    version: 1.16.23
+  - apiVersion: v1
+    appVersion: 12.17.1
     created: "2023-11-22T15:44:17.659310771Z"
     deprecated: true
     description: Sysdig Monitor and Secure agent
@@ -47803,4 +47825,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2023-11-22T16:21:48.017218944Z"
+generated: "2023-11-22T17:41:30.118259344Z"
