@@ -1,0 +1,130 @@
+suite: Test Scanner and Webhook configmap
+templates:
+  - templates/webhook/configmap.yaml
+  - templates/scanner/configmap.yaml
+  - templates/webhook/secret.yaml
+  - templates/webhook/deployment.yaml
+  - templates/webhook/admissionregistration.yaml
+tests:
+
+  - it: Return error if kspmAdmissionController is enabled and sysdig.url is provided without nats.url
+    set:
+      global:
+        sysdig:
+          region: us1
+      clusterName: test-k8s
+      sysdig:
+        url: "https://sysdig_url_endpoint"
+      features:
+        kspmAdmissionController: true
+    asserts:
+      - failedTemplate:
+          errorMessage: A valid .Values.webhook.v2.nats.url is required when .Values.sysdig.url is set
+        template: templates/webhook/deployment.yaml
+
+  - it: Return error if sysdig.apiendpoint is provided with http or https prefix
+    set:
+      global:
+        sysdig:
+          region: us1
+      clusterName: test-k8s
+      sysdig:
+        apiEndpoint: "https://sysdig_api_endpoint"
+      features:
+        kspmAdmissionController: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Sysdig API endpoint should not contain http:// or https:// prefix
+        template: templates/webhook/deployment.yaml
+
+  - it: Set SECURE_URL and EXTERNAL_NATS_URL if kspmAdmissionController is enabled and sysdig.url and nats.url are provided 
+    set:
+      global:
+        sysdig:
+          region: us1
+      clusterName: test-k8s
+      sysdig:
+        url: "https://sysdig_url_endpoint"
+      features:
+        kspmAdmissionController: true
+      webhook:
+        v2:
+          nats:
+            url: wss://nats:443
+    asserts:
+      - equal:
+          path: data.SECURE_URL
+          value: "https://sysdig_url_endpoint"
+        template: templates/webhook/configmap.yaml
+      - equal:
+          path: data.EXTERNAL_NATS_URL
+          value: "wss://nats:443"
+        template: templates/webhook/configmap.yaml
+
+  - it: Set SECURE_URL to sysdig.url instead of sysdig.apiendpoint if both were provided and set EXTERNAL_NATS_URL if nats.url is provided
+    set:
+      global:
+        sysdig:
+          region: us1
+      clusterName: test-k8s
+      sysdig:
+        url: "https://sysdig_url_endpoint"
+        apiEndpoint: "sysdig_api_endpoint"
+      features:
+        kspmAdmissionController: true
+      webhook:
+        v2:
+          nats:
+            url: wss://nats:443
+    asserts:
+      - equal:
+          path: data.SECURE_URL
+          value: "https://sysdig_url_endpoint"
+        template: templates/webhook/configmap.yaml
+      - equal:
+          path: data.EXTERNAL_NATS_URL
+          value: "wss://nats:443"
+        template: templates/webhook/configmap.yaml
+
+  - it: Set SECURE_URL to sysdig.apiendpoint and configure EXTERNAL_NATS_URL based on sysdig.apiendpoint
+    set:
+      global:
+        sysdig:
+          region: us1
+      clusterName: test-k8s
+      sysdig:
+        apiEndpoint: "sysdig_api_endpoint"
+      features:
+        kspmAdmissionController: true
+    asserts:
+      - equal:
+          path: data.SECURE_URL
+          value: "https://sysdig_api_endpoint"
+        template: templates/webhook/configmap.yaml
+      - equal:
+          path: data.EXTERNAL_NATS_URL
+          value: "wss://sysdig_api_endpoint:443"
+        template: templates/webhook/configmap.yaml
+
+  - it: Allow customers from custom regions to use only url instead of apiEndpoint
+    set:
+      global:
+        sysdig:
+          region: custom
+      clusterName: test-k8s
+      sysdig:
+        url: "https://sysdig_url_endpoint"
+      features:
+        kspmAdmissionController: false
+    asserts:
+      - equal:
+          path: data.SECURE_URL
+          value: "https://sysdig_url_endpoint"
+        template: templates/webhook/configmap.yaml
+      - notExists:
+          path: data.EXTERNAL_NATS_URL
+        template: templates/webhook/configmap.yaml
+
+
+
+
