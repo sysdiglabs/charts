@@ -111,13 +111,32 @@ If release name contains chart name it will be used as a full name.
 {{- end -}}
 
 {{/*
+Validate Sysdig API Endpoint
+*/}}
+{{- define "chart.validateSysdigApiEndpoint" -}}
+    {{- if or (hasPrefix "http://" .Values.sysdig.apiEndpoint) (hasPrefix "https://" .Values.sysdig.apiEndpoint) -}}
+        {{- fail "Sysdig API endpoint should not contain http:// or https:// prefix" -}}
+    {{- end -}}
+{{- end -}}
+
+{{/*
 Determine Secure endpoint based on provided region or .Values.sysdig.apiEndpoint
 */}}
 {{- define "admissionController.apiEndpoint" -}}
-    {{- if (or .Values.sysdig.apiEndpoint (eq .Values.global.sysdig.region "custom"))  -}}
-        {{- required "A valid Sysdig API endpoint (.sysdig.apiEndpoint) is required" .Values.sysdig.apiEndpoint -}}
-    {{- else if hasKey ((include "sysdig.regions" .) | fromYaml) .Values.global.sysdig.region }}
-        {{- include "sysdig.secureApiEndpoint" . }}
+    {{ include "chart.validateSysdigApiEndpoint" . }}
+    {{- if eq .Values.global.sysdig.region "custom" -}}
+        {{- $apiEndpoint := coalesce .Values.sysdig.url .Values.sysdig.apiEndpoint -}}
+        {{- required "A valid Sysdig API endpoint (.apiEndpoint or .url) is required for custom region" $apiEndpoint -}}
+    {{- else }}
+        {{- if .Values.sysdig.apiEndpoint -}}
+            {{- printf "%s" .Values.sysdig.apiEndpoint -}}
+        {{- else -}}
+            {{- if hasKey ((include "sysdig.regions" .) | fromYaml) .Values.global.sysdig.region -}}
+                {{- include "sysdig.secureApiEndpoint" . -}}
+            {{- else -}}
+                {{- required "A valid .Values.sysdig.apiEndpoint or a known region is required" .Values.sysdig.apiEndpoint -}}
+            {{- end -}}
+        {{- end -}}
     {{- end -}}
 {{- end -}}
 
@@ -125,11 +144,13 @@ Determine Secure endpoint based on provided region or .Values.sysdig.apiEndpoint
 Sysdig NATS service URL
 */}}
 {{- define "admissionController.natsUrl" -}}
-{{- if .Values.webhook.v2.nats.url -}}
-    {{- .Values.webhook.v2.nats.url -}}
-{{- else -}}
-    wss://{{ include "admissionController.apiEndpoint" . }}:443
-{{- end -}}
+    {{- if .Values.sysdig.url -}}
+        {{- required "A valid .Values.webhook.v2.nats.url is required when .Values.sysdig.url is set" .Values.webhook.v2.nats.url -}}
+    {{- else if .Values.webhook.v2.nats.url -}}
+        {{- .Values.webhook.v2.nats.url -}}
+    {{- else -}}
+        wss://{{ include "admissionController.apiEndpoint" . }}:443
+    {{- end -}}
 {{- end -}}
 
 
