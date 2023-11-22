@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.18.8
+### New Features
+* **node-analyzer** [09aa4ee7](https://github.com/sysdiglabs/charts/commit/09aa4ee720186daf8c0a9511891053e68b9cc3cd): Update legacy engine NIA component with security updates ([#1490](https://github.com/sysdiglabs/charts/issues/1490))
 # v1.18.7
 ### Chores
 * **node-analyzer** [99b29b05](https://github.com/sysdiglabs/charts/commit/99b29b05e508df76646d7e8657ac8fde01fc5450): Update legacy HostAnalyzer to 0.1.18 ([#1487](https://github.com/sysdiglabs/charts/issues/1487))
