@@ -33,13 +33,13 @@ global:
       #       MMNlTAQ9fvdNOTzZntye0PQYRTTS34D=
       #       -----END CERTIFICATE-----
       # Filename that is used when creating the secret.  Required if cert is provided.
-      keyName:
+      keyName: null
       # Provide the name of an existing Secret that contains the CA required
-      existingCaSecret:
+      existingCaSecret: null
       # Provide the filename that is defined inside the existing Secret
-      existingCaSecretKeyName:
+      existingCaSecretKeyName: null
       # Provide the name of an existing ConfigMap that contains the CA required
-      existingCaConfigMap:
+      existingCaConfigMap: null
       # Provide the filename that is defined inside the existing ConfigMap
       existingCaConfigMapKeyName: null
 namespace: ""
@@ -51,7 +51,7 @@ image:
   overrideValue: null
   registry: quay.io
   repository: sysdig/agent
-  tag: 12.17.1
+  tag: 12.18.0
   # Specify a imagePullPolicy
   # Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
   # ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
