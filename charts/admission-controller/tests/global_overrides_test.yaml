@@ -16,6 +16,10 @@ tests:
         url: secure.sysdigcloud.com
       clusterName: test-k8s
       version: 0.7.3
+      webhook:
+        v2:
+          nats:
+            url: nats://nats.urlendpoint
     asserts:
       - equal:
           path: stringData.SECURE_API_TOKEN
@@ -36,6 +40,10 @@ tests:
         url: secure.sysdigcloud.com
       clusterName: test-k8s
       version: 0.7.3
+      webhook:
+        v2:
+          nats:
+            url: nats://nats.urlendpoint
     asserts:
       - equal:
           path: stringData.SECURE_API_TOKEN
@@ -56,6 +64,10 @@ tests:
       sysdig:
         url: secure_url.com
         secureAPIToken: override_token
+      webhook:
+        v2:
+          nats:
+            url: nats://nats.urlendpoint
     asserts:
       - equal:
           path: stringData.SECURE_API_TOKEN
@@ -77,6 +89,10 @@ tests:
         k8sAuditDetections: false
       clusterName: test-k8s
       version: 0.7.3
+      webhook:
+        v2:
+          nats:
+            url: nats://nats.urlendpoint
     asserts:
       - equal:
           path: data.access-key
@@ -97,6 +113,10 @@ tests:
         k8sAuditDetections: false
       clusterName: test-k8s
       version: 0.7.3
+      webhook:
+        v2:
+          nats:
+            url: nats://nats.urlendpoint
     asserts:
       - equal:
           path: data.access-key
@@ -117,6 +137,10 @@ tests:
       features:
         kspmAdmissionController: true
         k8sAuditDetections: false
+      webhook:
+        v2:
+          nats:
+            url: nats://nats.urlendpoint
     asserts:
       - equal:
           path: data.access-key
@@ -131,6 +155,10 @@ tests:
         existingSecureAPITokenSecret: standard_token
         url: secure_url.com
       clusterName: test-k8s
+      webhook:
+        v2:
+          nats:
+            url: nats://nats.urlendpoint
     asserts:
       - equal:
           path: spec.template.spec.containers[0].envFrom[1].secretRef.name
@@ -150,6 +178,10 @@ tests:
       clusterName: test-k8s
       sysdig:
         url: secure_url.com
+      webhook:
+        v2:
+          nats:
+            url: nats://nats.urlendpoint
     asserts:
       - equal:
           path: spec.template.spec.containers[0].envFrom[1].secretRef.name
@@ -170,6 +202,10 @@ tests:
       sysdig:
         url: secure_url.com
         existingSecureAPITokenSecret: override_token
+      webhook:
+        v2:
+          nats:
+            url: nats://nats.urlendpoint
     asserts:
       - equal:
           path: spec.template.spec.containers[0].envFrom[1].secretRef.name
@@ -191,6 +227,10 @@ tests:
         k8sAuditDetections: false
       clusterName: test-k8s
       version: 0.7.3
+      webhook:
+        v2:
+          nats:
+            url: nats://nats.urlendpoint
     asserts:
       - equal:
           path: spec.template.spec.volumes[0].secret.secretName
@@ -211,6 +251,10 @@ tests:
         k8sAuditDetections: false
       clusterName: test-k8s
       version: 0.7.3
+      webhook:
+        v2:
+          nats:
+            url: nats://nats.urlendpoint
     asserts:
       - equal:
           path: spec.template.spec.volumes[0].secret.secretName
@@ -230,6 +274,10 @@ tests:
         k8sAuditDetections: false
       clusterName: test-k8s
       version: 0.7.3
+      webhook:
+        v2:
+          nats:
+            url: nats://nats.urlendpoint
     asserts:
       - equal:
           path: spec.template.spec.volumes[0].secret.secretName
@@ -249,6 +297,10 @@ tests:
         k8sAuditDetections: false
       clusterName: test-k8s
       version: 0.7.3
+      webhook:
+        v2:
+          nats:
+            url: nats://nats.urlendpoint
     asserts:
       - equal:
           path: spec.template.spec.volumes[0].secret.secretName
@@ -269,6 +321,10 @@ tests:
         k8sAuditDetections: false
       clusterName: test-k8s
       version: 0.7.3
+      webhook:
+        v2:
+          nats:
+            url: nats://nats.urlendpoint
     asserts:
       - equal:
           path: spec.template.spec.volumes[0].secret.secretName
