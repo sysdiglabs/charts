@@ -33,10 +33,14 @@ global:
       #       MMNlTAQ9fvdNOTzZntye0PQYRTTS34D=
       #       -----END CERTIFICATE-----
       # Filename that is used when creating the secret.  Required if cert is provided.
-      keyName: null # Provide the name of an existing Secret that contains the CA required
-      existingCaSecret: null # Provide the filename that is defined inside the existing Secret
-      existingCaSecretKeyName: null # Provide the name of an existing ConfigMap that contains the CA required
-      existingCaConfigMap: null # Provide the filename that is defined inside the existing ConfigMap
+      keyName: null
+      # Provide the name of an existing Secret that contains the CA required
+      existingCaSecret: null
+      # Provide the filename that is defined inside the existing Secret
+      existingCaSecretKeyName: null
+      # Provide the name of an existing ConfigMap that contains the CA required
+      existingCaConfigMap: null
+      # Provide the filename that is defined inside the existing ConfigMap
       existingCaConfigMapKeyName: null
 namespace: ""
 image:
