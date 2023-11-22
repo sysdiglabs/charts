@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.18.7
+### Chores
+* **node-analyzer** [99b29b05](https://github.com/sysdiglabs/charts/commit/99b29b05e508df76646d7e8657ac8fde01fc5450): Update legacy HostAnalyzer to 0.1.18 ([#1487](https://github.com/sysdiglabs/charts/issues/1487))
 # v1.18.6
 ### Chores
 * **sysdig, node-analyzer** [6c7c27bf](https://github.com/sysdiglabs/charts/commit/6c7c27bf845b30af0eb5a4cb8f5fe330923d564f): bump sysdig/vuln-runtime-scanner to v1.6.4 [SSPROD-3285] ([#1477](https://github.com/sysdiglabs/charts/issues/1477))
