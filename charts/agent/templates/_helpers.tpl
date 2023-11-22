@@ -509,5 +509,5 @@ true
 
 {{/* Return the name of the local forwarder configmap */}}
 {{- define "agent.localForwarderConfigMapName" }}
-{{- include "agent.configmapName" . | printf "%s-local-forwarder" | trunc 63 | trimSuffix "-" }}
+{{- include "agent.configmapName" . | trunc 46 | trimSuffix "-" | printf "%s-local-forwarder" }}
 {{- end }}
