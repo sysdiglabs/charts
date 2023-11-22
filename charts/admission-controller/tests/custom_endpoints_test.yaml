@@ -37,7 +37,7 @@ tests:
           errorMessage: Sysdig API endpoint should not contain http:// or https:// prefix
         template: templates/webhook/deployment.yaml
 
-  - it: Set SECURE_URL and EXTERNAL_NATS_URL if kspmAdmissionController is enabled and sysdig.url and nats.url are provided 
+  - it: Set SECURE_URL and EXTERNAL_NATS_URL if kspmAdmissionController is enabled and sysdig.url and nats.url are provided
     set:
       global:
         sysdig:
@@ -124,7 +124,3 @@ tests:
       - notExists:
           path: data.EXTERNAL_NATS_URL
         template: templates/webhook/configmap.yaml
-
-
-
-
