@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **clusterScanner** [849d2cdd](https://github.com/sysdiglabs/charts/commit/849d2cddd9058b3a1e46f110ccbd0a815399219a): bump RSI and ISE version to 0.5.3 ([#1494](https://github.com/sysdiglabs/charts/issues/1494))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.30.0...sysdig-deploy-1.30.1
+### New Features
+- **agent** [445f3c03](https://github.com/sysdiglabs/charts/commit/445f3c03e4236fdffbaba54b516da2993c519d2e): Add Local Forwarder support for Agent ([#1458](https://github.com/sysdiglabs/charts/issues/1458))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.30.1...sysdig-deploy-1.31.0

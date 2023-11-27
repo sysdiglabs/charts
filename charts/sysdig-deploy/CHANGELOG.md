@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.31.0
+### New Features
+* **agent** [445f3c03](https://github.com/sysdiglabs/charts/commit/445f3c03e4236fdffbaba54b516da2993c519d2e): Add Local Forwarder support for Agent ([#1458](https://github.com/sysdiglabs/charts/issues/1458))
 # v1.30.1
 ### Chores
 * **clusterScanner** [849d2cdd](https://github.com/sysdiglabs/charts/commit/849d2cddd9058b3a1e46f110ccbd0a815399219a): bump RSI and ISE version to 0.5.3 ([#1494](https://github.com/sysdiglabs/charts/issues/1494))
