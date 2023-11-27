@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.8.4
+### Chores
+* **clusterScanner** [849d2cdd](https://github.com/sysdiglabs/charts/commit/849d2cddd9058b3a1e46f110ccbd0a815399219a): bump RSI and ISE version to 0.5.3 ([#1494](https://github.com/sysdiglabs/charts/issues/1494))
 # v0.8.3
 ### Bug Fixes
 * **cluster-scanner** [09c0c714](https://github.com/sysdiglabs/charts/commit/09c0c714333f9ba7c28954b5a688a22092e5db88): corrected onPremCompatibilityVersion to 7.0.0 ([#1466](https://github.com/sysdiglabs/charts/issues/1466))
