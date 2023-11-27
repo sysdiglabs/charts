@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- [2b91ee58](https://github.com/sysdiglabs/charts/commit/2b91ee5813a416c7e4fe20fa3639645904deba47): release agent 12.18.0 ([#1493](https://github.com/sysdiglabs/charts/issues/1493))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.29.13...sysdig-deploy-1.30.0
+### Chores
+- **clusterScanner** [849d2cdd](https://github.com/sysdiglabs/charts/commit/849d2cddd9058b3a1e46f110ccbd0a815399219a): bump RSI and ISE version to 0.5.3 ([#1494](https://github.com/sysdiglabs/charts/issues/1494))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.30.0...sysdig-deploy-1.30.1
