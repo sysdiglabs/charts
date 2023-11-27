@@ -54,6 +54,7 @@ data:
       k8sInCluster: true
       namespace: {{ .Release.Namespace }}
       workers: {{ .Values.config.maxWorkers }}
+      disablePlatformScanning: {{ default false .Values.config.scan.disablePlatformScanning }}
       jobs:
         ttlSecondsAfterFinished: {{ .Values.config.scan.jobs.ttlSecondsAfterFinished }}
         serviceAccountName: {{ include "registry-scanner.serviceAccountName" . }}
