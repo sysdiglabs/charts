@@ -2,7 +2,8 @@
   "$schema": "http://json-schema.org/schema#",
   "type": "object",
   "required": [
-    "ebpf"
+    "ebpf",
+    "localForwarder"
   ],
   "properties": {
     "ebpf": {
@@ -20,6 +21,98 @@
           "enum": [
             "legacy_ebpf",
             "universal_ebpf"
+          ]
+        }
+      }
+    },
+    "localForwarder": {
+      "type": "object",
+      "required": [
+        "enabled",
+        "integrations",
+        "transmitMessageTypes"
+      ],
+      "if": {
+        "properties": {
+          "enabled": {
+            "const": true
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "integrations": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/$defs/AgentLocalForwarderIntegrations"
+            }
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "transmitMessageTypes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "POLICY_EVENTS",
+                "SECURE_AUDIT"
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "AgentLocalForwarderIntegrations": {
+      "type": "object",
+      "required": [
+        "channels",
+        "configuration"
+      ],
+      "properties": {
+        "channels": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "POLICY_EVENTS",
+              "ACTIVITY_AUDIT",
+              "MONITOR_EVENTS",
+              "SECURE_EVENTS_POLICIES",
+              "SECURE_EVENTS_SCANNING",
+              "SECURE_EVENTS_BENCHMARK",
+              "SECURE_EVENTS_HOSTSCANNING",
+              "SECURE_EVENTS_COMPLIANCE",
+              "SECURE_EVENTS_AUDIT_TRAIL",
+              "SECURE_OBJECT_STORE_RUNTIME",
+              "SECURE_OBJECT_STORE_REGISTRY",
+              "SECURE_OBJECT_STORE_PIPELINE"
+            ]
+          }
+        },
+        "configuration": {
+          "type": "object"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "SYSLOG",
+            "SPLUNK",
+            "MCM",
+            "QRADAR",
+            "WEBHOOK",
+            "KAFKA",
+            "CHRONICLE",
+            "SENTINEL",
+            "SQS",
+            "PUBSUB",
+            "SCC",
+            "LOCAL",
+            "ELASTIC",
+            "S3"
           ]
         }
       }

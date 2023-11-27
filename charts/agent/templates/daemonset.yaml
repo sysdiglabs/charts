@@ -223,6 +223,11 @@ spec:
               command: [ "test", "-e", "/opt/draios/logs/running" ]
             initialDelaySeconds: {{ .Values.daemonset.probes.initialDelay }}
           volumeMounts:
+          {{- if .Values.localForwarder.enabled }}
+            - mountPath: /opt/draios/etc/local_forwarder_config.yaml
+              subPath: local_forwarder_config.yaml
+              name: local-forwarder-config
+          {{- end }}
           {{- /* Always requested */}}
             - mountPath: /host/dev
               name: dev-vol
@@ -344,6 +349,12 @@ spec:
           configMap:
             name: {{ include "agent.configmapName" . }}
             optional: true
+        {{- if .Values.localForwarder.enabled }}
+        - name: local-forwarder-config
+          configMap:
+            name: {{ include "agent.localForwarderConfigMapName" . }}
+            optional: true
+        {{- end }}
         - name: sysdig-agent-secrets
           secret:
             {{- if not ( include "agent.accessKeySecret" . ) }}

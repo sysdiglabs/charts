@@ -506,3 +506,8 @@ sysdig_capture_enabled: false
 true
 {{- end }}
 {{- end }}
+
+{{/* Return the name of the local forwarder configmap */}}
+{{- define "agent.localForwarderConfigMapName" }}
+{{- include "agent.configmapName" . | trunc 46 | trimSuffix "-" | printf "%s-local-forwarder" }}
+{{- end }}
