@@ -8,5 +8,3 @@ version: 1.1.24
 appVersion: 0.2.60
 maintainers:
   - name: sysdiglabs
-  - name: hayk
-    email: hayk.kocharyan@sysdig.com

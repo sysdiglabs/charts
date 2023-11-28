@@ -8,8 +8,6 @@ home: https://sysdiglabs.github.io/admission-controller/
 icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
 maintainers:
   - name: sysdiglabs
-  - name: hayk
-    email: hayk.kocharyan@sysdig.com
 dependencies:
   - name: common
     repository: file://../common
