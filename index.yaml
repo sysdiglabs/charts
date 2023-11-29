@@ -20771,6 +20771,23 @@ entries:
     version: 0.1.0
   registry-scanner:
   - apiVersion: v2
+    appVersion: 0.2.59
+    created: "2023-11-29T18:24:21.273455677Z"
+    description: Sysdig Registry Scanner
+    digest: 622b562487eaab74de52f1c798694d63f31ef0f4d9ea65a349a45e1a812fb035
+    home: https://sysdiglabs.github.io/registry-scanner/
+    icon: https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Shovel_600px.png
+    maintainers:
+    - email: giuseppe.esposito@sysdig.com
+      name: giuse-sysdig
+    - email: hayk.kocharyan@sysdig.com
+      name: hayk
+    name: registry-scanner
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/registry-scanner-1.1.22/registry-scanner-1.1.22.tgz
+    version: 1.1.22
+  - apiVersion: v2
     appVersion: 0.2.58
     created: "2023-11-17T16:49:59.014304017Z"
     description: Sysdig Registry Scanner
@@ -30911,6 +30928,62 @@ entries:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-1.7.15/sysdig-1.7.15.tgz
     version: 1.7.15
   sysdig-deploy:
+  - apiVersion: v2
+    created: "2023-11-29T18:24:21.410919936Z"
+    dependencies:
+    - alias: admissionController
+      condition: admissionController.enabled
+      name: admission-controller
+      repository: file://../admission-controller
+      version: ~0.14.14
+    - alias: agent
+      condition: agent.enabled
+      name: agent
+      repository: file://../agent
+      version: ~1.17.0
+    - name: common
+      repository: file://../common
+      version: ~1.2.2
+    - alias: nodeAnalyzer
+      condition: nodeAnalyzer.enabled
+      name: node-analyzer
+      repository: file://../node-analyzer
+      version: ~1.18.8
+    - alias: clusterScanner
+      condition: clusterScanner.enabled
+      name: cluster-scanner
+      repository: file://../cluster-scanner
+      version: ~0.8.4
+    - alias: kspmCollector
+      condition: global.kspm.deploy
+      name: kspm-collector
+      repository: file://../kspm-collector
+      version: ~0.9.3
+    - alias: rapidResponse
+      condition: rapidResponse.enabled
+      name: rapid-response
+      repository: file://../rapid-response
+      version: ~0.8.4
+    description: A chart with various Sysdig components for Kubernetes
+    digest: 79358da3ea1004346bcc1407778b5078e500edc37b79bee8c2aa7f30169a8ffa
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    maintainers:
+    - email: alberto.barba@sysdig.com
+      name: AlbertoBarba
+    - email: adam.roberts@sysdig.com
+      name: aroberts87
+    - email: francesco.furlan@sysdig.com
+      name: francesco-furlan
+    - email: gerlando.falauto@sysdig.com
+      name: iurly
+    - email: marcovito.moscaritolo@sysdig.com
+      name: mavimo
+    name: sysdig-deploy
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/sysdig-deploy-1.31.1/sysdig-deploy-1.31.1.tgz
+    version: 1.31.1
   - apiVersion: v2
     created: "2023-11-27T15:48:51.641721692Z"
     dependencies:
@@ -48171,4 +48244,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2023-11-27T15:48:51.644080696Z"
+generated: "2023-11-29T18:24:21.413100342Z"
