@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.17.1
+### New Features
+* **agent** [5ec02705](https://github.com/sysdiglabs/charts/commit/5ec027053dd349769173ca7aa9db1dd395df7883): add support for new agent readiness probe ([#1437](https://github.com/sysdiglabs/charts/issues/1437))
 # v1.17.0
 ### New Features
 * **agent** [445f3c03](https://github.com/sysdiglabs/charts/commit/445f3c03e4236fdffbaba54b516da2993c519d2e): Add Local Forwarder support for Agent ([#1458](https://github.com/sysdiglabs/charts/issues/1458))
