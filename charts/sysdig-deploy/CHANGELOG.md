@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.31.2
+### Chores
+* **sysdig-deploy** [418863d1](https://github.com/sysdiglabs/charts/commit/418863d1c06007271bdad4f16e5c90e3884541d7): Automatic version bump due to updated dependencies ([#1502](https://github.com/sysdiglabs/charts/issues/1502))
 # v1.31.0
 ### New Features
 * **agent** [445f3c03](https://github.com/sysdiglabs/charts/commit/445f3c03e4236fdffbaba54b516da2993c519d2e): Add Local Forwarder support for Agent ([#1458](https://github.com/sysdiglabs/charts/issues/1458))
