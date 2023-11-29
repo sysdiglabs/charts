@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.1.22
+### Chores
+* **registry-scanner** [7d114fe8](https://github.com/sysdiglabs/charts/commit/7d114fe8cf822354dbc542f9ce845e216c08f70b): Update to v0.2.59 [ESC-3783] ([#1499](https://github.com/sysdiglabs/charts/issues/1499))
 # v1.1.21
 ### New Features
 * **registry-scanner** [569fc3ee](https://github.com/sysdiglabs/charts/commit/569fc3eea7b6e30c6ba08de18effd0f13693b3ff): List GCR as supported registry type ([#1462](https://github.com/sysdiglabs/charts/issues/1462))
