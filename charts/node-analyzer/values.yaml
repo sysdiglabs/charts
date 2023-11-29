@@ -416,6 +416,11 @@ nodeAnalyzer:
     settings:
       replicas: 1
 
+    scanContainers:
+      enabled: false
+      # dockerSocketPath: "unix:///var/run/docker.sock"
+      # podmanSocketPath: "unix:///var/run/podman.sock"
+
   kspmAnalyzer:
     debug: false
     image:

@@ -156,3 +156,62 @@ tests:
           of: ConfigMap
       - isNull:
           path: data.additional_dirs_to_scan
+
+  - it: "Container scanner is disabled by default"
+    set:
+      clusterName: "test"
+      nodeAnalyzer.hostScanner.deploy: true
+    templates:
+      - ../templates/daemonset-node-analyzer.yaml
+    asserts:
+      - isKind:
+          of: DaemonSet
+      - isNull:
+          path: spec.template.spec.containers[3].env[?(@.name == "USE_COMBINED_SCANNER")].value
+      - isNull:
+          path: spec.template.spec.containers[3].env[?(@.name == "SCAN_CONTAINERS_ENABLED")].value
+  - it: "Container scanner enabled - daemonset"
+    set:
+      clusterName: "test"
+      nodeAnalyzer.hostScanner.deploy: true
+      nodeAnalyzer.hostScanner.scanContainers.enabled: true
+    templates:
+      - ../templates/daemonset-node-analyzer.yaml
+    asserts:
+      - isKind:
+            of: DaemonSet
+      - equal:
+          path: spec.template.spec.containers[3].env[?(@.name == "USE_COMBINED_SCANNER")].value
+          value: "true"
+  - it: "Container scanner enabled and empty socket paths - configmap"
+    set:
+      clusterName: "test"
+      nodeAnalyzer.hostScanner.deploy: true
+      nodeAnalyzer.hostScanner.scanContainers.enabled: true
+    templates:
+      - ../templates/configmap-host-scanner.yaml
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - isNull:
+          path: data.docker_socket_path
+      - isNull:
+          path: data.podman_socket_path
+  - it: "Container scanner enabled and not empty socket paths - configmap"
+    set:
+      clusterName: "test"
+      nodeAnalyzer.hostScanner.deploy: true
+      nodeAnalyzer.hostScanner.scanContainers.enabled: true
+      nodeAnalyzer.hostScanner.scanContainers.dockerSocketPath: "/docker/socket"
+      nodeAnalyzer.hostScanner.scanContainers.podmanSocketPath: "/podman/socket"
+    templates:
+      - ../templates/configmap-host-scanner.yaml
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - equal:
+          path: data.docker_socket_path
+          value: "/docker/socket"
+      - equal:
+          path: data.podman_socket_path
+          value: "/podman/socket"
