@@ -337,7 +337,7 @@ nodeAnalyzer:
     env: {}
 
     settings:
-      eveEnabled: false
+      eveEnabled: true
       # Threshold for which images will be skipped in the analysis.
       # Size is in bytes, default is not set (don't skip)
       # maxImageSizeAllowed: ""

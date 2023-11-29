@@ -23,8 +23,6 @@ data:
   {{- end -}}
   {{- if .Values.nodeAnalyzer.runtimeScanner.settings.eveEnabled }}
   eve_enabled: "true"
-  {{- end -}}
-  {{- if hasKey .Values.nodeAnalyzer.runtimeScanner "eveConnector" }}
   eve_integration_enabled: "true"
   {{- end -}}
   {{- if hasKey .Values.nodeAnalyzer.runtimeScanner "settings" }}
