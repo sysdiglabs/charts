@@ -43,6 +43,15 @@ targets:
       file: "charts/agent/values.yaml"
       key: "$.image.tag"
 
+  updateAgentReadme:
+    name: "update agent tag in readme table"
+    kind: file
+    scmid: github
+    spec:
+      file: "charts/agent/README.md"
+      matchpattern: '\| `\d+.\d+.\d+`'
+      replacepattern: '| `{{ requiredEnv "AGENT_RELEASE" }}`'
+
   bumpAgentChart:
     name: "bump the chart version of the agent chart"
     kind: helmchart
