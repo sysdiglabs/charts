@@ -47,6 +47,38 @@ tests:
             initialDelaySeconds: 90
             periodSeconds: 3
     template: templates/daemonset.yaml
+  - it: "[DaemonSet] Readiness Probe (agent == dev)"
+    set:
+      image:
+        tag: dev
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].readinessProbe
+          value:
+            exec:
+              command:
+                - test
+                - -e
+                - /opt/draios/logs/running
+            initialDelaySeconds: 90
+            periodSeconds: 3
+    template: templates/daemonset.yaml
+  - it: "[DaemonSet] Readiness Probe (agent == latest)"
+    set:
+      image:
+        tag: latest
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].readinessProbe
+          value:
+            exec:
+              command:
+                - test
+                - -e
+                - /opt/draios/logs/running
+            initialDelaySeconds: 90
+            periodSeconds: 3
+    template: templates/daemonset.yaml
   - it: "[DelegatedAgentDeployment] Readiness Probe (agent > 12.18.0)"
     set:
       delegatedAgentDeployment:
@@ -83,6 +115,40 @@ tests:
         enabled: true
       image:
         tag: 12.16.3
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].readinessProbe
+          value:
+            exec:
+              command:
+                - test
+                - -e
+                - /opt/draios/logs/running
+            initialDelaySeconds: 90
+            periodSeconds: 3
+  - it: "[DelegatedAgentDeployment] Readiness Probe (agent == dev)"
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+      image:
+        tag: dev
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].readinessProbe
+          value:
+            exec:
+              command:
+                - test
+                - -e
+                - /opt/draios/logs/running
+            initialDelaySeconds: 90
+            periodSeconds: 3
+  - it: "[DelegatedAgentDeployment] Readiness Probe (agent == latest)"
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+      image:
+        tag: latest
     asserts:
       - equal:
           path: spec.template.spec.containers[0].readinessProbe
