@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.17.2
+### Bug Fixes
+* **agent** [9c64b01a](https://github.com/sysdiglabs/charts/commit/9c64b01a687e59b6d5950e43f79b560bead87129): allows to specify non semver tags [SMAGENT-6093]  ([#1504](https://github.com/sysdiglabs/charts/issues/1504))
 # v1.17.1
 ### New Features
 * **agent** [5ec02705](https://github.com/sysdiglabs/charts/commit/5ec027053dd349769173ca7aa9db1dd395df7883): add support for new agent readiness probe ([#1437](https://github.com/sysdiglabs/charts/issues/1437))
