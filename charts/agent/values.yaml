@@ -1,17 +1,27 @@
 # Default values for Sysdig Monitor and Secure Helm package.
 global:
-  clusterConfig: {}
+  clusterConfig:
+    # Sets a unique name to the cluster. You can then use the cluster name to identify events using the `kubernetes.cluster.name` tag
+    name: ""
   sysdig:
+    # Specify your Sysdig Agent Access Key
+    accessKey: ""
+    # An alternative to using the Sysdig Agent access key. Specify the name of a Kubernetes secret containing an `access-key` entry
+    accessKeySecret: ""
+    # The SaaS region for these agents. Possible values: `"us1"`, `"us2"`, `"us3"`, `"us4"`, `"eu1"`, `"au1"`, and `"custom"`
     region: "us1"
-  proxy: {}
+  proxy: {}  # +doc-gen:ignore
   gke:
     # true here enables the deployment on gke autopilot clusters
     autopilot: false
+    # Specifies the amount of ephemeral storage to provide to the agent container in GKE Autopilot clusters
     ephemeralStorage: "500Mi"
   image:
+    # Global pull secrets
     pullSecrets: []
+    # Global pull policy
     pullPolicy: IfNotPresent
-  ssl:
+  ssl:  # +doc-gen:ignore
     ca:
       # For outbound connections (secure backend, proxy,...)
       # A PEM-encoded x509 certificate.  This can also be a bundle with multiple certificates.
@@ -42,6 +52,7 @@ global:
       existingCaConfigMap: null
       # Provide the filename that is defined inside the existing ConfigMap
       existingCaConfigMapKeyName: null
+# Overrides the global namespace setting and release namespace for components
 namespace: ""
 image:
   # This is a hack to support RELATED_IMAGE_<identifier> feature in Helm based
@@ -49,60 +60,37 @@ image:
   #
   # As long as I don't want to people to use this, I will keep it undocumented
   overrideValue: null
+  # Sysdig Agent image registry
   registry: quay.io
+  # Sets the image repository to pull the agent image from
   repository: sysdig/agent
+  # Specifies the desired image tag
   tag: 12.18.0
-  # Specify a imagePullPolicy
-  # Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
-  # ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+  # Specifies the Image pull policy
   pullPolicy: []
-  # Optionally specify an array of imagePullSecrets.
-  # Secrets must be manually created in the namespace.
-  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-  #
-  # pullSecrets:
-  #   - name: myRegistrKeySecretName
+  # Specifies the image pull secrets
+  pullSecrets: []
 # Specify a predefined resource profile.
-#
-# Available options are:
-# * small
-#   Defined as:
-#   requests:
-#     cpu: 1000m
-#     memory: 1024Mi
-#   limits:
-#     cpu: 1000m
-#     memory: 1024Mi
-#
-# * medium
-#   Defined as:
-#   requests:
-#     cpu: 3000m
-#     memory: 3072Mi
-#   limits:
-#     cpu: 3000m
-#     memory: 3072Mi
-#
-# * large
-#   Defined as:
-#   requests:
-#     cpu: 5000m
-#     memory: 6144Mi
-#   limits:
-#     cpu: 5000m
-#     memory: 6144Mi
+# Options are `small`, `medium`, or `large`.
 resourceProfile: small
-# resources:
-#   requests:
-#     cpu: <cpu requests>m
-#     memory: <memory requests>Mi
-#   limits:
-#     cpu: <cpu limits>m
-#     memory: <memory limits>Mi
+# Allows for more fine-grained resource tuning than the resourceProfile options
+resources:
+  requests:
+    # Specifies the CPU requested to run per pod
+    cpu: ""
+    # Specifies the memory requested to run per pod
+    memory: ""
+  limits:
+    # Specifies the CPU limit per pod
+    cpu: ""
+    # Specifies the memory limit per pod
+    memory: ""
 gke:
   # true here enables the deployment on gke autopilot clusters
   autopilot: false
+  # If true, required PriorityClass will be created to ensure that the agent pods are scheduled in GKE Autopilot. The parameter uses the name provided by the `priorityClassName` parameter
   createPriorityClass: false
+  # Specifies the amount of ephemeral storage to provide to the agent container in GKE Autopilot clusters
   ephemeralStorage: "500Mi"
 rbac:
   # true here enables creation of rbac resources
@@ -126,9 +114,14 @@ daemonset:
     # You can also customize maxUnavailable, maxSurge or minReadySeconds if you
     # need it
     type: RollingUpdate
-    rollingUpdate: {}
+    rollingUpdate:
+      # The maximum number of nodes with an existing available DaemonSet pod that can have an updated DaemonSet pod during an update
+      maxSurge: ""
+      # The maximum number of pods that can be unavailable during the update process
+      maxUnavailable: ""
   ## Extra environment variables that will be pass onto deployment pods
   env: {}
+  # Specifies the desired Node Selector.
   nodeSelector: {}
   # arch and os will be used to template out a node affinity block matching everything in each list. If affinity is
   # defined, these fields will be ignored
@@ -136,10 +129,10 @@ daemonset:
     - amd64
     - arm64
     - s390x
+  # Specifies the allowed operating systems for scheduling
   os:
     - linux
-  # Allow the DaemonSet to schedule using affinity rules
-  # Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+  # Specifies node affinities. Overrides daemonset.arch and daemonset.os values.
   affinity: {}
   # Allow the DaemonSet to set annotations
   annotations: {}
@@ -147,17 +140,19 @@ daemonset:
   labels: {}
   # readiness probe delays
   probes:
+    # Specifies the initial delay for the daemonset readiness probe
     initialDelay: 90
+    # Specifies the period delay for the daemonset readiness probe
     periodDelay: 3
   kmodule:
+    # Sets the environment variables for the kernel module image builder container
     env: {}
-# If is behind a proxy you can set the proxy server
-# This proxy settings apply for the App-Checks.
-# If you need to configure the agent to allow it to communicate with the Sysdig collector through an HTTP proxy check:
-# https://docs.sysdig.com/en/enable-http-proxy-for-agents.html
 proxy:
+  # Sets `http_proxy` on the agent container. Overrides the proxy setting from `global.proxy`
   httpProxy: null
+  # Sets `https_proxy` on the agent container. Overrides the proxy setting from `global.proxy`
   httpsProxy: null
+  # Sets `no_proxy` on the agent container. Overrides the proxy setting from `global.proxy`
   noProxy: null
 # Set daemonset timezone
 timezone: null
@@ -177,27 +172,38 @@ slim:
   enabled: true
   # The image repo to be used for slim Agents
   image:
+    # Specifies the slim agent image repository
     repository: sysdig/agent-slim
   # When using slim the kernel module is built in other container, which
   # contains the toolchain required to build the kernel module.
   kmoduleImage:
+    # Specifies the repository to pull the kernel module image builder from
     repository: sysdig/agent-kmodule
+    # Specifies the image digest to pull
     digest: null
   resources:
     # Resources required by the kernel module builder image. These are some
     # a sane defaults ones, but you can tweak or ask Sysdig Support for more
     # info about this
     requests:
+      # Specifies the CPU requested for building the kernel module
       cpu: 250m
+      # Specifies the memory requested for building the kernel module
       memory: 348Mi
     limits:
+      # Specifies the CPU limit for building the kernel module
       cpu: 1000m
+      # Specifies the memory limit for building the kernel module
       memory: 512Mi
 # For Sysdig On-Prem installations or for custom collector settings, set the following fields
 collectorSettings:
+  # Specifies the IP address or hostname of the collector.
   collectorHost: null
+  # Specifies the port number for the TCP connection of the collector service
   collectorPort: null
-  ssl: null
+  # Specifies whether the collector accepts SSL
+  ssl: true
+  # Set this parameter to `false` if you don't want to verify SSL certificate
   sslVerifyCertificate: null
 # Setting a cluster name allows you to filter events from this cluster using kubernetes.cluster.name
 clusterName: ""
@@ -210,14 +216,6 @@ sysdig:
   disableCaptures: false
   # Advanced settings. Any option in here will be directly translated into dragent.yaml in the Configmap
   settings: {}
-  ### Example: Agent tags
-  # tags: linux:ubuntu,dept:dev,local:nyc
-  ### Example: Proxy configuration (see https://docs.sysdig.com/en/enable-http-proxy-for-agents.html)
-  # ssl: false
-  # http_proxy:
-  #   proxy_host: squid.yourdomain.com
-  #   proxy_port: 3128
-  #   ssl: false
 secure:
   # true here enables Sysdig Secure: container run-time security & forensics
   enabled: true
@@ -227,45 +225,27 @@ monitor:
 auditLog:
   # true here activates the K8s Audit Log feature for Sysdig Secure
   enabled: true
+  # Specifies the URL where Sysdig Agent listens for the Kubernetes audit log events
   auditServerUrl: 0.0.0.0
+  # Specifies the port where Sysdig Agent listens for the Kubernetes audit log events
   auditServerPort: 7765
   dynamicBackend:
     # true here configures an AuditSink who will receive the K8s audit logs
     enabled: false
 # Promscrape prometheus.yaml not configured by default
 prometheus:
+  # Specifies the file to configure promscrape.
   file: false
+  # Configures the Prometheus metric collection. Performs relabelling and filtering
   yaml: {}
 extraVolumes:
+  # Specifies the additional volumes to mount in the Sysdig Agent to pass new secrets or configmaps
   volumes: []
+  # Specifies the mount points for additional volumes
   mounts: []
-  # Allow passing extra volumes to the agent to mount secrets or certificates
-  # to authenticate in different services.
-  # Any kind of volume can be passed. Example:
-  #
-  # extraVolumes:
-  #   volumes:
-  #     - name: sysdig-new-cm
-  #       configMap:
-  #         name: my-cm
-  #         optional: true
-  #     - name: sysdig-new-secret
-  #       secret:
-  #         secretName: my-secret
-  #   mounts:
-  #     - mountPath: /opt/draios/cm
-  #       name: sysdig-new-cm
-  #     - mountPath: /opt/draios/secret
-  #       name: sysdig-new-secret
+# Allows passing extra secrets that can be mounted via extraVolumes
 extraSecrets: []
-# Allow passing extra secrets that can be mounted via extraVolumes
-#
-# extraSecrets:
-#   - name: sysdig-new-secret
-#     data:
-#       sysdig-new-password-key1: bXlwYXNzd29yZA==
-#       sysdig-new-password-key2: bXlwYXNzd29yZA==
-# Allow sysdig to run on Kubernetes 1.6 masters.
+# Specifies the tolerations for scheduling
 tolerations:
   - effect: NoSchedule
     key: node-role.kubernetes.io/master
@@ -280,14 +260,20 @@ tolerations:
     operator: Equal
     value: "true"
 leaderelection:
+  # Enables the agent leader election algorithm
   enable: false
 localForwarder:
+  # Enables the Agent Local Forwarder
   enabled: false
+  # Message types to forward from the Agent to the Agent Local Forwarder
   transmitMessageTypes:
     - POLICY_EVENTS
     - SECURE_AUDIT
+  # List of configurations for how and where the Agent Local Forwarder should forward messages
+  #
+  # See https://docs.sysdig.com/en/docs/sysdig-secure/secure-events/event-forwarding/
   integrations: []
-delegatedAgentDeployment:
+delegatedAgentDeployment:  # +doc-gen:ignore
   # Enable a specialized installation where an Agent Deployment is installed
   # in addition to the traditional DaemonSet. The DaemonSet Agents will not
   # be configured to communicate with the Kubernetes API Server, but the
@@ -327,7 +313,7 @@ delegatedAgentDeployment:
       type: RollingUpdate
 # Allow direct setting of Agent log priority levels for console and file logs (info|debug)
 logPriority: null
-ssl:
+ssl:  # +doc-gen:ignore
   ca:
     # For outbound connections (secure backend, proxy,...)
     # A PEM-encoded x509 certificate.  This can also be a bundle with multiple certificates.
@@ -358,7 +344,7 @@ ssl:
     existingCaConfigMap: null
     # Provide the filename that is defined inside the existing ConfigMap
     existingCaConfigMapKeyName: null
-tests:
+tests:  # +doc-gen:ignore
   timeout: 300s
   image:
     repo: bitnami/kubectl

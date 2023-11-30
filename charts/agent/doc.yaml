@@ -1,0 +1,11 @@
+chart:
+  name: agent
+  valuesExample: 'sysdig.accessKey=<YOUR-ACCESS-KEY>,sysdig.settings.tags="role:webserver\,location:europe"'
+project:
+  name: Sysdig Agent
+release:
+  name: sysdig-agent
+  namespace: sysdig-agent
+repository:
+  name: sysdig
+  url: https://charts.sysdig.com
