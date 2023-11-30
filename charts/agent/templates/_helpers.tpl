@@ -511,3 +511,11 @@ true
 {{- define "agent.localForwarderConfigMapName" }}
 {{- include "agent.configmapName" . | trunc 46 | trimSuffix "-" | printf "%s-local-forwarder" }}
 {{- end }}
+
+{{- define "agent.enableHttpProbes" }}
+{{- if regexMatch "^v?([0-9]+)(\\.[0-9]+)?(\\.[0-9]+)?(-([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?(\\+([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?$" .Values.image.tag }}
+{{- if semverCompare ">= 12.18.0-0" .Values.image.tag }}
+{{- printf "true" -}}
+{{- end }}
+{{- end }}
+{{- end }}
