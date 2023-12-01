@@ -179,3 +179,38 @@ tests:
       - equal:
           path: spec.template.spec.containers[0].readinessProbe.periodSeconds
           value: 3
+
+  - it: "Do not use the HTTP Readiness Probe on GKE Autopilot"
+    set:
+      global:
+        gke:
+          autopilot: true
+    template: templates/daemonset.yaml
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[*].readinessProbe
+          value:
+            exec:
+              command:
+                - test
+                - -e
+                - /opt/draios/logs/running
+            initialDelaySeconds: 90
+            periodSeconds: 3
+
+  - it: "Do not use the HTTP Readiness Probe on GKE Autopilot"
+    set:
+      gke:
+        autopilot: true
+    template: templates/daemonset.yaml
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[*].readinessProbe
+          value:
+            exec:
+              command:
+                - test
+                - -e
+                - /opt/draios/logs/running
+            initialDelaySeconds: 90
+            periodSeconds: 3
