@@ -12,6 +12,7 @@ data:
   sysdig_host: https://{{ include "cluster-scanner.apiHost" . }}
   {{ end -}}
   sysdig_verify_certificate: {{ .Values.sslVerifyCertificate | quote }}
+  sysdig_verify_registry_certificate: {{ .Values.sslVerifyRegistryCertificate | quote }}
   cluster_name: {{ .Values.global.clusterConfig.name }}
   root_namespace: {{ .Values.rootNamespace }}
   eve_enabled: {{ .Values.eveEnabled | quote }}

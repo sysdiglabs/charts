@@ -146,6 +146,12 @@ spec:
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: sysdig_verify_certificate
                 optional: true
+          - name: REGISTRY_VERIFY_CERTIFICATE
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: sysdig_verify_registry_certificate
+                optional: true
           - name: CLUSTER_NAME
             valueFrom:
               configMapKeyRef:
@@ -393,6 +399,12 @@ spec:
               configMapKeyRef:
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: sysdig_verify_certificate
+                optional: true
+          - name: REGISTRY_VERIFY_CERTIFICATE
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: sysdig_verify_registry_certificate
                 optional: true
           - name: NATS_URL
             valueFrom:
