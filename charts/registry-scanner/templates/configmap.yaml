@@ -65,6 +65,7 @@ data:
           limits:
             memory: {{ .Values.config.scan.jobs.resources.limits.memory }}
         temporaryVolumeSizeLimit: {{ .Values.config.scan.jobs.temporaryVolumeSizeLimit }}
+        scheduleExpression: {{ .Values.cronjob.schedule | quote }}
       {{- if .Values.config.scan.inlineScanImage }}
       inlineScanImage: {{ .Values.config.scan.inlineScanImage }}
       {{- end }}
