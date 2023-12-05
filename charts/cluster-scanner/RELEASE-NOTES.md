@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **clusterScanner** [849d2cdd](https://github.com/sysdiglabs/charts/commit/849d2cddd9058b3a1e46f110ccbd0a815399219a): bump RSI and ISE version to 0.5.3 ([#1494](https://github.com/sysdiglabs/charts/issues/1494))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/cluster-scanner-0.8.3...cluster-scanner-0.8.4
+### New Features
+- **cluster-scanner** [4d5254f0](https://github.com/sysdiglabs/charts/commit/4d5254f09559a7f8b1690c8c060428bb95727dc9): add verify registry as option in values ([#1516](https://github.com/sysdiglabs/charts/issues/1516))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/cluster-scanner-0.8.4...cluster-scanner-0.8.5
