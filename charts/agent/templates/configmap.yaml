@@ -29,7 +29,7 @@ data:
 {{/*
   Unset proxy_user and proxy_password if present in the settings block.
 */}}
-{{- if hasKey .Values.sysdig.settings "http_proxy" }}
+{{- if and (hasKey .Values.sysdig.settings "http_proxy") (not (include "agent.gke.autopilot" .)) }}
   {{- $_ := unset .Values.sysdig.settings.http_proxy "proxy_user" -}}
   {{- $_ := unset .Values.sysdig.settings.http_proxy "proxy_password" -}}
 {{- end }}

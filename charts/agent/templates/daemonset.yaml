@@ -249,7 +249,7 @@ spec:
               name: sysdig-agent-config
             - mountPath: /opt/draios/etc/kubernetes/secrets
               name: sysdig-agent-secrets
-            {{- if (include "agent.httpProxyCredentials" .) }}
+            {{- if and (include "agent.httpProxyCredentials" .) (not (include "agent.gke.autopilot" .)) }}
             - mountPath: /opt/draios/etc/secrets/http_proxy
               name: sysdig-agent-http-proxy-secrets
             {{- end }}
@@ -373,7 +373,7 @@ spec:
             {{- else }}
             secretName: {{ include "agent.accessKeySecret" . }}
             {{- end }}
-        {{- if (include "agent.httpProxyCredentials" .) }}
+        {{- if and (include "agent.httpProxyCredentials" .) (not (include "agent.gke.autopilot" .)) }}
         - name: sysdig-agent-http-proxy-secrets
           secret:
             secretName: {{ template "agent.fullname" . }}-proxy
