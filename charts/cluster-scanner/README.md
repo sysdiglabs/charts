@@ -25,7 +25,7 @@ $ pre-commit run -a
 $ helm repo add sysdig https://charts.sysdig.com
 $ helm repo update
 $ helm upgrade --install sysdig-cluster-scanner sysdig/cluster-scanner \
-      --create-namespace -n sysdig --version=0.8.4  \
+      --create-namespace -n sysdig --version=0.8.5  \
       --set global.clusterConfig.name=CLUSTER_NAME \
       --set global.sysdig.region=SYSDIG_REGION \
       --set global.sysdig.accessKey=YOUR-KEY-HERE
@@ -55,7 +55,7 @@ To install the chart with the release name `cluster-scanner`, run:
 
 ```console
 $ helm upgrade --install sysdig-cluster-scanner sysdig/cluster-scanner \
-       --create-namespace -n sysdig --version=0.8.4 \
+       --create-namespace -n sysdig --version=0.8.5 \
        --set global.clusterConfig.name=CLUSTER_NAME \
        --set global.sysdig.region=SYSDIG_REGION \
        --set global.sysdig.accessKey=YOUR-KEY-HERE
@@ -107,6 +107,7 @@ The following table lists the configurable parameters of the `cluster-scanner` c
 | replicaCount                                       |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | <code>2</code>                                |
 | scannerMode                                        | The scannerMode of the Cluster Scanner. Supported values are `local` or `multi`. Please refer to docs.sysdig.com for further documentation.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | <code>"local"</code>                          |
 | sslVerifyCertificate                               | Optional parameter used to check the compatibility of cluster-scanner component versions with the on-premised backend version. If you are running an on-prem version of the Sysdig backend, you MUST set this parameter with the version of Sysdig backend you are using. If you are runinng on SaaS, do NOT provide this parameter. E.g. if `onPremCompatibilityVersion=6.2`, we ensure that the image tag is < 0.5.0 for both the Runtime Status Integrator and the Image SBOM Extractor. onPremCompatibilityVersion: "6.2" Can be set to false to allow insecure connections to the Sysdig backend, such as for on-premise installs that use self-signed certificates. By default, certificates are always verified. | <code>true</code>                             |
+| sslVerifyRegistryCertificate                       | Can be set to false to allow insecure connections registries, Such as for registries with self-signed or private certificates. By default, certificates are always verified.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | <code>true</code>                             |
 | runtimeStatusIntegrator.image.registry             | The image registry to use for the Runtime Status Integrator component of Cluster Scanner                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                | <code>quay.io</code>                          |
 | runtimeStatusIntegrator.image.repository           | The image repository to use for pulling the Runtime Status Integrator image                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | <code>sysdig/runtime-status-integrator</code> |
 | runtimeStatusIntegrator.image.tag                  |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | <code>"0.5.3"</code>                          |
@@ -161,7 +162,7 @@ Specify each parameter using the **`--set key=value[,key=value]`** argument to `
 
 ```console
 $ helm upgrade --install sysdig-cluster-scanner sysdig/cluster-scanner \
-    --create-namespace -n sysdig --version=0.8.4 \
+    --create-namespace -n sysdig --version=0.8.5 \
     --set global.sysdig.region="us1"
 ```
 
@@ -170,7 +171,7 @@ installing the chart. For example:
 
 ```console
 $ helm upgrade --install sysdig-cluster-scanner sysdig/cluster-scanner \
-    --create-namespace -n sysdig --version=0.8.4 \
+    --create-namespace -n sysdig --version=0.8.5 \
     --values values.yaml
 ```
 

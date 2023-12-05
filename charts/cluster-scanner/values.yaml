@@ -96,6 +96,10 @@ scannerMode: "local"
 # By default, certificates are always verified.
 sslVerifyCertificate: true
 
+# Can be set to false to allow insecure connections registries,
+# Such as for registries with self-signed or private certificates.
+# By default, certificates are always verified.
+sslVerifyRegistryCertificate: true
 runtimeStatusIntegrator:
   image:
     # The image registry to use for the Runtime Status Integrator component of
