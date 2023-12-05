@@ -11379,6 +11379,34 @@ entries:
     version: 0.1.0
   kspm-collector:
   - apiVersion: v2
+    appVersion: 1.36.0
+    created: "2023-12-05T14:09:57.526336246Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      version: ~1.2.2
+    description: Sysdig KSPM collector
+    digest: 550c86b6dfdc4ee1f592c059ffe62a3fdaebc9f83f9c4a22df8574c08af506c7
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: chen.shmilovich@sysdig.com
+      name: chen-shmilovich-sysdig
+    name: kspm-collector
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/kspm-collector-0.10.0/kspm-collector-0.10.0.tgz
+    version: 0.10.0
+  - apiVersion: v2
     appVersion: 1.35.0
     created: "2023-11-12T09:18:08.633161302Z"
     dependencies:
@@ -13227,6 +13255,36 @@ entries:
     - https://github.com/sysdiglabs/charts/releases/download/kspm-collector-0.1.0/kspm-collector-0.1.0.tgz
     version: 0.1.0
   node-analyzer:
+  - apiVersion: v2
+    appVersion: 12.9.0
+    created: "2023-12-05T14:09:57.674316394Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      version: ~1.2.2
+    description: Sysdig Node Analyzer
+    digest: 0aef2e282b37109b4be12c64c2347100be99c6e45cb84d25de1e76b778080308
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: chen.shmilovich@sysdig.com
+      name: chen-shmilovich-sysdig
+    - email: giuseppe.esposito@sysdig.com
+      name: giuse-sysdig
+    name: node-analyzer
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/node-analyzer-1.19.0/node-analyzer-1.19.0.tgz
+    version: 1.19.0
   - apiVersion: v2
     appVersion: 12.9.0
     created: "2023-12-04T13:18:02.927284968Z"
@@ -31087,6 +31145,62 @@ entries:
     version: 1.7.15
   sysdig-deploy:
   - apiVersion: v2
+    created: "2023-12-05T14:09:57.998889136Z"
+    dependencies:
+    - alias: admissionController
+      condition: admissionController.enabled
+      name: admission-controller
+      repository: file://../admission-controller
+      version: ~0.14.14
+    - alias: agent
+      condition: agent.enabled
+      name: agent
+      repository: file://../agent
+      version: ~1.17.3
+    - name: common
+      repository: file://../common
+      version: ~1.2.2
+    - alias: nodeAnalyzer
+      condition: nodeAnalyzer.enabled
+      name: node-analyzer
+      repository: file://../node-analyzer
+      version: ~1.19.0
+    - alias: clusterScanner
+      condition: clusterScanner.enabled
+      name: cluster-scanner
+      repository: file://../cluster-scanner
+      version: ~0.8.4
+    - alias: kspmCollector
+      condition: global.kspm.deploy
+      name: kspm-collector
+      repository: file://../kspm-collector
+      version: ~0.10.0
+    - alias: rapidResponse
+      condition: rapidResponse.enabled
+      name: rapid-response
+      repository: file://../rapid-response
+      version: ~0.8.4
+    description: A chart with various Sysdig components for Kubernetes
+    digest: 367188eaefa991a90adba7a32870c45cbcf4834c57c1026fd8868a0619bc8ea6
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    maintainers:
+    - email: alberto.barba@sysdig.com
+      name: AlbertoBarba
+    - email: adam.roberts@sysdig.com
+      name: aroberts87
+    - email: francesco.furlan@sysdig.com
+      name: francesco-furlan
+    - email: gerlando.falauto@sysdig.com
+      name: iurly
+    - email: marcovito.moscaritolo@sysdig.com
+      name: mavimo
+    name: sysdig-deploy
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/sysdig-deploy-1.32.0/sysdig-deploy-1.32.0.tgz
+    version: 1.32.0
+  - apiVersion: v2
     created: "2023-12-01T17:49:14.716577508Z"
     dependencies:
     - alias: admissionController
@@ -48570,4 +48684,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2023-12-04T17:51:33.658835574Z"
+generated: "2023-12-05T14:09:58.002851046Z"
