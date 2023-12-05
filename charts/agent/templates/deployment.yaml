@@ -128,6 +128,10 @@ spec:
               name: sysdig-agent-config
             - mountPath: /opt/draios/etc/kubernetes/secrets
               name: sysdig-agent-secrets
+            {{- if (include "agent.httpProxyCredentials" .) }}
+            - mountPath: /opt/draios/etc/secrets/http_proxy
+              name: sysdig-agent-http-proxy-secrets
+            {{- end }}
             - mountPath: /etc/podinfo
               name: podinfo
             {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
@@ -252,6 +256,11 @@ spec:
             {{- else }}
             secretName: {{ include "agent.accessKeySecret" . }}
             {{- end }}
+        {{- if (include "agent.httpProxyCredentials" .) }}
+        - name: sysdig-agent-http-proxy-secrets
+          secret:
+            secretName: {{ template "agent.fullname" . }}-proxy
+        {{- end }}
         - name: podinfo
           downwardAPI:
             defaultMode: 420
