@@ -27,6 +27,13 @@ data:
     tags: {{ include "agent.tags" . }}
 {{- end }}
 {{/*
+  Unset proxy_user and proxy_password if present in the settings block.
+*/}}
+{{- if hasKey .Values.sysdig.settings "http_proxy" }}
+  {{- $_ := unset .Values.sysdig.settings.http_proxy "proxy_user" -}}
+  {{- $_ := unset .Values.sysdig.settings.http_proxy "proxy_password" -}}
+{{- end }}
+{{/*
   Checking here the user is using Custom CA and if http_proxy.ssl = true
   If these conditions are true, then we use the agent.sslCaFileName for the http_proxy.ca_certificate
 */}}
