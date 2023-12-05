@@ -37,3 +37,34 @@ tests:
           path: spec.template.spec.containers[*].volumeMounts[?(@.name == "varlib-vol")]
       - isNull:
           path: spec.template.spec.volumes[?(@.name == "varlib-vol")]
+
+  - it: Ensure agent http proxy volume is not mounted when http_proxy settings is not set
+    set:
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+    asserts:
+      - isNull:
+          path: spec.template.spec.volumes[?(@.name == "sysdig-agent-http-proxy-secrets")]
+        template: daemonset.yaml
+      - isNull:
+          path: spec.template.spec.containers[*].volumeMounts[?(@.name == "sysdig-agent-http-proxy-secrets")]
+        template: daemonset.yaml
+
+  - it: Ensure agent http proxy volume is mounted when http_proxy settings is set
+    set:
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+        settings:
+          http_proxy:
+            proxy_user: username
+            proxy_password: password
+    asserts:
+      - equal:
+          path: spec.template.spec.volumes[?(@.name == "sysdig-agent-http-proxy-secrets")].secret
+          value:
+            secretName: RELEASE-NAME-agent-proxy
+        template: daemonset.yaml
+      - equal:
+          path: spec.template.spec.containers[*].volumeMounts[?(@.name == "sysdig-agent-http-proxy-secrets")].mountPath
+          value: /opt/draios/etc/secrets/http_proxy
+        template: daemonset.yaml
