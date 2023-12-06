@@ -1,6 +1,7 @@
 suite: Host volumes are available for agent
 templates:
-  - templates/daemonset.yaml
+  - daemonset.yaml
+  - deployment.yaml
 tests:
   - it: Ensure /var/run host volume is mounted as /host/var/run in container
     asserts:
@@ -10,6 +11,9 @@ tests:
       - equal:
           path: spec.template.spec.volumes[?(@.name == "varrun-vol")].hostPath.path
           value: /var/run
+    templates:
+      - daemonset.yaml
+
   - it: Ensure /var/lib host volume is mounted as /host/var/lib in container
     asserts:
       - equal:
@@ -18,6 +22,9 @@ tests:
       - equal:
           path: spec.template.spec.volumes[?(@.name == "varlib-vol")].hostPath.path
           value: /var/lib
+    templates:
+      - daemonset.yaml
+
   - it: Ensure /var/lib host volume is not mounted as /host/var/lib in container when running on gke.autopilot
     set:
       gke:
@@ -27,6 +34,9 @@ tests:
           path: spec.template.spec.containers[*].volumeMounts[?(@.name == "varlib-vol")]
       - isNull:
           path: spec.template.spec.volumes[?(@.name == "varlib-vol")]
+    templates:
+      - daemonset.yaml
+
   - it: Ensure /var/lib host volume is not mounted as /host/var/lib in container when running on global.gke.autopilot
     set:
       global:
@@ -37,3 +47,63 @@ tests:
           path: spec.template.spec.containers[*].volumeMounts[?(@.name == "varlib-vol")]
       - isNull:
           path: spec.template.spec.volumes[?(@.name == "varlib-vol")]
+    templates:
+      - daemonset.yaml
+
+  - it: Ensure agent http proxy volume is not mounted when http_proxy settings is not set
+    set:
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+      delegatedAgentDeployment:
+        enabled: true
+    asserts:
+      - isNull:
+          path: spec.template.spec.volumes[?(@.name == "sysdig-agent-http-proxy-secrets")]
+      - isNull:
+          path: spec.template.spec.containers[*].volumeMounts[?(@.name == "sysdig-agent-http-proxy-secrets")]
+    templates:
+      - deployment.yaml
+      - daemonset.yaml
+
+  - it: Ensure agent http proxy volume is not mounted when http_proxy settings is set and autopilot is enabled
+    set:
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+        settings:
+          http_proxy:
+            proxy_user: username
+            proxy_password: password
+      delegatedAgentDeployment:
+        enabled: true
+      gke:
+        autopilot: true
+    asserts:
+      - isNull:
+          path: spec.template.spec.volumes[?(@.name == "sysdig-agent-http-proxy-secrets")]
+      - isNull:
+          path: spec.template.spec.containers[*].volumeMounts[?(@.name == "sysdig-agent-http-proxy-secrets")]
+    templates:
+      - deployment.yaml
+      - daemonset.yaml
+
+  - it: Ensure agent http proxy volume is mounted when http_proxy settings is set
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+        settings:
+          http_proxy:
+            proxy_user: username
+            proxy_password: password
+    asserts:
+      - equal:
+          path: spec.template.spec.volumes[?(@.name == "sysdig-agent-http-proxy-secrets")].secret
+          value:
+            secretName: RELEASE-NAME-agent-proxy
+      - equal:
+          path: spec.template.spec.containers[*].volumeMounts[?(@.name == "sysdig-agent-http-proxy-secrets")].mountPath
+          value: /opt/draios/etc/secrets/http_proxy
+    templates:
+      - deployment.yaml
+      - daemonset.yaml

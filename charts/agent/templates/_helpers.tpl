@@ -183,6 +183,16 @@ Return the default only if the value is not defined in sysdig.settings.<agent_se
 The following helper functions are all designed to use global values where
 possible, but accept overrides from the chart values.
 */}}
+
+{{- define "agent.httpProxyCredentials" -}}
+    {{- if hasKey .Values.sysdig.settings "http_proxy" -}}
+        {{- if and (hasKey .Values.sysdig.settings.http_proxy "proxy_user") (hasKey .Values.sysdig.settings.http_proxy "proxy_password") -}}
+proxy_user: {{ .Values.sysdig.settings.http_proxy.proxy_user | toString | b64enc | quote }}
+proxy_password: {{ .Values.sysdig.settings.http_proxy.proxy_password | toString | b64enc | quote }}
+        {{- end }}
+    {{- end }}
+{{- end -}}
+
 {{- define "agent.accessKey" -}}
     {{- required "A valid accessKey is required" (.Values.sysdig.accessKey | default .Values.global.sysdig.accessKey) -}}
 {{- end -}}
