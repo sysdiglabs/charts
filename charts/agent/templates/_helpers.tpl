@@ -93,7 +93,7 @@ Sysdig Agent resources
     {{- toYaml .Values.resources -}}
 {{- else if not (hasKey $resourceProfiles .Values.resourceProfile) }}
     {{- fail (printf "Invalid value for resourceProfile provided: %s" .Values.resourceProfile) }}
-{{- else if and (include "agent.gke.autopilot" .) (not .Values.slim.enabled) }}
+{{- else if include "agent.gke.autopilot" . }}
     {{- toYaml (dict "requests" (dict "cpu" "250m"
                                       "ephemeral-storage" .Values.gke.ephemeralStorage
                                       "memory" "512Mi")
