@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.18.0
+### New Features
+* **agent** [d17d3f80](https://github.com/sysdiglabs/charts/commit/d17d3f8030c6c2c50d659b6714439f49e68f1d85): mount agent http-proxy credentials as secret ([#1517](https://github.com/sysdiglabs/charts/issues/1517))
 # v1.17.3
 ### Bug Fixes
 * **agent** [b8c3e335](https://github.com/sysdiglabs/charts/commit/b8c3e3351824f6b0db17b1c0dac790b95efb7b33): GKE Autopilot do not accept HTTP probe ([#1508](https://github.com/sysdiglabs/charts/issues/1508))
