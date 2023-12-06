@@ -9,8 +9,6 @@ tests:
       gke:
         autopilot: true
         createPriorityClass: true
-      slim:
-        enabled: false
     asserts:
       - containsDocument:
           kind: DaemonSet
@@ -31,8 +29,6 @@ tests:
         autopilot: true
         createPriorityClass: true
         ephemeralStorage: 256Mi
-      slim:
-        enabled: false
     asserts:
       - equal:
           path: spec.template.spec.containers[0].resources.requests.ephemeral-storage
