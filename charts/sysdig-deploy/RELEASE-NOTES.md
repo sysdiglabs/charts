@@ -1,5 +1,5 @@
 # What's Changed
 
 ### New Features
-- **cluster-scanner** [4d5254f0](https://github.com/sysdiglabs/charts/commit/4d5254f09559a7f8b1690c8c060428bb95727dc9): add verify registry as option in values ([#1516](https://github.com/sysdiglabs/charts/issues/1516))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.32.0...sysdig-deploy-1.32.1
+- **agent** [d17d3f80](https://github.com/sysdiglabs/charts/commit/d17d3f8030c6c2c50d659b6714439f49e68f1d85): mount agent http-proxy credentials as secret ([#1517](https://github.com/sysdiglabs/charts/issues/1517))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.32.1...sysdig-deploy-1.33.0
