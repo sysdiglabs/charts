@@ -79,6 +79,31 @@ The `values.yaml` file specifies the values for the `node-analyzer` configuratio
    helm install -n sysdig-agent sysdig sysdig/sysdig-deploy -f values.sysdig.yaml
    ```
 
+### Example: Catering for Rancher's different containerd socket path
+Rancher uses a different containerd socket path (`/run/k3s/containerd/containerd.sock` instead of the expected `/var/run/containerd/containerd.sock`). We need to mount that alternative path into the runtime scanner (as it needs to connect to the containerd socket in order to identify what containers are running to know what images it needs to scan) via the chart's values as follows:
+
+#### Using the Key-Value Pair
+```
+--set nodeAnalyzer.nodeAnalyzer.extraVolumes.volumes[0].name=socketpath \
+--set nodeAnalyzer.nodeAnalyzer.extraVolumes.volumes[0].hostPath.path=/run/k3s/containerd/containerd.sock \
+--set nodeAnalyzer.nodeAnalyzer.runtimeScanner.extraMounts[0].name=socketpath \
+--set nodeAnalyzer.nodeAnalyzer.runtimeScanner.extraMounts[0].mountPath=/var/run/containerd/containerd.sock \
+```
+
+#### Using values.yaml
+```
+nodeAnalyzer:
+  nodeAnalyzer:
+    extraVolumes:
+      volumes:
+        - name: socketpath
+          hostPath:
+            path: /run/k3s/containerd/containerd.sock
+    runtimeScanner:
+      extraMounts:
+        - name: socketpath
+          mountPath: /var/run/containerd/containerd.sock
+```
 
 ## Verify the integrity and origin
 Sysdig Helm Charts are signed so users can verify the integrity and origin of each chart, the steps are as follows:
