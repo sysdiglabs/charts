@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.33.2
+### Chores
+* **admission-controller,cloud-connector,cluster-scanner,node-analyzer,registry-scanner,sysdig-deploy** [9d5d8c58](https://github.com/sysdiglabs/charts/commit/9d5d8c5809d35bcb5e8060ccc454f446cb1e3bc7): change charts ownership ([#1461](https://github.com/sysdiglabs/charts/issues/1461))
 # v1.33.1
 ### Bug Fixes
 * **agent** [74d90fca](https://github.com/sysdiglabs/charts/commit/74d90fcae6332638233fb3a959dd724b30d82989): ephemeral-storage on gke autopilot and slim enabled ([#1519](https://github.com/sysdiglabs/charts/issues/1519))

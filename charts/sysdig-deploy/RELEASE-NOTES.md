@@ -1,5 +1,5 @@
 # What's Changed
 
-### Bug Fixes
-- **agent** [74d90fca](https://github.com/sysdiglabs/charts/commit/74d90fcae6332638233fb3a959dd724b30d82989): ephemeral-storage on gke autopilot and slim enabled ([#1519](https://github.com/sysdiglabs/charts/issues/1519))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.33.0...sysdig-deploy-1.33.1
+### Chores
+- **admission-controller,cloud-connector,cluster-scanner,node-analyzer,registry-scanner,sysdig-deploy** [9d5d8c58](https://github.com/sysdiglabs/charts/commit/9d5d8c5809d35bcb5e8060ccc454f446cb1e3bc7): change charts ownership ([#1461](https://github.com/sysdiglabs/charts/issues/1461))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.33.1...sysdig-deploy-1.33.2
