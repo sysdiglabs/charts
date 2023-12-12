@@ -1,5 +1,5 @@
 # What's Changed
 
 ### Chores
-- **admission-controller,cloud-connector,cluster-scanner,node-analyzer,registry-scanner,sysdig-deploy** [9d5d8c58](https://github.com/sysdiglabs/charts/commit/9d5d8c5809d35bcb5e8060ccc454f446cb1e3bc7): change charts ownership ([#1461](https://github.com/sysdiglabs/charts/issues/1461))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.19.0...node-analyzer-1.19.1
+- **sysdig, node-analyzer** [4a1a9a1d](https://github.com/sysdiglabs/charts/commit/4a1a9a1d7feaeb4ee04b2c17e4b84d8440cf6901): bump sysdig/vuln-runtime-scanner to v1.6.6 ([#1526](https://github.com/sysdiglabs/charts/issues/1526))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.19.1...node-analyzer-1.19.2
