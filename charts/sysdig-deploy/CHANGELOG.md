@@ -10,6 +10,30 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.33.2
+### Chores
+* **admission-controller,cloud-connector,cluster-scanner,node-analyzer,registry-scanner,sysdig-deploy** [9d5d8c58](https://github.com/sysdiglabs/charts/commit/9d5d8c5809d35bcb5e8060ccc454f446cb1e3bc7): change charts ownership ([#1461](https://github.com/sysdiglabs/charts/issues/1461))
+# v1.33.1
+### Bug Fixes
+* **agent** [74d90fca](https://github.com/sysdiglabs/charts/commit/74d90fcae6332638233fb3a959dd724b30d82989): ephemeral-storage on gke autopilot and slim enabled ([#1519](https://github.com/sysdiglabs/charts/issues/1519))
+# v1.33.0
+### New Features
+* **agent** [d17d3f80](https://github.com/sysdiglabs/charts/commit/d17d3f8030c6c2c50d659b6714439f49e68f1d85): mount agent http-proxy credentials as secret ([#1517](https://github.com/sysdiglabs/charts/issues/1517))
+# v1.32.1
+### New Features
+* **cluster-scanner** [4d5254f0](https://github.com/sysdiglabs/charts/commit/4d5254f09559a7f8b1690c8c060428bb95727dc9): add verify registry as option in values ([#1516](https://github.com/sysdiglabs/charts/issues/1516))
+# v1.32.0
+### Chores
+* **node-analyzer,kspm-collector** [045b5d37](https://github.com/sysdiglabs/charts/commit/045b5d3798eb60ac6bff33f168273dca8a49618b): Bump KSPM to 1.38.0 & Node Analyzer to 1.36.0 ([#1513](https://github.com/sysdiglabs/charts/issues/1513))
+# v1.31.4
+### Chores
+* **sysdig-deploy** [1e046c81](https://github.com/sysdiglabs/charts/commit/1e046c81a725a256c1be3c4019013dc5695ae196): Automatic version bump due to updated dependencies ([#1509](https://github.com/sysdiglabs/charts/issues/1509))
+# v1.31.3
+### Chores
+* **sysdig-deploy** [00089aab](https://github.com/sysdiglabs/charts/commit/00089aabee2145933a6ead25a8b4b6ade34168e4): Automatic version bump due to updated dependencies ([#1505](https://github.com/sysdiglabs/charts/issues/1505))
+# v1.31.2
+### Chores
+* **sysdig-deploy** [418863d1](https://github.com/sysdiglabs/charts/commit/418863d1c06007271bdad4f16e5c90e3884541d7): Automatic version bump due to updated dependencies ([#1502](https://github.com/sysdiglabs/charts/issues/1502))
 # v1.31.0
 ### New Features
 * **agent** [445f3c03](https://github.com/sysdiglabs/charts/commit/445f3c03e4236fdffbaba54b516da2993c519d2e): Add Local Forwarder support for Agent ([#1458](https://github.com/sysdiglabs/charts/issues/1458))

@@ -103,9 +103,16 @@ spec:
             value: /opt/draios/etc/ca-certs/{{- include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.ssl) -}}
           {{- end }}
           readinessProbe:
+            {{- if eq (include "agent.enableHttpProbes" .) "true" }}
+            httpGet:
+              path: /healthz
+              port: 24483
+            {{- else }}
             exec:
               command: [ "test", "-e", "/opt/draios/logs/running" ]
-            failureThreshold: 3
+            {{- end }}
+            initialDelaySeconds: {{ .Values.delegatedAgentDeployment.deployment.probes.initialDelay }}
+            periodSeconds: {{ .Values.delegatedAgentDeployment.deployment.probes.periodDelay }}
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
           volumeMounts:
@@ -121,6 +128,10 @@ spec:
               name: sysdig-agent-config
             - mountPath: /opt/draios/etc/kubernetes/secrets
               name: sysdig-agent-secrets
+            {{- if and (include "agent.httpProxyCredentials" .) (not (include "agent.gke.autopilot" .)) }}
+            - mountPath: /opt/draios/etc/secrets/http_proxy
+              name: sysdig-agent-http-proxy-secrets
+            {{- end }}
             - mountPath: /etc/podinfo
               name: podinfo
             {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
@@ -245,6 +256,11 @@ spec:
             {{- else }}
             secretName: {{ include "agent.accessKeySecret" . }}
             {{- end }}
+        {{- if and (include "agent.httpProxyCredentials" .) (not (include "agent.gke.autopilot" .)) }}
+        - name: sysdig-agent-http-proxy-secrets
+          secret:
+            secretName: {{ template "agent.fullname" . }}-proxy
+        {{- end }}
         - name: podinfo
           downwardAPI:
             defaultMode: 420
