@@ -12,6 +12,7 @@ tests:
           path: spec.template.spec.containers[0].readinessProbe
           value:
              httpGet:
+               host: 127.0.0.1
                path: /healthz
                port: 24483
              initialDelaySeconds: 90
@@ -26,6 +27,7 @@ tests:
           path: spec.template.spec.containers[0].readinessProbe
           value:
             httpGet:
+              host: 127.0.0.1
               path: /healthz
               port: 24483
             initialDelaySeconds: 90
@@ -90,6 +92,7 @@ tests:
           path: spec.template.spec.containers[0].readinessProbe
           value:
             httpGet:
+              host: 127.0.0.1
               path: /healthz
               port: 24483
             initialDelaySeconds: 90
@@ -105,6 +108,7 @@ tests:
           path: spec.template.spec.containers[0].readinessProbe
           value:
             httpGet:
+              host: 127.0.0.1
               path: /healthz
               port: 24483
             initialDelaySeconds: 90
