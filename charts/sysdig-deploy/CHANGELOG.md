@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.34.0
+### New Features
+* **node-analyzer** [c43ad629](https://github.com/sysdiglabs/charts/commit/c43ad6292b8538d65de2267cf0aba9d55067e7d4): In-USE (EVE) enabled by default ([#1501](https://github.com/sysdiglabs/charts/issues/1501))
 # v1.33.3
 ### Chores
 * **sysdig-deploy** [1e740a6f](https://github.com/sysdiglabs/charts/commit/1e740a6f7b1740a8193ae4460592191eaa910409): Automatic version bump due to updated dependencies ([#1527](https://github.com/sysdiglabs/charts/issues/1527))
