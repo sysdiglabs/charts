@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.18.2
+### New Features
+* **agent** [d86d3be1](https://github.com/sysdiglabs/charts/commit/d86d3be1eb2ee7da6b135f5262457c6f70f98264): update the readiness probes to use localhost ([#1530](https://github.com/sysdiglabs/charts/issues/1530))
 # v1.18.1
 ### Bug Fixes
 * **agent** [74d90fca](https://github.com/sysdiglabs/charts/commit/74d90fcae6332638233fb3a959dd724b30d82989): ephemeral-storage on gke autopilot and slim enabled ([#1519](https://github.com/sysdiglabs/charts/issues/1519))
