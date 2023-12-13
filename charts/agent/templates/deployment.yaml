@@ -105,6 +105,7 @@ spec:
           readinessProbe:
             {{- if eq (include "agent.enableHttpProbes" .) "true" }}
             httpGet:
+              host: 127.0.0.1
               path: /healthz
               port: 24483
             {{- else }}
