@@ -719,8 +719,6 @@ spec:
                 name: {{ .Release.Name }}-runtime-scanner
                 key: eve_enabled
                 optional: true
-          {{- end }}
-          {{- if .Values.nodeAnalyzer.runtimeScanner.eveConnector.deploy }}
           - name: EVE_INTEGRATION_ENABLED
             valueFrom:
               configMapKeyRef:
