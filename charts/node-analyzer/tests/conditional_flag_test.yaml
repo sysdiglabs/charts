@@ -15,6 +15,7 @@ templates:
   - configmap-image-analyzer.yaml
   - secrets.yaml
   - serviceaccount-node-analyzer.yaml
+  - runtimeScanner/runtime-scanner-configmap.yaml
 
 tests:
   - it: Check global kspm deploy
@@ -62,14 +63,14 @@ tests:
           value: true
 
   - it: Check global kspm deploy without clusterName
+    templates: 
+      - daemonset-node-analyzer.yaml
     set:
       global:
         kspm:
           deploy: true
         sysdig:
           accessKey: "XXX"
-    templates: 
-      - configmap-kspm-analyzer.yaml
     asserts:
       - failedTemplate:
           errorMessage: "A valid clusterName is required"
@@ -128,6 +129,8 @@ tests:
   - it: Check nodeAnalyzer runtimeScanner deploy
     set:
       global:
+        clusterConfig:
+          name: "test"
         sysdig:
           accessKey: "XXX"
       nodeAnalyzer:

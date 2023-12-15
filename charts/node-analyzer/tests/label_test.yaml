@@ -1,8 +1,24 @@
 suite: Testing if labels are applied correctly
 templates:
   - daemonset-node-analyzer.yaml
+  # For checksums
+  - clusterrole-node-analyzer.yaml
+  - clusterrolebinding-node-analyzer.yaml
+  - configmap-benchmark-runner.yaml
+  - configmap-host-analyzer.yaml
+  - configmap-host-scanner.yaml
+  - configmap-image-analyzer.yaml
+  - configmap-kspm-analyzer.yaml
+  - secrets.yaml
+  - serviceaccount-node-analyzer.yaml
+  - runtimeScanner/runtime-scanner-configmap.yaml
+values:
+  - ./default_values.yaml
+
 tests:
   - it: check application of node-analyzer labels example 1
+    templates:
+      - daemonset-node-analyzer.yaml
     set:
       sysdig:
         accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
@@ -16,6 +32,8 @@ tests:
         path: metadata.labels['my.label/key2']
         value: testlabel2
   - it: check application of node-analyzer example 2
+    templates:
+      - daemonset-node-analyzer.yaml
     set:
       sysdig:
         accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
@@ -31,6 +49,8 @@ tests:
         path: metadata.labels['my.label/key2']
         value: testlabel2
   - it: check application of node-analyzer labels example 3
+    templates:
+      - daemonset-node-analyzer.yaml
     set:
       sysdig:
         accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
@@ -46,6 +66,8 @@ tests:
         path: metadata.labels['my.label/version']
         value: 2.7.3
   - it: check application of correct node-analyzer labels with value of label empty
+    templates:
+      - daemonset-node-analyzer.yaml
     set:
       sysdig:
         accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
@@ -56,6 +78,8 @@ tests:
         path: metadata.labels['my.label/key1']
         value:
   - it: check application of incorrect node-analyzer labels with yaml
+    templates:
+      - daemonset-node-analyzer.yaml
     set:
       sysdig:
         accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
@@ -65,6 +89,8 @@ tests:
     - failedTemplate:
         errorMessage: "daemonset.label does not seem to be of the type key:[space]value"
   - it: check application of incorrect node-analyzer labels with yaml key is empty
+    templates:
+      - daemonset-node-analyzer.yaml
     set:
       sysdig:
         accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE

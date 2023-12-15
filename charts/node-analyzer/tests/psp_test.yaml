@@ -2,16 +2,23 @@ suite: PSP create test
 templates:
   - templates/psp.yaml
   # For checksums
-  - templates/configmap-benchmark-runner.yaml
-  - templates/configmap-host-analyzer.yaml
-  - templates/configmap-host-scanner.yaml
-  - templates/configmap-image-analyzer.yaml
-  - templates/configmap-kspm-analyzer.yaml
-  - templates/secrets.yaml
-  - templates/serviceaccount-node-analyzer.yaml
-  - templates/runtimeScanner/runtime-scanner-configmap.yaml
+  - clusterrole-node-analyzer.yaml
+  - clusterrolebinding-node-analyzer.yaml
+  - configmap-benchmark-runner.yaml
+  - configmap-host-analyzer.yaml
+  - configmap-host-scanner.yaml
+  - configmap-image-analyzer.yaml
+  - configmap-kspm-analyzer.yaml
+  - secrets.yaml
+  - serviceaccount-node-analyzer.yaml
+  - runtimeScanner/runtime-scanner-configmap.yaml
+values:
+  - ./default_values.yaml
+
 tests:
   - it: Ensure PSP is created on k8s <1.25
+    templates:
+      - templates/psp.yaml
     capabilities:
       majorVersion: 1
       minorVersion: 24
@@ -24,6 +31,8 @@ tests:
           kind: PodSecurityPolicy
 
   - it: Ensure PSP is not created on k8s >=1.25
+    templates:
+      - templates/psp.yaml
     capabilities:
       majorVersion: 1
       minorVersion: 25
@@ -32,6 +41,8 @@ tests:
           count: 0
 
   - it: Ensure PSP is created on k8s <1.25 with '+' character in minor version
+    templates:
+      - templates/psp.yaml
     capabilities:
       majorVersion: 1
       minorVersion: "24+"
@@ -44,6 +55,8 @@ tests:
           kind: PodSecurityPolicy
 
   - it: Ensure PSP is not created on k8s >=1.25 with '+' character in minor version
+    templates:
+      - templates/psp.yaml
     capabilities:
       majorVersion: 1
       minorVersion: "25+"
