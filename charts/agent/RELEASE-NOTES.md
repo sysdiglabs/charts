@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **agent** [d86d3be1](https://github.com/sysdiglabs/charts/commit/d86d3be1eb2ee7da6b135f5262457c6f70f98264): update the readiness probes to use localhost ([#1530](https://github.com/sysdiglabs/charts/issues/1530))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.18.1...agent-1.18.2
+### Bug Fixes
+- **agent,sysdig-deploy** [d8e38523](https://github.com/sysdiglabs/charts/commit/d8e38523b3e94f0a6311bb5be8f5135e56d47f1c): /var/data volume mount ([#1532](https://github.com/sysdiglabs/charts/issues/1532))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.18.2...agent-1.18.3
