@@ -14,6 +14,23 @@ tests:
     templates:
       - daemonset.yaml
 
+  - it: Ensure /var/data host volume is mounted as /host/var/data in container
+    set:
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+      delegatedAgentDeployment:
+        enabled: true
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[*].volumeMounts[?(@.name == "vardata-vol")].mountPath
+          value: /host/var/data
+      - equal:
+          path: spec.template.spec.volumes[?(@.name == "vardata-vol")].hostPath.path
+          value: /var/data
+    templates:
+      - daemonset.yaml
+      - deployment.yaml
+
   - it: Ensure /var/lib host volume is mounted as /host/var/lib in container
     asserts:
       - equal:

@@ -160,6 +160,8 @@ spec:
               readOnly: true
             - mountPath: /host/var/lib
               name: varlib-vol
+            - mountPath: /host/var/data
+              name: vardata-vol
             - mountPath: /host/run
               name: run-vol
             - mountPath: /host/var/run
@@ -180,6 +182,8 @@ spec:
               readOnly: true
             - mountPath: /host/var/lib
               name: varlib-vol
+            - mountPath: /host/var/data
+              name: vardata-vol
             - mountPath: /host/run
               name: run-vol
             - mountPath: /host/var/run
@@ -308,6 +312,9 @@ spec:
         - name: varlib-vol
           hostPath:
             path: /var/lib
+        - name: vardata-vol
+          hostPath:
+            path: /var/data
         - name: run-vol
           hostPath:
             path: /run
@@ -331,6 +338,9 @@ spec:
         - name: varlib-vol
           hostPath:
             path: /var/lib
+        - name: vardata-vol
+          hostPath:
+            path: /var/data
         - name: run-vol
           hostPath:
             path: /run
