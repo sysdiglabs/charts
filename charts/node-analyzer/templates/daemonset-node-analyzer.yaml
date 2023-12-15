@@ -712,22 +712,18 @@ spec:
           - name: "{{ $key }}"
             value: "{{ $value }}"
           {{- end }}
-          {{- if .Values.nodeAnalyzer.runtimeScanner.settings.eveEnabled }}
           - name: EVE_ENABLED
             valueFrom:
               configMapKeyRef:
                 name: {{ .Release.Name }}-runtime-scanner
                 key: eve_enabled
                 optional: true
-          {{- end }}
-          {{- if .Values.nodeAnalyzer.runtimeScanner.eveConnector.deploy }}
           - name: EVE_INTEGRATION_ENABLED
             valueFrom:
               configMapKeyRef:
                 name: {{ .Release.Name }}-runtime-scanner
                 key: eve_integration_enabled
                 optional: true
-          {{- end }}
         volumeMounts:
           # Needed for some IBM OpenShift clusters which symlink /var/run/containers/storage to contents of /var/data by default
           - mountPath: /var/data

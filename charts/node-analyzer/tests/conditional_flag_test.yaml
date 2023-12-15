@@ -195,7 +195,7 @@ tests:
           count: 1
           any: true
 
-  - it: Check nodeAnalyzer runtimeScanner eveConnector deploy set to false
+  - it: Check nodeAnalyzer runtimeScanner EVE_INTEGRATION_ENABLED is true even if eveConnector deploy set to false
     set:
       nodeAnalyzer:
         runtimeScanner:
@@ -204,7 +204,7 @@ tests:
             deploy: false
       clusterName: test-k8s
     asserts:
-      - notContains:
+      - contains:
           path: spec.template.spec.containers[3].env
           content:
             name: EVE_INTEGRATION_ENABLED

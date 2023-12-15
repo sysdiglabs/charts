@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.1.24
+### Chores
+* **admission-controller,cloud-connector,cluster-scanner,node-analyzer,registry-scanner,sysdig-deploy** [9d5d8c58](https://github.com/sysdiglabs/charts/commit/9d5d8c5809d35bcb5e8060ccc454f446cb1e3bc7): change charts ownership ([#1461](https://github.com/sysdiglabs/charts/issues/1461))
 # v1.1.23
 ### Chores
 * **registry-scanner** [39d7ee0f](https://github.com/sysdiglabs/charts/commit/39d7ee0f1c2d9d5d44992f3a1467bc126872534c): Update to v0.2.60 ([#1512](https://github.com/sysdiglabs/charts/issues/1512))

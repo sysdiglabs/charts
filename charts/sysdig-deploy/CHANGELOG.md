@@ -10,6 +10,24 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.34.3
+### Chores
+* **sysdig-deploy** [50159c56](https://github.com/sysdiglabs/charts/commit/50159c56652290050e244fa856226327fb2cfa3d): Automatic version bump due to updated dependencies ([#1537](https://github.com/sysdiglabs/charts/issues/1537))
+# v1.34.2
+### Bug Fixes
+* **agent,sysdig-deploy** [d8e38523](https://github.com/sysdiglabs/charts/commit/d8e38523b3e94f0a6311bb5be8f5135e56d47f1c): /var/data volume mount ([#1532](https://github.com/sysdiglabs/charts/issues/1532))
+# v1.34.1
+### Chores
+* **sysdig-deploy** [e6edc444](https://github.com/sysdiglabs/charts/commit/e6edc4449f2313c3835ed63d76b4fc734f66eb72): Automatic version bump due to updated dependencies ([#1531](https://github.com/sysdiglabs/charts/issues/1531))
+# v1.34.0
+### New Features
+* **node-analyzer** [c43ad629](https://github.com/sysdiglabs/charts/commit/c43ad6292b8538d65de2267cf0aba9d55067e7d4): In-USE (EVE) enabled by default ([#1501](https://github.com/sysdiglabs/charts/issues/1501))
+# v1.33.3
+### Chores
+* **sysdig-deploy** [1e740a6f](https://github.com/sysdiglabs/charts/commit/1e740a6f7b1740a8193ae4460592191eaa910409): Automatic version bump due to updated dependencies ([#1527](https://github.com/sysdiglabs/charts/issues/1527))
+# v1.33.2
+### Chores
+* **admission-controller,cloud-connector,cluster-scanner,node-analyzer,registry-scanner,sysdig-deploy** [9d5d8c58](https://github.com/sysdiglabs/charts/commit/9d5d8c5809d35bcb5e8060ccc454f446cb1e3bc7): change charts ownership ([#1461](https://github.com/sysdiglabs/charts/issues/1461))
 # v1.33.1
 ### Bug Fixes
 * **agent** [74d90fca](https://github.com/sysdiglabs/charts/commit/74d90fcae6332638233fb3a959dd724b30d82989): ephemeral-storage on gke autopilot and slim enabled ([#1519](https://github.com/sysdiglabs/charts/issues/1519))
