@@ -106,3 +106,46 @@ tests:
       - lengthEqual:
           path: spec.template.spec.containers
           count: 3
+
+  - it: "always expose the EVE_ENABLED and EVE_INTEGRATION_ENABLED variables when eveEnabled is not specified"
+    set:
+      nodeAnalyzer:
+        runtimeScanner:
+          deploy: true
+    templates:
+      - ../templates/daemonset-node-analyzer.yaml
+    asserts:
+      - isNotNull:
+          path: spec.template.spec.containers[?(@.name == "sysdig-runtime-scanner")].env[?(@.name == "EVE_ENABLED")]
+      - isNotNull:
+          path: spec.template.spec.containers[?(@.name == "sysdig-runtime-scanner")].env[?(@.name == "EVE_INTEGRATION_ENABLED")]
+
+  - it: "always expose the EVE_ENABLED and EVE_INTEGRATION_ENABLED variables when eveEnabled is true"
+    set:
+      nodeAnalyzer:
+        runtimeScanner:
+          deploy: true
+          settings:
+            eveEnabled: true
+    templates:
+      - ../templates/daemonset-node-analyzer.yaml
+    asserts:
+      - isNotNull:
+          path: spec.template.spec.containers[?(@.name == "sysdig-runtime-scanner")].env[?(@.name == "EVE_ENABLED")]
+      - isNotNull:
+          path: spec.template.spec.containers[?(@.name == "sysdig-runtime-scanner")].env[?(@.name == "EVE_INTEGRATION_ENABLED")]
+
+  - it: "always expose the EVE_ENABLED and EVE_INTEGRATION_ENABLED variables when eveEnabled is false"
+    set:
+      nodeAnalyzer:
+        runtimeScanner:
+          deploy: true
+          settings:
+            eveEnabled: false
+    templates:
+      - ../templates/daemonset-node-analyzer.yaml
+    asserts:
+      - isNotNull:
+          path: spec.template.spec.containers[?(@.name == "sysdig-runtime-scanner")].env[?(@.name == "EVE_ENABLED")]
+      - isNotNull:
+          path: spec.template.spec.containers[?(@.name == "sysdig-runtime-scanner")].env[?(@.name == "EVE_INTEGRATION_ENABLED")]
