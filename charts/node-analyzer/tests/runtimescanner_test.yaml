@@ -2,7 +2,7 @@
 # Run "helm unittest -3 -f ./tests/runtimescanner_test.yaml ." from within the `charts/node-analyzer` folder
 suite: Test RuntimeScanner configuration
 templates:
-  - ../templates/daemonset-node-analyzer.yaml
+  - daemonset-node-analyzer.yaml
   # For checksums
   - clusterrole-node-analyzer.yaml
   - clusterrolebinding-node-analyzer.yaml
@@ -15,13 +15,13 @@ templates:
   - serviceaccount-node-analyzer.yaml
   - runtimeScanner/runtime-scanner-configmap.yaml
 values:
-  - ./default_values.yaml
+  - ./default_required_values.yaml
   - ../values.yaml
 
 tests:
   - it: "Add extra volume through nodeAnalyzer.imageAnalyzer.extraVolumes parameter (deprecated)"
     templates:
-      - ../templates/daemonset-node-analyzer.yaml
+      - daemonset-node-analyzer.yaml
     set:
       nodeAnalyzer:
         imageAnalyzer:
@@ -42,7 +42,7 @@ tests:
 
   - it: "Add extra volume through nodeAnalyzer.extraVolumes parameter"
     templates:
-      - ../templates/daemonset-node-analyzer.yaml
+      - daemonset-node-analyzer.yaml
     set:
       nodeAnalyzer:
           extraVolumes:
@@ -64,8 +64,9 @@ tests:
     set:
       secure.vulnerabilityManagement.newEngineOnly: true
       nodeAnalyzer.runtimeScanner.deploy: false
+      global.clusterConfig.name: "test"
     templates:
-      - ../templates/daemonset-node-analyzer.yaml
+      - daemonset-node-analyzer.yaml
     asserts:
       - isKind:
           of: DaemonSet
@@ -81,7 +82,7 @@ tests:
 
   - it: "is disabled by default, legacy will be deployed"
     templates:
-      - ../templates/daemonset-node-analyzer.yaml
+      - daemonset-node-analyzer.yaml
     asserts:
       - isKind:
           of: DaemonSet
@@ -101,8 +102,9 @@ tests:
   - it: "is enabled when newEngineOnly is set"
     set:
       secure.vulnerabilityManagement.newEngineOnly: true
+      global.clusterConfig.name: "test"
     templates:
-      - ../templates/daemonset-node-analyzer.yaml
+      - daemonset-node-analyzer.yaml
     asserts:
       - isKind:
           of: DaemonSet

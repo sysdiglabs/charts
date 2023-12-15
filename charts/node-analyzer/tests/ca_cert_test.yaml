@@ -8,15 +8,15 @@ templates:
   # For checksums
   - clusterrole-node-analyzer.yaml
   - clusterrolebinding-node-analyzer.yaml
-  - templates/configmap-benchmark-runner.yaml
-  - templates/configmap-host-analyzer.yaml
-  - templates/configmap-host-scanner.yaml
-  - templates/configmap-image-analyzer.yaml
-  - templates/configmap-kspm-analyzer.yaml
-  - templates/serviceaccount-node-analyzer.yaml
-  - templates/runtimeScanner/runtime-scanner-configmap.yaml
+  - configmap-benchmark-runner.yaml
+  - configmap-host-analyzer.yaml
+  - configmap-host-scanner.yaml
+  - configmap-image-analyzer.yaml
+  - configmap-kspm-analyzer.yaml
+  - serviceaccount-node-analyzer.yaml
+  - runtimeScanner/runtime-scanner-configmap.yaml
 values:
-  - ./default_values.yaml
+  - ./default_required_values.yaml
 
 tests:
   - it: Checking node-analyzer CA Cert Secret
@@ -26,6 +26,9 @@ tests:
       secure:
         vulnerabilityManagement:
           newEngineOnly: true
+      global:
+        clusterConfig:
+          name: "test"
       sysdig:
         accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
       nodeAnalyzer:
@@ -53,6 +56,9 @@ tests:
       secure:
         vulnerabilityManagement:
           newEngineOnly: true
+      global:
+        clusterConfig:
+          name: "test"
       sysdig:
         accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
       nodeAnalyzer:
@@ -121,6 +127,8 @@ tests:
         vulnerabilityManagement:
           newEngineOnly: true
       global:
+        clusterConfig:
+          name: "test"
         kspm:
           deploy: false
         ssl:

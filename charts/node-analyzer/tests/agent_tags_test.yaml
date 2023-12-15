@@ -11,9 +11,8 @@ templates:
   - configmap-kspm-analyzer.yaml
   - secrets.yaml
   - serviceaccount-node-analyzer.yaml
-  - runtimeScanner/runtime-scanner-configmap.yaml
 values:
-  - ./default_values.yaml
+  - ./default_required_values.yaml
 
 tests:
   - it: Check agent tags are set from global.settings.tags
@@ -24,6 +23,7 @@ tests:
             tag: value
         kspm:
           deploy: true
+      clusterName: "test"
     asserts:
       - contains:
           path: spec.template.spec.containers[0].env
@@ -37,6 +37,7 @@ tests:
       global:
         kspm:
           deploy: true
+      clusterName: "test"
     asserts:
       - notContains:
           path: spec.template.spec.containers[0].env

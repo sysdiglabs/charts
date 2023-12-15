@@ -15,7 +15,7 @@ templates:
   - serviceaccount-node-analyzer.yaml
   - runtimeScanner/runtime-scanner-configmap.yaml
 values:
-  - ./default_values.yaml
+  - ./default_required_values.yaml
   - ../values.yaml
 
 tests:
@@ -84,6 +84,7 @@ tests:
     set:
       secure.vulnerabilityManagement.newEngineOnly: true
       nodeAnalyzer.hostScanner.deploy: false
+      global.clusterConfig.name: "test"
     templates:
       - daemonset-node-analyzer.yaml
     asserts:

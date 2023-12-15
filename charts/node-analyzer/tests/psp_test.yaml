@@ -11,9 +11,8 @@ templates:
   - configmap-kspm-analyzer.yaml
   - secrets.yaml
   - serviceaccount-node-analyzer.yaml
-  - runtimeScanner/runtime-scanner-configmap.yaml
 values:
-  - ./default_values.yaml
+  - ./default_required_values.yaml
 
 tests:
   - it: Ensure PSP is created on k8s <1.25

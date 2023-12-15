@@ -1,6 +1,6 @@
 suite: Test specifying annotations to the Node Analyzer DaemonSet
 templates:
-  - templates/daemonset-node-analyzer.yaml
+  - daemonset-node-analyzer.yaml
   # For checksums
   - clusterrole-node-analyzer.yaml
   - clusterrolebinding-node-analyzer.yaml
@@ -13,12 +13,12 @@ templates:
   - serviceaccount-node-analyzer.yaml
   - runtimeScanner/runtime-scanner-configmap.yaml
 values:
-  - ./default_values.yaml
+  - ./default_required_values.yaml
 
 tests:
-  - it: Test annotations are added as expected
+  - it: Test additional annotations are added as expected
     templates:
-      - templates/daemonset-node-analyzer.yaml
+      - daemonset-node-analyzer.yaml
     set:
       daemonset:
         annotations:
@@ -27,9 +27,9 @@ tests:
       - equal:
           path: spec.template.metadata.annotations['super']
           value: annotation
-  - it: Test checksums annotations
+  - it: Test checksum annotations
     templates:
-      - templates/daemonset-node-analyzer.yaml
+      - daemonset-node-analyzer.yaml
     asserts:
       - isNotEmpty:
           path: spec.template.metadata.annotations['checksum/config-benchmark']
@@ -38,12 +38,6 @@ tests:
       - isNotEmpty:
           path: spec.template.metadata.annotations['checksum/config-image-analyzer']
       - isNotEmpty:
-          path: spec.template.metadata.annotations['checksum/config-kspm-analyzer']
-      - isNotEmpty:
-          path: spec.template.metadata.annotations['checksum/config-host-scanner']
-      - notExists: # NOTE: not enabled with default config
-          path: spec.template.metadata.annotations['checksum/config-runtime-scanner']
-      - isNotEmpty:
           path: spec.template.metadata.annotations['checksum/secret']
       - isNotEmpty:
           path: spec.template.metadata.annotations['checksum/clusterrole']
@@ -51,4 +45,31 @@ tests:
           path: spec.template.metadata.annotations['checksum/clusterrolebinding']
       - isNotEmpty:
           path: spec.template.metadata.annotations['checksum/serviceaccount']
-
+      # NOTE: not enabled with default config
+      - notExists:
+          path: spec.template.metadata.annotations['checksum/config-host-scanner']
+      - notExists: 
+          path: spec.template.metadata.annotations['checksum/config-runtime-scanner']
+      - notExists: 
+          path: spec.template.metadata.annotations['checksum/config-kspm-analyzer']
+  - it: Test checksum annotations for new scanning engine
+    templates:
+      - daemonset-node-analyzer.yaml
+    set:
+      secure:
+        vulnerabilityManagement:
+          newEngineOnly: true
+      global:
+        clusterConfig:
+          name: "test"
+        sysdig:
+          accessKey: "XXX"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - isNotEmpty:
+          path: spec.template.metadata.annotations['checksum/clusterrole']
+      - isNotEmpty:
+          path: spec.template.metadata.annotations['checksum/config-host-scanner']
+      - isNotEmpty: 
+          path: spec.template.metadata.annotations['checksum/config-runtime-scanner']

@@ -12,7 +12,7 @@ templates:
   - secrets.yaml
   - serviceaccount-node-analyzer.yaml
 values:
-  - ./default_values.yaml
+  - ./default_required_values.yaml
 tests:
   - it: set default updateStrategy
     asserts:
