@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.20.1
+### Chores
+* **node-analyzer** [9895cb00](https://github.com/sysdiglabs/charts/commit/9895cb002e359c36e857ea3e9dd867f34129aeef): Improve template to reflect eveEnabled settings in CM ([#1536](https://github.com/sysdiglabs/charts/issues/1536))
 # v1.20.0
 ### New Features
 * **node-analyzer** [c43ad629](https://github.com/sysdiglabs/charts/commit/c43ad6292b8538d65de2267cf0aba9d55067e7d4): In-USE (EVE) enabled by default ([#1501](https://github.com/sysdiglabs/charts/issues/1501))
