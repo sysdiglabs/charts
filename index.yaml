@@ -31511,6 +31511,62 @@ entries:
     version: 1.7.15
   sysdig-deploy:
   - apiVersion: v2
+    created: "2023-12-15T12:27:07.976197452Z"
+    dependencies:
+    - alias: admissionController
+      condition: admissionController.enabled
+      name: admission-controller
+      repository: file://../admission-controller
+      version: ~0.14.15
+    - alias: agent
+      condition: agent.enabled
+      name: agent
+      repository: file://../agent
+      version: ~1.18.3
+    - name: common
+      repository: file://../common
+      version: ~1.2.2
+    - alias: nodeAnalyzer
+      condition: nodeAnalyzer.enabled
+      name: node-analyzer
+      repository: file://../node-analyzer
+      version: ~1.20.1
+    - alias: clusterScanner
+      condition: clusterScanner.enabled
+      name: cluster-scanner
+      repository: file://../cluster-scanner
+      version: ~0.8.6
+    - alias: kspmCollector
+      condition: global.kspm.deploy
+      name: kspm-collector
+      repository: file://../kspm-collector
+      version: ~0.10.0
+    - alias: rapidResponse
+      condition: rapidResponse.enabled
+      name: rapid-response
+      repository: file://../rapid-response
+      version: ~0.8.4
+    description: A chart with various Sysdig components for Kubernetes
+    digest: ca3d6727b1e0360ec4aa69425c210319bb8271cf7ffbfcf12fed1eedab7e60c3
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    maintainers:
+    - email: alberto.barba@sysdig.com
+      name: AlbertoBarba
+    - email: adam.roberts@sysdig.com
+      name: aroberts87
+    - email: francesco.furlan@sysdig.com
+      name: francesco-furlan
+    - email: gerlando.falauto@sysdig.com
+      name: iurly
+    - email: marcovito.moscaritolo@sysdig.com
+      name: mavimo
+    name: sysdig-deploy
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/sysdig-deploy-1.34.3/sysdig-deploy-1.34.3.tgz
+    version: 1.34.3
+  - apiVersion: v2
     created: "2023-12-15T09:20:34.974727923Z"
     dependencies:
     - alias: admissionController
@@ -49498,4 +49554,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2023-12-15T12:06:24.950605874Z"
+generated: "2023-12-15T12:27:07.979761755Z"
