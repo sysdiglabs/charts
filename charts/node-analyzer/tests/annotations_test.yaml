@@ -63,7 +63,7 @@ tests:
         clusterConfig:
           name: "test"
         sysdig:
-          accessKey: "XXX"
+          accessKey: "AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE"
     asserts:
       - hasDocuments:
           count: 1

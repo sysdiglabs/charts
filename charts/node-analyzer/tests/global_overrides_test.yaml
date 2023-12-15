@@ -136,8 +136,6 @@ tests:
         template: daemonset-node-analyzer.yaml
 
   - it: check imagePullPolicy for eveconnector-api-deployment with global
-    values:
-      - ./default_required_values.yaml
     set:
       global:
         kspm:
@@ -163,8 +161,6 @@ tests:
       - runtimeScanner/eveconnector-api-deployment.yaml
 
   - it: check imagePullPolicy for daemonset-node-analyzer with global
-    values:
-      - ./default_required_values.yaml
     set:
       global:
         kspm:
@@ -211,8 +207,6 @@ tests:
       - daemonset-node-analyzer.yaml
 
   - it: check imagePullPolicy for eveconnector-api-deployment with legacy
-    values:
-      - ./default_required_values.yaml
     set:
       global:
         kspm:
@@ -238,8 +232,6 @@ tests:
       - runtimeScanner/eveconnector-api-deployment.yaml
 
   - it: check imagePullPolicy for eveconnector-api-deployment with local override
-    values:
-      - ./default_required_values.yaml
     set:
       global:
         kspm:
