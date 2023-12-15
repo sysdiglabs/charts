@@ -123,6 +123,9 @@ tests:
 
   - it: "always expose the EVE_ENABLED and EVE_INTEGRATION_ENABLED variables when eveEnabled is not specified"
     set:
+      global:
+        clusterConfig:
+          name: "test"
       nodeAnalyzer:
         runtimeScanner:
           deploy: true
@@ -136,6 +139,9 @@ tests:
 
   - it: "always expose the EVE_ENABLED and EVE_INTEGRATION_ENABLED variables when eveEnabled is true"
     set:
+      global:
+        clusterConfig:
+          name: "test"
       nodeAnalyzer:
         runtimeScanner:
           deploy: true
@@ -151,6 +157,9 @@ tests:
 
   - it: "always expose the EVE_ENABLED and EVE_INTEGRATION_ENABLED variables when eveEnabled is false"
     set:
+      global:
+        clusterConfig:
+          name: "test"
       nodeAnalyzer:
         runtimeScanner:
           deploy: true
