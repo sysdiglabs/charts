@@ -1,13 +1,24 @@
 suite: Test specifying annotations to the Node Analyzer DaemonSet
 templates:
   - templates/daemonset-node-analyzer.yaml
-tests:
-  - it: Test no annotations by default
-    asserts:
-      - isNull:
-          path: template.metadata.annotations
+  # For checksums
+  - clusterrole-node-analyzer.yaml
+  - clusterrolebinding-node-analyzer.yaml
+  - configmap-benchmark-runner.yaml
+  - configmap-host-analyzer.yaml
+  - configmap-host-scanner.yaml
+  - configmap-image-analyzer.yaml
+  - configmap-kspm-analyzer.yaml
+  - secrets.yaml
+  - serviceaccount-node-analyzer.yaml
+  - runtimeScanner/runtime-scanner-configmap.yaml
+values:
+  - ./default_values.yaml
 
+tests:
   - it: Test annotations are added as expected
+    templates:
+      - templates/daemonset-node-analyzer.yaml
     set:
       daemonset:
         annotations:
@@ -16,3 +27,28 @@ tests:
       - equal:
           path: spec.template.metadata.annotations['super']
           value: annotation
+  - it: Test checksums annotations
+    templates:
+      - templates/daemonset-node-analyzer.yaml
+    asserts:
+      - isNotEmpty:
+          path: spec.template.metadata.annotations['checksum/config-benchmark']
+      - isNotEmpty:
+          path: spec.template.metadata.annotations['checksum/config-host-analyzer']
+      - isNotEmpty:
+          path: spec.template.metadata.annotations['checksum/config-image-analyzer']
+      - isNotEmpty:
+          path: spec.template.metadata.annotations['checksum/config-kspm-analyzer']
+      - isNotEmpty:
+          path: spec.template.metadata.annotations['checksum/config-host-scanner']
+      - notExists: # NOTE: not enabled with default config
+          path: spec.template.metadata.annotations['checksum/config-runtime-scanner']
+      - isNotEmpty:
+          path: spec.template.metadata.annotations['checksum/secret']
+      - isNotEmpty:
+          path: spec.template.metadata.annotations['checksum/clusterrole']
+      - isNotEmpty:
+          path: spec.template.metadata.annotations['checksum/clusterrolebinding']
+      - isNotEmpty:
+          path: spec.template.metadata.annotations['checksum/serviceaccount']
+

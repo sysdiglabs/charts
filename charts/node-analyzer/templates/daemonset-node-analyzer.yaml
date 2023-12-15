@@ -34,11 +34,13 @@ spec:
         checksum/config-image-analyzer: {{ include (print $.Template.BasePath "/configmap-image-analyzer.yaml") . | sha256sum | quote  }}
         checksum/config-kspm-analyzer: {{ include (print $.Template.BasePath "/configmap-kspm-analyzer.yaml") . | sha256sum | quote  }}
         checksum/config-host-scanner: {{ include (print $.Template.BasePath "/configmap-host-scanner.yaml") . | sha256sum | quote  }}
-        checksum/config-runtime-scanner: {{ include (print $.Template.BasePath "/runtimeScanner/runtime-scanner-configmap.yaml") . | sha256sum | quote  }}
         checksum/secret: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum | quote  }}
         checksum/clusterrole: {{ include (print $.Template.BasePath "/clusterrole-node-analyzer.yaml") . | sha256sum | quote  }}
         checksum/clusterrolebinding: {{ include (print $.Template.BasePath "/clusterrolebinding-node-analyzer.yaml") . | sha256sum | quote  }}
         checksum/serviceaccount: {{ include (print $.Template.BasePath "/serviceaccount-node-analyzer.yaml") . | sha256sum | quote  }}
+      {{- if include "nodeAnalyzer.deployRuntimeScanner" . }}
+        checksum/config-runtime-scanner: {{ include (print $.Template.BasePath "/runtimeScanner/runtime-scanner-configmap.yaml") . | sha256sum | quote  }}
+      {{- end }}
 {{- if .Values.daemonset.annotations }}
         {{ toYaml .Values.daemonset.annotations | nindent 8 }}
 {{- end }}

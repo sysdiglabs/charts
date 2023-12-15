@@ -6,10 +6,22 @@ templates:
   - runtimeScanner/eveconnector-api-service.yaml
   - runtimeScanner/eveconnector-api-deployment.yaml
   - runtimeScanner/sysdig-eve-secret.yaml
+    # For checksums
+  - clusterrole-node-analyzer.yaml
+  - clusterrolebinding-node-analyzer.yaml
+  - configmap-benchmark-runner.yaml
+  - configmap-host-analyzer.yaml
+  - configmap-host-scanner.yaml
+  - configmap-image-analyzer.yaml
+  - secrets.yaml
+  - serviceaccount-node-analyzer.yaml
+
 tests:
   - it: Check global kspm deploy
     set:
       global:
+        sysdig:
+          accessKey: "XXX"
         kspm:
           deploy: true
       clusterName: test-cluster
@@ -23,6 +35,8 @@ tests:
   - it: Check hostPID is true if global.kspm.deploy is true
     set:
       global:
+        sysdig:
+          accessKey: "XXX"
         kspm:
           deploy: true
       clusterName: test-cluster
@@ -34,6 +48,9 @@ tests:
 
   - it: Check hostPID is true if nodeAnalyzer.benchmarkRunner.deploy is true
     set:
+      global:
+        sysdig:
+          accessKey: "XXX"
       nodeAnalyzer:
         benchmarkRunner:
           deploy: true
@@ -49,13 +66,19 @@ tests:
       global:
         kspm:
           deploy: true
-    template: configmap-kspm-analyzer.yaml
+        sysdig:
+          accessKey: "XXX"
+    templates: 
+      - configmap-kspm-analyzer.yaml
     asserts:
       - failedTemplate:
           errorMessage: "A valid clusterName is required"
 
   - it: Check nodeAnalyzer imageAnalyzer deploy
     set:
+      global:
+        sysdig:
+          accessKey: "XXX"
       nodeAnalyzer:
         imageAnalyzer:
           deploy: true
@@ -70,6 +93,9 @@ tests:
 
   - it: Check nodeAnalyzer hostAnalyzer deploy
     set:
+      global:
+        sysdig:
+          accessKey: "XXX"
       nodeAnalyzer:
         hostAnalyzer:
           deploy: true
@@ -84,6 +110,9 @@ tests:
 
   - it: Check nodeAnalyzer benchmarkRunner deploy
     set:
+      global:
+        sysdig:
+          accessKey: "XXX"
       nodeAnalyzer:
         benchmarkRunner:
           deploy: true
@@ -98,6 +127,9 @@ tests:
 
   - it: Check nodeAnalyzer runtimeScanner deploy
     set:
+      global:
+        sysdig:
+          accessKey: "XXX"
       nodeAnalyzer:
         runtimeScanner:
           deploy: true
@@ -112,6 +144,9 @@ tests:
 
   - it: Check nodeAnalyzer runtimeScanner eveConnector deploy
     set:
+      global:
+        sysdig:
+          accessKey: "XXX"
       nodeAnalyzer:
         runtimeScanner:
           deploy: true
@@ -141,6 +176,9 @@ tests:
 
   - it: Check nodeAnalyzer imageAnalyzer deploy set to false
     set:
+      global:
+        sysdig:
+          accessKey: "XXX"
       nodeAnalyzer:
         imageAnalyzer:
           deploy: false
@@ -155,6 +193,9 @@ tests:
 
   - it: Check nodeAnalyzer hostAnalyzer deploy set to false
     set:
+      global:
+        sysdig:
+          accessKey: "XXX"
       nodeAnalyzer:
         hostAnalyzer:
           deploy: false
@@ -169,6 +210,9 @@ tests:
 
   - it: Check nodeAnalyzer benchmarkRunner deploy set to false
     set:
+      global:
+        sysdig:
+          accessKey: "XXX"
       nodeAnalyzer:
         benchmarkRunner:
           deploy: false
@@ -183,6 +227,9 @@ tests:
 
   - it: Check nodeAnalyzer runtimeScanner deploy set to false
     set:
+      global:
+        sysdig:
+          accessKey: "XXX"
       nodeAnalyzer:
         runtimeScanner:
           deploy: false
@@ -197,6 +244,9 @@ tests:
 
   - it: Check nodeAnalyzer runtimeScanner EVE_INTEGRATION_ENABLED is true even if eveConnector deploy set to false
     set:
+      global:
+        sysdig:
+          accessKey: "XXX"
       nodeAnalyzer:
         runtimeScanner:
           deploy: true

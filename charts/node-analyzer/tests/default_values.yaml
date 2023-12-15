@@ -1,0 +1,5 @@
+global:
+  clusterConfig:
+    name: "test"
+  sysdig:
+    accessKey: "xxx"

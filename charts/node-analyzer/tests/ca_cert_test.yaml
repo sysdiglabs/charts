@@ -5,6 +5,19 @@ templates:
   - runtimeScanner/eveconnector-api-deployment.yaml
   - runtimeScanner/sysdig-eve-secret.yaml
   - runtimeScanner/eveconnector-api-configmap.yaml
+  # For checksums
+  - clusterrole-node-analyzer.yaml
+  - clusterrolebinding-node-analyzer.yaml
+  - templates/configmap-benchmark-runner.yaml
+  - templates/configmap-host-analyzer.yaml
+  - templates/configmap-host-scanner.yaml
+  - templates/configmap-image-analyzer.yaml
+  - templates/configmap-kspm-analyzer.yaml
+  - templates/serviceaccount-node-analyzer.yaml
+  - templates/runtimeScanner/runtime-scanner-configmap.yaml
+values:
+  - ./default_values.yaml
+
 tests:
   - it: Checking node-analyzer CA Cert Secret
     set:

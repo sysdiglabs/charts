@@ -1,6 +1,15 @@
 suite: PSP create test
 templates:
   - templates/psp.yaml
+  # For checksums
+  - templates/configmap-benchmark-runner.yaml
+  - templates/configmap-host-analyzer.yaml
+  - templates/configmap-host-scanner.yaml
+  - templates/configmap-image-analyzer.yaml
+  - templates/configmap-kspm-analyzer.yaml
+  - templates/secrets.yaml
+  - templates/serviceaccount-node-analyzer.yaml
+  - templates/runtimeScanner/runtime-scanner-configmap.yaml
 tests:
   - it: Ensure PSP is created on k8s <1.25
     capabilities:
