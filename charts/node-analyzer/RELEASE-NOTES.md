@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **node-analyzer** [9895cb00](https://github.com/sysdiglabs/charts/commit/9895cb002e359c36e857ea3e9dd867f34129aeef): Improve template to reflect eveEnabled settings in CM ([#1536](https://github.com/sysdiglabs/charts/issues/1536))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.20.0...node-analyzer-1.20.1
+### New Features
+- **node-analyzer** [809552f7](https://github.com/sysdiglabs/charts/commit/809552f71f8b17b9f57a72dd6b659e959eaa4fe4): namespace variable for runtime-scanner and eve-connector ([#1518](https://github.com/sysdiglabs/charts/issues/1518))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.20.1...node-analyzer-1.20.2
