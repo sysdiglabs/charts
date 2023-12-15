@@ -19,7 +19,7 @@ tests:
     capabilities:
       majorVersion: '1'
       minorVersion: '13'
-    templates: 
+    templates:
       - daemonset-node-analyzer.yaml
     asserts:
       - equal:
@@ -43,7 +43,7 @@ tests:
     capabilities:
       majorVersion: '1'
       minorVersion: '14'
-    templates: 
+    templates:
       - daemonset-node-analyzer.yaml
     asserts:
       - equal:
@@ -64,7 +64,7 @@ tests:
                         - linux
 
   - it: Test adding custom affinity settings
-    templates: 
+    templates:
       - daemonset-node-analyzer.yaml
     set:
       nodeAnalyzer:

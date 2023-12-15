@@ -48,9 +48,9 @@ tests:
       # NOTE: not enabled with default config
       - notExists:
           path: spec.template.metadata.annotations['checksum/config-host-scanner']
-      - notExists: 
+      - notExists:
           path: spec.template.metadata.annotations['checksum/config-runtime-scanner']
-      - notExists: 
+      - notExists:
           path: spec.template.metadata.annotations['checksum/config-kspm-analyzer']
   - it: Test checksum annotations for new scanning engine
     templates:
@@ -71,5 +71,5 @@ tests:
           path: spec.template.metadata.annotations['checksum/clusterrole']
       - isNotEmpty:
           path: spec.template.metadata.annotations['checksum/config-host-scanner']
-      - isNotEmpty: 
+      - isNotEmpty:
           path: spec.template.metadata.annotations['checksum/config-runtime-scanner']

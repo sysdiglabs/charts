@@ -63,7 +63,7 @@ tests:
           value: true
 
   - it: Check global kspm deploy without clusterName
-    templates: 
+    templates:
       - daemonset-node-analyzer.yaml
     set:
       global:
