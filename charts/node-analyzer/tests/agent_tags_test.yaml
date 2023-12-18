@@ -1,6 +1,19 @@
 suite: Test node-analyzer Agent Tags
 templates:
   - daemonset-node-analyzer.yaml
+  # For checksums
+  - clusterrole-node-analyzer.yaml
+  - clusterrolebinding-node-analyzer.yaml
+  - configmap-benchmark-runner.yaml
+  - configmap-host-analyzer.yaml
+  - configmap-host-scanner.yaml
+  - configmap-image-analyzer.yaml
+  - configmap-kspm-analyzer.yaml
+  - secrets.yaml
+  - serviceaccount-node-analyzer.yaml
+values:
+  - ./default_required_values.yaml
+
 tests:
   - it: Check agent tags are set from global.settings.tags
     set:
@@ -10,6 +23,7 @@ tests:
             tag: value
         kspm:
           deploy: true
+      clusterName: "test"
     asserts:
       - contains:
           path: spec.template.spec.containers[0].env
@@ -23,6 +37,7 @@ tests:
       global:
         kspm:
           deploy: true
+      clusterName: "test"
     asserts:
       - notContains:
           path: spec.template.spec.containers[0].env

@@ -28,8 +28,24 @@ spec:
         app.kubernetes.io/name: {{ include "nodeAnalyzer.name" . }}
 {{ include "daemonset.labels" . | indent 8 }}
 {{ include "nodeAnalyzer.labels" . | indent 8 }}
-{{- if .Values.daemonset.annotations }}
       annotations:
+        checksum/config-benchmark: {{ include (print $.Template.BasePath "/configmap-benchmark-runner.yaml") . | sha256sum | quote  }}
+        checksum/config-host-analyzer: {{ include (print $.Template.BasePath "/configmap-host-analyzer.yaml") . | sha256sum | quote  }}
+        checksum/config-image-analyzer: {{ include (print $.Template.BasePath "/configmap-image-analyzer.yaml") . | sha256sum | quote  }}
+        {{- if and .Values.nodeAnalyzer.deploy (not .Values.gke.autopilot) (include "nodeAnalyzer.deployHostScanner" .) }}
+        checksum/config-host-scanner: {{ include (print $.Template.BasePath "/configmap-host-scanner.yaml") . | sha256sum | quote  }}
+        {{- end }}
+        {{- if .Values.global.kspm.deploy }}
+        checksum/config-kspm-analyzer: {{ include (print $.Template.BasePath "/configmap-kspm-analyzer.yaml") . | sha256sum | quote  }}
+        {{- end }}
+        {{- if include "nodeAnalyzer.deployRuntimeScanner" . }}
+        checksum/config-runtime-scanner: {{ include (print $.Template.BasePath "/runtimeScanner/runtime-scanner-configmap.yaml") . | sha256sum | quote  }}
+        {{- end }}
+        checksum/secret: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum | quote  }}
+        checksum/clusterrole: {{ include (print $.Template.BasePath "/clusterrole-node-analyzer.yaml") . | sha256sum | quote  }}
+        checksum/clusterrolebinding: {{ include (print $.Template.BasePath "/clusterrolebinding-node-analyzer.yaml") . | sha256sum | quote  }}
+        checksum/serviceaccount: {{ include (print $.Template.BasePath "/serviceaccount-node-analyzer.yaml") . | sha256sum | quote  }}
+{{- if .Values.daemonset.annotations }}
         {{ toYaml .Values.daemonset.annotations | nindent 8 }}
 {{- end }}
     spec:

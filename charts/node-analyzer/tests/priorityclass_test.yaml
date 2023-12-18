@@ -2,6 +2,18 @@ suite: Node Analyzer PriorityClass tests
 templates:
   - templates/daemonset-node-analyzer.yaml
   - templates/priorityclass.yaml
+  # For checksums
+  - clusterrole-node-analyzer.yaml
+  - clusterrolebinding-node-analyzer.yaml
+  - configmap-benchmark-runner.yaml
+  - configmap-host-analyzer.yaml
+  - configmap-host-scanner.yaml
+  - configmap-image-analyzer.yaml
+  - configmap-kspm-analyzer.yaml
+  - secrets.yaml
+  - serviceaccount-node-analyzer.yaml
+values:
+  - ./default_required_values.yaml
 tests:
   - it: Check PriorityClass limits are correctly set
     set:
