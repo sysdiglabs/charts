@@ -36,7 +36,7 @@ To install the chart:
 helm repo add sysdig https://charts.sysdig.com
 helm repo update
 helm upgrade --install cloud-connector sysdig/cloud-connector \
-     --create-namespace -n cloud-connector --version=0.8.7  \
+     --create-namespace -n cloud-connector --version=0.8.8  \
      --set sysdig.secureAPIToken=<SECURE_API_TOKEN>
 ```
 
@@ -60,7 +60,7 @@ For example:
 
 ```bash
 helm upgrade --install cloud-connector sysdig/cloud-connector \
-     --create-namespace -n cloud-connector --version=0.8.7  \
+     --create-namespace -n cloud-connector --version=0.8.8  \
      --set sysdig.secureAPIToken=<SECURE_API_TOKEN>
 ```
 
@@ -72,7 +72,7 @@ For example:
 
 ```bash
 helm upgrade --install cloud-connector sysdig/cloud-connector \
-     --create-namespace -n cloud-connector --version=0.8.7  \
+     --create-namespace -n cloud-connector --version=0.8.8  \
     --values values.yaml
 ```
 
