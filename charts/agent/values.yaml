@@ -279,6 +279,10 @@ tolerations:
     key: node-role.kubernetes.io/etcd
     operator: Equal
     value: "true"
+  - effect: NoExecute
+    key: CriticalAddonsOnly
+    operator: Equal
+    value: "true"
 leaderelection:
   enable: false
 localForwarder:
