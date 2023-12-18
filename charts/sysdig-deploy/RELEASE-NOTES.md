@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **sysdig-deploy** [49fe006f](https://github.com/sysdiglabs/charts/commit/49fe006fb0ff206c7b566a45bfa5f71713d5ad0a): Add prerequisite information on the chart ([#1468](https://github.com/sysdiglabs/charts/issues/1468))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.34.6...sysdig-deploy-1.34.7
+### Chores
+- **sysdig-deploy** [c00c5d7e](https://github.com/sysdiglabs/charts/commit/c00c5d7ef2a0eda98bf6691869fc3c846cb08a4d): Automatic version bump due to updated dependencies ([#1541](https://github.com/sysdiglabs/charts/issues/1541))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.34.7...sysdig-deploy-1.34.8
