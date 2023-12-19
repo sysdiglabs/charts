@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.20.4
+### Chores
+* **node-analyzer** [14068b24](https://github.com/sysdiglabs/charts/commit/14068b24e61b1a95634794599e8e105721701686): bump sysdig/vuln-runtime-scanner to v1.6.7 ([#1545](https://github.com/sysdiglabs/charts/issues/1545))
 # v1.20.3
 ### Bug Fixes
 * **nodeAnalyzer** [7019a941](https://github.com/sysdiglabs/charts/commit/7019a94176feca81f12b5458788bd62d5d8316a5): deamonset not being rollout after configuration changes ([#1533](https://github.com/sysdiglabs/charts/issues/1533))
