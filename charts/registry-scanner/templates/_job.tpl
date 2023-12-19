@@ -128,6 +128,8 @@
           - name: REGISTRYSCANNER_PROFILING_ENABLED
             value: /profiling
           {{- end }}
+          - name: REGISTRYSCANNER_CRONJOB_SCHEDULE
+            value: {{ .Values.cronjob.schedule | quote }}
           {{- if .Values.extraEnvVars }}
           {{- toYaml .Values.extraEnvVars | nindent 10 }}
           {{- end }}

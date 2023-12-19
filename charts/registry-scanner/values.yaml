@@ -105,6 +105,8 @@ config:
       # The size limit for the emptyDir volume used by the scanner job.<br/>
       # This volume is used to store both the vulnerability database and the image to scan.
       temporaryVolumeSizeLimit: 2Gi
+    # Force the scan to happen on the client component rather than relying on backend scanning
+    disablePlatformScanning: false
   # Number of goroutines running in parallel in metadata phase for ECR Org setup.
   parallelGoRoutines: 100
 ssl:
