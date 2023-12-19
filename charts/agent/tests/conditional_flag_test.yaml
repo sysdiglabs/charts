@@ -46,3 +46,76 @@ tests:
       - equal:
           path: spec.template.spec.containers[*].image
           value: quay.io/sysdig/agent-slim:12.9.0
+
+  - it: Checking privileged flag set to true
+    set:
+      privileged: true
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[*].securityContext.privileged
+          value: true
+
+  - it: Checking privileged flag set to false with disabled ebpf
+    set:
+      privileged: false
+      ebpf:
+        enabled: false
+    asserts:
+      - failedTemplate:
+          errorMessage: "Disabling 'privileged' flag requires eBPF and Sysdig Agent 13.3.0 or newer"
+
+  - it: Checking privileged flag set to false with old agent version
+    set:
+      privileged: false
+      ebpf:
+        enabled: true
+      image:
+        tag: 13.2.0
+    asserts:
+      - failedTemplate:
+          errorMessage: "Disabling 'privileged' flag requires eBPF and Sysdig Agent 13.3.0 or newer"
+
+  - it: Checking privileged flag set to false, agent version 13.3.0
+    set:
+      privileged: false
+      ebpf:
+        enabled: true
+      image:
+        tag: 13.3.0
+    asserts:
+      - equal:
+          path: spec.template.metadata.annotations['container.apparmor.security.beta.kubernetes.io/sysdig']
+          value: "unconfined"
+      - notExists:
+          path: spec.template.spec.containers[*].securityContext.privileged
+      - equal:
+          path: spec.template.spec.containers[*].securityContext.seccompProfile.type
+          value: Unconfined
+      - contains:
+          path: spec.template.spec.containers[*].securityContext.capabilities.drop
+          content: ALL
+      - exists:
+          path: spec.template.spec.containers[*].securityContext.capabilities.add
+
+  - it: Checking privileged flag set to false, not semver agent version
+    set:
+      privileged: false
+      ebpf:
+        enabled: true
+      image:
+        tag: whatever
+    asserts:
+      - equal:
+          path: spec.template.metadata.annotations
+          value:
+            container.apparmor.security.beta.kubernetes.io/sysdig: unconfined
+      - notExists:
+          path: spec.template.spec.containers[*].securityContext.privileged
+      - equal:
+          path: spec.template.spec.containers[*].securityContext.seccompProfile.type
+          value: Unconfined
+      - contains:
+          path: spec.template.spec.containers[*].securityContext.capabilities.drop
+          content: ALL
+      - exists:
+          path: spec.template.spec.containers[*].securityContext.capabilities.add

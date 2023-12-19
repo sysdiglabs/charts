@@ -15,7 +15,12 @@ allowHostPID: true
 allowHostPorts: false
 allowPrivilegeEscalation: true
 allowPrivilegedContainer: true
+{{- if eq "true" (include "agent.privileged" .) }}
 allowedCapabilities: []
+{{- else }}
+allowedCapabilities:
+{{ include "agent.capabilities" . }}
+{{- end }}
 allowedUnsafeSysctls: []
 defaultAddCapabilities: []
 fsGroup:

@@ -1,0 +1,60 @@
+suite: Testing Security Context Constraint
+templates:
+  - securitycontextconstraint.yaml
+
+capabilities:
+  apiVersions:
+    - security.openshift.io/v1
+
+tests:
+  - it: Testing that SCS is not created if not enabled
+    set:
+      scc:
+        create: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: Testing that SCS is created when required
+    set:
+      scc:
+        create: true
+    asserts:
+      - hasDocuments:
+          count: 1
+      - isKind:
+          of: SecurityContextConstraints
+
+  - it: Testing that SCS capabilities are empty by default
+    set:
+      scc:
+        create: true
+    asserts:
+      - isEmpty:
+          path: allowedCapabilities
+
+  - it: Testing that SCS capabilities are empty when privileged is true
+    set:
+      privileged: true
+      image:
+        tag: '13.3.0'
+      ebpf:
+        enabled: true
+      scc:
+        create: true
+    asserts:
+      - isEmpty:
+          path: allowedCapabilities
+
+  - it: Testing that SCS capabilities are not empty when privileged is false
+    set:
+      privileged: false
+      image:
+        tag: '13.3.0'
+      ebpf:
+        enabled: true
+      scc:
+        create: true
+    asserts:
+      - isNotEmpty:
+          path: allowedCapabilities
