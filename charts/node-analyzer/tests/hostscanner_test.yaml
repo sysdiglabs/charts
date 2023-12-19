@@ -2,15 +2,26 @@
 # Run "helm unittest -3 -f ./tests/hostscanner_test.yaml ." from within the `charts/node-analyzer` folder
 suite: Test HostScanner configuration
 templates:
-  - ../templates/daemonset-node-analyzer.yaml
-  - ../templates/configmap-host-scanner.yaml
+  - daemonset-node-analyzer.yaml
+  - configmap-host-scanner.yaml
+  - clusterrole-node-analyzer.yaml
+  - clusterrolebinding-node-analyzer.yaml
+  - configmap-benchmark-runner.yaml
+  - configmap-host-analyzer.yaml
+  - configmap-host-scanner.yaml
+  - configmap-image-analyzer.yaml
+  - configmap-kspm-analyzer.yaml
+  - secrets.yaml
+  - serviceaccount-node-analyzer.yaml
+  - runtimeScanner/runtime-scanner-configmap.yaml
 values:
+  - ./default_required_values.yaml
   - ../values.yaml
 
 tests:
   - it: "HS not deployed by default"
     templates:
-      - ../templates/daemonset-node-analyzer.yaml
+      - daemonset-node-analyzer.yaml
     asserts:
       - isKind:
           of: DaemonSet
@@ -31,7 +42,7 @@ tests:
       clusterName: "test"
       secure.vulnerabilityManagement.newEngineOnly: true
     templates:
-      - ../templates/daemonset-node-analyzer.yaml
+      - daemonset-node-analyzer.yaml
     asserts:
       - isKind:
           of: DaemonSet
@@ -53,7 +64,7 @@ tests:
       secure.vulnerabilityManagement.newEngineOnly: true
       nodeAnalyzer.hostScanner.deploy: true
     templates:
-      - ../templates/daemonset-node-analyzer.yaml
+      - daemonset-node-analyzer.yaml
     asserts:
       - isKind:
           of: DaemonSet
@@ -73,8 +84,9 @@ tests:
     set:
       secure.vulnerabilityManagement.newEngineOnly: true
       nodeAnalyzer.hostScanner.deploy: false
+      global.clusterConfig.name: "test"
     templates:
-      - ../templates/daemonset-node-analyzer.yaml
+      - daemonset-node-analyzer.yaml
     asserts:
       - isKind:
           of: DaemonSet
@@ -92,7 +104,7 @@ tests:
       clusterName: "test"
       nodeAnalyzer.hostScanner.deploy: true
     templates:
-      - ../templates/daemonset-node-analyzer.yaml
+      - daemonset-node-analyzer.yaml
     asserts:
       - isKind:
           of: DaemonSet
@@ -115,7 +127,7 @@ tests:
     set:
       nodeAnalyzer.hostScanner.deploy: false
     templates:
-      - ../templates/daemonset-node-analyzer.yaml
+      - daemonset-node-analyzer.yaml
     asserts:
       - isKind:
           of: DaemonSet
@@ -138,7 +150,7 @@ tests:
       nodeAnalyzer.hostScanner.additionalDirsToScan: "/hello,/world"
       nodeAnalyzer.hostScanner.deploy: true
     templates:
-      - ../templates/configmap-host-scanner.yaml
+      - configmap-host-scanner.yaml
     asserts:
       - isKind:
           of: ConfigMap
@@ -150,7 +162,7 @@ tests:
       clusterName: "test"
       nodeAnalyzer.hostScanner.deploy: true
     templates:
-      - ../templates/configmap-host-scanner.yaml
+      - configmap-host-scanner.yaml
     asserts:
       - isKind:
           of: ConfigMap

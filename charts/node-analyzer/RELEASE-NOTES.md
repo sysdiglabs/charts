@@ -1,5 +1,7 @@
 # What's Changed
 
-### New Features
-- **node-analyzer** [c43ad629](https://github.com/sysdiglabs/charts/commit/c43ad6292b8538d65de2267cf0aba9d55067e7d4): In-USE (EVE) enabled by default ([#1501](https://github.com/sysdiglabs/charts/issues/1501))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.19.2...node-analyzer-1.20.0
+### Bug Fixes
+- **nodeAnalyzer** [7019a941](https://github.com/sysdiglabs/charts/commit/7019a94176feca81f12b5458788bd62d5d8316a5): deamonset not being rollout after configuration changes ([#1533](https://github.com/sysdiglabs/charts/issues/1533))
+
+    * * Fix node-analyzer daemonset rollout not triggered by a change in configuration
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.20.2...node-analyzer-1.20.3

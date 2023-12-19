@@ -10,6 +10,32 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.34.8
+### Chores
+* **sysdig-deploy** [c00c5d7e](https://github.com/sysdiglabs/charts/commit/c00c5d7ef2a0eda98bf6691869fc3c846cb08a4d): Automatic version bump due to updated dependencies ([#1541](https://github.com/sysdiglabs/charts/issues/1541))
+# v1.34.7
+### New Features
+* **sysdig-deploy** [49fe006f](https://github.com/sysdiglabs/charts/commit/49fe006fb0ff206c7b566a45bfa5f71713d5ad0a): Add prerequisite information on the chart ([#1468](https://github.com/sysdiglabs/charts/issues/1468))
+# v1.34.6
+### Chores
+* **sysdig-deploy** [45e6e37a](https://github.com/sysdiglabs/charts/commit/45e6e37a925ce869bfaa86c00514bb75f0f0dc79): Automatic version bump due to updated dependencies ([#1540](https://github.com/sysdiglabs/charts/issues/1540))
+# v1.34.5
+### Bug Fixes
+* **nodeAnalyzer** [7019a941](https://github.com/sysdiglabs/charts/commit/7019a94176feca81f12b5458788bd62d5d8316a5): deamonset not being rollout after configuration changes ([#1533](https://github.com/sysdiglabs/charts/issues/1533))
+
+    * * Fix node-analyzer daemonset rollout not triggered by a change in configuration
+# v1.34.4
+### New Features
+* **node-analyzer** [809552f7](https://github.com/sysdiglabs/charts/commit/809552f71f8b17b9f57a72dd6b659e959eaa4fe4): namespace variable for runtime-scanner and eve-connector ([#1518](https://github.com/sysdiglabs/charts/issues/1518))
+# v1.34.3
+### Chores
+* **sysdig-deploy** [50159c56](https://github.com/sysdiglabs/charts/commit/50159c56652290050e244fa856226327fb2cfa3d): Automatic version bump due to updated dependencies ([#1537](https://github.com/sysdiglabs/charts/issues/1537))
+# v1.34.2
+### Bug Fixes
+* **agent,sysdig-deploy** [d8e38523](https://github.com/sysdiglabs/charts/commit/d8e38523b3e94f0a6311bb5be8f5135e56d47f1c): /var/data volume mount ([#1532](https://github.com/sysdiglabs/charts/issues/1532))
+# v1.34.1
+### Chores
+* **sysdig-deploy** [e6edc444](https://github.com/sysdiglabs/charts/commit/e6edc4449f2313c3835ed63d76b4fc734f66eb72): Automatic version bump due to updated dependencies ([#1531](https://github.com/sysdiglabs/charts/issues/1531))
 # v1.34.0
 ### New Features
 * **node-analyzer** [c43ad629](https://github.com/sysdiglabs/charts/commit/c43ad6292b8538d65de2267cf0aba9d55067e7d4): In-USE (EVE) enabled by default ([#1501](https://github.com/sysdiglabs/charts/issues/1501))

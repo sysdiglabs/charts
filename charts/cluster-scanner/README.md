@@ -25,7 +25,7 @@ $ pre-commit run -a
 $ helm repo add sysdig https://charts.sysdig.com
 $ helm repo update
 $ helm upgrade --install sysdig-cluster-scanner sysdig/cluster-scanner \
-      --create-namespace -n sysdig --version=0.8.6  \
+      --create-namespace -n sysdig --version=0.8.7  \
       --set global.clusterConfig.name=CLUSTER_NAME \
       --set global.sysdig.region=SYSDIG_REGION \
       --set global.sysdig.accessKey=YOUR-KEY-HERE
@@ -45,7 +45,7 @@ This chart deploys the Sysdig Cluster Scanner as a Deployment on a [Kubernetes](
 
 ### Prerequisites
 
-- Helm 3
+- Helm 3.6
 - Sysdig AccessKey
 
 
@@ -55,7 +55,7 @@ To install the chart with the release name `cluster-scanner`, run:
 
 ```console
 $ helm upgrade --install sysdig-cluster-scanner sysdig/cluster-scanner \
-       --create-namespace -n sysdig --version=0.8.6 \
+       --create-namespace -n sysdig --version=0.8.7 \
        --set global.clusterConfig.name=CLUSTER_NAME \
        --set global.sysdig.region=SYSDIG_REGION \
        --set global.sysdig.accessKey=YOUR-KEY-HERE
@@ -162,7 +162,7 @@ Specify each parameter using the **`--set key=value[,key=value]`** argument to `
 
 ```console
 $ helm upgrade --install sysdig-cluster-scanner sysdig/cluster-scanner \
-    --create-namespace -n sysdig --version=0.8.6 \
+    --create-namespace -n sysdig --version=0.8.7 \
     --set global.sysdig.region="us1"
 ```
 
@@ -171,7 +171,7 @@ installing the chart. For example:
 
 ```console
 $ helm upgrade --install sysdig-cluster-scanner sysdig/cluster-scanner \
-    --create-namespace -n sysdig --version=0.8.6 \
+    --create-namespace -n sysdig --version=0.8.7 \
     --values values.yaml
 ```
 
