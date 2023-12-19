@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **sysdig-deploy** [49fe006f](https://github.com/sysdiglabs/charts/commit/49fe006fb0ff206c7b566a45bfa5f71713d5ad0a): Add prerequisite information on the chart ([#1468](https://github.com/sysdiglabs/charts/issues/1468))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/admission-controller-0.14.15...admission-controller-0.14.16
+### Chores
+- **admission-controller** [7c1a99a2](https://github.com/sysdiglabs/charts/commit/7c1a99a2fa9d164ff0a325ccbffd84fbc2c5123f): Update to v3.9.36 ([#1529](https://github.com/sysdiglabs/charts/issues/1529))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/admission-controller-0.14.16...admission-controller-0.14.17
