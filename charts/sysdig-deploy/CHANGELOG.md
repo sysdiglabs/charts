@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.35.0
+### New Features
+* **node-analyzer** [1e512f9a](https://github.com/sysdiglabs/charts/commit/1e512f9af08674b87b01c17b9bc34c436e90ff8a): bumped host-scanner to 0.7.0 to add container scanning support ([#1538](https://github.com/sysdiglabs/charts/issues/1538))
 # v1.34.9
 ### Chores
 * **sysdig-deploy** [98ac8b97](https://github.com/sysdiglabs/charts/commit/98ac8b975efe64cd973e62c18180197c1fc4bd9d): Automatic version bump due to updated dependencies ([#1542](https://github.com/sysdiglabs/charts/issues/1542))
