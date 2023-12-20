@@ -890,6 +890,26 @@ spec:
           - name: "{{ $key }}"
             value: "{{ $value }}"
           {{- end }}
+
+          {{- if .Values.nodeAnalyzer.hostScanner.scanContainers.enabled }}
+          # Container scanner
+          - name: USE_COMBINED_SCANNER
+            value: "true"
+          - name: SCAN_CONTAINERS_ENABLED
+            value: "true"
+          - name: DOCKER_SOCKET_PATHS
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-host-scanner
+                key: docker_socket_path
+                optional: true
+          - name: PODMAN_SOCKET_PATHS
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-host-scanner
+                key: podman_socket_path
+                optional: true
+          {{- end }}
         volumeMounts:
           - mountPath: /tmp
             name: tmp-vol
