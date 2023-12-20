@@ -392,7 +392,7 @@ nodeAnalyzer:
 
     image:
       repository: sysdig/vuln-host-scanner
-      tag: "0.6.8"
+      tag: "0.7.0"
       digest:
       pullPolicy:
 
@@ -415,6 +415,11 @@ nodeAnalyzer:
 
     settings:
       replicas: 1
+
+    scanContainers:
+      enabled: false
+      # dockerSocketPath: "unix:///var/run/docker.sock"
+      # podmanSocketPath: "unix:///var/run/podman.sock"
 
   kspmAnalyzer:
     debug: false
