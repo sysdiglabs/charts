@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.1.27
+### Chores
+* **registry-scanner** [2f36821c](https://github.com/sysdiglabs/charts/commit/2f36821c8d976a493bcae190bf893ca9d4fac534): Update to v0.2.62 ([#1554](https://github.com/sysdiglabs/charts/issues/1554))
 # v1.1.26
 ### New Features
 * **registry-scanner** [023b8ee4](https://github.com/sysdiglabs/charts/commit/023b8ee4c84712d183a13d523427ab745d4a5c71): ovveride platform scanning logic ([#1496](https://github.com/sysdiglabs/charts/issues/1496))
