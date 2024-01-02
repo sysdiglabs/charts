@@ -38,6 +38,9 @@ jobs:
       - name: Test cloud-scanning
         run: helm unittest --strict ./charts/cloud-scanning
 
+      - name: Test cluster-scanner
+        run: helm unittest --strict ./charts/cluster-scanner
+
       - name: Test harbor-scanner-sysdig-secure
         run: helm unittest --strict ./charts/harbor-scanner-sysdig-secure
 
@@ -53,10 +56,6 @@ jobs:
       - name: Test registry-scanner
         run: helm unittest --strict ./charts/registry-scanner
 
-      # Deprecated
-      # - name: Test sysdig
-      #   run: helm unittest --strict ./charts/sysdig
-
       - name: Test sysdig-deploy
         run: helm unittest --strict ./charts/sysdig-deploy
 
@@ -65,6 +64,3 @@ jobs:
 
       - name: Test sysdig-stackdriver-bridge
         run: helm unittest --strict ./charts/sysdig-stackdriver-bridge
-
-      - name: Test cluster-scanner
-        run: helm unittest --strict ./charts/cluster-scanner
