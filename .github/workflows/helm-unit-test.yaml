@@ -1,6 +1,7 @@
 name: Helm Unit Tests
 
-on: pull_request
+on:
+  pull_request:
 
 jobs:
   Unit-tests:
