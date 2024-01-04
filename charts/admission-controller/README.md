@@ -68,7 +68,7 @@ For example:
 
 ```bash
 helm upgrade --install admission-controller sysdig/admission-controller \
-    --create-namespace -n sysdig-admission-controller --version=0.14.17  \
+    --create-namespace -n sysdig-admission-controller --version=0.14.18  \
     --set sysdig.secureAPIToken=YOUR-KEY-HERE,clusterName=YOUR-CLUSTER-NAME
 ```
 
@@ -80,7 +80,7 @@ For example:
 
 ```bash
 helm upgrade --install admission-controller sysdig/admission-controller \
-     --create-namespace -n sysdig-admission-controller --version=0.14.17  \
+     --create-namespace -n sysdig-admission-controller --version=0.14.18  \
     --values values.yaml
 
 ```
