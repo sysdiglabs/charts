@@ -12,6 +12,7 @@ templates:
   - webhook/secret.yaml
   - webhook/admissionregistration.yaml
   - webhook/podmonitor.yaml
+  - webhook/service.yaml
 tests:
   - it: Checking scanner enabled flag
     set:
@@ -54,6 +55,50 @@ tests:
           path: spec.template.spec.containers[0].name
           value: kspm-admission-controller
         template: webhook/deployment.yaml
+      - contains:
+          path: spec.ports
+          content:
+           name: vac
+           port: 6443
+           targetPort: vac
+          count: 1
+        template: webhook/service.yaml
+      - notContains:
+          path: spec.ports
+          content:
+           name: http
+          any: true
+        template: webhook/service.yaml
+
+  - it: Checking KSPM AC disabled
+    set:
+      features:
+        kspmAdmissionController: false
+        k8sAuditDetections: true
+      clusterName: test-k8s
+      sysdig:
+        secureAPIToken: standard_token
+        accessKey: some_access_key
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].name
+          value: admission-controller
+        template: webhook/deployment.yaml
+      - contains:
+          path: spec.ports
+          content:
+           name: http
+           port: 443
+           targetPort: http
+          any: true
+          count: 1
+        template: webhook/service.yaml
+      - notContains:
+          path: spec.ports
+          content:
+           name: vac
+          any: true
+        template: webhook/service.yaml
 
   - it: Checking podmonitors scanner enabled
     set:
