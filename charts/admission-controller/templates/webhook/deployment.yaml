@@ -54,6 +54,8 @@ spec:
           image: {{ include "admissionController.kspm.image" . }}
           imagePullPolicy: {{ .Values.webhook.v2.image.pullPolicy | default .Values.global.image.pullPolicy }}
           env:
+            - name: DEFAULT_TIMEOUT
+            - value: {{ .Values.webhook.timeoutSeconds}}
             - name: DENY_ON_ERROR
               value: {{ .Values.webhook.denyOnError | quote }}
             - name: DRY_RUN
