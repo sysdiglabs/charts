@@ -411,7 +411,7 @@ agent config to prevent a backend push from enabling them after installation.
             "secure_audit_streams") }}
             {{- $_ := set $secureConfig $secureFeature (dict "enabled" false) }}
         {{- end }}
-    {{ else if and $secureLightMode (regexMatch "^v?([0-9]+)(\\.[0-9]+)?(\\.[0-9]+)?(-([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?(\\+([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?$" .Values.image.tag) (semverCompare ">= 12.19.x" .Values.image.tag) }}
+    {{ else if include "agent.enableFalcoBaselineSecureLight" . }}
         {{- range $secureFeature := (list
             "memdump"
             "network_topology") }}
@@ -534,6 +534,14 @@ true
 {{- if semverCompare ">= 12.18.0-0" .Values.image.tag }}
 {{- printf "true" -}}
 {{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
+
+{{- define "agent.enableFalcoBaselineSecureLight" }}
+{{- if regexMatch "^v?([0-9]+)(\\.[0-9]+)?(\\.[0-9]+)?(-([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?(\\+([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?$" .Values.image.tag }}
+{{- if semverCompare ">= 12.19.0-0" .Values.image.tag }}
+{{- printf "true" -}}
 {{- end }}
 {{- end }}
 {{- end }}
