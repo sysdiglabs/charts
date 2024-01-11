@@ -411,7 +411,7 @@ agent config to prevent a backend push from enabling them after installation.
             "secure_audit_streams") }}
             {{- $_ := set $secureConfig $secureFeature (dict "enabled" false) }}
         {{- end }}
-    {{ else if and $secureLightMode (semverCompare ">= 12.19.x" .Values.image.tag) }}
+    {{ else if and $secureLightMode (regexMatch "^v?([0-9]+)(\\.[0-9]+)?(\\.[0-9]+)?(-([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?(\\+([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?$" .Values.image.tag) (semverCompare ">= 12.19.x" .Values.image.tag) }}
         {{- range $secureFeature := (list
             "memdump"
             "network_topology") }}
