@@ -4071,6 +4071,43 @@ entries:
   agent:
   - apiVersion: v2
     appVersion: 12.19.0
+    created: "2024-01-12T11:25:49.175077845Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      version: ~1.2.2
+    description: Sysdig Monitor and Secure agent
+    digest: f20c312fe4750cdffaf7dfffe00cd5782a0f9f4d723f9a6c9830ec520b3b7aaf
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: alberto.barba@sysdig.com
+      name: AlbertoBarba
+    - email: adam.roberts@sysdig.com
+      name: aroberts87
+    - email: francesco.furlan@sysdig.com
+      name: francesco-furlan
+    - email: gerlando.falauto@sysdig.com
+      name: iurly
+    - email: marcovito.moscaritolo@sysdig.com
+      name: mavimo
+    name: agent
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/agent-1.19.1/agent-1.19.1.tgz
+    version: 1.19.1
+  - apiVersion: v2
+    appVersion: 12.19.0
     created: "2023-12-21T08:41:51.043650156Z"
     dependencies:
     - name: common
@@ -50572,4 +50609,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2024-01-08T09:03:28.587933915Z"
+generated: "2024-01-12T11:25:49.373884609Z"
