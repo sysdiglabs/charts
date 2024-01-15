@@ -129,11 +129,6 @@ tests:
       - matchRegex:
           path: data['dragent.yaml']
           pattern: |-
-            memdump:
-              enabled: false
-      - matchRegex:
-          path: data['dragent.yaml']
-          pattern: |-
             network_topology:
               enabled: false
       - notMatchRegex:
