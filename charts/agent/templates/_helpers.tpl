@@ -411,9 +411,8 @@ agent config to prevent a backend push from enabling them after installation.
             "secure_audit_streams") }}
             {{- $_ := set $secureConfig $secureFeature (dict "enabled" false) }}
         {{- end }}
-    {{ else if include "agent.enableFalcoBaselineSecureLight" . }}
+    {{ else if and (include "agent.enableFalcoBaselineSecureLight" .) $secureLightMode }}
         {{- range $secureFeature := (list
-            "memdump"
             "network_topology") }}
             {{- $_ := set $secureConfig $secureFeature (dict "enabled" false) }}
         {{- end }}
