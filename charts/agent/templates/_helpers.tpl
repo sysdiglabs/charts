@@ -413,6 +413,7 @@ agent config to prevent a backend push from enabling them after installation.
         {{- end }}
     {{ else if and (include "agent.enableFalcoBaselineSecureLight" .) $secureLightMode }}
         {{- range $secureFeature := (list
+            "memdump"
             "network_topology") }}
             {{- $_ := set $secureConfig $secureFeature (dict "enabled" false) }}
         {{- end }}
