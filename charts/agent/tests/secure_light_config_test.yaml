@@ -149,6 +149,11 @@ tests:
       - matchRegex:
           path: data['dragent.yaml']
           pattern: |-
+            memdump:
+              enabled: false
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
             network_topology:
               enabled: false
     template: configmap.yaml
@@ -179,6 +184,11 @@ tests:
           path: data['dragent.yaml']
           pattern: |-
             falcobaseline:
+              enabled: false
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            memdump:
               enabled: false
       - matchRegex:
           path: data['dragent.yaml']
