@@ -4,7 +4,7 @@ dependencies:
 - name: common
   repository: file://../common
   version: ~1.2.2
-description: Sysdig Monitor and Secure agent
+description: Sysdig Monitor and Secure Runtime Agent
 home: https://www.sysdig.com/
 icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
 keywords:
@@ -30,4 +30,4 @@ sources:
 - https://app.sysdigcloud.com/#/settings/user
 - https://github.com/draios/sysdig
 type: application
-version: 1.19.2
+version: 1.19.3
