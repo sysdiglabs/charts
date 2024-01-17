@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.14.19
+### Chores
+* [45895438](https://github.com/sysdiglabs/charts/commit/4589543862f78502932dca1c4e37a7d0d89259ff): migrate default branch to main ([#1556](https://github.com/sysdiglabs/charts/issues/1556))
 # v0.14.18
 ### Chores
 * **admission-controller** [3915ce10](https://github.com/sysdiglabs/charts/commit/3915ce106f7b347db99d1c9632887cbf33f4c950): add ports to service conditionally ([#1558](https://github.com/sysdiglabs/charts/issues/1558))
