@@ -56,13 +56,14 @@ jobs:
           SYSDIG_AWS_QA_REG_MANAGEMENT_ROLE_ARN: ${{secrets.SYSDIG_AWS_QA_REG_MANAGEMENT_ROLE_ARN}}
           SYSDIG_AWS_QA_TARGET_ACCOUNT_ID: ${{secrets.SYSDIG_AWS_QA_TARGET_ACCOUNT_ID}}   # cnt QA account
           SHOW_USAGE: false
+
       - name: Run chart-testing (lint)
-        run: ct lint
+        run: ct lint --target-branch=main
 
       - name: Run chart-testing (list-changed)
         id: list-changed
         run: |
-          changed=$(ct list-changed)
+          changed=$(ct list-changed --target-branch=main)
           if [[ -n "$changed" ]]; then
             echo "::set-output name=changed::true"
           fi
@@ -73,7 +74,7 @@ jobs:
           k3s-version: v1.23.9+k3s1
 
       - name: Run chart-testing (install)
-        run: ct install --upgrade --excluded-charts common,sysdig-stackdriver-bridge,sysdig-mcm-navmenu
+        run: ct install --upgrade --target-branch=main --excluded-charts common,sysdig-stackdriver-bridge,sysdig-mcm-navmenu
 
 
   lint-test-fork:
@@ -124,12 +125,12 @@ jobs:
           SECURE_AGENT_TOKEN: ${{ secrets.KUBELAB_AGENT_KEY }}
 
       - name: Run chart-testing (lint)
-        run: ct lint
+        run: ct lint --target-branch=main
 
       - name: Run chart-testing (list-changed)
         id: list-changed
         run: |
-          changed=$(ct list-changed)
+          changed=$(ct list-changed --target-branch=main)
           if [[ -n "$changed" ]]; then
             echo "::set-output name=changed::true"
           fi
@@ -140,7 +141,7 @@ jobs:
           k3s-version: v1.23.9+k3s1
 
       - name: Run chart-testing (install)
-        run: ct install --upgrade --excluded-charts common,sysdig-stackdriver-bridge,sysdig-mcm-navmenu
+        run: ct install --upgrade --target-branch=main --excluded-charts common,sysdig-stackdriver-bridge,sysdig-mcm-navmenu
 
       - uses: actions/github-script@v7
         id: update-check-run
