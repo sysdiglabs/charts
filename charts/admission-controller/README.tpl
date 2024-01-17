@@ -96,8 +96,8 @@ The following table lists the configurable parameters of the `{{ .Chart.Name }}`
 
 
 ## Examples
-- [Default `values.yaml`](https://github.com/sysdiglabs/charts/blob/master/charts/admission-controller/values.yaml)
-- Find some [examples of these values](https://github.com/sysdiglabs/charts/tree/master/charts/admission-controller/ci)
+- [Default `values.yaml`](https://github.com/sysdiglabs/charts/blob/main/charts/admission-controller/values.yaml)
+- Find some [examples of these values](https://github.com/sysdiglabs/charts/tree/main/charts/admission-controller/ci)
 
 
 <!--
