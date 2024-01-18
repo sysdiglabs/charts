@@ -68,7 +68,7 @@ For example:
 
 ```bash
 helm upgrade --install admission-controller sysdig/admission-controller \
-    --create-namespace -n sysdig-admission-controller --version=0.14.18  \
+    --create-namespace -n sysdig-admission-controller --version=0.14.19  \
     --set sysdig.secureAPIToken=YOUR-KEY-HERE,clusterName=YOUR-CLUSTER-NAME
 ```
 
@@ -80,7 +80,7 @@ For example:
 
 ```bash
 helm upgrade --install admission-controller sysdig/admission-controller \
-     --create-namespace -n sysdig-admission-controller --version=0.14.18  \
+     --create-namespace -n sysdig-admission-controller --version=0.14.19  \
     --values values.yaml
 
 ```
@@ -225,8 +225,8 @@ The following table lists the configurable parameters of the `admission-controll
 
 
 ## Examples
-- [Default `values.yaml`](https://github.com/sysdiglabs/charts/blob/master/charts/admission-controller/values.yaml)
-- Find some [examples of these values](https://github.com/sysdiglabs/charts/tree/master/charts/admission-controller/ci)
+- [Default `values.yaml`](https://github.com/sysdiglabs/charts/blob/main/charts/admission-controller/values.yaml)
+- Find some [examples of these values](https://github.com/sysdiglabs/charts/tree/main/charts/admission-controller/ci)
 
 
 <!--
