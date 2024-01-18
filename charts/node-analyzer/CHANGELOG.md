@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.22.2
+### Chores
+* **node-analyzer** [8857425b](https://github.com/sysdiglabs/charts/commit/8857425ba0edef4849a8ddd77a99122af1ec3161): bump sysdig/vuln-runtime-scanner to v0.7.4 ([#1569](https://github.com/sysdiglabs/charts/issues/1569))
 # v1.22.1
 ### Chores
 * **node-analyzer** [474f2619](https://github.com/sysdiglabs/charts/commit/474f26194a45b6b0b694cdf58627ad01abac95d2): bump sysdig/vuln-host-scanner to v0.7.2 to fix missing container scanning results when using Podman v3 ([#1550](https://github.com/sysdiglabs/charts/issues/1550))
