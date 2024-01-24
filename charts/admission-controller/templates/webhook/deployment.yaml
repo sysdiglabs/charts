@@ -55,7 +55,7 @@ spec:
           imagePullPolicy: {{ .Values.webhook.v2.image.pullPolicy | default .Values.global.image.pullPolicy }}
           env:
             - name: DEFAULT_TIMEOUT
-            - value: {{ .Values.webhook.timeoutSeconds}}
+              value: {{ .Values.webhook.timeoutSeconds | quote }}
             - name: DENY_ON_ERROR
               value: {{ .Values.webhook.denyOnError | default "false" | quote }}
             - name: DRY_RUN
