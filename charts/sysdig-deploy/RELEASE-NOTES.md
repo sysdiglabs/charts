@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **sysdig-deploy** [5f3641da](https://github.com/sysdiglabs/charts/commit/5f3641da0e3a29e8b0ecfdb81122271e3206bf7b): Automatic version bump due to updated dependencies ([#1570](https://github.com/sysdiglabs/charts/issues/1570))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.37.5...sysdig-deploy-1.37.6
+### New Features
+- **KSPM admission controller** [48a4f16f](https://github.com/sysdiglabs/charts/commit/48a4f16f19d62cc6f11c757d6f41571dc119a2d5): SSPROD-35354 - Make Dry Run mode configurable to a user in Chart Values. ([#1560](https://github.com/sysdiglabs/charts/issues/1560))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.37.6...sysdig-deploy-1.37.7
