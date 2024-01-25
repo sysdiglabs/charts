@@ -17,4 +17,4 @@ jobs:
           on-failed-regex-fail-action: false
           on-failed-regex-create-review: true
           on-failed-regex-request-changes: true
-          on-failed-regex-comment: "PR title does not comply with regex: `%regex%`! <br /> Check PR guidelines at https://github.com/sysdiglabs/charts/blob/master/README.md#pull-requests"
+          on-failed-regex-comment: "PR title does not comply with regex: `%regex%`! <br /> Check PR guidelines at https://github.com/sysdiglabs/charts/blob/main/README.md#pull-requests"
