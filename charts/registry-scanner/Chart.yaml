@@ -4,7 +4,7 @@ description: Sysdig Registry Scanner
 type: application
 home: https://www.sysdig.com/
 icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
-version: 1.1.28
-appVersion: 0.2.63
+version: 1.1.29
+appVersion: 0.2.64
 maintainers:
   - name: sysdiglabs
