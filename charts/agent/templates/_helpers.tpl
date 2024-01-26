@@ -339,10 +339,8 @@ and set the agent chart parameters accordingly
     {{- if and (not .Values.secure.enabled) $secureFeatProvided }}
         {{ fail "Set secure.enabled=true when specifying sysdig.settings.feature.mode is `secure` or `secure_light`" }}
     {{- end }}
-
 {{ include "agent.monitorFeatures" . }}
 {{ include "agent.secureFeatures" . }}
-
 {{- end -}}
 
 {{/*
@@ -431,6 +429,14 @@ agent config to prevent a backend push from enabling them after installation.
         {{- $_ := set $secureConfig "drift_control" (dict "enabled" false) }}
         {{- $_ := set $secureConfig "drift_killer" (dict "enabled" false) }}
     {{- end }}
+
+    {{/* Finally, check sysdig.settings for any additional security block confiugration.
+         If so, merge it with $secureConfig and unset .Values.sysdig.settings.security */}}
+    {{- if hasKey .Values.sysdig.settings "security" }}
+        {{- $secureConfig := merge $secureConfig.security .Values.sysdig.settings.security }}
+        {{- $_ := unset .Values.sysdig.settings "security"}}
+    {{- end }}
+
 {{ toYaml $secureConfig }}
 {{- end }}
 
