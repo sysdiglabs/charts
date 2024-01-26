@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.19.3
+### Bug Fixes
+* **agent** [57626624](https://github.com/sysdiglabs/charts/commit/5762662438ca6c93aa38eed3facf87a7bccd3c52): properly render security block content ([#1577](https://github.com/sysdiglabs/charts/issues/1577))
 # v1.19.2
 ### Bug Fixes
 * **agent** [6f49dd5d](https://github.com/sysdiglabs/charts/commit/6f49dd5d86fff854440b811edc2ddecc7e28600a): fix logic to disable network topology and memdump only for secure light ([#1564](https://github.com/sysdiglabs/charts/issues/1564))
