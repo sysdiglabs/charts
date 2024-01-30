@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.22.3
+### Chores
+* **node-analyzer,kspm-collector** [f1023ae1](https://github.com/sysdiglabs/charts/commit/f1023ae129bf5c95b13686bf793130d8fdbc6e50): Bump KSPM to 1.39.1 & Node Analyzer to 1.37.1 ([#1582](https://github.com/sysdiglabs/charts/issues/1582))
 # v1.22.2
 ### Chores
 * **node-analyzer** [8857425b](https://github.com/sysdiglabs/charts/commit/8857425ba0edef4849a8ddd77a99122af1ec3161): bump sysdig/vuln-runtime-scanner to v0.7.4 ([#1569](https://github.com/sysdiglabs/charts/issues/1569))
