@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.19.4
+### New Features
+* [b4f155be](https://github.com/sysdiglabs/charts/commit/b4f155bee9f48af7df9a9f147cac8d3d349453e7): release agent 12.20.0 ([#1584](https://github.com/sysdiglabs/charts/issues/1584))
 # v1.19.3
 ### Bug Fixes
 * **agent** [57626624](https://github.com/sysdiglabs/charts/commit/5762662438ca6c93aa38eed3facf87a7bccd3c52): properly render security block content ([#1577](https://github.com/sysdiglabs/charts/issues/1577))
