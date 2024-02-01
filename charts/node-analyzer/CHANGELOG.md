@@ -10,6 +10,21 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.22.3
+### Chores
+* **node-analyzer,kspm-collector** [f1023ae1](https://github.com/sysdiglabs/charts/commit/f1023ae129bf5c95b13686bf793130d8fdbc6e50): Bump KSPM to 1.39.1 & Node Analyzer to 1.37.1 ([#1582](https://github.com/sysdiglabs/charts/issues/1582))
+# v1.22.2
+### Chores
+* **node-analyzer** [8857425b](https://github.com/sysdiglabs/charts/commit/8857425ba0edef4849a8ddd77a99122af1ec3161): bump sysdig/vuln-runtime-scanner to v0.7.4 ([#1569](https://github.com/sysdiglabs/charts/issues/1569))
+# v1.22.1
+### Chores
+* **node-analyzer** [474f2619](https://github.com/sysdiglabs/charts/commit/474f26194a45b6b0b694cdf58627ad01abac95d2): bump sysdig/vuln-host-scanner to v0.7.2 to fix missing container scanning results when using Podman v3 ([#1550](https://github.com/sysdiglabs/charts/issues/1550))
+# v1.22.0
+### Chores
+* **node-analyzer,kspm-collector** [d80be00a](https://github.com/sysdiglabs/charts/commit/d80be00a821b0af2f71da6fd04590fcd897e0b4a): Bump KSPM to 1.39.0 & Node Analyzer to 1.37.0 ([#1549](https://github.com/sysdiglabs/charts/issues/1549))
+# v1.21.0
+### New Features
+* **node-analyzer** [1e512f9a](https://github.com/sysdiglabs/charts/commit/1e512f9af08674b87b01c17b9bc34c436e90ff8a): bumped host-scanner to 0.7.0 to add container scanning support ([#1538](https://github.com/sysdiglabs/charts/issues/1538))
 # v1.20.4
 ### Chores
 * **node-analyzer** [14068b24](https://github.com/sysdiglabs/charts/commit/14068b24e61b1a95634794599e8e105721701686): bump sysdig/vuln-runtime-scanner to v1.6.7 ([#1545](https://github.com/sysdiglabs/charts/issues/1545))

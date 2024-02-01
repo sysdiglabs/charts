@@ -68,7 +68,7 @@ For example:
 
 ```bash
 helm upgrade --install admission-controller sysdig/admission-controller \
-    --create-namespace -n sysdig-admission-controller --version=0.14.18  \
+    --create-namespace -n sysdig-admission-controller --version=0.14.21  \
     --set sysdig.secureAPIToken=YOUR-KEY-HERE,clusterName=YOUR-CLUSTER-NAME
 ```
 
@@ -80,7 +80,7 @@ For example:
 
 ```bash
 helm upgrade --install admission-controller sysdig/admission-controller \
-     --create-namespace -n sysdig-admission-controller --version=0.14.18  \
+     --create-namespace -n sysdig-admission-controller --version=0.14.21  \
     --values values.yaml
 
 ```
@@ -142,7 +142,7 @@ The following table lists the configurable parameters of the `admission-controll
 | webhook.v2.http.port                               | HTTP serve port where the requests will be served from                                                                                                                                                                                                                                                                                                                                                                                                        | <code>6443</code>                                                                                                                                                                                  |
 | webhook.v2.image.registry                          | The KSPM Admission Controller image registry                                                                                                                                                                                                                                                                                                                                                                                                                  | <code>quay.io</code>                                                                                                                                                                               |
 | webhook.v2.image.repository                        | The KSPM Admission Controller image repository                                                                                                                                                                                                                                                                                                                                                                                                                | <code>sysdig/secure-admission-controller</code>                                                                                                                                                    |
-| webhook.v2.image.tag                               | The KSPM Admission Controller image tag                                                                                                                                                                                                                                                                                                                                                                                                                       | <code>1.0.1</code>                                                                                                                                                                                 |
+| webhook.v2.image.tag                               | The KSPM Admission Controller image tag                                                                                                                                                                                                                                                                                                                                                                                                                       | <code>1.27.0</code>                                                                                                                                                                                |
 | webhook.v2.image.digest                            | Specifies the image digest value.  If set, this value is used instead of the tag value                                                                                                                                                                                                                                                                                                                                                                        | <code></code>                                                                                                                                                                                      |
 | webhook.v2.image.pullPolicy                        | The PullPolicy for KSPM Admission Controller image                                                                                                                                                                                                                                                                                                                                                                                                            | <code></code>                                                                                                                                                                                      |
 | webhook.name                                       | The service name for Webhook deployment                                                                                                                                                                                                                                                                                                                                                                                                                       | <code>webhook</code>                                                                                                                                                                               |
@@ -225,8 +225,8 @@ The following table lists the configurable parameters of the `admission-controll
 
 
 ## Examples
-- [Default `values.yaml`](https://github.com/sysdiglabs/charts/blob/master/charts/admission-controller/values.yaml)
-- Find some [examples of these values](https://github.com/sysdiglabs/charts/tree/master/charts/admission-controller/ci)
+- [Default `values.yaml`](https://github.com/sysdiglabs/charts/blob/main/charts/admission-controller/values.yaml)
+- Find some [examples of these values](https://github.com/sysdiglabs/charts/tree/main/charts/admission-controller/ci)
 
 
 <!--

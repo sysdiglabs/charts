@@ -39,4 +39,12 @@ data:
   {{- if .Values.nodeAnalyzer.hostScanner.vulnerabilityDBVersion }}
   vuln_db_version: {{ .Values.nodeAnalyzer.hostScanner.vulnerabilityDBVersion | quote }}
   {{- end }}
+  {{- if .Values.nodeAnalyzer.hostScanner.scanContainers.enabled }}
+  {{- if .Values.nodeAnalyzer.hostScanner.scanContainers.dockerSocketPath }}
+  docker_socket_path: {{ .Values.nodeAnalyzer.hostScanner.scanContainers.dockerSocketPath | quote}}
+  {{- end }}
+  {{- if .Values.nodeAnalyzer.hostScanner.scanContainers.podmanSocketPath }}
+  podman_socket_path: {{ .Values.nodeAnalyzer.hostScanner.scanContainers.podmanSocketPath | quote}}
+  {{- end }}
+  {{- end}}
 {{- end }}

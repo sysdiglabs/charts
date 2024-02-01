@@ -8,12 +8,16 @@ metadata:
 spec:
   type: {{ .Values.webhook.service.type }}
   ports:
+  {{- if .Values.features.kspmAdmissionController }}
   - name: vac
     port: {{ .Values.webhook.v2.service.port }}
     targetPort: vac
+  {{- end }}
+  {{- if (or .Values.features.k8sAuditDetections .Values.scanner.enabled .Values.webhook.acConfig) }}
   - name: http
     port: {{ .Values.webhook.service.port }}
     targetPort: http
     protocol: TCP
+  {{- end }}
   selector:
     {{- include "admissionController.webhook.selectorLabels" . | nindent 4 }}

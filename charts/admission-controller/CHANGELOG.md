@@ -10,6 +10,15 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.14.20
+### New Features
+* **KSPM admission controller** [48a4f16f](https://github.com/sysdiglabs/charts/commit/48a4f16f19d62cc6f11c757d6f41571dc119a2d5): SSPROD-35354 - Make Dry Run mode configurable to a user in Chart Values. ([#1560](https://github.com/sysdiglabs/charts/issues/1560))
+# v0.14.19
+### Chores
+* [45895438](https://github.com/sysdiglabs/charts/commit/4589543862f78502932dca1c4e37a7d0d89259ff): migrate default branch to main ([#1556](https://github.com/sysdiglabs/charts/issues/1556))
+# v0.14.18
+### Chores
+* **admission-controller** [3915ce10](https://github.com/sysdiglabs/charts/commit/3915ce106f7b347db99d1c9632887cbf33f4c950): add ports to service conditionally ([#1558](https://github.com/sysdiglabs/charts/issues/1558))
 # v0.14.17
 ### Chores
 * **admission-controller** [7c1a99a2](https://github.com/sysdiglabs/charts/commit/7c1a99a2fa9d164ff0a325ccbffd84fbc2c5123f): Update to v3.9.36 ([#1529](https://github.com/sysdiglabs/charts/issues/1529))

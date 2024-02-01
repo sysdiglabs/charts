@@ -20,7 +20,7 @@ If you make changes to an existing chart, but do not change its version, nothing
 
 #### Add a new chart
 
-To add a new chart, create a directory inside _charts_ with it contents at _master_ branch.
+To add a new chart, create a directory inside _charts_ with it contents at _main_ branch.
 
 When you commit it, it will be picked up by the GitHub action, and if it contains a chart and version that doesn't already exist in the _charts repository_, a new release with the package for the chart will be published on the _GitHub repository_, and the list of all charts at `index.yaml` on _gh-pages_ branch will be updated on the _charts repository_.
 
@@ -105,9 +105,9 @@ https://charts.sysdig.com is managed through GithubPages action, `.github/workfl
 
 #### Publishing a new version of a chart
 
-> **TL;DR**: When a commit to master includes a new version of a _chart_, a GitHub action will make it available on the _charts repository_.
+> **TL;DR**: When a commit to main includes a new version of a _chart_, a GitHub action will make it available on the _charts repository_.
 
-With each commit to _master_, a GitHub action will compare all charts versions at the `charts` folder on _master_ branch with published versions at the `index.yaml` chart list on _gh-pages_ branch.
+With each commit to _main_, a GitHub action will compare all charts versions at the `charts` folder on _main_ branch with published versions at the `index.yaml` chart list on _gh-pages_ branch.
 
 When it detects that the version in the folder doesn't exist in  `index.yaml`, it will create a release with the packaged chart content on the _GitHub repository_, and update `index.yaml` to include it on the `charts repository`.
 

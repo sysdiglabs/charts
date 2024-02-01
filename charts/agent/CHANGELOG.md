@@ -10,6 +10,21 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.19.4
+### New Features
+* [b4f155be](https://github.com/sysdiglabs/charts/commit/b4f155bee9f48af7df9a9f147cac8d3d349453e7): release agent 12.20.0 ([#1584](https://github.com/sysdiglabs/charts/issues/1584))
+# v1.19.3
+### Bug Fixes
+* **agent** [57626624](https://github.com/sysdiglabs/charts/commit/5762662438ca6c93aa38eed3facf87a7bccd3c52): properly render security block content ([#1577](https://github.com/sysdiglabs/charts/issues/1577))
+# v1.19.2
+### Bug Fixes
+* **agent** [6f49dd5d](https://github.com/sysdiglabs/charts/commit/6f49dd5d86fff854440b811edc2ddecc7e28600a): fix logic to disable network topology and memdump only for secure light ([#1564](https://github.com/sysdiglabs/charts/issues/1564))
+# v1.19.1
+### New Features
+* **agent** [7cf86a62](https://github.com/sysdiglabs/charts/commit/7cf86a6291502fe40624c0eaeba82d4894312093): enable falcobaseline for agent version 12.9.x and above ([#1561](https://github.com/sysdiglabs/charts/issues/1561))
+# v1.19.0
+### New Features
+* [843751e0](https://github.com/sysdiglabs/charts/commit/843751e0a10b86053922b00da98255445b48fd90): release agent 12.19.0 ([#1548](https://github.com/sysdiglabs/charts/issues/1548))
 # v1.18.4
 ### New Features
 * **agent** [3be55461](https://github.com/sysdiglabs/charts/commit/3be55461cc3b28f710c1000583018c9584616681): add tolerations for rke2 master nodes ([#1539](https://github.com/sysdiglabs/charts/issues/1539))

@@ -10,6 +10,48 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.37.11
+### Chores
+* **sysdig-deploy** [fefa41b8](https://github.com/sysdiglabs/charts/commit/fefa41b81334c2f41e009eea1653c62985bd0ac4): Automatic version bump due to updated dependencies ([#1585](https://github.com/sysdiglabs/charts/issues/1585))
+# v1.37.10
+### Chores
+* **node-analyzer,kspm-collector** [f1023ae1](https://github.com/sysdiglabs/charts/commit/f1023ae129bf5c95b13686bf793130d8fdbc6e50): Bump KSPM to 1.39.1 & Node Analyzer to 1.37.1 ([#1582](https://github.com/sysdiglabs/charts/issues/1582))
+# v1.37.9
+### Chores
+* **sysdig-deploy** [416764c6](https://github.com/sysdiglabs/charts/commit/416764c64a70c0f9da76916290f2eec9c89288c7): Automatic version bump due to updated dependencies ([#1581](https://github.com/sysdiglabs/charts/issues/1581))
+# v1.37.8
+### Chores
+* **sysdig-deploy** [03794a9b](https://github.com/sysdiglabs/charts/commit/03794a9b6f88acb84459108062eb2a173ab74462): Automatic version bump due to updated dependencies ([#1578](https://github.com/sysdiglabs/charts/issues/1578))
+# v1.37.7
+### New Features
+* **KSPM admission controller** [48a4f16f](https://github.com/sysdiglabs/charts/commit/48a4f16f19d62cc6f11c757d6f41571dc119a2d5): SSPROD-35354 - Make Dry Run mode configurable to a user in Chart Values. ([#1560](https://github.com/sysdiglabs/charts/issues/1560))
+# v1.37.6
+### Chores
+* **sysdig-deploy** [5f3641da](https://github.com/sysdiglabs/charts/commit/5f3641da0e3a29e8b0ecfdb81122271e3206bf7b): Automatic version bump due to updated dependencies ([#1570](https://github.com/sysdiglabs/charts/issues/1570))
+# v1.37.5
+### Chores
+* [45895438](https://github.com/sysdiglabs/charts/commit/4589543862f78502932dca1c4e37a7d0d89259ff): migrate default branch to main ([#1556](https://github.com/sysdiglabs/charts/issues/1556))
+# v1.37.4
+### Chores
+* **sysdig-deploy** [b586944a](https://github.com/sysdiglabs/charts/commit/b586944abf021495921257eabf3c5078b07ff9ed): Automatic version bump due to updated dependencies ([#1565](https://github.com/sysdiglabs/charts/issues/1565))
+# v1.37.3
+### Chores
+* **sysdig-deploy** [1b5f9b02](https://github.com/sysdiglabs/charts/commit/1b5f9b029d72beb8c2e8e5c15e05f0fd6aea00ca): Automatic version bump due to updated dependencies ([#1562](https://github.com/sysdiglabs/charts/issues/1562))
+# v1.37.2
+### Chores
+* **sysdig-deploy** [0fa391ec](https://github.com/sysdiglabs/charts/commit/0fa391ec4f466b57aa85e648ebb66ce0c488d9a5): Automatic version bump due to updated dependencies ([#1559](https://github.com/sysdiglabs/charts/issues/1559))
+# v1.37.1
+### Chores
+* **sysdig-deploy** [3f27087b](https://github.com/sysdiglabs/charts/commit/3f27087baf7749991737cd57e56b767ba3ad82fc): Automatic version bump due to updated dependencies ([#1551](https://github.com/sysdiglabs/charts/issues/1551))
+# v1.37.0
+### New Features
+* [843751e0](https://github.com/sysdiglabs/charts/commit/843751e0a10b86053922b00da98255445b48fd90): release agent 12.19.0 ([#1548](https://github.com/sysdiglabs/charts/issues/1548))
+# v1.36.0
+### Chores
+* **node-analyzer,kspm-collector** [d80be00a](https://github.com/sysdiglabs/charts/commit/d80be00a821b0af2f71da6fd04590fcd897e0b4a): Bump KSPM to 1.39.0 & Node Analyzer to 1.37.0 ([#1549](https://github.com/sysdiglabs/charts/issues/1549))
+# v1.35.0
+### New Features
+* **node-analyzer** [1e512f9a](https://github.com/sysdiglabs/charts/commit/1e512f9af08674b87b01c17b9bc34c436e90ff8a): bumped host-scanner to 0.7.0 to add container scanning support ([#1538](https://github.com/sysdiglabs/charts/issues/1538))
 # v1.34.9
 ### Chores
 * **sysdig-deploy** [98ac8b97](https://github.com/sysdiglabs/charts/commit/98ac8b975efe64cd973e62c18180197c1fc4bd9d): Automatic version bump due to updated dependencies ([#1542](https://github.com/sysdiglabs/charts/issues/1542))
