@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.14.21
+### Chores
+* **admission-controller** [f7c813c0](https://github.com/sysdiglabs/charts/commit/f7c813c0d4ba16edf1e93505f6034caf33e706e1): Release admission controller v3.9.37 ([#1587](https://github.com/sysdiglabs/charts/issues/1587))
 # v0.14.20
 ### New Features
 * **KSPM admission controller** [48a4f16f](https://github.com/sysdiglabs/charts/commit/48a4f16f19d62cc6f11c757d6f41571dc119a2d5): SSPROD-35354 - Make Dry Run mode configurable to a user in Chart Values. ([#1560](https://github.com/sysdiglabs/charts/issues/1560))
