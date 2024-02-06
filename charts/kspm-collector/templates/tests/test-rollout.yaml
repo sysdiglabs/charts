@@ -3,6 +3,7 @@ kind: Pod
 metadata:
   name: "{{ include "kspmCollector.fullname" . }}-test-rollout"
   labels:
+    namespace: {{ include "kspmCollector.namespace" . }}
     helm.sh/chart: {{ include "kspmCollector.chart" . }}
     app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
