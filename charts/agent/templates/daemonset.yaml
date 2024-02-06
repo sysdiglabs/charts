@@ -90,7 +90,12 @@ spec:
             readOnlyRootFilesystem: false
             allowPrivilegeEscalation: true
           resources:
-            {{ toYaml .Values.slim.resources | nindent 12 }}
+            {{- if (include "agent.gke.autopilot" .) }}
+              {{- $resources := merge .Values.slim.resources (dict "requests" (dict "ephemeral-storage" .Values.gke.ephemeralStorage))}}
+              {{- toYaml $resources | nindent 12 }}
+            {{- else }}
+              {{ toYaml .Values.slim.resources | nindent 12 }}
+            {{- end }}
           env:
           {{- if or (include "agent.ebpfEnabled" .) (include "agent.gke.autopilot" .) }}
             - name: SYSDIG_BPF_PROBE
