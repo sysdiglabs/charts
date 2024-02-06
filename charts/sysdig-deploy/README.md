@@ -145,7 +145,7 @@ The following table lists the configurable parameters of the sysdig-deploy chart
 | `global.sysdig.accessKeySecret`         | The name of a Kubernetes secret containing an `access-key` entry.                                                     | `""`      |
 | `global.sysdig.secureAPIToken`          | The API Token to access Sysdig Secure.                                                                                  | `""`      |
 | `global.sysdig.secureAPITokenSecret`    | The name of a Kubernetes secret containing API Token to access Sysdig Secure.                                           | `""`      |
-| `global.sysdig.region`                  | The SaaS region for these agents. Possible values: `"us1"`, `"us2"`, `"us3"`, `"us4"`, `"eu1"`, `"au1"`, and `"custom"`. See [Regions and IP Ranges](https://docs.sysdig.com/en/docs/administration/saas-regions-and-ip-ranges/) for more information  | `"us1"`   |
+| `global.sysdig.region`                  | The SaaS region for these agents. Possible values: `"us1"`, `"us2"`, `"us3"`, `"us4"`, `"eu1"`, `"au1"`, `"me2"`, and `"custom"`. See [SaaS Regions and IP Ranges](https://docs.sysdig.com/en/docs/administration/saas-regions-and-ip-ranges/) for more information  | `"us1"`   |
 | `global.sysdig.tags`                    | Sets the global tags which can override agent tags.                                                                     | `{}`      |
 | `global.imageRegistry`                  | The container image registry.                                                                                          | ``        |
 | `global.image.pullSecrets`                  | The global pull secrets.                                                                                          | `[]`        |
