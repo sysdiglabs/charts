@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.37.14
+### Bug Fixes
+* **agent,kspm-collector,node-analyzer,rapid-response,sysdig-deploy** [6b1f5818](https://github.com/sysdiglabs/charts/commit/6b1f5818836af26e5d83621049c96ae07d1fe12c): Set test rollout namespace based on required service accounts ([#1593](https://github.com/sysdiglabs/charts/issues/1593))
 # v1.37.13
 ### Chores
 * **sysdig-deploy** [0465c3a2](https://github.com/sysdiglabs/charts/commit/0465c3a2a633d8b94937803cf2dea6c543d81d09): Automatic version bump due to updated dependencies ([#1595](https://github.com/sysdiglabs/charts/issues/1595))
