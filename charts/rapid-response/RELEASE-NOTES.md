@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **rapid-response** [50a90678](https://github.com/sysdiglabs/charts/commit/50a9067882a4b441188cd4f8149528a892a29455): bump rapid-response version to 0.4.0 ([#1476](https://github.com/sysdiglabs/charts/issues/1476))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/rapid-response-0.8.3...rapid-response-0.8.4
+### Bug Fixes
+- **agent,kspm-collector,node-analyzer,rapid-response,sysdig-deploy** [6b1f5818](https://github.com/sysdiglabs/charts/commit/6b1f5818836af26e5d83621049c96ae07d1fe12c): Set test rollout namespace based on required service accounts ([#1593](https://github.com/sysdiglabs/charts/issues/1593))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/rapid-response-0.8.4...rapid-response-0.8.5
