@@ -20,13 +20,13 @@ dependencies:
   - name: admission-controller
     # repository: https://charts.sysdig.com
     repository: file://../admission-controller
-    version: ~0.14.21
+    version: ~0.14.21charts/kspm-collector/templates/tests/test-rollout.yaml
     alias: admissionController
     condition: admissionController.enabled
   - name: agent
     # repository: https://charts.sysdig.com
     repository: file://../agent
-    version: ~1.19.4
+    version: ~1.19.5
     alias: agent
     condition: agent.enabled
   - name: common
