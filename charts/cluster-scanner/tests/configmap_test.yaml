@@ -433,6 +433,25 @@ tests:
           path: data.enable_platform_services
           value: "true"
 
+  - it: "has correct platform services value when enablePlatformServicesConfig is set to false provided and region supports platform services"
+    set:
+      global.sysdig.apiHost: "http://test.com"
+      global.sysdig.region: "us1"
+      enablePlatformServices: false
+    asserts:
+      - isNull:
+          path: data.enable_platform_services
+
+  - it: "has correct platform services value when onPremCompatibilityVersion is = 7.0.0, region does NOT support platform services and enablePlatformServicesConfig set to false"
+    set:
+      global.sysdig.apiHost: "http://test.com"
+      onPremCompatibilityVersion: "7.0.0"
+      global.sysdig.region: ""
+      enablePlatformServices: false
+    asserts:
+      - isNull:
+          path: data.enable_platform_services
+
   - it: "fails if onPremCompatibilityVersion is not a valid semver"
     set:
       global.sysdig.apiHost: "http://test.com"

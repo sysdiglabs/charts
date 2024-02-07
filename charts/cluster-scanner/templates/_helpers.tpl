@@ -212,7 +212,7 @@ It also makes sure that the platform services are enabled in regions which suppo
 {{- define "cluster-scanner.enablePlatformServicesConfig" -}}
 {{- if ( semverCompare ">= 7.0.0" (.Values.onPremCompatibilityVersion | default "7.0.0" )) -}}
     {{- $regionsPlatformEnabled := list "us1" "us2" "us3" "us4" "au1" "eu1" -}}
-    {{- if or (has .Values.global.sysdig.region $regionsPlatformEnabled) .Values.onPremCompatibilityVersion -}}
+    {{- if and .Values.enablePlatformServices (or (has .Values.global.sysdig.region $regionsPlatformEnabled) .Values.onPremCompatibilityVersion) -}}
 enable_platform_services: "true"
     {{- end -}}
 {{- end -}}

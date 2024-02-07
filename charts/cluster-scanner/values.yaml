@@ -322,3 +322,6 @@ ssl:
     existingCaConfigMap:
     # Provide the filename that is defined inside the existing ConfigMap
     existingCaConfigMapKeyName:
+
+# Add option to be able to disable platform services
+enablePlatformServices: true
