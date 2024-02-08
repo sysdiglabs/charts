@@ -361,7 +361,7 @@ scanner:
     # The PullPolicy for Scanner image.
     pullPolicy:
     # The Scanner image tag.
-    tag: 0.0.13
+    tag: 0.0.14
     # Specify the image digest value.  If set, this value is used instead of the tag value.
     digest:
 
