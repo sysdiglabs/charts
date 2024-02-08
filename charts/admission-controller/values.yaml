@@ -168,8 +168,6 @@ podMonitors:
 
 webhook:
   v2:
-    # Number of seconds for the request to time out
-    timeoutSeconds: 5
     nats:
       # Allow insecure TLS certificates in backend connection to NATS service
       insecure: false
