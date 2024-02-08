@@ -130,7 +130,7 @@ Use the following command to deploy:
 helm upgrade --install registry-scanner \
    --namespace sysdig-agent \
    --create-namespace \
-   --version=1.1.29 \
+   --version=1.1.31 \
    --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
    --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
    --set config.secureSkipTLS=true \

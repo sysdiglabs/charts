@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: "{{ include "kspmCollector.fullname" . }}-test-rollout"
+  namespace: {{ include "kspmCollector.namespace" . }}
   labels:
     helm.sh/chart: {{ include "kspmCollector.chart" . }}
     app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}

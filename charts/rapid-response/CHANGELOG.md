@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.8.5
+### Bug Fixes
+* **agent,kspm-collector,node-analyzer,rapid-response,sysdig-deploy** [6b1f5818](https://github.com/sysdiglabs/charts/commit/6b1f5818836af26e5d83621049c96ae07d1fe12c): Set test rollout namespace based on required service accounts ([#1593](https://github.com/sysdiglabs/charts/issues/1593))
 # v0.8.4
 ### Chores
 * **rapid-response** [50a90678](https://github.com/sysdiglabs/charts/commit/50a9067882a4b441188cd4f8149528a892a29455): bump rapid-response version to 0.4.0 ([#1476](https://github.com/sysdiglabs/charts/issues/1476))
