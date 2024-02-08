@@ -437,7 +437,7 @@ tests:
     set:
       global.sysdig.apiHost: "http://test.com"
       global.sysdig.region: "us1"
-      enablePlatformServices: false
+      disablePlatformScanning: true
     asserts:
       - isNull:
           path: data.enable_platform_services
@@ -447,7 +447,7 @@ tests:
       global.sysdig.apiHost: "http://test.com"
       onPremCompatibilityVersion: "7.0.0"
       global.sysdig.region: ""
-      enablePlatformServices: false
+      disablePlatformScanning: true
     asserts:
       - isNull:
           path: data.enable_platform_services

@@ -324,4 +324,4 @@ ssl:
     existingCaConfigMapKeyName:
 
 # Option to make it possible to disable platform services
-enablePlatformServices: true
+disablePlatformScanning: false
