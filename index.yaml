@@ -10836,6 +10836,23 @@ entries:
   cluster-scanner:
   - apiVersion: v2
     appVersion: 0.1.0
+    created: "2024-02-09T19:42:44.505018841Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      version: ~1.2.2
+    description: Sysdig Cluster Scanner
+    digest: 201c1262ff571fc2766f3dd91e677b8f293e081fc2797e47fa39a2b26cf6501a
+    home: https://www.sysdig.com/
+    maintainers:
+    - name: sysdiglabs
+    name: cluster-scanner
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/cluster-scanner-0.8.9/cluster-scanner-0.8.9.tgz
+    version: 0.8.9
+  - apiVersion: v2
+    appVersion: 0.1.0
     created: "2024-01-29T15:43:45.738653002Z"
     dependencies:
     - name: common
@@ -51957,4 +51974,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2024-02-09T17:18:01.305100376Z"
+generated: "2024-02-09T19:42:44.622122536Z"
