@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.8.9
+### New Features
+* **cluster-scanner,sysdig-deploy** [58160f4c](https://github.com/sysdiglabs/charts/commit/58160f4c4dd1e999a7b39b7ce8995b319e06205b): add logic to make it possible to disable platform services if needed. ([#1596](https://github.com/sysdiglabs/charts/issues/1596))
 # v0.8.8
 ### New Features
 * **cluster-scanner** [d1c37ca8](https://github.com/sysdiglabs/charts/commit/d1c37ca8cc04c3b3f88f590a3bcf8c630ca480cb): bump cluster-scanner to 0.5.4 ([#1580](https://github.com/sysdiglabs/charts/issues/1580))
