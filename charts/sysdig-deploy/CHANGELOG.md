@@ -10,6 +10,12 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.37.16
+### Chores
+* **sysdig-deploy** [5074f3c3](https://github.com/sysdiglabs/charts/commit/5074f3c379e686a004c3bbe876ee19e5bba15995): Automatic version bump due to updated dependencies ([#1602](https://github.com/sysdiglabs/charts/issues/1602))
+# v1.37.15
+### Chores
+* **sysdig-deploy** [2eeae25c](https://github.com/sysdiglabs/charts/commit/2eeae25c6922d250d31f11af359affc63c81e385): Automatic version bump due to updated dependencies ([#1600](https://github.com/sysdiglabs/charts/issues/1600))
 # v1.37.14
 ### Bug Fixes
 * **agent,kspm-collector,node-analyzer,rapid-response,sysdig-deploy** [6b1f5818](https://github.com/sysdiglabs/charts/commit/6b1f5818836af26e5d83621049c96ae07d1fe12c): Set test rollout namespace based on required service accounts ([#1593](https://github.com/sysdiglabs/charts/issues/1593))

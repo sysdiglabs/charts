@@ -168,8 +168,6 @@ podMonitors:
 
 webhook:
   v2:
-    # Number of seconds for the request to time out
-    timeoutSeconds: 5
     nats:
       # Allow insecure TLS certificates in backend connection to NATS service
       insecure: false
@@ -363,7 +361,7 @@ scanner:
     # The PullPolicy for Scanner image.
     pullPolicy:
     # The Scanner image tag.
-    tag: 0.0.13
+    tag: 0.0.16
     # Specify the image digest value.  If set, this value is used instead of the tag value.
     digest:
 
