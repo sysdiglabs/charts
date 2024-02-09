@@ -2,9 +2,6 @@ suite: Test conditional flags and its dependent changes
 templates:
   - daemonset-node-analyzer.yaml
   - configmap-kspm-analyzer.yaml
-  - runtimeScanner/eveconnector-api-configmap.yaml
-  - runtimeScanner/eveconnector-api-service.yaml
-  - runtimeScanner/eveconnector-api-deployment.yaml
   - runtimeScanner/sysdig-eve-secret.yaml
     # For checksums
   - clusterrole-node-analyzer.yaml
@@ -145,7 +142,7 @@ tests:
           count: 1
           any: true
 
-  - it: Check nodeAnalyzer runtimeScanner eveConnector deploy
+  - it: Check nodeAnalyzer runtimeScanner eve integration enabled
     set:
       global:
         sysdig:
@@ -153,8 +150,6 @@ tests:
       nodeAnalyzer:
         runtimeScanner:
           deploy: true
-          eveConnector:
-            deploy: true
       clusterName: test-k8s
     asserts:
       - contains:
@@ -164,18 +159,6 @@ tests:
           count: 1
           any: true
         template: daemonset-node-analyzer.yaml
-      - containsDocument:
-          kind: ConfigMap
-          apiVersion: v1
-        template: runtimeScanner/eveconnector-api-configmap.yaml
-      - containsDocument:
-          kind: Service
-          apiVersion: v1
-        template: runtimeScanner/eveconnector-api-service.yaml
-      - containsDocument:
-          kind: Deployment
-          apiVersion: apps/v1
-        template: runtimeScanner/eveconnector-api-deployment.yaml
 
   - it: Check nodeAnalyzer imageAnalyzer deploy set to false
     set:

@@ -72,13 +72,6 @@ Return the proper nodeAnalyzer Agent image name for the Runtime Scanner
 {{- end -}}
 
 {{/*
-Return the proper Sysdig nodeAnalyzer image name for the Eve Connector
-*/}}
-{{- define "nodeAnalyzer.image.eveConnector" -}}
-    {{- include "nodeAnalyzer.imageRegistry" . -}} / {{- .Values.nodeAnalyzer.runtimeScanner.eveConnector.image.repository -}} {{- if .Values.nodeAnalyzer.runtimeScanner.eveConnector.image.digest -}} @ {{- .Values.nodeAnalyzer.runtimeScanner.eveConnector.image.digest -}} {{- else -}} : {{- .Values.nodeAnalyzer.runtimeScanner.eveConnector.image.tag -}} {{- end -}}
-{{- end -}}
-
-{{/*
 Return the proper nodeAnalyzer Agent image name for the Host Scanner
 */}}
 {{- define "nodeAnalyzer.image.hostScanner" -}}
@@ -193,25 +186,6 @@ Daemonset labels
         {{- toYaml .Values.daemonset.labels }}
     {{- end }}
   {{- end }}
-{{- end -}}
-
-{{/*
-Sysdig Eve Connector service URL
-*/}}
-{{- define "eveconnector.host" -}}
-{{ include "nodeAnalyzer.fullname" .}}-eveconnector.{{ .Release.Namespace }}
-{{- end -}}
-
-{{/*
-Sysdig Eve Connector Secret generation (if not exists)
-*/}}
-{{- define "eveconnector.token" -}}
-{{- $secret := lookup "v1" "Secret" .Release.Namespace "sysdig-eve-secret" -}}
-{{- if $secret -}}
-{{ $secret.data.token }}
-{{- else -}}
-{{ randAlphaNum 32 | b64enc | quote }}
-{{- end -}}
 {{- end -}}
 
 {{/*
