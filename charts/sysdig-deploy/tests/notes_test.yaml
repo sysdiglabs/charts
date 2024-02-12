@@ -64,6 +64,17 @@ tests:
       - matchRegexRaw:
           pattern: https://app.au1.sysdig.com/secure/#/data-sources/agents
 
+  - it: Checking region 'me2'
+    set:
+      global:
+        sysdig:
+          region: me2
+    asserts:
+        - matchRegexRaw:
+            pattern: https://app.me2.sysdig.com/#/dashboard-template/view.sysdig.agents\?last=10
+        - matchRegexRaw:
+            pattern: https://app.me2.sysdig.com/secure/#/data-sources/agents
+
   - it: Checking region 'au-syd-monitor'
     set:
       global:
