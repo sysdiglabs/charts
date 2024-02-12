@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.23.0
+### New Features
+* **common** [0061b52d](https://github.com/sysdiglabs/charts/commit/0061b52d51f43e1e4d5e2bdf1145be28287d5ce6): add me2 region support ([#1591](https://github.com/sysdiglabs/charts/issues/1591))
 # v1.22.7
 ### Chores
 * **node-analyzer** [40786f31](https://github.com/sysdiglabs/charts/commit/40786f31e9209f0e64961b95320e633bafab6d67): bump sysdig/vuln-host-scanner to v0.7.5 ([#1605](https://github.com/sysdiglabs/charts/issues/1605))
