@@ -42,7 +42,7 @@ jobs:
 
       - name: Create Pull Request
         if: steps.dependent_files.outputs.any_changed == 'true'
-        uses: peter-evans/create-pull-request@v5.0.2
+        uses: peter-evans/create-pull-request@v6.0.0
         with:
           title: "chore(sysdig-deploy): Automatic version bump due to updated dependencies"
           base: main
