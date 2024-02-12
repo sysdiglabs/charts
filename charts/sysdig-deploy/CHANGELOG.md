@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.38.0
+### New Features
+* **common** [0061b52d](https://github.com/sysdiglabs/charts/commit/0061b52d51f43e1e4d5e2bdf1145be28287d5ce6): add me2 region support ([#1591](https://github.com/sysdiglabs/charts/issues/1591))
 # v1.37.18
 ### Chores
 * **sysdig-deploy** [3fd8d8ae](https://github.com/sysdiglabs/charts/commit/3fd8d8ae8cc345ccb6af8db0284d76d01a8b1073): Automatic version bump due to updated dependencies ([#1609](https://github.com/sysdiglabs/charts/issues/1609))
