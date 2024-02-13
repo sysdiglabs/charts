@@ -9,6 +9,8 @@ tests:
       gke:
         autopilot: true
         createPriorityClass: true
+      slim:
+        enabled: false
     asserts:
       - containsDocument:
           kind: DaemonSet
@@ -29,6 +31,8 @@ tests:
         autopilot: true
         createPriorityClass: true
         ephemeralStorage: 256Mi
+      slim:
+        enabled: false
     asserts:
       - equal:
           path: spec.template.spec.containers[0].resources.requests.ephemeral-storage
@@ -101,3 +105,39 @@ tests:
             drift_killer:
               enabled: false
     template: templates/configmap.yaml
+
+  - it: Ensure ephemeral storage is set correctly on kmod container when slim mode is enabled
+    set:
+      gke:
+        autopilot: true
+        createPriorityClass: true
+      slim:
+        enabled: true
+    asserts:
+        - equal:
+            path: spec.template.spec.initContainers[0].resources.requests.ephemeral-storage
+            value: 500Mi
+    template: templates/daemonset.yaml
+
+  - it: Custom value for ephemeral-storage with slim mode enabled
+    set:
+      gke:
+        autopilot: true
+        createPriorityClass: true
+        ephemeralStorage: 603Mi
+      slim:
+        enabled: true
+    asserts:
+      - equal:
+          path: spec.template.spec.initContainers[0].resources.requests.ephemeral-storage
+          value: 603Mi
+    template: templates/daemonset.yaml
+
+  - it: Ensure we are not setting the ephemeral storage on kmod container when slim mode is enabled and not autopilot
+    set:
+      slim:
+        enabled: true
+    asserts:
+      - notExists:
+          path: spec.template.spec.initContainers[0].resources.requests.ephemeral-storage
+    template: templates/daemonset.yaml
