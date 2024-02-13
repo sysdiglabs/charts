@@ -92,6 +92,7 @@ rsi_js_consumer_ack_wait: "120s"
 rsi_js_consumer_max_deliver: "1"
 rsi_js_consumer_deliver_policy_all: "true"
 rsi_js_producer_subject_prefix: "analysis.requests"
+rsi_js_priority_producer_subject_prefix: "analysis.priority.requests"
 rsi_js_server_metrics_enable: "true"
 rsi_js_server_metrics_port: "8222"
 {{ end }}
@@ -111,6 +112,18 @@ ise_js_consumer_max_in_flight: "256"
 ise_js_consumer_ack_wait: "240s"
 ise_js_consumer_max_deliver: "1"
 ise_js_consumer_deliver_policy_all: "true"
+
+ise_js_priority_consumer_streamname: "analysis-requests"
+ise_js_priority_consumer_name: "ise-priority"
+ise_js_priority_consumer_durable: "ise-priority"
+ise_js_priority_consumer_pull: "true"
+ise_js_priority_consumer_pull_batch: "1"
+ise_js_priority_consumer_subject: "analysis.priority.requests.>"
+ise_js_priority_consumer_max_in_flight: "256"
+ise_js_priority_consumer_ack_wait: "240s"
+ise_js_priority_consumer_max_deliver: "1"
+ise_js_priority_consumer_deliver_policy_all: "true"
+
 ise_js_producer_subject: "analysis.sboms"
 {{ end }}
 

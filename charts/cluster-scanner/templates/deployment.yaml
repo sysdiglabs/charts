@@ -255,6 +255,11 @@ spec:
               configMapKeyRef:
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: rsi_js_producer_subject_prefix
+          - name: NATS_JS_PRIORITY_PRODUCER_SUBJECT_PREFIX
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: rsi_js_priority_producer_subject_prefix
           - name: NATS_JS_SERVER_USERNAME
             valueFrom:
               configMapKeyRef:
@@ -474,6 +479,68 @@ spec:
               configMapKeyRef:
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: ise_js_consumer_deliver_policy_all
+          - name: HIGH_PRIORITY_CONSUMER_ENABLED
+            value: "true"
+          - name: HIGH_PRIORITY_NATS_JS_CONSUMER_STREAMNAME
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: ise_js_priority_consumer_streamname
+                optional: true
+          - name: HIGH_PRIORITY_NATS_JS_CONSUMER_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: ise_js_priority_consumer_name
+                optional: true
+          - name: HIGH_PRIORITY_NATS_JS_CONSUMER_DURABLE
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: ise_js_priority_consumer_durable
+                optional: true
+          - name: HIGH_PRIORITY_NATS_JS_CONSUMER_PULL
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: ise_js_priority_consumer_pull
+                optional: true
+          - name: HIGH_PRIORITY_NATS_JS_CONSUMER_PULL_BATCH
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: ise_js_priority_consumer_pull_batch
+                optional: true
+          - name: HIGH_PRIORITY_NATS_JS_CONSUMER_SUBJECT
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: ise_js_priority_consumer_subject
+                optional: true
+          - name: HIGH_PRIORITY_NATS_JS_CONSUMER_MAX_IN_FLIGHT
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: ise_js_priority_consumer_max_in_flight
+                optional: true
+          - name: HIGH_PRIORITY_NATS_JS_CONSUMER_ACK_WAIT
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: ise_js_priority_consumer_ack_wait
+                optional: true
+          - name: HIGH_PRIORITY_NATS_JS_CONSUMER_MAX_DELIVER
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: ise_js_priority_consumer_max_deliver
+                optional: true
+          - name: HIGH_PRIORITY_NATS_JS_CONSUMER_DELIVER_POLICY_ALL
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: ise_js_priority_consumer_deliver_policy_all
+                optional: true
           - name: NATS_JS_PRODUCER_SUBJECT
             valueFrom:
               configMapKeyRef:
