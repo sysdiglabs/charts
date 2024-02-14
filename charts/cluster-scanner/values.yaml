@@ -65,7 +65,7 @@ global:
       # Provide the filename that is defined inside the existing ConfigMap
       existingCaConfigMapKeyName:
 # Enables Sysdig Eve to retrieve the list of running packages.
-eveEnabled: false
+eveEnabled: true
 # Enables the integration with Sysdig Eve. Stores the list of running packages
 # to Sysdig backend. It implies `eveEnabled: true`.
 eveIntegrationEnabled: false
