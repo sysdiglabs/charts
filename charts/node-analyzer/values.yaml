@@ -347,27 +347,6 @@ nodeAnalyzer:
       # Size is in bytes, default is 250MB
       maxFileSizeAllowed: "262144000"
 
-    eveConnector:
-      deploy: false
-      image:
-        repository: sysdig/eveclient-api
-        tag: 1.1.2
-        digest:
-        pullPolicy:
-
-      priorityClassName:
-
-      resources:
-        requests:
-          cpu: 100m
-          memory: 128Mi
-        limits:
-          cpu: 1000m
-          memory: 512Mi
-
-      settings:
-        replicas: 1
-
   hostScanner:
     # Note: deploy has been commented so that it will be used as hard override to newEngineOnly flag
     # but when not set, newEngineOnly will win. Desiderata examples in ./tests/hostscanner_test.yaml

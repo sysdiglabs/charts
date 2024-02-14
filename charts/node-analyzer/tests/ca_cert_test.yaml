@@ -2,9 +2,6 @@ suite: Test node-analyzer CA cert
 templates:
   - secrets.yaml
   - daemonset-node-analyzer.yaml
-  - runtimeScanner/eveconnector-api-deployment.yaml
-  - runtimeScanner/sysdig-eve-secret.yaml
-  - runtimeScanner/eveconnector-api-configmap.yaml
   # For checksums
   - clusterrole-node-analyzer.yaml
   - clusterrolebinding-node-analyzer.yaml
@@ -68,9 +65,6 @@ tests:
         hostScanner: { deploy: true }
         runtimeScanner:
           deploy: true
-          eveConnector:
-            deploy:
-              true
         ssl:
           ca:
             certs:
@@ -100,19 +94,6 @@ tests:
             mountPath: /ca-certs
             readOnly: true
         template: daemonset-node-analyzer.yaml
-      - contains:
-          path: spec.template.spec.containers[0].env
-          content:
-            name: SSL_CERT_FILE
-            value: "/ca-certs/root_ca.crt"
-        template: runtimeScanner/eveconnector-api-deployment.yaml
-      - contains:
-          path: spec.template.spec.containers[0].volumeMounts
-          content:
-            name: ca-cert
-            mountPath: /ca-certs
-            readOnly: true
-        template: runtimeScanner/eveconnector-api-deployment.yaml
 
   - it: Check Global CA Cert New Engine Only
     set:

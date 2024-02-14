@@ -2,9 +2,6 @@ suite: Test subchart overrides of global values
 templates:
   - secrets.yaml
   - daemonset-node-analyzer.yaml
-  - runtimeScanner/eveconnector-api-deployment.yaml
-  - runtimeScanner/eveconnector-api-configmap.yaml
-  - runtimeScanner/sysdig-eve-secret.yaml
   # For checksums
   - clusterrole-node-analyzer.yaml
   - clusterrolebinding-node-analyzer.yaml
@@ -135,31 +132,6 @@ tests:
             - name: test_override
         template: daemonset-node-analyzer.yaml
 
-  - it: check imagePullPolicy for eveconnector-api-deployment with global
-    set:
-      global:
-        kspm:
-          deploy: true
-        sysdig:
-          accessKeySecret: standard_key
-        image:
-          pullPolicy: Always
-      sysdig:
-        existingAccessKeySecret: override_key
-      clusterName: test-k8s
-      nodeAnalyzer:
-        deploy: true
-        runtimeScanner:
-          deploy: true
-          eveConnector:
-            deploy: true
-    asserts:
-      - equal:
-          path: spec.template.spec.containers[?(@.name == "node-analyzer-eveconnector-api")].imagePullPolicy
-          value: Always
-    templates:
-      - runtimeScanner/eveconnector-api-deployment.yaml
-
   - it: check imagePullPolicy for daemonset-node-analyzer with global
     set:
       global:
@@ -205,58 +177,6 @@ tests:
           value: Always
     templates:
       - daemonset-node-analyzer.yaml
-
-  - it: check imagePullPolicy for eveconnector-api-deployment with legacy
-    set:
-      global:
-        kspm:
-          deploy: true
-        sysdig:
-          accessKeySecret: standard_key
-      sysdig:
-        existingAccessKeySecret: override_key
-      clusterName: test-k8s
-      nodeAnalyzer:
-        deploy: true
-        runtimeScanner:
-          deploy: true
-          eveConnector:
-            deploy: true
-            image:
-              pullPolicy: Always
-    asserts:
-      - equal:
-          path: spec.template.spec.containers[?(@.name == "node-analyzer-eveconnector-api")].imagePullPolicy
-          value: Always
-    templates:
-      - runtimeScanner/eveconnector-api-deployment.yaml
-
-  - it: check imagePullPolicy for eveconnector-api-deployment with local override
-    set:
-      global:
-        kspm:
-          deploy: true
-        sysdig:
-          accessKeySecret: standard_key
-        image:
-          pullPolicy: Always
-      sysdig:
-        existingAccessKeySecret: override_key
-      clusterName: test-k8s
-      nodeAnalyzer:
-        deploy: true
-        runtimeScanner:
-          deploy: true
-          eveConnector:
-            deploy: true
-            image:
-              pullPolicy: Never
-    asserts:
-      - equal:
-          path: spec.template.spec.containers[?(@.name == "node-analyzer-eveconnector-api")].imagePullPolicy
-          value: Never
-    templates:
-      - runtimeScanner/eveconnector-api-deployment.yaml
 
   - it: check imagePullPolicy for daemonset-node-analyzer with legacy
     set:

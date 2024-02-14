@@ -1,7 +1,6 @@
 suite: Runtime Scanner Skip certificate tests
 templates:
   - templates/runtimeScanner/runtime-scanner-configmap.yaml
-  - templates/runtimeScanner/eveconnector-api-configmap.yaml
 tests:
   - it: "Global SSL certificate validation enabled (default value)"
     set:
@@ -10,11 +9,8 @@ tests:
         deploy: true
         runtimeScanner:
           deploy: true
-          eveConnector:
-            deploy: true
     templates:
       - templates/runtimeScanner/runtime-scanner-configmap.yaml
-      - templates/runtimeScanner/eveconnector-api-configmap.yaml
     asserts:
       - equal:
           path: data.ssl_verify_certificate
@@ -29,11 +25,8 @@ tests:
         deploy: true
         runtimeScanner:
           deploy: true
-          eveConnector:
-            deploy: true
     templates:
       - templates/runtimeScanner/runtime-scanner-configmap.yaml
-      - templates/runtimeScanner/eveconnector-api-configmap.yaml
     asserts:
       - equal:
           path: data.ssl_verify_certificate
@@ -48,11 +41,8 @@ tests:
         deploy: true
         runtimeScanner:
           deploy: true
-          eveConnector:
-            deploy: true
     templates:
       - templates/runtimeScanner/runtime-scanner-configmap.yaml
-      - templates/runtimeScanner/eveconnector-api-configmap.yaml
     asserts:
       - equal:
           path: data.ssl_verify_certificate
@@ -66,11 +56,8 @@ tests:
         sslVerifyCertificate: true
         runtimeScanner:
           deploy: true
-          eveConnector:
-            deploy: true
     templates:
       - templates/runtimeScanner/runtime-scanner-configmap.yaml
-      - templates/runtimeScanner/eveconnector-api-configmap.yaml
     asserts:
       - equal:
           path: data.ssl_verify_certificate
@@ -84,11 +71,8 @@ tests:
         sslVerifyCertificate: false
         runtimeScanner:
           deploy: true
-          eveConnector:
-            deploy: true
     templates:
       - templates/runtimeScanner/runtime-scanner-configmap.yaml
-      - templates/runtimeScanner/eveconnector-api-configmap.yaml
     asserts:
       - equal:
           path: data.ssl_verify_certificate
@@ -102,11 +86,8 @@ tests:
         runtimeScanner:
           deploy: true
           sslVerifyCertificate: true
-          eveConnector:
-            deploy: true
     templates:
       - templates/runtimeScanner/runtime-scanner-configmap.yaml
-      - templates/runtimeScanner/eveconnector-api-configmap.yaml
     asserts:
       - equal:
           path: data.ssl_verify_certificate
@@ -120,11 +101,8 @@ tests:
         runtimeScanner:
           deploy: true
           sslVerifyCertificate: false
-          eveConnector:
-            deploy: true
     templates:
       - templates/runtimeScanner/runtime-scanner-configmap.yaml
-      - templates/runtimeScanner/eveconnector-api-configmap.yaml
     asserts:
       - equal:
           path: data.ssl_verify_certificate
@@ -140,11 +118,8 @@ tests:
         sslVerifyCertificate: false
         runtimeScanner:
           deploy: true
-          eveConnector:
-            deploy: true
     templates:
       - templates/runtimeScanner/runtime-scanner-configmap.yaml
-      - templates/runtimeScanner/eveconnector-api-configmap.yaml
     asserts:
       - equal:
           path: data.ssl_verify_certificate
@@ -160,11 +135,8 @@ tests:
         sslVerifyCertificate: true
         runtimeScanner:
           deploy: true
-          eveConnector:
-            deploy: true
     templates:
       - templates/runtimeScanner/runtime-scanner-configmap.yaml
-      - templates/runtimeScanner/eveconnector-api-configmap.yaml
     asserts:
       - equal:
           path: data.ssl_verify_certificate
@@ -179,11 +151,8 @@ tests:
         runtimeScanner:
           deploy: true
           sslVerifyCertificate: false
-          eveConnector:
-            deploy: true
     templates:
       - templates/runtimeScanner/runtime-scanner-configmap.yaml
-      - templates/runtimeScanner/eveconnector-api-configmap.yaml
     asserts:
       - equal:
           path: data.ssl_verify_certificate
@@ -198,11 +167,8 @@ tests:
         runtimeScanner:
           deploy: true
           sslVerifyCertificate: true
-          eveConnector:
-            deploy: true
     templates:
       - templates/runtimeScanner/runtime-scanner-configmap.yaml
-      - templates/runtimeScanner/eveconnector-api-configmap.yaml
     asserts:
       - equal:
           path: data.ssl_verify_certificate
@@ -219,11 +185,8 @@ tests:
         runtimeScanner:
           deploy: true
           sslVerifyCertificate: false
-          eveConnector:
-            deploy: true
     templates:
       - templates/runtimeScanner/runtime-scanner-configmap.yaml
-      - templates/runtimeScanner/eveconnector-api-configmap.yaml
     asserts:
       - equal:
           path: data.ssl_verify_certificate
@@ -240,11 +203,8 @@ tests:
         runtimeScanner:
           deploy: true
           sslVerifyCertificate: true
-          eveConnector:
-            deploy: true
     templates:
       - templates/runtimeScanner/runtime-scanner-configmap.yaml
-      - templates/runtimeScanner/eveconnector-api-configmap.yaml
     asserts:
       - equal:
           path: data.ssl_verify_certificate
