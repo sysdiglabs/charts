@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.20.2
+### Chores
+* **agent,sysdig-deploy** [59342938](https://github.com/sysdiglabs/charts/commit/59342938d7a1b9f22d93c5f2ebdf1dc164e50ebf): set promscrape port to 9091 by default when gke autopilot is enabled ([#1618](https://github.com/sysdiglabs/charts/issues/1618))
 # v1.20.1
 ### Bug Fixes
 * **agent** [1ef8c266](https://github.com/sysdiglabs/charts/commit/1ef8c266d888f460e0ed8b50f00d5d7886a6c155): Properly set ephemeral-storage on kmod container when slim+autopilot are enabled ([#1592](https://github.com/sysdiglabs/charts/issues/1592))
