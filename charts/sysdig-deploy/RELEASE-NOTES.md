@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **cluster-scanner** [b551ed22](https://github.com/sysdiglabs/charts/commit/b551ed22df79ef9c52ff7deefe1e6d8e0de68d4d): added support for handling AC requests [SSPROD-35871] ([#1610](https://github.com/sysdiglabs/charts/issues/1610))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.38.2...sysdig-deploy-1.39.0
+### Chores
+- **agent,sysdig-deploy** [59342938](https://github.com/sysdiglabs/charts/commit/59342938d7a1b9f22d93c5f2ebdf1dc164e50ebf): set promscrape port to 9091 by default when gke autopilot is enabled ([#1618](https://github.com/sysdiglabs/charts/issues/1618))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.39.0...sysdig-deploy-1.39.1
