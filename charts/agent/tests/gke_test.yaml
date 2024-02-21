@@ -117,7 +117,7 @@ tests:
             promscrape_web_address: 127.0.0.1:9991
     template: templates/configmap.yaml
 
-  - it: Ensure promscrape_web_ddress is unaltered when is set on settings and autopilot is enabled
+  - it: Ensure promscrape_web_address is unaltered when is set on settings and autopilot is enabled
     set:
       gke:
         autopilot: true
