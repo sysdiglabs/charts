@@ -2,20 +2,24 @@
 
 Use the `sysdig-deploy` Helm chart to install Sysdig Secure and Sysdig Monitor in a Kubernetes environment.
 
+## Prerequisites
+
+Helm v3.6 or above
+
 ## Overview
 
 This chart deploys the following Sysdig components into your Kubernetes cluster:
 
-- [Sysdig Admission Controller](https://github.com/sysdiglabs/charts/tree/master/charts/admission-controller)
-- [Sysdig Agent](https://github.com/sysdiglabs/charts/tree/master/charts/agent)
-- [Sysdig Benchmark Runner (on-premises only)](https://github.com/sysdiglabs/charts/tree/master/charts/node-analyzer#benchmark-runner)
-- [Sysdig Host Analyzer (on-premises only)](https://github.com/sysdiglabs/charts/tree/master/charts/node-analyzer#host-analyzer-legacy)
-- [Sysdig Host Scanner](https://github.com/sysdiglabs/charts/tree/master/charts/node-analyzer#host-scanner)
-- [Sysdig KSPM Analyzer](https://github.com/sysdiglabs/charts/tree/master/charts/node-analyzer#kspm-analyzer-preview)
-- [Sysdig KSPM Collector](https://github.com/sysdiglabs/charts/tree/master/charts/kspm-collector)
-- [Sysdig Image Analyzer (on-premises only)](https://github.com/sysdiglabs/charts/tree/master/charts/node-analyzer#node-image-analyzer)
-- [Sysdig Rapid Response](https://github.com/sysdiglabs/charts/tree/master/charts/rapid-response)
-- [Sysdig Runtime Scanner](https://github.com/sysdiglabs/charts/tree/master/charts/node-analyzer#runtime-scanner)
+- [Sysdig Admission Controller](https://github.com/sysdiglabs/charts/tree/main/charts/admission-controller)
+- [Sysdig Agent](https://github.com/sysdiglabs/charts/tree/main/charts/agent)
+- [Sysdig Benchmark Runner (on-premises only)](https://github.com/sysdiglabs/charts/tree/main/charts/node-analyzer#benchmark-runner)
+- [Sysdig Host Analyzer (on-premises only)](https://github.com/sysdiglabs/charts/tree/main/charts/node-analyzer#host-analyzer-legacy)
+- [Sysdig Host Scanner](https://github.com/sysdiglabs/charts/tree/main/charts/node-analyzer#host-scanner)
+- [Sysdig KSPM Analyzer](https://github.com/sysdiglabs/charts/tree/main/charts/node-analyzer#kspm-analyzer-preview)
+- [Sysdig KSPM Collector](https://github.com/sysdiglabs/charts/tree/main/charts/kspm-collector)
+- [Sysdig Image Analyzer (on-premises only)](https://github.com/sysdiglabs/charts/tree/main/charts/node-analyzer#node-image-analyzer)
+- [Sysdig Rapid Response](https://github.com/sysdiglabs/charts/tree/main/charts/rapid-response)
+- [Sysdig Runtime Scanner](https://github.com/sysdiglabs/charts/tree/main/charts/node-analyzer#runtime-scanner)
 
 To deploy `sysdig-deploy`, follow the installation instructions given on the Sysdig Documentation website:
 
@@ -47,7 +51,7 @@ You can update the configurations by using either of the following:
 
 ### Example: Admission Controller
 
-See the `admission-controller` [README](https://github.com/sysdiglabs/charts/tree/master/charts/admission-controller/README.md) for the configuration values of the `admission-controller`. To override the Sysdig URL variable for the Admission Controller chart:
+See the `admission-controller` [README](https://github.com/sysdiglabs/charts/tree/main/charts/admission-controller/README.md) for the configuration values of the `admission-controller`. To override the Sysdig URL variable for the Admission Controller chart:
 
 #### Using the Key-Value Pair
 
@@ -88,7 +92,7 @@ The `values.yaml` file specifies the values for the configuration parameters.  Y
 
 ### Example: NodeAnalyzer
 
-See the `node-analyzer` subchart [README](https://github.com/sysdiglabs/charts/tree/master/charts/node-analyzer/README.md) for the configuration values of the `nodeAnalyzer`. To override the API endpoint variable:
+See the `node-analyzer` subchart [README](https://github.com/sysdiglabs/charts/tree/main/charts/node-analyzer/README.md) for the configuration values of the `nodeAnalyzer`. To override the API endpoint variable:
 
 #### Using the Key-Value Pair
 
@@ -141,7 +145,7 @@ The following table lists the configurable parameters of the sysdig-deploy chart
 | `global.sysdig.accessKeySecret`         | The name of a Kubernetes secret containing an `access-key` entry.                                                     | `""`      |
 | `global.sysdig.secureAPIToken`          | The API Token to access Sysdig Secure.                                                                                  | `""`      |
 | `global.sysdig.secureAPITokenSecret`    | The name of a Kubernetes secret containing API Token to access Sysdig Secure.                                           | `""`      |
-| `global.sysdig.region`                  | The SaaS region for these agents. Possible values: `"us1"`, `"us2"`, `"us3"`, `"us4"`, `"eu1"`, `"au1"`, and `"custom"`. See [Regions and IP Ranges](https://docs.sysdig.com/en/docs/administration/saas-regions-and-ip-ranges/) for more information  | `"us1"`   |
+| `global.sysdig.region`                  | The SaaS region for these agents. Possible values: `"us1"`, `"us2"`, `"us3"`, `"us4"`, `"eu1"`, `"au1"`, `"me2"`, and `"custom"`. See [SaaS Regions and IP Ranges](https://docs.sysdig.com/en/docs/administration/saas-regions-and-ip-ranges/) for more information  | `"us1"`   |
 | `global.sysdig.tags`                    | Sets the global tags which can override agent tags.                                                                     | `{}`      |
 | `global.imageRegistry`                  | The container image registry.                                                                                          | ``        |
 | `global.image.pullSecrets`                  | The global pull secrets.                                                                                          | `[]`        |

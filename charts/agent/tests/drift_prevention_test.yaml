@@ -25,20 +25,6 @@ tests:
               enabled: false
     template: templates/configmap.yaml
 
-  - it: Drift prevention must be false when is secure_light
-    set:
-      sysdig:
-        settings:
-          feature:
-            mode: secure_light
-    asserts:
-      - matchRegex:
-          path: data['dragent.yaml']
-          pattern: |-
-            drift_killer:
-              enabled: false
-    template: templates/configmap.yaml
-
   - it: Drift prevention must be false when is running on GKE Autopilot
     set:
       gke:
@@ -107,20 +93,6 @@ tests:
         enabled: false
       monitor:
         enabled: true
-    asserts:
-      - matchRegex:
-          path: data['dragent.yaml']
-          pattern: |-
-            drift_control:
-              enabled: false
-    template: templates/configmap.yaml
-
-  - it: Drift control must be false when is secure_light
-    set:
-      sysdig:
-        settings:
-          feature:
-            mode: secure_light
     asserts:
       - matchRegex:
           path: data['dragent.yaml']

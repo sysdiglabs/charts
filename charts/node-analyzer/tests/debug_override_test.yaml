@@ -1,0 +1,113 @@
+suite: Test overrides of global nodeAnalyzer.debug flag
+templates:
+  - templates/configmap-host-scanner.yaml
+  - templates/configmap-kspm-analyzer.yaml
+  - templates/runtimeScanner/runtime-scanner-configmap.yaml
+tests:
+  - it: check value of debug for runtimeScanner - local value provided
+    set:
+      clusterName: test-k8s
+      nodeAnalyzer:
+        runtimeScanner:
+          deploy: true
+          debug: true
+    asserts:
+      - equal:
+          path: data.debug
+          value: "true"
+        template: templates/runtimeScanner/runtime-scanner-configmap.yaml
+
+  - it: check value of debug (trace level) for runtimeScanner - local value provided
+    set:
+      clusterName: test-k8s
+      nodeAnalyzer:
+        runtimeScanner:
+          deploy: true
+          debug: trace
+    asserts:
+      - equal:
+          path: data.debug
+          value: "trace"
+        template: templates/runtimeScanner/runtime-scanner-configmap.yaml
+
+  - it: check value of debug for runtimeScanner - global (nodeAnalyzer.debug) value provided
+    set:
+      clusterName: test-k8s
+      nodeAnalyzer:
+        debug: true
+        runtimeScanner:
+          deploy: true
+    asserts:
+      - equal:
+          path: data.debug
+          value: "true"
+        template: templates/runtimeScanner/runtime-scanner-configmap.yaml
+
+  - it: check value of debug for hostScanner - local value provided
+    set:
+      clusterName: test-k8s
+      nodeAnalyzer:
+        hostScanner:
+          deploy: true
+          debug: true
+    asserts:
+      - equal:
+          path: data.debug
+          value: "true"
+        template: templates/configmap-host-scanner.yaml
+
+  - it: check value of debug (trace level) for hostScanner - local value provided
+    set:
+      clusterName: test-k8s
+      nodeAnalyzer:
+        hostScanner:
+          deploy: true
+          debug: trace
+    asserts:
+      - equal:
+          path: data.debug
+          value: "trace"
+        template: templates/configmap-host-scanner.yaml
+
+  - it: check value of debug for hostScanner - global (nodeAnalyzer.debug) value provided
+    set:
+      clusterName: test-k8s
+      nodeAnalyzer:
+        debug: true
+        hostScanner:
+          deploy: true
+    asserts:
+      - equal:
+          path: data.debug
+          value: "true"
+        template: templates/configmap-host-scanner.yaml
+
+  - it: check value of debug for kspmAnalyzer - local value provided
+    set:
+      global:
+        kspm:
+          deploy: true
+      clusterName: test-k8s
+      nodeAnalyzer:
+        kspmAnalyzer:
+          debug: true
+    asserts:
+      - equal:
+          path: data.environment
+          value: "DEVELOPMENT"
+        template: templates/configmap-kspm-analyzer.yaml
+
+  - it: check value of debug for kspmAnalyzer - global (nodeAnalyzer.debug) value provided
+    set:
+      global:
+        kspm:
+          deploy: true
+      clusterName: test-k8s
+      nodeAnalyzer:
+        deploy: true
+        debug: true
+    asserts:
+      - equal:
+          path: data.environment
+          value: "DEVELOPMENT"
+        template: templates/configmap-kspm-analyzer.yaml

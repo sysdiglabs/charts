@@ -10,6 +10,39 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.10.0
+### New Features
+* **cluster-scanner** [b551ed22](https://github.com/sysdiglabs/charts/commit/b551ed22df79ef9c52ff7deefe1e6d8e0de68d4d): added support for handling AC requests [SSPROD-35871] ([#1610](https://github.com/sysdiglabs/charts/issues/1610))
+# v0.9.1
+### Chores
+* **cluster-scanner** [0d74d403](https://github.com/sysdiglabs/charts/commit/0d74d403e672a38052c20b04dcd90a17051142f1): bump cluster-scanner to 0.5.9 ([#1613](https://github.com/sysdiglabs/charts/issues/1613))
+# v0.9.0
+### New Features
+* **common** [0061b52d](https://github.com/sysdiglabs/charts/commit/0061b52d51f43e1e4d5e2bdf1145be28287d5ce6): add me2 region support ([#1591](https://github.com/sysdiglabs/charts/issues/1591))
+# v0.8.9
+### New Features
+* **cluster-scanner,sysdig-deploy** [58160f4c](https://github.com/sysdiglabs/charts/commit/58160f4c4dd1e999a7b39b7ce8995b319e06205b): add logic to make it possible to disable platform services if needed. ([#1596](https://github.com/sysdiglabs/charts/issues/1596))
+# v0.8.8
+### New Features
+* **cluster-scanner** [d1c37ca8](https://github.com/sysdiglabs/charts/commit/d1c37ca8cc04c3b3f88f590a3bcf8c630ca480cb): bump cluster-scanner to 0.5.4 ([#1580](https://github.com/sysdiglabs/charts/issues/1580))
+# v0.8.7
+### New Features
+* **sysdig-deploy** [49fe006f](https://github.com/sysdiglabs/charts/commit/49fe006fb0ff206c7b566a45bfa5f71713d5ad0a): Add prerequisite information on the chart ([#1468](https://github.com/sysdiglabs/charts/issues/1468))
+# v0.8.6
+### Chores
+* **admission-controller,cloud-connector,cluster-scanner,node-analyzer,registry-scanner,sysdig-deploy** [9d5d8c58](https://github.com/sysdiglabs/charts/commit/9d5d8c5809d35bcb5e8060ccc454f446cb1e3bc7): change charts ownership ([#1461](https://github.com/sysdiglabs/charts/issues/1461))
+# v0.8.5
+### New Features
+* **cluster-scanner** [4d5254f0](https://github.com/sysdiglabs/charts/commit/4d5254f09559a7f8b1690c8c060428bb95727dc9): add verify registry as option in values ([#1516](https://github.com/sysdiglabs/charts/issues/1516))
+# v0.8.4
+### Chores
+* **clusterScanner** [849d2cdd](https://github.com/sysdiglabs/charts/commit/849d2cddd9058b3a1e46f110ccbd0a815399219a): bump RSI and ISE version to 0.5.3 ([#1494](https://github.com/sysdiglabs/charts/issues/1494))
+# v0.8.3
+### Bug Fixes
+* **cluster-scanner** [09c0c714](https://github.com/sysdiglabs/charts/commit/09c0c714333f9ba7c28954b5a688a22092e5db88): corrected onPremCompatibilityVersion to 7.0.0 ([#1466](https://github.com/sysdiglabs/charts/issues/1466))
+# v0.8.2
+### New Features
+* **cluster-scanner** [e25f85b5](https://github.com/sysdiglabs/charts/commit/e25f85b5fa53b153a11c5f716a499daee4c70c3b): Enable platform services in US4 [SSPROD-32841] ([#1460](https://github.com/sysdiglabs/charts/issues/1460))
 # v0.8.1
 ### New Features
 * **cluster-scanner** [8f19ed47](https://github.com/sysdiglabs/charts/commit/8f19ed47df2be280d2c432d1a182f6235a8e2231): bumped cluster-scanner images to 0.5.1 ([#1412](https://github.com/sysdiglabs/charts/issues/1412))

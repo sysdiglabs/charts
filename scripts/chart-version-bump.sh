@@ -4,7 +4,7 @@ set -e
 
 awk '
 {
-    if ($1 == "version:")
+    if ($0 ~ /^version:/)
     {
         l = split($NF, v, ".");
         v[l]++;

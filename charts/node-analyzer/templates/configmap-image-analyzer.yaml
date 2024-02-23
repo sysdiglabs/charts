@@ -8,9 +8,7 @@ metadata:
 {{ include "nodeAnalyzer.labels" . | indent 4 }}
 data:
   collector_endpoint: "https://{{ include "nodeAnalyzer.apiEndpoint" . }}/internal/scanning/scanning-analysis-collector"
-  {{- if hasKey .Values.nodeAnalyzer "sslVerifyCertificate" }}
-  ssl_verify_certificate: "{{ .Values.nodeAnalyzer.sslVerifyCertificate }}"
-  {{- end }}
+  ssl_verify_certificate: {{ include "imageAnalyzer.sslVerifyCertificate" . }}
   debug: "{{ .Values.nodeAnalyzer.debug | default false }}"
   {{- if .Values.nodeAnalyzer.imageAnalyzer.dockerSocketPath }}
   docker_socket_path: {{ .Values.nodeAnalyzer.imageAnalyzer.dockerSocketPath }}
@@ -33,13 +31,13 @@ data:
   {{- if .Values.nodeAnalyzer.imageAnalyzer.collectorTimeout }}
   collector_timeout: {{ .Values.nodeAnalyzer.imageAnalyzer.collectorTimeout }}
   {{- end }}
-  {{- if (.Values.nodeAnalyzer.httpProxy | default .Values.global.proxy.httpProxy) }}
-  http_proxy: {{ .Values.nodeAnalyzer.httpProxy | default .Values.global.proxy.httpProxy }}
+  {{- if (.Values.nodeAnalyzer.imageAnalyzer.httpProxy | default .Values.nodeAnalyzer.httpProxy | default .Values.global.proxy.httpProxy) }}
+  http_proxy: {{ .Values.nodeAnalyzer.imageAnalyzer.httpProxy | default .Values.nodeAnalyzer.httpProxy | default .Values.global.proxy.httpProxy }}
   {{- end -}}
-  {{- if (.Values.nodeAnalyzer.httpsProxy | default .Values.global.proxy.httpsProxy) }}
-  https_proxy: {{ .Values.nodeAnalyzer.httpsProxy | default .Values.global.proxy.httpsProxy }}
+  {{- if (.Values.nodeAnalyzer.imageAnalyzer.httpsProxy | default .Values.nodeAnalyzer.httpsProxy | default .Values.global.proxy.httpsProxy) }}
+  https_proxy: {{ .Values.nodeAnalyzer.imageAnalyzer.httpsProxy | default .Values.nodeAnalyzer.httpsProxy | default .Values.global.proxy.httpsProxy }}
   {{- end -}}
-  {{- if (.Values.nodeAnalyzer.noProxy | default .Values.global.proxy.noProxy) }}
-  no_proxy: {{ .Values.nodeAnalyzer.noProxy | default .Values.global.proxy.noProxy }}
+  {{- if (.Values.nodeAnalyzer.imageAnalyzer.noProxy | default .Values.nodeAnalyzer.noProxy | default .Values.global.proxy.noProxy) }}
+  no_proxy: {{ .Values.nodeAnalyzer.imageAnalyzer.noProxy | default .Values.nodeAnalyzer.noProxy | default .Values.global.proxy.noProxy }}
   {{- end -}}
 {{- end }}

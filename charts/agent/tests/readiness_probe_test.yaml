@@ -1,0 +1,220 @@
+suite: Test the Readiness Probe Configuration
+templates:
+  - templates/daemonset.yaml
+  - templates/deployment.yaml
+tests:
+  - it: "[DaemonSet] Readiness Probe (agent > 12.18.0)"
+    set:
+      image:
+        tag: 12.18.1
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].readinessProbe
+          value:
+             httpGet:
+               host: 127.0.0.1
+               path: /healthz
+               port: 24483
+             initialDelaySeconds: 90
+             periodSeconds: 3
+    template: templates/daemonset.yaml
+  - it: "[DaemonSet] Readiness Probe (agent == 12.18.0)"
+    set:
+      image:
+        tag: 12.18.0
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].readinessProbe
+          value:
+            httpGet:
+              host: 127.0.0.1
+              path: /healthz
+              port: 24483
+            initialDelaySeconds: 90
+            periodSeconds: 3
+    template: templates/daemonset.yaml
+  - it: "[DaemonSet] Readiness Probe (agent < 12.18.0)"
+    set:
+      image:
+        tag: 12.16.3
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].readinessProbe
+          value:
+            exec:
+              command:
+                - test
+                - -e
+                - /opt/draios/logs/running
+            initialDelaySeconds: 90
+            periodSeconds: 3
+    template: templates/daemonset.yaml
+  - it: "[DaemonSet] Readiness Probe (agent == dev)"
+    set:
+      image:
+        tag: dev
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].readinessProbe
+          value:
+            exec:
+              command:
+                - test
+                - -e
+                - /opt/draios/logs/running
+            initialDelaySeconds: 90
+            periodSeconds: 3
+    template: templates/daemonset.yaml
+  - it: "[DaemonSet] Readiness Probe (agent == latest)"
+    set:
+      image:
+        tag: latest
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].readinessProbe
+          value:
+            exec:
+              command:
+                - test
+                - -e
+                - /opt/draios/logs/running
+            initialDelaySeconds: 90
+            periodSeconds: 3
+    template: templates/daemonset.yaml
+  - it: "[DelegatedAgentDeployment] Readiness Probe (agent > 12.18.0)"
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+      image:
+        tag: 12.18.1
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].readinessProbe
+          value:
+            httpGet:
+              host: 127.0.0.1
+              path: /healthz
+              port: 24483
+            initialDelaySeconds: 90
+            periodSeconds: 3
+  - it: "[DelegatedAgentDeployment] Readiness Probe (agent == 12.18.0)"
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+      image:
+        tag: 12.18.0
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].readinessProbe
+          value:
+            httpGet:
+              host: 127.0.0.1
+              path: /healthz
+              port: 24483
+            initialDelaySeconds: 90
+            periodSeconds: 3
+  - it: "[DelegatedAgentDeployment] Readiness Probe (agent < 12.18.0)"
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+      image:
+        tag: 12.16.3
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].readinessProbe
+          value:
+            exec:
+              command:
+                - test
+                - -e
+                - /opt/draios/logs/running
+            initialDelaySeconds: 90
+            periodSeconds: 3
+  - it: "[DelegatedAgentDeployment] Readiness Probe (agent == dev)"
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+      image:
+        tag: dev
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].readinessProbe
+          value:
+            exec:
+              command:
+                - test
+                - -e
+                - /opt/draios/logs/running
+            initialDelaySeconds: 90
+            periodSeconds: 3
+  - it: "[DelegatedAgentDeployment] Readiness Probe (agent == latest)"
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+      image:
+        tag: latest
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].readinessProbe
+          value:
+            exec:
+              command:
+                - test
+                - -e
+                - /opt/draios/logs/running
+            initialDelaySeconds: 90
+            periodSeconds: 3
+  - it: Test setting probe delays
+    set:
+      daemonset:
+        probes:
+          initialDelay: 5
+          periodDelay: 3
+      delegatedAgentDeployment:
+        deployment:
+          probes:
+            initialDelay: 5
+            periodDelay: 3
+        enabled: true
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].readinessProbe.initialDelaySeconds
+          value: 5
+      - equal:
+          path: spec.template.spec.containers[0].readinessProbe.periodSeconds
+          value: 3
+
+  - it: "Do not use the HTTP Readiness Probe on GKE Autopilot"
+    set:
+      global:
+        gke:
+          autopilot: true
+    template: templates/daemonset.yaml
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[*].readinessProbe
+          value:
+            exec:
+              command:
+                - test
+                - -e
+                - /opt/draios/logs/running
+            initialDelaySeconds: 90
+            periodSeconds: 3
+
+  - it: "Do not use the HTTP Readiness Probe on GKE Autopilot"
+    set:
+      gke:
+        autopilot: true
+    template: templates/daemonset.yaml
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[*].readinessProbe
+          value:
+            exec:
+              command:
+                - test
+                - -e
+                - /opt/draios/logs/running
+            initialDelaySeconds: 90
+            periodSeconds: 3

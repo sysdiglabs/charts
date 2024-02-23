@@ -65,7 +65,7 @@ global:
       # Provide the filename that is defined inside the existing ConfigMap
       existingCaConfigMapKeyName:
 # Enables Sysdig Eve to retrieve the list of running packages.
-eveEnabled: false
+eveEnabled: true
 # Enables the integration with Sysdig Eve. Stores the list of running packages
 # to Sysdig backend. It implies `eveEnabled: true`.
 eveIntegrationEnabled: false
@@ -96,6 +96,10 @@ scannerMode: "local"
 # By default, certificates are always verified.
 sslVerifyCertificate: true
 
+# Can be set to false to allow insecure connections registries,
+# Such as for registries with self-signed or private certificates.
+# By default, certificates are always verified.
+sslVerifyRegistryCertificate: true
 runtimeStatusIntegrator:
   image:
     # The image registry to use for the Runtime Status Integrator component of
@@ -104,7 +108,7 @@ runtimeStatusIntegrator:
     # The image repository to use for pulling the Runtime Status Integrator
     # image
     repository: sysdig/runtime-status-integrator
-    tag: "0.5.1"
+    tag: "0.6.0"
   # Params to manage leader election
   # Leader election is implemented leveraging the native capabilities of
   # Kubernetes see: https://kubernetes.io/blog/2016/01/simple-leader-election-with-kubernetes/
@@ -166,7 +170,7 @@ imageSbomExtractor:
     registry: quay.io
     # The image repository to use for pulling the Image SBOM Extractor image
     repository: sysdig/image-sbom-extractor
-    tag: "0.5.1"
+    tag: "0.6.0"
   ports:
     # The port to be used to expose prometheus metrics for the Image SBOM
     # Extractor
@@ -318,3 +322,6 @@ ssl:
     existingCaConfigMap:
     # Provide the filename that is defined inside the existing ConfigMap
     existingCaConfigMapKeyName:
+
+# Option to make it possible to disable platform services
+disablePlatformScanning: false

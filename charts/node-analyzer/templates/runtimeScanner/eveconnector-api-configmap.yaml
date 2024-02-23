@@ -3,24 +3,23 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ template "nodeAnalyzer.fullname" . }}-eveconnector
+  namespace: {{ include "nodeAnalyzer.namespace" . }}
   labels:
 {{ include "nodeAnalyzer.labels" . | indent 4 }}
 data:
   api_endpoint: https://{{ include "nodeAnalyzer.apiEndpoint" . }}
   cluster_name: {{ required "A valid clusterName is required" (include "nodeAnalyzer.clusterName" . ) }}
-  {{- if hasKey .Values.nodeAnalyzer "sslVerifyCertificate" }}
-  ssl_verify_certificate: "{{ .Values.nodeAnalyzer.sslVerifyCertificate }}"
-  {{- end }}
+  ssl_verify_certificate: {{ include "runtimeScanner.sslVerifyCertificate" . }}
   {{- if hasKey .Values.nodeAnalyzer.runtimeScanner "eveConnector" }}
   cert_dns_name: {{ include "eveconnector.host" . | quote }}
   {{- end }}
-  {{- if (.Values.nodeAnalyzer.httpProxy | default .Values.global.proxy.httpProxy) }}
-  http_proxy: {{ .Values.nodeAnalyzer.httpProxy | default .Values.global.proxy.httpProxy }}
+  {{- if (.Values.nodeAnalyzer.runtimeScanner.httpProxy | default .Values.nodeAnalyzer.httpProxy | default .Values.global.proxy.httpProxy) }}
+  http_proxy: {{ .Values.nodeAnalyzer.runtimeScanner.httpProxy | default .Values.nodeAnalyzer.httpProxy | default .Values.global.proxy.httpProxy }}
   {{- end -}}
-  {{- if (.Values.nodeAnalyzer.httpsProxy | default .Values.global.proxy.httpsProxy) }}
-  https_proxy: {{ .Values.nodeAnalyzer.httpsProxy | default .Values.global.proxy.httpsProxy }}
+  {{- if (.Values.nodeAnalyzer.runtimeScanner.httpsProxy | default .Values.nodeAnalyzer.httpsProxy | default .Values.global.proxy.httpsProxy) }}
+  https_proxy: {{ .Values.nodeAnalyzer.runtimeScanner.httpsProxy | default .Values.nodeAnalyzer.httpsProxy | default .Values.global.proxy.httpsProxy }}
   {{- end -}}
-  {{- if (.Values.nodeAnalyzer.noProxy | default .Values.global.proxy.noProxy) }}
-  no_proxy: {{ .Values.nodeAnalyzer.noProxy | default .Values.global.proxy.noProxy }}
+  {{- if (.Values.nodeAnalyzer.runtimeScanner.noProxy | default .Values.nodeAnalyzer.noProxy | default .Values.global.proxy.noProxy) }}
+  no_proxy: {{ .Values.nodeAnalyzer.runtimeScanner.noProxy | default .Values.nodeAnalyzer.noProxy | default .Values.global.proxy.noProxy }}
   {{- end -}}
 {{- end }}

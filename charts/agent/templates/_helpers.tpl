@@ -98,6 +98,10 @@ Sysdig Agent resources
                                       "ephemeral-storage" .Values.gke.ephemeralStorage
                                       "memory" "512Mi")
                      "limits"   (get $resourceProfiles .Values.resourceProfile)) }}
+{{- else if (include "agent.gke.autopilot" .) }}
+    {{- toYaml (dict "requests" (dict "cpu" "250m"
+                                      "memory" "512Mi")
+                     "limits"   (get $resourceProfiles .Values.resourceProfile)) }}
 {{- else }}
     {{- toYaml (dict "requests" (get $resourceProfiles .Values.resourceProfile)
                      "limits"   (get $resourceProfiles .Values.resourceProfile)) }}
@@ -183,6 +187,16 @@ Return the default only if the value is not defined in sysdig.settings.<agent_se
 The following helper functions are all designed to use global values where
 possible, but accept overrides from the chart values.
 */}}
+
+{{- define "agent.httpProxyCredentials" -}}
+    {{- if hasKey .Values.sysdig.settings "http_proxy" -}}
+        {{- if and (hasKey .Values.sysdig.settings.http_proxy "proxy_user") (hasKey .Values.sysdig.settings.http_proxy "proxy_password") -}}
+proxy_user: {{ .Values.sysdig.settings.http_proxy.proxy_user | toString | b64enc | quote }}
+proxy_password: {{ .Values.sysdig.settings.http_proxy.proxy_password | toString | b64enc | quote }}
+        {{- end }}
+    {{- end }}
+{{- end -}}
+
 {{- define "agent.accessKey" -}}
     {{- required "A valid accessKey is required" (.Values.sysdig.accessKey | default .Values.global.sysdig.accessKey) -}}
 {{- end -}}
@@ -329,10 +343,8 @@ and set the agent chart parameters accordingly
     {{- if and (not .Values.secure.enabled) $secureFeatProvided }}
         {{ fail "Set secure.enabled=true when specifying sysdig.settings.feature.mode is `secure` or `secure_light`" }}
     {{- end }}
-
 {{ include "agent.monitorFeatures" . }}
 {{ include "agent.secureFeatures" . }}
-
 {{- end -}}
 
 {{/*
@@ -401,6 +413,12 @@ agent config to prevent a backend push from enabling them after installation.
             "secure_audit_streams") }}
             {{- $_ := set $secureConfig $secureFeature (dict "enabled" false) }}
         {{- end }}
+    {{ else if and (include "agent.enableFalcoBaselineSecureLight" .) $secureLightMode }}
+        {{- range $secureFeature := (list
+            "memdump"
+            "network_topology") }}
+            {{- $_ := set $secureConfig $secureFeature (dict "enabled" false) }}
+        {{- end }}
     {{ else if $secureLightMode }}
         {{- range $secureFeature := (list
             "drift_control"
@@ -415,6 +433,14 @@ agent config to prevent a backend push from enabling them after installation.
         {{- $_ := set $secureConfig "drift_control" (dict "enabled" false) }}
         {{- $_ := set $secureConfig "drift_killer" (dict "enabled" false) }}
     {{- end }}
+
+    {{/* Finally, check sysdig.settings for any additional security block confiugration.
+         If so, merge it with $secureConfig and unset .Values.sysdig.settings.security */}}
+    {{- if hasKey .Values.sysdig.settings "security" }}
+        {{- $secureConfig := merge $secureConfig.security .Values.sysdig.settings.security }}
+        {{- $_ := unset .Values.sysdig.settings "security"}}
+    {{- end }}
+
 {{ toYaml $secureConfig }}
 {{- end }}
 
@@ -504,5 +530,28 @@ sysdig_capture_enabled: false
 {{- if (and (le (.root.Capabilities.KubeVersion.Major | int) .major)
             (lt (.root.Capabilities.KubeVersion.Minor | trimSuffix "+" | int) .minor)) }}
 true
+{{- end }}
+{{- end }}
+
+{{/* Return the name of the local forwarder configmap */}}
+{{- define "agent.localForwarderConfigMapName" }}
+{{- include "agent.configmapName" . | trunc 46 | trimSuffix "-" | printf "%s-local-forwarder" }}
+{{- end }}
+
+{{- define "agent.enableHttpProbes" }}
+{{- if not (include "agent.gke.autopilot" .) }}
+{{- if regexMatch "^v?([0-9]+)(\\.[0-9]+)?(\\.[0-9]+)?(-([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?(\\+([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?$" .Values.image.tag }}
+{{- if semverCompare ">= 12.18.0-0" .Values.image.tag }}
+{{- printf "true" -}}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
+
+{{- define "agent.enableFalcoBaselineSecureLight" }}
+{{- if regexMatch "^v?([0-9]+)(\\.[0-9]+)?(\\.[0-9]+)?(-([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?(\\+([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?$" .Values.image.tag }}
+{{- if semverCompare ">= 12.19.0-0" .Values.image.tag }}
+{{- printf "true" -}}
+{{- end }}
 {{- end }}
 {{- end }}

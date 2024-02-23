@@ -34,13 +34,14 @@ Follow the instructions in [Install Registry Scanner](https://docs.sysdig.com/en
 - IBM ICR
 - Azure ACR
 - Google GAR
+- Google GCR
 
 Once installed, you can view the scan results in the [Vulnerabilities UI](https://docs.sysdig.com/en/docs/sysdig-secure/vulnerabilities/registry/) of Sysdig Secure.
 
 
 ### Prerequisites
 
-- Helm 3
+- Helm 3.6
 - Kubernetes v1.16+
 - Unique name to identify your Kubernetes cluster
 - Sysdig Secure API Token
@@ -55,13 +56,14 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | cronjob.failedJobsHistoryLimit                   | The number of failed job history to keep on the cluster.                                                                                                                                                                                   | <code>5</code>                               |
 | cronjob.successfulJobsHistoryLimit               | The number of successful job history to keep on the cluster.                                                                                                                                                                               | <code>2</code>                               |
 | cronjob.restartPolicy                            | The restart policy for a failed registry scan execution.                                                                                                                                                                                   | <code>Never</code>                           |
+| cronjob.timeZone                                 | Timezone settings for the cronjob. Value default will be null to guarantee we only set the timezone if the user provides it.                                                                                                               | <code>""</code>                              |
 | reportToPersistentVolumeClaim                    | Specify a volume claim to write the final JSON report there instead of standard output.                                                                                                                                                    | <code>""</code>                              |
 | config.logging                                   | The log level. Use one of the following: trace, debug, info, error.                                                                                                                                                                        | <code>"info"</code>                          |
 | config.registryURL                               | The URL of the registry to scan.                                                                                                                                                                                                           | <code>""</code>                              |
 | config.registryApiUrl                            | The API URL of the registry to scan. This is required if your registry type is Artifactory.                                                                                                                                                | <code>""</code>                              |
 | config.registryUser                              | The username for registry authentication.                                                                                                                                                                                                  | <code>""</code>                              |
 | config.registryPassword                          | The password for registry authentication.                                                                                                                                                                                                  | <code>""</code>                              |
-| config.registryType                              | Mandatory.<br/>The registry Type. Supported types: artifactory, ecr, icr, acr, quay, harbor, gar, nexus and dockerv2.                                                                                                                      | <code>""</code>                              |
+| config.registryType                              | Mandatory.<br/>The registry Type. Supported types: artifactory, ecr, icr, acr, quay, harbor, gar, gcr, nexus and dockerv2.                                                                                                                 | <code>""</code>                              |
 | config.registryAccountId                         | The account ID. Applicable only for ICR registry type.                                                                                                                                                                                     | <code>""</code>                              |
 | config.icrIamApi                                 | The ICR IAM API. Applicable only for ICR registry type.                                                                                                                                                                                    | <code>""</code>                              |
 | config.icrIamApiSkipTLS                          | Ignore TLS certificate for IAM API. Applicable only for ICR registry type.                                                                                                                                                                 | <code>false</code>                           |
@@ -91,6 +93,7 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | config.scan.jobs.resources.requests.cpu          | The CPU request for the scanner job.                                                                                                                                                                                                       | <code>500m</code>                            |
 | config.scan.jobs.resources.limits.memory         | The memory limit for the scanner job.                                                                                                                                                                                                      | <code>2Gi</code>                             |
 | config.scan.jobs.temporaryVolumeSizeLimit        | The size limit for the emptyDir volume used by the scanner job.<br/> This volume is used to store both the vulnerability database and the image to scan.                                                                                   | <code>2Gi</code>                             |
+| config.scan.disablePlatformScanning              | Force the scan to happen on the client component rather than relying on backend scanning                                                                                                                                                   | <code>false</code>                           |
 | config.parallelGoRoutines                        | Number of goroutines running in parallel in metadata phase for ECR Org setup.                                                                                                                                                              | <code>100</code>                             |
 | ssl.ca.certs                                     | For outbound connections. <br/>List of PEM-encoded x509 certificate authority.                                                                                                                                                             | <code>[]</code>                              |
 | customLabels                                     | The additional labels to add to CronJob and Scanning Jobs. The custom labels to be added to kubernetes manifests of all the resources created.                                                                                             | <code>{}</code>                              |
@@ -115,6 +118,7 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | scanOnStart.jobName                              | The name of the job created for the post-install scanner job                                                                                                                                                                               | <code>"registry-scanner-start-test"</code>   |
 | scanOnStart.asPostInstallHook                    | Specify whether to launch the job as a post-install helm hook. <br/>Used for testing purpose.                                                                                                                                              | <code>false</code>                           |
 | extraEnvVars                                     | The additional environment variables to be set.                                                                                                                                                                                            | <code>[]</code>                              |
+| memProfileToPersistentVolumeClaim                | Write memory profile dumps to Persistent Volume Claim (provide PVC name)                                                                                                                                                                   | <code>""</code>                              |
 
 ## On-Prem Deployment
 
@@ -124,7 +128,9 @@ Use the following command to deploy:
 
 ```
 helm upgrade --install registry-scanner \
-   --version=0.1.39 \
+   --namespace sysdig-agent \
+   --create-namespace \
+   --version=1.1.32 \
    --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
    --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
    --set config.secureSkipTLS=true \

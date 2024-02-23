@@ -2,14 +2,26 @@
 # Run "helm unittest -3 -f ./tests/runtimescanner_test.yaml ." from within the `charts/node-analyzer` folder
 suite: Test RuntimeScanner configuration
 templates:
-  - ../templates/daemonset-node-analyzer.yaml
+  - daemonset-node-analyzer.yaml
+  # For checksums
+  - clusterrole-node-analyzer.yaml
+  - clusterrolebinding-node-analyzer.yaml
+  - configmap-benchmark-runner.yaml
+  - configmap-host-analyzer.yaml
+  - configmap-host-scanner.yaml
+  - configmap-image-analyzer.yaml
+  - configmap-kspm-analyzer.yaml
+  - secrets.yaml
+  - serviceaccount-node-analyzer.yaml
+  - runtimeScanner/runtime-scanner-configmap.yaml
 values:
+  - ./default_required_values.yaml
   - ../values.yaml
 
 tests:
   - it: "Add extra volume through nodeAnalyzer.imageAnalyzer.extraVolumes parameter (deprecated)"
     templates:
-      - ../templates/daemonset-node-analyzer.yaml
+      - daemonset-node-analyzer.yaml
     set:
       nodeAnalyzer:
         imageAnalyzer:
@@ -30,7 +42,7 @@ tests:
 
   - it: "Add extra volume through nodeAnalyzer.extraVolumes parameter"
     templates:
-      - ../templates/daemonset-node-analyzer.yaml
+      - daemonset-node-analyzer.yaml
     set:
       nodeAnalyzer:
           extraVolumes:
@@ -52,8 +64,9 @@ tests:
     set:
       secure.vulnerabilityManagement.newEngineOnly: true
       nodeAnalyzer.runtimeScanner.deploy: false
+      global.clusterConfig.name: "test"
     templates:
-      - ../templates/daemonset-node-analyzer.yaml
+      - daemonset-node-analyzer.yaml
     asserts:
       - isKind:
           of: DaemonSet
@@ -69,7 +82,7 @@ tests:
 
   - it: "is disabled by default, legacy will be deployed"
     templates:
-      - ../templates/daemonset-node-analyzer.yaml
+      - daemonset-node-analyzer.yaml
     asserts:
       - isKind:
           of: DaemonSet
@@ -89,8 +102,9 @@ tests:
   - it: "is enabled when newEngineOnly is set"
     set:
       secure.vulnerabilityManagement.newEngineOnly: true
+      global.clusterConfig.name: "test"
     templates:
-      - ../templates/daemonset-node-analyzer.yaml
+      - daemonset-node-analyzer.yaml
     asserts:
       - isKind:
           of: DaemonSet
@@ -106,3 +120,55 @@ tests:
       - lengthEqual:
           path: spec.template.spec.containers
           count: 3
+
+  - it: "always expose the EVE_ENABLED and EVE_INTEGRATION_ENABLED variables when eveEnabled is not specified"
+    set:
+      global:
+        clusterConfig:
+          name: "test"
+      nodeAnalyzer:
+        runtimeScanner:
+          deploy: true
+    templates:
+      - ../templates/daemonset-node-analyzer.yaml
+    asserts:
+      - isNotNull:
+          path: spec.template.spec.containers[?(@.name == "sysdig-runtime-scanner")].env[?(@.name == "EVE_ENABLED")]
+      - isNotNull:
+          path: spec.template.spec.containers[?(@.name == "sysdig-runtime-scanner")].env[?(@.name == "EVE_INTEGRATION_ENABLED")]
+
+  - it: "always expose the EVE_ENABLED and EVE_INTEGRATION_ENABLED variables when eveEnabled is true"
+    set:
+      global:
+        clusterConfig:
+          name: "test"
+      nodeAnalyzer:
+        runtimeScanner:
+          deploy: true
+          settings:
+            eveEnabled: true
+    templates:
+      - ../templates/daemonset-node-analyzer.yaml
+    asserts:
+      - isNotNull:
+          path: spec.template.spec.containers[?(@.name == "sysdig-runtime-scanner")].env[?(@.name == "EVE_ENABLED")]
+      - isNotNull:
+          path: spec.template.spec.containers[?(@.name == "sysdig-runtime-scanner")].env[?(@.name == "EVE_INTEGRATION_ENABLED")]
+
+  - it: "always expose the EVE_ENABLED and EVE_INTEGRATION_ENABLED variables when eveEnabled is false"
+    set:
+      global:
+        clusterConfig:
+          name: "test"
+      nodeAnalyzer:
+        runtimeScanner:
+          deploy: true
+          settings:
+            eveEnabled: false
+    templates:
+      - ../templates/daemonset-node-analyzer.yaml
+    asserts:
+      - isNotNull:
+          path: spec.template.spec.containers[?(@.name == "sysdig-runtime-scanner")].env[?(@.name == "EVE_ENABLED")]
+      - isNotNull:
+          path: spec.template.spec.containers[?(@.name == "sysdig-runtime-scanner")].env[?(@.name == "EVE_INTEGRATION_ENABLED")]

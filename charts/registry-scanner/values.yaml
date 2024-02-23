@@ -11,6 +11,8 @@ cronjob:
   successfulJobsHistoryLimit: 2
   # The restart policy for a failed registry scan execution.
   restartPolicy: Never
+  # Timezone settings for the cronjob. Value default will be null to guarantee we only set the timezone if the user provides it.
+  timeZone: ""
 
 # Specify a volume claim to write the final JSON report there instead of standard output.
 reportToPersistentVolumeClaim: ""
@@ -26,7 +28,7 @@ config:
   registryUser: ""
   # The password for registry authentication.
   registryPassword: ""
-  # Mandatory.<br/>The registry Type. Supported types: artifactory, ecr, icr, acr, quay, harbor, gar, nexus and dockerv2.
+  # Mandatory.<br/>The registry Type. Supported types: artifactory, ecr, icr, acr, quay, harbor, gar, gcr, nexus and dockerv2.
   registryType: ""
   # The account ID. Applicable only for ICR registry type.
   registryAccountId: ""
@@ -103,6 +105,8 @@ config:
       # The size limit for the emptyDir volume used by the scanner job.<br/>
       # This volume is used to store both the vulnerability database and the image to scan.
       temporaryVolumeSizeLimit: 2Gi
+    # Force the scan to happen on the client component rather than relying on backend scanning
+    disablePlatformScanning: false
   # Number of goroutines running in parallel in metadata phase for ECR Org setup.
   parallelGoRoutines: 100
 ssl:
@@ -224,3 +228,6 @@ scanOnStart:
 extraEnvVars: []
 #  - name: FOO
 #    value: bar
+
+# Write memory profile dumps to Persistent Volume Claim (provide PVC name)
+memProfileToPersistentVolumeClaim: ""

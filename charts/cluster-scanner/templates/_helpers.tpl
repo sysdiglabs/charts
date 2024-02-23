@@ -92,6 +92,7 @@ rsi_js_consumer_ack_wait: "120s"
 rsi_js_consumer_max_deliver: "1"
 rsi_js_consumer_deliver_policy_all: "true"
 rsi_js_producer_subject_prefix: "analysis.requests"
+rsi_js_priority_producer_subject_prefix: "analysis.priority.requests"
 rsi_js_server_metrics_enable: "true"
 rsi_js_server_metrics_port: "8222"
 {{ end }}
@@ -111,6 +112,18 @@ ise_js_consumer_max_in_flight: "256"
 ise_js_consumer_ack_wait: "240s"
 ise_js_consumer_max_deliver: "1"
 ise_js_consumer_deliver_policy_all: "true"
+
+ise_js_priority_consumer_streamname: "analysis-requests"
+ise_js_priority_consumer_name: "ise-priority"
+ise_js_priority_consumer_durable: "ise-priority"
+ise_js_priority_consumer_pull: "true"
+ise_js_priority_consumer_pull_batch: "1"
+ise_js_priority_consumer_subject: "analysis.priority.requests.>"
+ise_js_priority_consumer_max_in_flight: "256"
+ise_js_priority_consumer_ack_wait: "240s"
+ise_js_priority_consumer_max_deliver: "1"
+ise_js_priority_consumer_deliver_policy_all: "true"
+
 ise_js_producer_subject: "analysis.sboms"
 {{ end }}
 
@@ -206,13 +219,13 @@ Define the proper imageRegistry to use for imageSbomExtractor
 {{- end -}}
 
 {{/*
-Generates configmap data to enable platform services if onPremCompatibility version is not set, or it is greater than 6.6.0
+Generates configmap data to enable platform services if onPremCompatibility version is not set, or it is greater than 7.0.0
 It also makes sure that the platform services are enabled in regions which support them when onPremCompatibility is not defined.
 */}}
 {{- define "cluster-scanner.enablePlatformServicesConfig" -}}
-{{- if ( semverCompare ">= 6.6.0" (.Values.onPremCompatibilityVersion | default "6.6.0" )) -}}
-    {{- $regionsPlatformEnabled := list "us1" "us2" "us3" "au1" "eu1" -}}
-    {{- if or (has .Values.global.sysdig.region $regionsPlatformEnabled) .Values.onPremCompatibilityVersion -}}
+{{- if ( semverCompare ">= 7.0.0" (.Values.onPremCompatibilityVersion | default "7.0.0" )) -}}
+    {{- $regionsPlatformEnabled := list "us1" "us2" "us3" "us4" "au1" "eu1" -}}
+    {{- if and (not .Values.disablePlatformScanning) (or (has .Values.global.sysdig.region $regionsPlatformEnabled) .Values.onPremCompatibilityVersion) -}}
 enable_platform_services: "true"
     {{- end -}}
 {{- end -}}

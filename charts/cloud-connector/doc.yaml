@@ -14,7 +14,7 @@ chart:
 #  values: "-- generate from values file --"
   valuesExample: "sysdig.secureAPIToken=<YOUR-SECURE-KEY>"
 prerequisites:
-- "Helm v3"
+- "Helm v3.6"
 - "Sysdig Secure API Token"
 
 release:

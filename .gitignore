@@ -145,3 +145,6 @@ Chart.lock
 *.envrc
 .vscode
 .local
+
+# ASDF config
+.tool-versions

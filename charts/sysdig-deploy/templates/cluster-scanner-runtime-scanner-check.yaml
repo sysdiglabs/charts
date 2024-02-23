@@ -1,3 +1,12 @@
-{{- if and .Values.clusterScanner.enabled .Values.nodeAnalyzer.enabled ( include "deployRuntimeScanner" . ) -}}
+{{- $nodeAnalyzerEnabled := default false .Values.nodeAnalyzer.enabled -}}
+{{- $runtimeScannerDeploy := false -}}
+
+{{- if $nodeAnalyzerEnabled -}}
+  {{- if and (default dict .Values.nodeAnalyzer).nodeAnalyzer (default dict .Values.nodeAnalyzer.nodeAnalyzer).runtimeScanner -}}
+    {{- $runtimeScannerDeploy = default false .Values.nodeAnalyzer.nodeAnalyzer.runtimeScanner.deploy -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if and $nodeAnalyzerEnabled $runtimeScannerDeploy .Values.clusterScanner.enabled -}}
 {{ fail "Cannot enable both the Runtime Scanner and the Cluster Scanner at the same time" }}
 {{- end -}}

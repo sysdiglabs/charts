@@ -139,3 +139,17 @@ tests:
       - matchRegex:
           path: data['config.yaml']
           pattern: allowListMemberAccountIDs:\n\s*- 123456789
+  - it: platform scanning is not disable by default
+    asserts:
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: scan:((.|\n)*)disablePlatformScanning:\s*false
+  - it: force scanning on the client component regardless of backend config
+    set:
+      config:
+        scan:
+          disablePlatformScanning: "true"
+    asserts:
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: scan:((.|\n)*)disablePlatformScanning:\s*true

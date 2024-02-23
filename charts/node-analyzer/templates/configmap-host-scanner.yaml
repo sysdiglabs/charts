@@ -23,20 +23,28 @@ data:
   {{- if .Values.nodeAnalyzer.hostScanner.additionalDirsToScan }}
   additional_dirs_to_scan: {{ .Values.nodeAnalyzer.hostScanner.additionalDirsToScan }}
   {{- end }}
-  {{- if hasKey .Values.nodeAnalyzer "sslVerifyCertificate" }}
-  ssl_verify_certificate: "{{ .Values.nodeAnalyzer.sslVerifyCertificate }}"
+  ssl_verify_certificate: {{ include "hostScanner.sslVerifyCertificate" . }}
+  {{- if (.Values.nodeAnalyzer.hostScanner.debug | default .Values.nodeAnalyzer.debug) }}
+  debug: "{{ .Values.nodeAnalyzer.hostScanner.debug | default .Values.nodeAnalyzer.debug }}"
   {{- end }}
-  debug: "{{ .Values.nodeAnalyzer.debug | default false }}"
-  {{- if (.Values.nodeAnalyzer.httpProxy | default .Values.global.proxy.httpProxy) }}
-  http_proxy: {{ .Values.nodeAnalyzer.httpProxy | default .Values.global.proxy.httpProxy }}
+  {{- if (.Values.nodeAnalyzer.hostScanner.httpProxy | default .Values.nodeAnalyzer.httpProxy | default .Values.global.proxy.httpProxy) }}
+  http_proxy: {{ .Values.nodeAnalyzer.hostScanner.httpProxy | default .Values.nodeAnalyzer.httpProxy | default .Values.global.proxy.httpProxy }}
   {{- end -}}
-  {{- if (.Values.nodeAnalyzer.httpsProxy | default .Values.global.proxy.httpsProxy) }}
-  https_proxy: {{ .Values.nodeAnalyzer.httpsProxy | default .Values.global.proxy.httpsProxy }}
+  {{- if (.Values.nodeAnalyzer.hostScanner.httpsProxy | default .Values.nodeAnalyzer.httpsProxy | default .Values.global.proxy.httpsProxy) }}
+  https_proxy: {{ .Values.nodeAnalyzer.hostScanner.httpsProxy | default .Values.nodeAnalyzer.httpsProxy | default .Values.global.proxy.httpsProxy }}
   {{- end -}}
-  {{- if (.Values.nodeAnalyzer.noProxy | default .Values.global.proxy.noProxy) }}
-  no_proxy: {{ .Values.nodeAnalyzer.noProxy | default .Values.global.proxy.noProxy }}
+  {{- if (.Values.nodeAnalyzer.hostScanner.noProxy | default .Values.nodeAnalyzer.noProxy | default .Values.global.proxy.noProxy) }}
+  no_proxy: {{ .Values.nodeAnalyzer.hostScanner.noProxy | default .Values.nodeAnalyzer.noProxy | default .Values.global.proxy.noProxy }}
   {{- end -}}
   {{- if .Values.nodeAnalyzer.hostScanner.vulnerabilityDBVersion }}
   vuln_db_version: {{ .Values.nodeAnalyzer.hostScanner.vulnerabilityDBVersion | quote }}
   {{- end }}
+  {{- if .Values.nodeAnalyzer.hostScanner.scanContainers.enabled }}
+  {{- if .Values.nodeAnalyzer.hostScanner.scanContainers.dockerSocketPath }}
+  docker_socket_path: {{ .Values.nodeAnalyzer.hostScanner.scanContainers.dockerSocketPath | quote}}
+  {{- end }}
+  {{- if .Values.nodeAnalyzer.hostScanner.scanContainers.podmanSocketPath }}
+  podman_socket_path: {{ .Values.nodeAnalyzer.hostScanner.scanContainers.podmanSocketPath | quote}}
+  {{- end }}
+  {{- end}}
 {{- end }}

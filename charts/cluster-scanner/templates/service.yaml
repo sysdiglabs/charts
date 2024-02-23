@@ -12,4 +12,8 @@ spec:
       targetPort: 4222
       protocol: TCP
       name: nats
+    - port: 9999
+      targetPort: 9999
+      protocol: TCP
+      name: grpc
   # NOTE: selector is intentionally left empty, the RSI component will implement a controller to handle the Endpoints resource associated with this service

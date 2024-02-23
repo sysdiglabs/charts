@@ -3,18 +3,18 @@ run-name: github actions is updating sysdig-deploy versions based on dependencie
 on:
   push:
     branches:
-      - master
+      - main
 jobs:
   update-sysdig-deploy-version:
     runs-on: ubuntu-latest
     steps:
       - name: Git checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - name: Check if dependent charts were modified or not
-        uses: tj-actions/changed-files@v35
+        uses: tj-actions/changed-files@v42
         id: dependent_files
         with:
           files: |
@@ -28,7 +28,7 @@ jobs:
 
       - name: Install YQ
         if: steps.dependent_files.outputs.any_changed == 'true'
-        uses: dcarbone/install-yq-action@v1.1.0
+        uses: dcarbone/install-yq-action@v1.1.1
 
       - name: run the script
         if: steps.dependent_files.outputs.any_changed == 'true'
@@ -42,10 +42,10 @@ jobs:
 
       - name: Create Pull Request
         if: steps.dependent_files.outputs.any_changed == 'true'
-        uses: peter-evans/create-pull-request@v5.0.1
+        uses: peter-evans/create-pull-request@v6.0.0
         with:
           title: "chore(sysdig-deploy): Automatic version bump due to updated dependencies"
-          base: master
+          base: main
           delete-branch: true
           labels: automated PR
           token: ${{ secrets.TOOLS_JENKINS_ADMIN_ACCESS_GITHUB_TOKEN }}

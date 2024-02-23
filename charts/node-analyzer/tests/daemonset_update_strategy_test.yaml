@@ -1,6 +1,18 @@
 suite: Test Daemonset Update Strategy
 templates:
   - templates/daemonset-node-analyzer.yaml
+  # For checksums
+  - clusterrole-node-analyzer.yaml
+  - clusterrolebinding-node-analyzer.yaml
+  - configmap-benchmark-runner.yaml
+  - configmap-host-analyzer.yaml
+  - configmap-host-scanner.yaml
+  - configmap-image-analyzer.yaml
+  - configmap-kspm-analyzer.yaml
+  - secrets.yaml
+  - serviceaccount-node-analyzer.yaml
+values:
+  - ./default_required_values.yaml
 tests:
   - it: set default updateStrategy
     asserts:
@@ -48,3 +60,5 @@ tests:
               maxSurge: 1
               maxUnavailable: 2
             type: RollingUpdate
+    templates:
+      - templates/daemonset-node-analyzer.yaml

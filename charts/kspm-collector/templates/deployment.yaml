@@ -16,6 +16,10 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: {{ include "kspmCollector.name" . }}
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
 {{ include "kspmCollector.labels" . | indent 8 }}
     spec:
       serviceAccountName: {{ template "kspmCollector.serviceAccountName" .}}

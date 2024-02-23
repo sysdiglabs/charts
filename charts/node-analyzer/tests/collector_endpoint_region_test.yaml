@@ -70,6 +70,18 @@ tests:
           path: data.collector_endpoint
           value: https://app.au1.sysdig.com
 
+  - it: Checking region 'me2'
+    set:
+      global:
+        sysdig:
+          region: me2
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - equal:
+          path: data.collector_endpoint
+          value: https://app.me2.sysdig.com
+
   - it: Checking region 'au-syd-monitor'
     set:
       global:

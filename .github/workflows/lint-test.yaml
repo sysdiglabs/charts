@@ -11,7 +11,7 @@ jobs:
     if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -20,11 +20,11 @@ jobs:
         with:
           version: v3.10.3
 
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.10"
 
-      - uses: actions/setup-go@v3
+      - uses: actions/setup-go@v5
         with:
           go-version: "^1.18"
           check-latest: true
@@ -38,7 +38,7 @@ jobs:
           git clean -df .
 
       - name: Set up chart-testing
-        uses: helm/chart-testing-action@v2.4.0
+        uses: helm/chart-testing-action@v2.6.1
 
       - name: Expand templates for CI
         run: |
@@ -56,24 +56,25 @@ jobs:
           SYSDIG_AWS_QA_REG_MANAGEMENT_ROLE_ARN: ${{secrets.SYSDIG_AWS_QA_REG_MANAGEMENT_ROLE_ARN}}
           SYSDIG_AWS_QA_TARGET_ACCOUNT_ID: ${{secrets.SYSDIG_AWS_QA_TARGET_ACCOUNT_ID}}   # cnt QA account
           SHOW_USAGE: false
+
       - name: Run chart-testing (lint)
-        run: ct lint
+        run: ct lint --target-branch=main
 
       - name: Run chart-testing (list-changed)
         id: list-changed
         run: |
-          changed=$(ct list-changed)
+          changed=$(ct list-changed --target-branch=main)
           if [[ -n "$changed" ]]; then
             echo "::set-output name=changed::true"
           fi
 
       - name: Create testing cluster
-        uses: jupyterhub/action-k3s-helm@v3
+        uses: jupyterhub/action-k3s-helm@v4
         with:
           k3s-version: v1.23.9+k3s1
 
       - name: Run chart-testing (install)
-        run: ct install --upgrade --excluded-charts common,sysdig-stackdriver-bridge,sysdig-mcm-navmenu
+        run: ct install --upgrade --target-branch=main --excluded-charts common,sysdig-stackdriver-bridge,sysdig-mcm-navmenu
 
 
   lint-test-fork:
@@ -85,7 +86,7 @@ jobs:
       contains(github.event.client_payload.pull_request.head.sha, github.event.client_payload.slash_command.args.named.sha)
     steps:
       - name: Fork based /approve-test-run checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: "refs/pull/${{ github.event.client_payload.pull_request.number }}/merge"
           fetch-depth: 0
@@ -95,11 +96,11 @@ jobs:
         with:
           version: v3.10.3
 
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.10"
 
-      - uses: actions/setup-go@v3
+      - uses: actions/setup-go@v5
         with:
           go-version: "^1.18"
           check-latest: true
@@ -113,7 +114,7 @@ jobs:
           git clean -df .
 
       - name: Set up chart-testing
-        uses: helm/chart-testing-action@v2.4.0
+        uses: helm/chart-testing-action@v2.6.1
 
       - name: Expand templates for CI
         run: |
@@ -124,25 +125,25 @@ jobs:
           SECURE_AGENT_TOKEN: ${{ secrets.KUBELAB_AGENT_KEY }}
 
       - name: Run chart-testing (lint)
-        run: ct lint
+        run: ct lint --target-branch=main
 
       - name: Run chart-testing (list-changed)
         id: list-changed
         run: |
-          changed=$(ct list-changed)
+          changed=$(ct list-changed --target-branch=main)
           if [[ -n "$changed" ]]; then
             echo "::set-output name=changed::true"
           fi
 
       - name: Create testing cluster
-        uses: jupyterhub/action-k3s-helm@v3
+        uses: jupyterhub/action-k3s-helm@v4
         with:
           k3s-version: v1.23.9+k3s1
 
       - name: Run chart-testing (install)
-        run: ct install --upgrade --excluded-charts common,sysdig-stackdriver-bridge,sysdig-mcm-navmenu
+        run: ct install --upgrade --target-branch=main --excluded-charts common,sysdig-stackdriver-bridge,sysdig-mcm-navmenu
 
-      - uses: actions/github-script@v6
+      - uses: actions/github-script@v7
         id: update-check-run
         if: ${{ always() }}
         env:

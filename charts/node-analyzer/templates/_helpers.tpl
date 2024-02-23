@@ -114,6 +114,59 @@ Return the proper image name for the CSPM Analyzer
 {{- end -}}
 
 {{/*
+ Helper to define skip of SSL Certificate for Runtime Scanner and Eve Connector
+*/}}
+{{- define "runtimeScanner.sslVerifyCertificate" -}}
+{{- $sslVerifyCertificate := coalesce (.Values.nodeAnalyzer.runtimeScanner.sslVerifyCertificate | quote) (.Values.nodeAnalyzer.sslVerifyCertificate | quote) (.Values.global.sslVerifyCertificate | quote) ("true" | quote) -}}
+{{ $sslVerifyCertificate }}
+{{- end -}}
+
+{{/*
+ Helper to define skip of SSL Certificate for Host Scanner
+*/}}
+{{- define "hostScanner.sslVerifyCertificate" -}}
+{{- $sslVerifyCertificate := coalesce (.Values.nodeAnalyzer.hostScanner.sslVerifyCertificate | quote) (.Values.nodeAnalyzer.sslVerifyCertificate | quote) (.Values.global.sslVerifyCertificate | quote) ("true" | quote) -}}
+{{ $sslVerifyCertificate }}
+{{- end -}}
+
+{{/*
+ Helper to define skip of SSL Certificate for Host Analyzer
+*/}}
+{{- define "hostAnalyzer.sslVerifyCertificate" -}}
+{{- $sslVerifyCertificate := coalesce (.Values.nodeAnalyzer.hostAnalyzer.sslVerifyCertificate | quote) (.Values.nodeAnalyzer.sslVerifyCertificate | quote) (.Values.global.sslVerifyCertificate | quote) ("true" | quote) -}}
+{{ $sslVerifyCertificate }}
+{{- end -}}
+
+{{/*
+ Helper to define skip of SSL Certificate for Image Analyzer
+*/}}
+{{- define "imageAnalyzer.sslVerifyCertificate" -}}
+{{- $sslVerifyCertificate := coalesce (.Values.nodeAnalyzer.imageAnalyzer.sslVerifyCertificate | quote) (.Values.nodeAnalyzer.sslVerifyCertificate | quote) (.Values.global.sslVerifyCertificate | quote) ("true" | quote) -}}
+{{ $sslVerifyCertificate }}
+{{- end -}}
+
+{{/*
+ Helper to define skip of SSL Certificate for Benchmark Runner
+*/}}
+{{- define "benchmarkRunner.sslVerifyCertificate" -}}
+{{- $sslVerifyCertificate := coalesce (.Values.nodeAnalyzer.benchmarkRunner.sslVerifyCertificate | quote) (.Values.nodeAnalyzer.sslVerifyCertificate | quote) (.Values.global.sslVerifyCertificate | quote) ("true" | quote) -}}
+{{ $sslVerifyCertificate }}
+{{- end -}}
+
+{{/*
+ Helper to define if to enable nats_insecure
+*/}}
+{{- define "kspmAnalyzer.natsInsecure" -}}
+{{- if (.Values.nodeAnalyzer.kspmAnalyzer.sslVerifyCertificate | default .Values.nodeAnalyzer.sslVerifyCertificate | default .Values.global.sslVerifyCertificate) -}}
+    "false"
+{{- else if or (eq .Values.nodeAnalyzer.kspmAnalyzer.sslVerifyCertificate false) (eq .Values.nodeAnalyzer.sslVerifyCertificate false) (eq .Values.global.sslVerifyCertificate false) -}}
+    "true"
+{{- else -}}
+    "false"
+{{- end -}}
+{{- end -}}
+
+{{/*
 Node Analyzer labels
 */}}
 {{- define "nodeAnalyzer.labels" -}}

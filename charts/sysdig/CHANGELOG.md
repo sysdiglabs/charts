@@ -10,6 +10,30 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.16.25
+### New Features
+* **sysdig,hostAnalyzer** [a8e1124b](https://github.com/sysdiglabs/charts/commit/a8e1124bfb668e9f9d04095c26d6ada0235cda04): Update legacy engine HostAnalyzer to v0.1.19 components with security updates ([#1601](https://github.com/sysdiglabs/charts/issues/1601))
+# v1.16.24
+### Chores
+* **sysdig, node-analyzer** [4a1a9a1d](https://github.com/sysdiglabs/charts/commit/4a1a9a1d7feaeb4ee04b2c17e4b84d8440cf6901): bump sysdig/vuln-runtime-scanner to v1.6.6 ([#1526](https://github.com/sysdiglabs/charts/issues/1526))
+# v1.16.23
+### New Features
+* **sysdig** [048837fc](https://github.com/sysdiglabs/charts/commit/048837fcb04b48c5dc584d13f5a005fdb75fd230): Update legacy engine NIA component with security updates ([#1489](https://github.com/sysdiglabs/charts/issues/1489))
+# v1.16.22
+### Chores
+* **sysdig** [d9d16526](https://github.com/sysdiglabs/charts/commit/d9d165266542cc04e9aaccfdbf5242bd8562b49f): Update HostAnalyzer to 0.1.18 components with security updates ([#1486](https://github.com/sysdiglabs/charts/issues/1486))
+# v1.16.21
+### Chores
+* **sysdig, node-analyzer** [6c7c27bf](https://github.com/sysdiglabs/charts/commit/6c7c27bf845b30af0eb5a4cb8f5fe330923d564f): bump sysdig/vuln-runtime-scanner to v1.6.4 [SSPROD-3285] ([#1477](https://github.com/sysdiglabs/charts/issues/1477))
+# v1.16.20
+### Bug Fixes
+* **agent,kspm-collector,node-analyzer,sysdig** [f378d192](https://github.com/sysdiglabs/charts/commit/f378d1922d0f21f5936c6ed872e6538536ccf1f2): whitespace errors ([#1436](https://github.com/sysdiglabs/charts/issues/1436))
+# v1.16.19
+### New Features
+* [629c5f06](https://github.com/sysdiglabs/charts/commit/629c5f06ccab168b9460ec1fa6564aed1a54c015): release agent 12.17.1 ([#1430](https://github.com/sysdiglabs/charts/issues/1430))
+# v1.16.18
+### Chores
+* **sysdig, node-analyzer** [2c6d3d0b](https://github.com/sysdiglabs/charts/commit/2c6d3d0bd9d1750d6f34c0bd7b3e2689482515b6): bump sysdig/vuln-runtime-scanner to v1.6.3 ([#1428](https://github.com/sysdiglabs/charts/issues/1428))
 # v1.16.17
 ### New Features
 * [eda0e7cd](https://github.com/sysdiglabs/charts/commit/eda0e7cdf12c0b40f0bb77c0a16e0fd5f0173256): release agent 12.17.0 ([#1410](https://github.com/sysdiglabs/charts/issues/1410))

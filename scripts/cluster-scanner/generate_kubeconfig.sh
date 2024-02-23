@@ -7,7 +7,7 @@ SERVICE_ACCOUNT_NAME=${SERVICE_ACCOUNT_NAME:-sysdig-cluster-scanner}
 CONTEXT=$(kubectl config current-context)
 NAMESPACE=${NAMESPACE:-sysdig-cluster-scanner}
 
-NEW_CONTEXT=${CLUSTER_NAME_OVERRIDE:-$(kubectl config view --minify -o jsonpath='{.clusters[].name}')}
+NEW_CONTEXT=${CLUSTER_NAME_OVERRIDE:-$(kubectl config view --minify -o jsonpath='{.clusters[].name}' | tr :/ -)}
 KUBECONFIG_FILE=${KUBECONFIG_FILE:-"${NEW_CONTEXT}.kubeconfig"}
 
 SECRET_NAME=sysdig-cluster-scanner

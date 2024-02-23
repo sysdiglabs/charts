@@ -1,0 +1,197 @@
+suite: Host Analyzer Skip certificate tests
+templates:
+  - templates/configmap-host-analyzer.yaml
+tests:
+  - it: "Global SSL certificate validation enabled (default value)"
+    set:
+      clusterName: "test"
+      nodeAnalyzer:
+        deploy: true
+    templates:
+      - templates/configmap-host-analyzer.yaml
+    asserts:
+      - equal:
+          path: data.ssl_verify_certificate
+          value: "true"
+
+  - it: "Global SSL certificate validation enabled (sslVerifyCertificate: true explicitly set)"
+    set:
+      clusterName: "test"
+      global:
+        sslVerifyCertificate: true
+      nodeAnalyzer:
+        deploy: true
+    templates:
+      - templates/configmap-host-analyzer.yaml
+    asserts:
+      - equal:
+          path: data.ssl_verify_certificate
+          value: "true"
+
+  - it: "Global SSL certificate validation disabled"
+    set:
+      clusterName: "test"
+      global:
+        sslVerifyCertificate: false
+      nodeAnalyzer:
+        deploy: true
+    templates:
+      - templates/configmap-host-analyzer.yaml
+    asserts:
+      - equal:
+          path: data.ssl_verify_certificate
+          value: "false"
+
+  - it: "SSL certificate validation enabled (sslVerifyCertificate: true explicitly set) [Node Analyzer POD]"
+    set:
+      clusterName: "test"
+      nodeAnalyzer:
+        deploy: true
+        sslVerifyCertificate: true
+    templates:
+      - templates/configmap-host-analyzer.yaml
+    asserts:
+      - equal:
+          path: data.ssl_verify_certificate
+          value: "true"
+
+  - it: "SSL certificate validation disabled [Node Analyzer POD]"
+    set:
+      clusterName: "test"
+      nodeAnalyzer:
+        deploy: true
+        sslVerifyCertificate: false
+    templates:
+      - templates/configmap-host-analyzer.yaml
+    asserts:
+      - equal:
+          path: data.ssl_verify_certificate
+          value: "false"
+
+  - it: "SSL certificate validation enabled (sslVerifyCertificate: true explicitly set) [hostAnalyzer container]"
+    set:
+      clusterName: "test"
+      nodeAnalyzer:
+        deploy: true
+        hostAnalyzer:
+          sslVerifyCertificate: true
+    templates:
+      - templates/configmap-host-analyzer.yaml
+    asserts:
+      - equal:
+          path: data.ssl_verify_certificate
+          value: "true"
+
+  - it: "SSL certificate validation disabled [hostAnalyzer container]"
+    set:
+      clusterName: "test"
+      nodeAnalyzer:
+        deploy: true
+        hostAnalyzer:
+          sslVerifyCertificate: false
+    templates:
+      - templates/configmap-host-analyzer.yaml
+    asserts:
+      - equal:
+          path: data.ssl_verify_certificate
+          value: "false"
+
+  - it: "SSL certificate validation disabled [Global + Node Analyzer POD]"
+    set:
+      global:
+        sslVerifyCertificate: true
+      clusterName: "test"
+      nodeAnalyzer:
+        deploy: true
+        sslVerifyCertificate: false
+        hostAnalyzer:
+          deploy: true
+    templates:
+      - templates/configmap-host-analyzer.yaml
+    asserts:
+      - equal:
+          path: data.ssl_verify_certificate
+          value: "false"
+
+  - it: "SSL certificate validation enabled [Global + Node Analyzer POD]"
+    set:
+      global:
+        sslVerifyCertificate: false
+      clusterName: "test"
+      nodeAnalyzer:
+        deploy: true
+        sslVerifyCertificate: true
+        hostAnalyzer:
+          deploy: true
+    templates:
+      - templates/configmap-host-analyzer.yaml
+    asserts:
+      - equal:
+          path: data.ssl_verify_certificate
+          value: "true"
+
+  - it: "SSL certificate validation disabled [Node Analyzer POD + Container]"
+    set:
+      clusterName: "test"
+      nodeAnalyzer:
+        deploy: true
+        sslVerifyCertificate: true
+        hostAnalyzer:
+          deploy: true
+          sslVerifyCertificate: false
+    templates:
+      - templates/configmap-host-analyzer.yaml
+    asserts:
+      - equal:
+          path: data.ssl_verify_certificate
+          value: "false"
+
+  - it: "SSL certificate validation enabled [Node Analyzer POD + Container]"
+    set:
+      clusterName: "test"
+      nodeAnalyzer:
+        deploy: true
+        sslVerifyCertificate: false
+        hostAnalyzer:
+          deploy: true
+          sslVerifyCertificate: true
+    templates:
+      - templates/configmap-host-analyzer.yaml
+    asserts:
+      - equal:
+          path: data.ssl_verify_certificate
+          value: "true"
+
+  - it: "SSL certificate validation disabled [Global + Node Analyzer POD + Container]"
+    set:
+      global:
+        sslVerifyCertificate: true
+      clusterName: "test"
+      nodeAnalyzer:
+        deploy: true
+        sslVerifyCertificate: true
+        hostAnalyzer:
+          sslVerifyCertificate: false
+    templates:
+      - templates/configmap-host-analyzer.yaml
+    asserts:
+      - equal:
+          path: data.ssl_verify_certificate
+          value: "false"
+
+  - it: "SSL certificate validation enabled [Global + Node Analyzer POD + Container]"
+    set:
+      global:
+        sslVerifyCertificate: false
+      clusterName: "test"
+      nodeAnalyzer:
+        deploy: true
+        sslVerifyCertificate: false
+        hostAnalyzer:
+          sslVerifyCertificate: true
+    templates:
+      - templates/configmap-host-analyzer.yaml
+    asserts:
+      - equal:
+          path: data.ssl_verify_certificate
+          value: "true"

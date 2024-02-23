@@ -1,0 +1,640 @@
+suite: Node Analyzer Proxy tests
+templates:
+  - templates/configmap-host-analyzer.yaml
+  - templates/configmap-host-scanner.yaml
+  - templates/configmap-image-analyzer.yaml
+  - templates/configmap-kspm-analyzer.yaml
+  - templates/configmap-benchmark-runner.yaml
+  - templates/runtimeScanner/runtime-scanner-configmap.yaml
+tests:
+  - it: "No proxy configured"
+    set:
+      global:
+        kspm:
+          deploy: true
+      clusterName: "test"
+      nodeAnalyzer:
+        hostAnalyzer:
+          deploy: true
+        runtimeScanner:
+          deploy: true
+        hostScanner:
+          deploy: true
+        benchmarkRunner:
+          deploy: true
+    templates:
+      - templates/configmap-benchmark-runner.yaml
+      - templates/configmap-host-analyzer.yaml
+      - templates/configmap-host-scanner.yaml
+      - templates/configmap-image-analyzer.yaml
+      - templates/configmap-kspm-analyzer.yaml
+      - templates/runtimeScanner/runtime-scanner-configmap.yaml
+    asserts:
+      - notExists:
+          path: data.http_proxy
+      - notExists:
+          path: data.https_proxy
+      - notExists:
+          path: data.no_proxy
+
+  - it: "Global proxy settings are set"
+    set:
+      clusterName: "test"
+      global:
+        proxy:
+          httpProxy: "http://squid.domain.local:3128"
+          httpsProxy: "http://squid.domain.local:3128"
+          noProxy: "100.64.0.0/10"
+        kspm:
+          deploy: true
+      nodeAnalyzer:
+        hostAnalyzer:
+          deploy: true
+        runtimeScanner:
+          deploy: true
+        hostScanner:
+          deploy: true
+        benchmarkRunner:
+          deploy: true
+    templates:
+      - templates/configmap-benchmark-runner.yaml
+      - templates/configmap-host-analyzer.yaml
+      - templates/configmap-host-scanner.yaml
+      - templates/configmap-image-analyzer.yaml
+      - templates/configmap-kspm-analyzer.yaml
+      - templates/runtimeScanner/runtime-scanner-configmap.yaml
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - equal:
+          path: data.http_proxy
+          value: "http://squid.domain.local:3128"
+      - equal:
+          path: data.https_proxy
+          value: "http://squid.domain.local:3128"
+      - equal:
+          path: data.no_proxy
+          value: "100.64.0.0/10"
+
+  - it: "Proxy settings are set"
+    set:
+      clusterName: "test"
+      global:
+        kspm:
+          deploy: true
+      nodeAnalyzer:
+        httpProxy: "http://squid.domain.local:3128"
+        httpsProxy: "http://squid.domain.local:3128"
+        noProxy: "100.64.0.0/10"
+        hostAnalyzer:
+          deploy: true
+        imageAnalyzer:
+          deploy: true
+        runtimeScanner:
+          deploy: true
+        hostScanner:
+          deploy: true
+        benchmarkRunner:
+          deploy: true
+    templates:
+      - templates/configmap-benchmark-runner.yaml
+      - templates/configmap-host-analyzer.yaml
+      - templates/configmap-host-scanner.yaml
+      - templates/configmap-image-analyzer.yaml
+      - templates/configmap-kspm-analyzer.yaml
+      - templates/runtimeScanner/runtime-scanner-configmap.yaml
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - equal:
+          path: data.http_proxy
+          value: "http://squid.domain.local:3128"
+      - equal:
+          path: data.https_proxy
+          value: "http://squid.domain.local:3128"
+      - equal:
+          path: data.no_proxy
+          value: "100.64.0.0/10"
+
+  - it: "Proxy settings are set ONLY for host analyzer"
+    set:
+      global:
+        kspm:
+          deploy: true
+      clusterName: "test"
+      nodeAnalyzer:
+        hostAnalyzer:
+          deploy: true
+          httpProxy: "http://squid.domain.local:3128"
+          httpsProxy: "http://squid.domain.local:3128"
+          noProxy: "100.64.0.0/10"
+        imageAnalyzer:
+          deploy: true
+        runtimeScanner:
+          deploy: true
+        hostScanner:
+          deploy: true
+        benchmarkRunner:
+          deploy: true
+    asserts:
+      - isKind:
+          of: ConfigMap
+        template: templates/configmap-host-analyzer.yaml
+      - equal:
+          path: data.http_proxy
+          value: "http://squid.domain.local:3128"
+        template: templates/configmap-host-analyzer.yaml
+      - equal:
+          path: data.https_proxy
+          value: "http://squid.domain.local:3128"
+        template: templates/configmap-host-analyzer.yaml
+      - equal:
+          path: data.no_proxy
+          value: "100.64.0.0/10"
+        template: templates/configmap-host-analyzer.yaml
+
+      - notExists:
+          path: data.http_proxy
+        template: templates/configmap-host-scanner.yaml
+      - notExists:
+          path: data.https_proxy
+        template: templates/configmap-host-scanner.yaml
+      - notExists:
+          path: data.no_proxy
+        template: templates/configmap-host-scanner.yaml
+
+      - notExists:
+          path: data.http_proxy
+        template: templates/configmap-image-analyzer.yaml
+      - notExists:
+          path: data.https_proxy
+        template: templates/configmap-image-analyzer.yaml
+      - notExists:
+          path: data.no_proxy
+        template: templates/configmap-image-analyzer.yaml
+
+      - notExists:
+          path: data.http_proxy
+        template: templates/configmap-kspm-analyzer.yaml
+      - notExists:
+          path: data.https_proxy
+        template: templates/configmap-kspm-analyzer.yaml
+      - notExists:
+          path: data.no_proxy
+        template: templates/configmap-kspm-analyzer.yaml
+
+      - notExists:
+          path: data.http_proxy
+        template: templates/configmap-benchmark-runner.yaml
+      - notExists:
+          path: data.https_proxy
+        template: templates/configmap-benchmark-runner.yaml
+      - notExists:
+          path: data.no_proxy
+        template: templates/configmap-benchmark-runner.yaml
+
+      - notExists:
+          path: data.http_proxy
+        template: templates/runtimeScanner/runtime-scanner-configmap.yaml
+      - notExists:
+          path: data.https_proxy
+        template: templates/runtimeScanner/runtime-scanner-configmap.yaml
+      - notExists:
+          path: data.no_proxy
+        template: templates/runtimeScanner/runtime-scanner-configmap.yaml
+
+  - it: "Proxy settings are set ONLY for image analyzer"
+    set:
+      global:
+        kspm:
+          deploy: true
+      clusterName: "test"
+      nodeAnalyzer:
+        hostAnalyzer:
+          deploy: true
+        imageAnalyzer:
+          deploy: true
+          httpProxy: "http://squid.domain.local:3128"
+          httpsProxy: "http://squid.domain.local:3128"
+          noProxy: "100.64.0.0/10"
+        runtimeScanner:
+          deploy: true
+        hostScanner:
+          deploy: true
+        benchmarkRunner:
+          deploy: true
+    asserts:
+      - isKind:
+          of: ConfigMap
+        template: templates/configmap-image-analyzer.yaml
+      - equal:
+          path: data.http_proxy
+          value: "http://squid.domain.local:3128"
+        template: templates/configmap-image-analyzer.yaml
+      - equal:
+          path: data.https_proxy
+          value: "http://squid.domain.local:3128"
+        template: templates/configmap-image-analyzer.yaml
+      - equal:
+          path: data.no_proxy
+          value: "100.64.0.0/10"
+        template: templates/configmap-image-analyzer.yaml
+
+      - notExists:
+          path: data.http_proxy
+        template: templates/configmap-host-scanner.yaml
+      - notExists:
+          path: data.https_proxy
+        template: templates/configmap-host-scanner.yaml
+      - notExists:
+          path: data.no_proxy
+        template: templates/configmap-host-scanner.yaml
+
+      - notExists:
+          path: data.http_proxy
+        template: templates/configmap-host-analyzer.yaml
+      - notExists:
+          path: data.https_proxy
+        template: templates/configmap-host-analyzer.yaml
+      - notExists:
+          path: data.no_proxy
+        template: templates/configmap-host-analyzer.yaml
+
+      - notExists:
+          path: data.http_proxy
+        template: templates/configmap-kspm-analyzer.yaml
+      - notExists:
+          path: data.https_proxy
+        template: templates/configmap-kspm-analyzer.yaml
+      - notExists:
+          path: data.no_proxy
+        template: templates/configmap-kspm-analyzer.yaml
+
+      - notExists:
+          path: data.http_proxy
+        template: templates/configmap-benchmark-runner.yaml
+      - notExists:
+          path: data.https_proxy
+        template: templates/configmap-benchmark-runner.yaml
+      - notExists:
+          path: data.no_proxy
+        template: templates/configmap-benchmark-runner.yaml
+
+      - notExists:
+          path: data.http_proxy
+        template: templates/runtimeScanner/runtime-scanner-configmap.yaml
+      - notExists:
+          path: data.https_proxy
+        template: templates/runtimeScanner/runtime-scanner-configmap.yaml
+      - notExists:
+          path: data.no_proxy
+        template: templates/runtimeScanner/runtime-scanner-configmap.yaml
+
+  - it: "Proxy settings are set ONLY for kspm analyzer"
+    set:
+      global:
+        kspm:
+          deploy: true
+      clusterName: "test"
+      nodeAnalyzer:
+        hostAnalyzer:
+          deploy: true
+        imageAnalyzer:
+          deploy: true
+        runtimeScanner:
+          deploy: true
+        hostScanner:
+          deploy: true
+        benchmarkRunner:
+          deploy: true
+        kspmAnalyzer:
+          httpProxy: "http://squid.domain.local:3128"
+          httpsProxy: "http://squid.domain.local:3128"
+          noProxy: "100.64.0.0/10"
+    asserts:
+      - isKind:
+          of: ConfigMap
+        template: templates/configmap-kspm-analyzer.yaml
+      - equal:
+          path: data.http_proxy
+          value: "http://squid.domain.local:3128"
+        template: templates/configmap-kspm-analyzer.yaml
+      - equal:
+          path: data.https_proxy
+          value: "http://squid.domain.local:3128"
+        template: templates/configmap-kspm-analyzer.yaml
+      - equal:
+          path: data.no_proxy
+          value: "100.64.0.0/10"
+        template: templates/configmap-kspm-analyzer.yaml
+
+      - notExists:
+          path: data.http_proxy
+        template: templates/configmap-host-scanner.yaml
+      - notExists:
+          path: data.https_proxy
+        template: templates/configmap-host-scanner.yaml
+      - notExists:
+          path: data.no_proxy
+        template: templates/configmap-host-scanner.yaml
+
+      - notExists:
+          path: data.http_proxy
+        template: templates/configmap-host-analyzer.yaml
+      - notExists:
+          path: data.https_proxy
+        template: templates/configmap-host-analyzer.yaml
+      - notExists:
+          path: data.no_proxy
+        template: templates/configmap-host-analyzer.yaml
+
+      - notExists:
+          path: data.http_proxy
+        template: templates/configmap-image-analyzer.yaml
+      - notExists:
+          path: data.https_proxy
+        template: templates/configmap-image-analyzer.yaml
+      - notExists:
+          path: data.no_proxy
+        template: templates/configmap-image-analyzer.yaml
+
+      - notExists:
+          path: data.http_proxy
+        template: templates/configmap-benchmark-runner.yaml
+      - notExists:
+          path: data.https_proxy
+        template: templates/configmap-benchmark-runner.yaml
+      - notExists:
+          path: data.no_proxy
+        template: templates/configmap-benchmark-runner.yaml
+
+      - notExists:
+          path: data.http_proxy
+        template: templates/runtimeScanner/runtime-scanner-configmap.yaml
+      - notExists:
+          path: data.https_proxy
+        template: templates/runtimeScanner/runtime-scanner-configmap.yaml
+      - notExists:
+          path: data.no_proxy
+        template: templates/runtimeScanner/runtime-scanner-configmap.yaml
+
+  - it: "Proxy settings are set ONLY for benchmark runner"
+    set:
+      global:
+        kspm:
+          deploy: true
+      clusterName: "test"
+      nodeAnalyzer:
+        hostAnalyzer:
+          deploy: true
+        imageAnalyzer:
+          deploy: true
+        runtimeScanner:
+          deploy: true
+        hostScanner:
+          deploy: true
+        benchmarkRunner:
+          deploy: true
+          httpProxy: "http://squid.domain.local:3128"
+          httpsProxy: "http://squid.domain.local:3128"
+          noProxy: "100.64.0.0/10"
+    asserts:
+      - isKind:
+          of: ConfigMap
+        template: templates/configmap-benchmark-runner.yaml
+      - equal:
+          path: data.http_proxy
+          value: "http://squid.domain.local:3128"
+        template: templates/configmap-benchmark-runner.yaml
+      - equal:
+          path: data.https_proxy
+          value: "http://squid.domain.local:3128"
+        template: templates/configmap-benchmark-runner.yaml
+      - equal:
+          path: data.no_proxy
+          value: "100.64.0.0/10"
+        template: templates/configmap-benchmark-runner.yaml
+
+      - notExists:
+          path: data.http_proxy
+        template: templates/configmap-host-scanner.yaml
+      - notExists:
+          path: data.https_proxy
+        template: templates/configmap-host-scanner.yaml
+      - notExists:
+          path: data.no_proxy
+        template: templates/configmap-host-scanner.yaml
+
+      - notExists:
+          path: data.http_proxy
+        template: templates/configmap-host-analyzer.yaml
+      - notExists:
+          path: data.https_proxy
+        template: templates/configmap-host-analyzer.yaml
+      - notExists:
+          path: data.no_proxy
+        template: templates/configmap-host-analyzer.yaml
+
+      - notExists:
+          path: data.http_proxy
+        template: templates/configmap-image-analyzer.yaml
+      - notExists:
+          path: data.https_proxy
+        template: templates/configmap-image-analyzer.yaml
+      - notExists:
+          path: data.no_proxy
+        template: templates/configmap-image-analyzer.yaml
+
+      - notExists:
+          path: data.http_proxy
+        template: templates/configmap-kspm-analyzer.yaml
+      - notExists:
+          path: data.https_proxy
+        template: templates/configmap-kspm-analyzer.yaml
+      - notExists:
+          path: data.no_proxy
+        template: templates/configmap-kspm-analyzer.yaml
+
+      - notExists:
+          path: data.http_proxy
+        template: templates/runtimeScanner/runtime-scanner-configmap.yaml
+      - notExists:
+          path: data.https_proxy
+        template: templates/runtimeScanner/runtime-scanner-configmap.yaml
+      - notExists:
+          path: data.no_proxy
+        template: templates/runtimeScanner/runtime-scanner-configmap.yaml
+
+  - it: "Proxy settings are set ONLY for host scanner"
+    set:
+      global:
+        kspm:
+          deploy: true
+      clusterName: "test"
+      nodeAnalyzer:
+        hostAnalyzer:
+          deploy: true
+        imageAnalyzer:
+          deploy: true
+        runtimeScanner:
+          deploy: true
+        hostScanner:
+          deploy: true
+          httpProxy: "http://squid.domain.local:3128"
+          httpsProxy: "http://squid.domain.local:3128"
+          noProxy: "100.64.0.0/10"
+        benchmarkRunner:
+          deploy: true
+    asserts:
+      - isKind:
+          of: ConfigMap
+        template: templates/configmap-host-scanner.yaml
+      - equal:
+          path: data.http_proxy
+          value: "http://squid.domain.local:3128"
+        template: templates/configmap-host-scanner.yaml
+      - equal:
+          path: data.https_proxy
+          value: "http://squid.domain.local:3128"
+        template: templates/configmap-host-scanner.yaml
+      - equal:
+          path: data.no_proxy
+          value: "100.64.0.0/10"
+        template: templates/configmap-host-scanner.yaml
+
+      - notExists:
+          path: data.http_proxy
+        template: templates/configmap-benchmark-runner.yaml
+      - notExists:
+          path: data.https_proxy
+        template: templates/configmap-benchmark-runner.yaml
+      - notExists:
+          path: data.no_proxy
+        template: templates/configmap-benchmark-runner.yaml
+
+      - notExists:
+          path: data.http_proxy
+        template: templates/configmap-host-analyzer.yaml
+      - notExists:
+          path: data.https_proxy
+        template: templates/configmap-host-analyzer.yaml
+      - notExists:
+          path: data.no_proxy
+        template: templates/configmap-host-analyzer.yaml
+
+      - notExists:
+          path: data.http_proxy
+        template: templates/configmap-image-analyzer.yaml
+      - notExists:
+          path: data.https_proxy
+        template: templates/configmap-image-analyzer.yaml
+      - notExists:
+          path: data.no_proxy
+        template: templates/configmap-image-analyzer.yaml
+
+      - notExists:
+          path: data.http_proxy
+        template: templates/configmap-kspm-analyzer.yaml
+      - notExists:
+          path: data.https_proxy
+        template: templates/configmap-kspm-analyzer.yaml
+      - notExists:
+          path: data.no_proxy
+        template: templates/configmap-kspm-analyzer.yaml
+
+      - notExists:
+          path: data.http_proxy
+        template: templates/runtimeScanner/runtime-scanner-configmap.yaml
+      - notExists:
+          path: data.https_proxy
+        template: templates/runtimeScanner/runtime-scanner-configmap.yaml
+      - notExists:
+          path: data.no_proxy
+        template: templates/runtimeScanner/runtime-scanner-configmap.yaml
+
+  - it: "Proxy settings are set ONLY for runtime scanner"
+    set:
+      global:
+        kspm:
+          deploy: true
+      clusterName: "test"
+      nodeAnalyzer:
+        hostAnalyzer:
+          deploy: true
+        imageAnalyzer:
+          deploy: true
+        runtimeScanner:
+          deploy: true
+          httpProxy: "http://squid.domain.local:3128"
+          httpsProxy: "http://squid.domain.local:3128"
+          noProxy: "100.64.0.0/10"
+        hostScanner:
+          deploy: true
+        benchmarkRunner:
+          deploy: true
+    asserts:
+      - isKind:
+          of: ConfigMap
+        template: templates/runtimeScanner/runtime-scanner-configmap.yaml
+      - equal:
+          path: data.http_proxy
+          value: "http://squid.domain.local:3128"
+        template: templates/runtimeScanner/runtime-scanner-configmap.yaml
+      - equal:
+          path: data.https_proxy
+          value: "http://squid.domain.local:3128"
+        template: templates/runtimeScanner/runtime-scanner-configmap.yaml
+      - equal:
+          path: data.no_proxy
+          value: "100.64.0.0/10"
+        template: templates/runtimeScanner/runtime-scanner-configmap.yaml
+
+      - notExists:
+          path: data.http_proxy
+        template: templates/configmap-benchmark-runner.yaml
+      - notExists:
+          path: data.https_proxy
+        template: templates/configmap-benchmark-runner.yaml
+      - notExists:
+          path: data.no_proxy
+        template: templates/configmap-benchmark-runner.yaml
+
+      - notExists:
+          path: data.http_proxy
+        template: templates/configmap-host-analyzer.yaml
+      - notExists:
+          path: data.https_proxy
+        template: templates/configmap-host-analyzer.yaml
+      - notExists:
+          path: data.no_proxy
+        template: templates/configmap-host-analyzer.yaml
+
+      - notExists:
+          path: data.http_proxy
+        template: templates/configmap-image-analyzer.yaml
+      - notExists:
+          path: data.https_proxy
+        template: templates/configmap-image-analyzer.yaml
+      - notExists:
+          path: data.no_proxy
+        template: templates/configmap-image-analyzer.yaml
+
+      - notExists:
+          path: data.http_proxy
+        template: templates/configmap-kspm-analyzer.yaml
+      - notExists:
+          path: data.https_proxy
+        template: templates/configmap-kspm-analyzer.yaml
+      - notExists:
+          path: data.no_proxy
+        template: templates/configmap-kspm-analyzer.yaml
+
+      - notExists:
+          path: data.http_proxy
+        template: templates/configmap-host-scanner.yaml
+      - notExists:
+          path: data.https_proxy
+        template: templates/configmap-host-scanner.yaml
+      - notExists:
+          path: data.no_proxy
+        template: templates/configmap-host-scanner.yaml

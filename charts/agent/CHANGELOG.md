@@ -10,6 +10,75 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.20.2
+### Chores
+* **agent,sysdig-deploy** [59342938](https://github.com/sysdiglabs/charts/commit/59342938d7a1b9f22d93c5f2ebdf1dc164e50ebf): set promscrape port to 9091 by default when gke autopilot is enabled ([#1618](https://github.com/sysdiglabs/charts/issues/1618))
+# v1.20.1
+### Bug Fixes
+* **agent** [1ef8c266](https://github.com/sysdiglabs/charts/commit/1ef8c266d888f460e0ed8b50f00d5d7886a6c155): Properly set ephemeral-storage on kmod container when slim+autopilot are enabled ([#1592](https://github.com/sysdiglabs/charts/issues/1592))
+# v1.20.0
+### New Features
+* **common** [0061b52d](https://github.com/sysdiglabs/charts/commit/0061b52d51f43e1e4d5e2bdf1145be28287d5ce6): add me2 region support ([#1591](https://github.com/sysdiglabs/charts/issues/1591))
+# v1.19.5
+### Bug Fixes
+* **agent,kspm-collector,node-analyzer,rapid-response,sysdig-deploy** [6b1f5818](https://github.com/sysdiglabs/charts/commit/6b1f5818836af26e5d83621049c96ae07d1fe12c): Set test rollout namespace based on required service accounts ([#1593](https://github.com/sysdiglabs/charts/issues/1593))
+# v1.19.4
+### New Features
+* [b4f155be](https://github.com/sysdiglabs/charts/commit/b4f155bee9f48af7df9a9f147cac8d3d349453e7): release agent 12.20.0 ([#1584](https://github.com/sysdiglabs/charts/issues/1584))
+# v1.19.3
+### Bug Fixes
+* **agent** [57626624](https://github.com/sysdiglabs/charts/commit/5762662438ca6c93aa38eed3facf87a7bccd3c52): properly render security block content ([#1577](https://github.com/sysdiglabs/charts/issues/1577))
+# v1.19.2
+### Bug Fixes
+* **agent** [6f49dd5d](https://github.com/sysdiglabs/charts/commit/6f49dd5d86fff854440b811edc2ddecc7e28600a): fix logic to disable network topology and memdump only for secure light ([#1564](https://github.com/sysdiglabs/charts/issues/1564))
+# v1.19.1
+### New Features
+* **agent** [7cf86a62](https://github.com/sysdiglabs/charts/commit/7cf86a6291502fe40624c0eaeba82d4894312093): enable falcobaseline for agent version 12.9.x and above ([#1561](https://github.com/sysdiglabs/charts/issues/1561))
+# v1.19.0
+### New Features
+* [843751e0](https://github.com/sysdiglabs/charts/commit/843751e0a10b86053922b00da98255445b48fd90): release agent 12.19.0 ([#1548](https://github.com/sysdiglabs/charts/issues/1548))
+# v1.18.4
+### New Features
+* **agent** [3be55461](https://github.com/sysdiglabs/charts/commit/3be55461cc3b28f710c1000583018c9584616681): add tolerations for rke2 master nodes ([#1539](https://github.com/sysdiglabs/charts/issues/1539))
+# v1.18.3
+### Bug Fixes
+* **agent,sysdig-deploy** [d8e38523](https://github.com/sysdiglabs/charts/commit/d8e38523b3e94f0a6311bb5be8f5135e56d47f1c): /var/data volume mount ([#1532](https://github.com/sysdiglabs/charts/issues/1532))
+# v1.18.2
+### New Features
+* **agent** [d86d3be1](https://github.com/sysdiglabs/charts/commit/d86d3be1eb2ee7da6b135f5262457c6f70f98264): update the readiness probes to use localhost ([#1530](https://github.com/sysdiglabs/charts/issues/1530))
+# v1.18.1
+### Bug Fixes
+* **agent** [74d90fca](https://github.com/sysdiglabs/charts/commit/74d90fcae6332638233fb3a959dd724b30d82989): ephemeral-storage on gke autopilot and slim enabled ([#1519](https://github.com/sysdiglabs/charts/issues/1519))
+# v1.18.0
+### New Features
+* **agent** [d17d3f80](https://github.com/sysdiglabs/charts/commit/d17d3f8030c6c2c50d659b6714439f49e68f1d85): mount agent http-proxy credentials as secret ([#1517](https://github.com/sysdiglabs/charts/issues/1517))
+# v1.17.3
+### Bug Fixes
+* **agent** [b8c3e335](https://github.com/sysdiglabs/charts/commit/b8c3e3351824f6b0db17b1c0dac790b95efb7b33): GKE Autopilot do not accept HTTP probe ([#1508](https://github.com/sysdiglabs/charts/issues/1508))
+# v1.17.2
+### Bug Fixes
+* **agent** [9c64b01a](https://github.com/sysdiglabs/charts/commit/9c64b01a687e59b6d5950e43f79b560bead87129): allows to specify non semver tags [SMAGENT-6093]  ([#1504](https://github.com/sysdiglabs/charts/issues/1504))
+# v1.17.1
+### New Features
+* **agent** [5ec02705](https://github.com/sysdiglabs/charts/commit/5ec027053dd349769173ca7aa9db1dd395df7883): add support for new agent readiness probe ([#1437](https://github.com/sysdiglabs/charts/issues/1437))
+# v1.17.0
+### New Features
+* **agent** [445f3c03](https://github.com/sysdiglabs/charts/commit/445f3c03e4236fdffbaba54b516da2993c519d2e): Add Local Forwarder support for Agent ([#1458](https://github.com/sysdiglabs/charts/issues/1458))
+# v1.16.0
+### New Features
+* [2b91ee58](https://github.com/sysdiglabs/charts/commit/2b91ee5813a416c7e4fe20fa3639645904deba47): release agent 12.18.0 ([#1493](https://github.com/sysdiglabs/charts/issues/1493))
+# v1.15.2
+### Bug Fixes
+* **agent,kspm-collector,node-analyzer,sysdig** [f378d192](https://github.com/sysdiglabs/charts/commit/f378d1922d0f21f5936c6ed872e6538536ccf1f2): whitespace errors ([#1436](https://github.com/sysdiglabs/charts/issues/1436))
+# v1.15.1
+### Chores
+* **sysdig-deploy** [f3fe1283](https://github.com/sysdiglabs/charts/commit/f3fe12830eac8fff05c556ef970313615c7fafb5): Automatic version bump due to updated dependencies ([#1435](https://github.com/sysdiglabs/charts/issues/1435))
+# v1.14.2
+### New Features
+* [629c5f06](https://github.com/sysdiglabs/charts/commit/629c5f06ccab168b9460ec1fa6564aed1a54c015): release agent 12.17.1 ([#1430](https://github.com/sysdiglabs/charts/issues/1430))
+# v1.14.1
+### Bug Fixes
+* **agent** [e2a99859](https://github.com/sysdiglabs/charts/commit/e2a99859f5737d2023bac322b6e97ab85a0988a3): do not render universal ebpf env vars in gke autopilot ([#1426](https://github.com/sysdiglabs/charts/issues/1426))
 # v1.14.0
 # v1.13.15
 ### New Features

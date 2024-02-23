@@ -168,8 +168,6 @@ podMonitors:
 
 webhook:
   v2:
-    # Number of seconds for the request to time out
-    timeoutSeconds: 5
     nats:
       # Allow insecure TLS certificates in backend connection to NATS service
       insecure: false
@@ -190,7 +188,7 @@ webhook:
       # The KSPM Admission Controller image repository
       repository: sysdig/secure-admission-controller
       # The KSPM Admission Controller image tag
-      tag: 1.0.1
+      tag: 1.27.0
       # Specifies the image digest value.  If set, this value is used instead of the tag value
       digest:
       # The PullPolicy for KSPM Admission Controller image
@@ -363,7 +361,7 @@ scanner:
     # The PullPolicy for Scanner image.
     pullPolicy:
     # The Scanner image tag.
-    tag: 0.0.13
+    tag: 0.0.16
     # Specify the image digest value.  If set, this value is used instead of the tag value.
     digest:
 

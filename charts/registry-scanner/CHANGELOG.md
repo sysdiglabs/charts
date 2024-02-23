@@ -10,6 +10,63 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.1.32
+### Chores
+* **registry-scanner** [856f8dd0](https://github.com/sysdiglabs/charts/commit/856f8dd079896a2fa8ed685be4cb8aad1082734e): Update to v0.2.67 ([#1615](https://github.com/sysdiglabs/charts/issues/1615))
+# v1.1.31
+### Chores
+* **registry-scanner** [c07d5266](https://github.com/sysdiglabs/charts/commit/c07d5266f10360376835e1b27d4f9d0f5f4514bc): Update to v0.2.66 ([#1598](https://github.com/sysdiglabs/charts/issues/1598))
+# v1.1.30
+### Chores
+* **registry-scanner** [a74e5bff](https://github.com/sysdiglabs/charts/commit/a74e5bffebb977bfd9f85f6f765c0958227d97cc): Update to v0.2.65 ([#1590](https://github.com/sysdiglabs/charts/issues/1590))
+# v1.1.29
+### Chores
+* **registry-scanner** [888b4ced](https://github.com/sysdiglabs/charts/commit/888b4ced7993b73601a65ac5310a58475fd17d9f): Update to v0.2.64 ([#1574](https://github.com/sysdiglabs/charts/issues/1574))
+# v1.1.28
+### Chores
+* **registry-scanner** [23061172](https://github.com/sysdiglabs/charts/commit/2306117241e774eec27378af67da4e4882534fb3): Update to v0.2.63 ([#1571](https://github.com/sysdiglabs/charts/issues/1571))
+# v1.1.27
+### Chores
+* **registry-scanner** [2f36821c](https://github.com/sysdiglabs/charts/commit/2f36821c8d976a493bcae190bf893ca9d4fac534): Update to v0.2.62 ([#1554](https://github.com/sysdiglabs/charts/issues/1554))
+# v1.1.26
+### New Features
+* **registry-scanner** [023b8ee4](https://github.com/sysdiglabs/charts/commit/023b8ee4c84712d183a13d523427ab745d4a5c71): ovveride platform scanning logic ([#1496](https://github.com/sysdiglabs/charts/issues/1496))
+# v1.1.25
+### New Features
+* **sysdig-deploy** [49fe006f](https://github.com/sysdiglabs/charts/commit/49fe006fb0ff206c7b566a45bfa5f71713d5ad0a): Add prerequisite information on the chart ([#1468](https://github.com/sysdiglabs/charts/issues/1468))
+# v1.1.24
+### Chores
+* **admission-controller,cloud-connector,cluster-scanner,node-analyzer,registry-scanner,sysdig-deploy** [9d5d8c58](https://github.com/sysdiglabs/charts/commit/9d5d8c5809d35bcb5e8060ccc454f446cb1e3bc7): change charts ownership ([#1461](https://github.com/sysdiglabs/charts/issues/1461))
+# v1.1.23
+### Chores
+* **registry-scanner** [39d7ee0f](https://github.com/sysdiglabs/charts/commit/39d7ee0f1c2d9d5d44992f3a1467bc126872534c): Update to v0.2.60 ([#1512](https://github.com/sysdiglabs/charts/issues/1512))
+# v1.1.22
+### Chores
+* **registry-scanner** [7d114fe8](https://github.com/sysdiglabs/charts/commit/7d114fe8cf822354dbc542f9ce845e216c08f70b): Update to v0.2.59 [ESC-3783] ([#1499](https://github.com/sysdiglabs/charts/issues/1499))
+# v1.1.21
+### New Features
+* **registry-scanner** [569fc3ee](https://github.com/sysdiglabs/charts/commit/569fc3eea7b6e30c6ba08de18effd0f13693b3ff): List GCR as supported registry type ([#1462](https://github.com/sysdiglabs/charts/issues/1462))
+# v1.1.20
+### New Features
+* **registry-scanner** [b952290a](https://github.com/sysdiglabs/charts/commit/b952290ac515798c115065f9f8a8735941231537): add support for cronjob timezone selection ([#1481](https://github.com/sysdiglabs/charts/issues/1481))
+# v1.1.19
+### Chores
+* **registry-scanner** [aff94d0f](https://github.com/sysdiglabs/charts/commit/aff94d0f5cf26c1e755050797329c73837bf2fb5): Update to v0.2.58 ([#1482](https://github.com/sysdiglabs/charts/issues/1482))
+# v1.1.18
+### Bug Fixes
+* Properly handle `securityContext` configuration for scan worker
+# v1.1.17
+### New Features
+* **registry-scanner** [022c547f](https://github.com/sysdiglabs/charts/commit/022c547f0a871a22e2e7035745765189edc5697f): Add flag to enable mem profile dumps on a PVC ([#1455](https://github.com/sysdiglabs/charts/issues/1455))
+# v1.1.16
+### Chores
+* **registry-scanner** [8c684a6c](https://github.com/sysdiglabs/charts/commit/8c684a6ce2188f73bc99b70c583961f5b4936b39): Update to v0.2.54 ([#1433](https://github.com/sysdiglabs/charts/issues/1433))
+# v1.1.15
+### Documentation
+* **registry-scanner** [87ba25b6](https://github.com/sysdiglabs/charts/commit/87ba25b630dfe8d838cfd761a80c779faefd38bf): specify the namespace to use during installation ([#1388](https://github.com/sysdiglabs/charts/issues/1388))
+# v1.1.14
+### Chores
+* **registry-scanner** [f83da6c9](https://github.com/sysdiglabs/charts/commit/f83da6c915468f6d8f442c3d971fc3e4296b2d1d): Update to v0.2.53 ([#1425](https://github.com/sysdiglabs/charts/issues/1425))
 # v1.1.13
 ### Chores
 * **registry-scanner** [9f3aee7d](https://github.com/sysdiglabs/charts/commit/9f3aee7d85bd420fa61239b965d528be9a583aef): Update to v0.2.51 ([#1419](https://github.com/sysdiglabs/charts/issues/1419))
