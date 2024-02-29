@@ -6,6 +6,10 @@ metadata:
   labels:
     app.kubernetes.io/name: {{ include "kspmCollector.name" . }}
 {{ include "kspmCollector.labels" . | indent 4 }}
+  {{- with .Values.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   replicas: {{ .Values.replicas }}
   selector:
@@ -16,11 +20,11 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: {{ include "kspmCollector.name" . }}
+        {{- include "kspmCollector.labels" . | nindent 8 }}
       {{- with .Values.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-{{ include "kspmCollector.labels" . | indent 8 }}
     spec:
       serviceAccountName: {{ template "kspmCollector.serviceAccountName" .}}
       securityContext:
