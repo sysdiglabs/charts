@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **common** [0061b52d](https://github.com/sysdiglabs/charts/commit/0061b52d51f43e1e4d5e2bdf1145be28287d5ce6): add me2 region support ([#1591](https://github.com/sysdiglabs/charts/issues/1591))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.11.2...kspm-collector-0.12.0
+### Chores
+- **node-analyzer,kspm-collector** [bf10775e](https://github.com/sysdiglabs/charts/commit/bf10775e88d40a12e1e3058d96f3ecdf6138c715): bump node-analyzer to v1.41.0 and kspm-collector to v1.38.0 ([#1627](https://github.com/sysdiglabs/charts/issues/1627))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.12.0...kspm-collector-0.13.0
