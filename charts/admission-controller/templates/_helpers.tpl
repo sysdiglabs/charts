@@ -395,6 +395,9 @@ webhooks:
     apiVersions: ["v1"]
     operations: ["CREATE", "UPDATE"]
     resources:
+{{- if (.Values.webhook.vm).enabled }}
+    - "pods"
+{{- end }}
     - "deployments"
     - "replicasets"
     - "statefulsets"

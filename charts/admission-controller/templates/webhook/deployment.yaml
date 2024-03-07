@@ -57,10 +57,6 @@ spec:
           env:
             - name: DEFAULT_TIMEOUT
               value: {{ .Values.webhook.timeoutSeconds | quote }}
-            - name: DENY_ON_ERROR
-              value: {{ .Values.webhook.denyOnError | default "false" | quote }}
-            - name: DRY_RUN
-              value: {{ .Values.webhook.dryRun | default "true" | quote }}
             {{- if (or (include "webhook.httpProxy" .) (include "webhook.httpsProxy" .) (include "webhook.noProxy" .) )}}
             - name: HTTP_PROXY
               value: {{ include "webhook.httpProxy" . }}
