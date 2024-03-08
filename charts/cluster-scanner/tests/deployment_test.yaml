@@ -281,7 +281,9 @@ tests:
             name: ENV_VAR_BOOL
             value: "true"
 
-  - it: "does not have registry volume nor volumeMounts if mirrors is empty"
+  - it: "does not have registry volume nor volumeMounts if mirrors is empty and natsjs tls is disabled"
+    set:
+      runtimeStatusIntegrator.natsJS.tls.enabled: false
     templates:
       - ../templates/deployment.yaml
     asserts:
@@ -311,3 +313,147 @@ tests:
             mountPath: /etc/docker/daemon.json
             subPath: daemon.json
             readOnly: true
+
+  - it: "has volume and volumeMounts if natsjs tls is enabled and no custom certs are being provided"
+    set:
+      runtimeStatusIntegrator.natsJS.tls.enabled: true
+    templates:
+      - ../templates/deployment.yaml
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: js-certs
+            secret:
+              secretName: test-release-cluster-scanner
+              items:
+                - key: js_tls_key
+                  path: js_tls.key
+                - key: js_tls_cert
+                  path: js_tls.cert
+                - key: js_tls_ca
+                  path: js_tls.ca
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: js-certs
+            mountPath: /js-certs
+            readOnly: true
+      - contains:
+          path: spec.template.spec.containers[1].volumeMounts
+          content:
+            name: js-certs
+            mountPath: /js-certs
+            readOnly: true
+      - contains:
+          path: spec.template.spec.containers[1].env
+          content:
+            name: NATS_TLS_CA
+            valueFrom:
+              configMapKeyRef:
+                name: test-release-cluster-scanner
+                key: js_tls_ca_paths
+                optional: true
+
+  - it: "has volume and volumeMounts if natsjs tls is enabled and custom certs are being provided"
+    set:
+      runtimeStatusIntegrator.natsJS.tls.enabled: true
+      runtimeStatusIntegrator.natsJS.tls.customCerts.existingCaSecret: "testCaSecret"
+      runtimeStatusIntegrator.natsJS.tls.customCerts.existingCaSecretKeyName: "caKeyName"
+      runtimeStatusIntegrator.natsJS.tls.customCerts.existingKeySecret: "testKeySecret"
+      runtimeStatusIntegrator.natsJS.tls.customCerts.existingKeySecretKeyName: "keyKeyName"
+      runtimeStatusIntegrator.natsJS.tls.customCerts.existingCertSecret: "testCertSecret"
+      runtimeStatusIntegrator.natsJS.tls.customCerts.existingCertSecretKeyName: "certKeyName"
+    templates:
+      - ../templates/deployment.yaml
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: js-certs
+            projected:
+              sources:
+                - secret:
+                    name: testKeySecret
+                    items:
+                      - key: keyKeyName
+                        path: js_tls.key
+                - secret:
+                    name: testCertSecret
+                    items:
+                      - key: certKeyName
+                        path: js_tls.cert
+                - secret:
+                    name: testCaSecret
+                    items:
+                      - key: caKeyName
+                        path: js_tls.ca
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: js-certs
+            mountPath: /js-certs
+            readOnly: true
+      - contains:
+          path: spec.template.spec.containers[1].volumeMounts
+          content:
+            name: js-certs
+            mountPath: /js-certs
+            readOnly: true
+      - contains:
+          path: spec.template.spec.containers[1].env
+          content:
+            name: NATS_TLS_CA
+            valueFrom:
+              configMapKeyRef:
+                name: test-release-cluster-scanner
+                key: js_tls_ca_paths
+                optional: true
+
+  - it: "has volume and volumeMounts if natsjs tls is enabled and custom certs are being provided but not the CA Secret"
+    set:
+      runtimeStatusIntegrator.natsJS.tls.enabled: true
+      runtimeStatusIntegrator.natsJS.tls.customCerts.existingKeySecret: "testKeySecret"
+      runtimeStatusIntegrator.natsJS.tls.customCerts.existingKeySecretKeyName: "keyKeyName"
+      runtimeStatusIntegrator.natsJS.tls.customCerts.existingCertSecret: "testCertSecret"
+      runtimeStatusIntegrator.natsJS.tls.customCerts.existingCertSecretKeyName: "certKeyName"
+    templates:
+      - ../templates/deployment.yaml
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: js-certs
+            projected:
+              sources:
+                - secret:
+                    name: testKeySecret
+                    items:
+                      - key: keyKeyName
+                        path: js_tls.key
+                - secret:
+                    name: testCertSecret
+                    items:
+                      - key: certKeyName
+                        path: js_tls.cert
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: js-certs
+            mountPath: /js-certs
+            readOnly: true
+      - contains:
+          path: spec.template.spec.containers[1].volumeMounts
+          content:
+            name: js-certs
+            mountPath: /js-certs
+            readOnly: true
+      - notContains:
+          path: spec.template.spec.containers[1].env
+          content:
+            name: NATS_TLS_CA
+            valueFrom:
+              configMapKeyRef:
+                name: test-release-cluster-scanner
+                key: js_tls_ca_paths
+                optional: true

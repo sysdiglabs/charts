@@ -53,6 +53,40 @@ spec:
           configMap:
             name: {{ include "cluster-scanner.fullname" . }}-registry-mirrors
         {{- end }}
+        {{- if ( include "cluster-scanner.nats.tls.hasSelfSignedCert" . ) }}
+        - name: js-certs
+          secret:
+            secretName: {{ include "cluster-scanner.fullname" . }}
+            items:
+              - key: js_tls_key
+                path: js_tls.key
+              - key: js_tls_cert
+                path: js_tls.cert
+              - key: js_tls_ca
+                path: js_tls.ca
+        {{- end }}
+        {{- if ( include "cluster-scanner.nats.tls.hasCustomCert" . ) }}
+        - name: js-certs
+          projected:
+            sources:
+              - secret:
+                  name: {{ .Values.runtimeStatusIntegrator.natsJS.tls.customCerts.existingKeySecret }}
+                  items:
+                    - key: {{ .Values.runtimeStatusIntegrator.natsJS.tls.customCerts.existingKeySecretKeyName }}
+                      path: js_tls.key
+              - secret:
+                  name: {{ .Values.runtimeStatusIntegrator.natsJS.tls.customCerts.existingCertSecret }}
+                  items:
+                      - key: {{ .Values.runtimeStatusIntegrator.natsJS.tls.customCerts.existingCertSecretKeyName }}
+                        path: js_tls.cert
+              {{- if ( include "cluster-scanner.nats.tls.hasCustomCASecret" . ) }}
+              - secret:
+                  name: {{ .Values.runtimeStatusIntegrator.natsJS.tls.customCerts.existingCaSecret }}
+                  items:
+                    - key: {{ .Values.runtimeStatusIntegrator.natsJS.tls.customCerts.existingCaSecretKeyName }}
+                      path: js_tls.ca
+              {{- end }}
+        {{- end }}
       containers:
         - name: rsi
           securityContext:
@@ -63,6 +97,11 @@ spec:
             {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
             - name: ca-cert
               mountPath: /ca-certs
+              readOnly: true
+            {{- end }}
+            {{- if ((.Values.runtimeStatusIntegrator.natsJS).tls).enabled }}
+            - name: js-certs
+              mountPath: /js-certs
               readOnly: true
             {{- end }}
       {{- with .Values.runtimeStatusIntegrator }}
@@ -189,6 +228,30 @@ spec:
               configMapKeyRef:
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: eve_integration_enabled
+                optional: true
+          - name: NATS_JS_TLS_ENABLED
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: js_server_tls_enabled
+                optional: true
+          - name: NATS_JS_TLS_CERT_PATH
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: js_tls_cert_path
+                optional: true
+          - name: NATS_JS_TLS_KEY_PATH
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: js_tls_key_path
+                optional: true
+          - name: NATS_JS_TLS_CA_PATHS
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: js_tls_ca_paths
                 optional: true
           - name: NATS_JS_CLIENT_NAME
             valueFrom:
@@ -331,6 +394,11 @@ spec:
               subPath: daemon.json
               readOnly: true
             {{- end }}
+            {{- if ((.Values.runtimeStatusIntegrator.natsJS).tls).enabled }}
+            - name: js-certs
+              mountPath: /js-certs
+              readOnly: true
+            {{- end }}
       {{- with .Values.imageSbomExtractor }}
           ports:
             - name: metrics
@@ -423,6 +491,26 @@ spec:
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: js_server_password
                 optional: true
+          - name: NATS_TLS_ENABLED
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: js_server_tls_enabled
+                optional: true
+          - name: NATS_TLS_SKIP
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: js_tls_skip_verify
+                optional: true
+          {{- if or ( include "cluster-scanner.nats.tls.hasSelfSignedCert" . ) ( include "cluster-scanner.nats.tls.hasCustomCASecret" . ) }}
+          - name: NATS_TLS_CA
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: js_tls_ca_paths
+                optional: true
+          {{- end }}
           - name: NATS_CLIENT_NAME
             valueFrom:
               fieldRef:

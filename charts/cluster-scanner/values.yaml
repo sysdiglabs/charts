@@ -163,6 +163,25 @@ runtimeStatusIntegrator:
     # Default uses a random password for each installation.
     # password: ""
 
+    tls:
+      enabled: true
+      # Can be set to false to allow insecure connections to the NATS JetStream instance
+      verifyCertificate: true
+      # By default, a self-signed certificate is generated when tls is enabled, unless a custom certificate is provided.
+      # customCerts:
+      #   # Provide the name of an existing Secret that contains the Key required. Mandatory if customCerts is provided.
+      #   existingKeySecret:
+      #   # Provide the filename that is defined inside the existing Secret. Mandatory if customCerts is provided.
+      #   existingKeySecretKeyName:
+      #   # Provide the name of an existing Secret that contains the Cert required. Mandatory if customCerts is provided.
+      #   existingCertSecret:
+      #   # Provide the filename that is defined inside the existing Secret. Mandatory if customCerts is provided.
+      #   existingCertSecretKeyName:
+      #   # Provide the name of an existing Secret that contains the CA required. Optional.
+      #   existingCaSecret:
+      #   # Provide the filename that is defined inside the existing Secret. Optional.
+      #   existingCaSecretKeyName:
+
 imageSbomExtractor:
   image:
     # The image registry to use for the Image SBOM Extractor component of
