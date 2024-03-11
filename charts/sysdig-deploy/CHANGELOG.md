@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.42.0
+### New Features
+* **cluster-scanner** [c4d7310c](https://github.com/sysdiglabs/charts/commit/c4d7310c61078513af7adc01030eca3405c43e99): added support for NATS JS TLS encryption ([#1630](https://github.com/sysdiglabs/charts/issues/1630))
 # v1.41.0
 ### New Features
 * [b50da463](https://github.com/sysdiglabs/charts/commit/b50da46344d635678b4ac89c1f3c1cd1a1687d1b): release agent 13.0.0 ([#1628](https://github.com/sysdiglabs/charts/issues/1628))
