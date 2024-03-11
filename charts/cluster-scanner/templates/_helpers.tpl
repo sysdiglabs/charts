@@ -303,7 +303,17 @@ Returns true if NATS TLS is enabled and custom certs have been provided
 */}}
 {{- define "cluster-scanner.nats.tls.hasCustomCert" -}}
 {{- if and ((.Values.runtimeStatusIntegrator.natsJS).tls).enabled ((.Values.runtimeStatusIntegrator.natsJS).tls).customCerts -}}
+{{- include "cluster-scanner.nats.tls.failIfMissingMandatoryCustomCerts" . -}}
 true
+{{- end -}}
+{{- end -}}
+
+{{/*
+Fails if not all mandatory customCerts fields are being set.
+*/}}
+{{- define "cluster-scanner.nats.tls.failIfMissingMandatoryCustomCerts" -}}
+{{- if not (and ((.Values.runtimeStatusIntegrator.natsJS.tls).customCerts).existingKeySecret ((.Values.runtimeStatusIntegrator.natsJS.tls).customCerts).existingCertSecret ) -}}
+{{- fail "Both existingKeySecret and existingCertSecret must be set when using nats customCerts" -}}
 {{- end -}}
 {{- end -}}
 

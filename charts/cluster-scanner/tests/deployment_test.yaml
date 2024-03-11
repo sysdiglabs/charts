@@ -503,3 +503,35 @@ tests:
                 name: test-release-cluster-scanner
                 key: js_tls_ca_paths
                 optional: true
+
+  - it: "fails if it has custom Certs and the existingKeySecret field is missing"
+    set:
+      runtimeStatusIntegrator.natsJS.tls.enabled: true
+      runtimeStatusIntegrator.natsJS.tls.customCerts.existingCertSecret: "testCertSecret"
+      runtimeStatusIntegrator.natsJS.tls.customCerts.existingCaSecret: "testCaSecret"
+    templates:
+      - ../templates/deployment.yaml
+    asserts:
+      - failedTemplate:
+          errorMessage: "Both existingKeySecret and existingCertSecret must be set when using nats customCerts"
+
+  - it: "fails if it has custom Certs and the existingCertSecret field is missing"
+    set:
+      runtimeStatusIntegrator.natsJS.tls.enabled: true
+      runtimeStatusIntegrator.natsJS.tls.customCerts.existingKeySecret: "testKeySecret"
+      runtimeStatusIntegrator.natsJS.tls.customCerts.existingCaSecret: "testCaSecret"
+    templates:
+      - ../templates/deployment.yaml
+    asserts:
+      - failedTemplate:
+          errorMessage: "Both existingKeySecret and existingCertSecret must be set when using nats customCerts"
+
+  - it: "fails if it has custom Certs and both existingKeySecret and existingCertSecret fields are missing"
+    set:
+      runtimeStatusIntegrator.natsJS.tls.enabled: true
+      runtimeStatusIntegrator.natsJS.tls.customCerts.existingCaSecret: "testCaSecret"
+    templates:
+      - ../templates/deployment.yaml
+    asserts:
+      - failedTemplate:
+          errorMessage: "Both existingKeySecret and existingCertSecret must be set when using nats customCerts"
