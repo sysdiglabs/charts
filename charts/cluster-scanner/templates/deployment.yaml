@@ -64,8 +64,7 @@ spec:
                 path: js_tls.cert
               - key: js_tls_ca
                 path: js_tls.ca
-        {{- end }}
-        {{- if ( include "cluster-scanner.nats.tls.hasCustomCert" . ) }}
+        {{- else if ( include "cluster-scanner.nats.tls.hasCustomCert" . ) }}
         - name: js-certs
           projected:
             sources:
