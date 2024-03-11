@@ -247,11 +247,19 @@ spec:
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: js_tls_key_path
                 optional: true
+          {{- if or ( include "cluster-scanner.nats.tls.hasSelfSignedCert" . ) ( include "cluster-scanner.nats.tls.hasCustomCASecret" . ) }}
           - name: NATS_JS_TLS_CA_PATHS
             valueFrom:
               configMapKeyRef:
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: js_tls_ca_paths
+                optional: true
+          {{- end }}
+          - name: NATS_JS_TLS_SKIP_VERIFY
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cluster-scanner.fullname" . }}
+                key: js_tls_skip_verify
                 optional: true
           - name: NATS_JS_CLIENT_NAME
             valueFrom:
