@@ -72,12 +72,12 @@ spec:
               - secret:
                   name: {{ .Values.runtimeStatusIntegrator.natsJS.tls.customCerts.existingKeySecret }}
                   items:
-                    - key: {{ .Values.runtimeStatusIntegrator.natsJS.tls.customCerts.existingKeySecretKeyName }}
+                    - key: {{ .Values.runtimeStatusIntegrator.natsJS.tls.customCerts.existingKeySecretKeyName | default "tls.key" | quote }}
                       path: js_tls.key
               - secret:
                   name: {{ .Values.runtimeStatusIntegrator.natsJS.tls.customCerts.existingCertSecret }}
                   items:
-                      - key: {{ .Values.runtimeStatusIntegrator.natsJS.tls.customCerts.existingCertSecretKeyName }}
+                      - key: {{ .Values.runtimeStatusIntegrator.natsJS.tls.customCerts.existingCertSecretKeyName | default "tls.crt" | quote }}
                         path: js_tls.cert
               {{- if ( include "cluster-scanner.nats.tls.hasCustomCASecret" . ) }}
               - secret:

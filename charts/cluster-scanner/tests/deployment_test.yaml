@@ -457,3 +457,49 @@ tests:
                 name: test-release-cluster-scanner
                 key: js_tls_ca_paths
                 optional: true
+
+  - it: "has volume and volumeMounts if natsjs tls is enabled and custom certs with default key names"
+    set:
+      runtimeStatusIntegrator.natsJS.tls.enabled: true
+      runtimeStatusIntegrator.natsJS.tls.customCerts.existingKeySecret: "testKeySecret"
+      runtimeStatusIntegrator.natsJS.tls.customCerts.existingCertSecret: "testCertSecret"
+    templates:
+      - ../templates/deployment.yaml
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: js-certs
+            projected:
+              sources:
+                - secret:
+                    name: testKeySecret
+                    items:
+                      - key: tls.key
+                        path: js_tls.key
+                - secret:
+                    name: testCertSecret
+                    items:
+                      - key: tls.crt
+                        path: js_tls.cert
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: js-certs
+            mountPath: /js-certs
+            readOnly: true
+      - contains:
+          path: spec.template.spec.containers[1].volumeMounts
+          content:
+            name: js-certs
+            mountPath: /js-certs
+            readOnly: true
+      - notContains:
+          path: spec.template.spec.containers[1].env
+          content:
+            name: NATS_TLS_CA
+            valueFrom:
+              configMapKeyRef:
+                name: test-release-cluster-scanner
+                key: js_tls_ca_paths
+                optional: true

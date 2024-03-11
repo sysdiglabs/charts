@@ -171,11 +171,11 @@ runtimeStatusIntegrator:
       # customCerts:
       #   # Provide the name of an existing Secret that contains the Key required. Mandatory if customCerts is provided.
       #   existingKeySecret:
-      #   # Provide the filename that is defined inside the existing Secret. Mandatory if customCerts is provided.
+      #   # Provide the filename that is defined inside the existing Secret. [tls.key is the Default value]
       #   existingKeySecretKeyName:
       #   # Provide the name of an existing Secret that contains the Cert required. Mandatory if customCerts is provided.
       #   existingCertSecret:
-      #   # Provide the filename that is defined inside the existing Secret. Mandatory if customCerts is provided.
+      #   # Provide the filename that is defined inside the existing Secret. [tls.crt is the Default value]
       #   existingCertSecretKeyName:
       #   # Provide the name of an existing Secret that contains the CA required. Optional.
       #   existingCaSecret:
