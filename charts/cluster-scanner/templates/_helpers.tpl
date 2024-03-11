@@ -243,7 +243,6 @@ Return the proper image name for the Runtime Status Integrator
 Return the proper image name for the Image Sbom Extractor
 */}}
 {{- define "cluster-scanner.imageSbomExtractor.image" -}}
-    {{- $data := dict "Values" .Values "Tag" .Values.imageSbomExtractor.image.tag -}}
     {{- $data := dict "Values" .Values "Tag" .Values.imageSbomExtractor.image.tag "Component" "imageSbomExtractor.image.tag" -}}
     {{- include "cluster-scanner.imageSbomExtractor.imageRegistry" . -}} / {{- .Values.imageSbomExtractor.image.repository -}} : {{- .Values.imageSbomExtractor.image.tag -}}
 {{- end -}}
@@ -268,4 +267,63 @@ Return local registry secrets in the correct format: <namespace_name>/<secret_na
     returned empty string does not evaluate to empty on Helm Version:"v3.8.0"
     */}}
     {{- .Values.global.sysdig.accessKeySecret | default "" -}}
+{{- end -}}
+
+{{/*
+Produce self-signed TLS certificate and key to secure NATS JetStream communication.
+*/}}
+{{- define "cluster-scanner.nats.tls.selfSignedCert" -}}
+ {{- $svcName := include "cluster-scanner.fullname" . -}}
+ {{- $dnsNames := list -}}
+ {{- $dnsNames = append $dnsNames (printf "%s.%s.svc.cluster.local" $svcName .Release.Namespace) -}}
+ {{- $dnsNames = append $dnsNames (printf "*.%s.%s.svc.cluster.local" $svcName .Release.Namespace) -}}
+ {{- $dnsNames = append $dnsNames (printf "%s.%s.svc" $svcName .Release.Namespace) -}}
+ {{- $dnsNames = append $dnsNames (printf "*.%s.%s.svc" $svcName .Release.Namespace) -}}
+ {{- $dnsNames = append $dnsNames (printf "*.%s" $svcName ) -}}
+ {{- $dnsNames = append $dnsNames $svcName -}}
+ {{- $dnsNames = append $dnsNames "localhost" -}}
+ {{- $ca := genCA "ClusterScannerCert-ca" 3650 -}}
+ {{- $tlsCert := genSignedCertWithKey "ClusterScannerCert" (list "127.0.0.1") ($dnsNames) 3650 $ca (genPrivateKey "ed25519") }}
+  js_tls_key: {{ $tlsCert.Key | b64enc | quote }}
+  js_tls_cert: {{ $tlsCert.Cert | b64enc | quote }}
+  js_tls_ca: {{ $ca.Cert | b64enc | quote }}
+{{- end -}}
+
+{{/*
+Returns true if NATS TLS is enabled and no custom certs have been provided
+*/}}
+{{- define "cluster-scanner.nats.tls.hasSelfSignedCert" -}}
+{{- if and ((.Values.runtimeStatusIntegrator.natsJS).tls).enabled (not ((.Values.runtimeStatusIntegrator.natsJS).tls).customCerts) -}}
+true
+{{- end -}}
+{{- end -}}
+
+{{/*
+Returns true if NATS TLS is enabled and custom certs have been provided
+*/}}
+{{- define "cluster-scanner.nats.tls.hasCustomCert" -}}
+{{- if and ((.Values.runtimeStatusIntegrator.natsJS).tls).enabled ((.Values.runtimeStatusIntegrator.natsJS).tls).customCerts -}}
+{{- include "cluster-scanner.nats.tls.failIfMissingMandatoryCustomCerts" . -}}
+true
+{{- end -}}
+{{- end -}}
+
+{{/*
+Fails if not all mandatory customCerts fields are being set.
+*/}}
+{{- define "cluster-scanner.nats.tls.failIfMissingMandatoryCustomCerts" -}}
+{{- if not (and ((.Values.runtimeStatusIntegrator.natsJS.tls).customCerts).existingKeySecret ((.Values.runtimeStatusIntegrator.natsJS.tls).customCerts).existingCertSecret ) -}}
+{{- fail "Both existingKeySecret and existingCertSecret must be set when using nats customCerts" -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Returns true if NATS TLS is enabled, custom certs have been provided and a CA secret has been provided
+*/}}
+{{- define "cluster-scanner.nats.tls.hasCustomCASecret" -}}
+{{- if (include "cluster-scanner.nats.tls.hasCustomCert" .) -}}
+{{- if and (.Values.runtimeStatusIntegrator.natsJS.tls.customCerts).existingCaSecret (.Values.runtimeStatusIntegrator.natsJS.tls.customCerts).existingCaSecretKeyName -}}
+true
+{{- end -}}
+{{- end -}}
 {{- end -}}

@@ -459,3 +459,60 @@ tests:
     asserts:
       - failedTemplate:
           errorMessage: "Invalid Semantic Version"
+
+  - it: "has nats TLS enabled when nats tls is enabled"
+    set:
+      runtimeStatusIntegrator.natsJS.tls.enabled: true
+    asserts:
+      - equal:
+          path: data.js_server_tls_enabled
+          value: "true"
+      - equal:
+          path: data.js_tls_skip_verify
+          value: "false"
+      - equal:
+          path: data.js_tls_cert_path
+          value: "/js-certs/js_tls.cert"
+      - equal:
+          path: data.js_tls_key_path
+          value: "/js-certs/js_tls.key"
+      - equal:
+          path: data.js_tls_ca_paths
+          value: "/js-certs/js_tls.ca"
+
+  - it: "has nats TLS enabled, and skips tls verification, when nats tls is enabled"
+    set:
+      runtimeStatusIntegrator.natsJS.tls.enabled: true
+      runtimeStatusIntegrator.natsJS.tls.verifyCertificate: false
+    asserts:
+      - equal:
+          path: data.js_server_tls_enabled
+          value: "true"
+      - equal:
+          path: data.js_tls_skip_verify
+          value: "true"
+      - equal:
+          path: data.js_tls_cert_path
+          value: "/js-certs/js_tls.cert"
+      - equal:
+          path: data.js_tls_key_path
+          value: "/js-certs/js_tls.key"
+      - equal:
+          path: data.js_tls_ca_paths
+          value: "/js-certs/js_tls.ca"
+
+  - it: "has nats TLS disabled when nats tls settings are not provided"
+    set:
+      runtimeStatusIntegrator.natsJS.tls: null
+    asserts:
+      - equal:
+          path: data.js_server_tls_enabled
+          value: "false"
+      - notExists:
+          path: data.js_tls_skip_verify
+      - notExists:
+          path: data.js_tls_cert_path
+      - notExists:
+          path: data.js_tls_key_path
+      - notExists:
+          path: data.js_tls_ca_paths
