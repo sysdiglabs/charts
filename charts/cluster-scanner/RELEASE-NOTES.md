@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **cluster-scanner** [c4d7310c](https://github.com/sysdiglabs/charts/commit/c4d7310c61078513af7adc01030eca3405c43e99): added support for NATS JS TLS encryption ([#1630](https://github.com/sysdiglabs/charts/issues/1630))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/cluster-scanner-0.10.1...cluster-scanner-0.11.0
+### Chores
+- **cluster-scanner** [2c460107](https://github.com/sysdiglabs/charts/commit/2c460107f03194a5ce35ce5b16f2296b4312e35a): bump cluster-scanner to 0.6.4 ([#1632](https://github.com/sysdiglabs/charts/issues/1632))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/cluster-scanner-0.11.0...cluster-scanner-0.11.1
