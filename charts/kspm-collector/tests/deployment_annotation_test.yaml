@@ -1,0 +1,37 @@
+suite: Deployment annotation test
+templates:
+  - deployment.yaml
+tests:
+  - it: check that the deployment do not have any custom annotation if not specified
+    set:
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+    asserts:
+    - isNull:
+        path: metadata.annotations
+
+  - it: check that the deployment include the annotation
+    set:
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+      annotations:
+        my-annotation: my-value
+    asserts:
+    - exists:
+        path: metadata.annotations
+
+  - it: check that the deployment include the annotation match the value we specified
+    set:
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+      annotations:
+        my-annotation-1: my-value-1
+        my-annotation-2: my-value-2
+    asserts:
+    - equal:
+        path: metadata.annotations['my-annotation-1']
+        value: my-value-1
+
+    - equal:
+        path: metadata.annotations['my-annotation-2']
+        value: my-value-2

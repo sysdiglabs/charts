@@ -172,6 +172,8 @@ affinity: {}
 
 labels: {}
 
+annotations: {}
+
 podAnnotations: {}
 
 ssl:

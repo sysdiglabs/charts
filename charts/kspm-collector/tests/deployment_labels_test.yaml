@@ -1,0 +1,44 @@
+suite: Deployment label test
+templates:
+  - deployment.yaml
+tests:
+  - it: check that the deployment do not have any custom labels if not specified
+    set:
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+    asserts:
+      - isNotNull:
+          path: spec.template.metadata.labels['app.kubernetes.io/name']
+      - isNotNull:
+          path: spec.template.metadata.labels['helm.sh/chart']
+      - isNotNull:
+          path: spec.template.metadata.labels['app.kubernetes.io/instance']
+      - isNotNull:
+          path: spec.template.metadata.labels['app.kubernetes.io/version']
+      - isNotNull:
+          path: spec.template.metadata.labels['app.kubernetes.io/managed-by']
+
+  - it: check that the deployment do not have custom labels when specified
+    set:
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+      labels:
+        mylabel1: test1
+        mylabel2: test2
+    asserts:
+      - isNotNull:
+          path: spec.template.metadata.labels['app.kubernetes.io/name']
+      - isNotNull:
+          path: spec.template.metadata.labels['helm.sh/chart']
+      - isNotNull:
+          path: spec.template.metadata.labels['app.kubernetes.io/instance']
+      - isNotNull:
+          path: spec.template.metadata.labels['app.kubernetes.io/version']
+      - isNotNull:
+          path: spec.template.metadata.labels['app.kubernetes.io/managed-by']
+      - equal:
+          path: spec.template.metadata.labels.mylabel1
+          value: test1
+      - equal:
+          path: spec.template.metadata.labels.mylabel2
+          value: test2
