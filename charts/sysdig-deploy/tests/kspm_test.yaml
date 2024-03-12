@@ -1,0 +1,67 @@
+suite: Testing kspm.collector and kspm-analyzer
+templates:
+  - charts/kspmCollector/templates/deployment.yaml
+  - charts/nodeAnalyzer/templates/configmap-kspm-analyzer.yaml
+  - charts/nodeAnalyzer/templates/daemonset-node-analyzer.yaml
+  - charts/nodeAnalyzer/templates/configmap-benchmark-runner.yaml
+  - charts/nodeAnalyzer/templates/configmap-host-analyzer.yaml
+  - charts/nodeAnalyzer/templates/configmap-image-analyzer.yaml
+  - charts/nodeAnalyzer/templates/secrets.yaml
+  - charts/nodeAnalyzer/templates/clusterrole-node-analyzer.yaml
+  - charts/nodeAnalyzer/templates/clusterrolebinding-node-analyzer.yaml
+  - charts/nodeAnalyzer/templates/serviceaccount-node-analyzer.yaml
+tests:
+  - it: Should both be enabled when global.kspm.deploy is true
+    set:
+      global:
+        clusterConfig:
+          name: "test"
+        sysdig:
+          region: us2
+          accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+        kspm:
+          deploy: true
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+        template: charts/kspmCollector/templates/deployment.yaml
+      - exists:
+          path: spec.template.spec.containers[?(@.name == "sysdig-kspm-analyzer")]
+        template: charts/nodeAnalyzer/templates/daemonset-node-analyzer.yaml
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+        template: charts/nodeAnalyzer/templates/configmap-kspm-analyzer.yaml
+
+  - it: Should both be disabled when global.kspm.deploy is false
+    set:
+      global:
+        clusterConfig:
+          name: "test"
+        sysdig:
+          region: us2
+          accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+        kspm:
+          deploy: false
+    asserts:
+      - notExists:
+          path: spec.template.spec.containers[?(@.name == "sysdig-kspm-analyzer")]
+        template: charts/nodeAnalyzer/templates/daemonset-node-analyzer.yaml
+
+  - it: Should kspm-analyzer is deployed when kspmCollector.enabled is false
+    set:
+      global:
+        clusterConfig:
+          name: "test"
+        sysdig:
+          region: us2
+          accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+        kspm:
+          deploy: true
+      kspmCollector:
+        enabled: false
+    asserts:
+      - exists:
+          path: spec.template.spec.containers[?(@.name == "sysdig-kspm-analyzer")]
+        template: charts/nodeAnalyzer/templates/daemonset-node-analyzer.yaml
