@@ -83,7 +83,7 @@ tests:
               - "create"
               - "patch"
 
-  - it: Test ConfigMaps can be read in kubernetes
+  - it: Test can be read core resources in kubernetes
     asserts:
       - contains:
           path: rules
@@ -91,7 +91,20 @@ tests:
             apiGroups:
               - ""
             resources:
-              - "configmaps"
+              - pods
+              - replicationcontrollers
+              - services
+              - endpoints
+              - events
+              - limitranges
+              - namespaces
+              - nodes
+              - nodes/metrics
+              - nodes/proxy
+              - resourcequotas
+              - persistentvolumes
+              - persistentvolumeclaims
+              - configmaps
             verbs:
               - "get"
               - "list"
