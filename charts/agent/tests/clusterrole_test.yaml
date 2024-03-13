@@ -82,3 +82,17 @@ tests:
             verbs:
               - "create"
               - "patch"
+
+  - it: Test ConfigMaps can be read in kubernetes
+    asserts:
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - "configmaps"
+            verbs:
+              - "get"
+              - "list"
+              - "watch"
