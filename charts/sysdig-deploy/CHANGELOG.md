@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.44.0
+### New Features
+* **sysdig-deploy** [3d12cbf9](https://github.com/sysdiglabs/charts/commit/3d12cbf95399514704248f1443caf45c03604a31): allow to deploy kspm-analyzer independently from kspm-collector ([#1641](https://github.com/sysdiglabs/charts/issues/1641))
 # v1.43.0
 ### New Features
 * **kspm-collector** [0b82d816](https://github.com/sysdiglabs/charts/commit/0b82d8165acdc7e34aea690d03422a7cd5a7b265): Deployment annotations and fix label render issue - replace [#1626](https://github.com/sysdiglabs/charts/issues/1626) ([#1639](https://github.com/sysdiglabs/charts/issues/1639))
