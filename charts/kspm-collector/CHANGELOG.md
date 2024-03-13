@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.14.1
+### Chores
+* **node-analyzer,kspm-collector** [53da744e](https://github.com/sysdiglabs/charts/commit/53da744e4aff66f4fdc86a462a4e72d7ed94ec92): Bump KSPM to 1.41.2 & Node Analyzer to 1.38.1 ([#1643](https://github.com/sysdiglabs/charts/issues/1643))
 # v0.14.0
 ### New Features
 * **kspm-collector** [0b82d816](https://github.com/sysdiglabs/charts/commit/0b82d8165acdc7e34aea690d03422a7cd5a7b265): Deployment annotations and fix label render issue - replace [#1626](https://github.com/sysdiglabs/charts/issues/1626) ([#1639](https://github.com/sysdiglabs/charts/issues/1639))
