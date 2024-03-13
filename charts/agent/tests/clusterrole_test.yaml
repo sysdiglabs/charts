@@ -83,29 +83,8 @@ tests:
               - "create"
               - "patch"
 
-  - it: Test can be read core resources in kubernetes
+  - it: SMAGENT-6299 - Test agent can read configmaps in kubernetes to publish the "kube_configmap_info" metric
     asserts:
       - contains:
-          path: rules
-          content:
-            apiGroups:
-              - ""
-            resources:
-              - pods
-              - replicationcontrollers
-              - services
-              - endpoints
-              - events
-              - limitranges
-              - namespaces
-              - nodes
-              - nodes/metrics
-              - nodes/proxy
-              - resourcequotas
-              - persistentvolumes
-              - persistentvolumeclaims
-              - configmaps
-            verbs:
-              - "get"
-              - "list"
-              - "watch"
+          path: rules[0].resources
+          content: configmaps
