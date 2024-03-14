@@ -139,7 +139,7 @@ nodeAnalyzer:
   noProxy:
   # NATS max reconnect attempts
   natsMaxReconnect: 0
-  natsMaxReconnectFailures: 0
+  natsMaxReconnectFailures: 60
 
   # Allow sysdig Node Image Analyzer to run on Kubernetes 1.6 masters
   tolerations:

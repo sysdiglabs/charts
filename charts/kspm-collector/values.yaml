@@ -6,7 +6,7 @@ httpsProxy:
 noProxy:
 sslVerifyCertificate:
 natsMaxReconnect: 0
-natsMaxReconnectFailures: 0
+natsMaxReconnectFailures: 60
 # Namespace to deploy to (Optional: Will default to release namespace)
 namespace:
 
