@@ -1,5 +1,5 @@
 # What's Changed
 
 ### Chores
-- **node-analyzer,kspm-collector** [53da744e](https://github.com/sysdiglabs/charts/commit/53da744e4aff66f4fdc86a462a4e72d7ed94ec92): Bump KSPM to 1.41.2 & Node Analyzer to 1.38.1 ([#1643](https://github.com/sysdiglabs/charts/issues/1643))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.24.1...node-analyzer-1.24.2
+- **kspm-collector,kspm-collector** [e885b38c](https://github.com/sysdiglabs/charts/commit/e885b38ccdf152db9227d0ecaf3b281f9f10752a): version bump of kspm-collector & node-analyzer ([#1650](https://github.com/sysdiglabs/charts/issues/1650))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.24.2...node-analyzer-1.24.3
