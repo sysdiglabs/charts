@@ -15,6 +15,7 @@ data:
   environment: {{ $env }}
   external_nats_url: {{ include "nodeAnalyzer.natsUrl" . }}
   nats_max_reconnect: {{ .Values.nodeAnalyzer.natsMaxReconnect | default 0 | quote }}
+  nats_max_reconnect_failures: {{ .Values.nodeAnalyzer.natsMaxReconnectFailures | default 60 | quote }}
   cluster_name: {{ required "A valid clusterName is required" (include "nodeAnalyzer.clusterName" .) }}
   agent_app_name: {{ include "nodeAnalyzer.name" . }}
   nats_insecure: {{ include "kspmAnalyzer.natsInsecure" . }}
