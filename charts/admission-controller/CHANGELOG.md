@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.15.1
+### Chores
+* **admission-controller** [19cf4fab](https://github.com/sysdiglabs/charts/commit/19cf4fabb6f39b3bdc07f1471cf55536751caa88): Update to v3.9.40 ([#1648](https://github.com/sysdiglabs/charts/issues/1648))
 # v0.15.0
 ### New Features
 * **common** [0061b52d](https://github.com/sysdiglabs/charts/commit/0061b52d51f43e1e4d5e2bdf1145be28287d5ce6): add me2 region support ([#1591](https://github.com/sysdiglabs/charts/issues/1591))
