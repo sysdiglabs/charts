@@ -139,6 +139,7 @@ nodeAnalyzer:
   noProxy:
   # NATS max reconnect attempts
   natsMaxReconnect: 0
+  natsMaxReconnectFailures: 0
 
   # Allow sysdig Node Image Analyzer to run on Kubernetes 1.6 masters
   tolerations:
@@ -425,7 +426,7 @@ nodeAnalyzer:
     debug: false
     image:
       repository: sysdig/kspm-analyzer
-      tag: 1.42.2
+      tag: 1.42.3
       digest:
       pullPolicy:
 
