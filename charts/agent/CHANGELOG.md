@@ -10,6 +10,7 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.22.0
 # v1.21.1
 ### New Features
 * [c99143c9](https://github.com/sysdiglabs/charts/commit/c99143c959ddf19b8335fba3631910c9e4b610f4): release agent 13.0.1 ([#1636](https://github.com/sysdiglabs/charts/issues/1636))
