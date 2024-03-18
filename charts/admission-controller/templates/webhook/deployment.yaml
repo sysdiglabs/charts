@@ -47,6 +47,7 @@ spec:
         {{- end }}
       {{- if .Values.webhook.hostNetwork }}
       hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
       {{- end }}
       containers:
       {{- if .Values.features.kspmAdmissionController}}
