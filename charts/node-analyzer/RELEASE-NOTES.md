@@ -1,5 +1,10 @@
 # What's Changed
 
-### New Features
-- **admission-controller,node-analyzer** [9e8cc902](https://github.com/sysdiglabs/charts/commit/9e8cc902897f4185f9f56b825d6741539999fcf9): set dnsPolicy when we allow hostNetwork in the Pod  ([#1652](https://github.com/sysdiglabs/charts/issues/1652))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.24.3...node-analyzer-1.24.4
+### Chores
+- **node-analyzer** [a90c3952](https://github.com/sysdiglabs/charts/commit/a90c3952dd4448806a7e300eac2293965cf9797e): bump sysdig/vuln-host-scanner to v0.8.0 ([#1660](https://github.com/sysdiglabs/charts/issues/1660))
+
+    * * Fixed a memory leak that could happen when disabling backend scanning
+* Fixed an issue that could cause memory spikes
+* Fixed an issue that could cause the host-scanner to detect wrongly the OS when running as a binary
+* Added support for platform scanning
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.24.4...node-analyzer-1.25.0
