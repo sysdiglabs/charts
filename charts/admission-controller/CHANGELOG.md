@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.15.3
+### Chores
+* **admission-controller** [2ee4a064](https://github.com/sysdiglabs/charts/commit/2ee4a0646896e352c49e90e1039a78f9101656f4): Update to v3.9.41 ([#1661](https://github.com/sysdiglabs/charts/issues/1661))
 # v0.15.2
 ### New Features
 * **admission-controller,node-analyzer** [9e8cc902](https://github.com/sysdiglabs/charts/commit/9e8cc902897f4185f9f56b825d6741539999fcf9): set dnsPolicy when we allow hostNetwork in the Pod  ([#1652](https://github.com/sysdiglabs/charts/issues/1652))
