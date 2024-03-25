@@ -75,6 +75,10 @@ data:
       labels:
         {{- include "registry-scanner.customLabels" . | nindent 8}}
       {{- end }}
+      {{- if .Values.podAnnotations }}
+      podAnnotations:
+        {{- toYaml .Values.podAnnotations | nindent 8 }}
+      {{- end }}
       {{- if .Values.config.scan.securityContext }}
       securityContext:
         {{- include "registry-scanner.scan.securityContext" . | nindent 8}}
