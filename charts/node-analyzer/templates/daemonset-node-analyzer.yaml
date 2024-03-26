@@ -28,8 +28,24 @@ spec:
         app.kubernetes.io/name: {{ include "nodeAnalyzer.name" . }}
 {{ include "daemonset.labels" . | indent 8 }}
 {{ include "nodeAnalyzer.labels" . | indent 8 }}
-{{- if .Values.daemonset.annotations }}
       annotations:
+        checksum/config-benchmark: {{ include (print $.Template.BasePath "/configmap-benchmark-runner.yaml") . | sha256sum | quote  }}
+        checksum/config-host-analyzer: {{ include (print $.Template.BasePath "/configmap-host-analyzer.yaml") . | sha256sum | quote  }}
+        checksum/config-image-analyzer: {{ include (print $.Template.BasePath "/configmap-image-analyzer.yaml") . | sha256sum | quote  }}
+        {{- if and .Values.nodeAnalyzer.deploy (not .Values.gke.autopilot) (include "nodeAnalyzer.deployHostScanner" .) }}
+        checksum/config-host-scanner: {{ include (print $.Template.BasePath "/configmap-host-scanner.yaml") . | sha256sum | quote  }}
+        {{- end }}
+        {{- if .Values.global.kspm.deploy }}
+        checksum/config-kspm-analyzer: {{ include (print $.Template.BasePath "/configmap-kspm-analyzer.yaml") . | sha256sum | quote  }}
+        {{- end }}
+        {{- if include "nodeAnalyzer.deployRuntimeScanner" . }}
+        checksum/config-runtime-scanner: {{ include (print $.Template.BasePath "/runtimeScanner/runtime-scanner-configmap.yaml") . | sha256sum | quote  }}
+        {{- end }}
+        checksum/secret: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum | quote  }}
+        checksum/clusterrole: {{ include (print $.Template.BasePath "/clusterrole-node-analyzer.yaml") . | sha256sum | quote  }}
+        checksum/clusterrolebinding: {{ include (print $.Template.BasePath "/clusterrolebinding-node-analyzer.yaml") . | sha256sum | quote  }}
+        checksum/serviceaccount: {{ include (print $.Template.BasePath "/serviceaccount-node-analyzer.yaml") . | sha256sum | quote  }}
+{{- if .Values.daemonset.annotations }}
         {{ toYaml .Values.daemonset.annotations | nindent 8 }}
 {{- end }}
     spec:
@@ -132,6 +148,7 @@ spec:
       # Use the Host Network Namespace.
       # This is required by the Benchmark and the HostScanner containers to determine the hostname and host mac address
       hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
       {{- end }}
       {{- if include "nodeAnalyzer.useHostPID" . }}
       # Use the Host PID namespace.
@@ -248,6 +265,12 @@ spec:
               configMapKeyRef:
                 name: {{ .Release.Name }}-kspm-analyzer
                 key: nats_max_reconnect
+                optional: true
+          - name: NATS_MAX_RECONNECT_FAILURES
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-kspm-analyzer
+                key: nats_max_reconnect_failures
                 optional: true
           {{- if .Values.global.sysdig.tags }}
           - name: TAGS
@@ -720,22 +743,18 @@ spec:
           - name: "{{ $key }}"
             value: "{{ $value }}"
           {{- end }}
-          {{- if .Values.nodeAnalyzer.runtimeScanner.settings.eveEnabled }}
           - name: EVE_ENABLED
             valueFrom:
               configMapKeyRef:
                 name: {{ .Release.Name }}-runtime-scanner
                 key: eve_enabled
                 optional: true
-          {{- end }}
-          {{- if .Values.nodeAnalyzer.runtimeScanner.eveConnector.deploy }}
           - name: EVE_INTEGRATION_ENABLED
             valueFrom:
               configMapKeyRef:
                 name: {{ .Release.Name }}-runtime-scanner
                 key: eve_integration_enabled
                 optional: true
-          {{- end }}
         volumeMounts:
           # Needed for some IBM OpenShift clusters which symlink /var/run/containers/storage to contents of /var/data by default
           - mountPath: /var/data
@@ -885,6 +904,26 @@ spec:
           {{- range $key, $value := .Values.nodeAnalyzer.hostScanner.env }}
           - name: "{{ $key }}"
             value: "{{ $value }}"
+          {{- end }}
+
+          {{- if .Values.nodeAnalyzer.hostScanner.scanContainers.enabled }}
+          # Container scanner
+          - name: USE_COMBINED_SCANNER
+            value: "true"
+          - name: SCAN_CONTAINERS_ENABLED
+            value: "true"
+          - name: DOCKER_SOCKET_PATHS
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-host-scanner
+                key: docker_socket_path
+                optional: true
+          - name: PODMAN_SOCKET_PATHS
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-host-scanner
+                key: podman_socket_path
+                optional: true
           {{- end }}
         volumeMounts:
           - mountPath: /tmp

@@ -1,7 +1,7 @@
 {{- if .Values.features.kspmAdmissionController }}
 {{- if include "admissionController.validAccessKeyConfig" . }}{{- end}}
 {{- end }}
-{{- if (or .Values.features.k8sAuditDetections .Values.scanner.enabled) }}
+{{- if (or .Values.features.k8sAuditDetections .Values.scanner.enabled .Values.webhook.acConfig) }}
 {{- if include "admissionController.validTokenConfig" . }}{{- end }}
 {{- end }}
 Sysdig Admission Controller is now installed!

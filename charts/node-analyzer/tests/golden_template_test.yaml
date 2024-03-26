@@ -2,6 +2,19 @@ suite: Testing pre-generated values and best-known edge cases
 templates:
   - daemonset-node-analyzer.yaml
   - configmap-benchmark-runner.yaml
+  # For checksums
+  - clusterrole-node-analyzer.yaml
+  - clusterrolebinding-node-analyzer.yaml
+  - configmap-benchmark-runner.yaml
+  - configmap-host-analyzer.yaml
+  - configmap-host-scanner.yaml
+  - configmap-image-analyzer.yaml
+  - configmap-kspm-analyzer.yaml
+  - secrets.yaml
+  - serviceaccount-node-analyzer.yaml
+values:
+  - ./default_required_values.yaml
+
 tests:
   - it: Testing node-analyzer deployed
     set:

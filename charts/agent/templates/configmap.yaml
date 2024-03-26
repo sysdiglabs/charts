@@ -27,11 +27,21 @@ data:
     tags: {{ include "agent.tags" . }}
 {{- end }}
 {{/*
+  Unset proxy_user and proxy_password if present and gke autopilot is disabled.
+*/}}
+{{- if and (hasKey .Values.sysdig.settings "http_proxy") (not (include "agent.gke.autopilot" .)) }}
+  {{- $_ := unset .Values.sysdig.settings.http_proxy "proxy_user" -}}
+  {{- $_ := unset .Values.sysdig.settings.http_proxy "proxy_password" -}}
+{{- end }}
+{{/*
   Checking here the user is using Custom CA and if http_proxy.ssl = true
   If these conditions are true, then we use the agent.sslCaFileName for the http_proxy.ca_certificate
 */}}
+{{- $baseSettings := .Values.sysdig.settings -}}
+{{- if and (include "agent.gke.autopilot" .) (or (not (hasKey $baseSettings "promscrape_web_address")) (eq (get $baseSettings "promscrape_web_address") "127.0.0.1:9990") ) }}
+  {{- $baseSettings := mergeOverwrite $baseSettings (dict "promscrape_web_address" "127.0.0.1:9991") -}}
+{{- end }}
 {{- if and (eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true") (.Values.sysdig.settings) (hasKey .Values.sysdig.settings "http_proxy") (hasKey (default dict .Values.sysdig.settings.http_proxy) "ssl") (eq (get (default (dict "ssl" false) .Values.sysdig.settings.http_proxy) "ssl") true) }}
-  {{- $baseSettings := .Values.sysdig.settings -}}
   {{- $caFilePath := printf "%s%s" "/etc/ca-certs/" (include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.ssl)) }}
   {{- $mergedSettings := mergeOverwrite $baseSettings (dict "http_proxy" (dict "ca_certificate" $caFilePath)) -}}
   {{ toYaml $mergedSettings | nindent 4 }}
@@ -44,6 +54,12 @@ data:
       enabled: true
       enforce_leader_election: true
       namespace: {{ include "agent.namespace" . }}
+{{- end }}
+{{- if .Values.localForwarder.enabled }}
+    local_forwarder:
+      enabled: true
+      transmit_message_types:
+        {{- toYaml .Values.localForwarder.transmitMessageTypes | nindent 8 }}
 {{- end }}
 {{- if .Values.prometheus.file }}
   prometheus.yaml: |

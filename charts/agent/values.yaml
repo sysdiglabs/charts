@@ -33,13 +33,13 @@ global:
       #       MMNlTAQ9fvdNOTzZntye0PQYRTTS34D=
       #       -----END CERTIFICATE-----
       # Filename that is used when creating the secret.  Required if cert is provided.
-      keyName:
+      keyName: null
       # Provide the name of an existing Secret that contains the CA required
-      existingCaSecret:
+      existingCaSecret: null
       # Provide the filename that is defined inside the existing Secret
-      existingCaSecretKeyName:
+      existingCaSecretKeyName: null
       # Provide the name of an existing ConfigMap that contains the CA required
-      existingCaConfigMap:
+      existingCaConfigMap: null
       # Provide the filename that is defined inside the existing ConfigMap
       existingCaConfigMapKeyName: null
 namespace: ""
@@ -51,7 +51,7 @@ image:
   overrideValue: null
   registry: quay.io
   repository: sysdig/agent
-  tag: 12.17.1
+  tag: 13.0.2
   # Specify a imagePullPolicy
   # Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
   # ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -145,9 +145,10 @@ daemonset:
   annotations: {}
   # Allow the DaemonSet to set labels
   labels: {}
-  # Liveness and readiness probes initial delay (in seconds)
+  # readiness probe delays
   probes:
     initialDelay: 90
+    periodDelay: 3
   kmodule:
     env: {}
 # If is behind a proxy you can set the proxy server
@@ -278,8 +279,18 @@ tolerations:
     key: node-role.kubernetes.io/etcd
     operator: Equal
     value: "true"
+  - effect: NoExecute
+    key: CriticalAddonsOnly
+    operator: Equal
+    value: "true"
 leaderelection:
   enable: false
+localForwarder:
+  enabled: false
+  transmitMessageTypes:
+    - POLICY_EVENTS
+    - SECURE_AUDIT
+  integrations: []
 delegatedAgentDeployment:
   # Enable a specialized installation where an Agent Deployment is installed
   # in addition to the traditional DaemonSet. The DaemonSet Agents will not
@@ -299,6 +310,10 @@ delegatedAgentDeployment:
     os:
       - linux
     labels: {}
+    # readiness probes delays
+    probes:
+      initialDelay: 90
+      periodDelay: 3
     progressDeadlineSeconds: 600
     replicas: 1
     resources:

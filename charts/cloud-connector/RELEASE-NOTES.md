@@ -1,5 +1,5 @@
 # What's Changed
 
-### Documentation
-- **admission-controller, cluster-scanner, registry-scanner, cloud-connector, node-analyzer, rapid-response, sysdig-deploy, agent** [df733e62](https://github.com/sysdiglabs/charts/commit/df733e6294eae1967197e3521473a5fab0282b67): update maintainers list ([#1283](https://github.com/sysdiglabs/charts/issues/1283))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/cloud-connector-0.8.5...cloud-connector-0.8.6
+### New Features
+- **sysdig-deploy** [49fe006f](https://github.com/sysdiglabs/charts/commit/49fe006fb0ff206c7b566a45bfa5f71713d5ad0a): Add prerequisite information on the chart ([#1468](https://github.com/sysdiglabs/charts/issues/1468))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/cloud-connector-0.8.7...cloud-connector-0.8.8

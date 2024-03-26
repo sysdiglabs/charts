@@ -38,6 +38,10 @@
         - name: report-storage
           mountPath: "/output"
         {{- end }}
+        {{- if .Values.memProfileToPersistentVolumeClaim }}
+        - name: profile-storage
+          mountPath: "/profiling"
+        {{- end }}
         {{- if .Values.ssl.ca.certs }}
         - name: ca-certs
           mountPath: "/ca-certs"
@@ -120,6 +124,12 @@
           - name: GROUP_LIMIT
             value: "{{ .Values.config.parallelGoRoutines }}"
           {{- end }}
+          {{- if .Values.memProfileToPersistentVolumeClaim }}
+          - name: REGISTRYSCANNER_PROFILING_ENABLED
+            value: /profiling
+          {{- end }}
+          - name: REGISTRYSCANNER_CRONJOB_SCHEDULE
+            value: {{ .Values.cronjob.schedule | quote }}
           {{- if .Values.extraEnvVars }}
           {{- toYaml .Values.extraEnvVars | nindent 10 }}
           {{- end }}
@@ -153,5 +163,10 @@
       - name: report-storage
         persistentVolumeClaim:
           claimName: {{ .Values.reportToPersistentVolumeClaim }}
+      {{- end }}
+      {{- if .Values.memProfileToPersistentVolumeClaim }}
+      - name: profile-storage
+        persistentVolumeClaim:
+          claimName: {{ .Values.memProfileToPersistentVolumeClaim }}
       {{- end }}
 {{- end }}

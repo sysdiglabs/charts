@@ -3,7 +3,7 @@ name: Release Charts
 on:
   push:
     branches:
-      - master
+      - main
 
 env:
   GITHUB_USERNAME: draios-jenkins
@@ -22,7 +22,7 @@ jobs:
 
       - name: Retrieve a list of updated charts
         id: updated-charts
-        uses: tj-actions/changed-files@v40
+        uses: tj-actions/changed-files@v43
         with:
           files: charts/*/Chart.yaml
 
@@ -78,7 +78,7 @@ jobs:
           done
 
       - name: Stash changelog files
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: generated-changelogs
           path: |
@@ -96,7 +96,7 @@ jobs:
           fetch-depth: 0
 
       - name: Unstash generated changelogs
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: generated-changelogs
           path: charts
@@ -169,7 +169,7 @@ jobs:
           token: ${{ secrets.TOOLS_JENKINS_ADMIN_ACCESS_GITHUB_TOKEN }}
 
       - name: Unstash generated changelogs
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: generated-changelogs
           path: charts
@@ -192,5 +192,5 @@ jobs:
               git add ${chart_path}/RELEASE-NOTES.md
               git commit -m "github_actions_ci: Update CHANGELOG and RELEASE-NOTES for ${chart_name}-${chart_version}"
           done
-          # Push changes to the master branch.
-          git push origin "${GITHUB_REF##*/}":master -f
+          # Push changes to the main branch.
+          git push origin "${GITHUB_REF##*/}":main -f

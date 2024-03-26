@@ -70,6 +70,18 @@ tests:
           path: data['dragent.yaml']
           pattern: .*ingest\.au1\.sysdig\.com.*
 
+  - it: Checking region 'me2'
+    set:
+      global:
+        sysdig:
+          region: me2
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*ingest\.me2\.sysdig\.com.*
+
   - it: Checking region 'au-syd-monitor'
     set:
       global:
@@ -510,3 +522,18 @@ tests:
     asserts:
       - failedTemplate:
           errorMessage: "global.sysdig.region=us7 provided is not recognized."
+
+  - it: Checking proxy_user and proxy_password are not set
+    set:
+      sysdig:
+        settings:
+          http_proxy:
+            proxy_user: "user"
+            proxy_password: "password"
+    asserts:
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: .*username.*
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: .*password.*

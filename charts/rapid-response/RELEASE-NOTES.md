@@ -1,5 +1,5 @@
 # What's Changed
 
-### Bug Fixes
-- **common,agent,admission-controller,cluster-scanner,kspm-collector,node-analyzer,rapid-response** [e76f1c17](https://github.com/sysdiglabs/charts/commit/e76f1c17e48491dd8ea21293ec1fed2619eed204): Update Sysdig CA ([#1393](https://github.com/sysdiglabs/charts/issues/1393))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/rapid-response-0.8.2...rapid-response-0.8.3
+### New Features
+- **common** [0061b52d](https://github.com/sysdiglabs/charts/commit/0061b52d51f43e1e4d5e2bdf1145be28287d5ce6): add me2 region support ([#1591](https://github.com/sysdiglabs/charts/issues/1591))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/rapid-response-0.8.5...rapid-response-0.9.0

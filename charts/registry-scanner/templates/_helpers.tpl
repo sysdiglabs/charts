@@ -129,3 +129,12 @@ Allow overriding registry and repository for air-gapped environments
 true
 {{- end }}
 {{- end }}
+
+{{/*
+Fail if cronjob.timeZone is set for Kubernetes < 1.24
+*/}}
+{{- define "registry-scanner.validateTimeZone" -}}
+  {{- if and .Values.cronjob.timeZone (include "registry-scanner.kubeVersionLessThan" (dict "root" . "major" 1 "minor" 24)) }}
+    {{ fail "cronjob.timeZone was specified but kubernetes version is smaller than 1.24." }}
+  {{- end }}
+{{- end }}

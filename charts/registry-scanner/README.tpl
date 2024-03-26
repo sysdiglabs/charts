@@ -34,6 +34,7 @@ Follow the instructions in [Install Registry Scanner](https://docs.sysdig.com/en
 - IBM ICR
 - Azure ACR
 - Google GAR
+- Google GCR
 
 Once installed, you can view the scan results in the [Vulnerabilities UI](https://docs.sysdig.com/en/docs/sysdig-secure/vulnerabilities/registry/) of Sysdig Secure.
 
@@ -61,7 +62,7 @@ Use the following command to deploy:
 helm upgrade --install registry-scanner \
    --namespace sysdig-agent \
    --create-namespace \
-   {{ with .Chart.Version }}--version={{.}} {{ end }} \
+   {{ with .Chart.Version }}--version={{.}}{{ end }} \
    --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
    --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
    --set config.secureSkipTLS=true \

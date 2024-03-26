@@ -5,6 +5,19 @@ templates:
   - runtimeScanner/eveconnector-api-deployment.yaml
   - runtimeScanner/eveconnector-api-configmap.yaml
   - runtimeScanner/sysdig-eve-secret.yaml
+  # For checksums
+  - clusterrole-node-analyzer.yaml
+  - clusterrolebinding-node-analyzer.yaml
+  - configmap-benchmark-runner.yaml
+  - configmap-host-analyzer.yaml
+  - configmap-host-scanner.yaml
+  - configmap-image-analyzer.yaml
+  - configmap-kspm-analyzer.yaml
+  - serviceaccount-node-analyzer.yaml
+  - runtimeScanner/runtime-scanner-configmap.yaml
+values:
+  - ./default_required_values.yaml
+
 tests:
   - it: check value of accessKey without local chart override - local value provided
     set:

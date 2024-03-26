@@ -139,6 +139,7 @@ nodeAnalyzer:
   noProxy:
   # NATS max reconnect attempts
   natsMaxReconnect: 0
+  natsMaxReconnectFailures: 60
 
   # Allow sysdig Node Image Analyzer to run on Kubernetes 1.6 masters
   tolerations:
@@ -184,7 +185,7 @@ nodeAnalyzer:
     deploy: true
     image:
       repository: sysdig/node-image-analyzer
-      tag: 0.1.29
+      tag: 0.1.30
       digest:
       pullPolicy:
 
@@ -242,7 +243,7 @@ nodeAnalyzer:
     deploy: true
     image:
       repository: sysdig/host-analyzer
-      tag: 0.1.17
+      tag: 0.1.19
       digest:
       pullPolicy:
 
@@ -308,7 +309,7 @@ nodeAnalyzer:
     probesPort: 7002
     image:
       repository: sysdig/vuln-runtime-scanner
-      tag: "1.6.3"
+      tag: "1.6.10"
       digest:
       pullPolicy:
 
@@ -337,7 +338,7 @@ nodeAnalyzer:
     env: {}
 
     settings:
-      eveEnabled: false
+      eveEnabled: true
       # Threshold for which images will be skipped in the analysis.
       # Size is in bytes, default is not set (don't skip)
       # maxImageSizeAllowed: ""
@@ -351,7 +352,7 @@ nodeAnalyzer:
       deploy: false
       image:
         repository: sysdig/eveclient-api
-        tag: 1.1.2
+        tag: 1.1.3
         digest:
         pullPolicy:
 
@@ -392,7 +393,7 @@ nodeAnalyzer:
 
     image:
       repository: sysdig/vuln-host-scanner
-      tag: "0.6.5"
+      tag: "0.8.0"
       digest:
       pullPolicy:
 
@@ -416,11 +417,16 @@ nodeAnalyzer:
     settings:
       replicas: 1
 
+    scanContainers:
+      enabled: false
+      # dockerSocketPath: "unix:///var/run/docker.sock"
+      # podmanSocketPath: "unix:///var/run/podman.sock"
+
   kspmAnalyzer:
     debug: false
     image:
       repository: sysdig/kspm-analyzer
-      tag: 1.35.0
+      tag: 1.42.3
       digest:
       pullPolicy:
 

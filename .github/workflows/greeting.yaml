@@ -1,8 +1,8 @@
 name: Greeting
 on:
   pull_request_target:
-    types:
-      - opened
+    types: [opened]
+    branches: [main]
 
 jobs:
   greeting:
@@ -11,10 +11,9 @@ jobs:
     name: Greeting comment upon PR from fork
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.full_name != 'sysdiglabs/charts'
-
     steps:
       - name: Issue the greeting comment
-        uses: peter-evans/create-or-update-comment@v3
+        uses: peter-evans/create-or-update-comment@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.pull_request.number }}
@@ -22,9 +21,4 @@ jobs:
             Hi @${{ github.event.pull_request.user.login }}. Thanks for your PR.
 
             After inspecting your changes someone with write access to this repo needs
-            to approve and run the workflow with the following slash_command.
-
-            NOTE: the workflow triggered this way will only report the final status to this PR,
-            in order to check the logs please go to the Actions tab and look for approve-test-run-command.
-
-            * `/approve-test-run sha=<short commit sha to test>`:            Run helm chart linting and testing workflow
+            to approve and run the workflow.

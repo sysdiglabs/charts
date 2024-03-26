@@ -4,6 +4,6 @@
 /charts/sysdig-deploy/  @sysdiglabs/team-tools-agent
 
 /charts/admission-controller @sysdiglabs/cloud-native
-/charts/cloud-connector @sysdiglabs/cloud-native
-/charts/cloud-scanning @sysdiglabs/cloud-native
-/charts/registry-scanner @sysdiglabs/cloud-native @sysdiglabs/vm-integrations
+/charts/cloud-connector      @sysdiglabs/cloud-native
+/charts/cloud-scanning       @sysdiglabs/cloud-native
+/charts/registry-scanner     @sysdiglabs/cloud-native @sysdiglabs/vm-scanners

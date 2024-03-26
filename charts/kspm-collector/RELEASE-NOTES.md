@@ -1,5 +1,5 @@
 # What's Changed
 
-### Bug Fixes
-- **agent,kspm-collector,node-analyzer,sysdig** [f378d192](https://github.com/sysdiglabs/charts/commit/f378d1922d0f21f5936c6ed872e6538536ccf1f2): whitespace errors ([#1436](https://github.com/sysdiglabs/charts/issues/1436))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.9.1...kspm-collector-0.9.2
+### Chores
+- **kspm-collector,kspm-collector** [e885b38c](https://github.com/sysdiglabs/charts/commit/e885b38ccdf152db9227d0ecaf3b281f9f10752a): version bump of kspm-collector & node-analyzer ([#1650](https://github.com/sysdiglabs/charts/issues/1650))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.14.1...kspm-collector-0.14.2

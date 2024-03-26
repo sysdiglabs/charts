@@ -92,6 +92,7 @@ rsi_js_consumer_ack_wait: "120s"
 rsi_js_consumer_max_deliver: "1"
 rsi_js_consumer_deliver_policy_all: "true"
 rsi_js_producer_subject_prefix: "analysis.requests"
+rsi_js_priority_producer_subject_prefix: "analysis.priority.requests"
 rsi_js_server_metrics_enable: "true"
 rsi_js_server_metrics_port: "8222"
 {{ end }}
@@ -111,6 +112,18 @@ ise_js_consumer_max_in_flight: "256"
 ise_js_consumer_ack_wait: "240s"
 ise_js_consumer_max_deliver: "1"
 ise_js_consumer_deliver_policy_all: "true"
+
+ise_js_priority_consumer_streamname: "analysis-requests"
+ise_js_priority_consumer_name: "ise-priority"
+ise_js_priority_consumer_durable: "ise-priority"
+ise_js_priority_consumer_pull: "true"
+ise_js_priority_consumer_pull_batch: "1"
+ise_js_priority_consumer_subject: "analysis.priority.requests.>"
+ise_js_priority_consumer_max_in_flight: "256"
+ise_js_priority_consumer_ack_wait: "240s"
+ise_js_priority_consumer_max_deliver: "1"
+ise_js_priority_consumer_deliver_policy_all: "true"
+
 ise_js_producer_subject: "analysis.sboms"
 {{ end }}
 
@@ -206,13 +219,13 @@ Define the proper imageRegistry to use for imageSbomExtractor
 {{- end -}}
 
 {{/*
-Generates configmap data to enable platform services if onPremCompatibility version is not set, or it is greater than 6.6.0
+Generates configmap data to enable platform services if onPremCompatibility version is not set, or it is greater than 7.0.0
 It also makes sure that the platform services are enabled in regions which support them when onPremCompatibility is not defined.
 */}}
 {{- define "cluster-scanner.enablePlatformServicesConfig" -}}
-{{- if ( semverCompare ">= 6.6.0" (.Values.onPremCompatibilityVersion | default "6.6.0" )) -}}
-    {{- $regionsPlatformEnabled := list "us1" "us2" "us3" "au1" "eu1" -}}
-    {{- if or (has .Values.global.sysdig.region $regionsPlatformEnabled) .Values.onPremCompatibilityVersion -}}
+{{- if ( semverCompare ">= 7.0.0" (.Values.onPremCompatibilityVersion | default "7.0.0" )) -}}
+    {{- $regionsPlatformEnabled := list "us1" "us2" "us3" "us4" "au1" "eu1" -}}
+    {{- if and (not .Values.disablePlatformScanning) (or (has .Values.global.sysdig.region $regionsPlatformEnabled) .Values.onPremCompatibilityVersion) -}}
 enable_platform_services: "true"
     {{- end -}}
 {{- end -}}
@@ -230,7 +243,6 @@ Return the proper image name for the Runtime Status Integrator
 Return the proper image name for the Image Sbom Extractor
 */}}
 {{- define "cluster-scanner.imageSbomExtractor.image" -}}
-    {{- $data := dict "Values" .Values "Tag" .Values.imageSbomExtractor.image.tag -}}
     {{- $data := dict "Values" .Values "Tag" .Values.imageSbomExtractor.image.tag "Component" "imageSbomExtractor.image.tag" -}}
     {{- include "cluster-scanner.imageSbomExtractor.imageRegistry" . -}} / {{- .Values.imageSbomExtractor.image.repository -}} : {{- .Values.imageSbomExtractor.image.tag -}}
 {{- end -}}
@@ -255,4 +267,63 @@ Return local registry secrets in the correct format: <namespace_name>/<secret_na
     returned empty string does not evaluate to empty on Helm Version:"v3.8.0"
     */}}
     {{- .Values.global.sysdig.accessKeySecret | default "" -}}
+{{- end -}}
+
+{{/*
+Produce self-signed TLS certificate and key to secure NATS JetStream communication.
+*/}}
+{{- define "cluster-scanner.nats.tls.selfSignedCert" -}}
+ {{- $svcName := include "cluster-scanner.fullname" . -}}
+ {{- $dnsNames := list -}}
+ {{- $dnsNames = append $dnsNames (printf "%s.%s.svc.cluster.local" $svcName .Release.Namespace) -}}
+ {{- $dnsNames = append $dnsNames (printf "*.%s.%s.svc.cluster.local" $svcName .Release.Namespace) -}}
+ {{- $dnsNames = append $dnsNames (printf "%s.%s.svc" $svcName .Release.Namespace) -}}
+ {{- $dnsNames = append $dnsNames (printf "*.%s.%s.svc" $svcName .Release.Namespace) -}}
+ {{- $dnsNames = append $dnsNames (printf "*.%s" $svcName ) -}}
+ {{- $dnsNames = append $dnsNames $svcName -}}
+ {{- $dnsNames = append $dnsNames "localhost" -}}
+ {{- $ca := genCA "ClusterScannerCert-ca" 3650 -}}
+ {{- $tlsCert := genSignedCertWithKey "ClusterScannerCert" (list "127.0.0.1") ($dnsNames) 3650 $ca (genPrivateKey "ed25519") }}
+  js_tls_key: {{ $tlsCert.Key | b64enc | quote }}
+  js_tls_cert: {{ $tlsCert.Cert | b64enc | quote }}
+  js_tls_ca: {{ $ca.Cert | b64enc | quote }}
+{{- end -}}
+
+{{/*
+Returns true if NATS TLS is enabled and no custom certs have been provided
+*/}}
+{{- define "cluster-scanner.nats.tls.hasSelfSignedCert" -}}
+{{- if and ((.Values.runtimeStatusIntegrator.natsJS).tls).enabled (not ((.Values.runtimeStatusIntegrator.natsJS).tls).customCerts) -}}
+true
+{{- end -}}
+{{- end -}}
+
+{{/*
+Returns true if NATS TLS is enabled and custom certs have been provided
+*/}}
+{{- define "cluster-scanner.nats.tls.hasCustomCert" -}}
+{{- if and ((.Values.runtimeStatusIntegrator.natsJS).tls).enabled ((.Values.runtimeStatusIntegrator.natsJS).tls).customCerts -}}
+{{- include "cluster-scanner.nats.tls.failIfMissingMandatoryCustomCerts" . -}}
+true
+{{- end -}}
+{{- end -}}
+
+{{/*
+Fails if not all mandatory customCerts fields are being set.
+*/}}
+{{- define "cluster-scanner.nats.tls.failIfMissingMandatoryCustomCerts" -}}
+{{- if not (and ((.Values.runtimeStatusIntegrator.natsJS.tls).customCerts).existingKeySecret ((.Values.runtimeStatusIntegrator.natsJS.tls).customCerts).existingCertSecret ) -}}
+{{- fail "Both existingKeySecret and existingCertSecret must be set when using nats customCerts" -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Returns true if NATS TLS is enabled, custom certs have been provided and a CA secret has been provided
+*/}}
+{{- define "cluster-scanner.nats.tls.hasCustomCASecret" -}}
+{{- if (include "cluster-scanner.nats.tls.hasCustomCert" .) -}}
+{{- if and (.Values.runtimeStatusIntegrator.natsJS.tls.customCerts).existingCaSecret (.Values.runtimeStatusIntegrator.natsJS.tls.customCerts).existingCaSecretKeyName -}}
+true
+{{- end -}}
+{{- end -}}
 {{- end -}}

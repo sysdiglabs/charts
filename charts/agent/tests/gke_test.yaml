@@ -105,3 +105,78 @@ tests:
             drift_killer:
               enabled: false
     template: templates/configmap.yaml
+
+  - it: Ensure promscrape_web_address is set 127.0.0.1:9991 when autopilot is enabled
+    set:
+      gke:
+        autopilot: true
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            promscrape_web_address: 127.0.0.1:9991
+    template: templates/configmap.yaml
+
+  - it: Ensure promscrape_web_address is unaltered when is set on settings and autopilot is enabled
+    set:
+      gke:
+        autopilot: true
+      sysdig:
+        settings:
+          promscrape_web_address: test:1234
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            promscrape_web_address: test:1234
+    template: templates/configmap.yaml
+
+  - it: Ensure promscrape_web_address is unaltered when autopilot is disabled
+    set:
+      gke:
+        autopilot: false
+      sysdig:
+        settings:
+          promscrape_web_address: test:1234
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            promscrape_web_address: test:1234
+    template: templates/configmap.yaml
+
+  - it: Ensure ephemeral storage is set correctly on kmod container when slim mode is enabled
+    set:
+      gke:
+        autopilot: true
+        createPriorityClass: true
+      slim:
+        enabled: true
+    asserts:
+        - equal:
+            path: spec.template.spec.initContainers[0].resources.requests.ephemeral-storage
+            value: 500Mi
+    template: templates/daemonset.yaml
+
+  - it: Custom value for ephemeral-storage with slim mode enabled
+    set:
+      gke:
+        autopilot: true
+        createPriorityClass: true
+        ephemeralStorage: 603Mi
+      slim:
+        enabled: true
+    asserts:
+      - equal:
+          path: spec.template.spec.initContainers[0].resources.requests.ephemeral-storage
+          value: 603Mi
+    template: templates/daemonset.yaml
+
+  - it: Ensure we are not setting the ephemeral storage on kmod container when slim mode is enabled and not autopilot
+    set:
+      slim:
+        enabled: true
+    asserts:
+      - notExists:
+          path: spec.template.spec.initContainers[0].resources.requests.ephemeral-storage
+    template: templates/daemonset.yaml

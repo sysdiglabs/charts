@@ -10,6 +10,242 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.46.1
+### Chores
+* **sysdig-deploy** [ce0b3a12](https://github.com/sysdiglabs/charts/commit/ce0b3a12b8f9a3efd7e67f8d8a95d5884560112a): Automatic version bump due to updated dependencies ([#1662](https://github.com/sysdiglabs/charts/issues/1662))
+# v1.46.0
+### Chores
+* **node-analyzer** [a90c3952](https://github.com/sysdiglabs/charts/commit/a90c3952dd4448806a7e300eac2293965cf9797e): bump sysdig/vuln-host-scanner to v0.8.0 ([#1660](https://github.com/sysdiglabs/charts/issues/1660))
+
+    * * Fixed a memory leak that could happen when disabling backend scanning
+* Fixed an issue that could cause memory spikes
+* Fixed an issue that could cause the host-scanner to detect wrongly the OS when running as a binary
+* Added support for platform scanning
+# v1.45.5
+### Chores
+* **sysdig-deploy** [19ef1587](https://github.com/sysdiglabs/charts/commit/19ef1587a21932f6fb1b2dc5b83dd600bcb80b05): Automatic version bump due to updated dependencies ([#1659](https://github.com/sysdiglabs/charts/issues/1659))
+# v1.45.4
+### Chores
+* **sysdig-deploy** [873493d9](https://github.com/sysdiglabs/charts/commit/873493d93d213ff514ae0ef4a6075ff33889a914): Automatic version bump due to updated dependencies ([#1657](https://github.com/sysdiglabs/charts/issues/1657))
+# v1.45.3
+### Chores
+* **sysdig-deploy** [13bc5d46](https://github.com/sysdiglabs/charts/commit/13bc5d4616173be878b921cedee74c94f999d646): Automatic version bump due to updated dependencies ([#1654](https://github.com/sysdiglabs/charts/issues/1654))
+# v1.45.2
+### Chores
+* **kspm-collector,kspm-collector** [e885b38c](https://github.com/sysdiglabs/charts/commit/e885b38ccdf152db9227d0ecaf3b281f9f10752a): version bump of kspm-collector & node-analyzer ([#1650](https://github.com/sysdiglabs/charts/issues/1650))
+# v1.45.1
+### Chores
+* **sysdig-deploy** [ce3d5ff9](https://github.com/sysdiglabs/charts/commit/ce3d5ff9a69856758cd8c5ecc8d1145a00acf5a2): Automatic version bump due to updated dependencies ([#1649](https://github.com/sysdiglabs/charts/issues/1649))
+# v1.45.0
+# v1.44.1
+### Chores
+* **node-analyzer,kspm-collector** [53da744e](https://github.com/sysdiglabs/charts/commit/53da744e4aff66f4fdc86a462a4e72d7ed94ec92): Bump KSPM to 1.41.2 & Node Analyzer to 1.38.1 ([#1643](https://github.com/sysdiglabs/charts/issues/1643))
+# v1.44.0
+### New Features
+* **sysdig-deploy** [3d12cbf9](https://github.com/sysdiglabs/charts/commit/3d12cbf95399514704248f1443caf45c03604a31): allow to deploy kspm-analyzer independently from kspm-collector ([#1641](https://github.com/sysdiglabs/charts/issues/1641))
+# v1.43.0
+### New Features
+* **kspm-collector** [0b82d816](https://github.com/sysdiglabs/charts/commit/0b82d8165acdc7e34aea690d03422a7cd5a7b265): Deployment annotations and fix label render issue - replace [#1626](https://github.com/sysdiglabs/charts/issues/1626) ([#1639](https://github.com/sysdiglabs/charts/issues/1639))
+# v1.42.3
+### Chores
+* **sysdig-deploy** [d23e0702](https://github.com/sysdiglabs/charts/commit/d23e0702dec0603c4312d89848ceeeb8651f8acf): Automatic version bump due to updated dependencies ([#1638](https://github.com/sysdiglabs/charts/issues/1638))
+# v1.42.2
+### Chores
+* **sysdig-deploy** [1ab54517](https://github.com/sysdiglabs/charts/commit/1ab5451766e4a00e63fc7ce7dc19fb88a26c79b2): Automatic version bump due to updated dependencies ([#1635](https://github.com/sysdiglabs/charts/issues/1635))
+# v1.42.1
+### Chores
+* **sysdig-deploy** [8e0b1a1a](https://github.com/sysdiglabs/charts/commit/8e0b1a1a966b2436060fe3bcb7b22255d743874c): Automatic version bump due to updated dependencies ([#1633](https://github.com/sysdiglabs/charts/issues/1633))
+# v1.42.0
+### New Features
+* **cluster-scanner** [c4d7310c](https://github.com/sysdiglabs/charts/commit/c4d7310c61078513af7adc01030eca3405c43e99): added support for NATS JS TLS encryption ([#1630](https://github.com/sysdiglabs/charts/issues/1630))
+# v1.41.0
+### New Features
+* [b50da463](https://github.com/sysdiglabs/charts/commit/b50da46344d635678b4ac89c1f3c1cd1a1687d1b): release agent 13.0.0 ([#1628](https://github.com/sysdiglabs/charts/issues/1628))
+# v1.40.0
+### Chores
+* **node-analyzer,kspm-collector** [bf10775e](https://github.com/sysdiglabs/charts/commit/bf10775e88d40a12e1e3058d96f3ecdf6138c715): bump node-analyzer to v1.41.0 and kspm-collector to v1.38.0 ([#1627](https://github.com/sysdiglabs/charts/issues/1627))
+# v1.39.3
+### Chores
+* **sysdig-deploy** [b037e8b8](https://github.com/sysdiglabs/charts/commit/b037e8b8af8c62d097b4c7516c62fa301fa6af44): Automatic version bump due to updated dependencies ([#1623](https://github.com/sysdiglabs/charts/issues/1623))
+# v1.39.2
+### Chores
+* **sysdig-deploy** [df1c5f61](https://github.com/sysdiglabs/charts/commit/df1c5f61152a734c2c593658c9b529ed016eb26c): Automatic version bump due to updated dependencies ([#1620](https://github.com/sysdiglabs/charts/issues/1620))
+# v1.39.1
+### Chores
+* **agent,sysdig-deploy** [59342938](https://github.com/sysdiglabs/charts/commit/59342938d7a1b9f22d93c5f2ebdf1dc164e50ebf): set promscrape port to 9091 by default when gke autopilot is enabled ([#1618](https://github.com/sysdiglabs/charts/issues/1618))
+# v1.39.0
+### New Features
+* **cluster-scanner** [b551ed22](https://github.com/sysdiglabs/charts/commit/b551ed22df79ef9c52ff7deefe1e6d8e0de68d4d): added support for handling AC requests [SSPROD-35871] ([#1610](https://github.com/sysdiglabs/charts/issues/1610))
+# v1.38.2
+### Chores
+* **sysdig-deploy** [dfb2fc59](https://github.com/sysdiglabs/charts/commit/dfb2fc599d450858069550f1d25fd761cd2cf126): Automatic version bump due to updated dependencies ([#1614](https://github.com/sysdiglabs/charts/issues/1614))
+# v1.38.1
+### Chores
+* **sysdig-deploy** [3457e98c](https://github.com/sysdiglabs/charts/commit/3457e98ca9dae4133b06657f5c1b1385f2fa91cb): Automatic version bump due to updated dependencies ([#1612](https://github.com/sysdiglabs/charts/issues/1612))
+# v1.38.0
+### New Features
+* **common** [0061b52d](https://github.com/sysdiglabs/charts/commit/0061b52d51f43e1e4d5e2bdf1145be28287d5ce6): add me2 region support ([#1591](https://github.com/sysdiglabs/charts/issues/1591))
+# v1.37.18
+### Chores
+* **sysdig-deploy** [3fd8d8ae](https://github.com/sysdiglabs/charts/commit/3fd8d8ae8cc345ccb6af8db0284d76d01a8b1073): Automatic version bump due to updated dependencies ([#1609](https://github.com/sysdiglabs/charts/issues/1609))
+# v1.37.17
+### Chores
+* **sysdig-deploy** [af596967](https://github.com/sysdiglabs/charts/commit/af596967c45764582bd07c3a87d73425c9d16be8): Automatic version bump due to updated dependencies ([#1604](https://github.com/sysdiglabs/charts/issues/1604))
+# v1.37.16
+### Chores
+* **sysdig-deploy** [5074f3c3](https://github.com/sysdiglabs/charts/commit/5074f3c379e686a004c3bbe876ee19e5bba15995): Automatic version bump due to updated dependencies ([#1602](https://github.com/sysdiglabs/charts/issues/1602))
+# v1.37.15
+### Chores
+* **sysdig-deploy** [2eeae25c](https://github.com/sysdiglabs/charts/commit/2eeae25c6922d250d31f11af359affc63c81e385): Automatic version bump due to updated dependencies ([#1600](https://github.com/sysdiglabs/charts/issues/1600))
+# v1.37.14
+### Bug Fixes
+* **agent,kspm-collector,node-analyzer,rapid-response,sysdig-deploy** [6b1f5818](https://github.com/sysdiglabs/charts/commit/6b1f5818836af26e5d83621049c96ae07d1fe12c): Set test rollout namespace based on required service accounts ([#1593](https://github.com/sysdiglabs/charts/issues/1593))
+# v1.37.13
+### Chores
+* **sysdig-deploy** [0465c3a2](https://github.com/sysdiglabs/charts/commit/0465c3a2a633d8b94937803cf2dea6c543d81d09): Automatic version bump due to updated dependencies ([#1595](https://github.com/sysdiglabs/charts/issues/1595))
+# v1.37.12
+### Chores
+* **sysdig-deploy** [59c9169e](https://github.com/sysdiglabs/charts/commit/59c9169eb5c57e88fb8a625b4087d7b1969aa2cf): Automatic version bump due to updated dependencies ([#1588](https://github.com/sysdiglabs/charts/issues/1588))
+# v1.37.11
+### Chores
+* **sysdig-deploy** [fefa41b8](https://github.com/sysdiglabs/charts/commit/fefa41b81334c2f41e009eea1653c62985bd0ac4): Automatic version bump due to updated dependencies ([#1585](https://github.com/sysdiglabs/charts/issues/1585))
+# v1.37.10
+### Chores
+* **node-analyzer,kspm-collector** [f1023ae1](https://github.com/sysdiglabs/charts/commit/f1023ae129bf5c95b13686bf793130d8fdbc6e50): Bump KSPM to 1.39.1 & Node Analyzer to 1.37.1 ([#1582](https://github.com/sysdiglabs/charts/issues/1582))
+# v1.37.9
+### Chores
+* **sysdig-deploy** [416764c6](https://github.com/sysdiglabs/charts/commit/416764c64a70c0f9da76916290f2eec9c89288c7): Automatic version bump due to updated dependencies ([#1581](https://github.com/sysdiglabs/charts/issues/1581))
+# v1.37.8
+### Chores
+* **sysdig-deploy** [03794a9b](https://github.com/sysdiglabs/charts/commit/03794a9b6f88acb84459108062eb2a173ab74462): Automatic version bump due to updated dependencies ([#1578](https://github.com/sysdiglabs/charts/issues/1578))
+# v1.37.7
+### New Features
+* **KSPM admission controller** [48a4f16f](https://github.com/sysdiglabs/charts/commit/48a4f16f19d62cc6f11c757d6f41571dc119a2d5): SSPROD-35354 - Make Dry Run mode configurable to a user in Chart Values. ([#1560](https://github.com/sysdiglabs/charts/issues/1560))
+# v1.37.6
+### Chores
+* **sysdig-deploy** [5f3641da](https://github.com/sysdiglabs/charts/commit/5f3641da0e3a29e8b0ecfdb81122271e3206bf7b): Automatic version bump due to updated dependencies ([#1570](https://github.com/sysdiglabs/charts/issues/1570))
+# v1.37.5
+### Chores
+* [45895438](https://github.com/sysdiglabs/charts/commit/4589543862f78502932dca1c4e37a7d0d89259ff): migrate default branch to main ([#1556](https://github.com/sysdiglabs/charts/issues/1556))
+# v1.37.4
+### Chores
+* **sysdig-deploy** [b586944a](https://github.com/sysdiglabs/charts/commit/b586944abf021495921257eabf3c5078b07ff9ed): Automatic version bump due to updated dependencies ([#1565](https://github.com/sysdiglabs/charts/issues/1565))
+# v1.37.3
+### Chores
+* **sysdig-deploy** [1b5f9b02](https://github.com/sysdiglabs/charts/commit/1b5f9b029d72beb8c2e8e5c15e05f0fd6aea00ca): Automatic version bump due to updated dependencies ([#1562](https://github.com/sysdiglabs/charts/issues/1562))
+# v1.37.2
+### Chores
+* **sysdig-deploy** [0fa391ec](https://github.com/sysdiglabs/charts/commit/0fa391ec4f466b57aa85e648ebb66ce0c488d9a5): Automatic version bump due to updated dependencies ([#1559](https://github.com/sysdiglabs/charts/issues/1559))
+# v1.37.1
+### Chores
+* **sysdig-deploy** [3f27087b](https://github.com/sysdiglabs/charts/commit/3f27087baf7749991737cd57e56b767ba3ad82fc): Automatic version bump due to updated dependencies ([#1551](https://github.com/sysdiglabs/charts/issues/1551))
+# v1.37.0
+### New Features
+* [843751e0](https://github.com/sysdiglabs/charts/commit/843751e0a10b86053922b00da98255445b48fd90): release agent 12.19.0 ([#1548](https://github.com/sysdiglabs/charts/issues/1548))
+# v1.36.0
+### Chores
+* **node-analyzer,kspm-collector** [d80be00a](https://github.com/sysdiglabs/charts/commit/d80be00a821b0af2f71da6fd04590fcd897e0b4a): Bump KSPM to 1.39.0 & Node Analyzer to 1.37.0 ([#1549](https://github.com/sysdiglabs/charts/issues/1549))
+# v1.35.0
+### New Features
+* **node-analyzer** [1e512f9a](https://github.com/sysdiglabs/charts/commit/1e512f9af08674b87b01c17b9bc34c436e90ff8a): bumped host-scanner to 0.7.0 to add container scanning support ([#1538](https://github.com/sysdiglabs/charts/issues/1538))
+# v1.34.9
+### Chores
+* **sysdig-deploy** [98ac8b97](https://github.com/sysdiglabs/charts/commit/98ac8b975efe64cd973e62c18180197c1fc4bd9d): Automatic version bump due to updated dependencies ([#1542](https://github.com/sysdiglabs/charts/issues/1542))
+# v1.34.8
+### Chores
+* **sysdig-deploy** [c00c5d7e](https://github.com/sysdiglabs/charts/commit/c00c5d7ef2a0eda98bf6691869fc3c846cb08a4d): Automatic version bump due to updated dependencies ([#1541](https://github.com/sysdiglabs/charts/issues/1541))
+# v1.34.7
+### New Features
+* **sysdig-deploy** [49fe006f](https://github.com/sysdiglabs/charts/commit/49fe006fb0ff206c7b566a45bfa5f71713d5ad0a): Add prerequisite information on the chart ([#1468](https://github.com/sysdiglabs/charts/issues/1468))
+# v1.34.6
+### Chores
+* **sysdig-deploy** [45e6e37a](https://github.com/sysdiglabs/charts/commit/45e6e37a925ce869bfaa86c00514bb75f0f0dc79): Automatic version bump due to updated dependencies ([#1540](https://github.com/sysdiglabs/charts/issues/1540))
+# v1.34.5
+### Bug Fixes
+* **nodeAnalyzer** [7019a941](https://github.com/sysdiglabs/charts/commit/7019a94176feca81f12b5458788bd62d5d8316a5): deamonset not being rollout after configuration changes ([#1533](https://github.com/sysdiglabs/charts/issues/1533))
+
+    * * Fix node-analyzer daemonset rollout not triggered by a change in configuration
+# v1.34.4
+### New Features
+* **node-analyzer** [809552f7](https://github.com/sysdiglabs/charts/commit/809552f71f8b17b9f57a72dd6b659e959eaa4fe4): namespace variable for runtime-scanner and eve-connector ([#1518](https://github.com/sysdiglabs/charts/issues/1518))
+# v1.34.3
+### Chores
+* **sysdig-deploy** [50159c56](https://github.com/sysdiglabs/charts/commit/50159c56652290050e244fa856226327fb2cfa3d): Automatic version bump due to updated dependencies ([#1537](https://github.com/sysdiglabs/charts/issues/1537))
+# v1.34.2
+### Bug Fixes
+* **agent,sysdig-deploy** [d8e38523](https://github.com/sysdiglabs/charts/commit/d8e38523b3e94f0a6311bb5be8f5135e56d47f1c): /var/data volume mount ([#1532](https://github.com/sysdiglabs/charts/issues/1532))
+# v1.34.1
+### Chores
+* **sysdig-deploy** [e6edc444](https://github.com/sysdiglabs/charts/commit/e6edc4449f2313c3835ed63d76b4fc734f66eb72): Automatic version bump due to updated dependencies ([#1531](https://github.com/sysdiglabs/charts/issues/1531))
+# v1.34.0
+### New Features
+* **node-analyzer** [c43ad629](https://github.com/sysdiglabs/charts/commit/c43ad6292b8538d65de2267cf0aba9d55067e7d4): In-USE (EVE) enabled by default ([#1501](https://github.com/sysdiglabs/charts/issues/1501))
+# v1.33.3
+### Chores
+* **sysdig-deploy** [1e740a6f](https://github.com/sysdiglabs/charts/commit/1e740a6f7b1740a8193ae4460592191eaa910409): Automatic version bump due to updated dependencies ([#1527](https://github.com/sysdiglabs/charts/issues/1527))
+# v1.33.2
+### Chores
+* **admission-controller,cloud-connector,cluster-scanner,node-analyzer,registry-scanner,sysdig-deploy** [9d5d8c58](https://github.com/sysdiglabs/charts/commit/9d5d8c5809d35bcb5e8060ccc454f446cb1e3bc7): change charts ownership ([#1461](https://github.com/sysdiglabs/charts/issues/1461))
+# v1.33.1
+### Bug Fixes
+* **agent** [74d90fca](https://github.com/sysdiglabs/charts/commit/74d90fcae6332638233fb3a959dd724b30d82989): ephemeral-storage on gke autopilot and slim enabled ([#1519](https://github.com/sysdiglabs/charts/issues/1519))
+# v1.33.0
+### New Features
+* **agent** [d17d3f80](https://github.com/sysdiglabs/charts/commit/d17d3f8030c6c2c50d659b6714439f49e68f1d85): mount agent http-proxy credentials as secret ([#1517](https://github.com/sysdiglabs/charts/issues/1517))
+# v1.32.1
+### New Features
+* **cluster-scanner** [4d5254f0](https://github.com/sysdiglabs/charts/commit/4d5254f09559a7f8b1690c8c060428bb95727dc9): add verify registry as option in values ([#1516](https://github.com/sysdiglabs/charts/issues/1516))
+# v1.32.0
+### Chores
+* **node-analyzer,kspm-collector** [045b5d37](https://github.com/sysdiglabs/charts/commit/045b5d3798eb60ac6bff33f168273dca8a49618b): Bump KSPM to 1.38.0 & Node Analyzer to 1.36.0 ([#1513](https://github.com/sysdiglabs/charts/issues/1513))
+# v1.31.4
+### Chores
+* **sysdig-deploy** [1e046c81](https://github.com/sysdiglabs/charts/commit/1e046c81a725a256c1be3c4019013dc5695ae196): Automatic version bump due to updated dependencies ([#1509](https://github.com/sysdiglabs/charts/issues/1509))
+# v1.31.3
+### Chores
+* **sysdig-deploy** [00089aab](https://github.com/sysdiglabs/charts/commit/00089aabee2145933a6ead25a8b4b6ade34168e4): Automatic version bump due to updated dependencies ([#1505](https://github.com/sysdiglabs/charts/issues/1505))
+# v1.31.2
+### Chores
+* **sysdig-deploy** [418863d1](https://github.com/sysdiglabs/charts/commit/418863d1c06007271bdad4f16e5c90e3884541d7): Automatic version bump due to updated dependencies ([#1502](https://github.com/sysdiglabs/charts/issues/1502))
+# v1.31.0
+### New Features
+* **agent** [445f3c03](https://github.com/sysdiglabs/charts/commit/445f3c03e4236fdffbaba54b516da2993c519d2e): Add Local Forwarder support for Agent ([#1458](https://github.com/sysdiglabs/charts/issues/1458))
+# v1.30.1
+### Chores
+* **clusterScanner** [849d2cdd](https://github.com/sysdiglabs/charts/commit/849d2cddd9058b3a1e46f110ccbd0a815399219a): bump RSI and ISE version to 0.5.3 ([#1494](https://github.com/sysdiglabs/charts/issues/1494))
+# v1.30.0
+### New Features
+* [2b91ee58](https://github.com/sysdiglabs/charts/commit/2b91ee5813a416c7e4fe20fa3639645904deba47): release agent 12.18.0 ([#1493](https://github.com/sysdiglabs/charts/issues/1493))
+# v1.29.13
+### Chores
+* **sysdig-deploy** [731d7c82](https://github.com/sysdiglabs/charts/commit/731d7c82bd65eba81561c5d7164d090d1e536f4d): Automatic version bump due to updated dependencies ([#1491](https://github.com/sysdiglabs/charts/issues/1491))
+# v1.29.12
+### Chores
+* **sysdig-deploy** [ddc589c2](https://github.com/sysdiglabs/charts/commit/ddc589c299ebbc6a19106b5451d31a2a733b5442): Automatic version bump due to updated dependencies ([#1488](https://github.com/sysdiglabs/charts/issues/1488))
+# v1.29.11
+### Chores
+* **sysdig-deploy** [3319ba5f](https://github.com/sysdiglabs/charts/commit/3319ba5f234b44236de62c0adc86a253a015d4a3): Automatic version bump due to updated dependencies ([#1483](https://github.com/sysdiglabs/charts/issues/1483))
+# v1.29.10
+### Bug Fixes
+* [16386ec1](https://github.com/sysdiglabs/charts/commit/16386ec18d4e76f0744926ead627ada28eca1e4b): feat(node-analyzer,cluster-scanner): resolving bug with nodeAnalyzer and clusterScanner condition. ([#1479](https://github.com/sysdiglabs/charts/issues/1479))
+# v1.29.9
+### Chores
+* **sysdig-deploy** [7673743f](https://github.com/sysdiglabs/charts/commit/7673743f25e9a80fc92c90d2ef972e285622f635): Automatic version bump due to updated dependencies ([#1478](https://github.com/sysdiglabs/charts/issues/1478))
+# v1.29.8
+### Chores
+* **sysdig-deploy** [d0fd9c63](https://github.com/sysdiglabs/charts/commit/d0fd9c6377cc5af4df08356fd802198f43324db5): Automatic version bump due to updated dependencies ([#1475](https://github.com/sysdiglabs/charts/issues/1475))
+# v1.29.7
+### Chores
+* **kspm-collector,node-analyzer** [0b43cdef](https://github.com/sysdiglabs/charts/commit/0b43cdef544b2a5d553479027c9065964c6c4829): update cspm agents to UBI image 1.5.8 ([#1469](https://github.com/sysdiglabs/charts/issues/1469))
+# v1.29.6
+### Bug Fixes
+* **cluster-scanner** [09c0c714](https://github.com/sysdiglabs/charts/commit/09c0c714333f9ba7c28954b5a688a22092e5db88): corrected onPremCompatibilityVersion to 7.0.0 ([#1466](https://github.com/sysdiglabs/charts/issues/1466))
+# v1.29.5
+### Chores
+* **sysdig-deploy** [a1fd1d5f](https://github.com/sysdiglabs/charts/commit/a1fd1d5fb8a96e8e09be367b728ef3cea3b522db): Automatic version bump due to updated dependencies ([#1463](https://github.com/sysdiglabs/charts/issues/1463))
+# v1.29.4
+### Chores
+* **sysdig-deploy** [300e22e0](https://github.com/sysdiglabs/charts/commit/300e22e0bdbcdc5fcbe4cd2bf31fdb72d98d6bb7): Automatic version bump due to updated dependencies ([#1457](https://github.com/sysdiglabs/charts/issues/1457))
 # v1.29.3
 ### Bug Fixes
 * **node-analyzer,sysdig-deploy** [5ea89862](https://github.com/sysdiglabs/charts/commit/5ea898622331b94947c0982261ca8d07971f48cf): Ability to disable sslVerifyCertificate per container on node-analyzer ([#1445](https://github.com/sysdiglabs/charts/issues/1445))

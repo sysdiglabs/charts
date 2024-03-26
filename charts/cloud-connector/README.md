@@ -25,7 +25,7 @@ Use [Cloud Connector](https://docs.sysdig.com/en/docs/installation/sysdig-secure
 ### Prerequisites
 
 
-- Helm v3
+- Helm v3.6
 - Sysdig Secure API Token
 
 ###  Installation
@@ -36,7 +36,7 @@ To install the chart:
 helm repo add sysdig https://charts.sysdig.com
 helm repo update
 helm upgrade --install cloud-connector sysdig/cloud-connector \
-     --create-namespace -n cloud-connector --version=0.8.6  \
+     --create-namespace -n cloud-connector --version=0.8.8  \
      --set sysdig.secureAPIToken=<SECURE_API_TOKEN>
 ```
 
@@ -60,7 +60,7 @@ For example:
 
 ```bash
 helm upgrade --install cloud-connector sysdig/cloud-connector \
-     --create-namespace -n cloud-connector --version=0.8.6  \
+     --create-namespace -n cloud-connector --version=0.8.8  \
      --set sysdig.secureAPIToken=<SECURE_API_TOKEN>
 ```
 
@@ -72,7 +72,7 @@ For example:
 
 ```bash
 helm upgrade --install cloud-connector sysdig/cloud-connector \
-     --create-namespace -n cloud-connector --version=0.8.6  \
+     --create-namespace -n cloud-connector --version=0.8.8  \
     --values values.yaml
 ```
 

@@ -33,7 +33,7 @@ tests:
           value: kube-system
       - equal:
           path: data.eve_enabled
-          value: "false"
+          value: "true"
       - equal:
           path: data.eve_integration_enabled
           value: "false"
@@ -359,7 +359,7 @@ tests:
           path: data.enable_platform_services
           value: "true"
 
-  - it: "has correct platform services value when onPremCompatibilityVersion is < 6.6 and region does NOT support platform services"
+  - it: "has correct platform services value when onPremCompatibilityVersion is < 7.0 and region does NOT support platform services"
     set:
       global.sysdig.apiHost: "http://test.com"
       onPremCompatibilityVersion: "6.5.99"
@@ -368,7 +368,7 @@ tests:
       - isNull:
           path: data.enable_platform_services
 
-  - it: "has correct platform services value when onPremCompatibilityVersion is < 6.6 and region supports platform services"
+  - it: "has correct platform services value when onPremCompatibilityVersion is < 7.0 and region supports platform services"
     set:
       global.sysdig.apiHost: "http://test.com"
       onPremCompatibilityVersion: "6.5.99"
@@ -395,20 +395,20 @@ tests:
       - isNull:
           path: data.enable_platform_services
 
-  - it: "has correct platform services value when onPremCompatibilityVersion is = 6.6.0 and region does NOT support platform services"
+  - it: "has correct platform services value when onPremCompatibilityVersion is = 7.0.0 and region does NOT support platform services"
     set:
       global.sysdig.apiHost: "http://test.com"
-      onPremCompatibilityVersion: "6.6.0"
+      onPremCompatibilityVersion: "7.0.0"
       global.sysdig.region: ""
     asserts:
       - equal:
           path: data.enable_platform_services
           value: "true"
 
-  - it: "has correct platform services value when onPremCompatibilityVersion is = 6.6.0 and region supports platform services"
+  - it: "has correct platform services value when onPremCompatibilityVersion is = 7.0.0 and region supports platform services"
     set:
       global.sysdig.apiHost: "http://test.com"
-      onPremCompatibilityVersion: "6.6.0"
+      onPremCompatibilityVersion: "7.0.0"
       global.sysdig.region: "us1"
     asserts:
       - equal:
@@ -418,20 +418,39 @@ tests:
   - it: "has correct platform services value when onPremCompatibilityVersion is just a major.minor version"
     set:
       global.sysdig.apiHost: "http://test.com"
-      onPremCompatibilityVersion: "6.6"
+      onPremCompatibilityVersion: "7.0"
     asserts:
       - equal:
           path: data.enable_platform_services
           value: "true"
 
-  - it: "has correct platform services value when onPremCompatibilityVersion is > 6.6.0"
+  - it: "has correct platform services value when onPremCompatibilityVersion is > 7.0.0"
     set:
       global.sysdig.apiHost: "http://test.com"
-      onPremCompatibilityVersion: "6.6.1"
+      onPremCompatibilityVersion: "7.0.1"
     asserts:
       - equal:
           path: data.enable_platform_services
           value: "true"
+
+  - it: "has correct platform services value when enablePlatformServicesConfig is set to false provided and region supports platform services"
+    set:
+      global.sysdig.apiHost: "http://test.com"
+      global.sysdig.region: "us1"
+      disablePlatformScanning: true
+    asserts:
+      - isNull:
+          path: data.enable_platform_services
+
+  - it: "has correct platform services value when onPremCompatibilityVersion is = 7.0.0, region does NOT support platform services and enablePlatformServicesConfig set to false"
+    set:
+      global.sysdig.apiHost: "http://test.com"
+      onPremCompatibilityVersion: "7.0.0"
+      global.sysdig.region: ""
+      disablePlatformScanning: true
+    asserts:
+      - isNull:
+          path: data.enable_platform_services
 
   - it: "fails if onPremCompatibilityVersion is not a valid semver"
     set:
@@ -440,3 +459,60 @@ tests:
     asserts:
       - failedTemplate:
           errorMessage: "Invalid Semantic Version"
+
+  - it: "has nats TLS enabled when nats tls is enabled"
+    set:
+      runtimeStatusIntegrator.natsJS.tls.enabled: true
+    asserts:
+      - equal:
+          path: data.js_server_tls_enabled
+          value: "true"
+      - equal:
+          path: data.js_tls_skip_verify
+          value: "false"
+      - equal:
+          path: data.js_tls_cert_path
+          value: "/js-certs/js_tls.cert"
+      - equal:
+          path: data.js_tls_key_path
+          value: "/js-certs/js_tls.key"
+      - equal:
+          path: data.js_tls_ca_paths
+          value: "/js-certs/js_tls.ca"
+
+  - it: "has nats TLS enabled, and skips tls verification, when nats tls is enabled"
+    set:
+      runtimeStatusIntegrator.natsJS.tls.enabled: true
+      runtimeStatusIntegrator.natsJS.tls.verifyCertificate: false
+    asserts:
+      - equal:
+          path: data.js_server_tls_enabled
+          value: "true"
+      - equal:
+          path: data.js_tls_skip_verify
+          value: "true"
+      - equal:
+          path: data.js_tls_cert_path
+          value: "/js-certs/js_tls.cert"
+      - equal:
+          path: data.js_tls_key_path
+          value: "/js-certs/js_tls.key"
+      - equal:
+          path: data.js_tls_ca_paths
+          value: "/js-certs/js_tls.ca"
+
+  - it: "has nats TLS disabled when nats tls settings are not provided"
+    set:
+      runtimeStatusIntegrator.natsJS.tls: null
+    asserts:
+      - equal:
+          path: data.js_server_tls_enabled
+          value: "false"
+      - notExists:
+          path: data.js_tls_skip_verify
+      - notExists:
+          path: data.js_tls_cert_path
+      - notExists:
+          path: data.js_tls_key_path
+      - notExists:
+          path: data.js_tls_ca_paths

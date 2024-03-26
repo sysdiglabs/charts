@@ -22,6 +22,7 @@ rules:
       - resourcequotas
       - persistentvolumes
       - persistentvolumeclaims
+      - configmaps
     verbs:
       - get
       - list

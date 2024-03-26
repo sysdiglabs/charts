@@ -90,7 +90,12 @@ spec:
             readOnlyRootFilesystem: false
             allowPrivilegeEscalation: true
           resources:
-            {{ toYaml .Values.slim.resources | nindent 12 }}
+            {{- if (include "agent.gke.autopilot" .) }}
+              {{- $resources := merge .Values.slim.resources (dict "requests" (dict "ephemeral-storage" .Values.gke.ephemeralStorage))}}
+              {{- toYaml $resources | nindent 12 }}
+            {{- else }}
+              {{ toYaml .Values.slim.resources | nindent 12 }}
+            {{- end }}
           env:
           {{- if or (include "agent.ebpfEnabled" .) (include "agent.gke.autopilot" .) }}
             - name: SYSDIG_BPF_PROBE
@@ -219,10 +224,23 @@ spec:
               value: /opt/draios/etc/ca-certs/{{- include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.ssl) -}}
             {{- end }}
           readinessProbe:
+            {{- if eq (include "agent.enableHttpProbes" .) "true" }}
+            httpGet:
+              host: 127.0.0.1
+              path: /healthz
+              port: 24483
+            {{- else }}
             exec:
               command: [ "test", "-e", "/opt/draios/logs/running" ]
+            {{- end }}
             initialDelaySeconds: {{ .Values.daemonset.probes.initialDelay }}
+            periodSeconds: {{ .Values.daemonset.probes.periodDelay }}
           volumeMounts:
+          {{- if .Values.localForwarder.enabled }}
+            - mountPath: /opt/draios/etc/local_forwarder_config.yaml
+              subPath: local_forwarder_config.yaml
+              name: local-forwarder-config
+          {{- end }}
           {{- /* Always requested */}}
             - mountPath: /host/dev
               name: dev-vol
@@ -237,6 +255,10 @@ spec:
               name: sysdig-agent-config
             - mountPath: /opt/draios/etc/kubernetes/secrets
               name: sysdig-agent-secrets
+            {{- if and (include "agent.httpProxyCredentials" .) (not (include "agent.gke.autopilot" .)) }}
+            - mountPath: /opt/draios/etc/secrets/http_proxy
+              name: sysdig-agent-http-proxy-secrets
+            {{- end }}
             - mountPath: /etc/podinfo
               name: podinfo
 
@@ -265,6 +287,8 @@ spec:
               readOnly: true
             - mountPath: /host/var/lib
               name: varlib-vol
+            - mountPath: /host/var/data
+              name: vardata-vol
             - mountPath: /host/var/run
               name: varrun-vol
             {{- if (include "agent.ebpfEnabled" .) }}
@@ -283,6 +307,8 @@ spec:
               readOnly: true
             - mountPath: /host/var/lib
               name: varlib-vol
+            - mountPath: /host/var/data
+              name: vardata-vol
             - mountPath: /host/var/run
               name: varrun-vol
             {{- if (include "agent.ebpfEnabled" .) }}
@@ -344,6 +370,12 @@ spec:
           configMap:
             name: {{ include "agent.configmapName" . }}
             optional: true
+        {{- if .Values.localForwarder.enabled }}
+        - name: local-forwarder-config
+          configMap:
+            name: {{ include "agent.localForwarderConfigMapName" . }}
+            optional: true
+        {{- end }}
         - name: sysdig-agent-secrets
           secret:
             {{- if not ( include "agent.accessKeySecret" . ) }}
@@ -351,6 +383,11 @@ spec:
             {{- else }}
             secretName: {{ include "agent.accessKeySecret" . }}
             {{- end }}
+        {{- if and (include "agent.httpProxyCredentials" .) (not (include "agent.gke.autopilot" .)) }}
+        - name: sysdig-agent-http-proxy-secrets
+          secret:
+            secretName: {{ template "agent.fullname" . }}-proxy
+        {{- end }}
         - name: podinfo
           downwardAPI:
             defaultMode: 420
@@ -397,6 +434,9 @@ spec:
         - name: varlib-vol
           hostPath:
             path: /var/lib
+        - name: vardata-vol
+          hostPath:
+            path: /var/data
         - name: varrun-vol
           hostPath:
             path: /var/run
@@ -432,6 +472,9 @@ spec:
         - name: varlib-vol
           hostPath:
             path: /var/lib
+        - name: vardata-vol
+          hostPath:
+            path: /var/data
         {{- if (include "agent.ebpfEnabled" .) }}
         - name: bpf-probes
           emptyDir: {}

@@ -1,11 +1,26 @@
 suite: Test specifying affinity settings on the Node Analyzer DaemonSet
 templates:
-  - templates/daemonset-node-analyzer.yaml
+  - daemonset-node-analyzer.yaml
+  # For checksums
+  - clusterrole-node-analyzer.yaml
+  - clusterrolebinding-node-analyzer.yaml
+  - configmap-benchmark-runner.yaml
+  - configmap-host-analyzer.yaml
+  - configmap-host-scanner.yaml
+  - configmap-image-analyzer.yaml
+  - configmap-kspm-analyzer.yaml
+  - secrets.yaml
+  - serviceaccount-node-analyzer.yaml
+  - runtimeScanner/runtime-scanner-configmap.yaml
+values:
+  - ./default_required_values.yaml
 tests:
   - it: Test the default affinity annotations (<1.14)
     capabilities:
       majorVersion: '1'
       minorVersion: '13'
+    templates:
+      - daemonset-node-analyzer.yaml
     asserts:
       - equal:
           path: spec.template.spec['affinity']
@@ -28,6 +43,8 @@ tests:
     capabilities:
       majorVersion: '1'
       minorVersion: '14'
+    templates:
+      - daemonset-node-analyzer.yaml
     asserts:
       - equal:
           path: spec.template.spec['affinity']
@@ -47,6 +64,8 @@ tests:
                         - linux
 
   - it: Test adding custom affinity settings
+    templates:
+      - daemonset-node-analyzer.yaml
     set:
       nodeAnalyzer:
         affinity:

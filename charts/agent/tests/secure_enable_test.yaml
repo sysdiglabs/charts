@@ -45,21 +45,6 @@ tests:
       - matchRegex:
           path: data['dragent.yaml']
           pattern: |-
-            drift_control:
-              enabled: false
-      - matchRegex:
-          path: data['dragent.yaml']
-          pattern: |-
-            drift_killer:
-              enabled: false
-      - matchRegex:
-          path: data['dragent.yaml']
-          pattern: |-
-            falcobaseline:
-              enabled: false
-      - matchRegex:
-          path: data['dragent.yaml']
-          pattern: |-
             memdump:
               enabled: false
       - matchRegex:
@@ -144,21 +129,6 @@ tests:
       - matchRegex:
           path: data['dragent.yaml']
           pattern: |-
-            drift_control:
-              enabled: false
-      - matchRegex:
-          path: data['dragent.yaml']
-          pattern: |-
-            drift_killer:
-              enabled: false
-      - matchRegex:
-          path: data['dragent.yaml']
-          pattern: |-
-            falcobaseline:
-              enabled: false
-      - matchRegex:
-          path: data['dragent.yaml']
-          pattern: |-
             memdump:
               enabled: false
       - matchRegex:
@@ -200,3 +170,26 @@ tests:
     asserts:
       - failedTemplate:
           errorMessage: 'Set secure.enabled=true when specifying sysdig.settings.feature.mode is `secure` or `secure_light`'
+
+  - it: Test secure.enabled=true when manually specifying security block content
+    set:
+      secure:
+        enabled: true
+      sysdig:
+        settings:
+          security:
+            goodFeatureEnabled: true
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            security:
+              enabled: true
+              goodFeatureEnabled: true
+      - notMatchRegex:  # Catch the case of duplications due to sysdig.settings.security being specified
+          path: data['dragent.yaml']
+          pattern: |-
+            security:
+              goodFeatureEnabled: true

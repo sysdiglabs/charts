@@ -1,0 +1,13 @@
+{{- if .Values.localForwarder.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "agent.localForwarderConfigMapName" . }}
+  namespace: {{ include "agent.namespace" . }}
+  labels:
+{{ (include "agent.labels" .) | indent 4 }}
+data:
+  local_forwarder_config.yaml: |
+    integrations:
+      {{- toYaml .Values.localForwarder.integrations | nindent 6 }}
+{{- end }}

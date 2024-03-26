@@ -1,0 +1,198 @@
+suite: Testing seetings for secure light mode
+templates:
+  - configmap.yaml
+tests:
+  - it: Testing if certain settings set to false for agent version =< 12.18.x
+    set:
+      image:
+        tag: 12.18.1
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+        settings:
+          feature:
+            mode: secure_light
+      secure:
+        enabled: true
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            drift_control:
+              enabled: false
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            drift_killer:
+              enabled: false
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            falcobaseline:
+              enabled: false
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            memdump:
+              enabled: false
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            network_topology:
+              enabled: false
+    template: configmap.yaml
+
+  - it: Testing if certain settings set to false for agent version = 12.16.3
+    set:
+      image:
+        tag: 12.16.3
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+        settings:
+          feature:
+            mode: secure_light
+      secure:
+        enabled: true
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            drift_control:
+              enabled: false
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            drift_killer:
+              enabled: false
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            falcobaseline:
+              enabled: false
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            memdump:
+              enabled: false
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            network_topology:
+              enabled: false
+    template: configmap.yaml
+
+  - it: Testing if certain settings set to false for agent version latest
+    set:
+      image:
+        tag: latest
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+        settings:
+          feature:
+            mode: secure_light
+      secure:
+        enabled: true
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            drift_control:
+              enabled: false
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            drift_killer:
+              enabled: false
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            falcobaseline:
+              enabled: false
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            memdump:
+              enabled: false
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            network_topology:
+              enabled: false
+    template: configmap.yaml
+
+  - it: Testing if certain settings set to false for agent version > 12.18.x
+    set:
+      image:
+        tag: 12.19.0
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+        settings:
+          feature:
+            mode: secure_light
+      secure:
+        enabled: true
+    asserts:
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            drift_control:
+              enabled: false
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            drift_killer:
+              enabled: false
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            falcobaseline:
+              enabled: false
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            memdump:
+              enabled: false
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            network_topology:
+              enabled: false
+    template: configmap.yaml
+
+  - it: Testing if certain settings set to false for agent version 12.20.1
+    set:
+      image:
+        tag: 12.20.1
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+        settings:
+          feature:
+            mode: secure_light
+      secure:
+        enabled: true
+    asserts:
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            drift_control:
+              enabled: false
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            drift_killer:
+              enabled: false
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            falcobaseline:
+              enabled: false
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            memdump:
+              enabled: false
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            network_topology:
+              enabled: false
+    template: configmap.yaml

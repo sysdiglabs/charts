@@ -6,10 +6,23 @@ templates:
   - runtimeScanner/eveconnector-api-service.yaml
   - runtimeScanner/eveconnector-api-deployment.yaml
   - runtimeScanner/sysdig-eve-secret.yaml
+    # For checksums
+  - clusterrole-node-analyzer.yaml
+  - clusterrolebinding-node-analyzer.yaml
+  - configmap-benchmark-runner.yaml
+  - configmap-host-analyzer.yaml
+  - configmap-host-scanner.yaml
+  - configmap-image-analyzer.yaml
+  - secrets.yaml
+  - serviceaccount-node-analyzer.yaml
+  - runtimeScanner/runtime-scanner-configmap.yaml
+
 tests:
   - it: Check global kspm deploy
     set:
       global:
+        sysdig:
+          accessKey: "AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE"
         kspm:
           deploy: true
       clusterName: test-cluster
@@ -23,6 +36,8 @@ tests:
   - it: Check hostPID is true if global.kspm.deploy is true
     set:
       global:
+        sysdig:
+          accessKey: "AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE"
         kspm:
           deploy: true
       clusterName: test-cluster
@@ -34,6 +49,9 @@ tests:
 
   - it: Check hostPID is true if nodeAnalyzer.benchmarkRunner.deploy is true
     set:
+      global:
+        sysdig:
+          accessKey: "AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE"
       nodeAnalyzer:
         benchmarkRunner:
           deploy: true
@@ -45,17 +63,23 @@ tests:
           value: true
 
   - it: Check global kspm deploy without clusterName
+    templates:
+      - daemonset-node-analyzer.yaml
     set:
       global:
         kspm:
           deploy: true
-    template: configmap-kspm-analyzer.yaml
+        sysdig:
+          accessKey: "AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE"
     asserts:
       - failedTemplate:
           errorMessage: "A valid clusterName is required"
 
   - it: Check nodeAnalyzer imageAnalyzer deploy
     set:
+      global:
+        sysdig:
+          accessKey: "AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE"
       nodeAnalyzer:
         imageAnalyzer:
           deploy: true
@@ -70,6 +94,9 @@ tests:
 
   - it: Check nodeAnalyzer hostAnalyzer deploy
     set:
+      global:
+        sysdig:
+          accessKey: "AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE"
       nodeAnalyzer:
         hostAnalyzer:
           deploy: true
@@ -84,6 +111,9 @@ tests:
 
   - it: Check nodeAnalyzer benchmarkRunner deploy
     set:
+      global:
+        sysdig:
+          accessKey: "AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE"
       nodeAnalyzer:
         benchmarkRunner:
           deploy: true
@@ -98,6 +128,11 @@ tests:
 
   - it: Check nodeAnalyzer runtimeScanner deploy
     set:
+      global:
+        clusterConfig:
+          name: "test"
+        sysdig:
+          accessKey: "AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE"
       nodeAnalyzer:
         runtimeScanner:
           deploy: true
@@ -112,6 +147,9 @@ tests:
 
   - it: Check nodeAnalyzer runtimeScanner eveConnector deploy
     set:
+      global:
+        sysdig:
+          accessKey: "AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE"
       nodeAnalyzer:
         runtimeScanner:
           deploy: true
@@ -141,6 +179,9 @@ tests:
 
   - it: Check nodeAnalyzer imageAnalyzer deploy set to false
     set:
+      global:
+        sysdig:
+          accessKey: "AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE"
       nodeAnalyzer:
         imageAnalyzer:
           deploy: false
@@ -155,6 +196,9 @@ tests:
 
   - it: Check nodeAnalyzer hostAnalyzer deploy set to false
     set:
+      global:
+        sysdig:
+          accessKey: "AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE"
       nodeAnalyzer:
         hostAnalyzer:
           deploy: false
@@ -169,6 +213,9 @@ tests:
 
   - it: Check nodeAnalyzer benchmarkRunner deploy set to false
     set:
+      global:
+        sysdig:
+          accessKey: "AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE"
       nodeAnalyzer:
         benchmarkRunner:
           deploy: false
@@ -183,6 +230,9 @@ tests:
 
   - it: Check nodeAnalyzer runtimeScanner deploy set to false
     set:
+      global:
+        sysdig:
+          accessKey: "AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE"
       nodeAnalyzer:
         runtimeScanner:
           deploy: false
@@ -195,8 +245,11 @@ tests:
           count: 1
           any: true
 
-  - it: Check nodeAnalyzer runtimeScanner eveConnector deploy set to false
+  - it: Check nodeAnalyzer runtimeScanner EVE_INTEGRATION_ENABLED is true even if eveConnector deploy set to false
     set:
+      global:
+        sysdig:
+          accessKey: "AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE"
       nodeAnalyzer:
         runtimeScanner:
           deploy: true
@@ -204,7 +257,7 @@ tests:
             deploy: false
       clusterName: test-k8s
     asserts:
-      - notContains:
+      - contains:
           path: spec.template.spec.containers[3].env
           content:
             name: EVE_INTEGRATION_ENABLED

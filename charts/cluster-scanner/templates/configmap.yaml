@@ -12,6 +12,7 @@ data:
   sysdig_host: https://{{ include "cluster-scanner.apiHost" . }}
   {{ end -}}
   sysdig_verify_certificate: {{ .Values.sslVerifyCertificate | quote }}
+  sysdig_verify_registry_certificate: {{ .Values.sslVerifyRegistryCertificate | quote }}
   cluster_name: {{ .Values.global.clusterConfig.name }}
   root_namespace: {{ .Values.rootNamespace }}
   eve_enabled: {{ .Values.eveEnabled | quote }}
@@ -22,6 +23,13 @@ data:
 {{- include "cluster-scanner.modeConfig" . | nindent 2 }}
   js_server_user: {{ .Values.runtimeStatusIntegrator.natsJS.user }}
   js_server_url: "nats://{{- include "cluster-scanner.fullname" . }}:4222"
+  js_server_tls_enabled: {{ ((.Values.runtimeStatusIntegrator.natsJS).tls).enabled | default "false" | quote }}
+  {{- if ((.Values.runtimeStatusIntegrator.natsJS).tls).enabled }}
+  js_tls_skip_verify: {{ not ((.Values.runtimeStatusIntegrator.natsJS).tls).verifyCertificate | default "false" | quote }}
+  js_tls_cert_path: "/js-certs/js_tls.cert"
+  js_tls_key_path: "/js-certs/js_tls.key"
+  js_tls_ca_paths: "/js-certs/js_tls.ca"
+  {{- end }}
   rsi_leaderelection_lock_name: {{ .Values.runtimeStatusIntegrator.leaderElectionLeaseNameOverride | default (include "cluster-scanner.fullname" .) }}
   rsi_leaderelection_lock_namespace: {{ .Values.runtimeStatusIntegrator.leaderElectionLeaseNamespaceOverride | default .Release.Namespace }}
   rsi_service_name: {{ include "cluster-scanner.fullname" . }}

@@ -3,6 +3,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ .Release.Name }}-runtime-scanner
+  namespace: {{ include "nodeAnalyzer.namespace" . }}
   labels:
 {{ include "nodeAnalyzer.labels" . | indent 4 }}
 data:
@@ -14,30 +15,26 @@ data:
   {{- end }}
   {{- if (.Values.nodeAnalyzer.runtimeScanner.httpProxy | default .Values.nodeAnalyzer.httpProxy | default .Values.global.proxy.httpProxy) }}
   http_proxy: {{ .Values.nodeAnalyzer.runtimeScanner.httpProxy | default .Values.nodeAnalyzer.httpProxy | default .Values.global.proxy.httpProxy }}
-  {{- end -}}
+  {{- end }}
   {{- if (.Values.nodeAnalyzer.runtimeScanner.httpsProxy | default .Values.nodeAnalyzer.httpsProxy | default .Values.global.proxy.httpsProxy) }}
   https_proxy: {{ .Values.nodeAnalyzer.runtimeScanner.httpsProxy | default .Values.nodeAnalyzer.httpsProxy | default .Values.global.proxy.httpsProxy }}
-  {{- end -}}
+  {{- end }}
   {{- if (.Values.nodeAnalyzer.runtimeScanner.noProxy | default .Values.nodeAnalyzer.noProxy | default .Values.global.proxy.noProxy) }}
   no_proxy: {{ .Values.nodeAnalyzer.runtimeScanner.noProxy | default .Values.nodeAnalyzer.noProxy | default .Values.global.proxy.noProxy }}
-  {{- end -}}
-  {{- if .Values.nodeAnalyzer.runtimeScanner.settings.eveEnabled }}
-  eve_enabled: "true"
-  {{- end -}}
-  {{- if hasKey .Values.nodeAnalyzer.runtimeScanner "eveConnector" }}
-  eve_integration_enabled: "true"
-  {{- end -}}
+  {{- end }}
+  eve_enabled: {{ .Values.nodeAnalyzer.runtimeScanner.settings.eveEnabled | quote }}
+  eve_integration_enabled: {{ .Values.nodeAnalyzer.runtimeScanner.settings.eveEnabled | quote }}
   {{- if hasKey .Values.nodeAnalyzer.runtimeScanner "settings" }}
   prom_port: {{ .Values.nodeAnalyzer.runtimeScanner.settings.prometheusPort | default 25001 | quote }}
-  {{- end -}}
+  {{- end }}
 
   {{- if .Values.nodeAnalyzer.runtimeScanner.settings.maxImageSizeAllowed }}
   max_image_size_allowed: {{ .Values.nodeAnalyzer.runtimeScanner.settings.maxImageSizeAllowed | int64 | quote }}
-  {{- end -}}
+  {{- end }}
   {{- if .Values.nodeAnalyzer.runtimeScanner.settings.maxFileSizeAllowed }}
   analyzer.maxFileSizeAllowed: {{ .Values.nodeAnalyzer.runtimeScanner.settings.maxFileSizeAllowed | int64 | quote }}
-  {{- end -}}
+  {{- end }}
   {{- if .Values.nodeAnalyzer.runtimeScanner.settings.vulnerabilityDBVersion }}
   vuln_db_version: {{ .Values.nodeAnalyzer.runtimeScanner.settings.vulnerabilityDBVersion | quote }}
-  {{- end -}}
+  {{- end }}
 {{- end }}
