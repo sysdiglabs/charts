@@ -279,6 +279,8 @@ spec:
           {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl)) "true" }}
           - name: SSL_CERT_FILE
             value: /ca-certs/{{- include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl) -}}
+          {{- end }}
+          {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl)) "true" }}
           - name: TLS_CA_PATHS
             value: /ca-certs/{{- include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.ssl) -}}
           {{- end }}
