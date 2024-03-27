@@ -1,10 +1,5 @@
 # What's Changed
 
-### Chores
-- **node-analyzer** [a90c3952](https://github.com/sysdiglabs/charts/commit/a90c3952dd4448806a7e300eac2293965cf9797e): bump sysdig/vuln-host-scanner to v0.8.0 ([#1660](https://github.com/sysdiglabs/charts/issues/1660))
-
-    * * Fixed a memory leak that could happen when disabling backend scanning
-* Fixed an issue that could cause memory spikes
-* Fixed an issue that could cause the host-scanner to detect wrongly the OS when running as a binary
-* Added support for platform scanning
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.24.4...node-analyzer-1.25.0
+### New Features
+- **node-analyzer,kspm-collector** [7d1201fc](https://github.com/sysdiglabs/charts/commit/7d1201fc5d1bfc18e9cfc24ed621e76773405d64): Skip TLS certificate verification when using TLS Proxy & bump applications version ([#1665](https://github.com/sysdiglabs/charts/issues/1665))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.25.0...node-analyzer-1.26.0
