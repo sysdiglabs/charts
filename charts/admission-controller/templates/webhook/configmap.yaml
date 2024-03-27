@@ -47,7 +47,7 @@ data:
   PLUGINS_VM_ENRICHER_K8S_LABELS: "{}"
   PLUGINS_VM_EXECUTOR_EXTRACT_SBOM: |-
     {
-      "rsiHost": {{ .Values.webhook.vm.clusterScannerEndpoint | default "clusterscanner-cluster-scanner:9999" | quote }},
+      "rsiHost": {{ .Values.webhook.vm.clusterScannerEndpoint | quote }},
       "insecure": true
     }
   {{- end }}
