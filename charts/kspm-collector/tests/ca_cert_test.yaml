@@ -3,7 +3,7 @@ templates:
   - secret.yaml
   - deployment.yaml
 tests:
-  - it: Check Custsom CA Cert Disabled
+  - it: Check Custom CA Cert Disabled
     documentIndex: 0
     set:
       clusterName: "test-k8s"
@@ -28,7 +28,7 @@ tests:
           path: spec.template.spec.containers[0].volumeMounts
         template: deployment.yaml
 
-  - it: Check Custsom CA Cert defined with Values
+  - it: Check Custom CA Cert defined with Values
     documentIndex: 0
     set:
       clusterName: "test-k8s"
@@ -70,7 +70,7 @@ tests:
             readOnly: true
         template: deployment.yaml
 
-  - it: Check Custsom CA Cert defined with Existing Secret
+  - it: Check Custom CA Cert defined with Existing Secret
     documentIndex: 0
     set:
       clusterName: "test-k8s"
@@ -108,7 +108,7 @@ tests:
             readOnly: true
         template: deployment.yaml
 
-  - it: Check Custsom CA Cert defined with Existing ConfigMap
+  - it: Check Custom CA Cert defined with Existing ConfigMap
     documentIndex: 0
     set:
       clusterName: "test-k8s"
