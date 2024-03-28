@@ -188,13 +188,22 @@ webhook:
       # The KSPM Admission Controller image repository
       repository: sysdig/secure-admission-controller
       # The KSPM Admission Controller image tag
-      tag: 1.27.0
+      tag: 1.27.2
       # Specifies the image digest value.  If set, this value is used instead of the tag value
       digest:
       # The PullPolicy for KSPM Admission Controller image
       pullPolicy:
   # The service name for Webhook deployment
   name: webhook
+
+  # Vulnerability Management extension settings
+  vm:
+    enabled: true
+    # NOTE: If you're installing ClusterScanner via ClusterShield
+    # the clusterScannerEndpoint will be in the form `${cluster-shield-installation-fullname}-cluster-scanner:9999`
+    # Port is always 9999
+    clusterScannerEndpoint: "CHANGEME:9999"
+
   # The number of replicas for webhook. **Deprecated**, use `webhook.autoscaling.minReplicas` and `webhook.autoscaling.maxReplicas` instead.
   replicaCount: 1
 
