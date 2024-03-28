@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **node-analyzer,kspm-collector** [7d1201fc](https://github.com/sysdiglabs/charts/commit/7d1201fc5d1bfc18e9cfc24ed621e76773405d64): Skip TLS certificate verification when using TLS Proxy & bump applications version ([#1665](https://github.com/sysdiglabs/charts/issues/1665))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.46.2...sysdig-deploy-1.47.0
+### Chores
+- **cluster-scanner** [8ec409ea](https://github.com/sysdiglabs/charts/commit/8ec409eaf8942f4be315c4e814ef25cc3fe68fa6): bump cluster-scanner to 0.7.0 ([#1663](https://github.com/sysdiglabs/charts/issues/1663))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.47.0...sysdig-deploy-1.48.0
