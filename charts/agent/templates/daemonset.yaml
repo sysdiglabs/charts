@@ -305,6 +305,9 @@ spec:
             - mountPath: /host/etc
               name: etc-vol
               readOnly: true
+            - mountPath: /host/usr/lib/os-release
+              name: osrel-usr
+              readOnly: true
             - mountPath: /host/var/lib
               name: varlib-vol
             - mountPath: /host/var/data
@@ -342,6 +345,9 @@ spec:
           {{- if and (.Values.slim.enabled) (include "agent.gke.autopilot" .) }}
             - mountPath: /host/etc/os-release
               name: osrel
+              readOnly: true
+            - mountPath: /host/usr
+              name: usr-vol
               readOnly: true
             - mountPath: /host/var/run/containerd/containerd.sock
               name: containerdsock-vol
@@ -463,6 +469,9 @@ spec:
         - name: usr-vol
           hostPath:
             path: /usr
+        - name: osrel-usr
+          hostPath:
+            path: /usr/lib/os-release
         - name: varrun-vol
           hostPath:
             path: /var/run
@@ -511,6 +520,9 @@ spec:
         - name: osrel
           hostPath:
             path: /etc/os-release
+        - name: usr-vol
+          hostPath:
+            path: /usr
         - name: bpf-probes
           emptyDir: {}
         - name: containerdsock-vol

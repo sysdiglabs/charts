@@ -124,3 +124,126 @@ tests:
     templates:
       - deployment.yaml
       - daemonset.yaml
+
+  - it: Check for os-release mounts in slim=false, autopilot=false
+    set:
+      slim:
+        enabled: false
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: etc-vol
+            hostPath:
+              path: /etc
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: usr-vol
+            hostPath:
+              path: /usr
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "sysdig")].volumeMounts
+          content:
+              mountPath: /host/etc
+              name: etc-vol
+              readOnly: true
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "sysdig")].volumeMounts
+          content:
+            mountPath: /host/usr
+            name: usr-vol
+            readOnly: true
+    template: daemonset.yaml
+
+  - it: Check for os-release mounts in slim=true, autopilot=false
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: etc-vol
+            hostPath:
+              path: /etc
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: osrel-usr
+            hostPath:
+              path: /usr/lib/os-release
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "sysdig")].volumeMounts
+          content:
+            mountPath: /host/etc
+            name: etc-vol
+            readOnly: true
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "sysdig")].volumeMounts
+          content:
+            mountPath: /host/usr/lib/os-release
+            name: osrel-usr
+            readOnly: true
+    template: daemonset.yaml
+
+  - it: Check for os-release mounts in slim=false, autopilot=true
+    set:
+      slim:
+        enabled: false
+      gke:
+        autopilot: true
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: osrel
+            hostPath:
+              path: /etc/os-release
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: usr-vol
+            hostPath:
+              path: /usr
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "sysdig")].volumeMounts
+          content:
+            mountPath: /host/etc/os-release
+            name: osrel
+            readOnly: true
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "sysdig")].volumeMounts
+          content:
+            mountPath: /host/usr
+            name: usr-vol
+            readOnly: true
+    template: daemonset.yaml
+
+  - it: Check for os-release mounts in slim=true, autopilot=true
+    set:
+      gke:
+        autopilot: true
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: osrel
+            hostPath:
+              path: /etc/os-release
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: usr-vol
+            hostPath:
+              path: /usr
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "sysdig")].volumeMounts
+          content:
+            mountPath: /host/etc/os-release
+            name: osrel
+            readOnly: true
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "sysdig")].volumeMounts
+          content:
+            mountPath: /host/usr
+            name: usr-vol
+            readOnly: true
+    template: daemonset.yaml
