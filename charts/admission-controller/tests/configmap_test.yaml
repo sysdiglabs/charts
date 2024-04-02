@@ -162,3 +162,12 @@ tests:
                 "insecure": true
               }
           template: templates/webhook/configmap.yaml
+  - it: Raise error if missing clusterScannerEndpoint
+    set:
+      clusterName: test-k8s
+      webhook:
+        vm:
+          enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: "A valid Sysdig API endpoint (.webhook.vm.clusterScannerEndpoint) is required"

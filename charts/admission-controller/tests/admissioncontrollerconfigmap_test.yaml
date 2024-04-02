@@ -18,8 +18,6 @@ tests:
   - it: Creates the clusterrole if webhook.acConfig is present
     set:
       webhook:
-        vm:
-          enabled: false
         acConfig: |
           foo: bar
           fizz: buzz
@@ -43,6 +41,7 @@ tests:
       webhook:
         vm:
           enabled: true
+          clusterScannerEndpoint: fake:9999
     asserts:
       - isSubset:
           path: rules[1]
@@ -52,10 +51,6 @@ tests:
             verbs: [ "get" ]
         template: templates/webhook/clusterrole.yaml
   - it: Does not create the configmap if webhook.acConfig is not present
-    set:
-      webhook:
-        vm:
-          enabled: false
     asserts:
       - notContains:
           path: rules

@@ -483,3 +483,11 @@ webhooks:
   failurePolicy: Ignore
 {{- end }}
 {{- end }}
+
+{{- define "admissionController.webhook.vmClusterScannerEndpoint" -}}
+{{- if not (and (.Values.webhook.vm).enabled (.Values.webhook.vm).clusterScannerEndpoint) -}}
+{{- required "A valid Sysdig API endpoint (.webhook.vm.clusterScannerEndpoint) is required" (.Values.webhook.vm).clusterScannerEndpoint -}}
+{{- else }}
+{{- (.Values.webhook.vm).clusterScannerEndpoint -}}
+{{- end -}}
+{{- end -}}

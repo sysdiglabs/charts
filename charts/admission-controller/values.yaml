@@ -198,11 +198,11 @@ webhook:
 
   # Vulnerability Management extension settings
   vm:
-    enabled: true
+    enabled: false
     # NOTE: If you're installing ClusterScanner via ClusterShield
     # the clusterScannerEndpoint will be in the form `${cluster-shield-installation-fullname}-cluster-scanner:9999`
     # Port is always 9999
-    clusterScannerEndpoint: "CHANGEME:9999"
+    # clusterScannerEndpoint: "CHANGEME:9999"
 
   # The number of replicas for webhook. **Deprecated**, use `webhook.autoscaling.minReplicas` and `webhook.autoscaling.maxReplicas` instead.
   replicaCount: 1
