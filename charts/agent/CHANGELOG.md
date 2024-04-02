@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.22.3
+### New Features
+* **agent** [a8bce052](https://github.com/sysdiglabs/charts/commit/a8bce0521e81091a76754b55f43de3933bf5dde2): ensure os-release file is mounted ([#1625](https://github.com/sysdiglabs/charts/issues/1625))
 # v1.22.2
 ### New Features
 * [fcaa2e3a](https://github.com/sysdiglabs/charts/commit/fcaa2e3a55890783c20940527b2f584dd5637f91): release agent 13.0.3 ([#1668](https://github.com/sysdiglabs/charts/issues/1668))

@@ -1,5 +1,5 @@
 # What's Changed
 
 ### New Features
-- [fcaa2e3a](https://github.com/sysdiglabs/charts/commit/fcaa2e3a55890783c20940527b2f584dd5637f91): release agent 13.0.3 ([#1668](https://github.com/sysdiglabs/charts/issues/1668))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.22.1...agent-1.22.2
+- **agent** [a8bce052](https://github.com/sysdiglabs/charts/commit/a8bce0521e81091a76754b55f43de3933bf5dde2): ensure os-release file is mounted ([#1625](https://github.com/sysdiglabs/charts/issues/1625))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.22.2...agent-1.22.3
