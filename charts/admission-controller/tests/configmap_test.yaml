@@ -117,3 +117,57 @@ tests:
             WORKERS: "2"
             WORKER_VERIFYSSL: "true"
           template: templates/webhook/configmap.yaml
+  - it: Creates the configmap with vm settings
+    set:
+      clusterName: test-k8s
+      webhook:
+        vm:
+          enabled: true
+          clusterScannerEndpoint: "some-svc-name:9999"
+    asserts:
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          template: templates/webhook/configmap.yaml
+      - isSubset:
+          path: data
+          content:
+            PLUGINS_VM_ENRICHER_IMAGEMETADATA: "{}"
+            PLUGINS_VM_ENRICHER_K8S_LABELS: "{}"
+            PLUGINS_VM_EXECUTOR_EXTRACT_SBOM: |-
+              {
+                "rsiHost": "some-svc-name:9999",
+                "insecure": true
+              }
+          template: templates/webhook/configmap.yaml
+  - it: Creates the configmap with no vm settings if disabled
+    set:
+      clusterName: test-k8s
+      webhook:
+        vm:
+          enabled: false
+    asserts:
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          template: templates/webhook/configmap.yaml
+      - isNotSubset:
+          path: data
+          content:
+            PLUGINS_VM_ENRICHER_IMAGEMETADATA: "{}"
+            PLUGINS_VM_ENRICHER_K8S_LABELS: "{}"
+            PLUGINS_VM_EXECUTOR_EXTRACT_SBOM: |-
+              {
+                "rsiHost": "clusterscanner-cluster-scanner:9999",
+                "insecure": true
+              }
+          template: templates/webhook/configmap.yaml
+  - it: Raise error if missing clusterScannerEndpoint
+    set:
+      clusterName: test-k8s
+      webhook:
+        vm:
+          enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: "A valid Sysdig API endpoint (.webhook.vm.clusterScannerEndpoint) is required"

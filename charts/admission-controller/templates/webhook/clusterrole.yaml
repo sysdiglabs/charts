@@ -18,7 +18,13 @@ rules:
   - pods
 {{- if .Values.webhook.acConfig }}
   - configmaps
+{{- end }}
+{{- if or .Values.webhook.acConfig (.Values.webhook.vm).enabled  }}
   - secrets
+{{- end }}
+{{- if (.Values.webhook.vm).enabled }}
+  - serviceaccounts
+  - namespaces
 {{- end }}
   verbs:
   - get

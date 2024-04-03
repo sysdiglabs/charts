@@ -42,3 +42,12 @@ data:
   WORKERS: "2"
   WORKER_VERIFYSSL: "true"
   {{- end}}
+  {{- if (.Values.webhook.vm).enabled }}
+  PLUGINS_VM_ENRICHER_IMAGEMETADATA: "{}"
+  PLUGINS_VM_ENRICHER_K8S_LABELS: "{}"
+  PLUGINS_VM_EXECUTOR_EXTRACT_SBOM: |-
+    {
+      "rsiHost": {{ include "admissionController.webhook.vmClusterScannerEndpoint" . | quote }},
+      "insecure": true
+    }
+  {{- end }}

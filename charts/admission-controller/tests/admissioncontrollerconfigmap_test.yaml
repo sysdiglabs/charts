@@ -33,11 +33,24 @@ tests:
           path: rules[1]
           content:
             apiGroups: [ "" ]
-            resources: [ "pods", "configmaps", "secrets" ]
+            resources: [ "pods", "configmaps", "secrets"]
+            verbs: [ "get" ]
+        template: templates/webhook/clusterrole.yaml
+  - it: contains VM RBAC additions when enabled
+    set:
+      webhook:
+        vm:
+          enabled: true
+          clusterScannerEndpoint: fake:9999
+    asserts:
+      - isSubset:
+          path: rules[1]
+          content:
+            apiGroups: [ "" ]
+            resources: [ "pods", "secrets", "serviceaccounts", "namespaces"]
             verbs: [ "get" ]
         template: templates/webhook/clusterrole.yaml
   - it: Does not create the configmap if webhook.acConfig is not present
-    set: {}
     asserts:
       - notContains:
           path: rules
