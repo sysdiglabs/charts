@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.49.1
+### Chores
+* **sysdig-deploy** [bedf9d55](https://github.com/sysdiglabs/charts/commit/bedf9d552490bf37861b83de12449c6a3d274727): Automatic version bump due to updated dependencies ([#1678](https://github.com/sysdiglabs/charts/issues/1678))
 # v1.49.0
 ### New Features
 * **admission-controller** [7128e512](https://github.com/sysdiglabs/charts/commit/7128e51219382f536fb61bded24414d97fb1eb42): Support for VM checks ([#1651](https://github.com/sysdiglabs/charts/issues/1651))
