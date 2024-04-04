@@ -244,6 +244,9 @@ spec:
           {{- /* Always requested */}}
             - mountPath: /host/dev
               name: dev-vol
+            - mountPath: /host/usr
+              name: usr-vol
+              readOnly: true
             - mountPath: /host/proc
               name: proc-vol
               readOnly: true
@@ -281,9 +284,6 @@ spec:
               readOnly: true
             - mountPath: /host/lib/modules
               name: modules-vol
-              readOnly: true
-            - mountPath: /host/usr
-              name: usr-vol
               readOnly: true
             - mountPath: /host/var/lib
               name: varlib-vol
@@ -331,9 +331,6 @@ spec:
             - mountPath: /host/lib/modules
               name: modules-vol
               readOnly: true
-            - mountPath: /host/usr
-              name: usr-vol
-              readOnly: true
             - mountPath: /host/var/run
               name: varrun-vol
           {{- end }}
@@ -357,6 +354,9 @@ spec:
         - name: dev-vol
           hostPath:
             path: /dev
+        - name: usr-vol
+          hostPath:
+            path: /usr
         - name: proc-vol
           hostPath:
             path: /proc
@@ -428,9 +428,6 @@ spec:
         - name: modules-vol
           hostPath:
             path: /lib/modules
-        - name: usr-vol
-          hostPath:
-            path: /usr
         - name: varlib-vol
           hostPath:
             path: /var/lib
@@ -460,9 +457,6 @@ spec:
         - name: modules-vol
           hostPath:
             path: /lib/modules
-        - name: usr-vol
-          hostPath:
-            path: /usr
         - name: varrun-vol
           hostPath:
             path: /var/run
@@ -495,9 +489,6 @@ spec:
         - name: modules-vol
           hostPath:
             path: /lib/modules
-        - name: usr-vol
-          hostPath:
-            path: /usr
         - name: varrun-vol
           hostPath:
             path: /var/run
