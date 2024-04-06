@@ -13,9 +13,7 @@ data:
       url: {{ .Values.config.registryURL }}
       user: from-secret
       pass: from-secret
-      {{- if .Values.config.registryType }}
       type: {{ .Values.config.registryType }}
-      {{- end }}
       {{- if .Values.config.registryAccountId }}
       accountId: {{ .Values.config.registryAccountId }}
       {{- end }}
