@@ -113,12 +113,17 @@
           - name: REGISTRYSCANNER_REGISTRY_PASSWORD
             valueFrom:
               secretKeyRef:
+          {{- if eq .Values.config.registryType "ocp" }}
+                name: {{ include "registry-scanner.serviceAccountName" . }}-token
+                key: token
+          {{- else }}
                 {{- if not .Values.existingSecretName }}
                 name: {{ include "registry-scanner.fullname" . }}
                 {{- else }}
                 name: {{ .Values.existingSecretName }}
                 {{- end }}
                 key: registryPassword
+          {{- end }}
           {{- end }}
           {{ if .Values.config.parallelGoRoutines }}
           - name: GROUP_LIMIT

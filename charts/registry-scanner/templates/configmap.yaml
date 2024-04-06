@@ -13,7 +13,9 @@ data:
       url: {{ .Values.config.registryURL }}
       user: from-secret
       pass: from-secret
-      {{- if .Values.config.registryType }}
+      {{- if and .Values.config.registryType (eq .Values.config.registryType "ocp") }}
+      type: dockerv2
+      {{- else if .Values.config.registryType }}
       type: {{ .Values.config.registryType }}
       {{- end }}
       {{- if .Values.config.registryAccountId }}
