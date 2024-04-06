@@ -27,7 +27,11 @@ data:
       {{- if .Values.config.icrIamApiSkipTLS }}
       icrIamApiSkipTLS: {{ .Values.config.icrIamApiSkipTLS }}
       {{- end }}
+      {{- if eq .Values.config.registryType "ocp" }}
+      skipTLS: true
+      {{- else }}
       skipTLS: {{ .Values.config.registrySkipTLS }}
+      {{- end }}
       {{- if .Values.config.registryApiUrl }}
       api: {{ .Values.config.registryApiUrl }}
       {{- end }}
