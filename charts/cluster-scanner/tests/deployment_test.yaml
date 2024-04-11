@@ -540,9 +540,9 @@ tests:
     templates:
       - ../templates/deployment.yaml
     set:
-      labels:
+      podLabels:
         foo: bar
     asserts:
       - equal:
-          path: metadata.labels.foo
+          path: spec.template.metadata.labels.foo
           value: bar

@@ -346,4 +346,4 @@ ssl:
 disablePlatformScanning: false
 
 # Set Cluster Scanner pod labels
-labels: {}
+podLabels: {}
