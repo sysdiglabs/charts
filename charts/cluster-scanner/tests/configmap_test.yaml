@@ -36,7 +36,7 @@ tests:
           value: "true"
       - equal:
           path: data.eve_integration_enabled
-          value: "false"
+          value: "true"
       - equal:
           path: data.logging_level
           value: "INFO"

@@ -25,7 +25,7 @@ $ pre-commit run -a
 $ helm repo add sysdig https://charts.sysdig.com
 $ helm repo update
 $ helm upgrade --install sysdig-cluster-scanner sysdig/cluster-scanner \
-      --create-namespace -n sysdig --version=0.12.2  \
+      --create-namespace -n sysdig --version=0.12.3  \
       --set global.clusterConfig.name=CLUSTER_NAME \
       --set global.sysdig.region=SYSDIG_REGION \
       --set global.sysdig.accessKey=YOUR-KEY-HERE
@@ -55,7 +55,7 @@ To install the chart with the release name `cluster-scanner`, run:
 
 ```console
 $ helm upgrade --install sysdig-cluster-scanner sysdig/cluster-scanner \
-       --create-namespace -n sysdig --version=0.12.2 \
+       --create-namespace -n sysdig --version=0.12.3 \
        --set global.clusterConfig.name=CLUSTER_NAME \
        --set global.sysdig.region=SYSDIG_REGION \
        --set global.sysdig.accessKey=YOUR-KEY-HERE
@@ -102,7 +102,7 @@ The following table lists the configurable parameters of the `cluster-scanner` c
 | global.ssl.ca.existingCaConfigMap                    | Provide the name of an existing ConfigMap that contains the CA required                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | <code></code>                                 |
 | global.ssl.ca.existingCaConfigMapKeyName             | Provide the filename that is defined inside the existing ConfigMap                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | <code></code>                                 |
 | eveEnabled                                           | Enables Sysdig Eve to retrieve the list of running packages.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | <code>true</code>                             |
-| eveIntegrationEnabled                                | Enables the integration with Sysdig Eve. Stores the list of running packages to Sysdig backend. It implies `eveEnabled: true`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | <code>false</code>                            |
+| eveIntegrationEnabled                                | Enables the integration with Sysdig Eve. Stores the list of running packages to Sysdig backend. It implies `eveEnabled: true`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | <code>true</code>                             |
 | rootNamespace                                        | The namespace to use to retrieve the cluster UID                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | <code>"kube-system"</code>                    |
 | replicaCount                                         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | <code>2</code>                                |
 | scannerMode                                          | The scannerMode of the Cluster Scanner. Supported values are `local` or `multi`. Please refer to docs.sysdig.com for further documentation.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | <code>"local"</code>                          |
@@ -165,7 +165,7 @@ Specify each parameter using the **`--set key=value[,key=value]`** argument to `
 
 ```console
 $ helm upgrade --install sysdig-cluster-scanner sysdig/cluster-scanner \
-    --create-namespace -n sysdig --version=0.12.2 \
+    --create-namespace -n sysdig --version=0.12.3 \
     --set global.sysdig.region="us1"
 ```
 
@@ -174,7 +174,7 @@ installing the chart. For example:
 
 ```console
 $ helm upgrade --install sysdig-cluster-scanner sysdig/cluster-scanner \
-    --create-namespace -n sysdig --version=0.12.2 \
+    --create-namespace -n sysdig --version=0.12.3 \
     --values values.yaml
 ```
 
