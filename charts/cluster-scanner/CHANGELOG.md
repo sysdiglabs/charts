@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.12.3
+### Chores
+* **cluster-scanner** [bced17d8](https://github.com/sysdiglabs/charts/commit/bced17d865e9a6aba53035a5e24d8549814d7135): enable EveIntegration by default ([#1692](https://github.com/sysdiglabs/charts/issues/1692))
 # v0.12.2
 ### Chores
 * **cluster-scanner** [e93a0a14](https://github.com/sysdiglabs/charts/commit/e93a0a146b01066aecf5a9a7153daa831da45697): bump cluster-scanner to 0.7.2 ([#1689](https://github.com/sysdiglabs/charts/issues/1689))
