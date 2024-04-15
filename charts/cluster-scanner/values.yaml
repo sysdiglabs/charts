@@ -297,6 +297,9 @@ securityContext: {}
 # Set Cluster Scanner Selector Labels
 selectorLabels: {}
 
+# Set Cluster Scanner Custom Labels
+labels: {}
+
 # Set Cluster Scanner Node Selector
 nodeSelector:
   # Cluster Scanner is only supported on nodes with amd64 architecture
