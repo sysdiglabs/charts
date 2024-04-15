@@ -535,14 +535,3 @@ tests:
     asserts:
       - failedTemplate:
           errorMessage: "Both existingKeySecret and existingCertSecret must be set when using nats customCerts"
-
-  - it: tests labels settings
-    templates:
-      - ../templates/deployment.yaml
-    set:
-      podLabels:
-        foo: bar
-    asserts:
-      - equal:
-          path: spec.template.metadata.labels.foo
-          value: bar

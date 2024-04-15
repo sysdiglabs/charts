@@ -46,15 +46,15 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 Custom labels
 */}}
 {{- define "cluster-scanner.customLabels" -}}
-{{- if .Values.labels }}
-{{- $tp := typeOf .Values.labels }}
+{{- if .Values.podLabels }}
+{{- $tp := typeOf .Values.podLabels }}
 {{- if eq $tp "string" }}
-{{- if not (regexMatch "^[a-z0-9A-Z].*(: )(.*[a-z0-9A-Z]$)?" .Values.labels) }}
+{{- if not (regexMatch "^[a-z0-9A-Z].*(: )(.*[a-z0-9A-Z]$)?" .Values.podLabels) }}
     {{- fail "labels does not seem to be of the type key:[space]value" }}
 {{- end }}
-{{ tpl .Values.labels . }}
+{{ tpl .Values.podLabels . }}
 {{- else }}
-{{ toYaml .Values.labels }}
+{{ toYaml .Values.podLabels }}
 {{- end }}
 {{- end }}
 {{- end }}
