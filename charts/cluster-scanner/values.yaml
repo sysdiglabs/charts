@@ -344,3 +344,9 @@ ssl:
 
 # Option to make it possible to disable platform services
 disablePlatformScanning: false
+
+# Set Cluster Scanner pod labels
+podLabels: {}
+
+# Set Cluster Scanner labels
+labels: {}

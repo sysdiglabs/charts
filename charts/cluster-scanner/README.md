@@ -25,7 +25,7 @@ $ pre-commit run -a
 $ helm repo add sysdig https://charts.sysdig.com
 $ helm repo update
 $ helm upgrade --install sysdig-cluster-scanner sysdig/cluster-scanner \
-      --create-namespace -n sysdig --version=0.12.3  \
+      --create-namespace -n sysdig --version=0.12.4  \
       --set global.clusterConfig.name=CLUSTER_NAME \
       --set global.sysdig.region=SYSDIG_REGION \
       --set global.sysdig.accessKey=YOUR-KEY-HERE
@@ -55,7 +55,7 @@ To install the chart with the release name `cluster-scanner`, run:
 
 ```console
 $ helm upgrade --install sysdig-cluster-scanner sysdig/cluster-scanner \
-       --create-namespace -n sysdig --version=0.12.3 \
+       --create-namespace -n sysdig --version=0.12.4 \
        --set global.clusterConfig.name=CLUSTER_NAME \
        --set global.sysdig.region=SYSDIG_REGION \
        --set global.sysdig.accessKey=YOUR-KEY-HERE
@@ -159,13 +159,15 @@ The following table lists the configurable parameters of the `cluster-scanner` c
 | ssl.ca.existingCaConfigMap                           | Provide the name of an existing ConfigMap that contains the CA required                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | <code></code>                                 |
 | ssl.ca.existingCaConfigMapKeyName                    | Provide the filename that is defined inside the existing ConfigMap                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | <code></code>                                 |
 | disablePlatformScanning                              | Option to make it possible to disable platform services                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | <code>false</code>                            |
+| podLabels                                            | Set Cluster Scanner pod labels                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | <code>{}</code>                               |
+| labels                                               | Set Cluster Scanner labels                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | <code>{}</code>                               |
 
 
 Specify each parameter using the **`--set key=value[,key=value]`** argument to `helm upgrade --install`. For example:
 
 ```console
 $ helm upgrade --install sysdig-cluster-scanner sysdig/cluster-scanner \
-    --create-namespace -n sysdig --version=0.12.3 \
+    --create-namespace -n sysdig --version=0.12.4 \
     --set global.sysdig.region="us1"
 ```
 
@@ -174,7 +176,7 @@ installing the chart. For example:
 
 ```console
 $ helm upgrade --install sysdig-cluster-scanner sysdig/cluster-scanner \
-    --create-namespace -n sysdig --version=0.12.3 \
+    --create-namespace -n sysdig --version=0.12.4 \
     --values values.yaml
 ```
 
