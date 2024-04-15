@@ -40,22 +40,8 @@ helm.sh/chart: {{ include "cluster-scanner.chart" . }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
-{{- end }}
-
-{{/*
-Custom labels
-*/}}
-{{- define "cluster-scanner.customLabels" -}}
-{{- if .Values.podLabels }}
-{{- $tp := typeOf .Values.podLabels }}
-{{- if eq $tp "string" }}
-{{- if not (regexMatch "^[a-z0-9A-Z].*(: )(.*[a-z0-9A-Z]$)?" .Values.podLabels) }}
-    {{- fail "labels does not seem to be of the type key:[space]value" }}
-{{- end }}
-{{ tpl .Values.podLabels . }}
-{{- else }}
-{{ toYaml .Values.podLabels }}
-{{- end }}
+{{- with .Values.labels }}
+{{- toYaml . | nindent 0 }}
 {{- end }}
 {{- end }}
 

@@ -15,10 +15,10 @@ release:
   namespace: test-ns
 
 tests:
-  - it: check application of cluster scanner labels example 1
+  - it: check labels example 1
     template: deployment.yaml
     set:
-      podLabels: {"my.label/key1": "testlabel1","my.label/key2": "testlabel2"}
+      labels: {"my.label/key1": "testlabel1","my.label/key2": "testlabel2"}
     asserts:
     - equal:
         path: metadata.labels['my.label/key1']
@@ -27,10 +27,10 @@ tests:
         path: metadata.labels['my.label/key2']
         value: testlabel2
 
-  - it: check application of cluster scanner labels example 2
+  - it: check labels example 2
     template: deployment.yaml
     set:
-      podLabels:
+      labels:
         my.label/key1: testlabel1
         my.label/key2: testlabel2
     asserts:
@@ -41,10 +41,10 @@ tests:
         path: metadata.labels['my.label/key2']
         value: testlabel2
 
-  - it: check application of cluster scanner labels example 3
+  - it: check labels example 3
     template: deployment.yaml
     set:
-      podLabels:
+      labels:
         my.label/key: testlabel
         my.label/version: 2.7.3
     asserts:
@@ -55,26 +55,57 @@ tests:
         path: metadata.labels['my.label/version']
         value: 2.7.3
 
-  - it: check application of correct cluster scanner labels with value of label empty
+  - it: check podLabels example 1
     template: deployment.yaml
     set:
-      podLabels: "my.label/key1: "
+      podLabels: {"my.label/key1": "testlabel1","my.label/key2": "testlabel2"}
     asserts:
-    - isEmpty:
-        path: metadata.labels['my.label/key1']
+    - equal:
+        path: spec.template.metadata.labels['my.label/key1']
+        value: testlabel1
+    - equal:
+        path: spec.template.metadata.labels['my.label/key2']
+        value: testlabel2
 
-  - it: check application of incorrect cluster scanner labels with yaml
+  - it: check podLabels example 2
     template: deployment.yaml
     set:
-      podLabels: "my.label/key1:testlabel1"
+      podLabels:
+        my.label/key1: testlabel1
+        my.label/key2: testlabel2
     asserts:
-    - failedTemplate:
-        errorMessage: "labels does not seem to be of the type key:[space]value"
+    - equal:
+        path: spec.template.metadata.labels['my.label/key1']
+        value: testlabel1
+    - equal:
+        path: spec.template.metadata.labels['my.label/key2']
+        value: testlabel2
 
-  - it: check application of incorrect cluster scanner labels with yaml key is empty
+  - it: check podLabels example 3
     template: deployment.yaml
     set:
-      podLabels: ":testlabel1"
+      podLabels:
+        my.label/key: testlabel
+        my.label/version: 2.7.3
     asserts:
-    - failedTemplate:
-        errorMessage: "labels does not seem to be of the type key:[space]value"
+    - equal:
+        path: spec.template.metadata.labels['my.label/key']
+        value: testlabel
+    - equal:
+        path: spec.template.metadata.labels['my.label/version']
+        value: 2.7.3
+
+  - it: check podLabels and labels
+    template: deployment.yaml
+    set:
+      labels:
+        mylabel1: testlabel1
+      podLabels:
+        mylabel2: testlabel2
+    asserts:
+    - equal:
+        path: spec.template.metadata.labels['mylabel1']
+        value: testlabel1
+    - equal:
+        path: spec.template.metadata.labels['mylabel2']
+        value: testlabel2

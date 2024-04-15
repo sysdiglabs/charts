@@ -5,7 +5,6 @@ metadata:
   namespace: {{ include "cluster-scanner.namespace" . }}
   labels:
     {{- include "cluster-scanner.labels" . | nindent 4 }}
-    {{- include "cluster-scanner.customLabels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   strategy:
@@ -26,8 +25,10 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "cluster-scanner.selectorLabels" . | nindent 8 }}
-        {{- include "cluster-scanner.customLabels" . | nindent 8 }}
+        {{- include "cluster-scanner.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
     spec:
       {{- with .Values.global.image.pullSecrets }}
       imagePullSecrets:

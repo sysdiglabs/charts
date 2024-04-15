@@ -347,3 +347,6 @@ disablePlatformScanning: false
 
 # Set Cluster Scanner pod labels
 podLabels: {}
+
+# Set Cluster Scanner labels
+labels: {}
