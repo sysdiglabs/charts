@@ -4,7 +4,8 @@ metadata:
   name: {{ include "cluster-scanner.fullname" . }}
   namespace: {{ include "cluster-scanner.namespace" . }}
   labels:
-   {{- include "cluster-scanner.labels" . | nindent 4 }}
+    {{- include "cluster-scanner.labels" . | nindent 4 }}
+    {{- include "cluster-scanner.customLabels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   strategy:
@@ -26,9 +27,7 @@ spec:
       {{- end }}
       labels:
         {{- include "cluster-scanner.selectorLabels" . | nindent 8 }}
-        {{- with .Values.podLabels }}
-        {{- toYaml . | nindent 8 }}
-        {{- end }}
+        {{- include "cluster-scanner.customLabels" . | nindent 8 }}
     spec:
       {{- with .Values.global.image.pullSecrets }}
       imagePullSecrets:

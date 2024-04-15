@@ -68,7 +68,7 @@ global:
 eveEnabled: true
 # Enables the integration with Sysdig Eve. Stores the list of running packages
 # to Sysdig backend. It implies `eveEnabled: true`.
-eveIntegrationEnabled: false
+eveIntegrationEnabled: true
 # The namespace to use to retrieve the cluster UID
 rootNamespace: "kube-system"
 
@@ -296,6 +296,9 @@ securityContext: {}
 
 # Set Cluster Scanner Selector Labels
 selectorLabels: {}
+
+# Set Cluster Scanner Custom Labels
+labels: {}
 
 # Set Cluster Scanner Node Selector
 nodeSelector:
