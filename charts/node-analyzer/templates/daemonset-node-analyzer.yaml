@@ -92,6 +92,16 @@ spec:
           hostPath:
             path: /
         {{- end }}
+         {{- if eq .Values.bottlerocket.enabled true }}
+        - name: apiclient
+          hostPath:
+            path: {{ .Values.bottlerocket.apiClientPath }}
+            type: File
+        - name: apiserver-socket
+          hostPath:
+            path: {{ .Values.bottlerocket.apiServerSocketPath }}
+            type: Socket
+        {{- end }}
         - name: tmp-vol
           {{- if .Values.nodeAnalyzer.runtimeScanner.storageClassName }}
           ephemeral:
@@ -298,6 +308,13 @@ spec:
           - name: ca-cert
             mountPath: /ca-certs
             readOnly: true
+          {{- end }}
+          {{- if eq .Values.bottlerocket.enabled true }}
+          - mountPath: /usr/bin/apiclient
+            name: apiclient
+            readOnly: true
+          - mountPath: /run/api.sock
+            name: apiserver-socket
           {{- end }}
       # kspm-analyzer
       {{- end }}
