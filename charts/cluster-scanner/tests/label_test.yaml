@@ -1,0 +1,111 @@
+suite: Testing if labels are applied correctly
+templates:
+  - deployment.yaml
+  # these are required due to checksum annotation of deployment.yaml
+  - configmap.yaml
+  - secret.yaml
+  - clusterrole.yaml
+  - clusterrolebinding.yaml
+  - role.yaml
+  - rolebinding.yaml
+values:
+  - ./values.required.yaml
+release:
+  name: test-release
+  namespace: test-ns
+
+tests:
+  - it: check labels example 1
+    template: deployment.yaml
+    set:
+      labels: {"my.label/key1": "testlabel1","my.label/key2": "testlabel2"}
+    asserts:
+    - equal:
+        path: metadata.labels['my.label/key1']
+        value: testlabel1
+    - equal:
+        path: metadata.labels['my.label/key2']
+        value: testlabel2
+
+  - it: check labels example 2
+    template: deployment.yaml
+    set:
+      labels:
+        my.label/key1: testlabel1
+        my.label/key2: testlabel2
+    asserts:
+    - equal:
+        path: metadata.labels['my.label/key1']
+        value: testlabel1
+    - equal:
+        path: metadata.labels['my.label/key2']
+        value: testlabel2
+
+  - it: check labels example 3
+    template: deployment.yaml
+    set:
+      labels:
+        my.label/key: testlabel
+        my.label/version: 2.7.3
+    asserts:
+    - equal:
+        path: metadata.labels['my.label/key']
+        value: testlabel
+    - equal:
+        path: metadata.labels['my.label/version']
+        value: 2.7.3
+
+  - it: check podLabels example 1
+    template: deployment.yaml
+    set:
+      podLabels: {"my.label/key1": "testlabel1","my.label/key2": "testlabel2"}
+    asserts:
+    - equal:
+        path: spec.template.metadata.labels['my.label/key1']
+        value: testlabel1
+    - equal:
+        path: spec.template.metadata.labels['my.label/key2']
+        value: testlabel2
+
+  - it: check podLabels example 2
+    template: deployment.yaml
+    set:
+      podLabels:
+        my.label/key1: testlabel1
+        my.label/key2: testlabel2
+    asserts:
+    - equal:
+        path: spec.template.metadata.labels['my.label/key1']
+        value: testlabel1
+    - equal:
+        path: spec.template.metadata.labels['my.label/key2']
+        value: testlabel2
+
+  - it: check podLabels example 3
+    template: deployment.yaml
+    set:
+      podLabels:
+        my.label/key: testlabel
+        my.label/version: 2.7.3
+    asserts:
+    - equal:
+        path: spec.template.metadata.labels['my.label/key']
+        value: testlabel
+    - equal:
+        path: spec.template.metadata.labels['my.label/version']
+        value: 2.7.3
+
+  - it: check podLabels and labels
+    template: deployment.yaml
+    set:
+      labels:
+        mylabel1: testlabel1
+      podLabels:
+        mylabel2: testlabel2
+    asserts:
+    - equal:
+        path: spec.template.metadata.labels['mylabel1']
+        value: testlabel1
+    - equal:
+        path: spec.template.metadata.labels['mylabel2']
+        value: testlabel2
