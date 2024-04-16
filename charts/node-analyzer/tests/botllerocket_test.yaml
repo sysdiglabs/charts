@@ -1,0 +1,93 @@
+
+suite: Bottlerocket creates volumes
+templates:
+  - templates/daemonset-node-analyzer.yaml
+  # For checksums
+  - clusterrole-node-analyzer.yaml
+  - clusterrolebinding-node-analyzer.yaml
+  - configmap-benchmark-runner.yaml
+  - configmap-host-analyzer.yaml
+  - configmap-host-scanner.yaml
+  - configmap-image-analyzer.yaml
+  - configmap-kspm-analyzer.yaml
+  - secrets.yaml
+  - serviceaccount-node-analyzer.yaml
+values:
+  - ./default_required_values.yaml
+
+tests:
+  - it: Bottlerocket enabled creates default volumes
+    set:
+      nodeAnalyzer:
+        bottlerocket:
+          enabled: true
+    asserts:
+      - equal:
+          path: spec.template.spec.volumes[0]
+          value:
+            name: apiclient
+            hostPath:
+              path: /usr/bin/apiclient
+              type: File
+        template: templates/daemonset-node-analyzer.yaml
+      - equal:
+          path: spec.template.spec.volumes[0]
+          value:
+            name: apiserver-socket
+            hostPath:
+              path: /run/api.sock
+              type: Socket
+        template: templates/daemonset-node-analyzer.yaml
+      - equal:
+          path: spec.template.spec.volumeMounts[0]
+          value:
+            name: apiclient
+            mountPath: /usr/bin/apiclient
+            readOnly: true
+        template: templates/daemonset-node-analyzer.yaml
+      - equal:
+          path: spec.template.spec.volumeMounts[0]
+          value:
+            name: apiserver-socket
+            mountPath: /run/api.sock
+        template: templates/daemonset-node-analyzer.yaml
+
+  - it: Bottlerocket disabled does not creates default volumes
+    set:
+      nodeAnalyzer:
+        bottlerocket:
+          enabled: false
+    asserts:
+      - equal:
+          path: spec.template.spec.volumes[0]
+          value:
+            name: apiclient
+            hostPath:
+              path: /usr/bin/apiclient
+              type: File
+        not: true
+        template: templates/daemonset-node-analyzer.yaml
+      - equal:
+          path: spec.template.spec.volumes[0]
+          value:
+            name: apiserver-socket
+            hostPath:
+              path: /run/api.sock
+              type: Socket
+        not: true
+        template: templates/daemonset-node-analyzer.yaml
+      - equal:
+          path: spec.template.spec.volumeMounts[0]
+          value:
+            name: apiclient
+            mountPath: /usr/bin/apiclient
+            readOnly: true
+        not: true
+        template: templates/daemonset-node-analyzer.yaml
+      - equal:
+          path: spec.template.spec.volumeMounts[0]
+          value:
+            name: apiserver-socket
+            mountPath: /run/api.sock
+        not: true
+        template: templates/daemonset-node-analyzer.yaml
