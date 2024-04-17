@@ -29,4 +29,3 @@ tests:
               - "namespaces"
               - "secrets"
             verbs: ["get", "list", "watch"]
-
