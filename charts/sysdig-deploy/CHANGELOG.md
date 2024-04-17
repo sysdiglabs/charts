@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.50.0
+### New Features
+* **cluster-scanner** [ae116768](https://github.com/sysdiglabs/charts/commit/ae1167685b7fdab35accd9db4f9fc0f91e1015ef): removed support for multi-cluster ([#1700](https://github.com/sysdiglabs/charts/issues/1700))
 # v1.49.9
 ### Chores
 * **sysdig-deploy** [caf331ce](https://github.com/sysdiglabs/charts/commit/caf331ce83cc8e0e8c575b7c83d839f7c75c81e0): Automatic version bump due to updated dependencies ([#1698](https://github.com/sysdiglabs/charts/issues/1698))
