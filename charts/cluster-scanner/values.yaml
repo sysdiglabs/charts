@@ -74,10 +74,6 @@ rootNamespace: "kube-system"
 
 replicaCount: 2
 
-# The scannerMode of the Cluster Scanner. Supported values are `local` or
-# `multi`. Please refer to docs.sysdig.com for further documentation.
-scannerMode: "local"
-
 # Optional parameter used to check the compatibility of cluster-scanner
 # component versions with the on-premised backend version.
 #
@@ -115,15 +111,8 @@ runtimeStatusIntegrator:
   # leaderElectionLeaseNameOverride: ""
   # leaderElectionLeaseNamespaceOverride: ""
 
-  # When the Cluster Scanner is running in `multi` mode, set the secret name to
-  # be used to retrieve the kubeconfig configuration to connect to the clusters
-  # to inspect.
-  multiCluster:
-    # kubeconfigSecretName: ""
-
-  # Restrict access to specific Docker secrets when Cluster Scanner is running
-  # in `local` mode. The default behavior is listing all secrets. See
-  # `values.yaml` for an example. Optional.
+  # Restrict access to specific Docker secrets when Cluster Scanner is running.
+  # The default behavior is listing all secrets. See `values.yaml` for an example. Optional.
   localCluster:
     # rbac:
     #   allowedPullSecrets:

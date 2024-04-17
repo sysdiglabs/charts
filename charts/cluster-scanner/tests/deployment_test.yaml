@@ -83,25 +83,6 @@ tests:
           path: spec.template.spec.containers[1].image
           value: registry-ise.io/test-ise.com/repo:9.0.1
 
-  - it: "sets kubeconfig env var if set"
-    templates:
-      - ../templates/deployment.yaml
-    set:
-      scannerMode: "multi"
-      runtimeStatusIntegrator.multiCluster.kubeconfigSecretName: "my-secret"
-    asserts:
-      - not: true
-        isEmpty:
-          path: spec.template.spec.containers[0].env[?(@.name == "SYSDIG_KUBECONFIG_CONTENT")]
-      - isSubset:
-          path: spec.template.spec.containers[0].env[?(@.name == "SYSDIG_KUBECONFIG_CONTENT")]
-          content:
-            name: SYSDIG_KUBECONFIG_CONTENT
-            valueFrom:
-              secretKeyRef:
-                name: "my-secret"
-                key: .kubeconfig
-
   - it: "sets redis caching env vars when cache type is redis"
     templates:
       - ../templates/deployment.yaml
@@ -130,11 +111,10 @@ tests:
           path: spec.strategy.type
           value: Recreate
 
-  - it: "sets the local registry secrets when in local mode"
+  - it: "sets the local registry secrets"
     templates:
       - ../templates/deployment.yaml
     set:
-      scannerMode: "local"
       runtimeStatusIntegrator.localCluster:
         rbac:
           allowedPullSecrets:
@@ -152,32 +132,6 @@ tests:
             valueFrom:
               configMapKeyRef:
                 key: local_registry_secrets
-                name: test-release-cluster-scanner
-                optional: true
-
-  - it: "does not set the local registry secrets when in multi mode"
-    templates:
-      - ../templates/deployment.yaml
-    set:
-      scannerMode: "multi"
-      runtimeStatusIntegrator.multiCluster.kubeconfigSecretName: "my-secret"
-      runtimeStatusIntegrator.localCluster:
-        rbac:
-          allowedPullSecrets:
-            namespaceOneName:
-              - myDockerSecretOne
-              - myDockerSecretTwo
-            anotherNamespace:
-              - myOtherDockerSecretOne
-              - myOtherDockerSecretTwo
-    asserts:
-      - equal:
-          path: spec.template.spec.containers[0].env[?(@.name == "EVE_ENABLED")]
-          value:
-            name: EVE_ENABLED
-            valueFrom:
-              configMapKeyRef:
-                key: eve_enabled
                 name: test-release-cluster-scanner
                 optional: true
 

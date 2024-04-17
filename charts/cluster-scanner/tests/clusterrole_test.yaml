@@ -8,7 +8,7 @@ release:
   namespace: test-ns
 
 tests:
-  - it: "generates correct ClusterRole in local mode"
+  - it: "generates correct ClusterRole"
     asserts:
       - equal:
           path: metadata.name
@@ -26,21 +26,6 @@ tests:
               - "cronjobs"
               - "jobs"
               - "nodes"
-              - "namespaces"
-              - "secrets"
-            verbs: ["get", "list", "watch"]
-  - it: "generates correct ClusterRole in multi mode"
-    set:
-      scannerMode: "multi"
-    asserts:
-      - equal:
-          path: metadata.name
-          value: test-release-cluster-scanner
-      - isSubset:
-          path: rules[0]
-          content:
-            apiGroups: ["", "apps", "batch", "extensions"]
-            resources:
               - "namespaces"
               - "secrets"
             verbs: ["get", "list", "watch"]
