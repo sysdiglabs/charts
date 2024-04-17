@@ -39,8 +39,11 @@ data:
 {{- $_ := mergeOverwrite .Values.secure (dict "enabled" false) }}
 {{- (include "agent.secureFeatures" .) | nindent 4 }}
 {{- include "agent.logSettings" . }}
+{{- $delegatedAgentTag := "com.sysdig.delegated-agent-deployment:true" }}
 {{- if .Values.global.sysdig.tags }}
-    tags: {{ include "agent.tags" . }}
+    tags: {{ printf "%s,%s" (include "agent.tags" .) $delegatedAgentTag }}
+{{- else }}
+    tags: {{ $delegatedAgentTag }}
 {{- end }}
 {{/*
   Checking here the user is using Custom CA and if http_proxy.ssl = true
