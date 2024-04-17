@@ -178,7 +178,6 @@ ise_cache_local_ttl: {{ .ttl }}
 
 {{- define "cluster-scanner.configContent" }}
 {{ .Values.global }}
-{{ .Values.runtimeStatusIntegrator.multiCluster }}
 {{ .Values.runtimeStatusIntegrator.localCluster }}
 {{ .Values.runtimeStatusIntegrator.natsJS }}
 {{ .Values.imageSbomExtractor.cache }}
