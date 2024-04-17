@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.22.7
+### New Features
+* **agent** [41107025](https://github.com/sysdiglabs/charts/commit/41107025c4ff1c897fcd1783bc2a2ce7a4dd026a): add tag to distinguish delegated deployment agents ([#1701](https://github.com/sysdiglabs/charts/issues/1701))
 # v1.22.6
 ### New Features
 * [359ac387](https://github.com/sysdiglabs/charts/commit/359ac3871f0e38a175802ed0e8f1c620b572e008): release agent 13.0.4 ([#1696](https://github.com/sysdiglabs/charts/issues/1696))
