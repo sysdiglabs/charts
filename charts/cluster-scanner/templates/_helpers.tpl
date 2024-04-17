@@ -72,10 +72,8 @@ Create the name of the service account to use
 Generates configmap data for mode-specific values
 */}}
 {{- define "cluster-scanner.modeConfig" -}}
-rsi_mode: {{ .Values.scannerMode }}
-{{- if eq .Values.scannerMode "local" }}
+rsi_mode: "local"
 local_registry_secrets: {{ include "cluster-scanner.runtimeStatusIntegrator.localCluster.localSecrets" . }}
-{{- end }}
 {{- end }}
 
 {{/*

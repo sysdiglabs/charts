@@ -74,10 +74,6 @@ rootNamespace: "kube-system"
 
 replicaCount: 2
 
-# The scannerMode of the Cluster Scanner. Supported values are `local` or
-# `multi`. Please refer to docs.sysdig.com for further documentation.
-scannerMode: "local"
-
 # Optional parameter used to check the compatibility of cluster-scanner
 # component versions with the on-premised backend version.
 #
