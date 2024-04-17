@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.13.0
+### New Features
+* **cluster-scanner** [ae116768](https://github.com/sysdiglabs/charts/commit/ae1167685b7fdab35accd9db4f9fc0f91e1015ef): removed support for multi-cluster ([#1700](https://github.com/sysdiglabs/charts/issues/1700))
 # v0.12.4
 ### New Features
 * **cluster-scanner,sysdig-deploy** [8917a0af](https://github.com/sysdiglabs/charts/commit/8917a0af74d5a875bcec55b0f8269cddff75066c): add option to populate custom labels for cluster scanner ([#1691](https://github.com/sysdiglabs/charts/issues/1691))
