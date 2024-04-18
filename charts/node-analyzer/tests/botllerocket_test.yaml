@@ -23,7 +23,7 @@ tests:
           enabled: true
     asserts:
       - equal:
-          path: spec.template.spec.volumes[0]
+          path: spec.template.spec.volumes[7]
           value:
             name: apiclient
             hostPath:
@@ -31,7 +31,7 @@ tests:
               type: File
         template: templates/daemonset-node-analyzer.yaml
       - equal:
-          path: spec.template.spec.volumes[0]
+          path: spec.template.spec.volumes[8]
           value:
             name: apiserver-socket
             hostPath:
@@ -59,7 +59,7 @@ tests:
           enabled: false
     asserts:
       - equal:
-          path: spec.template.spec.volumes[0]
+          path: spec.template.spec.volumes[7]
           value:
             name: apiclient
             hostPath:
@@ -68,7 +68,7 @@ tests:
         not: true
         template: templates/daemonset-node-analyzer.yaml
       - equal:
-          path: spec.template.spec.volumes[0]
+          path: spec.template.spec.volumes[8]
           value:
             name: apiserver-socket
             hostPath:
