@@ -43,7 +43,7 @@ tests:
           any: true
         template: templates/daemonset-node-analyzer.yaml
       - contains:
-          path: spec.template.spec.volumeMounts
+          path: spec.template.spec.containers[0].volumeMounts
           content:
             name: apiclient
             mountPath: /usr/bin/apiclient
@@ -52,7 +52,7 @@ tests:
           any: true
         template: templates/daemonset-node-analyzer.yaml
       - contains:
-          path: spec.template.spec.volumeMounts
+          path: spec.template.spec.containers[0].volumeMounts
           content:
             name: apiserver-socket
             mountPath: /run/api.sock
@@ -66,44 +66,32 @@ tests:
         bottlerocket:
           enabled: false
     asserts:
-      - contains:
+      - notContains:
           path: spec.template.spec.volumes
           content:
             name: apiclient
             hostPath:
               path: /usr/bin/apiclient
               type: File
-          count: 1
-          any: true
-        not: true
         template: templates/daemonset-node-analyzer.yaml
-      - contains:
+      - notContains:
           path: spec.template.spec.volumes
           content:
             name: apiserver-socket
             hostPath:
               path: /run/api.sock
               type: Socket
-          count: 1
-          any: true
-        not: true
         template: templates/daemonset-node-analyzer.yaml
-      - contains:
-          path: spec.template.spec.volumeMounts
+      - notContains:
+          path: spec.template.spec.containers[0].volumeMounts
           content:
             name: apiclient
             mountPath: /usr/bin/apiclient
             readOnly: true
-          count: 1
-          any: true
-        not: true
         template: templates/daemonset-node-analyzer.yaml
-      - contains:
-          path: spec.template.spec.volumeMounts
+      - notContains:
+          path: spec.template.spec.containers[0].volumeMounts
           content:
             name: apiserver-socket
             mountPath: /run/api.sock
-          count: 1
-          any: true
-        not: true
         template: templates/daemonset-node-analyzer.yaml
