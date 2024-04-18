@@ -499,6 +499,7 @@ nodeAnalyzer:
     apiClientPath: /usr/bin/apiclient
     # Path to host api socket
     apiServerSocketPath: /run/api.sock
+
 tests:
   timeout: 300s
   image:
