@@ -43,7 +43,7 @@ tests:
           any: true
         template: templates/daemonset-node-analyzer.yaml
       - contains:
-          path: spec.template.spec.volumes.volumeMounts
+          path: spec.template.spec.volumeMounts
           content:
             name: apiclient
             mountPath: /usr/bin/apiclient
@@ -52,7 +52,7 @@ tests:
           any: true
         template: templates/daemonset-node-analyzer.yaml
       - contains:
-          path: spec.template.spec.volumes.volumeMounts
+          path: spec.template.spec.volumeMounts
           content:
             name: apiserver-socket
             mountPath: /run/api.sock
@@ -89,7 +89,7 @@ tests:
         not: true
         template: templates/daemonset-node-analyzer.yaml
       - contains:
-          path: spec.template.spec.volumes.volumeMounts
+          path: spec.template.spec.volumeMounts
           content:
             name: apiclient
             mountPath: /usr/bin/apiclient
@@ -99,7 +99,7 @@ tests:
         not: true
         template: templates/daemonset-node-analyzer.yaml
       - contains:
-          path: spec.template.spec.volumes.volumeMounts
+          path: spec.template.spec.volumeMounts
           content:
             name: apiserver-socket
             mountPath: /run/api.sock
