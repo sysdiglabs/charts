@@ -43,19 +43,21 @@ tests:
           any: true
         template: templates/daemonset-node-analyzer.yaml
       - contains:
-          path: spec.template.spec.containers[0].volumeMounts
+          path: spec.template.spec.containers
           content:
-            name: apiclient
-            mountPath: /usr/bin/apiclient
-            readOnly: true
+            volumeMounts:
+              name: apiclient
+              mountPath: /usr/bin/apiclient
+              readOnly: true
           count: 1
           any: true
         template: templates/daemonset-node-analyzer.yaml
       - contains:
-          path: spec.template.spec.containers[0].volumeMounts
+          path: spec.template.spec.containers
           content:
-            name: apiserver-socket
-            mountPath: /run/api.sock
+            volumeMounts:
+              name: apiserver-socket
+              mountPath: /run/api.sock
           count: 1
           any: true
         template: templates/daemonset-node-analyzer.yaml
@@ -83,15 +85,17 @@ tests:
               type: Socket
         template: templates/daemonset-node-analyzer.yaml
       - notContains:
-          path: spec.template.spec.containers[0].volumeMounts
+          path: spec.template.spec.containers
           content:
-            name: apiclient
-            mountPath: /usr/bin/apiclient
-            readOnly: true
+            volumeMounts:
+              name: apiclient
+              mountPath: /usr/bin/apiclient
+              readOnly: true
         template: templates/daemonset-node-analyzer.yaml
       - notContains:
-          path: spec.template.spec.containers[0].volumeMounts
+          path: spec.template.spec.containers
           content:
-            name: apiserver-socket
-            mountPath: /run/api.sock
+            volumeMounts:
+              name: apiserver-socket
+              mountPath: /run/api.sock
         template: templates/daemonset-node-analyzer.yaml
