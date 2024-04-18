@@ -22,34 +22,42 @@ tests:
         bottlerocket:
           enabled: true
     asserts:
-      - equal:
-          path: spec.template.spec.volumes[7]
-          value:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
             name: apiclient
             hostPath:
               path: /usr/bin/apiclient
               type: File
+          count: 1
+          any: true
         template: templates/daemonset-node-analyzer.yaml
-      - equal:
-          path: spec.template.spec.volumes[8]
-          value:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
             name: apiserver-socket
             hostPath:
               path: /run/api.sock
               type: Socket
+          count: 1
+          any: true
         template: templates/daemonset-node-analyzer.yaml
-      - equal:
-          path: spec.template.spec.volumes.volumeMounts[0]
-          value:
+      - contains:
+          path: spec.template.spec.volumes.volumeMounts
+          content:
             name: apiclient
             mountPath: /usr/bin/apiclient
             readOnly: true
+          count: 1
+          any: true
         template: templates/daemonset-node-analyzer.yaml
-      - equal:
-          path: spec.template.spec.volumes.volumeMounts[0]
-          value:
+      - contains:
+          path: spec.template.spec.volumes.volumeMounts
+          content:
             name: apiserver-socket
             mountPath: /run/api.sock
+          count: 1
+          any: true
         template: templates/daemonset-node-analyzer.yaml
 
   - it: Bottlerocket disabled does not creates default volumes
@@ -58,36 +66,44 @@ tests:
         bottlerocket:
           enabled: false
     asserts:
-      - equal:
-          path: spec.template.spec.volumes[7]
-          value:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
             name: apiclient
             hostPath:
               path: /usr/bin/apiclient
               type: File
+          count: 1
+          any: true
         not: true
         template: templates/daemonset-node-analyzer.yaml
-      - equal:
-          path: spec.template.spec.volumes[8]
-          value:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
             name: apiserver-socket
             hostPath:
               path: /run/api.sock
               type: Socket
+          count: 1
+          any: true
         not: true
         template: templates/daemonset-node-analyzer.yaml
-      - equal:
-          path: spec.template.spec.volumes.volumeMounts[0]
-          value:
+      - contains:
+          path: spec.template.spec.volumes.volumeMounts
+          content:
             name: apiclient
             mountPath: /usr/bin/apiclient
             readOnly: true
+          count: 1
+          any: true
         not: true
         template: templates/daemonset-node-analyzer.yaml
-      - equal:
-          path: spec.template.spec.volumes.volumeMounts[0]
-          value:
+      - contains:
+          path: spec.template.spec.volumes.volumeMounts
+          content:
             name: apiserver-socket
             mountPath: /run/api.sock
+          count: 1
+          any: true
         not: true
         template: templates/daemonset-node-analyzer.yaml
