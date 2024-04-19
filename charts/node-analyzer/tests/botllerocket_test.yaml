@@ -18,6 +18,7 @@ values:
 tests:
   - it: Bottlerocket enabled creates default volumes
     set:
+      clusterName: bottlerocket
       global:
         kspm:
           deploy: true
@@ -65,6 +66,7 @@ tests:
 
   - it: Bottlerocket disabled does not creates default volumes
     set:
+      clusterName: not-bottlerocket
       global:
         kspm:
           deploy: true
