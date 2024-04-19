@@ -512,6 +512,7 @@ spec:
       {{- if .Values.extraVolumes.volumes }}
         {{ toYaml .Values.extraVolumes.volumes | nindent 8 }}
       {{- end }}
+  minReadySeconds: {{ .Values.daemonset.minReadySeconds }}
   updateStrategy:
     type: {{ .Values.daemonset.updateStrategy.type }}
     rollingUpdate:

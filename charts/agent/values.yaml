@@ -120,6 +120,7 @@ serviceAccount:
   name: null
 daemonset:
   deploy: true
+  minReadySeconds: 1
   # Perform rolling updates by default in the DaemonSet agent
   # ref: https://kubernetes.io/docs/tasks/manage-daemon/update-daemon-set/
   updateStrategy:
