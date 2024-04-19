@@ -18,6 +18,9 @@ values:
 tests:
   - it: Bottlerocket enabled creates default volumes
     set:
+      global:
+        kspm:
+          deploy: true
       nodeAnalyzer:
         bottlerocket:
           enabled: true
@@ -43,27 +46,28 @@ tests:
           any: true
         template: templates/daemonset-node-analyzer.yaml
       - contains:
-          path: spec.template.spec.containers
+          path: spec.template.spec.containers[0].volumeMounts
           content:
-            volumeMounts:
-              name: apiclient
-              mountPath: /usr/bin/apiclient
-              readOnly: true
+            name: apiclient
+            mountPath: /usr/bin/apiclient
+            readOnly: true
           count: 1
           any: true
         template: templates/daemonset-node-analyzer.yaml
       - contains:
-          path: spec.template.spec.containers
+          path: spec.template.spec.containers[0].volumeMounts
           content:
-            volumeMounts:
-              name: apiserver-socket
-              mountPath: /run/api.sock
+            name: apiserver-socket
+            mountPath: /run/api.sock
           count: 1
           any: true
         template: templates/daemonset-node-analyzer.yaml
 
   - it: Bottlerocket disabled does not creates default volumes
     set:
+      global:
+        kspm:
+          deploy: true
       nodeAnalyzer:
         bottlerocket:
           enabled: false
@@ -85,17 +89,15 @@ tests:
               type: Socket
         template: templates/daemonset-node-analyzer.yaml
       - notContains:
-          path: spec.template.spec.containers
+          path: spec.template.spec.containers[0].volumeMounts
           content:
-            volumeMounts:
-              name: apiclient
-              mountPath: /usr/bin/apiclient
-              readOnly: true
+            name: apiclient
+            mountPath: /usr/bin/apiclient
+            readOnly: true
         template: templates/daemonset-node-analyzer.yaml
       - notContains:
-          path: spec.template.spec.containers
+          path: spec.template.spec.containers[0].volumeMounts
           content:
-            volumeMounts:
-              name: apiserver-socket
-              mountPath: /run/api.sock
+            name: apiserver-socket
+            mountPath: /run/api.sock
         template: templates/daemonset-node-analyzer.yaml
