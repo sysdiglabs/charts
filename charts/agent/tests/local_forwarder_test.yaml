@@ -33,8 +33,8 @@ tests:
             local_forwarder:
               enabled: true
               transmit_message_types:
-                - POLICY_EVENTS
-                - SECURE_AUDIT
+              - POLICY_EVENTS
+              - SECURE_AUDIT
         template: configmap.yaml
       - contains:
           path: spec.template.spec.volumes
@@ -100,5 +100,5 @@ tests:
             local_forwarder:
               enabled: true
               transmit_message_types:
-                - POLICY_EVENTS
+              - POLICY_EVENTS
         template: configmap.yaml
