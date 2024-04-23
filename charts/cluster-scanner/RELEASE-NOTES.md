@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **cluster-scanner** [ae116768](https://github.com/sysdiglabs/charts/commit/ae1167685b7fdab35accd9db4f9fc0f91e1015ef): removed support for multi-cluster ([#1700](https://github.com/sysdiglabs/charts/issues/1700))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/cluster-scanner-0.12.4...cluster-scanner-0.13.0
+### Chores
+- **cluster-scanner** [6c917450](https://github.com/sysdiglabs/charts/commit/6c9174500a67a8285caeac17f5fcf76441d8e6ad): bump cluster-scanner to 0.7.4 ([#1707](https://github.com/sysdiglabs/charts/issues/1707))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/cluster-scanner-0.13.0...cluster-scanner-0.13.1
