@@ -149,6 +149,7 @@ daemonset:
   probes:
     initialDelay: 90
     periodDelay: 3
+    failureThreshold: 3
   kmodule:
     env: {}
 # If is behind a proxy you can set the proxy server
@@ -314,6 +315,7 @@ delegatedAgentDeployment:
     probes:
       initialDelay: 90
       periodDelay: 3
+      failureThreshold: 3
     progressDeadlineSeconds: 600
     replicas: 1
     resources:
