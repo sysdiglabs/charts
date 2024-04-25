@@ -1,5 +1,5 @@
 # What's Changed
 
 ### New Features
-- **node-analyzer,kspm-collector** [7d1201fc](https://github.com/sysdiglabs/charts/commit/7d1201fc5d1bfc18e9cfc24ed621e76773405d64): Skip TLS certificate verification when using TLS Proxy & bump applications version ([#1665](https://github.com/sysdiglabs/charts/issues/1665))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.14.2...kspm-collector-0.15.0
+- **kspm-collector,node-analyzer** [03e67add](https://github.com/sysdiglabs/charts/commit/03e67adde86b18ef4f96dfe58e6425534a3b4ac0): release kspm-collector & node-analyzer with support for CRN & name from IBM cloud MDS ([#1712](https://github.com/sysdiglabs/charts/issues/1712))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.15.0...kspm-collector-0.15.1
