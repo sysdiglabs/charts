@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **kspm-collector,node-analyzer** [03e67add](https://github.com/sysdiglabs/charts/commit/03e67adde86b18ef4f96dfe58e6425534a3b4ac0): release kspm-collector & node-analyzer with support for CRN & name from IBM cloud MDS ([#1712](https://github.com/sysdiglabs/charts/issues/1712))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.51.1...sysdig-deploy-1.51.2
+### Chores
+- **sysdig-deploy** [b56c5b11](https://github.com/sysdiglabs/charts/commit/b56c5b11f0b9a0b29fb67b01d0eaab2bc872b6be): Automatic version bump due to updated dependencies ([#1717](https://github.com/sysdiglabs/charts/issues/1717))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.51.2...sysdig-deploy-1.51.3
