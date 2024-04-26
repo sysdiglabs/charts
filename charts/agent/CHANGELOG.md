@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.23.1
+### Chores
+* **agent** [06666894](https://github.com/sysdiglabs/charts/commit/066668948b814d8d004c53e2ce5e122c41d39d72): allow to configure probes failureThreshold ([#1710](https://github.com/sysdiglabs/charts/issues/1710))
 # v1.23.0
 ### New Features
 * [5a4444cb](https://github.com/sysdiglabs/charts/commit/5a4444cbdb59d96c95199e5668b01d1d0b38db6b): release agent 13.1.0 ([#1705](https://github.com/sysdiglabs/charts/issues/1705))
