@@ -16,8 +16,8 @@ tests:
                path: /healthz
                port: 24483
              initialDelaySeconds: 90
-             periodSeconds: 3
-             failureThreshold: 3
+             periodSeconds: 10
+             failureThreshold: 9
     template: templates/daemonset.yaml
   - it: "[DaemonSet] Readiness Probe (agent == 12.18.0)"
     set:
@@ -32,8 +32,8 @@ tests:
               path: /healthz
               port: 24483
             initialDelaySeconds: 90
-            periodSeconds: 3
-            failureThreshold: 3
+            periodSeconds: 10
+            failureThreshold: 9
     template: templates/daemonset.yaml
   - it: "[DaemonSet] Readiness Probe (agent < 12.18.0)"
     set:
@@ -49,8 +49,8 @@ tests:
                 - -e
                 - /opt/draios/logs/running
             initialDelaySeconds: 90
-            periodSeconds: 3
-            failureThreshold: 3
+            periodSeconds: 10
+            failureThreshold: 9
     template: templates/daemonset.yaml
   - it: "[DaemonSet] Readiness Probe (agent == dev)"
     set:
@@ -66,8 +66,8 @@ tests:
                 - -e
                 - /opt/draios/logs/running
             initialDelaySeconds: 90
-            periodSeconds: 3
-            failureThreshold: 3
+            periodSeconds: 10
+            failureThreshold: 9
     template: templates/daemonset.yaml
   - it: "[DaemonSet] Readiness Probe (agent == latest)"
     set:
@@ -83,8 +83,8 @@ tests:
                 - -e
                 - /opt/draios/logs/running
             initialDelaySeconds: 90
-            periodSeconds: 3
-            failureThreshold: 3
+            periodSeconds: 10
+            failureThreshold: 9
     template: templates/daemonset.yaml
   - it: "[DelegatedAgentDeployment] Readiness Probe (agent > 12.18.0)"
     set:
@@ -101,8 +101,8 @@ tests:
               path: /healthz
               port: 24483
             initialDelaySeconds: 90
-            periodSeconds: 3
-            failureThreshold: 3
+            periodSeconds: 10
+            failureThreshold: 9
 
   - it: "[DelegatedAgentDeployment] Readiness Probe (agent == 12.18.0)"
     set:
@@ -119,8 +119,8 @@ tests:
               path: /healthz
               port: 24483
             initialDelaySeconds: 90
-            periodSeconds: 3
-            failureThreshold: 3
+            periodSeconds: 10
+            failureThreshold: 9
 
   - it: "[DelegatedAgentDeployment] Readiness Probe (agent < 12.18.0)"
     set:
@@ -138,8 +138,8 @@ tests:
                 - -e
                 - /opt/draios/logs/running
             initialDelaySeconds: 90
-            periodSeconds: 3
-            failureThreshold: 3
+            periodSeconds: 10
+            failureThreshold: 9
 
   - it: "[DelegatedAgentDeployment] Readiness Probe (agent == dev)"
     set:
@@ -157,8 +157,8 @@ tests:
                 - -e
                 - /opt/draios/logs/running
             initialDelaySeconds: 90
-            periodSeconds: 3
-            failureThreshold: 3
+            periodSeconds: 10
+            failureThreshold: 9
 
   - it: "[DelegatedAgentDeployment] Readiness Probe (agent == latest)"
     set:
@@ -176,8 +176,8 @@ tests:
                 - -e
                 - /opt/draios/logs/running
             initialDelaySeconds: 90
-            periodSeconds: 3
-            failureThreshold: 3
+            periodSeconds: 10
+            failureThreshold: 9
 
   - it: Test setting probe delays
     set:
@@ -220,8 +220,8 @@ tests:
                 - -e
                 - /opt/draios/logs/running
             initialDelaySeconds: 90
-            periodSeconds: 3
-            failureThreshold: 3
+            periodSeconds: 10
+            failureThreshold: 9
 
   - it: "Do not use the HTTP Readiness Probe on GKE Autopilot"
     set:
@@ -238,5 +238,5 @@ tests:
                 - -e
                 - /opt/draios/logs/running
             initialDelaySeconds: 90
-            periodSeconds: 3
-            failureThreshold: 3
+            periodSeconds: 10
+            failureThreshold: 9
