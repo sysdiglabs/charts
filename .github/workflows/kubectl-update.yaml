@@ -10,7 +10,7 @@ permissions:
   pull-requests: write
 
 jobs:
-  agent-release:
+  kubectl-update:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
