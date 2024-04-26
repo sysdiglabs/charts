@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **node-analyzer** [4670c8ab](https://github.com/sysdiglabs/charts/commit/4670c8abb12e776d150f0be469242a5ef0dab392): bump vuln-host-scanner to v0.8.1 ([#1682](https://github.com/sysdiglabs/charts/issues/1682))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.26.2...node-analyzer-1.26.3
+### New Features
+- **kspm-collector,node-analyzer** [03e67add](https://github.com/sysdiglabs/charts/commit/03e67adde86b18ef4f96dfe58e6425534a3b4ac0): release kspm-collector & node-analyzer with support for CRN & name from IBM cloud MDS ([#1712](https://github.com/sysdiglabs/charts/issues/1712))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.26.3...node-analyzer-1.26.4
