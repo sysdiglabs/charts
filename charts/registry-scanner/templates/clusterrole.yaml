@@ -3,7 +3,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   namespace: {{ .Release.Namespace }}
-  name: cluster-role-sa-token-requester
+  name: token-requestor
 rules:
 - apiGroups: [""]
   resources: ["serviceaccounts/token"]

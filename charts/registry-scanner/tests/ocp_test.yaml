@@ -1,77 +1,59 @@
 suite: Registry Scanner - OCP Internal Registry
-values:
-  - test-values.yaml
+
 release:
   name: my-release
   namespace: my-namespace
+
+values:
+  - ocp_test_values.yaml
+
 tests:
-  - it: checks cluster role binding
-    set:
-      config.registryType: ocp
+  - it: service account has registry-viewer role
+    documentIndex: 0
     asserts:
       - containsDocument:
           kind: ClusterRoleBinding
           apiVersion: rbac.authorization.k8s.io/v1
       - equal:
           path: metadata.name
-          value: my-release-registry-scanner
+          value: my-release-registry-scanner-crb-registry-viewer
       - equal:
           path: subjects[0].name
           value: my-release-registry-scanner
       - equal:
           path: subjects[0].namespace
           value: my-namespace
-    template: templates/clusterrolebinding.yaml
-  - it: checks config secret
-    set:
-      config.registryType: ocp
-    documentIndex: 0
-    asserts:
-      - containsDocument:
-          kind: Secret
-          apiVersion: v1
       - equal:
-          path: data.registryUser
-          value: c2VydmljZWFjY291bnQ=
-      - notExists:
-          path: data.registryPassword
-    template: templates/secret.yaml
-  - it: checks service account secret
-    set:
-      config.registryType: ocp
+          path: roleRef.name
+          value: registry-viewer
+    template: templates/clusterrolebinding.yaml
+  
+  - it: service account has token-requestor role
     documentIndex: 1
     asserts:
       - containsDocument:
-          kind: Secret
-          apiVersion: v1
-      - equal:
-          path: type
-          value: kubernetes.io/service-account-token
+          kind: ClusterRoleBinding
+          apiVersion: rbac.authorization.k8s.io/v1
       - equal:
           path: metadata.name
-          value: my-release-registry-scanner-token
-    template: templates/secret.yaml
+          value: my-release-registry-scanner-crb-token-requestor
+      - equal:
+          path: subjects[0].name
+          value: my-release-registry-scanner
+      - equal:
+          path: subjects[0].namespace
+          value: my-namespace
+      - equal:
+          path: roleRef.name
+          value: token-requestor
+    template: templates/clusterrolebinding.yaml
+
   - it: checks configmap
-    set:
-      config.registryType: ocp
     asserts:
       - matchRegex:
           path: data['config.yaml']
-          pattern: "type: dockerv2"
+          pattern: "type: ocp"
       - matchRegex:
           path: data['config.yaml']
           pattern: "skipTLS: true"
     template: templates/configmap.yaml
-  - it: checks cronjob
-    set:
-      config.registryType: ocp
-    asserts:
-      - contains:
-          path: spec.jobTemplate.spec.template.spec.containers[0].env
-          content:
-            name: REGISTRYSCANNER_REGISTRY_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: my-release-registry-scanner-token
-                key: token
-    template: templates/cronjob.yaml
