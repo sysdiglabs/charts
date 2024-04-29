@@ -27,7 +27,7 @@ tests:
           path: roleRef.name
           value: registry-viewer
     template: templates/clusterrolebinding.yaml
-  
+
   - it: service account has token-requestor role
     documentIndex: 1
     asserts:
