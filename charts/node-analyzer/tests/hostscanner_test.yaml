@@ -236,7 +236,7 @@ tests:
           of: ConfigMap
       - equal:
           path: data.prom_enabled
-          value: false
+          value: "false"
       - isNull:
           path: data.prom_port
       - isNull:
@@ -253,7 +253,7 @@ tests:
           of: ConfigMap
       - equal:
           path: data.prom_enabled
-          value: false
+          value: "false"
   - it: "Prometheus is enabled"
     set:
       clusterName: "test"
@@ -266,7 +266,7 @@ tests:
           of: ConfigMap
       - equal:
           path: data.prom_enabled
-          value: true
+          value: "true"
       - isNull:
           path: data.prom_port
       - isNull:
