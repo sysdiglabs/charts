@@ -10,6 +10,12 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.51.4
+### Chores
+* **sysdig-deploy** [119aed28](https://github.com/sysdiglabs/charts/commit/119aed2864fadb7336b57e6b8e65fe7c43fb3ecc): Automatic version bump due to updated dependencies ([#1718](https://github.com/sysdiglabs/charts/issues/1718))
+# v1.51.3
+### Chores
+* **sysdig-deploy** [b56c5b11](https://github.com/sysdiglabs/charts/commit/b56c5b11f0b9a0b29fb67b01d0eaab2bc872b6be): Automatic version bump due to updated dependencies ([#1717](https://github.com/sysdiglabs/charts/issues/1717))
 # v1.51.2
 ### New Features
 * **kspm-collector,node-analyzer** [03e67add](https://github.com/sysdiglabs/charts/commit/03e67adde86b18ef4f96dfe58e6425534a3b4ac0): release kspm-collector & node-analyzer with support for CRN & name from IBM cloud MDS ([#1712](https://github.com/sysdiglabs/charts/issues/1712))

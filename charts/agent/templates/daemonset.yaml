@@ -235,6 +235,7 @@ spec:
             {{- end }}
             initialDelaySeconds: {{ .Values.daemonset.probes.initialDelay }}
             periodSeconds: {{ .Values.daemonset.probes.periodDelay }}
+            failureThreshold: {{ .Values.daemonset.probes.failureThreshold }}
           volumeMounts:
           {{- if .Values.localForwarder.enabled }}
             - mountPath: /opt/draios/etc/local_forwarder_config.yaml
