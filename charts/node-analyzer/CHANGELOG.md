@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.27.0
+### Chores
+* **node-analyzer** [c702f9dc](https://github.com/sysdiglabs/charts/commit/c702f9dc5b58cd0a6c18a2c82a813a524c347e5c): bump host-scanner to v0.9.0 ([#1713](https://github.com/sysdiglabs/charts/issues/1713))
 # v1.26.5
 ### Bug Fixes
 * **node-analyzer** [8ac36439](https://github.com/sysdiglabs/charts/commit/8ac36439f8d67ba20f29c9e29ee52b6fc698124f): use correct values for custom CA envs generation ([#1716](https://github.com/sysdiglabs/charts/issues/1716))
