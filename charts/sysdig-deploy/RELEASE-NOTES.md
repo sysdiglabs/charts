@@ -1,5 +1,5 @@
 # What's Changed
 
 ### Chores
-- **sysdig-deploy** [eb8085b5](https://github.com/sysdiglabs/charts/commit/eb8085b50acd6249cf9fc155adc3638e310f9994): Automatic version bump due to updated dependencies ([#1725](https://github.com/sysdiglabs/charts/issues/1725))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.51.5...sysdig-deploy-1.51.6
+- **node-analyzer** [c702f9dc](https://github.com/sysdiglabs/charts/commit/c702f9dc5b58cd0a6c18a2c82a813a524c347e5c): bump host-scanner to v0.9.0 ([#1713](https://github.com/sysdiglabs/charts/issues/1713))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.51.6...sysdig-deploy-1.52.0
