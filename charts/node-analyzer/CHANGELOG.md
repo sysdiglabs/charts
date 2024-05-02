@@ -10,6 +10,12 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.26.5
+### Bug Fixes
+* **node-analyzer** [8ac36439](https://github.com/sysdiglabs/charts/commit/8ac36439f8d67ba20f29c9e29ee52b6fc698124f): use correct values for custom CA envs generation ([#1716](https://github.com/sysdiglabs/charts/issues/1716))
+# v1.26.4
+### New Features
+* **kspm-collector,node-analyzer** [03e67add](https://github.com/sysdiglabs/charts/commit/03e67adde86b18ef4f96dfe58e6425534a3b4ac0): release kspm-collector & node-analyzer with support for CRN & name from IBM cloud MDS ([#1712](https://github.com/sysdiglabs/charts/issues/1712))
 # v1.26.3
 ### Chores
 * **node-analyzer** [4670c8ab](https://github.com/sysdiglabs/charts/commit/4670c8abb12e776d150f0be469242a5ef0dab392): bump vuln-host-scanner to v0.8.1 ([#1682](https://github.com/sysdiglabs/charts/issues/1682))

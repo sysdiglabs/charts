@@ -292,7 +292,7 @@ spec:
           {{- end }}
           {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl)) "true" }}
           - name: TLS_CA_PATHS
-            value: /ca-certs/{{- include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.ssl) -}}
+            value: /ca-certs/{{- include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl) -}}
           {{- end }}
           {{- range $key, $value := .Values.nodeAnalyzer.kspmAnalyzer.env }}
           - name: "{{ $key }}"

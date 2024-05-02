@@ -1,5 +1,5 @@
 # What's Changed
 
 ### Chores
-- **cluster-scanner** [6c917450](https://github.com/sysdiglabs/charts/commit/6c9174500a67a8285caeac17f5fcf76441d8e6ad): bump cluster-scanner to 0.7.4 ([#1707](https://github.com/sysdiglabs/charts/issues/1707))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.51.0...sysdig-deploy-1.51.1
+- **sysdig-deploy** [eb8085b5](https://github.com/sysdiglabs/charts/commit/eb8085b50acd6249cf9fc155adc3638e310f9994): Automatic version bump due to updated dependencies ([#1725](https://github.com/sysdiglabs/charts/issues/1725))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.51.5...sysdig-deploy-1.51.6
