@@ -899,6 +899,23 @@ spec:
             value: "/tmp"
           - name: PROBES_PORT
             value: {{ .Values.nodeAnalyzer.hostScanner.probesPort | quote }}
+          - name: PROM_ENABLED
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-host-scanner
+                key: prom_enabled
+          - name: PROM_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-host-scanner
+                key: prom_port
+                optional: true
+          - name: PROM_ENDPOINT
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-host-scanner
+                key: prom_endpoint
+                optional: true
           {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl)) "true" }}
           - name: SSL_CERT_FILE
             value: /ca-certs/{{- include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl) -}}
@@ -910,8 +927,6 @@ spec:
 
           {{- if .Values.nodeAnalyzer.hostScanner.scanContainers.enabled }}
           # Container scanner
-          - name: USE_COMBINED_SCANNER
-            value: "true"
           - name: SCAN_CONTAINERS_ENABLED
             value: "true"
           - name: DOCKER_SOCKET_PATHS
