@@ -138,6 +138,8 @@ serviceAccount:
   create: true
   # Use this value as serviceAccountName
   name: null
+windowsDaemonset:
+  nodeSelector: {}
 daemonset:
   deploy: true
   # Perform rolling updates by default in the DaemonSet agent
