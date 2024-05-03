@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "agent-windows.fullname" . }}
+data:
+  dragent.yaml: |
+    log:
+      console_priority: debug
+
+    customerid: {{ include "agent.accessKey" . | quote }}
+
+{{- include "agent.connectionSettings" . | trim | nindent 4 }}
