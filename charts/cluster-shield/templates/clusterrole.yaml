@@ -1,0 +1,188 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "cluster-shield.fullname" . }}
+rules:
+{{- if .Values.cluster_shield.features.container_vulnerability_management.enabled }}
+- apiGroups: ["", "apps", "batch", "extensions"]
+  resources:
+    - "cronjobs"
+    - "daemonsets"
+    - "deployments"
+    - "jobs"
+    - "namespaces"
+    - "nodes"
+    - "pods"
+    - "replicasets"
+    - "secrets"
+    - "statefulsets"
+  verbs: ["get", "list", "watch"]
+{{- end }}
+{{- if .Values.cluster_shield.features.audit.enabled }}
+- apiGroups:
+    - ""
+  resourceNames:
+    - kube-system
+  resources:
+    - namespaces
+  verbs:
+    - get
+- apiGroups:
+    - ""
+  resources:
+    - pods
+  verbs:
+    - get
+- apiGroups:
+    - "apps"
+  resources:
+    - deployments
+    - replicasets
+    - statefulsets
+    - daemonsets
+  verbs:
+    - get
+{{- end }}
+{{- if .Values.cluster_shield.features.posture.enabled }}
+- apiGroups:
+    - ""
+    - rbac.authorization.k8s.io
+    - extensions
+    - apps
+    - batch
+    - networking.k8s.io
+    - autoscaling
+    - policy
+    - storage.k8s.io
+    - config.openshift.io
+  resources:
+    - pods
+    - pods/log
+    - namespaces
+    - deployments
+    - daemonsets
+    - statefulsets
+    - jobs
+    - cronjobs
+    - clusterroles
+    - clusterrolebindings
+    - roles
+    - rolebindings
+    - services
+    - serviceaccounts
+    - nodes
+    - ingresses
+    - ingressclasses
+    - networkpolicies
+    - replicasets
+    - configmaps
+    - events
+    - limitranges
+    - persistentvolumes
+    - persistentvolumeclaims
+    - replicationcontrollers
+    - resourcequotas
+    - controllerrevisions
+    - horizontalpodautoscalers
+    - podsecuritypolicies
+    - storageclasses
+    - volumeattachments
+    - clusterversions
+  verbs: ["get", "list", "watch"]
+{{- end }}
+{{- if .Values.cluster_shield.features.kubernetes_metadata.enabled }}
+- apiGroups:
+    - ""
+  resources:
+    - pods
+    - replicationcontrollers
+    - services
+    - events
+    - limitranges
+    - namespaces
+    - nodes
+    - resourcequotas
+    - persistentvolumes
+    - persistentvolumeclaims
+    - configmaps
+  verbs:
+    - get
+    - list
+    - watch
+- apiGroups:
+    - apps
+  resources:
+    - daemonsets
+    - deployments
+    - replicasets
+    - statefulsets
+  verbs:
+    - get
+    - list
+    - watch
+- apiGroups:
+    - autoscaling
+  resources:
+    - horizontalpodautoscalers
+  verbs:
+    - get
+    - list
+    - watch
+- apiGroups:
+    - batch
+  resources:
+    - cronjobs
+    - jobs
+  verbs:
+    - get
+    - list
+    - watch
+- apiGroups:
+    - networking.k8s.io
+  resources:
+    - ingresses
+  verbs:
+    - get
+    - list
+    - watch
+- apiGroups:
+  - storage.k8s.io
+  resources:
+  - storageclasses
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - certificates.k8s.io
+  resources:
+  - certificatesigningrequests
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - policy
+  resources:
+  - poddisruptionbudgets
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - discovery.k8s.io
+  resources:
+  - endpointslices
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - events.k8s.io
+  resources:
+  - events
+  verbs:
+  - get
+  - list
+  - watch
+{{- end }}

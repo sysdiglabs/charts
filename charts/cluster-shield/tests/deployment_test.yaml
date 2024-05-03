@@ -1,0 +1,209 @@
+suite: Test Deployment
+templates:
+  - templates/deployment.yaml
+values:
+  - ../ci/base-values.yaml
+release:
+  name: shield-release
+  namespace: shield-namespace
+tests:
+  - it: Test run-all-namespaced mode
+    set:
+      run_command: "run-all-namespaced"
+    asserts:
+      - isKind:
+          of: Deployment
+      - equal:
+          path: metadata.name
+          value: shield-release-cluster-shield
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - isNotNull:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")]
+      - isNotNull:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].securityContext
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].securityContext.privileged
+          value: true
+  - it: Test run-all mode
+    set:
+      run_command: "run-all"
+    asserts:
+      - isKind:
+          of: Deployment
+      - equal:
+          path: metadata.name
+          value: shield-release-cluster-shield
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - isNotNull:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")]
+      - isNull:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].securityContext
+  - it: Test env var is set when existingAccessKeySecret provided
+    set:
+      global:
+        sysdig:
+          existingAccessKeySecret: "test-existing-access-key-secret"
+    asserts:
+      - isKind:
+          of: Deployment
+      - equal:
+          path: metadata.name
+          value: shield-release-cluster-shield
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - isNotNull:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")]
+      - isNotNull:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "SYSDIG_CLUSTER_SHIELD_SYSDIG_ENDPOINT__ACCESS_KEY")]
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "SYSDIG_CLUSTER_SHIELD_SYSDIG_ENDPOINT__ACCESS_KEY")].valueFrom.secretKeyRef.name
+          value: test-existing-access-key-secret
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "SYSDIG_CLUSTER_SHIELD_SYSDIG_ENDPOINT__ACCESS_KEY")].valueFrom.secretKeyRef.key
+          value: access-key
+  - it: Test env var is set when existingAccessKeySecret and existingAccessKeySecretKeyName provided
+    set:
+      global:
+        sysdig:
+          existingAccessKeySecret: "test-existing-access-key-secret"
+          existingAccessKeySecretKeyName: "access-key-custom"
+    asserts:
+      - isKind:
+          of: Deployment
+      - equal:
+          path: metadata.name
+          value: shield-release-cluster-shield
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - isNotNull:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")]
+      - isNotNull:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "SYSDIG_CLUSTER_SHIELD_SYSDIG_ENDPOINT__ACCESS_KEY")]
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "SYSDIG_CLUSTER_SHIELD_SYSDIG_ENDPOINT__ACCESS_KEY")].valueFrom.secretKeyRef.name
+          value: test-existing-access-key-secret
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "SYSDIG_CLUSTER_SHIELD_SYSDIG_ENDPOINT__ACCESS_KEY")].valueFrom.secretKeyRef.key
+          value: access-key-custom
+  - it: Test env var is set when existingSecureApiTokenSecret provided
+    set:
+      global:
+        sysdig:
+          existingSecureApiTokenSecret: "test-existing-secure-api-token-secret"
+    asserts:
+      - isKind:
+          of: Deployment
+      - equal:
+          path: metadata.name
+          value: shield-release-cluster-shield
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - isNotNull:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")]
+      - isNotNull:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "SYSDIG_CLUSTER_SHIELD_SYSDIG_ENDPOINT__SECURE_API_TOKEN")]
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "SYSDIG_CLUSTER_SHIELD_SYSDIG_ENDPOINT__SECURE_API_TOKEN")].valueFrom.secretKeyRef.name
+          value: test-existing-secure-api-token-secret
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "SYSDIG_CLUSTER_SHIELD_SYSDIG_ENDPOINT__SECURE_API_TOKEN")].valueFrom.secretKeyRef.key
+          value: secure-api-token
+
+  - it: Test env var is set when existingSecureApiTokenSecret and existingSecureApiTokenSecretKeyName provided
+    set:
+      global:
+        sysdig:
+          existingSecureApiTokenSecret: "test-existing-secure-api-token-secret"
+          existingSecureApiTokenSecretKeyName: "secure-api-token-custom"
+    asserts:
+      - isKind:
+          of: Deployment
+      - equal:
+          path: metadata.name
+          value: shield-release-cluster-shield
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - isNotNull:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")]
+      - isNotNull:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "SYSDIG_CLUSTER_SHIELD_SYSDIG_ENDPOINT__SECURE_API_TOKEN")]
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "SYSDIG_CLUSTER_SHIELD_SYSDIG_ENDPOINT__SECURE_API_TOKEN")].valueFrom.secretKeyRef.name
+          value: test-existing-secure-api-token-secret
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "SYSDIG_CLUSTER_SHIELD_SYSDIG_ENDPOINT__SECURE_API_TOKEN")].valueFrom.secretKeyRef.key
+          value: secure-api-token-custom
+  - it: Test readinessProbe default values
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].readinessProbe.httpGet.path
+          value: /healthz
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].readinessProbe.httpGet.port
+          value: http
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].readinessProbe.initialDelaySeconds
+          value: 10
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].readinessProbe.periodSeconds
+          value: 5
+  - it: Test readinessProbe custom values
+    set:
+      probes:
+        readiness:
+          initialDelaySeconds: 20
+          periodSeconds: 10
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].readinessProbe.httpGet.path
+          value: /healthz
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].readinessProbe.httpGet.port
+          value: http
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].readinessProbe.initialDelaySeconds
+          value: 20
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].readinessProbe.periodSeconds
+          value: 10
+  - it: Test livenessProbe default values
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].livenessProbe.httpGet.path
+          value: /healthz
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].livenessProbe.httpGet.port
+          value: http
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].livenessProbe.initialDelaySeconds
+          value: 5
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].livenessProbe.periodSeconds
+          value: 5
+  - it: Test livenessProbe custom values
+    set:
+      probes:
+        liveness:
+          initialDelaySeconds: 20
+          periodSeconds: 10
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].livenessProbe.httpGet.path
+          value: /healthz
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].livenessProbe.httpGet.port
+          value: http
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].livenessProbe.initialDelaySeconds
+          value: 20
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].livenessProbe.periodSeconds
+          value: 10

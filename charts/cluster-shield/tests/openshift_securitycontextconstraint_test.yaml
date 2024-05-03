@@ -1,0 +1,37 @@
+suite: Test Openshift SecurityContextConstraints
+templates:
+  - templates/openshift_securitycontextconstraint.yaml
+values:
+  - ../ci/base-values.yaml
+release:
+  name: shield-release
+  namespace: shield-namespace
+capabilities:
+  apiVersions:
+    - security.openshift.io/v1
+tests:
+  - it: Test run-all-namespaced mode
+    set:
+      run_command: "run-all-namespaced"
+    asserts:
+      - isKind:
+          of: SecurityContextConstraints
+#      - equal:
+#          path: metadata.name
+#          value: shield-release-cluster-shield
+#      - equal:
+#          path: metadata.namespace
+#          value: shield-namespace
+#      - isNotNull:
+#          path: spec.template.spec.containers[?(@.name == "cluster-shield")]
+#      - isNotNull:
+#          path: spec.template.spec.containers[?(@.name == "cluster-shield")].securityContext
+#      - equal:
+#          path: spec.template.spec.containers[?(@.name == "cluster-shield")].securityContext.privileged
+#          value: true
+  - it: Test run-all mode
+    set:
+      run_command: "run-all"
+    asserts:
+      - hasDocuments:
+          count: 0

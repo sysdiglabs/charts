@@ -1,0 +1,99 @@
+suite: Test Service
+templates:
+  - templates/service.yaml
+values:
+  - ../ci/base-values.yaml
+release:
+  name: shield-release
+  namespace: shield-namespace
+tests:
+  - it: Contains a Service resource
+    asserts:
+      - isKind:
+          of: Service
+      - equal:
+          path: metadata.name
+          value: shield-release-cluster-shield
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - isNotNull:
+          path: .spec.ports[?(@.name == "http")]
+      - equal:
+          path: spec.ports[?(@.name == "http")].port
+          value: 8080
+      - equal:
+          path: spec.ports[?(@.name == "http")].protocol
+          value: TCP
+      - equal:
+          path: spec.ports[?(@.name == "http")].targetPort
+          value: http
+      - lengthEqual:
+          path: spec.ports
+          count: 1
+  - it: Enable Audit Feature
+    set:
+      cluster_shield:
+        features:
+          audit:
+            enabled: true
+    asserts:
+      - isKind:
+          of: Service
+      - isNotNull:
+          path: .spec.ports[?(@.name == "audit")]
+      - equal:
+          path: spec.ports[?(@.name == "audit")].port
+          value: 6443
+      - equal:
+          path: spec.ports[?(@.name == "audit")].protocol
+          value: TCP
+      - equal:
+          path: spec.ports[?(@.name == "audit")].targetPort
+          value: audit
+      - lengthEqual:
+          path: spec.ports
+          count: 2
+  - it: Enable Admission Control Feature
+    set:
+      cluster_shield:
+        features:
+          admission_control:
+              enabled: true
+    asserts:
+      - isKind:
+          of: Service
+      - isNotNull:
+          path: .spec.ports[?(@.name == "posture-ac")]
+      - equal:
+          path: spec.ports[?(@.name == "posture-ac")].port
+          value: 8443
+      - equal:
+          path: spec.ports[?(@.name == "posture-ac")].protocol
+          value: TCP
+      - equal:
+          path: spec.ports[?(@.name == "posture-ac")].targetPort
+          value: posture-ac
+      - lengthEqual:
+          path: spec.ports
+          count: 2
+  - it: Enable All Features
+    set:
+      cluster_shield:
+        features:
+          admission_control:
+            enabled: true
+          audit:
+              enabled: true
+    asserts:
+      - isKind:
+          of: Service
+      - lengthEqual:
+          path: spec.ports
+          count: 3
+      - isNotNull:
+          path: .spec.ports[?(@.name == "http")]
+      - isNotNull:
+          path: .spec.ports[?(@.name == "audit")]
+      - isNotNull:
+          path: .spec.ports[?(@.name == "posture-ac")]

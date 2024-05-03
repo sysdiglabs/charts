@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "cluster-shield.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "cluster-shield.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  {{- if .Values.cluster_shield.features.audit.enabled }}
+    - port: {{ include "cluster-shield.admissionControllerAuditPort" . }}
+      targetPort: audit
+      protocol: TCP
+      name: audit
+  {{- end }}
+  {{- if and .Values.cluster_shield.features.admission_control.enabled }}
+    - port: {{ include "cluster-shield.admissionControlPort" . }}
+      targetPort: posture-ac
+      protocol: TCP
+      name: posture-ac
+  {{- end }}
+  selector:
+    {{- include "cluster-shield.selectorLabels" . | nindent 4 }}
