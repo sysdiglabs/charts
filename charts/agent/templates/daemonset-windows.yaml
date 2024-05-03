@@ -33,7 +33,7 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.windowsImage.repository }}:{{ .Values.windowsImage.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.windowsImage.pullPolicy }}
+          imagePullPolicy: {{ .Values.windowsImage.pullPolicy | default .Values.global.image.pullPolicy }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
