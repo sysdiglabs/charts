@@ -1,7 +1,8 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "agent-windows.fullname" . }}
+  #name: {{ include "agent-windows.fullname" . }}
+  name: {{ include "agent.configmapName" . | printf "%s-windows" | trunc 63 | trimSuffix "-" }}
 data:
   dragent.yaml: |
     log:

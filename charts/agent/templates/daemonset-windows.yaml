@@ -1,7 +1,8 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: {{ include "agent-windows.fullname" . }}
+#  name: {{ include "agent-windows.fullname" . }}
+  name: {{ include "agent.fullname" . | printf "%s-windows" }}
   labels:
     {{- include "agent-windows.labels" . | nindent 4 }}
 spec:
@@ -42,7 +43,8 @@ spec:
       volumes:
       - name: config
         configMap:
-          name: {{ include "agent-windows.fullname" . }}
+#          name: {{ include "agent-windows.fullname" . }}
+          name: {{ include "agent.configmapName" . | printf "%s-windows" | trunc 63 | trimSuffix "-" }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
