@@ -1,0 +1,43 @@
+{{- if and (.Capabilities.APIVersions.Has "security.openshift.io/v1") (eq .Values.run_command "run-all-namespaced") }}
+apiVersion: security.openshift.io/v1
+kind: SecurityContextConstraints
+metadata:
+  annotations:
+    kubernetes.io/description: |
+      This provides the minimum requirements to the Sysdig cluster-shield to run in the Openshift.
+  name: {{ include "cluster-shield.fullname" . }}
+  labels:
+    {{- include "cluster-shield.labels" . | nindent 4 }}
+allowHostDirVolumePlugin: true
+allowHostIPC: false
+allowHostNetwork: true
+allowHostPID: true
+allowHostPorts: false
+allowPrivilegeEscalation: true
+allowPrivilegedContainer: true
+allowedCapabilities: []
+allowedUnsafeSysctls: []
+defaultAddCapabilities: []
+fsGroup:
+  type: RunAsAny
+groups: []
+priority: 0
+readOnlyRootFilesystem: false
+requiredDropCapabilities: []
+runAsUser:
+  type: RunAsAny
+seLinuxContext:
+  type: RunAsAny
+seccompProfiles:
+- '*'
+supplementalGroups:
+  type: RunAsAny
+users:
+- system:serviceaccount:{{ .Release.Namespace }}:{{ include "cluster-shield.fullname" . }}
+volumes:
+- hostPath
+- emptyDir
+- secret
+- configMap
+- downwardAPI
+{{- end }}

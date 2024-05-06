@@ -1,0 +1,115 @@
+global:
+  sysdig:
+    existingAccessKeySecret:
+    existingAccessKeySecretKeyName:
+    existingSecureApiTokenSecret:
+    existingSecureApiTokenSecretKeyName:
+cluster_shield:
+  # Global Configurations
+  cluster_config:
+    name:
+  log_level: warn
+  monitoring_port: 8080
+  ssl:
+    verify: true
+  sysdig_endpoint:
+    access_key:
+    api_url:
+    secure_api_token:
+    region: custom
+  kubernetes:
+    root_namespace: kube-system
+  # Features
+  features:
+    admission_control:
+      enabled: false
+      deny_on_error: false
+      dry_run: true
+      timeout: 5
+    audit:
+      enabled: false
+      timeout: 5
+    posture:
+      enabled: false
+    container_vulnerability_management:
+      enabled: false
+      in_use:
+        enabled: true
+        integration_enabled: false
+      local_cluster:
+        enabled: true
+        registry_secrets: []
+      platform_services_enabled: true
+      registry_ssl:
+        verify: true
+      remote_clusters:
+        enabled: false
+    kubernetes_metadata:
+      enabled: false
+ca:
+  # A PEM-encoded x509 certificate. This can also be a bundle with multiple certificates.
+  certs: []
+  # - |
+  #     -----BEGIN CERTIFICATE-----
+  #     MIIDEzCCAfugAwIBAgIQKiv9U+KxPJzu1adXwC06RzANBgkqhkiG9w0BAQsFADAU
+  #     MRIwEAYDVQQDEwloYXJib3ItY2EwHhcNMjIwMjIzMDY1NjExWhcNMjMwMjIzMDY1
+  #     NjExWjAUMRIwEAYDVQQDEwloYXJib3ItY2EwggEiMA0GCSqGSIb3DQEBAQUAA4IB
+  #     MMNlTAQ9fvdNOTzZntye0PQYR5SR13E=
+  #     -----END CERTIFICATE-----
+
+  # Filename that is used when creating the secret. Required if certs is provided.
+  keyName: null
+  # Provide the name of an existing Secret that contains the CA required
+  existingCaSecret: null
+  # Provide the filename that is defined inside the existing Secret
+  existingCaSecretKeyName: null
+  # Provide the name of an existing ConfigMap that contains the CA required
+  existingCaConfigMap: null
+  # Provide the filename that is defined inside the existing ConfigMap
+  existingCaConfigMapKeyName: null
+run_command: "run-all-namespaced"
+image:
+  repository: quay.io/sysdig/cluster-shield
+  pullPolicy: IfNotPresent
+proxy:
+  httpProxy:
+  httpsProxy:
+  noProxy: 127.0.0.1,localhost,.local,.internal
+imagePullSecrets: []
+# - name: regcred
+
+probes:
+  liveness:
+    initialDelaySeconds: 5
+    periodSeconds: 5
+  readiness:
+    initialDelaySeconds: 10
+    periodSeconds: 5
+podAnnotations: {}
+podLabels: {}
+service:
+  type: ClusterIP
+  port: 8080
+serviceAccount:
+  labels: {}
+  annotations: {}
+resources: {}
+# We usually recommend not to specify default resources and to leave this as a conscious
+# choice for the user. This also increases chances charts run on environments with little
+# resources, such as Minikube. If you do want to specify resources, uncomment the following
+# lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+# limits:
+#   cpu: 100m
+#   memory: 128Mi
+# requests:
+#   cpu: 100m
+#   memory: 128Mi
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
+replicaCount: 2
+updateStrategy:
+  type: RollingUpdate
+  rollingUpdate: {}
+onPremCompatibilityVersion:

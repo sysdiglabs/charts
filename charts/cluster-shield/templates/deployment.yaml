@@ -1,0 +1,170 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "cluster-shield.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "cluster-shield.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  strategy:
+    {{- toYaml .Values.updateStrategy | nindent 4 }}
+  selector:
+    matchLabels:
+      {{- include "cluster-shield.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "cluster-shield.labels" . | nindent 8 }}
+  {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "cluster-shield.fullname" . }}
+      securityContext: {}
+      containers:
+        - name: {{ .Chart.Name }}
+          {{- if eq .Values.run_command "run-all-namespaced" }}
+          securityContext:
+            privileged: true
+            runAsNonRoot: false
+            runAsUser: 0
+            readOnlyRootFilesystem: false
+            allowPrivilegeEscalation: true
+          {{- end }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args: [ {{ .Values.run_command | quote }} ]
+          ports:
+            - name: http
+              containerPort: {{ .Values.cluster_shield.monitoring_port | default 8080 }}
+              protocol: TCP
+            {{- if .Values.cluster_shield.features.audit.enabled }}
+            - name: audit
+              containerPort: {{ include "cluster-shield.admissionControllerAuditPort" . }}
+              protocol: TCP
+            {{- end }}
+            {{- if .Values.cluster_shield.features.admission_control.enabled }}
+            - name: posture-ac
+              containerPort: {{ include "cluster-shield.admissionControlPort" . }}
+              protocol: TCP
+            {{- end }}
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            {{- if and (.Values.probes) (.Values.probes.liveness) }}
+            initialDelaySeconds: {{ .Values.probes.liveness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.probes.liveness.periodSeconds }}
+            {{- end }}
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            {{- if and (.Values.probes) (.Values.probes.readiness) }}
+            initialDelaySeconds: {{ .Values.probes.readiness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.probes.readiness.periodSeconds }}
+            {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - mountPath: /etc/sysdig/config/
+              name: cluster-shield
+            - mountPath: /etc/sysdig/secrets/
+              name: cluster-shield-secret
+            {{- if eq (include "cluster-shield.needCerts" .) "true" }}
+            - name: cert
+              mountPath: /cert
+              readOnly: true
+            {{- end }}
+            {{- if eq (include "cluster-shield.custom_ca.enabled" .) "true" }}
+            - name: ca-cert
+              mountPath: /ca-certs
+              readOnly: true
+            {{- end }}
+          env:
+            - name: KUBE_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: KUBE_POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: KUBE_SERVICE_NAME
+              value: {{ include "cluster-shield.clusterScannerServiceName" . }}
+            {{- if .Values.global.sysdig.existingAccessKeySecret }}
+            - name: SYSDIG_CLUSTER_SHIELD_SYSDIG_ENDPOINT__ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.global.sysdig.existingAccessKeySecret }}
+                  key: {{ .Values.global.sysdig.existingAccessKeySecretKeyName | default "access-key"}}
+            {{- end }}
+            {{- if .Values.global.sysdig.existingSecureApiTokenSecret }}
+            - name: SYSDIG_CLUSTER_SHIELD_SYSDIG_ENDPOINT__SECURE_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.global.sysdig.existingSecureApiTokenSecret }}
+                  key: {{ .Values.global.sysdig.existingSecureApiTokenSecretKeyName | default "secure-api-token" }}
+            {{- end }}
+            {{- if eq (include "cluster-shield.custom_ca.enabled" .) "true" }}
+            - name: SSL_CERT_FILE
+              value: /ca-certs/{{- include "cluster-shield.custom_ca.keyName" . -}}
+            {{- end }}
+            {{- if .Values.proxy.httpProxy }}
+            - name: HTTP_PROXY
+              value: "{{ .Values.proxy.httpProxy }}"
+            {{- end }}
+            {{- if .Values.proxy.httpsProxy }}
+            - name: HTTPS_PROXY
+              value: "{{ .Values.proxy.httpsProxy }}"
+            {{- end }}
+            {{- if or .Values.proxy.httpProxy .Values.proxy.httpsProxy }}
+            - name: NO_PROXY
+              value: "{{ .Values.proxy.noProxy }}"
+            {{- end }}
+      volumes:
+        - name: cluster-shield
+          configMap:
+            name: {{ include "cluster-shield.configmapName" . }}
+        - name: cluster-shield-secret
+          secret:
+            secretName: {{ include "cluster-shield.secretName" . }}
+        {{- if eq (include "cluster-shield.needCerts" .) "true" }}
+        - name: cert
+          secret:
+            secretName: {{ include "cluster-shield.tlsCertsSecretName" . }}
+        {{- end }}
+        {{- if eq (include "cluster-shield.custom_ca.useValues" .) "true" }}
+        - name: ca-cert
+          secret:
+            secretName: {{ include "cluster-shield.customCASecretName" . }}
+        {{- else if eq (include "cluster-shield.custom_ca.useExistingSecret" .) "true" }}
+        - name: ca-cert
+          secret:
+            secretName: {{ .Values.ca.existingCaSecret }}
+        {{- else if eq (include "cluster-shield.custom_ca.useExistingConfigMap" .) "true" }}
+        - name: ca-cert
+          configMap:
+            name: {{ .Values.ca.existingCaConfigMap }}
+        {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

@@ -1,0 +1,849 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "type": "object",
+  "required": [
+    "cluster_shield",
+    "image",
+    "run_command",
+    "proxy"
+  ],
+  "properties": {
+    "global": {
+      "type": "object",
+      "description": "Global configurations",
+      "properties": {
+        "sysdig": {
+          "type": "object",
+          "description": "Global sysdig configurations",
+          "properties": {
+            "existingAccessKeySecret": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "The name of the secret containing the Sysdig Agent Access Key"
+            },
+            "existingAccessKeySecretKeyName": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "default": "access-key",
+              "description": "The key name of the secret containing the Sysdig Agent Access Key"
+            },
+            "existingSecureApiTokenSecret": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "The name of the secret containing the Sysdig Secure API Token"
+            },
+            "existingSecureApiTokenSecretKeyName": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "The key name of the secret containing the Sysdig Secure API Token"
+            }
+          }
+        }
+      }
+    },
+    "probes": {
+      "type": "object",
+      "description": "Configuration for the probes",
+      "properties": {
+        "liveness": {
+          "$ref": "#/$defs/Probe",
+          "description": "Configuration for the liveness probe"
+        },
+        "readiness": {
+          "$ref": "#/$defs/Probe",
+          "description": "Configuration for the readiness probe"
+        }
+      }
+    },
+    "run_command": {
+      "type": "string",
+      "description": "The command to be executed by the cluster-shield",
+      "default": "run-all-namespaced",
+      "enum": [
+        "run-all-namespaced",
+        "run-all"
+      ]
+    },
+    "image": {
+      "type": "object",
+      "properties": {
+        "repository": {
+          "type": "string",
+          "description": "The repository of the image to be used"
+        },
+        "tag": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "description": "The tag of the image to be used"
+        },
+        "pullPolicy": {
+          "type": "string",
+          "description": "The pull policy to be used",
+          "default": "IfNotPresent",
+          "enum": [
+            "Always",
+            "IfNotPresent",
+            "Never"
+          ]
+        }
+      }
+    },
+    "proxy": {
+      "type": "object",
+      "description": "Define proxy information to be used",
+      "properties": {
+        "httpProxy": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The value for the HTTP_PROXY env variable"
+        },
+        "httpsProxy": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The value for the HTTPS_PROXY env variable"
+        },
+        "noProxy": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The value for the NO_PROXY env variable"
+        }
+      },
+      "additionalProperties": false
+    },
+    "cluster_shield": {
+      "$ref": "#/$defs/ClusterShieldConfiguration"
+    }
+  },
+  "allOf": [
+    {
+      "description": "One between global.sysdig.existingAccessKeySecret and cluster_shield.sysdig_endpoint.access_key must be set",
+      "anyOf": [
+        {
+          "properties": {
+            "cluster_shield": {
+              "properties": {
+                "sysdig_endpoint": {
+                  "properties": {
+                    "access_key": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "access_key"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "global": {
+              "properties": {
+                "sysdig": {
+                  "properties": {
+                    "existingAccessKeySecret": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "existingAccessKeySecret"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "description": "One between global.sysdig.existingSecureApiTokenSecret and cluster_shield.sysdig_endpoint.secure_api_token must be set",
+      "anyOf": [
+        {
+          "properties": {
+            "cluster_shield": {
+              "properties": {
+                "sysdig_endpoint": {
+                  "properties": {
+                    "secure_api_token": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "secure_api_token"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "global": {
+              "properties": {
+                "sysdig": {
+                  "properties": {
+                    "existingSecureApiTokenSecret": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "existingSecureApiTokenSecret"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "$defs": {
+    "Probe": {
+      "type": "object",
+      "properties": {
+        "initialDelaySeconds": {
+          "type": "integer",
+          "description": "Number of seconds after the container has started before the probe is initiated.",
+          "default": 0
+        },
+        "periodSeconds": {
+          "type": "integer",
+          "description": "How often (in seconds) to perform the probe.",
+          "default": 0
+        }
+      }
+    },
+    "ClusterShieldConfiguration": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "Settings",
+      "type": "object",
+      "properties": {
+        "log_level": {
+          "type": "string",
+          "description": "Minimum log severity to be reported in logs.",
+          "default": "warn",
+          "enum": [
+            "err",
+            "warn",
+            "info",
+            "debug",
+            "trace"
+          ]
+        },
+        "cluster_config": {
+          "$ref": "#/$defs/ClusterShieldConfiguration/$defs/ClusterConfig",
+          "description": "The cluster configuration"
+        },
+        "sysdig_endpoint": {
+          "description": "Configuration for the sysdig services.",
+          "$ref": "#/$defs/ClusterShieldConfiguration/$defs/SysdigEndpoint"
+        },
+        "ssl": {
+          "description": "SSL configurations.",
+          "$ref": "#/$defs/ClusterShieldConfiguration/$defs/SSL"
+        },
+        "features": {
+          "description": "Features configurations",
+          "$ref": "#/$defs/ClusterShieldConfiguration/$defs/Features"
+        },
+        "monitoring_port": {
+          "type": "integer",
+          "default": 8080,
+          "minimum": 1,
+          "maximum": 65535,
+          "description": "HTTP Server port used to expose healthcheck and prometheus metrics."
+        },
+        "kubernetes": {
+          "$ref": "#/$defs/ClusterShieldConfiguration/$defs/Kubernetes",
+          "description": "Kubernetes configurations"
+        }
+      },
+      "allOf": [
+        {
+          "description": "Sets sysdig_endpoint required properties based on features configuration.",
+          "if": {
+            "properties": {
+              "sysdig_endpoint": {
+                "$ref": "#/$defs/ClusterShieldConfiguration/$defs/SysdigEndpoint/$defs/IsCustomRegion"
+              },
+              "features": {
+                "properties": {
+                  "kubernetes_metadata": {
+                    "$ref": "#/$defs/ClusterShieldConfiguration/$defs/KubernetesMetadata/$defs/IsEnabled"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "sysdig_endpoint": {
+                "$ref": "#/$defs/ClusterShieldConfiguration/$defs/SysdigEndpoint/$defs/SetCollectorRequired"
+              }
+            }
+          }
+        }
+      ],
+      "$defs": {
+        "Audit": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Specify if the audit feature is enabled",
+              "default": false
+            },
+            "timeout": {
+              "type": "integer",
+              "description": "The number of seconds for the request to time out",
+              "default": 5
+            }
+          },
+          "required": [
+            "enabled",
+            "timeout"
+          ],
+          "additionalProperties": false,
+          "$defs": {
+            "IsEnabled": {
+              "properties": {
+                "enabled": {
+                  "const": true
+                }
+              }
+            }
+          }
+        },
+        "ClusterConfig": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "The name of the cluster. Make sure to set a unique value for all the clusters being inspected",
+              "examples": [
+                "my-cluster"
+              ]
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "additionalProperties": false
+        },
+        "SysdigEndpoint": {
+          "type": "object",
+          "properties": {
+            "access_key": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "Sysdig Agent Access Key",
+              "examples": [
+                "12345678-1234-1234-1234-123456789012"
+              ]
+            },
+            "api_url": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "Sysdig backend host",
+              "format": "uri",
+              "examples": [
+                "https://www.example.com"
+              ]
+            },
+            "secure_api_token": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "The API Token to access Sysdig Secure",
+              "examples": [
+                "12345678-1234-1234-1234-123456789012"
+              ]
+            },
+            "collector": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "Host and port to access Sysdig Collector endpoint",
+              "format": "hostport",
+              "examples": [
+                "collector.example.com:6443",
+                "192.168.0.1:6443",
+                "[2001:db8:1f70::999:de8:7648:6e8]:6443"
+              ]
+            },
+            "region": {
+              "type": "string",
+              "description": "The region where the collector is located",
+              "default": "custom",
+              "enum": [
+                "custom",
+                "au-syd-monitor",
+                "au-syd-private-monitor",
+                "au-syd-private-secure",
+                "au-syd-secure",
+                "au1",
+                "br-sao-monitor",
+                "br-sao-private-monitor",
+                "br-sao-private-secure",
+                "br-sao-secure",
+                "ca-tor-monitor",
+                "ca-tor-private-monitor",
+                "ca-tor-private-secure",
+                "ca-tor-secure",
+                "eu-de-monitor",
+                "eu-de-private-monitor",
+                "eu-de-private-secure",
+                "eu-de-secure",
+                "eu-gb-monitor",
+                "eu-gb-private-monitor",
+                "eu-gb-private-secure",
+                "eu-gb-secure",
+                "eu1",
+                "jp-osa-monitor",
+                "jp-osa-private-monitor",
+                "jp-osa-private-secure",
+                "jp-osa-secure",
+                "jp-tok-monitor",
+                "jp-tok-private-monitor",
+                "jp-tok-private-secure",
+                "jp-tok-secure",
+                "me2",
+                "us-east-monitor",
+                "us-east-private-monitor",
+                "us-east-private-secure",
+                "us-east-secure",
+                "us-south-monitor",
+                "us-south-private-monitor",
+                "us-south-private-secure",
+                "us-south-secure",
+                "us1",
+                "us2",
+                "us3",
+                "us4"
+              ]
+            }
+          },
+          "required": [
+            "region"
+          ],
+          "additionalProperties": false,
+          "allOf": [
+            {
+              "if": {
+                "$ref": "#/$defs/ClusterShieldConfiguration/$defs/SysdigEndpoint/$defs/IsCustomRegion"
+              },
+              "then": {
+                "properties": {
+                  "api_url": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "api_url"
+                ]
+              }
+            }
+          ],
+          "$defs": {
+            "IsCustomRegion": {
+              "properties": {
+                "region": {
+                  "const": "custom"
+                }
+              }
+            },
+            "SetCollectorRequired": {
+              "collector": {
+                "type": "string"
+              },
+              "required": [
+                "collector"
+              ]
+            }
+          }
+        },
+        "SSL": {
+          "type": "object",
+          "properties": {
+            "verify": {
+              "type": "boolean",
+              "default": true,
+              "description": "Define if the client must verify the backend SSL certificate."
+            }
+          },
+          "required": [
+            "verify"
+          ],
+          "additionalProperties": false
+        },
+        "ContainerVulnerabilityManagement": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Specify if the scanning feature is enabled",
+              "default": false
+            },
+            "in_use": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/ContainerVulnerabilityManagementInUse"
+            },
+            "registry_ssl": {
+              "description": "Verify SSL certificate when connecting to the registry",
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/SSL"
+            },
+            "platform_services_enabled": {
+              "type": "boolean",
+              "description": "Specify if the platform services are enabled",
+              "default": true
+            },
+            "local_cluster": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/ContainerVulnerabilityManagementLocal"
+            },
+            "remote_clusters": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/ContainerVulnerabilityManagementRemote"
+            }
+          },
+          "if": {
+            "properties": {
+              "enabled": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "oneOf": [
+              {
+                "properties": {
+                  "local_cluster": {
+                    "properties": {
+                      "enabled": {
+                        "const": true
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "remote_clusters": {
+                    "properties": {
+                      "enabled": {
+                        "const": true
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "required": [
+            "enabled",
+            "local_cluster",
+            "remote_clusters",
+            "in_use",
+            "registry_ssl"
+          ],
+          "additionalProperties": false,
+          "$defs": {
+            "IsEnabled": {
+              "properties": {
+                "enabled": {
+                  "const": true
+                }
+              }
+            }
+          }
+        },
+        "ContainerVulnerabilityManagementInUse": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Retrieve in-use information from the backend and aggregate them on the scan results",
+              "default": true
+            },
+            "integration_enabled": {
+              "type": "boolean",
+              "description": "Share in-use information with the external integrations",
+              "default": false
+            }
+          },
+          "required": [
+            "enabled",
+            "integration_enabled"
+          ],
+          "additionalProperties": false
+        },
+        "ContainerVulnerabilityManagementLocal": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Specify if should scan only the local cluster",
+              "default": true
+            },
+            "registry_secrets": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/ClusterShieldConfiguration/$defs/ContainerVulnerabilityManagementLocalRegistrySecret"
+              },
+              "examples": [
+                [
+                  {
+                    "namespace": "sysdig-agent",
+                    "secrets": [
+                      "registry-secret"
+                    ]
+                  }
+                ]
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "ContainerVulnerabilityManagementLocalRegistrySecret": {
+          "type": "object",
+          "properties": {
+            "namespace": {
+              "type": "string"
+            },
+            "secrets": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "namespace",
+            "secrets"
+          ],
+          "additionalProperties": false
+        },
+        "ContainerVulnerabilityManagementRemote": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Specify if it should scan remote clusters",
+              "default": false
+            },
+            "kubeconfig_path": {
+              "type": "string",
+              "description": "Path to the kubeconfig file",
+              "examples": [
+                "/path/to/kubeconfig"
+              ]
+            }
+          },
+          "if": {
+            "properties": {
+              "enabled": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "kubeconfig_path"
+            ]
+          },
+          "additionalProperties": false
+        },
+        "Kubernetes": {
+          "type": "object",
+          "properties": {
+            "root_namespace": {
+              "type": "string",
+              "description": "Root namespace to use for the kubernetes resources",
+              "default": "kube-system",
+              "examples": [
+                "kube-system"
+              ]
+            },
+            "tls_cert_file": {
+              "type": "string",
+              "$comment": "HELM-AUTOGENERATED",
+              "description": "Path to the TLS Certificate file",
+              "examples": [
+                "/cert/tls.crt"
+              ]
+            },
+            "tls_private_key_file": {
+              "type": "string",
+              "$comment": "HELM-AUTOGENERATED",
+              "description": "Path to the TLS Private Key file",
+              "examples": [
+                "/cert/tls.key"
+              ]
+            },
+            "ca_cert_file": {
+              "type": "string",
+              "description": "Path to the CA Certificate file",
+              "$comment": "HELM-AUTOGENERATED",
+              "examples": [
+                "/cert/ca.crt"
+              ]
+            }
+          },
+          "additionalProperties": false,
+          "$defs": {
+            "SetRequired": {
+              "required": [
+                "root_namespace",
+                "running_namespace"
+              ]
+            },
+            "SetTLSRequired": {
+              "required": [
+                "tls_cert_file",
+                "tls_private_key_file",
+                "ca_cert_file"
+              ]
+            }
+          }
+        },
+        "KubernetesMetadata": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Specify if the Kubernetes Metadata feature is enabled",
+              "default": false
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "enabled"
+          ],
+          "$defs": {
+            "IsEnabled": {
+              "properties": {
+                "enabled": {
+                  "const": true
+                }
+              }
+            }
+          }
+        },
+        "Posture": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Specify if the Posture feature is enabled",
+              "default": false
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "enabled"
+          ]
+        },
+        "AdmissionControl": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Specify if the Admission Control is enabled",
+              "default": false
+            },
+            "deny_on_error": {
+              "type": "boolean",
+              "description": "Deny request when an error happens inside the evaluation phase",
+              "default": false
+            },
+            "dry_run": {
+              "type": "boolean",
+              "description": "Dry Run requests",
+              "default": true
+            },
+            "timeout": {
+              "type": "integer",
+              "description": "The number of seconds for the request to time out",
+              "default": 5
+            }
+          },
+          "required": [
+            "enabled",
+            "deny_on_error"
+          ],
+          "$defs": {
+            "IsEnabled": {
+              "properties": {
+                "enabled": {
+                  "const": true
+                }
+              }
+            }
+          }
+        },
+        "Features": {
+          "type": "object",
+          "title": "Features",
+          "description": "Features configurations",
+          "properties": {
+            "admission_control": {
+              "description": "Configurations for the admission control feature",
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/AdmissionControl"
+            },
+            "audit": {
+              "description": "Configurations for the audit feature",
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/Audit"
+            },
+            "container_vulnerability_management": {
+              "description": "Configurations for the container vulnerability management feature",
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/ContainerVulnerabilityManagement"
+            },
+            "kubernetes_metadata": {
+              "description": "Configurations for the kubernetes metadata feature",
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/KubernetesMetadata"
+            },
+            "posture": {
+              "description": "Configurations for the posture feature",
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/Posture"
+            }
+          },
+          "required": [
+            "admission_control",
+            "audit",
+            "container_vulnerability_management",
+            "kubernetes_metadata",
+            "posture"
+          ]
+        }
+      },
+      "required": [
+        "cluster_config",
+        "kubernetes",
+        "log_level",
+        "sysdig_endpoint",
+        "features",
+        "ssl"
+      ]
+    }
+  }
+}

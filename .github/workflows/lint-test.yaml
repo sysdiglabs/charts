@@ -71,4 +71,4 @@ jobs:
           k3s-version: v1.23.9+k3s1
 
       - name: Run chart-testing (install)
-        run: ct install --upgrade --target-branch=main --excluded-charts common,sysdig-stackdriver-bridge,sysdig-mcm-navmenu
+        run: ct install --upgrade --target-branch=main --excluded-charts cluster-shield,common,sysdig-stackdriver-bridge,sysdig-mcm-navmenu
