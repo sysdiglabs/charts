@@ -1,0 +1,98 @@
+{{/*
+We need to put all resources that need certificate or CA Bundle together,
+so the template is executed just once
+*/}}
+---
+{{- if eq (include "cluster-shield.needCerts" .) "true" }}
+{{- $certString := include "cluster-shield.tlsGenCerts" . -}}
+{{- $certList := split "$" $certString }}
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingWebhookConfiguration
+metadata:
+  name: {{ include "cluster-shield.fullname" . }}-audit
+  namespace: {{ .Release.Namespace }}
+webhooks:
+  {{- if .Values.cluster_shield.features.audit.enabled }}
+  - name: audit.secure.sysdig.com
+    matchPolicy: Equivalent
+    rules:
+      - apiGroups:
+          - ""
+          - apps
+          - autoscaling
+          - batch
+          - networking.k8s.io
+          - rbac.authorization.k8s.io
+          - extensions
+        apiVersions:
+          - '*'
+        operations:
+          - '*'
+        resources:
+          - '*/*'
+        scope: '*'
+    clientConfig:
+      service:
+        namespace: {{ .Release.Namespace }}
+        name: {{ include "cluster-shield.fullname" . }}
+        path: /k8s-audit
+        port: {{ include "cluster-shield.admissionControllerAuditPort" . }}
+      caBundle: {{ $certList._2 }}
+    admissionReviewVersions: ["v1", "v1beta1"]
+    sideEffects: None
+    timeoutSeconds: {{ .Values.cluster_shield.features.audit.timeout }}
+    failurePolicy: Ignore
+  {{- end }}
+  {{- if .Values.cluster_shield.features.admission_control.enabled }}
+  - name: vac.secure.sysdig.com
+    namespaceSelector:
+      matchExpressions:
+        - key: kubernetes.io/metadata.name
+          operator: NotIn
+          values:
+            - {{ .Release.Namespace }}
+    rules:
+      - apiGroups:
+          - ""
+          - apps
+          - batch
+        apiVersions: [ "v1" ]
+        operations: [ "CREATE", "UPDATE" ]
+        resources:
+          - "deployments"
+          - "replicasets"
+          - "statefulsets"
+          - "daemonsets"
+          - "jobs"
+          - "cronjobs"
+        scope: "Namespaced"
+    clientConfig:
+      service:
+        namespace: {{ .Release.Namespace }}
+        name: {{ include "cluster-shield.fullname" . }}
+        path: /validate
+        port: {{ include "cluster-shield.admissionControlPort" . }}
+      caBundle: {{ $certList._2 }}
+    admissionReviewVersions: [ "v1", "v1beta1" ]
+    sideEffects: None
+    timeoutSeconds: {{ .Values.cluster_shield.features.admission_control.timeout }}
+    {{- if .Values.cluster_shield.features.admission_control.deny_on_error }}
+    failurePolicy: Fail
+    {{- else }}
+    failurePolicy: Ignore
+    {{- end }}
+  {{- end }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ include "cluster-shield.tlsCertsSecretName" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "cluster-shield.labels" . | nindent 4 }}
+data:
+  {{ include "cluster-shield.tlsCertFileName" . }}: {{ $certList._0 }}
+  {{ include "cluster-shield.tlsCertPrivateKeyFileName" . }}: {{ $certList._1 }}
+  {{ include "cluster-shield.caCertFileName" .}}: {{ $certList._2 }}
+
+{{- end }}
