@@ -8,6 +8,9 @@ metadata:
 {{ (include "agent.labels" .) | indent 4 }}
 data:
   dragent.yaml: |
+    # WARNING: this should be deleted as soon as the windows
+    # agent is able to read the configuration from the secrets
+    customerid: {{ include "agent.accessKey" . | quote }}
     new_k8s: true
 {{- include "agent.clusterName" . | trim | nindent 4 }}
 {{- if .Values.delegatedAgentDeployment.enabled }}
