@@ -25,7 +25,7 @@ $ pre-commit run -a
 $ helm repo add sysdig https://charts.sysdig.com
 $ helm repo update
 $ helm upgrade --install sysdig-sysdig-cluster-shield sysdig/cluster-shield \
-    --create-namespace -n sysdig-agent --version=0.10.1  \
+    --create-namespace -n sysdig-agent --version=0.10.2  \
     --set global.clusterConfig.name=CLUSTER_NAME \
     --set global.sysdig.region=SYSDIG_REGION \
     --set global.sysdig.accessKey=YOUR-KEY-HERE
