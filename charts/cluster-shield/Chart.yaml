@@ -1,0 +1,17 @@
+apiVersion: v2
+name: cluster-shield
+description: Cluster Shield Helm Chart for Kubernetes
+type: application
+version: 0.10.2
+appVersion: "0.10.1"
+maintainers:
+  - name: AlbertoBarba
+    email: alberto.barba@sysdig.com
+  - name: aroberts87
+    email: adam.roberts@sysdig.com
+  - name: francesco-furlan
+    email: francesco.furlan@sysdig.com
+  - name: iurly
+    email: gerlando.falauto@sysdig.com
+  - name: mavimo
+    email: marcovito.moscaritolo@sysdig.com

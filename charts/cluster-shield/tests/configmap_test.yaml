@@ -1,0 +1,21 @@
+suite: Test ConfigMap
+templates:
+  - templates/configmap.yaml
+values:
+  - ../ci/base-values.yaml
+tests:
+  - it: Creates the configmap if webhook.acConfig is present
+    set:
+      cluster_shield:
+        log_level: info
+    asserts:
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+      - hasDocuments:
+          count: 1
+      - isNotEmpty:
+          path: data
+      - matchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: "log_level: info"
