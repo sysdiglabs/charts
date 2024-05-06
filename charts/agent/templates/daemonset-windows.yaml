@@ -39,11 +39,20 @@ spec:
           volumeMounts:
           - name: config
             mountPath: /Sysdig/Agent/Config
+          - name: secrets
+            mountPath: /Sysdig/Agent/Secrets
       terminationGracePeriodSeconds: 0
       volumes:
       - name: config
         configMap:
           name: {{ include "agent.configmapName" . }}
+      - name: secrets
+        secret:
+          {{- if not ( include "agent.accessKeySecret" . ) }}
+          secretName: {{ template "agent.fullname" . }}
+          {{- else }}
+          secretName: {{ include "agent.accessKeySecret" . }}
+          {{- end }}
       nodeSelector:
       {{- if .Values.windowsDaemonset.nodeSelector }}
         {{ toYaml .Values.windowsDaemonset.nodeSelector | nindent 8 }}
