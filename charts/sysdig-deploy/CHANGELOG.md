@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.52.2
+### Chores
+* **sysdig-deploy** [c071f361](https://github.com/sysdiglabs/charts/commit/c071f3618d1f10b50836cad82da10c39a2da6597): Automatic version bump due to updated dependencies ([#1732](https://github.com/sysdiglabs/charts/issues/1732))
 # v1.52.1
 ### New Features
 * **node-analyzer** [dbe2d40f](https://github.com/sysdiglabs/charts/commit/dbe2d40f15480af19ee1ca6a59b4d936cedca7db): Add flag in order to allow Bottlerocket volumes ([#1699](https://github.com/sysdiglabs/charts/issues/1699))
