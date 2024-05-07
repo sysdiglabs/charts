@@ -1,8 +1,7 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-#  name: {{ include "agent-windows.fullname" . }}
-  name: {{ include "agent.fullname" . | printf "%s-windows" }}
+  name: {{ include "agent-windows.fullname" . }}
   labels:
     {{- include "agent-windows.labels" . | nindent 4 }}
 spec:
@@ -21,6 +20,7 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
+      serviceAccountName: {{ template "agent.serviceAccountName" .}}
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
@@ -32,10 +32,10 @@ spec:
       hostNetwork: true
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.windowsImage.repository }}:{{ .Values.windowsImage.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.windowsImage.pullPolicy | default .Values.global.image.pullPolicy }}
+          image: "{{ .Values.windows.image.registry }}/{{ .Values.windows.image.repository }}:{{ .Values.windows.image.tag }}"
+          imagePullPolicy: {{ .Values.windows.image.pullPolicy | default .Values.global.image.pullPolicy }}
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{- toYaml .Values.windows.resources | nindent 12 }}
           volumeMounts:
           - name: config
             mountPath: /Sysdig/Agent/Config
@@ -54,16 +54,16 @@ spec:
           secretName: {{ include "agent.accessKeySecret" . }}
           {{- end }}
       nodeSelector:
-      {{- if .Values.windowsDaemonset.nodeSelector }}
-        {{ toYaml .Values.windowsDaemonset.nodeSelector | nindent 8 }}
+      {{- if .Values.windows.nodeSelector }}
+        {{ toYaml .Values.windows.nodeSelector | nindent 8 }}
       {{- else }}
         "kubernetes.io/os": windows
       {{- end }}
-      {{- with .Values.affinity }}
+      {{- with .Values.windows.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.tolerations }}
+      {{- with .Values.windows.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}

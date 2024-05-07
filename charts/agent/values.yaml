@@ -62,25 +62,32 @@ image:
   #
   # pullSecrets:
   #   - name: myRegistrKeySecretName
-windowsImage:
-  # This is a hack to support RELATED_IMAGE_<identifier> feature in Helm based
-  # Operators
-  #
-  # As long as I don't want to people to use this, I will keep it undocumented
-  overrideValue: null
-  registry: quay.io
-  repository: sysdig/agent-windows
-  tag: latest-2022
-  # Specify a imagePullPolicy
-  # Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
-  # ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
-  pullPolicy: []
-  # Optionally specify an array of imagePullSecrets.
-  # Secrets must be manually created in the namespace.
-  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-  #
-  # pullSecrets:
-  #   - name: myRegistrKeySecretName
+windows:
+  nodeSelector: {}
+  image:
+    registry: quay.io
+    repository: sysdig/agent-windows
+    tag: latest
+    # Specify an imagePullPolicy
+    # Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+    # ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+    pullPolicy: []
+    # Optionally specify an array of imagePullSecrets.
+    # Secrets must be manually created in the namespace.
+    # ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+    #
+    # pullSecrets:
+    #   - name: myRegistrKeySecretName
+  resources:
+    # sizing TBD
+    requests:
+      cpu: 250m
+      memory: 348Mi
+    limits:
+      cpu: 1000m
+      memory: 512Mi
+  affinity: {}
+  tolerations: []
 
 # Specify a predefined resource profile.
 #
@@ -138,8 +145,6 @@ serviceAccount:
   create: true
   # Use this value as serviceAccountName
   name: null
-windowsDaemonset:
-  nodeSelector: {}
 daemonset:
   deploy: true
   # Perform rolling updates by default in the DaemonSet agent
