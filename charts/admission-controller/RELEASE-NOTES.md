@@ -1,7 +1,5 @@
 # What's Changed
 
-### New Features
-- **admission_controller** [4c07fbd2](https://github.com/sysdiglabs/charts/commit/4c07fbd2c8c7144bef6ca7c3fba75a150775117b): release with AC Webhook latest version, 1.27.3 ([#1708](https://github.com/sysdiglabs/charts/issues/1708))
-
-    * * Fixed a bug when doing metadata enrichment for Pods resources
-#### Full diff: https://github.com/sysdiglabs/charts/compare/admission-controller-0.16.0...admission-controller-0.16.1
+### Chores
+- **admission-controller** [1f2bef59](https://github.com/sysdiglabs/charts/commit/1f2bef5901e1cbf0622c92f037d7b674705b6204): Update to v3.9.44 ([#1731](https://github.com/sysdiglabs/charts/issues/1731))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/admission-controller-0.16.1...admission-controller-0.16.2

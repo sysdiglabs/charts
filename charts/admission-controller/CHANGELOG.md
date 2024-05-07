@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.16.2
+### Chores
+* **admission-controller** [1f2bef59](https://github.com/sysdiglabs/charts/commit/1f2bef5901e1cbf0622c92f037d7b674705b6204): Update to v3.9.44 ([#1731](https://github.com/sysdiglabs/charts/issues/1731))
 # v0.16.1
 ### New Features
 * **admission_controller** [4c07fbd2](https://github.com/sysdiglabs/charts/commit/4c07fbd2c8c7144bef6ca7c3fba75a150775117b): release with AC Webhook latest version, 1.27.3 ([#1708](https://github.com/sysdiglabs/charts/issues/1708))
