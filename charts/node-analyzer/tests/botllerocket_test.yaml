@@ -1,0 +1,105 @@
+
+suite: Bottlerocket creates volumes
+templates:
+  - templates/daemonset-node-analyzer.yaml
+  # For checksums
+  - clusterrole-node-analyzer.yaml
+  - clusterrolebinding-node-analyzer.yaml
+  - configmap-benchmark-runner.yaml
+  - configmap-host-analyzer.yaml
+  - configmap-host-scanner.yaml
+  - configmap-image-analyzer.yaml
+  - configmap-kspm-analyzer.yaml
+  - secrets.yaml
+  - serviceaccount-node-analyzer.yaml
+values:
+  - ./default_required_values.yaml
+
+tests:
+  - it: Bottlerocket enabled creates default volumes
+    set:
+      clusterName: bottlerocket
+      global:
+        kspm:
+          deploy: true
+      nodeAnalyzer:
+        bottlerocket:
+          enabled: true
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: apiclient
+            hostPath:
+              path: /usr/bin/apiclient
+              type: File
+          count: 1
+          any: true
+        template: templates/daemonset-node-analyzer.yaml
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: apiserver-socket
+            hostPath:
+              path: /run/api.sock
+              type: Socket
+          count: 1
+          any: true
+        template: templates/daemonset-node-analyzer.yaml
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: apiclient
+            mountPath: /usr/bin/apiclient
+            readOnly: true
+          count: 1
+          any: true
+        template: templates/daemonset-node-analyzer.yaml
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: apiserver-socket
+            mountPath: /run/api.sock
+          count: 1
+          any: true
+        template: templates/daemonset-node-analyzer.yaml
+
+  - it: Bottlerocket disabled does not creates default volumes
+    set:
+      clusterName: not-bottlerocket
+      global:
+        kspm:
+          deploy: true
+      nodeAnalyzer:
+        bottlerocket:
+          enabled: false
+    asserts:
+      - notContains:
+          path: spec.template.spec.volumes
+          content:
+            name: apiclient
+            hostPath:
+              path: /usr/bin/apiclient
+              type: File
+        template: templates/daemonset-node-analyzer.yaml
+      - notContains:
+          path: spec.template.spec.volumes
+          content:
+            name: apiserver-socket
+            hostPath:
+              path: /run/api.sock
+              type: Socket
+        template: templates/daemonset-node-analyzer.yaml
+      - notContains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: apiclient
+            mountPath: /usr/bin/apiclient
+            readOnly: true
+        template: templates/daemonset-node-analyzer.yaml
+      - notContains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: apiserver-socket
+            mountPath: /run/api.sock
+        template: templates/daemonset-node-analyzer.yaml
