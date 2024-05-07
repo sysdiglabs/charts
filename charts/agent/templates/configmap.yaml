@@ -8,12 +8,6 @@ metadata:
 {{ (include "agent.labels" .) | indent 4 }}
 data:
   dragent.yaml: |
-{{- if or .Values.sysdig.accessKey .Values.global.sysdig.accessKey }}
-    # WARNING: this should be deleted as soon as the windows
-    # agent is able to read the configuration from the secrets
-    # (See SSPROD-39123)
-    customerid: {{ include "agent.accessKey" . | quote }}
-{{- end }}
     new_k8s: true
 {{- include "agent.clusterName" . | trim | nindent 4 }}
 {{- if .Values.delegatedAgentDeployment.enabled }}
