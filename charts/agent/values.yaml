@@ -63,6 +63,7 @@ image:
   # pullSecrets:
   #   - name: myRegistrKeySecretName
 windows:
+  enabled: false
   nodeSelector: {}
   image:
     registry: quay.io

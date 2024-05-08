@@ -1,4 +1,4 @@
-{{- if or .Values.daemonset.deploy .Values.delegatedAgentDeployment.enabled }}
+{{- if or .Values.daemonset.deploy .Values.delegatedAgentDeployment.enabled .Values.windows.enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
