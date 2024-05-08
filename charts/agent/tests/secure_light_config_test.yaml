@@ -196,3 +196,22 @@ tests:
             network_topology:
               enabled: false
     template: configmap.yaml
+
+  - it: Testing if memdump settings is overridable also on secure_light mode
+    set:
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+        settings:
+          memdump:
+            enabled: true
+          feature:
+            mode: secure_light
+      secure:
+        enabled: true
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            memdump:
+              enabled: true
+    template: configmap.yaml

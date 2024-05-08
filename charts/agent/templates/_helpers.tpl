@@ -424,9 +424,11 @@ agent config to prevent a backend push from enabling them after installation.
             "drift_control"
             "drift_killer"
             "falcobaseline"
-            "memdump"
             "network_topology") }}
             {{- $_ := set $secureConfig $secureFeature (dict "enabled" false) }}
+        {{- end }}
+        {{- if not (hasKey .Values.sysdig.settings "memdump") }}
+            {{- $_ := set $secureConfig "memdump" (dict "enabled" false) }}
         {{- end }}
     {{- end }}
     {{- if include "agent.gke.autopilot" . }}
