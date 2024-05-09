@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.27.2
+### Chores
+* **node-analyzer** [7336c1b9](https://github.com/sysdiglabs/charts/commit/7336c1b91aeddb057626f1a456a12a50a47e86d4): bump runtime-scanner to v1.6.12 ([#1737](https://github.com/sysdiglabs/charts/issues/1737))
 # v1.27.1
 ### New Features
 * **node-analyzer** [dbe2d40f](https://github.com/sysdiglabs/charts/commit/dbe2d40f15480af19ee1ca6a59b4d936cedca7db): Add flag in order to allow Bottlerocket volumes ([#1699](https://github.com/sysdiglabs/charts/issues/1699))

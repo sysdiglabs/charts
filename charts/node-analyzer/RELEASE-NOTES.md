@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **node-analyzer** [dbe2d40f](https://github.com/sysdiglabs/charts/commit/dbe2d40f15480af19ee1ca6a59b4d936cedca7db): Add flag in order to allow Bottlerocket volumes ([#1699](https://github.com/sysdiglabs/charts/issues/1699))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.27.0...node-analyzer-1.27.1
+### Chores
+- **node-analyzer** [7336c1b9](https://github.com/sysdiglabs/charts/commit/7336c1b91aeddb057626f1a456a12a50a47e86d4): bump runtime-scanner to v1.6.12 ([#1737](https://github.com/sysdiglabs/charts/issues/1737))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.27.1...node-analyzer-1.27.2
