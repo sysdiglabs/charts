@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **node-analyzer** [dbe2d40f](https://github.com/sysdiglabs/charts/commit/dbe2d40f15480af19ee1ca6a59b4d936cedca7db): Add flag in order to allow Bottlerocket volumes ([#1699](https://github.com/sysdiglabs/charts/issues/1699))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.52.0...sysdig-deploy-1.52.1
+### Chores
+- **sysdig-deploy** [36cec8f2](https://github.com/sysdiglabs/charts/commit/36cec8f2d4c034d325515bd87a8acadaf0bc8ef8): Automatic version bump due to updated dependencies ([#1735](https://github.com/sysdiglabs/charts/issues/1735))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.52.3...sysdig-deploy-1.52.4

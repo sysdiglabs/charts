@@ -463,18 +463,22 @@ agent config to prevent a backend push from enabling them after installation.
         {{- end }}
     {{ else if and (include "agent.enableFalcoBaselineSecureLight" .) $secureLightMode }}
         {{- range $secureFeature := (list
-            "memdump"
             "network_topology") }}
             {{- $_ := set $secureConfig $secureFeature (dict "enabled" false) }}
+        {{- end }}
+        {{- if not (hasKey .Values.sysdig.settings "memdump") }}
+            {{- $_ := set $secureConfig "memdump" (dict "enabled" false) }}
         {{- end }}
     {{ else if $secureLightMode }}
         {{- range $secureFeature := (list
             "drift_control"
             "drift_killer"
             "falcobaseline"
-            "memdump"
             "network_topology") }}
             {{- $_ := set $secureConfig $secureFeature (dict "enabled" false) }}
+        {{- end }}
+        {{- if not (hasKey .Values.sysdig.settings "memdump") }}
+            {{- $_ := set $secureConfig "memdump" (dict "enabled" false) }}
         {{- end }}
     {{- end }}
     {{- if include "agent.gke.autopilot" . }}
