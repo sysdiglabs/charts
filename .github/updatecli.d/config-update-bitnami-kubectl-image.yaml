@@ -32,6 +32,7 @@ sources:
       image: bitnami/kubectl
       versionfilter:
         kind: semver
+        strict: true
 
 targets:
   bumpAgentChart:
