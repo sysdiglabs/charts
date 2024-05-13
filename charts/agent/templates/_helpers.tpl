@@ -585,6 +585,13 @@ true
 {{- end }}
 {{- end }}
 
+{{/* Check if semver. The regex is from the code of the library Helm uses for semver. */}}
+{{- define "agent.isSemVer" -}}
+    {{- if regexMatch "^v?([0-9]+)(\\.[0-9]+)?(\\.[0-9]+)?(-([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?(\\+([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?$" . }}
+        true
+    {{- end -}}
+{{- end -}}
+
 {{/* Return the name of the local forwarder configmap */}}
 {{- define "agent.localForwarderConfigMapName" }}
 {{- include "agent.configmapName" . | trunc 46 | trimSuffix "-" | printf "%s-local-forwarder" }}
@@ -592,18 +599,14 @@ true
 
 {{- define "agent.enableHttpProbes" }}
 {{- if not (include "agent.gke.autopilot" .) }}
-{{- if regexMatch "^v?([0-9]+)(\\.[0-9]+)?(\\.[0-9]+)?(-([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?(\\+([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?$" .Values.image.tag }}
-{{- if semverCompare ">= 12.18.0-0" .Values.image.tag }}
+{{- if and (include "agent.isSemVer" .Values.image.tag) (semverCompare ">= 12.18.0-0" .Values.image.tag) }}
 {{- printf "true" -}}
-{{- end }}
 {{- end }}
 {{- end }}
 {{- end }}
 
 {{- define "agent.enableFalcoBaselineSecureLight" }}
-{{- if regexMatch "^v?([0-9]+)(\\.[0-9]+)?(\\.[0-9]+)?(-([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?(\\+([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?$" .Values.image.tag }}
-{{- if semverCompare ">= 12.19.0-0" .Values.image.tag }}
+{{- if and (include "agent.isSemVer" .Values.image.tag) (semverCompare ">= 12.19.0-0" .Values.image.tag) }}
 {{- printf "true" -}}
-{{- end }}
 {{- end }}
 {{- end }}
