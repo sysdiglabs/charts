@@ -38,6 +38,16 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.windows.image.registry }}/{{ .Values.windows.image.repository }}:{{ .Values.windows.image.tag }}"
           imagePullPolicy: {{ .Values.windows.image.pullPolicy | default .Values.global.image.pullPolicy }}
+          readinessProbe:
+            exec:
+              command: |
+                $ports = 24483, 24484
+                $ports | ForEach-Object {
+                  $res = (curl -TimeoutSec 10 http://localhost:$_/healthz)
+                  if ($res.Content -Ne "Agent processes are healthy" -Or -Not $?) {
+                        exit 1
+                  }
+                }
           resources:
             {{- toYaml .Values.windows.resources | nindent 12 }}
           volumeMounts:
