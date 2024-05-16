@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.27.5
+### Chores
+* **node-analyzer** [c5a7c493](https://github.com/sysdiglabs/charts/commit/c5a7c4931a45a218c319085857f1bdf54df23a23): bump legacy node image analyzer to v0.1.32 ([#1738](https://github.com/sysdiglabs/charts/issues/1738))
 # v1.27.4
 ### New Features
 * **node-analyzer** [8229ffce](https://github.com/sysdiglabs/charts/commit/8229ffce6e561735ca587499be796c84af80e072): bump host-scanner to v0.9.1 ([#1739](https://github.com/sysdiglabs/charts/issues/1739))
