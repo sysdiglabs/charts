@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **kspm-collector** [b751ae90](https://github.com/sysdiglabs/charts/commit/b751ae900f4cb865d4ccd7f428eef333c17d0615): bump kspm-collector version to 0.15.4 ([#1747](https://github.com/sysdiglabs/charts/issues/1747))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.52.7...sysdig-deploy-1.52.8
+### Chores
+- **sysdig-deploy** [923b465a](https://github.com/sysdiglabs/charts/commit/923b465a43ed5bdb23858be4510a787ad59a23d2): Automatic version bump due to updated dependencies ([#1744](https://github.com/sysdiglabs/charts/issues/1744))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.52.8...sysdig-deploy-1.52.9
