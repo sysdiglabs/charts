@@ -39,12 +39,13 @@ spec:
           image: "{{ .Values.windows.image.registry }}/{{ .Values.windows.image.repository }}:{{ .Values.windows.image.tag }}"
           imagePullPolicy: {{ .Values.windows.image.pullPolicy | default .Values.global.image.pullPolicy }}
           readinessProbe:
+            timeoutSeconds: 10
             exec:
               command:
                 - powershell
                 - -File
                 - C:/hpc/Sysdig/Agent/Healthprobe.ps1
-                - -Ports
+                - -Port
                 - "24483"
           resources:
             {{- toYaml .Values.windows.resources | nindent 12 }}
