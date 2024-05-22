@@ -40,14 +40,12 @@ spec:
           imagePullPolicy: {{ .Values.windows.image.pullPolicy | default .Values.global.image.pullPolicy }}
           readinessProbe:
             exec:
-              command: |
-                $ports = 24483, 24484
-                $ports | ForEach-Object {
-                  $res = (curl -TimeoutSec 10 http://localhost:$_/healthz)
-                  if ($res.Content -Ne "Agent processes are healthy" -Or -Not $?) {
-                        exit 1
-                  }
-                }
+              command:
+                - powershell
+                - -File
+                - C:/hpc/Sysdig/Agent/Healthprobe.ps1
+                - -Ports
+                - "24483"
           resources:
             {{- toYaml .Values.windows.resources | nindent 12 }}
           volumeMounts:
