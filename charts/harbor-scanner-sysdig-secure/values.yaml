@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: sysdiglabs/harbor-scanner-sysdig-secure
-  tag: {{ .Chart.AppVersion }}
+  # tag: latest
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
