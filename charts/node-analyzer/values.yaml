@@ -387,6 +387,8 @@ nodeAnalyzer:
     # additionalDirsToScan is a optional comma-separated list of directories that
     # should be analyzer in addition to default ones.
     # additionalDirsToScan: "/foo/bar/baz,/my/other/folder"
+    #
+    # disablePlatformScanning: false
 
     # probesPort is the port where readiness and liveness probes are exposed
     probesPort: 7001

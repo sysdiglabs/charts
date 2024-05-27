@@ -912,6 +912,12 @@ spec:
                 name: {{ .Release.Name }}-host-scanner
                 key: vuln_db_version
                 optional: true
+          - name: DISABLE_PLATFORM_SCANNING
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-host-scanner
+                key: disable_platform_scanning
+                optional: true
           - name: TMPDIR
             value: "/tmp"
           - name: PROBES_ENABLED
