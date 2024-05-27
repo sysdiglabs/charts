@@ -29,7 +29,7 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           {{- if .Values.customEntryPoint }}
           command: {{ .Values.customEntryPoint | toYaml | nindent 10 }}
@@ -66,8 +66,8 @@ spec:
             {{- end }}
             - name: VERIFY_SSL
               value: "{{ .Values.sysdig.secure.verifySSL }}"
-            {{- if .Values.inlineScanning.enabled }}
-            - name: INLINE_SCANNING
+            {{- if .Values.cliScanning.enabled }}
+            - name: CLI_SCANNING
               value: "true"
             - name: ASYNC_MODE
               valueFrom:
@@ -78,6 +78,8 @@ spec:
               value: {{ .Release.Namespace }}
             - name: SECRET_NAME
               value: {{ include "harbor-scanner-sysdig-secure.fullname" . }}
+            - name: CLI_SCANNER_IMAGE
+              value: {{ .Values.cliScanning.image | quote }}
             {{- end }}
           ports:
             - name: http
