@@ -14,7 +14,7 @@ To install the chart:
 ```console
 helm repo add sysdig https://charts.sysdig.com
 helm repo update
-helm install sharbor-scanner-sysdig-secure --namespace sharbor-scanner-sysdig-secure --create-namespace -f values.yaml sysdig/harbor-scanner-sysdig-secure
+helm install harbor-scanner-sysdig-secure --namespace harbor-scanner-sysdig-secure --create-namespace -f values.yaml sysdig/harbor-scanner-sysdig-secure
 ```
 
 ## Verify the integrity and origin
@@ -68,6 +68,7 @@ Sysdig Secure chart and their default values:
 | `customEntryPoint`                           | Overrides the container entrypoint.                          | `[]`                                      |
 | `replicaCount`                               | Specifies the number of replicas for the Scanner Adapter.    | `1`                                       |
 | `image.repository`                           | Specifies the image repository to pull the image from.       | `sysdiglabs/harbor-scanner-sysdig-secure` |
+| `image.tag`                                  | Specifies the image tag to pull.                             | `{{ Chart.AppVersion }}`                  |
 | `image.pullPolicy`                           | Specifies the image pull policy.                             | `IfNotPresent`                            |
 | `imagePullSecrets`                           | Specifies the image pull secrets.                            | `[]`                                      |
 | `nameOverride`                               | Specifies the chart name override.                           | ` `                                       |
@@ -91,5 +92,6 @@ Sysdig Secure chart and their default values:
 | `proxy.httpProxy`                            | Specifies the URL of the proxy for HTTP connections. Leave empty if not using proxy. It sets the `http_proxy` environment variable. | ` `                                       |
 | `proxy.httpsProxy`                           | Specifies the URL of the proxy for HTTPS connections. Leave empty if not using proxy.  It sets the `https_proxy` environment variable. | ` `                                       |
 | `proxy.noProxy`                              | Specifies the comma-separated list of domain extensions proxy should not be used for. Includes the internal IP of the kube API server. | ` `                                       |
-| `inlineScanning.enabled`                     | Enables the Inline Scanning feature.                         | `true`                                    |
+| `cliScanning.enabled`                     | Enables the CLI Scanning feature.                         | `true`                                    |
+| `cliScanning.image`                       | Specifies the pullstring for the CLI Scanner Image.                         | `alpine:latest`                                    |
 | `asyncMode.enabled`                          | Enables the Async-Mode feature.                              | `false`                                   |
