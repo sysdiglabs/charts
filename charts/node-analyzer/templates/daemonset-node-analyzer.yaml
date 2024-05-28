@@ -92,6 +92,16 @@ spec:
           hostPath:
             path: /
         {{- end }}
+        {{- if .Values.nodeAnalyzer.bottlerocket.enabled }}
+        - name: apiclient
+          hostPath:
+            path: {{ .Values.nodeAnalyzer.bottlerocket.apiClientPath }}
+            type: File
+        - name: apiserver-socket
+          hostPath:
+            path: {{ .Values.nodeAnalyzer.bottlerocket.apiServerSocketPath }}
+            type: Socket
+        {{- end }}
         - name: tmp-vol
           {{- if .Values.nodeAnalyzer.runtimeScanner.storageClassName }}
           ephemeral:
@@ -282,7 +292,7 @@ spec:
           {{- end }}
           {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl)) "true" }}
           - name: TLS_CA_PATHS
-            value: /ca-certs/{{- include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.ssl) -}}
+            value: /ca-certs/{{- include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl) -}}
           {{- end }}
           {{- range $key, $value := .Values.nodeAnalyzer.kspmAnalyzer.env }}
           - name: "{{ $key }}"
@@ -298,6 +308,13 @@ spec:
           - name: ca-cert
             mountPath: /ca-certs
             readOnly: true
+          {{- end }}
+          {{- if .Values.nodeAnalyzer.bottlerocket.enabled }}
+          - name: apiclient
+            mountPath: /usr/bin/apiclient
+            readOnly: true
+          - name: apiserver-socket
+            mountPath: /run/api.sock
           {{- end }}
       # kspm-analyzer
       {{- end }}
@@ -897,8 +914,27 @@ spec:
                 optional: true
           - name: TMPDIR
             value: "/tmp"
+          - name: PROBES_ENABLED
+            value: "true"
           - name: PROBES_PORT
             value: {{ .Values.nodeAnalyzer.hostScanner.probesPort | quote }}
+          - name: PROM_ENABLED
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-host-scanner
+                key: prom_enabled
+          - name: PROM_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-host-scanner
+                key: prom_port
+                optional: true
+          - name: PROM_ENDPOINT
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-host-scanner
+                key: prom_endpoint
+                optional: true
           {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl)) "true" }}
           - name: SSL_CERT_FILE
             value: /ca-certs/{{- include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.nodeAnalyzer.ssl) -}}
@@ -910,8 +946,6 @@ spec:
 
           {{- if .Values.nodeAnalyzer.hostScanner.scanContainers.enabled }}
           # Container scanner
-          - name: USE_COMBINED_SCANNER
-            value: "true"
           - name: SCAN_CONTAINERS_ENABLED
             value: "true"
           - name: DOCKER_SOCKET_PATHS

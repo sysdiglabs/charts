@@ -50,6 +50,7 @@ rules:
       - 'storageclasses'
       - 'volumeattachments'
       - 'clusterversions'
+      - 'secrets'
     verbs:
       - 'get'
       - 'list'

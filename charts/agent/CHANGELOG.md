@@ -10,6 +10,27 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.24.0
+### New Features
+* [67814659](https://github.com/sysdiglabs/charts/commit/678146599e3dde46aa57c025b1db86869838cd9d): release agent 13.2.0 ([#1748](https://github.com/sysdiglabs/charts/issues/1748))
+# v1.23.3
+### Chores
+* **agent** [d1c6a829](https://github.com/sysdiglabs/charts/commit/d1c6a82958f7fe9a443632151e8efc39357a2a68): let memdump override also on secure-light mode ([#1736](https://github.com/sysdiglabs/charts/issues/1736))
+# v1.23.2
+### New Features
+* [69b040bc](https://github.com/sysdiglabs/charts/commit/69b040bc9432a456c70ab37d72d9139398262bf1): release agent 13.1.1 ([#1734](https://github.com/sysdiglabs/charts/issues/1734))
+# v1.23.1
+### Chores
+* **agent** [06666894](https://github.com/sysdiglabs/charts/commit/066668948b814d8d004c53e2ce5e122c41d39d72): allow to configure probes failureThreshold ([#1710](https://github.com/sysdiglabs/charts/issues/1710))
+# v1.23.0
+### New Features
+* [5a4444cb](https://github.com/sysdiglabs/charts/commit/5a4444cbdb59d96c95199e5668b01d1d0b38db6b): release agent 13.1.0 ([#1705](https://github.com/sysdiglabs/charts/issues/1705))
+# v1.22.7
+### New Features
+* **agent** [41107025](https://github.com/sysdiglabs/charts/commit/41107025c4ff1c897fcd1783bc2a2ce7a4dd026a): add tag to distinguish delegated deployment agents ([#1701](https://github.com/sysdiglabs/charts/issues/1701))
+# v1.22.6
+### New Features
+* [359ac387](https://github.com/sysdiglabs/charts/commit/359ac3871f0e38a175802ed0e8f1c620b572e008): release agent 13.0.4 ([#1696](https://github.com/sysdiglabs/charts/issues/1696))
 # v1.22.5
 ### New Features
 * **agent** [8977c6f0](https://github.com/sysdiglabs/charts/commit/8977c6f046d1e00b126e96cda77eebae9e382766): revert ensure os-release file is mounted ([#1686](https://github.com/sysdiglabs/charts/issues/1686))

@@ -4,7 +4,7 @@ metadata:
   name: {{ include "cluster-scanner.fullname" . }}
   namespace: {{ include "cluster-scanner.namespace" . }}
   labels:
-   {{- include "cluster-scanner.labels" . | nindent 4 }}
+    {{- include "cluster-scanner.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   strategy:
@@ -25,7 +25,10 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "cluster-scanner.selectorLabels" . | nindent 8 }}
+        {{- include "cluster-scanner.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
     spec:
       {{- with .Values.global.image.pullSecrets }}
       imagePullSecrets:
@@ -166,13 +169,6 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: status.podIP
-          {{- if  eq .Values.scannerMode "multi" }}
-          - name: SYSDIG_KUBECONFIG_CONTENT
-            valueFrom:
-              secretKeyRef:
-                name: {{ .Values.runtimeStatusIntegrator.multiCluster.kubeconfigSecretName }}
-                key: .kubeconfig
-          {{- end }}
           - name: SYSDIG_API_URL
             valueFrom:
               configMapKeyRef:
@@ -208,14 +204,12 @@ spec:
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: rsi_pprof_enabled
                 optional: true
-          {{- if  eq .Values.scannerMode "local" }}
           - name: LOCAL_REGISTRY_SECRETS
             valueFrom:
               configMapKeyRef:
                 name: {{ include "cluster-scanner.fullname" . }}
                 key: local_registry_secrets
                 optional: true
-          {{- end }}
           - name: EVE_ENABLED
             valueFrom:
               configMapKeyRef:

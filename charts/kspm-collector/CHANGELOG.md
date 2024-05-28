@@ -10,6 +10,18 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.15.4
+### New Features
+* **kspm-collector** [b751ae90](https://github.com/sysdiglabs/charts/commit/b751ae900f4cb865d4ccd7f428eef333c17d0615): bump kspm-collector version to 0.15.4 ([#1747](https://github.com/sysdiglabs/charts/issues/1747))
+# v0.15.3
+### Others
+* [549e723e](https://github.com/sysdiglabs/charts/commit/549e723e11f0cb0deff59715f5ed2d26bdf4568c)
+# v0.15.2
+### New Features
+* **kspm-collector** [5d917b1c](https://github.com/sysdiglabs/charts/commit/5d917b1c64661edd997bc4f81d1461a28b99eab2): Added permission for secrets ([#1715](https://github.com/sysdiglabs/charts/issues/1715))
+# v0.15.1
+### New Features
+* **kspm-collector,node-analyzer** [03e67add](https://github.com/sysdiglabs/charts/commit/03e67adde86b18ef4f96dfe58e6425534a3b4ac0): release kspm-collector & node-analyzer with support for CRN & name from IBM cloud MDS ([#1712](https://github.com/sysdiglabs/charts/issues/1712))
 # v0.15.0
 ### New Features
 * **node-analyzer,kspm-collector** [7d1201fc](https://github.com/sysdiglabs/charts/commit/7d1201fc5d1bfc18e9cfc24ed621e76773405d64): Skip TLS certificate verification when using TLS Proxy & bump applications version ([#1665](https://github.com/sysdiglabs/charts/issues/1665))

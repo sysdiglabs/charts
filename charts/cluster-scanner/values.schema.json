@@ -2,17 +2,9 @@
   "$schema": "http://json-schema.org/schema#",
   "type": "object",
   "required": [
-    "global",
-    "scannerMode"
+    "global"
   ],
   "properties": {
-    "scannerMode": {
-      "type": "string",
-      "enum": [
-        "local",
-        "multi"
-      ]
-    },
     "global": {
       "type": "object",
       "required": [
@@ -66,6 +58,14 @@
           }
         }
       }
+    },
+    "labels": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "podLabels": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
     }
   }
 }

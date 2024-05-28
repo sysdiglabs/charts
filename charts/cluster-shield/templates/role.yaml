@@ -1,0 +1,30 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ include "cluster-shield.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+rules:
+{{- if .Values.cluster_shield.features.container_vulnerability_management.enabled }}
+- apiGroups: ["", "coordination.k8s.io"]
+  resources:
+    - "leases"
+  resourceNames:
+    - {{ include "cluster-shield.clusterScannerLockName" . }}
+  verbs: ["*"]
+- apiGroups: ["", "coordination.k8s.io"]
+  resources:
+    - "leases"
+  verbs: ["create"]
+- apiGroups: ["*"]
+  resources:
+    - "endpoints"
+  verbs: ["get", "watch", "list"]
+- apiGroups: ["*"]
+  resources:
+    - "endpoints"
+    # Following is required for OpenShift. See https://docs.openshift.com/container-platform/3.11/architecture/core_concepts/pods_and_services.html#endpoints
+    - "endpoints/restricted"
+  resourceNames:
+    - {{ include "cluster-shield.clusterScannerServiceName" . }}
+  verbs: ["*"]
+{{- end }}

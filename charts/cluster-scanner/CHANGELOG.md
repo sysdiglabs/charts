@@ -10,6 +10,27 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.13.3
+### Chores
+* **cluster-scanner,sysdig-deploy** [48c98ef5](https://github.com/sysdiglabs/charts/commit/48c98ef5612f16572f9d8acd29e2d6527dec2523): bump cluster-scanner to 0.7.6 ([#1745](https://github.com/sysdiglabs/charts/issues/1745))
+# v0.13.2
+### Chores
+* **cluster-scanner,sysdig-deploy** [f956c444](https://github.com/sysdiglabs/charts/commit/f956c4444ca7c0036db79abe7b2ac20bddfbf74c): bump cluster-scanner to 0.7.5 ([#1733](https://github.com/sysdiglabs/charts/issues/1733))
+# v0.13.1
+### Chores
+* **cluster-scanner** [6c917450](https://github.com/sysdiglabs/charts/commit/6c9174500a67a8285caeac17f5fcf76441d8e6ad): bump cluster-scanner to 0.7.4 ([#1707](https://github.com/sysdiglabs/charts/issues/1707))
+# v0.13.0
+### New Features
+* **cluster-scanner** [ae116768](https://github.com/sysdiglabs/charts/commit/ae1167685b7fdab35accd9db4f9fc0f91e1015ef): removed support for multi-cluster ([#1700](https://github.com/sysdiglabs/charts/issues/1700))
+# v0.12.4
+### New Features
+* **cluster-scanner,sysdig-deploy** [8917a0af](https://github.com/sysdiglabs/charts/commit/8917a0af74d5a875bcec55b0f8269cddff75066c): add option to populate custom labels for cluster scanner ([#1691](https://github.com/sysdiglabs/charts/issues/1691))
+# v0.12.3
+### Chores
+* **cluster-scanner** [bced17d8](https://github.com/sysdiglabs/charts/commit/bced17d865e9a6aba53035a5e24d8549814d7135): enable EveIntegration by default ([#1692](https://github.com/sysdiglabs/charts/issues/1692))
+# v0.12.2
+### Chores
+* **cluster-scanner** [e93a0a14](https://github.com/sysdiglabs/charts/commit/e93a0a146b01066aecf5a9a7153daa831da45697): bump cluster-scanner to 0.7.2 ([#1689](https://github.com/sysdiglabs/charts/issues/1689))
 # v0.12.1
 ### Chores
 * **cluster-scanner** [34d84a56](https://github.com/sysdiglabs/charts/commit/34d84a5663062bc8e1d7b801b3f910d8f5dcd0a1): bump cluster-scanner to 0.7.1 ([#1673](https://github.com/sysdiglabs/charts/issues/1673))

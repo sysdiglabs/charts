@@ -185,7 +185,7 @@ nodeAnalyzer:
     deploy: true
     image:
       repository: sysdig/node-image-analyzer
-      tag: 0.1.31
+      tag: 0.1.32
       digest:
       pullPolicy:
 
@@ -279,7 +279,7 @@ nodeAnalyzer:
 
     image:
       repository: sysdig/compliance-benchmark-runner
-      tag: 1.1.0.9
+      tag: 1.1.1.4
       digest:
       pullPolicy:
 
@@ -309,7 +309,7 @@ nodeAnalyzer:
     probesPort: 7002
     image:
       repository: sysdig/vuln-runtime-scanner
-      tag: "1.6.11"
+      tag: "1.7.0"
       digest:
       pullPolicy:
 
@@ -393,7 +393,7 @@ nodeAnalyzer:
 
     image:
       repository: sysdig/vuln-host-scanner
-      tag: "0.8.1"
+      tag: "0.10.0"
       digest:
       pullPolicy:
 
@@ -401,6 +401,12 @@ nodeAnalyzer:
     httpProxy:
     httpsProxy:
     noProxy:
+
+    # Prometheus configuration
+    prometheus:
+      enabled: false
+      # endpoint: "/metrics"
+      # port: "25000"
 
     resources:
       requests:
@@ -426,7 +432,7 @@ nodeAnalyzer:
     debug: false
     image:
       repository: sysdig/kspm-analyzer
-      tag: 1.42.5
+      tag: 1.43.3
       digest:
       pullPolicy:
 
@@ -491,6 +497,14 @@ nodeAnalyzer:
       existingCaConfigMap:
       # Provide the filename that is defined inside the existing ConfigMap.  Required if existingCaConfigMap is set.
       existingCaConfigMapKeyName:
+
+      # If Bottlerocket is enabled then the apiclient and api socket will be mounted
+  bottlerocket:
+    enabled: false
+    # Path to host apiclient binary
+    apiClientPath: /usr/bin/apiclient
+    # Path to host api socket
+    apiServerSocketPath: /run/api.sock
 
 tests:
   timeout: 300s

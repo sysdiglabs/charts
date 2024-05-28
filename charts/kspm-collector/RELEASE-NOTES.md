@@ -1,5 +1,5 @@
 # What's Changed
 
 ### New Features
-- **node-analyzer,kspm-collector** [7d1201fc](https://github.com/sysdiglabs/charts/commit/7d1201fc5d1bfc18e9cfc24ed621e76773405d64): Skip TLS certificate verification when using TLS Proxy & bump applications version ([#1665](https://github.com/sysdiglabs/charts/issues/1665))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.14.2...kspm-collector-0.15.0
+- **kspm-collector** [b751ae90](https://github.com/sysdiglabs/charts/commit/b751ae900f4cb865d4ccd7f428eef333c17d0615): bump kspm-collector version to 0.15.4 ([#1747](https://github.com/sysdiglabs/charts/issues/1747))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.15.3...kspm-collector-0.15.4

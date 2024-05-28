@@ -47,4 +47,11 @@ data:
   podman_socket_path: {{ .Values.nodeAnalyzer.hostScanner.scanContainers.podmanSocketPath | quote}}
   {{- end }}
   {{- end}}
+  prom_enabled: {{ .Values.nodeAnalyzer.hostScanner.prometheus.enabled | default false | quote }}
+  {{- if .Values.nodeAnalyzer.hostScanner.prometheus.endpoint }}
+  prom_endpoint: {{ .Values.nodeAnalyzer.hostScanner.prometheus.endpoint | quote }}
+  {{- end }}
+  {{- if .Values.nodeAnalyzer.hostScanner.prometheus.port }}
+  prom_port: {{ .Values.nodeAnalyzer.hostScanner.prometheus.port | quote }}
+  {{- end }}
 {{- end }}

@@ -1,0 +1,21 @@
+project:
+  name: Sysdig Cluster Shield
+  shortName: Cluster Shield
+  url: https://docs.sysdig.com/en/docs/sysdig-secure/scanning
+  description: This chart deploys the Sysdig Cluster Shield in your Kubernetes cluster.
+  app: the Sysdig Cluster Shield
+repository:
+  url: https://charts.sysdig.com
+  name: sysdig
+chart:
+  name: cluster-shield
+prerequisites:
+  - "Helm 3.6"
+  - "Sysdig AccessKey"
+  - "Sysdig Secure API Token"
+  - "Sysdig Secure API URL"
+  - "Sysdig Secure Collector"
+
+release:
+  name: sysdig-cluster-shield
+  namespace: sysdig-agent

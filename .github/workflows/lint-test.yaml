@@ -13,7 +13,7 @@ jobs:
           fetch-depth: 0
 
       - name: Set up Helm
-        uses: azure/setup-helm@v3.5
+        uses: azure/setup-helm@v4
         with:
           version: v3.10.3
 
@@ -71,4 +71,4 @@ jobs:
           k3s-version: v1.23.9+k3s1
 
       - name: Run chart-testing (install)
-        run: ct install --upgrade --target-branch=main --excluded-charts common,sysdig-stackdriver-bridge,sysdig-mcm-navmenu
+        run: ct install --upgrade --target-branch=main --excluded-charts cluster-shield,common,sysdig-stackdriver-bridge,sysdig-mcm-navmenu

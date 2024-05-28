@@ -1,0 +1,44 @@
+suite: Test Cluster Scanner Dedicated Service
+templates:
+  - templates/service-cluster-scanner.yaml
+values:
+  - ../ci/base-values.yaml
+release:
+  name: shield-release
+  namespace: shield-namespace
+tests:
+  - it: Contains a Service resource
+    asserts:
+      - isKind:
+          of: Service
+      - equal:
+          path: metadata.name
+          value: shield-release-cluster-shield-cluster-scanner
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - lengthEqual:
+          path: spec.ports
+          count: 2
+      - isNotNull:
+          path: .spec.ports[?(@.name == "nats")]
+      - equal:
+          path: spec.ports[?(@.name == "nats")].port
+          value: 4222
+      - equal:
+          path: spec.ports[?(@.name == "nats")].targetPort
+          value: 4222
+      - equal:
+          path: spec.ports[?(@.name == "nats")].protocol
+          value: TCP
+      - isNotNull:
+          path: .spec.ports[?(@.name == "grpc")]
+      - equal:
+          path: spec.ports[?(@.name == "grpc")].port
+          value: 9999
+      - equal:
+          path: spec.ports[?(@.name == "grpc")].targetPort
+          value: 9999
+      - equal:
+          path: spec.ports[?(@.name == "grpc")].protocol
+          value: TCP

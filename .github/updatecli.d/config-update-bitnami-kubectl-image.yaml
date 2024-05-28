@@ -1,0 +1,72 @@
+name: update bitnami/kubectl image tag for helm tests
+
+scms:
+  github:
+    kind: "github"
+    spec:
+      user: "updatecli"
+      email: "updatecli@sysdig.com"
+      owner: "sysdiglabs"
+      repository: "charts"
+      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
+      username: draios-jenkins
+      branch: "main"
+      hidecredit: true
+
+actions:
+  github:
+    kind: "github/pullrequest"
+    scmid: "github"
+    spec:
+      automerge: true
+      description: 'bump bitnami/kubectl image references'
+      labels:
+        - "automated PR"
+      mergemethod: squash
+      title: 'chore(ci): bump bitnami/kubectl image references'
+
+sources:
+  bitnamiKubectlImage:
+    kind: dockerimage
+    spec:
+      image: bitnami/kubectl
+      versionfilter:
+        kind: semver
+        strict: true
+
+targets:
+  bumpAgentChart:
+    name: "bump the bitnami/kubectl image reference in the agent chart"
+    kind: helmchart
+    scmid: github
+    spec:
+      name: "charts/agent"
+      key: "$.tests.image.tag"
+      versionincrement: patch
+
+  bumpKspmCollectorChart:
+    name: "bump the bitnami/kubectl image reference in the kspm-collector chart"
+    kind: helmchart
+    scmid: github
+    spec:
+      name: "charts/kspm-collector"
+      key: "$.tests.image.tag"
+      versionincrement: patch
+
+  bumpNodeAnalyzerChart:
+    name: "bump the bitnami/kubectl image reference in the node-analyzer chart"
+    kind: helmchart
+    scmid: github
+    spec:
+      name: "charts/node-analyzer"
+      key: "$.tests.image.tag"
+      versionincrement: patch
+
+  bumpRapidResponseChart:
+    name: "bump the bitnami/kubectl image reference in the rapid-response chart"
+    kind: helmchart
+    scmid: github
+    spec:
+      name: "charts/rapid-response"
+      key: "$.tests.image.tag"
+      versionincrement: patch

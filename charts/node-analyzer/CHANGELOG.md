@@ -10,6 +10,39 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.29.1
+### Chores
+* **node-analyzer** [fcb47948](https://github.com/sysdiglabs/charts/commit/fcb47948280b55cc964b8a7a1a564923e284bb4e): Bump benchmark runner ([#1675](https://github.com/sysdiglabs/charts/issues/1675))
+# v1.29.0
+### Chores
+* **node-analyzer** [f3b29822](https://github.com/sysdiglabs/charts/commit/f3b29822e8bc3c60f48d0bac678b360eace7e133): bump sysdig/vuln-runtime-scanner to v1.7.0 ([#1750](https://github.com/sysdiglabs/charts/issues/1750))
+# v1.28.0
+### Chores
+* **node-analyzer** [239f22e8](https://github.com/sysdiglabs/charts/commit/239f22e8e2a36e847e1a352212d52c0261ad6b5a): bump sysdig/vuln-host-scanner to v0.10.0 ([#1749](https://github.com/sysdiglabs/charts/issues/1749))
+# v1.27.5
+### Chores
+* **node-analyzer** [c5a7c493](https://github.com/sysdiglabs/charts/commit/c5a7c4931a45a218c319085857f1bdf54df23a23): bump legacy node image analyzer to v0.1.32 ([#1738](https://github.com/sysdiglabs/charts/issues/1738))
+# v1.27.4
+### New Features
+* **node-analyzer** [8229ffce](https://github.com/sysdiglabs/charts/commit/8229ffce6e561735ca587499be796c84af80e072): bump host-scanner to v0.9.1 ([#1739](https://github.com/sysdiglabs/charts/issues/1739))
+# v1.27.3
+### Others
+* [549e723e](https://github.com/sysdiglabs/charts/commit/549e723e11f0cb0deff59715f5ed2d26bdf4568c)
+# v1.27.2
+### Chores
+* **node-analyzer** [7336c1b9](https://github.com/sysdiglabs/charts/commit/7336c1b91aeddb057626f1a456a12a50a47e86d4): bump runtime-scanner to v1.6.12 ([#1737](https://github.com/sysdiglabs/charts/issues/1737))
+# v1.27.1
+### New Features
+* **node-analyzer** [dbe2d40f](https://github.com/sysdiglabs/charts/commit/dbe2d40f15480af19ee1ca6a59b4d936cedca7db): Add flag in order to allow Bottlerocket volumes ([#1699](https://github.com/sysdiglabs/charts/issues/1699))
+# v1.27.0
+### Chores
+* **node-analyzer** [c702f9dc](https://github.com/sysdiglabs/charts/commit/c702f9dc5b58cd0a6c18a2c82a813a524c347e5c): bump host-scanner to v0.9.0 ([#1713](https://github.com/sysdiglabs/charts/issues/1713))
+# v1.26.5
+### Bug Fixes
+* **node-analyzer** [8ac36439](https://github.com/sysdiglabs/charts/commit/8ac36439f8d67ba20f29c9e29ee52b6fc698124f): use correct values for custom CA envs generation ([#1716](https://github.com/sysdiglabs/charts/issues/1716))
+# v1.26.4
+### New Features
+* **kspm-collector,node-analyzer** [03e67add](https://github.com/sysdiglabs/charts/commit/03e67adde86b18ef4f96dfe58e6425534a3b4ac0): release kspm-collector & node-analyzer with support for CRN & name from IBM cloud MDS ([#1712](https://github.com/sysdiglabs/charts/issues/1712))
 # v1.26.3
 ### Chores
 * **node-analyzer** [4670c8ab](https://github.com/sysdiglabs/charts/commit/4670c8abb12e776d150f0be469242a5ef0dab392): bump vuln-host-scanner to v0.8.1 ([#1682](https://github.com/sysdiglabs/charts/issues/1682))

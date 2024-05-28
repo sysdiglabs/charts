@@ -1,7 +1,5 @@
 # What's Changed
 
-### New Features
-- **admission-controller** [7128e512](https://github.com/sysdiglabs/charts/commit/7128e51219382f536fb61bded24414d97fb1eb42): Support for VM checks ([#1651](https://github.com/sysdiglabs/charts/issues/1651))
-
-    * * Added support for VM checks, disabled by default
-#### Full diff: https://github.com/sysdiglabs/charts/compare/admission-controller-0.15.4...admission-controller-0.16.0
+### Chores
+- **admission-controller** [1f2bef59](https://github.com/sysdiglabs/charts/commit/1f2bef5901e1cbf0622c92f037d7b674705b6204): Update to v3.9.44 ([#1731](https://github.com/sysdiglabs/charts/issues/1731))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/admission-controller-0.16.1...admission-controller-0.16.2

@@ -179,8 +179,6 @@ tests:
       - isKind:
           of: DaemonSet
       - isNull:
-          path: spec.template.spec.containers[3].env[?(@.name == "USE_COMBINED_SCANNER")].value
-      - isNull:
           path: spec.template.spec.containers[3].env[?(@.name == "SCAN_CONTAINERS_ENABLED")].value
   - it: "Container scanner enabled - daemonset"
     set:
@@ -193,7 +191,7 @@ tests:
       - isKind:
             of: DaemonSet
       - equal:
-          path: spec.template.spec.containers[3].env[?(@.name == "USE_COMBINED_SCANNER")].value
+          path: spec.template.spec.containers[3].env[?(@.name == "SCAN_CONTAINERS_ENABLED")].value
           value: "true"
   - it: "Container scanner enabled and empty socket paths - configmap"
     set:
@@ -227,3 +225,88 @@ tests:
       - equal:
           path: data.podman_socket_path
           value: "/podman/socket"
+  - it: "Prometheus is disabled by default"
+    set:
+      clusterName: "test"
+      nodeAnalyzer.hostScanner.deploy: true
+    templates:
+      - ../templates/configmap-host-scanner.yaml
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - equal:
+          path: data.prom_enabled
+          value: "false"
+      - isNull:
+          path: data.prom_port
+      - isNull:
+          path: data.prom_endpoint
+  - it: "Prometheus is explicitly disabled"
+    set:
+      clusterName: "test"
+      nodeAnalyzer.hostScanner.deploy: true
+      nodeAnalyzer.hostScanner.prometheus.enabled: false
+    templates:
+      - ../templates/configmap-host-scanner.yaml
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - equal:
+          path: data.prom_enabled
+          value: "false"
+  - it: "Prometheus is enabled"
+    set:
+      clusterName: "test"
+      nodeAnalyzer.hostScanner.deploy: true
+      nodeAnalyzer.hostScanner.prometheus.enabled: true
+    templates:
+      - ../templates/configmap-host-scanner.yaml
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - equal:
+          path: data.prom_enabled
+          value: "true"
+      - isNull:
+          path: data.prom_port
+      - isNull:
+          path: data.prom_endpoint
+  - it: "Prometheus endpoint is set"
+    set:
+      clusterName: "test"
+      nodeAnalyzer.hostScanner.deploy: true
+      nodeAnalyzer.hostScanner.prometheus.endpoint: "/metrics"
+    templates:
+      - ../templates/configmap-host-scanner.yaml
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - equal:
+          path: data.prom_endpoint
+          value: "/metrics"
+  - it: "Prometheus port is set"
+    set:
+      clusterName: "test"
+      nodeAnalyzer.hostScanner.deploy: true
+      nodeAnalyzer.hostScanner.prometheus.port: "1234"
+    templates:
+      - ../templates/configmap-host-scanner.yaml
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - equal:
+          path: data.prom_port
+          value: "1234"
+  - it: "Prometheus port is set as number"
+    set:
+      clusterName: "test"
+      nodeAnalyzer.hostScanner.deploy: true
+      nodeAnalyzer.hostScanner.prometheus.port: 1234
+    templates:
+      - ../templates/configmap-host-scanner.yaml
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - equal:
+          path: data.prom_port
+          value: "1234"

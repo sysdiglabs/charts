@@ -40,6 +40,9 @@ helm.sh/chart: {{ include "cluster-scanner.chart" . }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- with .Values.labels }}
+{{- toYaml . | nindent 0 }}
+{{- end }}
 {{- end }}
 
 {{/*
@@ -69,10 +72,8 @@ Create the name of the service account to use
 Generates configmap data for mode-specific values
 */}}
 {{- define "cluster-scanner.modeConfig" -}}
-rsi_mode: {{ .Values.scannerMode }}
-{{- if eq .Values.scannerMode "local" }}
+rsi_mode: "local"
 local_registry_secrets: {{ include "cluster-scanner.runtimeStatusIntegrator.localCluster.localSecrets" . }}
-{{- end }}
 {{- end }}
 
 {{/*
@@ -177,7 +178,6 @@ ise_cache_local_ttl: {{ .ttl }}
 
 {{- define "cluster-scanner.configContent" }}
 {{ .Values.global }}
-{{ .Values.runtimeStatusIntegrator.multiCluster }}
 {{ .Values.runtimeStatusIntegrator.localCluster }}
 {{ .Values.runtimeStatusIntegrator.natsJS }}
 {{ .Values.imageSbomExtractor.cache }}
