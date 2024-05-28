@@ -13,9 +13,7 @@ data:
       url: {{ .Values.config.registryURL }}
       user: from-secret
       pass: from-secret
-      {{- if .Values.config.registryType }}
       type: {{ .Values.config.registryType }}
-      {{- end }}
       {{- if .Values.config.registryAccountId }}
       accountId: {{ .Values.config.registryAccountId }}
       {{- end }}
@@ -25,7 +23,11 @@ data:
       {{- if .Values.config.icrIamApiSkipTLS }}
       icrIamApiSkipTLS: {{ .Values.config.icrIamApiSkipTLS }}
       {{- end }}
+      {{- if eq .Values.config.registryType "ocp" }}
+      skipTLS: true
+      {{- else }}
       skipTLS: {{ .Values.config.registrySkipTLS }}
+      {{- end }}
       {{- if .Values.config.registryApiUrl }}
       api: {{ .Values.config.registryApiUrl }}
       {{- end }}
