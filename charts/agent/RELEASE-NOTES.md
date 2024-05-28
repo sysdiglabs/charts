@@ -1,5 +1,5 @@
 # What's Changed
 
 ### New Features
-- [67814659](https://github.com/sysdiglabs/charts/commit/678146599e3dde46aa57c025b1db86869838cd9d): release agent 13.2.0 ([#1748](https://github.com/sysdiglabs/charts/issues/1748))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.23.3...agent-1.24.0
+- **agent,kspm-collector,node-analyzer,rapid-response** [c0359500](https://github.com/sysdiglabs/charts/commit/c0359500433949727357cfd918d43d9a0e0dbe11): update kubectl images used for testing purpose ([#1758](https://github.com/sysdiglabs/charts/issues/1758))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.24.0...agent-1.24.1
