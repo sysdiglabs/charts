@@ -1,5 +1,5 @@
 # What's Changed
 
 ### New Features
-- **common** [0061b52d](https://github.com/sysdiglabs/charts/commit/0061b52d51f43e1e4d5e2bdf1145be28287d5ce6): add me2 region support ([#1591](https://github.com/sysdiglabs/charts/issues/1591))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/rapid-response-0.8.5...rapid-response-0.9.0
+- **agent,kspm-collector,node-analyzer,rapid-response** [c0359500](https://github.com/sysdiglabs/charts/commit/c0359500433949727357cfd918d43d9a0e0dbe11): update kubectl images used for testing purpose ([#1758](https://github.com/sysdiglabs/charts/issues/1758))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/rapid-response-0.9.0...rapid-response-0.9.1
