@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.29.2
+### New Features
+* **agent,kspm-collector,node-analyzer,rapid-response** [c0359500](https://github.com/sysdiglabs/charts/commit/c0359500433949727357cfd918d43d9a0e0dbe11): update kubectl images used for testing purpose ([#1758](https://github.com/sysdiglabs/charts/issues/1758))
 # v1.29.1
 ### Chores
 * **node-analyzer** [fcb47948](https://github.com/sysdiglabs/charts/commit/fcb47948280b55cc964b8a7a1a564923e284bb4e): Bump benchmark runner ([#1675](https://github.com/sysdiglabs/charts/issues/1675))
