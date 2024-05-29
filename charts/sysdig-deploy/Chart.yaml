@@ -2,7 +2,7 @@ apiVersion: v2
 name: sysdig-deploy
 description: A chart with various Sysdig components for Kubernetes
 type: application
-version: 1.55.2
+version: 1.55.3
 maintainers:
   - name: AlbertoBarba
     email: alberto.barba@sysdig.com
@@ -42,7 +42,7 @@ dependencies:
   - name: cluster-scanner
     # repository: https://charts.sysdig.com
     repository: file://../cluster-scanner
-    version: ~0.13.3
+    version: ~0.13.4
     alias: clusterScanner
     condition: clusterScanner.enabled
   - name: kspm-collector
