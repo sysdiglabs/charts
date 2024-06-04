@@ -59,6 +59,11 @@ spec:
             mountPath: Sysdig/Agent/certificates
             readOnly: true
           {{- end }}
+          {{- if and (include "agent.httpProxyCredentials" .) (not (include "agent.gke.autopilot" .)) }}
+          # TODO: the actual location is still a work in progress (not yet implemented on the windows agent!)
+          - mountPath: /Sysdig/Agent/HttpProxySecrets
+            name: sysdig-agent-http-proxy-secrets
+          {{- end }}
       terminationGracePeriodSeconds: 0
       volumes:
       - name: config
@@ -71,6 +76,11 @@ spec:
           {{- else }}
           secretName: {{ include "agent.accessKeySecret" . }}
           {{- end }}
+      {{- if and (include "agent.httpProxyCredentials" .) (not (include "agent.gke.autopilot" .)) }}
+      - name: sysdig-agent-http-proxy-secrets
+        secret:
+          secretName: {{ template "agent.fullname" . }}-proxy
+      {{- end }}
       {{- if eq (include "sysdig.custom_ca.useValues"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
       - name: ca-cert
         secret:
