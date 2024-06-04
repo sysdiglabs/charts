@@ -51,12 +51,12 @@ spec:
             {{- toYaml .Values.windows.resources | nindent 12 }}
           volumeMounts:
           - name: config
-            mountPath: /Sysdig/Agent/Config
+            mountPath: Sysdig/Agent/Config
           - name: secrets
-            mountPath: /Sysdig/Agent/Secrets
+            mountPath: Sysdig/Agent/Secrets
           {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
           - name: ca-cert
-            mountPath: /etc/ca-certs
+            mountPath: Sysdig/Agent/certificates
             readOnly: true
           {{- end }}
       terminationGracePeriodSeconds: 0

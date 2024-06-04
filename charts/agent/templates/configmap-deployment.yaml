@@ -51,7 +51,7 @@ data:
 */}}
 {{- $baseSettings := .Values.sysdig.settings -}}
 {{- if and (eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true") (.Values.sysdig.settings) (hasKey .Values.sysdig.settings "http_proxy") (hasKey .Values.sysdig.settings.http_proxy "ssl") (eq (get .Values.sysdig.settings.http_proxy "ssl") true) }}
-  {{- $caFilePath := printf "%s%s" "/etc/ca-certs/" (include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.ssl)) }}
+  {{- $caFilePath := printf "%s%s" "certificates" (include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.ssl)) }}
   {{- $mergedSettings := mergeOverwrite $baseSettings (dict "http_proxy" (dict "ca_certificate" $caFilePath)) -}}
   {{- $finalSettings := mergeOverwrite $mergedSettings $requiredOverrides -}}
   {{ toYaml $finalSettings | nindent 4 }}
