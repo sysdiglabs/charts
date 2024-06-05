@@ -1,0 +1,171 @@
+suite: Test Deployment
+templates:
+  - templates/deployment.yaml
+  - templates/secrets.yaml
+values:
+  - ../ci/base-values.yaml
+release:
+  name: shield-release
+  namespace: shield-namespace
+tests:
+  - it: Test without proxy configuration
+    set:
+      global:
+        sysdig:
+          existingSecureApiTokenSecret: "test-existing-secure-api-token-secret"
+          existingSecureApiTokenSecretKeyName: "secure-api-token-custom"
+    asserts:
+      - isNull:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTP_PROXY")]
+        template: templates/deployment.yaml
+      - isNull:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTPS_PROXY")]
+        template: templates/deployment.yaml
+      - isNull:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "NO_PROXY")]
+        template: templates/deployment.yaml
+      - hasDocuments:
+          count: 1
+        template: templates/secrets.yaml
+      - containsDocument:
+          kind: Secret
+          apiVersion: v1
+          name: sysdig-cluster-shield
+        template: templates/secrets.yaml
+
+  - it: Test proxy configuration are stored in a secret and mounted as env vars
+    set:
+      global:
+        sysdig:
+          existingSecureApiTokenSecret: "test-existing-secure-api-token-secret"
+          existingSecureApiTokenSecretKeyName: "secure-api-token-custom"
+      proxy:
+        httpProxy: http://proxy.example.com:1234
+        httpsProxy: https://proxy.example.com:1234
+        noProxy: 127.0.0.1,localhost,.local,.internal
+    asserts:
+      - isNotNull:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTP_PROXY")]
+        template: templates/deployment.yaml
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTP_PROXY")].valueFrom.secretKeyRef.name
+          value: sysdig-cluster-shield-proxy
+        template: templates/deployment.yaml
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTP_PROXY")].valueFrom.secretKeyRef.key
+          value: httpProxy
+        template: templates/deployment.yaml
+      - isNotNull:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTPS_PROXY")]
+        template: templates/deployment.yaml
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTPS_PROXY")].valueFrom.secretKeyRef.name
+          value: sysdig-cluster-shield-proxy
+        template: templates/deployment.yaml
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTPS_PROXY")].valueFrom.secretKeyRef.key
+          value: httpsProxy
+        template: templates/deployment.yaml
+      - isNotNull:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "NO_PROXY")]
+        template: templates/deployment.yaml
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "NO_PROXY")].valueFrom.secretKeyRef.name
+          value: sysdig-cluster-shield-proxy
+        template: templates/deployment.yaml
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "NO_PROXY")].valueFrom.secretKeyRef.key
+          value: noProxy
+        template: templates/deployment.yaml
+      - containsDocument:
+          kind: Secret
+          apiVersion: v1
+          name: sysdig-cluster-shield-proxy
+        template: templates/secrets.yaml
+      - equal:
+          path: data.httpProxy
+          decodeBase64: true
+          value: http://proxy.example.com:1234
+        template: templates/secrets.yaml
+        documentIndex: 1
+      - equal:
+          path: data.httpsProxy
+          decodeBase64: true
+          value: https://proxy.example.com:1234
+        template: templates/secrets.yaml
+        documentIndex: 1
+      - equal:
+          path: data.noProxy
+          decodeBase64: true
+          value: 127.0.0.1,localhost,.local,.internal
+        template: templates/secrets.yaml
+        documentIndex: 1
+
+
+  - it: Test global proxy configuration are stored in a secret and mounted as env vars
+    set:
+      global:
+        sysdig:
+          existingSecureApiTokenSecret: "test-existing-secure-api-token-secret"
+          existingSecureApiTokenSecretKeyName: "secure-api-token-custom"
+        proxy:
+          httpProxy: http://proxy-global.example.com:1234
+          httpsProxy: https://proxy-global.example.com:1234
+          noProxy: .global,127.0.0.1,localhost,.local,.internal
+    asserts:
+      - isNotNull:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTP_PROXY")]
+        template: templates/deployment.yaml
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTP_PROXY")].valueFrom.secretKeyRef.name
+          value: sysdig-cluster-shield-proxy
+        template: templates/deployment.yaml
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTP_PROXY")].valueFrom.secretKeyRef.key
+          value: httpProxy
+        template: templates/deployment.yaml
+      - isNotNull:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTPS_PROXY")]
+        template: templates/deployment.yaml
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTPS_PROXY")].valueFrom.secretKeyRef.name
+          value: sysdig-cluster-shield-proxy
+        template: templates/deployment.yaml
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTPS_PROXY")].valueFrom.secretKeyRef.key
+          value: httpsProxy
+        template: templates/deployment.yaml
+      - isNotNull:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "NO_PROXY")]
+        template: templates/deployment.yaml
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "NO_PROXY")].valueFrom.secretKeyRef.name
+          value: sysdig-cluster-shield-proxy
+        template: templates/deployment.yaml
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "NO_PROXY")].valueFrom.secretKeyRef.key
+          value: noProxy
+        template: templates/deployment.yaml
+      - containsDocument:
+          kind: Secret
+          apiVersion: v1
+          name: sysdig-cluster-shield-proxy
+        template: templates/secrets.yaml
+      - equal:
+          path: data.httpProxy
+          decodeBase64: true
+          value: http://proxy-global.example.com:1234
+        template: templates/secrets.yaml
+        documentIndex: 1
+      - equal:
+          path: data.httpsProxy
+          decodeBase64: true
+          value: https://proxy-global.example.com:1234
+        template: templates/secrets.yaml
+        documentIndex: 1
+      - equal:
+          path: data.noProxy
+          decodeBase64: true
+          value: .global,127.0.0.1,localhost,.local,.internal
+        template: templates/secrets.yaml
+        documentIndex: 1
