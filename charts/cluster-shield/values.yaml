@@ -52,6 +52,7 @@ cluster_shield:
     access_key:
     api_url:
     region:
+    secure_api_token:
   kubernetes:
     root_namespace: kube-system
   # Features
