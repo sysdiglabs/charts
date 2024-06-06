@@ -53,7 +53,7 @@ spec:
           - name: config
             mountPath: Sysdig/Agent/Config
           - name: secrets
-            mountPath: Sysdig/Agent/Secrets
+            mountPath: Sysdig/Agent/Secrets/AccessKey
           {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
           - name: ca-cert
             mountPath: Sysdig/Agent/certificates
