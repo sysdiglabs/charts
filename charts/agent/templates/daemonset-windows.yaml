@@ -60,8 +60,7 @@ spec:
             readOnly: true
           {{- end }}
           {{- if and (include "agent.httpProxyCredentials" .) (not (include "agent.gke.autopilot" .)) }}
-          # TODO: the actual location is still a work in progress (not yet implemented on the windows agent!)
-          - mountPath: /Sysdig/Agent/HttpProxySecrets
+          - mountPath: Sysdig/Agent/Secrets/http_proxy
             name: sysdig-agent-http-proxy-secrets
           {{- end }}
       terminationGracePeriodSeconds: 0
