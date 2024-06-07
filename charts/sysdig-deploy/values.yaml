@@ -69,3 +69,6 @@ rapidResponse:
   rapidResponse:
     passphrase: ""
     existingPassphraseSecret: ""
+
+clusterShield:
+  enabled: false
