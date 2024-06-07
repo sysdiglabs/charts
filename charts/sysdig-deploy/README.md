@@ -173,6 +173,7 @@ The following table lists the configurable parameters of the sysdig-deploy chart
 | `rapidResponse.enabled`                 | Enable Rapid Response component in this chart.                                                                          | `false`      |
 | `clusterShield`                         | The configuration specific to Sysdig Cluster Shield.                                 | `{}`      |
 | `clusterShield.enabled`                 | Enable Cluster Shield component in this chart.                                                                          | `false`      |
+
 ## Upgrading
 
 1. Refresh the `sysdig` helm repo to get the latest chart.
