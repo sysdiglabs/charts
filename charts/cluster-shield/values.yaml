@@ -10,14 +10,13 @@ global:
     pullSecrets: []
     pullPolicy: IfNotPresent
   sysdig:
-    existingAccessKeySecret:
-    existingAccessKeySecretKeyName:
-    existingSecureApiTokenSecret:
-    existingSecureApiTokenSecretKeyName:
+    accessKeySecret:
     accessKey:
     apiHost:
     region: "custom"
+    secureAPITokenSecret:
     secureAPIToken:
+  imageRegistry:
   sslVerifyCertificate:
   ssl:
     ca:

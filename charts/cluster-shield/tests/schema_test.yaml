@@ -43,7 +43,7 @@ tests:
             values don't meet the specifications of the schema(s) in the following chart(s):
             cluster-shield:
             - (root): Must validate at least one schema (anyOf)
-            - global.sysdig.existingAccessKeySecret: Invalid type. Expected: string, given: null
+            - global.sysdig.accessKeySecret: Invalid type. Expected: string, given: null
             - (root): Must validate all the schemas (allOf)
 
   - it: sysdig_endpoint - Use invalid SaaS Region

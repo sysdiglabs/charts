@@ -16,34 +16,19 @@
           "type": "object",
           "description": "Global sysdig configurations",
           "properties": {
-            "existingAccessKeySecret": {
+            "accessKeySecret": {
               "type": [
                 "string",
                 "null"
               ],
               "description": "The name of the secret containing the Sysdig Agent Access Key"
             },
-            "existingAccessKeySecretKeyName": {
-              "type": [
-                "string",
-                "null"
-              ],
-              "default": "access-key",
-              "description": "The key name of the secret containing the Sysdig Agent Access Key"
-            },
-            "existingSecureApiTokenSecret": {
+            "secureAPITokenSecret": {
               "type": [
                 "string",
                 "null"
               ],
               "description": "The name of the secret containing the Sysdig Secure API Token"
-            },
-            "existingSecureApiTokenSecretKeyName": {
-              "type": [
-                "string",
-                "null"
-              ],
-              "description": "The key name of the secret containing the Sysdig Secure API Token"
             },
             "region": {
               "type": [
@@ -250,7 +235,7 @@
       ]
     },
     {
-      "description": "One between global.sysdig.existingAccessKeySecret,global.sysdig.accessKey and cluster_shield.sysdig_endpoint.access_key must be set",
+      "description": "One between global.sysdig.accessKeySecret,global.sysdig.accessKey and cluster_shield.sysdig_endpoint.access_key must be set",
       "anyOf": [
         {
           "properties": {
@@ -276,12 +261,12 @@
               "properties": {
                 "sysdig": {
                   "properties": {
-                    "existingAccessKeySecret": {
+                    "accessKeySecret": {
                       "type": "string"
                     }
                   },
                   "required": [
-                    "existingAccessKeySecret"
+                    "accessKeySecret"
                   ]
                 }
               }

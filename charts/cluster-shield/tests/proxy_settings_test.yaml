@@ -12,8 +12,7 @@ tests:
     set:
       global:
         sysdig:
-          existingSecureApiTokenSecret: "test-existing-secure-api-token-secret"
-          existingSecureApiTokenSecretKeyName: "secure-api-token-custom"
+          secureAPITokenSecret: "test-existing-secure-api-token-secret"
     asserts:
       - isNull:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTP_PROXY")]
@@ -37,8 +36,7 @@ tests:
     set:
       global:
         sysdig:
-          existingSecureApiTokenSecret: "test-existing-secure-api-token-secret"
-          existingSecureApiTokenSecretKeyName: "secure-api-token-custom"
+          secureAPITokenSecret: "test-existing-secure-api-token-secret"
       proxy:
         httpProxy: http://proxy.example.com:1234
         httpsProxy: https://proxy.example.com:1234
@@ -106,8 +104,7 @@ tests:
     set:
       global:
         sysdig:
-          existingSecureApiTokenSecret: "test-existing-secure-api-token-secret"
-          existingSecureApiTokenSecretKeyName: "secure-api-token-custom"
+          secureAPITokenSecret: "test-existing-secure-api-token-secret"
         proxy:
           httpProxy: http://proxy-global.example.com:1234
           httpsProxy: https://proxy-global.example.com:1234

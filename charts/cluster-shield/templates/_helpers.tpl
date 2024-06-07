@@ -122,7 +122,7 @@ Adds kubernetes related keys to the configuration.
 {{- if not .Values.cluster_shield.sysdig_endpoint.access_key }}
 {{- if .Values.global.sysdig.accessKey }}
 {{- $_ := set $secret.sysdig_endpoint "access_key" .Values.global.sysdig.accessKey }}
-{{- else if not .Values.global.sysdig.existingAccessKeySecret }}
+{{- else if not .Values.global.sysdig.accessKeySecret }}
 {{- fail "One of global.sysdig.accessKey and cluster_shield.sysdig_endpoint.access_key must be defined." -}}
 {{- end }}
 {{- end }}
@@ -387,4 +387,15 @@ Proxy Secret Name
 {{- if or (or .Values.proxy.httpProxy .Values.global.proxy.httpProxy) (or .Values.proxy.httpsProxy .Values.global.proxy.httpsProxy) }}
 {{- true }}
 {{- end }}
+{{- end -}}
+
+{{/*
+Define the proper image repository to use for cluster-shield
+*/}}
+{{- define "cluster-shield.repository" -}}
+    {{- if .Values.global.imageRegistry -}}
+        {{- printf "%s/%s" .Values.global.imageRegistry "sysdig/cluster-shield" -}}
+    {{- else -}}
+        {{- .Values.image.repository -}}
+    {{- end -}}
 {{- end -}}

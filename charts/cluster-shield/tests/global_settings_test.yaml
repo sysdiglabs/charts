@@ -13,8 +13,7 @@ tests:
         sysdig:
           region: "custom"
           apiHost: "http://www.global-example.org"
-          existingSecureApiTokenSecret: "test-existing-secure-api-token-secret"
-          existingSecureApiTokenSecretKeyName: "secure-api-token-custom"
+          secureAPITokenSecret: "test-existing-secure-api-token-secret"
       cluster_shield:
         sysdig_endpoint:
           api_url:
@@ -37,8 +36,7 @@ tests:
         sysdig:
           region: "custom"
           apiHost: "www.global-example.org"
-          existingSecureApiTokenSecret: "test-existing-secure-api-token-secret"
-          existingSecureApiTokenSecretKeyName: "secure-api-token-custom"
+          secureAPITokenSecret: "test-existing-secure-api-token-secret"
       cluster_shield:
         sysdig_endpoint:
           api_url:

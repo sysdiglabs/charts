@@ -47,7 +47,7 @@ spec:
             readOnlyRootFilesystem: false
             allowPrivilegeEscalation: true
           {{- end }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          image: "{{ include "cluster-shield.repository" . }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy | default .Values.global.image.pullPolicy | default "IfNotPresent" }}
           args: [ {{ .Values.run_command | quote }} ]
           ports:
@@ -108,19 +108,19 @@ spec:
                   fieldPath: status.podIP
             - name: KUBE_SERVICE_NAME
               value: {{ include "cluster-shield.clusterScannerServiceName" . }}
-            {{- if .Values.global.sysdig.existingAccessKeySecret }}
+            {{- if .Values.global.sysdig.accessKeySecret }}
             - name: SYSDIG_CLUSTER_SHIELD_SYSDIG_ENDPOINT__ACCESS_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.global.sysdig.existingAccessKeySecret }}
-                  key: {{ .Values.global.sysdig.existingAccessKeySecretKeyName | default "access-key"}}
+                  name: {{ .Values.global.sysdig.accessKeySecret }}
+                  key: "access-key"
             {{- end }}
-            {{- if .Values.global.sysdig.existingSecureApiTokenSecret }}
+            {{- if .Values.global.sysdig.secureAPITokenSecret }}
             - name: SYSDIG_CLUSTER_SHIELD_SYSDIG_ENDPOINT__SECURE_API_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.global.sysdig.existingSecureApiTokenSecret }}
-                  key: {{ .Values.global.sysdig.existingSecureApiTokenSecretKeyName | default "secure-api-token" }}
+                  name: {{ .Values.global.sysdig.secureAPITokenSecret }}
+                  key: "secure-api-token"
             {{- end }}
             {{- if eq (include "cluster-shield.custom_ca.enabled" .) "true" }}
             - name: SSL_CERT_FILE
