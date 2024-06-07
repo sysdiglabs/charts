@@ -169,9 +169,10 @@ The following table lists the configurable parameters of the sysdig-deploy chart
 | `nodeAnalyzer.nodeAnalyzer.runtimeScanner.deploy` | Deploy the Runtime Scanner.                                                                                   | `false`   |
 | `kspmCollector`                         | The configuration specific to the Sysdig KSPM Collector.     | `{}`      |
 | `kspmCollector.apiEndpoint`             | The API endpoint for `kspmCollector`.                                                                       | `""`      |
-| `rapidResponse`                         | The configuration specific  to Sysdig Rapid Response.                                 | `{}`      |
-| `rapidResponse.enabled`                 | Enable Rapid Response component in this chart.                                                                          | `""`      |
-
+| `rapidResponse`                         | The configuration specific to Sysdig Rapid Response.                                 | `{}`      |
+| `rapidResponse.enabled`                 | Enable Rapid Response component in this chart.                                                                          | `false`      |
+| `clusterShield`                         | The configuration specific to Sysdig Cluster Shield.                                 | `{}`      |
+| `clusterShield.enabled`                 | Enable Cluster Shield component in this chart.                                                                          | `false`      |
 ## Upgrading
 
 1. Refresh the `sysdig` helm repo to get the latest chart.
