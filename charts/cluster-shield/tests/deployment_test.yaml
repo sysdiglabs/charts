@@ -42,11 +42,11 @@ tests:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")]
       - isNull:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].securityContext
-  - it: Test env var is set when existingAccessKeySecret provided
+  - it: Test env var is set when accessKeySecret provided
     set:
       global:
         sysdig:
-          existingAccessKeySecret: "test-existing-access-key-secret"
+          accessKeySecret: "test-existing-access-key-secret"
     asserts:
       - isKind:
           of: Deployment
@@ -66,36 +66,11 @@ tests:
       - equal:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "SYSDIG_CLUSTER_SHIELD_SYSDIG_ENDPOINT__ACCESS_KEY")].valueFrom.secretKeyRef.key
           value: access-key
-  - it: Test env var is set when existingAccessKeySecret and existingAccessKeySecretKeyName provided
+  - it: Test env var is set when secureAPITokenSecret provided
     set:
       global:
         sysdig:
-          existingAccessKeySecret: "test-existing-access-key-secret"
-          existingAccessKeySecretKeyName: "access-key-custom"
-    asserts:
-      - isKind:
-          of: Deployment
-      - equal:
-          path: metadata.name
-          value: shield-release-cluster-shield
-      - equal:
-          path: metadata.namespace
-          value: shield-namespace
-      - isNotNull:
-          path: spec.template.spec.containers[?(@.name == "cluster-shield")]
-      - isNotNull:
-          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "SYSDIG_CLUSTER_SHIELD_SYSDIG_ENDPOINT__ACCESS_KEY")]
-      - equal:
-          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "SYSDIG_CLUSTER_SHIELD_SYSDIG_ENDPOINT__ACCESS_KEY")].valueFrom.secretKeyRef.name
-          value: test-existing-access-key-secret
-      - equal:
-          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "SYSDIG_CLUSTER_SHIELD_SYSDIG_ENDPOINT__ACCESS_KEY")].valueFrom.secretKeyRef.key
-          value: access-key-custom
-  - it: Test env var is set when existingSecureApiTokenSecret provided
-    set:
-      global:
-        sysdig:
-          existingSecureApiTokenSecret: "test-existing-secure-api-token-secret"
+          secureAPITokenSecret: "test-existing-secure-api-token-secret"
     asserts:
       - isKind:
           of: Deployment
@@ -116,31 +91,6 @@ tests:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "SYSDIG_CLUSTER_SHIELD_SYSDIG_ENDPOINT__SECURE_API_TOKEN")].valueFrom.secretKeyRef.key
           value: secure-api-token
 
-  - it: Test env var is set when existingSecureApiTokenSecret and existingSecureApiTokenSecretKeyName provided
-    set:
-      global:
-        sysdig:
-          existingSecureApiTokenSecret: "test-existing-secure-api-token-secret"
-          existingSecureApiTokenSecretKeyName: "secure-api-token-custom"
-    asserts:
-      - isKind:
-          of: Deployment
-      - equal:
-          path: metadata.name
-          value: shield-release-cluster-shield
-      - equal:
-          path: metadata.namespace
-          value: shield-namespace
-      - isNotNull:
-          path: spec.template.spec.containers[?(@.name == "cluster-shield")]
-      - isNotNull:
-          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "SYSDIG_CLUSTER_SHIELD_SYSDIG_ENDPOINT__SECURE_API_TOKEN")]
-      - equal:
-          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "SYSDIG_CLUSTER_SHIELD_SYSDIG_ENDPOINT__SECURE_API_TOKEN")].valueFrom.secretKeyRef.name
-          value: test-existing-secure-api-token-secret
-      - equal:
-          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "SYSDIG_CLUSTER_SHIELD_SYSDIG_ENDPOINT__SECURE_API_TOKEN")].valueFrom.secretKeyRef.key
-          value: secure-api-token-custom
   - it: Test readinessProbe default values
     asserts:
       - equal:

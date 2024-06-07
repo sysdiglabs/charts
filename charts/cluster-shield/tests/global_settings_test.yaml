@@ -1,0 +1,54 @@
+suite: Test Global Settings
+templates:
+  - templates/configmap.yaml
+values:
+  - ../ci/base-values.yaml
+release:
+  name: shield-release
+  namespace: shield-namespace
+tests:
+  - it: Test with global custom region and apiHost (with protocol)
+    set:
+      global:
+        sysdig:
+          region: "custom"
+          apiHost: "http://www.global-example.org"
+          secureAPITokenSecret: "test-existing-secure-api-token-secret"
+      cluster_shield:
+        sysdig_endpoint:
+          api_url:
+          region:
+    asserts:
+      - notFailedTemplate: {}
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: sysdig-cluster-shield
+      - matchRegex:
+          path: data["cluster-shield.yaml"]
+          pattern: |-
+            sysdig_endpoint:
+              api_url: http://www.global-example.org
+
+  - it: Test with global custom region and apiHost (without protocol)
+    set:
+      global:
+        sysdig:
+          region: "custom"
+          apiHost: "www.global-example.org"
+          secureAPITokenSecret: "test-existing-secure-api-token-secret"
+      cluster_shield:
+        sysdig_endpoint:
+          api_url:
+          region:
+    asserts:
+      - notFailedTemplate: {}
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: sysdig-cluster-shield
+      - matchRegex:
+          path: data["cluster-shield.yaml"]
+          pattern: |-
+            sysdig_endpoint:
+              api_url: https://www.global-example.org

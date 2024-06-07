@@ -1,7 +1,7 @@
 project:
   name: Sysdig Cluster Shield
   shortName: Cluster Shield
-  url: https://docs.sysdig.com/en/docs/sysdig-secure/scanning
+  url: https://docs.sysdig.com/en/docs/installation/cluster-shield
   description: This chart deploys the Sysdig Cluster Shield in your Kubernetes cluster.
   app: the Sysdig Cluster Shield
 repository:

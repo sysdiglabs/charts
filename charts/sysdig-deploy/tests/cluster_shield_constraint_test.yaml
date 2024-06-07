@@ -1,0 +1,255 @@
+suite: Testing cluster shield checks
+templates:
+  - templates/cluster-shield-check.yaml
+tests:
+  - it: Should not fail if cluster shield is disabled
+    set:
+      global:
+        sysdig:
+          accessKey: "XXXXXXXX"
+        kspm:
+          deploy: true
+      admissionController:
+        enabled: true
+        features:
+          kspmAdmissionController: true
+          k8sAuditDetections: true
+      clusterScanner:
+        enabled: true
+      kspmCollector:
+        enabled: true
+      clusterShield:
+        enabled: false
+
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: Should not fail if cluster shield and all features are enabled
+    set:
+      global:
+        sysdig:
+          accessKey: "XXXXXXXX"
+        kspm:
+          deploy: true
+      admissionController:
+        enabled: true
+        features:
+          kspmAdmissionController: false
+          k8sAuditDetections: false
+      clusterScanner:
+        enabled: false
+      kspmCollector:
+        enabled: false
+      clusterShield:
+        enabled: true
+        cluster_shield:
+          features:
+            admission_control:
+              enabled: true
+            audit:
+              enabled: true
+            container_vulnerability_management:
+              enabled: true
+            posture:
+              enabled: true
+
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: Should fail when both admission control and kspm admission controller are enabled
+    set:
+      global:
+        sysdig:
+          accessKey: "XXXXXXXX"
+        kspm:
+          deploy: true
+      admissionController:
+        enabled: true
+        features:
+          kspmAdmissionController: true
+          k8sAuditDetections: true
+      clusterScanner:
+        enabled: true
+      kspmCollector:
+        enabled: true
+      clusterShield:
+        enabled: true
+        cluster_shield:
+          features:
+            admission_control:
+              enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: "Cannot enable both cluster_shield.features.admission_control and admissionController.features.kspmAdmissionController"
+
+  - it: Should not fail fail when admission control is enabled and kspm admission controller is disabled
+    set:
+      global:
+        sysdig:
+          accessKey: "XXXXXXXX"
+        kspm:
+          deploy: true
+      admissionController:
+        enabled: true
+        features:
+          kspmAdmissionController: false
+          k8sAuditDetections: true
+      clusterScanner:
+        enabled: true
+      kspmCollector:
+        enabled: true
+      clusterShield:
+        enabled: true
+        cluster_shield:
+          features:
+            admission_control:
+              enabled: true
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: Should fail when both audit and k8s audit detections are enabled
+    set:
+      global:
+        kspm:
+          deploy: true
+      admissionController:
+        enabled: true
+        features:
+          kspmAdmissionController: true
+          k8sAuditDetections: true
+      clusterScanner:
+        enabled: true
+      kspmCollector:
+        enabled: true
+      clusterShield:
+        enabled: true
+        cluster_shield:
+          features:
+            audit:
+              enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: "Cannot enable both cluster_shield.features.audit and admissionController.features.k8sAuditDetections"
+
+  - it: Should not fail fail when audit is enabled and k8s audit detections is disabled
+    set:
+      global:
+        kspm:
+          deploy: true
+      admissionController:
+        enabled: true
+        features:
+          kspmAdmissionController: true
+          k8sAuditDetections: false
+      clusterScanner:
+        enabled: true
+      kspmCollector:
+        enabled: true
+      clusterShield:
+        enabled: true
+        cluster_shield:
+          features:
+            audit:
+              enabled: true
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: Should fail when both posture and kspmCollector are enabled
+    set:
+      global:
+        kspm:
+          deploy: true
+      admissionController:
+        enabled: true
+        features:
+          kspmAdmissionController: true
+          k8sAuditDetections: true
+      clusterScanner:
+        enabled: true
+      kspmCollector:
+        enabled: true
+      clusterShield:
+        enabled: true
+        cluster_shield:
+          features:
+            posture:
+              enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: "Cannot enable both cluster_shield.features.posture and kspmCollector"
+
+  - it: Should not fail fail when posture is enabled and kspmCollector is disabled
+    set:
+      global:
+        kspm:
+          deploy: true
+      admissionController:
+        enabled: true
+        features:
+          kspmAdmissionController: true
+          k8sAuditDetections: true
+      clusterScanner:
+        enabled: true
+      kspmCollector:
+        enabled: false
+      clusterShield:
+        enabled: true
+        cluster_shield:
+          features:
+            posture:
+              enabled: true
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: Should fail when both container vulnerability management and clusterScanner are enabled
+    set:
+      global:
+        kspm:
+          deploy: true
+      admissionController:
+        enabled: true
+        features:
+          kspmAdmissionController: true
+          k8sAuditDetections: true
+      clusterScanner:
+        enabled: true
+      kspmCollector:
+        enabled: true
+      clusterShield:
+        enabled: true
+        cluster_shield:
+          features:
+            container_vulnerability_management:
+              enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: "Cannot enable both cluster_shield.features.container_vulnerability_management and clusterScanner"
+
+  - it: Should not fail fail when container vulnerability management is enabled and clusterScanner is disabled
+    set:
+      global:
+        kspm:
+          deploy: true
+      admissionController:
+        enabled: true
+        features:
+          kspmAdmissionController: true
+          k8sAuditDetections: true
+      clusterScanner:
+        enabled: false
+      kspmCollector:
+        enabled: false
+      clusterShield:
+        enabled: true
+        cluster_shield:
+          features:
+            container_vulnerability_management:
+              enabled: true
+    asserts:
+      - hasDocuments:
+          count: 0

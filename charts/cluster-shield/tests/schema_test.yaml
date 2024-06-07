@@ -5,9 +5,17 @@ release:
   name: shield-release
   namespace: shield-namespace
 templates:
-  - templates/deployment.yaml # Added since it seems that 1 template is required
+  - templates/configmap.yaml # Added since it seems that 1 template is required
 tests:
-  - it: sysdig_endpoint - Use Custom Region providing Access Key and Secure API Token
+  - it: sysdig_endpoint - Use Custom Region providing only Access Key
+    set:
+      cluster_shield:
+        sysdig_endpoint:
+          access_key: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+          region: "custom"
+    asserts:
+      - notFailedTemplate: { }
+  - it: sysdig_endpoint - Use Custom Region providing both Access Key and Secure API Token
     set:
       cluster_shield:
         sysdig_endpoint:
@@ -16,7 +24,6 @@ tests:
           region: "custom"
     asserts:
       - notFailedTemplate: { }
-
   - it: sysdig_endpoint - Use SaaS Region
     set:
       cluster_shield:
@@ -24,27 +31,26 @@ tests:
           region: "us1"
     asserts:
       - notFailedTemplate: { }
-
   - it: sysdig_endpoint - Use Custom Region without Access Key and Secure API Token
     set:
       cluster_shield:
         sysdig_endpoint:
           region: "custom"
           access_key:
-          secure_api_token:
     asserts:
       - failedTemplate:
           errorMessage: |
             values don't meet the specifications of the schema(s) in the following chart(s):
             cluster-shield:
             - (root): Must validate at least one schema (anyOf)
-            - global.sysdig.existingAccessKeySecret: Invalid type. Expected: string, given: null
-            - (root): Must validate at least one schema (anyOf)
-            - global.sysdig.existingSecureApiTokenSecret: Invalid type. Expected: string, given: null
+            - global.sysdig.accessKeySecret: Invalid type. Expected: string, given: null
             - (root): Must validate all the schemas (allOf)
 
   - it: sysdig_endpoint - Use invalid SaaS Region
     set:
+      global:
+        sysdig:
+          region:
       cluster_shield:
         sysdig_endpoint:
           region: "do-not-exist"
@@ -53,4 +59,62 @@ tests:
           errorMessage: |
             values don't meet the specifications of the schema(s) in the following chart(s):
             cluster-shield:
-            - cluster_shield.sysdig_endpoint.region: cluster_shield.sysdig_endpoint.region must be one of the following: "custom", "au-syd-monitor", "au-syd-private-monitor", "au-syd-private-secure", "au-syd-secure", "au1", "br-sao-monitor", "br-sao-private-monitor", "br-sao-private-secure", "br-sao-secure", "ca-tor-monitor", "ca-tor-private-monitor", "ca-tor-private-secure", "ca-tor-secure", "eu-de-monitor", "eu-de-private-monitor", "eu-de-private-secure", "eu-de-secure", "eu-gb-monitor", "eu-gb-private-monitor", "eu-gb-private-secure", "eu-gb-secure", "eu1", "jp-osa-monitor", "jp-osa-private-monitor", "jp-osa-private-secure", "jp-osa-secure", "jp-tok-monitor", "jp-tok-private-monitor", "jp-tok-private-secure", "jp-tok-secure", "me2", "us-east-monitor", "us-east-private-monitor", "us-east-private-secure", "us-east-secure", "us-south-monitor", "us-south-private-monitor", "us-south-private-secure", "us-south-secure", "us1", "us2", "us3", "us4"
+            - cluster_shield.sysdig_endpoint.region: cluster_shield.sysdig_endpoint.region must be one of the following: "custom", "au-syd-monitor", "au-syd-private-monitor", "au-syd-private-secure", "au-syd-secure", "au1", "br-sao-monitor", "br-sao-private-monitor", "br-sao-private-secure", "br-sao-secure", "ca-tor-monitor", "ca-tor-private-monitor", "ca-tor-private-secure", "ca-tor-secure", "eu-de-monitor", "eu-de-private-monitor", "eu-de-private-secure", "eu-de-secure", "eu-gb-monitor", "eu-gb-private-monitor", "eu-gb-private-secure", "eu-gb-secure", "eu1", "jp-osa-monitor", "jp-osa-private-monitor", "jp-osa-private-secure", "jp-osa-secure", "jp-tok-monitor", "jp-tok-private-monitor", "jp-tok-private-secure", "jp-tok-secure", "me2", "us-east-monitor", "us-east-private-monitor", "us-east-private-secure", "us-east-secure", "us-south-monitor", "us-south-private-monitor", "us-south-private-secure", "us-south-secure", "us1", "us2", "us3", "us4", null
+
+  - it: Global - Custom Region requires API URL
+    set:
+      global:
+        sysdig:
+          region: "custom"
+          apiHost:
+      cluster_shield:
+        sysdig_endpoint:
+          access_key: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+          region:
+          api_url:
+    asserts:
+      - failedTemplate:
+          errorMessage: Custom region requires one of global.sysdig.apiHost or cluster_shield.sysdig_endpoint.api_url to be defined.
+
+  - it: Global - SaaS Region doesn't require API URL
+    set:
+      global:
+        sysdig:
+          region: "us1"
+          apiHost:
+      cluster_shield:
+        sysdig_endpoint:
+          access_key: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+          region:
+          api_url:
+    asserts:
+      - notFailedTemplate: { }
+
+  - it: Local - Custom Region requires API URL
+    set:
+      global:
+        sysdig:
+          apiHost:
+          region: us1
+      cluster_shield:
+        sysdig_endpoint:
+          access_key: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+          region: "custom"
+          api_url:
+    asserts:
+      - failedTemplate:
+          errorMessage: Custom region requires one of global.sysdig.apiHost or cluster_shield.sysdig_endpoint.api_url to be defined.
+
+  - it: Local - SaaS Local region doesn't require API URL
+    set:
+      global:
+        sysdig:
+          region: "custom"
+          apiHost:
+      cluster_shield:
+        sysdig_endpoint:
+          access_key: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+          region: "us1"
+          api_url:
+    asserts:
+      - notFailedTemplate: { }
