@@ -38,13 +38,24 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.windows.image.registry }}/{{ .Values.windows.image.repository }}:{{ .Values.windows.image.tag }}"
           imagePullPolicy: {{ .Values.windows.image.pullPolicy | default .Values.global.image.pullPolicy }}
+          livenessProbe:
+            timeoutSeconds: 10
+            exec:
+              command:
+                - powershell
+                - -File
+                - $env:CONTAINER_SANDBOX_MOUNT_POINT/Sysdig/Agent/Healthprobe.ps1
+                - -Port
+                - "24483"
+              initialDelaySeconds: 60
+              periodSeconds: 5
           readinessProbe:
             timeoutSeconds: 10
             exec:
               command:
                 - powershell
                 - -File
-                - C:/hpc/Sysdig/Agent/Healthprobe.ps1
+                - $env:CONTAINER_SANDBOX_MOUNT_POINT/Sysdig/Agent/Healthprobe.ps1
                 - -Port
                 - "24483"
           resources:
