@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.3.0
+### New Features
+* **registry-scanner** [7cae555e](https://github.com/sysdiglabs/charts/commit/7cae555e5042913f5613d31bb1b580b444604695): add the registry retry params [internal] ([#1765](https://github.com/sysdiglabs/charts/issues/1765))
 # v1.2.0
 ### New Features
 * **registry-scanner** [bf5495fb](https://github.com/sysdiglabs/charts/commit/bf5495fb3c74a19d625f12e2c231e7391e33b1a0): add support for ocp registry ([#1711](https://github.com/sysdiglabs/charts/issues/1711))
