@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.24.2
+### Bug Fixes
+* **agent** [7f087f0b](https://github.com/sysdiglabs/charts/commit/7f087f0b40158e976bc69abddeca0fc0947a986a): add the the missing channel for Agent Local Forwarder ([#1766](https://github.com/sysdiglabs/charts/issues/1766))
 # v1.24.1
 ### New Features
 * **agent,kspm-collector,node-analyzer,rapid-response** [c0359500](https://github.com/sysdiglabs/charts/commit/c0359500433949727357cfd918d43d9a0e0dbe11): update kubectl images used for testing purpose ([#1758](https://github.com/sysdiglabs/charts/issues/1758))
