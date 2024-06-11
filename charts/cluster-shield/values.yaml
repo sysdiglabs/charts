@@ -40,7 +40,6 @@ global:
       existingCaConfigMap: null
       # Provide the filename that is defined inside the existing ConfigMap
       existingCaConfigMapKeyName: null
-
 cluster_shield:
   # Global Configurations
   cluster_config:
@@ -50,8 +49,8 @@ cluster_shield:
   sysdig_endpoint:
     access_key:
     api_url:
-    region:
     secure_api_token:
+    region:
   kubernetes:
     root_namespace: kube-system
   # Features
