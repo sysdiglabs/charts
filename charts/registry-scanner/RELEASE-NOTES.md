@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **registry-scanner** [6c45dbd6](https://github.com/sysdiglabs/charts/commit/6c45dbd6669cd4056c4859110edbfab5beb94432): Update to v0.2.68 ([#1674](https://github.com/sysdiglabs/charts/issues/1674))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-1.1.33...registry-scanner-1.1.34
+### New Features
+- **registry-scanner** [7cae555e](https://github.com/sysdiglabs/charts/commit/7cae555e5042913f5613d31bb1b580b444604695): add the registry retry params [internal] ([#1765](https://github.com/sysdiglabs/charts/issues/1765))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-1.2.0...registry-scanner-1.3.0

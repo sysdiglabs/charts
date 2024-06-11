@@ -2,14 +2,12 @@ apiVersion: v2
 name: harbor-scanner-sysdig-secure
 description: Harbor Scanner for Sysdig Secure
 type: application
-version: 0.5.1
-appVersion: 0.6.0
+version: 0.8.0
+appVersion: 0.8.0
 home: https://github.com/sysdiglabs/harbor-scanner-sysdig-secure
 icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
 maintainers:
-  - name: nestorsalceda
-    email: nestor.salceda@sysdig.com
-  - name: airadier
-    email: alvaro.iradier@sysdig.com
-  - name: marcuzzuu
-    email: marco.mancuso@sysdig.com
+  - name: aaronm-sysdig
+    email: aaron.miles@sysdig.com
+  - name: Jujuyeh
+    email: paul.hodgetts@sysdig.com

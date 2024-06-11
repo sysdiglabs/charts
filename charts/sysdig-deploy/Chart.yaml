@@ -2,7 +2,7 @@ apiVersion: v2
 name: sysdig-deploy
 description: A chart with various Sysdig components for Kubernetes
 type: application
-version: 1.55.0
+version: 1.56.0
 maintainers:
   - name: AlbertoBarba
     email: alberto.barba@sysdig.com
@@ -26,7 +26,7 @@ dependencies:
   - name: agent
     # repository: https://charts.sysdig.com
     repository: file://../agent
-    version: ~1.24.0
+    version: ~1.24.1
     alias: agent
     condition: agent.enabled
   - name: common
@@ -36,24 +36,30 @@ dependencies:
   - name: node-analyzer
     # repository: https://charts.sysdig.com
     repository: file://../node-analyzer
-    version: ~1.29.0
+    version: ~1.29.2
     alias: nodeAnalyzer
     condition: nodeAnalyzer.enabled
   - name: cluster-scanner
     # repository: https://charts.sysdig.com
     repository: file://../cluster-scanner
-    version: ~0.13.3
+    version: ~0.13.4
     alias: clusterScanner
     condition: clusterScanner.enabled
   - name: kspm-collector
     # repository: https://charts.sysdig.com
     repository: file://../kspm-collector
-    version: ~0.15.4
+    version: ~0.15.5
     alias: kspmCollector
     condition: kspmCollector.enabled,global.kspm.deploy
   - name: rapid-response
     # repository: https://charts.sysdig.com
     repository: file://../rapid-response
-    version: ~0.9.0
+    version: ~0.9.1
     alias: rapidResponse
     condition: rapidResponse.enabled
+  - name: cluster-shield
+    # repository: https://charts.sysdig.com
+    repository: file://../cluster-shield
+    version: ~0.11.0
+    alias: clusterShield
+    condition: clusterShield.enabled

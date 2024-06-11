@@ -35,6 +35,7 @@ Follow the instructions in [Install Registry Scanner](https://docs.sysdig.com/en
 - Azure ACR
 - Google GAR
 - Google GCR
+- OpenShift Internal Registry
 
 Once installed, you can view the scan results in the [Vulnerabilities UI](https://docs.sysdig.com/en/docs/sysdig-secure/vulnerabilities/registry/) of Sysdig Secure.
 
@@ -63,7 +64,7 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | config.registryApiUrl                            | The API URL of the registry to scan. This is required if your registry type is Artifactory.                                                                                                                                                | <code>""</code>                              |
 | config.registryUser                              | The username for registry authentication.                                                                                                                                                                                                  | <code>""</code>                              |
 | config.registryPassword                          | The password for registry authentication.                                                                                                                                                                                                  | <code>""</code>                              |
-| config.registryType                              | Mandatory.<br/>The registry Type. Supported types: artifactory, ecr, icr, acr, quay, harbor, gar, gcr, nexus and dockerv2.                                                                                                                 | <code>""</code>                              |
+| config.registryType                              | Mandatory.<br/>The registry Type. Supported types: artifactory, ecr, icr, acr, quay, harbor, gar, gcr, nexus, ocp and dockerv2.                                                                                                            | <code>""</code>                              |
 | config.registryAccountId                         | The account ID. Applicable only for ICR registry type.                                                                                                                                                                                     | <code>""</code>                              |
 | config.icrIamApi                                 | The ICR IAM API. Applicable only for ICR registry type.                                                                                                                                                                                    | <code>""</code>                              |
 | config.icrIamApiSkipTLS                          | Ignore TLS certificate for IAM API. Applicable only for ICR registry type.                                                                                                                                                                 | <code>false</code>                           |
@@ -75,6 +76,9 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | config.aws.allowListMemberAccountIDs             | The organization account IDs in which the registry scan is performed. If not configured, the scan will be performed in all the member accounts of the organization.                                                                        | <code>[]</code>                              |
 | config.aws.allowListRegions                      | For organizational accounts. It is the AWS regions where the registries are located. If not configured, the scan will be performed in all available regions.                                                                               | <code>[]</code>                              |
 | config.registrySkipTLS                           | Ignore registry TLS certificate errors (self-signed, etc.).                                                                                                                                                                                | <code>false</code>                           |
+| config.registryMaxRetries                        | Max number of retries to call the registtry APIs in case of failure or 409.                                                                                                                                                                | <code>10</code>                              |
+| config.registryMaxRetryWait                      | Max wait time between retries.                                                                                                                                                                                                             | <code>10m</code>                             |
+| config.registryMinRetryWait                      | Min wait time between retries.                                                                                                                                                                                                             | <code>5s</code>                              |
 | config.secureBaseURL                             | **required** <br/> The Sysdig Secure Base URL.                                                                                                                                                                                             | <code>https://secure.sysdig.com</code>       |
 | config.secureAPIToken                            | **required** <br/> The API Token to access Sysdig Secure.                                                                                                                                                                                  | <code>""</code>                              |
 | config.secureOnPrem                              | Specify that Sysdig Secure installation is on-prem.                                                                                                                                                                                        | <code>false</code>                           |
@@ -130,7 +134,7 @@ Use the following command to deploy:
 helm upgrade --install registry-scanner \
    --namespace sysdig-agent \
    --create-namespace \
-   --version=1.1.34 \
+   --version=1.3.0 \
    --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
    --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
    --set config.secureSkipTLS=true \

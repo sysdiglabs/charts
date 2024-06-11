@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **node-analyzer** [f3b29822](https://github.com/sysdiglabs/charts/commit/f3b29822e8bc3c60f48d0bac678b360eace7e133): bump sysdig/vuln-runtime-scanner to v1.7.0 ([#1750](https://github.com/sysdiglabs/charts/issues/1750))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.28.0...node-analyzer-1.29.0
+### New Features
+- **agent,kspm-collector,node-analyzer,rapid-response** [c0359500](https://github.com/sysdiglabs/charts/commit/c0359500433949727357cfd918d43d9a0e0dbe11): update kubectl images used for testing purpose ([#1758](https://github.com/sysdiglabs/charts/issues/1758))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.29.1...node-analyzer-1.29.2

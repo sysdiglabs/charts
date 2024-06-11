@@ -1,0 +1,65 @@
+{{- $clusterShieldEnabled := default false .Values.clusterShield.enabled -}}
+
+{{- if $clusterShieldEnabled -}}
+  {{- $clusterShieldConfig := default (dict "features" dict) .Values.clusterShield.cluster_shield -}}
+
+  {{- if hasKey $clusterShieldConfig.features "admission_control" -}}
+    {{- $admissionControlEnabled := $clusterShieldConfig.features.admission_control.enabled | default false -}}
+    {{- $kspmAdmissionControllerEnabled := true -}}
+    {{- if hasKey .Values.admissionController "features" -}}
+      {{- if hasKey .Values.admissionController.features "kspmAdmissionController" -}}
+        {{- $kspmAdmissionControllerEnabled = .Values.admissionController.features.kspmAdmissionController -}}
+      {{- end -}}
+    {{- end -}}
+    {{- if and $admissionControlEnabled .Values.admissionController.enabled $kspmAdmissionControllerEnabled -}}
+      {{ fail "Cannot enable both cluster_shield.features.admission_control and admissionController.features.kspmAdmissionController" }}
+    {{- end -}}
+  {{- end -}}
+
+  {{- if hasKey $clusterShieldConfig.features "container_vulnerability_management" -}}
+    {{- $containerVulnerabilityManagementEnabled := $clusterShieldConfig.features.container_vulnerability_management.enabled | default false -}}
+    {{- if and $containerVulnerabilityManagementEnabled .Values.clusterScanner.enabled -}}
+      {{ fail "Cannot enable both cluster_shield.features.container_vulnerability_management and clusterScanner" }}
+    {{- end -}}
+
+    {{- $nodeAnalyzerEnabled := default false .Values.nodeAnalyzer.enabled -}}
+    {{- $runtimeScannerDeploy := false -}}
+
+    {{- if $nodeAnalyzerEnabled -}}
+      {{- if and (default dict .Values.nodeAnalyzer).nodeAnalyzer (default dict .Values.nodeAnalyzer.nodeAnalyzer).runtimeScanner -}}
+        {{- $runtimeScannerDeploy = default false .Values.nodeAnalyzer.nodeAnalyzer.runtimeScanner.deploy -}}
+      {{- end -}}
+    {{- end -}}
+
+    {{- if and $nodeAnalyzerEnabled $runtimeScannerDeploy .Values.clusterScanner.enabled -}}
+      {{ fail "Cannot enable both cluster_shield.features.container_vulnerability_management and Runtime Scanner" }}
+    {{- end -}}
+  {{- end -}}
+
+  {{- if hasKey $clusterShieldConfig.features "audit" -}}
+    {{- $auditEnabled := $clusterShieldConfig.features.audit.enabled | default false -}}
+    {{- $k8sAuditDetectionsEnabled := true -}}
+    {{- if hasKey .Values.admissionController "features" -}}
+      {{- if hasKey .Values.admissionController.features "k8sAuditDetections" -}}
+        {{- $k8sAuditDetectionsEnabled = .Values.admissionController.features.k8sAuditDetections -}}
+      {{- end -}}
+    {{- end -}}
+    {{- if and $auditEnabled .Values.admissionController.enabled $k8sAuditDetectionsEnabled -}}
+      {{ fail "Cannot enable both cluster_shield.features.audit and admissionController.features.k8sAuditDetections" }}
+    {{- end -}}
+  {{- end -}}
+
+  {{- if hasKey $clusterShieldConfig.features "posture" -}}
+    {{- $postureEnabled := $clusterShieldConfig.features.posture.enabled | default false -}}
+    {{- $kspmCollectorEnabled := true -}}
+    {{- if hasKey .Values "kspmCollector" -}}
+      {{- if hasKey .Values.kspmCollector "enabled" -}}
+        {{- $kspmCollectorEnabled = .Values.kspmCollector.enabled -}}
+      {{- end -}}
+    {{- end -}}
+
+    {{- if and $postureEnabled .Values.global.kspm $kspmCollectorEnabled -}}
+      {{ fail "Cannot enable both cluster_shield.features.posture and kspmCollector" }}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}

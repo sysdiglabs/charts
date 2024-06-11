@@ -110,6 +110,7 @@
                 name: {{ .Values.existingSecretName }}
                 {{- end }}
                 key: registryUser
+          {{- if ne .Values.config.registryType "ocp" }}
           - name: REGISTRYSCANNER_REGISTRY_PASSWORD
             valueFrom:
               secretKeyRef:
@@ -119,6 +120,7 @@
                 name: {{ .Values.existingSecretName }}
                 {{- end }}
                 key: registryPassword
+          {{- end }}
           {{- end }}
           {{ if .Values.config.parallelGoRoutines }}
           - name: GROUP_LIMIT

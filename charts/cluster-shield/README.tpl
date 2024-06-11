@@ -12,12 +12,10 @@ $ pre-commit run -a
 
 -->
 
-# Cluster Shield - [Controlled Availability]
+# Cluster Shield
 
 [{{ .Project.Name }}]({{ .Project.URL }}).
 <br/>{{ .Project.Description }}
-
-**NOTE: {{ .Project.Name }} is released in Controlled Availability to selected customers. If you would like to use it, please contact your Sysdig Field Representative or our Support.**
 
 ## TL;DR;
 

@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **node-analyzer** [f3b29822](https://github.com/sysdiglabs/charts/commit/f3b29822e8bc3c60f48d0bac678b360eace7e133): bump sysdig/vuln-runtime-scanner to v1.7.0 ([#1750](https://github.com/sysdiglabs/charts/issues/1750))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.54.0...sysdig-deploy-1.55.0
+### New Features
+- **cluster-shield,sysdig-deploy** [8f6dfaaf](https://github.com/sysdiglabs/charts/commit/8f6dfaaf4b8472439be38560db5bf0d3b300f86f): bump cluster-shield to v0.11.0 and integrate it in sysdig-deploy ([#1764](https://github.com/sysdiglabs/charts/issues/1764))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.55.3...sysdig-deploy-1.56.0

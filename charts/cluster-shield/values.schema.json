@@ -16,34 +16,74 @@
           "type": "object",
           "description": "Global sysdig configurations",
           "properties": {
-            "existingAccessKeySecret": {
+            "accessKeySecret": {
               "type": [
                 "string",
                 "null"
               ],
               "description": "The name of the secret containing the Sysdig Agent Access Key"
             },
-            "existingAccessKeySecretKeyName": {
-              "type": [
-                "string",
-                "null"
-              ],
-              "default": "access-key",
-              "description": "The key name of the secret containing the Sysdig Agent Access Key"
-            },
-            "existingSecureApiTokenSecret": {
+            "secureAPITokenSecret": {
               "type": [
                 "string",
                 "null"
               ],
               "description": "The name of the secret containing the Sysdig Secure API Token"
             },
-            "existingSecureApiTokenSecretKeyName": {
+            "region": {
               "type": [
                 "string",
                 "null"
               ],
-              "description": "The key name of the secret containing the Sysdig Secure API Token"
+              "description": "The region where the collector is located",
+              "default": "custom",
+              "enum": [
+                "custom",
+                "au-syd-monitor",
+                "au-syd-private-monitor",
+                "au-syd-private-secure",
+                "au-syd-secure",
+                "au1",
+                "br-sao-monitor",
+                "br-sao-private-monitor",
+                "br-sao-private-secure",
+                "br-sao-secure",
+                "ca-tor-monitor",
+                "ca-tor-private-monitor",
+                "ca-tor-private-secure",
+                "ca-tor-secure",
+                "eu-de-monitor",
+                "eu-de-private-monitor",
+                "eu-de-private-secure",
+                "eu-de-secure",
+                "eu-gb-monitor",
+                "eu-gb-private-monitor",
+                "eu-gb-private-secure",
+                "eu-gb-secure",
+                "eu1",
+                "jp-osa-monitor",
+                "jp-osa-private-monitor",
+                "jp-osa-private-secure",
+                "jp-osa-secure",
+                "jp-tok-monitor",
+                "jp-tok-private-monitor",
+                "jp-tok-private-secure",
+                "jp-tok-secure",
+                "me2",
+                "us-east-monitor",
+                "us-east-private-monitor",
+                "us-east-private-secure",
+                "us-east-secure",
+                "us-south-monitor",
+                "us-south-private-monitor",
+                "us-south-private-secure",
+                "us-south-secure",
+                "us1",
+                "us2",
+                "us3",
+                "us4",
+                null
+              ]
             }
           }
         }
@@ -87,10 +127,14 @@
           "description": "The tag of the image to be used"
         },
         "pullPolicy": {
-          "type": "string",
+          "type": [
+            "null",
+            "string"
+          ],
           "description": "The pull policy to be used",
           "default": "IfNotPresent",
           "enum": [
+            null,
             "Always",
             "IfNotPresent",
             "Never"
@@ -132,7 +176,66 @@
   },
   "allOf": [
     {
-      "description": "One between global.sysdig.existingAccessKeySecret and cluster_shield.sysdig_endpoint.access_key must be set",
+      "description": "One between global.sysdig.region and cluster_shield.sysdig_endpoint.region must be set",
+      "anyOf": [
+        {
+          "properties": {
+            "cluster_shield": {
+              "properties": {
+                "sysdig_endpoint": {
+                  "properties": {
+                    "region": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "region"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "global": {
+              "properties": {
+                "sysdig": {
+                  "properties": {
+                    "region": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "region"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "global": {
+              "properties": {
+                "sysdig": {
+                  "properties": {
+                    "accessKey": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "accessKey"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "description": "One between global.sysdig.accessKeySecret,global.sysdig.accessKey and cluster_shield.sysdig_endpoint.access_key must be set",
       "anyOf": [
         {
           "properties": {
@@ -158,35 +261,12 @@
               "properties": {
                 "sysdig": {
                   "properties": {
-                    "existingAccessKeySecret": {
+                    "accessKeySecret": {
                       "type": "string"
                     }
                   },
                   "required": [
-                    "existingAccessKeySecret"
-                  ]
-                }
-              }
-            }
-          }
-        }
-      ]
-    },
-    {
-      "description": "One between global.sysdig.existingSecureApiTokenSecret and cluster_shield.sysdig_endpoint.secure_api_token must be set",
-      "anyOf": [
-        {
-          "properties": {
-            "cluster_shield": {
-              "properties": {
-                "sysdig_endpoint": {
-                  "properties": {
-                    "secure_api_token": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "secure_api_token"
+                    "accessKeySecret"
                   ]
                 }
               }
@@ -199,12 +279,71 @@
               "properties": {
                 "sysdig": {
                   "properties": {
-                    "existingSecureApiTokenSecret": {
+                    "accessKey": {
                       "type": "string"
                     }
                   },
                   "required": [
-                    "existingSecureApiTokenSecret"
+                    "accessKey"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "description": "One between global.clusterConfig.name and cluster_shield.cluster_config.name must be set",
+      "anyOf": [
+        {
+          "properties": {
+            "cluster_shield": {
+              "properties": {
+                "cluster_config": {
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "global": {
+              "properties": {
+                "clusterConfig": {
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "global": {
+              "properties": {
+                "sysdig": {
+                  "properties": {
+                    "accessKey": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "accessKey"
                   ]
                 }
               }
@@ -269,6 +408,9 @@
           "minimum": 1,
           "maximum": 65535,
           "description": "HTTP Server port used to expose healthcheck and prometheus metrics."
+        },
+        "cache": {
+          "$ref": "#/$defs/ClusterShieldConfiguration/$defs/Cache"
         },
         "kubernetes": {
           "$ref": "#/$defs/ClusterShieldConfiguration/$defs/Kubernetes",
@@ -335,16 +477,17 @@
           "type": "object",
           "properties": {
             "name": {
-              "type": "string",
+              "type": [
+                "string",
+                "null"
+              ],
               "description": "The name of the cluster. Make sure to set a unique value for all the clusters being inspected",
               "examples": [
                 "my-cluster"
               ]
             }
           },
-          "required": [
-            "name"
-          ],
+          "required": [],
           "additionalProperties": false
         },
         "SysdigEndpoint": {
@@ -395,7 +538,10 @@
               ]
             },
             "region": {
-              "type": "string",
+              "type": [
+                "string",
+                "null"
+              ],
               "description": "The region where the collector is located",
               "default": "custom",
               "enum": [
@@ -442,31 +588,13 @@
                 "us1",
                 "us2",
                 "us3",
-                "us4"
+                "us4",
+                null
               ]
             }
           },
-          "required": [
-            "region"
-          ],
+          "required": [],
           "additionalProperties": false,
-          "allOf": [
-            {
-              "if": {
-                "$ref": "#/$defs/ClusterShieldConfiguration/$defs/SysdigEndpoint/$defs/IsCustomRegion"
-              },
-              "then": {
-                "properties": {
-                  "api_url": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "api_url"
-                ]
-              }
-            }
-          ],
           "$defs": {
             "IsCustomRegion": {
               "properties": {
@@ -781,6 +909,9 @@
               "description": "Dry Run requests",
               "default": true
             },
+            "container_vulnerability_management": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/AdmissionControlContainerVulnerabilityManagement"
+            },
             "timeout": {
               "type": "integer",
               "description": "The number of seconds for the request to time out",
@@ -834,6 +965,90 @@
             "kubernetes_metadata",
             "posture"
           ]
+        },
+        "AdmissionControlContainerVulnerabilityManagement": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Enable container vulnerability management checks",
+              "default": true
+            }
+          }
+        },
+        "Cache": {
+          "type": "object",
+          "description": "Configuration for the cluster shield cache",
+          "properties": {
+            "backend": {
+              "type": "string",
+              "description": "Define the cache backend to use",
+              "enum": [
+                "redis"
+              ]
+            },
+            "redis": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/CacheRedis"
+            }
+          },
+          "additionalProperties": false,
+          "required": [],
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "backend": {
+                    "const": "redis"
+                  }
+                }
+              },
+              "then": {
+                "required": [
+                  "redis"
+                ]
+              }
+            }
+          ]
+        },
+        "CacheRedis": {
+          "type": "object",
+          "description": "Configuration for the cluster shield redis cache",
+          "properties": {
+            "address": {
+              "type": "string"
+            },
+            "database": {
+              "type": "string"
+            },
+            "password": {
+              "type": "string"
+            },
+            "prefix": {
+              "type": "string"
+            },
+            "sentinel_addresses": {
+              "type": "string"
+            },
+            "sentinel_master": {
+              "type": "string"
+            },
+            "tls_ca": {
+              "type": "string"
+            },
+            "tls_enabled": {
+              "type": "boolean"
+            },
+            "tls_skip": {
+              "type": "boolean"
+            },
+            "ttl": {
+              "type": "string"
+            },
+            "username": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
@@ -841,8 +1056,7 @@
         "kubernetes",
         "log_level",
         "sysdig_endpoint",
-        "features",
-        "ssl"
+        "features"
       ]
     }
   }
