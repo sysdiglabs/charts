@@ -23,7 +23,7 @@ $ pre-commit run -a
 $ helm repo add sysdig https://charts.sysdig.com
 $ helm repo update
 $ helm upgrade --install sysdig-sysdig-cluster-shield sysdig/cluster-shield \
-    --create-namespace -n sysdig-agent --version=0.11.0  \
+    --create-namespace -n sysdig-agent --version=1.0.0  \
     --set global.clusterConfig.name=CLUSTER_NAME \
     --set global.sysdig.region=SYSDIG_REGION \
     --set global.sysdig.accessKey=YOUR-KEY-HERE
@@ -127,8 +127,8 @@ The following table lists the configurable parameters of the `cluster-shield` ch
 | cluster_shield.monitoring_port                                                            |                                                                                       | <code>8080</code>                                 |
 | cluster_shield.sysdig_endpoint.access_key                                                 |                                                                                       | <code></code>                                     |
 | cluster_shield.sysdig_endpoint.api_url                                                    |                                                                                       | <code></code>                                     |
-| cluster_shield.sysdig_endpoint.region                                                     |                                                                                       | <code></code>                                     |
 | cluster_shield.sysdig_endpoint.secure_api_token                                           |                                                                                       | <code></code>                                     |
+| cluster_shield.sysdig_endpoint.region                                                     |                                                                                       | <code></code>                                     |
 | cluster_shield.kubernetes.root_namespace                                                  |                                                                                       | <code>kube-system</code>                          |
 | cluster_shield.features.admission_control.enabled                                         |                                                                                       | <code>false</code>                                |
 | cluster_shield.features.admission_control.deny_on_error                                   |                                                                                       | <code>false</code>                                |
