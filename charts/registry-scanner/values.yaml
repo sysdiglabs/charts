@@ -53,6 +53,12 @@ config:
     allowListRegions: []
   # Ignore registry TLS certificate errors (self-signed, etc.).
   registrySkipTLS: false
+  # Max number of retries to call the registtry APIs in case of failure or 409.
+  registryMaxRetries: 10
+  # Max wait time between retries.
+  registryMaxRetryWait: 10m
+  # Min wait time between retries.
+  registryMinRetryWait: 5s
   # **required**
   # <br/> The Sysdig Secure Base URL.
   secureBaseURL: https://secure.sysdig.com
