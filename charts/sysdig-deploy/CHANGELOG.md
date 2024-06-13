@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.56.5
+### Bug Fixes
+* **kspm-collector,node-analyzer** [919bac75](https://github.com/sysdiglabs/charts/commit/919bac7579929a11ca2f19fd39d9600271c345fe): fix pod failure in NATS connection error ([#1773](https://github.com/sysdiglabs/charts/issues/1773))
 # v1.56.4
 ### Chores
 * **cluster-shield** [e615245d](https://github.com/sysdiglabs/charts/commit/e615245dcfdf26c0261c5a02dd1123e7c7b7fe6e): Automatic bump to version 1.0.0 ([#1771](https://github.com/sysdiglabs/charts/issues/1771))

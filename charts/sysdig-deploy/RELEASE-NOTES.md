@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **cluster-shield** [e615245d](https://github.com/sysdiglabs/charts/commit/e615245dcfdf26c0261c5a02dd1123e7c7b7fe6e): Automatic bump to version 1.0.0 ([#1771](https://github.com/sysdiglabs/charts/issues/1771))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.56.3...sysdig-deploy-1.56.4
+### Bug Fixes
+- **kspm-collector,node-analyzer** [919bac75](https://github.com/sysdiglabs/charts/commit/919bac7579929a11ca2f19fd39d9600271c345fe): fix pod failure in NATS connection error ([#1773](https://github.com/sysdiglabs/charts/issues/1773))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.56.4...sysdig-deploy-1.56.5
