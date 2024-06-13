@@ -352,7 +352,7 @@ nodeAnalyzer:
       deploy: false
       image:
         repository: sysdig/eveclient-api
-        tag: 1.1.3
+        tag: 1.1.4
         digest:
         pullPolicy:
 
