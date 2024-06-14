@@ -42,10 +42,7 @@ spec:
             timeoutSeconds: 10
             exec:
               command:
-                - powershell
-                - -File
-                - $env:CONTAINER_SANDBOX_MOUNT_POINT/Sysdig/Agent/Healthprobe.ps1
-                - -Port
+                - $env:CONTAINER_SANDBOX_MOUNT_POINT/Sysdig/Agent/healthprobe.bat
                 - "24483"
               initialDelaySeconds: 60
               periodSeconds: 5
@@ -53,10 +50,7 @@ spec:
             timeoutSeconds: 10
             exec:
               command:
-                - powershell
-                - -File
-                - $env:CONTAINER_SANDBOX_MOUNT_POINT/Sysdig/Agent/Healthprobe.ps1
-                - -Port
+                - $env:CONTAINER_SANDBOX_MOUNT_POINT/Sysdig/Agent/healthprobe.bat
                 - "24483"
           resources:
             {{- toYaml .Values.windows.resources | nindent 12 }}
