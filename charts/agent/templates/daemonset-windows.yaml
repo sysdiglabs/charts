@@ -44,14 +44,15 @@ spec:
               command:
                 - $env:CONTAINER_SANDBOX_MOUNT_POINT/Sysdig/Agent/healthprobe.bat
                 - "24483"
-              initialDelaySeconds: 60
-              periodSeconds: 5
+            initialDelaySeconds: 60
+            periodSeconds: 5
           readinessProbe:
             timeoutSeconds: 10
             exec:
               command:
                 - $env:CONTAINER_SANDBOX_MOUNT_POINT/Sysdig/Agent/healthprobe.bat
                 - "24483"
+            initialDelaySeconds: 20
           resources:
             {{- toYaml .Values.windows.resources | nindent 12 }}
           volumeMounts:
