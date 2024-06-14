@@ -64,6 +64,9 @@
           }
         }
       }
+    },
+    "privileged": {
+      "type": "boolean"
     }
   },
   "$defs": {
