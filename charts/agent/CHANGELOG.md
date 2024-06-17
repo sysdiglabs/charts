@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.24.4
+### Bug Fixes
+* **agent** [c85da268](https://github.com/sysdiglabs/charts/commit/c85da2687541c4a1f0bbf85199bbdecdb027dbbd): [SMAGENT-7391] fix path of CA certificate to be used for proxy ([#1776](https://github.com/sysdiglabs/charts/issues/1776))
 # v1.24.3
 ### New Features
 * [4c1696d2](https://github.com/sysdiglabs/charts/commit/4c1696d25db079854a120001dbbe3cbce1d79e68): release agent 13.2.1 ([#1769](https://github.com/sysdiglabs/charts/issues/1769))
