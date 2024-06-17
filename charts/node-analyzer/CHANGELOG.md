@@ -10,6 +10,31 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.29.4
+# v1.29.3
+### Bug Fixes
+* **kspm-collector,node-analyzer** [919bac75](https://github.com/sysdiglabs/charts/commit/919bac7579929a11ca2f19fd39d9600271c345fe): fix pod failure in NATS connection error ([#1773](https://github.com/sysdiglabs/charts/issues/1773))
+# v1.29.2
+### New Features
+* **agent,kspm-collector,node-analyzer,rapid-response** [c0359500](https://github.com/sysdiglabs/charts/commit/c0359500433949727357cfd918d43d9a0e0dbe11): update kubectl images used for testing purpose ([#1758](https://github.com/sysdiglabs/charts/issues/1758))
+# v1.29.1
+### Chores
+* **node-analyzer** [fcb47948](https://github.com/sysdiglabs/charts/commit/fcb47948280b55cc964b8a7a1a564923e284bb4e): Bump benchmark runner ([#1675](https://github.com/sysdiglabs/charts/issues/1675))
+# v1.29.0
+### Chores
+* **node-analyzer** [f3b29822](https://github.com/sysdiglabs/charts/commit/f3b29822e8bc3c60f48d0bac678b360eace7e133): bump sysdig/vuln-runtime-scanner to v1.7.0 ([#1750](https://github.com/sysdiglabs/charts/issues/1750))
+# v1.28.0
+### Chores
+* **node-analyzer** [239f22e8](https://github.com/sysdiglabs/charts/commit/239f22e8e2a36e847e1a352212d52c0261ad6b5a): bump sysdig/vuln-host-scanner to v0.10.0 ([#1749](https://github.com/sysdiglabs/charts/issues/1749))
+# v1.27.5
+### Chores
+* **node-analyzer** [c5a7c493](https://github.com/sysdiglabs/charts/commit/c5a7c4931a45a218c319085857f1bdf54df23a23): bump legacy node image analyzer to v0.1.32 ([#1738](https://github.com/sysdiglabs/charts/issues/1738))
+# v1.27.4
+### New Features
+* **node-analyzer** [8229ffce](https://github.com/sysdiglabs/charts/commit/8229ffce6e561735ca587499be796c84af80e072): bump host-scanner to v0.9.1 ([#1739](https://github.com/sysdiglabs/charts/issues/1739))
+# v1.27.3
+### Others
+* [549e723e](https://github.com/sysdiglabs/charts/commit/549e723e11f0cb0deff59715f5ed2d26bdf4568c)
 # v1.27.2
 ### Chores
 * **node-analyzer** [7336c1b9](https://github.com/sysdiglabs/charts/commit/7336c1b91aeddb057626f1a456a12a50a47e86d4): bump runtime-scanner to v1.6.12 ([#1737](https://github.com/sysdiglabs/charts/issues/1737))

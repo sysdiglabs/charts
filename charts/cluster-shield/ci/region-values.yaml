@@ -4,5 +4,4 @@ cluster_shield:
     name: "lint-cluster"
   sysdig_endpoint:
     access_key: "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
-    secure_api_token: "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
     region: "us1"

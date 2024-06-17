@@ -12,12 +12,10 @@ $ pre-commit run -a
 
 -->
 
-# Cluster Shield - [Controlled Availability]
+# Cluster Shield
 
-[Sysdig Cluster Shield](https://docs.sysdig.com/en/docs/sysdig-secure/scanning).
+[Sysdig Cluster Shield](https://docs.sysdig.com/en/docs/installation/cluster-shield).
 <br/>This chart deploys the Sysdig Cluster Shield in your Kubernetes cluster.
-
-**NOTE: Sysdig Cluster Shield is released in Controlled Availability to selected customers. If you would like to use it, please contact your Sysdig Field Representative or our Support.**
 
 ## TL;DR;
 
@@ -25,7 +23,7 @@ $ pre-commit run -a
 $ helm repo add sysdig https://charts.sysdig.com
 $ helm repo update
 $ helm upgrade --install sysdig-sysdig-cluster-shield sysdig/cluster-shield \
-    --create-namespace -n sysdig-agent --version=0.10.2  \
+    --create-namespace -n sysdig-agent --version=1.0.0  \
     --set global.clusterConfig.name=CLUSTER_NAME \
     --set global.sysdig.region=SYSDIG_REGION \
     --set global.sysdig.accessKey=YOUR-KEY-HERE
@@ -104,23 +102,39 @@ The following table lists the configurable parameters of the `cluster-shield` ch
 
 |                                         Parameter                                         |                                      Description                                      |                      Default                      |
 |-------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------|---------------------------------------------------|
-| global.sysdig.existingAccessKeySecret                                                     |                                                                                       | <code></code>                                     |
-| global.sysdig.existingAccessKeySecretKeyName                                              |                                                                                       | <code></code>                                     |
-| global.sysdig.existingSecureApiTokenSecret                                                |                                                                                       | <code></code>                                     |
-| global.sysdig.existingSecureApiTokenSecretKeyName                                         |                                                                                       | <code></code>                                     |
+| global.clusterConfig.name                                                                 | name to identify this cluster for events and metrics                                  | <code>""</code>                                   |
+| global.proxy.httpProxy                                                                    |                                                                                       | <code></code>                                     |
+| global.proxy.httpsProxy                                                                   |                                                                                       | <code></code>                                     |
+| global.proxy.noProxy                                                                      |                                                                                       | <code>127.0.0.1,localhost,.local,.internal</code> |
+| global.image.pullSecrets                                                                  |                                                                                       | <code>[]</code>                                   |
+| global.image.pullPolicy                                                                   |                                                                                       | <code>IfNotPresent</code>                         |
+| global.sysdig.accessKeySecret                                                             |                                                                                       | <code></code>                                     |
+| global.sysdig.accessKey                                                                   |                                                                                       | <code></code>                                     |
+| global.sysdig.apiHost                                                                     |                                                                                       | <code></code>                                     |
+| global.sysdig.region                                                                      |                                                                                       | <code>"custom"</code>                             |
+| global.sysdig.secureAPITokenSecret                                                        |                                                                                       | <code></code>                                     |
+| global.sysdig.secureAPIToken                                                              |                                                                                       | <code></code>                                     |
+| global.imageRegistry                                                                      |                                                                                       | <code></code>                                     |
+| global.sslVerifyCertificate                                                               |                                                                                       | <code></code>                                     |
+| global.ssl.ca.certs                                                                       | A PEM-encoded x509 certificate. This can also be a bundle with multiple certificates. | <code>[]</code>                                   |
+| global.ssl.ca.keyName                                                                     | Filename that is used when creating the secret. Required if certs is provided.        | <code>null</code>                                 |
+| global.ssl.ca.existingCaSecret                                                            | Provide the name of an existing Secret that contains the CA required                  | <code>null</code>                                 |
+| global.ssl.ca.existingCaSecretKeyName                                                     | Provide the filename that is defined inside the existing Secret                       | <code>null</code>                                 |
+| global.ssl.ca.existingCaConfigMap                                                         | Provide the name of an existing ConfigMap that contains the CA required               | <code>null</code>                                 |
+| global.ssl.ca.existingCaConfigMapKeyName                                                  | Provide the filename that is defined inside the existing ConfigMap                    | <code>null</code>                                 |
 | cluster_shield.cluster_config.name                                                        |                                                                                       | <code></code>                                     |
 | cluster_shield.log_level                                                                  |                                                                                       | <code>warn</code>                                 |
 | cluster_shield.monitoring_port                                                            |                                                                                       | <code>8080</code>                                 |
-| cluster_shield.ssl.verify                                                                 |                                                                                       | <code>true</code>                                 |
 | cluster_shield.sysdig_endpoint.access_key                                                 |                                                                                       | <code></code>                                     |
 | cluster_shield.sysdig_endpoint.api_url                                                    |                                                                                       | <code></code>                                     |
 | cluster_shield.sysdig_endpoint.secure_api_token                                           |                                                                                       | <code></code>                                     |
-| cluster_shield.sysdig_endpoint.region                                                     |                                                                                       | <code>custom</code>                               |
+| cluster_shield.sysdig_endpoint.region                                                     |                                                                                       | <code></code>                                     |
 | cluster_shield.kubernetes.root_namespace                                                  |                                                                                       | <code>kube-system</code>                          |
 | cluster_shield.features.admission_control.enabled                                         |                                                                                       | <code>false</code>                                |
 | cluster_shield.features.admission_control.deny_on_error                                   |                                                                                       | <code>false</code>                                |
 | cluster_shield.features.admission_control.dry_run                                         |                                                                                       | <code>true</code>                                 |
 | cluster_shield.features.admission_control.timeout                                         |                                                                                       | <code>5</code>                                    |
+| cluster_shield.features.admission_control.container_vulnerability_management.enabled      |                                                                                       | <code>false</code>                                |
 | cluster_shield.features.audit.enabled                                                     |                                                                                       | <code>false</code>                                |
 | cluster_shield.features.audit.timeout                                                     |                                                                                       | <code>5</code>                                    |
 | cluster_shield.features.posture.enabled                                                   |                                                                                       | <code>false</code>                                |
@@ -141,10 +155,10 @@ The following table lists the configurable parameters of the `cluster-shield` ch
 | ca.existingCaConfigMapKeyName                                                             | Provide the filename that is defined inside the existing ConfigMap                    | <code>null</code>                                 |
 | run_command                                                                               |                                                                                       | <code>"run-all-namespaced"</code>                 |
 | image.repository                                                                          |                                                                                       | <code>quay.io/sysdig/cluster-shield</code>        |
-| image.pullPolicy                                                                          |                                                                                       | <code>IfNotPresent</code>                         |
+| image.pullPolicy                                                                          |                                                                                       | <code></code>                                     |
 | proxy.httpProxy                                                                           |                                                                                       | <code></code>                                     |
 | proxy.httpsProxy                                                                          |                                                                                       | <code></code>                                     |
-| proxy.noProxy                                                                             |                                                                                       | <code>127.0.0.1,localhost,.local,.internal</code> |
+| proxy.noProxy                                                                             |                                                                                       | <code></code>                                     |
 | imagePullSecrets                                                                          |                                                                                       | <code>[]</code>                                   |
 | probes.liveness.initialDelaySeconds                                                       |                                                                                       | <code>5</code>                                    |
 | probes.liveness.periodSeconds                                                             |                                                                                       | <code>5</code>                                    |

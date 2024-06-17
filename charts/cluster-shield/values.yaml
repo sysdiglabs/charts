@@ -1,22 +1,56 @@
 global:
+  clusterConfig:
+    # name to identify this cluster for events and metrics
+    name: ""
+  proxy:
+    httpProxy:
+    httpsProxy:
+    noProxy: 127.0.0.1,localhost,.local,.internal
+  image:
+    pullSecrets: []
+    pullPolicy: IfNotPresent
   sysdig:
-    existingAccessKeySecret:
-    existingAccessKeySecretKeyName:
-    existingSecureApiTokenSecret:
-    existingSecureApiTokenSecretKeyName:
+    accessKeySecret:
+    accessKey:
+    apiHost:
+    region: "custom"
+    secureAPITokenSecret:
+    secureAPIToken:
+  imageRegistry:
+  sslVerifyCertificate:
+  ssl:
+    ca:
+      # A PEM-encoded x509 certificate. This can also be a bundle with multiple certificates.
+      certs: []
+      # - |
+      #     -----BEGIN CERTIFICATE-----
+      #     MIIDEzCCAfugAwIBAgIQKiv9U+KxPJzu1adXwC06RzANBgkqhkiG9w0BAQsFADAU
+      #     MRIwEAYDVQQDEwloYXJib3ItY2EwHhcNMjIwMjIzMDY1NjExWhcNMjMwMjIzMDY1
+      #     NjExWjAUMRIwEAYDVQQDEwloYXJib3ItY2EwggEiMA0GCSqGSIb3DQEBAQUAA4IB
+      #     MMNlTAQ9fvdNOTzZntye0PQYR5SR13E=
+      #     -----END CERTIFICATE-----
+
+      # Filename that is used when creating the secret. Required if certs is provided.
+      keyName: null
+      # Provide the name of an existing Secret that contains the CA required
+      existingCaSecret: null
+      # Provide the filename that is defined inside the existing Secret
+      existingCaSecretKeyName: null
+      # Provide the name of an existing ConfigMap that contains the CA required
+      existingCaConfigMap: null
+      # Provide the filename that is defined inside the existing ConfigMap
+      existingCaConfigMapKeyName: null
 cluster_shield:
   # Global Configurations
   cluster_config:
     name:
   log_level: warn
   monitoring_port: 8080
-  ssl:
-    verify: true
   sysdig_endpoint:
     access_key:
     api_url:
     secure_api_token:
-    region: custom
+    region:
   kubernetes:
     root_namespace: kube-system
   # Features
@@ -26,6 +60,8 @@ cluster_shield:
       deny_on_error: false
       dry_run: true
       timeout: 5
+      container_vulnerability_management:
+        enabled: false
     audit:
       enabled: false
       timeout: 5
@@ -70,11 +106,11 @@ ca:
 run_command: "run-all-namespaced"
 image:
   repository: quay.io/sysdig/cluster-shield
-  pullPolicy: IfNotPresent
+  pullPolicy:
 proxy:
   httpProxy:
   httpsProxy:
-  noProxy: 127.0.0.1,localhost,.local,.internal
+  noProxy:
 imagePullSecrets: []
 # - name: regcred
 

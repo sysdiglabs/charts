@@ -3,7 +3,7 @@ kind: ClusterRole
 metadata:
   name: {{ include "cluster-shield.fullname" . }}
 rules:
-{{- if .Values.cluster_shield.features.container_vulnerability_management.enabled }}
+{{- if eq "true" (include "cluster-shield.containerVulnerabilityManagementEnabled" .) }}
 - apiGroups: ["", "apps", "batch", "extensions"]
   resources:
     - "cronjobs"
@@ -88,6 +88,7 @@ rules:
     - storageclasses
     - volumeattachments
     - clusterversions
+    - secrets
   verbs: ["get", "list", "watch"]
 {{- end }}
 {{- if .Values.cluster_shield.features.kubernetes_metadata.enabled }}
@@ -186,3 +187,15 @@ rules:
   - list
   - watch
 {{- end }}
+{{- if and (.Values.cluster_shield.features.admission_control.enabled) (.Values.cluster_shield.features.admission_control.container_vulnerability_management.enabled) }}
+- apiGroups:
+    - ""
+  resources:
+    - pods
+    - configmaps
+    - secrets
+    - serviceaccounts
+    - namespaces
+  verbs:
+    - get
+{{- end}}

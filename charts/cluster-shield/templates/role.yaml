@@ -4,7 +4,7 @@ metadata:
   name: {{ include "cluster-shield.fullname" . }}
   namespace: {{ .Release.Namespace }}
 rules:
-{{- if .Values.cluster_shield.features.container_vulnerability_management.enabled }}
+{{- if eq "true" (include "cluster-shield.containerVulnerabilityManagementEnabled" .) }}
 - apiGroups: ["", "coordination.k8s.io"]
   resources:
     - "leases"

@@ -1,0 +1,59 @@
+suite: Registry Scanner - OCP Internal Registry
+
+release:
+  name: my-release
+  namespace: my-namespace
+
+values:
+  - ocp_test_values.yaml
+
+tests:
+  - it: service account has registry-viewer role
+    documentIndex: 0
+    asserts:
+      - containsDocument:
+          kind: ClusterRoleBinding
+          apiVersion: rbac.authorization.k8s.io/v1
+      - equal:
+          path: metadata.name
+          value: my-release-registry-scanner-crb-registry-viewer
+      - equal:
+          path: subjects[0].name
+          value: my-release-registry-scanner
+      - equal:
+          path: subjects[0].namespace
+          value: my-namespace
+      - equal:
+          path: roleRef.name
+          value: registry-viewer
+    template: templates/clusterrolebinding.yaml
+
+  - it: service account has token-requestor role
+    documentIndex: 1
+    asserts:
+      - containsDocument:
+          kind: ClusterRoleBinding
+          apiVersion: rbac.authorization.k8s.io/v1
+      - equal:
+          path: metadata.name
+          value: my-release-registry-scanner-crb-token-requestor
+      - equal:
+          path: subjects[0].name
+          value: my-release-registry-scanner
+      - equal:
+          path: subjects[0].namespace
+          value: my-namespace
+      - equal:
+          path: roleRef.name
+          value: token-requestor
+    template: templates/clusterrolebinding.yaml
+
+  - it: checks configmap
+    asserts:
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: "type: ocp"
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: "skipTLS: true"
+    template: templates/configmap.yaml

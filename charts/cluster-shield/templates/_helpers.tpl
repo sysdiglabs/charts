@@ -2,7 +2,7 @@
 Expand the name of the chart.
 */}}
 {{- define "cluster-shield.name" -}}
-{{- .Chart.Name | trunc 63 | trimSuffix "-" }}
+{{- .Chart.Name | trunc 63 | trimSuffix "-" | lower }}
 {{- end }}
 
 {{/*
@@ -12,9 +12,9 @@ If release name contains chart name it will be used as a full name.
 */}}
 {{- define "cluster-shield.fullname" -}}
 {{- if contains .Chart.Name .Release.Name }}
-{{- .Release.Name | trunc 63 | trimSuffix "-" }}
+{{- .Release.Name | trunc 63 | trimSuffix "-" | lower }}
 {{- else }}
-{{- printf "%s-%s" .Release.Name .Chart.Name | trunc 63 | trimSuffix "-" }}
+{{- printf "%s-%s" .Release.Name .Chart.Name | trunc 63 | trimSuffix "-" | lower }}
 {{- end }}
 {{- end }}
 
@@ -51,17 +51,58 @@ Adds kubernetes related keys to the configuration.
 {{- define "cluster-shield.configMap" -}}
 {{- $conf := deepCopy .Values.cluster_shield -}}
 {{- $_ := set $conf "kubernetes" (include "cluster-shield.configurationKubernetes" . | fromYaml) }}
-{{- if .Values.cluster_shield.features.container_vulnerability_management.enabled }}
+{{- if eq "true" (include "cluster-shield.containerVulnerabilityManagementEnabled" .) }}
 {{- if regexMatch "^v?([0-9]+)(\\.[0-9]+)?(\\.[0-9]+)?(-([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?(\\+([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?$" (.Values.onPremCompatibilityVersion | default "") }}
 {{- if semverCompare "< 7.0.0" .Values.onPremCompatibilityVersion -}}
 {{- $_ := set $conf.features.container_vulnerability_management "platform_services_enabled" false }}
 {{- end -}}
 {{- end -}}
-{{- $_ := set $conf "cluster_scanner" (include "cluster-shield.configurationClusterScanner" . | fromYaml) }}
-
+{{- $_ := set $conf "cluster_scanner" (merge (include "cluster-shield.configurationClusterScanner" . | fromYaml) (.Values.cluster_shield.cluster_scanner | default dict)) }}
 {{- end }}
+{{- if and (.Values.cluster_shield.features.admission_control.enabled) (.Values.cluster_shield.features.admission_control.container_vulnerability_management.enabled)}}
+{{- $_ := set $conf "admission_controller_secure" (include "cluster-shield.configurationAdmissionControllerSecure" . | fromYaml) }}
+{{- end}}
 {{- $_ := unset $conf.sysdig_endpoint "access_key" }}
 {{- $_ := unset $conf.sysdig_endpoint "secure_api_token" }}
+{{/* sysdig-deploy support start */}}
+{{- if not .Values.cluster_shield.cluster_config.name }}
+{{- if .Values.global.clusterConfig.name }}
+{{- $_ := set $conf "cluster_config" (dict "name" .Values.global.clusterConfig.name) }}
+{{- else }}
+{{- fail "One of global.clusterConfig.name and cluster_shield.cluster_config.name must be defined." -}}
+{{- end }}
+{{- end }}
+{{- if not .Values.cluster_shield.sysdig_endpoint.region }}
+{{- if .Values.global.sysdig.region }}
+{{- $_ := set $conf.sysdig_endpoint "region" .Values.global.sysdig.region }}
+{{- else }}
+{{- fail "One of global.sysdig.region and cluster_shield.sysdig_endpoint.region must be defined." -}}
+{{- end }}
+{{- end }}
+{{- if eq $conf.sysdig_endpoint.region "custom" }}
+{{- if and (not .Values.cluster_shield.sysdig_endpoint.api_url) .Values.global.sysdig.apiHost }}
+{{- $_ := set $conf.sysdig_endpoint "api_url" .Values.global.sysdig.apiHost }}
+{{- if not (or (hasPrefix "https://" .Values.global.sysdig.apiHost) (hasPrefix "http://" .Values.global.sysdig.apiHost)) }}
+{{- $_ := set $conf.sysdig_endpoint "api_url" (printf "https://%s" .Values.global.sysdig.apiHost) }}
+{{- end }}
+{{- end }}
+{{- if not $conf.sysdig_endpoint.api_url }}
+{{- fail "Custom region requires one of global.sysdig.apiHost or cluster_shield.sysdig_endpoint.api_url to be defined." -}}
+{{- end }}
+{{- end }}
+{{- if not (hasKey (default .Values.cluster_shield.ssl dict) "verify") }}
+{{- $_ := set $conf "ssl" (dict "verify" (.Values.global.sslVerifyCertificate | default true)) }}
+{{- else if not .Values.cluster_shield.ssl.verify }}
+{{- $_ := set $conf "ssl" (dict "verify" (.Values.global.sslVerifyCertificate | default true)) }}
+{{- end }}
+{{- if not .Values.cluster_shield.cluster_config.name }}
+{{- if .Values.global.clusterConfig.name }}
+{{- $_ := set $conf.cluster_config "name" .Values.global.clusterConfig.name }}
+{{- else }}
+{{- fail "One of global.clusterConfig.name and cluster_shield.cluster_config.name must be defined." -}}
+{{- end }}
+{{- end }}
+{{/* sysdig-deploy support end */}}
 {{- $conf | toYaml -}}
 {{- end }}
 
@@ -71,10 +112,26 @@ Adds kubernetes related keys to the configuration.
 {{- define "cluster-shield.secret" -}}
 {{- $secret := dict "sysdig_endpoint" (dict) }}
 {{- $_ := set $secret.sysdig_endpoint "access_key" .Values.cluster_shield.sysdig_endpoint.access_key }}
+{{- if .Values.cluster_shield.sysdig_endpoint.secure_api_token }}
 {{- $_ := set $secret.sysdig_endpoint "secure_api_token" .Values.cluster_shield.sysdig_endpoint.secure_api_token }}
-{{- if .Values.cluster_shield.features.container_vulnerability_management.enabled }}
+{{- end }}
+{{- if eq "true" (include "cluster-shield.containerVulnerabilityManagementEnabled" .) }}
 {{- $_ := set $secret "cluster_scanner" (include "cluster-shield.secretClusterScanner" . | fromYaml) }}
 {{- end }}
+{{- /* sysdig-deploy support start */}}
+{{- if not .Values.cluster_shield.sysdig_endpoint.access_key }}
+{{- if .Values.global.sysdig.accessKey }}
+{{- $_ := set $secret.sysdig_endpoint "access_key" .Values.global.sysdig.accessKey }}
+{{- else if not .Values.global.sysdig.accessKeySecret }}
+{{- fail "One of global.sysdig.accessKey and cluster_shield.sysdig_endpoint.access_key must be defined." -}}
+{{- end }}
+{{- end }}
+{{- if not .Values.cluster_shield.sysdig_endpoint.secure_api_token }}
+{{- if .Values.global.sysdig.secureAPIToken }}
+{{- $_ := set $secret.sysdig_endpoint "secure_api_token" .Values.global.sysdig.secureAPIToken }}
+{{- end }}
+{{- end }}
+{{- /* sysdig-deploy support end */}}
 {{- $secret | toYaml -}}
 {{- end }}
 
@@ -123,10 +180,18 @@ runtime_status_integrator:
 {{- end }}
 
 {{/*
+Admission Controller Secure Configuration
+*/}}
+{{- define "cluster-shield.configurationAdmissionControllerSecure" -}}
+rsi_grpc_endpoint: {{ include "cluster-shield.clusterScannerServiceName" . }}:9999
+{{- end }}
+
+
+{{/*
 Verify if certs needs to be generated and mounted inside the pod
 */}}
 {{- define "cluster-shield.needCerts"}}
-{{- or .Values.cluster_shield.features.audit.enabled .Values.cluster_shield.features.admission_control.enabled .Values.cluster_shield.features.container_vulnerability_management.enabled }}
+{{- or .Values.cluster_shield.features.audit.enabled .Values.cluster_shield.features.admission_control.enabled (eq "true" (include "cluster-shield.containerVulnerabilityManagementEnabled" .)) }}
 {{- end -}}
 
 {{/*
@@ -137,7 +202,7 @@ Custom CA
 {{- end -}}
 
 {{- define "cluster-shield.custom_ca.useExistingSecret" -}}
-    {{- if (and .Values.ca.existingCaSecretKeyName .Values.ca.existingCaSecret) -}}
+    {{- if or (and .Values.ca.existingCaSecretKeyName .Values.ca.existingCaSecret) (and .Values.global.ssl.ca.existingCaSecretKeyName .Values.global.ssl.ca.existingCaSecret) -}}
         {{- true -}}
     {{- else -}}
         {{- false -}}
@@ -145,7 +210,7 @@ Custom CA
 {{- end -}}
 
 {{- define "cluster-shield.custom_ca.useExistingConfigMap" -}}
-    {{- if (and .Values.ca.existingCaSecretKeyName .Values.ca.existingCaSecret) -}}
+    {{- if or (and .Values.ca.existingCaSecretKeyName .Values.ca.existingCaSecret) (and .Values.global.ssl.ca.existingCaSecretKeyName .Values.global.ssl.ca.existingCaSecret) -}}
         {{- false -}}
     {{- else if (and .Values.ca.existingCaConfigMapKeyName .Values.ca.existingCaConfigMap) -}}
         {{- true -}}
@@ -155,7 +220,7 @@ Custom CA
 {{- end -}}
 
 {{- define "cluster-shield.custom_ca.useValues" -}}
-    {{- if (and .Values.ca.existingCaSecretKeyName .Values.ca.existingCaSecret) -}}
+    {{- if or (and .Values.ca.existingCaSecretKeyName .Values.ca.existingCaSecret) (and .Values.global.ssl.ca.existingCaSecretKeyName .Values.global.ssl.ca.existingCaSecret) -}}
         {{- false -}}
     {{- else if (and .Values.ca.existingCaConfigMapKeyName .Values.ca.existingCaConfigMap) -}}
         {{- false -}}
@@ -168,16 +233,16 @@ Custom CA
 
 {{- define "cluster-shield.custom_ca.keyName" -}}
     {{- if eq (include "cluster-shield.custom_ca.useExistingSecret" .) "true" -}}
-        {{- .Values.ca.existingCaSecretKeyName -}}
+        {{- .Values.ca.existingCaSecretKeyName | default .Values.global.ssl.ca.existingCaSecretKeyName -}}
     {{- else if eq (include "cluster-shield.custom_ca.useExistingConfigMap" .) "true" -}}
-        {{- .Values.ca.existingCaConfigMapKeyName -}}
+        {{- .Values.ca.existingCaConfigMapKeyName | default .Values.global.ssl.ca.existingCaConfigMapKeyName -}}
     {{- else if eq (include "cluster-shield.custom_ca.useValues" .) "true" -}}
-        {{- .Values.ca.keyName -}}
+        {{- .Values.ca.keyName | default .Values.global.ssl.ca.keyName -}}
     {{- end -}}
 {{- end -}}
 
 {{- define "cluster-shield.custom_ca.cert" -}}
-    {{- join "" (.Values.ca.certs) -}}
+    {{- join "" (.Values.ca.certs | default .Values.global.ssl.ca.certs) -}}
 {{- end -}}
 
 {{/*
@@ -210,7 +275,7 @@ Generate certificates for aggregated api server
 
 
         {{- $ca := genCA (include "cluster-shield.fullname" .) 3650 -}}
-        {{- $tlsCert := genSignedCertWithKey (include "cluster-shield.fullname" .) (list "127.0.0.1") ($dnsNames) 3650 $ca (genPrivateKey "ed25519") }}
+        {{- $tlsCert := genSignedCert (include "cluster-shield.fullname" .) (list "127.0.0.1") $dnsNames 3650 $ca -}}
         {{- printf "%s$%s$%s" ($tlsCert.Cert | b64enc) ($tlsCert.Key | b64enc) ($ca.Cert | b64enc) -}}
     {{- end -}}
 {{- end -}}
@@ -299,4 +364,38 @@ TLS Secret Name
 */}}
 {{- define "cluster-shield.customCASecretName" -}}
     {{- include "cluster-shield.name" . -}}-ca
+{{- end -}}
+
+{{/*
+Proxy Secret Name
+*/}}
+{{- define "cluster-shield.proxySecretName" -}}
+    {{- include "cluster-shield.secretName" . -}}-proxy
+{{- end -}}
+
+{{/*
+Check if Container Vulnerability Management is enabled
+*/}}
+{{- define "cluster-shield.containerVulnerabilityManagementEnabled" -}}
+    {{- or (.Values.cluster_shield.features.container_vulnerability_management.enabled) (and (.Values.cluster_shield.features.admission_control.enabled) (.Values.cluster_shield.features.admission_control.container_vulnerability_management.enabled)) -}}
+{{- end -}}
+
+{{/*
+Proxy Secret Name
+*/}}
+{{- define "cluster-shield.proxyEnabled" -}}
+{{- if or (or .Values.proxy.httpProxy .Values.global.proxy.httpProxy) (or .Values.proxy.httpsProxy .Values.global.proxy.httpsProxy) }}
+{{- true }}
+{{- end }}
+{{- end -}}
+
+{{/*
+Define the proper image repository to use for cluster-shield
+*/}}
+{{- define "cluster-shield.repository" -}}
+    {{- if .Values.global.imageRegistry -}}
+        {{- printf "%s/%s" .Values.global.imageRegistry "sysdig/cluster-shield" -}}
+    {{- else -}}
+        {{- .Values.image.repository -}}
+    {{- end -}}
 {{- end -}}

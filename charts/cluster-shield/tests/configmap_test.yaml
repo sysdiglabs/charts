@@ -4,7 +4,7 @@ templates:
 values:
   - ../ci/base-values.yaml
 tests:
-  - it: Creates the configmap if webhook.acConfig is present
+  - it: Sets the correct log level in configmap
     set:
       cluster_shield:
         log_level: info
@@ -19,3 +19,57 @@ tests:
       - matchRegex:
           path: data['cluster-shield.yaml']
           pattern: "log_level: info"
+
+  - it: Cluster Scanner default configuration
+    set:
+      cluster_shield:
+        log_level: info
+        features:
+          container_vulnerability_management:
+            enabled: true
+    asserts:
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+      - hasDocuments:
+          count: 1
+      - isNotEmpty:
+          path: data
+      - matchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: |
+            cluster_scanner:
+              image_sbom_extractor:
+                nats_url: nats://release-name-cluster-shield-cluster-scanner:4222
+              leader_election_lock_name: release-name-cluster-shield
+
+  - it: Cluster Scanner configuration with additional values
+    set:
+      cluster_shield:
+        log_level: info
+        features:
+          container_vulnerability_management:
+            enabled: true
+        cluster_scanner:
+          image_sbom_extractor:
+            cache:
+              types:
+                - distributed
+    asserts:
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+      - hasDocuments:
+          count: 1
+      - isNotEmpty:
+          path: data
+      - matchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: |
+            cluster_scanner:
+              image_sbom_extractor:
+                cache:
+                  types:
+                  - distributed
+                nats_url: nats://release-name-cluster-shield-cluster-scanner:4222
+              leader_election_lock_name: release-name-cluster-shield

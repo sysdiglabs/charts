@@ -914,6 +914,8 @@ spec:
                 optional: true
           - name: TMPDIR
             value: "/tmp"
+          - name: PROBES_ENABLED
+            value: "true"
           - name: PROBES_PORT
             value: {{ .Values.nodeAnalyzer.hostScanner.probesPort | quote }}
           - name: PROM_ENABLED

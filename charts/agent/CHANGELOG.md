@@ -10,6 +10,18 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.24.3
+### New Features
+* [4c1696d2](https://github.com/sysdiglabs/charts/commit/4c1696d25db079854a120001dbbe3cbce1d79e68): release agent 13.2.1 ([#1769](https://github.com/sysdiglabs/charts/issues/1769))
+# v1.24.2
+### Bug Fixes
+* **agent** [7f087f0b](https://github.com/sysdiglabs/charts/commit/7f087f0b40158e976bc69abddeca0fc0947a986a): add the the missing channel for Agent Local Forwarder ([#1766](https://github.com/sysdiglabs/charts/issues/1766))
+# v1.24.1
+### New Features
+* **agent,kspm-collector,node-analyzer,rapid-response** [c0359500](https://github.com/sysdiglabs/charts/commit/c0359500433949727357cfd918d43d9a0e0dbe11): update kubectl images used for testing purpose ([#1758](https://github.com/sysdiglabs/charts/issues/1758))
+# v1.24.0
+### New Features
+* [67814659](https://github.com/sysdiglabs/charts/commit/678146599e3dde46aa57c025b1db86869838cd9d): release agent 13.2.0 ([#1748](https://github.com/sysdiglabs/charts/issues/1748))
 # v1.23.3
 ### Chores
 * **agent** [d1c6a829](https://github.com/sysdiglabs/charts/commit/d1c6a82958f7fe9a443632151e8efc39357a2a68): let memdump override also on secure-light mode ([#1736](https://github.com/sysdiglabs/charts/issues/1736))

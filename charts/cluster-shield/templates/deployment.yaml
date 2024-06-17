@@ -24,14 +24,21 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
+      {{- if .Values.imagePullSecrets }}
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{/* sysdig-deploy support start */}}
+      {{- else if .Values.global.image.pullSecrets }}
+      imagePullSecrets:
+        {{- toYaml .Values.global.image.pullSecrets | nindent 8 }}
+      {{- end }}
+      {{/* sysdig-deploy support end */}}
       serviceAccountName: {{ include "cluster-shield.fullname" . }}
       securityContext: {}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: "cluster-shield"
           {{- if eq .Values.run_command "run-all-namespaced" }}
           securityContext:
             privileged: true
@@ -40,8 +47,8 @@ spec:
             readOnlyRootFilesystem: false
             allowPrivilegeEscalation: true
           {{- end }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          image: "{{ include "cluster-shield.repository" . }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy | default .Values.global.image.pullPolicy | default "IfNotPresent" }}
           args: [ {{ .Values.run_command | quote }} ]
           ports:
             - name: http
@@ -101,35 +108,43 @@ spec:
                   fieldPath: status.podIP
             - name: KUBE_SERVICE_NAME
               value: {{ include "cluster-shield.clusterScannerServiceName" . }}
-            {{- if .Values.global.sysdig.existingAccessKeySecret }}
+            {{- if .Values.global.sysdig.accessKeySecret }}
             - name: SYSDIG_CLUSTER_SHIELD_SYSDIG_ENDPOINT__ACCESS_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.global.sysdig.existingAccessKeySecret }}
-                  key: {{ .Values.global.sysdig.existingAccessKeySecretKeyName | default "access-key"}}
+                  name: {{ .Values.global.sysdig.accessKeySecret }}
+                  key: "access-key"
             {{- end }}
-            {{- if .Values.global.sysdig.existingSecureApiTokenSecret }}
+            {{- if .Values.global.sysdig.secureAPITokenSecret }}
             - name: SYSDIG_CLUSTER_SHIELD_SYSDIG_ENDPOINT__SECURE_API_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.global.sysdig.existingSecureApiTokenSecret }}
-                  key: {{ .Values.global.sysdig.existingSecureApiTokenSecretKeyName | default "secure-api-token" }}
+                  name: {{ .Values.global.sysdig.secureAPITokenSecret }}
+                  key: "secure-api-token"
             {{- end }}
             {{- if eq (include "cluster-shield.custom_ca.enabled" .) "true" }}
             - name: SSL_CERT_FILE
               value: /ca-certs/{{- include "cluster-shield.custom_ca.keyName" . -}}
             {{- end }}
-            {{- if .Values.proxy.httpProxy }}
+            {{- if or (or .Values.proxy.httpProxy .Values.proxy.httpsProxy) (or .Values.global.proxy.httpProxy .Values.global.proxy.httpsProxy) }}
             - name: HTTP_PROXY
-              value: "{{ .Values.proxy.httpProxy }}"
-            {{- end }}
-            {{- if .Values.proxy.httpsProxy }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "cluster-shield.proxySecretName" . }}
+                  key: httpProxy
+                  optional: true
             - name: HTTPS_PROXY
-              value: "{{ .Values.proxy.httpsProxy }}"
-            {{- end }}
-            {{- if or .Values.proxy.httpProxy .Values.proxy.httpsProxy }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "cluster-shield.proxySecretName" . }}
+                  key: httpsProxy
+                  optional: true
             - name: NO_PROXY
-              value: "{{ .Values.proxy.noProxy }}"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "cluster-shield.proxySecretName" . }}
+                  key: noProxy
+                  optional: true
             {{- end }}
       volumes:
         - name: cluster-shield

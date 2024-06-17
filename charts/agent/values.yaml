@@ -51,7 +51,7 @@ image:
   overrideValue: null
   registry: quay.io
   repository: sysdig/agent
-  tag: 13.1.1
+  tag: 13.2.1
   # Specify a imagePullPolicy
   # Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
   # ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -396,4 +396,4 @@ tests:
   timeout: 300s
   image:
     repo: bitnami/kubectl
-    tag: 1.24.4
+    tag: 1.30.1
