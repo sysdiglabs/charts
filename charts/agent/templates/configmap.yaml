@@ -42,7 +42,7 @@ data:
   {{- $baseSettings := mergeOverwrite $baseSettings (dict "promscrape_web_address" "127.0.0.1:9991") -}}
 {{- end }}
 {{- if and (eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true") (.Values.sysdig.settings) (hasKey .Values.sysdig.settings "http_proxy") (hasKey (default dict .Values.sysdig.settings.http_proxy) "ssl") (eq (get (default (dict "ssl" false) .Values.sysdig.settings.http_proxy) "ssl") true) }}
-  {{- $caFilePath := printf "%s%s" "/etc/ca-certs/" (include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.ssl)) }}
+  {{- $caFilePath := printf "%s%s" "etc/ca-certs/" (include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.ssl)) }}
   {{- $mergedSettings := mergeOverwrite $baseSettings (dict "http_proxy" (dict "ca_certificate" $caFilePath)) -}}
   {{ toYaml $mergedSettings | nindent 4 }}
 {{- else if .Values.sysdig.settings }}
