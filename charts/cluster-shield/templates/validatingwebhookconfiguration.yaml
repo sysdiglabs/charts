@@ -36,7 +36,7 @@ webhooks:
         namespace: {{ .Release.Namespace }}
         name: {{ include "cluster-shield.fullname" . }}
         path: /k8s-audit
-        port: {{ include "cluster-shield.admissionControllerAuditPort" . }}
+        port: {{ include "cluster-shield.serviceAuditPort" . }}
       caBundle: {{ $certList._2 }}
     admissionReviewVersions: ["v1", "v1beta1"]
     sideEffects: None
@@ -71,7 +71,7 @@ webhooks:
         namespace: {{ .Release.Namespace }}
         name: {{ include "cluster-shield.fullname" . }}
         path: /validate
-        port: {{ include "cluster-shield.admissionControlPort" . }}
+        port: {{ include "cluster-shield.serviceAdmissionControlPort" . }}
       caBundle: {{ $certList._2 }}
     admissionReviewVersions: [ "v1", "v1beta1" ]
     sideEffects: None

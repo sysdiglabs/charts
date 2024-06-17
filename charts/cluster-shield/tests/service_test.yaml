@@ -7,7 +7,7 @@ release:
   name: shield-release
   namespace: shield-namespace
 tests:
-  - it: Contains a Service resource
+  - it: Without any features enabled [default values]
     asserts:
       - isKind:
           of: Service
@@ -18,20 +18,77 @@ tests:
           path: metadata.namespace
           value: shield-namespace
       - isNotNull:
-          path: .spec.ports[?(@.name == "http")]
+          path: .spec.ports[?(@.name == "monitoring")]
       - equal:
-          path: spec.ports[?(@.name == "http")].port
+          path: spec.ports[?(@.name == "monitoring")].port
           value: 8080
       - equal:
-          path: spec.ports[?(@.name == "http")].protocol
+          path: spec.ports[?(@.name == "monitoring")].protocol
           value: TCP
       - equal:
-          path: spec.ports[?(@.name == "http")].targetPort
-          value: http
+          path: spec.ports[?(@.name == "monitoring")].targetPort
+          value: monitoring
       - lengthEqual:
           path: spec.ports
           count: 1
-  - it: Enable Audit Feature
+
+  - it: Without any features enabled [custom service monitoring port]
+    set:
+      service:
+        monitoring_port: 1234
+    asserts:
+      - isKind:
+          of: Service
+      - equal:
+          path: metadata.name
+          value: shield-release-cluster-shield
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - isNotNull:
+          path: .spec.ports[?(@.name == "monitoring")]
+      - equal:
+          path: spec.ports[?(@.name == "monitoring")].port
+          value: 1234
+      - equal:
+          path: spec.ports[?(@.name == "monitoring")].protocol
+          value: TCP
+      - equal:
+          path: spec.ports[?(@.name == "monitoring")].targetPort
+          value: monitoring
+      - lengthEqual:
+          path: spec.ports
+          count: 1
+
+  - it: Without any features enabled [custom pod monitoring port]
+    set:
+      cluster_shield:
+        monitoring_port: 1234
+    asserts:
+      - isKind:
+          of: Service
+      - equal:
+          path: metadata.name
+          value: shield-release-cluster-shield
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - isNotNull:
+          path: .spec.ports[?(@.name == "monitoring")]
+      - equal:
+          path: spec.ports[?(@.name == "monitoring")].port
+          value: 1234
+      - equal:
+          path: spec.ports[?(@.name == "monitoring")].protocol
+          value: TCP
+      - equal:
+          path: spec.ports[?(@.name == "monitoring")].targetPort
+          value: monitoring
+      - lengthEqual:
+          path: spec.ports
+          count: 1
+
+  - it: Enable Audit Feature [default values]
     set:
       cluster_shield:
         features:
@@ -54,7 +111,59 @@ tests:
       - lengthEqual:
           path: spec.ports
           count: 2
-  - it: Enable Admission Control Feature
+
+  - it: Enable Audit Feature [custom service audit port]
+    set:
+      cluster_shield:
+        features:
+          audit:
+            enabled: true
+      service:
+        audit_port: 1234
+    asserts:
+      - isKind:
+          of: Service
+      - isNotNull:
+          path: .spec.ports[?(@.name == "audit")]
+      - equal:
+          path: spec.ports[?(@.name == "audit")].port
+          value: 1234
+      - equal:
+          path: spec.ports[?(@.name == "audit")].protocol
+          value: TCP
+      - equal:
+          path: spec.ports[?(@.name == "audit")].targetPort
+          value: audit
+      - lengthEqual:
+          path: spec.ports
+          count: 2
+
+  - it: Enable Audit Feature [custom pod audit port]
+    set:
+      cluster_shield:
+        features:
+          audit:
+            enabled: true
+            http_port: 1234
+    asserts:
+      - isKind:
+          of: Service
+      - isNotNull:
+          path: .spec.ports[?(@.name == "audit")]
+      - equal:
+          path: spec.ports[?(@.name == "audit")].port
+          value: 1234
+      - equal:
+          path: spec.ports[?(@.name == "audit")].protocol
+          value: TCP
+      - equal:
+          path: spec.ports[?(@.name == "audit")].targetPort
+          value: audit
+      - lengthEqual:
+          path: spec.ports
+          count: 2
+
+  - it: Enable Admission Control Feature [default values]
     set:
       cluster_shield:
         features:
@@ -64,19 +173,71 @@ tests:
       - isKind:
           of: Service
       - isNotNull:
-          path: .spec.ports[?(@.name == "posture-ac")]
+          path: .spec.ports[?(@.name == "admission")]
       - equal:
-          path: spec.ports[?(@.name == "posture-ac")].port
+          path: spec.ports[?(@.name == "admission")].port
           value: 8443
       - equal:
-          path: spec.ports[?(@.name == "posture-ac")].protocol
+          path: spec.ports[?(@.name == "admission")].protocol
           value: TCP
       - equal:
-          path: spec.ports[?(@.name == "posture-ac")].targetPort
-          value: posture-ac
+          path: spec.ports[?(@.name == "admission")].targetPort
+          value: admission
       - lengthEqual:
           path: spec.ports
           count: 2
+
+  - it: Enable Admission Control Feature [custom service admission_control port]
+    set:
+      cluster_shield:
+        features:
+          admission_control:
+            enabled: true
+      service:
+        admission_control_port: 5678
+    asserts:
+      - isKind:
+          of: Service
+      - isNotNull:
+          path: .spec.ports[?(@.name == "admission")]
+      - equal:
+          path: spec.ports[?(@.name == "admission")].port
+          value: 5678
+      - equal:
+          path: spec.ports[?(@.name == "admission")].protocol
+          value: TCP
+      - equal:
+          path: spec.ports[?(@.name == "admission")].targetPort
+          value: admission
+      - lengthEqual:
+          path: spec.ports
+          count: 2
+
+  - it: Enable Admission Control Feature [custom pod admission_control port]
+    set:
+      cluster_shield:
+        features:
+          admission_control:
+            enabled: true
+            http_port: 5678
+    asserts:
+      - isKind:
+          of: Service
+      - isNotNull:
+          path: .spec.ports[?(@.name == "admission")]
+      - equal:
+          path: spec.ports[?(@.name == "admission")].port
+          value: 5678
+      - equal:
+          path: spec.ports[?(@.name == "admission")].protocol
+          value: TCP
+      - equal:
+          path: spec.ports[?(@.name == "admission")].targetPort
+          value: admission
+      - lengthEqual:
+          path: spec.ports
+          count: 2
+
   - it: Enable All Features
     set:
       cluster_shield:
@@ -92,8 +253,8 @@ tests:
           path: spec.ports
           count: 3
       - isNotNull:
-          path: .spec.ports[?(@.name == "http")]
+          path: .spec.ports[?(@.name == "monitoring")]
       - isNotNull:
           path: .spec.ports[?(@.name == "audit")]
       - isNotNull:
-          path: .spec.ports[?(@.name == "posture-ac")]
+          path: .spec.ports[?(@.name == "admission")]

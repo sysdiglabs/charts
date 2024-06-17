@@ -51,23 +51,23 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy | default .Values.global.image.pullPolicy | default "IfNotPresent" }}
           args: [ {{ .Values.run_command | quote }} ]
           ports:
-            - name: http
-              containerPort: {{ .Values.cluster_shield.monitoring_port | default 8080 }}
+            - name: monitoring
+              containerPort: {{ .Values.cluster_shield.monitoring_port }}
               protocol: TCP
-            {{- if .Values.cluster_shield.features.audit.enabled }}
-            - name: audit
-              containerPort: {{ include "cluster-shield.admissionControllerAuditPort" . }}
+            {{- if .Values.cluster_shield.features.admission_control.enabled }}
+            - name: admission
+              containerPort: {{ .Values.cluster_shield.features.admission_control.http_port }}
               protocol: TCP
             {{- end }}
-            {{- if .Values.cluster_shield.features.admission_control.enabled }}
-            - name: posture-ac
-              containerPort: {{ include "cluster-shield.admissionControlPort" . }}
+            {{- if .Values.cluster_shield.features.audit.enabled }}
+            - name: audit
+              containerPort: {{ .Values.cluster_shield.features.audit.http_port }}
               protocol: TCP
             {{- end }}
           livenessProbe:
             httpGet:
               path: /healthz
-              port: http
+              port: monitoring
             {{- if and (.Values.probes) (.Values.probes.liveness) }}
             initialDelaySeconds: {{ .Values.probes.liveness.initialDelaySeconds }}
             periodSeconds: {{ .Values.probes.liveness.periodSeconds }}
@@ -75,7 +75,7 @@ spec:
           readinessProbe:
             httpGet:
               path: /healthz
-              port: http
+              port: monitoring
             {{- if and (.Values.probes) (.Values.probes.readiness) }}
             initialDelaySeconds: {{ .Values.probes.readiness.initialDelaySeconds }}
             periodSeconds: {{ .Values.probes.readiness.periodSeconds }}

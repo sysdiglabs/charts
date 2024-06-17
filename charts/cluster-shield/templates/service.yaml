@@ -8,21 +8,21 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
+    - port: {{ include "cluster-shield.serviceMonitoringPort" . }}
+      targetPort: monitoring
       protocol: TCP
-      name: http
+      name: monitoring
+  {{- if and .Values.cluster_shield.features.admission_control.enabled }}
+    - port: {{ include "cluster-shield.serviceAdmissionControlPort" . }}
+      targetPort: admission
+      protocol: TCP
+      name: admission
+  {{- end }}
   {{- if .Values.cluster_shield.features.audit.enabled }}
-    - port: {{ include "cluster-shield.admissionControllerAuditPort" . }}
+    - port: {{ include "cluster-shield.serviceAuditPort" . }}
       targetPort: audit
       protocol: TCP
       name: audit
-  {{- end }}
-  {{- if and .Values.cluster_shield.features.admission_control.enabled }}
-    - port: {{ include "cluster-shield.admissionControlPort" . }}
-      targetPort: posture-ac
-      protocol: TCP
-      name: posture-ac
   {{- end }}
   selector:
     {{- include "cluster-shield.selectorLabels" . | nindent 4 }}
