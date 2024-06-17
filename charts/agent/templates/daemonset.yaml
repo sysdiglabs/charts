@@ -123,13 +123,13 @@ spec:
           {{- end }}
           {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
             - name: SSL_CERT_FILE
-              value: /opt/draios/etc/ca-certs/{{- include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.ssl) -}}
+              value: /opt/draios/certificates/{{- include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.ssl) -}}
           {{- end }}
           volumeMounts:
           {{- /* Always requested */}}
             {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
             - name: ca-cert
-              mountPath: /opt/draios/etc/ca-certs
+              mountPath: /opt/draios/certificates
               readOnly: true
             {{- end }}
 
@@ -221,7 +221,7 @@ spec:
             {{- end }}
             {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
             - name: SSL_CERT_FILE
-              value: /opt/draios/etc/ca-certs/{{- include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.ssl) -}}
+              value: /opt/draios/certificates/{{- include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.ssl) -}}
             {{- end }}
           readinessProbe:
             {{- if eq (include "agent.enableHttpProbes" .) "true" }}
@@ -268,7 +268,7 @@ spec:
 
           {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
             - name: ca-cert
-              mountPath: /opt/draios/etc/ca-certs
+              mountPath: /opt/draios/certificates
               readOnly: true
           {{- end }}
 

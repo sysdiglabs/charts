@@ -39,7 +39,7 @@ tests:
           path: spec.template.spec.initContainers[0].env
           content:
             name: SSL_CERT_FILE
-            value: "/opt/draios/etc/ca-certs/root_ca.crt"
+            value: "/opt/draios/certificates/root_ca.crt"
         template: templates/daemonset.yaml
       - contains:
           path: spec.template.spec.volumes
@@ -52,12 +52,12 @@ tests:
           path: spec.template.spec.initContainers[0].volumeMounts
           content:
             name: ca-cert
-            mountPath: /opt/draios/etc/ca-certs
+            mountPath: /opt/draios/certificates
             readOnly: true
         template: templates/daemonset.yaml
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: .*\/etc\/ca-certs\/root_ca\.crt.*
+          pattern: certificates\/root_ca\.crt.*
         template: templates/configmap.yaml
   - it: Check Local CA Cert Delegated Agent Deployment
     set:
@@ -78,13 +78,13 @@ tests:
           path: spec.template.spec.initContainers[0].env
           content:
             name: SSL_CERT_FILE
-            value: "/opt/draios/etc/ca-certs/root_ca.crt"
+            value: "/opt/draios/certificates/root_ca.crt"
         template: templates/daemonset.yaml
       - contains:
           path: spec.template.spec.containers[0].env
           content:
             name: SSL_CERT_FILE
-            value: "/opt/draios/etc/ca-certs/root_ca.crt"
+            value: "/opt/draios/certificates/root_ca.crt"
         template: templates/deployment.yaml
       - contains:
           path: spec.template.spec.volumes
@@ -104,23 +104,23 @@ tests:
           path: spec.template.spec.initContainers[0].volumeMounts
           content:
             name: ca-cert
-            mountPath: /opt/draios/etc/ca-certs
+            mountPath: /opt/draios/certificates
             readOnly: true
         template: templates/daemonset.yaml
       - contains:
           path: spec.template.spec.containers[0].volumeMounts
           content:
             name: ca-cert
-            mountPath: /opt/draios/etc/ca-certs
+            mountPath: /opt/draios/certificates
             readOnly: true
         template: templates/deployment.yaml
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: .*\/etc\/ca-certs\/root_ca\.crt.*
+          pattern: certificates\/root_ca\.crt.*
         template: templates/configmap.yaml
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: .*\/etc\/ca-certs\/root_ca\.crt.*
+          pattern: certificates\/root_ca\.crt.*
         template: templates/configmap-deployment.yaml
   - it: Check Local CA Cert with SSL Proxy
     set:
@@ -142,7 +142,7 @@ tests:
           path: spec.template.spec.initContainers[0].env
           content:
             name: SSL_CERT_FILE
-            value: "/opt/draios/etc/ca-certs/root_ca.crt"
+            value: "/opt/draios/certificates/root_ca.crt"
         template: templates/daemonset.yaml
       - contains:
           path: spec.template.spec.volumes
@@ -155,12 +155,12 @@ tests:
           path: spec.template.spec.initContainers[0].volumeMounts
           content:
             name: ca-cert
-            mountPath: /opt/draios/etc/ca-certs
+            mountPath: /opt/draios/certificates
             readOnly: true
         template: templates/daemonset.yaml
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: .*\/etc\/ca-certs\/root_ca\.crt.*
+          pattern: certificates\/root_ca\.crt.*
         template: templates/configmap.yaml
   - it: Check Local CA Cert with SSL Proxy Delegated Agent Deployment
     set:
@@ -184,13 +184,13 @@ tests:
           path: spec.template.spec.initContainers[0].env
           content:
             name: SSL_CERT_FILE
-            value: "/opt/draios/etc/ca-certs/root_ca.crt"
+            value: "/opt/draios/certificates/root_ca.crt"
         template: templates/daemonset.yaml
       - contains:
           path: spec.template.spec.containers[0].env
           content:
             name: SSL_CERT_FILE
-            value: "/opt/draios/etc/ca-certs/root_ca.crt"
+            value: "/opt/draios/certificates/root_ca.crt"
         template: templates/deployment.yaml
       - contains:
           path: spec.template.spec.volumes
@@ -210,23 +210,23 @@ tests:
           path: spec.template.spec.initContainers[0].volumeMounts
           content:
             name: ca-cert
-            mountPath: /opt/draios/etc/ca-certs
+            mountPath: /opt/draios/certificates
             readOnly: true
         template: templates/daemonset.yaml
       - contains:
           path: spec.template.spec.containers[0].volumeMounts
           content:
             name: ca-cert
-            mountPath: /opt/draios/etc/ca-certs
+            mountPath: /opt/draios/certificates
             readOnly: true
         template: templates/deployment.yaml
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: .*\/etc\/ca-certs\/root_ca\.crt.*
+          pattern: certificates\/root_ca\.crt.*
         template: templates/configmap.yaml
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: .*\/etc\/ca-certs\/root_ca\.crt.*
+          pattern: certificates\/root_ca\.crt.*
         template: templates/configmap-deployment.yaml
   - it: Check Global CA Cert with local CA cert override
     set:
@@ -254,7 +254,7 @@ tests:
           path: spec.template.spec.initContainers[0].env
           content:
             name: SSL_CERT_FILE
-            value: "/opt/draios/etc/ca-certs/root_ca.crt"
+            value: "/opt/draios/certificates/root_ca.crt"
         template: templates/daemonset.yaml
       - contains:
           path: spec.template.spec.volumes
@@ -267,12 +267,12 @@ tests:
           path: spec.template.spec.initContainers[0].volumeMounts
           content:
             name: ca-cert
-            mountPath: /opt/draios/etc/ca-certs
+            mountPath: /opt/draios/certificates
             readOnly: true
         template: templates/daemonset.yaml
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: .*\/etc\/ca-certs\/root_ca\.crt.*
+          pattern: certificates\/root_ca\.crt.*
         template: templates/configmap.yaml
   - it: Check Global CA Cert with local CA cert override Delegated Agent Deployment
     set:
@@ -302,13 +302,13 @@ tests:
           path: spec.template.spec.initContainers[0].env
           content:
             name: SSL_CERT_FILE
-            value: "/opt/draios/etc/ca-certs/root_ca.crt"
+            value: "/opt/draios/certificates/root_ca.crt"
         template: templates/daemonset.yaml
       - contains:
           path: spec.template.spec.containers[0].env
           content:
             name: SSL_CERT_FILE
-            value: "/opt/draios/etc/ca-certs/root_ca.crt"
+            value: "/opt/draios/certificates/root_ca.crt"
         template: templates/deployment.yaml
       - contains:
           path: spec.template.spec.volumes
@@ -328,23 +328,23 @@ tests:
           path: spec.template.spec.initContainers[0].volumeMounts
           content:
             name: ca-cert
-            mountPath: /opt/draios/etc/ca-certs
+            mountPath: /opt/draios/certificates
             readOnly: true
         template: templates/daemonset.yaml
       - contains:
           path: spec.template.spec.containers[0].volumeMounts
           content:
             name: ca-cert
-            mountPath: /opt/draios/etc/ca-certs
+            mountPath: /opt/draios/certificates
             readOnly: true
         template: templates/deployment.yaml
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: .*\/etc\/ca-certs\/root_ca\.crt.*
+          pattern: certificates\/root_ca\.crt.*
         template: templates/configmap.yaml
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: .*\/etc\/ca-certs\/root_ca\.crt.*
+          pattern: certificates\/root_ca\.crt.*
         template: templates/configmap-deployment.yaml
   - it: Check Global CA Cert
     set:
@@ -364,7 +364,7 @@ tests:
           path: spec.template.spec.initContainers[0].env
           content:
             name: SSL_CERT_FILE
-            value: "/opt/draios/etc/ca-certs/global_root_ca.crt"
+            value: "/opt/draios/certificates/global_root_ca.crt"
         template: templates/daemonset.yaml
       - contains:
           path: spec.template.spec.volumes
@@ -377,19 +377,19 @@ tests:
           path: spec.template.spec.initContainers[0].volumeMounts
           content:
             name: ca-cert
-            mountPath: /opt/draios/etc/ca-certs
+            mountPath: /opt/draios/certificates
             readOnly: true
         template: templates/daemonset.yaml
       - contains:
           path: spec.template.spec.containers[0].volumeMounts
           content:
             name: ca-cert
-            mountPath: /opt/draios/etc/ca-certs
+            mountPath: /opt/draios/certificates
             readOnly: true
         template: templates/daemonset.yaml
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: .*\/etc\/ca-certs\/global_root_ca\.crt.*
+          pattern: certificates\/global_root_ca\.crt.*
         template: templates/configmap.yaml
   - it: Check Global CA Cert Delegated Agent Deployment
     set:
@@ -411,13 +411,13 @@ tests:
           path: spec.template.spec.initContainers[0].env
           content:
             name: SSL_CERT_FILE
-            value: "/opt/draios/etc/ca-certs/global_root_ca.crt"
+            value: "/opt/draios/certificates/global_root_ca.crt"
         template: templates/daemonset.yaml
       - contains:
           path: spec.template.spec.containers[0].env
           content:
             name: SSL_CERT_FILE
-            value: "/opt/draios/etc/ca-certs/global_root_ca.crt"
+            value: "/opt/draios/certificates/global_root_ca.crt"
         template: templates/deployment.yaml
       - contains:
           path: spec.template.spec.volumes
@@ -437,30 +437,30 @@ tests:
           path: spec.template.spec.initContainers[0].volumeMounts
           content:
             name: ca-cert
-            mountPath: /opt/draios/etc/ca-certs
+            mountPath: /opt/draios/certificates
             readOnly: true
         template: templates/daemonset.yaml
       - contains:
           path: spec.template.spec.containers[0].volumeMounts
           content:
             name: ca-cert
-            mountPath: /opt/draios/etc/ca-certs
+            mountPath: /opt/draios/certificates
             readOnly: true
         template: templates/deployment.yaml
       - contains:
           path: spec.template.spec.containers[0].volumeMounts
           content:
             name: ca-cert
-            mountPath: /opt/draios/etc/ca-certs
+            mountPath: /opt/draios/certificates
             readOnly: true
         template: templates/daemonset.yaml
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: .*\/etc\/ca-certs\/global_root_ca\.crt.*
+          pattern: certificates\/global_root_ca\.crt.*
         template: templates/configmap.yaml
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: .*\/etc\/ca-certs\/global_root_ca\.crt.*
+          pattern: certificates\/global_root_ca\.crt.*
         template: templates/configmap-deployment.yaml
   - it: Check Global CA Cert with SSL Proxy
     set:
@@ -483,7 +483,7 @@ tests:
           path: spec.template.spec.initContainers[0].env
           content:
             name: SSL_CERT_FILE
-            value: "/opt/draios/etc/ca-certs/global_root_ca.crt"
+            value: "/opt/draios/certificates/global_root_ca.crt"
         template: templates/daemonset.yaml
       - contains:
           path: spec.template.spec.volumes
@@ -496,19 +496,19 @@ tests:
           path: spec.template.spec.initContainers[0].volumeMounts
           content:
             name: ca-cert
-            mountPath: /opt/draios/etc/ca-certs
+            mountPath: /opt/draios/certificates
             readOnly: true
         template: templates/daemonset.yaml
       - contains:
           path: spec.template.spec.containers[0].volumeMounts
           content:
             name: ca-cert
-            mountPath: /opt/draios/etc/ca-certs
+            mountPath: /opt/draios/certificates
             readOnly: true
         template: templates/daemonset.yaml
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: .*\/etc\/ca-certs\/global_root_ca\.crt.*
+          pattern: certificates\/global_root_ca\.crt.*
         template: templates/configmap.yaml
   - it: Check Global CA Cert with SSL Proxy Delegated Agent Deployment
     set:
@@ -533,13 +533,13 @@ tests:
           path: spec.template.spec.initContainers[0].env
           content:
             name: SSL_CERT_FILE
-            value: "/opt/draios/etc/ca-certs/global_root_ca.crt"
+            value: "/opt/draios/certificates/global_root_ca.crt"
         template: templates/daemonset.yaml
       - contains:
           path: spec.template.spec.containers[0].env
           content:
             name: SSL_CERT_FILE
-            value: "/opt/draios/etc/ca-certs/global_root_ca.crt"
+            value: "/opt/draios/certificates/global_root_ca.crt"
         template: templates/deployment.yaml
       - contains:
           path: spec.template.spec.volumes
@@ -559,28 +559,28 @@ tests:
           path: spec.template.spec.initContainers[0].volumeMounts
           content:
             name: ca-cert
-            mountPath: /opt/draios/etc/ca-certs
+            mountPath: /opt/draios/certificates
             readOnly: true
         template: templates/daemonset.yaml
       - contains:
           path: spec.template.spec.containers[0].volumeMounts
           content:
             name: ca-cert
-            mountPath: /opt/draios/etc/ca-certs
+            mountPath: /opt/draios/certificates
             readOnly: true
         template: templates/deployment.yaml
       - contains:
           path: spec.template.spec.containers[0].volumeMounts
           content:
             name: ca-cert
-            mountPath: /opt/draios/etc/ca-certs
+            mountPath: /opt/draios/certificates
             readOnly: true
         template: templates/daemonset.yaml
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: .*\/etc\/ca-certs\/global_root_ca\.crt.*
+          pattern: certificates\/global_root_ca\.crt.*
         template: templates/configmap.yaml
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: .*\/etc\/ca-certs\/global_root_ca\.crt.*
+          pattern: certificates\/global_root_ca\.crt.*
         template: templates/configmap-deployment.yaml
