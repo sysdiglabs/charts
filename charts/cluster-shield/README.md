@@ -23,7 +23,7 @@ $ pre-commit run -a
 $ helm repo add sysdig https://charts.sysdig.com
 $ helm repo update
 $ helm upgrade --install sysdig-sysdig-cluster-shield sysdig/cluster-shield \
-    --create-namespace -n sysdig-agent --version=1.0.1  \
+    --create-namespace -n sysdig-agent --version=1.0.2  \
     --set global.clusterConfig.name=CLUSTER_NAME \
     --set global.sysdig.region=SYSDIG_REGION \
     --set global.sysdig.accessKey=YOUR-KEY-HERE
@@ -172,9 +172,14 @@ The following table lists the configurable parameters of the `cluster-shield` ch
 | service.monitoring_port                                                                   |                                                                                       | <code></code>                                     |
 | service.admission_control_port                                                            |                                                                                       | <code></code>                                     |
 | service.audit_port                                                                        |                                                                                       | <code></code>                                     |
+| serviceAccount.name                                                                       |                                                                                       | <code></code>                                     |
+| serviceAccount.create                                                                     |                                                                                       | <code>true</code>                                 |
 | serviceAccount.labels                                                                     |                                                                                       | <code>{}</code>                                   |
 | serviceAccount.annotations                                                                |                                                                                       | <code>{}</code>                                   |
 | resources                                                                                 |                                                                                       | <code>{}</code>                                   |
+| priorityClassName                                                                         |                                                                                       | <code></code>                                     |
+| createPriorityClass                                                                       |                                                                                       | <code>false</code>                                |
+| priorityClassValue                                                                        |                                                                                       | <code>10</code>                                   |
 | nodeSelector                                                                              |                                                                                       | <code>{}</code>                                   |
 | tolerations                                                                               |                                                                                       | <code>[]</code>                                   |
 | affinity                                                                                  |                                                                                       | <code>{}</code>                                   |

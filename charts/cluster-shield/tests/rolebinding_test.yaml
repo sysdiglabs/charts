@@ -1,0 +1,41 @@
+suite: Test RoleBinding
+templates:
+  - templates/rolebinding.yaml
+values:
+  - ../ci/base-values.yaml
+release:
+  name: shield-release
+  namespace: shield-namespace
+tests:
+  - it: Test default
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          apiVersion: rbac.authorization.k8s.io/v1
+          kind: RoleBinding
+          name: shield-release-cluster-shield
+      - contains:
+          path: subjects
+          content:
+            kind: ServiceAccount
+            namespace: shield-namespace
+            name: shield-release-cluster-shield
+
+  - it: Test with custom service account name
+    set:
+      serviceAccount:
+        name: "custom-service-account"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          apiVersion: rbac.authorization.k8s.io/v1
+          kind: RoleBinding
+          name: shield-release-cluster-shield
+      - contains:
+          path: subjects
+          content:
+            kind: ServiceAccount
+            namespace: shield-namespace
+            name: custom-service-account

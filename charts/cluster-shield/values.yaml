@@ -131,6 +131,8 @@ service:
   admission_control_port:
   audit_port:
 serviceAccount:
+  name:
+  create: true
   labels: {}
   annotations: {}
 resources: {}
@@ -145,6 +147,9 @@ resources: {}
 #   cpu: 100m
 #   memory: 128Mi
 
+priorityClassName:
+createPriorityClass: false
+priorityClassValue: 10
 nodeSelector: {}
 tolerations: []
 affinity: {}

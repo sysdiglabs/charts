@@ -16,19 +16,22 @@ tests:
     asserts:
       - isKind:
           of: SecurityContextConstraints
-#      - equal:
-#          path: metadata.name
-#          value: shield-release-cluster-shield
-#      - equal:
-#          path: metadata.namespace
-#          value: shield-namespace
-#      - isNotNull:
-#          path: spec.template.spec.containers[?(@.name == "cluster-shield")]
-#      - isNotNull:
-#          path: spec.template.spec.containers[?(@.name == "cluster-shield")].securityContext
-#      - equal:
-#          path: spec.template.spec.containers[?(@.name == "cluster-shield")].securityContext.privileged
-#          value: true
+      - contains:
+          path: users
+          content: "system:serviceaccount:shield-namespace:shield-release-cluster-shield"
+
+  - it: Test run-all-namespaced mode with custom service account name
+    set:
+      run_command: "run-all-namespaced"
+      serviceAccount:
+        name: "custom-service-account"
+    asserts:
+      - isKind:
+          of: SecurityContextConstraints
+      - contains:
+          path: users
+          content: "system:serviceaccount:shield-namespace:custom-service-account"
+
   - it: Test run-all mode
     set:
       run_command: "run-all"
