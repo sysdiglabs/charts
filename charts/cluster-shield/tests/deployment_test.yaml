@@ -215,3 +215,54 @@ tests:
       - equal:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "admission")].containerPort
           value: 9876
+
+  - it: Test without specifying priorityClassName
+    asserts:
+      - isNull:
+          path: spec.template.spec.priorityClassName
+
+  - it: Test specifying priorityClassName
+    set:
+      priorityClassName: fake-priority-class-name
+    asserts:
+      - isNotNull:
+          path: spec.template.spec.priorityClassName
+      - equal:
+          path: spec.template.spec.priorityClassName
+          value: fake-priority-class-name
+
+  - it: Test specifying createPriorityClass
+    set:
+      createPriorityClass: true
+    asserts:
+      - isNotNull:
+          path: spec.template.spec.priorityClassName
+      - equal:
+          path: spec.template.spec.priorityClassName
+          value: shield-release-cluster-shield
+
+  - it: Test specifying both priorityClassName and createPriorityClass
+    set:
+      createPriorityClass: true
+      priorityClassName: fake-priority-class-name
+    asserts:
+      - isNotNull:
+          path: spec.template.spec.priorityClassName
+      - equal:
+          path: spec.template.spec.priorityClassName
+          value: fake-priority-class-name
+
+  - it: Default service account name
+    asserts:
+      - equal:
+          path: spec.template.spec.serviceAccountName
+          value: shield-release-cluster-shield
+
+  - it: Custom service account name
+    set:
+      serviceAccount:
+        name: custom-service-account
+    asserts:
+      - equal:
+          path: spec.template.spec.serviceAccountName
+          value: custom-service-account

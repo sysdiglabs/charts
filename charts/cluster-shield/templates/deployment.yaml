@@ -35,15 +35,13 @@ spec:
         {{- toYaml .Values.global.image.pullSecrets | nindent 8 }}
       {{- end }}
       {{/* sysdig-deploy support end */}}
-      serviceAccountName: {{ include "cluster-shield.fullname" . }}
-      securityContext: {}
+      serviceAccountName: {{ include "cluster-shield.serviceAccountName" . }}
       containers:
         - name: "cluster-shield"
           {{- if eq .Values.run_command "run-all-namespaced" }}
           securityContext:
             privileged: true
             runAsNonRoot: false
-            runAsUser: 0
             readOnlyRootFilesystem: false
             allowPrivilegeEscalation: true
           {{- end }}
@@ -174,6 +172,9 @@ spec:
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if or .Values.createPriorityClass .Values.priorityClassName }}
+      priorityClassName: "{{ include "cluster-shield.priorityClassName" . }}"
       {{- end }}
       {{- with .Values.affinity }}
       affinity:

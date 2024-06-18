@@ -1,0 +1,104 @@
+suite: Test PriorityClass
+templates:
+  - templates/priorityclass.yaml
+values:
+  - ../ci/base-values.yaml
+release:
+  name: shield-release
+  namespace: shield-namespace
+tests:
+  - it: Test without createPriorityClass (default)
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: Test with createPriorityClass
+    set:
+      createPriorityClass: true
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: PriorityClass
+          apiVersion: scheduling.k8s.io/v1
+          name: shield-release-cluster-shield
+      - equal:
+          path: preemptionPolicy
+          value: PreemptLowerPriority
+      - equal:
+          path: globalDefault
+          value: false
+      - equal:
+          path: value
+          value: 10
+
+  - it: Test with createPriorityClass and priorityClassValue
+    set:
+      createPriorityClass: true
+      priorityClassValue: 5
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: PriorityClass
+          apiVersion: scheduling.k8s.io/v1
+          name: shield-release-cluster-shield
+      - equal:
+          path: preemptionPolicy
+          value: PreemptLowerPriority
+      - equal:
+          path: globalDefault
+          value: false
+      - equal:
+          path: value
+          value: 5
+
+  - it: Test with priorityClassName
+    set:
+      priorityClassName: fake-priority-class-name
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: Test with createPriorityClass and priorityClassName
+    set:
+      createPriorityClass: true
+      priorityClassName: fake-priority-class-name
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: PriorityClass
+          apiVersion: scheduling.k8s.io/v1
+          name: fake-priority-class-name
+      - equal:
+          path: preemptionPolicy
+          value: PreemptLowerPriority
+      - equal:
+          path: globalDefault
+          value: false
+      - equal:
+          path: value
+          value: 10
+
+  - it: Test with createPriorityClass, priorityClassName and priorityClassValue
+    set:
+      createPriorityClass: true
+      priorityClassName: fake-priority-class-name
+      priorityClassValue: 5
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: PriorityClass
+          apiVersion: scheduling.k8s.io/v1
+          name: fake-priority-class-name
+      - equal:
+          path: preemptionPolicy
+          value: PreemptLowerPriority
+      - equal:
+          path: globalDefault
+          value: false
+      - equal:
+          path: value
+          value: 5

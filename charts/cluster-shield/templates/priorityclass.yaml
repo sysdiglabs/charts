@@ -1,0 +1,10 @@
+{{- if .Values.createPriorityClass }}
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: {{ include "cluster-shield.priorityClassName" . }}
+value: {{ .Values.priorityClassValue }}
+preemptionPolicy: PreemptLowerPriority
+globalDefault: false
+description: "Sysdig cluster-shield priority"
+{{- end }}

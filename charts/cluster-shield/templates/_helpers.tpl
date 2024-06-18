@@ -397,3 +397,14 @@ Define the proper image repository to use for cluster-shield
 {{- define "cluster-shield.serviceAuditPort" -}}
     {{ .Values.service.audit_port | default .Values.cluster_shield.features.audit.http_port }}
 {{- end -}}
+
+{{- define "cluster-shield.priorityClassName" -}}
+    {{ .Values.priorityClassName | default (include "cluster-shield.fullname" .) }}
+{{- end -}}
+
+{{/*
+Create the name of the service account to use
+*/}}
+{{- define "cluster-shield.serviceAccountName" -}}
+{{- .Values.serviceAccount.name | default (include "cluster-shield.fullname" .) }}
+{{- end }}
