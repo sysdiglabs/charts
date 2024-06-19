@@ -2,6 +2,21 @@ suite: Host volumes are available for agent
 templates:
   - daemonset.yaml
   - deployment.yaml
+kubernetesProvider:
+  scheme:
+    "v1/Node":
+      gvr:
+        version: "v1"
+        resource: "nodes"
+      namespaced: false
+  objects:
+  - apiVersion: v1
+    kind: Node
+    metadata:
+      name: fakenode
+    status:
+      nodeInfo:
+        osImage: fake-os-image
 tests:
   - it: Ensure /var/run host volume is mounted as /host/var/run in container
     asserts:

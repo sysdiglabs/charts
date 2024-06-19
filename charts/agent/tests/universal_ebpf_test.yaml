@@ -1,6 +1,21 @@
 suite: Universal eBPF tests
 templates:
   - templates/daemonset.yaml
+kubernetesProvider:
+  scheme:
+    "v1/Node":
+      gvr:
+        version: "v1"
+        resource: "nodes"
+      namespaced: false
+  objects:
+  - apiVersion: v1
+    kind: Node
+    metadata:
+      name: fakenode
+    status:
+      nodeInfo:
+        osImage: fake-os-image
 tests:
   - it: Ensure that when the eBPF is disabled we create the sysdig container without SYSDIG_BPF_PROBE and SYSDIG_AGENT_DRIVER environment variables
     set:
