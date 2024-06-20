@@ -21,6 +21,7 @@ jobs:
             charts/admission-controller/*
             charts/agent/*
             charts/cluster-scanner/*
+            charts/cluster-shield/*
             charts/common/*
             charts/kspm-collector/*
             charts/node-analyzer/*

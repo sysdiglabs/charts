@@ -60,10 +60,12 @@ cluster_shield:
       deny_on_error: false
       dry_run: true
       timeout: 5
+      http_port: 8443
       container_vulnerability_management:
         enabled: false
     audit:
       enabled: false
+      http_port: 6443
       timeout: 5
     posture:
       enabled: false
@@ -125,8 +127,12 @@ podAnnotations: {}
 podLabels: {}
 service:
   type: ClusterIP
-  port: 8080
+  monitoring_port:
+  admission_control_port:
+  audit_port:
 serviceAccount:
+  name:
+  create: true
   labels: {}
   annotations: {}
 resources: {}
@@ -141,6 +147,9 @@ resources: {}
 #   cpu: 100m
 #   memory: 128Mi
 
+priorityClassName:
+createPriorityClass: false
+priorityClassValue: 10
 nodeSelector: {}
 tolerations: []
 affinity: {}

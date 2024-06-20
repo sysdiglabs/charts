@@ -452,6 +452,13 @@
               "description": "Specify if the audit feature is enabled",
               "default": false
             },
+            "http_port": {
+              "type": "integer",
+              "default": 6443,
+              "minimum": 1,
+              "maximum": 65535,
+              "description": "HTTP Server port used to expose the webhook web server."
+            },
             "timeout": {
               "type": "integer",
               "description": "The number of seconds for the request to time out",
@@ -460,6 +467,7 @@
           },
           "required": [
             "enabled",
+            "http_port",
             "timeout"
           ],
           "additionalProperties": false,
@@ -912,6 +920,13 @@
             "container_vulnerability_management": {
               "$ref": "#/$defs/ClusterShieldConfiguration/$defs/AdmissionControlContainerVulnerabilityManagement"
             },
+            "http_port": {
+              "type": "integer",
+              "default": 8443,
+              "minimum": 1,
+              "maximum": 65535,
+              "description": "HTTP Server port used to expose the webhook web server."
+            },
             "timeout": {
               "type": "integer",
               "description": "The number of seconds for the request to time out",
@@ -920,7 +935,8 @@
           },
           "required": [
             "enabled",
-            "deny_on_error"
+            "deny_on_error",
+            "http_port"
           ],
           "$defs": {
             "IsEnabled": {

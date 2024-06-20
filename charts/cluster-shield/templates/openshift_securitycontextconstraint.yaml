@@ -33,7 +33,7 @@ seccompProfiles:
 supplementalGroups:
   type: RunAsAny
 users:
-- system:serviceaccount:{{ .Release.Namespace }}:{{ include "cluster-shield.fullname" . }}
+- system:serviceaccount:{{ .Release.Namespace }}:{{ include "cluster-shield.serviceAccountName" . }}
 volumes:
 - hostPath
 - emptyDir

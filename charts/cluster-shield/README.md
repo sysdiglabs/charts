@@ -23,7 +23,7 @@ $ pre-commit run -a
 $ helm repo add sysdig https://charts.sysdig.com
 $ helm repo update
 $ helm upgrade --install sysdig-sysdig-cluster-shield sysdig/cluster-shield \
-    --create-namespace -n sysdig-agent --version=1.0.0  \
+    --create-namespace -n sysdig-agent --version=1.0.2  \
     --set global.clusterConfig.name=CLUSTER_NAME \
     --set global.sysdig.region=SYSDIG_REGION \
     --set global.sysdig.accessKey=YOUR-KEY-HERE
@@ -134,8 +134,10 @@ The following table lists the configurable parameters of the `cluster-shield` ch
 | cluster_shield.features.admission_control.deny_on_error                                   |                                                                                       | <code>false</code>                                |
 | cluster_shield.features.admission_control.dry_run                                         |                                                                                       | <code>true</code>                                 |
 | cluster_shield.features.admission_control.timeout                                         |                                                                                       | <code>5</code>                                    |
+| cluster_shield.features.admission_control.http_port                                       |                                                                                       | <code>8443</code>                                 |
 | cluster_shield.features.admission_control.container_vulnerability_management.enabled      |                                                                                       | <code>false</code>                                |
 | cluster_shield.features.audit.enabled                                                     |                                                                                       | <code>false</code>                                |
+| cluster_shield.features.audit.http_port                                                   |                                                                                       | <code>6443</code>                                 |
 | cluster_shield.features.audit.timeout                                                     |                                                                                       | <code>5</code>                                    |
 | cluster_shield.features.posture.enabled                                                   |                                                                                       | <code>false</code>                                |
 | cluster_shield.features.container_vulnerability_management.enabled                        |                                                                                       | <code>false</code>                                |
@@ -167,10 +169,17 @@ The following table lists the configurable parameters of the `cluster-shield` ch
 | podAnnotations                                                                            |                                                                                       | <code>{}</code>                                   |
 | podLabels                                                                                 |                                                                                       | <code>{}</code>                                   |
 | service.type                                                                              |                                                                                       | <code>ClusterIP</code>                            |
-| service.port                                                                              |                                                                                       | <code>8080</code>                                 |
+| service.monitoring_port                                                                   |                                                                                       | <code></code>                                     |
+| service.admission_control_port                                                            |                                                                                       | <code></code>                                     |
+| service.audit_port                                                                        |                                                                                       | <code></code>                                     |
+| serviceAccount.name                                                                       |                                                                                       | <code></code>                                     |
+| serviceAccount.create                                                                     |                                                                                       | <code>true</code>                                 |
 | serviceAccount.labels                                                                     |                                                                                       | <code>{}</code>                                   |
 | serviceAccount.annotations                                                                |                                                                                       | <code>{}</code>                                   |
 | resources                                                                                 |                                                                                       | <code>{}</code>                                   |
+| priorityClassName                                                                         |                                                                                       | <code></code>                                     |
+| createPriorityClass                                                                       |                                                                                       | <code>false</code>                                |
+| priorityClassValue                                                                        |                                                                                       | <code>10</code>                                   |
 | nodeSelector                                                                              |                                                                                       | <code>{}</code>                                   |
 | tolerations                                                                               |                                                                                       | <code>[]</code>                                   |
 | affinity                                                                                  |                                                                                       | <code>{}</code>                                   |

@@ -7,6 +7,7 @@ sysdig_deploy_path="sysdig-deploy"
 admission_controller_chart_path="admission-controller"
 agent_chart_path="agent"
 cluster_scanner_chart_path="cluster-scanner"
+cluster_shield_chart_path="cluster-shield"
 common_chart_path="common"
 kspm_collector_chart_path="kspm-collector"
 node_analyzer_chart_path="node-analyzer"
@@ -69,7 +70,7 @@ check_update_needed () {
     fi
 }
 
-charts=( "$node_analyzer_chart_path" "$agent_chart_path" "$kspm_collector_chart_path" "$rapid_response_chart_path" "$admission_controller_chart_path" "$common_chart_path" "$cluster_scanner_chart_path")
+charts=( "$node_analyzer_chart_path" "$agent_chart_path" "$kspm_collector_chart_path" "$rapid_response_chart_path" "$admission_controller_chart_path" "$common_chart_path" "$cluster_scanner_chart_path" "$cluster_shield_chart_path")
 for chart in "${charts[@]}"
 do
     check_update_needed "$chart"

@@ -9,4 +9,4 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     namespace: {{ .Release.Namespace }}
-    name: {{ include "cluster-shield.fullname" . }}
+    name: {{ include "cluster-shield.serviceAccountName" . }}

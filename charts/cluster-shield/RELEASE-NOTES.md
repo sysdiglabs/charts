@@ -1,5 +1,5 @@
 # What's Changed
 
 ### Chores
-- **cluster-shield** [e615245d](https://github.com/sysdiglabs/charts/commit/e615245dcfdf26c0261c5a02dd1123e7c7b7fe6e): Automatic bump to version 1.0.0 ([#1771](https://github.com/sysdiglabs/charts/issues/1771))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/cluster-shield-0.11.0...cluster-shield-1.0.0
+- **cluster-shield** [0c3097f9](https://github.com/sysdiglabs/charts/commit/0c3097f9f32e7fefea4444c3c026951ac4fb10ac): Automatic bump to version 1.0.1 ([#1782](https://github.com/sysdiglabs/charts/issues/1782))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/cluster-shield-1.0.1...cluster-shield-1.0.2

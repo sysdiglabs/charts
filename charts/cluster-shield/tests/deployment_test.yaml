@@ -26,6 +26,7 @@ tests:
       - equal:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].securityContext.privileged
           value: true
+
   - it: Test run-all mode
     set:
       run_command: "run-all"
@@ -66,6 +67,7 @@ tests:
       - equal:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "SYSDIG_CLUSTER_SHIELD_SYSDIG_ENDPOINT__ACCESS_KEY")].valueFrom.secretKeyRef.key
           value: access-key
+
   - it: Test env var is set when secureAPITokenSecret provided
     set:
       global:
@@ -98,13 +100,14 @@ tests:
           value: /healthz
       - equal:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].readinessProbe.httpGet.port
-          value: http
+          value: monitoring
       - equal:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].readinessProbe.initialDelaySeconds
           value: 10
       - equal:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].readinessProbe.periodSeconds
           value: 5
+
   - it: Test readinessProbe custom values
     set:
       probes:
@@ -117,13 +120,14 @@ tests:
           value: /healthz
       - equal:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].readinessProbe.httpGet.port
-          value: http
+          value: monitoring
       - equal:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].readinessProbe.initialDelaySeconds
           value: 20
       - equal:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].readinessProbe.periodSeconds
           value: 10
+
   - it: Test livenessProbe default values
     asserts:
       - equal:
@@ -131,13 +135,14 @@ tests:
           value: /healthz
       - equal:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].livenessProbe.httpGet.port
-          value: http
+          value: monitoring
       - equal:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].livenessProbe.initialDelaySeconds
           value: 5
       - equal:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].livenessProbe.periodSeconds
           value: 5
+
   - it: Test livenessProbe custom values
     set:
       probes:
@@ -150,10 +155,114 @@ tests:
           value: /healthz
       - equal:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].livenessProbe.httpGet.port
-          value: http
+          value: monitoring
       - equal:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].livenessProbe.initialDelaySeconds
           value: 20
       - equal:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].livenessProbe.periodSeconds
           value: 10
+
+  - it: Test default container ports
+    set:
+      cluster_shield:
+        features:
+          audit:
+            enabled: true
+          admission_control:
+            enabled: true
+    asserts:
+      - isNotNull:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "monitoring")]
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "monitoring")].containerPort
+          value: 8080
+      - isNotNull:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "audit")]
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "audit")].containerPort
+          value: 6443
+      - isNotNull:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "admission")]
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "admission")].containerPort
+          value: 8443
+
+  - it: Test custom container ports
+    set:
+      cluster_shield:
+        monitoring_port: 1234
+        features:
+          audit:
+            enabled: true
+            http_port: 5678
+          admission_control:
+            enabled: true
+            http_port: 9876
+    asserts:
+      - isNotNull:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "monitoring")]
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "monitoring")].containerPort
+          value: 1234
+      - isNotNull:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "audit")]
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "audit")].containerPort
+          value: 5678
+      - isNotNull:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "admission")]
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "admission")].containerPort
+          value: 9876
+
+  - it: Test without specifying priorityClassName
+    asserts:
+      - isNull:
+          path: spec.template.spec.priorityClassName
+
+  - it: Test specifying priorityClassName
+    set:
+      priorityClassName: fake-priority-class-name
+    asserts:
+      - isNotNull:
+          path: spec.template.spec.priorityClassName
+      - equal:
+          path: spec.template.spec.priorityClassName
+          value: fake-priority-class-name
+
+  - it: Test specifying createPriorityClass
+    set:
+      createPriorityClass: true
+    asserts:
+      - isNotNull:
+          path: spec.template.spec.priorityClassName
+      - equal:
+          path: spec.template.spec.priorityClassName
+          value: shield-release-cluster-shield
+
+  - it: Test specifying both priorityClassName and createPriorityClass
+    set:
+      createPriorityClass: true
+      priorityClassName: fake-priority-class-name
+    asserts:
+      - isNotNull:
+          path: spec.template.spec.priorityClassName
+      - equal:
+          path: spec.template.spec.priorityClassName
+          value: fake-priority-class-name
+
+  - it: Default service account name
+    asserts:
+      - equal:
+          path: spec.template.spec.serviceAccountName
+          value: shield-release-cluster-shield
+
+  - it: Custom service account name
+    set:
+      serviceAccount:
+        name: custom-service-account
+    asserts:
+      - equal:
+          path: spec.template.spec.serviceAccountName
+          value: custom-service-account

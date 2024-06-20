@@ -332,20 +332,6 @@ ca.crt
 {{- end }}
 
 {{/*
-Audit Port
-*/}}
-{{- define "cluster-shield.admissionControllerAuditPort" -}}
-6443
-{{- end }}
-
-{{/*
-Audit Port
-*/}}
-{{- define "cluster-shield.admissionControlPort" -}}
-8443
-{{- end }}
-
-{{/*
 ConfigMap Name
 */}}
 {{- define "cluster-shield.configmapName" -}}
@@ -399,3 +385,26 @@ Define the proper image repository to use for cluster-shield
         {{- .Values.image.repository -}}
     {{- end -}}
 {{- end -}}
+
+{{- define "cluster-shield.serviceMonitoringPort" -}}
+    {{ .Values.service.monitoring_port | default .Values.cluster_shield.monitoring_port }}
+{{- end -}}
+
+{{- define "cluster-shield.serviceAdmissionControlPort" -}}
+    {{ .Values.service.admission_control_port | default .Values.cluster_shield.features.admission_control.http_port }}
+{{- end -}}
+
+{{- define "cluster-shield.serviceAuditPort" -}}
+    {{ .Values.service.audit_port | default .Values.cluster_shield.features.audit.http_port }}
+{{- end -}}
+
+{{- define "cluster-shield.priorityClassName" -}}
+    {{ .Values.priorityClassName | default (include "cluster-shield.fullname" .) }}
+{{- end -}}
+
+{{/*
+Create the name of the service account to use
+*/}}
+{{- define "cluster-shield.serviceAccountName" -}}
+{{- .Values.serviceAccount.name | default (include "cluster-shield.fullname" .) }}
+{{- end }}

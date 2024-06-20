@@ -1,0 +1,282 @@
+suite: Test ValidatingWebhookConfiguration
+templates:
+  - templates/validatingwebhookconfiguration.yaml
+values:
+  - ../ci/base-values.yaml
+release:
+  name: shield-release
+  namespace: shield-namespace
+tests:
+  - it: Doesn't create a ValidatingWebhookConfiguration resource when admission control and audit features are disabled
+    set:
+      cluster_shield:
+        features:
+          admission_control:
+            enabled: false
+          audit:
+            enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: Creates a ValidatingWebhookConfiguration resource when admission control feature is enabled
+    set:
+      cluster_shield:
+        features:
+          admission_control:
+            enabled: true
+          audit:
+            enabled: false
+    documentIndex: 0
+    asserts:
+      - hasDocuments:
+          count: 2
+      - isNotNull:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")]
+      - equal:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].failurePolicy
+          value: "Ignore"
+      - equal:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].timeoutSeconds
+          value: 5
+      - equal:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].clientConfig.service.namespace
+          value: "shield-namespace"
+      - equal:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].clientConfig.service.name
+          value: "shield-release-cluster-shield"
+      - equal:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].clientConfig.service.path
+          value: "/validate"
+      - equal:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].clientConfig.service.port
+          value: 8443
+
+  - it: Creates a ValidatingWebhookConfiguration resource when admission control feature is enabled with deny_on_error
+    set:
+      cluster_shield:
+        features:
+          admission_control:
+            enabled: true
+            deny_on_error: true
+          audit:
+            enabled: false
+    documentIndex: 0
+    asserts:
+      - hasDocuments:
+          count: 2
+      - isNotNull:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")]
+      - equal:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].failurePolicy
+          value: "Fail"
+      - equal:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].clientConfig.service.namespace
+          value: "shield-namespace"
+      - equal:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].clientConfig.service.name
+          value: "shield-release-cluster-shield"
+      - equal:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].clientConfig.service.path
+          value: "/validate"
+      - equal:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].clientConfig.service.port
+          value: 8443
+
+  - it: Creates a ValidatingWebhookConfiguration resource when audit feature is enabled
+    set:
+      cluster_shield:
+        features:
+          admission_control:
+            enabled: false
+          audit:
+            enabled: true
+    documentIndex: 0
+    asserts:
+      - hasDocuments:
+          count: 2
+      - isNotNull:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")]
+      - equal:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].clientConfig.service.namespace
+          value: "shield-namespace"
+      - equal:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].clientConfig.service.name
+          value: "shield-release-cluster-shield"
+      - equal:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].clientConfig.service.path
+          value: "/k8s-audit"
+      - equal:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].clientConfig.service.port
+          value: 6443
+      - equal:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].failurePolicy
+          value: "Ignore"
+      - equal:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].timeoutSeconds
+          value: 5
+
+  - it: Creates a ValidatingWebhookConfiguration resource when admission control and audit features are enabled with custom timeouts
+    set:
+      cluster_shield:
+        features:
+          admission_control:
+            enabled: true
+            timeout: 10
+          audit:
+            enabled: true
+            timeout: 20
+    documentIndex: 0
+    asserts:
+      - hasDocuments:
+          count: 2
+      - isNotNull:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")]
+      - isNotNull:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")]
+      - equal:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].clientConfig.service.namespace
+          value: "shield-namespace"
+      - equal:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].clientConfig.service.name
+          value: "shield-release-cluster-shield"
+      - equal:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].clientConfig.service.path
+          value: "/validate"
+      - equal:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].clientConfig.service.port
+          value: 8443
+      - equal:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].timeoutSeconds
+          value: 10
+      - equal:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].failurePolicy
+          value: "Ignore"
+      - equal:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].clientConfig.service.namespace
+          value: "shield-namespace"
+      - equal:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].clientConfig.service.name
+          value: "shield-release-cluster-shield"
+      - equal:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].clientConfig.service.path
+          value: "/k8s-audit"
+      - equal:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].clientConfig.service.port
+          value: 6443
+      - equal:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].timeoutSeconds
+          value: 20
+      - equal:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].failurePolicy
+          value: "Ignore"
+
+  - it: Creates a ValidatingWebhookConfiguration resource when admission control and audit features are enabled using custom service ports
+    set:
+      cluster_shield:
+        features:
+          admission_control:
+            enabled: true
+          audit:
+            enabled: true
+      service:
+        admission_control_port: 1234
+        audit_port: 5678
+    documentIndex: 0
+    asserts:
+      - hasDocuments:
+          count: 2
+      - isNotNull:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")]
+      - isNotNull:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")]
+      - equal:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].clientConfig.service.namespace
+          value: "shield-namespace"
+      - equal:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].clientConfig.service.name
+          value: "shield-release-cluster-shield"
+      - equal:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].clientConfig.service.path
+          value: "/validate"
+      - equal:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].clientConfig.service.port
+          value: 1234
+      - equal:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].clientConfig.service.namespace
+          value: "shield-namespace"
+      - equal:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].clientConfig.service.name
+          value: "shield-release-cluster-shield"
+      - equal:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].clientConfig.service.path
+          value: "/k8s-audit"
+      - equal:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].clientConfig.service.port
+          value: 5678
+
+  - it: Creates a ValidatingWebhookConfiguration resource when admission control and audit features are enabled using custom pod ports
+    set:
+      cluster_shield:
+        features:
+          admission_control:
+            enabled: true
+            http_port: 1234
+          audit:
+            enabled: true
+            http_port: 5678
+    documentIndex: 0
+    asserts:
+      - hasDocuments:
+          count: 2
+      - isNotNull:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")]
+      - isNotNull:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")]
+      - equal:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].clientConfig.service.namespace
+          value: "shield-namespace"
+      - equal:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].clientConfig.service.name
+          value: "shield-release-cluster-shield"
+      - equal:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].clientConfig.service.path
+          value: "/validate"
+      - equal:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].clientConfig.service.port
+          value: 1234
+      - equal:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].clientConfig.service.namespace
+          value: "shield-namespace"
+      - equal:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].clientConfig.service.name
+          value: "shield-release-cluster-shield"
+      - equal:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].clientConfig.service.path
+          value: "/k8s-audit"
+      - equal:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].clientConfig.service.port
+          value: 5678
+
+  - it: Creates a Valid secret for certificates
+    set:
+      cluster_shield:
+        features:
+          admission_control:
+            enabled: true
+          audit:
+            enabled: true
+    documentIndex: 1
+    asserts:
+      - hasDocuments:
+          count: 2
+      - containsDocument:
+          kind: Secret
+          apiVersion: v1
+          name: sysdig-cluster-shield-tls-certs
+      - isNotNull:
+          path: data["tls.crt"]
+      - isNotNull:
+          path: data["tls.key"]
+      - isNotNull:
+          path: data["ca.crt"]
