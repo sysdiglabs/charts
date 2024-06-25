@@ -1,5 +1,5 @@
 # What's Changed
 
 ### Chores
-- **sysdig-deploy** [0e11c6e0](https://github.com/sysdiglabs/charts/commit/0e11c6e0c19276ab48fe833fd24cfb1e2b8ed7ff): Automatic version bump due to updated dependencies ([#1787](https://github.com/sysdiglabs/charts/issues/1787))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.56.9...sysdig-deploy-1.56.10
+- **sysdig-deploy** [ddfa6d30](https://github.com/sysdiglabs/charts/commit/ddfa6d30253065f7eecadd87b6e11d92dfc69590): Automatic version bump due to updated dependencies ([#1789](https://github.com/sysdiglabs/charts/issues/1789))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.56.10...sysdig-deploy-1.56.11
