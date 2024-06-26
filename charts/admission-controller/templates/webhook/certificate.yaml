@@ -1,0 +1,24 @@
+{{- if .Values.webhook.ssl.certManager.enabled }}
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  labels:
+    {{- include "admissionController.webhook.labels" . | nindent 4 }}
+  name: {{ include "admissionController.webhook.fullname" . }}
+  namespace: {{ include "admissionController.namespace" . }}
+spec:
+  dnsNames:
+  - {{ include "admissionController.webhook.fullname" . }}
+  - {{ include "admissionController.webhook.fullname" . }}.{{ include "admissionController.namespace" . }}.svc
+  issuerRef:
+    {{- with .Values.webhook.ssl.certManager.issuer.group }}
+    group: {{ . }}
+    {{- end }}
+    {{- with .Values.webhook.ssl.certManager.issuer.kind }}
+    kind: {{ . }}
+    {{- end }}
+    {{- with .Values.webhook.ssl.certManager.issuer.name }}
+    name: {{ . }}
+    {{- end }}
+  secretName: {{ include "admissionController.webhook.fullname" . }}-tls
+{{- end }}

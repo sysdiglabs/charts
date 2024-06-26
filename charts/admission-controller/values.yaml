@@ -300,6 +300,14 @@ webhook:
   logLevel: info
 
   ssl:
+    certManager:
+      # Use cert-manager for certificate management
+      enabled: false
+      issuer:
+        group: cert-manager.io
+        kind: ClusterIssuer
+        # Required if webhook.ssl.certManager.enabled is true
+        name: ""
     # Reuse existing TLS Secret during chart upgrade.
     reuseTLSSecret: false
     ca:
