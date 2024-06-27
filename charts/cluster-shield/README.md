@@ -23,7 +23,7 @@ $ pre-commit run -a
 $ helm repo add sysdig https://charts.sysdig.com
 $ helm repo update
 $ helm upgrade --install sysdig-sysdig-cluster-shield sysdig/cluster-shield \
-    --create-namespace -n sysdig-agent --version=1.0.3  \
+    --create-namespace -n sysdig-agent --version=1.0.5  \
     --set global.clusterConfig.name=CLUSTER_NAME \
     --set global.sysdig.region=SYSDIG_REGION \
     --set global.sysdig.accessKey=YOUR-KEY-HERE
@@ -115,7 +115,7 @@ The following table lists the configurable parameters of the `cluster-shield` ch
 | global.sysdig.secureAPITokenSecret                                                        |                                                                                       | <code></code>                                     |
 | global.sysdig.secureAPIToken                                                              |                                                                                       | <code></code>                                     |
 | global.imageRegistry                                                                      |                                                                                       | <code></code>                                     |
-| global.sslVerifyCertificate                                                               |                                                                                       | <code></code>                                     |
+| global.sslVerifyCertificate                                                               |                                                                                       | <code>true</code>                                 |
 | global.ssl.ca.certs                                                                       | A PEM-encoded x509 certificate. This can also be a bundle with multiple certificates. | <code>[]</code>                                   |
 | global.ssl.ca.keyName                                                                     | Filename that is used when creating the secret. Required if certs is provided.        | <code>null</code>                                 |
 | global.ssl.ca.existingCaSecret                                                            | Provide the name of an existing Secret that contains the CA required                  | <code>null</code>                                 |

@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **cluster-shield** [0c3097f9](https://github.com/sysdiglabs/charts/commit/0c3097f9f32e7fefea4444c3c026951ac4fb10ac): Automatic bump to version 1.0.1 ([#1782](https://github.com/sysdiglabs/charts/issues/1782))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/cluster-shield-1.0.1...cluster-shield-1.0.2
+### Bug Fixes
+- **cluster-shield** [de790816](https://github.com/sysdiglabs/charts/commit/de7908164fad4ef145722e254c0259bed5fc5701): global.sslVerifyCertificate was not correctly used ([#1793](https://github.com/sysdiglabs/charts/issues/1793))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/cluster-shield-1.0.3...cluster-shield-1.0.4

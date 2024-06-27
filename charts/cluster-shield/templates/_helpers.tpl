@@ -91,9 +91,7 @@ Adds kubernetes related keys to the configuration.
 {{- end }}
 {{- end }}
 {{- if not (hasKey (default .Values.cluster_shield.ssl dict) "verify") }}
-{{- $_ := set $conf "ssl" (dict "verify" (.Values.global.sslVerifyCertificate | default true)) }}
-{{- else if not .Values.cluster_shield.ssl.verify }}
-{{- $_ := set $conf "ssl" (dict "verify" (.Values.global.sslVerifyCertificate | default true)) }}
+{{- $_ := set $conf "ssl" (dict "verify" .Values.global.sslVerifyCertificate) }}
 {{- end }}
 {{- if not .Values.cluster_shield.cluster_config.name }}
 {{- if .Values.global.clusterConfig.name }}

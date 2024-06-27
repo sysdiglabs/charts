@@ -118,7 +118,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.global.sysdig.secureAPITokenSecret }}
-                  key: "secure-api-token"
+                  key: "SECURE_API_TOKEN"
             {{- end }}
             {{- if eq (include "cluster-shield.custom_ca.enabled" .) "true" }}
             - name: SSL_CERT_FILE
