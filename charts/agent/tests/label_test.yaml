@@ -1,6 +1,21 @@
 suite: Testing if labels are applied correctly
 templates:
   - daemonset.yaml
+kubernetesProvider:
+  scheme:
+    "v1/Node":
+      gvr:
+        version: "v1"
+        resource: "nodes"
+      namespaced: false
+  objects:
+  - apiVersion: v1
+    kind: Node
+    metadata:
+      name: fakenode
+    status:
+      nodeInfo:
+        osImage: fake-os-image
 tests:
   - it: check application of agent labels example 1
     set:

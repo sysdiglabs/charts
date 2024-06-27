@@ -2,6 +2,21 @@ suite: Agent PriorityClass tests
 templates:
   - templates/daemonset.yaml
   - templates/priorityclass.yaml
+kubernetesProvider:
+  scheme:
+    "v1/Node":
+      gvr:
+        version: "v1"
+        resource: "nodes"
+      namespaced: false
+  objects:
+  - apiVersion: v1
+    kind: Node
+    metadata:
+      name: fakenode
+    status:
+      nodeInfo:
+        osImage: fake-os-image
 tests:
   - it: Check PriorityClass limits are correctly set
     set:

@@ -2,6 +2,21 @@ suite: Test the Readiness Probe Configuration
 templates:
   - templates/daemonset.yaml
   - templates/deployment.yaml
+kubernetesProvider:
+  scheme:
+    "v1/Node":
+      gvr:
+        version: "v1"
+        resource: "nodes"
+      namespaced: false
+  objects:
+  - apiVersion: v1
+    kind: Node
+    metadata:
+      name: fakenode
+    status:
+      nodeInfo:
+        osImage: fake-os-image
 tests:
   - it: "[DaemonSet] Readiness Probe (agent > 12.18.0)"
     set:

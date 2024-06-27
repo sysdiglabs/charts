@@ -12,6 +12,13 @@ tests:
         sysdig:
           tags:
             tag: value
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: TAGS
+            value: tag:value
+
   - it: Check nested agent tags are set from global.sysdig.tags
     set:
       clusterName: "test-k8s"

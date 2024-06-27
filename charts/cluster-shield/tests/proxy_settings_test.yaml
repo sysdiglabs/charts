@@ -80,6 +80,7 @@ tests:
           apiVersion: v1
           name: sysdig-cluster-shield-proxy
         template: templates/secrets.yaml
+        documentIndex: 1
       - equal:
           path: data.httpProxy
           decodeBase64: true
@@ -148,6 +149,7 @@ tests:
           apiVersion: v1
           name: sysdig-cluster-shield-proxy
         template: templates/secrets.yaml
+        documentIndex: 1
       - equal:
           path: data.httpProxy
           decodeBase64: true

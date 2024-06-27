@@ -18,7 +18,7 @@ jobs:
           version: v3.4.0
 
       - name: Set up helm unit test plugin
-        run: helm plugin install https://github.com/helm-unittest/helm-unittest --version=0.3.3
+        run: make deps-unittest
 
       - name: Bundle chart dependencies
         run: make deps
