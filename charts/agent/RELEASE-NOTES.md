@@ -1,5 +1,5 @@
 # What's Changed
 
-### Bug Fixes
-- **agent** [c85da268](https://github.com/sysdiglabs/charts/commit/c85da2687541c4a1f0bbf85199bbdecdb027dbbd): [SMAGENT-7391] fix path of CA certificate to be used for proxy ([#1776](https://github.com/sysdiglabs/charts/issues/1776))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.24.3...agent-1.24.4
+### Chores
+- **agent,cluster-shield,sysdig-deploy,rapid-response,kspm-collector,cluster-scanner** [87059f19](https://github.com/sysdiglabs/charts/commit/87059f1992b6bf1c133ef96937ea2da90fa7d8a1): bump helm-unittest to v0.5.1 ([#1785](https://github.com/sysdiglabs/charts/issues/1785))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.24.4...agent-1.24.5
