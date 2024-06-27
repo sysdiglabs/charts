@@ -73,3 +73,96 @@ tests:
                   - distributed
                 nats_url: nats://release-name-cluster-shield-cluster-scanner:4222
               leader_election_lock_name: release-name-cluster-shield
+
+  - it: Set SSL Verify (global flag - disabled)
+    set:
+      global:
+        sslVerifyCertificate: false
+    asserts:
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+      - hasDocuments:
+          count: 1
+      - isNotEmpty:
+          path: data
+      - matchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: |
+            ssl:
+              verify: false
+
+  - it: Set SSL Verify (global flag - enabled)
+    set:
+      global:
+        sslVerifyCertificate: true
+    asserts:
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+      - hasDocuments:
+          count: 1
+      - isNotEmpty:
+          path: data
+      - matchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: |
+            ssl:
+              verify: true
+
+  - it: Set SSL Verify (local flag - disabled)
+    set:
+      global:
+        sslVerifyCertificate: true
+      cluster_shield:
+        ssl:
+          verify: false
+    asserts:
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+      - hasDocuments:
+          count: 1
+      - isNotEmpty:
+          path: data
+      - matchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: |
+            ssl:
+              verify: false
+
+  - it: Set SSL Verify (local flag - enabled)
+    set:
+      global:
+        sslVerifyCertificate: false
+      cluster_shield:
+        ssl:
+          verify: true
+    asserts:
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+      - hasDocuments:
+          count: 1
+      - isNotEmpty:
+          path: data
+      - matchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: |
+            ssl:
+              verify: true
+
+  - it: Set SSL Verify (default)
+    asserts:
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+      - hasDocuments:
+          count: 1
+      - isNotEmpty:
+          path: data
+      - matchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: |
+            ssl:
+              verify: true

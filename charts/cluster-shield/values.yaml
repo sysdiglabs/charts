@@ -17,7 +17,7 @@ global:
     secureAPITokenSecret:
     secureAPIToken:
   imageRegistry:
-  sslVerifyCertificate:
+  sslVerifyCertificate: true
   ssl:
     ca:
       # A PEM-encoded x509 certificate. This can also be a bundle with multiple certificates.
