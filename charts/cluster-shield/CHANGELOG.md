@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.0.4
+### Bug Fixes
+* **cluster-shield** [de790816](https://github.com/sysdiglabs/charts/commit/de7908164fad4ef145722e254c0259bed5fc5701): global.sslVerifyCertificate was not correctly used ([#1793](https://github.com/sysdiglabs/charts/issues/1793))
 # v1.0.3
 ### Bug Fixes
 * **cluster-shield** [92cfbb00](https://github.com/sysdiglabs/charts/commit/92cfbb001d1c790b238d3efc9659c4b36a20156d): Change secureApiTokenSecret key name ([#1790](https://github.com/sysdiglabs/charts/issues/1790))
