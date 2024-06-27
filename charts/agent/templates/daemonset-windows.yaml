@@ -39,20 +39,20 @@ spec:
           image: "{{ .Values.windows.image.registry }}/{{ .Values.windows.image.repository }}:{{ .Values.windows.image.tag }}"
           imagePullPolicy: {{ .Values.windows.image.pullPolicy | default .Values.global.image.pullPolicy }}
           livenessProbe:
-            timeoutSeconds: 10
-            exec:
-              command:
-                - $env:CONTAINER_SANDBOX_MOUNT_POINT/Sysdig/Agent/healthprobe.bat
-                - "24483"
+            httpGet:
+              host: 127.0.0.1
+              path: /healthz
+              port: 24484
             initialDelaySeconds: 60
-            periodSeconds: 5
-          readinessProbe:
+            periodSeconds: 30
             timeoutSeconds: 10
-            exec:
-              command:
-                - $env:CONTAINER_SANDBOX_MOUNT_POINT/Sysdig/Agent/healthprobe.bat
-                - "24483"
-            initialDelaySeconds: 20
+          readinessProbe:
+            httpGet:
+              host: 127.0.0.1
+              path: /healthz
+              port: 24484
+            initialDelaySeconds: 60
+            timeoutSeconds: 10
           resources:
             {{- toYaml .Values.windows.resources | nindent 12 }}
           volumeMounts:
