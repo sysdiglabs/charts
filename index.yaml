@@ -4341,6 +4341,43 @@ entries:
   agent:
   - apiVersion: v2
     appVersion: 13.2.1
+    created: "2024-06-27T17:31:28.276910438Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      version: ~1.3.0
+    description: Sysdig Monitor and Secure agent
+    digest: 2144c95c9f6bcc093e940e454b348d7492c6f8f7a28f9e9d915a278f9f9c0916
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: alberto.barba@sysdig.com
+      name: AlbertoBarba
+    - email: adam.roberts@sysdig.com
+      name: aroberts87
+    - email: francesco.furlan@sysdig.com
+      name: francesco-furlan
+    - email: gerlando.falauto@sysdig.com
+      name: iurly
+    - email: marcovito.moscaritolo@sysdig.com
+      name: mavimo
+    name: agent
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/agent-1.24.5/agent-1.24.5.tgz
+    version: 1.24.5
+  - apiVersion: v2
+    appVersion: 13.2.1
     created: "2024-06-17T13:45:59.063564462Z"
     dependencies:
     - name: common
@@ -11830,6 +11867,23 @@ entries:
   cluster-scanner:
   - apiVersion: v2
     appVersion: 0.1.0
+    created: "2024-06-27T17:31:28.440617029Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      version: ~1.3.0
+    description: Sysdig Cluster Scanner
+    digest: c5b62ea7bef44c901601d439b0cbb99f29cef1175509e796eb405879b3ad3da5
+    home: https://www.sysdig.com/
+    maintainers:
+    - name: sysdiglabs
+    name: cluster-scanner
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/cluster-scanner-0.13.5/cluster-scanner-0.13.5.tgz
+    version: 0.13.5
+  - apiVersion: v2
+    appVersion: 0.1.0
     created: "2024-05-29T07:00:25.363209275Z"
     dependencies:
     - name: common
@@ -12700,6 +12754,27 @@ entries:
   cluster-shield:
   - apiVersion: v2
     appVersion: 1.0.1
+    created: "2024-06-27T17:31:28.593000722Z"
+    description: Cluster Shield Helm Chart for Kubernetes
+    digest: 1e3015ed3ec795812fbc872d677da32529573f3ded48aae4151cc0034aac1489
+    maintainers:
+    - email: alberto.barba@sysdig.com
+      name: AlbertoBarba
+    - email: adam.roberts@sysdig.com
+      name: aroberts87
+    - email: francesco.furlan@sysdig.com
+      name: francesco-furlan
+    - email: gerlando.falauto@sysdig.com
+      name: iurly
+    - email: marcovito.moscaritolo@sysdig.com
+      name: mavimo
+    name: cluster-shield
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/cluster-shield-1.0.5/cluster-shield-1.0.5.tgz
+    version: 1.0.5
+  - apiVersion: v2
+    appVersion: 1.0.1
     created: "2024-06-27T16:40:32.547667367Z"
     description: Cluster Shield Helm Chart for Kubernetes
     digest: ae128f96f710f9e3b56777dc9843060761d8a979bd8897af31f6162ac8d58c5b
@@ -13527,6 +13602,34 @@ entries:
     - https://github.com/sysdiglabs/charts/releases/download/harbor-scanner-sysdig-secure-0.1.0/harbor-scanner-sysdig-secure-0.1.0.tgz
     version: 0.1.0
   kspm-collector:
+  - apiVersion: v2
+    appVersion: 1.39.2
+    created: "2024-06-27T17:31:28.749035549Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      version: ~1.3.0
+    description: Sysdig KSPM collector
+    digest: f54a484a18ffe5f5980b17d7bff09ba3f5c422365ea879255dbd923fa989b876
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: chen.shmilovich@sysdig.com
+      name: chen-shmilovich-sysdig
+    name: kspm-collector
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/kspm-collector-0.15.7/kspm-collector-0.15.7.tgz
+    version: 0.15.7
   - apiVersion: v2
     appVersion: 1.39.2
     created: "2024-06-13T09:59:23.863414155Z"
@@ -23633,6 +23736,36 @@ entries:
     - https://github.com/sysdiglabs/charts/releases/download/node-analyzer-1.0.0/node-analyzer-1.0.0.tgz
     version: 1.0.0
   rapid-response:
+  - apiVersion: v2
+    appVersion: 0.4.0
+    created: "2024-06-27T17:31:28.974533704Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      version: ~1.3.0
+    description: Sysdig Rapid Response
+    digest: ae76a906ed4d366a8592789ef6688a35a6ac19944449ecd9d7c0fe86a78029d1
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: matteo.rolla@sysdig.com
+      name: mrolla
+    - email: daniele.delorenzi@sysdig.com
+      name: dark-vex
+    name: rapid-response
+    sources:
+    - https://github.com/sysdiglabs/charts/
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/rapid-response-0.9.2/rapid-response-0.9.2.tgz
+    version: 0.9.2
   - apiVersion: v2
     appVersion: 0.4.0
     created: "2024-05-28T15:42:58.038872666Z"
@@ -35319,6 +35452,67 @@ entries:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-1.7.15/sysdig-1.7.15.tgz
     version: 1.7.15
   sysdig-deploy:
+  - apiVersion: v2
+    created: "2024-06-27T17:31:29.157538037Z"
+    dependencies:
+    - alias: admissionController
+      condition: admissionController.enabled
+      name: admission-controller
+      repository: file://../admission-controller
+      version: ~0.16.3
+    - alias: agent
+      condition: agent.enabled
+      name: agent
+      repository: file://../agent
+      version: ~1.24.4
+    - name: common
+      repository: file://../common
+      version: ~1.3.0
+    - alias: nodeAnalyzer
+      condition: nodeAnalyzer.enabled
+      name: node-analyzer
+      repository: file://../node-analyzer
+      version: ~1.29.6
+    - alias: clusterScanner
+      condition: clusterScanner.enabled
+      name: cluster-scanner
+      repository: file://../cluster-scanner
+      version: ~0.13.4
+    - alias: kspmCollector
+      condition: kspmCollector.enabled,global.kspm.deploy
+      name: kspm-collector
+      repository: file://../kspm-collector
+      version: ~0.15.6
+    - alias: rapidResponse
+      condition: rapidResponse.enabled
+      name: rapid-response
+      repository: file://../rapid-response
+      version: ~0.9.1
+    - alias: clusterShield
+      condition: clusterShield.enabled
+      name: cluster-shield
+      repository: file://../cluster-shield
+      version: ~1.0.4
+    description: A chart with various Sysdig components for Kubernetes
+    digest: a5f6e312c7520f75bba3ef76ca0ab5e9e45d16ae205c9c0ae3f66566d9ea1b3d
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    maintainers:
+    - email: alberto.barba@sysdig.com
+      name: AlbertoBarba
+    - email: adam.roberts@sysdig.com
+      name: aroberts87
+    - email: francesco.furlan@sysdig.com
+      name: francesco-furlan
+    - email: gerlando.falauto@sysdig.com
+      name: iurly
+    - email: marcovito.moscaritolo@sysdig.com
+      name: mavimo
+    name: sysdig-deploy
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/sysdig-deploy-1.57.0/sysdig-deploy-1.57.0.tgz
+    version: 1.57.0
   - apiVersion: v2
     created: "2024-06-27T17:01:06.408589097Z"
     dependencies:
@@ -59252,4 +59446,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2024-06-27T17:01:06.411062585Z"
+generated: "2024-06-27T17:31:29.160744062Z"
