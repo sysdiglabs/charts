@@ -411,7 +411,9 @@ webhooks:
       name: {{ include "admissionController.webhook.fullname" . }}
       path: /validate
       port:  {{ .Values.webhook.v2.service.port }}
-    caBundle: {{ .Cert }}
+    {{- with .Cert }}
+    caBundle: {{ . }}
+    {{- end }}
 
   admissionReviewVersions: ["v1", "v1beta1"]
   sideEffects: None
@@ -453,7 +455,9 @@ webhooks:
       name: {{ include "admissionController.webhook.fullname" . }}
       path: /allow-pod
       port:  {{ .Values.webhook.service.port }}
-    caBundle: {{ .Cert }}
+    {{- with .Cert }}
+    caBundle: {{ . }}
+    {{- end }}
   admissionReviewVersions: ["v1", "v1beta1"]
   sideEffects: None
   timeoutSeconds: {{ .Values.webhook.timeoutSeconds }}
@@ -476,7 +480,9 @@ webhooks:
       name: {{ include "admissionController.webhook.fullname" . }}
       path: /k8s-audit
       port:  {{ .Values.webhook.service.port }}
-    caBundle: {{ .Cert }}
+    {{- with .Cert }}
+    caBundle: {{ . }}
+    {{- end }}
   admissionReviewVersions: ["v1", "v1beta1"]
   sideEffects: None
   timeoutSeconds: {{ .Values.webhook.timeoutSeconds }}
