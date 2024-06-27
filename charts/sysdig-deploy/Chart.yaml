@@ -60,6 +60,6 @@ dependencies:
   - name: cluster-shield
     # repository: https://charts.sysdig.com
     repository: file://../cluster-shield
-    version: ~1.0.2
+    version: ~1.0.4
     alias: clusterShield
     condition: clusterShield.enabled
