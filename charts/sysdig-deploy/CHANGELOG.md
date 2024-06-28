@@ -10,6 +10,15 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.57.1
+### Chores
+* **sysdig-deploy** [296906c5](https://github.com/sysdiglabs/charts/commit/296906c5a05a5eaed54327f30d00fe3adc8cb737): Automatic version bump due to updated dependencies ([#1794](https://github.com/sysdiglabs/charts/issues/1794))
+# v1.57.0
+### Chores
+* **agent,cluster-shield,sysdig-deploy,rapid-response,kspm-collector,cluster-scanner** [87059f19](https://github.com/sysdiglabs/charts/commit/87059f1992b6bf1c133ef96937ea2da90fa7d8a1): bump helm-unittest to v0.5.1 ([#1785](https://github.com/sysdiglabs/charts/issues/1785))
+# v1.56.12
+### Chores
+* **sysdig-deploy** [96a40a64](https://github.com/sysdiglabs/charts/commit/96a40a64b7088f6f7dad0489e00db1387a8f407d): Automatic version bump due to updated dependencies ([#1792](https://github.com/sysdiglabs/charts/issues/1792))
 # v1.56.11
 ### Chores
 * **sysdig-deploy** [ddfa6d30](https://github.com/sysdiglabs/charts/commit/ddfa6d30253065f7eecadd87b6e11d92dfc69590): Automatic version bump due to updated dependencies ([#1789](https://github.com/sysdiglabs/charts/issues/1789))

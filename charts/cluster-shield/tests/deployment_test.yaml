@@ -91,7 +91,7 @@ tests:
           value: test-existing-secure-api-token-secret
       - equal:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "SYSDIG_CLUSTER_SHIELD_SYSDIG_ENDPOINT__SECURE_API_TOKEN")].valueFrom.secretKeyRef.key
-          value: secure-api-token
+          value: SECURE_API_TOKEN
 
   - it: Test readinessProbe default values
     asserts:

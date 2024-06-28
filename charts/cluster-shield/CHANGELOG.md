@@ -10,6 +10,15 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.0.5
+### Chores
+* **agent,cluster-shield,sysdig-deploy,rapid-response,kspm-collector,cluster-scanner** [87059f19](https://github.com/sysdiglabs/charts/commit/87059f1992b6bf1c133ef96937ea2da90fa7d8a1): bump helm-unittest to v0.5.1 ([#1785](https://github.com/sysdiglabs/charts/issues/1785))
+# v1.0.4
+### Bug Fixes
+* **cluster-shield** [de790816](https://github.com/sysdiglabs/charts/commit/de7908164fad4ef145722e254c0259bed5fc5701): global.sslVerifyCertificate was not correctly used ([#1793](https://github.com/sysdiglabs/charts/issues/1793))
+# v1.0.3
+### Bug Fixes
+* **cluster-shield** [92cfbb00](https://github.com/sysdiglabs/charts/commit/92cfbb001d1c790b238d3efc9659c4b36a20156d): Change secureApiTokenSecret key name ([#1790](https://github.com/sysdiglabs/charts/issues/1790))
 # v1.0.2
 ### Chores
 * **cluster-shield** [0c3097f9](https://github.com/sysdiglabs/charts/commit/0c3097f9f32e7fefea4444c3c026951ac4fb10ac): Automatic bump to version 1.0.1 ([#1782](https://github.com/sysdiglabs/charts/issues/1782))

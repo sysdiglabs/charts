@@ -1,5 +1,5 @@
 # What's Changed
 
 ### Chores
-- **cluster-shield** [0c3097f9](https://github.com/sysdiglabs/charts/commit/0c3097f9f32e7fefea4444c3c026951ac4fb10ac): Automatic bump to version 1.0.1 ([#1782](https://github.com/sysdiglabs/charts/issues/1782))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/cluster-shield-1.0.1...cluster-shield-1.0.2
+- **agent,cluster-shield,sysdig-deploy,rapid-response,kspm-collector,cluster-scanner** [87059f19](https://github.com/sysdiglabs/charts/commit/87059f1992b6bf1c133ef96937ea2da90fa7d8a1): bump helm-unittest to v0.5.1 ([#1785](https://github.com/sysdiglabs/charts/issues/1785))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/cluster-shield-1.0.4...cluster-shield-1.0.5

@@ -6,6 +6,21 @@ templates:
   - charts/nodeAnalyzer/templates/secrets.yaml
   - charts/nodeAnalyzer/templates/configmap-benchmark-runner.yaml
   - charts/rapidResponse/templates/secrets.yaml
+kubernetesProvider:
+  scheme:
+    "v1/Node":
+      gvr:
+        version: "v1"
+        resource: "nodes"
+      namespaced: false
+  objects:
+  - apiVersion: v1
+    kind: Node
+    metadata:
+      name: fakenode
+    status:
+      nodeInfo:
+        osImage: fake-os-image
 tests:
   - it: check Readme install command under "Agent" example
     set:

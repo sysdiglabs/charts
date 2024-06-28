@@ -24,6 +24,7 @@ tests:
           kind: Secret
           name: release-name-rapid-response-ca
         template: secrets.yaml
+        documentIndex: 2
       - contains:
           path: spec.template.spec.containers[0].env
           content:
@@ -66,6 +67,7 @@ tests:
           kind: Secret
           name: release-name-rapid-response-ca
         template: secrets.yaml
+        documentIndex: 2
       - contains:
           path: spec.template.spec.containers[0].env
           content:
