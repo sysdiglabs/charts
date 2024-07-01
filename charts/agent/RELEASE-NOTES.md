@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **agent,cluster-shield,sysdig-deploy,rapid-response,kspm-collector,cluster-scanner** [87059f19](https://github.com/sysdiglabs/charts/commit/87059f1992b6bf1c133ef96937ea2da90fa7d8a1): bump helm-unittest to v0.5.1 ([#1785](https://github.com/sysdiglabs/charts/issues/1785))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.24.4...agent-1.24.5
+### New Features
+- **agent** [ce6bdcd9](https://github.com/sysdiglabs/charts/commit/ce6bdcd95c97e658a38b2733aa773864494dba7b): add support for Windows Agent ([#1730](https://github.com/sysdiglabs/charts/issues/1730))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.24.5...agent-1.25.0
