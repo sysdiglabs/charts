@@ -1,0 +1,116 @@
+{{- if .Values.windows.enabled }}
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: {{ include "agent-windows.fullname" . }}
+  labels:
+    {{- include "agent-windows.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "agent-windows.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "agent-windows.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      serviceAccountName: {{ template "agent.serviceAccountName" .}}
+      {{- if .Values.windows.image.pullSecrets }}
+      imagePullSecrets:
+        {{ toYaml .Values.windows.image.pullSecrets | nindent 8 }}
+      {{- else if .Values.global.image.pullSecrets }}
+      imagePullSecrets:
+        {{ toYaml .Values.global.image.pullSecrets | nindent 8 }}
+      {{- end }}
+      securityContext:
+        windowsOptions:
+          hostProcess: true
+          runAsUserName: "NT AUTHORITY\\SYSTEM"
+      hostNetwork: true
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.windows.image.registry }}/{{ .Values.windows.image.repository }}:{{ .Values.windows.image.tag }}"
+          imagePullPolicy: {{ .Values.windows.image.pullPolicy | default .Values.global.image.pullPolicy }}
+          livenessProbe:
+            httpGet:
+              host: 127.0.0.1
+              path: /healthz
+              port: 24484
+            initialDelaySeconds: 60
+            periodSeconds: 30
+            timeoutSeconds: 10
+          readinessProbe:
+            httpGet:
+              host: 127.0.0.1
+              path: /healthz
+              port: 24484
+            initialDelaySeconds: 60
+            timeoutSeconds: 10
+          resources:
+            {{- toYaml .Values.windows.resources | nindent 12 }}
+          volumeMounts:
+          - name: config
+            mountPath: Sysdig/Agent/Config
+          - name: secrets
+            mountPath: Sysdig/Agent/Secrets/AccessKey
+          {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
+          - name: ca-cert
+            mountPath: Sysdig/Agent/certificates
+            readOnly: true
+          {{- end }}
+          {{- if and (include "agent.httpProxyCredentials" .) (not (include "agent.gke.autopilot" .)) }}
+          - mountPath: Sysdig/Agent/Secrets/http_proxy
+            name: sysdig-agent-http-proxy-secrets
+          {{- end }}
+      terminationGracePeriodSeconds: 0
+      volumes:
+      - name: config
+        configMap:
+          name: {{ include "agent.configmapName" . }}
+      - name: secrets
+        secret:
+          {{- if not ( include "agent.accessKeySecret" . ) }}
+          secretName: {{ template "agent.fullname" . }}
+          {{- else }}
+          secretName: {{ include "agent.accessKeySecret" . }}
+          {{- end }}
+      {{- if and (include "agent.httpProxyCredentials" .) (not (include "agent.gke.autopilot" .)) }}
+      - name: sysdig-agent-http-proxy-secrets
+        secret:
+          secretName: {{ template "agent.fullname" . }}-proxy
+      {{- end }}
+      {{- if eq (include "sysdig.custom_ca.useValues"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
+      - name: ca-cert
+        secret:
+          secretName: {{ include "agent.fullname" . }}-ca
+      {{- else if eq (include "sysdig.custom_ca.useExistingSecret"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
+      - name: ca-cert
+        secret:
+          secretName: {{ include "sysdig.custom_ca.existingSecret" (dict "global" .Values.global.ssl "component" .Values.ssl) }}
+      {{- else if eq (include "sysdig.custom_ca.useExistingConfigMap" (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
+      - name: ca-cert
+        configMap:
+          name: {{ include "sysdig.custom_ca.existingConfigMap" (dict "global" .Values.global.ssl "component" .Values.ssl) }}
+      {{- end }}
+      nodeSelector:
+      {{- if .Values.windows.nodeSelector }}
+        {{ toYaml .Values.windows.nodeSelector | nindent 8 }}
+      {{- else }}
+        "kubernetes.io/os": windows
+      {{- end }}
+      {{- with .Values.windows.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.windows.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}
