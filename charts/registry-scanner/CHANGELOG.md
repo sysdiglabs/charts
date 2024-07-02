@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.3.1
+### Chores
+* **registry-scanner** [c5e38597](https://github.com/sysdiglabs/charts/commit/c5e38597ecc15bb94994dd341d2101a1d518ec4c): Update to v0.2.71 ([#1796](https://github.com/sysdiglabs/charts/issues/1796))
 # v1.3.0
 ### New Features
 * **registry-scanner** [7cae555e](https://github.com/sysdiglabs/charts/commit/7cae555e5042913f5613d31bb1b580b444604695): add the registry retry params [internal] ([#1765](https://github.com/sysdiglabs/charts/issues/1765))
