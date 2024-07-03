@@ -26,6 +26,9 @@ tests:
       - equal:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].securityContext.privileged
           value: true
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].args
+          content: run-all-namespaced
 
   - it: Test run-all mode
     set:
@@ -43,6 +46,33 @@ tests:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")]
       - isNull:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].securityContext
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].args
+          content: run-all
+
+  - it: Test GKE Autopilot
+    set:
+      run_command: "run-all-namespaced"
+      global:
+        gke:
+          autopilot: true
+    asserts:
+      - isKind:
+          of: Deployment
+      - equal:
+          path: metadata.name
+          value: shield-release-cluster-shield
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - isNotNull:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")]
+      - isNull:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].securityContext
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].args
+          content: run-all
+
   - it: Test env var is set when accessKeySecret provided
     set:
       global:

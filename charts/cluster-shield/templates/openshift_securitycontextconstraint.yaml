@@ -1,4 +1,4 @@
-{{- if and (.Capabilities.APIVersions.Has "security.openshift.io/v1") (eq .Values.run_command "run-all-namespaced") }}
+{{- if and (.Capabilities.APIVersions.Has "security.openshift.io/v1") (ne "true" (include "cluster-shield.isSingleProcess" .)) }}
 apiVersion: security.openshift.io/v1
 kind: SecurityContextConstraints
 metadata:

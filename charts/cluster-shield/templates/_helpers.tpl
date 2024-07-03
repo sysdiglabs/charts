@@ -406,3 +406,18 @@ Create the name of the service account to use
 {{- define "cluster-shield.serviceAccountName" -}}
 {{- .Values.serviceAccount.name | default (include "cluster-shield.fullname" .) }}
 {{- end }}
+
+{{/*
+Verify if the application needs to start in single process mode
+*/}}
+{{- define "cluster-shield.isSingleProcess"}}
+{{- or (ne .Values.run_command "run-all-namespaced") .Values.global.gke.autopilot }}
+{{- end -}}
+
+{{- define "cluster-shield.command" -}}
+{{- if eq "true" (include "cluster-shield.isSingleProcess" .) -}}
+run-all
+{{- else -}}
+run-all-namespaced
+{{- end -}}
+{{- end -}}

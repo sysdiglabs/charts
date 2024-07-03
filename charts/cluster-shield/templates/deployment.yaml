@@ -38,7 +38,7 @@ spec:
       serviceAccountName: {{ include "cluster-shield.serviceAccountName" . }}
       containers:
         - name: "cluster-shield"
-          {{- if eq .Values.run_command "run-all-namespaced" }}
+          {{- if ne "true" (include "cluster-shield.isSingleProcess" .) }}
           securityContext:
             privileged: true
             runAsNonRoot: false
@@ -47,7 +47,7 @@ spec:
           {{- end }}
           image: "{{ include "cluster-shield.repository" . }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy | default .Values.global.image.pullPolicy | default "IfNotPresent" }}
-          args: [ {{ .Values.run_command | quote }} ]
+          args: [ {{ (include "cluster-shield.command" .) | quote }} ]
           ports:
             - name: monitoring
               containerPort: {{ .Values.cluster_shield.monitoring_port }}
