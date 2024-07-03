@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.57.3
+### New Features
+* **node-analyzer** [798fee05](https://github.com/sysdiglabs/charts/commit/798fee055cbd3786c1f266f1277752608176a7d4): Change Bottlerocket apiclient and socket volume mounts to ignore non existent files ([#1797](https://github.com/sysdiglabs/charts/issues/1797))
 # v1.57.2
 ### New Features
 * **agent** [ce6bdcd9](https://github.com/sysdiglabs/charts/commit/ce6bdcd95c97e658a38b2733aa773864494dba7b): add support for Windows Agent ([#1730](https://github.com/sysdiglabs/charts/issues/1730))
