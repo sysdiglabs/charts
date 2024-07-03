@@ -96,11 +96,11 @@ spec:
         - name: apiclient
           hostPath:
             path: {{ .Values.nodeAnalyzer.bottlerocket.apiClientPath }}
-            type: File
+            type: ""
         - name: apiserver-socket
           hostPath:
             path: {{ .Values.nodeAnalyzer.bottlerocket.apiServerSocketPath }}
-            type: Socket
+            type: ""
         {{- end }}
         - name: tmp-vol
           {{- if .Values.nodeAnalyzer.runtimeScanner.storageClassName }}
