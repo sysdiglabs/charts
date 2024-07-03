@@ -32,7 +32,7 @@ tests:
             name: apiclient
             hostPath:
               path: /usr/bin/apiclient
-              type: File
+              type: ""
           count: 1
           any: true
         template: templates/daemonset-node-analyzer.yaml
@@ -42,7 +42,7 @@ tests:
             name: apiserver-socket
             hostPath:
               path: /run/api.sock
-              type: Socket
+              type: ""
           count: 1
           any: true
         template: templates/daemonset-node-analyzer.yaml
@@ -80,7 +80,7 @@ tests:
             name: apiclient
             hostPath:
               path: /usr/bin/apiclient
-              type: File
+              type: ""
         template: templates/daemonset-node-analyzer.yaml
       - notContains:
           path: spec.template.spec.volumes
@@ -88,7 +88,7 @@ tests:
             name: apiserver-socket
             hostPath:
               path: /run/api.sock
-              type: Socket
+              type: ""
         template: templates/daemonset-node-analyzer.yaml
       - notContains:
           path: spec.template.spec.containers[0].volumeMounts
