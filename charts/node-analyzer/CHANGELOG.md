@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.29.7
+### New Features
+* **node-analyzer** [798fee05](https://github.com/sysdiglabs/charts/commit/798fee055cbd3786c1f266f1277752608176a7d4): Change Bottlerocket apiclient and socket volume mounts to ignore non existent files ([#1797](https://github.com/sysdiglabs/charts/issues/1797))
 # v1.29.6
 ### Chores
 * **node-analyzer** [c144dca5](https://github.com/sysdiglabs/charts/commit/c144dca52b6ab39d4295f98d4227a76c23ed73a1): bump sysdig/vuln-host-scanner to v0.10.1 ([#1788](https://github.com/sysdiglabs/charts/issues/1788))
