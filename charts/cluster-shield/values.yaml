@@ -1,22 +1,40 @@
 global:
   clusterConfig:
-    # name to identify this cluster for events and metrics
+    # The name of the cluster. Make sure to set a unique value for all the
+    # clusters being inspected.
     name: ""
   proxy:
+    # Sets the HTTP Proxy address.
     httpProxy:
+    # Sets the HTTPS Proxy address.
     httpsProxy:
+    # Sets IPs/URLs that should not pass trough a Proxy Server.
     noProxy: 127.0.0.1,localhost,.local,.internal
   image:
+    # The pull secrets used for the Cluster Shield container image
     pullSecrets: []
+    # The pull policy for the Cluster Shield container image
     pullPolicy: IfNotPresent
   sysdig:
+    # An existing secret containing the Sysdig Agent Access Key
     accessKeySecret:
+    # The Sysdig Agent Access Key
     accessKey:
+    # The Sysdig Agent API Hostname
     apiHost:
+    # Region name for Sysdig.
+    # When no region is suitable (e.g. on-premise installations) set the value to "custom"
     region: "custom"
+    # An existing secret containing the Secure API token to access Sysdig Secure. (needed only with on-premise installations)
     secureAPITokenSecret:
+    # The Secure API token to access Sysdig Secure. (needed only with on-premise installations)
     secureAPIToken:
+  gke:
+    # If true, overrides the Cluster Shield configuration to run on GKE Autopilot clusters.
+    autopilot: false
+  # The image registry configuration
   imageRegistry:
+  # Define if the certificate should be verified
   sslVerifyCertificate: true
   ssl:
     ca:
@@ -41,48 +59,85 @@ global:
       # Provide the filename that is defined inside the existing ConfigMap
       existingCaConfigMapKeyName: null
 cluster_shield:
-  # Global Configurations
   cluster_config:
+    # The name of the cluster. Make sure to set a unique value for all the
+    # clusters being inspected.
     name:
+  # The log level for the Cluster Shield application
   log_level: warn
+  # The port that the Cluster Shield will use to expose probes and metrics
   monitoring_port: 8080
   sysdig_endpoint:
+    # The Sysdig Agent Access Key
     access_key:
+    # The Sysdig Agent API URL
     api_url:
+    # The Sysdig Secure API Token
     secure_api_token:
+    # Region name for Sysdig.
+    # When no region is suitable (e.g. on-premise installations) set the value to "custom"
     region:
   kubernetes:
+    # The system namespace of your Kubernetes cluster
     root_namespace: kube-system
   # Features
   features:
     admission_control:
+      # Enable the admission control feature
       enabled: false
+      # Deny the admission of the pod if an error occurs
       deny_on_error: false
+      # Enable the dry run mode
       dry_run: true
+      # The timeout for the admission control feature
       timeout: 5
+      # The port that will be used to expose admission control endpoints
       http_port: 8443
       container_vulnerability_management:
+        # Enable the container vulnerability management feature on the admission control
         enabled: false
     audit:
+      # Enable the Kubernetes Audit feature
       enabled: false
+      # The port that will be used to expose the audit endpoints
       http_port: 6443
+      # The timeout for the audit feature
       timeout: 5
     posture:
+      # Enable the posture feature
       enabled: false
     container_vulnerability_management:
+      # Enable the container vulnerability management feature
       enabled: false
       in_use:
+        # Allows to retrieve the list of running packages.
         enabled: true
+        # Allows to store the list of running packages to Sysdig backend.
         integration_enabled: false
       local_cluster:
+        # Enable to scan the cluster where the cluster-shield is running.
         enabled: true
+        # Restrict access to specific Docker secrets when Cluster Scanner is running.
+        # The default behavior is listing all secrets.
         registry_secrets: []
+        # - namespace: namespace1
+        #   secrets:
+        #     - secret1
+        #     - secret2
+        # - namespace: namespace2
+        #   secrets:
+        #     - secret3
+        #     - secret4
+      # Define if the platform services are enabled
       platform_services_enabled: true
       registry_ssl:
+        # If set to false it allows insecure connections to registries,
+        # Such as for registries with self-signed or private certificates.
         verify: true
       remote_clusters:
         enabled: false
     kubernetes_metadata:
+      # Enable the Kubernetes Metadata feature
       enabled: false
 ca:
   # A PEM-encoded x509 certificate. This can also be a bundle with multiple certificates.
@@ -105,35 +160,56 @@ ca:
   existingCaConfigMap: null
   # Provide the filename that is defined inside the existing ConfigMap
   existingCaConfigMapKeyName: null
+# The command executed by the Cluster Shield POD
 run_command: "run-all-namespaced"
 image:
+  # The Cluster Shield container image repository
   repository: quay.io/sysdig/cluster-shield
+  # The Cluster Shield container image pull policy
   pullPolicy:
 proxy:
+  # Sets the HTTP Proxy address.
   httpProxy:
+  # Sets the HTTPS Proxy address.
   httpsProxy:
+  # Sets IPs/URLs that should not pass trough a Proxy Server.
   noProxy:
+# The Cluster Shield container image pull secrets
 imagePullSecrets: []
 # - name: regcred
 
 probes:
   liveness:
+    # The liveness probe initial delay
     initialDelaySeconds: 5
+    # The liveness probe period
     periodSeconds: 5
   readiness:
+    # The readiness probe initial delay
     initialDelaySeconds: 10
+    # The readiness probe period
     periodSeconds: 5
+# Additional pod annotations
 podAnnotations: {}
+# Additional pod labels
 podLabels: {}
 service:
+  # The Cluster Shield service type
   type: ClusterIP
+  # The Service port used to expose probes and metrics
   monitoring_port:
+  # The Service port used to expose admission control endpoints
   admission_control_port:
+  # The Service port used to expose audit endpoints
   audit_port:
 serviceAccount:
-  name:
+  # Specifies whether a service account should be created
   create: true
+  # The name of the service account to use.
+  name:
+  # Additional service account labels
   labels: {}
+  # Additional service account annotations
   annotations: {}
 resources: {}
 # We usually recommend not to specify default resources and to leave this as a conscious
@@ -147,14 +223,30 @@ resources: {}
 #   cpu: 100m
 #   memory: 128Mi
 
+# Set Cluster Shield deployment priorityClassName
 priorityClassName:
+# Specifies whether a PriorityClass should be created
 createPriorityClass: false
+# Set Cluster Shield deployment priorityClassValue
 priorityClassValue: 10
+# Node labels for pod assignment
 nodeSelector: {}
+# Tolerations for pod assignment
 tolerations: []
+# Affinity for pod assignment
 affinity: {}
+# The number of replicas for the Cluster Shield deployment
 replicaCount: 2
 updateStrategy:
+  # The update strategy for the Cluster Shield deployment
   type: RollingUpdate
+  # The rolling update strategy for the Cluster Shield deployment
   rollingUpdate: {}
+# Optional parameter used to check the compatibility of cluster-shield
+# component versions with the on-premised backend version.
+#
+# If you are running an on-prem version of the Sysdig backend, you MUST set
+# this parameter with the version of Sysdig backend you are using.
+#
+# If you are runinng on SaaS, do NOT provide this parameter.
 onPremCompatibilityVersion:
