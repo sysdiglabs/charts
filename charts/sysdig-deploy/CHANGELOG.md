@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.58.0
+### New Features
+* [8c39a945](https://github.com/sysdiglabs/charts/commit/8c39a9451035bf28b8af543fa6726c767927cad1): release agent 13.3.0 ([#1799](https://github.com/sysdiglabs/charts/issues/1799))
 # v1.57.4
 ### Chores
 * **cluster-shield** [7c86a283](https://github.com/sysdiglabs/charts/commit/7c86a283f1ec252ca280f11457c5e6825dd09d10): Automatic bump to version 1.1.0 ([#1798](https://github.com/sysdiglabs/charts/issues/1798))
