@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.59.0
+### New Features
+* **agent** [14e85ea9](https://github.com/sysdiglabs/charts/commit/14e85ea9af9d83e65ad7aa8074b089024b327d73): privileged flag for Sysdig Agent  ([#1743](https://github.com/sysdiglabs/charts/issues/1743))
 # v1.58.0
 ### New Features
 * [8c39a945](https://github.com/sysdiglabs/charts/commit/8c39a9451035bf28b8af543fa6726c767927cad1): release agent 13.3.0 ([#1799](https://github.com/sysdiglabs/charts/issues/1799))
