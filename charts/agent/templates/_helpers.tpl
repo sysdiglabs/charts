@@ -585,6 +585,13 @@ true
 {{- end }}
 {{- end }}
 
+{{/* Check if semver. The regex is from the code of the library Helm uses for semver. */}}
+{{- define "agent.isSemVer" -}}
+    {{- if regexMatch "^v?([0-9]+)(\\.[0-9]+)?(\\.[0-9]+)?(-([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?(\\+([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?$" . }}
+        true
+    {{- end -}}
+{{- end -}}
+
 {{/* Return the name of the local forwarder configmap */}}
 {{- define "agent.localForwarderConfigMapName" }}
 {{- include "agent.configmapName" . | trunc 46 | trimSuffix "-" | printf "%s-local-forwarder" }}
@@ -592,18 +599,77 @@ true
 
 {{- define "agent.enableHttpProbes" }}
 {{- if not (include "agent.gke.autopilot" .) }}
-{{- if regexMatch "^v?([0-9]+)(\\.[0-9]+)?(\\.[0-9]+)?(-([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?(\\+([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?$" .Values.image.tag }}
-{{- if semverCompare ">= 12.18.0-0" .Values.image.tag }}
+{{- if and (include "agent.isSemVer" .Values.image.tag) (semverCompare ">= 12.18.0-0" .Values.image.tag) }}
 {{- printf "true" -}}
-{{- end }}
 {{- end }}
 {{- end }}
 {{- end }}
 
 {{- define "agent.enableFalcoBaselineSecureLight" }}
-{{- if regexMatch "^v?([0-9]+)(\\.[0-9]+)?(\\.[0-9]+)?(-([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?(\\+([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?$" .Values.image.tag }}
-{{- if semverCompare ">= 12.19.0-0" .Values.image.tag }}
+{{- if and (include "agent.isSemVer" .Values.image.tag) (semverCompare ">= 12.19.0-0" .Values.image.tag) }}
 {{- printf "true" -}}
 {{- end }}
 {{- end }}
+
+{{- define "agent.annotationsSection" }}
+  {{- if (include "agent.gke.autopilot" .) }}
+annotations:
+  autopilot.gke.io/no-connect: "true"
+  {{- else if or (.Values.daemonset.annotations) (eq "false" (include "agent.privileged" .)) }}
+annotations:
+    {{- if (eq "false" (include "agent.privileged" .)) }}
+  container.apparmor.security.beta.kubernetes.io/sysdig: unconfined
+    {{- end }}
+    {{- if .Values.daemonset.annotations }}
+{{- toYaml .Values.daemonset.annotations | nindent 2 }}
+    {{- end }}
+  {{- end }}
 {{- end }}
+
+{{/*
+  - .Values.privileged is true: no problem
+  - .Values.privileged is false:
+    - eBPF disabled: fail
+    - eBPF enabled:
+      - image tag >= 13.3.0: no problem
+      - image tag not semver: go on at user's risk
+*/}}
+{{- define "agent.privileged" }}
+  {{- if or .Values.privileged (include "agent.gke.autopilot" .) }}
+    {{- /* OK */ -}}
+    {{- print "true" }}
+  {{- else }}
+    {{- $errMsg := "Disabling 'privileged' flag requires eBPF and Sysdig Agent 13.3.0 or newer" }}
+    {{- /* eBPF is mandatory */ -}}
+    {{- if not (eq "true" (include "agent.ebpfEnabled" .)) }}
+      {{- /* FAIL */ -}}
+      {{- fail $errMsg }}
+    {{- end }}
+    {{- /* Version check */ -}}
+    {{- if (include "agent.isSemVer" .Values.image.tag) }}
+      {{- /* Check for release version */ -}}
+      {{- if (semverCompare ">= 13.3.0-0" .Values.image.tag) }}
+        {{- /* OK */ -}}
+        {{- print "false" }}
+      {{- else }}
+        {{- /* FAIL */ -}}
+        {{- fail $errMsg }}
+      {{- end }}
+    {{- /* Check for dev version */ -}}
+    {{- else }}
+      {{- /* Let it go through  */ -}}
+      {{- print "false" }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+
+{{- define "agent.capabilities" -}}
+- SYS_ADMIN
+- SYS_RESOURCE
+- SYS_PTRACE
+- SYS_CHROOT
+- DAC_READ_SEARCH
+- KILL
+- SETUID
+- SETGID
+{{- end -}}
