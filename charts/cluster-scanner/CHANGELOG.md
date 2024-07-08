@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.13.6
+### Chores
+* **cluster-scanner** [57976b93](https://github.com/sysdiglabs/charts/commit/57976b937c7eaf236f1021401e55003be95fc134): bump cluster-scanner to 0.8.4 ([#1802](https://github.com/sysdiglabs/charts/issues/1802))
 # v0.13.5
 ### Chores
 * **agent,cluster-shield,sysdig-deploy,rapid-response,kspm-collector,cluster-scanner** [87059f19](https://github.com/sysdiglabs/charts/commit/87059f1992b6bf1c133ef96937ea2da90fa7d8a1): bump helm-unittest to v0.5.1 ([#1785](https://github.com/sysdiglabs/charts/issues/1785))
