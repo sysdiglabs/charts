@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.27.1
+### Chores
+* **agent** [2ea1ea65](https://github.com/sysdiglabs/charts/commit/2ea1ea65866c9e237fc7498e748b84ef990fb5fc): bump the Windows Agent release to 1.0.1 ([#1804](https://github.com/sysdiglabs/charts/issues/1804))
 # v1.27.0
 ### New Features
 * **agent** [14e85ea9](https://github.com/sysdiglabs/charts/commit/14e85ea9af9d83e65ad7aa8074b089024b327d73): privileged flag for Sysdig Agent  ([#1743](https://github.com/sysdiglabs/charts/issues/1743))
