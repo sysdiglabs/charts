@@ -142,7 +142,7 @@ spec:
             - mountPath: /host/usr
               name: usr-vol
               readOnly: true
-            - path: /host/usr/lib64
+            - mountPath: /host/usr/lib64
               name: lib64-vol
               readOnly: true
             {{- if (include "agent.ebpfEnabled" .) }}
