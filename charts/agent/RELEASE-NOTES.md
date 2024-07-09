@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **agent** [2ea1ea65](https://github.com/sysdiglabs/charts/commit/2ea1ea65866c9e237fc7498e748b84ef990fb5fc): bump the Windows Agent release to 1.0.1 ([#1804](https://github.com/sysdiglabs/charts/issues/1804))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.27.0...agent-1.27.1
+### New Features
+- **agent** [401c54eb](https://github.com/sysdiglabs/charts/commit/401c54eb00421dc36f603d5e00426e2658d5ef80): add /lib64 volume mount ([#1801](https://github.com/sysdiglabs/charts/issues/1801))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.27.1...agent-1.27.2
