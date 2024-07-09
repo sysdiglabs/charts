@@ -12918,6 +12918,27 @@ entries:
     version: 0.1.1
   cluster-shield:
   - apiVersion: v2
+    appVersion: 1.1.1
+    created: "2024-07-09T14:00:12.603694351Z"
+    description: Cluster Shield Helm Chart for Kubernetes
+    digest: 096cc8575461cb2c1e0ba4b418297b37cd881123495c261480c418b929ce945b
+    maintainers:
+    - email: alberto.barba@sysdig.com
+      name: AlbertoBarba
+    - email: adam.roberts@sysdig.com
+      name: aroberts87
+    - email: francesco.furlan@sysdig.com
+      name: francesco-furlan
+    - email: gerlando.falauto@sysdig.com
+      name: iurly
+    - email: marcovito.moscaritolo@sysdig.com
+      name: mavimo
+    name: cluster-shield
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/cluster-shield-1.1.1/cluster-shield-1.1.1.tgz
+    version: 1.1.1
+  - apiVersion: v2
     appVersion: 1.1.0
     created: "2024-07-03T15:54:13.125597671Z"
     description: Cluster Shield Helm Chart for Kubernetes
@@ -60163,4 +60184,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2024-07-08T11:14:08.692778432Z"
+generated: "2024-07-09T14:00:12.695696916Z"
