@@ -82,6 +82,42 @@ tests:
     templates:
       - daemonset.yaml
 
+  - it: Ensure /lib64 host volume is mounted as /host/usr/lib64 in container
+    asserts:
+      - equal:
+          path: spec.template.spec.initContainers[*].volumeMounts[?(@.name == "lib64-vol")].mountPath
+          value: /host/usr/lib64
+      - equal:
+          path: spec.template.spec.volumes[?(@.name == "lib64-vol")].hostPath.path
+          value: /lib64
+    templates:
+      - daemonset.yaml
+
+  - it: Ensure /lib64 host volume is not mounted in container when running on gke.autopilot
+    set:
+      gke:
+        autopilot: true
+    asserts:
+      - isNull:
+          path: spec.template.spec.initContainers[*].volumeMounts[?(@.name == "lib64-vol")]
+      - isNull:
+          path: spec.template.spec.volumes[?(@.name == "lib64-vol")]
+    templates:
+      - daemonset.yaml
+
+  - it: Ensure /lib64 host volume is not mounted in container when running on global.gke.autopilot
+    set:
+      global:
+        gke:
+          autopilot: true
+    asserts:
+      - isNull:
+          path: spec.template.spec.initContainers[*].volumeMounts[?(@.name == "lib64-vol")]
+      - isNull:
+          path: spec.template.spec.volumes[?(@.name == "lib64-vol")]
+    templates:
+      - daemonset.yaml
+
   - it: Ensure agent http proxy volume is not mounted when http_proxy settings is not set
     set:
       sysdig:
