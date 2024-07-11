@@ -142,9 +142,6 @@ spec:
             - mountPath: /host/usr
               name: usr-vol
               readOnly: true
-            - mountPath: /host/usr/lib64
-              name: lib64-vol
-              readOnly: true
             {{- if (include "agent.ebpfEnabled" .) }}
             - mountPath: /root/.sysdig
               name: bpf-probes
@@ -444,9 +441,6 @@ spec:
         - name: varrun-vol
           hostPath:
             path: /var/run
-        - name: lib64-vol
-          hostPath:
-            path: /lib64
         {{- if (include "agent.ebpfEnabled" .) }}
         - name: bpf-probes
           emptyDir: {}
@@ -479,9 +473,6 @@ spec:
         - name: vardata-vol
           hostPath:
             path: /var/data
-        - name: lib64-vol
-          hostPath:
-            path: /lib64
         {{- if (include "agent.ebpfEnabled" .) }}
         - name: bpf-probes
           emptyDir: {}
