@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.27.5
+### New Features
+* [d1babb9f](https://github.com/sysdiglabs/charts/commit/d1babb9f03b70f5cebefc42927c7bb778100cf64): release agent 13.3.1 ([#1815](https://github.com/sysdiglabs/charts/issues/1815))
 # v1.27.4
 ### Bug Fixes
 * **agent** [7bf898a1](https://github.com/sysdiglabs/charts/commit/7bf898a10d09460864b74cdebe3f03822c99fb23): revert /lib64 volume mount ([#1813](https://github.com/sysdiglabs/charts/issues/1813))
