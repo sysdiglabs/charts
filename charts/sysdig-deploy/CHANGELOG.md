@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.59.8
+### Chores
+* **sysdig-deploy** [77a0c0f1](https://github.com/sysdiglabs/charts/commit/77a0c0f1db83c4b1198846dbb86e2f54e2dfb41e): Automatic version bump due to updated dependencies ([#1834](https://github.com/sysdiglabs/charts/issues/1834))
 # v1.59.7
 ### Chores
 * **sysdig-deploy** [583f1626](https://github.com/sysdiglabs/charts/commit/583f1626dcbdb3fe28c48a8d30573a95904d7433): Automatic version bump due to updated dependencies ([#1816](https://github.com/sysdiglabs/charts/issues/1816))
