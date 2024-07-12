@@ -54,38 +54,38 @@ helm install --create-namespace -n rapid-response rapid-response \
 
 The following table lists the configurable parameters of the Sysdig Rapid Response chart and their default values:
 
-| Parameter                                  | Description                                                  | Default                                                      |
-| ------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| `global.image.pullSecrets`                 | Sets the global pull secrets.                                | <code>[]</code>                                              |
-| `global.image.pullPolicy`                  | Sets the global pull policy.                                 | <code>`IfNotPresent`</code>                                  |
-| `sysdig.accessKey`                         | Specifies your Sysdig Access Key.                            | Either `accessKey` or `existingAccessKeySecret` is required  |
-| `sysdig.existingAccessKeySecret`           | An alternative to using the Sysdig Agent Access Key. Specify the name of a Kubernetes secret containing an `access-key` entry. | Either `accessKey` or `existingAccessKeySecre`t is required  |
-| `rapidResponse.passphrase`                 | Specifies a passphrase to encrypt the traffic between the user and the host. | `Either passphrase or existingPassphraseSecret` is required  |
-| `rapidResponse.existingPassphraseSecret`   | An alternative to using the passphrase. Specify the name of a Kubernetes secret containing a `passphrase` entry. | Either passphrase or `existingPassphraseSecret` is required. |
-| `rapidResponse.existingServiceAccount`     | (Optional) Sets the ServiceAccount name to provide additional capabilities to Rapid Response pod. | ` `                                                          |
-| `rapidResponse.image.registry`             | Specifies the Rapid Response image registry.                 | `quay.io`                                                    |
-| `rapidResponse.image.repository`           | Specifies the  image repository to pull from.                | `sysdig/rapid-response-host-component`                       |
-| `rapidResponse.image.tag`                  | Specifies the  image tag to pull.                            | `"0.4.0"`                                                    |
-| `rapidResponse.image.pullPolicy`           | Specifies the image pull policy.                             | `""`                                                         |
-| `rapidResponse.imagePullSecrets`           | Specifies the image pull secret.                             | ` `                                                          |
-| `rapidResponse.apiEndpoint`                | Specifies the Rapid Response `apiEndpoint`.                  | ` `                                                          |
-| `rapidResponse.proxy.httpProxy`            | Sets the HTTP Proxy address.                                 | ` `                                                          |
-| `rapidResponse.proxy.httpsProxy`           | Sets the HTTPS Proxy address.                                | ` `                                                          |
-| `rapidResponse.proxy.noProxy`              | Sets IPs/URLs that should not pass trough a Proxy Server.    | ` `                                                          |
-| `rapidResponse.resources.requests.cpu`     | Specifies the Rapid Response CPU requests.                   | `150m`                                                       |
-| `rapidResponse.resources.requests.memory`  | Specifies the Rapid Response memory requests.                | `256Mi`                                                      |
-| `rapidResponse.resources.limits.cpu`       | Specifies the Rapid Response CPU limits.                     | `500m`                                                       |
-| `rapidResponse.resources.limits.memory`    | Specifies the Rapid Response memory limits.                  | `500Mi`                                                      |
-| `rapidResponse.extraVolumes.volumes`       | Specifies the volumes to be made available in the Rapid Response shell. | `[]`                                                         |
-| `rapidResponse.extraVolumes.mounts`        | Specifies the mount paths for the volumes specified.         | `[]`                                                         |
-| `rapidResponse.scc.create`                 | Creates OpenShift's Security Context constraint.             | `true`                                                       |
-| `rapidResponse.securityContext.privileged` | Privileged flag. OCP 4.x and other Kubernetes distributions require this flag to access host filesystem. | `false`                                                      |
-| `rapidResponse.serviceAccount.create`      | Creates serviceAccount.                                      | `true`                                                       |
-| `rapidResponse.serviceAccount.name`        | Uses this value as serviceAccountName.                       | `rapid-response`                                             |
-| `rapidResponse.skipTlsVerifyCertificate`   | **Deprecated** Set it to `true` for disabling the certificate verification. | `false` **Deprecated** <br>use `sslVerifyCertificate` instead |
-| `rapidResponse.ssl.ca.certs`               | Adds a list of CA certificates to be used by Rapid Response. | `[]`                                                         |
-| `rapidResponse.sslVerifyCertificate`       | Set it to `false` for disabling the certificate verification. | `true`                                                       |
-| `rapidResponse.tolerations`                | Specifies the tolerations for scheduling.                    | `node-role.kubernetes.io/master:NoSchedule` <br> `node-role.kubernetes.io/control-plane:NoSchedule` |
+0.4.1Parameter                                  | Description                                                  | Default                                                      |
+0.4.1------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+0.4.1`global.image.pullSecrets`                 | Sets the global pull secrets.                                | <code>[]</code>                                              |
+0.4.1`global.image.pullPolicy`                  | Sets the global pull policy.                                 | <code>`IfNotPresent`</code>                                  |
+0.4.1`sysdig.accessKey`                         | Specifies your Sysdig Access Key.                            | Either `accessKey` or `existingAccessKeySecret` is required  |
+0.4.1`sysdig.existingAccessKeySecret`           | An alternative to using the Sysdig Agent Access Key. Specify the name of a Kubernetes secret containing an `access-key` entry. | Either `accessKey` or `existingAccessKeySecre`t is required  |
+0.4.1`rapidResponse.passphrase`                 | Specifies a passphrase to encrypt the traffic between the user and the host. | `Either passphrase or existingPassphraseSecret` is required  |
+0.4.1`rapidResponse.existingPassphraseSecret`   | An alternative to using the passphrase. Specify the name of a Kubernetes secret containing a `passphrase` entry. | Either passphrase or `existingPassphraseSecret` is required. |
+0.4.1`rapidResponse.existingServiceAccount`     | (Optional) Sets the ServiceAccount name to provide additional capabilities to Rapid Response pod. | ` `                                                          |
+0.4.1`rapidResponse.image.registry`             | Specifies the Rapid Response image registry.                 | `quay.io`                                                    |
+0.4.1`rapidResponse.image.repository`           | Specifies the  image repository to pull from.                | `sysdig/rapid-response-host-component`                       |
+0.4.1`rapidResponse.image.tag`                  | Specifies the  image tag to pull.                            | `"0.4.0"`                                                    |
+0.4.1`rapidResponse.image.pullPolicy`           | Specifies the image pull policy.                             | `""`                                                         |
+0.4.1`rapidResponse.imagePullSecrets`           | Specifies the image pull secret.                             | ` `                                                          |
+0.4.1`rapidResponse.apiEndpoint`                | Specifies the Rapid Response `apiEndpoint`.                  | ` `                                                          |
+0.4.1`rapidResponse.proxy.httpProxy`            | Sets the HTTP Proxy address.                                 | ` `                                                          |
+0.4.1`rapidResponse.proxy.httpsProxy`           | Sets the HTTPS Proxy address.                                | ` `                                                          |
+0.4.1`rapidResponse.proxy.noProxy`              | Sets IPs/URLs that should not pass trough a Proxy Server.    | ` `                                                          |
+0.4.1`rapidResponse.resources.requests.cpu`     | Specifies the Rapid Response CPU requests.                   | `150m`                                                       |
+0.4.1`rapidResponse.resources.requests.memory`  | Specifies the Rapid Response memory requests.                | `256Mi`                                                      |
+0.4.1`rapidResponse.resources.limits.cpu`       | Specifies the Rapid Response CPU limits.                     | `500m`                                                       |
+0.4.1`rapidResponse.resources.limits.memory`    | Specifies the Rapid Response memory limits.                  | `500Mi`                                                      |
+0.4.1`rapidResponse.extraVolumes.volumes`       | Specifies the volumes to be made available in the Rapid Response shell. | `[]`                                                         |
+0.4.1`rapidResponse.extraVolumes.mounts`        | Specifies the mount paths for the volumes specified.         | `[]`                                                         |
+0.4.1`rapidResponse.scc.create`                 | Creates OpenShift's Security Context constraint.             | `true`                                                       |
+0.4.1`rapidResponse.securityContext.privileged` | Privileged flag. OCP 4.x and other Kubernetes distributions require this flag to access host filesystem. | `false`                                                      |
+0.4.1`rapidResponse.serviceAccount.create`      | Creates serviceAccount.                                      | `true`                                                       |
+0.4.1`rapidResponse.serviceAccount.name`        | Uses this value as serviceAccountName.                       | `rapid-response`                                             |
+0.4.1`rapidResponse.skipTlsVerifyCertificate`   | **Deprecated** Set it to `true` for disabling the certificate verification. | `false` **Deprecated** <br>use `sslVerifyCertificate` instead |
+0.4.1`rapidResponse.ssl.ca.certs`               | Adds a list of CA certificates to be used by Rapid Response. | `[]`                                                         |
+0.4.1`rapidResponse.sslVerifyCertificate`       | Set it to `false` for disabling the certificate verification. | `true`                                                       |
+0.4.1`rapidResponse.tolerations`                | Specifies the tolerations for scheduling.                    | `node-role.kubernetes.io/master:NoSchedule` <br> `node-role.kubernetes.io/control-plane:NoSchedule` |
 
 ## Additional Configurations
 
