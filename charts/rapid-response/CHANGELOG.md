@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.9.5
+### New Features
+* **rapid-response** [b1bab244](https://github.com/sysdiglabs/charts/commit/b1bab244959765a35b60397500b66166b7e13831): update list of supported architectures ([#1837](https://github.com/sysdiglabs/charts/issues/1837))
 # v0.9.4
 ### Chores
 * **rapid-response** [ea37f363](https://github.com/sysdiglabs/charts/commit/ea37f363d44e1c14a2702eb74f7c83f5331215a4): bump rapid-response version to 0.4.6 ([#1835](https://github.com/sysdiglabs/charts/issues/1835))
