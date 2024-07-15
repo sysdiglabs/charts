@@ -17,6 +17,9 @@ tests:
                 operator: In
                 values:
                   - amd64
+                  - arm64
+                  - s390x
+                  - ppc64le
               - key: beta.kubernetes.io/os
                 operator: In
                 values:
@@ -37,6 +40,9 @@ tests:
                 operator: In
                 values:
                   - amd64
+                  - arm64
+                  - s390x
+                  - ppc64le
               - key: kubernetes.io/os
                 operator: In
                 values:
@@ -57,6 +63,9 @@ tests:
                 operator: In
                 values:
                   - amd64
+                  - arm64
+                  - s390x
+                  - ppc64le
               - key: kubernetes.io/os
                 operator: In
                 values:
