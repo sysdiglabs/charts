@@ -65,7 +65,7 @@ The following table lists the configurable parameters of the Sysdig Rapid Respon
 | `rapidResponse.existingServiceAccount`     | (Optional) Sets the ServiceAccount name to provide additional capabilities to Rapid Response pod. | ` `                                                          |
 | `rapidResponse.image.registry`             | Specifies the Rapid Response image registry.                 | `quay.io`                                                    |
 | `rapidResponse.image.repository`           | Specifies the  image repository to pull from.                | `sysdig/rapid-response-host-component`                       |
-| `rapidResponse.image.tag`                  | Specifies the  image tag to pull.                            | `"0.4.1"`                                                    |
+| `rapidResponse.image.tag`                  | Specifies the  image tag to pull.                            | `"0.4.6"`                                                    |
 | `rapidResponse.image.pullPolicy`           | Specifies the image pull policy.                             | `""`                                                         |
 | `rapidResponse.imagePullSecrets`           | Specifies the image pull secret.                             | ` `                                                          |
 | `rapidResponse.apiEndpoint`                | Specifies the Rapid Response `apiEndpoint`.                  | ` `                                                          |
