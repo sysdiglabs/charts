@@ -189,8 +189,9 @@ rapidResponse:
   # defined, these fields will be ignored
   arch:
     - amd64
-  #  - arm64
-  #  - s390x
+    - arm64
+    - s390x
+    - ppc64le
   os:
     - linux
   # Allow the DaemonSet to schedule using affinity rules
