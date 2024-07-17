@@ -163,8 +163,8 @@ spec:
               name: bpf-probes
           {{- end }}
 
-          {{- if and (.Values.kmodule) (.Values.kmodule.extraVolumes) (.Values.kmodule.extraVolumes.mounts) }}
-            {{ toYaml .Values.kmodule.extraVolumes.mounts | nindent 12 }}
+          {{- if .Values.daemonset.kmodule.extraVolumes.mounts }}
+            {{ toYaml .Values.daemonset.kmodule.extraVolumes.mounts | nindent 12 }}
           {{- end }}
       {{- end }}
       containers:
@@ -521,8 +521,8 @@ spec:
         {{ toYaml .Values.extraVolumes.volumes | nindent 8 }}
       {{- end }}
 
-      {{- if and (.Values.kmodule) (.Values.kmodule.extraVolumes) (.Values.kmodule.extraVolumes.volumes) }}
-        {{ toYaml .Values.kmodule.extraVolumes.volumes | nindent 8 }}
+      {{- if .Values.daemonset.kmodule.extraVolumes.volumes }}
+        {{ toYaml .Values.daemonset.kmodule.extraVolumes.volumes | nindent 8 }}
       {{- end }}
   updateStrategy:
     type: {{ .Values.daemonset.updateStrategy.type }}
