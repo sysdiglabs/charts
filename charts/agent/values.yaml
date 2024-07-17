@@ -179,6 +179,9 @@ daemonset:
     failureThreshold: 9
   kmodule:
     env: {}
+    extraVolumes:
+      volumes: []
+      mounts: []
 # If is behind a proxy you can set the proxy server
 # This proxy settings apply for the App-Checks.
 # If you need to configure the agent to allow it to communicate with the Sysdig collector through an HTTP proxy check:
