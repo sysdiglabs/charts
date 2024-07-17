@@ -262,3 +262,29 @@ tests:
             name: usr-vol
             readOnly: true
     template: daemonset.yaml
+
+  - it: Check kmodule extra volumes/mounts
+    set:
+      kmodule:
+        extraVolumes:
+          mounts:
+            - mountPath: /host/usr/lib64
+              name: lib64-vol
+          volumes:
+            - name: lib64-vol
+              hostPath:
+                path: /lib64
+    asserts:
+      - contains:
+          path: spec.template.spec.initContainers[0].volumeMounts
+          content:
+            mountPath: /host/usr/lib64
+            name: lib64-vol
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: lib64-vol
+            hostPath:
+              path: /lib64
+    templates:
+      - templates/daemonset.yaml
