@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.27.7
+### Chores
+* **agent** [9be47a0d](https://github.com/sysdiglabs/charts/commit/9be47a0dd84a6053661611e37a9af02eb22ec259): add kmodule.extraVolumes to daemonset ([#1838](https://github.com/sysdiglabs/charts/issues/1838))
 # v1.27.6
 # v1.27.5
 ### New Features
