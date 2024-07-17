@@ -265,26 +265,51 @@ tests:
 
   - it: Check kmodule extra volumes/mounts
     set:
-      kmodule:
-        extraVolumes:
-          mounts:
-            - mountPath: /host/usr/lib64
-              name: lib64-vol
-          volumes:
-            - name: lib64-vol
-              hostPath:
-                path: /lib64
+      daemonset:
+        kmodule:
+          extraVolumes:
+            mounts:
+              - mountPath: /host/usr/lib64
+                name: lib64-vol
+              - mountPath: /host/custom
+                name: custom-vol
+            volumes:
+              - name: lib64-vol
+                hostPath:
+                  path: /lib64
+              - name: custom-vol
+                hostPath:
+                  path: /mnt/custom
     asserts:
-      - contains:
-          path: spec.template.spec.initContainers[0].volumeMounts
-          content:
-            mountPath: /host/usr/lib64
-            name: lib64-vol
-      - contains:
-          path: spec.template.spec.volumes
-          content:
-            name: lib64-vol
+      - equal:
+          path: spec.template.spec.initContainers[*].volumeMounts[?(@.name == "lib64-vol")].mountPath
+          value: /host/usr/lib64
+      - equal:
+          path: spec.template.spec.volumes[?(@.name == "lib64-vol")].hostPath
+          value:
+            path: /lib64
+      - equal:
+          path: spec.template.spec.initContainers[*].volumeMounts[?(@.name == "custom-vol")].mountPath
+          value: /host/custom
+      - equal:
+          path: spec.template.spec.volumes[?(@.name == "custom-vol")].hostPath
+          value:
+            path: /mnt/custom
+    templates:
+      - templates/daemonset.yaml
+
+  - it: Check kmodule don't have extra volumes/mounts when we set the extraVolumes
+    set:
+      extraVolumes:
+        mounts:
+          - mountPath: /host/custom
+            name: custom-vol
+        volumes:
+          - name: custom-vol
             hostPath:
-              path: /lib64
+              path: /mnt/custom
+    asserts:
+      - isNull:
+          path: spec.template.spec.initContainers[*].volumeMounts[?(@.name == "custom-vol")]
     templates:
       - templates/daemonset.yaml
