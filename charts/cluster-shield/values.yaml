@@ -164,7 +164,7 @@ ca:
 run_command: "run-all-namespaced"
 image:
   # The Cluster Shield container image repository
-  repository: sysdig/cluster-shield
+  repository: quay.io/sysdig/cluster-shield
   # The Cluster Shield container image pull policy
   pullPolicy:
 proxy:
