@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.13.7
+### Bug Fixes
+* **cluster-scanner** [395589fe](https://github.com/sysdiglabs/charts/commit/395589fed7878c91bc14eb83d6a469cf2dc56355): properly document onPremCompatibilityVersion ([#1844](https://github.com/sysdiglabs/charts/issues/1844))
 # v0.13.6
 ### Chores
 * **cluster-scanner** [57976b93](https://github.com/sysdiglabs/charts/commit/57976b937c7eaf236f1021401e55003be95fc134): bump cluster-scanner to 0.8.4 ([#1802](https://github.com/sysdiglabs/charts/issues/1802))
