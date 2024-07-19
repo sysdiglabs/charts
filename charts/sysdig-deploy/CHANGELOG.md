@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.60.1
+### Chores
+* **sysdig-deploy** [5eb57fed](https://github.com/sysdiglabs/charts/commit/5eb57fedf6dcf9244bb42d7069cad2993dea0e59): Automatic version bump due to updated dependencies ([#1848](https://github.com/sysdiglabs/charts/issues/1848))
 # v1.60.0
 ### Chores
 * **cluster-scanner** [c8c03956](https://github.com/sysdiglabs/charts/commit/c8c03956fe1d1fc5f999f627817acd711944806b): Release cluster-scanner 0.9.2 ([#1846](https://github.com/sysdiglabs/charts/issues/1846))
