@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **cluster-scanner** [c8c03956](https://github.com/sysdiglabs/charts/commit/c8c03956fe1d1fc5f999f627817acd711944806b): Release cluster-scanner 0.9.2 ([#1846](https://github.com/sysdiglabs/charts/issues/1846))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/cluster-scanner-0.13.7...cluster-scanner-0.14.0
+### New Features
+- **common,admission-controller,agent,cluster-scanner,kspm-collector,node-analyzer,rapid-response** [07abc204](https://github.com/sysdiglabs/charts/commit/07abc204fd61e4692b48cf36babf0eecae6d154b): Add support for the in1 region ([#1847](https://github.com/sysdiglabs/charts/issues/1847))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/cluster-scanner-0.14.0...cluster-scanner-0.14.1
