@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.9.6
+### New Features
+* **common,admission-controller,agent,cluster-scanner,kspm-collector,node-analyzer,rapid-response** [07abc204](https://github.com/sysdiglabs/charts/commit/07abc204fd61e4692b48cf36babf0eecae6d154b): Add support for the in1 region ([#1847](https://github.com/sysdiglabs/charts/issues/1847))
 # v0.9.5
 ### New Features
 * **rapid-response** [b1bab244](https://github.com/sysdiglabs/charts/commit/b1bab244959765a35b60397500b66166b7e13831): update list of supported architectures ([#1837](https://github.com/sysdiglabs/charts/issues/1837))
