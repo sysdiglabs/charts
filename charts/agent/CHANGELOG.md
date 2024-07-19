@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.27.9
+### New Features
+* **common,admission-controller,agent,cluster-scanner,kspm-collector,node-analyzer,rapid-response** [07abc204](https://github.com/sysdiglabs/charts/commit/07abc204fd61e4692b48cf36babf0eecae6d154b): Add support for the in1 region ([#1847](https://github.com/sysdiglabs/charts/issues/1847))
 # v1.27.8
 ### Bug Fixes
 * **agent** [4aa59d01](https://github.com/sysdiglabs/charts/commit/4aa59d01292f0df09bdbbc00a95c6ddcc5967c66): fix issue on the extraVolume mount for the init container ([#1840](https://github.com/sysdiglabs/charts/issues/1840))
