@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **sysdig-deploy** [3db4435f](https://github.com/sysdiglabs/charts/commit/3db4435fdd5cd48a49c69fe560c43fbc3ec34581): Automatic version bump due to updated dependencies ([#1853](https://github.com/sysdiglabs/charts/issues/1853))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.60.3...sysdig-deploy-1.60.4
+### New Features
+- **nodeanalyzer** [2c527dd0](https://github.com/sysdiglabs/charts/commit/2c527dd0121e4f13994824effa6a897189a56685): add tolerations for rke2 master nodes ([#1800](https://github.com/sysdiglabs/charts/issues/1800))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.60.4...sysdig-deploy-1.61.0
