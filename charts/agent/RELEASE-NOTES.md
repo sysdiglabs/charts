@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **node-analyzer,kspm-collector,agent,rapid-response** [fccdc179](https://github.com/sysdiglabs/charts/commit/fccdc1790d42e22c3d605303a4d5f904a0e91439): bump the bitnami/kubectl image reference in charts ([#1772](https://github.com/sysdiglabs/charts/issues/1772))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.27.9...agent-1.27.10
+### New Features
+- [b3de2d75](https://github.com/sysdiglabs/charts/commit/b3de2d75f96f4064330a977c0d6f590737d6f461): release agent 13.3.2 ([#1856](https://github.com/sysdiglabs/charts/issues/1856))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.27.10...agent-1.27.11
