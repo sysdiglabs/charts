@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.61.2
+### New Features
+* **node-analyzer** [3bcce318](https://github.com/sysdiglabs/charts/commit/3bcce31812ab03b07dcfe1ea3184abef84e266b9): release node-analyzer with bug fix for host-shield shell tmp folder ([#1860](https://github.com/sysdiglabs/charts/issues/1860))
 # v1.61.1
 ### Chores
 * **sysdig-deploy** [7f839c88](https://github.com/sysdiglabs/charts/commit/7f839c882557ea5acf6ea6f1dbaf495e8ee14714): Automatic version bump due to updated dependencies ([#1857](https://github.com/sysdiglabs/charts/issues/1857))
