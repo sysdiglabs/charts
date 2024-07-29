@@ -1,5 +1,5 @@
 # What's Changed
 
 ### New Features
-- **nodeanalyzer** [2c527dd0](https://github.com/sysdiglabs/charts/commit/2c527dd0121e4f13994824effa6a897189a56685): add tolerations for rke2 master nodes ([#1800](https://github.com/sysdiglabs/charts/issues/1800))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.29.12...node-analyzer-1.30.0
+- **node-analyzer** [3bcce318](https://github.com/sysdiglabs/charts/commit/3bcce31812ab03b07dcfe1ea3184abef84e266b9): release node-analyzer with bug fix for host-shield shell tmp folder ([#1860](https://github.com/sysdiglabs/charts/issues/1860))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.30.0...node-analyzer-1.30.1
