@@ -160,7 +160,7 @@ spec:
       hostNetwork: true
       dnsPolicy: {{ default "ClusterFirstWithHostNet" .Values.dnsPolicy }}
       {{- else if .Values.dnsPolicy }}
-      dnsPolicy: {{ default "ClusterFirstWithHostNet" .Values.dnsPolicy }}
+      dnsPolicy: {{ .Values.dnsPolicy }}
       {{- end }}
       {{- if include "nodeAnalyzer.useHostPID" . }}
       # Use the Host PID namespace.
