@@ -1,4 +1,4 @@
-suite: Test setting host network and DNS Policy 
+suite: Test setting host network and DNS Policy
 values:
   - ./default_required_values.yaml
 tests:
