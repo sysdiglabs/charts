@@ -515,3 +515,9 @@ tests:
   image:
     repo: bitnami/kubectl
     tag: 1.30.3
+
+# Allow to modify DNS policy
+dnsPolicy: null
+
+# Allow to set host network
+hostNetwork: null

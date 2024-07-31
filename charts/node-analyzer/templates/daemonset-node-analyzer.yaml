@@ -158,7 +158,22 @@ spec:
       # Use the Host Network Namespace.
       # This is required by the Benchmark and the HostScanner containers to determine the hostname and host mac address
       hostNetwork: true
+      {{- if .Values.dnsPolicy }}
+      dnsPolicy: {{ .Values.dnsPolicy }}
+      {{- else }}
       dnsPolicy: ClusterFirstWithHostNet
+      {{- end }}
+      {{- else if .Values.hostNetwork }}
+      hostNetwork: true
+      {{- if .Values.dnsPolicy }}
+      dnsPolicy: {{ .Values.dnsPolicy }}
+      {{- else }}
+      dnsPolicy: ClusterFirstWithHostNet
+      {{- end }}
+      {{- else }}
+      {{- if .Values.dnsPolicy }}
+      dnsPolicy: {{ .Values.dnsPolicy }}
+      {{- end }}
       {{- end }}
       {{- if include "nodeAnalyzer.useHostPID" . }}
       # Use the Host PID namespace.

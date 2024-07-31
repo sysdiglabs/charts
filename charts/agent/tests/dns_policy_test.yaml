@@ -1,0 +1,17 @@
+suite: Test setting DNS Policy 
+templates:
+  - daemonset.yaml
+tests:
+  - it: Checking default dnsPolicy
+    asserts:
+      - equal:
+          path: spec.template.spec.dnsPolicy
+          value: ClusterFirstWithHostNet
+
+  - it: Checking setting different dnsPolicy
+    set:
+      dnsPolicy: ClusterFirst
+    asserts:
+      - equal:
+          path: spec.template.spec.dnsPolicy
+          value: ClusterFirst
