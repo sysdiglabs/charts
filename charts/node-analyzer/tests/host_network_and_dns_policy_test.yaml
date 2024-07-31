@@ -1,0 +1,120 @@
+suite: Test setting host network and DNS Policy
+values:
+  - ./default_required_values.yaml
+tests:
+  - it: Checking host network and DNS policy when host scanner enabled
+    templates:
+      - daemonset-node-analyzer.yaml
+    set:
+      nodeAnalyzer.hostScanner.deploy: true
+    asserts:
+      - equal:
+          path: spec.template.spec.hostNetwork
+          value: true
+      - equal:
+          path: spec.template.spec.dnsPolicy
+          value: ClusterFirstWithHostNet
+
+  - it: Checking host network and DNS policy when host scanner enabled and DNS Policy set
+    templates:
+      - daemonset-node-analyzer.yaml
+    set:
+      nodeAnalyzer.hostScanner.deploy: true
+      dnsPolicy: ClusterFirst
+    asserts:
+      - equal:
+          path: spec.template.spec.hostNetwork
+          value: true
+      - equal:
+          path: spec.template.spec.dnsPolicy
+          value: ClusterFirst
+
+  - it: Checking host network and DNS policy when host scanner and benchmark runner enabled
+    templates:
+      - daemonset-node-analyzer.yaml
+    set:
+      nodeAnalyzer.hostScanner.deploy: true
+      nodeAnalyzer.benchmarkRunner.deploy: true
+    asserts:
+      - equal:
+          path: spec.template.spec.hostNetwork
+          value: true
+      - equal:
+          path: spec.template.spec.dnsPolicy
+          value: ClusterFirstWithHostNet
+
+  - it: Checking host network and DNS policy when host scanner and benchmark runner enabled and dnsPolicy set
+    templates:
+      - daemonset-node-analyzer.yaml
+    set:
+      nodeAnalyzer.hostScanner.deploy: true
+      nodeAnalyzer.benchmarkRunner.deploy: true
+      dnsPolicy: ClusterFirst
+    asserts:
+      - equal:
+          path: spec.template.spec.hostNetwork
+          value: true
+      - equal:
+          path: spec.template.spec.dnsPolicy
+          value: ClusterFirst
+
+  - it: Checking default host network and dnsPolicy
+    templates:
+      - daemonset-node-analyzer.yaml
+    set:
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: false
+    asserts:
+      - notExists:
+          path: spec.template.spec.hostNetwork
+      - notExists:
+          path: spec.template.spec.dnsPolicy
+
+  - it: Checking default host network and custom dnsPolicy
+    templates:
+      - daemonset-node-analyzer.yaml
+    set:
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: false
+      dnsPolicy: ClusterFirst
+    asserts:
+      - notExists:
+          path: spec.template.spec.hostNetwork
+      - equal:
+          path: spec.template.spec.dnsPolicy
+          value: ClusterFirst
+
+  - it: Checking custom host network and default dnsPolicy
+    templates:
+      - daemonset-node-analyzer.yaml
+    set:
+      hostNetwork: true
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: false
+    asserts:
+      - equal:
+          path: spec.template.spec.hostNetwork
+          value: true
+      - equal:
+          path: spec.template.spec.dnsPolicy
+          value: ClusterFirstWithHostNet
+
+  - it: Checking custom host network and custom dnsPolicy
+    templates:
+      - daemonset-node-analyzer.yaml
+    set:
+      hostNetwork: true
+      dnsPolicy: ClusterFirst
+      nodeAnalyzer:
+        benchmarkRunner:
+          deploy: false
+    asserts:
+      - equal:
+          path: spec.template.spec.hostNetwork
+          value: true
+      - equal:
+          path: spec.template.spec.dnsPolicy
+          value: ClusterFirst

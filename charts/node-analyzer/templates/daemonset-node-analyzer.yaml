@@ -154,11 +154,13 @@ spec:
         {{- toYaml .Values.global.image.pullSecrets | nindent 8 }}
       {{- end }}
       terminationGracePeriodSeconds: 5
-      {{- if or (include "nodeAnalyzer.deployBenchmarkRunner" .) (include "nodeAnalyzer.deployHostScanner" .) }}
+      {{- if or (include "nodeAnalyzer.deployBenchmarkRunner" .) (include "nodeAnalyzer.deployHostScanner" .) .Values.hostNetwork }}
       # Use the Host Network Namespace.
       # This is required by the Benchmark and the HostScanner containers to determine the hostname and host mac address
       hostNetwork: true
-      dnsPolicy: ClusterFirstWithHostNet
+      dnsPolicy: {{ default "ClusterFirstWithHostNet" .Values.dnsPolicy }}
+      {{- else if .Values.dnsPolicy }}
+      dnsPolicy: {{ .Values.dnsPolicy }}
       {{- end }}
       {{- if include "nodeAnalyzer.useHostPID" . }}
       # Use the Host PID namespace.
