@@ -27,11 +27,7 @@ spec:
       tolerations:
         {{ toYaml .Values.tolerations | nindent 8 }}
       hostNetwork: true
-      {{- if .Values.dnsPolicy }}
-      dnsPolicy: {{ .Values.dnsPolicy }}
-      {{- else }}
-      dnsPolicy: ClusterFirstWithHostNet
-      {{- end }}
+      dnsPolicy: {{ default "ClusterFirstWithHostNet" .Values.dnsPolicy }}
       hostPID: true
       terminationGracePeriodSeconds: 5
       {{- if .Values.daemonset.nodeSelector }}
