@@ -30,4 +30,4 @@ sources:
 - https://app.sysdigcloud.com/#/settings/user
 - https://github.com/draios/sysdig
 type: application
-version: 1.27.13
+version: 1.27.14
