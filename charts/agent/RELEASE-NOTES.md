@@ -1,5 +1,5 @@
 # What's Changed
 
-### Bug Fixes
-- **agent** [7f66f3a5](https://github.com/sysdiglabs/charts/commit/7f66f3a531452ca0bf0bd957e720e5affbddbdad): Fix doc for `windows.image.pullSecrets` ([#1867](https://github.com/sysdiglabs/charts/issues/1867))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.27.12...agent-1.27.13
+### New Features
+- **agent** [d74fe798](https://github.com/sysdiglabs/charts/commit/d74fe7989e2ef332cef338fe05d7a4d08c1d490c): explicitly naming the prometheus metrics port in the agent daemonset ([#1869](https://github.com/sysdiglabs/charts/issues/1869))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.27.13...agent-1.27.14

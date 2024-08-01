@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.27.14
+### New Features
+* **agent** [d74fe798](https://github.com/sysdiglabs/charts/commit/d74fe7989e2ef332cef338fe05d7a4d08c1d490c): explicitly naming the prometheus metrics port in the agent daemonset ([#1869](https://github.com/sysdiglabs/charts/issues/1869))
 # v1.27.13
 ### Bug Fixes
 * **agent** [7f66f3a5](https://github.com/sysdiglabs/charts/commit/7f66f3a531452ca0bf0bd957e720e5affbddbdad): Fix doc for `windows.image.pullSecrets` ([#1867](https://github.com/sysdiglabs/charts/issues/1867))
