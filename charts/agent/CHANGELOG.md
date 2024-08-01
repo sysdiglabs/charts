@@ -10,6 +10,12 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.27.13
+### Bug Fixes
+* **agent** [7f66f3a5](https://github.com/sysdiglabs/charts/commit/7f66f3a531452ca0bf0bd957e720e5affbddbdad): Fix doc for `windows.image.pullSecrets` ([#1867](https://github.com/sysdiglabs/charts/issues/1867))
+# v1.27.12
+### New Features
+* **agent,node-analyzer** [9c21415e](https://github.com/sysdiglabs/charts/commit/9c21415e63126dbce960d0024bc632ff595ec6d1): add option to set hostNetwork and dnsPolicy ([#1863](https://github.com/sysdiglabs/charts/issues/1863))
 # v1.27.11
 ### New Features
 * [b3de2d75](https://github.com/sysdiglabs/charts/commit/b3de2d75f96f4064330a977c0d6f590737d6f461): release agent 13.3.2 ([#1856](https://github.com/sysdiglabs/charts/issues/1856))

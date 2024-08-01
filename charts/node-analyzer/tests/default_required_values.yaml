@@ -1,3 +1,4 @@
 global:
   sysdig:
     accessKey: "AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE"
+clusterName: "test"

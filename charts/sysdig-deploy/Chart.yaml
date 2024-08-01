@@ -2,7 +2,7 @@ apiVersion: v2
 name: sysdig-deploy
 description: A chart with various Sysdig components for Kubernetes
 type: application
-version: 1.61.2
+version: 1.61.4
 maintainers:
   - name: AlbertoBarba
     email: alberto.barba@sysdig.com
@@ -26,7 +26,7 @@ dependencies:
   - name: agent
     # repository: https://charts.sysdig.com
     repository: file://../agent
-    version: ~1.27.11
+    version: ~1.27.13
     alias: agent
     condition: agent.enabled
   - name: common
@@ -36,7 +36,7 @@ dependencies:
   - name: node-analyzer
     # repository: https://charts.sysdig.com
     repository: file://../node-analyzer
-    version: ~1.30.1
+    version: ~1.30.2
     alias: nodeAnalyzer
     condition: nodeAnalyzer.enabled
   - name: cluster-scanner
