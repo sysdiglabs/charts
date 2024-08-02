@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.27.15
+### Bug Fixes
+* **agent** [b193d652](https://github.com/sysdiglabs/charts/commit/b193d652c67930d83c62341800474448bde60f14): use dig function for prometheus_exporter settings check ([#1871](https://github.com/sysdiglabs/charts/issues/1871))
 # v1.27.14
 ### New Features
 * **agent** [d74fe798](https://github.com/sysdiglabs/charts/commit/d74fe7989e2ef332cef338fe05d7a4d08c1d490c): explicitly naming the prometheus metrics port in the agent daemonset ([#1869](https://github.com/sysdiglabs/charts/issues/1869))
