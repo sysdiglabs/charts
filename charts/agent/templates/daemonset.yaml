@@ -230,9 +230,9 @@ spec:
             - name: SSL_CERT_FILE
               value: /opt/draios/certificates/{{- include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.ssl) -}}
             {{- end }}
-          {{- if and (hasKey .Values.sysdig.settings "prometheus_exporter") (.Values.sysdig.settings.prometheus_exporter.enabled) }}
+          {{- if dig "prometheus_exporter" "enabled" false .Values.sysdig.settings }}
           ports:
-            - containerPort: {{ regexFind "[0-9]+$" (default "0.0.0.0:9544" .Values.sysdig.settings.prometheus_exporter.listen_url) }}
+            - containerPort: {{ regexFind "[0-9]+$" (dig "prometheus_exporter" "listen_url" "0.0.0.0:9544" .Values.sysdig.settings) }}
               name: metrics
           {{- end }}
           readinessProbe:
