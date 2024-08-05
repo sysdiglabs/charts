@@ -35,6 +35,12 @@ spec:
         {{- toYaml .Values.global.image.pullSecrets | nindent 8 }}
       {{- end }}
       {{/* sysdig-deploy support end */}}
+      {{- if .Values.hostNetwork }}
+      hostNetwork: true
+      dnsPolicy: {{ default "ClusterFirstWithHostNet" .Values.dnsPolicy }}
+      {{- else if .Values.dnsPolicy }}
+      dnsPolicy: {{ .Values.dnsPolicy }}
+      {{- end }}
       serviceAccountName: {{ include "cluster-shield.serviceAccountName" . }}
       containers:
         - name: "cluster-shield"
@@ -163,11 +169,11 @@ spec:
         {{- else if eq (include "cluster-shield.custom_ca.useExistingSecret" .) "true" }}
         - name: ca-cert
           secret:
-            secretName: {{ .Values.ca.existingCaSecret }}
+            secretName: {{ .Values.ca.existingCaSecret | default .Values.global.ssl.ca.existingCaSecret }}
         {{- else if eq (include "cluster-shield.custom_ca.useExistingConfigMap" .) "true" }}
         - name: ca-cert
           configMap:
-            name: {{ .Values.ca.existingCaConfigMap }}
+            name:  {{ .Values.ca.existingCaConfigMap | default .Values.global.ssl.ca.existingCaConfigMap }}
         {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:

@@ -59,7 +59,7 @@ tests:
           errorMessage: |
             values don't meet the specifications of the schema(s) in the following chart(s):
             cluster-shield:
-            - cluster_shield.sysdig_endpoint.region: cluster_shield.sysdig_endpoint.region must be one of the following: "custom", "au-syd-monitor", "au-syd-private-monitor", "au-syd-private-secure", "au-syd-secure", "au1", "br-sao-monitor", "br-sao-private-monitor", "br-sao-private-secure", "br-sao-secure", "ca-tor-monitor", "ca-tor-private-monitor", "ca-tor-private-secure", "ca-tor-secure", "eu-de-monitor", "eu-de-private-monitor", "eu-de-private-secure", "eu-de-secure", "eu-gb-monitor", "eu-gb-private-monitor", "eu-gb-private-secure", "eu-gb-secure", "eu1", "jp-osa-monitor", "jp-osa-private-monitor", "jp-osa-private-secure", "jp-osa-secure", "jp-tok-monitor", "jp-tok-private-monitor", "jp-tok-private-secure", "jp-tok-secure", "me2", "us-east-monitor", "us-east-private-monitor", "us-east-private-secure", "us-east-secure", "us-south-monitor", "us-south-private-monitor", "us-south-private-secure", "us-south-secure", "us1", "us2", "us3", "us4", null
+            - cluster_shield.sysdig_endpoint.region: cluster_shield.sysdig_endpoint.region must be one of the following: "custom", "au-syd-monitor", "au-syd-private-monitor", "au-syd-private-secure", "au-syd-secure", "au1", "br-sao-monitor", "br-sao-private-monitor", "br-sao-private-secure", "br-sao-secure", "ca-tor-monitor", "ca-tor-private-monitor", "ca-tor-private-secure", "ca-tor-secure", "eu-de-monitor", "eu-de-private-monitor", "eu-de-private-secure", "eu-de-secure", "eu-gb-monitor", "eu-gb-private-monitor", "eu-gb-private-secure", "eu-gb-secure", "eu1", "in1", "jp-osa-monitor", "jp-osa-private-monitor", "jp-osa-private-secure", "jp-osa-secure", "jp-tok-monitor", "jp-tok-private-monitor", "jp-tok-private-secure", "jp-tok-secure", "me2", "us-east-monitor", "us-east-private-monitor", "us-east-private-secure", "us-east-secure", "us-south-monitor", "us-south-private-monitor", "us-south-private-secure", "us-south-secure", "us1", "us2", "us3", "us4", null
 
   - it: Global - Custom Region requires API URL
     set:
@@ -118,3 +118,43 @@ tests:
           api_url:
     asserts:
       - notFailedTemplate: { }
+
+  - it: Accept null as dnsPolicy
+    set:
+      dnsPolicy: null
+    asserts:
+      - notFailedTemplate: { }
+
+  - it: Accept ClusterFirst as dnsPolicy
+    set:
+      dnsPolicy: ClusterFirst
+    asserts:
+      - notFailedTemplate: { }
+
+  - it: Accept ClusterFirstWithHostNet as dnsPolicy
+    set:
+      dnsPolicy: ClusterFirstWithHostNet
+    asserts:
+      - notFailedTemplate: { }
+
+  - it: Accept Default as dnsPolicy
+    set:
+      dnsPolicy: Default
+    asserts:
+      - notFailedTemplate: { }
+
+  - it: Accept None as dnsPolicy
+    set:
+      dnsPolicy: None
+    asserts:
+      - notFailedTemplate: { }
+
+  - it: Does not Accept incorrect dnsPolicy
+    set:
+      dnsPolicy: CustomDNSPolicy
+    asserts:
+      - failedTemplate:
+          errorMessage: |
+            values don't meet the specifications of the schema(s) in the following chart(s):
+            cluster-shield:
+            - dnsPolicy: dnsPolicy must be one of the following: null, "ClusterFirst", "ClusterFirstWithHostNet", "Default", "None"
