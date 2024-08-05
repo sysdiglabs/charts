@@ -115,8 +115,6 @@ cluster_shield:
         # Allows to store the list of running packages to Sysdig backend.
         integration_enabled: false
       local_cluster:
-        # Enable to scan the cluster where the cluster-shield is running.
-        enabled: true
         # Restrict access to specific Docker secrets when Cluster Scanner is running.
         # The default behavior is listing all secrets.
         registry_secrets: []
@@ -134,8 +132,6 @@ cluster_shield:
         # If set to false it allows insecure connections to registries,
         # Such as for registries with self-signed or private certificates.
         verify: true
-      remote_clusters:
-        enabled: false
     kubernetes_metadata:
       # Enable the Kubernetes Metadata feature
       enabled: false
@@ -163,8 +159,10 @@ ca:
 # The command executed by the Cluster Shield POD
 run_command: "run-all-namespaced"
 image:
+  # The Sysdig Registry Scanner image registry.
+  registry: quay.io
   # The Cluster Shield container image repository
-  repository: quay.io/sysdig/cluster-shield
+  repository: sysdig/cluster-shield
   # The Cluster Shield container image pull policy
   pullPolicy:
 proxy:
@@ -250,3 +248,9 @@ updateStrategy:
 #
 # If you are runinng on SaaS, do NOT provide this parameter.
 onPremCompatibilityVersion:
+# Specifies if Cluster Shield should be started in hostNetwork mode.
+# This field is required if you are using a custom CNI where the control plane nodes are unable to initiate
+# network connections to the pods, for example, using Calico CNI plugin on EKS.
+hostNetwork: false
+# Define Cluster Shield Pods DNS Policy
+dnsPolicy:

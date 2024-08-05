@@ -61,6 +61,7 @@
                 "eu-gb-private-secure",
                 "eu-gb-secure",
                 "eu1",
+                "in1",
                 "jp-osa-monitor",
                 "jp-osa-private-monitor",
                 "jp-osa-private-secure",
@@ -172,6 +173,21 @@
     },
     "cluster_shield": {
       "$ref": "#/$defs/ClusterShieldConfiguration"
+    },
+    "dnsPolicy": {
+      "type": [
+        "null",
+        "string"
+      ],
+      "description": "Define Cluster Shield Pods DNS Policy",
+      "default": null,
+      "enum": [
+        null,
+        "ClusterFirst",
+        "ClusterFirstWithHostNet",
+        "Default",
+        "None"
+      ]
     }
   },
   "allOf": [
@@ -417,32 +433,6 @@
           "description": "Kubernetes configurations"
         }
       },
-      "allOf": [
-        {
-          "description": "Sets sysdig_endpoint required properties based on features configuration.",
-          "if": {
-            "properties": {
-              "sysdig_endpoint": {
-                "$ref": "#/$defs/ClusterShieldConfiguration/$defs/SysdigEndpoint/$defs/IsCustomRegion"
-              },
-              "features": {
-                "properties": {
-                  "kubernetes_metadata": {
-                    "$ref": "#/$defs/ClusterShieldConfiguration/$defs/KubernetesMetadata/$defs/IsEnabled"
-                  }
-                }
-              }
-            }
-          },
-          "then": {
-            "properties": {
-              "sysdig_endpoint": {
-                "$ref": "#/$defs/ClusterShieldConfiguration/$defs/SysdigEndpoint/$defs/SetCollectorRequired"
-              }
-            }
-          }
-        }
-      ],
       "$defs": {
         "Audit": {
           "type": "object",
@@ -576,6 +566,7 @@
                 "eu-gb-private-secure",
                 "eu-gb-secure",
                 "eu1",
+                "in1",
                 "jp-osa-monitor",
                 "jp-osa-private-monitor",
                 "jp-osa-private-secure",
@@ -658,51 +649,28 @@
             "local_cluster": {
               "$ref": "#/$defs/ClusterShieldConfiguration/$defs/ContainerVulnerabilityManagementLocal"
             },
-            "remote_clusters": {
-              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/ContainerVulnerabilityManagementRemote"
+            "parallel_files_analysis_count": {
+              "type": "integer",
+              "description": "Maximum number of files that are analyzed in parallel",
+              "default": 5
+            },
+            "max_file_size_bytes": {
+              "type": "integer",
+              "description": "Maximum size in bytes for a file to be analyzed",
+              "default": 104857600
+            },
+            "max_file_size_bytes_in_memory": {
+              "type": "integer",
+              "description": "Maximum size in bytes for a file to be analyzed in memory; file whose size is bigger than this are temporarily copied on to the filesystem",
+              "default": 26214400
             }
-          },
-          "if": {
-            "properties": {
-              "enabled": {
-                "const": true
-              }
-            }
-          },
-          "then": {
-            "oneOf": [
-              {
-                "properties": {
-                  "local_cluster": {
-                    "properties": {
-                      "enabled": {
-                        "const": true
-                      }
-                    }
-                  }
-                }
-              },
-              {
-                "properties": {
-                  "remote_clusters": {
-                    "properties": {
-                      "enabled": {
-                        "const": true
-                      }
-                    }
-                  }
-                }
-              }
-            ]
           },
           "required": [
             "enabled",
             "local_cluster",
-            "remote_clusters",
             "in_use",
             "registry_ssl"
           ],
-          "additionalProperties": false,
           "$defs": {
             "IsEnabled": {
               "properties": {
@@ -736,11 +704,6 @@
         "ContainerVulnerabilityManagementLocal": {
           "type": "object",
           "properties": {
-            "enabled": {
-              "type": "boolean",
-              "description": "Specify if should scan only the local cluster",
-              "default": true
-            },
             "registry_secrets": {
               "type": "array",
               "items": {
@@ -757,8 +720,7 @@
                 ]
               ]
             }
-          },
-          "additionalProperties": false
+          }
         },
         "ContainerVulnerabilityManagementLocalRegistrySecret": {
           "type": "object",
@@ -777,36 +739,6 @@
             "namespace",
             "secrets"
           ],
-          "additionalProperties": false
-        },
-        "ContainerVulnerabilityManagementRemote": {
-          "type": "object",
-          "properties": {
-            "enabled": {
-              "type": "boolean",
-              "description": "Specify if it should scan remote clusters",
-              "default": false
-            },
-            "kubeconfig_path": {
-              "type": "string",
-              "description": "Path to the kubeconfig file",
-              "examples": [
-                "/path/to/kubeconfig"
-              ]
-            }
-          },
-          "if": {
-            "properties": {
-              "enabled": {
-                "const": true
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "kubeconfig_path"
-            ]
-          },
           "additionalProperties": false
         },
         "Kubernetes": {

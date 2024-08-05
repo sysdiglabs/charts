@@ -4,6 +4,26 @@ templates:
 values:
   - ../ci/base-values.yaml
 tests:
+
+  - it: Check configmap does not contain leading/trailing whitespaces
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+      - isNotEmpty:
+          path: data
+      - notMatchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: ^\n
+      - notMatchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: \n\n$
+      - matchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: \n$
+
   - it: Sets the correct log level in configmap
     set:
       cluster_shield:
@@ -166,3 +186,77 @@ tests:
           pattern: |
             ssl:
               verify: true
+
+
+  - it: Local custom region requires Collector when kubernetes_metadata feature is enabled
+    set:
+      cluster_shield:
+        sysdig_endpoint:
+          region: "custom"
+          api_url: "https://www.example.com"
+          collector: null
+        features:
+          kubernetes_metadata:
+            enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Custom region requires cluster_shield.sysdig_endpoint.collector to be defined.
+
+  - it: Global custom region requires Collector when kubernetes_metadata feature is enabled
+    set:
+      global:
+        sysdig:
+          region: "custom"
+      cluster_shield:
+        sysdig_endpoint:
+          api_url: "https://www.example.com"
+          collector: null
+        features:
+          kubernetes_metadata:
+            enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Custom region requires cluster_shield.sysdig_endpoint.collector to be defined.
+
+
+  - it: Local custom region requires Collector when kubernetes_metadata feature is enabled
+    set:
+      cluster_shield:
+        sysdig_endpoint:
+          region: "custom"
+          api_url: "https://www.example.com"
+          collector: "collector.example.com:6443"
+        features:
+          kubernetes_metadata:
+            enabled: true
+    asserts:
+      - notFailedTemplate: {}
+      - matchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: |-
+            sysdig_endpoint:
+              api_url: https://www.example.com
+              collector: collector.example.com:6443
+              region: custom
+
+  - it: Global custom region requires Collector when kubernetes_metadata feature is enabled
+    set:
+      global:
+        sysdig:
+          region: "custom"
+      cluster_shield:
+        sysdig_endpoint:
+          api_url: "https://www.example.com"
+          collector: "collector.example.com:6443"
+        features:
+          kubernetes_metadata:
+            enabled: true
+    asserts:
+      - notFailedTemplate: {}
+      - matchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: |-
+            sysdig_endpoint:
+              api_url: https://www.example.com
+              collector: collector.example.com:6443
+              region: custom

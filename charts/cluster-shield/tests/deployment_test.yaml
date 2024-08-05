@@ -19,6 +19,10 @@ tests:
       - equal:
           path: metadata.namespace
           value: shield-namespace
+      - isNull:
+          path: spec.template.spec.hostNetwork
+      - isNull:
+          path: spec.template.spec.dnsPolicy
       - isNotNull:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")]
       - isNotNull:
@@ -42,6 +46,10 @@ tests:
       - equal:
           path: metadata.namespace
           value: shield-namespace
+      - isNull:
+          path: spec.template.spec.hostNetwork
+      - isNull:
+          path: spec.template.spec.dnsPolicy
       - isNotNull:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")]
       - isNull:
@@ -296,3 +304,63 @@ tests:
       - equal:
           path: spec.template.spec.serviceAccountName
           value: custom-service-account
+
+  - it: Use image.registry, image.repository and image.tag to build the pullString
+    set:
+      image:
+        registry: "test-registry.io"
+        repository: "sysdig/cluster-shield"
+        tag: "0.0.0"
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].image
+          value: test-registry.io/sysdig/cluster-shield:0.0.0
+
+  - it: Use global.imageRegistry,image.repository and image.tag to build the pullString
+    set:
+      global:
+        imageRegistry: "test-global-registry.io"
+      image:
+        registry: "test-registry.io"
+        repository: "sysdig/cluster-shield"
+        tag: "0.0.0"
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].image
+          value: test-global-registry.io/sysdig/cluster-shield:0.0.0
+
+  - it: Default DNS Policy
+    asserts:
+      - notExists:
+          path: spec.template.spec.dnsPolicy
+
+  - it: Test hostNetwork
+    set:
+      hostNetwork: true
+    asserts:
+      - equal:
+          path: spec.template.spec.hostNetwork
+          value: true
+      - equal:
+          path: spec.template.spec.dnsPolicy
+          value: ClusterFirstWithHostNet
+
+  - it: Custom DNS Policy
+    set:
+      dnsPolicy: "None"
+    asserts:
+      - equal:
+          path: spec.template.spec.dnsPolicy
+          value: None
+
+  - it: Custom DNS Policy with hostNetwork
+    set:
+      hostNetwork: true
+      dnsPolicy: "None"
+    asserts:
+      - equal:
+          path: spec.template.spec.hostNetwork
+          value: true
+      - equal:
+          path: spec.template.spec.dnsPolicy
+          value: None

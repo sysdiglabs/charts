@@ -6,11 +6,11 @@ so the template is executed just once
 {{- if eq (include "cluster-shield.needCerts" .) "true" }}
 {{- $certString := include "cluster-shield.tlsGenCerts" . -}}
 {{- $certList := split "$" $certString }}
+{{- if eq (include "cluster-shield.needWebhooks" .) "true" }}
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
 metadata:
   name: {{ include "cluster-shield.fullname" . }}-audit
-  namespace: {{ .Release.Namespace }}
 webhooks:
   {{- if .Values.cluster_shield.features.audit.enabled }}
   - name: audit.secure.sysdig.com
@@ -59,6 +59,9 @@ webhooks:
         apiVersions: [ "v1" ]
         operations: [ "CREATE", "UPDATE" ]
         resources:
+          {{- if .Values.cluster_shield.features.admission_control.container_vulnerability_management.enabled }}
+          - "pods"
+          {{- end }}
           - "deployments"
           - "replicasets"
           - "statefulsets"
@@ -82,6 +85,7 @@ webhooks:
     failurePolicy: Ignore
     {{- end }}
   {{- end }}
+{{- end }}
 ---
 apiVersion: v1
 kind: Secret

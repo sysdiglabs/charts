@@ -31,7 +31,13 @@ tests:
     asserts:
       - hasDocuments:
           count: 2
-      - isNotNull:
+      - containsDocument:
+          kind: ValidatingWebhookConfiguration
+          apiVersion: admissionregistration.k8s.io/v1
+          name: shield-release-cluster-shield-audit
+      - notExists:
+          path: metadata.namespace
+      - exists:
           path: .webhooks[?(@.name == "vac.secure.sysdig.com")]
       - equal:
           path: .webhooks[?(@.name == "vac.secure.sysdig.com")].failurePolicy
@@ -65,7 +71,13 @@ tests:
     asserts:
       - hasDocuments:
           count: 2
-      - isNotNull:
+      - containsDocument:
+          kind: ValidatingWebhookConfiguration
+          apiVersion: admissionregistration.k8s.io/v1
+          name: shield-release-cluster-shield-audit
+      - notExists:
+          path: metadata.namespace
+      - exists:
           path: .webhooks[?(@.name == "vac.secure.sysdig.com")]
       - equal:
           path: .webhooks[?(@.name == "vac.secure.sysdig.com")].failurePolicy
@@ -95,7 +107,11 @@ tests:
     asserts:
       - hasDocuments:
           count: 2
-      - isNotNull:
+      - containsDocument:
+          kind: ValidatingWebhookConfiguration
+          apiVersion: admissionregistration.k8s.io/v1
+          name: shield-release-cluster-shield-audit
+      - exists:
           path: .webhooks[?(@.name == "audit.secure.sysdig.com")]
       - equal:
           path: .webhooks[?(@.name == "audit.secure.sysdig.com")].clientConfig.service.namespace
@@ -130,9 +146,13 @@ tests:
     asserts:
       - hasDocuments:
           count: 2
-      - isNotNull:
+      - containsDocument:
+          kind: ValidatingWebhookConfiguration
+          apiVersion: admissionregistration.k8s.io/v1
+          name: shield-release-cluster-shield-audit
+      - exists:
           path: .webhooks[?(@.name == "vac.secure.sysdig.com")]
-      - isNotNull:
+      - exists:
           path: .webhooks[?(@.name == "audit.secure.sysdig.com")]
       - equal:
           path: .webhooks[?(@.name == "vac.secure.sysdig.com")].clientConfig.service.namespace
@@ -186,9 +206,9 @@ tests:
     asserts:
       - hasDocuments:
           count: 2
-      - isNotNull:
+      - exists:
           path: .webhooks[?(@.name == "vac.secure.sysdig.com")]
-      - isNotNull:
+      - exists:
           path: .webhooks[?(@.name == "audit.secure.sysdig.com")]
       - equal:
           path: .webhooks[?(@.name == "vac.secure.sysdig.com")].clientConfig.service.namespace
@@ -229,9 +249,13 @@ tests:
     asserts:
       - hasDocuments:
           count: 2
-      - isNotNull:
+      - containsDocument:
+          kind: ValidatingWebhookConfiguration
+          apiVersion: admissionregistration.k8s.io/v1
+          name: shield-release-cluster-shield-audit
+      - exists:
           path: .webhooks[?(@.name == "vac.secure.sysdig.com")]
-      - isNotNull:
+      - exists:
           path: .webhooks[?(@.name == "audit.secure.sysdig.com")]
       - equal:
           path: .webhooks[?(@.name == "vac.secure.sysdig.com")].clientConfig.service.namespace
@@ -274,9 +298,38 @@ tests:
           kind: Secret
           apiVersion: v1
           name: sysdig-cluster-shield-tls-certs
-      - isNotNull:
+      - isNotNullOrEmpty:
           path: data["tls.crt"]
-      - isNotNull:
+      - isNotNullOrEmpty:
           path: data["tls.key"]
-      - isNotNull:
+      - isNotNullOrEmpty:
+          path: data["ca.crt"]
+
+  - it: Does create only the TLS secret if admission control and audit features are disabled but container_vulnerability_management is enabled
+    set:
+      cluster_shield:
+        features:
+          container_vulnerability_management:
+            enabled: true
+          admission_control:
+            enabled: false
+          audit:
+            enabled: false
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: Secret
+          apiVersion: v1
+          name: sysdig-cluster-shield-tls-certs
+      - containsDocument:
+          kind: ValidatingWebhookConfiguration
+          apiVersion: admissionregistration.k8s.io/v1
+          name: shield-release-cluster-shield-audit
+        not: true
+      - isNotNullOrEmpty:
+          path: data["tls.crt"]
+      - isNotNullOrEmpty:
+          path: data["tls.key"]
+      - isNotNullOrEmpty:
           path: data["ca.crt"]

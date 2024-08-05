@@ -50,59 +50,62 @@ Adds kubernetes related keys to the configuration.
 */}}
 {{- define "cluster-shield.configMap" -}}
 {{- $conf := deepCopy .Values.cluster_shield -}}
-{{- $_ := set $conf "kubernetes" (include "cluster-shield.configurationKubernetes" . | fromYaml) }}
-{{- if eq "true" (include "cluster-shield.containerVulnerabilityManagementEnabled" .) }}
-{{- if regexMatch "^v?([0-9]+)(\\.[0-9]+)?(\\.[0-9]+)?(-([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?(\\+([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?$" (.Values.onPremCompatibilityVersion | default "") }}
+{{- $_ := set $conf "kubernetes" (include "cluster-shield.configurationKubernetes" . | fromYaml) -}}
+{{- if eq "true" (include "cluster-shield.containerVulnerabilityManagementEnabled" .) -}}
+{{- if regexMatch "^v?([0-9]+)(\\.[0-9]+)?(\\.[0-9]+)?(-([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?(\\+([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?$" (.Values.onPremCompatibilityVersion | default "") -}}
 {{- if semverCompare "< 7.0.0" .Values.onPremCompatibilityVersion -}}
-{{- $_ := set $conf.features.container_vulnerability_management "platform_services_enabled" false }}
+{{- $_ := set $conf.features.container_vulnerability_management "platform_services_enabled" false -}}
 {{- end -}}
 {{- end -}}
-{{- $_ := set $conf "cluster_scanner" (merge (include "cluster-shield.configurationClusterScanner" . | fromYaml) (.Values.cluster_shield.cluster_scanner | default dict)) }}
-{{- end }}
+{{- $_ := set $conf "cluster_scanner" (merge (include "cluster-shield.configurationClusterScanner" . | fromYaml) (.Values.cluster_shield.cluster_scanner | default dict)) -}}
+{{- end -}}
 {{- if and (.Values.cluster_shield.features.admission_control.enabled) (.Values.cluster_shield.features.admission_control.container_vulnerability_management.enabled)}}
-{{- $_ := set $conf "admission_controller_secure" (include "cluster-shield.configurationAdmissionControllerSecure" . | fromYaml) }}
+{{- $_ := set $conf "admission_controller_secure" (include "cluster-shield.configurationAdmissionControllerSecure" . | fromYaml) -}}
 {{- end}}
-{{- $_ := unset $conf.sysdig_endpoint "access_key" }}
-{{- $_ := unset $conf.sysdig_endpoint "secure_api_token" }}
+{{- $_ := unset $conf.sysdig_endpoint "access_key" -}}
+{{- $_ := unset $conf.sysdig_endpoint "secure_api_token" -}}
 {{/* sysdig-deploy support start */}}
-{{- if not .Values.cluster_shield.cluster_config.name }}
-{{- if .Values.global.clusterConfig.name }}
-{{- $_ := set $conf "cluster_config" (dict "name" .Values.global.clusterConfig.name) }}
-{{- else }}
+{{- if not .Values.cluster_shield.cluster_config.name -}}
+{{- if .Values.global.clusterConfig.name -}}
+{{- $_ := set $conf "cluster_config" (dict "name" .Values.global.clusterConfig.name) -}}
+{{- else -}}
 {{- fail "One of global.clusterConfig.name and cluster_shield.cluster_config.name must be defined." -}}
-{{- end }}
-{{- end }}
-{{- if not .Values.cluster_shield.sysdig_endpoint.region }}
-{{- if .Values.global.sysdig.region }}
-{{- $_ := set $conf.sysdig_endpoint "region" .Values.global.sysdig.region }}
-{{- else }}
+{{- end -}}
+{{- end -}}
+{{- if not .Values.cluster_shield.sysdig_endpoint.region -}}
+{{- if .Values.global.sysdig.region -}}
+{{- $_ := set $conf.sysdig_endpoint "region" .Values.global.sysdig.region -}}
+{{- else -}}
 {{- fail "One of global.sysdig.region and cluster_shield.sysdig_endpoint.region must be defined." -}}
-{{- end }}
-{{- end }}
-{{- if eq $conf.sysdig_endpoint.region "custom" }}
-{{- if and (not .Values.cluster_shield.sysdig_endpoint.api_url) .Values.global.sysdig.apiHost }}
-{{- $_ := set $conf.sysdig_endpoint "api_url" .Values.global.sysdig.apiHost }}
-{{- if not (or (hasPrefix "https://" .Values.global.sysdig.apiHost) (hasPrefix "http://" .Values.global.sysdig.apiHost)) }}
-{{- $_ := set $conf.sysdig_endpoint "api_url" (printf "https://%s" .Values.global.sysdig.apiHost) }}
-{{- end }}
-{{- end }}
-{{- if not $conf.sysdig_endpoint.api_url }}
+{{- end -}}
+{{- end -}}
+{{- if eq $conf.sysdig_endpoint.region "custom" -}}
+{{- if and (not .Values.cluster_shield.sysdig_endpoint.api_url) .Values.global.sysdig.apiHost -}}
+{{- $_ := set $conf.sysdig_endpoint "api_url" .Values.global.sysdig.apiHost -}}
+{{- if not (or (hasPrefix "https://" .Values.global.sysdig.apiHost) (hasPrefix "http://" .Values.global.sysdig.apiHost)) -}}
+{{- $_ := set $conf.sysdig_endpoint "api_url" (printf "https://%s" .Values.global.sysdig.apiHost) -}}
+{{- end -}}
+{{- end -}}
+{{- if not $conf.sysdig_endpoint.api_url -}}
 {{- fail "Custom region requires one of global.sysdig.apiHost or cluster_shield.sysdig_endpoint.api_url to be defined." -}}
-{{- end }}
-{{- end }}
-{{- if not (hasKey (default .Values.cluster_shield.ssl dict) "verify") }}
-{{- $_ := set $conf "ssl" (dict "verify" .Values.global.sslVerifyCertificate) }}
-{{- end }}
-{{- if not .Values.cluster_shield.cluster_config.name }}
-{{- if .Values.global.clusterConfig.name }}
-{{- $_ := set $conf.cluster_config "name" .Values.global.clusterConfig.name }}
-{{- else }}
+{{- end -}}
+{{- if and ($conf.features.kubernetes_metadata.enabled) (not $conf.sysdig_endpoint.collector) -}}
+{{- fail "Custom region requires cluster_shield.sysdig_endpoint.collector to be defined." -}}
+{{- end -}}
+{{- end -}}
+{{- if not (hasKey (default .Values.cluster_shield.ssl dict) "verify") -}}
+{{- $_ := set $conf "ssl" (dict "verify" .Values.global.sslVerifyCertificate) -}}
+{{- end -}}
+{{- if not .Values.cluster_shield.cluster_config.name -}}
+{{- if .Values.global.clusterConfig.name -}}
+{{- $_ := set $conf.cluster_config "name" .Values.global.clusterConfig.name -}}
+{{- else -}}
 {{- fail "One of global.clusterConfig.name and cluster_shield.cluster_config.name must be defined." -}}
-{{- end }}
-{{- end }}
+{{- end -}}
+{{- end -}}
 {{/* sysdig-deploy support end */}}
 {{- $conf | toYaml -}}
-{{- end }}
+{{- end -}}
 
 {{/*
 Adds kubernetes related keys to the configuration.
@@ -193,6 +196,13 @@ Verify if certs needs to be generated and mounted inside the pod
 {{- end -}}
 
 {{/*
+Verify if ValidatingWebhookConfiguration needs to be generated
+*/}}
+{{- define "cluster-shield.needWebhooks"}}
+{{- or .Values.cluster_shield.features.audit.enabled .Values.cluster_shield.features.admission_control.enabled }}
+{{- end -}}
+
+{{/*
 Custom CA
 */}}
 {{- define "cluster-shield.custom_ca.enabled" -}}
@@ -210,7 +220,7 @@ Custom CA
 {{- define "cluster-shield.custom_ca.useExistingConfigMap" -}}
     {{- if or (and .Values.ca.existingCaSecretKeyName .Values.ca.existingCaSecret) (and .Values.global.ssl.ca.existingCaSecretKeyName .Values.global.ssl.ca.existingCaSecret) -}}
         {{- false -}}
-    {{- else if (and .Values.ca.existingCaConfigMapKeyName .Values.ca.existingCaConfigMap) -}}
+    {{- else if or (and .Values.ca.existingCaConfigMapKeyName .Values.ca.existingCaConfigMap) (and .Values.global.ssl.ca.existingCaConfigMapKeyName .Values.global.ssl.ca.existingCaConfigMap) -}}
         {{- true -}}
     {{- else -}}
         {{- false -}}
@@ -222,7 +232,7 @@ Custom CA
         {{- false -}}
     {{- else if (and .Values.ca.existingCaConfigMapKeyName .Values.ca.existingCaConfigMap) -}}
         {{- false -}}
-    {{- else if (and .Values.ca.certs .Values.ca.keyName) -}}
+    {{- else if or (and .Values.ca.certs .Values.ca.keyName) (and .Values.global.ssl.ca.keyName .Values.global.ssl.ca.certs) -}}
         {{- true -}}
     {{- else -}}
         {{- false -}}
@@ -377,11 +387,7 @@ Proxy Secret Name
 Define the proper image repository to use for cluster-shield
 */}}
 {{- define "cluster-shield.repository" -}}
-    {{- if .Values.global.imageRegistry -}}
-        {{- printf "%s/%s" .Values.global.imageRegistry "sysdig/cluster-shield" -}}
-    {{- else -}}
-        {{- .Values.image.repository -}}
-    {{- end -}}
+    {{- printf "%s/%s" (default .Values.image.registry .Values.global.imageRegistry) .Values.image.repository -}}
 {{- end -}}
 
 {{- define "cluster-shield.serviceMonitoringPort" -}}

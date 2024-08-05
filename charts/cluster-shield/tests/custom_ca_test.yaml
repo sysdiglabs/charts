@@ -1,0 +1,264 @@
+suite: Test Custom CA
+templates:
+  - templates/deployment.yaml
+  - templates/secrets.yaml
+values:
+  - ../ci/base-values.yaml
+release:
+  name: shield-release
+  namespace: shield-namespace
+tests:
+  - it: Test without Custom CA Settings
+    asserts:
+      - hasDocuments:
+          count: 1
+        template: templates/secrets.yaml
+      - containsDocument:
+          kind: Secret
+          apiVersion: v1
+          name: cluster-shield-ca
+        not: true
+        template: templates/secrets.yaml
+      - notExists:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "SSL_CERT_FILE")]
+        template: templates/deployment.yaml
+      - notContains:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].volumeMounts
+          content:
+            name: ca-cert
+            mountPath: /ca-certs
+            readOnly: true
+        template: templates/deployment.yaml
+      - notExists:
+          path: spec.template.spec.volumes[?(@.name == "ca-cert")]
+        template: templates/deployment.yaml
+
+  - it: Test with Local Custom CA Settings (values)
+    set:
+      ca:
+        certs:
+          - "test certificate"
+        keyName: "custom-ca-from-values.crt"
+    asserts:
+      - hasDocuments:
+          count: 2
+        template: templates/secrets.yaml
+      - containsDocument:
+          kind: Secret
+          apiVersion: v1
+          name: cluster-shield-ca
+        template: templates/secrets.yaml
+        documentIndex: 1
+      - equal:
+          path: data["custom-ca-from-values.crt"]
+          decodeBase64: true
+          value: "test certificate"
+        template: templates/secrets.yaml
+        documentIndex: 1
+      - isSubset:
+          path: spec.template.spec.volumes[?(@.name == "ca-cert")]
+          content:
+            secret:
+              secretName: cluster-shield-ca
+        template: templates/deployment.yaml
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].volumeMounts
+          content:
+            name: ca-cert
+            mountPath: /ca-certs
+            readOnly: true
+        template: templates/deployment.yaml
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "SSL_CERT_FILE")]
+          value:
+            name: SSL_CERT_FILE
+            value: /ca-certs/custom-ca-from-values.crt
+        template: templates/deployment.yaml
+
+  - it: Test with Local Custom CA Settings (configmap)
+    set:
+      ca:
+        existingCaConfigMap: fake-configmap-name
+        existingCaConfigMapKeyName: custom-ca-from-configmap.crt
+    asserts:
+      - hasDocuments:
+          count: 1
+        template: templates/secrets.yaml
+      - containsDocument:
+          kind: Secret
+          apiVersion: v1
+          name: cluster-shield-ca
+        template: templates/secrets.yaml
+        not: true
+      - isSubset:
+          path: spec.template.spec.volumes[?(@.name == "ca-cert")]
+          content:
+            configMap:
+              name: fake-configmap-name
+        template: templates/deployment.yaml
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].volumeMounts
+          content:
+            name: ca-cert
+            mountPath: /ca-certs
+            readOnly: true
+        template: templates/deployment.yaml
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "SSL_CERT_FILE")]
+          value:
+            name: SSL_CERT_FILE
+            value: /ca-certs/custom-ca-from-configmap.crt
+        template: templates/deployment.yaml
+
+  - it: Test with Local Custom CA Settings (secret)
+    set:
+      ca:
+        existingCaSecret: fake-secret-name
+        existingCaSecretKeyName: custom-ca-from-secret.crt
+    asserts:
+      - hasDocuments:
+          count: 1
+        template: templates/secrets.yaml
+      - containsDocument:
+          kind: Secret
+          apiVersion: v1
+          name: cluster-shield-ca
+        template: templates/secrets.yaml
+        not: true
+      - isSubset:
+          path: spec.template.spec.volumes[?(@.name == "ca-cert")]
+          content:
+            secret:
+              secretName: fake-secret-name
+        template: templates/deployment.yaml
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].volumeMounts
+          content:
+            name: ca-cert
+            mountPath: /ca-certs
+            readOnly: true
+        template: templates/deployment.yaml
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "SSL_CERT_FILE")]
+          value:
+            name: SSL_CERT_FILE
+            value: /ca-certs/custom-ca-from-secret.crt
+        template: templates/deployment.yaml
+
+  - it: Test with Global Custom CA Settings (values)
+    set:
+      global:
+        ssl:
+          ca:
+            certs:
+              - "test certificate"
+            keyName: "custom-ca-from-values.crt"
+    asserts:
+      - hasDocuments:
+          count: 2
+        template: templates/secrets.yaml
+      - containsDocument:
+          kind: Secret
+          apiVersion: v1
+          name: cluster-shield-ca
+        template: templates/secrets.yaml
+        documentIndex: 1
+      - equal:
+          path: data["custom-ca-from-values.crt"]
+          decodeBase64: true
+          value: "test certificate"
+        template: templates/secrets.yaml
+        documentIndex: 1
+      - isSubset:
+          path: spec.template.spec.volumes[?(@.name == "ca-cert")]
+          content:
+            secret:
+              secretName: cluster-shield-ca
+        template: templates/deployment.yaml
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].volumeMounts
+          content:
+            name: ca-cert
+            mountPath: /ca-certs
+            readOnly: true
+        template: templates/deployment.yaml
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "SSL_CERT_FILE")]
+          value:
+            name: SSL_CERT_FILE
+            value: /ca-certs/custom-ca-from-values.crt
+        template: templates/deployment.yaml
+
+  - it: Test with Global Custom CA Settings (configmap)
+    set:
+      global:
+        ssl:
+          ca:
+            existingCaConfigMap: fake-configmap-name
+            existingCaConfigMapKeyName: custom-ca-from-configmap.crt
+    asserts:
+      - hasDocuments:
+          count: 1
+        template: templates/secrets.yaml
+      - containsDocument:
+          kind: Secret
+          apiVersion: v1
+          name: cluster-shield-ca
+        template: templates/secrets.yaml
+        not: true
+      - isSubset:
+          path: spec.template.spec.volumes[?(@.name == "ca-cert")]
+          content:
+            configMap:
+              name: fake-configmap-name
+        template: templates/deployment.yaml
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].volumeMounts
+          content:
+            name: ca-cert
+            mountPath: /ca-certs
+            readOnly: true
+        template: templates/deployment.yaml
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "SSL_CERT_FILE")]
+          value:
+            name: SSL_CERT_FILE
+            value: /ca-certs/custom-ca-from-configmap.crt
+        template: templates/deployment.yaml
+
+  - it: Test with Global Custom CA Settings (secret)
+    set:
+      global:
+        ssl:
+          ca:
+            existingCaSecret: fake-secret-name
+            existingCaSecretKeyName: custom-ca-from-secret.crt
+    asserts:
+      - hasDocuments:
+          count: 1
+        template: templates/secrets.yaml
+      - containsDocument:
+          kind: Secret
+          apiVersion: v1
+          name: cluster-shield-ca
+        template: templates/secrets.yaml
+        not: true
+      - isSubset:
+          path: spec.template.spec.volumes[?(@.name == "ca-cert")]
+          content:
+            secret:
+              secretName: fake-secret-name
+        template: templates/deployment.yaml
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].volumeMounts
+          content:
+            name: ca-cert
+            mountPath: /ca-certs
+            readOnly: true
+        template: templates/deployment.yaml
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "SSL_CERT_FILE")]
+          value:
+            name: SSL_CERT_FILE
+            value: /ca-certs/custom-ca-from-secret.crt
+        template: templates/deployment.yaml
