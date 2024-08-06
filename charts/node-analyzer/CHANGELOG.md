@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.30.3
+### Chores
+* **kspm-collector,node-analyzer** [d372a3c0](https://github.com/sysdiglabs/charts/commit/d372a3c01552094c8598493e9d1092e66fade67d): release kspm-collector & node-analyzer ([#1875](https://github.com/sysdiglabs/charts/issues/1875))
 # v1.30.2
 ### New Features
 * **agent,node-analyzer** [9c21415e](https://github.com/sysdiglabs/charts/commit/9c21415e63126dbce960d0024bc632ff595ec6d1): add option to set hostNetwork and dnsPolicy ([#1863](https://github.com/sysdiglabs/charts/issues/1863))
