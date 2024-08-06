@@ -189,7 +189,7 @@ nodeAnalyzer:
     deploy: true
     image:
       repository: sysdig/node-image-analyzer
-      tag: 0.1.33
+      tag: 0.1.34
       digest:
       pullPolicy:
 
@@ -247,7 +247,7 @@ nodeAnalyzer:
     deploy: true
     image:
       repository: sysdig/host-analyzer
-      tag: 0.1.21
+      tag: 0.1.22
       digest:
       pullPolicy:
 
