@@ -26493,6 +26493,20 @@ entries:
     version: 0.1.0
   registry-scanner:
   - apiVersion: v2
+    appVersion: 0.2.73
+    created: "2024-08-07T16:41:46.7064404Z"
+    description: Sysdig Registry Scanner
+    digest: 402e5a2bd86b117335dce97dba1945847127d419d31846aff014020396a6ce18
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    maintainers:
+    - name: sysdiglabs
+    name: registry-scanner
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/registry-scanner-1.3.2/registry-scanner-1.3.2.tgz
+    version: 1.3.2
+  - apiVersion: v2
     appVersion: 0.2.71
     created: "2024-07-02T15:35:29.919083525Z"
     description: Sysdig Registry Scanner
@@ -62928,4 +62942,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2024-08-07T13:36:49.751632847Z"
+generated: "2024-08-07T16:41:46.708892369Z"
