@@ -1,5 +1,5 @@
 # What's Changed
 
-### Bug Fixes
-- **agent** [b193d652](https://github.com/sysdiglabs/charts/commit/b193d652c67930d83c62341800474448bde60f14): use dig function for prometheus_exporter settings check ([#1871](https://github.com/sysdiglabs/charts/issues/1871))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.27.14...agent-1.27.15
+### New Features
+- [f0c9a27a](https://github.com/sysdiglabs/charts/commit/f0c9a27a39ea5bcfd8e2a71c04d3756e47ac1487): release agent 13.3.3 ([#1881](https://github.com/sysdiglabs/charts/issues/1881))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.27.15...agent-1.27.16

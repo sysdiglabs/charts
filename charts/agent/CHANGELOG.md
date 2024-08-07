@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.27.16
+### New Features
+* [f0c9a27a](https://github.com/sysdiglabs/charts/commit/f0c9a27a39ea5bcfd8e2a71c04d3756e47ac1487): release agent 13.3.3 ([#1881](https://github.com/sysdiglabs/charts/issues/1881))
 # v1.27.15
 ### Bug Fixes
 * **agent** [b193d652](https://github.com/sysdiglabs/charts/commit/b193d652c67930d83c62341800474448bde60f14): use dig function for prometheus_exporter settings check ([#1871](https://github.com/sysdiglabs/charts/issues/1871))
