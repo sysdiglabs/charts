@@ -16941,6 +16941,35 @@ entries:
   node-analyzer:
   - apiVersion: v2
     appVersion: 12.9.0
+    created: "2024-08-12T12:15:25.335510944Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      version: ~1.3.1
+    description: Sysdig Node Analyzer
+    digest: 919fbcc870f77ec8f142e0577b2df7b4ab257c7d5696c45f72bade5e5191ed40
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: chen.shmilovich@sysdig.com
+      name: chen-shmilovich-sysdig
+    - name: sysdiglabs
+    name: node-analyzer
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/node-analyzer-1.31.0/node-analyzer-1.31.0.tgz
+    version: 1.31.0
+  - apiVersion: v2
+    appVersion: 12.9.0
     created: "2024-08-07T07:22:49.700702997Z"
     dependencies:
     - name: common
@@ -37004,6 +37033,67 @@ entries:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-1.7.15/sysdig-1.7.15.tgz
     version: 1.7.15
   sysdig-deploy:
+  - apiVersion: v2
+    created: "2024-08-12T12:15:25.55209164Z"
+    dependencies:
+    - alias: admissionController
+      condition: admissionController.enabled
+      name: admission-controller
+      repository: file://../admission-controller
+      version: ~0.16.5
+    - alias: agent
+      condition: agent.enabled
+      name: agent
+      repository: file://../agent
+      version: ~1.27.16
+    - name: common
+      repository: file://../common
+      version: ~1.3.1
+    - alias: nodeAnalyzer
+      condition: nodeAnalyzer.enabled
+      name: node-analyzer
+      repository: file://../node-analyzer
+      version: ~1.31.0
+    - alias: clusterScanner
+      condition: clusterScanner.enabled
+      name: cluster-scanner
+      repository: file://../cluster-scanner
+      version: ~0.14.2
+    - alias: kspmCollector
+      condition: kspmCollector.enabled,global.kspm.deploy
+      name: kspm-collector
+      repository: file://../kspm-collector
+      version: ~0.16.0
+    - alias: rapidResponse
+      condition: rapidResponse.enabled
+      name: rapid-response
+      repository: file://../rapid-response
+      version: ~0.9.7
+    - alias: clusterShield
+      condition: clusterShield.enabled
+      name: cluster-shield
+      repository: file://../cluster-shield
+      version: ~1.2.0
+    description: A chart with various Sysdig components for Kubernetes
+    digest: 875b80e80cb38a5e803bbcd2565a7f6d8ab78ecf5f00804830fe6a9fff9f455d
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    maintainers:
+    - email: alberto.barba@sysdig.com
+      name: AlbertoBarba
+    - email: adam.roberts@sysdig.com
+      name: aroberts87
+    - email: francesco.furlan@sysdig.com
+      name: francesco-furlan
+    - email: gerlando.falauto@sysdig.com
+      name: iurly
+    - email: marcovito.moscaritolo@sysdig.com
+      name: mavimo
+    name: sysdig-deploy
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/sysdig-deploy-1.62.0/sysdig-deploy-1.62.0.tgz
+    version: 1.62.0
   - apiVersion: v2
     created: "2024-08-12T10:34:29.113490188Z"
     dependencies:
@@ -63194,4 +63284,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2024-08-12T10:34:29.116051681Z"
+generated: "2024-08-12T12:15:25.555021384Z"
