@@ -46,7 +46,7 @@ data:
   {{- $mergedSettings := mergeOverwrite $baseSettings (dict "http_proxy" (dict "ca_certificate" $caFilePath)) -}}
   {{ toYaml $mergedSettings | nindent 4 }}
 {{- else if (dig "kspm_analyzer" "enabled" false $baseSettings) }}
-  {{- $mergedSettings := mergeOverwrite $baseSettings (dict "kspm_analyzer" (dict "agent_app_name" "agent")) -}}
+  {{- $mergedSettings := mergeOverwrite $baseSettings (dict "kspm_analyzer" (dict "agent_app_name" "agent" "pod_namespace" .Release.Namespace)) -}}
   {{ toYaml $mergedSettings | nindent 4 }}
 {{- else if .Values.sysdig.settings }}
   {{ toYaml .Values.sysdig.settings | nindent 4 }}

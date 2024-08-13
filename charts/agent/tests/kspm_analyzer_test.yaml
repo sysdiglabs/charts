@@ -31,6 +31,7 @@ tests:
             kspm_analyzer:
               agent_app_name: agent
               enabled: true
+              pod_namespace: NAMESPACE
         template: templates/configmap.yaml
       - equal:
           path: spec.template.spec.containers[?(@.name == "sysdig")].ports[?(@.name == "kspm-analyzer")]
@@ -47,7 +48,33 @@ tests:
             kspm_analyzer:
               agent_app_name: agent
               enabled: true
+              pod_namespace: NAMESPACE
         template: templates/configmap.yaml
       - notExists:
           path: spec.template.spec.containers[?(@.name == "sysdig")].ports[?(@.name == "kspm-analyzer")]
         template: templates/daemonset.yaml
+
+  - it: Ensure POD_NAMESPACE env var set if kspm-analyzer is enabled
+    set:
+      sysdig:
+        settings:
+          kspm_analyzer:
+            enabled: true
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig")].env[?(@.name == "POD_NAMESPACE")]
+          value:
+            name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+    template: templates/daemonset.yaml
+
+  - it: Ensure POD_NAMESPACE env var not set if kspm-analyzer is disabled
+    asserts:
+      - notContains:
+          path: spec.template.spec.containers[?(@.name == "sysdig")].env
+          value:
+            name: POD_NAMESPACE
+            value: NAMESPACE
+    template: templates/daemonset.yaml
