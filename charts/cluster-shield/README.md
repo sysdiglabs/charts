@@ -14,7 +14,7 @@ $ pre-commit run -a
 
 # Cluster Shield
 
-[Sysdig Cluster Shield](https://docs.sysdig.com/en/docs/installation/cluster-shield).
+[Sysdig Cluster Shield](https://docs.sysdig.com/en/docs/installation/sysdig-secure/install-agent-components/kubernetes/cluster-shield/).
 <br/>This chart deploys the Sysdig Cluster Shield in your Kubernetes cluster.
 
 ## TL;DR;
