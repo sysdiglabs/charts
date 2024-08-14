@@ -1,0 +1,80 @@
+suite: Test port and label names when kspm analyzer is enabled in host shield
+templates:
+  - templates/configmap.yaml
+  - templates/daemonset.yaml
+kubernetesProvider:
+  scheme:
+    "v1/Node":
+      gvr:
+        version: "v1"
+        resource: "nodes"
+      namespaced: false
+  objects:
+    - apiVersion: v1
+      kind: Node
+      metadata:
+        name: fakenode
+      status:
+        nodeInfo:
+          osImage: fake-os-image
+tests:
+  - it: Ensure configmap and daemonset settings are set when needed
+    set:
+      sysdig:
+        settings:
+          kspm_analyzer:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            kspm_analyzer:
+              agent_app_name: agent
+              enabled: true
+              pod_namespace: NAMESPACE
+        template: templates/configmap.yaml
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig")].ports[?(@.name == "kspm-analyzer")]
+          value:
+            name: kspm-analyzer
+            containerPort: 12000
+        template: templates/daemonset.yaml
+
+  - it: Ensure configmap and daemonset settings are not set when not needed
+    asserts:
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            kspm_analyzer:
+              agent_app_name: agent
+              enabled: true
+              pod_namespace: NAMESPACE
+        template: templates/configmap.yaml
+      - notExists:
+          path: spec.template.spec.containers[?(@.name == "sysdig")].ports[?(@.name == "kspm-analyzer")]
+        template: templates/daemonset.yaml
+
+  - it: Ensure POD_NAMESPACE env var set if kspm-analyzer is enabled
+    set:
+      sysdig:
+        settings:
+          kspm_analyzer:
+            enabled: true
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig")].env[?(@.name == "POD_NAMESPACE")]
+          value:
+            name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+    template: templates/daemonset.yaml
+
+  - it: Ensure POD_NAMESPACE env var not set if kspm-analyzer is disabled
+    asserts:
+      - notContains:
+          path: spec.template.spec.containers[?(@.name == "sysdig")].env
+          value:
+            name: POD_NAMESPACE
+            value: NAMESPACE
+    template: templates/daemonset.yaml
