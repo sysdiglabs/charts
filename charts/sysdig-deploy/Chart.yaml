@@ -2,7 +2,7 @@ apiVersion: v2
 name: sysdig-deploy
 description: A chart with various Sysdig components for Kubernetes
 type: application
-version: 1.61.10
+version: 1.62.0
 maintainers:
   - name: AlbertoBarba
     email: alberto.barba@sysdig.com
@@ -20,7 +20,7 @@ dependencies:
   - name: admission-controller
     # repository: https://charts.sysdig.com
     repository: file://../admission-controller
-    version: ~0.16.4
+    version: ~0.16.5
     alias: admissionController
     condition: admissionController.enabled
   - name: agent
@@ -36,7 +36,7 @@ dependencies:
   - name: node-analyzer
     # repository: https://charts.sysdig.com
     repository: file://../node-analyzer
-    version: ~1.30.5
+    version: ~1.31.0
     alias: nodeAnalyzer
     condition: nodeAnalyzer.enabled
   - name: cluster-scanner
