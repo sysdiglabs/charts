@@ -74,3 +74,68 @@ tests:
     asserts:
       - isNotEmpty:
           path: allowedCapabilities
+
+  - it: Test that we allow hostPorts when prometheus_exporter is enabled
+    set:
+      scc:
+        create: true
+      sysdig:
+        settings:
+          prometheus_exporter:
+            enabled: true
+    asserts:
+      - equal:
+          path: allowHostPorts
+          value: true
+
+  - it: Test that we allow hostPorts when kspm_analyzer is enabled
+    set:
+      scc:
+        create: true
+      sysdig:
+        settings:
+          kspm_analyzer:
+            enabled: true
+    asserts:
+      - equal:
+          path: allowHostPorts
+          value: true
+
+  - it: Test that we do not allow hostPorts when neither prometheus_exporter nor kspm_analyzer are enabled
+    set:
+      scc:
+        create: true
+      sysdig:
+        settings:
+          prometheus_exporter:
+            enabled: false
+          kspm_analyzer:
+            enabled: false
+    asserts:
+      - equal:
+          path: allowHostPorts
+          value: false
+
+  - it: Test that we do not allow hostPorts in the default case
+    set:
+      scc:
+        create: true
+    asserts:
+      - equal:
+          path: allowHostPorts
+          value: false
+
+  - it: Test that we allow hostPorts when prometheus_exporter and kspm_analyzer are enabled
+    set:
+      scc:
+        create: true
+      sysdig:
+        settings:
+          prometheus_exporter:
+            enabled: true
+          kspm_analyzer:
+            enabled: true
+    asserts:
+      - equal:
+          path: allowHostPorts
+          value: true
