@@ -44,9 +44,9 @@ supplementalGroups:
 users:
 - system:serviceaccount:{{ include "agent.namespace" . }}:{{ template "agent.serviceAccountName" .}}
 volumes:
-- hostPath
-- emptyDir
-- secret
 - configMap
 - downwardAPI
+- emptyDir
+- hostPath
+- secret
 {{- end }}
