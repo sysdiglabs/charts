@@ -269,6 +269,7 @@ spec:
           {{- /* Always requested */}}
             - mountPath: /host/dev
               name: dev-vol
+              readOnly: {{ (include "agent.ebpfEnabled" .) | default false }}
             - mountPath: /host/usr
               name: usr-vol
               readOnly: true
