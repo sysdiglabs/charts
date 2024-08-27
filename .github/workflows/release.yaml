@@ -22,7 +22,7 @@ jobs:
 
       - name: Retrieve a list of updated charts
         id: updated-charts
-        uses: tj-actions/changed-files@v44
+        uses: tj-actions/changed-files@v45
         with:
           files: charts/*/Chart.yaml
 
