@@ -14,7 +14,7 @@ jobs:
           fetch-depth: 0
 
       - name: Check if dependent charts were modified or not
-        uses: tj-actions/changed-files@v44
+        uses: tj-actions/changed-files@v45
         id: dependent_files
         with:
           files: |
