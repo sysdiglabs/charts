@@ -89,7 +89,7 @@ spec:
               {{ toYaml .Values.slim.resources | nindent 12 }}
             {{- end }}
           env:
-          {{- if or (include "agent.ebpfEnabled" .) (include "agent.gke.autopilot" .) }}
+          {{- if (include "agent.ebpfEnabled" .) }}
             - name: SYSDIG_BPF_PROBE
               value:
           {{- end }}
@@ -195,14 +195,14 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: spec.nodeName
-            {{- if and (or (include "agent.ebpfEnabled" .) (include "agent.gke.autopilot" .)) (not (include "agent.universalEbpfEnforced" . )) }}
+            {{- if and (include "agent.ebpfEnabled" .) (not (include "agent.universalEbpfEnforced" . )) }}
             - name: SYSDIG_BPF_PROBE
               value:
             {{- end }}
-            {{- if and (include "agent.universalEbpfEnforced" .) (not (include "agent.gke.autopilot" .)) }}
+            {{- if (include "agent.universalEbpfEnforced" .) }}
             - name: SYSDIG_AGENT_DRIVER
               value: universal_ebpf
-            {{- else if and (include "agent.legacyEbpfEnforced" .) (not (include "agent.gke.autopilot" .)) }}
+            {{- else if (include "agent.legacyEbpfEnforced" .) }}
             - name: SYSDIG_AGENT_DRIVER
               value: legacy_ebpf
             {{- end }}
