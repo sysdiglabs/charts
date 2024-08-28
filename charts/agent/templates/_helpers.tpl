@@ -280,7 +280,7 @@ Check for all COS nodes or a flag to enable eBPF. If false, return nothing so
 it can act like a boolean
 */}}
 {{- define "agent.ebpfEnabled" -}}
-  {{- if (or (eq "true" (include "agent.isAllCos" .)) .Values.ebpf.enabled) -}}
+  {{- if (or (eq "true" (include "agent.isAllCos" .)) (include "agent.gke.autopilot" .) .Values.ebpf.enabled) -}}
     true
   {{- end -}}
 {{- end -}}
@@ -635,7 +635,7 @@ annotations:
       - image tag not semver: go on at user's risk
 */}}
 {{- define "agent.privileged" }}
-  {{- if or .Values.privileged (include "agent.gke.autopilot" .) }}
+  {{- if .Values.privileged }}
     {{- /* OK */ -}}
     {{- print "true" }}
   {{- else }}

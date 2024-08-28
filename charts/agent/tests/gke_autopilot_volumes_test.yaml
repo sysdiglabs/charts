@@ -141,13 +141,34 @@ tests:
       - isNull:
           path: spec.template.spec.volumes[?(@.hostPath.path =~ /\/.*/ && @.hostPath.path != "/usr" && @.hostPath.path != "/run" && @.hostPath.path != "/dev" && @.hostPath.path != "/proc" && @.hostPath.path != "/etc/os-release" && @.hostPath.path != "/boot" && @.hostPath.path != "/var/run/containerd/containerd.sock")]
 
-  - it: Ensure the SYSDIG_AGENT_DRIVER env var is not set
+  - it: Ensure the SYSDIG_AGENT_DRIVER env var is set to legacy_ebpf when running on GKE Autopilot (default)
     set:
       gke:
         autopilot:
           enabled: true
     asserts:
-      - isNull:
-          path: spec.template.spec.initContainer[0].env[?(@.name != "SYSDIG_BPF_PROBE")]
-      - isNull:
-          path: spec.template.spec.containers[0].env[?(@.name != "SYSDIG_BPF_PROBE" && @.name != "K8S_NODE")]
+      - exists:
+          path: spec.template.spec.containers[0].env[?(@.name == "SYSDIG_BPF_PROBE")]
+      - isNullOrEmpty:
+          path: spec.template.spec.containers[0].env[?(@.name == "SYSDIG_BPF_PROBE")].value
+      - exists:
+          path: spec.template.spec.containers[0].env[?(@.name == "SYSDIG_AGENT_DRIVER")]
+      - equal:
+          path: spec.template.spec.containers[0].env[?(@.name == "SYSDIG_AGENT_DRIVER")].value
+          value: legacy_ebpf
+
+  - it: Ensure the SYSDIG_AGENT_DRIVER env var is set to universal_ebpf when running on GKE Autopilot (user defined)
+    set:
+      gke:
+        autopilot:
+          enabled: true
+      ebpf:
+        kind: universal_ebpf
+    asserts:
+      - notExists:
+          path: spec.template.spec.containers[0].env[?(@.name == "SYSDIG_BPF_PROBE")].value
+      - exists:
+          path: spec.template.spec.containers[0].env[?(@.name == "SYSDIG_AGENT_DRIVER")]
+      - equal:
+          path: spec.template.spec.containers[0].env[?(@.name == "SYSDIG_AGENT_DRIVER")].value
+          value: universal_ebpf
