@@ -597,14 +597,6 @@ true
 {{- include "agent.configmapName" . | trunc 46 | trimSuffix "-" | printf "%s-local-forwarder" }}
 {{- end }}
 
-{{- define "agent.enableHttpProbes" }}
-{{- if not (include "agent.gke.autopilot" .) }}
-{{- if and (include "agent.isSemVer" .Values.image.tag) (semverCompare ">= 12.18.0-0" .Values.image.tag) }}
-{{- printf "true" -}}
-{{- end }}
-{{- end }}
-{{- end }}
-
 {{- define "agent.enableFalcoBaselineSecureLight" }}
 {{- if and (include "agent.isSemVer" .Values.image.tag) (semverCompare ">= 12.19.0-0" .Values.image.tag) }}
 {{- printf "true" -}}

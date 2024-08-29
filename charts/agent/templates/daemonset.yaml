@@ -248,15 +248,10 @@ spec:
           {{- end }}
           {{- end }}
           readinessProbe:
-            {{- if eq (include "agent.enableHttpProbes" .) "true" }}
             httpGet:
               host: 127.0.0.1
               path: /healthz
               port: 24483
-            {{- else }}
-            exec:
-              command: [ "test", "-e", "/opt/draios/logs/running" ]
-            {{- end }}
             initialDelaySeconds: {{ .Values.daemonset.probes.initialDelay }}
             periodSeconds: {{ .Values.daemonset.probes.periodDelay }}
             failureThreshold: {{ .Values.daemonset.probes.failureThreshold }}

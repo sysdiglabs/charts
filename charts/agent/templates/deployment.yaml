@@ -103,15 +103,10 @@ spec:
             value: /opt/draios/certificates/{{- include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.ssl) -}}
           {{- end }}
           readinessProbe:
-            {{- if eq (include "agent.enableHttpProbes" .) "true" }}
             httpGet:
               host: 127.0.0.1
               path: /healthz
               port: 24483
-            {{- else }}
-            exec:
-              command: [ "test", "-e", "/opt/draios/logs/running" ]
-            {{- end }}
             initialDelaySeconds: {{ .Values.delegatedAgentDeployment.deployment.probes.initialDelay }}
             periodSeconds: {{ .Values.delegatedAgentDeployment.deployment.probes.periodDelay }}
             failureThreshold: {{ .Values.delegatedAgentDeployment.deployment.probes.failureThreshold }}
