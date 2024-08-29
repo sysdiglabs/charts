@@ -113,6 +113,9 @@ config:
       temporaryVolumeSizeLimit: 2Gi
     # Force the scan to happen on the client component rather than relying on backend scanning
     disablePlatformScanning: false
+    # NodeSelector for child jobs.
+    # If only .Values.nodeSelector is specified, child jobs will inherit the same nodeSelector as the main pod
+    # inlineJobNodeSelector: {}
   # Number of goroutines running in parallel in metadata phase for ECR Org setup.
   parallelGoRoutines: 100
 ssl:
