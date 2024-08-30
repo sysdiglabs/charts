@@ -96,9 +96,9 @@ data:
       podAnnotations:
         {{- toYaml .Values.podAnnotations | nindent 8 }}
       {{- end }}
-      {{- if .Values.config.scan.inlineJobNodeSelector }}
+      {{- if .Values.config.scan.jobs.nodeSelector }}
       nodeSelector:
-        {{- toYaml .Values.config.scan.inlineJobNodeSelector | nindent 8 }}
+        {{- toYaml .Values.config.scan.jobs.nodeSelector | nindent 8 }}
       {{- else if .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml .Values.nodeSelector | nindent 8 }}

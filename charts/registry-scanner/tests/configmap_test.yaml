@@ -139,13 +139,13 @@ tests:
           path: data['config.yaml']
           pattern: nodeSelector:\n\s*department:\s*engineering
 
-  - it: nodeSelector variables reaches the configmap if set on config.scan level
+  - it: nodeSelector variables reaches the configmap if set on config.scan.jobs level
     set:
       config:
         scan:
-          inlineJobNodeSelector:
-            department: engineering
-
+          jobs:
+            nodeSelector:
+              department: engineering
     asserts:
       - matchRegex:
           path: data['config.yaml']
@@ -157,8 +157,9 @@ tests:
         department: engineering
       config:
         scan:
-          inlineJobNodeSelector:
-            department: human-resources
+          jobs:
+            nodeSelector:
+              department: human-resources
     asserts:
       - matchRegex:
           path: data['config.yaml']
