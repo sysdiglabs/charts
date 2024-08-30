@@ -146,6 +146,11 @@ tests:
           inlineJobNodeSelector:
             department: engineering
 
+    asserts:
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: nodeSelector:\n\s*department:\s*engineering
+
   - it: nodeSelector variables reaches the configmap and overrides root level if both are set
     set:
       nodeSelector:
