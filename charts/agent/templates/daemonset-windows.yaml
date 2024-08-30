@@ -65,10 +65,8 @@ spec:
             mountPath: Sysdig/Agent/certificates
             readOnly: true
           {{- end }}
-          {{- if (include "agent.httpProxyCredentials" .) }}
           - mountPath: Sysdig/Agent/Secrets/http_proxy
             name: sysdig-agent-http-proxy-secrets
-          {{- end }}
       terminationGracePeriodSeconds: 0
       volumes:
       - name: config
@@ -81,11 +79,10 @@ spec:
           {{- else }}
           secretName: {{ include "agent.accessKeySecret" . }}
           {{- end }}
-      {{- if (include "agent.httpProxyCredentials" .) }}
       - name: sysdig-agent-http-proxy-secrets
         secret:
           secretName: {{ template "agent.fullname" . }}-proxy
-      {{- end }}
+          optional: true
       {{- if eq (include "sysdig.custom_ca.useValues"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
       - name: ca-cert
         secret:

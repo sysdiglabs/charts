@@ -112,17 +112,21 @@ tests:
     templates:
       - daemonset.yaml
 
-  - it: Ensure agent http proxy volume is not mounted when http_proxy settings is not set
+  - it: Ensure agent http proxy volume is mounted as optional
     set:
       sysdig:
         accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
       delegatedAgentDeployment:
         enabled: true
     asserts:
-      - isNull:
-          path: spec.template.spec.volumes[?(@.name == "sysdig-agent-http-proxy-secrets")]
-      - isNull:
-          path: spec.template.spec.containers[*].volumeMounts[?(@.name == "sysdig-agent-http-proxy-secrets")]
+      - equal:
+          path: spec.template.spec.volumes[?(@.name == "sysdig-agent-http-proxy-secrets")].secret
+          value:
+            secretName: RELEASE-NAME-agent-proxy
+            optional: true
+      - equal:
+          path: spec.template.spec.containers[*].volumeMounts[?(@.name == "sysdig-agent-http-proxy-secrets")].mountPath
+          value: /opt/draios/etc/secrets/http_proxy
     templates:
       - deployment.yaml
       - daemonset.yaml
@@ -142,6 +146,7 @@ tests:
           path: spec.template.spec.volumes[?(@.name == "sysdig-agent-http-proxy-secrets")].secret
           value:
             secretName: RELEASE-NAME-agent-proxy
+            optional: true
       - equal:
           path: spec.template.spec.containers[*].volumeMounts[?(@.name == "sysdig-agent-http-proxy-secrets")].mountPath
           value: /opt/draios/etc/secrets/http_proxy
