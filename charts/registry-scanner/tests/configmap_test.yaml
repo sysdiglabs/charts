@@ -159,7 +159,6 @@ tests:
         scan:
           inlineJobNodeSelector:
             department: human-resources
-          
     asserts:
       - matchRegex:
           path: data['config.yaml']
