@@ -97,6 +97,7 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | config.scan.jobs.resources.requests.cpu          | The CPU request for the scanner job.                                                                                                                                                                                                       | <code>500m</code>                            |
 | config.scan.jobs.resources.limits.memory         | The memory limit for the scanner job.                                                                                                                                                                                                      | <code>2Gi</code>                             |
 | config.scan.jobs.temporaryVolumeSizeLimit        | The size limit for the emptyDir volume used by the scanner job.<br/> This volume is used to store both the vulnerability database and the image to scan.                                                                                   | <code>2Gi</code>                             |
+| config.scan.jobs.nodeSelector                    | NodeSelector for child jobs. If only .Values.nodeSelector is specified, child jobs will inherit the same nodeSelector as the main pod                                                                                                      | <code>{}</code>                              |
 | config.scan.disablePlatformScanning              | Force the scan to happen on the client component rather than relying on backend scanning                                                                                                                                                   | <code>false</code>                           |
 | config.parallelGoRoutines                        | Number of goroutines running in parallel in metadata phase for ECR Org setup.                                                                                                                                                              | <code>100</code>                             |
 | ssl.ca.certs                                     | For outbound connections. <br/>List of PEM-encoded x509 certificate authority.                                                                                                                                                             | <code>[]</code>                              |
@@ -134,7 +135,7 @@ Use the following command to deploy:
 helm upgrade --install registry-scanner \
    --namespace sysdig-agent \
    --create-namespace \
-   --version=1.3.3 \
+   --version=1.3.4 \
    --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
    --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
    --set config.secureSkipTLS=true \
