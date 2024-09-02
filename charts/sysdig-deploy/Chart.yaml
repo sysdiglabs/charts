@@ -26,7 +26,7 @@ dependencies:
   - name: agent
     # repository: https://charts.sysdig.com
     repository: file://../agent
-    version: ~1.27.18
+    version: ~1.28.0
     alias: agent
     condition: agent.enabled
   - name: common
