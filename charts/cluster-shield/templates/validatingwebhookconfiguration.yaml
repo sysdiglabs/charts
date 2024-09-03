@@ -87,6 +87,7 @@ webhooks:
   {{- end }}
 {{- end }}
 ---
+{{- if not .Values.existingTLSSecret.name }}
 apiVersion: v1
 kind: Secret
 metadata:
@@ -98,5 +99,5 @@ data:
   {{ include "cluster-shield.tlsCertFileName" . }}: {{ $certList._0 }}
   {{ include "cluster-shield.tlsCertPrivateKeyFileName" . }}: {{ $certList._1 }}
   {{ include "cluster-shield.caCertFileName" .}}: {{ $certList._2 }}
-
 {{- end }}
+{{- end}}

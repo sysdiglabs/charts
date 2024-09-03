@@ -187,7 +187,6 @@ tests:
             ssl:
               verify: true
 
-
   - it: Local custom region requires Collector when kubernetes_metadata feature is enabled
     set:
       cluster_shield:
@@ -260,3 +259,66 @@ tests:
               api_url: https://www.example.com
               collector: collector.example.com:6443
               region: custom
+
+  - it: Default TLS configuration
+    set:
+      cluster_shield:
+        features:
+          admission_control:
+            enabled: true
+          audit:
+            enabled: true
+          container_vulnerability_management:
+            enabled: true
+    asserts:
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+      - hasDocuments:
+          count: 1
+      - isNotEmpty:
+          path: data
+      - isNotEmpty:
+          path: data["cluster-shield.yaml"]
+      - matchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: |
+            kubernetes:
+              ca_cert_file: /cert/ca.crt
+              running_namespace: NAMESPACE
+              tls_cert_file: /cert/tls.crt
+              tls_private_key_file: /cert/tls.key
+
+  - it: Custom TLS filenames
+    set:
+      existingTLSSecret:
+        name: my-tls-secret
+        tlsCertName: custom_tls.crt
+        tlsCertKeyName: custom_tls.key
+        caCertName: custom_ca.crt
+      cluster_shield:
+        features:
+          admission_control:
+            enabled: true
+          audit:
+            enabled: true
+          container_vulnerability_management:
+            enabled: true
+    asserts:
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+      - hasDocuments:
+          count: 1
+      - isNotEmpty:
+          path: data
+      - isNotEmpty:
+          path: data["cluster-shield.yaml"]
+      - matchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: |
+            kubernetes:
+              ca_cert_file: /cert/custom_ca.crt
+              running_namespace: NAMESPACE
+              tls_cert_file: /cert/custom_tls.crt
+              tls_private_key_file: /cert/custom_tls.key

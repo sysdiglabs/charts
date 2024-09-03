@@ -53,7 +53,7 @@ Adds kubernetes related keys to the configuration.
 {{- $_ := set $conf "kubernetes" (include "cluster-shield.configurationKubernetes" . | fromYaml) -}}
 {{- if eq "true" (include "cluster-shield.containerVulnerabilityManagementEnabled" .) -}}
 {{- if regexMatch "^v?([0-9]+)(\\.[0-9]+)?(\\.[0-9]+)?(-([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?(\\+([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?$" (.Values.onPremCompatibilityVersion | default "") -}}
-{{- if semverCompare "< 7.0.0" .Values.onPremCompatibilityVersion -}}
+{{- if semverCompare "< 6.12.0" .Values.onPremCompatibilityVersion -}}
 {{- $_ := set $conf.features.container_vulnerability_management "platform_services_enabled" false -}}
 {{- end -}}
 {{- end -}}
@@ -108,31 +108,30 @@ Adds kubernetes related keys to the configuration.
 {{- end -}}
 
 {{/*
-Adds kubernetes related keys to the configuration.
+Generate Secret
 */}}
 {{- define "cluster-shield.secret" -}}
-{{- $secret := dict "sysdig_endpoint" (dict) }}
-{{- $_ := set $secret.sysdig_endpoint "access_key" .Values.cluster_shield.sysdig_endpoint.access_key }}
-{{- if .Values.cluster_shield.sysdig_endpoint.secure_api_token }}
-{{- $_ := set $secret.sysdig_endpoint "secure_api_token" .Values.cluster_shield.sysdig_endpoint.secure_api_token }}
-{{- end }}
-{{- if eq "true" (include "cluster-shield.containerVulnerabilityManagementEnabled" .) }}
-{{- $_ := set $secret "cluster_scanner" (include "cluster-shield.secretClusterScanner" . | fromYaml) }}
-{{- end }}
-{{- /* sysdig-deploy support start */}}
-{{- if not .Values.cluster_shield.sysdig_endpoint.access_key }}
-{{- if .Values.global.sysdig.accessKey }}
-{{- $_ := set $secret.sysdig_endpoint "access_key" .Values.global.sysdig.accessKey }}
-{{- else if not .Values.global.sysdig.accessKeySecret }}
-{{- fail "One of global.sysdig.accessKey and cluster_shield.sysdig_endpoint.access_key must be defined." -}}
-{{- end }}
-{{- end }}
-{{- if not .Values.cluster_shield.sysdig_endpoint.secure_api_token }}
-{{- if .Values.global.sysdig.secureAPIToken }}
-{{- $_ := set $secret.sysdig_endpoint "secure_api_token" .Values.global.sysdig.secureAPIToken }}
-{{- end }}
-{{- end }}
-{{- /* sysdig-deploy support end */}}
+{{- $secret := dict -}}
+{{- if not .Values.global.sysdig.accessKeySecret -}}
+    {{- $accessKey := coalesce .Values.cluster_shield.sysdig_endpoint.access_key .Values.global.sysdig.accessKey -}}
+    {{- if not $accessKey -}}
+        {{- fail "One of global.sysdig.accessKey and cluster_shield.sysdig_endpoint.access_key must be defined." -}}
+    {{- end -}}
+    {{- $_ := set $secret "sysdig-access-key" $accessKey -}}
+{{- end -}}
+{{- if not .Values.global.sysdig.secureAPITokenSecret -}}
+    {{- $secureApiToken := coalesce .Values.cluster_shield.sysdig_endpoint.secure_api_token .Values.global.sysdig.secureAPIToken -}}
+    {{- if $secureApiToken -}}
+        {{- $_ := set $secret "sysdig-secure-api-token" $secureApiToken -}}
+    {{- end -}}
+{{- end -}}
+{{- if eq "true" (include "cluster-shield.containerVulnerabilityManagementEnabled" .) -}}
+    {{- $userDefinedNatsPassword := dig "cluster_scanner" "runtime_status_integrator" "nats_server" "password" nil .Values.cluster_shield -}}
+    {{- $_ := set $secret "sysdig-cluster-nats-password" (default (randAlphaNum 32) $userDefinedNatsPassword) -}}
+{{- end -}}
+{{- range $index, $value := $secret }}
+    {{- $_ := set $secret $index (b64enc $value) -}}
+{{- end -}}
 {{- $secret | toYaml -}}
 {{- end }}
 
@@ -169,15 +168,6 @@ Cluster Scanner Configuration
 leader_election_lock_name: {{ include "cluster-shield.clusterScannerLockName" . }}
 image_sbom_extractor:
     nats_url: nats://{{ include "cluster-shield.clusterScannerServiceName" . }}:4222
-{{- end }}
-
-{{/*
-Cluster Scanner Configuration
-*/}}
-{{- define "cluster-shield.secretClusterScanner" -}}
-runtime_status_integrator:
-    nats_server:
-        password: {{ randAlphaNum 32 }}
 {{- end }}
 
 {{/*
@@ -259,8 +249,11 @@ Generate certificates for aggregated api server
 {{- define "cluster-shield.tlsGenCerts" -}}
     {{- $secret := lookup "v1" "Secret" .Release.Namespace (include "cluster-shield.tlsCertsSecretName" .) -}}
     {{- if $secret -}}
-        {{- printf "%s$%s$%s" (index $secret.data "tls.crt") (index $secret.data "tls.key") (index $secret.data "ca.crt") -}}
+        {{- printf "%s$%s$%s" (index $secret.data (include "cluster-shield.tlsCertFileName" .)) (index $secret.data (include "cluster-shield.tlsCertPrivateKeyFileName" .)) (index $secret.data (include "cluster-shield.caCertFileName" .)) -}}
     {{- else -}}
+        {{- if .Values.existingTLSSecret.name }}
+            {{- fail (printf "The TLS Secret '%s' does not exist" .Values.existingTLSSecret.name) -}}
+        {{- end }}
         {{- $svcName := include "cluster-shield.fullname" . -}}
         {{- $clusterScannerSvcName := include "cluster-shield.clusterScannerServiceName" . -}}
 
@@ -292,7 +285,7 @@ Generate certificates for aggregated api server
 TLS Secret Name
 */}}
 {{- define "cluster-shield.tlsCertsSecretName" -}}
-    {{- include "cluster-shield.secretName" . -}}-tls-certs
+    {{- .Values.existingTLSSecret.name | default (printf "%s-tls-certs" (include "cluster-shield.secretName" .)) -}}
 {{- end -}}
 
 {{/*
@@ -321,7 +314,7 @@ CA Cert File Path
 Audit Cert File
 */}}
 {{- define "cluster-shield.tlsCertFileName" -}}
-tls.crt
+{{- .Values.existingTLSSecret.tlsCertName | default "tls.crt" -}}
 {{- end }}
 
 
@@ -329,14 +322,14 @@ tls.crt
 Audit Cert Private Key File
 */}}
 {{- define "cluster-shield.tlsCertPrivateKeyFileName" -}}
-tls.key
+{{- .Values.existingTLSSecret.tlsCertKeyName | default "tls.key" -}}
 {{- end }}
 
 {{/*
 CA Cert File Name
 */}}
 {{- define "cluster-shield.caCertFileName" -}}
-ca.crt
+{{- .Values.existingTLSSecret.caCertName | default "ca.crt" -}}
 {{- end }}
 
 {{/*
@@ -426,4 +419,9 @@ run-all
 {{- else -}}
 run-all-namespaced
 {{- end -}}
+{{- end -}}
+
+{{- define "cluster-shield.secret_mounts" -}}
+{{- $secrets := list (include "cluster-shield.secretName" .) .Values.global.sysdig.accessKeySecret .Values.global.sysdig.secureAPITokenSecret}}
+{{- (uniq (compact $secrets)) | toYaml -}}
 {{- end -}}

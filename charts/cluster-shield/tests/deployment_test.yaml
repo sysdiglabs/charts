@@ -81,7 +81,7 @@ tests:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].args
           content: run-all
 
-  - it: Test env var is set when accessKeySecret provided
+  - it: Test accessKeySecret is mounted when provided
     set:
       global:
         sysdig:
@@ -95,16 +95,17 @@ tests:
       - equal:
           path: metadata.namespace
           value: shield-namespace
-      - isNotNull:
-          path: spec.template.spec.containers[?(@.name == "cluster-shield")]
-      - isNotNull:
-          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "SYSDIG_CLUSTER_SHIELD_SYSDIG_ENDPOINT__ACCESS_KEY")]
-      - equal:
-          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "SYSDIG_CLUSTER_SHIELD_SYSDIG_ENDPOINT__ACCESS_KEY")].valueFrom.secretKeyRef.name
-          value: test-existing-access-key-secret
-      - equal:
-          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "SYSDIG_CLUSTER_SHIELD_SYSDIG_ENDPOINT__ACCESS_KEY")].valueFrom.secretKeyRef.key
-          value: access-key
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: secret-test-existing-access-key-secret
+            secret:
+              secretName: test-existing-access-key-secret
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].volumeMounts
+          content:
+            name: secret-test-existing-access-key-secret
+            mountPath: /etc/sysdig/secret-files/test-existing-access-key-secret
 
   - it: Test env var is set when secureAPITokenSecret provided
     set:
@@ -120,16 +121,83 @@ tests:
       - equal:
           path: metadata.namespace
           value: shield-namespace
-      - isNotNull:
-          path: spec.template.spec.containers[?(@.name == "cluster-shield")]
-      - isNotNull:
-          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "SYSDIG_CLUSTER_SHIELD_SYSDIG_ENDPOINT__SECURE_API_TOKEN")]
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: secret-test-existing-secure-api-token-secret
+            secret:
+              secretName: test-existing-secure-api-token-secret
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].volumeMounts
+          content:
+            name: secret-test-existing-secure-api-token-secret
+            mountPath: /etc/sysdig/secret-files/test-existing-secure-api-token-secret
+
+  - it: Test Both accessKeySecret and secureAPITokenSecret are mounted when provided
+    set:
+      global:
+        sysdig:
+          accessKeySecret: "test-existing-access-key-secret"
+          secureAPITokenSecret: "test-existing-secure-api-token-secret"
+    asserts:
+      - isKind:
+          of: Deployment
       - equal:
-          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "SYSDIG_CLUSTER_SHIELD_SYSDIG_ENDPOINT__SECURE_API_TOKEN")].valueFrom.secretKeyRef.name
-          value: test-existing-secure-api-token-secret
+          path: metadata.name
+          value: shield-release-cluster-shield
       - equal:
-          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "SYSDIG_CLUSTER_SHIELD_SYSDIG_ENDPOINT__SECURE_API_TOKEN")].valueFrom.secretKeyRef.key
-          value: SECURE_API_TOKEN
+          path: metadata.namespace
+          value: shield-namespace
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: secret-test-existing-access-key-secret
+            secret:
+              secretName: test-existing-access-key-secret
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].volumeMounts
+          content:
+            name: secret-test-existing-access-key-secret
+            mountPath: /etc/sysdig/secret-files/test-existing-access-key-secret
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: secret-test-existing-secure-api-token-secret
+            secret:
+              secretName: test-existing-secure-api-token-secret
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].volumeMounts
+          content:
+            name: secret-test-existing-secure-api-token-secret
+            mountPath: /etc/sysdig/secret-files/test-existing-secure-api-token-secret
+
+  - it: Test it has only one mount when accessKeySecret and secureAPITokenSecret are the same
+    set:
+      global:
+        sysdig:
+          accessKeySecret: "test-existing-credentials-secret"
+          secureAPITokenSecret: "test-existing-credentials-secret"
+    asserts:
+      - isKind:
+          of: Deployment
+      - equal:
+          path: metadata.name
+          value: shield-release-cluster-shield
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: secret-test-existing-credentials-secret
+            secret:
+              secretName: test-existing-credentials-secret
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].volumeMounts
+          count: 1
+          content:
+            name: secret-test-existing-credentials-secret
+            mountPath: /etc/sysdig/secret-files/test-existing-credentials-secret
 
   - it: Test readinessProbe default values
     asserts:
@@ -364,3 +432,23 @@ tests:
       - equal:
           path: spec.template.spec.dnsPolicy
           value: None
+
+  - it: Mount existing TLS Secret
+    set:
+      cluster_shield:
+        features:
+          admission_control:
+            enabled: true
+          audit:
+            enabled: true
+          container_vulnerability_management:
+            enabled: true
+      existingTLSSecret:
+        name: my-custom-tls-secret
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: cert
+            secret:
+              secretName: my-custom-tls-secret
