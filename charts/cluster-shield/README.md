@@ -14,7 +14,7 @@ $ pre-commit run -a
 
 # Cluster Shield
 
-[Sysdig Cluster Shield](https://docs.sysdig.com/en/docs/installation/cluster-shield).
+[Sysdig Cluster Shield](https://docs.sysdig.com/en/docs/installation/sysdig-secure/install-agent-components/kubernetes/cluster-shield/).
 <br/>This chart deploys the Sysdig Cluster Shield in your Kubernetes cluster.
 
 ## TL;DR;
@@ -23,7 +23,7 @@ $ pre-commit run -a
 $ helm repo add sysdig https://charts.sysdig.com
 $ helm repo update
 $ helm upgrade --install sysdig-sysdig-cluster-shield sysdig/cluster-shield \
-    --create-namespace -n sysdig-agent --version=1.2.0  \
+    --create-namespace -n sysdig-agent --version=1.3.0  \
     --set global.clusterConfig.name=CLUSTER_NAME \
     --set global.sysdig.region=SYSDIG_REGION \
     --set global.sysdig.accessKey=YOUR-KEY-HERE
@@ -189,6 +189,10 @@ The following table lists the configurable parameters of the `cluster-shield` ch
 | onPremCompatibilityVersion                                                                | Optional parameter used to check the compatibility of cluster-shield component versions with the on-premised backend version. If you are running an on-prem version of the Sysdig backend, you MUST set this parameter with the version of Sysdig backend you are using. If you are runinng on SaaS, do NOT provide this parameter. | <code></code>                                     |
 | hostNetwork                                                                               | Specifies if Cluster Shield should be started in hostNetwork mode. This field is required if you are using a custom CNI where the control plane nodes are unable to initiate network connections to the pods, for example, using Calico CNI plugin on EKS.                                                                          | <code>false</code>                                |
 | dnsPolicy                                                                                 | Define Cluster Shield Pods DNS Policy                                                                                                                                                                                                                                                                                               | <code></code>                                     |
+| existingTLSSecret.name                                                                    | Provide the name of an existing Secret that contains the TLS certificate required                                                                                                                                                                                                                                                   | <code></code>                                     |
+| existingTLSSecret.tlsCertName                                                             | Provide the certificate filename that is defined inside the existing Secret (default tls.crt)                                                                                                                                                                                                                                       | <code></code>                                     |
+| existingTLSSecret.tlsCertKeyName                                                          | Provide the certificate key filename that is defined inside the existing Secret (default tls.key)                                                                                                                                                                                                                                   | <code></code>                                     |
+| existingTLSSecret.caCertName                                                              | Provide the certificate authority filename that is defined inside the existing Secret (default ca.crt)                                                                                                                                                                                                                              | <code></code>                                     |
 
 
 ## Running helm unit tests
