@@ -1,3 +1,4 @@
+{{- $secrets := (include "cluster-shield.secret_mounts" .) | fromYamlArray }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -89,8 +90,10 @@ spec:
           volumeMounts:
             - mountPath: /etc/sysdig/config/
               name: cluster-shield
-            - mountPath: /etc/sysdig/secrets/
-              name: cluster-shield-secret
+            {{- range $secretName :=  $secrets }}
+            - mountPath: {{ printf "/etc/sysdig/secret-files/%s" $secretName }}
+              name: {{ printf "secret-%s" $secretName }}
+            {{- end }}
             {{- if eq (include "cluster-shield.needCerts" .) "true" }}
             - name: cert
               mountPath: /cert
@@ -112,20 +115,6 @@ spec:
                   fieldPath: status.podIP
             - name: KUBE_SERVICE_NAME
               value: {{ include "cluster-shield.clusterScannerServiceName" . }}
-            {{- if .Values.global.sysdig.accessKeySecret }}
-            - name: SYSDIG_CLUSTER_SHIELD_SYSDIG_ENDPOINT__ACCESS_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.global.sysdig.accessKeySecret }}
-                  key: "access-key"
-            {{- end }}
-            {{- if .Values.global.sysdig.secureAPITokenSecret }}
-            - name: SYSDIG_CLUSTER_SHIELD_SYSDIG_ENDPOINT__SECURE_API_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.global.sysdig.secureAPITokenSecret }}
-                  key: "SECURE_API_TOKEN"
-            {{- end }}
             {{- if eq (include "cluster-shield.custom_ca.enabled" .) "true" }}
             - name: SSL_CERT_FILE
               value: /ca-certs/{{- include "cluster-shield.custom_ca.keyName" . -}}
@@ -154,9 +143,11 @@ spec:
         - name: cluster-shield
           configMap:
             name: {{ include "cluster-shield.configmapName" . }}
-        - name: cluster-shield-secret
+        {{- range $secretName :=  $secrets }}
+        - name: {{ printf "secret-%s" $secretName }}
           secret:
-            secretName: {{ include "cluster-shield.secretName" . }}
+            secretName: {{ $secretName }}
+        {{- end }}
         {{- if eq (include "cluster-shield.needCerts" .) "true" }}
         - name: cert
           secret:

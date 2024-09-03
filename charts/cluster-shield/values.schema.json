@@ -801,6 +801,37 @@
               "type": "boolean",
               "description": "Specify if the Kubernetes Metadata feature is enabled",
               "default": false
+            },
+            "annotations_allowlist": {
+              "type": "object",
+              "propertyNames": {
+                "pattern": "^[a-z]*$",
+                "description": "The resource name in lowercase plural form",
+                "examples": [
+                  "nodes",
+                  "pods"
+                ]
+              },
+              "additionalProperties": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "description": "The annotation key",
+                  "format": "k8s-qualified-name-with-wildcard",
+                  "examples": [
+                    "kubernetes.io/team"
+                  ]
+                }
+              },
+              "description": "List of Kubernetes annotations keys that will be sent to the Sysdig BE e.g. for generating KSM metrics. To include them, provide a list of resource names in their plural form and Kubernetes annotation keys you would like to allow for them. Annotation keys can contain wildcard character '*'. A single '*' can be provided per resource to allow any annotation. By default, no annotations are allowed for any resource.",
+              "examples": [
+                {
+                  "nodes": [
+                    "kubernetes.io/team",
+                    "kubernetes.io/role"
+                  ]
+                }
+              ]
             }
           },
           "additionalProperties": false,

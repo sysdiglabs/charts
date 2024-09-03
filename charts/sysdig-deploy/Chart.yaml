@@ -2,7 +2,7 @@ apiVersion: v2
 name: sysdig-deploy
 description: A chart with various Sysdig components for Kubernetes
 type: application
-version: 1.62.3
+version: 1.62.4
 maintainers:
   - name: AlbertoBarba
     email: alberto.barba@sysdig.com
@@ -60,6 +60,6 @@ dependencies:
   - name: cluster-shield
     # repository: https://charts.sysdig.com
     repository: file://../cluster-shield
-    version: ~1.2.0
+    version: ~1.3.0
     alias: clusterShield
     condition: clusterShield.enabled
