@@ -10,6 +10,7 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.31.2
 # v1.31.1
 ### New Features
 * **node-analyzer** [4315173f](https://github.com/sysdiglabs/charts/commit/4315173f25c64bd1f67c209275e4d03cec1bda54): Added replication controllers to the list of inspected resources ([#1905](https://github.com/sysdiglabs/charts/issues/1905))
