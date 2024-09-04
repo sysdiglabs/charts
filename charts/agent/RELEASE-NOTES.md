@@ -1,5 +1,5 @@
 # What's Changed
 
-### Bug Fixes
-- **agent** [0d1a0673](https://github.com/sysdiglabs/charts/commit/0d1a06734f04032c2fdcd6bd0ca61f384db01ae4): set allowHostPorts when needed ([#1893](https://github.com/sysdiglabs/charts/issues/1893))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.27.17...agent-1.27.18
+### Chores
+- **agent,sysdig-deploy** [5b43c245](https://github.com/sysdiglabs/charts/commit/5b43c245a82bbddb3b58b1c63d69b846686f1a17): mount /host/dev volume readonly on ebpf mode ([#1901](https://github.com/sysdiglabs/charts/issues/1901))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.27.18...agent-1.28.0
