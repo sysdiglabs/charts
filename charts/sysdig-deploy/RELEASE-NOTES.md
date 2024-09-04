@@ -1,5 +1,5 @@
 # What's Changed
 
 ### Chores
-- **sysdig-deploy** [6b0826e4](https://github.com/sysdiglabs/charts/commit/6b0826e41a9eb93dc4734ae084a2f7269aef1413): Automatic version bump due to updated dependencies ([#1894](https://github.com/sysdiglabs/charts/issues/1894))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.62.1...sysdig-deploy-1.62.2
+- **agent,sysdig-deploy** [5b43c245](https://github.com/sysdiglabs/charts/commit/5b43c245a82bbddb3b58b1c63d69b846686f1a17): mount /host/dev volume readonly on ebpf mode ([#1901](https://github.com/sysdiglabs/charts/issues/1901))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.62.4...sysdig-deploy-1.63.0

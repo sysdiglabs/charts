@@ -42,6 +42,7 @@ rules:
     - pods/log
     - secrets
     - serviceaccounts
+    - replicationcontrollers
   verbs:
     - get
     - list

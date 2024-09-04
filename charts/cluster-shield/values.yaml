@@ -254,3 +254,12 @@ onPremCompatibilityVersion:
 hostNetwork: false
 # Define Cluster Shield Pods DNS Policy
 dnsPolicy:
+existingTLSSecret:
+  # Provide the name of an existing Secret that contains the TLS certificate required
+  name:
+  # Provide the certificate filename that is defined inside the existing Secret (default tls.crt)
+  tlsCertName:
+  # Provide the certificate key filename that is defined inside the existing Secret (default tls.key)
+  tlsCertKeyName:
+  # Provide the certificate authority filename that is defined inside the existing Secret (default ca.crt)
+  caCertName:

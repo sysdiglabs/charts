@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.3.4
+### New Features
+* **registry-scanner** [72af93a2](https://github.com/sysdiglabs/charts/commit/72af93a214af15586ccb11b9f98d1ec35fe93ff3): allow nodeselector configuration ([#1904](https://github.com/sysdiglabs/charts/issues/1904))
 # v1.3.3
 ### Chores
 * **registry-scanner** [ddb44159](https://github.com/sysdiglabs/charts/commit/ddb4415973724e3ce3309b519cffa25b2c7d4e52): Update to v0.3.0 ([#1884](https://github.com/sysdiglabs/charts/issues/1884))
