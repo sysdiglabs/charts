@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.63.1
+### Chores
+* **sysdig-deploy** [b87f3281](https://github.com/sysdiglabs/charts/commit/b87f3281926691989dc70e776e87d9f4a934affd): Automatic version bump due to updated dependencies ([#1911](https://github.com/sysdiglabs/charts/issues/1911))
 # v1.63.0
 ### Chores
 * **agent,sysdig-deploy** [5b43c245](https://github.com/sysdiglabs/charts/commit/5b43c245a82bbddb3b58b1c63d69b846686f1a17): mount /host/dev volume readonly on ebpf mode ([#1901](https://github.com/sysdiglabs/charts/issues/1901))
