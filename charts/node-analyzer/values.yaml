@@ -313,7 +313,7 @@ nodeAnalyzer:
     probesPort: 7002
     image:
       repository: sysdig/vuln-runtime-scanner
-      tag: "1.7.2"
+      tag: "1.8.0"
       digest:
       pullPolicy:
 
