@@ -17,7 +17,7 @@ $ pre-commit run -a
 [Sysdig Cluster Shield](https://docs.sysdig.com/en/docs/installation/sysdig-secure/install-agent-components/kubernetes/cluster-shield/).
 <br/>This chart deploys the Sysdig Cluster Shield in your Kubernetes cluster.
 
-## TL;DR;
+## Update your Helm Repository
 
 ```
 $ helm repo add sysdig https://charts.sysdig.com
