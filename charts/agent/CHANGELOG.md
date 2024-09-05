@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.29.1
+### Bug Fixes
+* **agent** [16f961e7](https://github.com/sysdiglabs/charts/commit/16f961e75638e964eabcb3aed97893e961d1213b): Reorder volume list  (replace [#1899](https://github.com/sysdiglabs/charts/issues/1899)) ([#1917](https://github.com/sysdiglabs/charts/issues/1917))
 # v1.29.0
 ### New Features
 * [3c1919c5](https://github.com/sysdiglabs/charts/commit/3c1919c5322d8f3a0336e3f6670f98528cac922f): release agent 13.4.0 ([#1913](https://github.com/sysdiglabs/charts/issues/1913))
