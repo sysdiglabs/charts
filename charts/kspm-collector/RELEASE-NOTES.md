@@ -1,5 +1,5 @@
 # What's Changed
 
 ### Chores
-- **kspm-collector,node-analyzer** [d372a3c0](https://github.com/sysdiglabs/charts/commit/d372a3c01552094c8598493e9d1092e66fade67d): release kspm-collector & node-analyzer ([#1875](https://github.com/sysdiglabs/charts/issues/1875))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.15.9...kspm-collector-0.16.0
+- **ci** [e222f21d](https://github.com/sysdiglabs/charts/commit/e222f21de483926259c9574e4c2d9679681b9ddb): bump bitnami/kubectl image references ([#1892](https://github.com/sysdiglabs/charts/issues/1892))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.16.0...kspm-collector-0.16.1
