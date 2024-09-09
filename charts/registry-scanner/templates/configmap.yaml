@@ -96,6 +96,13 @@ data:
       podAnnotations:
         {{- toYaml .Values.podAnnotations | nindent 8 }}
       {{- end }}
+      {{- if .Values.config.scan.jobs.nodeSelector }}
+      nodeSelector:
+        {{- toYaml .Values.config.scan.jobs.nodeSelector | nindent 8 }}
+      {{- else if .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml .Values.nodeSelector | nindent 8 }}
+      {{- end }}
       {{- if .Values.config.scan.securityContext }}
       securityContext:
         {{- include "registry-scanner.scan.securityContext" . | nindent 8}}

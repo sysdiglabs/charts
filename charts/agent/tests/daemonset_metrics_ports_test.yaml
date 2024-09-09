@@ -1,0 +1,68 @@
+suite: Test Daemonset Metrics Port
+templates:
+  - templates/daemonset.yaml
+kubernetesProvider:
+  scheme:
+    "v1/Node":
+      gvr:
+        version: "v1"
+        resource: "nodes"
+      namespaced: false
+  objects:
+  - apiVersion: v1
+    kind: Node
+    metadata:
+      name: fakenode
+    status:
+      nodeInfo:
+        osImage: fake-os-image
+tests:
+  - it: test default behavior with no port
+    asserts:
+      - isNull:
+          path: spec.template.spec.containers[0].ports
+    templates:
+      - templates/daemonset.yaml
+
+  - it: test behavior with prometheus_exporter enabled
+    set:
+      sysdig:
+        settings:
+          prometheus_exporter:
+            enabled: true
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].ports
+          value:
+            - containerPort: 9544
+              name: metrics
+    templates:
+      - templates/daemonset.yaml
+
+  - it: test behavior with prometheus_exporter explicitly disabled
+    set:
+      sysdig:
+        settings:
+          prometheus_exporter:
+            enabled: false
+    asserts:
+      - isNull:
+          path: spec.template.spec.containers[0].ports
+    templates:
+      - templates/daemonset.yaml
+
+  - it: test behavior with prometheus_exporter enabled and non-default port
+    set:
+      sysdig:
+        settings:
+          prometheus_exporter:
+            enabled: true
+            listen_url: 127.0.0.1:1234
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].ports
+          value:
+            - containerPort: 1234
+              name: metrics
+    templates:
+      - templates/daemonset.yaml

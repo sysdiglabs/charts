@@ -6,4 +6,5 @@ metadata:
   labels:
     {{- include "cluster-shield.labels" . | nindent 4 }}
 data:
-  cluster-shield.yaml: {{ include "cluster-shield.configMap" . | quote }}
+  cluster-shield.yaml: |
+    {{- include "cluster-shield.configMap" . | nindent 4 }}

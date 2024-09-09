@@ -12,7 +12,11 @@ allowHostDirVolumePlugin: true
 allowHostIPC: false
 allowHostNetwork: true
 allowHostPID: true
+{{- if or (dig "kspm_analyzer" "enabled" false .Values.sysdig.settings) (dig "prometheus_exporter" "enabled" false .Values.sysdig.settings) }}
+allowHostPorts: true
+{{- else }}
 allowHostPorts: false
+{{- end }}
 allowPrivilegeEscalation: true
 allowPrivilegedContainer: true
 {{- if eq "true" (include "agent.privileged" .) }}
@@ -40,9 +44,9 @@ supplementalGroups:
 users:
 - system:serviceaccount:{{ include "agent.namespace" . }}:{{ template "agent.serviceAccountName" .}}
 volumes:
-- hostPath
-- emptyDir
-- secret
 - configMap
 - downwardAPI
+- emptyDir
+- hostPath
+- secret
 {{- end }}

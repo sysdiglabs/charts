@@ -29,6 +29,36 @@ tests:
     templates:
       - daemonset.yaml
 
+  - it: Ensure /host/dev host volume is NOT mounted readonly by default
+    set:
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+      delegatedAgentDeployment:
+        enabled: true
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[*].volumeMounts[?(@.name == "dev-vol")].readOnly
+          value: false
+    templates:
+      - daemonset.yaml
+      - deployment.yaml
+
+  - it: Ensure /host/dev host volume is mounted readonly on epbf mode
+    set:
+      ebpf:
+        enabled: true
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+      delegatedAgentDeployment:
+        enabled: true
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[*].volumeMounts[?(@.name == "dev-vol")].readOnly
+          value: true
+    templates:
+      - daemonset.yaml
+      - deployment.yaml
+
   - it: Ensure /var/data host volume is mounted as /host/var/data in container
     set:
       sysdig:

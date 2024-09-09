@@ -189,7 +189,7 @@ nodeAnalyzer:
     deploy: true
     image:
       repository: sysdig/node-image-analyzer
-      tag: 0.1.33
+      tag: 0.1.35
       digest:
       pullPolicy:
 
@@ -247,7 +247,7 @@ nodeAnalyzer:
     deploy: true
     image:
       repository: sysdig/host-analyzer
-      tag: 0.1.21
+      tag: 0.1.22
       digest:
       pullPolicy:
 
@@ -313,7 +313,7 @@ nodeAnalyzer:
     probesPort: 7002
     image:
       repository: sysdig/vuln-runtime-scanner
-      tag: "1.7.1"
+      tag: "1.8.0"
       digest:
       pullPolicy:
 
@@ -397,7 +397,7 @@ nodeAnalyzer:
 
     image:
       repository: sysdig/vuln-host-scanner
-      tag: "0.10.2"
+      tag: "0.12.0"
       digest:
       pullPolicy:
 
@@ -436,7 +436,7 @@ nodeAnalyzer:
     debug: false
     image:
       repository: sysdig/kspm-analyzer
-      tag: 1.44.0
+      tag: 1.44.2
       digest:
       pullPolicy:
 
@@ -514,7 +514,7 @@ tests:
   timeout: 300s
   image:
     repo: bitnami/kubectl
-    tag: 1.30.3
+    tag: 1.31.0
 
 # Allow to modify DNS policy
 dnsPolicy: null

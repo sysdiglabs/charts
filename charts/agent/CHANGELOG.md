@@ -10,6 +10,36 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.29.2
+### Chores
+* **ci** [e222f21d](https://github.com/sysdiglabs/charts/commit/e222f21de483926259c9574e4c2d9679681b9ddb): bump bitnami/kubectl image references ([#1892](https://github.com/sysdiglabs/charts/issues/1892))
+# v1.29.1
+### Bug Fixes
+* **agent** [16f961e7](https://github.com/sysdiglabs/charts/commit/16f961e75638e964eabcb3aed97893e961d1213b): Reorder volume list  (replace [#1899](https://github.com/sysdiglabs/charts/issues/1899)) ([#1917](https://github.com/sysdiglabs/charts/issues/1917))
+# v1.29.0
+### New Features
+* [3c1919c5](https://github.com/sysdiglabs/charts/commit/3c1919c5322d8f3a0336e3f6670f98528cac922f): release agent 13.4.0 ([#1913](https://github.com/sysdiglabs/charts/issues/1913))
+# v1.28.0
+### Chores
+* **agent,sysdig-deploy** [5b43c245](https://github.com/sysdiglabs/charts/commit/5b43c245a82bbddb3b58b1c63d69b846686f1a17): mount /host/dev volume readonly on ebpf mode ([#1901](https://github.com/sysdiglabs/charts/issues/1901))
+# v1.27.18
+### Bug Fixes
+* **agent** [0d1a0673](https://github.com/sysdiglabs/charts/commit/0d1a06734f04032c2fdcd6bd0ca61f384db01ae4): set allowHostPorts when needed ([#1893](https://github.com/sysdiglabs/charts/issues/1893))
+# v1.27.17
+### Bug Fixes
+* **agent** [4d0d730e](https://github.com/sysdiglabs/charts/commit/4d0d730ebaae28fa79e50aed99782bfc7da3615b): add kspm-analyzer specific settings to agent pod when enabled ([#1889](https://github.com/sysdiglabs/charts/issues/1889))
+# v1.27.16
+### New Features
+* [f0c9a27a](https://github.com/sysdiglabs/charts/commit/f0c9a27a39ea5bcfd8e2a71c04d3756e47ac1487): release agent 13.3.3 ([#1881](https://github.com/sysdiglabs/charts/issues/1881))
+# v1.27.15
+### Bug Fixes
+* **agent** [b193d652](https://github.com/sysdiglabs/charts/commit/b193d652c67930d83c62341800474448bde60f14): use dig function for prometheus_exporter settings check ([#1871](https://github.com/sysdiglabs/charts/issues/1871))
+# v1.27.14
+### New Features
+* **agent** [d74fe798](https://github.com/sysdiglabs/charts/commit/d74fe7989e2ef332cef338fe05d7a4d08c1d490c): explicitly naming the prometheus metrics port in the agent daemonset ([#1869](https://github.com/sysdiglabs/charts/issues/1869))
+# v1.27.13
+### Bug Fixes
+* **agent** [7f66f3a5](https://github.com/sysdiglabs/charts/commit/7f66f3a531452ca0bf0bd957e720e5affbddbdad): Fix doc for `windows.image.pullSecrets` ([#1867](https://github.com/sysdiglabs/charts/issues/1867))
 # v1.27.12
 ### New Features
 * **agent,node-analyzer** [9c21415e](https://github.com/sysdiglabs/charts/commit/9c21415e63126dbce960d0024bc632ff595ec6d1): add option to set hostNetwork and dnsPolicy ([#1863](https://github.com/sysdiglabs/charts/issues/1863))
