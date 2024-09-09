@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.16.6
+### Chores
+* **admission-controller** [cb767c33](https://github.com/sysdiglabs/charts/commit/cb767c33699478121191eb221fe3a451706f41c1): Update to v3.9.47 ([#1866](https://github.com/sysdiglabs/charts/issues/1866))
 # v0.16.5
 ### Bug Fixes
 * **admission-controller** [c39e2b78](https://github.com/sysdiglabs/charts/commit/c39e2b78f5cd376a618991f835134de965a6b682): Fix proxy dns resolution ([#1885](https://github.com/sysdiglabs/charts/issues/1885))
