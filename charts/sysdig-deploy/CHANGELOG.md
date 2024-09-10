@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.64.6
+### Bug Fixes
+* **sysdig-deploy** [a40a67b3](https://github.com/sysdiglabs/charts/commit/a40a67b370f7a5b4ebc34bb396ce9714bf033087): cluster-shield check for posture does not properly check the global kspm flag ([#1930](https://github.com/sysdiglabs/charts/issues/1930))
 # v1.64.5
 ### Chores
 * **sysdig-deploy** [6547d0de](https://github.com/sysdiglabs/charts/commit/6547d0def8740718ff0a0cbb113d6c82ba9f1f23): Automatic version bump due to updated dependencies ([#1929](https://github.com/sysdiglabs/charts/issues/1929))
