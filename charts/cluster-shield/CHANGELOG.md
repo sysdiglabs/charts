@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.3.1
+### Chores
+* **cluster-shield** [c37ba855](https://github.com/sysdiglabs/charts/commit/c37ba8559c34eb3029b99f0b51aa6571d9538e22): Automatic bump to version 1.3.1 ([#1928](https://github.com/sysdiglabs/charts/issues/1928))
 # v1.3.0
 ### Chores
 * **cluster-shield** [b8b27211](https://github.com/sysdiglabs/charts/commit/b8b27211bc7d54f9be98ef710030351e8d7352c8): Automatic bump to version 1.3.0 ([#1909](https://github.com/sysdiglabs/charts/issues/1909))
