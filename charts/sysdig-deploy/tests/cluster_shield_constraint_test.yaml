@@ -206,6 +206,30 @@ tests:
       - hasDocuments:
           count: 0
 
+  - it: Should not fail fail when both posture and kspmCollector are enabled but global kspm deploy is disabled
+    set:
+      global:
+        kspm:
+          deploy: false
+      admissionController:
+        enabled: true
+        features:
+          kspmAdmissionController: true
+          k8sAuditDetections: true
+      clusterScanner:
+        enabled: true
+      kspmCollector:
+        enabled: true
+      clusterShield:
+        enabled: true
+        cluster_shield:
+          features:
+            posture:
+              enabled: true
+    asserts:
+      - hasDocuments:
+          count: 0
+
   - it: Should fail when both container vulnerability management and clusterScanner are enabled
     set:
       global:
