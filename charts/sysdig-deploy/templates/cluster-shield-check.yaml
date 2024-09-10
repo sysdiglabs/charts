@@ -58,7 +58,7 @@
       {{- end -}}
     {{- end -}}
 
-    {{- if and $postureEnabled .Values.global.kspm $kspmCollectorEnabled -}}
+    {{- if and $postureEnabled .Values.global.kspm.deploy $kspmCollectorEnabled -}}
       {{ fail "Cannot enable both cluster_shield.features.posture and kspmCollector" }}
     {{- end -}}
   {{- end -}}
