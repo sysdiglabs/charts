@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **ci** [e222f21d](https://github.com/sysdiglabs/charts/commit/e222f21de483926259c9574e4c2d9679681b9ddb): bump bitnami/kubectl image references ([#1892](https://github.com/sysdiglabs/charts/issues/1892))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.31.4...node-analyzer-1.31.5
+### Bug Fixes
+- **node-analyzer** [f6252060](https://github.com/sysdiglabs/charts/commit/f62520608ef424b423b5aeaf9df60b5b82de6d42): enable eve-integration when eveConnector is deployed [SSPROD-18967] ([#1927](https://github.com/sysdiglabs/charts/issues/1927))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.31.5...node-analyzer-1.31.6
