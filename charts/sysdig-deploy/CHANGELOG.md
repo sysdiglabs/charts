@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.64.7
+### Bug Fixes
+* **node-analyzer** [f6252060](https://github.com/sysdiglabs/charts/commit/f62520608ef424b423b5aeaf9df60b5b82de6d42): enable eve-integration when eveConnector is deployed [SSPROD-18967] ([#1927](https://github.com/sysdiglabs/charts/issues/1927))
 # v1.64.6
 ### Bug Fixes
 * **sysdig-deploy** [a40a67b3](https://github.com/sysdiglabs/charts/commit/a40a67b370f7a5b4ebc34bb396ce9714bf033087): cluster-shield check for posture does not properly check the global kspm flag ([#1930](https://github.com/sysdiglabs/charts/issues/1930))
