@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.9.9
+### Chores
+* **rapid-response** [8595fe2d](https://github.com/sysdiglabs/charts/commit/8595fe2d91b52c9f041a9d50b0c9a5b0b9440ae4): bump rapid-response version to 0.4.7 ([#1931](https://github.com/sysdiglabs/charts/issues/1931))
 # v0.9.8
 ### Chores
 * **ci** [e222f21d](https://github.com/sysdiglabs/charts/commit/e222f21de483926259c9574e4c2d9679681b9ddb): bump bitnami/kubectl image references ([#1892](https://github.com/sysdiglabs/charts/issues/1892))
