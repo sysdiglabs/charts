@@ -661,14 +661,14 @@ spec:
           httpGet:
             port: {{ .Values.nodeAnalyzer.runtimeScanner.probesPort }}
             path: /probes/liveness
-          initialDelaySeconds: 90
-          periodSeconds: 3
+          initialDelaySeconds: {{ .Values.nodeAnalyzer.runtimeScanner.livenessProbe.probe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.nodeAnalyzer.runtimeScanner.livenessProbe.probe.periodSeconds }}
         readinessProbe:
           httpGet:
             port: {{ .Values.nodeAnalyzer.runtimeScanner.probesPort }}
             path: /probes/readiness
-          initialDelaySeconds: 90
-          periodSeconds: 3
+          initialDelaySeconds: {{ .Values.nodeAnalyzer.runtimeScanner.readinessProbe.probe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.nodeAnalyzer.runtimeScanner.readinessProbe.probe.periodSeconds }}
         securityContext:
             privileged: true
         resources:
@@ -808,14 +808,14 @@ spec:
           httpGet:
             port: {{ .Values.nodeAnalyzer.hostScanner.probesPort }}
             path: /probes/liveness
-          initialDelaySeconds: 90
-          periodSeconds: 3
+          initialDelaySeconds: {{ .Values.nodeAnalyzer.hostScanner.livenessProbe.probe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.nodeAnalyzer.hostScanner.livenessProbe.probe.periodSeconds }}
         readinessProbe:
           httpGet:
             port: {{ .Values.nodeAnalyzer.hostScanner.probesPort }}
             path: /probes/readiness
-          initialDelaySeconds: 90
-          periodSeconds: 3
+          initialDelaySeconds: {{ .Values.nodeAnalyzer.hostScanner.readinessProbe.probe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.nodeAnalyzer.hostScanner.readinessProbe.probe.periodSeconds }}
         securityContext:
           # The privileged flag is necessary for OCP 4.x and other Kubernetes setups that deny host filesystem access to
           # running containers by default regardless of volume mounts.
