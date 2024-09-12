@@ -339,6 +339,15 @@ nodeAnalyzer:
         memory: 2Gi
         ephemeral-storage: "4Gi"
 
+    readinessProbe:
+      probe:
+        initialDelaySeconds: 90
+        periodSeconds: 3
+    livenessProbe:
+      probe:
+        initialDelaySeconds: 90
+        periodSeconds: 3
+
     env: {}
 
     settings:
@@ -421,6 +430,15 @@ nodeAnalyzer:
         cpu: 150m
         memory: 150Mi
         ephemeral-storage: 250Mi
+
+    readinessProbe:
+      probe:
+        initialDelaySeconds: 90
+        periodSeconds: 3
+    livenessProbe:
+      probe:
+        initialDelaySeconds: 90
+        periodSeconds: 3
 
     env: {}
 
