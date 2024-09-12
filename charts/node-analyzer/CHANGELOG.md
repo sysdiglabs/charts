@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.31.7
+### Bug Fixes
+* **node-analyzer** [3e8c4f6e](https://github.com/sysdiglabs/charts/commit/3e8c4f6ef196953c81f4b563b263aa3a221549b2): Reorder volume list ([#1934](https://github.com/sysdiglabs/charts/issues/1934))
 # v1.31.6
 ### Bug Fixes
 * **node-analyzer** [f6252060](https://github.com/sysdiglabs/charts/commit/f62520608ef424b423b5aeaf9df60b5b82de6d42): enable eve-integration when eveConnector is deployed [SSPROD-18967] ([#1927](https://github.com/sysdiglabs/charts/issues/1927))
