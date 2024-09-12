@@ -35,9 +35,9 @@ supplementalGroups:
 users:
 - system:serviceaccount:{{ .Release.Namespace }}:{{ template "nodeAnalyzer.serviceAccountName" .}}
 volumes:
-- hostPath
-- emptyDir
-- secret
 - configMap
 - downwardAPI
+- emptyDir
+- hostPath
+- secret
 {{- end }}
