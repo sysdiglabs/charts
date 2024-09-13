@@ -1,0 +1,19 @@
+{{- if .Capabilities.APIVersions.Has "monitoring.openshift.io/v1" }}
+{{- $clusterRole := lookup "rbac.authorization.k8s.io/v1" "ClusterRole" "" "cluster-monitoring-view" -}}
+{{- if and .Values.rbac.create $clusterRole }}
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: {{ template "agent.fullname" .}}-cluster-monitoring-view
+  labels:
+{{ include "agent.labels" . | indent 4 }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ template "agent.serviceAccountName" .}}
+    namespace: {{ include "agent.namespace" . }}
+roleRef:
+  kind: ClusterRole
+  name: cluster-monitoring-view
+  apiGroup: rbac.authorization.k8s.io
+{{- end }}
+{{- end }}
