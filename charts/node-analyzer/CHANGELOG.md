@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.32.0
+### New Features
+* **node-analyzer** [8b367c36](https://github.com/sysdiglabs/charts/commit/8b367c3679eb339886286cdde67ea4e7686a0b2a): Allow setting parameters for runtime and host scanner probes in Daemoset ([#1940](https://github.com/sysdiglabs/charts/issues/1940))
 # v1.31.7
 ### Bug Fixes
 * **node-analyzer** [3e8c4f6e](https://github.com/sysdiglabs/charts/commit/3e8c4f6ef196953c81f4b563b263aa3a221549b2): Reorder volume list ([#1934](https://github.com/sysdiglabs/charts/issues/1934))
