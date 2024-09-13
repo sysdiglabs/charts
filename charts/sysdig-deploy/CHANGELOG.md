@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.65.1
+### Chores
+* **sysdig-deploy** [0bd8c236](https://github.com/sysdiglabs/charts/commit/0bd8c23692509e451f8b476e0dc18ef46bcfe9a3): Automatic version bump due to updated dependencies ([#1942](https://github.com/sysdiglabs/charts/issues/1942))
 # v1.65.0
 ### New Features
 * **node-analyzer** [8b367c36](https://github.com/sysdiglabs/charts/commit/8b367c3679eb339886286cdde67ea4e7686a0b2a): Allow setting parameters for runtime and host scanner probes in Daemoset ([#1940](https://github.com/sysdiglabs/charts/issues/1940))
