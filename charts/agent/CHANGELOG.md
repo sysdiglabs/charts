@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.29.3
+### New Features
+* **agent** [2cd73379](https://github.com/sysdiglabs/charts/commit/2cd73379b9e38767fbae20169b1cf7299d13fc4f): create a clusterrolebinding if the clusterrole cluster-monitoring-view exists [SMAGENT-8031] ([#1938](https://github.com/sysdiglabs/charts/issues/1938))
 # v1.29.2
 ### Chores
 * **ci** [e222f21d](https://github.com/sysdiglabs/charts/commit/e222f21de483926259c9574e4c2d9679681b9ddb): bump bitnami/kubectl image references ([#1892](https://github.com/sysdiglabs/charts/issues/1892))
