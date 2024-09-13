@@ -2,6 +2,8 @@ suite: Test Deployment
 templates:
   - templates/deployment.yaml
   - templates/secrets.yaml
+  - templates/configmap.yaml
+  - templates/validatingwebhookconfiguration.yaml
 values:
   - ../ci/base-values.yaml
 release:
