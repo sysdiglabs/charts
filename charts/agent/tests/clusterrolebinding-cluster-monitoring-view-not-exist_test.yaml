@@ -1,0 +1,11 @@
+suite: Agent Cluster Role Binding cluster-monitoring-view (not exist)
+templates:
+  - templates/clusterrolebinding-cluster-monitoring-view.yaml
+tests:
+  - it: Does not create the ClusterRoleBinding if the ClusterRole does not exist and monitoring.openshift.io/v1 is supported
+    capabilities:
+      apiVersions:
+        - security.openshift.io/v1
+    asserts:
+      - hasDocuments:
+          count: 0
