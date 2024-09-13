@@ -1,0 +1,112 @@
+suite: Test Daemonset Abc
+templates:
+  - templates/daemonset-node-analyzer.yaml
+  # For checksums
+  - templates/runtimeScanner/runtime-scanner-configmap.yaml
+  - templates/configmap-host-scanner.yaml
+  - clusterrole-node-analyzer.yaml
+  - clusterrolebinding-node-analyzer.yaml
+  - configmap-benchmark-runner.yaml
+  - configmap-host-analyzer.yaml
+  - configmap-image-analyzer.yaml
+  - secrets.yaml
+  - serviceaccount-node-analyzer.yaml
+values:
+  - ./default_required_values.yaml
+tests:
+  - it: assert default sysdig-runtime-scanner probes
+    set:
+      nodeAnalyzer:
+        runtimeScanner:
+          deploy: true
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-runtime-scanner")].livenessProbe.initialDelaySeconds
+          value: 90
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-runtime-scanner")].livenessProbe.periodSeconds
+          value: 3
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-runtime-scanner")].readinessProbe.initialDelaySeconds
+          value: 90
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-runtime-scanner")].readinessProbe.periodSeconds
+          value: 3
+    templates:
+      - templates/daemonset-node-analyzer.yaml
+  - it: assert custom sysdig-runtime-scanner probess
+    set:
+      nodeAnalyzer:
+        runtimeScanner:
+          deploy: true
+          livenessProbe:
+            probe:
+              initialDelaySeconds: 10
+              periodSeconds: 5
+          readinessProbe:
+              probe:
+                initialDelaySeconds: 15
+                periodSeconds: 10
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-runtime-scanner")].livenessProbe.initialDelaySeconds
+          value: 10
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-runtime-scanner")].livenessProbe.periodSeconds
+          value: 5
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-runtime-scanner")].readinessProbe.initialDelaySeconds
+          value: 15
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-runtime-scanner")].readinessProbe.periodSeconds
+          value: 10
+    templates:
+      - templates/daemonset-node-analyzer.yaml
+  - it: assert default sysdig-host-scanner probes
+    set:
+      nodeAnalyzer:
+        hostScanner:
+          deploy: true
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-scanner")].livenessProbe.initialDelaySeconds
+          value: 90
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-scanner")].livenessProbe.periodSeconds
+          value: 3
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-scanner")].readinessProbe.initialDelaySeconds
+          value: 90
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-scanner")].readinessProbe.periodSeconds
+          value: 3
+    templates:
+      - templates/daemonset-node-analyzer.yaml
+  - it: assert custom sysdig-host-scanner probess
+    set:
+      nodeAnalyzer:
+        hostScanner:
+          deploy: true
+          livenessProbe:
+            probe:
+              initialDelaySeconds: 10
+              periodSeconds: 5
+          readinessProbe:
+            probe:
+              initialDelaySeconds: 15
+              periodSeconds: 10
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-scanner")].livenessProbe.initialDelaySeconds
+          value: 10
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-scanner")].livenessProbe.periodSeconds
+          value: 5
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-scanner")].readinessProbe.initialDelaySeconds
+          value: 15
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-scanner")].readinessProbe.periodSeconds
+          value: 10
+    templates:
+      - templates/daemonset-node-analyzer.yaml
