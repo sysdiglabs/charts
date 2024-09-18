@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.29.5
+### New Features
+* [e5ba9c17](https://github.com/sysdiglabs/charts/commit/e5ba9c17cc76a953b88d679b7925765de5e12a21): release agent 13.4.1 ([#1950](https://github.com/sysdiglabs/charts/issues/1950))
 # v1.29.4
 ### Chores
 * **ci** [fc5ecbaa](https://github.com/sysdiglabs/charts/commit/fc5ecbaaee10ec74f09a77a40be626f34e7dd292): bump bitnami/kubectl image references ([#1946](https://github.com/sysdiglabs/charts/issues/1946))
