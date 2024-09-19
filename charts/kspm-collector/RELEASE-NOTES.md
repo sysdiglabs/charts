@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **ci** [fc5ecbaa](https://github.com/sysdiglabs/charts/commit/fc5ecbaaee10ec74f09a77a40be626f34e7dd292): bump bitnami/kubectl image references ([#1946](https://github.com/sysdiglabs/charts/issues/1946))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.16.1...kspm-collector-0.16.2
+### New Features
+- **node-analyzer,collector** [3b87e546](https://github.com/sysdiglabs/charts/commit/3b87e5469de26664b5871df3c2f71f212ffea6d1): Add OKE support ([#1949](https://github.com/sysdiglabs/charts/issues/1949))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.16.2...kspm-collector-0.16.3
