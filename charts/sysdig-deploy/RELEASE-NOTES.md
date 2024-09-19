@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **sysdig-deploy** [eadb6807](https://github.com/sysdiglabs/charts/commit/eadb6807b3a105086c80f72ae7cd9ee75c53f821): Automatic version bump due to updated dependencies ([#1951](https://github.com/sysdiglabs/charts/issues/1951))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.65.3...sysdig-deploy-1.65.4
+### New Features
+- **node-analyzer,collector** [3b87e546](https://github.com/sysdiglabs/charts/commit/3b87e5469de26664b5871df3c2f71f212ffea6d1): Add OKE support ([#1949](https://github.com/sysdiglabs/charts/issues/1949))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.65.4...sysdig-deploy-1.65.5
