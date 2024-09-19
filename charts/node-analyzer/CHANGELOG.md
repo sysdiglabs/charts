@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.32.3
+### New Features
+* **node-analyzer,collector** [3b87e546](https://github.com/sysdiglabs/charts/commit/3b87e5469de26664b5871df3c2f71f212ffea6d1): Add OKE support ([#1949](https://github.com/sysdiglabs/charts/issues/1949))
 # v1.32.2
 ### Chores
 * **ci** [fc5ecbaa](https://github.com/sysdiglabs/charts/commit/fc5ecbaaee10ec74f09a77a40be626f34e7dd292): bump bitnami/kubectl image references ([#1946](https://github.com/sysdiglabs/charts/issues/1946))
