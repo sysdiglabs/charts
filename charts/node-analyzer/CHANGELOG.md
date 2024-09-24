@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.32.4
+### Bug Fixes
+* **node-analyzer** [a9558c59](https://github.com/sysdiglabs/charts/commit/a9558c59fac432f4e2c5275c54079bff9e13f951): bump nodeanalyzer to 1.44.8 ([#1953](https://github.com/sysdiglabs/charts/issues/1953))
 # v1.32.3
 ### New Features
 * **node-analyzer,collector** [3b87e546](https://github.com/sysdiglabs/charts/commit/3b87e5469de26664b5871df3c2f71f212ffea6d1): Add OKE support ([#1949](https://github.com/sysdiglabs/charts/issues/1949))
