@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.32.6
+### Bug Fixes
+* **node-analyzer** [a0d4004b](https://github.com/sysdiglabs/charts/commit/a0d4004bc0a64072cbb07570d0c7c8c6c6971449): Fix binaries path nodeanalyzer ([#1956](https://github.com/sysdiglabs/charts/issues/1956))
 # v1.32.5
 # v1.32.4
 ### Bug Fixes
