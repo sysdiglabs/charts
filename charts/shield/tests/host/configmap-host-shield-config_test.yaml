@@ -1,0 +1,280 @@
+suite: Host - Configmap [host_shield_config.yaml]
+templates:
+  - templates/host/configmap.yaml
+release:
+  name: release-name
+  namespace: shield-namespace
+kubernetesProvider:
+  scheme:
+    "v1/Secret":
+      gvr:
+        version: "v1"
+        resource: "secrets"
+      namespaced: true
+values:
+  - ../values/base.yaml
+tests:
+  - it: Everything is disabled by default
+    asserts:
+      - matchRegex:
+          path: data['host_shield_config.yaml']
+          pattern: |
+            features:
+              detections:
+                ml_policies:
+                  enabled: false
+              posture:
+                host_posture:
+                  enabled: false
+              responding:
+                rapid_response:
+                  enabled: false
+              vulnerability_management:
+                host_vulnerability_management:
+                  enabled: false
+                in_use:
+                  enabled: false
+                  integration_enabled: false
+
+  - it: Ensure Posture is enabled when requested
+    set:
+      features:
+        posture:
+          host_posture:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['host_shield_config.yaml']
+          pattern: |
+            features:
+              detections:
+                ml_policies:
+                  enabled: false
+              posture:
+                host_posture:
+                  enabled: true
+              responding:
+                rapid_response:
+                  enabled: false
+              vulnerability_management:
+                host_vulnerability_management:
+                  enabled: false
+                in_use:
+                  enabled: false
+                  integration_enabled: false
+
+  - it: Posture configs are not present when not enabled
+    set:
+      features:
+        posture:
+          host_posture:
+            enabled: false
+    asserts:
+      - matchRegex:
+          path: data['host_shield_config.yaml']
+          pattern: |
+            features:
+              detections:
+                ml_policies:
+                  enabled: false
+              posture:
+                host_posture:
+                  enabled: false
+              responding:
+                rapid_response:
+                  enabled: false
+              vulnerability_management:
+                host_vulnerability_management:
+                  enabled: false
+                in_use:
+                  enabled: false
+                  integration_enabled: false
+
+  - it: Ensure Host Vulnerability Management is enabled when requested
+    set:
+      features:
+        vulnerability_management:
+          host_vulnerability_management:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['host_shield_config.yaml']
+          pattern: |
+            features:
+              detections:
+                ml_policies:
+                  enabled: false
+              posture:
+                host_posture:
+                  enabled: false
+              responding:
+                rapid_response:
+                  enabled: false
+              vulnerability_management:
+                host_vulnerability_management:
+                  enabled: true
+                in_use:
+                  enabled: false
+                  integration_enabled: false
+
+  - it: Host Vulnerability Management configs are not present when not enabled
+    set:
+      features:
+        vulnerability_management:
+          host_vulnerability_management:
+            enabled: false
+    asserts:
+      - matchRegex:
+          path: data['host_shield_config.yaml']
+          pattern: |
+            features:
+              detections:
+                ml_policies:
+                  enabled: false
+              posture:
+                host_posture:
+                  enabled: false
+              responding:
+                rapid_response:
+                  enabled: false
+              vulnerability_management:
+                host_vulnerability_management:
+                  enabled: false
+                in_use:
+                  enabled: false
+                  integration_enabled: false
+
+  - it: Host Vulnerability Management is disabled by default
+    asserts:
+      - matchRegex:
+          path: data['host_shield_config.yaml']
+          pattern: |
+            features:
+              detections:
+                ml_policies:
+                  enabled: false
+              posture:
+                host_posture:
+                  enabled: false
+              responding:
+                rapid_response:
+                  enabled: false
+              vulnerability_management:
+                host_vulnerability_management:
+                  enabled: false
+                in_use:
+                  enabled: false
+                  integration_enabled: false
+
+  - it: Enable Posture and Vulnerability Management
+    set:
+      features:
+        posture:
+          host_posture:
+            enabled: true
+        vulnerability_management:
+          host_vulnerability_management:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['host_shield_config.yaml']
+          pattern: |-
+            features:
+              detections:
+                ml_policies:
+                  enabled: false
+              posture:
+                host_posture:
+                  enabled: true
+              responding:
+                rapid_response:
+                  enabled: false
+              vulnerability_management:
+                host_vulnerability_management:
+                  enabled: true
+
+  - it: Enable Posture, Vulnerability Management, and set in_use to true
+    set:
+      features:
+        posture:
+          host_posture:
+            enabled: true
+        vulnerability_management:
+          host_vulnerability_management:
+            enabled: true
+          in_use:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['host_shield_config.yaml']
+          pattern: |-
+            features:
+              detections:
+                ml_policies:
+                  enabled: false
+              posture:
+                host_posture:
+                  enabled: true
+              responding:
+                rapid_response:
+                  enabled: false
+              vulnerability_management:
+                host_vulnerability_management:
+                  enabled: true
+                in_use:
+                  enabled: true
+                  integration_enabled: false
+
+  - it: Enable Rapid Response
+    set:
+      features:
+        responding:
+          rapid_response:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['host_shield_config.yaml']
+          pattern: |-
+            features:
+              detections:
+                ml_policies:
+                  enabled: false
+              posture:
+                host_posture:
+                  enabled: false
+              responding:
+                rapid_response:
+                  enabled: true
+              vulnerability_management:
+                host_vulnerability_management:
+                  enabled: false
+                in_use:
+                  enabled: false
+                  integration_enabled: false
+
+  - it: Enable ML Policies
+    set:
+      features:
+        detections:
+          ml_policies:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['host_shield_config.yaml']
+          pattern: |-
+            features:
+              detections:
+                ml_policies:
+                  enabled: true
+              posture:
+                host_posture:
+                  enabled: false
+              responding:
+                rapid_response:
+                  enabled: false
+              vulnerability_management:
+                host_vulnerability_management:
+                  enabled: false
+                in_use:
+                  enabled: false
+                  integration_enabled: false

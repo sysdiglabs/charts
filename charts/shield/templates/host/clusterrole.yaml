@@ -1,0 +1,126 @@
+{{- if .Values.host.rbac.create }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "host.fullname" . }}
+  labels:
+    {{- include "host.rbac_labels" . | nindent 4 }}
+  {{- with .Values.host.rbac.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - pods
+      - replicationcontrollers
+      - services
+      - endpoints
+      - events
+      - limitranges
+      - namespaces
+      - nodes
+      - nodes/metrics
+      - nodes/proxy
+      - resourcequotas
+      - persistentvolumes
+      - persistentvolumeclaims
+      - configmaps
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - events
+    verbs:
+      - create
+      - patch
+  - apiGroups:
+      - apps
+    resources:
+      - daemonsets
+      - deployments
+      - replicasets
+      - statefulsets
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - autoscaling
+    resources:
+      - horizontalpodautoscalers
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - batch
+    resources:
+      - cronjobs
+      - jobs
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - networking.k8s.io
+    resources:
+      - networkpolicies
+      - ingresses
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - extensions
+    resources:
+      - daemonsets
+      - deployments
+      - replicasets
+    verbs:
+      - get
+      - list
+      - watch
+  - nonResourceURLs:
+      - /metrics
+    verbs:
+      - get
+  - apiGroups:
+      - storage.k8s.io
+    resources:
+      - storageclasses
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - certificates.k8s.io
+    resources:
+      - certificatesigningrequests
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - policy
+    resources:
+      - poddisruptionbudgets
+    verbs:
+      - get
+      - list
+      - watch
+{{- if .Capabilities.APIVersions.Has "rbac.authorization.k8s.io/v1beta1/PodSecurityPolicy" }}
+  - apiGroups:
+      - "policy"
+    resources:
+      - "podsecuritypolicies"
+    resourceNames:
+      - "{{ template "host.fullname" . }}"
+    verbs:
+      - "use"
+{{- end }}
+{{- end }}

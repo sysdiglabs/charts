@@ -1,0 +1,21 @@
+{{- if .Values.host.rbac.create }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ include "host.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "host.rbac_labels" . | nindent 4 }}
+  {{- with .Values.host.rbac.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ include "host.fullname" . }}
+subjects:
+  - kind: ServiceAccount
+    namespace: {{ .Release.Namespace }}
+    name: {{ include "host.service_account_name" . }}
+{{- end }}

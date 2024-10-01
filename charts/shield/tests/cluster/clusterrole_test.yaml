@@ -1,0 +1,347 @@
+suite: Cluster - ClusterRole
+templates:
+  - templates/cluster/clusterrole.yaml
+release:
+  name: release-name
+  namespace: shield-namespace
+values:
+  - ../values/base.yaml
+tests:
+  - it: Default Role
+    asserts:
+      - containsDocument:
+          kind: ClusterRole
+          apiVersion: rbac.authorization.k8s.io/v1
+          name: release-name-shield-cluster
+      - equal:
+          path: rules
+          value:
+
+  - it: Audit
+    set:
+      features:
+        detections:
+          kubernetes_audit:
+            enabled: true
+    asserts:
+      - containsDocument:
+          kind: ClusterRole
+          apiVersion: rbac.authorization.k8s.io/v1
+          name: release-name-shield-cluster
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resourceNames:
+              - kube-system
+            resources:
+              - namespaces
+            verbs:
+              - get
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - pods
+            verbs:
+              - get
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - apps
+            resources:
+              - deployments
+              - replicasets
+              - statefulsets
+              - daemonsets
+            verbs:
+              - get
+
+  - it: Container Vulnerability Management
+    set:
+      features:
+        vulnerability_management:
+          container_vulnerability_management:
+            enabled: true
+    asserts:
+      - containsDocument:
+          kind: ClusterRole
+          apiVersion: rbac.authorization.k8s.io/v1
+          name: release-name-shield-cluster
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+              - apps
+              - batch
+              - extensions
+            resources:
+              - cronjobs
+              - daemonsets
+              - deployments
+              - jobs
+              - namespaces
+              - nodes
+              - pods
+              - replicasets
+              - replicationcontrollers
+              - secrets
+              - statefulsets
+            verbs:
+              - get
+              - list
+              - watch
+
+  - it: Posture
+    set:
+      features:
+        posture:
+          cluster_posture:
+            enabled: true
+    asserts:
+      - containsDocument:
+          kind: ClusterRole
+          apiVersion: rbac.authorization.k8s.io/v1
+          name: release-name-shield-cluster
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+              - rbac.authorization.k8s.io
+              - extensions
+              - apps
+              - batch
+              - networking.k8s.io
+              - autoscaling
+              - policy
+              - storage.k8s.io
+              - config.openshift.io
+            resources:
+              - pods
+              - pods/log
+              - namespaces
+              - deployments
+              - daemonsets
+              - statefulsets
+              - jobs
+              - cronjobs
+              - clusterroles
+              - clusterrolebindings
+              - roles
+              - rolebindings
+              - services
+              - serviceaccounts
+              - nodes
+              - ingresses
+              - ingressclasses
+              - networkpolicies
+              - replicasets
+              - configmaps
+              - events
+              - limitranges
+              - persistentvolumes
+              - persistentvolumeclaims
+              - replicationcontrollers
+              - resourcequotas
+              - controllerrevisions
+              - horizontalpodautoscalers
+              - podsecuritypolicies
+              - storageclasses
+              - volumeattachments
+              - clusterversions
+              - secrets
+            verbs:
+              - get
+              - list
+              - watch
+
+  - it: Admission Control with Container Vulnerability Management
+    set:
+      features:
+        admission_control:
+          enabled: true
+          container_vulnerability_management:
+            enabled: true
+    asserts:
+      - containsDocument:
+          kind: ClusterRole
+          apiVersion: rbac.authorization.k8s.io/v1
+          name: release-name-shield-cluster
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+              - apps
+              - batch
+              - extensions
+            resources:
+              - cronjobs
+              - daemonsets
+              - deployments
+              - jobs
+              - namespaces
+              - nodes
+              - pods
+              - replicasets
+              - replicationcontrollers
+              - secrets
+              - statefulsets
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - pods
+              - configmaps
+              - secrets
+              - serviceaccounts
+              - namespaces
+            verbs:
+              - get
+
+  - it: Kubernetes Metadata
+    set:
+      features:
+        kubernetes_metadata:
+          enabled: true
+    asserts:
+      - containsDocument:
+          kind: ClusterRole
+          apiVersion: rbac.authorization.k8s.io/v1
+          name: release-name-shield-cluster
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - pods
+              - replicationcontrollers
+              - services
+              - events
+              - limitranges
+              - namespaces
+              - nodes
+              - resourcequotas
+              - persistentvolumes
+              - persistentvolumeclaims
+              - configmaps
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - apps
+            resources:
+              - daemonsets
+              - deployments
+              - replicasets
+              - statefulsets
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - autoscaling
+            resources:
+              - horizontalpodautoscalers
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - batch
+            resources:
+              - cronjobs
+              - jobs
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - networking.k8s.io
+            resources:
+              - ingresses
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - storage.k8s.io
+            resources:
+              - storageclasses
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - certificates.k8s.io
+            resources:
+              - certificatesigningrequests
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - policy
+            resources:
+              - poddisruptionbudgets
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - discovery.k8s.io
+            resources:
+              - endpointslices
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - events.k8s.io
+            resources:
+              - events
+            verbs:
+              - get
+              - list
+              - watch

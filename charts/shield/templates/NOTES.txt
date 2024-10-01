@@ -1,0 +1,15 @@
+Cluster Labels
+
+{{ include "cluster.labels" . }}
+
+Cluster Selector Labels
+
+{{ include "cluster.selector_labels" . }}
+
+Host Labels
+
+{{ include "host.labels" . }}
+
+Host Selector Labels
+
+{{ include "host.selector_labels" . }}

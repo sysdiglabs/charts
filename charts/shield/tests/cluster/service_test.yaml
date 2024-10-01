@@ -1,0 +1,212 @@
+suite: Cluster - Service
+templates:
+  - templates/cluster/service.yaml
+release:
+  name: release-name
+  namespace: shield-namespace
+values:
+  - ../values/base.yaml
+tests:
+  - it: Default Monitoring Port
+    asserts:
+      - containsDocument:
+          kind: Service
+          apiVersion: v1
+          name: release-name-shield-cluster
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - equal:
+          path: spec.type
+          value: ClusterIP
+      - isNotNull:
+          path: .spec.ports[?(@.name == "monitoring")]
+      - equal:
+          path: spec.ports[?(@.name == "monitoring")].port
+          value: 8080
+      - equal:
+          path: spec.ports[?(@.name == "monitoring")].protocol
+          value: TCP
+      - equal:
+          path: spec.ports[?(@.name == "monitoring")].targetPort
+          value: monitoring
+      - lengthEqual:
+          path: spec.ports
+          count: 1
+      - equal:
+          path: metadata.labels["sysdig/component"]
+          value: cluster
+
+  - it: Custom Monitoring Port
+    set:
+      cluster:
+        additional_settings:
+          monitoring_port: 8081
+    asserts:
+      - containsDocument:
+          kind: Service
+          apiVersion: v1
+          name: release-name-shield-cluster
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - equal:
+          path: spec.type
+          value: ClusterIP
+      - isNotNull:
+          path: .spec.ports[?(@.name == "monitoring")]
+      - equal:
+          path: spec.ports[?(@.name == "monitoring")].port
+          value: 8081
+      - equal:
+          path: spec.ports[?(@.name == "monitoring")].protocol
+          value: TCP
+      - equal:
+          path: spec.ports[?(@.name == "monitoring")].targetPort
+          value: monitoring
+      - lengthEqual:
+          path: spec.ports
+          count: 1
+      - equal:
+          path: metadata.labels["sysdig/component"]
+          value: cluster
+
+  - it: Default Audit Port
+    set:
+      features:
+        detections:
+          kubernetes_audit:
+            enabled: true
+    asserts:
+      - containsDocument:
+          kind: Service
+          apiVersion: v1
+          name: release-name-shield-cluster
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - equal:
+          path: spec.type
+          value: ClusterIP
+      - isNotNull:
+          path: .spec.ports[?(@.name == "audit")]
+      - equal:
+          path: spec.ports[?(@.name == "audit")].port
+          value: 6443
+      - equal:
+          path: spec.ports[?(@.name == "audit")].protocol
+          value: TCP
+      - equal:
+          path: spec.ports[?(@.name == "audit")].targetPort
+          value: audit
+      - lengthEqual:
+          path: spec.ports
+          count: 2
+      - equal:
+          path: metadata.labels["sysdig/component"]
+          value: cluster
+
+  - it: Custom Audit Port
+    set:
+      features:
+        detections:
+          kubernetes_audit:
+            enabled: true
+            http_port: 6444
+    asserts:
+      - containsDocument:
+          kind: Service
+          apiVersion: v1
+          name: release-name-shield-cluster
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - equal:
+          path: spec.type
+          value: ClusterIP
+      - isNotNull:
+          path: .spec.ports[?(@.name == "audit")]
+      - equal:
+          path: spec.ports[?(@.name == "audit")].port
+          value: 6444
+      - equal:
+          path: spec.ports[?(@.name == "audit")].protocol
+          value: TCP
+      - equal:
+          path: spec.ports[?(@.name == "audit")].targetPort
+          value: audit
+      - lengthEqual:
+          path: spec.ports
+          count: 2
+      - equal:
+          path: metadata.labels["sysdig/component"]
+          value: cluster
+
+  - it: Default Admission Control Port
+    set:
+      features:
+        admission_control:
+          enabled: true
+    asserts:
+      - containsDocument:
+          kind: Service
+          apiVersion: v1
+          name: release-name-shield-cluster
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - equal:
+          path: spec.type
+          value: ClusterIP
+      - isNotNull:
+          path: .spec.ports[?(@.name == "ac")]
+      - equal:
+          path: spec.ports[?(@.name == "ac")].port
+          value: 8443
+      - equal:
+          path: spec.ports[?(@.name == "ac")].protocol
+          value: TCP
+      - equal:
+          path: spec.ports[?(@.name == "ac")].targetPort
+          value: ac
+      - lengthEqual:
+          path: spec.ports
+          count: 2
+      - equal:
+          path: metadata.labels["sysdig/component"]
+          value: cluster
+
+  - it: Custom Admission Control Port
+    set:
+      features:
+        admission_control:
+          enabled: true
+          http_port: 1234
+    asserts:
+      - containsDocument:
+          kind: Service
+          apiVersion: v1
+          name: release-name-shield-cluster
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - equal:
+          path: spec.type
+          value: ClusterIP
+      - isNotNull:
+          path: .spec.ports[?(@.name == "ac")]
+      - equal:
+          path: spec.ports[?(@.name == "ac")].port
+          value: 1234
+      - equal:
+          path: spec.ports[?(@.name == "ac")].protocol
+          value: TCP
+      - equal:
+          path: spec.ports[?(@.name == "ac")].targetPort
+          value: ac
+      - lengthEqual:
+          path: spec.ports
+          count: 2
+      - equal:
+          path: metadata.labels["sysdig/component"]
+          value: cluster
