@@ -30355,6 +30355,28 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/registry-scanner-0.0.1/registry-scanner-0.0.1.tgz
     version: 0.0.1
+  shield:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2024-10-01T14:10:40.494282864Z"
+    description: A chart with various Sysdig components for Kubernetes
+    digest: 5236a2a061c873f75d81f8069fabf14643ef87b84418d422affc96b019cf37e8
+    maintainers:
+    - email: alberto.barba@sysdig.com
+      name: AlbertoBarba
+    - email: adam.roberts@sysdig.com
+      name: aroberts87
+    - email: francesco.furlan@sysdig.com
+      name: francesco-furlan
+    - email: gerlando.falauto@sysdig.com
+      name: iurly
+    - email: marcovito.moscaritolo@sysdig.com
+      name: mavimo
+    name: shield
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/shield-0.1.1/shield-0.1.1.tgz
+    version: 0.1.1
   sysdig:
   - apiVersion: v1
     appVersion: 12.17.1
@@ -65952,4 +65974,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2024-09-26T14:08:03.593344084Z"
+generated: "2024-10-01T14:10:40.627747245Z"
