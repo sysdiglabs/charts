@@ -1,0 +1,234 @@
+suite: Cluster - Configmap
+templates:
+  - templates/cluster/configmap.yaml
+release:
+  name: release-name
+  namespace: shield-namespace
+values:
+  - ../values/base.yaml
+tests:
+  - it: Default
+    set:
+      cluster_config:
+        name: shield-cluster
+      sysdig_endpoint:
+        api_url: https://fake.api.url.com
+        collector:
+          host: fake.collector.host
+          port: 6443
+        access_key: fake-access-key
+        secure_api_token: fake-secure-api-token
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: release-name-shield-cluster
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["cluster-shield.yaml"]
+      - matchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: |
+            cluster_config:
+              name: shield-cluster
+            features:
+              admission_control:
+                container_vulnerability_management:
+                  enabled: false
+                deny_on_error: false
+                dry_run: true
+                enabled: false
+                excluded_namespaces: \[\]
+                http_port: 8443
+                timeout: 10
+              audit:
+                enabled: false
+                excluded_namespaces: \[\]
+                http_port: 6443
+                timeout: 10
+              container_vulnerability_management:
+                enabled: false
+                in_use:
+                  enabled: false
+                  integration_enabled: false
+                local_cluster:
+                  registry_secrets: \[\]
+                platform_services_enabled: true
+                registry_ssl:
+                  verify: true
+              kubernetes_metadata:
+                enabled: false
+              posture:
+                enabled: false
+            kubernetes:
+              ca_cert_file: /etc/sysdig/tls-certificates/ca.crt
+              root_namespace: kube-system
+              running_namespace: shield-namespace
+              tls_cert_file: /etc/sysdig/tls-certificates/tls.crt
+              tls_private_key_file: /etc/sysdig/tls-certificates/tls.key
+            log_level: info
+            monitoring_port: 8080
+            ssl:
+              verify: true
+            sysdig_endpoint:
+              api_url: https://fake.api.url.com
+              collector: fake.collector.host:6443
+
+  - it: Sets NATS Url and Lock Name when Container Vulnerability Management is enabled
+    set:
+      cluster_config:
+        name: shield-cluster
+      sysdig_endpoint:
+        api_url: https://fake.api.url.com
+        collector:
+          host: fake.collector.host
+          port: 6443
+        access_key: fake-access-key
+        secure_api_token: fake-secure-api-token
+      features:
+        vulnerability_management:
+          container_vulnerability_management:
+            enabled: true
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: release-name-shield-cluster
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["cluster-shield.yaml"]
+      - matchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: |
+            cluster_scanner:
+              image_sbom_extractor:
+                nats_url: nats://release-name-shield-cluster-container-vulnerability-management:4222
+              leader_election_lock_name: release-name-shield-cluster-container-vulnerability-management
+
+  - it: Sets t he GRPC Endpoint when Admission Control is enabled with Container Vulnerability Management
+    set:
+      cluster_config:
+        name: shield-cluster
+      sysdig_endpoint:
+        api_url: https://fake.api.url.com
+        collector:
+          host: fake.collector.host
+          port: 6443
+        access_key: fake-access-key
+        secure_api_token: fake-secure-api-token
+      features:
+        admission_control:
+          enabled: true
+          container_vulnerability_management:
+            enabled: true
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: release-name-shield-cluster
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["cluster-shield.yaml"]
+      - matchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: |
+            cluster_scanner:
+              image_sbom_extractor:
+                nats_url: nats://release-name-shield-cluster-container-vulnerability-management:4222
+              leader_election_lock_name: release-name-shield-cluster-container-vulnerability-management
+      - matchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: |
+            admission_controller_secure:
+              rsi_grpc_endpoint: release-name-shield-cluster-container-vulnerability-management:9999
+
+  - it: Secure API Token - Fail if kubernetes audit is enabled with On Premise Versions < 6.12.0 and Secure API Token is not set
+    set:
+      on_prem_version: 6.11.0
+      sysdig_endpoint:
+        secure_api_token:
+        secure_api_token_existing_secret:
+      features:
+        detections:
+          kubernetes_audit:
+            enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: "Secure API Token is required for kubernetes audit with On Premise Versions < 6.12.0"
+
+  - it: Secure API Token - Do not fail if kubernetes audit is enabled with On Premise Versions < 6.12.0 and Secure API Token is set
+    set:
+      on_prem_version: 6.11.0
+      sysdig_endpoint:
+        secure_api_token: fake-secure-api-token
+        secure_api_token_existing_secret:
+      features:
+        detections:
+          kubernetes_audit:
+            enabled: true
+    asserts:
+      - notFailedTemplate: {}
+
+  - it: Secure API Token - Do not fail if kubernetes audit is enabled with On Premise Versions < 6.12.0 and Secure API Token is provided via existing secret
+    set:
+      on_prem_version: 6.11.0
+      sysdig_endpoint:
+        secure_api_token:
+        secure_api_token_existing_secret: fake-secure-api-token-existing-secret
+      features:
+        detections:
+          kubernetes_audit:
+            enabled: true
+    asserts:
+      - notFailedTemplate: {}
+
+  - it: Secure API Token - Do not fail if kubernetes audit is disabled with On Premise Versions < 6.12.0
+    set:
+      on_prem_version: 6.11.0
+      sysdig_endpoint:
+        secure_api_token:
+        secure_api_token_existing_secret:
+      features:
+        detections:
+          kubernetes_audit:
+            enabled: false
+    asserts:
+      - notFailedTemplate: {}
+
+  - it: Secure API Token - Do not fail if kubernetes audit is enabled with On Premise Versions > 6.12.0
+    set:
+      on_prem_version: 6.13.0
+      sysdig_endpoint:
+        secure_api_token:
+        secure_api_token_existing_secret:
+      features:
+        detections:
+          kubernetes_audit:
+            enabled: true
+    asserts:
+      - notFailedTemplate: {}
+
+  - it: Secure API Token - Do not fail if kubernetes audit is enabled with On Premise Versions unset
+    set:
+      on_prem_version:
+      sysdig_endpoint:
+        secure_api_token:
+        secure_api_token_existing_secret:
+      features:
+        detections:
+          kubernetes_audit:
+            enabled: true
+    asserts:
+      - notFailedTemplate: {}

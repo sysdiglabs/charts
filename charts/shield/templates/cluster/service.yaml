@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "cluster.service_name" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "cluster.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+    - port: {{ .Values.cluster.additional_settings.monitoring_port }}
+      targetPort: monitoring
+      protocol: TCP
+      name: monitoring
+  {{- if (include "cluster.audit_enabled" .) }}
+    - port: {{ include "cluster.audit_service_port" . }}
+      targetPort: audit
+      protocol: TCP
+      name: audit
+  {{- end }}
+  {{- if (include "cluster.admission_control_enabled" .) }}
+    - port: {{ include "cluster.admission_control_service_port" . }}
+      targetPort: ac
+      protocol: TCP
+      name: ac
+  {{- end }}
+  selector:
+    {{- include "cluster.selector_labels" . | nindent 4 }}

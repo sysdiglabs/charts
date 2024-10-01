@@ -1,0 +1,10 @@
+{{- if .Values.host.priority_class.create }}
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: {{ include "host.priority_class_name" . }}
+value: {{ .Values.host.priority_class.value }}
+preemptionPolicy: PreemptLowerPriority
+globalDefault: false
+description: "Sysdig host-shield priority"
+{{- end }}

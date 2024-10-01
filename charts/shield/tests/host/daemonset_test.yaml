@@ -1,0 +1,302 @@
+suite: Host - DaemonSet
+templates:
+  - templates/host/daemonset.yaml
+release:
+  name: release-name
+  namespace: shield-namespace
+values:
+  - ../values/base.yaml
+tests:
+  - it: DaemonSet Sanity Check
+    asserts:
+      - isKind:
+          of: DaemonSet
+          count: 1
+      - equal:
+          path: metadata.name
+          value: release-name-shield-host
+
+  - it: Test without Custom CA Settings
+    asserts:
+      - notExists:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].env[?(@.name == "SSL_CERT_FILE")]
+      - notExists:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].volumeMounts[?(@.name == "ca-certs")]
+      - notExists:
+          path: spec.template.spec.volumes[?(@.name == "ca-certs")]
+
+  - it: Test with Custom CA In Values
+    set:
+      ssl:
+        ca:
+          certs:
+            - "test certificate"
+          key_name: "custom-ca-from-values.crt"
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].env[?(@.name == "SSL_CERT_FILE")]
+          value:
+            name: SSL_CERT_FILE
+            value: /opt/draios/certificates/custom-ca-from-values.crt
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].volumeMounts
+          content:
+            name: ca-certs
+            mountPath: /opt/draios/certificates/
+            readOnly: true
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: ca-certs
+            secret:
+              secretName: release-name-shield-common-ca
+
+  - it: Test with Custom CA In Existing Secret
+    set:
+      ssl:
+        ca:
+          existing_ca_secret: "fake-secret-name"
+          existing_ca_secret_key_name: "custom-ca-from-secret.crt"
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].env[?(@.name == "SSL_CERT_FILE")]
+          value:
+            name: SSL_CERT_FILE
+            value: /opt/draios/certificates/custom-ca-from-secret.crt
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].volumeMounts
+          content:
+            name: ca-certs
+            mountPath: /opt/draios/certificates/
+            readOnly: true
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: ca-certs
+            secret:
+              secretName: fake-secret-name
+
+  - it: Test host.privileged=true
+    set:
+      host:
+        privileged: true
+    asserts:
+      - isNullOrEmpty:
+          path: spec.template.metadata.annotations
+      - isSubset:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].securityContext
+          content:
+            privileged: true
+            runAsNonRoot: false
+            readOnlyRootFilesystem: false
+            allowPrivilegeEscalation: true
+      - isNotSubset:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].securityContext
+          content:
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: Unconfined
+            capabilities:
+              drop:
+                - ALL
+              add:
+                - SYS_ADMIN
+                - SYS_RESOURCE
+                - SYS_PTRACE
+                - SYS_CHROOT
+                - DAC_READ_SEARCH
+                - KILL
+                - SETUID
+                - SETGID
+
+  - it: Test host.privileged=false
+    set:
+      host:
+        privileged: false
+    asserts:
+      - isSubset:
+          path: spec.template.metadata.annotations
+          content:
+            container.apparmor.security.beta.kubernetes.io/sysdig: unconfined
+      - isSubset:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].securityContext
+          content:
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: Unconfined
+            capabilities:
+              drop:
+                - ALL
+              add:
+                - SYS_ADMIN
+                - SYS_RESOURCE
+                - SYS_PTRACE
+                - SYS_CHROOT
+                - DAC_READ_SEARCH
+                - KILL
+                - SETUID
+                - SETGID
+      - isNotSubset:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].securityContext
+          content:
+            privileged: true
+            runAsNonRoot: false
+            readOnlyRootFilesystem: false
+            allowPrivilegeEscalation: true
+
+  - it: Test user specified priority class
+    set:
+      host:
+        priority_class:
+          name: sysdig-host-shield-priority
+    asserts:
+      - equal:
+          path: spec.template.spec.priorityClassName
+          value: sysdig-host-shield-priority
+
+  - it: Test chart created priority class
+    set:
+      host:
+        priority_class:
+          create: true
+          name: my-fancy-priority-class
+          value: 10
+    asserts:
+      - equal:
+          path: spec.template.spec.priorityClassName
+          value: my-fancy-priority-class
+
+  - it: Test default container images
+    set:
+      host:
+        image:
+          tag: latest
+    asserts:
+      - equal:
+          path: spec.template.spec.initContainers[?(@.name == "sysdig-host-shield-kmodule")].image
+          value: quay.io/sysdig/agent-kmodule:latest
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].image
+          value: quay.io/sysdig/agent-slim:latest
+
+  - it: Default workload labels
+    set:
+      host:
+        image:
+          tag: 11.11.11
+    asserts:
+      - containsDocument:
+          kind: DaemonSet
+          apiVersion: apps/v1
+          name: release-name-shield-host
+          namespace: shield-namespace
+      - isSubset:
+          path: metadata.labels
+          content:
+            app.kubernetes.io/instance: release-name
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: shield
+            app.kubernetes.io/version: 1.0.0
+            sysdig/component: host
+            sysdig/component-version: 11.11.11
+
+  - it: Default pod labels
+    set:
+      host:
+        image:
+          tag: 11.11.11
+    asserts:
+      - containsDocument:
+          kind: DaemonSet
+          apiVersion: apps/v1
+          name: release-name-shield-host
+          namespace: shield-namespace
+      - isSubset:
+          path: spec.template.metadata.labels
+          content:
+            app.kubernetes.io/instance: release-name
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: shield
+            app.kubernetes.io/version: 1.0.0
+            sysdig/component: host
+            sysdig/component-version: 11.11.11
+
+  - it: Test Rapid Response password secret
+    set:
+      features:
+        responding:
+          rapid_response:
+            enabled: true
+      host:
+        additional_settings:
+          rapid_response:
+            password: abc123
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].env
+          content:
+            name: PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: release-name-shield-host-rapid-response
+                key: password
+
+  - it: Host root and tmp not mounted by default
+    asserts:
+      - notExists:
+          path: spec.template.spec.volumes[?(@.name == "host-root")]
+      - notExists:
+          path: spec.template.spec.volumes[?(@.name == "host-tmp")]
+
+  - it: Host root mounted when host scanner is enabled
+    set:
+      features:
+        vulnerability_management:
+          host_vulnerability_management:
+            enabled: true
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: host-root
+            hostPath:
+              path: /
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].volumeMounts
+          content:
+            name: host-root
+            mountPath: /host
+            readOnly: true
+      - notExists:
+          path: spec.template.spec.volumes[?(@.name == "host-tmp")]
+
+  - it: Host root and tmp mounted when kspm-analyzer is enabled
+    set:
+      features:
+        posture:
+          host_posture:
+            enabled: true
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: host-root
+            hostPath:
+              path: /
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: host-tmp
+            hostPath:
+              path: /tmp
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].volumeMounts
+          content:
+            name: host-root
+            mountPath: /host
+            readOnly: true
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].volumeMounts
+          content:
+            name: host-tmp
+            mountPath: /host/tmp

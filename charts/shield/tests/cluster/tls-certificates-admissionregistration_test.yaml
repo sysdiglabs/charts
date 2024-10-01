@@ -1,0 +1,518 @@
+suite: Cluster - TLS Certificates Secret & AdmissionRegistration
+templates:
+  - templates/cluster/tls-certificates-admissionregistration.yaml
+release:
+  name: shield-release
+  namespace: shield-namespace
+values:
+  - ../values/base.yaml
+kubernetesProvider:
+  scheme:
+    "v1/Secret":
+      gvr:
+        version: "v1"
+        resource: "secrets"
+      namespaced: true
+  objects:
+    - apiVersion: v1
+      kind: Secret
+      metadata:
+        name: sysdig-tls-certs
+        namespace: shield-namespace
+      data:
+        tls.crt: dGxzIGNlcnQ= # "tls cert"
+        tls.key: dGxzIGtleQ== # "tls key"
+        ca.crt: Y2EgY2VydA== # "ca cert"
+
+tests:
+  - it: Default
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: Generate TLS Secret (container_vulnerability_management enabled)
+    set:
+      features:
+        vulnerability_management:
+          container_vulnerability_management:
+            enabled: true
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: Secret
+          apiVersion: v1
+          name: shield-release-cluster-tls-certificates
+          namespace: shield-namespace
+        documentIndex: 0
+      - isNotNullOrEmpty:
+          path: data["tls.crt"]
+        documentIndex: 0
+      - isNotNullOrEmpty:
+          path: data["tls.key"]
+        documentIndex: 0
+      - isNotNullOrEmpty:
+          path: data["ca.crt"]
+        documentIndex: 0
+
+  - it: Generate TLS Secret (audit enabled)
+    set:
+      features:
+        detections:
+          kubernetes_audit:
+            enabled: true
+    asserts:
+      - hasDocuments:
+          count: 2
+      - containsDocument:
+          kind: Secret
+          apiVersion: v1
+          name: shield-release-cluster-tls-certificates
+          namespace: shield-namespace
+        documentIndex: 0
+      - isNotNullOrEmpty:
+          path: data["tls.crt"]
+        documentIndex: 0
+      - isNotNullOrEmpty:
+          path: data["tls.key"]
+        documentIndex: 0
+      - isNotNullOrEmpty:
+          path: data["ca.crt"]
+        documentIndex: 0
+
+  - it: Generate TLS Secret (admission_control enabled)
+    set:
+      features:
+        admission_control:
+          enabled: true
+    asserts:
+      - hasDocuments:
+          count: 2
+      - containsDocument:
+          kind: Secret
+          apiVersion: v1
+          name: shield-release-cluster-tls-certificates
+          namespace: shield-namespace
+        documentIndex: 0
+      - isNotNullOrEmpty:
+          path: data["tls.crt"]
+        documentIndex: 0
+      - isNotNullOrEmpty:
+          path: data["tls.key"]
+        documentIndex: 0
+      - isNotNullOrEmpty:
+          path: data["ca.crt"]
+        documentIndex: 0
+
+  - it: Audit AdmissionRegistration (Generate TLS)
+    set:
+      features:
+        detections:
+          kubernetes_audit:
+            enabled: true
+    asserts:
+      - hasDocuments:
+          count: 2
+      - containsDocument:
+          kind: ValidatingWebhookConfiguration
+          apiVersion: admissionregistration.k8s.io/v1
+          name: shield-release-cluster-audit
+        documentIndex: 1
+      - exists:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")]
+        documentIndex: 1
+      - notExists:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].namespaceSelector
+        documentIndex: 1
+      - equal:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].matchPolicy
+          value: Equivalent
+        documentIndex: 1
+      - contains:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].rules
+          content:
+            apiGroups:
+              - ""
+              - apps
+              - autoscaling
+              - batch
+              - networking.k8s.io
+              - rbac.authorization.k8s.io
+              - extensions
+            apiVersions:
+              - '*'
+            operations:
+              - '*'
+            resources:
+              - '*/*'
+            scope: '*'
+        documentIndex: 1
+      - equal:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].clientConfig.service.namespace
+          value: "shield-namespace"
+        documentIndex: 1
+      - equal:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].clientConfig.service.name
+          value: "shield-release-cluster"
+        documentIndex: 1
+      - equal:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].clientConfig.service.path
+          value: "/k8s-audit"
+        documentIndex: 1
+      - equal:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].clientConfig.service.port
+          value: 6443
+        documentIndex: 1
+      - isNotNullOrEmpty:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].clientConfig.caBundle
+        documentIndex: 1
+      - equal:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].failurePolicy
+          value: "Ignore"
+        documentIndex: 1
+      - equal:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].timeoutSeconds
+          value: 10
+        documentIndex: 1
+
+  - it: Audit AdmissionRegistration (Existing TLS)
+    set:
+      cluster:
+        tls_certificates:
+          create: false
+          secret_name: sysdig-tls-certs
+      features:
+        detections:
+          kubernetes_audit:
+            enabled: true
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ValidatingWebhookConfiguration
+          apiVersion: admissionregistration.k8s.io/v1
+          name: shield-release-cluster-audit
+        documentIndex: 0
+      - exists:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")]
+        documentIndex: 0
+      - notExists:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].namespaceSelector
+        documentIndex: 0
+      - equal:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].clientConfig.service.namespace
+          value: "shield-namespace"
+        documentIndex: 0
+      - equal:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].clientConfig.service.name
+          value: "shield-release-cluster"
+        documentIndex: 0
+      - equal:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].clientConfig.service.path
+          value: "/k8s-audit"
+        documentIndex: 0
+      - equal:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].clientConfig.service.port
+          value: 6443
+        documentIndex: 0
+      - equal:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].clientConfig.caBundle
+          value: Y2EgY2VydA==
+        documentIndex: 0
+
+  - it: Audit AdmissionRegistration (Custom Port)
+    set:
+      features:
+        detections:
+          kubernetes_audit:
+            enabled: true
+            http_port: 1234
+    asserts:
+      - hasDocuments:
+          count: 2
+      - containsDocument:
+          kind: ValidatingWebhookConfiguration
+          apiVersion: admissionregistration.k8s.io/v1
+          name: shield-release-cluster-audit
+        documentIndex: 1
+      - exists:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")]
+        documentIndex: 1
+      - notExists:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].namespaceSelector
+        documentIndex: 1
+      - equal:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].clientConfig.service.namespace
+          value: "shield-namespace"
+        documentIndex: 1
+      - equal:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].clientConfig.service.name
+          value: "shield-release-cluster"
+        documentIndex: 1
+      - equal:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].clientConfig.service.path
+          value: "/k8s-audit"
+        documentIndex: 1
+      - equal:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].clientConfig.service.port
+          value: 1234
+        documentIndex: 1
+
+  - it: Admission Control AdmissionRegistration (Generate TLS)
+    set:
+      features:
+        admission_control:
+          enabled: true
+    asserts:
+      - hasDocuments:
+          count: 2
+      - containsDocument:
+          kind: ValidatingWebhookConfiguration
+          apiVersion: admissionregistration.k8s.io/v1
+          name: shield-release-cluster-admission-control
+        documentIndex: 1
+      - exists:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")]
+        documentIndex: 1
+      - exists:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].namespaceSelector
+        documentIndex: 1
+      - contains:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].namespaceSelector.matchExpressions
+          content:
+            key: kubernetes.io/metadata.name
+            operator: NotIn
+            values:
+              - shield-namespace
+        documentIndex: 1
+      - contains:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].rules
+          content:
+            apiGroups:
+              - ""
+              - apps
+              - batch
+            apiVersions: [ "v1" ]
+            operations: [ "CREATE", "UPDATE" ]
+            resources:
+              - deployments
+              - replicasets
+              - statefulsets
+              - daemonsets
+              - jobs"
+              - cronjobs
+            scope: Namespaced
+        documentIndex: 1
+      - equal:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].clientConfig.service.namespace
+          value: "shield-namespace"
+        documentIndex: 1
+      - equal:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].clientConfig.service.name
+          value: "shield-release-cluster"
+        documentIndex: 1
+      - equal:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].clientConfig.service.path
+          value: "/validate"
+        documentIndex: 1
+      - equal:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].clientConfig.service.port
+          value: 8443
+        documentIndex: 1
+      - isNotNullOrEmpty:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].clientConfig.caBundle
+        documentIndex: 1
+      - equal:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].failurePolicy
+          value: "Ignore"
+        documentIndex: 1
+      - equal:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].timeoutSeconds
+          value: 10
+        documentIndex: 1
+
+  - it: Admission Control AdmissionRegistration (Existing TLS)
+    set:
+      cluster:
+        tls_certificates:
+          create: false
+          secret_name: sysdig-tls-certs
+      features:
+        admission_control:
+          enabled: true
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ValidatingWebhookConfiguration
+          apiVersion: admissionregistration.k8s.io/v1
+          name: shield-release-cluster-admission-control
+        documentIndex: 0
+      - exists:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")]
+        documentIndex: 0
+      - exists:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].namespaceSelector
+        documentIndex: 0
+      - contains:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].namespaceSelector.matchExpressions
+          content:
+            key: kubernetes.io/metadata.name
+            operator: NotIn
+            values:
+              - shield-namespace
+        documentIndex: 0
+      - equal:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].clientConfig.service.namespace
+          value: "shield-namespace"
+        documentIndex: 0
+      - equal:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].clientConfig.service.name
+          value: "shield-release-cluster"
+        documentIndex: 0
+      - equal:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].clientConfig.service.path
+          value: "/validate"
+        documentIndex: 0
+      - equal:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].clientConfig.service.port
+          value: 8443
+        documentIndex: 0
+      - equal:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].clientConfig.caBundle
+          value: Y2EgY2VydA==
+        documentIndex: 0
+
+  - it: Admission Control AdmissionRegistration (Custom Port)
+    set:
+      features:
+        admission_control:
+          enabled: true
+          http_port: 1234
+    asserts:
+      - hasDocuments:
+          count: 2
+      - containsDocument:
+          kind: ValidatingWebhookConfiguration
+          apiVersion: admissionregistration.k8s.io/v1
+          name: shield-release-cluster-admission-control
+        documentIndex: 1
+      - exists:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")]
+        documentIndex: 1
+      - exists:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].namespaceSelector
+        documentIndex: 1
+      - contains:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].namespaceSelector.matchExpressions
+          content:
+            key: kubernetes.io/metadata.name
+            operator: NotIn
+            values:
+              - shield-namespace
+        documentIndex: 1
+      - equal:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].clientConfig.service.namespace
+          value: "shield-namespace"
+        documentIndex: 1
+      - equal:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].clientConfig.service.name
+          value: "shield-release-cluster"
+        documentIndex: 1
+      - equal:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].clientConfig.service.path
+          value: "/validate"
+        documentIndex: 1
+      - equal:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].clientConfig.service.port
+          value: 1234
+        documentIndex: 1
+
+  - it: Admission Control AdmissionRegistration (Deny on Error)
+    set:
+      features:
+        admission_control:
+          enabled: true
+          deny_on_error: true
+    asserts:
+      - hasDocuments:
+          count: 2
+      - containsDocument:
+          kind: ValidatingWebhookConfiguration
+          apiVersion: admissionregistration.k8s.io/v1
+          name: shield-release-cluster-admission-control
+        documentIndex: 1
+      - exists:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")]
+        documentIndex: 1
+      - equal:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].failurePolicy
+          value: "Fail"
+        documentIndex: 1
+
+
+  - it: Audit Exclude Namespaces
+    set:
+      features:
+        detections:
+          kubernetes_audit:
+            enabled: true
+            excluded_namespaces:
+              - kube-system
+              - kube-public
+    asserts:
+      - hasDocuments:
+          count: 2
+      - containsDocument:
+          kind: ValidatingWebhookConfiguration
+          apiVersion: admissionregistration.k8s.io/v1
+          name: shield-release-cluster-audit
+        documentIndex: 1
+      - exists:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")]
+        documentIndex: 1
+      - exists:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].namespaceSelector
+        documentIndex: 1
+      - contains:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].namespaceSelector.matchExpressions
+          content:
+            key: kubernetes.io/metadata.name
+            operator: NotIn
+            values:
+              - kube-system
+              - kube-public
+        documentIndex: 1
+
+  - it: Admission Control Exclude Namespaces
+    set:
+      features:
+        admission_control:
+          enabled: true
+          excluded_namespaces:
+            - kube-system
+            - kube-public
+    asserts:
+      - hasDocuments:
+          count: 2
+      - containsDocument:
+          kind: ValidatingWebhookConfiguration
+          apiVersion: admissionregistration.k8s.io/v1
+          name: shield-release-cluster-admission-control
+        documentIndex: 1
+      - exists:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")]
+        documentIndex: 1
+      - exists:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].namespaceSelector
+        documentIndex: 1
+      - contains:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].namespaceSelector.matchExpressions
+          content:
+            key: kubernetes.io/metadata.name
+            operator: NotIn
+            values:
+              - shield-namespace # The current namespace is always excluded
+              - kube-system
+              - kube-public
+        documentIndex: 1

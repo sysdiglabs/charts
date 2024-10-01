@@ -1,0 +1,878 @@
+suite: Host - Configmap [dragent.yaml]
+templates:
+  - templates/host/configmap.yaml
+release:
+  name: release-name
+  namespace: shield-namespace
+values:
+  - ../values/base.yaml
+kubernetesProvider:
+  scheme:
+    "v1/Secret":
+      gvr:
+        version: "v1"
+        resource: "secrets"
+      namespaced: true
+  objects:
+    - apiVersion: v1
+      kind: Secret
+      metadata:
+        name: proxy-without-credentials-http-protocol
+        namespace: shield-namespace
+      data:
+        http_proxy: aHR0cDovL3Byb3h5LWV4aXN0aW5nLmV4YW1wbGUuY29tOjgwODA= # http://proxy-existing.example.com:8080
+        https_proxy: aHR0cDovL3Byb3h5LWV4aXN0aW5nLmV4YW1wbGUuY29tOjgwODA= # http://proxy-existing.example.com:8080
+    - apiVersion: v1
+      kind: Secret
+      metadata:
+        name: proxy-with-credentials-http-protocol
+        namespace: shield-namespace
+      data:
+        http_proxy: aHR0cDovL3VzZXJleGlzdGluZzpwYXNzd29yZGV4aXN0aW5nQHByb3h5LWV4aXN0aW5nLmV4YW1wbGUuY29tOjgwODA= # http://userexisting:passwordexisting@proxy-existing.example.com:8080
+        https_proxy: aHR0cDovL3VzZXJleGlzdGluZzpwYXNzd29yZGV4aXN0aW5nQHByb3h5LWV4aXN0aW5nLmV4YW1wbGUuY29tOjgwODA= # http://userexisting:passwordexisting@proxy-existing.example.com:8080
+    - apiVersion: v1
+      kind: Secret
+      metadata:
+        name: proxy-without-credentials-https-protocol
+        namespace: shield-namespace
+      data:
+        http_proxy: aHR0cHM6Ly9wcm94eS1leGlzdGluZy5leGFtcGxlLmNvbTo4MDgw # https://proxy-existing.example.com:8080
+        https_proxy: aHR0cHM6Ly9wcm94eS1leGlzdGluZy5leGFtcGxlLmNvbTo4MDgw # https://proxy-existing.example.com:8080
+    - apiVersion: v1
+      kind: Secret
+      metadata:
+        name: proxy-with-credentials-https-protocol
+        namespace: shield-namespace
+      data:
+        http_proxy: aHR0cHM6Ly91c2VyZXhpc3Rpbmc6cGFzc3dvcmRleGlzdGluZ0Bwcm94eS1leGlzdGluZy5leGFtcGxlLmNvbTo4MDgw # https://userexisting:passwordexisting@proxy-existing.example.com:8080
+        https_proxy: aHR0cHM6Ly91c2VyZXhpc3Rpbmc6cGFzc3dvcmRleGlzdGluZ0Bwcm94eS1leGlzdGluZy5leGFtcGxlLmNvbTo4MDgw # https://userexisting:passwordexisting@proxy-existing.example.com:8080
+tests:
+  - it: No Proxy
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+      - notExists:
+          path: data["dragent.yaml"].http_proxy
+
+  - it: With Only HTTP Proxy (http protocol)
+    set:
+      proxy:
+        http_proxy: "http://proxy.example.com:8080"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              proxy_host: proxy.example.com
+              proxy_port: "8080"
+              ssl: false
+
+  - it: With Only HTTP Proxy (http protocol) [Existing Secret]
+    set:
+      proxy:
+        http_proxy_existing_secret: "proxy-without-credentials-http-protocol"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              proxy_host: proxy-existing.example.com
+              proxy_port: "8080"
+              ssl: false
+
+  - it: With Only HTTP Proxy (http protocol + authentication)
+    set:
+      proxy:
+        http_proxy: "http://user:password@proxy.example.com:8080"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              proxy_host: proxy.example.com
+              proxy_password: password
+              proxy_port: "8080"
+              proxy_user: user
+              ssl: false
+
+  - it: With Only HTTP Proxy (http protocol + authentication) [Existing Secret]
+    set:
+      proxy:
+        http_proxy_existing_secret: "proxy-with-credentials-http-protocol"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              proxy_host: proxy-existing.example.com
+              proxy_password: passwordexisting
+              proxy_port: "8080"
+              proxy_user: userexisting
+              ssl: false
+
+  - it: With Only HTTP Proxy (https protocol)
+    set:
+      proxy:
+        http_proxy: "https://proxy.example.com:8080"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              proxy_host: proxy.example.com
+              proxy_port: "8080"
+              ssl: true
+
+  - it: With Only HTTP Proxy (https protocol) [Existing Secret]
+    set:
+      proxy:
+        http_proxy_existing_secret: "proxy-without-credentials-https-protocol"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              proxy_host: proxy-existing.example.com
+              proxy_port: "8080"
+              ssl: true
+
+  - it: With Only HTTP Proxy (https protocol + authentication)
+    set:
+      proxy:
+        http_proxy: "https://user:password@proxy.example.com:8080"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              proxy_host: proxy.example.com
+              proxy_password: password
+              proxy_port: "8080"
+              proxy_user: user
+              ssl: true
+
+  - it: With Only HTTP Proxy (https protocol + authentication) [Existing Secret]
+    set:
+      proxy:
+        http_proxy_existing_secret: "proxy-with-credentials-https-protocol"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              proxy_host: proxy-existing.example.com
+              proxy_password: passwordexisting
+              proxy_port: "8080"
+              proxy_user: userexisting
+              ssl: true
+
+  - it: With Only HTTPS Proxy (http protocol)
+    set:
+      proxy:
+        https_proxy: "http://proxy.example.com:8080"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              proxy_host: proxy.example.com
+              proxy_port: "8080"
+              ssl: false
+
+  - it: With Only HTTPS Proxy (http protocol) [Existing Secret]
+    set:
+      proxy:
+        https_proxy_existing_secret: "proxy-without-credentials-http-protocol"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              proxy_host: proxy-existing.example.com
+              proxy_port: "8080"
+              ssl: false
+
+  - it: With Only HTTPS Proxy (http protocol + authentication)
+    set:
+      proxy:
+        https_proxy: "http://user:password@proxy.example.com:8080"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              proxy_host: proxy.example.com
+              proxy_password: password
+              proxy_port: "8080"
+              proxy_user: user
+              ssl: false
+
+  - it: With Only HTTPS Proxy (http protocol + authentication) [Existing Secret]
+    set:
+      proxy:
+        https_proxy_existing_secret: "proxy-with-credentials-http-protocol"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              proxy_host: proxy-existing.example.com
+              proxy_password: passwordexisting
+              proxy_port: "8080"
+              proxy_user: userexisting
+              ssl: false
+
+  - it: With Only HTTPS Proxy (https protocol)
+    set:
+      proxy:
+        https_proxy: "https://proxy.example.com:8080"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              proxy_host: proxy.example.com
+              proxy_port: "8080"
+              ssl: true
+
+  - it: With Only HTTPS Proxy (https protocol) [Existing Secret]
+    set:
+      proxy:
+        https_proxy_existing_secret: "proxy-without-credentials-https-protocol"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              proxy_host: proxy-existing.example.com
+              proxy_port: "8080"
+              ssl: true
+
+  - it: With Only HTTPS Proxy (https protocol + authentication)
+    set:
+      proxy:
+        https_proxy: "https://user:password@proxy.example.com:8080"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              proxy_host: proxy.example.com
+              proxy_password: password
+              proxy_port: "8080"
+              proxy_user: user
+              ssl: true
+
+  - it: With Only HTTP Proxy (https protocol + authentication) [Existing Secret]
+    set:
+      proxy:
+        https_proxy_existing_secret: "proxy-with-credentials-https-protocol"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              proxy_host: proxy-existing.example.com
+              proxy_password: passwordexisting
+              proxy_port: "8080"
+              proxy_user: userexisting
+              ssl: true
+
+  - it: With HTTP and HTTPS Proxy (http protocol + authentication)
+    set:
+      proxy:
+        http_proxy: "https://proxy.example.com:8080"
+        https_proxy: "http://user:password@proxy.example.com:8080"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              proxy_host: proxy.example.com
+              proxy_password: password
+              proxy_port: "8080"
+              proxy_user: user
+              ssl: false
+
+  - it: With HTTP and HTTPS Proxy (http protocol + authentication) [Existing Secret]
+    set:
+      proxy:
+        http_proxy_existing_secret: "proxy-without-credentials-http-protocol"
+        https_proxy_existing_secret: "proxy-with-credentials-http-protocol"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              proxy_host: proxy-existing.example.com
+              proxy_password: passwordexisting
+              proxy_port: "8080"
+              proxy_user: userexisting
+              ssl: false
+
+  - it: With HTTP and HTTPS Proxy (https protocol + authentication)
+    set:
+      proxy:
+        http_proxy: "http://proxy.example.com:8080"
+        https_proxy: "https://user:password@proxy.example.com:8080"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              proxy_host: proxy.example.com
+              proxy_password: password
+              proxy_port: "8080"
+              proxy_user: user
+              ssl: true
+
+  - it: With HTTP and HTTPS Proxy (https protocol + authentication) [Existing Secret]
+    set:
+      proxy:
+        http_proxy_existing_secret: "proxy-without-credentials-https-protocol"
+        https_proxy_existing_secret: "proxy-with-credentials-https-protocol"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              proxy_host: proxy-existing.example.com
+              proxy_password: passwordexisting
+              proxy_port: "8080"
+              proxy_user: userexisting
+              ssl: true
+
+  - it: Test dict conversions
+    set:
+        host:
+            additional_settings:
+                long_int: 9545013498239122
+                long_float: 95.12345678912322
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            long_float: 95.12345678912322
+            long_int: 9545013498239122
+
+  - it: Set API endpoint
+    set:
+      sysdig_endpoint:
+        api_url: "https://api.example.com"
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            sysdig_api_endpoint: https://api.example.com
+
+  - it: All features disabled by default
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            app_checks_enabled: false
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            audit_tap:
+              enabled: false
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            drift_control:
+              enabled: false
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            jmx:
+              enabled: false
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            live_logs:
+              enabled: false
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            local_forwarder:
+              enabled: false
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            malware_control:
+              enabled: false
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            network_topology:
+              enabled: false
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            prometheus:
+              enabled: false
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            secure_audit_streams:
+              enabled: false
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            statsd:
+              enabled: false
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            sysdig_captures_enabled: false
+
+  - it: Enable App Checks
+    set:
+      features:
+        monitoring:
+          app_checks:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            app_checks_enabled: true
+
+  - it: Enable Audit Tap
+    set:
+      features:
+        investigations:
+          audit_tap:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            audit_tap:
+              enabled: true
+
+  - it: Enable Drift Control
+    set:
+      features:
+        detections:
+          drift_control:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            drift_control:
+              enabled: true
+
+  - it: Enable JMX
+    set:
+      features:
+        monitoring:
+          java_management_extensions:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            jmx:
+              enabled: true
+
+  - it: Enable Live Logs
+    set:
+      features:
+        investigations:
+          live_logs:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            live_logs:
+              enabled: true
+
+  - it: Enable Local Forwarder
+    set:
+      features:
+        investigations:
+          event_forwarder:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            local_forwarder:
+              enabled: true
+
+  - it: Enable Malware Control
+    set:
+      features:
+        detections:
+          malware_control:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            malware_control:
+              enabled: true
+
+  - it: Enable Network Security
+    set:
+      features:
+        investigations:
+          network_security:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            network_topology:
+              enabled: true
+
+  - it: Enable Prometheus
+    set:
+      features:
+        monitoring:
+          prometheus:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            prometheus:
+              enabled: true
+
+  - it: Enable Secure Audit Streams
+    set:
+      features:
+        investigations:
+          activity_audit:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            secure_audit_streams:
+              enabled: true
+
+  - it: Enable StatsD
+    set:
+      features:
+        monitoring:
+          statsd:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            statsd:
+              enabled: true
+
+  - it: Enable Captures
+    set:
+      features:
+        investigations:
+          captures:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            sysdig_captures_enabled: true
+
+  - it: Ensure Host Scanner root FS path is set
+    set:
+      features:
+        vulnerability_management:
+          host_vulnerability_management:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            host_scanner:
+              host_fs_mount_path: /host
+
+  - it: Manually specified Host Scanner root FS path
+    set:
+      features:
+        vulnerability_management:
+          host_vulnerability_management:
+            enabled: true
+      host:
+        additional_settings:
+          host_scanner:
+            host_fs_mount_path: /mnt
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            host_scanner:
+              host_fs_mount_path: /mnt
+
+  - it: Tags
+    set:
+      cluster_config:
+        tags:
+          agentTag1: agentTagValue1
+          agentTag2: agentTagValue2
+          AgentTag3: AgentTagValue3
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            tags: AgentTag3:AgentTagValue3,agentTag1:agentTagValue1,agentTag2:agentTagValue2

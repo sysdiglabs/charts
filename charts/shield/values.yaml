@@ -1,0 +1,405 @@
+cluster_config:
+  # The name of the cluster
+  name:
+  # The domain of the cluster
+  cluster_domain: cluster.local
+  # The type of the cluster (Accepted Values: gke, gke-autopilot, other)
+  cluster_type: other
+  # The root namespace of the cluster
+  root_namespace: kube-system
+  # Tags you want to apply to the metadata sent to the Sysdig Backend.
+  tags: {}
+
+sysdig_endpoint:
+  # The region where the Sysdig Secure instance is located
+  region: custom
+  # The URL of the Sysdig Secure API (required only when region is custom)
+  api_url:
+  collector:
+    # The hostname of the Sysdig Secure collector (required only when region is custom)
+    host:
+    # The port of the Sysdig Secure collector (required only when region is custom)
+    port:
+  # The access key for the Sysdig Secure instance
+  access_key:
+  # The access key for the Sysdig Secure instance (existing secret)
+  access_key_existing_secret:
+  # The API token for the Sysdig Secure instance
+  secure_api_token:
+  # The API token for the Sysdig Secure instance (existing secret)
+  secure_api_token_existing_secret:
+
+# Features
+
+features:
+  admission_control:
+    # Enable the admission control feature
+    enabled: false
+    # Deny the admission of the pod if an error occurs
+    deny_on_error: false
+    # Enable the dry run mode
+    dry_run: true
+    # The timeout for the admission control feature
+    timeout: 10
+    # The port that will be used to expose admission control endpoints
+    http_port: 8443
+    # The list of namespaces that will be excluded from the admission control
+    excluded_namespaces: []
+    container_vulnerability_management:
+      # Enable the container vulnerability management feature on the admission control
+      enabled: false
+
+  kubernetes_metadata:
+    # Enable the Kubernetes Metadata feature on cluster shield
+    enabled: false
+
+  posture:
+    host_posture:
+      enabled: false
+    cluster_posture:
+      # Enable the posture feature on cluster shield
+      enabled: false
+  vulnerability_management:
+    host_vulnerability_management:
+      enabled: false
+    container_vulnerability_management:
+      # Enable the container vulnerability management feature on cluster shield
+      enabled: false
+      local_cluster:
+        # Restrict access to specific Docker secrets when Cluster Scanner is running.
+        # The default behavior is listing all secrets.
+        registry_secrets: []
+        # - namespace: namespace1
+        #   secrets:
+        #     - secret1
+        #     - secret2
+        # - namespace: namespace2
+        #   secrets:
+        #     - secret3
+        #     - secret4
+      # Define if the platform services are enabled
+      platform_services_enabled: true
+      registry_ssl:
+        # If set to false it allows insecure connections to registries,
+        # Such as for registries with self-signed or private certificates.
+        verify: true
+    in_use:
+      # Allows to retrieve the list of running packages.
+      enabled: false
+      # Allows to store the list of running packages to Sysdig backend.
+      integration_enabled: false
+  detections:
+    drift_control:
+      enabled: false
+    malware_control:
+      enabled: false
+    ml_policies:
+      enabled: false
+    kubernetes_audit:
+      # Enable the Kubernetes Audit feature on cluster shield
+      enabled: false
+      # The timeout for the audit feature
+      timeout: 10
+      # The port that will be used to expose the audit endpoints
+      http_port: 6443
+      # The list of namespaces that will be excluded from the audit feature
+      excluded_namespaces: []
+  investigations:
+    activity_audit:
+      enabled: false
+    live_logs:
+      enabled: false
+    network_security:
+      enabled: false
+    audit_tap:
+      enabled: false
+    captures:
+      enabled: false
+    event_forwarder:
+      enabled: false
+  responding:
+    rapid_response:
+      enabled: false
+  monitoring:
+    app_checks:
+      enabled: false
+    java_management_extensions:
+      enabled: false
+    prometheus:
+      enabled: false
+    statsd:
+      enabled: false
+
+host:
+  # The driver to use for the host agent (Accepted Values: kmod, legacy_ebpf, universal_ebpf)
+  driver: kmod
+  # Additional settings to be passed to the host shield (overrides the helm generated settings)
+  additional_settings: {}
+  image:
+    # The registry where the host shield images are stored
+    registry: quay.io
+    # The repository where the host shield images are stored
+    repository: sysdig
+    # The image name for the host shield kmodule drive
+    kmodule_name: agent-kmodule
+    # The image name for the host shield
+    shield_name: agent-slim
+    # The tag for the host shield images
+    tag: 13.4.0
+    # The pull policy for the host shield images
+    pull_policy: IfNotPresent
+    # The pull secrets for the host shield images
+    pull_secrets: []
+  priority_class:
+    # Create a priority class for the host shield
+    create: false
+    # The name of the priority class (if create is set to false, this will be used as the name of the existing priority class)
+    name:
+    # The value of the priority class
+    value: 10
+    # The labels for the priority class
+    labels: {}
+    # The annotations for the priority class
+    annotations: {}
+  # Sets the host shield to run in privileged mode
+  privileged: true
+  rbac:
+    # Create the RBAC resources for the host shield
+    create: true
+    # The name of the service account for the host shield (if create is set to false, this will be used as the name of the existing service account)
+    service_account_name:
+    # The labels for the service account
+    labels: {}
+    # The annotations for the service account
+    annotations: {}
+  resources:
+    kmodule:
+      limits:
+        # The CPU limit for the kmodule
+        cpu: 1000m
+        # The memory limit for the kmodule
+        memory: 1Gi
+      requests:
+        # The CPU request for the kmodule
+        cpu: 250m
+        # The memory request for the kmodule
+        memory: 384Mi
+    shield:
+      limits:
+        # The CPU limit for the host shield
+        cpu: 1000m
+        # The memory limit for the host shield
+        memory: 1Gi
+      requests:
+        # The CPU request for the host shield
+        cpu: 250m
+        # The memory request for the host shield
+        memory: 384Mi
+  # The annotations for the host shield workloads
+  workload_annotations: {}
+  # The labels for the host shield workloads
+  workload_labels: {}
+  # The annotations for the host shield pods
+  pod_annotations: {}
+  # The labels for the host shield pods
+  pod_labels: {}
+  # The node selector for the host shield
+  node_selector: {}
+  # The tolerations for the host shield
+  tolerations: []
+  # The affinity for the host shield
+  affinity: {}
+  probes:
+    readiness:
+      # The readiness probe initial delay
+      initialDelaySeconds: 90
+      # The readiness probe period
+      periodSeconds: 10
+      # The readiness probe failure threshold
+      failureThreshold: 9
+    liveness:  # TODO: Currently host does not have liveness probe. Should we add it?
+      # The liveness probe initial delay
+      initialDelaySeconds: 90
+      # The liveness probe period
+      periodSeconds: 10
+      # The readiness probe failure threshold
+      failureThreshold: 9
+  update_strategy:
+    # The update strategy
+    type: RollingUpdate
+    rollingUpdate: {}
+
+cluster:
+  image:
+    # The registry where the cluster shield image is stored
+    registry: quay.io
+    # The repository where the cluster shield image is stored
+    repository: sysdig/cluster-shield
+    # The tag for the cluster shield image
+    tag: 1.4.0-rc2
+    # The pull policy for the cluster shield image
+    pull_policy: IfNotPresent
+    # The pull secrets for the cluster shield image
+    pull_secrets: []
+  # The mode in which the cluster shield should run (Accepted Values: single-process, multi-process)
+  run_mode: multi-process
+  priority_class:
+    # Create a priority class for the cluster shield
+    create: false
+    # The name of the priority class (if create is set to false, this will be used as the name of the existing priority class)
+    name:
+    # The value of the priority class
+    value: 10
+    # The labels for the priority class
+    labels: {}
+    # The annotations for the priority class
+    annotations: {}
+  rbac:
+    # Create the RBAC resources for the cluster shield
+    create: true
+    # The name of the service account for the cluster shield (if create is set to false, this will be used as the name of the existing service account)
+    service_account_name:
+    # The labels for the service account
+    labels: {}
+    # The annotations for the service account
+    annotations: {}
+  admissionregistration:
+    # Create the admissionregistration resources for the cluster shield
+    create: true
+  tls_certificates:
+    # Create the TLS certificates for the cluster shield
+    create: true
+    # The name of the secret that contains the TLS certificates
+    secret_name:
+  resources:
+    requests:
+      # The CPU request for the cluster shield
+      cpu: 500m
+      # The memory request for the cluster shield
+      memory: 512Mi
+    limits:
+      # The CPU limit for the cluster shield
+      cpu: 1500m
+      # The memory limit for the cluster shield
+      memory: 1536Mi
+  # The annotations for the cluster shield workloads
+  workload_annotations: {}
+  # The labels for the cluster shield workloads
+  workload_labels: {}
+  # The annotations for the cluster shield pods
+  pod_annotations: {}
+  # The labels for the cluster shield pods
+  pod_labels: {}
+  # The node selector for the cluster shield
+  node_selector: {}
+  # The tolerations for the cluster shield
+  tolerations: []
+  # The affinity for the cluster shield
+  affinity: {}
+  # Additional settings to be passed to the cluster shield (overrides the helm generated settings)
+  additional_settings:
+    log_level: info
+    monitoring_port: 8080
+  # Automatically adds the Prometheus annotations to the Cluster Shield pods
+  enable_prometheus_scraping: true
+  probes:
+    readiness:
+      # The readiness probe initial delay
+      initialDelaySeconds: 10
+      # The readiness probe period
+      periodSeconds: 5
+      # The readiness probe failure threshold
+      failureThreshold: 9
+    liveness:
+      # The liveness probe initial delay
+      initialDelaySeconds: 5
+      # The liveness probe period
+      periodSeconds: 5
+      # The readiness probe failure threshold
+      failureThreshold: 9
+  # The number of replicas for the cluster shield
+  replica_count: 2
+  update_strategy:
+    # The update strategy
+    type: RollingUpdate
+    rollingUpdate: {}
+
+  # Specifies if Cluster Shield should be started in hostNetwork mode.
+  # This field is required if you are using a custom CNI where the control plane nodes are unable to initiate
+  # network connections to the pods, for example, using Calico CNI plugin on EKS.
+  host_network: false
+
+  # Define Cluster Shield Pods DNS Policy
+  dns_policy:
+
+ssl:
+  # Enable SSL verification
+  verify: true
+  ca:
+    # For outbound connections (secure backend, proxy,...)
+    # A PEM-encoded x509 certificate.  This can also be a bundle with multiple certificates.
+    certs: []
+    # Example of certificate
+    # certs:
+    #   - |
+    #       -----BEGIN CERTIFICATE-----
+    #       MIIDEzCCAfugAwIBAgIQKiv9U+KxPJzu1adXwC06RzANBgkqhkiG9w0BAQsFADAU
+    #       MRIwEAYDVQQDEwloYXJib3ItY2EwHhcNMjIwMjIzMDY1NjExWhcNMjMwMjIzMDY1
+    #       NjExWjAUMRIwEAYDVQQDEwloYXJib3ItY2EwggEiMA0GCSqGSIb3DQEBAQUAA4IB
+    #       MMNlTAQ9fvdNOTzZntye0PQYR5SR13E=
+    #       -----END CERTIFICATE-----
+    #   - |
+    #       -----BEGIN CERTIFICATE-----
+    #       MIIDEzCCAfugAwIBAgIQKiv9U+KxPJzu1adXwC06RzANBgkqhkiG9w0BAQsFADAU
+    #       MRIwEAYDVQQDEwloYXJib3ItY2EwHhcNMjIwMjIzMDY1NjExWhcNMjMwMjIzMDY1
+    #       NjExWjAUMRIwEAYDVQQDEwloYXJib3ItY2EwggEiMA0GCSqGSIb3DQEBAQUAA4IB
+    #       MMNlTAQ9fvdNOTzZntye0PQYRTTS34D=
+    #       -----END CERTIFICATE-----
+
+    # Filename that is used when creating the secret.  Required if cert is provided.
+    key_name:
+    # Provide the name of an existing Secret that contains the CA required
+    existing_ca_secret:
+    # Provide the filename that is defined inside the existing Secret
+    existing_ca_secret_key_name:
+
+proxy:
+  # HTTP proxy to use for all HTTP requests
+  http_proxy:
+  # Provide the name of an existing Secret that contains the HTTP proxy
+  http_proxy_existing_secret:
+  # HTTPS proxy to use for all HTTPS requests
+  https_proxy:
+  # Provide the name of an existing Secret that contains the HTTPS proxy
+  https_proxy_existing_secret:
+  # No proxy hosts and ips
+  no_proxy:
+  # Provide the name of an existing Secret that contains the no proxy hosts
+  no_proxy_existing_secret:
+
+# The annotations for the all the workloads
+workload_annotations: {}
+# The labels for the all the workloads
+workload_labels: {}
+# The annotations for the all the pods
+pod_annotations: {}
+# The labels for the all the pods
+pod_labels: {}
+# The node selector for the all the workloads
+node_selector: {}
+# The tolerations for the all the workloads
+tolerations: []
+# The affinity for the all the workloads
+affinity: {}
+
+name_override:
+fullname_override:
+
+# Optional parameter used to check the compatibility of shield
+# component versions with the on-premised backend version.
+#
+# If you are running an on-prem version of the Sysdig backend, you MUST set
+# this parameter with the version of Sysdig backend you are using.
+#
+# If you are runinng on SaaS, do NOT provide this parameter.
+on_prem_version:

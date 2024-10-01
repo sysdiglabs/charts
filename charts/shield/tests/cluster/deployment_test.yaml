@@ -1,0 +1,1178 @@
+suite: Cluster - Deployment
+templates:
+  - templates/cluster/deployment.yaml
+release:
+  name: release-name
+  namespace: shield-namespace
+values:
+  - ../values/base.yaml
+tests:
+  - it: Default image
+    set:
+      cluster:
+        image:
+          tag: 1.0.0
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].image
+          value: quay.io/sysdig/cluster-shield:1.0.0
+
+  - it: Custom image
+    set:
+      cluster:
+        image:
+          registry: myregistry.io
+          repository: ext/sysdig/cluster-shield
+          tag: 1.4.0
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].image
+          value: myregistry.io/ext/sysdig/cluster-shield:1.4.0
+
+  - it: Does not contain proxy environment variables
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - notExists:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTP_PROXY")]
+      - notExists:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTPS_PROXY")]
+      - notExists:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "NO_PROXY")]
+
+  - it: Does not set proxy environment variables when only No Proxy is specified
+    set:
+      proxy:
+        no_proxy: "localhost"
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - notExists:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTP_PROXY")]
+      - notExists:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTPS_PROXY")]
+      - notExists:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "NO_PROXY")]
+
+  - it: Does not set proxy environment variables when only No Proxy Existing Secret is specified
+    set:
+      proxy:
+        no_proxy_existing_secret: "no-proxy-existing-secret"
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - notExists:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTP_PROXY")]
+      - notExists:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTPS_PROXY")]
+      - notExists:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "NO_PROXY")]
+
+  - it: Does set proxy environment variables when only HTTP Proxy is specified
+    set:
+      proxy:
+        http_proxy: "http://proxy.example.com:8080"
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - exists:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTP_PROXY")]
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTP_PROXY")].valueFrom.secretKeyRef.name
+          value: release-name-shield-common-proxy
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTP_PROXY")].valueFrom.secretKeyRef.key
+          value: http_proxy
+      - exists:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTPS_PROXY")]
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTPS_PROXY")].valueFrom.secretKeyRef.name
+          value: release-name-shield-common-proxy
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTPS_PROXY")].valueFrom.secretKeyRef.key
+          value: https_proxy
+      - exists:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "NO_PROXY")]
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "NO_PROXY")].valueFrom.secretKeyRef.name
+          value: release-name-shield-common-proxy
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "NO_PROXY")].valueFrom.secretKeyRef.key
+          value: no_proxy
+
+  - it: Does set proxy environment variables when only HTTP Proxy Existing Secret is specified
+    set:
+      proxy:
+        http_proxy_existing_secret: "http-proxy-existing-secret"
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - exists:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTP_PROXY")]
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTP_PROXY")].valueFrom.secretKeyRef.name
+          value: http-proxy-existing-secret
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTP_PROXY")].valueFrom.secretKeyRef.key
+          value: http_proxy
+      - exists:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTPS_PROXY")]
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTPS_PROXY")].valueFrom.secretKeyRef.name
+          value: release-name-shield-common-proxy
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTPS_PROXY")].valueFrom.secretKeyRef.key
+          value: https_proxy
+      - exists:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "NO_PROXY")]
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "NO_PROXY")].valueFrom.secretKeyRef.name
+          value: release-name-shield-common-proxy
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "NO_PROXY")].valueFrom.secretKeyRef.key
+          value: no_proxy
+
+  - it: Default environment variables
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env
+          content:
+            name: KUBE_POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env
+          content:
+            name: KUBE_POD_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
+      - notContains:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env
+          content:
+            name: KUBE_SERVICE_NAME
+            value: release-name-shield-cluster-container-vulnerability-management
+          any: true
+
+  - it: Default liveness probe
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].livenessProbe
+          value:
+            httpGet:
+              path: /healthz
+              port: 8080
+            failureThreshold: 9
+            initialDelaySeconds: 5
+            periodSeconds: 5
+
+  - it: Custom liveness probe
+    set:
+      cluster:
+        probes:
+          liveness:
+            failureThreshold: 1
+            initialDelaySeconds: 2
+            periodSeconds: 3
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].livenessProbe
+          value:
+            httpGet:
+              path: /healthz
+              port: 8080
+            failureThreshold: 1
+            initialDelaySeconds: 2
+            periodSeconds: 3
+
+  - it: Default readiness probe
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].readinessProbe
+          value:
+            httpGet:
+              path: /healthz
+              port: 8080
+            failureThreshold: 9
+            initialDelaySeconds: 10
+            periodSeconds: 5
+
+  - it: Custom readiness probe
+    set:
+      cluster:
+        probes:
+          readiness:
+            failureThreshold: 1
+            initialDelaySeconds: 2
+            periodSeconds: 3
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].readinessProbe
+          value:
+            httpGet:
+              path: /healthz
+              port: 8080
+            failureThreshold: 1
+            initialDelaySeconds: 2
+            periodSeconds: 3
+
+  - it: Default workload labels
+    set:
+      cluster:
+        image:
+          tag: 1.1.1
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - isSubset:
+          path: metadata.labels
+          content:
+            app.kubernetes.io/instance: release-name
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: shield
+            app.kubernetes.io/version: 1.0.0
+            sysdig/component: cluster
+            sysdig/component-version: 1.1.1
+
+  - it: Deployment with custom component labels
+    set:
+      cluster:
+        image:
+          tag: 1.1.1
+        workload_labels:
+          my-component-label1-key: my-component-label1-value
+          my-component-label2-key: my-component-label2-value
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - isSubset:
+          path: metadata.labels
+          content:
+            app.kubernetes.io/instance: release-name
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: shield
+            app.kubernetes.io/version: 1.0.0
+            my-component-label1-key: my-component-label1-value
+            my-component-label2-key: my-component-label2-value
+            sysdig/component: cluster
+            sysdig/component-version: 1.1.1
+
+  - it: Deployment with custom component labels and global labels
+    set:
+      workload_labels:
+        my-global-label1-key: my-global-label1-value
+        my-global-label2-key: my-global-label2-value
+      cluster:
+        image:
+          tag: 1.1.1
+        workload_labels:
+          my-component-label1-key: my-component-label1-value
+          my-component-label2-key: my-component-label2-value
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - isSubset:
+          path: metadata.labels
+          content:
+            app.kubernetes.io/instance: release-name
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: shield
+            app.kubernetes.io/version: 1.0.0
+            my-component-label1-key: my-component-label1-value
+            my-component-label2-key: my-component-label2-value
+            my-global-label1-key: my-global-label1-value
+            my-global-label2-key: my-global-label2-value
+            sysdig/component: cluster
+            sysdig/component-version: 1.1.1
+
+  - it: Default Image Pull Policy
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].imagePullPolicy
+          value: IfNotPresent
+
+  - it: Custom Image Pull Policy
+    set:
+      cluster:
+        image:
+          pull_policy: Always
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].imagePullPolicy
+          value: Always
+
+  - it: Default Security Context and Run Command
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].securityContext
+          value:
+            allowPrivilegeEscalation: true
+            privileged: true
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].args
+          value: ["run-all-namespaced"]
+
+  - it: Multi-Process Security Context and Run Command
+    set:
+      cluster:
+        run_mode: multi-process
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].securityContext
+          value:
+            allowPrivilegeEscalation: true
+            privileged: true
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].args
+          value: ["run-all-namespaced"]
+
+  - it: Single-Process Security Context and Run Command
+    set:
+      cluster:
+        run_mode: single-process
+    asserts:
+      - notExists:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].securityContext
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].args
+          value: ["run-all"]
+
+  - it: GKE Security Context and Run Command
+    set:
+      cluster_config:
+        cluster_type: gke-autopilot
+    asserts:
+      - notExists:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].securityContext
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].args
+          value: ["run-all"]
+
+  - it: Default workload annotations
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - exists:
+          path: metadata.annotations
+        not: true
+
+  - it: Deployment with custom component annotations
+    set:
+      cluster:
+        workload_annotations:
+          my-component-annotation1-key: my-component-annotation1-value
+          my-component-annotation2-key: my-component-annotation2-value
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - equal:
+          path: metadata.annotations
+          value:
+            my-component-annotation1-key: my-component-annotation1-value
+            my-component-annotation2-key: my-component-annotation2-value
+
+  - it: Deployment with custom component annotations and global annotations
+    set:
+      workload_annotations:
+        my-global-annotation1-key: my-global-annotation1-value
+        my-global-annotation2-key: my-global-annotation2-value
+      cluster:
+        workload_annotations:
+          my-component-annotation1-key: my-component-annotation1-value
+          my-component-annotation2-key: my-component-annotation2-value
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - equal:
+          path: metadata.annotations
+          value:
+            my-global-annotation1-key: my-global-annotation1-value
+            my-global-annotation2-key: my-global-annotation2-value
+            my-component-annotation1-key: my-component-annotation1-value
+            my-component-annotation2-key: my-component-annotation2-value
+
+  - it: Default pod labels
+    set:
+      cluster:
+        image:
+          tag: 1.1.1
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - isSubset:
+          path: spec.template.metadata.labels
+          content:
+            app.kubernetes.io/instance: release-name
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: shield
+            app.kubernetes.io/version: 1.0.0
+            sysdig/component: cluster
+            sysdig/component-version: 1.1.1
+
+  - it: Pod with custom component labels
+    set:
+      cluster:
+        image:
+          tag: 1.1.1
+        pod_labels:
+          my-component-label1-key: my-component-label1-value
+          my-component-label2-key: my-component-label2-value
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - isSubset:
+          path: spec.template.metadata.labels
+          content:
+            app.kubernetes.io/instance: release-name
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: shield
+            app.kubernetes.io/version: 1.0.0
+            my-component-label1-key: my-component-label1-value
+            my-component-label2-key: my-component-label2-value
+            sysdig/component: cluster
+            sysdig/component-version: 1.1.1
+
+  - it: Pod with custom component labels and global labels
+    set:
+      pod_labels:
+        my-global-label1-key: my-global-label1-value
+        my-global-label2-key: my-global-label2-value
+      cluster:
+        image:
+          tag: 1.1.1
+        pod_labels:
+          my-component-label1-key: my-component-label1-value
+          my-component-label2-key: my-component-label2-value
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - isSubset:
+          path: spec.template.metadata.labels
+          content:
+            app.kubernetes.io/instance: release-name
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: shield
+            app.kubernetes.io/version: 1.0.0
+            my-component-label1-key: my-component-label1-value
+            my-component-label2-key: my-component-label2-value
+            my-global-label1-key: my-global-label1-value
+            my-global-label2-key: my-global-label2-value
+            sysdig/component: cluster
+            sysdig/component-version: 1.1.1
+
+  - it: Default pod annotations with prometheus scraping enabled
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - equal:
+          path: spec.template.metadata.annotations
+          value:
+            prometheus.io/path: /metrics
+            prometheus.io/port: "8080"
+            prometheus.io/scrape: "true"
+
+  - it: Default pod annotations with prometheus scraping disabled
+    set:
+      cluster:
+        enable_prometheus_scraping: false
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - equal:
+          path: spec.template.metadata.annotations
+          value: null
+
+  - it: Pod with custom component annotations
+    set:
+      cluster:
+        pod_annotations:
+          my-component-annotation1-key: my-component-annotation1-value
+          my-component-annotation2-key: my-component-annotation2-value
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - equal:
+          path: spec.template.metadata.annotations
+          value:
+            my-component-annotation1-key: my-component-annotation1-value
+            my-component-annotation2-key: my-component-annotation2-value
+            prometheus.io/path: /metrics
+            prometheus.io/port: "8080"
+            prometheus.io/scrape: "true"
+
+  - it: Pod with custom component annotations and global annotations
+    set:
+      pod_annotations:
+        my-global-annotation1-key: my-global-annotation1-value
+        my-global-annotation2-key: my-global-annotation2-value
+      cluster:
+        pod_annotations:
+          my-component-annotation1-key: my-component-annotation1-value
+          my-component-annotation2-key: my-component-annotation2-value
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - equal:
+          path: spec.template.metadata.annotations
+          value:
+            my-global-annotation1-key: my-global-annotation1-value
+            my-global-annotation2-key: my-global-annotation2-value
+            my-component-annotation1-key: my-component-annotation1-value
+            my-component-annotation2-key: my-component-annotation2-value
+            prometheus.io/path: /metrics
+            prometheus.io/port: "8080"
+            prometheus.io/scrape: "true"
+
+  - it: Default pod node_selector
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - exists:
+          path: spec.template.spec.nodeSelector
+        not: true
+
+  - it: Pod with custom component node_selector
+    set:
+      cluster:
+        node_selector:
+          my-component-node-selector1-key: my-component-node-selector1-value
+          my-component-node-selector2-key: my-component-node-selector2-value
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - equal:
+          path: spec.template.spec.nodeSelector
+          value:
+            my-component-node-selector1-key: my-component-node-selector1-value
+            my-component-node-selector2-key: my-component-node-selector2-value
+
+  - it: Pod with custom component node_selector and global node_selector
+    set:
+      node_selector:
+        my-global-node-selector1-key: my-global-node-selector1-value
+        my-global-node-selector2-key: my-global-node-selector2-value
+      cluster:
+        node_selector:
+          my-component-node-selector1-key: my-component-node-selector1-value
+          my-component-node-selector2-key: my-component-node-selector2-value
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - equal:
+          path: spec.template.spec.nodeSelector
+          value:
+            my-global-node-selector1-key: my-global-node-selector1-value
+            my-global-node-selector2-key: my-global-node-selector2-value
+            my-component-node-selector1-key: my-component-node-selector1-value
+            my-component-node-selector2-key: my-component-node-selector2-value
+
+  - it: Default pod affinity
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - exists:
+          path: spec.template.spec.affinity
+        not: true
+
+  - it: Pod with custom component affinity
+    set:
+      cluster:
+        affinity:
+          my-component-affinity1-key: my-component-affinity1-value
+          my-component-affinity2-key: my-component-affinity2-value
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - equal:
+          path: spec.template.spec.affinity
+          value:
+            my-component-affinity1-key: my-component-affinity1-value
+            my-component-affinity2-key: my-component-affinity2-value
+
+  - it: Pod with custom component affinity and global affinity
+    set:
+      affinity:
+        my-global-affinity1-key: my-global-affinity1-value
+        my-global-affinity2-key: my-global-affinity2-value
+      cluster:
+        affinity:
+          my-component-affinity1-key: my-component-affinity1-value
+          my-component-affinity2-key: my-component-affinity2-value
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - equal:
+          path: spec.template.spec.affinity
+          value:
+            my-global-affinity1-key: my-global-affinity1-value
+            my-global-affinity2-key: my-global-affinity2-value
+            my-component-affinity1-key: my-component-affinity1-value
+            my-component-affinity2-key: my-component-affinity2-value
+
+  - it: Default pod tolerations
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - exists:
+          path: spec.template.spec.tolerations
+        not: true
+
+  - it: Pod with custom component tolerations
+    set:
+      cluster:
+        tolerations:
+          - my-component-tolerations1-key: my-component-tolerations1-value
+          - my-component-tolerations2-key: my-component-tolerations2-value
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - equal:
+          path: spec.template.spec.tolerations
+          value:
+            - my-component-tolerations1-key: my-component-tolerations1-value
+            - my-component-tolerations2-key: my-component-tolerations2-value
+
+  - it: Pod with custom component tolerations and global tolerations
+    set:
+      tolerations:
+        - my-global-tolerations1-key: my-global-tolerations1-value
+        - my-global-tolerations2-key: my-global-tolerations2-value
+      cluster:
+        tolerations:
+          - my-component-tolerations1-key: my-component-tolerations1-value
+          - my-component-tolerations2-key: my-component-tolerations2-value
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - equal:
+          path: spec.template.spec.tolerations
+          value:
+            - my-global-tolerations1-key: my-global-tolerations1-value
+            - my-global-tolerations2-key: my-global-tolerations2-value
+            - my-component-tolerations1-key: my-component-tolerations1-value
+            - my-component-tolerations2-key: my-component-tolerations2-value
+
+  - it: Test without Custom CA Settings
+    asserts:
+      - notExists:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "SSL_CERT_FILE")]
+      - notExists:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].volumeMounts[?(@.name == "ca-certs")]
+      - notExists:
+          path: spec.template.spec.volumes[?(@.name == "ca-certs")]
+
+  - it: Test with Custom CA In Values
+    set:
+      ssl:
+        ca:
+          certs:
+            - "test certificate"
+          key_name: "custom-ca-from-values.crt"
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "SSL_CERT_FILE")]
+          value:
+            name: SSL_CERT_FILE
+            value: /etc/sysdig/ca-certs/custom-ca-from-values.crt
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].volumeMounts
+          content:
+            name: ca-certs
+            mountPath: /etc/sysdig/ca-certs/
+            readOnly: true
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: ca-certs
+            secret:
+              secretName: release-name-shield-common-ca
+
+  - it: Test with Custom CA In Existing Secret
+    set:
+      ssl:
+        ca:
+          existing_ca_secret: "fake-secret-name"
+          existing_ca_secret_key_name: "custom-ca-from-secret.crt"
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "SSL_CERT_FILE")]
+          value:
+            name: SSL_CERT_FILE
+            value: /etc/sysdig/ca-certs/custom-ca-from-secret.crt
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].volumeMounts
+          content:
+            name: ca-certs
+            mountPath: /etc/sysdig/ca-certs/
+            readOnly: true
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: ca-certs
+            secret:
+              secretName: fake-secret-name
+
+  - it: Default Monitoring Port
+    asserts:
+      - exists:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "monitoring")]
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "monitoring")].containerPort
+          value: 8080
+
+  - it: Custom Monitoring Port
+    set:
+      cluster:
+        additional_settings:
+          monitoring_port: 8081
+    asserts:
+      - exists:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "monitoring")]
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "monitoring")].containerPort
+          value: 8081
+
+  - it: Default Audit Port
+    set:
+      features:
+        detections:
+          kubernetes_audit:
+            enabled: true
+    asserts:
+      - exists:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "audit")]
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "audit")].containerPort
+          value: 6443
+
+  - it: Custom Audit Port
+    set:
+      features:
+        detections:
+          kubernetes_audit:
+            enabled: true
+            http_port: 6444
+    asserts:
+      - exists:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "audit")]
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "audit")].containerPort
+          value: 6444
+
+  - it: Default Admission Control Port
+    set:
+      features:
+        admission_control:
+          enabled: true
+    asserts:
+      - exists:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "ac")]
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "ac")].containerPort
+          value: 8443
+
+  - it: Custom Admission Control Port
+    set:
+      features:
+        admission_control:
+          enabled: true
+          http_port: 1234
+    asserts:
+      - exists:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "ac")]
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "ac")].containerPort
+          value: 1234
+
+  - it: Default Container Vulnerability Management Port
+    set:
+      features:
+        vulnerability_management:
+          container_vulnerability_management:
+            enabled: true
+    asserts:
+      - exists:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "cvm-nats")]
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "cvm-nats")].containerPort
+          value: 4222
+      - exists:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "cvm-grpc")].containerPort
+        not: true
+
+  - it: Default Admission Controller with Container Vulnerability Management Port
+    set:
+      features:
+        admission_control:
+          enabled: true
+          container_vulnerability_management:
+            enabled: true
+    asserts:
+      - exists:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "cvm-nats")]
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "cvm-nats")].containerPort
+          value: 4222
+      - exists:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "cvm-grpc")].containerPort
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "cvm-grpc")].containerPort
+          value: 9999
+
+  - it: Default Values (only access key)
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env
+          value:
+            - name: KUBE_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: KUBE_POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+      - equal:
+          path: spec.template.spec.volumes
+          value:
+          - name: cluster-shield-config
+            configMap:
+              name: release-name-shield-cluster
+          - name: secret-release-name-shield-common-access-key
+            secret:
+              secretName: release-name-shield-common-access-key
+          - name: secret-release-name-shield-cluster
+            secret:
+              secretName: release-name-shield-cluster
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].volumeMounts
+          value:
+            - mountPath: /etc/sysdig/config/
+              name: cluster-shield-config
+            - name: secret-release-name-shield-common-access-key
+              mountPath: /etc/sysdig/secret-files/release-name-shield-common-access-key
+            - name: secret-release-name-shield-cluster
+              mountPath: /etc/sysdig/secret-files/release-name-shield-cluster
+
+  - it: Default Values (with both access key and secure api token)
+    set:
+      sysdig_endpoint:
+        secure_api_token: "test-secure-api-token"
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env
+          value:
+            - name: KUBE_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: KUBE_POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+      - equal:
+          path: spec.template.spec.volumes
+          value:
+          - name: cluster-shield-config
+            configMap:
+              name: release-name-shield-cluster
+          - name: secret-release-name-shield-common-access-key
+            secret:
+              secretName: release-name-shield-common-access-key
+          - name: secret-release-name-shield-common-secure-api-token
+            secret:
+              secretName: release-name-shield-common-secure-api-token
+          - name: secret-release-name-shield-cluster
+            secret:
+              secretName: release-name-shield-cluster
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].volumeMounts
+          value:
+            - mountPath: /etc/sysdig/config/
+              name: cluster-shield-config
+            - name: secret-release-name-shield-common-access-key
+              mountPath: /etc/sysdig/secret-files/release-name-shield-common-access-key
+            - name: secret-release-name-shield-common-secure-api-token
+              mountPath: /etc/sysdig/secret-files/release-name-shield-common-secure-api-token
+            - name: secret-release-name-shield-cluster
+              mountPath: /etc/sysdig/secret-files/release-name-shield-cluster
+
+  - it: Default Values (with different existing secrets for access key and secure api token)
+    set:
+      sysdig_endpoint:
+        access_key:
+        access_key_existing_secret: "existing-access-key-secret"
+        secure_api_token:
+        secure_api_token_existing_secret: "existing-secure-api-token-secret"
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env
+          value:
+            - name: KUBE_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: KUBE_POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+      - equal:
+          path: spec.template.spec.volumes
+          value:
+          - name: cluster-shield-config
+            configMap:
+              name: release-name-shield-cluster
+          - name: secret-existing-access-key-secret
+            secret:
+              secretName: existing-access-key-secret
+          - name: secret-existing-secure-api-token-secret
+            secret:
+              secretName: existing-secure-api-token-secret
+          - name: secret-release-name-shield-cluster
+            secret:
+              secretName: release-name-shield-cluster
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].volumeMounts
+          value:
+            - mountPath: /etc/sysdig/config/
+              name: cluster-shield-config
+            - name: secret-existing-access-key-secret
+              mountPath: /etc/sysdig/secret-files/existing-access-key-secret
+            - name: secret-existing-secure-api-token-secret
+              mountPath: /etc/sysdig/secret-files/existing-secure-api-token-secret
+            - name: secret-release-name-shield-cluster
+              mountPath: /etc/sysdig/secret-files/release-name-shield-cluster
+
+  - it: Default Values (same existing secrets for access key and secure api token)
+    set:
+      sysdig_endpoint:
+        access_key:
+        access_key_existing_secret: "existing-credential-secret"
+        secure_api_token:
+        secure_api_token_existing_secret: "existing-credential-secret"
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env
+          value:
+            - name: KUBE_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: KUBE_POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+      - equal:
+          path: spec.template.spec.volumes
+          value:
+          - name: cluster-shield-config
+            configMap:
+              name: release-name-shield-cluster
+          - name: secret-existing-credential-secret
+            secret:
+              secretName: existing-credential-secret
+          - name: secret-release-name-shield-cluster
+            secret:
+              secretName: release-name-shield-cluster
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].volumeMounts
+          value:
+            - mountPath: /etc/sysdig/config/
+              name: cluster-shield-config
+            - name: secret-existing-credential-secret
+              mountPath: /etc/sysdig/secret-files/existing-credential-secret
+            - name: secret-release-name-shield-cluster
+              mountPath: /etc/sysdig/secret-files/release-name-shield-cluster
+
+  - it: Container Vulnerability Management Enabled
+    set:
+      features:
+        vulnerability_management:
+          container_vulnerability_management:
+            enabled: true
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env
+          content:
+            name: KUBE_SERVICE_NAME
+            value: release-name-shield-cluster-container-vulnerability-management
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: cluster-shield-tls-certificates-secret
+            secret:
+              secretName: release-name-shield-cluster-tls-certificates
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].volumeMounts
+          content:
+            mountPath: /etc/sysdig/tls-certificates/
+            name: cluster-shield-tls-certificates-secret
+
+  - it: Default Host Network and DNS Policy
+    asserts:
+      - notExists:
+          path: spec.template.spec.hostNetwork
+      - notExists:
+          path: spec.template.spec.dnsPolicy
+
+  - it: Set DNS Policy
+    set:
+      cluster:
+        dns_policy: ClusterFirst
+    asserts:
+      - notExists:
+          path: spec.template.spec.hostNetwork
+      - equal:
+          path: spec.template.spec.dnsPolicy
+          value: ClusterFirst
+
+  - it: Test with Host Network and default DNS Policy
+    set:
+      cluster:
+        host_network: true
+    asserts:
+      - equal:
+          path: spec.template.spec.hostNetwork
+          value: true
+      - equal:
+          path: spec.template.spec.dnsPolicy
+          value: ClusterFirstWithHostNet
+
+  - it: Test with Host Network and DNS Policy
+    set:
+      cluster:
+        host_network: true
+        dns_policy: ClusterFirst
+    asserts:
+      - equal:
+          path: spec.template.spec.hostNetwork
+          value: true
+      - equal:
+          path: spec.template.spec.dnsPolicy
+          value: ClusterFirst
+
+  - it: Replicas with no feature enabled (default value)
+    asserts:
+      - equal:
+          path: spec.replicas
+          value: 0
+
+  - it: Replicas with feature enabled (default value)
+    set:
+      features:
+        detections:
+          kubernetes_audit:
+            enabled: true
+    asserts:
+      - equal:
+          path: spec.replicas
+          value: 2
+
+
+  - it: Replicas with no feature enabled (custom value)
+    set:
+      cluster:
+        replica_count: 5
+    asserts:
+      - equal:
+          path: spec.replicas
+          value: 0
+
+  - it: Replicas with feature enabled (custom value)
+    set:
+      cluster:
+        replica_count: 5
+      features:
+        detections:
+          kubernetes_audit:
+            enabled: true
+    asserts:
+      - equal:
+          path: spec.replicas
+          value: 5

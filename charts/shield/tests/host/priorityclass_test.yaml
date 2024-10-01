@@ -1,0 +1,40 @@
+suite: Host - PriorityClass
+templates:
+  - templates/host/priorityclass.yaml
+release:
+  name: release-name
+  namespace: shield-namespace
+values:
+  - ../values/base.yaml
+tests:
+  - it: Create the the PriorityClass when requested
+    set:
+      host:
+        priority_class:
+          create: true
+          name: my-fancy-priority-class
+          value: 1000
+    asserts:
+      - isKind:
+          of: PriorityClass
+          count: 1
+      - equal:
+          path: metadata.name
+          value: my-fancy-priority-class
+      - equal:
+          path: value
+          value: 1000
+
+  - it: Ensure the PriorityClass is not created when not requested
+    set:
+      host:
+        priority_class:
+          create: false
+    asserts:
+      - hasDocuments:
+        count: 0
+
+  - it: Ensure we do not create a PriorityClass with the default chart values
+    asserts:
+      - hasDocuments:
+        count: 0
