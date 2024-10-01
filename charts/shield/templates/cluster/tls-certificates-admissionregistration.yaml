@@ -1,0 +1,137 @@
+{{- if (include "cluster.tls_certificates.required" .) }}
+{{- $cert := dict -}}
+{{- $existingTlsCertificatesSecret := lookup "v1" "Secret" .Release.Namespace (include "cluster.tls_certificates.secret_name" .) -}}
+{{- if $existingTlsCertificatesSecret -}}
+  {{- $_ := set $cert "Cert" (index $existingTlsCertificatesSecret.data (include "cluster.tls_certificates.cert_file_name" .)) -}}
+  {{- $_ := set $cert "Key" (index $existingTlsCertificatesSecret.data (include "cluster.tls_certificates.private_key_file_name" .)) -}}
+  {{- $_ := set $cert "CACert" (index $existingTlsCertificatesSecret.data (include "cluster.tls_certificates.ca_cert_file_name" .)) -}}
+{{- else -}}
+  {{- if not .Values.cluster.tls_certificates.create }}
+    {{- fail (printf "The TLS Secret '%s' does not exist" .Values.cluster.tls_certificates.secret_name) -}}
+  {{- end -}}
+
+  {{- $dnsNames := (include "cluster.tls_certificates.dns_names" . | fromYamlArray) -}}
+
+  {{- $ca := genCA (include "cluster.fullname" .) 3650 -}}
+  {{- $tlsCert := genSignedCert (include "cluster.fullname" .) (list "127.0.0.1") $dnsNames 3650 $ca -}}
+  {{- $_ := set $cert "Cert" ($tlsCert.Cert | b64enc) -}}
+  {{- $_ := set $cert "Key" ($tlsCert.Key | b64enc) -}}
+  {{- $_ := set $cert "CACert" ($ca.Cert | b64enc) -}}
+{{- end -}}
+{{- if .Values.cluster.tls_certificates.create }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ include "cluster.tls_certificates.secret_name" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "cluster.labels" . | nindent 4 }}
+data:
+  {{ include "cluster.tls_certificates.cert_file_name" . }}: {{ $cert.Cert }}
+  {{ include "cluster.tls_certificates.private_key_file_name" . }}: {{ $cert.Key }}
+  {{ include "cluster.tls_certificates.ca_cert_file_name" . }}: {{ $cert.CACert }}
+{{- end }}
+{{- if and .Values.cluster.admissionregistration.create (include "cluster.audit_enabled" .) }}
+---
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingWebhookConfiguration
+metadata:
+  name: {{ include "cluster.audit_webhook_name" . }}
+  labels:
+    {{- include "cluster.labels" . | nindent 4 }}
+webhooks:
+  - name: audit.secure.sysdig.com
+    {{ with .Values.features.detections.kubernetes_audit.excluded_namespaces }}
+    namespaceSelector:
+      matchExpressions:
+        - key: kubernetes.io/metadata.name
+          operator: NotIn
+          values:
+            {{- range . }}
+            - {{ . }}
+            {{- end }}
+    {{ end }}
+    matchPolicy: Equivalent
+    rules:
+      - apiGroups:
+          - ""
+          - apps
+          - autoscaling
+          - batch
+          - networking.k8s.io
+          - rbac.authorization.k8s.io
+          - extensions
+        apiVersions:
+          - '*'
+        operations:
+          - '*'
+        resources:
+          - '*/*'
+        scope: '*'
+    clientConfig:
+      service:
+        namespace: {{ .Release.Namespace }}
+        name: {{ include "cluster.service_name" . }}
+        path: /k8s-audit
+        port: {{ include "cluster.audit_service_port" . }}
+      caBundle: {{ $cert.CACert }}
+    admissionReviewVersions: ["v1", "v1beta1"]
+    sideEffects: None
+    timeoutSeconds: {{ .Values.features.detections.kubernetes_audit.timeout }}
+    failurePolicy: Ignore
+{{- end }}
+{{- if and .Values.cluster.admissionregistration.create (include "cluster.admission_control_enabled" .) }}
+---
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingWebhookConfiguration
+metadata:
+  name: {{ include "cluster.admission_control_webhook_name" . }}
+  labels:
+    {{- include "cluster.labels" . | nindent 4 }}
+webhooks:
+  - name: vac.secure.sysdig.com
+    namespaceSelector:
+      matchExpressions:
+        - key: kubernetes.io/metadata.name
+          operator: NotIn
+          values:
+            - {{ .Release.Namespace }}
+            {{- range .Values.features.admission_control.excluded_namespaces }}
+            - {{ . }}
+            {{- end }}
+    rules:
+      - apiGroups:
+          - ""
+          - apps
+          - batch
+        apiVersions: [ "v1" ]
+        operations: [ "CREATE", "UPDATE" ]
+        resources:
+          {{- if .Values.features.admission_control.container_vulnerability_management.enabled }}
+          - pods
+          {{- end }}
+          - deployments
+          - replicasets
+          - statefulsets
+          - daemonsets
+          - jobs"
+          - cronjobs
+        scope: Namespaced
+    clientConfig:
+      service:
+        namespace: {{ .Release.Namespace }}
+        name: {{ include "cluster.service_name" . }}
+        path: /validate
+        port: {{ include "cluster.admission_control_service_port" . }}
+      caBundle: {{ $cert.CACert }}
+    admissionReviewVersions: ["v1", "v1beta1"]
+    sideEffects: None
+    timeoutSeconds: {{ .Values.features.admission_control.timeout }}
+    {{- if .Values.features.admission_control.deny_on_error }}
+    failurePolicy: Fail
+    {{- else }}
+    failurePolicy: Ignore
+    {{- end }}
+{{- end }}
+{{- end }}

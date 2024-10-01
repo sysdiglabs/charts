@@ -1,0 +1,166 @@
+{{- $secrets := (include "cluster.secrets_mount" .) | fromYamlArray }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "cluster.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "cluster.workload_labels" . | nindent 4 }}
+  {{- $workloadAnnotations := (include "cluster.workload_annotations" .) }}
+  {{- if $workloadAnnotations }}
+  annotations:
+    {{- $workloadAnnotations | nindent 4 }}
+  {{- end }}
+spec:
+  replicas: {{ include "cluster.replica_count" . }}
+  strategy:
+    {{- toYaml .Values.cluster.update_strategy | nindent 4 }}
+  selector:
+    matchLabels:
+      {{- include "cluster.selector_labels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        {{- $podAnnotations := (include "cluster.pod_annotations" .) }}
+        {{- if $podAnnotations }}
+          {{- $podAnnotations | nindent 8 }}
+        {{- end }}
+        {{- if .Values.cluster.enable_prometheus_scraping }}
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/metrics"
+        prometheus.io/port: {{ .Values.cluster.additional_settings.monitoring_port | quote }}
+        {{- end }}
+      labels:
+        {{- include "cluster.pod_labels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ include "cluster.service_account_name" . }}
+      automountServiceAccountToken: true
+      securityContext: {}
+      {{- $nodeSelector := (include "cluster.node_selector" .) }}
+      {{- if $nodeSelector }}
+      nodeSelector:
+        {{- $nodeSelector | nindent 8 }}
+      {{- end }}
+      {{- $affinity := (include "cluster.affinity" .) }}
+      {{- if $affinity }}
+      affinity:
+        {{- $affinity | nindent 8 }}
+      {{- end }}
+      {{- $tolerations := (include "cluster.tolerations" .) }}
+      {{- if $tolerations }}
+      tolerations:
+        {{- $tolerations | nindent 8 }}
+      {{- end }}
+      {{- if (include "cluster.has_priority_class" .) }}
+      priorityClassName: "{{ include "cluster.priority_class_name" . }}"
+      {{- end }}
+      imagePullSecrets:
+        {{- toYaml .Values.cluster.image.pull_secrets | nindent 8 }}
+      {{- if .Values.cluster.host_network }}
+      hostNetwork: true
+      dnsPolicy: {{ default "ClusterFirstWithHostNet" .Values.cluster.dns_policy }}
+      {{- else if .Values.cluster.dns_policy }}
+      dnsPolicy: {{ .Values.cluster.dns_policy }}
+      {{- end }}
+      containers:
+        - name: "cluster-shield"
+          imagePullPolicy: {{ .Values.cluster.image.pull_policy }}
+          image: "{{ .Values.cluster.image.registry }}/{{ .Values.cluster.image.repository }}:{{ .Values.cluster.image.tag }}"
+          args: [ {{ (include "cluster.run_command" .) | quote }} ]
+          {{- if not (include "cluster.is_single_process_mode" .) }}
+          securityContext:
+            privileged: true
+            runAsNonRoot: false
+            readOnlyRootFilesystem: false
+            allowPrivilegeEscalation: true
+          {{- end }}
+          ports:
+            - name: monitoring
+              containerPort: {{ .Values.cluster.additional_settings.monitoring_port }}
+              protocol: TCP
+          {{- if (include "cluster.audit_enabled" .) }}
+            - name: audit
+              containerPort: {{ include "cluster.audit_service_port" . }}
+              protocol: TCP
+          {{- end }}
+          {{- if (include "cluster.admission_control_enabled" .) }}
+            - name: ac
+              containerPort: {{ include "cluster.admission_control_service_port" . }}
+              protocol: TCP
+          {{- end }}
+          {{- if (include "cluster.container_vulnerability_management_enabled" .) }}
+            - name: cvm-nats
+              containerPort: 4222
+              protocol: TCP
+          {{- end }}
+          {{- if (include "cluster.admission_control_container_vulnerability_management_enabled" .) }}
+            - name: cvm-grpc
+              containerPort: 9999
+              protocol: TCP
+          {{- end }}
+          env:
+            - name: KUBE_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: KUBE_POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            {{- if (include "cluster.container_vulnerability_management_enabled" .) }}
+            - name: KUBE_SERVICE_NAME
+              value: {{ include "cluster.container_vulnerability_management_service_name" . }}
+            {{- end }}
+            {{- $proxyEnvs := (include "common.proxy.envs" .) }}
+            {{- if $proxyEnvs }}
+              {{- $proxyEnvs | nindent 12 }}
+            {{- end }}
+            {{- $customCAEnvs := (include "common.custom_ca.envs" (merge . (dict "CACertsPath" "/etc/sysdig/ca-certs/"))) }}
+            {{- if $customCAEnvs }}
+              {{- $customCAEnvs | nindent 12 }}
+            {{- end }}
+          resources:
+            {{- toYaml .Values.cluster.resources | nindent 12 }}
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: {{ .Values.cluster.additional_settings.monitoring_port }}
+            {{- .Values.cluster.probes.liveness | toYaml | nindent 12 }}
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: {{ .Values.cluster.additional_settings.monitoring_port }}
+            {{- .Values.cluster.probes.readiness | toYaml | nindent 12 }}
+          volumeMounts:
+            {{- $customCAMounts := (include "common.custom_ca.volume_mount" .) }}
+            {{- if $customCAMounts }}
+              {{- $customCAMounts | nindent 12 }}
+            {{- end }}
+            - mountPath: /etc/sysdig/config/
+              name: cluster-shield-config
+            {{- range $secretName :=  $secrets }}
+            - mountPath: {{ printf "/etc/sysdig/secret-files/%s" $secretName }}
+              name: {{ printf "secret-%s" $secretName }}
+            {{- end }}
+            {{- if (include "cluster.tls_certificates.required" .) }}
+            - mountPath: {{ include "cluster.tls_certificates.mount_path" (merge . (dict "CACertsPath" "/etc/sysdig/ca-certs/")) }}
+              name: cluster-shield-tls-certificates-secret
+            {{- end }}
+      volumes:
+        {{- $customCAVolume := (include "common.custom_ca.volume" .) }}
+        {{- if $customCAVolume }}
+          {{- $customCAVolume | nindent 8 }}
+        {{- end }}
+        - name: cluster-shield-config
+          configMap:
+            name: {{ include "cluster.fullname" . }}
+        {{- range $secretName :=  $secrets }}
+        - name: {{ printf "secret-%s" $secretName }}
+          secret:
+            secretName: {{ $secretName }}
+        {{- end }}
+        {{- if (include "cluster.tls_certificates.required" .) }}
+        - name: cluster-shield-tls-certificates-secret
+          secret:
+            secretName: {{ include "cluster.tls_certificates.secret_name" . }}
+        {{- end }}

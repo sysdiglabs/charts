@@ -1,0 +1,872 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "title": "Values",
+  "type": "object",
+  "properties": {
+    "cluster_config": {
+      "$ref": "#/$defs/ClusterConfig"
+    },
+    "sysdig_endpoint": {
+      "$ref": "#/$defs/SysdigEndpoint"
+    },
+    "cluster": {
+      "$ref": "#/$defs/Cluster"
+    },
+    "ssl": {
+      "$ref": "#/$defs/SSL"
+    },
+    "features": {
+      "$ref": "#/$defs/Features"
+    }
+  },
+  "required": [
+    "cluster_config",
+    "sysdig_endpoint"
+  ],
+  "$defs": {
+    "ClusterConfig": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the cluster. Make sure to set a unique value for all the clusters being inspected",
+          "examples": [
+            "my-cluster"
+          ]
+        },
+        "cluster_domain": {
+          "type": "string",
+          "description": "Domain name of the cluster",
+          "examples": [
+            "cluster.local"
+          ]
+        },
+        "cluster_type": {
+          "type": "string",
+          "description": "Type of Kubernetes cluster",
+          "enum": [
+            "other",
+            "gke-autopilot"
+          ],
+          "examples": [
+            "other"
+          ]
+        },
+        "root_namespace": {
+          "type": "string",
+          "description": "Root namespace to use for the kubernetes resources",
+          "examples": [
+            "kube-system"
+          ]
+        },
+        "tags": {
+          "type": "object",
+          "description": "Tags you want to apply to the metadata sent to the Sysdig Backend.",
+          "propertyNames": {
+            "pattern": "^[a-zA-Z0-9_-]{1,255}$",
+            "description": "The tag name",
+            "examples": [ "env", "region" ]
+          },
+          "additionalProperties": {
+            "type": "string",
+            "maxLength": 255
+          }
+        }
+      },
+      "required": [
+        "name",
+        "cluster_domain",
+        "cluster_type",
+        "root_namespace"
+      ],
+      "additionalProperties": false
+    },
+    "SysdigEndpoint": {
+      "type": "object",
+      "properties": {
+        "access_key": {
+          "type": "string",
+          "description": "Sysdig Agent Access Key",
+          "examples": [
+            "12345678-1234-1234-1234-123456789012"
+          ]
+        },
+        "access_key_existing_secret": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The name of the secret containing the Sysdig Agent Access Key"
+        },
+        "api_url": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Sysdig backend host",
+          "format": "uri",
+          "examples": [
+            "https://www.example.com"
+          ]
+        },
+        "collector": {
+          "type": "object",
+          "properties": {
+            "host": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "The host of the collector",
+              "examples": [
+                "example.com"
+              ]
+            },
+            "port": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 1,
+              "maximum": 65535,
+              "description": "The port of the collector",
+              "examples": [
+                6443
+              ]
+            }
+          }
+        },
+        "region": {
+          "type": "string",
+          "description": "The region where the collector is located",
+          "enum": [
+            "custom",
+            "au-syd-monitor",
+            "au-syd-private-monitor",
+            "au-syd-private-secure",
+            "au-syd-secure",
+            "au1",
+            "br-sao-monitor",
+            "br-sao-private-monitor",
+            "br-sao-private-secure",
+            "br-sao-secure",
+            "ca-tor-monitor",
+            "ca-tor-private-monitor",
+            "ca-tor-private-secure",
+            "ca-tor-secure",
+            "eu-de-monitor",
+            "eu-de-private-monitor",
+            "eu-de-private-secure",
+            "eu-de-secure",
+            "eu-gb-monitor",
+            "eu-gb-private-monitor",
+            "eu-gb-private-secure",
+            "eu-gb-secure",
+            "eu1",
+            "in1",
+            "jp-osa-monitor",
+            "jp-osa-private-monitor",
+            "jp-osa-private-secure",
+            "jp-osa-secure",
+            "jp-tok-monitor",
+            "jp-tok-private-monitor",
+            "jp-tok-private-secure",
+            "jp-tok-secure",
+            "me2",
+            "us-east-monitor",
+            "us-east-private-monitor",
+            "us-east-private-secure",
+            "us-east-secure",
+            "us-south-monitor",
+            "us-south-private-monitor",
+            "us-south-private-secure",
+            "us-south-secure",
+            "us1",
+            "us2",
+            "us3",
+            "us4",
+            null
+          ]
+        },
+        "secure_api_token": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The API Token to access Sysdig Secure",
+          "examples": [
+            "12345678-1234-1234-1234-123456789012"
+          ]
+        },
+        "secure_api_token_existing_secret": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The name of the secret containing the Sysdig Agent Access Key"
+        }
+      },
+      "allOf": [
+        {
+          "description": "Either access_key or access_key_existing_secret must be set",
+          "oneOf": [
+            {
+              "properties": {
+                "access_key": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "access_key"
+              ]
+            },
+            {
+              "properties": {
+                "access_key_existing_secret": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "access_key_existing_secret"
+              ]
+            }
+          ]
+        },
+        {
+          "description": "If region is set to custom, api_url, collector.host and collector.port must be set",
+          "oneOf": [
+            {
+              "properties": {
+                "region": {
+                  "not": {
+                    "const": "custom"
+                  }
+                }
+              }
+            },
+            {
+              "properties": {
+                "region": {
+                  "const": "custom"
+                },
+                "api_url": {
+                  "type": "string"
+                },
+                "collector": {
+                  "properties": {
+                    "host": {
+                      "type": "string"
+                    },
+                    "port": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "host",
+                    "port"
+                  ]
+                }
+              },
+              "required": [
+                "api_url"
+              ]
+            }
+          ]
+        }
+      ],
+      "required": [
+        "region"
+      ],
+      "additionalProperties": false
+    },
+    "Cluster": {
+      "type": "object",
+      "properties": {
+        "run_mode": {
+          "type": "string",
+          "description": "The mode in which the cluster is running",
+          "enum": [
+            "multi-process",
+            "single-process"
+          ]
+        }
+      },
+      "required": [
+        "run_mode"
+      ]
+    },
+    "Host": {
+      "type": "object",
+      "properties": {
+        "driver": {
+          "type": "string",
+          "description": "The mode in which the cluster is running",
+          "enum": [
+            "kmod",
+            "legacy_ebpf",
+            "universal_ebpf"
+          ]
+        }
+      },
+      "required": [
+        "driver"
+      ]
+    },
+    "SSL": {
+      "type": "object",
+      "properties": {
+        "verify": {
+          "type": "boolean",
+          "description": "Define if the client must verify the backend SSL certificate."
+        },
+        "ca": {
+          "type": "object",
+          "description": "Custom Certificate Authority to use for SSL verification",
+          "properties": {
+            "certs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "List of PEM-encoded certificates"
+            },
+            "key_name": {
+              "type": ["string", "null"],
+              "description": "The name of the key in the secret"
+            },
+            "existing_ca_secret": {
+              "type": ["string", "null"],
+              "description": "The name of the secret containing the CA certificate"
+            },
+            "existing_ca_secret_key_name": {
+              "type": ["string", "null"],
+              "description": "The name of the key in the secret"
+            }
+          }
+        }
+      },
+      "required": [
+        "verify"
+      ],
+      "additionalProperties": false
+    },
+    "Features": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "admission_control": {
+          "$ref": "#/$defs/FeatureAdmissionControl"
+        },
+        "kubernetes_metadata": {
+          "$ref": "#/$defs/FeatureKubernetesMetadata"
+        },
+        "posture": {
+          "$ref": "#/$defs/FeatureGroupPosture"
+        },
+        "vulnerability_management": {
+          "$ref": "#/$defs/FeatureGroupVulnerabilityManagement"
+        },
+        "detections": {
+          "$ref": "#/$defs/FeatureGroupDetections"
+        },
+        "investigations": {
+          "$ref": "#/$defs/FeatureGroupInvestigations"
+        },
+        "responding": {
+          "$ref": "#/$defs/FeatureGroupResponding"
+        },
+        "monitoring": {
+          "$ref": "#/$defs/FeatureGroupMonitoring"
+        }
+      }
+    },
+    "FeatureAdmissionControl": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Specify if the Admission Control is enabled"
+        },
+        "deny_on_error": {
+          "type": "boolean",
+          "description": "Deny request when an error happens inside the evaluation phase"
+        },
+        "dry_run": {
+          "type": "boolean",
+          "description": "Dry Run requests"
+        },
+        "container_vulnerability_management": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Enable container vulnerability management checks"
+            }
+          }
+        },
+        "http_port": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65535,
+          "description": "HTTP Server port used to expose the webhook web server."
+        },
+        "timeout": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "The number of seconds for the request to time out"
+        },
+        "excluded_namespaces": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of namespaces to exclude from the admission control feature"
+        }
+      }
+    },
+    "FeatureKubernetesMetadata": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Specify if the Kubernetes Metadata feature is enabled"
+        },
+        "annotations_allowlist": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^[a-z]*$",
+            "description": "The resource name in lowercase plural form",
+            "examples": [
+              "nodes",
+              "pods"
+            ]
+          },
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "The annotation key",
+              "format": "k8s-qualified-name-with-wildcard",
+              "examples": [
+                "kubernetes.io/team"
+              ]
+            }
+          },
+          "description": "List of Kubernetes annotations keys that will be sent to the Sysdig BE e.g. for generating KSM metrics. To include them, provide a list of resource names in their plural form and Kubernetes annotation keys you would like to allow for them. Annotation keys can contain wildcard character '*'. A single '*' can be provided per resource to allow any annotation. By default, no annotations are allowed for any resource.",
+          "examples": [
+            {
+              "nodes": [
+                "kubernetes.io/team",
+                "kubernetes.io/role"
+              ]
+            }
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "enabled"
+      ],
+      "$defs": {
+        "IsEnabled": {
+          "properties": {
+            "enabled": {
+              "const": true
+            }
+          }
+        }
+      }
+    },
+    "FeatureGroupPosture": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "host_posture": {
+          "$ref": "#/$defs/FeatureGroupPosture/$defs/HostPosture"
+        },
+        "cluster_posture": {
+          "$ref": "#/$defs/FeatureGroupPosture/$defs/ClusterPosture"
+        }
+      },
+      "$defs": {
+        "HostPosture": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Specify if the Host Posture feature is enabled"
+            }
+          }
+        },
+        "ClusterPosture": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Specify if the Cluster Posture feature is enabled"
+            }
+          }
+        }
+      }
+    },
+    "FeatureGroupVulnerabilityManagement": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "host_vulnerability_management": {
+          "$ref": "#/$defs/FeatureGroupVulnerabilityManagement/$defs/HostVulnerabilityManagement"
+        },
+        "container_vulnerability_management": {
+          "$ref": "#/$defs/FeatureGroupVulnerabilityManagement/$defs/ContainerVulnerabilityManagement"
+        },
+        "in_use": {
+          "$ref": "#/$defs/FeatureGroupVulnerabilityManagement/$defs/InUse"
+        }
+      },
+      "$defs": {
+        "HostVulnerabilityManagement": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Specify if the Host Vulnerability Management feature is enabled"
+            }
+          }
+        },
+        "ContainerVulnerabilityManagement": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Specify if the Container VulnerabilityManagement feature is enabled"
+            },
+            "registry_ssl": {
+              "description": "Verify SSL certificate when connecting to the registry",
+              "type": "object",
+              "properties": {
+                "verify": {
+                  "type": "boolean",
+                  "description": "Define if the client must verify the backend SSL certificate."
+                }
+              }
+            },
+            "platform_services_enabled": {
+              "type": "boolean",
+              "description": "Specify if the platform services are enabled"
+            },
+            "local_cluster": {
+              "type": "object",
+              "properties": {
+                "registry_secrets": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "namespace": {
+                        "type": "string"
+                      },
+                      "secrets": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "required": [
+                      "namespace",
+                      "secrets"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "examples": [
+                    [
+                      {
+                        "namespace": "sysdig-agent",
+                        "secrets": [
+                          "registry-secret"
+                        ]
+                      }
+                    ]
+                  ]
+                }
+              }
+            },
+            "parallel_files_analysis_count": {
+              "type": "integer",
+              "description": "Maximum number of files that are analyzed in parallel"
+            },
+            "max_file_size_bytes": {
+              "type": "integer",
+              "description": "Maximum size in bytes for a file to be analyzed"
+            },
+            "max_file_size_bytes_in_memory": {
+              "type": "integer",
+              "description": "Maximum size in bytes for a file to be analyzed in memory; file whose size is bigger than this are temporarily copied on to the filesystem"
+            }
+          }
+        },
+        "InUse": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Specify if the In Use feature is enabled"
+            },
+            "integration_enabled": {
+              "type": "boolean",
+              "description": "Share in-use information with the external integrations"
+            }
+          }
+        }
+      }
+    },
+    "FeatureGroupDetections": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "drift_control": {
+          "$ref": "#/$defs/FeatureGroupDetections/$defs/DriftControl"
+        },
+        "malware_control": {
+          "$ref": "#/$defs/FeatureGroupDetections/$defs/MalwareControl"
+        },
+        "ml_policies": {
+          "$ref": "#/$defs/FeatureGroupDetections/$defs/MLPolicies"
+        },
+        "kubernetes_audit": {
+          "$ref": "#/$defs/FeatureGroupDetections/$defs/KubernetesAudit"
+        }
+      },
+      "$defs": {
+        "DriftControl": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Specify if the Drift Control feature is enabled"
+            }
+          }
+        },
+        "MalwareControl": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Specify if the Malware Control feature is enabled"
+            }
+          }
+        },
+        "MLPolicies": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Specify if the ML Policies feature is enabled"
+            }
+          }
+        },
+        "KubernetesAudit": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Specify if the Kubernetes Audit feature is enabled"
+            },
+            "http_port": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 65535,
+              "description": "HTTP Server port used to expose the webhook web server."
+            },
+            "timeout": {
+              "type": "integer",
+              "description": "The number of seconds for the request to time out"
+            },
+            "excluded_namespaces": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "List of namespaces to exclude from the audit feature"
+            }
+          }
+        }
+      }
+    },
+    "FeatureGroupInvestigations": {
+      "type": "object",
+      "properties": {
+        "activity_audit": {
+          "$ref": "#/$defs/FeatureGroupInvestigations/$defs/ActivityAudit"
+        },
+        "live_logs": {
+          "$ref": "#/$defs/FeatureGroupInvestigations/$defs/LiveLogs"
+        },
+        "network_security": {
+          "$ref": "#/$defs/FeatureGroupInvestigations/$defs/NetworkSecurity"
+        },
+        "audit_tap": {
+          "$ref": "#/$defs/FeatureGroupInvestigations/$defs/AuditTap"
+        },
+        "captures": {
+          "$ref": "#/$defs/FeatureGroupInvestigations/$defs/Captures"
+        },
+        "event_forwarder": {
+          "$ref": "#/$defs/FeatureGroupInvestigations/$defs/EventForwarder"
+        }
+      },
+      "$defs": {
+        "ActivityAudit": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Specify if the Activity Audit feature is enabled"
+            }
+          }
+        },
+        "LiveLogs": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Specify if the Live Logs feature is enabled"
+            }
+          }
+        },
+        "NetworkSecurity": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Specify if the Network Security feature is enabled"
+            }
+          }
+        },
+        "AuditTap": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Specify if the Audit Tap feature is enabled"
+            }
+          }
+        },
+        "Captures": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Specify if the Captures feature is enabled"
+            }
+          }
+        },
+        "EventForwarder": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Specify if the Event Forwarder feature is enabled"
+            }
+          }
+        }
+      }
+    },
+    "FeatureGroupResponding": {
+      "type": "object",
+      "properties": {
+        "rapid_response": {
+          "$ref": "#/$defs/FeatureGroupResponding/$defs/RapidResponse"
+        }
+      },
+      "$defs": {
+        "RapidResponse": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Specify if the Rapid Response feature is enabled"
+            }
+          }
+        }
+      }
+    },
+    "FeatureGroupMonitoring": {
+      "type": "object",
+      "properties": {
+        "app_checks": {
+          "$ref": "#/$defs/FeatureGroupMonitoring/$defs/AppChecks"
+        },
+        "java_management_extensions": {
+          "$ref": "#/$defs/FeatureGroupMonitoring/$defs/JavaManagementExtensions"
+        },
+        "prometheus": {
+          "$ref": "#/$defs/FeatureGroupMonitoring/$defs/Prometheus"
+        },
+        "statsd": {
+          "$ref": "#/$defs/FeatureGroupMonitoring/$defs/Statsd"
+        }
+      },
+      "$defs": {
+        "AppChecks": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Specify if the App Checks feature is enabled"
+            }
+          }
+        },
+        "JavaManagementExtensions": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Specify if the Java Management Extensions feature is enabled"
+            }
+          }
+        },
+        "Prometheus": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Specify if the Prometheus feature is enabled"
+            }
+          }
+        },
+        "Statsd": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Specify if the Statsd feature is enabled"
+            }
+          }
+        }
+      }
+    }
+  }
+}

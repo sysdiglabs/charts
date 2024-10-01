@@ -1,0 +1,17 @@
+apiVersion: v2
+name: shield
+description: A chart with various Sysdig components for Kubernetes
+maintainers:
+  - name: AlbertoBarba
+    email: alberto.barba@sysdig.com
+  - name: aroberts87
+    email: adam.roberts@sysdig.com
+  - name: francesco-furlan
+    email: francesco.furlan@sysdig.com
+  - name: iurly
+    email: gerlando.falauto@sysdig.com
+  - name: mavimo
+    email: marcovito.moscaritolo@sysdig.com
+type: application
+version: 0.1.2
+appVersion: "1.0.0"

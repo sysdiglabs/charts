@@ -1,0 +1,118 @@
+suite: Cluster - Role
+templates:
+  - templates/cluster/role.yaml
+release:
+  name: release-name
+  namespace: shield-namespace
+values:
+  - ../values/base.yaml
+tests:
+  - it: Default Role
+    asserts:
+      - containsDocument:
+          kind: Role
+          apiVersion: rbac.authorization.k8s.io/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - equal:
+          path: rules
+          value:
+
+  - it: Container Vulnerability Management
+    set:
+      features:
+        vulnerability_management:
+          container_vulnerability_management:
+            enabled: true
+    asserts:
+      - containsDocument:
+          kind: Role
+          apiVersion: rbac.authorization.k8s.io/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - contains:
+          path: rules
+          content:
+            apiGroups: ["", "coordination.k8s.io"]
+            resources:
+              - "leases"
+            resourceNames:
+              - "release-name-shield-cluster-container-vulnerability-management"
+            verbs: ["*"]
+
+      - contains:
+          path: rules
+          content:
+            apiGroups: ["", "coordination.k8s.io"]
+            resources:
+              - "leases"
+            verbs: ["create"]
+
+      - contains:
+          path: rules
+          content:
+            apiGroups: ["*"]
+            resources:
+              - "endpoints"
+            verbs: ["get", "watch", "list"]
+
+      - contains:
+          path: rules
+          content:
+            apiGroups: ["*"]
+            resources:
+              - "endpoints"
+              - "endpoints/restricted"
+            resourceNames:
+              - "release-name-shield-cluster-container-vulnerability-management"
+            verbs: ["*"]
+
+  - it: Admission Control withContainer Vulnerability Management
+    set:
+      features:
+        admission_control:
+          enabled: true
+          container_vulnerability_management:
+            enabled: true
+    asserts:
+      - containsDocument:
+          kind: Role
+          apiVersion: rbac.authorization.k8s.io/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - contains:
+          path: rules
+          content:
+            apiGroups: ["", "coordination.k8s.io"]
+            resources:
+              - "leases"
+            resourceNames:
+              - "release-name-shield-cluster-container-vulnerability-management"
+            verbs: ["*"]
+
+      - contains:
+          path: rules
+          content:
+            apiGroups: ["", "coordination.k8s.io"]
+            resources:
+              - "leases"
+            verbs: ["create"]
+
+      - contains:
+          path: rules
+          content:
+            apiGroups: ["*"]
+            resources:
+              - "endpoints"
+            verbs: ["get", "watch", "list"]
+
+      - contains:
+          path: rules
+          content:
+            apiGroups: ["*"]
+            resources:
+              - "endpoints"
+              - "endpoints/restricted"
+            resourceNames:
+              - "release-name-shield-cluster-container-vulnerability-management"
+            verbs: ["*"]

@@ -1,7 +1,10 @@
 # request review from agent team members for changes to sysdig chart
-/charts/sysdig/         @sysdiglabs/team-tools-agent
 /charts/agent/          @sysdiglabs/team-tools-agent
+/charts/cluster-shield/ @sysdiglabs/team-tools-agent
+/charts/common/         @sysdiglabs/team-tools-agent
+/charts/shield/         @sysdiglabs/team-tools-agent
 /charts/sysdig-deploy/  @sysdiglabs/team-tools-agent
+/charts/sysdig/         @sysdiglabs/team-tools-agent
 
 /charts/admission-controller @sysdiglabs/cloud-native
 /charts/cloud-connector      @sysdiglabs/cloud-native

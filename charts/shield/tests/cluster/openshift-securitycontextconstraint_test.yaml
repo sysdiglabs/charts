@@ -1,0 +1,28 @@
+suite: Cluster - OpenShift SecurityContextConstraints
+templates:
+  - templates/cluster/openshift-securitycontextconstraint.yaml
+release:
+  name: release-name
+  namespace: shield-namespace
+values:
+  - ../values/base.yaml
+tests:
+  - it: Doesn't create SecurityContextConstraints by default
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: Creates SecurityContextConstraints when the Capability is available
+    capabilities:
+      apiVersions:
+        - security.openshift.io/v1
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: SecurityContextConstraints
+          apiVersion: security.openshift.io/v1
+          name: release-name-shield-cluster
+      - contains:
+          path: users
+          content: "system:serviceaccount:shield-namespace:release-name-shield-cluster"

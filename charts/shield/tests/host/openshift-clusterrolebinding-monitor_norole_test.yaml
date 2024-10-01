@@ -1,0 +1,16 @@
+suite: Host - OpenShift ClusterRoleBinding Monitor (Role does not exist)
+templates:
+  - templates/host/openshift-clusterrolebinding-monitor.yaml
+release:
+  name: release-name
+  namespace: shield-namespace
+values:
+  - ../values/base.yaml
+tests:
+  - it: Does not create the ClusterRoleBinding if the ClusterRole does not exist and monitoring.openshift.io/v1 is supported
+    capabilities:
+      apiVersions:
+        - security.openshift.io/v1
+    asserts:
+      - hasDocuments:
+          count: 0

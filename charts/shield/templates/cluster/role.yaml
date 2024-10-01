@@ -1,0 +1,38 @@
+{{- if .Values.cluster.rbac.create }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ include "cluster.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "cluster.rbac_labels" . | nindent 4 }}
+  {{- with .Values.cluster.rbac.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+rules:
+{{- if (include "cluster.container_vulnerability_management_enabled" .) }}
+  - apiGroups: ["", "coordination.k8s.io"]
+    resources:
+      - "leases"
+    resourceNames:
+      - {{ include "cluster.container_vulnerability_management_lease_name" . }}
+    verbs: ["*"]
+  - apiGroups: ["", "coordination.k8s.io"]
+    resources:
+      - "leases"
+    verbs: ["create"]
+  - apiGroups: ["*"]
+    resources:
+      - "endpoints"
+    verbs: ["get", "watch", "list"]
+  - apiGroups: ["*"]
+    resources:
+      - "endpoints"
+      # Following is required for OpenShift. See https://docs.openshift.com/container-platform/3.11/architecture/core_concepts/pods_and_services.html#endpoints
+      - "endpoints/restricted"
+    resourceNames:
+      - {{ include "cluster.container_vulnerability_management_service_name" . }}
+    verbs: ["*"]
+  {{- end }}
+{{- end }}
