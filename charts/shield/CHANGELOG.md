@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.1.2
+### Bug Fixes
+* **shield** [a2a59670](https://github.com/sysdiglabs/charts/commit/a2a596707f6e2a3d819ce9e7d49048237bedbb2e): README.md table not formatted properly ([#1965](https://github.com/sysdiglabs/charts/issues/1965))
 # v0.1.1
 ### Bug Fixes
 * **shield** [babb2ae7](https://github.com/sysdiglabs/charts/commit/babb2ae7de30849504567140b7f6b984a912800e): add missing CHANGELOG.md file ([#1964](https://github.com/sysdiglabs/charts/issues/1964))
