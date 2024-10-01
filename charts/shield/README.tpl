@@ -70,5 +70,5 @@ The command removes all the Kubernetes components associated with the chart and 
 
 The following table lists the configurable parameters of the `{{ .Chart.Name }}` chart and their default values.
 
-{{- .Chart.Values -}}
+{{ .Chart.Values }}
 {{- end -}}
