@@ -29,6 +29,9 @@ global:
     secureAPITokenSecret:
     # The Secure API token to access Sysdig Secure. (needed only with on-premise installations)
     secureAPIToken:
+    # Tags you want to apply to the metadata sent to the Sysdig BE.
+    # They are used for instance as additional labels to the KSM metrics, with format `agent_tag_<tag_name>
+    tags: {}
   gke:
     # If true, overrides the Cluster Shield configuration to run on GKE Autopilot clusters.
     autopilot: false
@@ -63,6 +66,9 @@ cluster_shield:
     # The name of the cluster. Make sure to set a unique value for all the
     # clusters being inspected.
     name:
+    # Tags you want to apply to the metadata sent to the Sysdig BE.
+    # They are used for instance as additional labels to the KSM metrics, with format `agent_tag_<tag_name>
+    tags: {}
   # The log level for the Cluster Shield application
   log_level: warn
   # The port that the Cluster Shield will use to expose probes and metrics
@@ -93,6 +99,8 @@ cluster_shield:
       timeout: 5
       # The port that will be used to expose admission control endpoints
       http_port: 8443
+      # The list of namespaces to exclude from the admission control feature
+      excluded_namespaces: []
       container_vulnerability_management:
         # Enable the container vulnerability management feature on the admission control
         enabled: false
@@ -103,6 +111,8 @@ cluster_shield:
       http_port: 6443
       # The timeout for the audit feature
       timeout: 5
+      # The list of namespaces to exclude from the audit feature
+      excluded_namespaces: []
     posture:
       # Enable the posture feature
       enabled: false
