@@ -322,3 +322,93 @@ tests:
               running_namespace: NAMESPACE
               tls_cert_file: /cert/custom_tls.crt
               tls_private_key_file: /cert/custom_tls.key
+
+  - it: Add Global Tags
+    set:
+      global:
+        sysdig:
+          tags:
+            key1: value1
+            key2:
+              subkey1: subvalue2
+              subkey2:
+                subsubkey1: subsubvalue1
+    asserts:
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+      - hasDocuments:
+          count: 1
+      - isNotEmpty:
+          path: data
+      - isNotEmpty:
+          path: data["cluster-shield.yaml"]
+      - matchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: |
+            cluster_config:
+              name: lint-cluster
+              tags:
+                key1: value1
+                key2.subkey1: subvalue2
+                key2.subkey2.subsubkey1: subsubvalue1
+
+  - it: Cluster Config Tags
+    set:
+      cluster_shield:
+        cluster_config:
+          tags:
+            key1: value1
+            key2: value2
+    asserts:
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+      - hasDocuments:
+          count: 1
+      - isNotEmpty:
+          path: data
+      - isNotEmpty:
+          path: data["cluster-shield.yaml"]
+      - matchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: |
+            cluster_config:
+              name: lint-cluster
+              tags:
+                key1: value1
+                key2: value2
+
+  - it: Test Cluster Config Tags overrides Global Tags
+    set:
+      global:
+        sysdig:
+          tags:
+            key1: value1
+            key2:
+              subkey1: subvalue2
+              subkey2:
+                subsubkey1: subsubvalue1
+      cluster_shield:
+        cluster_config:
+          tags:
+            key1: value1
+            key2: value2
+    asserts:
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+      - hasDocuments:
+          count: 1
+      - isNotEmpty:
+          path: data
+      - isNotEmpty:
+          path: data["cluster-shield.yaml"]
+      - matchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: |
+            cluster_config:
+              name: lint-cluster
+              tags:
+                key1: value1
+                key2: value2

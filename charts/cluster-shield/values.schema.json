@@ -453,6 +453,14 @@
               "type": "integer",
               "description": "The number of seconds for the request to time out",
               "default": 5
+            },
+            "excluded_namespaces": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "List of namespaces to exclude from the audit feature",
+              "default": []
             }
           },
           "required": [
@@ -482,6 +490,28 @@
               "description": "The name of the cluster. Make sure to set a unique value for all the clusters being inspected",
               "examples": [
                 "my-cluster"
+              ]
+            },
+            "tags": {
+              "type": "object",
+              "propertyNames": {
+                "pattern": "^[a-zA-Z0-9_-]{1,255}$",
+                "description": "The tag name",
+                "examples": [
+                  "env",
+                  "region"
+                ]
+              },
+              "additionalProperties": {
+                "type": "string",
+                "maxLength": 255
+              },
+              "description": "Tags you want to apply to the metadata sent to the Sysdig BE. They are used for instance as additional labels to the KSM metrics, with format `agent_tag_<tag_name>`",
+              "examples": [
+                {
+                  "env": "staging",
+                  "region": "us-west-1"
+                }
               ]
             }
           },
@@ -894,6 +924,14 @@
               "type": "integer",
               "description": "The number of seconds for the request to time out",
               "default": 5
+            },
+            "excluded_namespaces": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "List of namespaces to exclude from the admission control feature",
+              "default": []
             }
           },
           "required": [

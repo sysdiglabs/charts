@@ -15,6 +15,16 @@ webhooks:
   {{- if .Values.cluster_shield.features.audit.enabled }}
   - name: audit.secure.sysdig.com
     matchPolicy: Equivalent
+    {{ with .Values.cluster_shield.features.audit.excluded_namespaces }}
+    namespaceSelector:
+      matchExpressions:
+        - key: kubernetes.io/metadata.name
+          operator: NotIn
+          values:
+            {{- range . }}
+            - {{ . }}
+            {{- end }}
+    {{ end }}
     rules:
       - apiGroups:
           - ""
@@ -51,6 +61,9 @@ webhooks:
           operator: NotIn
           values:
             - {{ .Release.Namespace }}
+            {{- range .Values.cluster_shield.features.admission_control.excluded_namespaces }}
+            - {{ . }}
+            {{- end }}
     rules:
       - apiGroups:
           - ""

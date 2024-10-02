@@ -67,9 +67,14 @@ Adds kubernetes related keys to the configuration.
 {{/* sysdig-deploy support start */}}
 {{- if not .Values.cluster_shield.cluster_config.name -}}
 {{- if .Values.global.clusterConfig.name -}}
-{{- $_ := set $conf "cluster_config" (dict "name" .Values.global.clusterConfig.name) -}}
+{{- $_ := set $conf.cluster_config "name" .Values.global.clusterConfig.name -}}
 {{- else -}}
 {{- fail "One of global.clusterConfig.name and cluster_shield.cluster_config.name must be defined." -}}
+{{- end -}}
+{{- end -}}
+{{- if not .Values.cluster_shield.cluster_config.tags -}}
+{{- if .Values.global.sysdig.tags -}}
+{{- $_ := set $conf.cluster_config "tags" (include "cluster-shield.global_tags" . | fromYaml) -}}
 {{- end -}}
 {{- end -}}
 {{- if not .Values.cluster_shield.sysdig_endpoint.region -}}
@@ -424,4 +429,30 @@ run-all-namespaced
 {{- define "cluster-shield.secret_mounts" -}}
 {{- $secrets := list (include "cluster-shield.secretName" .) .Values.global.sysdig.accessKeySecret .Values.global.sysdig.secureAPITokenSecret}}
 {{- (uniq (compact $secrets)) | toYaml -}}
+{{- end -}}
+
+{{- define "cluster-shield.dict.flatten" -}}
+    {{- $map := first . -}}
+    {{- $label := last . -}}
+    {{- $fields := list -}}
+    {{- range $key, $val := $map -}}
+        {{- $sublabel := list $label $key | join "." -}}
+        {{- if $label | eq "" -}}
+        {{ $sublabel = $key }}
+        {{- end -}}
+        {{- if kindOf $val | eq "map" -}}
+            {{- $fields = (list $val $sublabel | include "cluster-shield.dict.flatten") | append $fields }}
+        {{- else -}}
+            {{- $fields = (printf "%s:%s" $sublabel $val) | append $fields -}}
+        {{- end -}}
+    {{- end -}}
+    {{- join "," $fields -}}
+{{- end -}}
+
+{{- define "cluster-shield.global_tags" -}}
+{{- $tags := (include "cluster-shield.dict.flatten" (list .Values.global.sysdig.tags "") | split ",") -}}
+{{- range $tags -}}
+{{- $tag := (split ":" .) -}}
+{{- $tag._0 }}: {{ $tag._1 }}
+{{ end -}}
 {{- end -}}
