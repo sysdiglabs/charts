@@ -17,24 +17,6 @@ $ pre-commit run -a
 [{{ .Project.Name }}]({{ .Project.URL }}).
 <br/>{{ .Project.Description }}
 
-## TL;DR;
-
-```
-$ helm repo add {{ .Repository.Name }} {{ .Repository.URL }}
-$ helm repo update
-$ helm upgrade --install sysdig-{{ .Release.Name }} {{ .Repository.Name }}/{{ .Chart.Name }} \
-    --create-namespace -n {{ .Release.Namespace }}{{ with .Chart.Version }} --version={{.}} {{ end }} \
-    --set global.clusterConfig.name=CLUSTER_NAME \
-    --set global.sysdig.region=SYSDIG_REGION \
-    --set global.sysdig.accessKey=YOUR-KEY-HERE
-```
-
-- [Configuration](#configuration)
-- [Usages](#usages)
-- [Confirm Working Status](#confirm-working-status)
-- [Troubleshooting](#troubleshooting)
-
-<br/><br/>
 
 ## Introduction
 
