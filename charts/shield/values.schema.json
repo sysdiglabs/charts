@@ -779,11 +779,29 @@
         },
         "EventForwarder": {
           "type": "object",
-          "additionalProperties": true,
+          "additionalProperties": false,
           "properties": {
             "enabled": {
               "type": "boolean",
               "description": "Specify if the Event Forwarder feature is enabled"
+            },
+            "integrations": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "transmit_message_types": {
+              "type": "array",
+              "description": "List of message types to transmit",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "POLICY_EVENTS",
+                  "SECURE_AUDIT"
+                ]
+              },
+              "uniqueItems": true
             }
           }
         }
