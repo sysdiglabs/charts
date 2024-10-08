@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **cluster-shield,sysdig-deploy,shield** [f718a4e7](https://github.com/sysdiglabs/charts/commit/f718a4e7b6164a306919531120ad9cbf938c6424): bump cluster-shield to version 1.4.0 ([#1967](https://github.com/sysdiglabs/charts/issues/1967))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-0.1.2...shield-0.1.3
+### Bug Fixes
+- **shield** [3389a4e4](https://github.com/sysdiglabs/charts/commit/3389a4e4683f4e96222ff06f14ad5a8354922e7c): allow accesskey to be null in case access_key_existing_secret is set ([#1969](https://github.com/sysdiglabs/charts/issues/1969))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/cluster-shield-1.4.0...shield-0.1.4
