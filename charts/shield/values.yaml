@@ -206,9 +206,40 @@ host:
   # The node selector for the host shield
   node_selector: {}
   # The tolerations for the host shield
-  tolerations: []
+  tolerations:  # +doc-gen:break
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/control-plane
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/controlplane
+      operator: Equal
+      value: "true"
+    - effect: NoExecute
+      key: node-role.kubernetes.io/etcd
+      operator: Equal
+      value: "true"
+    - effect: NoExecute
+      key: CriticalAddonsOnly
+      operator: Equal
+      value: "true"
   # The affinity for the host shield
-  affinity: {}
+  affinity:  # +doc-gen:break
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key: kubernetes.io/arch
+              operator: In
+              values:
+                - amd64
+                - arm64
+                - ppc64le
+                - s390x
+            - key: kubernetes.io/os
+              operator: In
+              values:
+                - linux
   probes:
     readiness:
       # The readiness probe initial delay

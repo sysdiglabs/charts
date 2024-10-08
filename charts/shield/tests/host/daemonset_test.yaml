@@ -300,3 +300,104 @@ tests:
           content:
             name: host-tmp
             mountPath: /host/tmp
+
+  - it: Test default affinity settings
+    asserts:
+      - equal:
+          path: spec.template.spec.affinity
+          value:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                    - key: kubernetes.io/arch
+                      operator: In
+                      values:
+                      - amd64
+                      - arm64
+                      - ppc64le
+                      - s390x
+                    - key: kubernetes.io/os
+                      operator: In
+                      values:
+                      - linux
+
+  - it: Test custom affinity settings
+    set:
+      host:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                    - amd64
+                  - key: kubernetes.io/os
+                    operator: In
+                    values:
+                    - linux
+    asserts:
+      - equal:
+          path: spec.template.spec.affinity
+          value:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                    - key: kubernetes.io/arch
+                      operator: In
+                      values:
+                      - amd64
+                    - key: kubernetes.io/os
+                      operator: In
+                      values:
+                      - linux
+
+  - it: Test default host tolerations
+    asserts:
+      - equal:
+          path: spec.template.spec.tolerations
+          value:
+            - effect: NoSchedule
+              key: node-role.kubernetes.io/master
+            - effect: NoSchedule
+              key: node-role.kubernetes.io/control-plane
+            - effect: NoSchedule
+              key: node-role.kubernetes.io/controlplane
+              operator: Equal
+              value: "true"
+            - effect: NoExecute
+              key: node-role.kubernetes.io/etcd
+              operator: Equal
+              value: "true"
+            - effect: NoExecute
+              key: CriticalAddonsOnly
+              operator: Equal
+              value: "true"
+
+  - it: Test custom host tolerations
+    set:
+      host:
+        tolerations:
+          - my: specialtoleration
+    asserts:
+      - equal:
+          path: spec.template.spec.tolerations
+          value:
+            - my: specialtoleration
+
+  - it: Test combining tolerations
+    set:
+      tolerations:
+        - my: specialdefaulttoleration
+      host:
+        tolerations:
+          - my: specialhosttoleration
+    asserts:
+      - equal:
+          path: spec.template.spec.tolerations
+          value:
+            - my: specialdefaulttoleration
+            - my: specialhosttoleration

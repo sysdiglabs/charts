@@ -54,8 +54,8 @@ If release name contains chart name it will be used as a full name.
 {{- end -}}
 
 {{- define "host.tolerations" -}}
-{{- $tollerations := concat .Values.tolerations .Values.host.tolerations -}}
-{{- with $tollerations -}}
+{{- $tolerations := concat .Values.tolerations .Values.host.tolerations -}}
+{{- with $tolerations -}}
 {{- . | toYaml -}}
 {{- end -}}
 {{- end -}}
@@ -66,12 +66,6 @@ If release name contains chart name it will be used as a full name.
 {{- . | toYaml -}}
 {{- end -}}
 {{- end -}}
-{{ with .Values.affinity }}
-{{- . | toYaml }}
-{{- end }}
-{{ with .Values.host.affinity }}
-{{- . | toYaml }}
-{{- end }}
 
 {{- define "host.kmodule_resources" }}
 {{- with .Values.host.resources.kmodule }}
