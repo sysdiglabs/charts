@@ -30502,6 +30502,27 @@ entries:
   shield:
   - apiVersion: v2
     appVersion: 1.0.0
+    created: "2024-10-08T18:55:59.45680179Z"
+    description: A chart with various Sysdig components for Kubernetes
+    digest: 34d7405273a6835585e0724da161cf063bdc28eb4f98f835bfa003c13db83ccd
+    maintainers:
+    - email: alberto.barba@sysdig.com
+      name: AlbertoBarba
+    - email: adam.roberts@sysdig.com
+      name: aroberts87
+    - email: francesco.furlan@sysdig.com
+      name: francesco-furlan
+    - email: gerlando.falauto@sysdig.com
+      name: iurly
+    - email: marcovito.moscaritolo@sysdig.com
+      name: mavimo
+    name: shield
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/shield-0.1.5/shield-0.1.5.tgz
+    version: 0.1.5
+  - apiVersion: v2
+    appVersion: 1.0.0
     created: "2024-10-08T08:03:42.953199439Z"
     description: A chart with various Sysdig components for Kubernetes
     digest: 3563d24c82ef248f8fd0bcfe593b5e17b16ae54e5b0871136e11fbbc3b7c6e19
@@ -66364,4 +66385,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2024-10-08T16:39:06.941617159Z"
+generated: "2024-10-08T18:55:59.590621129Z"
