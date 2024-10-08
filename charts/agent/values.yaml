@@ -397,6 +397,7 @@ ssl:
     # Provide the filename that is defined inside the existing ConfigMap
     existingCaConfigMapKeyName: null
 tests:
+  skip: false
   timeout: 300s
   image:
     repo: bitnami/kubectl
