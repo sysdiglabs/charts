@@ -302,10 +302,6 @@ tests:
             mountPath: /host/tmp
 
   - it: Test default affinity settings
-    capabilities:
-        apiVersions:
-            - kubernetes.io/arch
-            - kubernetes.io/os
     asserts:
       - equal:
           path: spec.template.spec.affinity
@@ -322,31 +318,6 @@ tests:
                       - ppc64le
                       - s390x
                     - key: kubernetes.io/os
-                      operator: In
-                      values:
-                      - linux
-
-  - it: Test default affinity settings (legacy cluster)
-    capabilities:
-      apiVersions:
-        - beta.kubernetes.io/arch
-        - beta.kubernetes.io/os
-    asserts:
-      - equal:
-          path: spec.template.spec.affinity
-          value:
-            nodeAffinity:
-              requiredDuringSchedulingIgnoredDuringExecution:
-                nodeSelectorTerms:
-                  - matchExpressions:
-                    - key: beta.kubernetes.io/arch
-                      operator: In
-                      values:
-                      - amd64
-                      - arm64
-                      - ppc64le
-                      - s390x
-                    - key: beta.kubernetes.io/os
                       operator: In
                       values:
                       - linux

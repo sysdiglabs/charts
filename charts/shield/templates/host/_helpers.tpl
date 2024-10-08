@@ -62,35 +62,9 @@ If release name contains chart name it will be used as a full name.
 
 {{- define "host.affinity" -}}
 {{- $affinity := merge (dict) .Values.affinity .Values.host.affinity -}}
-{{- if $affinity }}
 {{- with $affinity -}}
 {{- . | toYaml -}}
 {{- end -}}
-{{- else -}}
-nodeAffinity:
-  requiredDuringSchedulingIgnoredDuringExecution:
-    nodeSelectorTerms:
-    - matchExpressions:
-      {{- if .Capabilities.APIVersions.Has "kubernetes.io/arch"}}
-      - key: kubernetes.io/arch
-      {{- else }}
-      - key: beta.kubernetes.io/arch
-      {{- end }}
-        operator: In
-        values:
-        - amd64
-        - arm64
-        - ppc64le
-        - s390x
-      {{- if .Capabilities.APIVersions.Has "kubernetes.io/os"}}
-      - key: kubernetes.io/os
-      {{- else }}
-      - key: beta.kubernetes.io/os
-      {{- end }}
-        operator: In
-        values:
-        - linux
-    {{- end }}
 {{- end -}}
 
 {{- define "host.kmodule_resources" }}
