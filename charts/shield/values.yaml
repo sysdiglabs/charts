@@ -206,7 +206,7 @@ host:
   # The node selector for the host shield
   node_selector: {}
   # The tolerations for the host shield
-  tolerations:
+  tolerations: # +doc-gen:break
     - effect: NoSchedule
       key: node-role.kubernetes.io/master
     - effect: NoSchedule
