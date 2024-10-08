@@ -206,7 +206,7 @@ host:
   # The node selector for the host shield
   node_selector: {}
   # The tolerations for the host shield
-  tolerations: # +doc-gen:break
+  tolerations:  # +doc-gen:break
     - effect: NoSchedule
       key: node-role.kubernetes.io/master
     - effect: NoSchedule
@@ -224,7 +224,7 @@ host:
       operator: Equal
       value: "true"
   # The affinity for the host shield
-  affinity: # +doc-gen:break
+  affinity:  # +doc-gen:break
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
