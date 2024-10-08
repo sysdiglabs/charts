@@ -1,3 +1,4 @@
+{{- if not .Values.tests.skip }}
 apiVersion: v1
 kind: Pod
 metadata:
@@ -27,3 +28,4 @@ spec:
       - -w
       - --timeout={{ .Values.tests.timeout }}
   restartPolicy: Never
+{{- end }}

@@ -1,0 +1,19 @@
+suite: Test KSPM Collector tests
+templates:
+  - tests/test-rollout.yaml
+
+tests:
+  - it: "Check that test are executed by deafult"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - isKind:
+          of: Pod
+
+  - it: "Check that test are not included when skip is set"
+    set:
+      tests:
+        skip: true
+    asserts:
+      - hasDocuments:
+          count: 0

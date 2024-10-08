@@ -213,6 +213,7 @@ ssl:
     existingCaConfigMapKeyName:
 
 tests:
+  skip: false
   timeout: 300s
   image:
     repo: bitnami/kubectl

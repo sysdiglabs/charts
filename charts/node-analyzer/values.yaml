@@ -529,6 +529,7 @@ nodeAnalyzer:
     apiServerSocketPath: /run/api.sock
 
 tests:
+  skip: false
   timeout: 300s
   image:
     repo: bitnami/kubectl
