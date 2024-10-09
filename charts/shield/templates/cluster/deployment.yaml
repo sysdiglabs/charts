@@ -119,6 +119,7 @@ spec:
             {{- if $customCAEnvs }}
               {{- $customCAEnvs | nindent 12 }}
             {{- end }}
+            {{- include "cluster.env" . | nindent 12 }}
           resources:
             {{- toYaml .Values.cluster.resources | nindent 12 }}
           livenessProbe:
@@ -146,6 +147,7 @@ spec:
             - mountPath: {{ include "cluster.tls_certificates.mount_path" (merge . (dict "CACertsPath" "/etc/sysdig/ca-certs/")) }}
               name: cluster-shield-tls-certificates-secret
             {{- end }}
+            {{- include "cluster.volume_mounts" . | nindent 12 }}
       volumes:
         {{- $customCAVolume := (include "common.custom_ca.volume" .) }}
         {{- if $customCAVolume }}
@@ -164,3 +166,4 @@ spec:
           secret:
             secretName: {{ include "cluster.tls_certificates.secret_name" . }}
         {{- end }}
+        {{- include "cluster.volumes" . | nindent 8 }}
