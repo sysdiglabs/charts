@@ -232,3 +232,25 @@ tests:
             enabled: true
     asserts:
       - notFailedTemplate: {}
+
+
+  - it: Cluster Tags
+    set:
+      cluster_config:
+        name: test-cluster
+        tags:
+          key1: value1
+          key2: "true"
+          key3: "false"
+    asserts:
+      - exists:
+          path: data["cluster-shield.yaml"]
+      - matchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: |
+            cluster_config:
+              name: test-cluster
+              tags:
+                key1: value1
+                key2: "true"
+                key3: "false"
