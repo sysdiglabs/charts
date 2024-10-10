@@ -115,21 +115,21 @@ true
 {{- end }}
 
 {{- define "host.env" -}}
-{{- $env := concat .Values.env .Values.host.env -}}
+{{- $env := concat (default (list) .Values.env) (default (list) .Values.host.env) -}}
 {{- with $env -}}
 {{- . | toYaml -}}
 {{- end -}}
 {{- end -}}
 
 {{- define "host.volumes" -}}
-{{- $volumes := concat .Values.volumes .Values.host.volumes -}}
+{{- $volumes := concat (default (list) .Values.volumes) (default (list) .Values.host.volumes) -}}
 {{- with $volumes -}}
 {{- . | toYaml -}}
 {{- end -}}
 {{- end -}}
 
 {{- define "host.volume_mounts" -}}
-{{- $volumeMounts := concat .Values.volume_mounts .Values.host.volume_mounts -}}
+{{- $volumeMounts := concat (default (list) .Values.volume_mounts) (default (list) .Values.host.volume_mounts) -}}
 {{- with $volumeMounts -}}
 {{- . | toYaml -}}
 {{- end -}}
