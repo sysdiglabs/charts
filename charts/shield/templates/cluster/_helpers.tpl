@@ -103,21 +103,21 @@ If release name contains chart name it will be used as a full name.
 {{- end -}}
 
 {{- define "cluster.env" -}}
-{{- $env := concat .Values.env .Values.cluster.env -}}
+{{- $env := concat (default (list) .Values.env) (default (list) .Values.cluster.env) -}}
 {{- with $env -}}
 {{- . | toYaml -}}
 {{- end -}}
 {{- end -}}
 
 {{- define "cluster.volumes" -}}
-{{- $volumes := concat .Values.volumes .Values.cluster.volumes -}}
+{{- $volumes := concat (default (list) .Values.volumes) (default (list) .Values.cluster.volumes) -}}
 {{- with $volumes -}}
 {{- . | toYaml -}}
 {{- end -}}
 {{- end -}}
 
 {{- define "cluster.volume_mounts" -}}
-{{- $volumeMounts := concat .Values.volume_mounts .Values.cluster.volume_mounts -}}
+{{- $volumeMounts := concat (default (list) .Values.volume_mounts) (default (list) .Values.cluster.volume_mounts) -}}
 {{- with $volumeMounts -}}
 {{- . | toYaml -}}
 {{- end -}}
