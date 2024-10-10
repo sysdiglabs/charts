@@ -401,3 +401,153 @@ tests:
           value:
             - my: specialdefaulttoleration
             - my: specialhosttoleration
+
+  - it: Common custom env vars
+    set:
+      env:
+        - name: MY_ENV_VAR
+          value: my-value
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].env
+          content:
+            name: MY_ENV_VAR
+            value: my-value
+
+  - it: Common and Host specific custom env vars
+    set:
+      env:
+        - name: MY_ENV_VAR
+          value: my-value
+      host:
+        env:
+          - name: MY_HOST_ENV_VAR
+            value: my-host-value
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].env
+          content:
+            name: MY_ENV_VAR
+            value: my-value
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].env
+          content:
+            name: MY_HOST_ENV_VAR
+            value: my-host-value
+
+  - it: Ensure cluster specific env vars not present
+    set:
+      cluster:
+        env:
+          - name: MY_CLUSTER_ENV_VAR
+            value: my-cluster-value
+      host:
+        env:
+          - name: MY_HOST_ENV_VAR
+            value: my-host-value
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].env
+          content:
+            name: MY_HOST_ENV_VAR
+            value: my-host-value
+      - notContains:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].env
+          content:
+            name: MY_CLUSTER_ENV_VAR
+            value: my-cluster-value
+
+  - it: Common volumes and volume mounts
+    set:
+      volumes:
+        - name: my-volume
+          emptyDir: {}
+      volume_mounts:
+        - name: my-volume
+          mountPath: /host/my-mount-path
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: my-volume
+            emptyDir: {}
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].volumeMounts
+          content:
+            name: my-volume
+            mountPath: /host/my-mount-path
+
+  - it: Common and Host specific volumes and volume mounts
+    set:
+      volumes:
+        - name: my-volume
+          emptyDir: {}
+      volume_mounts:
+        - name: my-volume
+          mountPath: /host/my-mount-path
+      host:
+        volumes:
+          - name: my-host-volume
+            emptyDir: {}
+        volume_mounts:
+          - name: my-host-volume
+            mountPath: /host/my-host-mount-path
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: my-volume
+            emptyDir: {}
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: my-host-volume
+            emptyDir: {}
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].volumeMounts
+          content:
+            name: my-volume
+            mountPath: /host/my-mount-path
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].volumeMounts
+          content:
+            name: my-host-volume
+            mountPath: /host/my-host-mount-path
+
+  - it: Ensure cluster specific volumes and volume mounts not present
+    set:
+      cluster:
+        volumes:
+          - name: my-cluster-volume
+            emptyDir: {}
+        volume_mounts:
+          - name: my-cluster-volume
+            mountPath: /host/my-cluster-mount-path
+      host:
+        volumes:
+          - name: my-host-volume
+            emptyDir: {}
+        volume_mounts:
+          - name: my-host-volume
+            mountPath: /host/my-host-mount-path
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: my-host-volume
+            emptyDir: {}
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].volumeMounts
+          content:
+            name: my-host-volume
+            mountPath: /host/my-host-mount-path
+      - notContains:
+          path: spec.template.spec.volumes
+          content:
+            name: my-cluster-volume
+            emptyDir: {}
+      - notContains:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].volumeMounts
+          content:
+            name: my-cluster-volume
+            mountPath: /host/my-cluster-mount-path

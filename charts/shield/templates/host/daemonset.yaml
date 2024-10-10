@@ -157,6 +157,7 @@ spec:
                   name: {{ include "host.rapid_response_secret" . }}
                   key: password
             {{- end }}
+            {{- include "host.env" . | nindent 12 }}
           readinessProbe:
             httpGet:
               host: 127.0.0.1
@@ -232,6 +233,7 @@ spec:
               name: host-tmp
           {{- end }}
           {{- end }}
+          {{- include "host.volume_mounts" . | nindent 12 }}
       volumes:
       {{- /* Always requested */}}
         - name: dev-vol
@@ -337,3 +339,4 @@ spec:
             path: /tmp
       {{- end }}
       {{- end }}
+      {{- include "host.volumes" . | nindent 8 }}
