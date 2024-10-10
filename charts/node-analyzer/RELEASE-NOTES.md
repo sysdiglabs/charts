@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **agent,node-analyzer,kspm-collector** [8f8c0d0c](https://github.com/sysdiglabs/charts/commit/8f8c0d0c22a7d001e3ecf6272e2c711ebb6fec65): Allow to skip test execution via config file ([#1970](https://github.com/sysdiglabs/charts/issues/1970))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.32.7...node-analyzer-1.32.8
+### Bug Fixes
+- **node-analyzer** [3d2c44c3](https://github.com/sysdiglabs/charts/commit/3d2c44c3af90b4c9a6296cee4cb46d4e02fddd11): Bump nodeanalyzer to 1.44.10 ([#1975](https://github.com/sysdiglabs/charts/issues/1975))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.32.8...node-analyzer-1.32.9
