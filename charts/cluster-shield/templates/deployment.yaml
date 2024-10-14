@@ -104,6 +104,9 @@ spec:
               mountPath: /ca-certs
               readOnly: true
             {{- end }}
+            {{- with .Values.volumeMounts }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
           env:
             - name: KUBE_POD_NAME
               valueFrom:
@@ -139,6 +142,9 @@ spec:
                   key: noProxy
                   optional: true
             {{- end }}
+            {{- with .Values.env }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
       volumes:
         - name: cluster-shield
           configMap:
@@ -165,6 +171,9 @@ spec:
         - name: ca-cert
           configMap:
             name:  {{ .Values.ca.existingCaConfigMap | default .Values.global.ssl.ca.existingCaConfigMap }}
+        {{- end }}
+        {{- with .Values.volumes }}
+        {{- toYaml . | nindent 8 }}
         {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
