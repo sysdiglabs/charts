@@ -453,6 +453,6 @@ run-all-namespaced
 {{- $tags := (include "cluster-shield.dict.flatten" (list .Values.global.sysdig.tags "") | split ",") -}}
 {{- range $tags -}}
 {{- $tag := (split ":" .) -}}
-{{- $tag._0 }}: {{ $tag._1 }}
+{{- $tag._0 }}: {{ $tag._1 | quote }}
 {{ end -}}
 {{- end -}}

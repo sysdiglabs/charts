@@ -452,3 +452,39 @@ tests:
             name: cert
             secret:
               secretName: my-custom-tls-secret
+
+  - it: Test setting custom environment variables
+    set:
+      env:
+        - name: MY_ENV_VAR
+          value: my-value
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env
+          content:
+            name: MY_ENV_VAR
+            value: my-value
+
+  - it: Test adding custom volume and volume mounts
+    set:
+      volumes:
+        - name: my-volume
+          hostPath:
+            path: /opt/my-dir
+      volumeMounts:
+        - name: my-volume
+          mountPath: /host/opt/my-dir
+          readOnly: true
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].volumeMounts
+          content:
+            name: my-volume
+            mountPath: /host/opt/my-dir
+            readOnly: true
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: my-volume
+            hostPath:
+              path: /opt/my-dir

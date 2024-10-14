@@ -188,6 +188,75 @@
         "Default",
         "None"
       ]
+    },
+    "env": {
+      "type": "array",
+      "description": "Define additional environment variables to be used by the Cluster Shield",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the environment variable"
+          },
+          "value": {
+            "type": "string",
+            "description": "The value of the environment variable"
+          }
+        },
+        "required": [
+          "name",
+          "value"
+        ]
+      }
+    },
+    "volumes": {
+      "type": "array",
+      "description": "Define additional volumes to be used by the Cluster Shield",
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the volume"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      }
+    },
+    "volumeMounts": {
+      "type": "array",
+      "description": "Define additional volume mounts to be used by the Cluster Shield pods",
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the volume"
+          },
+          "mountPath": {
+            "type": "string",
+            "description": "The path where the volume will be mounted"
+          },
+          "subPath": {
+            "type": "string",
+            "description": "The subpath of the volume to mount"
+          },
+          "readOnly": {
+            "type": "boolean",
+            "description": "Set the volume read-only",
+            "default": false
+          }
+        },
+        "required": [
+          "name",
+          "mountPath"
+        ]
+      }
     }
   },
   "allOf": [
