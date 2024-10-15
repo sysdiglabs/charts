@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.1.7
+### New Features
+* **shield** [b4aac2cc](https://github.com/sysdiglabs/charts/commit/b4aac2cc07965aaa5e91b33568a042cc16b8bf9c): add local forwarder support to host shield  in shield chart ([#1972](https://github.com/sysdiglabs/charts/issues/1972))
 # v0.1.6
 ### New Features
 * **shield** [af7d38c5](https://github.com/sysdiglabs/charts/commit/af7d38c5d38d51d7d96077c076e8b0234a4aa72c): allow custom env vars and volume mounts ([#1974](https://github.com/sysdiglabs/charts/issues/1974))
