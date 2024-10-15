@@ -233,6 +233,11 @@ spec:
               name: host-tmp
           {{- end }}
           {{- end }}
+          {{- if .Values.features.investigations.event_forwarder.enabled }}
+            - mountPath: /opt/draios/etc/local_forwarder_config.yaml
+              name: local-forwarder-config
+              subPath: local_forwarder_config.yaml
+          {{- end }}
           {{- include "host.volume_mounts" . | nindent 12 }}
       volumes:
       {{- /* Always requested */}}
@@ -338,5 +343,13 @@ spec:
           hostPath:
             path: /tmp
       {{- end }}
+      {{- end }}
+      {{- if .Values.features.investigations.event_forwarder.enabled }}
+        - name: local-forwarder-config
+          configMap:
+            name: {{ include "host.fullname" . }}
+            items:
+              - key: local_forwarder_config.yaml
+                path: local_forwarder_config.yaml
       {{- end }}
       {{- include "host.volumes" . | nindent 8 }}

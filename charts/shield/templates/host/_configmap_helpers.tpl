@@ -95,6 +95,11 @@
   {{- end }}
   {{- $_ := set $config "tags" (join "," $tagList) -}}
 {{- end -}}
+{{- if .Values.features.investigations.event_forwarder.enabled }}
+{{- with .Values.features.investigations.event_forwarder }}
+{{- $config = merge $config (dict "local_forwarder" (dict "enabled" .enabled "transmit_message_types" .transmit_message_types)) }}
+{{- end }}
+{{- end }}
 {{- if .Values.host.additional_settings }}
 {{- $config = merge $config (include "host.config_override" . | fromYaml) }}
 {{- end }}
