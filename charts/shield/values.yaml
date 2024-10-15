@@ -117,6 +117,8 @@ features:
       enabled: false
     event_forwarder:
       enabled: false
+      integrations: []
+      transmit_message_types: []
   responding:
     rapid_response:
       enabled: false
