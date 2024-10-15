@@ -332,7 +332,7 @@ tests:
             key2:
               subkey1: subvalue2
               subkey2:
-                subsubkey1: subsubvalue1
+                subsubkey1: "true"
     asserts:
       - containsDocument:
           kind: ConfigMap
@@ -351,7 +351,7 @@ tests:
               tags:
                 key1: value1
                 key2.subkey1: subvalue2
-                key2.subkey2.subsubkey1: subsubvalue1
+                key2.subkey2.subsubkey1: "true"
 
   - it: Cluster Config Tags
     set:
@@ -359,7 +359,7 @@ tests:
         cluster_config:
           tags:
             key1: value1
-            key2: value2
+            key2: "true"
     asserts:
       - containsDocument:
           kind: ConfigMap
@@ -377,7 +377,7 @@ tests:
               name: lint-cluster
               tags:
                 key1: value1
-                key2: value2
+                key2: "true"
 
   - it: Test Cluster Config Tags overrides Global Tags
     set:
@@ -393,7 +393,7 @@ tests:
         cluster_config:
           tags:
             key1: value1
-            key2: value2
+            key2: "true"
     asserts:
       - containsDocument:
           kind: ConfigMap
@@ -411,4 +411,4 @@ tests:
               name: lint-cluster
               tags:
                 key1: value1
-                key2: value2
+                key2: "true"

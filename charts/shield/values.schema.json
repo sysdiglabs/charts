@@ -17,6 +17,18 @@
     },
     "features": {
       "$ref": "#/$defs/Features"
+    },
+    "host": {
+      "$ref": "#/$defs/Host"
+    },
+    "env": {
+      "$ref": "#/$defs/EnvVars"
+    },
+    "volumes": {
+      "$ref": "#/$defs/Volumes"
+    },
+    "volume_mounts": {
+      "$ref": "#/$defs/VolumeMounts"
     }
   },
   "required": [
@@ -289,6 +301,15 @@
             "multi-process",
             "single-process"
           ]
+        },
+        "env": {
+          "$ref": "#/$defs/EnvVars"
+        },
+        "volumes": {
+          "$ref": "#/$defs/Volumes"
+        },
+        "volume_mounts": {
+          "$ref": "#/$defs/VolumeMounts"
         }
       },
       "required": [
@@ -296,6 +317,7 @@
       ]
     },
     "Host": {
+      "additionalProperties": true,
       "type": "object",
       "properties": {
         "driver": {
@@ -306,6 +328,15 @@
             "legacy_ebpf",
             "universal_ebpf"
           ]
+        },
+        "env": {
+          "$ref": "#/$defs/EnvVars"
+        },
+        "volumes": {
+          "$ref": "#/$defs/Volumes"
+        },
+        "volume_mounts": {
+          "$ref": "#/$defs/VolumeMounts"
         }
       },
       "required": [
@@ -884,6 +915,75 @@
             }
           }
         }
+      }
+    },
+    "EnvVars": {
+      "type": "array",
+      "items": {
+        "additionalProperties": false,
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the environment variable"
+          },
+          "value": {
+            "type": "string",
+            "description": "The value of the environment variable"
+          }
+        },
+        "required": [
+          "name",
+          "value"
+        ]
+      }
+    },
+    "Volumes": {
+      "type": "array",
+      "description": "Additional volumes to be mounted in the containers",
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the volume"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      }
+    },
+    "VolumeMounts": {
+      "type": "array",
+      "description": "Define additional volume mounts to be used by the Cluster Shield pods",
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the volume"
+          },
+          "mountPath": {
+            "type": "string",
+            "description": "The path where the volume will be mounted"
+          },
+          "subPath": {
+            "type": "string",
+            "description": "The subpath of the volume to mount"
+          },
+          "readOnly": {
+            "type": "boolean",
+            "description": "Set the volume read-only",
+            "default": false
+          }
+        },
+        "required": [
+          "name",
+          "mountPath"
+        ]
       }
     }
   }

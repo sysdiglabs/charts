@@ -261,6 +261,12 @@ host:
     # The update strategy
     type: RollingUpdate
     rollingUpdate: {}
+  # The custom environment variables for the host shield
+  env: []
+  # The custom volumes for the host shield
+  volumes: []
+  # The custom volume mounts for the host shield
+  volume_mounts: []
 
 cluster:
   image:
@@ -364,6 +370,12 @@ cluster:
 
   # Define Cluster Shield Pods DNS Policy
   dns_policy:
+  # The custom environment variables for cluster shield
+  env: []
+  # The custom volumes for cluster shield
+  volumes: []
+  # The custom volume mounts for cluster shield
+  volume_mounts: []
 
 ssl:
   # Enable SSL verification
@@ -424,6 +436,12 @@ node_selector: {}
 tolerations: []
 # The affinity for the all the workloads
 affinity: {}
+# The environment variables for the all the workloads
+env: []
+# The volumes to mount for all the workloads
+volumes: []
+# The volume mounts for all the workloads
+volume_mounts: []
 
 name_override:
 fullname_override:

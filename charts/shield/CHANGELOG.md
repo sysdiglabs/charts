@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.1.6
+### New Features
+* **shield** [af7d38c5](https://github.com/sysdiglabs/charts/commit/af7d38c5d38d51d7d96077c076e8b0234a4aa72c): allow custom env vars and volume mounts ([#1974](https://github.com/sysdiglabs/charts/issues/1974))
 # v0.1.5
 ### Bug Fixes
 * **shield** [8e5567de](https://github.com/sysdiglabs/charts/commit/8e5567de21f80bc1fad05d46aa7cf1deed31ef95): add default host shield tolerations and affinity ([#1968](https://github.com/sysdiglabs/charts/issues/1968))

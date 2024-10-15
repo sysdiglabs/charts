@@ -10,6 +10,18 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.66.6
+### Chores
+* **sysdig-deploy** [c95f2b41](https://github.com/sysdiglabs/charts/commit/c95f2b41c39ad8707d279c375c4d6523ac370292): Automatic version bump due to updated dependencies ([#1981](https://github.com/sysdiglabs/charts/issues/1981))
+# v1.66.5
+### Chores
+* **sysdig-deploy** [28498fc5](https://github.com/sysdiglabs/charts/commit/28498fc5b0f7773c5b224049f682a6674904ade1): Automatic version bump due to updated dependencies ([#1980](https://github.com/sysdiglabs/charts/issues/1980))
+# v1.66.4
+### Chores
+* **sysdig-deploy** [e208e4ed](https://github.com/sysdiglabs/charts/commit/e208e4ed5c97dfc772797842a0fad3f95f766163): Automatic version bump due to updated dependencies ([#1978](https://github.com/sysdiglabs/charts/issues/1978))
+# v1.66.3
+### Bug Fixes
+* **node-analyzer** [3d2c44c3](https://github.com/sysdiglabs/charts/commit/3d2c44c3af90b4c9a6296cee4cb46d4e02fddd11): Bump nodeanalyzer to 1.44.10 ([#1975](https://github.com/sysdiglabs/charts/issues/1975))
 # v1.66.2
 ### Chores
 * **sysdig-deploy** [01c83d1c](https://github.com/sysdiglabs/charts/commit/01c83d1cfae64b39d2625f599f29a63ac240a6ab): Automatic version bump due to updated dependencies ([#1971](https://github.com/sysdiglabs/charts/issues/1971))

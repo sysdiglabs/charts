@@ -78,7 +78,7 @@ clusterName: ""
 
 image:
   repository: sysdig/kspm-collector
-  tag: 1.39.4
+  tag: 1.39.5
   digest:
   registry: quay.io
   pullPolicy:

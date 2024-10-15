@@ -157,6 +157,7 @@ spec:
                   name: {{ include "host.rapid_response_secret" . }}
                   key: password
             {{- end }}
+            {{- include "host.env" . | nindent 12 }}
           readinessProbe:
             httpGet:
               host: 127.0.0.1
@@ -237,6 +238,7 @@ spec:
               name: local-forwarder-config
               subPath: local_forwarder_config.yaml
           {{- end }}
+          {{- include "host.volume_mounts" . | nindent 12 }}
       volumes:
       {{- /* Always requested */}}
         - name: dev-vol
@@ -350,3 +352,4 @@ spec:
               - key: local_forwarder_config.yaml
                 path: local_forwarder_config.yaml
       {{- end }}
+      {{- include "host.volumes" . | nindent 8 }}

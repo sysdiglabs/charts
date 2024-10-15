@@ -273,3 +273,19 @@ existingTLSSecret:
   tlsCertKeyName:
   # Provide the certificate authority filename that is defined inside the existing Secret (default ca.crt)
   caCertName:
+# Optional parameter used to add environment variables to the Cluster Shield pods
+env: []
+# - name: MY_ENV_VAR
+#   value: my-env-var-value
+
+# Optional parameter to specify additional host volumes for the Cluster Shield pods
+volumes: []
+# - name: my-volume
+#   hostPath:
+#     path: /path/to/host/folder
+
+# Optional parameter to specify additional volume mounts for the Cluster Shield pods
+volumeMounts: []
+# - name: my-volume
+#   mountPath: /host/path/to/mount/folder
+#   readOnly: true
