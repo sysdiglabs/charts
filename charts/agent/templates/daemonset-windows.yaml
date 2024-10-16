@@ -38,11 +38,19 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.windows.image.registry }}/{{ .Values.windows.image.repository }}:{{ .Values.windows.image.tag }}"
           imagePullPolicy: {{ .Values.windows.image.pullPolicy | default .Values.global.image.pullPolicy }}
+          livenessProbe:
+            httpGet:
+              host: 127.0.0.1
+              path: /healthz
+              port: 24483
+            initialDelaySeconds: 60
+            periodSeconds: 30
+            timeoutSeconds: 10
           readinessProbe:
             httpGet:
               host: 127.0.0.1
               path: /healthz
-              port: 24484
+              port: 24483
             initialDelaySeconds: 60
             timeoutSeconds: 10
           resources:
