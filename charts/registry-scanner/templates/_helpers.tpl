@@ -138,3 +138,24 @@ Fail if cronjob.timeZone is set for Kubernetes < 1.24
     {{ fail "cronjob.timeZone was specified but kubernetes version is smaller than 1.24." }}
   {{- end }}
 {{- end }}
+{{/*
+Check cronjob value
+*/}}
+{{- define "registry-scanner.checkCronSchedule" -}}
+  {{- $schedule := .Values.cronjob.schedule}}
+  {{- $parts := splitList " " $schedule -}}
+
+  {{- if eq (len $parts) 5 -}}
+    {{- $minute := index $parts 0 -}}
+    {{- $hour := index $parts 1 -}}
+    {{- $dayOfMonth := index $parts 2 -}}
+    {{- $month := index $parts 3 -}}
+    {{- $dayOfWeek := index $parts 4 -}}
+
+    {{- if and (eq $dayOfMonth "*" ) (eq $dayOfWeek "*") (eq $month "*") -}}}
+      {{- printf "WARNING: You have configured the registry scanner to run on a schedule of '%s'. Running the scanner more often than every 24 hours can increase the load on your registry. The recommended configuration is to perform a scan weekly." $schedule | fail}}
+    {{- end -}}
+  {{- else -}}
+    {{- print "Error: Wrong cronjob format." | quote }}
+  {{- end -}}
+{{- end -}}
