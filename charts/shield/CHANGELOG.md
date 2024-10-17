@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.1.8
+### Bug Fixes
+* **shield** [aa91cf17](https://github.com/sysdiglabs/charts/commit/aa91cf17a79b6cc952a069106b7db1377834cd99): Fix cluster name & execute unit test in CI for the shield chart ([#1986](https://github.com/sysdiglabs/charts/issues/1986))
 # v0.1.7
 ### New Features
 * **shield** [b4aac2cc](https://github.com/sysdiglabs/charts/commit/b4aac2cc07965aaa5e91b33568a042cc16b8bf9c): add local forwarder support to host shield  in shield chart ([#1972](https://github.com/sysdiglabs/charts/issues/1972))
