@@ -89,7 +89,7 @@ spec:
               {{ toYaml .Values.slim.resources | nindent 12 }}
             {{- end }}
           env:
-          {{- if or (include "agent.ebpfEnabled" .) (include "agent.gke.autopilot" .) }}
+          {{- if (include "agent.ebpfEnabled" .) }}
             - name: SYSDIG_BPF_PROBE
               value:
           {{- end }}
@@ -195,14 +195,14 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: spec.nodeName
-            {{- if and (or (include "agent.ebpfEnabled" .) (include "agent.gke.autopilot" .)) (not (include "agent.universalEbpfEnforced" . )) }}
+            {{- if and (include "agent.ebpfEnabled" .) (not (include "agent.universalEbpfEnforced" . )) }}
             - name: SYSDIG_BPF_PROBE
               value:
             {{- end }}
-            {{- if and (include "agent.universalEbpfEnforced" .) (not (include "agent.gke.autopilot" .)) }}
+            {{- if (include "agent.universalEbpfEnforced" .) }}
             - name: SYSDIG_AGENT_DRIVER
               value: universal_ebpf
-            {{- else if and (include "agent.legacyEbpfEnforced" .) (not (include "agent.gke.autopilot" .)) }}
+            {{- else if (include "agent.legacyEbpfEnforced" .) }}
             - name: SYSDIG_AGENT_DRIVER
               value: legacy_ebpf
             {{- end }}
@@ -248,15 +248,10 @@ spec:
           {{- end }}
           {{- end }}
           readinessProbe:
-            {{- if eq (include "agent.enableHttpProbes" .) "true" }}
             httpGet:
               host: 127.0.0.1
               path: /healthz
               port: 24483
-            {{- else }}
-            exec:
-              command: [ "test", "-e", "/opt/draios/logs/running" ]
-            {{- end }}
             initialDelaySeconds: {{ .Values.daemonset.probes.initialDelay }}
             periodSeconds: {{ .Values.daemonset.probes.periodDelay }}
             failureThreshold: {{ .Values.daemonset.probes.failureThreshold }}
@@ -284,10 +279,8 @@ spec:
               name: sysdig-agent-config
             - mountPath: /opt/draios/etc/kubernetes/secrets
               name: sysdig-agent-secrets
-            {{- if and (include "agent.httpProxyCredentials" .) (not (include "agent.gke.autopilot" .)) }}
             - mountPath: /opt/draios/etc/secrets/http_proxy
               name: sysdig-agent-http-proxy-secrets
-            {{- end }}
             - mountPath: /etc/podinfo
               name: podinfo
 
@@ -396,6 +389,10 @@ spec:
           configMap:
             name: {{ include "agent.configmapName" . }}
             optional: true
+        - name: sysdig-agent-http-proxy-secrets
+          secret:
+            secretName: {{ template "agent.fullname" . }}-proxy
+            optional: true
         {{- if .Values.localForwarder.enabled }}
         - name: local-forwarder-config
           configMap:
@@ -409,11 +406,6 @@ spec:
             {{- else }}
             secretName: {{ include "agent.accessKeySecret" . }}
             {{- end }}
-        {{- if and (include "agent.httpProxyCredentials" .) (not (include "agent.gke.autopilot" .)) }}
-        - name: sysdig-agent-http-proxy-secrets
-          secret:
-            secretName: {{ template "agent.fullname" . }}-proxy
-        {{- end }}
         - name: podinfo
           downwardAPI:
             defaultMode: 420

@@ -280,7 +280,7 @@ Check for all COS nodes or a flag to enable eBPF. If false, return nothing so
 it can act like a boolean
 */}}
 {{- define "agent.ebpfEnabled" -}}
-  {{- if (or (eq "true" (include "agent.isAllCos" .)) .Values.ebpf.enabled) -}}
+  {{- if (or (eq "true" (include "agent.isAllCos" .)) (include "agent.gke.autopilot" .) .Values.ebpf.enabled) -}}
     true
   {{- end -}}
 {{- end -}}
@@ -597,14 +597,6 @@ true
 {{- include "agent.configmapName" . | trunc 46 | trimSuffix "-" | printf "%s-local-forwarder" }}
 {{- end }}
 
-{{- define "agent.enableHttpProbes" }}
-{{- if not (include "agent.gke.autopilot" .) }}
-{{- if and (include "agent.isSemVer" .Values.image.tag) (semverCompare ">= 12.18.0-0" .Values.image.tag) }}
-{{- printf "true" -}}
-{{- end }}
-{{- end }}
-{{- end }}
-
 {{- define "agent.enableFalcoBaselineSecureLight" }}
 {{- if and (include "agent.isSemVer" .Values.image.tag) (semverCompare ">= 12.19.0-0" .Values.image.tag) }}
 {{- printf "true" -}}
@@ -635,7 +627,7 @@ annotations:
       - image tag not semver: go on at user's risk
 */}}
 {{- define "agent.privileged" }}
-  {{- if or .Values.privileged (include "agent.gke.autopilot" .) }}
+  {{- if .Values.privileged }}
     {{- /* OK */ -}}
     {{- print "true" }}
   {{- else }}
