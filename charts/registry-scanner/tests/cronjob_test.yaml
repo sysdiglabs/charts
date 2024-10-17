@@ -121,3 +121,20 @@ tests:
       - failedTemplate:
           # errorMessage: spec.timeZone
           errorMessage: "cronjob.timeZone was specified but kubernetes version is smaller than 1.24."
+
+  - it: sets cronjob schedule more often than 24h
+    set:
+      cronjob.schedule: "0 0 * * *"
+    asserts:
+      - failedTemplate:
+          errorMessage: "WARNING: You have configured the registry scanner to run on a schedule of '0 0 * * *'. \
+           Running the scanner more often than every 24 hours can increase the load on your registry. \
+           The recommended configuration is to perform a scan weekly."
+
+  - it: sets cronjob schedule less often than 24h
+    set:
+      cronjob.schedule: "0 0 1 * *"
+    asserts:
+      - equal:
+          path: spec.schedule
+          value: "0 0 1 * *"
