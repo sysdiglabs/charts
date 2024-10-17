@@ -663,6 +663,40 @@ annotations:
   {{- end }}
 {{- end }}
 
+{{/*
+  - .Values.windows.tag is < 1.2.0:
+    - livenessProbe port 24484
+    - readinessProbe port 24484
+  - .Values.windows.tag is >= 1.2.0:
+    - livenessProbe port 24483
+    - readinessProbe port 24483
+*/}}
+{{- define "compareWindowsVersions" -}}
+  {{- $version := default "0.0.0" .Version -}}
+  {{- $compareVersion := default "1.3.0" .CompareVersion -}}
+  {{- $version_str := printf "%s" $version -}}
+  {{- $versionParts := split "." $version_str -}}
+  {{- $compareParts := split "." $compareVersion -}}
+
+  {{- $majorVersion := $versionParts._0 | int -}}
+  {{- $minorVersion := $versionParts._1 | int -}}
+  {{- $patchVersion := $versionParts._2 | int -}}
+
+  {{- $compareMajor := $compareParts._0 | int -}}
+  {{- $compareMinor := $compareParts._1 | int -}}
+  {{- $comparePatch := $compareParts._2 | int -}}
+
+  {{- if gt $majorVersion $compareMajor -}}
+  24483
+  {{- else if and (eq $majorVersion $compareMajor) (gt $minorVersion $compareMinor) -}}
+  24483
+  {{- else if and (eq $majorVersion $compareMajor) (eq $minorVersion $compareMinor) (le $patchVersion $comparePatch) -}}
+  24483
+  {{- else -}}
+  24484
+  {{- end -}}
+{{- end -}}
+
 {{- define "agent.capabilities" -}}
 - SYS_ADMIN
 - SYS_RESOURCE
