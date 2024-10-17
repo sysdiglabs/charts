@@ -4,9 +4,9 @@
 
 The Node Analyzer provides a method for deploying the components for the following Sysdig Secure features:
 
-- [Runtime Scanning](https://docs.sysdig.com/en/docs/installation/sysdig-secure/#runtime-scanning)
-- [Host Scanning](https://docs.sysdig.com/en/docs/installation/sysdig-secure/#vulnerability-host-scanning)
-- [KSPM Analyzer](https://docs.sysdig.com/en/docs/installation/sysdig-secure/#compliance)
+- [Runtime Scanning](https://docs.sysdig.com//en/runtime)
+- [Host Scanning](https://docs.sysdig.com/en/host-scan/
+- [KSPM Analyzer](https://docs.sysdig.com/en/compliance/)
 
 This chart adds the Sysdig Node Analyzer to all nodes in your cluster via a DaemonSet. The Node Analyzer is deployed by default unless you set the value `nodeAnalyzer.deploy` to `false`.
 
