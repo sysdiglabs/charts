@@ -66,7 +66,7 @@
 
 {{- define "host.configmap" }}
 {{- $config := dict
-  "cluster_name" .Values.cluster_config.name
+  "k8s_cluster_name" .Values.cluster_config.name
   "collector" (include "common.collector_endpoint" .)
   "collector_port" .Values.sysdig_endpoint.collector.port }}
 {{- $config = merge $config (dict "sysdig_api_endpoint" (include "common.secure_api_endpoint" .)) }}
