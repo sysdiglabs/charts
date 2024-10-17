@@ -609,6 +609,16 @@ tests:
             long_float: 95.12345678912322
             long_int: 9545013498239122
 
+  - it: Set Cluster name
+    set:
+      cluster_config:
+        name: demo-cluster
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            k8s_cluster_name: demo-cluster
+
   - it: Set API endpoint
     set:
       sysdig_endpoint:
