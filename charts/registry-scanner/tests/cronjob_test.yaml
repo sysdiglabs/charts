@@ -144,7 +144,7 @@ tests:
     asserts:
       - equal:
           path: spec.schedule
-          value: "0 0 1 4 *"  
+          value: "0 0 1 4 *"
   - it: sets cronjob schedule less often than 24h and slash
     set:
       cronjob.schedule: "0 1/2 * * *"
