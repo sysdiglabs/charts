@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **registry-scanner** [8aadffd0](https://github.com/sysdiglabs/charts/commit/8aadffd0460d8633d402a645ad4f3b4ac3f2c059): Update to v0.5.0 ([#1925](https://github.com/sysdiglabs/charts/issues/1925))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-1.3.5...registry-scanner-1.4.0
+### New Features
+- **registry-scanner** [2ebd7855](https://github.com/sysdiglabs/charts/commit/2ebd7855670ec0ed53b7c6b0ef70e3a0a630bd81): check cronjob frequency to avoid misuse ([#1983](https://github.com/sysdiglabs/charts/issues/1983))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-1.4.0...registry-scanner-1.4.1
