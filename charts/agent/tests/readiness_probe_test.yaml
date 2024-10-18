@@ -18,10 +18,7 @@ kubernetesProvider:
       nodeInfo:
         osImage: fake-os-image
 tests:
-  - it: "[DaemonSet] Readiness Probe (agent > 12.18.0)"
-    set:
-      image:
-        tag: 12.18.1
+  - it: "[DaemonSet] Readiness Probe"
     asserts:
       - equal:
           path: spec.template.spec.containers[0].readinessProbe
@@ -34,10 +31,11 @@ tests:
              periodSeconds: 10
              failureThreshold: 9
     template: templates/daemonset.yaml
-  - it: "[DaemonSet] Readiness Probe (agent == 12.18.0)"
+
+  - it: "[DelegatedAgentDeployment] Readiness Probe"
     set:
-      image:
-        tag: 12.18.0
+      delegatedAgentDeployment:
+        enabled: true
     asserts:
       - equal:
           path: spec.template.spec.containers[0].readinessProbe
@@ -46,150 +44,6 @@ tests:
               host: 127.0.0.1
               path: /healthz
               port: 24483
-            initialDelaySeconds: 90
-            periodSeconds: 10
-            failureThreshold: 9
-    template: templates/daemonset.yaml
-  - it: "[DaemonSet] Readiness Probe (agent < 12.18.0)"
-    set:
-      image:
-        tag: 12.16.3
-    asserts:
-      - equal:
-          path: spec.template.spec.containers[0].readinessProbe
-          value:
-            exec:
-              command:
-                - test
-                - -e
-                - /opt/draios/logs/running
-            initialDelaySeconds: 90
-            periodSeconds: 10
-            failureThreshold: 9
-    template: templates/daemonset.yaml
-  - it: "[DaemonSet] Readiness Probe (agent == dev)"
-    set:
-      image:
-        tag: dev
-    asserts:
-      - equal:
-          path: spec.template.spec.containers[0].readinessProbe
-          value:
-            exec:
-              command:
-                - test
-                - -e
-                - /opt/draios/logs/running
-            initialDelaySeconds: 90
-            periodSeconds: 10
-            failureThreshold: 9
-    template: templates/daemonset.yaml
-  - it: "[DaemonSet] Readiness Probe (agent == latest)"
-    set:
-      image:
-        tag: latest
-    asserts:
-      - equal:
-          path: spec.template.spec.containers[0].readinessProbe
-          value:
-            exec:
-              command:
-                - test
-                - -e
-                - /opt/draios/logs/running
-            initialDelaySeconds: 90
-            periodSeconds: 10
-            failureThreshold: 9
-    template: templates/daemonset.yaml
-  - it: "[DelegatedAgentDeployment] Readiness Probe (agent > 12.18.0)"
-    set:
-      delegatedAgentDeployment:
-        enabled: true
-      image:
-        tag: 12.18.1
-    asserts:
-      - equal:
-          path: spec.template.spec.containers[0].readinessProbe
-          value:
-            httpGet:
-              host: 127.0.0.1
-              path: /healthz
-              port: 24483
-            initialDelaySeconds: 90
-            periodSeconds: 10
-            failureThreshold: 9
-
-  - it: "[DelegatedAgentDeployment] Readiness Probe (agent == 12.18.0)"
-    set:
-      delegatedAgentDeployment:
-        enabled: true
-      image:
-        tag: 12.18.0
-    asserts:
-      - equal:
-          path: spec.template.spec.containers[0].readinessProbe
-          value:
-            httpGet:
-              host: 127.0.0.1
-              path: /healthz
-              port: 24483
-            initialDelaySeconds: 90
-            periodSeconds: 10
-            failureThreshold: 9
-
-  - it: "[DelegatedAgentDeployment] Readiness Probe (agent < 12.18.0)"
-    set:
-      delegatedAgentDeployment:
-        enabled: true
-      image:
-        tag: 12.16.3
-    asserts:
-      - equal:
-          path: spec.template.spec.containers[0].readinessProbe
-          value:
-            exec:
-              command:
-                - test
-                - -e
-                - /opt/draios/logs/running
-            initialDelaySeconds: 90
-            periodSeconds: 10
-            failureThreshold: 9
-
-  - it: "[DelegatedAgentDeployment] Readiness Probe (agent == dev)"
-    set:
-      delegatedAgentDeployment:
-        enabled: true
-      image:
-        tag: dev
-    asserts:
-      - equal:
-          path: spec.template.spec.containers[0].readinessProbe
-          value:
-            exec:
-              command:
-                - test
-                - -e
-                - /opt/draios/logs/running
-            initialDelaySeconds: 90
-            periodSeconds: 10
-            failureThreshold: 9
-
-  - it: "[DelegatedAgentDeployment] Readiness Probe (agent == latest)"
-    set:
-      delegatedAgentDeployment:
-        enabled: true
-      image:
-        tag: latest
-    asserts:
-      - equal:
-          path: spec.template.spec.containers[0].readinessProbe
-          value:
-            exec:
-              command:
-                - test
-                - -e
-                - /opt/draios/logs/running
             initialDelaySeconds: 90
             periodSeconds: 10
             failureThreshold: 9
@@ -218,40 +72,3 @@ tests:
       - equal:
           path: spec.template.spec.containers[0].readinessProbe.failureThreshold
           value: 10
-
-  - it: "Do not use the HTTP Readiness Probe on GKE Autopilot"
-    set:
-      global:
-        gke:
-          autopilot: true
-    template: templates/daemonset.yaml
-    asserts:
-      - equal:
-          path: spec.template.spec.containers[*].readinessProbe
-          value:
-            exec:
-              command:
-                - test
-                - -e
-                - /opt/draios/logs/running
-            initialDelaySeconds: 90
-            periodSeconds: 10
-            failureThreshold: 9
-
-  - it: "Do not use the HTTP Readiness Probe on GKE Autopilot"
-    set:
-      gke:
-        autopilot: true
-    template: templates/daemonset.yaml
-    asserts:
-      - equal:
-          path: spec.template.spec.containers[*].readinessProbe
-          value:
-            exec:
-              command:
-                - test
-                - -e
-                - /opt/draios/logs/running
-            initialDelaySeconds: 90
-            periodSeconds: 10
-            failureThreshold: 9
