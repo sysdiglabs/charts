@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.4.2
+### Bug Fixes
+* [80d9f7e6](https://github.com/sysdiglabs/charts/commit/80d9f7e629baa61611c72a71df5a77ac328c6eed): cronjob schedule check ([#1987](https://github.com/sysdiglabs/charts/issues/1987))
 # v1.4.1
 ### New Features
 * **registry-scanner** [2ebd7855](https://github.com/sysdiglabs/charts/commit/2ebd7855670ec0ed53b7c6b0ef70e3a0a630bd81): check cronjob frequency to avoid misuse ([#1983](https://github.com/sysdiglabs/charts/issues/1983))
