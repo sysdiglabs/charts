@@ -152,10 +152,11 @@ Check cronjob value
     {{- $month := index $parts 3 -}}
     {{- $dayOfWeek := index $parts 4 -}}
 
-    {{- if and (eq $dayOfMonth "*" ) (eq $dayOfWeek "*") (eq $month "*") -}}}
-      {{- printf "WARNING: You have configured the registry scanner to run on a schedule of '%s'. Running the scanner more often than every 24 hours can increase the load on your registry. The recommended configuration is to perform a scan weekly." $schedule | fail}}
+    {{- if and (eq $dayOfMonth "*" ) (eq $dayOfWeek "*") (eq $month "*") -}}
+      {{- if or ($hour | contains "*") ($hour | contains ",") ($hour | contains "-") ($hour | contains "/") -}}
+        # {{- printf "WARNING: You have configured the registry scanner to run on a schedule of '%s'. Running the scanner more often than every 24 hours can increase the load on your registry. The recommended configuration is to perform a scan weekly." $schedule | fail}}
+        {{- fail (printf "WARNING: You have configured the registry scanner to run on a schedule of '%s'. Running the scanner more often than every 24 hours can increase the load on your registry. The recommended configuration is to perform a scan weekly." $schedule) }}
+      {{- end -}}
     {{- end -}}
-  {{- else -}}
-    {{- print "Error: Wrong cronjob format." | quote }}
   {{- end -}}
 {{- end -}}
