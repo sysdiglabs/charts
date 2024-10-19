@@ -87,6 +87,18 @@
               ]
             }
           }
+        },
+        "sslVerifyCertificate": {
+          "type": [
+            "boolean",
+            "string"
+          ],
+          "enum": [
+            "true",
+            "false",
+            true,
+            false
+          ]
         }
       }
     },
