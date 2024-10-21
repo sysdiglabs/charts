@@ -99,7 +99,8 @@ Adds kubernetes related keys to the configuration.
 {{- end -}}
 {{- end -}}
 {{- if not (hasKey (default .Values.cluster_shield.ssl dict) "verify") -}}
-{{- $_ := set $conf "ssl" (dict "verify" .Values.global.sslVerifyCertificate) -}}
+{{/* Hackish way to manage boolean values as helm do not provide `toBool` function, see https://github.com/helm/helm/issues/10382 */}}
+{{- $_ := set $conf "ssl" (printf "{\"verify\": %s}" (.Values.global.sslVerifyCertificate | toString) | fromJson) -}}
 {{- end -}}
 {{- if not .Values.cluster_shield.cluster_config.name -}}
 {{- if .Values.global.clusterConfig.name -}}

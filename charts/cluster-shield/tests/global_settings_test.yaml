@@ -52,3 +52,33 @@ tests:
           pattern: |-
             sysdig_endpoint:
               api_url: https://www.global-example.org
+
+  - it: Test genrated type with global ssl (string)
+    set:
+      global:
+        sslVerifyCertificate: "false"
+    asserts:
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: sysdig-cluster-shield
+      - matchRegex:
+          path: data["cluster-shield.yaml"]
+          pattern: |-
+            ssl:
+              verify: false
+
+  - it: Test genrated type with global ssl (bool)
+    set:
+      global:
+        sslVerifyCertificate: false
+    asserts:
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: sysdig-cluster-shield
+      - matchRegex:
+          path: data["cluster-shield.yaml"]
+          pattern: |-
+            ssl:
+              verify: false
