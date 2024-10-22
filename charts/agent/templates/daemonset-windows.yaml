@@ -42,7 +42,12 @@ spec:
             httpGet:
               host: 127.0.0.1
               path: /healthz
-              port: {{ include "compareWindowsVersions" (dict "Version" .Values.windows.image.tag "CompareVersion" "1.3.0") }}
+              port:
+                { { - if include "agent.enableWindowsProbesSinglePort" . } }
+                  24483
+                { { - else } }
+                  24484
+                { { - end } }
             initialDelaySeconds: 60
             periodSeconds: 30
             timeoutSeconds: 10
@@ -50,7 +55,12 @@ spec:
             httpGet:
               host: 127.0.0.1
               path: /healthz
-              port: {{ include "compareWindowsVersions" (dict "Version" .Values.windows.image.tag "CompareVersion" "1.3.0") }}
+              port:
+                { { - if include "agent.enableWindowsProbesSinglePort" . } }
+                  24483
+                { { - else } }
+                  24484
+                { { - end } }
             initialDelaySeconds: 60
             timeoutSeconds: 10
           resources:
