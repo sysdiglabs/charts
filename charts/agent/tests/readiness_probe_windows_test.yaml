@@ -59,3 +59,17 @@ tests:
       - equal:
           path: spec.template.spec.containers[0].readinessProbe.httpGet.port
           value: 24483
+
+  - it: "Windows Agent Probes (agent = 86dedf6)"
+    set:
+      windows:
+        enabled: true
+        image:
+          tag: 86dedf6
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].livenessProbe.httpGet.port
+          value: 24483
+      - equal:
+          path: spec.template.spec.containers[0].readinessProbe.httpGet.port
+          value: 24483
