@@ -1,0 +1,61 @@
+suite: Test the Readiness Probe Configuration
+templates:
+  - templates/daemonset-windows.yaml
+kubernetesProvider:
+  scheme:
+    "v1/Node":
+      gvr:
+        version: "v1"
+        resource: "nodes"
+      namespaced: false
+  objects:
+  - apiVersion: v1
+    kind: Node
+    metadata:
+      name: fakenode
+    status:
+      nodeInfo:
+        osImage: fake-os-image
+tests:
+
+  - it: "Windows Agent Probes (agent < 1.3.0)"
+    set:
+      windows:
+        enabled: true
+        image:
+          tag: 1.2.5
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[*].livenessProbe.httpGet.port
+          value: 24484
+      - equal:
+          path: spec.template.spec.containers[0].readinessProbe.httpGet.port
+          value: 24484
+
+  - it: "Windows Agent Probes (agent > 1.2.0)"
+    set:
+      windows:
+        enabled: true
+        image:
+          tag: 1.3.0
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].livenessProbe.httpGet.port
+          value: 24483
+      - equal:
+          path: spec.template.spec.containers[0].readinessProbe.httpGet.port
+          value: 24483
+
+  - it: "Windows Agent Probes (agent = latest)"
+    set:
+      windows:
+        enabled: true
+        image:
+          tag: latest
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].livenessProbe.httpGet.port
+          value: 24483
+      - equal:
+          path: spec.template.spec.containers[0].readinessProbe.httpGet.port
+          value: 24483
