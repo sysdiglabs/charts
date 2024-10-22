@@ -43,11 +43,11 @@ spec:
               host: 127.0.0.1
               path: /healthz
               port:
-                { { - if include "agent.enableWindowsProbesSinglePort" . } }
-                  24483
-                { { - else } }
+                {{- if include "agent.enableWindowsProbesSinglePort" . }}
                   24484
-                { { - end } }
+                {{- else }}
+                  24483
+                {{- end }}
             initialDelaySeconds: 60
             periodSeconds: 30
             timeoutSeconds: 10
@@ -56,11 +56,11 @@ spec:
               host: 127.0.0.1
               path: /healthz
               port:
-                { { - if include "agent.enableWindowsProbesSinglePort" . } }
-                  24483
-                { { - else } }
+                {{- if include "agent.enableWindowsProbesSinglePort" . }}
                   24484
-                { { - end } }
+                {{- else }}
+                  24483
+                {{- end }}
             initialDelaySeconds: 60
             timeoutSeconds: 10
           resources:
