@@ -1,0 +1,4 @@
+## Append samples of your project ##
+resources:
+- shield_v1alpha1_shield.yaml
+#+kubebuilder:scaffold:manifestskustomizesamples
