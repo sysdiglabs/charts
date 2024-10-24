@@ -1,0 +1,269 @@
+apiVersion: shield.sysdig.com/v1alpha1
+kind: Shield
+metadata:
+  name: shield-sample
+spec:
+  # Default values copied from <project_dir>/helm-charts/shield/values.yaml
+  affinity: {}
+  cluster:
+    additional_settings:
+      log_level: info
+      monitoring_port: 8080
+    admissionregistration:
+      create: true
+    affinity: {}
+    dns_policy: null
+    enable_prometheus_scraping: true
+    env: []
+    host_network: false
+    image:
+      pull_policy: IfNotPresent
+      pull_secrets: []
+      registry: quay.io
+      repository: sysdig/cluster-shield
+      tag: 1.4.0
+    node_selector: {}
+    pod_annotations: {}
+    pod_labels: {}
+    priority_class:
+      annotations: {}
+      create: false
+      labels: {}
+      name: null
+      value: 10
+    probes:
+      liveness:
+        failureThreshold: 9
+        initialDelaySeconds: 5
+        periodSeconds: 5
+      readiness:
+        failureThreshold: 9
+        initialDelaySeconds: 10
+        periodSeconds: 5
+    rbac:
+      annotations: {}
+      create: true
+      labels: {}
+      service_account_name: null
+    replica_count: 2
+    resources:
+      limits:
+        cpu: 1500m
+        memory: 1536Mi
+      requests:
+        cpu: 500m
+        memory: 512Mi
+    run_mode: multi-process
+    tls_certificates:
+      create: true
+      secret_name: null
+    tolerations: []
+    update_strategy:
+      rollingUpdate: {}
+      type: RollingUpdate
+    volume_mounts: []
+    volumes: []
+    workload_annotations: {}
+    workload_labels: {}
+  cluster_config:
+    cluster_domain: cluster.local
+    cluster_type: other
+    name: null
+    root_namespace: kube-system
+    tags: {}
+  env: []
+  features:
+    admission_control:
+      container_vulnerability_management:
+        enabled: false
+      deny_on_error: false
+      dry_run: true
+      enabled: false
+      excluded_namespaces: []
+      http_port: 8443
+      timeout: 10
+    detections:
+      drift_control:
+        enabled: false
+      kubernetes_audit:
+        enabled: false
+        excluded_namespaces: []
+        http_port: 6443
+        timeout: 10
+      malware_control:
+        enabled: false
+      ml_policies:
+        enabled: false
+    investigations:
+      activity_audit:
+        enabled: false
+      audit_tap:
+        enabled: false
+      captures:
+        enabled: false
+      event_forwarder:
+        enabled: false
+        integrations: []
+        transmit_message_types: []
+      live_logs:
+        enabled: false
+      network_security:
+        enabled: false
+    kubernetes_metadata:
+      enabled: false
+    monitoring:
+      app_checks:
+        enabled: false
+      java_management_extensions:
+        enabled: false
+      prometheus:
+        enabled: false
+      statsd:
+        enabled: false
+    posture:
+      cluster_posture:
+        enabled: false
+      host_posture:
+        enabled: false
+    responding:
+      rapid_response:
+        enabled: false
+    vulnerability_management:
+      container_vulnerability_management:
+        enabled: false
+        local_cluster:
+          registry_secrets: []
+        platform_services_enabled: true
+        registry_ssl:
+          verify: true
+      host_vulnerability_management:
+        enabled: false
+      in_use:
+        enabled: false
+        integration_enabled: false
+  fullname_override: null
+  host:
+    additional_settings: {}
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: kubernetes.io/arch
+              operator: In
+              values:
+              - amd64
+              - arm64
+              - ppc64le
+              - s390x
+            - key: kubernetes.io/os
+              operator: In
+              values:
+              - linux
+    driver: kmod
+    env: []
+    image:
+      kmodule_name: agent-kmodule
+      pull_policy: IfNotPresent
+      pull_secrets: []
+      registry: quay.io
+      repository: sysdig
+      shield_name: agent-slim
+      tag: 13.4.0
+    node_selector: {}
+    pod_annotations: {}
+    pod_labels: {}
+    priority_class:
+      annotations: {}
+      create: false
+      labels: {}
+      name: null
+      value: 10
+    privileged: true
+    probes:
+      liveness:
+        failureThreshold: 9
+        initialDelaySeconds: 90
+        periodSeconds: 10
+      readiness:
+        failureThreshold: 9
+        initialDelaySeconds: 90
+        periodSeconds: 10
+    rbac:
+      annotations: {}
+      create: true
+      labels: {}
+      service_account_name: null
+    resources:
+      kmodule:
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+        requests:
+          cpu: 250m
+          memory: 384Mi
+      shield:
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+        requests:
+          cpu: 250m
+          memory: 384Mi
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/control-plane
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/controlplane
+      operator: Equal
+      value: "true"
+    - effect: NoExecute
+      key: node-role.kubernetes.io/etcd
+      operator: Equal
+      value: "true"
+    - effect: NoExecute
+      key: CriticalAddonsOnly
+      operator: Equal
+      value: "true"
+    update_strategy:
+      rollingUpdate: {}
+      type: RollingUpdate
+    volume_mounts: []
+    volumes: []
+    workload_annotations: {}
+    workload_labels: {}
+  name_override: null
+  node_selector: {}
+  on_prem_version: null
+  pod_annotations: {}
+  pod_labels: {}
+  proxy:
+    http_proxy: null
+    http_proxy_existing_secret: null
+    https_proxy: null
+    https_proxy_existing_secret: null
+    no_proxy: null
+    no_proxy_existing_secret: null
+  ssl:
+    ca:
+      certs: []
+      existing_ca_secret: null
+      existing_ca_secret_key_name: null
+      key_name: null
+    verify: true
+  sysdig_endpoint:
+    access_key: null
+    access_key_existing_secret: null
+    api_url: null
+    collector:
+      host: null
+      port: null
+    region: custom
+    secure_api_token: null
+    secure_api_token_existing_secret: null
+  tolerations: []
+  volume_mounts: []
+  volumes: []
+  workload_annotations: {}
+  workload_labels: {}

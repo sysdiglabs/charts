@@ -1,0 +1,23 @@
+# permissions for end users to view shields.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: rh-shield-operator
+    app.kubernetes.io/managed-by: kustomize
+  name: shield-viewer-role
+rules:
+- apiGroups:
+  - shield.sysdig.com
+  resources:
+  - shields
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - shield.sysdig.com
+  resources:
+  - shields/status
+  verbs:
+  - get
