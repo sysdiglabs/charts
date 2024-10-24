@@ -401,6 +401,6 @@ tests:
   timeout: 300s
   image:
     repo: bitnami/kubectl
-    tag: 1.31.1
+    tag: 1.31.2
 # Allow to modify DNS policy
 dnsPolicy: null
