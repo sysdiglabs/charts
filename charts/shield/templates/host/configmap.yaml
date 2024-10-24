@@ -6,7 +6,7 @@ metadata:
   labels:
     {{- include "host.labels" . | nindent 4 }}
 data:
-  host_shield_config.yaml: |
+  host-shield.yaml: |
     {{- include "host.host_shield_config" . | nindent 4 }}
   dragent.yaml: |
     {{- include "host.configmap" . | nindent 4 }}

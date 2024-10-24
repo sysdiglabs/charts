@@ -1,4 +1,4 @@
-suite: Host - Configmap [host_shield_config.yaml]
+suite: Host - Configmap [host-shield.yaml]
 templates:
   - templates/host/configmap.yaml
 release:
@@ -17,7 +17,7 @@ tests:
   - it: Everything is disabled by default
     asserts:
       - matchRegex:
-          path: data['host_shield_config.yaml']
+          path: data['host-shield.yaml']
           pattern: |
             features:
               detections:
@@ -44,7 +44,7 @@ tests:
             enabled: true
     asserts:
       - matchRegex:
-          path: data['host_shield_config.yaml']
+          path: data['host-shield.yaml']
           pattern: |
             features:
               detections:
@@ -71,7 +71,7 @@ tests:
             enabled: false
     asserts:
       - matchRegex:
-          path: data['host_shield_config.yaml']
+          path: data['host-shield.yaml']
           pattern: |
             features:
               detections:
@@ -98,7 +98,7 @@ tests:
             enabled: true
     asserts:
       - matchRegex:
-          path: data['host_shield_config.yaml']
+          path: data['host-shield.yaml']
           pattern: |
             features:
               detections:
@@ -125,7 +125,7 @@ tests:
             enabled: false
     asserts:
       - matchRegex:
-          path: data['host_shield_config.yaml']
+          path: data['host-shield.yaml']
           pattern: |
             features:
               detections:
@@ -147,7 +147,7 @@ tests:
   - it: Host Vulnerability Management is disabled by default
     asserts:
       - matchRegex:
-          path: data['host_shield_config.yaml']
+          path: data['host-shield.yaml']
           pattern: |
             features:
               detections:
@@ -177,7 +177,7 @@ tests:
             enabled: true
     asserts:
       - matchRegex:
-          path: data['host_shield_config.yaml']
+          path: data['host-shield.yaml']
           pattern: |-
             features:
               detections:
@@ -206,7 +206,7 @@ tests:
             enabled: true
     asserts:
       - matchRegex:
-          path: data['host_shield_config.yaml']
+          path: data['host-shield.yaml']
           pattern: |-
             features:
               detections:
@@ -233,7 +233,7 @@ tests:
             enabled: true
     asserts:
       - matchRegex:
-          path: data['host_shield_config.yaml']
+          path: data['host-shield.yaml']
           pattern: |-
             features:
               detections:
@@ -260,7 +260,7 @@ tests:
             enabled: true
     asserts:
       - matchRegex:
-          path: data['host_shield_config.yaml']
+          path: data['host-shield.yaml']
           pattern: |-
             features:
               detections:
