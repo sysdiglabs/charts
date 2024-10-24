@@ -34,22 +34,33 @@ global:
       #       NjExWjAUMRIwEAYDVQQDEwloYXJib3ItY2EwggEiMA0GCSqGSIb3DQEBAQUAA4IB
       #       MMNlTAQ9fvdNOTzZntye0PQYRTTS34D=
       #       -----END CERTIFICATE-----
+
       # Filename that is used when creating the secret.  Required if cert is provided.
-      keyName: null # Provide the name of an existing Secret that contains the CA required
-      existingCaSecret: null # Provide the filename that is defined inside the existing Secret.  Required if existingCaSecret is set.
-      existingCaSecretKeyName: null # Provide the name of an existing ConfigMap that contains the CA required
-      existingCaConfigMap: null # Provide the filename that is defined inside the existing ConfigMap.  Required if existingCaConfigMap is set.
-      existingCaConfigMapKeyName: null
+      keyName:
+
+      # Provide the name of an existing Secret that contains the CA required
+      existingCaSecret:
+      # Provide the filename that is defined inside the existing Secret.  Required if existingCaSecret is set.
+      existingCaSecretKeyName:
+
+      # Provide the name of an existing ConfigMap that contains the CA required
+      existingCaConfigMap:
+      # Provide the filename that is defined inside the existing ConfigMap.  Required if existingCaConfigMap is set.
+      existingCaConfigMapKeyName:
+
 image:
   # This is a hack to support RELATED_IMAGE_<identifier> feature in Helm based
   # Operators
   #
   # As long as I don't want to people to use this, I will keep it undocumented
-  overrideValue: null
+  overrideValue:
+
   registry: quay.io
+
 gke:
   # true here enables the deployment on gke autopilot clusters
   autopilot: false
+
 daemonset:
   # Specify custom annotations for the DaemonSet
   annotations: {}
@@ -63,57 +74,73 @@ daemonset:
     # You can also customize maxUnavailable
     rollingUpdate:
       maxUnavailable: 1
-      maxSurge: null
+      maxSurge:
+
 rbac:
   # true here enables creation of rbac resources
   create: true
+
 scc:
   # true here enables creation of Security Context Constraints in Openshift
   create: true
+
 psp:
   # true here enables creation of Pod Security Policy to allow the agent run with the required permissions
   create: true
+
 # Setting a cluster name allows you to filter events from this cluster using kubernetes.cluster.name
 clusterName: ""
+
 # Override value for the NATS service endpoint
 natsUrl: ""
+
 secure:
   # true here enables Sysdig Secure: container run-time security & forensics
   enabled: true
   vulnerabilityManagement:
     # set to true to disable the deployment of legacy components
     newEngineOnly: false
+
 sysdig:
   # Required: You need your Sysdig access key before running agents, either specifying 'accessKey' here, or using 'existingAccessKeySecret'
   accessKey: ""
   # Alternatively, specify the name of a Kubernetes secret containing an 'access-key' entry
   existingAccessKeySecret: ""
+
 namespace: ""
+
 nodeAnalyzer:
   # Create node analyzer specific serviceAccount resource
   serviceAccount:
     create: true
     # Use this value as nodeAnalyzerServiceAccountName
     name: "node-analyzer"
+
   deploy: true
+
   # The API endpoint for Sysdig Secure, specified with no protocol:
   # * SaaS default region (US East): secure.sysdig.com
   # * SaaS US Web: us2.app.sysdig.com
   # * SaaS European Union: eu1.app.sysdig.com
   # * On-Prem: sysdig.my.company.com
   apiEndpoint: ""
+
   # Can be set to false to allow insecure connections to the Sysdig backend,
   # such as for on-premise installs that use self-signed certificates.
   # By default, certificates are always verified.
   # sslVerifyCertificate: false
+
   # Can be set to true to show debug logging, useful for troubleshooting.
   debug: false
+
   # Proxy configuration variables
-  httpProxy: null
-  httpsProxy: null
-  noProxy: null # NATS max reconnect attempts
+  httpProxy:
+  httpsProxy:
+  noProxy:
+  # NATS max reconnect attempts
   natsMaxReconnect: 0
   natsMaxReconnectFailures: 60
+
   # Allow sysdig Node Image Analyzer to run on Kubernetes 1.6 masters
   tolerations:
     - effect: NoSchedule
@@ -132,46 +159,65 @@ nodeAnalyzer:
       key: CriticalAddonsOnly
       operator: Equal
       value: "true"
+
   # Specify if the Priority Class needs to be created
   createPriorityClass: false
+
   # Set nodeAnalyzer daemonset priorityClassName
-  priorityClassName: null # Set the value for the Priority Class (if it is to be created)
-  priorityClassValue: null # Allow the DaemonSet to set labels
+  priorityClassName:
+
+  # Set the value for the Priority Class (if it is to be created)
+  priorityClassValue:
+
+  # Allow the DaemonSet to set labels
   labels: {}
   # Use this pullSecret to pull images from a private registry
   pullSecrets: {}
   #   - name: myRegistryKeySecretName
+
   nodeSelector: {}
+
   # Allow the DaemonSet to schedule using affinity rules
   # Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
   affinity: {}
+
   # Allow passing extra volumes to the Node Analyzer to mount docker socket, cri-o socket, etc.
   extraVolumes:
     volumes: []
+
   imageAnalyzer:
     deploy: true
     image:
       repository: sysdig/node-image-analyzer
       tag: 0.1.35
-      digest: null
-      pullPolicy: null # Proxy configuration variables
-    httpProxy: null
-    httpsProxy: null
-    noProxy: null # The Docker socket path.
-# If a custom path is specified, ensure it is correctly mounted from the host inside the container.
-# dockerSocketPath: unix:///var/run/docker.sock
-# The socket path to a CRI compatible runtime, such as CRI-O.
-# If a custom path is specified, ensure it is correctly mounted from the host inside the container.
-# criSocketPath: unix:///var/run/crio/crio.sock
-# The socket path to a CRI-Containerd daemon.
-# If a custom path is specified, ensure it is correctly mounted from the host inside the container.
-# containerdSocketPath: unix:///var/run/containerd/containerd.sock
-# Allow passing extra volumes to the Node Image Analyzer to mount docker socket, cri-o socket, etc.
-# DEPRECATED: use nodeAnalyzer.extraVolumes instead
+      digest:
+      pullPolicy:
+
+    # Proxy configuration variables
+    httpProxy:
+    httpsProxy:
+    noProxy:
+
+    # The Docker socket path.
+    # If a custom path is specified, ensure it is correctly mounted from the host inside the container.
+    # dockerSocketPath: unix:///var/run/docker.sock
+
+    # The socket path to a CRI compatible runtime, such as CRI-O.
+    # If a custom path is specified, ensure it is correctly mounted from the host inside the container.
+    # criSocketPath: unix:///var/run/crio/crio.sock
+
+    # The socket path to a CRI-Containerd daemon.
+    # If a custom path is specified, ensure it is correctly mounted from the host inside the container.
+    # containerdSocketPath: unix:///var/run/containerd/containerd.sock
+
+    # Allow passing extra volumes to the Node Image Analyzer to mount docker socket, cri-o socket, etc.
+    # DEPRECATED: use nodeAnalyzer.extraVolumes instead
     extraVolumes:
       volumes: []
       mounts: []
+
       # Example:
+
       # volumes:
       # - name: docker-sock
       #   hostPath:
@@ -179,12 +225,14 @@ nodeAnalyzer:
       # mounts:
       # - mountPath: /var/run/docker.sock
       #   name: docker-sock
+
       # example for bottlerocket
       # volumes:
       #  - name: socketpath
       #    hostPath:
       #      path: /run/dockershim.sock
       #      type: ""
+
     resources:
       requests:
         cpu: 150m
@@ -192,24 +240,33 @@ nodeAnalyzer:
       limits:
         cpu: 500m
         memory: 1536Mi
+
     env: {}
+
   hostAnalyzer:
     deploy: true
     image:
       repository: sysdig/host-analyzer
       tag: 0.1.22
-      digest: null
-      pullPolicy: null # Proxy configuration variables
-    httpProxy: null
-    httpsProxy: null
-    noProxy: null # The scanning schedule specification for the host analyzer expressed as a crontab string such as “5 4 * * *”.
-# The default value of @dailydefault instructs the analyzer to automatically pick a schedule that will start
-# shortly after it is deployed and will perform a scan every 24 hours.
+      digest:
+      pullPolicy:
+
+    # Proxy configuration variables
+    httpProxy:
+    httpsProxy:
+    noProxy:
+
+    # The scanning schedule specification for the host analyzer expressed as a crontab string such as “5 4 * * *”.
+    # The default value of @dailydefault instructs the analyzer to automatically pick a schedule that will start
+    # shortly after it is deployed and will perform a scan every 24 hours.
     schedule: "@dailydefault"
+
     # The list of directories to inspect during the scan, expressed as a comma separated list.
     # dirsToScan: "/etc,/var/lib/dpkg,/usr/local,/usr/lib/sysimage/rpm,/var/lib/rpm,/lib/apk/db"
+
     # The number of times the analysis collector is allowed to retry sending results if backend communication fails.
     # maxSendAttempts: 3
+
     resources:
       requests:
         cpu: 150m
@@ -217,18 +274,24 @@ nodeAnalyzer:
       limits:
         cpu: 500m
         memory: 1536Mi
+
     env: {}
+
   benchmarkRunner:
     deploy: true
     includeSensitivePermissions: false
+
     image:
       repository: sysdig/compliance-benchmark-runner
       tag: 1.1.1.4
-      digest: null
-      pullPolicy: null # Proxy configuration variables
-    httpProxy: null
-    httpsProxy: null
-    noProxy: null
+      digest:
+      pullPolicy:
+
+    # Proxy configuration variables
+    httpProxy:
+    httpsProxy:
+    noProxy:
+
     resources:
       requests:
         cpu: 150m
@@ -236,28 +299,36 @@ nodeAnalyzer:
       limits:
         cpu: 500m
         memory: 256Mi
+
     env: {}
+
   runtimeScanner:
     # Note: deploy has been commented so that it will be used as hard override to newEngineOnly flag
     # but when not set, newEngineOnly will win. Desiderata examples in ./tests/runtimescanner_test.yaml
     # deploy: false
+
     # Can be set to "true" to show debug logging or "trace" to show trace logging, useful for troubleshooting.
     debug: false
+
     probesPort: 7002
     image:
       repository: sysdig/vuln-runtime-scanner
       tag: "1.8.0"
-      digest: null
-      pullPolicy: null # Proxy configuration variables
-    httpProxy: null
-    httpsProxy: null
-    noProxy: null
-    storageClassName: null
+      digest:
+      pullPolicy:
+
+    # Proxy configuration variables
+    httpProxy:
+    httpsProxy:
+    noProxy:
+
+    storageClassName:
     extraMounts: []
     # example for bottlerocket
     # extraMounts:
     #   - name: socketpath
     #     mountPath: /var/run/containerd/containerd.sock
+
     resources:
       requests:
         cpu: 150m
@@ -267,6 +338,7 @@ nodeAnalyzer:
         cpu: 1000m
         memory: 2Gi
         ephemeral-storage: "4Gi"
+
     readinessProbe:
       probe:
         initialDelaySeconds: 90
@@ -275,24 +347,30 @@ nodeAnalyzer:
       probe:
         initialDelaySeconds: 90
         periodSeconds: 3
+
     env: {}
+
     settings:
       eveEnabled: true
       # Threshold for which images will be skipped in the analysis.
       # Size is in bytes, default is not set (don't skip)
       # maxImageSizeAllowed: ""
+
       # Threshold for which files will be skipped in the analysis.
       # Fine tune this parameter if you have large files that needs to be analyzed (eg: big .JAR files)
       # Size is in bytes, default is 250MB
       maxFileSizeAllowed: "262144000"
+
     eveConnector:
       deploy: false
       image:
         repository: sysdig/eveclient-api
         tag: 1.1.4
-        digest: null
-        pullPolicy: null
-      priorityClassName: null
+        digest:
+        pullPolicy:
+
+      priorityClassName:
+
       resources:
         requests:
           cpu: 100m
@@ -300,14 +378,18 @@ nodeAnalyzer:
         limits:
           cpu: 1000m
           memory: 512Mi
+
       settings:
         replicas: 1
+
   hostScanner:
     # Note: deploy has been commented so that it will be used as hard override to newEngineOnly flag
     # but when not set, newEngineOnly will win. Desiderata examples in ./tests/hostscanner_test.yaml
     # deploy: false
+
     # Can be set to "true" to show debug logging or "trace" to show trace logging, useful for troubleshooting.
     debug: false
+
     # scanOnStart will make a scan happen at startup.
     # scanOnStart: true
     #
@@ -318,20 +400,27 @@ nodeAnalyzer:
     # additionalDirsToScan is a optional comma-separated list of directories that
     # should be analyzer in addition to default ones.
     # additionalDirsToScan: "/foo/bar/baz,/my/other/folder"
+
     # probesPort is the port where readiness and liveness probes are exposed
     probesPort: 7001
+
     image:
       repository: sysdig/vuln-host-scanner
       tag: "0.12.3"
-      digest: null
-      pullPolicy: null # Proxy configuration variables
-    httpProxy: null
-    httpsProxy: null
-    noProxy: null # Prometheus configuration
+      digest:
+      pullPolicy:
+
+    # Proxy configuration variables
+    httpProxy:
+    httpsProxy:
+    noProxy:
+
+    # Prometheus configuration
     prometheus:
       enabled: false
       # endpoint: "/metrics"
       # port: "25000"
+
     resources:
       requests:
         cpu: 150m
@@ -341,6 +430,7 @@ nodeAnalyzer:
         cpu: 150m
         memory: 150Mi
         ephemeral-storage: 250Mi
+
     readinessProbe:
       probe:
         initialDelaySeconds: 90
@@ -349,23 +439,30 @@ nodeAnalyzer:
       probe:
         initialDelaySeconds: 90
         periodSeconds: 3
+
     env: {}
+
     settings:
       replicas: 1
+
     scanContainers:
       enabled: false
       # dockerSocketPath: "unix:///var/run/docker.sock"
       # podmanSocketPath: "unix:///var/run/podman.sock"
+
   kspmAnalyzer:
     debug: false
     image:
       repository: sysdig/kspm-analyzer
       tag: 1.44.11
-      digest: null
-      pullPolicy: null # Proxy configuration variables
-    httpProxy: null
-    httpsProxy: null
-    noProxy: null
+      digest:
+      pullPolicy:
+
+    # Proxy configuration variables
+    httpProxy:
+    httpsProxy:
+    noProxy:
+
     resources:
       requests:
         cpu: 150m
@@ -373,7 +470,9 @@ nodeAnalyzer:
       limits:
         cpu: 500m
         memory: 1536Mi
+
     port: 12000
+
     readinessProbe:
       enabled: true
       probe:
@@ -384,6 +483,7 @@ nodeAnalyzer:
       probe:
         initialDelaySeconds: 90
         periodSeconds: 3
+
     env: {}
   ssl:
     ca:
@@ -406,25 +506,37 @@ nodeAnalyzer:
       #       NjExWjAUMRIwEAYDVQQDEwloYXJib3ItY2EwggEiMA0GCSqGSIb3DQEBAQUAA4IB
       #       MMNlTAQ9fvdNOTzZntye0PQYRTTS34D=
       #       -----END CERTIFICATE-----
+
       # Filename that is used when creating the secret.  Required if cert is provided.
-      keyName: null # Provide the name of an existing Secret that contains the CA required
-      existingCaSecret: null # Provide the filename that is defined inside the existing Secret.  Required if existingCaSecret is set.
-      existingCaSecretKeyName: null # Provide the name of an existing ConfigMap that contains the CA required
-      existingCaConfigMap: null # Provide the filename that is defined inside the existing ConfigMap.  Required if existingCaConfigMap is set.
-      existingCaConfigMapKeyName: null # If Bottlerocket is enabled then the apiclient and api socket will be mounted
+      keyName:
+
+      # Provide the name of an existing Secret that contains the CA required
+      existingCaSecret:
+      # Provide the filename that is defined inside the existing Secret.  Required if existingCaSecret is set.
+      existingCaSecretKeyName:
+
+      # Provide the name of an existing ConfigMap that contains the CA required
+      existingCaConfigMap:
+      # Provide the filename that is defined inside the existing ConfigMap.  Required if existingCaConfigMap is set.
+      existingCaConfigMapKeyName:
+
+      # If Bottlerocket is enabled then the apiclient and api socket will be mounted
   bottlerocket:
     enabled: false
     # Path to host apiclient binary
     apiClientPath: /usr/bin/apiclient
     # Path to host api socket
     apiServerSocketPath: /run/api.sock
+
 tests:
   skip: false
   timeout: 300s
   image:
     repo: bitnami/kubectl
     tag: 1.31.2
+
 # Allow to modify DNS policy
 dnsPolicy: null
+
 # Allow to set host network
 hostNetwork: null
