@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.1.9
+### Bug Fixes
+* **shield** [46e8c875](https://github.com/sysdiglabs/charts/commit/46e8c875fbed6a29b9ce3dd03905e643c62ca626): Fix wrong config file name ([#1994](https://github.com/sysdiglabs/charts/issues/1994))
 # v0.1.8
 ### Bug Fixes
 * **shield** [aa91cf17](https://github.com/sysdiglabs/charts/commit/aa91cf17a79b6cc952a069106b7db1377834cd99): Fix cluster name & execute unit test in CI for the shield chart ([#1986](https://github.com/sysdiglabs/charts/issues/1986))
