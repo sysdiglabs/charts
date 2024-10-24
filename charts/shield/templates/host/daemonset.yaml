@@ -186,9 +186,9 @@ spec:
             - mountPath: /opt/draios/etc/kubernetes/config/dragent.yaml
               name: dragent-config
               subPath: dragent.yaml
-            - mountPath: /opt/draios/etc/kubernetes/config/host_shield_config.yaml
+            - mountPath: /opt/draios/etc/kubernetes/config/host-shield.yaml
               name: host-shield-config
-              subPath: host_shield_config.yaml
+              subPath: host-shield.yaml
             - mountPath: /opt/draios/etc/kubernetes/secrets
               name: sysdig-agent-secrets
             - mountPath: /etc/podinfo
@@ -266,8 +266,8 @@ spec:
           configMap:
             name: {{ include "host.fullname" . }}
             items:
-              - key: host_shield_config.yaml
-                path: host_shield_config.yaml
+              - key: host-shield.yaml
+                path: host-shield.yaml
         - name: sysdig-agent-secrets
           secret:
             secretName: {{ include "common.credentials.access_key_secret_name" . }}
