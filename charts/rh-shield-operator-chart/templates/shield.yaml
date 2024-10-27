@@ -1,0 +1,10 @@
+---
+apiVersion: shield.sysdig.com/v1alpha1
+kind: Shield
+metadata:
+  name: sysdig-shield-{{ default .Release.Name (dig "cluster" "name" .Values.shield_settings) }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  {{- with .Values.shield_settings }}
+  {{- toYaml . | nindent 2 }}
+  {{- end }}
