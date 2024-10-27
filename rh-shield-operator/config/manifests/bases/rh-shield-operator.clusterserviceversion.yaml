@@ -3,38 +3,57 @@ kind: ClusterServiceVersion
 metadata:
   annotations:
     alm-examples: '[]'
-    capabilities: Basic Install
+    capabilities: SeamlessUpgrades
+    categories: Security, Monitoring
+    description: |
+      The Sysdig Shield Operator provides a way to deploy Sysdig Shield components on an OpenShift cluster.
+    repository: https://github.com/sysdiglabs/charts
+    support: https://sysdig.com
   name: rh-shield-operator.v0.0.0
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
   customresourcedefinitions: {}
-  description: Openshift Operator based on the shield Helm chart by Sysdig
-  displayName: rh-shield-operator
+  description: |
+    [Sysdig](https://www.sysdig.com/) is a unified platform for container and
+    microservices monitoring, troubleshooting, security, and forensics. Sysdig
+    platform has been built on top of the [Sysdig tool](https://sysdig.com/opensource/sysdig/) and
+    [Sysdig Inspect](https://sysdig.com/blog/sysdig-inspect/) open-source technologies.
+    This operator installs the Sysdig Cluster and Host Shields for
+    [Sysdig Monitor](https://sysdig.com/product/monitor/) and
+    [Sysdig Secure](https://sysdig.com/product/secure/).
+  displayName: Sysdig Shield Operator
   icon:
-  - base64data: ""
-    mediatype: ""
+  - base64data: "PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2aWV3Qm94PSIwIDAgMjE3IDIwOCI"
+    mediatype: "image/svg+xml"
   install:
     spec:
       deployments: null
     strategy: ""
   installModes:
-  - supported: false
+  - supported: true
     type: OwnNamespace
-  - supported: false
+  - supported: true
     type: SingleNamespace
   - supported: false
     type: MultiNamespace
   - supported: true
     type: AllNamespaces
   keywords:
-  - sysdig
-  - shield
-  - security
-  - monitoring
+    - monitoring
+    - security
+    - alerting
+    - metrics
+    - troubleshooting
+    - runtime
+    - syscall
   links:
-  - name: Operator Source
-    url: https://github.com/sysdiglabs/charts
+  - name: Shield Operator
+    url: https://github.com/sysdiglabs/charts/tree/main/rh-shield-operator
+  - name: Helm Chart
+    url: https://github.com/sysdiglabs/charts/tree/main/charts/shield
+  - name: Sysdig
+    url: https://sysdig.com
   maintainers:
   - email: adam.roberts@sysdig.com
     name: Adam Roberts
