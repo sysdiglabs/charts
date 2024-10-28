@@ -158,6 +158,17 @@ spec:
                   key: password
             {{- end }}
             {{- include "host.env" . | nindent 12 }}
+            {{ if or .Values.features.posture.host_posture.enabled (dig "kspm_analyzer" "enabled" false .Values.host.additional_settings) }}
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            {{- end }}
+          ports:
+            {{- if or .Values.features.posture.host_posture.enabled (dig "kspm_analyzer" "enabled" false .Values.host.additional_settings) }}
+            - containerPort: {{ dig "kspm_analyzer" "port" 12000 .Values.host.additional_settings }}
+              name: kspm-analyzer
+            {{- end }}
           readinessProbe:
             httpGet:
               host: 127.0.0.1
