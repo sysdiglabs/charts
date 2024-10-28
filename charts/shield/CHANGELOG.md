@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.1.10
+### Bug Fixes
+* **shield** [501061f4](https://github.com/sysdiglabs/charts/commit/501061f4753696f6f7ef12888eeecbf242091891): add env var and port to host shield container ([#1995](https://github.com/sysdiglabs/charts/issues/1995))
 # v0.1.9
 ### Bug Fixes
 * **shield** [46e8c875](https://github.com/sysdiglabs/charts/commit/46e8c875fbed6a29b9ce3dd03905e643c62ca626): Fix wrong config file name ([#1994](https://github.com/sysdiglabs/charts/issues/1994))
