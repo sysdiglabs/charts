@@ -551,3 +551,35 @@ tests:
           content:
             name: my-cluster-volume
             mountPath: /host/my-cluster-mount-path
+
+  - it: Ensure port and env var set when host posture is enabled
+    set:
+      features:
+        posture:
+          host_posture:
+            enabled: true
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].env
+          content:
+            name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                  fieldPath: metadata.namespace
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].ports
+          content:
+            containerPort: 12000
+            name: kspm-analyzer
+
+  - it: Ensure port and env var not set when host posture is disabled
+    asserts:
+      - notContains:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].env
+          content:
+            name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+      - isNullOrEmpty:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].ports
