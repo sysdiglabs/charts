@@ -88,6 +88,9 @@
     {{- $config = merge $config (dict "host_scanner" (dict "host_fs_mount_path" "/host")) }}
   {{- end }}
 {{- end }}
+{{- if or .Values.features.posture.host_posture.enabled (dig "kspm_analyzer" "enabled" false .Values.host.additional_settings) }}
+  {{- $config = merge $config (dict "kspm_analyzer" (dict "agent_app_name" "shield")) }}
+{{- end }}
 {{- if .Values.cluster_config.tags -}}
   {{- $tagList := list }}
   {{- range $k, $v := .Values.cluster_config.tags }}
