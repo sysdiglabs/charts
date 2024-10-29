@@ -89,7 +89,7 @@
   {{- end }}
 {{- end }}
 {{- if or .Values.features.posture.host_posture.enabled (dig "kspm_analyzer" "enabled" false .Values.host.additional_settings) }}
-  {{- $config = merge $config (dict "kspm_analyzer" (dict "agent_app_name" "shield")) }}
+  {{- $config = merge $config (dict "kspm_analyzer" (dict "agent_app_name" (include "shield.name" .)) }}
 {{- end }}
 {{- if .Values.cluster_config.tags -}}
   {{- $tagList := list }}
