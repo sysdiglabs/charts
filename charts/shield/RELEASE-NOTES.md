@@ -1,5 +1,5 @@
 # What's Changed
 
-### Bug Fixes
-- **shield** [a08bf371](https://github.com/sysdiglabs/charts/commit/a08bf3714862664370d5584a14eeb3a41b1ad7e0): apply kspm_analyzer agent app name ([#1999](https://github.com/sysdiglabs/charts/issues/1999))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-0.1.10...shield-0.1.11
+### New Features
+- **agent,sysdg-deploy,shield** [aa507cd5](https://github.com/sysdiglabs/charts/commit/aa507cd50bde037ec9c407dd7282677641beafaa): release agent 13.5.0 ([#2000](https://github.com/sysdiglabs/charts/issues/2000))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-0.1.11...shield-0.1.12
