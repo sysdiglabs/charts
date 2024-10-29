@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.32.13
+### Chores
+* **node-analyzer** [9f2377a3](https://github.com/sysdiglabs/charts/commit/9f2377a336c251bf25a1975c00466275b1c6e40e): bump sysdig/vuln-runtime-scanner to v1.8.1 ([#1998](https://github.com/sysdiglabs/charts/issues/1998))
 # v1.32.12
 ### Chores
 * **ci** [24341099](https://github.com/sysdiglabs/charts/commit/2434109978fc1b1703fcac72ec225f8c0823f50b): bump bitnami/kubectl image references ([#1992](https://github.com/sysdiglabs/charts/issues/1992))
