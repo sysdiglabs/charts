@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.1.11
+### Bug Fixes
+* **shield** [a08bf371](https://github.com/sysdiglabs/charts/commit/a08bf3714862664370d5584a14eeb3a41b1ad7e0): apply kspm_analyzer agent app name ([#1999](https://github.com/sysdiglabs/charts/issues/1999))
 # v0.1.10
 ### Bug Fixes
 * **shield** [501061f4](https://github.com/sysdiglabs/charts/commit/501061f4753696f6f7ef12888eeecbf242091891): add env var and port to host shield container ([#1995](https://github.com/sysdiglabs/charts/issues/1995))
