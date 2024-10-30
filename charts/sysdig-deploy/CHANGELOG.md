@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.67.1
+### Chores
+* **sysdig-deploy** [2f706ae3](https://github.com/sysdiglabs/charts/commit/2f706ae30d2a7ef8909ee0ce66c0fbaa48bac032): Automatic version bump due to updated dependencies ([#2002](https://github.com/sysdiglabs/charts/issues/2002))
 # v1.67.0
 ### New Features
 * **agent,sysdg-deploy,shield** [aa507cd5](https://github.com/sysdiglabs/charts/commit/aa507cd50bde037ec9c407dd7282677641beafaa): release agent 13.5.0 ([#2000](https://github.com/sysdiglabs/charts/issues/2000))
