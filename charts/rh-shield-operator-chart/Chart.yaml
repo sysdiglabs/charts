@@ -1,6 +1,6 @@
 apiVersion: v2
 name: rh-shield-operator-chart
-description: A Helm chart for installing the rh-shield-operator 
+description: A Helm chart for installing the rh-shield-operator
 
 # A chart can be either an 'application' or a 'library' chart.
 #
