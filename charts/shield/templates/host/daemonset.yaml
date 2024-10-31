@@ -34,6 +34,8 @@ spec:
         {{- include "host.affinity" . | nindent 8 }}
       nodeSelector:
         {{- include "host.node_selector" . | nindent 8 }}
+      imagePullSecrets:
+        {{- toYaml .Values.host.image.pull_secrets | nindent 8 }}
       {{- if not (include "host.driver.is_universal_ebpf" .) }}
       initContainers:
         - name: sysdig-host-shield-kmodule
