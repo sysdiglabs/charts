@@ -583,3 +583,33 @@ tests:
                 fieldPath: metadata.namespace
       - isNullOrEmpty:
           path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].ports
+
+  - it: Image pull secrets are populated
+    set:
+      host:
+        image:
+          pull_secrets:
+            - name: my-secret
+    asserts:
+      - equal:
+          path: spec.template.spec.imagePullSecrets[0].name
+          value: my-secret
+
+  - it: Multiple pull secrets
+    set:
+      host:
+        image:
+          pull_secrets:
+            - name: my-secret
+            - name: my-other-secret
+    asserts:
+      - equal:
+          path: spec.template.spec.imagePullSecrets
+          value:
+            - name: my-secret
+            - name: my-other-secret
+
+  - it: Pull secrets are empty if none provided
+    asserts:
+      - isNullOrEmpty:
+          path: spec.template.spec.imagePullSecrets
