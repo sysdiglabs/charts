@@ -1,4 +1,4 @@
-name: update sysdig and agent charts for new agent release
+name: update shield and agent charts for new host-shield release
 
 scms:
   github:
@@ -18,11 +18,11 @@ actions:
     scmid: "github"
     spec:
       automerge: true
-      description: 'bump agent image tags for `agent` and `sysdig` charts to {{ requiredEnv "AGENT_RELEASE" }}'
+      description: 'bump agent image tags for `agent` and `shield` charts to {{ requiredEnv "AGENT_RELEASE" }}'
       labels:
         - "automated PR"
       mergemethod: squash
-      title: 'feat: release agent {{ requiredEnv "AGENT_RELEASE" }}'
+      title: 'feat(agent,shield): release agent {{ requiredEnv "AGENT_RELEASE" }}'
 
 sources:
   agentRelease:
@@ -35,22 +35,23 @@ sources:
         pattern: '[0-9]+\.[0-9]+\.[0-9]+$'
 
 targets:
-  updateAgentChartValues:
-    name: "update agent tag in agent chart"
-    kind: yaml
-    scmid: github
-    spec:
-      file: "charts/agent/values.yaml"
-      key: "$.image.tag"
-
-  bumpAgentChart:
-    name: "bump the chart version of the agent chart"
+  updateAgentChart:
+    name: "update the agent chart"
     kind: helmchart
     scmid: github
-    dependson:
-      - updateAgentChartValues
     spec:
       name: "charts/agent"
-      file: Chart.yaml
-      key: "$.appVersion"
-      versionincrement: patch
+      file: values.yaml
+      key: "$.image.tag"
+      appVersion: true
+      versionincrement: auto
+
+  updateShieldChart:
+    name: "update the the shield chart"
+    kind: helmchart
+    scmid: github
+    spec:
+      name: "charts/shield"
+      file: values.yaml
+      key: "$.host.image.tag"
+      versionincrement: auto
