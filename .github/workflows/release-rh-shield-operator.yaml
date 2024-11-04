@@ -27,7 +27,7 @@ jobs:
 
       - name: Build and Push Operator and Bundle Images
         env:
-          IMAGE_TAG_BASE: $${{ secrets.QUAY_RH_SHIELD_OPERATOR_IMAGE_TAG_BASE }}
+          IMAGE_TAG_BASE: ${{ secrets.QUAY_RH_SHIELD_OPERATOR_IMAGE_TAG_BASE }}
           VERSION: ${{ github.event.inputs.release_version }}
         run: |
           make docker-build docker-push bundle-build bundle-push
