@@ -8,3 +8,11 @@ updates:
       - "draios/team-tools-agent"
     labels:
       - "dependencies"
+  - package-ecosystem: docker
+    directory: "/rh-shield-operator"
+    schedule:
+      interval: "daily"
+    reviewers:
+      - "draios/team-tools-agent"
+    labels:
+      - "dependencies"
