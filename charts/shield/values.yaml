@@ -104,6 +104,24 @@ features:
       http_port: 6443
       # The list of namespaces that will be excluded from the audit feature
       excluded_namespaces: []
+      # List of rules used to determine if a request should be audited
+      webhook_rules:  # +doc-gen:break
+        - apiGroups:
+            - ""
+            - apps
+            - autoscaling
+            - batch
+            - networking.k8s.io
+            - rbac.authorization.k8s.io
+            - extensions
+          apiVersions:
+            - '*'
+          operations:
+            - '*'
+          resources:
+            - '*/*'
+          scope: '*'
+
   investigations:
     activity_audit:
       enabled: false
@@ -275,7 +293,7 @@ cluster:
     # The repository where the cluster shield image is stored
     repository: sysdig/cluster-shield
     # The tag for the cluster shield image
-    tag: 1.4.0
+    tag: 1.5.0
     # The pull policy for the cluster shield image
     pull_policy: IfNotPresent
     # The pull secrets for the cluster shield image
