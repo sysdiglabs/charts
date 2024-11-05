@@ -1,18 +1,34 @@
-name: Release the Shield Operator
+name: Build and Push the Shield Operator
 
 on:
   workflow_dispatch:
-    inputs:
-      release_version:
-        description: 'The version of the operator to release'
-        required: true
-        type: string
+
+env:
+  IMAGE_TAG_BASE: quay.io/sysdig/rh-shield-operator
+
 jobs:
-  build-and-push:
-    name: Build and Push the Operator Images
+  determine-operator-version:
+    name: Get the Operator Version from the Makefile
+    runs-on: ubuntu-latest
+    outputs:
+      release_version: ${{ steps.get-operator-version.outputs.release_version }}
+    steps:
+      - name: Checkout charts repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: '1'
+
+      - name: Get Operator Version
+        id: get-operator-version
+        run: |
+          echo "::set-output name=release_version::$(awk "/^VERSION/ {print $3}" Makefile)"
+        working-directory: rh-shield-operator
+
+  build-operator:
+    name: Build the Operator Image
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout charts repo
         uses: actions/checkout@v4
         with:
           fetch-depth: '1'
@@ -24,10 +40,103 @@ jobs:
           username: ${{ secrets.QUAY_RH_SHIELD_OPERATOR_USERNAME }}
           password: ${{ secrets.QUAY_RH_SHIELD_OPERATOR_PASSWORD }}
 
-      - name: Build and Push Operator and Bundle Images
-        env:
-          IMAGE_TAG_BASE: ${{ secrets.QUAY_RH_SHIELD_OPERATOR_IMAGE_TAG_BASE }}
-          VERSION: ${{ github.event.inputs.release_version }}
+      - name: Build and Push Operator Image
+        id: build-operator
         run: |
-          make docker-build docker-push bundle-build bundle-push
+          make docker-build docker-push
         working-directory: rh-shield-operator
+
+  build-operator-bundle:
+    name: Build the Operator Bundle
+    runs-on: ubuntu-latest
+    needs:
+      - build-operator
+      - determine-operator-version
+    steps:
+      - name: Make Operator Bundle
+        # 'make bundle' uses the live image from the registry to generate the image digest
+        # so this step must be after the image is pushed to the registry
+        run: |
+          USE_IMAGE_DIGESTS=true make bundle
+
+      - name: Set Labels and Annotations required for Certification on the Bundle
+        uses: mikefarah/yq@v4
+        with:
+          cmd: |
+            yq e -i '.metadata.name |= sub("rh-shield-operator", "sysdig-shield-operator")' manifests/rh-shield-operator.clusterserviceversion.yaml
+            yq e -i '.metadata.name |= sub("rh-shield-operator", "sysdig-shield-operator")' metadata/annotations.yaml
+            yq e -i '.metadata.annotations.containerImage = (.spec.relatedImages[] | select(.name == "manager").image)' manifests/rh-shield-operator.clusterserviceversion.yaml
+            yq e -i '.metadata.annotations += {
+              "features.operators.openshift.io/cnf": "false",
+              "features.operators.openshift.io/cni": "false",
+              "features.operators.openshift.io/csi": "false",
+              "features.operators.openshift.io/disconnected": "false",
+              "features.operators.openshift.io/fips-compliant": "false",
+              "features.operators.openshift.io/proxy-aware": "false",
+              "features.operators.openshift.io/tls-profiles": "false",
+              "features.operators.openshift.io/token-auth-aws": "false",
+              "features.operators.openshift.io/token-auth-azure": "false",
+              "features.operators.openshift.io/token-auth-gcp": "false"
+            }' manifests/rh-shield-operator.clusterserviceversion.yaml
+            yq e -i '.annotations."com.redhat.openshift.versions" = "v4.8-v4.17"' metadata/annotations.yaml
+
+      - name: Open Pull Request for Bundle update
+        uses: peter-evans/create-pull-request@v7.0.5
+        id: open-pr
+        with:
+          token: ${{ secrets.TOOLS_JENKINS_ADMIN_ACCESS_GITHUB_TOKEN }}
+          commit-message: |
+            "chore(rh-shield-operator): update bundle for rh-shield-operator:v${{ steps.determine-operator-version.outputs.release_version }}"
+          title: |
+            "chore(rh-shield-operator): update bundle for rh-shield-operator:v${{ steps.determine-operator-version.outputs.release_version }}"
+          body: |
+            This is an automated pull request that is generated as a part of the rh-shield-operator release pipeline.
+            The changes here update the bundle metadata using the newly published Operator image to generate the
+            image checksum, as well as adjusting some metadata that is required for certification.
+
+      - name: Wait for PR to be merged
+        shell: bash
+        run: |
+          echo "Waiting for PR ${{ steps.open-pr.outputs.pull-request-url }} to be merged..."
+
+          PR_STATUS=$(gh pr view ${{ steps.open-pr.outputs.pull-request-number }} --json state -q .state)
+
+          timeout 2h bash -c 'until [[ "$PR_STATUS" == "MERGED" ]]; do
+            echo "PR not merged yet, waiting 10s..."
+            sleep 10
+            PR_STATUS="$(gh pr view ${{ steps.open-pr.outputs.pull-request-number }} --json state -q .state)"
+          done'
+
+          if [[ "$PR_STATUS" != "MERGED" ]]; then
+            echo "PR was not merged in time. Check ${{ steps.open-pr.outputs.pull-request-url }} for more information."
+            exit 1
+          else
+            echo "PR was merged!"
+          fi
+
+      - name: Build and Push Bundle Image
+        run: |
+          make bundle-build bundle-push
+        working-directory: rh-shield-operator
+
+  certify-operator-image:
+    name: Certify the Operator Image with Preflight
+    runs-on: ubuntu-latest
+    needs:
+      - build-operator
+      - determine-operator-version
+    steps:
+      - name: Install Preflight
+        uses: redhat-actions/openshift-tools-installer@v1
+        with:
+          source: "github"
+          preflight: "latest"
+          github_pat: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run Preflight checks
+        run: |
+          preflight check container \
+            --pyxis-api-token=${{ secrets.RH_SHIELD_OPERATOR_PYXIS_API_TOKEN }} \
+            --certification-project-id=${{ secrets.RH_SHIELD_OPERATOR_CERTIFICATION_PROJECT_ID }} \
+            --submit \
+            ${{ env.IMAGE_TAG_BASE }}:${{ steps.determine-operator-version.outputs.release_version }}
