@@ -26,21 +26,9 @@ webhooks:
             {{- end }}
     {{ end }}
     rules:
-      - apiGroups:
-          - ""
-          - apps
-          - autoscaling
-          - batch
-          - networking.k8s.io
-          - rbac.authorization.k8s.io
-          - extensions
-        apiVersions:
-          - '*'
-        operations:
-          - '*'
-        resources:
-          - '*/*'
-        scope: '*'
+    {{- with .Values.cluster_shield.features.audit.webhook_rules }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
     clientConfig:
       service:
         namespace: {{ .Release.Namespace }}

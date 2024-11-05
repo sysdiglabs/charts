@@ -19,13 +19,13 @@ tests:
       - equal:
           path: metadata.namespace
           value: shield-namespace
-      - isNull:
+      - notExists:
           path: spec.template.spec.hostNetwork
-      - isNull:
+      - notExists:
           path: spec.template.spec.dnsPolicy
-      - isNotNull:
+      - isNotNullOrEmpty:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")]
-      - isNotNull:
+      - isNotNullOrEmpty:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].securityContext
       - equal:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].securityContext.privileged
@@ -46,13 +46,13 @@ tests:
       - equal:
           path: metadata.namespace
           value: shield-namespace
-      - isNull:
+      - notExists:
           path: spec.template.spec.hostNetwork
-      - isNull:
+      - notExists:
           path: spec.template.spec.dnsPolicy
-      - isNotNull:
+      - isNotNullOrEmpty:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")]
-      - isNull:
+      - notExists:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].securityContext
       - contains:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].args
@@ -73,9 +73,9 @@ tests:
       - equal:
           path: metadata.namespace
           value: shield-namespace
-      - isNotNull:
+      - isNotNullOrEmpty:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")]
-      - isNull:
+      - notExists:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].securityContext
       - contains:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].args
@@ -278,17 +278,17 @@ tests:
           admission_control:
             enabled: true
     asserts:
-      - isNotNull:
+      - isNotNullOrEmpty:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "monitoring")]
       - equal:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "monitoring")].containerPort
           value: 8080
-      - isNotNull:
+      - isNotNullOrEmpty:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "audit")]
       - equal:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "audit")].containerPort
           value: 6443
-      - isNotNull:
+      - isNotNullOrEmpty:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "admission")]
       - equal:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "admission")].containerPort
@@ -306,17 +306,17 @@ tests:
             enabled: true
             http_port: 9876
     asserts:
-      - isNotNull:
+      - isNotNullOrEmpty:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "monitoring")]
       - equal:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "monitoring")].containerPort
           value: 1234
-      - isNotNull:
+      - isNotNullOrEmpty:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "audit")]
       - equal:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "audit")].containerPort
           value: 5678
-      - isNotNull:
+      - isNotNullOrEmpty:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "admission")]
       - equal:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "admission")].containerPort
@@ -324,14 +324,14 @@ tests:
 
   - it: Test without specifying priorityClassName
     asserts:
-      - isNull:
+      - notExists:
           path: spec.template.spec.priorityClassName
 
   - it: Test specifying priorityClassName
     set:
       priorityClassName: fake-priority-class-name
     asserts:
-      - isNotNull:
+      - isNotNullOrEmpty:
           path: spec.template.spec.priorityClassName
       - equal:
           path: spec.template.spec.priorityClassName
@@ -341,7 +341,7 @@ tests:
     set:
       createPriorityClass: true
     asserts:
-      - isNotNull:
+      - isNotNullOrEmpty:
           path: spec.template.spec.priorityClassName
       - equal:
           path: spec.template.spec.priorityClassName
@@ -352,7 +352,7 @@ tests:
       createPriorityClass: true
       priorityClassName: fake-priority-class-name
     asserts:
-      - isNotNull:
+      - isNotNullOrEmpty:
           path: spec.template.spec.priorityClassName
       - equal:
           path: spec.template.spec.priorityClassName
