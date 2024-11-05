@@ -50,6 +50,22 @@ tests:
                 excluded_namespaces: \[\]
                 http_port: 6443
                 timeout: 10
+                webhook_rules:
+                - apiGroups:
+                  - ""
+                  - apps
+                  - autoscaling
+                  - batch
+                  - networking.k8s.io
+                  - rbac.authorization.k8s.io
+                  - extensions
+                  apiVersions:
+                  - '\*'
+                  operations:
+                  - '\*'
+                  resources:
+                  - '\*/\*'
+                  scope: '\*'
               container_vulnerability_management:
                 enabled: false
                 in_use:
@@ -77,6 +93,7 @@ tests:
             sysdig_endpoint:
               api_url: https://fake.api.url.com
               collector: fake.collector.host:6443
+              region: custom
 
   - it: Sets NATS Url and Lock Name when Container Vulnerability Management is enabled
     set:

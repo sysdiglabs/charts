@@ -19,7 +19,7 @@ tests:
       - equal:
           path: spec.type
           value: ClusterIP
-      - isNotNull:
+      - isNotNullOrEmpty:
           path: .spec.ports[?(@.name == "http")]
       - equal:
           path: spec.ports[?(@.name == "http")].port
