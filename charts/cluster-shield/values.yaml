@@ -113,6 +113,23 @@ cluster_shield:
       timeout: 5
       # The list of namespaces to exclude from the audit feature
       excluded_namespaces: []
+      # List of rules used to determine if a request should be audited
+      webhook_rules: # +doc-gen:break
+        - apiGroups:
+            - ""
+            - apps
+            - autoscaling
+            - batch
+            - networking.k8s.io
+            - rbac.authorization.k8s.io
+            - extensions
+          apiVersions:
+            - '*'
+          operations:
+            - '*'
+          resources:
+            - '*/*'
+          scope: '*'
     posture:
       # Enable the posture feature
       enabled: false

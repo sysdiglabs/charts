@@ -14,13 +14,13 @@ tests:
         sysdig:
           secureAPITokenSecret: "test-existing-secure-api-token-secret"
     asserts:
-      - isNull:
+      - notExists:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTP_PROXY")]
         template: templates/deployment.yaml
-      - isNull:
+      - notExists:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTPS_PROXY")]
         template: templates/deployment.yaml
-      - isNull:
+      - notExists:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "NO_PROXY")]
         template: templates/deployment.yaml
       - hasDocuments:
@@ -42,7 +42,7 @@ tests:
         httpsProxy: https://proxy.example.com:1234
         noProxy: 127.0.0.1,localhost,.local,.internal
     asserts:
-      - isNotNull:
+      - isNotNullOrEmpty:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTP_PROXY")]
         template: templates/deployment.yaml
       - equal:
@@ -53,7 +53,7 @@ tests:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTP_PROXY")].valueFrom.secretKeyRef.key
           value: httpProxy
         template: templates/deployment.yaml
-      - isNotNull:
+      - isNotNullOrEmpty:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTPS_PROXY")]
         template: templates/deployment.yaml
       - equal:
@@ -64,7 +64,7 @@ tests:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTPS_PROXY")].valueFrom.secretKeyRef.key
           value: httpsProxy
         template: templates/deployment.yaml
-      - isNotNull:
+      - isNotNullOrEmpty:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "NO_PROXY")]
         template: templates/deployment.yaml
       - equal:
@@ -111,7 +111,7 @@ tests:
           httpsProxy: https://proxy-global.example.com:1234
           noProxy: .global,127.0.0.1,localhost,.local,.internal
     asserts:
-      - isNotNull:
+      - isNotNullOrEmpty:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTP_PROXY")]
         template: templates/deployment.yaml
       - equal:
@@ -122,7 +122,7 @@ tests:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTP_PROXY")].valueFrom.secretKeyRef.key
           value: httpProxy
         template: templates/deployment.yaml
-      - isNotNull:
+      - isNotNullOrEmpty:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTPS_PROXY")]
         template: templates/deployment.yaml
       - equal:
@@ -133,7 +133,7 @@ tests:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "HTTPS_PROXY")].valueFrom.secretKeyRef.key
           value: httpsProxy
         template: templates/deployment.yaml
-      - isNotNull:
+      - isNotNullOrEmpty:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "NO_PROXY")]
         template: templates/deployment.yaml
       - equal:

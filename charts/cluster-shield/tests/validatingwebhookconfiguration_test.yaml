@@ -413,3 +413,115 @@ tests:
               - kube-system
               - kube-public
               - my-namespace
+
+  - it: Default rules in the audit webhook
+    set:
+      cluster_shield:
+        features:
+          audit:
+            enabled: true
+    documentIndex: 0
+    asserts:
+      - hasDocuments:
+          count: 2
+      - containsDocument:
+          kind: ValidatingWebhookConfiguration
+          apiVersion: admissionregistration.k8s.io/v1
+          name: shield-release-cluster-shield-audit
+      - exists:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")]
+      - exists:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].rules
+      - lengthEqual:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].rules
+          count: 1
+      - contains:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].rules
+          content:
+            apiGroups:
+              - ""
+              - apps
+              - autoscaling
+              - batch
+              - networking.k8s.io
+              - rbac.authorization.k8s.io
+              - extensions
+            apiVersions:
+              - '*'
+            operations:
+              - '*'
+            resources:
+              - '*/*'
+            scope: '*'
+
+
+  - it: Custom rules in the audit webhook
+    set:
+      cluster_shield:
+        features:
+          audit:
+            enabled: true
+            webhook_rules:
+              - apiGroups:
+                  - apps
+                apiVersions:
+                  - v1
+                  - v1beta1
+                operations:
+                  - CREATE
+                  - UPDATE
+                resources:
+                  - deployments
+                  - replicasets
+                scope: Namespaced
+              - apiGroups:
+                  - ""
+                apiVersions:
+                  - v1
+                operations:
+                  - CREATE
+                resources:
+                  - pods
+                scope: Namespaced
+    documentIndex: 0
+    asserts:
+      - hasDocuments:
+          count: 2
+      - containsDocument:
+          kind: ValidatingWebhookConfiguration
+          apiVersion: admissionregistration.k8s.io/v1
+          name: shield-release-cluster-shield-audit
+      - exists:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")]
+      - exists:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].rules
+      - lengthEqual:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].rules
+          count: 2
+      - contains:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].rules
+          content:
+            apiGroups:
+              - apps
+            apiVersions:
+              - v1
+              - v1beta1
+            operations:
+              - CREATE
+              - UPDATE
+            resources:
+              - deployments
+              - replicasets
+            scope: Namespaced
+      - contains:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")].rules
+          content:
+            apiGroups:
+              - ""
+            apiVersions:
+              - v1
+            operations:
+              - CREATE
+            resources:
+              - pods
+            scope: Namespaced

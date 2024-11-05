@@ -20,7 +20,7 @@ tests:
       - lengthEqual:
           path: spec.ports
           count: 2
-      - isNotNull:
+      - isNotNullOrEmpty:
           path: .spec.ports[?(@.name == "nats")]
       - equal:
           path: spec.ports[?(@.name == "nats")].port
@@ -31,7 +31,7 @@ tests:
       - equal:
           path: spec.ports[?(@.name == "nats")].protocol
           value: TCP
-      - isNotNull:
+      - isNotNullOrEmpty:
           path: .spec.ports[?(@.name == "grpc")]
       - equal:
           path: spec.ports[?(@.name == "grpc")].port
