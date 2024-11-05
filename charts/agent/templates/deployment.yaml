@@ -69,8 +69,12 @@ spec:
             privileged: true
             runAsNonRoot: false
             runAsUser: 0
+            runAsGroup: 0
             readOnlyRootFilesystem: false
             allowPrivilegeEscalation: true
+            capabilities:
+              add:
+                - ALL
           env:
           - name: RUN_MODE
             value: nodriver
