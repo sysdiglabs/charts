@@ -692,6 +692,11 @@ runAsNonRoot: false
 runAsUser: 0
 readOnlyRootFilesystem: false
 allowPrivilegeEscalation: true
+capabilities:
+  drop:
+    - ALL
+  add:
+    - ALL
 {{- else }}
 allowPrivilegeEscalation: false
 seccompProfile:
