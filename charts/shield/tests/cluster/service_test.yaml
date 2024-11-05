@@ -19,7 +19,7 @@ tests:
       - equal:
           path: spec.type
           value: ClusterIP
-      - isNotNull:
+      - isNotNullOrEmpty:
           path: .spec.ports[?(@.name == "monitoring")]
       - equal:
           path: spec.ports[?(@.name == "monitoring")].port
@@ -53,7 +53,7 @@ tests:
       - equal:
           path: spec.type
           value: ClusterIP
-      - isNotNull:
+      - isNotNullOrEmpty:
           path: .spec.ports[?(@.name == "monitoring")]
       - equal:
           path: spec.ports[?(@.name == "monitoring")].port
@@ -88,7 +88,7 @@ tests:
       - equal:
           path: spec.type
           value: ClusterIP
-      - isNotNull:
+      - isNotNullOrEmpty:
           path: .spec.ports[?(@.name == "audit")]
       - equal:
           path: spec.ports[?(@.name == "audit")].port
@@ -124,7 +124,7 @@ tests:
       - equal:
           path: spec.type
           value: ClusterIP
-      - isNotNull:
+      - isNotNullOrEmpty:
           path: .spec.ports[?(@.name == "audit")]
       - equal:
           path: spec.ports[?(@.name == "audit")].port
@@ -158,7 +158,7 @@ tests:
       - equal:
           path: spec.type
           value: ClusterIP
-      - isNotNull:
+      - isNotNullOrEmpty:
           path: .spec.ports[?(@.name == "ac")]
       - equal:
           path: spec.ports[?(@.name == "ac")].port
@@ -193,7 +193,7 @@ tests:
       - equal:
           path: spec.type
           value: ClusterIP
-      - isNotNull:
+      - isNotNullOrEmpty:
           path: .spec.ports[?(@.name == "ac")]
       - equal:
           path: spec.ports[?(@.name == "ac")].port
