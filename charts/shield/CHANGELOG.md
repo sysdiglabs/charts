@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.1.14
+### Chores
+* **shield** [1a9e6aa2](https://github.com/sysdiglabs/charts/commit/1a9e6aa20ca53d6525e7da2842f8aa543a636ae1): bump cluster-shield to v1.5.0 ([#2016](https://github.com/sysdiglabs/charts/issues/2016))
 # v0.1.13
 ### Bug Fixes
 * **shield** [ffced55c](https://github.com/sysdiglabs/charts/commit/ffced55c860c3cf5bcf0e6d79029003491da144b): add pull secrets to host shield daemonset ([#2007](https://github.com/sysdiglabs/charts/issues/2007))
