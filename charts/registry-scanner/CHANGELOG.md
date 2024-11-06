@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.5.0
+### New Features
+* **registry-scanner** [550e0b9d](https://github.com/sysdiglabs/charts/commit/550e0b9d297d014587b42513e81d07e7a4ed6a4c): Bump app version to 0.6.0 ([#2021](https://github.com/sysdiglabs/charts/issues/2021))
 # v1.4.2
 ### Bug Fixes
 * [80d9f7e6](https://github.com/sysdiglabs/charts/commit/80d9f7e629baa61611c72a71df5a77ac328c6eed): cronjob schedule check ([#1987](https://github.com/sysdiglabs/charts/issues/1987))
