@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.33.0
+### Chores
+* **kspm-collector,node-analyzer** [5189fe6b](https://github.com/sysdiglabs/charts/commit/5189fe6b544cc097d10e803cb88e5653b22f1a81): release kspm-collector & node-analyzer ([#2020](https://github.com/sysdiglabs/charts/issues/2020))
 # v1.32.15
 ### Chores
 * **node-analyzer** [0fe56283](https://github.com/sysdiglabs/charts/commit/0fe56283e6b6e71f6bf8bc4364d2c48d406528a3): bump nia to v0.1.36 ([#2003](https://github.com/sysdiglabs/charts/issues/2003))
