@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.67.4
+### Chores
+* **kspm-collector,node-analyzer** [5189fe6b](https://github.com/sysdiglabs/charts/commit/5189fe6b544cc097d10e803cb88e5653b22f1a81): release kspm-collector & node-analyzer ([#2020](https://github.com/sysdiglabs/charts/issues/2020))
 # v1.67.3
 ### Chores
 * **cluster-shield,sysdig-deploy** [0b00754b](https://github.com/sysdiglabs/charts/commit/0b00754b0e3e24a7a9ce906180f019e268036423): bump cluster-shield to version 1.5.0 ([#2015](https://github.com/sysdiglabs/charts/issues/2015))
