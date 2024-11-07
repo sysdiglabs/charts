@@ -168,17 +168,14 @@ podMonitors:
 
 webhook:
   v2:
-    nats:
-      # Allow insecure TLS certificates in backend connection to NATS service
-      insecure: false
-      # Override the NATS service connection URL
-      url: ""
     service:
       # Use this type as webhook service
       type: ClusterIP
       # Configure port for the V2 webhook service
       port: 6443
     http:
+      # Allow insecure TLS certificates in backend connection
+      insecure: false
       # HTTP serve port where the requests will be served from
       port: 6443
       # KSPM Admission Controller container image
@@ -188,7 +185,7 @@ webhook:
       # The KSPM Admission Controller image repository
       repository: sysdig/secure-admission-controller
       # The KSPM Admission Controller image tag
-      tag: 1.27.4
+      tag: 1.27.5-rc
       # Specifies the image digest value.  If set, this value is used instead of the tag value
       digest:
       # The PullPolicy for KSPM Admission Controller image

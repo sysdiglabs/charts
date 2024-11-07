@@ -22,8 +22,8 @@ data:
   {{- if .Values.features.kspmAdmissionController}}
   SERVICE_PORT: "{{ .Values.webhook.v2.http.port }}"
   CERT_LOCATION: /cert
-  EXTERNAL_NATS_URL:  {{ include "admissionController.natsUrl" . }}
-  NATS_INSECURE: "{{.Values.webhook.v2.nats.insecure}}"
+  BACKEND_URL: "{{ .Values.sysdig.url | default (printf "https://%s" (include "admissionController.apiEndpoint" .)) }}"
+  VERIFY_SSL: "{{.Values.webhook.v2.http.insecure}}"
   {{- end}}
   {{- if .Values.webhook.acConfig }}
   CACHE_FLUSH_PERIOD: "{{ .Values.webhook.cacheFlushPeriod | default "24h" }}"
