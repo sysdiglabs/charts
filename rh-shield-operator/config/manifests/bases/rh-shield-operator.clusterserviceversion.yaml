@@ -3,7 +3,7 @@ kind: ClusterServiceVersion
 metadata:
   annotations:
     alm-examples: '[]'
-    capabilities: SeamlessUpgrades
+    capabilities: Basic Install
     categories: Security, Monitoring
     description: |
       The Sysdig Shield Operator provides a way to deploy Sysdig Shield components on an OpenShift cluster.
