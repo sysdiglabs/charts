@@ -29,5 +29,5 @@ jobs:
           IMAGE_TAG_BASE: ${{ secrets.QUAY_RH_SHIELD_OPERATOR_IMAGE_TAG_BASE }}
           VERSION: ${{ github.event.inputs.release_version }}
         run: |
-          make docker-build docker-push bundle-build bundle-push
+          make docker-build docker-push bundle bundle-build bundle-push
         working-directory: rh-shield-operator
