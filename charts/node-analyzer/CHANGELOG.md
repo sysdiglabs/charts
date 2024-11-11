@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.33.1
+### New Features
+* **node-analyzer** [06903836](https://github.com/sysdiglabs/charts/commit/069038368fc5a9ed955e1eec14673b59b909d702): Add support for ubuntu24, coreos and suse ([#2022](https://github.com/sysdiglabs/charts/issues/2022))
 # v1.33.0
 ### Chores
 * **kspm-collector,node-analyzer** [5189fe6b](https://github.com/sysdiglabs/charts/commit/5189fe6b544cc097d10e803cb88e5653b22f1a81): release kspm-collector & node-analyzer ([#2020](https://github.com/sysdiglabs/charts/issues/2020))
