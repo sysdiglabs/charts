@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.1.15
+### Bug Fixes
+* **shield** [d805ca07](https://github.com/sysdiglabs/charts/commit/d805ca07f7065da88ecb783f6deb8752d0f27c28): touch up custom port formatting ([#2026](https://github.com/sysdiglabs/charts/issues/2026))
 # v0.1.14
 ### Chores
 * **shield** [1a9e6aa2](https://github.com/sysdiglabs/charts/commit/1a9e6aa20ca53d6525e7da2842f8aa543a636ae1): bump cluster-shield to v1.5.0 ([#2016](https://github.com/sysdiglabs/charts/issues/2016))
