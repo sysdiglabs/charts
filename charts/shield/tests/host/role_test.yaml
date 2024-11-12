@@ -1,0 +1,68 @@
+suite: Host - Role
+templates:
+  - templates/host/role.yaml
+release:
+  name: release-name
+  namespace: shield-namespace
+values:
+  - ../values/base.yaml
+tests:
+  - it: Create the Role when requested
+    set:
+      host:
+        rbac:
+          create: true
+    asserts:
+      - isKind:
+          of: Role
+          count: 1
+      - equal:
+          path: metadata.name
+          value: release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - equal:
+          path: rules
+          value:
+            - apiGroups:
+                - coordination.k8s.io
+              resources:
+                - leases
+              verbs:
+                - create
+                - get
+                - list
+                - update
+                - watch
+
+  - it: Ensure the Role is not created when not requested
+    set:
+      host:
+        rbac:
+          create: false
+    asserts:
+      - hasDocuments:
+        count: 0
+
+  - it: Check that labels and annotations are added
+    set:
+      host:
+        rbac:
+          create: true
+          labels:
+            app.kubernetes.io/name: shield
+            app.kubernetes.io/instance: release-name
+          annotations:
+            app.kubernetes.io/description: "This is a test"
+    asserts:
+      - isSubset:
+          path: metadata.labels
+          content:
+            app.kubernetes.io/name: shield
+            app.kubernetes.io/instance: release-name
+
+      - isSubset:
+          path: metadata.annotations
+          content:
+            app.kubernetes.io/description: "This is a test"
