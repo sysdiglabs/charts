@@ -78,7 +78,7 @@ If release name contains chart name it will be used as a full name.
 {{- end -}}
 
 {{- define "cluster.affinity" -}}
-{{- $affinity := merge .Values.affinity .Values.cluster.affinity -}}
+{{- $affinity := merge (dict) .Values.affinity .Values.cluster.affinity -}}
 {{- with $affinity -}}
 {{- . | toYaml -}}
 {{- end -}}

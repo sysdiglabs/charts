@@ -115,7 +115,7 @@ spec:
             {{- if $proxyEnvs }}
               {{- $proxyEnvs | nindent 12 }}
             {{- end }}
-            {{- $customCAEnvs := (include "common.custom_ca.envs" (merge . (dict "CACertsPath" "/etc/sysdig/ca-certs/"))) }}
+            {{- $customCAEnvs := (include "common.custom_ca.envs" (merge (dict) . (dict "CACertsPath" "/etc/sysdig/ca-certs/"))) }}
             {{- if $customCAEnvs }}
               {{- $customCAEnvs | nindent 12 }}
             {{- end }}
@@ -133,7 +133,7 @@ spec:
               port: {{ .Values.cluster.additional_settings.monitoring_port }}
             {{- .Values.cluster.probes.readiness | toYaml | nindent 12 }}
           volumeMounts:
-            {{- $customCAMounts := (include "common.custom_ca.volume_mount" .) }}
+            {{- $customCAMounts := (include "common.custom_ca.volume_mount" (merge (dict) . (dict "CACertsPath" "/etc/sysdig/ca-certs/")) ) }}
             {{- if $customCAMounts }}
               {{- $customCAMounts | nindent 12 }}
             {{- end }}
@@ -144,7 +144,7 @@ spec:
               name: {{ printf "secret-%s" $secretName }}
             {{- end }}
             {{- if (include "cluster.tls_certificates.required" .) }}
-            - mountPath: {{ include "cluster.tls_certificates.mount_path" (merge . (dict "CACertsPath" "/etc/sysdig/ca-certs/")) }}
+            - mountPath: {{ include "cluster.tls_certificates.mount_path" . }}
               name: cluster-shield-tls-certificates-secret
             {{- end }}
             {{- include "cluster.volume_mounts" . | nindent 12 }}
