@@ -1,5 +1,5 @@
 # What's Changed
 
 ### Bug Fixes
-- **shield** [d805ca07](https://github.com/sysdiglabs/charts/commit/d805ca07f7065da88ecb783f6deb8752d0f27c28): touch up custom port formatting ([#2026](https://github.com/sysdiglabs/charts/issues/2026))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-0.1.14...shield-0.1.15
+- **shield** [28d8ae0e](https://github.com/sysdiglabs/charts/commit/28d8ae0ebb8d2c8ca718b386fe69ecda5d90a603): update custom CA path in host shield config ([#2029](https://github.com/sysdiglabs/charts/issues/2029))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-0.1.15...shield-0.1.16
