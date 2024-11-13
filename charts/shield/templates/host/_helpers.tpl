@@ -24,6 +24,9 @@ If release name contains chart name it will be used as a full name.
     {{- $host := split ":" $parsedProxyConfig.host -}}
     {{- $_ := set $proxyConfig "proxy_host" $host._0 -}}
     {{- $_ := set $proxyConfig "proxy_port" $host._1 -}}
+    {{- if (include "common.custom_ca.enabled" .) }}
+      {{- $_ = set $proxyConfig "ca_certificate" (include "common.custom_ca.path" (mergeOverwrite . (dict "CACertsPath" "certificates/"))) }}
+    {{- end }}
     {{- $proxyConfig | toYaml -}}
 {{- end -}}
 {{- end -}}

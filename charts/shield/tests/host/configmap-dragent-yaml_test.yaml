@@ -920,3 +920,34 @@ tests:
           pattern: |
             kspm_analyzer:
               agent_app_name: shield
+
+  - it: Test with Custom CA In Values
+    set:
+      proxy:
+        https_proxy: "https://proxy.example.com:8080"
+      ssl:
+        ca:
+          certs:
+            - "test certificate"
+          key_name: "custom-ca-from-values.crt"
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              ca_certificate: certificates/custom-ca-from-values.crt
+
+  - it: Test with Custom CA In Existing Secret
+    set:
+      proxy:
+        https_proxy: "https://proxy.example.com:8080"
+      ssl:
+        ca:
+          existing_ca_secret: "fake-secret-name"
+          existing_ca_secret_key_name: "custom-ca-from-secret.crt"
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              ca_certificate: certificates/custom-ca-from-secret.crt
