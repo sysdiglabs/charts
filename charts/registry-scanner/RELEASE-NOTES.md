@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **registry-scanner** [550e0b9d](https://github.com/sysdiglabs/charts/commit/550e0b9d297d014587b42513e81d07e7a4ed6a4c): Bump app version to 0.6.0 ([#2021](https://github.com/sysdiglabs/charts/issues/2021))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-1.4.2...registry-scanner-1.5.0
+### Chores
+- **registry-scanner** [01f5be70](https://github.com/sysdiglabs/charts/commit/01f5be701753c8e6b802a7ded3e619a8ed589cc4): Update to v0.6.1 ([#2024](https://github.com/sysdiglabs/charts/issues/2024))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-1.5.0...registry-scanner-1.5.1
