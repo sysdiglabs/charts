@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.1.20
+### New Features
+* **shield** [cbfdb4b6](https://github.com/sysdiglabs/charts/commit/cbfdb4b6e5410afa5f4834c0cd8413497af33fb8): set host shield to secure_light by default ([#2035](https://github.com/sysdiglabs/charts/issues/2035))
 # v0.1.19
 ### Chores
 * **shield** [fbcda7fa](https://github.com/sysdiglabs/charts/commit/fbcda7faebc03e0ee8796a96677dcdc5af2c26a6): add webhook/checksum on cluster deployment ([#2033](https://github.com/sysdiglabs/charts/issues/2033))
