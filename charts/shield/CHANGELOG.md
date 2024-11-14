@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.1.18
+### Bug Fixes
+* **shield** [bd7667cc](https://github.com/sysdiglabs/charts/commit/bd7667cc6f8035cfb31d79a303a8bd45d65b5564): avoid merge with main context ([#2030](https://github.com/sysdiglabs/charts/issues/2030))
 # v0.1.17
 ### Bug Fixes
 * **shield** [be56023d](https://github.com/sysdiglabs/charts/commit/be56023d573681925e68e4b49a99f2a6993437f0): add lease rule for host shield role ([#2034](https://github.com/sysdiglabs/charts/issues/2034))
