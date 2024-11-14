@@ -21,6 +21,7 @@ spec:
   template:
     metadata:
       annotations:
+        checksum/webhook: {{ include (print $.Template.BasePath "/cluster/tls-certificates-admissionregistration.yaml") . | sha256sum | quote }}
         {{- $podAnnotations := (include "cluster.pod_annotations" .) }}
         {{- if $podAnnotations }}
           {{- $podAnnotations | nindent 8 }}
