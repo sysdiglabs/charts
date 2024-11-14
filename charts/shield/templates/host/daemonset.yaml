@@ -59,7 +59,7 @@ spec:
             {{- if (include "common.proxy.enabled" .) }}
             {{- include "common.proxy.envs" . | nindent 12 }}
             {{- end }}
-            {{- include "common.custom_ca.envs" (merge . (dict "CACertsPath" "/opt/draios/certificates/")) | nindent 12 }}
+            {{- include "common.custom_ca.envs" (merge (dict) . (dict "CACertsPath" "/opt/draios/certificates/")) | nindent 12 }}
           volumeMounts:
             {{- /* Autopilot = false */}}
             {{- if not (include "common.cluster_type.is_gke_autopilot" .) }}
@@ -151,7 +151,7 @@ spec:
             {{- if (include "common.proxy.enabled" .) }}
             {{- include "common.proxy.envs" . | nindent 12 }}
             {{- end }}
-            {{- include "common.custom_ca.envs" (merge . (dict "CACertsPath" "/opt/draios/certificates/")) | nindent 12 }}
+            {{- include "common.custom_ca.envs" (merge (dict) . (dict "CACertsPath" "/opt/draios/certificates/")) | nindent 12 }}
             {{- if .Values.features.responding.rapid_response.enabled }}
             - name: PASSWORD
               valueFrom:
@@ -182,7 +182,7 @@ spec:
           volumeMounts:
           {{- /* TOOD: Local Forwarder config mount */}}
           {{- /* Custom CA */}}
-          {{- include "common.custom_ca.volume_mount" (merge . (dict "CACertsPath" "/opt/draios/certificates/")) | nindent 12 }}
+          {{- include "common.custom_ca.volume_mount" (merge (dict) . (dict "CACertsPath" "/opt/draios/certificates/")) | nindent 12 }}
           {{- /* Always requested */}}
             - mountPath: /host/dev
               name: dev-vol
