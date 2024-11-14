@@ -34,6 +34,38 @@
 {{- dict "features" $config | toYaml }}
 {{- end }}
 
+{{- define "host.features.netsec_enabled" }}
+{{- if or .Values.features.investigations.network_security.enabled
+          (dig "network_topology" "enabled" false .Values.host.additional_settings) }}
+true
+{{- end }}
+{{- end }}
+
+{{- define "host.features.monitor_enabled" }}
+{{- if  or .Values.features.monitoring.app_checks.enabled
+           .Values.features.monitoring.java_management_extensions.enabled
+           .Values.features.monitoring.prometheus.enabled
+           .Values.features.monitoring.statsd.enabled
+           (dig "app_checks_enabled" false .Values.host.additional_settings)
+           (dig "jmx" "enabled" false .Values.host.additional_settings)
+           (dig "prometheus" "enabled" false .Values.host.additional_settings)
+           (dig "statsd" "enabled" false .Values.host.additional_settings) }}
+true
+{{- end }}
+{{- end }}
+
+{{/* Calculate the agent mode based on enabled features */}}
+{{- define "host.configmap.agent_mode" }}
+{{- $mode := "secure_light" }}
+{{- if (include "host.features.netsec_enabled" .) }}
+{{- $mode = "secure" }}
+{{- end }}
+{{- if (include "host.features.monitor_enabled" .) }}
+{{- $mode = "monitor" }}
+{{- end }}
+{{- dict "feature" (dict "mode" $mode) | toYaml -}}
+{{- end }}
+
 {{- define "host.parse_features" }}
 {{/* TODO: Kubernetes metadata */}}
 {{- with .Values.features }}
@@ -103,8 +135,9 @@
 {{- $config = merge $config (dict "local_forwarder" (dict "enabled" .enabled "transmit_message_types" .transmit_message_types)) }}
 {{- end }}
 {{- end }}
+{{- $config = merge $config (include "host.configmap.agent_mode" . | fromYaml) }}
 {{- if .Values.host.additional_settings }}
-{{- $config = merge $config (include "host.config_override" . | fromYaml) }}
+{{- $config = mergeOverwrite $config (include "host.config_override" . | fromYaml) }}
 {{- end }}
 {{- $config | toYaml }}
 {{- end }}
