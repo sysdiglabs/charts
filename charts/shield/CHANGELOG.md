@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.1.17
+### Bug Fixes
+* **shield** [be56023d](https://github.com/sysdiglabs/charts/commit/be56023d573681925e68e4b49a99f2a6993437f0): add lease rule for host shield role ([#2034](https://github.com/sysdiglabs/charts/issues/2034))
 # v0.1.16
 ### Bug Fixes
 * **shield** [28d8ae0e](https://github.com/sysdiglabs/charts/commit/28d8ae0ebb8d2c8ca718b386fe69ecda5d90a603): update custom CA path in host shield config ([#2029](https://github.com/sysdiglabs/charts/issues/2029))
