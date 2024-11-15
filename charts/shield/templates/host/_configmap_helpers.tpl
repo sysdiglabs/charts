@@ -100,7 +100,9 @@ true
 {{- $config := dict
   "k8s_cluster_name" .Values.cluster_config.name
   "collector" (include "common.collector_endpoint" .)
-  "collector_port" .Values.sysdig_endpoint.collector.port }}
+  "collector_port" .Values.sysdig_endpoint.collector.port
+  "k8s_delegated_nodes" (dig "k8s_delegated_nodes" 0 .Values.host.additional_settings)
+}}
 {{- $config = merge $config (dict "sysdig_api_endpoint" (include "common.secure_api_endpoint" .)) }}
 {{- if (include "common.proxy.enabled" . ) }}
 {{- $config := merge $config (dict "http_proxy" (include "host.proxy_config" . | fromYaml)) }}

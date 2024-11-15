@@ -1213,6 +1213,10 @@ tests:
     template: templates/cluster/deployment.yaml
 
   - it: Replicas with no feature enabled (default value)
+    set:
+      features:
+        kubernetes_metadata:
+          enabled: false
     asserts:
       - equal:
           path: spec.replicas
@@ -1220,11 +1224,6 @@ tests:
     template: templates/cluster/deployment.yaml
 
   - it: Replicas with feature enabled (default value)
-    set:
-      features:
-        detections:
-          kubernetes_audit:
-            enabled: true
     asserts:
       - equal:
           path: spec.replicas
@@ -1236,6 +1235,9 @@ tests:
     set:
       cluster:
         replica_count: 5
+      features:
+        kubernetes_metadata:
+          enabled: false
     asserts:
       - equal:
           path: spec.replicas
@@ -1246,10 +1248,6 @@ tests:
     set:
       cluster:
         replica_count: 5
-      features:
-        detections:
-          kubernetes_audit:
-            enabled: true
     asserts:
       - equal:
           path: spec.replicas

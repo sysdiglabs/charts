@@ -1027,3 +1027,25 @@ tests:
           pattern: |
             feature:
               mode: monitor
+
+  - it: Default Delegated Nodes Number
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            k8s_delegated_nodes: 0
+
+  - it: Manually specified Delegated Nodes Number
+    set:
+      features:
+        vulnerability_management:
+          host_vulnerability_management:
+            enabled: true
+      host:
+        additional_settings:
+          k8s_delegated_nodes: 1
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            k8s_delegated_nodes: 1
