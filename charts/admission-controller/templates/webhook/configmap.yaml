@@ -22,6 +22,7 @@ data:
   {{- if .Values.features.kspmAdmissionController}}
   SERVICE_PORT: "{{ .Values.webhook.v2.http.port }}"
   CERT_LOCATION: /cert
+  NATS_INSECURE: "{{.Values.webhook.v2.nats.insecure}}"
   BACKEND_URL: "{{ .Values.sysdig.url | default (printf "https://%s" (include "admissionController.apiEndpoint" .)) }}"
   VERIFY_SSL: "{{.Values.webhook.v2.http.insecure}}"
   {{- end}}

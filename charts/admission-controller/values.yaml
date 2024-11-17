@@ -168,6 +168,11 @@ podMonitors:
 
 webhook:
   v2:
+    nats:
+      # Allow insecure TLS certificates in backend connection to NATS service
+      insecure: false
+      # Override the NATS service connection URL
+      url: ""
     service:
       # Use this type as webhook service
       type: ClusterIP
