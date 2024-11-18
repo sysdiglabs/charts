@@ -688,7 +688,7 @@ tests:
       - matchRegex:
           path: data['dragent.yaml']
           pattern: |
-            sysdig_captures_enabled: false
+            sysdig_capture_enabled: false
 
   - it: Enable App Checks
     set:
@@ -842,7 +842,7 @@ tests:
       - matchRegex:
           path: data['dragent.yaml']
           pattern: |
-            sysdig_captures_enabled: true
+            sysdig_capture_enabled: true
 
   - it: Ensure Host Scanner root FS path is set
     set:
