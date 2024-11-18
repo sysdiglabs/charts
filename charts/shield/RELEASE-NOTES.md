@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **sysdig-deploy,shield** [4d9a268f](https://github.com/sysdiglabs/charts/commit/4d9a268fb941a3bf737131238c6207ef4ec0fc6b): Automatic version bump due to updated dependencies ([#2037](https://github.com/sysdiglabs/charts/issues/2037))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/cluster-shield-1.5.1...shield-0.1.21
+### New Features
+- **shield** [e5a03f7c](https://github.com/sysdiglabs/charts/commit/e5a03f7c3394b9df4fd9c6e6802cf7597365052b): release host shield 13.6.1 ([#2039](https://github.com/sysdiglabs/charts/issues/2039))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-0.1.21...shield-0.2.0
