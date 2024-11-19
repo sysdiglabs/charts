@@ -1070,3 +1070,39 @@ tests:
           path: data['dragent.yaml']
           pattern: |
             k8s_delegated_nodes: 1
+
+  - it: Ensure collector_port is set when given
+    set:
+      sysdig_endpoint:
+        collector:
+          url: example.com
+          port: 1234
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            collector_port: 1234
+
+  - it: Ensure collector_port is not set when a region is provided
+    set:
+      sysdig_endpoint:
+        region: us1
+        collector:
+          port: null
+    asserts:
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            collector_port: .*
+
+  - it: Validate port can be overridden for region if provided
+    set:
+      sysdig_endpoint:
+        region: us1
+        collector:
+          port: 1234
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            collector_port: 1234

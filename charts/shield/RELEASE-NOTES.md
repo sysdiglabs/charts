@@ -1,5 +1,5 @@
 # What's Changed
 
-### Bug Fixes
-- **shield** [7575efd3](https://github.com/sysdiglabs/charts/commit/7575efd3001caf0e00abf2edf88dd855e8945e24): correct typo in captures enablement ([#2040](https://github.com/sysdiglabs/charts/issues/2040))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-0.2.0...shield-0.2.1
+### New Features
+- **shield** [c5aff8b5](https://github.com/sysdiglabs/charts/commit/c5aff8b51d8456bfe5f7cba9924e153548d4bda9): enable kubernetes-metadata by default and decrease delegated nodes number to 0 ([#2038](https://github.com/sysdiglabs/charts/issues/2038))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-0.2.1...shield-0.2.2
