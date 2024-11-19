@@ -222,6 +222,11 @@ tests:
               image_sbom_extractor:
                 nats_url: nats://release-name-shield-cluster-container-vulnerability-management:4222
               leader_election_lock_name: release-name-shield-cluster-container-vulnerability-management
+      - matchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: |
+            admission_controller_secure:
+              rsi_grpc_endpoint: release-name-shield-cluster-container-vulnerability-management:9999
 
   - it: Secure API Token - Fail if kubernetes audit is enabled with On Premise Versions < 6.12.0 and Secure API Token is not set
     set:
