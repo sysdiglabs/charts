@@ -61,7 +61,6 @@
           "description": "Type of Kubernetes cluster",
           "enum": [
             "generic",
-            "other",
             "gke-autopilot"
           ],
           "examples": [
