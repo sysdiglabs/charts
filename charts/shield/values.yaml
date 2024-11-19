@@ -51,7 +51,7 @@ features:
 
   kubernetes_metadata:
     # Enable the Kubernetes Metadata feature on cluster shield
-    enabled: false
+    enabled: true
 
   posture:
     host_posture:
