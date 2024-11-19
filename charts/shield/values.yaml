@@ -3,8 +3,8 @@ cluster_config:
   name:
   # The domain of the cluster
   cluster_domain: cluster.local
-  # The type of the cluster (Accepted Values: gke, gke-autopilot, other)
-  cluster_type: other
+  # The type of the cluster (Accepted Values: gke-autopilot, generic)
+  cluster_type: generic
   # The root namespace of the cluster
   root_namespace: kube-system
   # Tags you want to apply to the metadata sent to the Sysdig Backend.
@@ -215,13 +215,13 @@ host:
         cpu: 250m
         # The memory request for the host shield
         memory: 384Mi
-  # The annotations for the host shield workloads
+  # The annotations for the host shield workloads (metadata.annotations)
   workload_annotations: {}
-  # The labels for the host shield workloads
+  # The labels for the host shield workloads (metadata.labels)
   workload_labels: {}
-  # The annotations for the host shield pods
+  # The annotations for the host shield pods (spec.template.metadata.annotations)
   pod_annotations: {}
-  # The labels for the host shield pods
+  # The labels for the host shield pods (spec.template.metadata.labels)
   pod_labels: {}
   # The node selector for the host shield
   node_selector: {}
@@ -320,8 +320,8 @@ cluster:
     labels: {}
     # The annotations for the service account
     annotations: {}
-  admissionregistration:
-    # Create the admissionregistration resources for the cluster shield
+  validatingwebhookconfiguration:
+    # Create the validatingwebhookconfiguration resources for the cluster shield
     create: true
   tls_certificates:
     # Create the TLS certificates for the cluster shield
@@ -339,13 +339,13 @@ cluster:
       cpu: 1500m
       # The memory limit for the cluster shield
       memory: 1536Mi
-  # The annotations for the cluster shield workloads
+  # The annotations for the cluster shield workloads (metadata.annotations)
   workload_annotations: {}
-  # The labels for the cluster shield workloads
+  # The labels for the cluster shield workloads (metadata.labels)
   workload_labels: {}
-  # The annotations for the cluster shield pods
+  # The annotations for the cluster shield pods (spec.template.metadata.annotations)
   pod_annotations: {}
-  # The labels for the cluster shield pods
+  # The labels for the cluster shield pods (spec.template.metadata.labels)
   pod_labels: {}
   # The node selector for the cluster shield
   node_selector: {}
@@ -440,13 +440,13 @@ proxy:
   # Provide the name of an existing Secret that contains the no proxy hosts
   no_proxy_existing_secret:
 
-# The annotations for the all the workloads
+# Additional annotations for the all the workloads (metadata.annotations)
 workload_annotations: {}
-# The labels for the all the workloads
+# Additional labels for the all the workloads (metadata.labels)
 workload_labels: {}
-# The annotations for the all the pods
+# Additional annotations for all the pods (spec.template.metadata.annotations)
 pod_annotations: {}
-# The labels for the all the pods
+# Additional labels for all the pods (spec.template.metadata.labels)
 pod_labels: {}
 # The node selector for the all the workloads
 node_selector: {}
@@ -460,8 +460,9 @@ env: []
 volumes: []
 # The volume mounts for all the workloads
 volume_mounts: []
-
+# Overrides the default resource identifier ex. sysdig-<override>-cluster
 name_override:
+# Overrides the default full resource identifier ex. <override>-cluster
 fullname_override:
 
 # Optional parameter used to check the compatibility of shield
