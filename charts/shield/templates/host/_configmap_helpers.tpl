@@ -91,7 +91,7 @@ true
     (dict "enabled" .investigations.activity_audit.enabled)
   "statsd"
     (dict "enabled" .monitoring.statsd.enabled)
-  "sysdig_captures_enabled" .investigations.captures.enabled }}
+  "sysdig_capture_enabled" .investigations.captures.enabled }}
 {{- $config | toYaml }}
 {{- end }}
 {{- end }}
