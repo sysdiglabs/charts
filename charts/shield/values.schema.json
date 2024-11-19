@@ -60,11 +60,12 @@
           "type": "string",
           "description": "Type of Kubernetes cluster",
           "enum": [
+            "generic",
             "other",
             "gke-autopilot"
           ],
           "examples": [
-            "other"
+            "generic"
           ]
         },
         "root_namespace": {
