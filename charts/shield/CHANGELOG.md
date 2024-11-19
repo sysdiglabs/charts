@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.2.3
+### New Features
+* **shield** [0dd9ffd6](https://github.com/sysdiglabs/charts/commit/0dd9ffd6b518d7e165a0df4a2b49bbb42831c25c): only specify collector port if given in config ([#2042](https://github.com/sysdiglabs/charts/issues/2042))
 # v0.2.2
 ### New Features
 * **shield** [c5aff8b5](https://github.com/sysdiglabs/charts/commit/c5aff8b51d8456bfe5f7cba9924e153548d4bda9): enable kubernetes-metadata by default and decrease delegated nodes number to 0 ([#2038](https://github.com/sysdiglabs/charts/issues/2038))
