@@ -100,7 +100,13 @@ true
 {{- $config := dict
   "k8s_cluster_name" .Values.cluster_config.name
   "collector" (include "common.collector_endpoint" .)
-  "collector_port" .Values.sysdig_endpoint.collector.port }}
+  "collector_port" .Values.sysdig_endpoint.collector.port
+}}
+{{- if .Values.features.kubernetes_metadata.enabled }}
+  {{- $_ := set $config "k8s_delegated_nodes" (dig "k8s_delegated_nodes" 0 .Values.host.additional_settings) -}}
+{{- else if hasKey .Values.host.additional_settings "k8s_delegated_nodes" }}
+  {{- $_ := set $config "k8s_delegated_nodes" (get $config "k8s_delegated_nodes") }}
+{{- end }}
 {{- $config = merge $config (dict "sysdig_api_endpoint" (include "common.secure_api_endpoint" .)) }}
 {{- if (include "common.proxy.enabled" . ) }}
 {{- $config := merge $config (dict "http_proxy" (include "host.proxy_config" . | fromYaml)) }}

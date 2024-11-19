@@ -1027,3 +1027,46 @@ tests:
           pattern: |
             feature:
               mode: monitor
+
+  - it: Default Delegated Nodes Number (Kubernetes Metadata feature enabled)
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            k8s_delegated_nodes: 0
+
+  - it: Manually specified Delegated Nodes Number (Kubernetes Metadata feature enabled)
+    set:
+      host:
+        additional_settings:
+          k8s_delegated_nodes: 1
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            k8s_delegated_nodes: 1
+
+  - it: Default Delegated Nodes Number (Kubernetes Metadata feature disabled)
+    set:
+      features:
+        kubernetes_metadata:
+          enabled: false
+    asserts:
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            k8s_delegated_nodes: .*
+
+  - it: Manually specified Delegated Nodes Number (Kubernetes Metadata feature disabled)
+    set:
+      features:
+        kubernetes_metadata:
+          enabled: false
+      host:
+        additional_settings:
+          k8s_delegated_nodes: 1
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            k8s_delegated_nodes: 1

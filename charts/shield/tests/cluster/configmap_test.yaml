@@ -77,7 +77,7 @@ tests:
                 registry_ssl:
                   verify: true
               kubernetes_metadata:
-                enabled: false
+                enabled: true
               posture:
                 enabled: false
             kubernetes:
@@ -94,6 +94,63 @@ tests:
               api_url: https://fake.api.url.com
               collector: fake.collector.host:6443
               region: custom
+
+  - it: Disable Kubernetes Metadata feature
+    set:
+      features:
+        kubernetes_metadata:
+          enabled: false
+    asserts:
+      - exists:
+          path: data["cluster-shield.yaml"]
+      - matchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: |
+            features:
+              admission_control:
+                container_vulnerability_management:
+                  enabled: false
+                deny_on_error: false
+                dry_run: true
+                enabled: false
+                excluded_namespaces: \[\]
+                http_port: 8443
+                timeout: 10
+              audit:
+                enabled: false
+                excluded_namespaces: \[\]
+                http_port: 6443
+                timeout: 10
+                webhook_rules:
+                - apiGroups:
+                  - ""
+                  - apps
+                  - autoscaling
+                  - batch
+                  - networking.k8s.io
+                  - rbac.authorization.k8s.io
+                  - extensions
+                  apiVersions:
+                  - '\*'
+                  operations:
+                  - '\*'
+                  resources:
+                  - '\*/\*'
+                  scope: '\*'
+              container_vulnerability_management:
+                enabled: false
+                in_use:
+                  enabled: false
+                  integration_enabled: false
+                local_cluster:
+                  registry_secrets: \[\]
+                platform_services_enabled: true
+                registry_ssl:
+                  verify: true
+              kubernetes_metadata:
+                enabled: false
+              posture:
+                enabled: false
 
   - it: Sets NATS Url and Lock Name when Container Vulnerability Management is enabled
     set:
@@ -130,7 +187,7 @@ tests:
                 nats_url: nats://release-name-shield-cluster-container-vulnerability-management:4222
               leader_election_lock_name: release-name-shield-cluster-container-vulnerability-management
 
-  - it: Sets t he GRPC Endpoint when Admission Control is enabled with Container Vulnerability Management
+  - it: Sets the GRPC Endpoint when Admission Control is enabled with Container Vulnerability Management
     set:
       cluster_config:
         name: shield-cluster
