@@ -29,6 +29,9 @@
     },
     "volume_mounts": {
       "$ref": "#/$defs/VolumeMounts"
+    },
+    "proxy": {
+      "$ref": "#/$defs/Proxy"
     }
   },
   "required": [
@@ -1015,6 +1018,38 @@
           "mountPath"
         ]
       }
+    },
+    "Proxy": {
+      "type": "object",
+      "properties": {
+        "http_proxy": {
+          "type": ["string", "null"],
+          "format": "uri",
+          "description": "HTTP Proxy URL"
+        },
+        "http_proxy_existing_secret": {
+          "type": ["string", "null"],
+          "description": "The name of the secret containing the HTTP Proxy URL"
+        },
+        "https_proxy": {
+          "type": ["string", "null"],
+          "format": "uri",
+          "description": "HTTPS Proxy URL"
+        },
+        "https_proxy_existing_secret": {
+          "type": ["string", "null"],
+          "description": "The name of the secret containing the HTTPS Proxy URL"
+        },
+        "no_proxy": {
+          "type": ["string", "null"],
+          "description": "No Proxy URL"
+        },
+        "no_proxy_existing_secret": {
+          "type": ["string", "null"],
+          "description": "The name of the secret containing the No Proxy URL"
+        }
+      },
+      "additionalProperties": false
     }
   }
 }
