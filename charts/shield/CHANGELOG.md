@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.2.1
+### Bug Fixes
+* **shield** [7575efd3](https://github.com/sysdiglabs/charts/commit/7575efd3001caf0e00abf2edf88dd855e8945e24): correct typo in captures enablement ([#2040](https://github.com/sysdiglabs/charts/issues/2040))
 # v0.2.0
 ### New Features
 * **shield** [e5a03f7c](https://github.com/sysdiglabs/charts/commit/e5a03f7c3394b9df4fd9c6e6802cf7597365052b): release host shield 13.6.1 ([#2039](https://github.com/sysdiglabs/charts/issues/2039))
