@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.2.8
+### Bug Fixes
+* **shield** [42aa7ad2](https://github.com/sysdiglabs/charts/commit/42aa7ad2c09800ab34207fdbf925dd42ab3dcb18): set /var/data type to DirectoryOrCreate ([#2050](https://github.com/sysdiglabs/charts/issues/2050))
 # v0.2.7
 ### Bug Fixes
 * **shield** [4b1be3ec](https://github.com/sysdiglabs/charts/commit/4b1be3ec21baf34529c08386f7460ea804eea725): shorten the service name used for container vulnerability management service ([#2049](https://github.com/sysdiglabs/charts/issues/2049))
