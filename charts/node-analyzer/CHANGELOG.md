@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.33.2
+### Bug Fixes
+* **node-analyzer** [f1aa8910](https://github.com/sysdiglabs/charts/commit/f1aa89100fe080353d32eadd687043b901d3c07a): Bump nodeanalyzer to 1.44.17 ([#2047](https://github.com/sysdiglabs/charts/issues/2047))
 # v1.33.1
 ### New Features
 * **node-analyzer** [06903836](https://github.com/sysdiglabs/charts/commit/069038368fc5a9ed955e1eec14673b59b909d702): Add support for ubuntu24, coreos and suse ([#2022](https://github.com/sysdiglabs/charts/issues/2022))
