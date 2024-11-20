@@ -613,3 +613,9 @@ tests:
     asserts:
       - isNullOrEmpty:
           path: spec.template.spec.imagePullSecrets
+
+  - it: Test that /var/data is type DirectoryOrCreate
+    asserts:
+      - equal:
+          path: spec.template.spec.volumes[?(@.name == "vardata-vol")].hostPath.type
+          value: DirectoryOrCreate
