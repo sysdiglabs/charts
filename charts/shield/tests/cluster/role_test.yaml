@@ -64,7 +64,7 @@ tests:
               - "endpoints"
               - "endpoints/restricted"
             resourceNames:
-              - "release-name-shield-cluster-container-vulnerability-management"
+              - "release-name-shield-cluster-container-vm"
             verbs: ["*"]
 
   - it: Admission Control withContainer Vulnerability Management
@@ -114,5 +114,5 @@ tests:
               - "endpoints"
               - "endpoints/restricted"
             resourceNames:
-              - "release-name-shield-cluster-container-vulnerability-management"
+              - "release-name-shield-cluster-container-vm"
             verbs: ["*"]

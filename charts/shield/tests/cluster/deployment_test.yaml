@@ -175,7 +175,7 @@ tests:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].env
           content:
             name: KUBE_SERVICE_NAME
-            value: release-name-shield-cluster-container-vulnerability-management
+            value: release-name-shield-cluster-container-vm
           any: true
     template: templates/cluster/deployment.yaml
 
@@ -1151,7 +1151,7 @@ tests:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].env
           content:
             name: KUBE_SERVICE_NAME
-            value: release-name-shield-cluster-container-vulnerability-management
+            value: release-name-shield-cluster-container-vm
       - contains:
           path: spec.template.spec.volumes
           content:

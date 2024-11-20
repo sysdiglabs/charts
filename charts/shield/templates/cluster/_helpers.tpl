@@ -16,7 +16,7 @@ If release name contains chart name it will be used as a full name.
 {{- end }}
 
 {{- define "cluster.container_vulnerability_management_service_name" -}}
-  {{- include "cluster.fullname" . }}-container-vulnerability-management
+  {{- include "cluster.fullname" . | trunc 50 | trimSuffix "-" }}-container-vm
 {{- end }}
 
 {{- define "cluster.container_vulnerability_management_lease_name" -}}
