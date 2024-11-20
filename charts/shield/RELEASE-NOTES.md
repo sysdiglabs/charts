@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **shield** [bf1bf76b](https://github.com/sysdiglabs/charts/commit/bf1bf76b5110bdf185b42b353c9ac0ff8c7e1c82): remove other as accepted value for cluster_type ([#2044](https://github.com/sysdiglabs/charts/issues/2044))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-0.2.5...shield-0.2.6
+### Bug Fixes
+- **shield** [4b1be3ec](https://github.com/sysdiglabs/charts/commit/4b1be3ec21baf34529c08386f7460ea804eea725): shorten the service name used for container vulnerability management service ([#2049](https://github.com/sysdiglabs/charts/issues/2049))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-0.2.6...shield-0.2.7
