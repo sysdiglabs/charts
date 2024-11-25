@@ -26,3 +26,81 @@ tests:
       - contains:
           path: users
           content: "system:serviceaccount:shield-namespace:release-name-shield-host"
+
+  - it: SecurityContextConstraints allowedCapabilities is empty when host.privileged is true
+    capabilities:
+      apiVersions:
+        - security.openshift.io/v1
+    set:
+      host:
+        privileged: true
+    asserts:
+      - equal:
+          path: allowedCapabilities
+          value: []
+
+  - it: SecurityContextConstraints allowedCapabilities is not empty when host.privileged is false
+    capabilities:
+      apiVersions:
+        - security.openshift.io/v1
+    set:
+      host:
+        privileged: false
+    asserts:
+      - equal:
+          path: allowedCapabilities
+          value:
+            - SYS_ADMIN
+            - SYS_RESOURCE
+            - SYS_PTRACE
+            - SYS_CHROOT
+            - DAC_READ_SEARCH
+            - KILL
+            - SETUID
+            - SETGID
+
+  - it: SecurityContextConstraints allowHostPorts is true when features.posture.host_posture.enabled is true
+    capabilities:
+      apiVersions:
+        - security.openshift.io/v1
+    set:
+      features:
+        posture:
+          host_posture:
+            enabled: true
+    asserts:
+      - equal:
+          path: allowHostPorts
+          value: true
+
+  - it: SecurityContextConstraints allowHostPorts is true when host.additional_settings.kspm_analyzer.enabled is true
+    capabilities:
+      apiVersions:
+        - security.openshift.io/v1
+    set:
+      host:
+        additional_settings:
+          kspm_analyzer:
+            enabled: true
+    asserts:
+      - equal:
+          path: allowHostPorts
+          value: true
+
+  - it: SecurityContextConstraints allowHostPorts is false when features.posture.host_posture.enabled and host.additional_settings.kspm_analyzer.enabled are false
+    capabilities:
+      apiVersions:
+        - security.openshift.io/v1
+    set:
+      features:
+        posture:
+          host_posture:
+            enabled: false
+      host:
+        additional_settings:
+          kspm_analyzer:
+            enabled: false
+    asserts:
+      - equal:
+          path: allowHostPorts
+          value: false
