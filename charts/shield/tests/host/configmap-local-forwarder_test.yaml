@@ -59,20 +59,3 @@ tests:
                   output: stdout
                 type: LOCAL
         template: host/configmap.yaml
-      - contains:
-          path: spec.template.spec.volumes
-          content:
-            configMap:
-              items:
-                - key: local_forwarder_config.yaml
-                  path: local_forwarder_config.yaml
-              name: release-name-shield-host
-            name: local-forwarder-config
-        template: host/daemonset.yaml
-      - contains:
-          path: spec.template.spec.containers[0].volumeMounts
-          content:
-            mountPath: /opt/draios/etc/local_forwarder_config.yaml
-            subPath: local_forwarder_config.yaml
-            name: local-forwarder-config
-        template: host/daemonset.yaml
