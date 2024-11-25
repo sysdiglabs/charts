@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.2.10
+### Bug Fixes
+* **shield** [8a7ea104](https://github.com/sysdiglabs/charts/commit/8a7ea1045bc5333196a48b0d24b8815efd27b9cd): reconfigure host shield configmap mounts ([#2055](https://github.com/sysdiglabs/charts/issues/2055))
 # v0.2.9
 ### Bug Fixes
 * **shield** [14d4d769](https://github.com/sysdiglabs/charts/commit/14d4d769d2075951a53f7fb932a910649796cea0): configure the host securitycontextconstraint when running on openshift based clusters ([#2054](https://github.com/sysdiglabs/charts/issues/2054))
