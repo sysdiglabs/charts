@@ -173,7 +173,6 @@ spec:
             periodSeconds: 10
             failureThreshold: 9
           volumeMounts:
-          {{- /* TOOD: Local Forwarder config mount */}}
           {{- /* Custom CA */}}
           {{- include "common.custom_ca.volume_mount" (merge (dict) . (dict "CACertsPath" "/opt/draios/certificates/")) | nindent 12 }}
           {{- /* Always requested */}}
@@ -189,14 +188,10 @@ spec:
               name: run-vol
             - mountPath: /dev/shm
               name: dshm
-            - mountPath: /opt/draios/etc/kubernetes/config/dragent.yaml
-              name: dragent-config
-              subPath: dragent.yaml
-            - mountPath: /opt/draios/etc/kubernetes/config/host-shield.yaml
+            - mountPath: /opt/draios/etc/kubernetes/config
               name: host-shield-config
-              subPath: host-shield.yaml
             - mountPath: /opt/draios/etc/kubernetes/secrets
-              name: sysdig-agent-secrets
+              name: host-shield-secrets
             - mountPath: /etc/podinfo
               name: podinfo
           {{- /* Autopilot = false */}}
@@ -262,19 +257,10 @@ spec:
         - name: dshm
           emptyDir:
             medium: Memory
-        - name: dragent-config
-          configMap:
-            name: {{ include "host.fullname" . }}
-            items:
-              - key: dragent.yaml
-                path: dragent.yaml
         - name: host-shield-config
           configMap:
             name: {{ include "host.fullname" . }}
-            items:
-              - key: host-shield.yaml
-                path: host-shield.yaml
-        - name: sysdig-agent-secrets
+        - name: host-shield-secrets
           secret:
             secretName: {{ include "common.credentials.access_key_secret_name" . }}
         - name: podinfo
@@ -355,8 +341,6 @@ spec:
         - name: local-forwarder-config
           configMap:
             name: {{ include "host.fullname" . }}
-            items:
-              - key: local_forwarder_config.yaml
-                path: local_forwarder_config.yaml
+            optional: true
       {{- end }}
       {{- include "host.volumes" . | nindent 8 }}
