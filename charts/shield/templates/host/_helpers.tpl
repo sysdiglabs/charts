@@ -137,3 +137,14 @@ true
 {{- . | toYaml -}}
 {{- end -}}
 {{- end -}}
+
+{{- define "host.capabilities" -}}
+- DAC_READ_SEARCH
+- KILL
+- SETGID
+- SETUID
+- SYS_ADMIN
+- SYS_CHROOT
+- SYS_PTRACE
+- SYS_RESOURCE
+{{- end -}}
