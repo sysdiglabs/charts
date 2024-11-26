@@ -404,3 +404,6 @@ tests:
     tag: 1.31.2
 # Allow to modify DNS policy
 dnsPolicy: null
+# Overrides `security.openshift.io/v1` API detection
+# useful while using "helm template" and to generate security context constraints
+hasAPISecurityOpenshiftV1Override: false

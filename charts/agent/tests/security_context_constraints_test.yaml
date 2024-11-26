@@ -139,3 +139,14 @@ tests:
       - equal:
           path: allowHostPorts
           value: true
+
+  - it: Testing that SCS is created when security.openshift.io/v1 api are overridden
+    set:
+      scc:
+        create: true
+      hasAPISecurityOpenshiftV1Override: true
+    asserts:
+      - hasDocuments:
+          count: 1
+      - isKind:
+          of: SecurityContextConstraints
