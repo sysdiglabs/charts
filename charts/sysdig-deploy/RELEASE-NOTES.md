@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **sysdig-deploy** [837ccb6c](https://github.com/sysdiglabs/charts/commit/837ccb6ca56082a100d2d88e0295e91af270827e): Automatic version bump due to updated dependencies ([#2048](https://github.com/sysdiglabs/charts/issues/2048))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.68.0...sysdig-deploy-1.68.1
+### New Features
+- **agent** [3453bc7d](https://github.com/sysdiglabs/charts/commit/3453bc7dccad55c9c8f2cd67948e132d6b4eb120): Support single healthProbe port for Windows version with tag greater than 1.2.0 ([#1990](https://github.com/sysdiglabs/charts/issues/1990))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.68.1...sysdig-deploy-1.69.0
