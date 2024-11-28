@@ -42,7 +42,7 @@ spec:
             httpGet:
               host: 127.0.0.1
               path: /healthz
-              port: 24484
+              port: {{ if eq (include "agent.enableWindowsProbesSinglePort" .) "true" }}24483{{ else }}24484{{ end }}
             initialDelaySeconds: 60
             periodSeconds: 30
             timeoutSeconds: 10
@@ -50,7 +50,7 @@ spec:
             httpGet:
               host: 127.0.0.1
               path: /healthz
-              port: 24484
+              port: {{ if eq (include "agent.enableWindowsProbesSinglePort" .) "true" }}24483{{ else }}24484{{ end }}
             initialDelaySeconds: 60
             timeoutSeconds: 10
           resources:
