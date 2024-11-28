@@ -1,5 +1,5 @@
 # What's Changed
 
 ### New Features
-- **agent,sysdig-deploy** [9304b56c](https://github.com/sysdiglabs/charts/commit/9304b56c81553823b8457c4d031f29a83fb9a932): release agent 13.6.1 ([#2031](https://github.com/sysdiglabs/charts/issues/2031))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.30.0...agent-1.31.0
+- **agent** [3453bc7d](https://github.com/sysdiglabs/charts/commit/3453bc7dccad55c9c8f2cd67948e132d6b4eb120): Support single healthProbe port for Windows version with tag greater than 1.2.0 ([#1990](https://github.com/sysdiglabs/charts/issues/1990))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.31.0...agent-1.32.0
