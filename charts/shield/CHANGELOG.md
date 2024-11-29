@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.2.11
+### Chores
+* **shield** [8f5d7046](https://github.com/sysdiglabs/charts/commit/8f5d7046f2faff0fb719a5c035ff3e28d68a7a5a): replace experimental warning with technical preview notice ([#2060](https://github.com/sysdiglabs/charts/issues/2060))
 # v0.2.10
 ### Bug Fixes
 * **shield** [8a7ea104](https://github.com/sysdiglabs/charts/commit/8a7ea1045bc5333196a48b0d24b8815efd27b9cd): reconfigure host shield configmap mounts ([#2055](https://github.com/sysdiglabs/charts/issues/2055))
