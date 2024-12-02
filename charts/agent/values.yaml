@@ -404,3 +404,4 @@ tests:
     tag: 1.31.2
 # Allow to modify DNS policy
 dnsPolicy: null
+customSecurityContext: {}
