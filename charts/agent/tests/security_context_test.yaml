@@ -22,7 +22,7 @@ tests:
       privileged: true
     asserts:
       - equal:
-          path: spec.template.spec.containers[?(@.name == "sysdig")].securityContext #.value
+          path: spec.template.spec.containers[?(@.name == "sysdig")].securityContext
           value:
             allowPrivilegeEscalation: true
             privileged: true
@@ -35,7 +35,7 @@ tests:
       privileged: true
     asserts:
       - equal:
-          path: spec.template.spec.containers[?(@.name == "sysdig")].securityContext #.value
+          path: spec.template.spec.containers[?(@.name == "sysdig")].securityContext
           value:
             allowPrivilegeEscalation: true
             privileged: true
@@ -51,13 +51,13 @@ tests:
       privileged: false
     asserts:
       - isSubset:
-          path: spec.template.spec.containers[?(@.name == "sysdig")].securityContext #.value
+          path: spec.template.spec.containers[?(@.name == "sysdig")].securityContext
           content:
             allowPrivilegeEscalation: false
             seccompProfile:
                 type: Unconfined
       - isNotSubset:
-          path: spec.template.spec.containers[?(@.name == "sysdig")].securityContext #.value
+          path: spec.template.spec.containers[?(@.name == "sysdig")].securityContext
           content:
             allowPrivilegeEscalation: false
             privileged: true
