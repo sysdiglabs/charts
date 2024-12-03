@@ -86,13 +86,13 @@ rules:
   apiGroups:
   - "admissionregistration.k8s.io"
   resources:
-    - "validatingwebhookconfigurations"
+  - "validatingwebhookconfigurations"
 - verbs:
   - "*"
   apiGroups:
   - "coordination.k8s.io"
   resources:
-    - "leases"
+  - "leases"
 - verbs:
   - "*"
   apiGroups:
