@@ -17,7 +17,7 @@ kubernetesProvider:
       nodeInfo:
         osImage: fake-os-image
 tests:
-  - it: Ensure the securityContext for a privileged agent is the one defined
+  - it: Ensure the securityContext for a privileged agent is exactly what was defined
     set:
       privileged: true
     asserts:
@@ -30,20 +30,7 @@ tests:
             runAsNonRoot: false
             runAsUser: 0
 
-  - it: Ensure the securityContext for a privileged agent is the one defined
-    set:
-      privileged: true
-    asserts:
-      - equal:
-          path: spec.template.spec.containers[?(@.name == "sysdig")].securityContext
-          value:
-            allowPrivilegeEscalation: true
-            privileged: true
-            readOnlyRootFilesystem: false
-            runAsNonRoot: false
-            runAsUser: 0
-
-  - it: Ensure the securityContext for a non-privileged agent is the one defined
+  - it: Ensure the securityContext for a non-privileged agent contains the keys defined
     set:
       ebpf:
         enabled: true
@@ -65,7 +52,7 @@ tests:
             runAsNonRoot: false
             runAsUser: 0
 
-  - it: Ensure the customSecurityContext (mainly for bottlerocket) is honored
+  - it: Ensure the customSecurityContext is honored
     set:
       customSecurityContext:
         allowPrivilegeEscalation: true
