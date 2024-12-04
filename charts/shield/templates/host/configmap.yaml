@@ -15,3 +15,7 @@ data:
     integrations:
       {{- toYaml .Values.features.investigations.event_forwarder.integrations | nindent 6 }}
   {{- end }}
+  {{- if .Values.features.monitoring.prometheus.file }}
+  prometheus.yaml: |
+    {{- toYaml .Values.features.monitoring.prometheus.yaml | nindent 4 }}
+  {{- end }}

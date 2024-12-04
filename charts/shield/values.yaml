@@ -147,6 +147,8 @@ features:
       enabled: false
     prometheus:
       enabled: false
+      file:
+        enabled: false
     statsd:
       enabled: false
 
