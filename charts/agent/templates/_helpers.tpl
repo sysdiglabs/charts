@@ -685,7 +685,7 @@ annotations:
 
 {{- define "agent.securityContext" -}}
 {{- if .Values.customSecurityContext }}
-    {{- toYaml .Values.customSecurityContext -}}
+  {{- toYaml .Values.customSecurityContext -}}
 {{- else if eq "true" (include "agent.privileged" .) }}
 privileged: true
 runAsNonRoot: false
@@ -695,11 +695,11 @@ allowPrivilegeEscalation: true
 {{- else }}
 allowPrivilegeEscalation: false
 seccompProfile:
-    type: Unconfined
+  type: Unconfined
 capabilities:
-    drop:
+  drop:
     - ALL
-    add:
-    {{- include "agent.capabilities" . | nindent 14 }}
+  add:
+    {{- include "agent.capabilities" . | nindent 4 }}
 {{- end }}
 {{- end -}}
