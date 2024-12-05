@@ -95,7 +95,7 @@ rules:
   verbs:
     - get
     - list
-{{- if and .Values.nodeAnalyzer.kspmAnalyzer.includeSensitivePermissions }}
+{{- if or .Values.nodeAnalyzer.kspmAnalyzer.includeSensitivePermissions (and .Values.nodeAnalyzer.benchmarkRunner.includeSensitivePermissions .Values.nodeAnalyzer.benchmarkRunner.deploy)}}
 - apiGroups:
     - ""
   resources:
