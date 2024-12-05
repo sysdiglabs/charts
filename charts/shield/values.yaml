@@ -1,7 +1,6 @@
 cluster_config:
   # The name of the cluster
-  name:
-  # The domain of the cluster
+  name: null # The domain of the cluster
   cluster_domain: cluster.local
   # The type of the cluster (Accepted Values: gke-autopilot, generic)
   cluster_type: generic
@@ -14,23 +13,15 @@ sysdig_endpoint:
   # The region where the Sysdig Secure instance is located
   region: custom
   # The URL of the Sysdig Secure API (required only when region is custom)
-  api_url:
+  api_url: null
   collector:
     # The hostname of the Sysdig Secure collector (required only when region is custom)
-    host:
-    # The port of the Sysdig Secure collector (required only when region is custom)
-    port:
-  # The access key for the Sysdig Secure instance
-  access_key:
-  # The access key for the Sysdig Secure instance (existing secret)
-  access_key_existing_secret:
-  # The API token for the Sysdig Secure instance
-  secure_api_token:
-  # The API token for the Sysdig Secure instance (existing secret)
-  secure_api_token_existing_secret:
-
-# Features
-
+    host: null # The port of the Sysdig Secure collector (required only when region is custom)
+    port: null # The access key for the Sysdig Secure instance
+  access_key: null # The access key for the Sysdig Secure instance (existing secret)
+  access_key_existing_secret: null # The API token for the Sysdig Secure instance
+  secure_api_token: null # The API token for the Sysdig Secure instance (existing secret)
+  secure_api_token_existing_secret: null # Features
 features:
   admission_control:
     # Enable the admission control feature
@@ -105,7 +96,7 @@ features:
       # The list of namespaces that will be excluded from the audit feature
       excluded_namespaces: []
       # List of rules used to determine if a request should be audited
-      webhook_rules:  # +doc-gen:break
+      webhook_rules: # +doc-gen:break
         - apiGroups:
             - ""
             - apps
@@ -165,7 +156,7 @@ host:
     # The image name for the host shield
     shield_name: agent-slim
     # The tag for the host shield images
-    tag: 13.6.1
+    tag: 13.7.0
     # The pull policy for the host shield images
     pull_policy: IfNotPresent
     # The pull secrets for the host shield images
@@ -174,8 +165,7 @@ host:
     # Create a priority class for the host shield
     create: false
     # The name of the priority class (if create is set to false, this will be used as the name of the existing priority class)
-    name:
-    # The value of the priority class
+    name: null # The value of the priority class
     value: 10
     # The labels for the priority class
     labels: {}
@@ -187,8 +177,7 @@ host:
     # Create the RBAC resources for the host shield
     create: true
     # The name of the service account for the host shield (if create is set to false, this will be used as the name of the existing service account)
-    service_account_name:
-    # The labels for the service account
+    service_account_name: null # The labels for the service account
     labels: {}
     # The annotations for the service account
     annotations: {}
@@ -226,7 +215,7 @@ host:
   # The node selector for the host shield
   node_selector: {}
   # The tolerations for the host shield
-  tolerations:  # +doc-gen:break
+  tolerations: # +doc-gen:break
     - effect: NoSchedule
       key: node-role.kubernetes.io/master
     - effect: NoSchedule
@@ -244,7 +233,7 @@ host:
       operator: Equal
       value: "true"
   # The affinity for the host shield
-  affinity:  # +doc-gen:break
+  affinity: # +doc-gen:break
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
@@ -268,7 +257,7 @@ host:
       periodSeconds: 10
       # The readiness probe failure threshold
       failureThreshold: 9
-    liveness:  # TODO: Currently host does not have liveness probe. Should we add it?
+    liveness: # TODO: Currently host does not have liveness probe. Should we add it?
       # The liveness probe initial delay
       initialDelaySeconds: 90
       # The liveness probe period
@@ -304,8 +293,7 @@ cluster:
     # Create a priority class for the cluster shield
     create: false
     # The name of the priority class (if create is set to false, this will be used as the name of the existing priority class)
-    name:
-    # The value of the priority class
+    name: null # The value of the priority class
     value: 10
     # The labels for the priority class
     labels: {}
@@ -315,8 +303,7 @@ cluster:
     # Create the RBAC resources for the cluster shield
     create: true
     # The name of the service account for the cluster shield (if create is set to false, this will be used as the name of the existing service account)
-    service_account_name:
-    # The labels for the service account
+    service_account_name: null # The labels for the service account
     labels: {}
     # The annotations for the service account
     annotations: {}
@@ -327,7 +314,7 @@ cluster:
     # Create the TLS certificates for the cluster shield
     create: true
     # The name of the secret that contains the TLS certificates
-    secret_name:
+    secret_name: null
   resources:
     requests:
       # The CPU request for the cluster shield
@@ -387,8 +374,7 @@ cluster:
   host_network: false
 
   # Define Cluster Shield Pods DNS Policy
-  dns_policy:
-  # The custom environment variables for cluster shield
+  dns_policy: null # The custom environment variables for cluster shield
   env: []
   # The custom volumes for cluster shield
   volumes: []
@@ -420,27 +406,17 @@ ssl:
     #       -----END CERTIFICATE-----
 
     # Filename that is used when creating the secret.  Required if cert is provided.
-    key_name:
-    # Provide the name of an existing Secret that contains the CA required
-    existing_ca_secret:
-    # Provide the filename that is defined inside the existing Secret
-    existing_ca_secret_key_name:
-
+    key_name: null # Provide the name of an existing Secret that contains the CA required
+    existing_ca_secret: null # Provide the filename that is defined inside the existing Secret
+    existing_ca_secret_key_name: null
 proxy:
   # HTTP proxy to use for all HTTP requests
-  http_proxy:
-  # Provide the name of an existing Secret that contains the HTTP proxy
-  http_proxy_existing_secret:
-  # HTTPS proxy to use for all HTTPS requests
-  https_proxy:
-  # Provide the name of an existing Secret that contains the HTTPS proxy
-  https_proxy_existing_secret:
-  # No proxy hosts and ips
-  no_proxy:
-  # Provide the name of an existing Secret that contains the no proxy hosts
-  no_proxy_existing_secret:
-
-# Additional annotations for the all the workloads (metadata.annotations)
+  http_proxy: null # Provide the name of an existing Secret that contains the HTTP proxy
+  http_proxy_existing_secret: null # HTTPS proxy to use for all HTTPS requests
+  https_proxy: null # Provide the name of an existing Secret that contains the HTTPS proxy
+  https_proxy_existing_secret: null # No proxy hosts and ips
+  no_proxy: null # Provide the name of an existing Secret that contains the no proxy hosts
+  no_proxy_existing_secret: null # Additional annotations for the all the workloads (metadata.annotations)
 workload_annotations: {}
 # Additional labels for the all the workloads (metadata.labels)
 workload_labels: {}
@@ -461,15 +437,12 @@ volumes: []
 # The volume mounts for all the workloads
 volume_mounts: []
 # Overrides the default resource identifier ex. sysdig-<override>-cluster
-name_override:
-# Overrides the default full resource identifier ex. <override>-cluster
-fullname_override:
-
-# Optional parameter used to check the compatibility of shield
+name_override: null # Overrides the default full resource identifier ex. <override>-cluster
+fullname_override: null # Optional parameter used to check the compatibility of shield
 # component versions with the on-premised backend version.
 #
 # If you are running an on-prem version of the Sysdig backend, you MUST set
 # this parameter with the version of Sysdig backend you are using.
 #
 # If you are runinng on SaaS, do NOT provide this parameter.
-on_prem_version:
+on_prem_version: null
