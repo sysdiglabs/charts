@@ -42,7 +42,7 @@ tests:
           content:
             allowPrivilegeEscalation: false
             seccompProfile:
-                type: Unconfined
+              type: Unconfined
       - isNotSubset:
           path: spec.template.spec.containers[?(@.name == "sysdig")].securityContext
           content:
