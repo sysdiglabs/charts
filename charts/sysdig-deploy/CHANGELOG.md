@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.71.0
+### New Features
+* **agent** [2f61bf41](https://github.com/sysdiglabs/charts/commit/2f61bf415127e76a6f628d962916d74cb1870997): [SMAGENT-8424] Allow for custom security context ([#2062](https://github.com/sysdiglabs/charts/issues/2062))
 # v1.70.0
 ### New Features
 * **agent,shield** [e48080ae](https://github.com/sysdiglabs/charts/commit/e48080aee167e1a324e09ff092676378abb4c3f1): release agent 13.7.0 ([#2069](https://github.com/sysdiglabs/charts/issues/2069))
