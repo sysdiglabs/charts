@@ -458,6 +458,9 @@ nodeAnalyzer:
       digest:
       pullPolicy:
 
+    # Permissions for OCP4, previously only added for benchmarkrunner
+    includeSensitivePermissions: false
+
     # Proxy configuration variables
     httpProxy:
     httpsProxy:
