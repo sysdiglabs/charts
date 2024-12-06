@@ -3,12 +3,9 @@ name: Build and Push the Shield Operator
 on:
   workflow_dispatch:
 
-env:
-  IMAGE_TAG_BASE: quay.io/sysdig/rh-shield-operator
-
 jobs:
   determine-operator-version:
-    name: Get the Operator Version from the Makefile
+    name: Determine the Operator Version
     runs-on: ubuntu-latest
     outputs:
       release_version: ${{ steps.get-operator-version.outputs.release_version }}
@@ -21,7 +18,9 @@ jobs:
       - name: Get Operator Version
         id: get-operator-version
         run: |
-          echo "::set-output name=release_version::$(awk "/^VERSION/ {print $3}" Makefile)"
+          VERSION=$(awk '/^VERSION/{print $3}' Makefile)
+          echo "Discovered release version is $VERSION"
+          echo "release_version=$VERSION" >> $GITHUB_OUTPUT
         working-directory: rh-shield-operator
 
   build-operator:
@@ -53,19 +52,26 @@ jobs:
       - build-operator
       - determine-operator-version
     steps:
-      - name: Make Operator Bundle
-        # 'make bundle' uses the live image from the registry to generate the image digest
-        # so this step must be after the image is pushed to the registry
+      - name: Checkout charts repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: '1'
+
+      - name: Generate Bundle Content
+        # When using 'USE_IMAGE_DIGEST' the 'make bundle' command inspects the live operator image from the registry
+        # in order to generate the image digest. As a result, this step must be after the operator image has been
+        # generated and pushed to the registry.
         run: |
           USE_IMAGE_DIGESTS=true make bundle
+        working-directory: rh-shield-operator
 
       - name: Set Labels and Annotations required for Certification on the Bundle
         uses: mikefarah/yq@v4
         with:
           cmd: |
-            yq e -i '.metadata.name |= sub("rh-shield-operator", "sysdig-shield-operator")' manifests/rh-shield-operator.clusterserviceversion.yaml
-            yq e -i '.metadata.name |= sub("rh-shield-operator", "sysdig-shield-operator")' metadata/annotations.yaml
-            yq e -i '.metadata.annotations.containerImage = (.spec.relatedImages[] | select(.name == "manager").image)' manifests/rh-shield-operator.clusterserviceversion.yaml
+            yq e -i '.metadata.name |= sub("rh-shield-operator", "sysdig-shield-operator")' rh-shield-operator/bundle/manifests/rh-shield-operator.clusterserviceversion.yaml
+            yq e -i '.annotations."operators.operatorframework.io.bundle.package.v1" |= sub("rh-shield-operator", "sysdig-shield-operator")' rh-shield-operator/bundle/metadata/annotations.yaml
+            yq e -i '.metadata.annotations.containerImage = (.spec.relatedImages[] | select(.name == "manager").image)' rh-shield-operator/bundle/manifests/rh-shield-operator.clusterserviceversion.yaml
             yq e -i '.metadata.annotations += {
               "features.operators.openshift.io/cnf": "false",
               "features.operators.openshift.io/cni": "false",
@@ -77,11 +83,11 @@ jobs:
               "features.operators.openshift.io/token-auth-aws": "false",
               "features.operators.openshift.io/token-auth-azure": "false",
               "features.operators.openshift.io/token-auth-gcp": "false"
-            }' manifests/rh-shield-operator.clusterserviceversion.yaml
-            yq e -i '.annotations."com.redhat.openshift.versions" = "v4.8-v4.17"' metadata/annotations.yaml
+            }' rh-shield-operator/bundle/manifests/rh-shield-operator.clusterserviceversion.yaml
+            yq e -i '.annotations."com.redhat.openshift.versions" = "v4.8-v4.17"' rh-shield-operator/bundle/metadata/annotations.yaml
 
       - name: Open Pull Request for Bundle update
-        uses: peter-evans/create-pull-request@v7.0.5
+        uses: peter-evans/create-pull-request@v7
         id: open-pr
         with:
           token: ${{ secrets.TOOLS_JENKINS_ADMIN_ACCESS_GITHUB_TOKEN }}
@@ -94,25 +100,12 @@ jobs:
             The changes here update the bundle metadata using the newly published Operator image to generate the
             image checksum, as well as adjusting some metadata that is required for certification.
 
-      - name: Wait for PR to be merged
-        shell: bash
-        run: |
-          echo "Waiting for PR ${{ steps.open-pr.outputs.pull-request-url }} to be merged..."
-
-          PR_STATUS=$(gh pr view ${{ steps.open-pr.outputs.pull-request-number }} --json state -q .state)
-
-          timeout 2h bash -c 'until [[ "$PR_STATUS" == "MERGED" ]]; do
-            echo "PR not merged yet, waiting 10s..."
-            sleep 10
-            PR_STATUS="$(gh pr view ${{ steps.open-pr.outputs.pull-request-number }} --json state -q .state)"
-          done'
-
-          if [[ "$PR_STATUS" != "MERGED" ]]; then
-            echo "PR was not merged in time. Check ${{ steps.open-pr.outputs.pull-request-url }} for more information."
-            exit 1
-          else
-            echo "PR was merged!"
-          fi
+      - name: Wait for Pull Request to be merged
+        uses: Wandalen/wretry.action@v3.7.3
+        with:
+          command: gh pr view ${{ steps.open-pr.outputs.pull-request-number }} --json state -q .state | grep MERGED
+          attempt_limit: 240  # Results in 2 hours of waiting
+          attempt_delay: 30000  # 30 seconds
 
       - name: Build and Push Bundle Image
         run: |
@@ -126,6 +119,11 @@ jobs:
       - build-operator
       - determine-operator-version
     steps:
+      - name: Checkout charts repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: '1'
+
       - name: Install Preflight
         uses: redhat-actions/openshift-tools-installer@v1
         with:
@@ -135,8 +133,8 @@ jobs:
 
       - name: Run Preflight checks
         run: |
+          IMAGE_TAG_BASE=$(awk '/^IMAGE_TAG_BASE/{print $3}' Makefile)
+
           preflight check container \
-            --pyxis-api-token=${{ secrets.RH_SHIELD_OPERATOR_PYXIS_API_TOKEN }} \
-            --certification-project-id=${{ secrets.RH_SHIELD_OPERATOR_CERTIFICATION_PROJECT_ID }} \
-            --submit \
-            ${{ env.IMAGE_TAG_BASE }}:${{ steps.determine-operator-version.outputs.release_version }}
+            $IMAGE_TAG_BASE:v${{ needs.determine-operator-version.outputs.release_version }}
+        working-directory: rh-shield-operator
