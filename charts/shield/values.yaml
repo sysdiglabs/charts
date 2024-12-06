@@ -147,6 +147,8 @@ features:
       enabled: false
     prometheus:
       enabled: false
+      # The content of the prometheus.yaml file
+      prometheus_yaml: {}
     statsd:
       enabled: false
 
