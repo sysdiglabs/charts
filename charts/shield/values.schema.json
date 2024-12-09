@@ -930,11 +930,16 @@
         },
         "Prometheus": {
           "type": "object",
-          "additionalProperties": true,
+          "additionalProperties": false,
           "properties": {
             "enabled": {
               "type": "boolean",
               "description": "Specify if the Prometheus feature is enabled"
+            },
+            "prometheus_yaml": {
+              "type": "object",
+              "description": "The prometheus.yaml configuration file used by the Host Shield",
+              "additionalProperties": true
             }
           }
         },
