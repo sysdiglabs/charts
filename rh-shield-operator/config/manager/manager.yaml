@@ -60,6 +60,7 @@ spec:
       containers:
       - args:
         - --leader-elect
+        - --health-probe-bind-address=:8081
         - --leader-election-id=rh-shield-operator
         image: controller:latest
         name: manager
