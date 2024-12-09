@@ -370,14 +370,14 @@ metadata:
       ]
     capabilities: Basic Install
     categories: Security, Monitoring
-    createdAt: "2024-12-09T17:08:58Z"
+    createdAt: "2025-01-02T15:51:05Z"
     description: |
       The Sysdig Shield Operator provides a way to deploy Sysdig Shield components on an OpenShift cluster.
-    operators.operatorframework.io/builder: operator-sdk-v1.36.1
+    operators.operatorframework.io/builder: operator-sdk-v1.38.0
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
     repository: https://github.com/sysdiglabs/charts
     support: https://sysdig.com
-  name: rh-shield-operator.v0.1.6
+  name: rh-shield-operator.v0.2.0
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -522,34 +522,13 @@ spec:
             spec:
               containers:
               - args:
-                - --secure-listen-address=0.0.0.0:8443
-                - --upstream=http://127.0.0.1:8080/
-                - --logtostderr=true
-                - --v=0
-                image: gcr.io/kubebuilder/kube-rbac-proxy:v0.16.0
-                name: kube-rbac-proxy
-                ports:
-                - containerPort: 8443
-                  name: https
-                  protocol: TCP
-                resources:
-                  limits:
-                    cpu: 500m
-                    memory: 128Mi
-                  requests:
-                    cpu: 5m
-                    memory: 64Mi
-                securityContext:
-                  allowPrivilegeEscalation: false
-                  capabilities:
-                    drop:
-                    - ALL
-              - args:
-                - --health-probe-bind-address=:8081
-                - --metrics-bind-address=127.0.0.1:8080
+                - --metrics-require-rbac
+                - --metrics-secure
+                - --metrics-bind-address=:8443
                 - --leader-elect
+                - --health-probe-bind-address=:8081
                 - --leader-election-id=rh-shield-operator
-                image: quay.io/sysdig/rh-shield-operator:v0.1.6
+                image: quay.io/sysdig/rh-shield-operator:v0.2.0
                 livenessProbe:
                   httpGet:
                     path: /healthz
@@ -653,4 +632,4 @@ spec:
   provider:
     name: Sysdig
     url: https://sysdig.com
-  version: 0.1.6
+  version: 0.2.0
