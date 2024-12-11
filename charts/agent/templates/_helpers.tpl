@@ -359,6 +359,15 @@ Determine sysdig secure endpoint based on provided region
 {{- end -}}
 
 {{/*
+Determine api endpoint based on provided region
+*/}}
+{{- define "agent.secureApiEndpoint" -}}
+    {{- if hasKey ((include "sysdig.regions" .) | fromYaml) .Values.global.sysdig.region }}
+        {{- include "sysdig.secureApiEndpoint" . }}
+    {{- end -}}
+{{- end -}}
+
+{{/*
 Agent agentConfigmapName
 */}}
 {{- define "agent.configmapName" -}}
@@ -526,10 +535,9 @@ ssl_verify_certificate: {{ $sslVerifyCertificate }}
 {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
 ca_certificate: certificates/{{ include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.ssl) }}
 {{- end }}
-
-{{- $sysdigApiEndpoint := include "sysdig.secureApiEndpoint" . }}
-{{- if $sysdigApiEndpoint }}
-sysdig_api_endpoint: {{ $sysdigApiEndpoint }}
+{{- $secureApiEndpoint := include "get_if_not_in_settings" (dict "root" . "default" (include "sysdig.secureApiEndpoint" .) "setting" "sysdig_api_endpoint") }}
+{{- if $secureApiEndpoint }}
+sysdig_api_endpoint: {{ $secureApiEndpoint }}
 {{- end }}
 {{- end }}
 
