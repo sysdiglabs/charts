@@ -147,6 +147,8 @@ features:
       enabled: false
     prometheus:
       enabled: false
+      # The content of the prometheus.yaml file
+      prometheus_yaml: {}
     statsd:
       enabled: false
 
@@ -165,7 +167,7 @@ host:
     # The image name for the host shield
     shield_name: agent-slim
     # The tag for the host shield images
-    tag: 13.6.1
+    tag: 13.7.0
     # The pull policy for the host shield images
     pull_policy: IfNotPresent
     # The pull secrets for the host shield images

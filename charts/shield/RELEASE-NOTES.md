@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **shield** [8f5d7046](https://github.com/sysdiglabs/charts/commit/8f5d7046f2faff0fb719a5c035ff3e28d68a7a5a): replace experimental warning with technical preview notice ([#2060](https://github.com/sysdiglabs/charts/issues/2060))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-0.2.10...shield-0.2.11
+### New Features
+- **shield** [a7e2cdcb](https://github.com/sysdiglabs/charts/commit/a7e2cdcba6385b493fe3d113a4274df38d5ac3d0): Introduce Prometheus scrape custom config ([#2067](https://github.com/sysdiglabs/charts/issues/2067))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-0.3.0...shield-0.3.1
