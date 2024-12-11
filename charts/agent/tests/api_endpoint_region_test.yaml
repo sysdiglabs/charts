@@ -61,11 +61,11 @@ tests:
         sysdig:
           region: eu1
     asserts:
-        - isKind:
-            of: ConfigMap
-        - matchRegex:
-            path: data['dragent.yaml']
-            pattern: .*collector:.*ingest\-eu1\.app\.sysdig\.com.*
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*collector:.*ingest\-eu1\.app\.sysdig\.com.*
       - matchRegex:
           path: data['dragent.yaml']
           pattern: .*sysdig_api_endpoint:.*eu1\.app\.sysdig\.com.*
