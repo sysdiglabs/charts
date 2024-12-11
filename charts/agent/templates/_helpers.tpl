@@ -527,9 +527,9 @@ ssl_verify_certificate: {{ $sslVerifyCertificate }}
 ca_certificate: certificates/{{ include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.ssl) }}
 {{- end }}
 
-{{- $sysdigApiEndpoint := include "sysdig.secureApiEndpoint" }}
+{{- $sysdigApiEndpoint := include "sysdig.secureApiEndpoint" . }}
 {{- if $sysdigApiEndpoint }}
-sysdig_api_endpoint: {{- $sysdigApiEndpoint }}
+sysdig_api_endpoint: {{ $sysdigApiEndpoint }}
 {{- end }}
 {{- end }}
 
