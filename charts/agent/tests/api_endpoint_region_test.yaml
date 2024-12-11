@@ -20,7 +20,10 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: .*ingest\-us2\.app\.sysdig\.com.*
+          pattern: .*collector:.*ingest\-us2\.app\.sysdig\.com.*
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*us2\.app\.sysdig\.com.*
 
   - it: Checking region 'us3'
     set:
@@ -32,7 +35,10 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: .*ingest\.us3\.sysdig\.com.*
+          pattern: .*collector:.*ingest\.us3\.sysdig\.com.*
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*app\.us3\.sysdig\.com.*
 
   - it: Checking region 'us4'
     set:
@@ -44,7 +50,10 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: .*ingest\.us4\.sysdig\.com.*
+          pattern: .*collector:.*ingest\.us4\.sysdig\.com.*
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*app\.us4\.sysdig\.com.*
 
   - it: Checking region 'eu1'
     set:
@@ -56,7 +65,10 @@ tests:
             of: ConfigMap
         - matchRegex:
             path: data['dragent.yaml']
-            pattern: .*ingest\-eu1\.app\.sysdig\.com.*
+            pattern: .*collector:.*ingest\-eu1\.app\.sysdig\.com.*
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*eu1\.app\.sysdig\.com.*
 
   - it: Checking region 'au1'
     set:
@@ -68,7 +80,10 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: .*ingest\.au1\.sysdig\.com.*
+          pattern: .*collector:.*ingest\.au1\.sysdig\.com.*
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*app\.au1\.sysdig\.com.*
 
   - it: Checking region 'me2'
     set:
@@ -80,7 +95,10 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: .*ingest\.me2\.sysdig\.com.*
+          pattern: .*collector:.*ingest\.me2\.sysdig\.com.*
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*app\.me2\.sysdig\.com.*
 
   - it: Checking region 'au-syd-monitor'
     set:
@@ -92,7 +110,10 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: ingest.au-syd.monitoring.cloud.ibm.com
+          pattern: collector:.*ingest.au-syd.monitoring.cloud.ibm.com
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*au-syd\.security-compliance-secure\.cloud\.ibm\.com
 
   - it: Checking region 'br-sao-monitor'
     set:
@@ -104,7 +125,10 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: ingest.br-sao.monitoring.cloud.ibm.com
+          pattern: collector:.*ingest.br-sao.monitoring.cloud.ibm.com
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*br-sao\.security-compliance-secure\.cloud\.ibm\.com
 
   - it: Checking region 'ca-tor-monitor'
     set:
@@ -116,7 +140,10 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: ingest.ca-tor.monitoring.cloud.ibm.com
+          pattern: collector:.*ingest.ca-tor.monitoring.cloud.ibm.com
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*ca-tor\.security-compliance-secure\.cloud\.ibm\.com
 
   - it: Checking region 'eu-de-monitor'
     set:
@@ -128,7 +155,10 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: ingest.eu-de.monitoring.cloud.ibm.com
+          pattern: collector:.*ingest.eu-de.monitoring.cloud.ibm.com
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*eu-de\.security-compliance-secure\.cloud\.ibm\.com
 
   - it: Checking region 'eu-gb-monitor'
     set:
@@ -140,7 +170,10 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: ingest.eu-gb.monitoring.cloud.ibm.com
+          pattern: collector:.*ingest.eu-gb.monitoring.cloud.ibm.com
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*eu-gb\.security-compliance-secure\.cloud\.ibm\.com
 
   - it: Checking region 'jp-osa-monitor'
     set:
@@ -152,7 +185,10 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: ingest.jp-osa.monitoring.cloud.ibm.com
+          pattern: collector:.*ingest.jp-osa.monitoring.cloud.ibm.com
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*jp-osa\.security-compliance-secure\.cloud\.ibm\.com
 
   - it: Checking region 'jp-tok-monitor'
     set:
@@ -164,7 +200,10 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: ingest.jp-tok.monitoring.cloud.ibm.com
+          pattern: collector:.*ingest.jp-tok.monitoring.cloud.ibm.com
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*jp-tok\.security-compliance-secure\.cloud\.ibm\.com
 
   - it: Checking region 'us-east-monitor'
     set:
@@ -176,7 +215,10 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: ingest.us-east.monitoring.cloud.ibm.com
+          pattern: collector:.*ingest.us-east.monitoring.cloud.ibm.com
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*us-east\.security-compliance-secure\.cloud\.ibm\.com
 
   - it: Checking region 'us-south-monitor'
     set:
@@ -188,7 +230,10 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: ingest.us-south.monitoring.cloud.ibm.com
+          pattern: collector:.*ingest.us-south.monitoring.cloud.ibm.com
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*us-south\.security-compliance-secure\.cloud\.ibm\.com
 
   - it: Checking region 'au-syd-private-monitor'
     set:
@@ -200,7 +245,10 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: ingest.private.au-syd.monitoring.cloud.ibm.com
+          pattern: collector:.*ingest.private.au-syd.monitoring.cloud.ibm.com
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*private\.au-syd\.security-compliance-secure\.cloud\.ibm\.com
 
   - it: Checking region 'br-sao-private-monitor'
     set:
@@ -212,7 +260,10 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: ingest.private.br-sao.monitoring.cloud.ibm.com
+          pattern: collector:.*ingest.private.br-sao.monitoring.cloud.ibm.com
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*private\.br-sao\.security-compliance-secure\.cloud\.ibm\.com
 
   - it: Checking region 'ca-tor-private-monitor'
     set:
@@ -224,7 +275,10 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: ingest.private.ca-tor.monitoring.cloud.ibm.com
+          pattern: collector:.*ingest.private.ca-tor.monitoring.cloud.ibm.com
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*private\.ca-tor\.security-compliance-secure\.cloud\.ibm\.com
 
   - it: Checking region 'eu-de-private-monitor'
     set:
@@ -236,7 +290,10 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: ingest.private.eu-de.monitoring.cloud.ibm.com
+          pattern: collector:.*ingest.private.eu-de.monitoring.cloud.ibm.com
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*private\.eu-de\.security-compliance-secure\.cloud\.ibm\.com
 
   - it: Checking region 'eu-gb-private-monitor'
     set:
@@ -248,7 +305,10 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: ingest.private.eu-gb.monitoring.cloud.ibm.com
+          pattern: collector:.*ingest.private.eu-gb.monitoring.cloud.ibm.com
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*private\.eu-gb\.security-compliance-secure\.cloud\.ibm\.com
 
   - it: Checking region 'jp-osa-private-monitor'
     set:
@@ -260,7 +320,10 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: ingest.private.jp-osa.monitoring.cloud.ibm.com
+          pattern: collector:.*ingest.private.jp-osa.monitoring.cloud.ibm.com
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*private\.jp-osa\.security-compliance-secure\.cloud\.ibm\.com
 
   - it: Checking region 'jp-tok-private-monitor'
     set:
@@ -272,7 +335,10 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: ingest.private.jp-tok.monitoring.cloud.ibm.com
+          pattern: collector:.*ingest.private.jp-tok.monitoring.cloud.ibm.com
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*private\.jp-tok\.security-compliance-secure\.cloud\.ibm\.com
 
   - it: Checking region 'us-east-private-monitor'
     set:
@@ -284,7 +350,10 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: ingest.private.us-east.monitoring.cloud.ibm.com
+          pattern: collector:.*ingest.private.us-east.monitoring.cloud.ibm.com
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*private\.us-east\.security-compliance-secure\.cloud\.ibm\.com
 
   - it: Checking region 'us-south-private-monitor'
     set:
@@ -296,7 +365,10 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: ingest.private.us-south.monitoring.cloud.ibm.com
+          pattern: collector:.*ingest.private.us-south.monitoring.cloud.ibm.com
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*private\.us-south\.security-compliance-secure\.cloud\.ibm\.com
 
   - it: Checking region 'au-syd-secure'
     set:
@@ -308,7 +380,10 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: ingest.au-syd.security-compliance-secure.cloud.ibm.com
+          pattern: collector:.*ingest.au-syd.security-compliance-secure.cloud.ibm.com
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*au-syd\.security-compliance-secure\.cloud\.ibm\.com
 
   - it: Checking region 'br-sao-secure'
     set:
@@ -320,7 +395,10 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: ingest.br-sao.security-compliance-secure.cloud.ibm.com
+          pattern: collector:.*ingest.br-sao.security-compliance-secure.cloud.ibm.com
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*br-sao\.security-compliance-secure\.cloud\.ibm\.com
 
   - it: Checking region 'ca-tor-secure'
     set:
@@ -332,7 +410,10 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: ingest.ca-tor.security-compliance-secure.cloud.ibm.com
+          pattern: collector:.*ingest.ca-tor.security-compliance-secure.cloud.ibm.com
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*ca-tor\.security-compliance-secure\.cloud\.ibm\.com
 
   - it: Checking region 'eu-de-secure'
     set:
@@ -344,7 +425,10 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: ingest.eu-de.security-compliance-secure.cloud.ibm.com
+          pattern: collector:.*ingest.eu-de.security-compliance-secure.cloud.ibm.com
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*eu-de\.security-compliance-secure\.cloud\.ibm\.com
 
   - it: Checking region 'eu-gb-secure'
     set:
@@ -356,7 +440,10 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: ingest.eu-gb.security-compliance-secure.cloud.ibm.com
+          pattern: collector:.*ingest.eu-gb.security-compliance-secure.cloud.ibm.com
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*eu-gb\.security-compliance-secure\.cloud\.ibm\.com
 
   - it: Checking region 'jp-osa-secure'
     set:
@@ -368,7 +455,10 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: ingest.jp-osa.security-compliance-secure.cloud.ibm.com
+          pattern: collector:.*ingest.jp-osa.security-compliance-secure.cloud.ibm.com
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*jp-osa\.security-compliance-secure\.cloud\.ibm\.com
 
   - it: Checking region 'jp-tok-secure'
     set:
@@ -380,7 +470,10 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: ingest.jp-tok.security-compliance-secure.cloud.ibm.com
+          pattern: collector:.*ingest.jp-tok.security-compliance-secure.cloud.ibm.com
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*jp-tok\.security-compliance-secure\.cloud\.ibm\.com
 
   - it: Checking region 'us-east-secure'
     set:
@@ -392,7 +485,10 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: ingest.us-east.security-compliance-secure.cloud.ibm.com
+          pattern: collector:.*ingest.us-east.security-compliance-secure.cloud.ibm.com
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*us-east\.security-compliance-secure\.cloud\.ibm\.com
 
   - it: Checking region 'us-south-secure'
     set:
@@ -404,7 +500,10 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: ingest.us-south.security-compliance-secure.cloud.ibm.com
+          pattern: collector:.*ingest.us-south.security-compliance-secure.cloud.ibm.com
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*us-south\.security-compliance-secure\.cloud\.ibm\.com
 
   - it: Checking region 'au-syd-private-secure'
     set:
@@ -416,7 +515,10 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: ingest.private.au-syd.security-compliance-secure.cloud.ibm.com
+          pattern: collector:.*ingest.private.au-syd.security-compliance-secure.cloud.ibm.com
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*private\.au-syd\.security-compliance-secure\.cloud\.ibm\.com
 
   - it: Checking region 'br-sao-private-secure'
     set:
@@ -428,7 +530,10 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: ingest.private.br-sao.security-compliance-secure.cloud.ibm.com
+          pattern: collector:.*ingest.private.br-sao.security-compliance-secure.cloud.ibm.com
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*private\.br-sao\.security-compliance-secure\.cloud\.ibm\.com
 
   - it: Checking region 'ca-tor-private-secure'
     set:
@@ -440,7 +545,10 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: ingest.private.ca-tor.security-compliance-secure.cloud.ibm.com
+          pattern: collector:.*ingest.private.ca-tor.security-compliance-secure.cloud.ibm.com
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*private\.ca-tor\.security-compliance-secure\.cloud\.ibm\.com
 
   - it: Checking region 'eu-de-private-secure'
     set:
@@ -452,7 +560,10 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: ingest.private.eu-de.security-compliance-secure.cloud.ibm.com
+          pattern: collector:.*ingest.private.eu-de.security-compliance-secure.cloud.ibm.com
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*private\.eu-de\.security-compliance-secure\.cloud\.ibm\.com
 
   - it: Checking region 'eu-gb-private-secure'
     set:
@@ -464,7 +575,10 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: ingest.private.eu-gb.security-compliance-secure.cloud.ibm.com
+          pattern: collector:.*ingest.private.eu-gb.security-compliance-secure.cloud.ibm.com
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*private\.eu-gb\.security-compliance-secure\.cloud\.ibm\.com
 
   - it: Checking region 'jp-osa-private-secure'
     set:
@@ -476,7 +590,10 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: ingest.private.jp-osa.security-compliance-secure.cloud.ibm.com
+          pattern: collector:.*ingest.private.jp-osa.security-compliance-secure.cloud.ibm.com
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*private\.jp-osa\.security-compliance-secure\.cloud\.ibm\.com
 
   - it: Checking region 'jp-tok-private-secure'
     set:
@@ -488,7 +605,10 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: ingest.private.jp-tok.security-compliance-secure.cloud.ibm.com
+          pattern: collector:.*ingest.private.jp-tok.security-compliance-secure.cloud.ibm.com
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*private\.jp-tok\.security-compliance-secure\.cloud\.ibm\.com
 
   - it: Checking region 'us-east-private-secure'
     set:
@@ -500,7 +620,10 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: ingest.private.us-east.security-compliance-secure.cloud.ibm.com
+          pattern: collector:.*ingest.private.us-east.security-compliance-secure.cloud.ibm.com
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*private\.us-east\.security-compliance-secure\.cloud\.ibm\.com
 
   - it: Checking region 'us-south-private-secure'
     set:
@@ -512,7 +635,10 @@ tests:
           of: ConfigMap
       - matchRegex:
           path: data['dragent.yaml']
-          pattern: ingest.private.us-south.security-compliance-secure.cloud.ibm.com
+          pattern: collector:.*ingest.private.us-south.security-compliance-secure.cloud.ibm.com
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*private\.us-south\.security-compliance-secure\.cloud\.ibm\.com
 
   - it: Checking wrong region input
     set:
