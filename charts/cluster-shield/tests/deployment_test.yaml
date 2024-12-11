@@ -1,11 +1,30 @@
 suite: Test Deployment
 templates:
   - templates/deployment.yaml
+  - templates/validatingwebhookconfiguration.yaml
 values:
   - ../ci/base-values.yaml
 release:
   name: shield-release
   namespace: shield-namespace
+# Dummy secret provided to avoid bug from empty lookups : https://github.com/helm-unittest/helm-unittest/issues/380
+kubernetesProvider:
+  scheme:
+    "v1/Secret":
+      gvr:
+        version: "v1"
+        resource: "secrets"
+      namespaced: true
+  objects:
+    - kind: Secret
+      apiVersion: v1
+      metadata:
+        name: my-custom-tls-secret
+        namespace: shield-namespace
+      data:
+        tls.crt: "testCrt"
+        tls.key: "testKey"
+        ca.crt: "testCA"
 tests:
   - it: Test run-all-namespaced mode
     set:
@@ -33,6 +52,7 @@ tests:
       - contains:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].args
           content: run-all-namespaced
+    template: templates/deployment.yaml
 
   - it: Test run-all mode
     set:
@@ -57,6 +77,7 @@ tests:
       - contains:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].args
           content: run-all
+    template: templates/deployment.yaml
 
   - it: Test GKE Autopilot
     set:
@@ -80,6 +101,7 @@ tests:
       - contains:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].args
           content: run-all
+    template: templates/deployment.yaml
 
   - it: Test accessKeySecret is mounted when provided
     set:
@@ -106,6 +128,7 @@ tests:
           content:
             name: secret-test-existing-access-key-secret
             mountPath: /etc/sysdig/secret-files/test-existing-access-key-secret
+    template: templates/deployment.yaml
 
   - it: Test env var is set when secureAPITokenSecret provided
     set:
@@ -132,6 +155,7 @@ tests:
           content:
             name: secret-test-existing-secure-api-token-secret
             mountPath: /etc/sysdig/secret-files/test-existing-secure-api-token-secret
+    template: templates/deployment.yaml
 
   - it: Test Both accessKeySecret and secureAPITokenSecret are mounted when provided
     set:
@@ -170,6 +194,7 @@ tests:
           content:
             name: secret-test-existing-secure-api-token-secret
             mountPath: /etc/sysdig/secret-files/test-existing-secure-api-token-secret
+    template: templates/deployment.yaml
 
   - it: Test it has only one mount when accessKeySecret and secureAPITokenSecret are the same
     set:
@@ -198,6 +223,7 @@ tests:
           content:
             name: secret-test-existing-credentials-secret
             mountPath: /etc/sysdig/secret-files/test-existing-credentials-secret
+    template: templates/deployment.yaml
 
   - it: Test readinessProbe default values
     asserts:
@@ -213,6 +239,7 @@ tests:
       - equal:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].readinessProbe.periodSeconds
           value: 5
+    template: templates/deployment.yaml
 
   - it: Test readinessProbe custom values
     set:
@@ -233,6 +260,7 @@ tests:
       - equal:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].readinessProbe.periodSeconds
           value: 10
+    template: templates/deployment.yaml
 
   - it: Test livenessProbe default values
     asserts:
@@ -248,6 +276,7 @@ tests:
       - equal:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].livenessProbe.periodSeconds
           value: 5
+    template: templates/deployment.yaml
 
   - it: Test livenessProbe custom values
     set:
@@ -268,6 +297,7 @@ tests:
       - equal:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].livenessProbe.periodSeconds
           value: 10
+    template: templates/deployment.yaml
 
   - it: Test default container ports
     set:
@@ -293,6 +323,7 @@ tests:
       - equal:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "admission")].containerPort
           value: 8443
+    template: templates/deployment.yaml
 
   - it: Test custom container ports
     set:
@@ -321,11 +352,13 @@ tests:
       - equal:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].ports[?(@.name == "admission")].containerPort
           value: 9876
+    template: templates/deployment.yaml
 
   - it: Test without specifying priorityClassName
     asserts:
       - notExists:
           path: spec.template.spec.priorityClassName
+    template: templates/deployment.yaml
 
   - it: Test specifying priorityClassName
     set:
@@ -336,6 +369,7 @@ tests:
       - equal:
           path: spec.template.spec.priorityClassName
           value: fake-priority-class-name
+    template: templates/deployment.yaml
 
   - it: Test specifying createPriorityClass
     set:
@@ -346,6 +380,7 @@ tests:
       - equal:
           path: spec.template.spec.priorityClassName
           value: shield-release-cluster-shield
+    template: templates/deployment.yaml
 
   - it: Test specifying both priorityClassName and createPriorityClass
     set:
@@ -357,12 +392,14 @@ tests:
       - equal:
           path: spec.template.spec.priorityClassName
           value: fake-priority-class-name
+    template: templates/deployment.yaml
 
   - it: Default service account name
     asserts:
       - equal:
           path: spec.template.spec.serviceAccountName
           value: shield-release-cluster-shield
+    template: templates/deployment.yaml
 
   - it: Custom service account name
     set:
@@ -372,6 +409,7 @@ tests:
       - equal:
           path: spec.template.spec.serviceAccountName
           value: custom-service-account
+    template: templates/deployment.yaml
 
   - it: Use image.registry, image.repository and image.tag to build the pullString
     set:
@@ -383,6 +421,7 @@ tests:
       - equal:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].image
           value: test-registry.io/sysdig/cluster-shield:0.0.0
+    template: templates/deployment.yaml
 
   - it: Use global.imageRegistry,image.repository and image.tag to build the pullString
     set:
@@ -396,11 +435,13 @@ tests:
       - equal:
           path: spec.template.spec.containers[?(@.name == "cluster-shield")].image
           value: test-global-registry.io/sysdig/cluster-shield:0.0.0
+    template: templates/deployment.yaml
 
   - it: Default DNS Policy
     asserts:
       - notExists:
           path: spec.template.spec.dnsPolicy
+    template: templates/deployment.yaml
 
   - it: Test hostNetwork
     set:
@@ -412,6 +453,7 @@ tests:
       - equal:
           path: spec.template.spec.dnsPolicy
           value: ClusterFirstWithHostNet
+    template: templates/deployment.yaml
 
   - it: Custom DNS Policy
     set:
@@ -420,6 +462,7 @@ tests:
       - equal:
           path: spec.template.spec.dnsPolicy
           value: None
+    template: templates/deployment.yaml
 
   - it: Custom DNS Policy with hostNetwork
     set:
@@ -432,6 +475,7 @@ tests:
       - equal:
           path: spec.template.spec.dnsPolicy
           value: None
+    template: templates/deployment.yaml
 
   - it: Mount existing TLS Secret
     set:
@@ -452,6 +496,7 @@ tests:
             name: cert
             secret:
               secretName: my-custom-tls-secret
+    template: templates/deployment.yaml
 
   - it: Test setting custom environment variables
     set:
@@ -464,6 +509,7 @@ tests:
           content:
             name: MY_ENV_VAR
             value: my-value
+    template: templates/deployment.yaml
 
   - it: Test adding custom volume and volume mounts
     set:
@@ -488,3 +534,22 @@ tests:
             name: my-volume
             hostPath:
               path: /opt/my-dir
+    template: templates/deployment.yaml
+
+  - it: Checksum Annotations
+    asserts:
+      - isNotNull:
+          path: spec.template.metadata.annotations.checksum/webhook
+    template: templates/deployment.yaml
+
+  - it: Custom Annotations
+    set:
+      podAnnotations:
+        hello: world
+    asserts:
+      - isNotNull:
+          path: spec.template.metadata.annotations.checksum/webhook
+      - equal:
+          path: spec.template.metadata.annotations.hello
+          value: world
+    template: templates/deployment.yaml
