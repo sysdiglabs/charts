@@ -526,6 +526,11 @@ ssl_verify_certificate: {{ $sslVerifyCertificate }}
 {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
 ca_certificate: certificates/{{ include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.ssl) }}
 {{- end }}
+
+{{- $sysdigApiEndpoint := include "sysdig.secureApiEndpoint" }}
+{{- if $sysdigApiEndpoint }}
+sysdig_api_endpoint: {{- $sysdigApiEndpoint }}
+{{- end }}
 {{- end }}
 
 {{/*
