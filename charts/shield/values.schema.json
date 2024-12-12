@@ -422,9 +422,14 @@
           "type": "boolean",
           "description": "Specify if the Admission Control is enabled"
         },
-        "deny_on_error": {
-          "type": "boolean",
-          "description": "Deny request when an error happens inside the evaluation phase"
+        "failure_policy": {
+          "type": "string",
+          "description": "The policy to apply when a request is denied",
+          "enum": [
+            "Ignore",
+            "Fail"
+          ],
+          "default": "Ignore"
         },
         "dry_run": {
           "type": "boolean",
