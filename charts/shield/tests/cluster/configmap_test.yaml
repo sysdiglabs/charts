@@ -39,10 +39,10 @@ tests:
               admission_control:
                 container_vulnerability_management:
                   enabled: false
-                deny_on_error: false
                 dry_run: true
                 enabled: false
                 excluded_namespaces: \[\]
+                failure_policy: Ignore
                 http_port: 8443
                 timeout: 10
               audit:
@@ -110,10 +110,10 @@ tests:
               admission_control:
                 container_vulnerability_management:
                   enabled: false
-                deny_on_error: false
                 dry_run: true
                 enabled: false
                 excluded_namespaces: \[\]
+                failure_policy: Ignore
                 http_port: 8443
                 timeout: 10
               audit:

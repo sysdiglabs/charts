@@ -433,7 +433,7 @@ tests:
       features:
         admission_control:
           enabled: true
-          deny_on_error: true
+          failure_policy: Fail
     asserts:
       - hasDocuments:
           count: 2
