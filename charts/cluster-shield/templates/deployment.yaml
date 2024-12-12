@@ -15,10 +15,11 @@ spec:
       {{- include "cluster-shield.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
       annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        checksum/webhook: {{ include (print $.Template.BasePath "/validatingwebhookconfiguration.yaml") . | sha256sum | quote }}
+        {{- if .Values.podAnnotations }}
+        {{- toYaml .Values.podAnnotations | nindent 8 }}
+        {{- end }}
       labels:
         {{- include "cluster-shield.labels" . | nindent 8 }}
   {{- with .Values.podLabels }}

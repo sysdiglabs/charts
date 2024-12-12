@@ -1106,3 +1106,43 @@ tests:
           path: data['dragent.yaml']
           pattern: |
             collector_port: 1234
+
+  - it: Check prometheus.yaml key is created when needed
+    set:
+      features:
+        monitoring:
+          prometheus:
+            enabled: true
+    asserts:
+      - exists:
+          path: data["prometheus.yaml"]
+
+  - it: Check that expected content is present in prometheus.yaml
+    set:
+      features:
+        monitoring:
+          prometheus:
+            enabled: true
+            prometheus_yaml:
+              scrape_configs:
+                - job_name: kubernetes-pods
+                  kubernetes_sd_configs:
+                    - role: pod
+    asserts:
+      - matchRegex:
+          path: data['prometheus.yaml']
+          pattern: |
+            scrape_configs:
+            - job_name: kubernetes-pods
+              kubernetes_sd_configs:
+              - role: pod
+
+  - it: Check prometheus.yaml key is not created when not needed
+    set:
+      features:
+        monitoring:
+          prometheus:
+            enabled: false
+    asserts:
+      - notExists:
+          path: data["prometheus.yaml"]

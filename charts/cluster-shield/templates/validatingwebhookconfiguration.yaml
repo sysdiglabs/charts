@@ -80,11 +80,7 @@ webhooks:
     admissionReviewVersions: [ "v1", "v1beta1" ]
     sideEffects: None
     timeoutSeconds: {{ .Values.cluster_shield.features.admission_control.timeout }}
-    {{- if .Values.cluster_shield.features.admission_control.deny_on_error }}
-    failurePolicy: Fail
-    {{- else }}
-    failurePolicy: Ignore
-    {{- end }}
+    failurePolicy: {{ .Values.cluster_shield.features.admission_control.failure_policy }}
   {{- end }}
 {{- end }}
 ---

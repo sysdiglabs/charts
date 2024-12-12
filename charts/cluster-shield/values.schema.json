@@ -1011,10 +1011,14 @@
               "description": "Specify if the Admission Control is enabled",
               "default": false
             },
-            "deny_on_error": {
-              "type": "boolean",
-              "description": "Deny request when an error happens inside the evaluation phase",
-              "default": false
+            "failure_policy": {
+              "type": "string",
+              "description": "The policy to apply when a request is denied",
+              "enum": [
+                "Ignore",
+                "Fail"
+              ],
+              "default": "Ignore"
             },
             "dry_run": {
               "type": "boolean",
@@ -1047,7 +1051,7 @@
           },
           "required": [
             "enabled",
-            "deny_on_error",
+            "failure_policy",
             "http_port"
           ],
           "$defs": {

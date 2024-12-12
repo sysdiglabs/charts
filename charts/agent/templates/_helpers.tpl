@@ -681,3 +681,25 @@ annotations:
 - SETUID
 - SETGID
 {{- end -}}
+
+
+{{- define "agent.securityContext" -}}
+{{- if .Values.customSecurityContext }}
+  {{- toYaml .Values.customSecurityContext -}}
+{{- else if eq "true" (include "agent.privileged" .) }}
+privileged: true
+runAsNonRoot: false
+runAsUser: 0
+readOnlyRootFilesystem: false
+allowPrivilegeEscalation: true
+{{- else }}
+allowPrivilegeEscalation: false
+seccompProfile:
+  type: Unconfined
+capabilities:
+  drop:
+    - ALL
+  add:
+    {{- include "agent.capabilities" . | nindent 4 }}
+{{- end }}
+{{- end -}}

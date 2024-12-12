@@ -1,0 +1,127 @@
+suite: Security Context tests
+templates:
+  - templates/daemonset.yaml
+kubernetesProvider:
+  scheme:
+    "v1/Node":
+      gvr:
+        version: "v1"
+        resource: "nodes"
+      namespaced: false
+  objects:
+  - apiVersion: v1
+    kind: Node
+    metadata:
+      name: fakenode
+    status:
+      nodeInfo:
+        osImage: fake-os-image
+tests:
+  - it: Ensure the securityContext for a privileged agent is exactly what was defined
+    set:
+      privileged: true
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig")].securityContext
+          value:
+            allowPrivilegeEscalation: true
+            privileged: true
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+            runAsUser: 0
+
+  - it: Ensure the securityContext for a non-privileged agent contains the keys defined
+    set:
+      ebpf:
+        enabled: true
+        kind: universal_ebpf
+      privileged: false
+    asserts:
+      - isSubset:
+          path: spec.template.spec.containers[?(@.name == "sysdig")].securityContext
+          content:
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: Unconfined
+      - isNotSubset:
+          path: spec.template.spec.containers[?(@.name == "sysdig")].securityContext
+          content:
+            allowPrivilegeEscalation: false
+            privileged: true
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+            runAsUser: 0
+
+  - it: Ensure the customSecurityContext is honored
+    set:
+      customSecurityContext:
+        allowPrivilegeEscalation: true
+        readOnlyRootFilesystem: false
+        runAsNonRoot: false
+        runAsUser: 0
+        seLinuxOptions:
+          type: super_t
+        seccompProfile:
+          type: Unconfined
+        capabilities:
+          add:
+            - AUDIT_CONTROL
+            - BLOCK_SUSPEND
+            - DAC_READ_SEARCH
+            - IPC_LOCK
+            - IPC_OWNER
+            - LEASE
+            - LINUX_IMMUTABLE
+            - MAC_ADMIN
+            - MAC_OVERRIDE
+            - NET_ADMIN
+            - NET_BROADCAST
+            - SYSLOG
+            - SYS_ADMIN
+            - SYS_BOOT
+            - SYS_MODULE
+            - SYS_NICE
+            - SYS_PACCT
+            - SYS_PTRACE
+            - SYS_RAWIO
+            - SYS_RESOURCE
+            - SYS_TIME
+            - SYS_TTY_CONFIG
+            - WAKE_ALARM
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig")].securityContext
+          value:
+            allowPrivilegeEscalation: true
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+            runAsUser: 0
+            seLinuxOptions:
+              type: super_t
+            seccompProfile:
+              type: Unconfined
+            capabilities:
+              add:
+                - AUDIT_CONTROL
+                - BLOCK_SUSPEND
+                - DAC_READ_SEARCH
+                - IPC_LOCK
+                - IPC_OWNER
+                - LEASE
+                - LINUX_IMMUTABLE
+                - MAC_ADMIN
+                - MAC_OVERRIDE
+                - NET_ADMIN
+                - NET_BROADCAST
+                - SYSLOG
+                - SYS_ADMIN
+                - SYS_BOOT
+                - SYS_MODULE
+                - SYS_NICE
+                - SYS_PACCT
+                - SYS_PTRACE
+                - SYS_RAWIO
+                - SYS_RESOURCE
+                - SYS_TIME
+                - SYS_TTY_CONFIG
+                - WAKE_ALARM
