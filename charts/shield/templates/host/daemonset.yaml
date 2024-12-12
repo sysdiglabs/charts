@@ -123,10 +123,10 @@ spec:
             - name: SYSDIG_BPF_PROBE
               value:
             {{- end }}
-            {{- if and (include "host.driver.is_universal_ebpf" .) (not (include "common.cluster_type.is_gke_autopilot" .)) }}
+            {{- if (include "host.driver.is_universal_ebpf" .) }}
             - name: SYSDIG_AGENT_DRIVER
               value: universal_ebpf
-            {{- else if and (include "host.driver.is_legacy_ebpf" .) (not (include "common.cluster_type.is_gke_autopilot" .)) }}
+            {{- else if (include "host.driver.is_legacy_ebpf" .) }}
             - name: SYSDIG_AGENT_DRIVER
               value: legacy_ebpf
             {{- end }}
