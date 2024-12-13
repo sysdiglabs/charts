@@ -605,6 +605,14 @@ true
 {{- end }}
 {{- end }}
 
+{{- define "agent.enableWindowsProbesSinglePort" }}
+    {{- if and (include "agent.isSemVer" .Values.windows.image.tag) (semverCompare "< 1.3.0-0" .Values.windows.image.tag) }}
+        {{- printf "false" -}}
+    {{- else -}}
+        {{- printf "true" -}}
+    {{- end }}
+{{- end }}
+
 {{- define "agent.enableFalcoBaselineSecureLight" }}
 {{- if and (include "agent.isSemVer" .Values.image.tag) (semverCompare ">= 12.19.0-0" .Values.image.tag) }}
 {{- printf "true" -}}
@@ -672,4 +680,26 @@ annotations:
 - KILL
 - SETUID
 - SETGID
+{{- end -}}
+
+
+{{- define "agent.securityContext" -}}
+{{- if .Values.customSecurityContext }}
+  {{- toYaml .Values.customSecurityContext -}}
+{{- else if eq "true" (include "agent.privileged" .) }}
+privileged: true
+runAsNonRoot: false
+runAsUser: 0
+readOnlyRootFilesystem: false
+allowPrivilegeEscalation: true
+{{- else }}
+allowPrivilegeEscalation: false
+seccompProfile:
+  type: Unconfined
+capabilities:
+  drop:
+    - ALL
+  add:
+    {{- include "agent.capabilities" . | nindent 4 }}
+{{- end }}
 {{- end -}}

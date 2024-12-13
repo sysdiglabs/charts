@@ -10,6 +10,15 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.34.0
+### New Features
+* **agent** [2f61bf41](https://github.com/sysdiglabs/charts/commit/2f61bf415127e76a6f628d962916d74cb1870997): [SMAGENT-8424] Allow for custom security context ([#2062](https://github.com/sysdiglabs/charts/issues/2062))
+# v1.33.0
+### New Features
+* **agent,shield** [e48080ae](https://github.com/sysdiglabs/charts/commit/e48080aee167e1a324e09ff092676378abb4c3f1): release agent 13.7.0 ([#2069](https://github.com/sysdiglabs/charts/issues/2069))
+# v1.32.0
+### New Features
+* **agent** [3453bc7d](https://github.com/sysdiglabs/charts/commit/3453bc7dccad55c9c8f2cd67948e132d6b4eb120): Support single healthProbe port for Windows version with tag greater than 1.2.0 ([#1990](https://github.com/sysdiglabs/charts/issues/1990))
 # v1.31.0
 ### New Features
 * **agent,sysdig-deploy** [9304b56c](https://github.com/sysdiglabs/charts/commit/9304b56c81553823b8457c4d031f29a83fb9a932): release agent 13.6.1 ([#2031](https://github.com/sysdiglabs/charts/issues/2031))

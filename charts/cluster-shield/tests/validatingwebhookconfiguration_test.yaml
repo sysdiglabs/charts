@@ -67,13 +67,13 @@ tests:
           path: .webhooks[?(@.name == "vac.secure.sysdig.com")].clientConfig.service.port
           value: 8443
 
-  - it: Creates a ValidatingWebhookConfiguration resource when admission control feature is enabled with deny_on_error
+  - it: Creates a ValidatingWebhookConfiguration resource when admission control feature is enabled with failure_policy
     set:
       cluster_shield:
         features:
           admission_control:
             enabled: true
-            deny_on_error: true
+            failure_policy: Fail
           audit:
             enabled: false
     documentIndex: 0
