@@ -38,7 +38,6 @@
       "items": {
         "type": "string",
         "description": "Capabilities of the cluster",
-        "format": "k8s-qualified-name-with-wildcard",
         "examples": [
           "security.openshift.io/v1"
         ]
