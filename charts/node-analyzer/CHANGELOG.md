@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.33.4
+### Bug Fixes
+* **node-analyzer** [f45ed3bc](https://github.com/sysdiglabs/charts/commit/f45ed3bcdda05cd59582b5ac1553af9e4ef06cc5): Fix path execution node-analyzer ([#2079](https://github.com/sysdiglabs/charts/issues/2079))
 # v1.33.3
 ### Bug Fixes
 * **node-analyzer** [e0bdf2fd](https://github.com/sysdiglabs/charts/commit/e0bdf2fdc42c45add4c431f1bea2f458e26d6ad1): Modify permissions from node-analyzer ([#2066](https://github.com/sysdiglabs/charts/issues/2066))
