@@ -88,6 +88,21 @@ rules:
   verbs:
     - get
     - list
+- apiGroups:
+    - logging.openshift.io
+  resources:
+    - clusterlogforwarders
+  verbs:
+    - get
+    - list
+{{- if and .Values.nodeAnalyzer.kspmAnalyzer.includeSensitivePermissions (not .Values.nodeAnalyzer.benchmarkRunner.deploy) }}
+- apiGroups:
+    - ""
+  resources:
+    - pods/exec
+  verbs:
+    - create
+{{- end }}
 {{- if and .Values.nodeAnalyzer.benchmarkRunner.includeSensitivePermissions .Values.nodeAnalyzer.benchmarkRunner.deploy }}
 - apiGroups:
     - ""
