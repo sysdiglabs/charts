@@ -442,8 +442,8 @@ proxy:
   # Provide the name of an existing Secret that contains the no proxy hosts
   no_proxy_existing_secret:
 
-# Additional capabilities, e.g. "security.openshift.io/v1"
-extra_capabilities: []
+# Additional .APIVersions in .Capabilities, e.g. "security.openshift.io/v1"
+extra_capabilities_api_versions: []
 
 # Additional annotations for the all the workloads (metadata.annotations)
 workload_annotations: {}

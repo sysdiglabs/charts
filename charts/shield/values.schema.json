@@ -33,7 +33,7 @@
     "proxy": {
       "$ref": "#/$defs/Proxy"
     },
-    "extra_capabilities": {
+    "extra_capabilities_api_versions": {
       "type": "array",
       "items": {
         "type": "string",
