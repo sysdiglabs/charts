@@ -454,9 +454,12 @@ nodeAnalyzer:
     debug: false
     image:
       repository: sysdig/kspm-analyzer
-      tag: 1.44.18
+      tag: 1.44.19
       digest:
       pullPolicy:
+
+    # Permissions for OCP4, previously only added for benchmarkrunner
+    includeSensitivePermissions: false
 
     # Proxy configuration variables
     httpProxy:
