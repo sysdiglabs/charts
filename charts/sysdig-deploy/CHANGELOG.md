@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.72.3
+### New Features
+* **agent** [550c06fa](https://github.com/sysdiglabs/charts/commit/550c06fad7140b7e98d6063ba61337be4341498a): [SMAGENT-8138] add full securityContext to agent charts ([#2017](https://github.com/sysdiglabs/charts/issues/2017))
 # v1.72.2
 ### Chores
 * **sysdig-deploy** [ac8d8396](https://github.com/sysdiglabs/charts/commit/ac8d83966f9789d124fdd2fd3d0251e39bee6078): Automatic version bump due to updated dependencies ([#2080](https://github.com/sysdiglabs/charts/issues/2080))
