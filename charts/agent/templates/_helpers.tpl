@@ -690,14 +690,8 @@ annotations:
 privileged: true
 runAsNonRoot: false
 runAsUser: 0
-runAsGroup: 0
 readOnlyRootFilesystem: false
 allowPrivilegeEscalation: true
-capabilities:
-  drop:
-    - ALL
-  add:
-    - ALL
 {{- else }}
 allowPrivilegeEscalation: false
 seccompProfile:
