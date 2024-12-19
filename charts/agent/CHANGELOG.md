@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.34.3
+### Chores
+* **agent** [ed886c9a](https://github.com/sysdiglabs/charts/commit/ed886c9a60c57fa10c90b9dd90fa1ee3433e70d0): Bump Windows Agent release to 1.3.1 ([#2085](https://github.com/sysdiglabs/charts/issues/2085))
 # v1.34.2
 ### New Features
 * **agent** [a65d52c3](https://github.com/sysdiglabs/charts/commit/a65d52c363277573f7c6b70dab172e065c38f59f): REVERT [SMAGENT-8138] add full securityContext to agent charts ([#2084](https://github.com/sysdiglabs/charts/issues/2084))
