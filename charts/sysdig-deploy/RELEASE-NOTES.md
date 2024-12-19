@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **agent** [a65d52c3](https://github.com/sysdiglabs/charts/commit/a65d52c363277573f7c6b70dab172e065c38f59f): REVERT [SMAGENT-8138] add full securityContext to agent charts ([#2084](https://github.com/sysdiglabs/charts/issues/2084))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.72.3...sysdig-deploy-1.72.4
+### Chores
+- **sysdig-deploy** [8720e678](https://github.com/sysdiglabs/charts/commit/8720e6787f9467ba17c842b54e8d7c436d381fb3): Automatic version bump due to updated dependencies ([#2082](https://github.com/sysdiglabs/charts/issues/2082))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.72.4...sysdig-deploy-1.72.5
