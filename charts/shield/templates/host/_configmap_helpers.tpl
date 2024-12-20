@@ -143,6 +143,9 @@ true
 {{- $config = merge $config (dict "local_forwarder" (dict "enabled" .enabled "transmit_message_types" .transmit_message_types)) }}
 {{- end }}
 {{- end }}
+{{- if not (dig "remotefs_stats" "enabled" false .Values.host.additional_settings) }}
+{{- $config = merge $config (dict "remotefs_stats" (dict "enabled" false)) }}
+{{- end }}
 {{- $config = merge $config (include "host.configmap.agent_mode" . | fromYaml) }}
 {{- if .Values.host.additional_settings }}
 {{- $config = mergeOverwrite $config (include "host.config_override" . | fromYaml) }}

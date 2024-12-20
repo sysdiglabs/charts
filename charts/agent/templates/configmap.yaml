@@ -41,15 +41,18 @@ data:
 {{- if and (include "agent.gke.autopilot" .) (or (not (hasKey $baseSettings "promscrape_web_address")) (eq (get $baseSettings "promscrape_web_address") "127.0.0.1:9990") ) }}
   {{- $baseSettings := mergeOverwrite $baseSettings (dict "promscrape_web_address" "127.0.0.1:9991") -}}
 {{- end }}
+{{- if not (dig "remotefs_stats" "enabled" false $baseSettings)}}
+  {{- $merged := mergeOverwrite $baseSettings (dict "remotefs_stats" (dict "enabled" false)) -}}
+{{- end }}
 {{- if and (eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true") (.Values.sysdig.settings) (hasKey .Values.sysdig.settings "http_proxy") (hasKey (default dict .Values.sysdig.settings.http_proxy) "ssl") (eq (get (default (dict "ssl" false) .Values.sysdig.settings.http_proxy) "ssl") true) }}
   {{- $caFilePath := printf "%s%s" "certificates/" (include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.ssl)) }}
-  {{- $mergedSettings := mergeOverwrite $baseSettings (dict "http_proxy" (dict "ca_certificate" $caFilePath)) -}}
-  {{ toYaml $mergedSettings | nindent 4 }}
-{{- else if (dig "kspm_analyzer" "enabled" false $baseSettings) }}
-  {{- $mergedSettings := mergeOverwrite $baseSettings (dict "kspm_analyzer" (dict "agent_app_name" "agent" "pod_namespace" .Release.Namespace)) -}}
-  {{ toYaml $mergedSettings | nindent 4 }}
-{{- else if .Values.sysdig.settings }}
-  {{ toYaml .Values.sysdig.settings | nindent 4 }}
+  {{- $baseSettings := mergeOverwrite $baseSettings (dict "http_proxy" (dict "ca_certificate" $caFilePath)) -}}
+{{- end }}
+{{- if (dig "kspm_analyzer" "enabled" false $baseSettings) }}
+  {{- $baseSettings := mergeOverwrite $baseSettings (dict "kspm_analyzer" (dict "agent_app_name" "agent" "pod_namespace" .Release.Namespace)) -}}
+{{- end }}
+{{- if $baseSettings}}
+  {{ toYaml $baseSettings | nindent 4 }}
 {{- end }}
 {{- if .Values.leaderelection.enable }}
     k8s_delegation_election: true

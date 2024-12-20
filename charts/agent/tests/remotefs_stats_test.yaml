@@ -1,0 +1,24 @@
+suite: Test remotefs_stats is disabled by default
+templates:
+  - templates/configmap.yaml
+tests:
+  - it: remotefs_stats should be disabled by default
+    asserts:
+      - matchRegex:
+          path: data["dragent.yaml"]
+          pattern: |
+            remotefs_stats:
+              enabled: false
+
+  - it: remotefs_stats can be enabled if desired
+    set:
+      sysdig:
+        settings:
+          remotefs_stats:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data["dragent.yaml"]
+          pattern: |
+            remotefs_stats:
+              enabled: true
