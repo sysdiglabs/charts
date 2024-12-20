@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **shield** [897b64ed](https://github.com/sysdiglabs/charts/commit/897b64ede6de8b2bc9d13e40bf7c909bfb52ba5f): bump cluster-shield to v1.6.0 ([#2075](https://github.com/sysdiglabs/charts/issues/2075))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/cluster-shield-1.6.0...shield-0.4.0
+### New Features
+- **shield** [25c29f18](https://github.com/sysdiglabs/charts/commit/25c29f182afa6d910e552f8f70c5d86f5c09c2bc): allow to override capabilities [SMAGENT-8408] ([#2077](https://github.com/sysdiglabs/charts/issues/2077))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-0.4.0...shield-0.4.1

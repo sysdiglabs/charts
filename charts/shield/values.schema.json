@@ -32,6 +32,16 @@
     },
     "proxy": {
       "$ref": "#/$defs/Proxy"
+    },
+    "extra_capabilities_api_versions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "Capabilities of the cluster",
+        "examples": [
+          "security.openshift.io/v1"
+        ]
+      }
     }
   },
   "required": [
