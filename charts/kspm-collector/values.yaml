@@ -217,4 +217,4 @@ tests:
   timeout: 300s
   image:
     repo: bitnami/kubectl
-    tag: 1.31.2
+    tag: 1.32.0
