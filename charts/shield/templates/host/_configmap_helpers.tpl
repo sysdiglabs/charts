@@ -9,7 +9,7 @@
 {{- end }}
 
 {{- define "host.configmap.responding" }}
-{{- dict "responding" (pick . "rapid_response") | toYaml }}
+{{- dict "responding" (dict "rapid_response" (dict "enabled" .rapid_response.enabled)) | toYaml }}
 {{- end }}
 
 {{- define "host.configmap.detections" }}

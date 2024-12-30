@@ -140,6 +140,7 @@ features:
   responding:
     rapid_response:
       enabled: false
+      password: ""
   monitoring:
     app_checks:
       enabled: false

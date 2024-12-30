@@ -146,11 +146,13 @@ spec:
             {{- end }}
             {{- include "common.custom_ca.envs" (merge (dict) . (dict "CACertsPath" "/opt/draios/certificates/")) | nindent 12 }}
             {{- if .Values.features.responding.rapid_response.enabled }}
+            {{- if and (include "common.is_semver" .Values.host.image.tag) (semverCompare "<13.8.0" .Values.host.image.tag) }}
             - name: PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: {{ include "host.rapid_response_secret" . }}
                   key: password
+            {{- end }}
             {{- end }}
             {{- include "host.env" . | nindent 12 }}
             {{ if or .Values.features.posture.host_posture.enabled (dig "kspm_analyzer" "enabled" false .Values.host.additional_settings) }}
@@ -190,8 +192,13 @@ spec:
               name: dshm
             - mountPath: /opt/draios/etc/kubernetes/config
               name: host-shield-config
+          {{- if and (include "common.is_semver" .Values.host.image.tag) (semverCompare ">=13.8.0" .Values.host.image.tag) }}
+            - mountPath: /opt/draios/etc/kubernetes/secrets/agent
+              name: host-shield-secrets
+          {{- else }}
             - mountPath: /opt/draios/etc/kubernetes/secrets
               name: host-shield-secrets
+          {{- end }}
             - mountPath: /etc/podinfo
               name: podinfo
           {{- /* Autopilot = false */}}
@@ -238,6 +245,10 @@ spec:
             - mountPath: /opt/draios/etc/local_forwarder_config.yaml
               name: local-forwarder-config
               subPath: local_forwarder_config.yaml
+          {{- end }}
+          {{- if .Values.features.responding.rapid_response.enabled }}
+            - mountPath: /opt/draios/etc/kubernetes/secrets/rapid-response
+              name: rapid-response-password
           {{- end }}
           {{- include "host.volume_mounts" . | nindent 12 }}
       volumes:
@@ -343,4 +354,9 @@ spec:
             name: {{ include "host.fullname" . }}
             optional: true
       {{- end }}
+      {{- if .Values.features.responding.rapid_response.enabled }}
+        - name: rapid-response-password
+          secret:
+            secretName: {{ include "host.rapid_response_secret" . }}
+        {{- end }}
       {{- include "host.volumes" . | nindent 8 }}

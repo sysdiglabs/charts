@@ -221,16 +221,66 @@ tests:
             sysdig/component: host
             sysdig/component-version: 11.11.11
 
-  - it: Test Rapid Response password secret
+  - it: Test Rapid Response password secret (features block)
     set:
+      host:
+        image:
+          tag: 13.8.0
       features:
         responding:
           rapid_response:
             enabled: true
+            password: abc123
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].volumeMounts
+          content:
+            name: rapid-response-password
+            mountPath: /opt/draios/etc/kubernetes/secrets/rapid-response
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: rapid-response-password
+            secret:
+              secretName: release-name-shield-host-rapid-response
+
+  - it: Test Rapid Response password secret (features block / sideload password)
+    set:
       host:
         additional_settings:
           rapid_response:
             password: abc123
+        image:
+          tag: 13.8.0
+      features:
+        responding:
+          rapid_response:
+            enabled: true
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].volumeMounts
+          content:
+            name: rapid-response-password
+            mountPath: /opt/draios/etc/kubernetes/secrets/rapid-response
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: rapid-response-password
+            secret:
+              secretName: release-name-shield-host-rapid-response
+
+  - it: Ensure older Host Shield versions work as expected
+    set:
+      host:
+        additional_settings:
+          rapid_response:
+            password: abc123
+        image:
+          tag: 10.10.10
+      features:
+        responding:
+          rapid_response:
+            enabled: true
     asserts:
       - contains:
           path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].env
@@ -238,8 +288,8 @@ tests:
             name: PASSWORD
             valueFrom:
               secretKeyRef:
-                name: release-name-shield-host-rapid-response
                 key: password
+                name: release-name-shield-host-rapid-response
 
   - it: Host root and tmp not mounted by default
     asserts:
@@ -619,3 +669,39 @@ tests:
       - equal:
           path: spec.template.spec.volumes[?(@.name == "vardata-vol")].hostPath.type
           value: DirectoryOrCreate
+
+  - it: Ensure access-key is mounted correctly
+    set:
+      host:
+        image:
+          tag: 13.8.0
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: host-shield-secrets
+            secret:
+              secretName: release-name-shield-common-access-key
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].volumeMounts
+          content:
+            name: host-shield-secrets
+            mountPath: /opt/draios/etc/kubernetes/secrets/agent
+
+  - it: Ensure access-key is mounted correctly for old versions
+    set:
+      host:
+        image:
+          tag: 13.7.0
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: host-shield-secrets
+            secret:
+              secretName: release-name-shield-common-access-key
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].volumeMounts
+          content:
+            name: host-shield-secrets
+            mountPath: /opt/draios/etc/kubernetes/secrets
