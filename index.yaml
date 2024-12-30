@@ -4395,6 +4395,43 @@ entries:
   agent:
   - apiVersion: v2
     appVersion: 13.7.0
+    created: "2024-12-30T11:52:27.085226755Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      version: ~1.3.1
+    description: Sysdig Monitor and Secure agent
+    digest: 11fe2ef3b72337e9943b70b2f8edeff72edbbbd8c21060065d87c51b381489a7
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: alberto.barba@sysdig.com
+      name: AlbertoBarba
+    - email: adam.roberts@sysdig.com
+      name: aroberts87
+    - email: francesco.furlan@sysdig.com
+      name: francesco-furlan
+    - email: gerlando.falauto@sysdig.com
+      name: iurly
+    - email: marcovito.moscaritolo@sysdig.com
+      name: mavimo
+    name: agent
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/agent-1.34.4/agent-1.34.4.tgz
+    version: 1.34.4
+  - apiVersion: v2
+    appVersion: 13.7.0
     created: "2024-12-19T19:36:45.7818988Z"
     dependencies:
     - name: common
@@ -15495,6 +15532,34 @@ entries:
   kspm-collector:
   - apiVersion: v2
     appVersion: 1.39.6
+    created: "2024-12-30T11:52:27.285389959Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      version: ~1.3.1
+    description: Sysdig KSPM collector
+    digest: d2e430390ec572e7ec8ea7ae4e9c75a512dfe42711a42f35123f3a73b6ca1243
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: chen.shmilovich@sysdig.com
+      name: chen-shmilovich-sysdig
+    name: kspm-collector
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/kspm-collector-0.17.1/kspm-collector-0.17.1.tgz
+    version: 0.17.1
+  - apiVersion: v2
+    appVersion: 1.39.6
     created: "2024-11-06T12:01:21.577134418Z"
     dependencies:
     - name: common
@@ -18098,6 +18163,35 @@ entries:
     - https://github.com/sysdiglabs/charts/releases/download/kspm-collector-0.1.0/kspm-collector-0.1.0.tgz
     version: 0.1.0
   node-analyzer:
+  - apiVersion: v2
+    appVersion: 12.9.2
+    created: "2024-12-30T11:52:27.503543073Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      version: ~1.3.1
+    description: Sysdig Node Analyzer
+    digest: 26d982847d42629a3df2f7d47418a9a2eb3a308666cf347984623809a79fdcfb
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: chen.shmilovich@sysdig.com
+      name: chen-shmilovich-sysdig
+    - name: sysdiglabs
+    name: node-analyzer
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/node-analyzer-1.33.5/node-analyzer-1.33.5.tgz
+    version: 1.33.5
   - apiVersion: v2
     appVersion: 12.9.2
     created: "2024-12-16T15:23:36.945335975Z"
@@ -27096,6 +27190,36 @@ entries:
     - https://github.com/sysdiglabs/charts/releases/download/node-analyzer-1.0.0/node-analyzer-1.0.0.tgz
     version: 1.0.0
   rapid-response:
+  - apiVersion: v2
+    appVersion: 0.5.1
+    created: "2024-12-30T11:52:27.713528422Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      version: ~1.3.1
+    description: Sysdig Rapid Response
+    digest: 742983f48dc6aa8981e32e7c0fb9f9241cfcb71c499d060856f36f467c19bc49
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: matteo.rolla@sysdig.com
+      name: mrolla
+    - email: daniele.delorenzi@sysdig.com
+      name: dark-vex
+    name: rapid-response
+    sources:
+    - https://github.com/sysdiglabs/charts/
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/rapid-response-0.9.14/rapid-response-0.9.14.tgz
+    version: 0.9.14
   - apiVersion: v2
     appVersion: 0.5.1
     created: "2024-12-16T16:24:37.489884976Z"
@@ -69619,4 +69743,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2024-12-20T15:12:57.292947019Z"
+generated: "2024-12-30T11:52:27.897871483Z"
