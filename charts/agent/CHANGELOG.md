@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.34.4
+### Chores
+* **ci** [e3167692](https://github.com/sysdiglabs/charts/commit/e316769250d0ab94519de59436be0d16fb5df3e1): bump bitnami/kubectl image references ([#2053](https://github.com/sysdiglabs/charts/issues/2053))
 # v1.34.3
 ### Chores
 * **agent** [ed886c9a](https://github.com/sysdiglabs/charts/commit/ed886c9a60c57fa10c90b9dd90fa1ee3433e70d0): Bump Windows Agent release to 1.3.1 ([#2085](https://github.com/sysdiglabs/charts/issues/2085))
