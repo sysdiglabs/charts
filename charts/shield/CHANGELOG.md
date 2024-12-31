@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.4.2
+### New Features
+* **agent,shield** [d8414740](https://github.com/sysdiglabs/charts/commit/d8414740491a7fc39ba85b72ad08d4792e94b734): release agent 13.7.1 ([#2094](https://github.com/sysdiglabs/charts/issues/2094))
 # v0.4.1
 ### New Features
 * **shield** [25c29f18](https://github.com/sysdiglabs/charts/commit/25c29f182afa6d910e552f8f70c5d86f5c09c2bc): allow to override capabilities [SMAGENT-8408] ([#2077](https://github.com/sysdiglabs/charts/issues/2077))
