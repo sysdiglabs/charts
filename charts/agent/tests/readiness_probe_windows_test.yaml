@@ -19,9 +19,6 @@ kubernetesProvider:
 tests:
 
   - it: "Windows Agent Probes (agent < 1.3.0)"
-    capabilities:
-      majorVersion: 1
-      minorVersion: 31
     set:
       windows:
         enabled: true

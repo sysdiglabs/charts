@@ -10,6 +10,18 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.72.7
+### Chores
+* **sysdig-deploy** [95dfa5a9](https://github.com/sysdiglabs/charts/commit/95dfa5a90ae259a2118bbb4ff1e697fedff2c562): Automatic version bump due to updated dependencies ([#2096](https://github.com/sysdiglabs/charts/issues/2096))
+# v1.72.6
+### Chores
+* **sysdig-deploy** [676622c0](https://github.com/sysdiglabs/charts/commit/676622c08bf7ada2b7d178c2b95059aef87150cb): Automatic version bump due to updated dependencies ([#2093](https://github.com/sysdiglabs/charts/issues/2093))
+# v1.72.5
+### Chores
+* **sysdig-deploy** [8720e678](https://github.com/sysdiglabs/charts/commit/8720e6787f9467ba17c842b54e8d7c436d381fb3): Automatic version bump due to updated dependencies ([#2082](https://github.com/sysdiglabs/charts/issues/2082))
+# v1.72.4
+### New Features
+* **agent** [a65d52c3](https://github.com/sysdiglabs/charts/commit/a65d52c363277573f7c6b70dab172e065c38f59f): REVERT [SMAGENT-8138] add full securityContext to agent charts ([#2084](https://github.com/sysdiglabs/charts/issues/2084))
 # v1.72.3
 ### New Features
 * **agent** [550c06fa](https://github.com/sysdiglabs/charts/commit/550c06fad7140b7e98d6063ba61337be4341498a): [SMAGENT-8138] add full securityContext to agent charts ([#2017](https://github.com/sysdiglabs/charts/issues/2017))

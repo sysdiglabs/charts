@@ -5,6 +5,7 @@ ARG RELEASE_VERSION
 
 LABEL name="rh-shield-operator" \
       vendor="Sysdig" \
+      maintainer="Sysdig" \
       version="${RELEASE_VERSION}" \
       release="1" \
       summary="Operator based on the shield chart by Sysdig" \

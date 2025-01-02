@@ -10,6 +10,18 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.34.5
+### New Features
+* **agent,shield** [d8414740](https://github.com/sysdiglabs/charts/commit/d8414740491a7fc39ba85b72ad08d4792e94b734): release agent 13.7.1 ([#2094](https://github.com/sysdiglabs/charts/issues/2094))
+# v1.34.4
+### Chores
+* **ci** [e3167692](https://github.com/sysdiglabs/charts/commit/e316769250d0ab94519de59436be0d16fb5df3e1): bump bitnami/kubectl image references ([#2053](https://github.com/sysdiglabs/charts/issues/2053))
+# v1.34.3
+### Chores
+* **agent** [ed886c9a](https://github.com/sysdiglabs/charts/commit/ed886c9a60c57fa10c90b9dd90fa1ee3433e70d0): Bump Windows Agent release to 1.3.1 ([#2085](https://github.com/sysdiglabs/charts/issues/2085))
+# v1.34.2
+### New Features
+* **agent** [a65d52c3](https://github.com/sysdiglabs/charts/commit/a65d52c363277573f7c6b70dab172e065c38f59f): REVERT [SMAGENT-8138] add full securityContext to agent charts ([#2084](https://github.com/sysdiglabs/charts/issues/2084))
 # v1.34.1
 ### New Features
 * **agent** [550c06fa](https://github.com/sysdiglabs/charts/commit/550c06fad7140b7e98d6063ba61337be4341498a): [SMAGENT-8138] add full securityContext to agent charts ([#2017](https://github.com/sysdiglabs/charts/issues/2017))
