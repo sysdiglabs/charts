@@ -694,8 +694,6 @@ runAsGroup: 0
 readOnlyRootFilesystem: false
 allowPrivilegeEscalation: true
 capabilities:
-  drop:
-    - ALL
   add:
     - CHOWN
     - DAC_OVERRIDE
