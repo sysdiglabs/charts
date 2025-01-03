@@ -696,8 +696,6 @@ allowPrivilegeEscalation: true
 capabilities:
   drop:
     - ALL
-  add:
-    - ALL
 {{- else }}
 allowPrivilegeEscalation: false
 seccompProfile:

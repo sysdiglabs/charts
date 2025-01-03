@@ -85,8 +85,6 @@ spec:
             capabilities:
               drop:
                 - ALL
-              add:
-                - ALL
           resources:
             {{- if (include "agent.gke.autopilot" .) }}
               {{- $resources := merge .Values.slim.resources (dict "requests" (dict "ephemeral-storage" .Values.gke.ephemeralStorage))}}
