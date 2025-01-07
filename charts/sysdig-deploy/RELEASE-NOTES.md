@@ -1,5 +1,5 @@
 # What's Changed
 
 ### Chores
-- **sysdig-deploy** [c74a8ba4](https://github.com/sysdiglabs/charts/commit/c74a8ba4c6c88b997c444e0bb16b7bfde9942291): Automatic version bump due to updated dependencies ([#2097](https://github.com/sysdiglabs/charts/issues/2097))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.72.7...sysdig-deploy-1.72.8
+- **cluster-shield,sysdig-deploy** [fda74488](https://github.com/sysdiglabs/charts/commit/fda744888d283c69a65d883cb4528dc270061c60): Automatic bump to version 1.7.0 ([#2101](https://github.com/sysdiglabs/charts/issues/2101))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.72.8...sysdig-deploy-1.73.0
