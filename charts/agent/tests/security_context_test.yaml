@@ -29,6 +29,10 @@ tests:
             readOnlyRootFilesystem: false
             runAsNonRoot: false
             runAsUser: 0
+            runAsGroup: 0
+            capabilities:
+              drop:
+                - ALL
 
   - it: Ensure the securityContext for a non-privileged agent contains the keys defined
     set:
@@ -125,3 +129,35 @@ tests:
                 - SYS_TIME
                 - SYS_TTY_CONFIG
                 - WAKE_ALARM
+
+  - it: Ensure the securityContext contains the mandatory keys
+    asserts:
+      - isSubset:
+          path: spec.template.spec['initContainers','containers'][:].securityContext.capabilities
+          content:
+            drop:
+              - ALL
+      - exists:
+          path: spec.template.spec.initContainers[:].securityContext.runAsNonRoot
+      - exists:
+          path: spec.template.spec.containers[:].securityContext.runAsNonRoot
+      - exists:
+          path: spec.template.spec.initContainers[:].securityContext.runAsUser
+      - exists:
+          path: spec.template.spec.containers[:].securityContext.runAsUser
+      - exists:
+          path: spec.template.spec.initContainers[:].securityContext.runAsGroup
+      - exists:
+          path: spec.template.spec.containers[:].securityContext.runAsGroup
+      - exists:
+          path: spec.template.spec.initContainers[:].securityContext.privileged
+      - exists:
+          path: spec.template.spec.containers[:].securityContext.privileged
+      - exists:
+          path: spec.template.spec.initContainers[:].securityContext.allowPrivilegeEscalation
+      - exists:
+          path: spec.template.spec.containers[:].securityContext.allowPrivilegeEscalation
+      - exists:
+          path: spec.template.spec.initContainers[:].securityContext.readOnlyRootFilesystem
+      - exists:
+          path: spec.template.spec.containers[:].securityContext.readOnlyRootFilesystem
