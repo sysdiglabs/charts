@@ -33,8 +33,6 @@ tests:
             capabilities:
               drop:
                 - ALL
-              add:
-                - ALL
 
   - it: Ensure the securityContext for a non-privileged agent contains the keys defined
     set:
