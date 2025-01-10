@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.73.2
+### Chores
+* **cluster-shield,sysdig-deploy,shield** [9edcb32f](https://github.com/sysdiglabs/charts/commit/9edcb32f47d5b3338b15f229d6eadc2cece9492e): Automatic bump to version 1.7.1 ([#2104](https://github.com/sysdiglabs/charts/issues/2104))
 # v1.73.1
 ### New Features
 * **agent** [3dfcf311](https://github.com/sysdiglabs/charts/commit/3dfcf311d7585421ab0f6ad8f3ea36b9912f34c3): [SMAGENT-8138][SMAGENT-8501] add full securityContext to agent charts ([#2102](https://github.com/sysdiglabs/charts/issues/2102))
