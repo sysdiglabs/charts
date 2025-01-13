@@ -680,6 +680,9 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
+        "dns_detections": {
+            "$ref": "#/$defs/FeatureGroupDetections/$defs/DNSDetections"
+        },
         "drift_control": {
           "$ref": "#/$defs/FeatureGroupDetections/$defs/DriftControl"
         },
@@ -694,6 +697,16 @@
         }
       },
       "$defs": {
+        "DNSDetections": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Specify if the DNS Detections feature is enabled"
+            }
+          }
+        },
         "DriftControl": {
           "type": "object",
           "additionalProperties": true,

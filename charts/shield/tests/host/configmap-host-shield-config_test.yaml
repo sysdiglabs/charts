@@ -21,6 +21,8 @@ tests:
           pattern: |
             features:
               detections:
+                dns_detections:
+                  enabled: false
                 ml_policies:
                   enabled: false
               posture:
@@ -48,6 +50,8 @@ tests:
           pattern: |
             features:
               detections:
+                dns_detections:
+                  enabled: false
                 ml_policies:
                   enabled: false
               posture:
@@ -75,6 +79,8 @@ tests:
           pattern: |
             features:
               detections:
+                dns_detections:
+                  enabled: false
                 ml_policies:
                   enabled: false
               posture:
@@ -102,6 +108,8 @@ tests:
           pattern: |
             features:
               detections:
+                dns_detections:
+                  enabled: false
                 ml_policies:
                   enabled: false
               posture:
@@ -129,6 +137,8 @@ tests:
           pattern: |
             features:
               detections:
+                dns_detections:
+                  enabled: false
                 ml_policies:
                   enabled: false
               posture:
@@ -151,6 +161,8 @@ tests:
           pattern: |
             features:
               detections:
+                dns_detections:
+                  enabled: false
                 ml_policies:
                   enabled: false
               posture:
@@ -181,6 +193,8 @@ tests:
           pattern: |-
             features:
               detections:
+                dns_detections:
+                  enabled: false
                 ml_policies:
                   enabled: false
               posture:
@@ -210,6 +224,8 @@ tests:
           pattern: |-
             features:
               detections:
+                dns_detections:
+                  enabled: false
                 ml_policies:
                   enabled: false
               posture:
@@ -237,6 +253,8 @@ tests:
           pattern: |-
             features:
               detections:
+                dns_detections:
+                  enabled: false
                 ml_policies:
                   enabled: false
               posture:
@@ -264,6 +282,8 @@ tests:
           pattern: |-
             features:
               detections:
+                dns_detections:
+                  enabled: false
                 ml_policies:
                   enabled: true
               posture:
@@ -276,5 +296,28 @@ tests:
                 host_vulnerability_management:
                   enabled: false
                 in_use:
+
+  - it: Ensure DNS Detections is disabled by default
+    asserts:
+      - matchRegex:
+          path: data['host-shield.yaml']
+          pattern: |-
+            features:
+              detections:
+                dns_detections:
                   enabled: false
-                  integration_enabled: false
+
+  - it: Enable DNS Detections
+    set:
+      features:
+        detections:
+          dns_detections:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['host-shield.yaml']
+          pattern: |-
+            features:
+              detections:
+                dns_detections:
+                  enabled: true
