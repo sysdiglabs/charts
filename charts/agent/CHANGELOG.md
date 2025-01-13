@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.34.6
+### New Features
+* **agent** [3dfcf311](https://github.com/sysdiglabs/charts/commit/3dfcf311d7585421ab0f6ad8f3ea36b9912f34c3): [SMAGENT-8138][SMAGENT-8501] add full securityContext to agent charts ([#2102](https://github.com/sysdiglabs/charts/issues/2102))
 # v1.34.5
 ### New Features
 * **agent,shield** [d8414740](https://github.com/sysdiglabs/charts/commit/d8414740491a7fc39ba85b72ad08d4792e94b734): release agent 13.7.1 ([#2094](https://github.com/sysdiglabs/charts/issues/2094))

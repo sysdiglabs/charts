@@ -1,5 +1,5 @@
 # What's Changed
 
 ### Chores
-- **admission-controller** [cb767c33](https://github.com/sysdiglabs/charts/commit/cb767c33699478121191eb221fe3a451706f41c1): Update to v3.9.47 ([#1866](https://github.com/sysdiglabs/charts/issues/1866))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/admission-controller-0.16.5...admission-controller-0.16.6
+- **admission-controller** [d1267cf6](https://github.com/sysdiglabs/charts/commit/d1267cf668829b16a91d66fcb05be9dedbb70df0): Bump Admission-controller to 0.16.7 ([#2105](https://github.com/sysdiglabs/charts/issues/2105))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/admission-controller-0.16.6...admission-controller-0.16.7
