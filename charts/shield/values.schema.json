@@ -396,7 +396,7 @@
     },
     "Features": {
       "type": "object",
-      "additionalProperties": false,
+      "additionalProperties": true,
       "properties": {
         "admission_control": {
           "$ref": "#/$defs/FeatureAdmissionControl"
