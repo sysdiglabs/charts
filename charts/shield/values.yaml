@@ -89,6 +89,8 @@ features:
       # Allows to store the list of running packages to Sysdig backend.
       integration_enabled: false
   detections:
+    dns_detections:
+      enabled: false
     drift_control:
       enabled: false
     malware_control:
