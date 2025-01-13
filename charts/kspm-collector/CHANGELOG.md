@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.17.2
+### Chores
+* **kspm-collector,node-analyzer** [91a82fc6](https://github.com/sysdiglabs/charts/commit/91a82fc6702b3368f6cf8f40d82f46879973ebc0): release kspm-collector & node-analyzer ([#2107](https://github.com/sysdiglabs/charts/issues/2107))
 # v0.17.1
 ### Chores
 * **ci** [e3167692](https://github.com/sysdiglabs/charts/commit/e316769250d0ab94519de59436be0d16fb5df3e1): bump bitnami/kubectl image references ([#2053](https://github.com/sysdiglabs/charts/issues/2053))
