@@ -8,8 +8,8 @@
 {{- dict "vulnerability_management" (pick . "host_vulnerability_management" "in_use") | toYaml }}
 {{- end }}
 
-{{- define "host.configmap.respond" }}
-{{- dict "respond" (pick . "rapid_response") | toYaml }}
+{{- define "host.configmap.responding" }}
+{{- dict "responding" (pick . "rapid_response") | toYaml }}
 {{- end }}
 
 {{- define "host.configmap.detections" }}
@@ -25,8 +25,8 @@
 {{- with .Values.features.vulnerability_management }}
 {{- $config = merge $config ((include "host.configmap.vm" .) | fromYaml) }}
 {{- end }}
-{{- with .Values.features.respond }}
-{{- $config = merge $config ((include "host.configmap.respond" .) | fromYaml) }}
+{{- with .Values.features.responding }}
+{{- $config = merge $config ((include "host.configmap.responding" .) | fromYaml) }}
 {{- end }}
 {{- with .Values.features.detections }}
 {{- $config = merge $config ((include "host.configmap.detections" .) | fromYaml)}}
@@ -42,10 +42,10 @@ true
 {{- end }}
 
 {{- define "host.features.monitor_enabled" }}
-{{- if  or .Values.features.monitor.app_checks.enabled
-           .Values.features.monitor.java_management_extensions.enabled
-           .Values.features.monitor.prometheus.enabled
-           .Values.features.monitor.statsd.enabled
+{{- if  or .Values.features.monitoring.app_checks.enabled
+           .Values.features.monitoring.java_management_extensions.enabled
+           .Values.features.monitoring.prometheus.enabled
+           .Values.features.monitoring.statsd.enabled
            (dig "app_checks_enabled" false .Values.host.additional_settings)
            (dig "jmx" "enabled" false .Values.host.additional_settings)
            (dig "prometheus" "enabled" false .Values.host.additional_settings)
@@ -70,13 +70,13 @@ true
 {{/* TODO: Kubernetes metadata */}}
 {{- with .Values.features }}
 {{- $config := dict
-  "app_checks_enabled" .monitor.app_checks.enabled
+  "app_checks_enabled" .monitoring.app_checks.enabled
   "audit_tap"
     (dict "enabled" .investigations.audit_tap.enabled)
   "drift_control"
     (dict "enabled" .detections.drift_control.enabled)
   "jmx"
-    (dict "enabled" .monitor.java_management_extensions.enabled)
+    (dict "enabled" .monitoring.java_management_extensions.enabled)
   "live_logs"
     (dict "enabled" .investigations.live_logs.enabled)
   "local_forwarder"
@@ -86,11 +86,11 @@ true
   "network_topology"
     (dict "enabled" .investigations.network_security.enabled)
   "prometheus"
-    (dict "enabled" .monitor.prometheus.enabled)
+    (dict "enabled" .monitoring.prometheus.enabled)
   "secure_audit_streams"
     (dict "enabled" .investigations.activity_audit.enabled)
   "statsd"
-    (dict "enabled" .monitor.statsd.enabled)
+    (dict "enabled" .monitoring.statsd.enabled)
   "sysdig_capture_enabled" .investigations.captures.enabled }}
 {{- $config | toYaml }}
 {{- end }}
@@ -113,7 +113,7 @@ true
 {{- if (include "common.proxy.enabled" . ) }}
 {{- $config := merge $config (dict "http_proxy" (include "host.proxy_config" . | fromYaml)) }}
 {{- end }}
-{{- if .Values.features.respond.rapid_response.enabled }}
+{{- if .Values.features.responding.rapid_response.enabled }}
 {{- $config = merge $config (dict "rapid_response" (dict "enabled" true)) }}
 {{- end }}
 {{- $config = merge $config (include "host.parse_features" . | fromYaml) }}
