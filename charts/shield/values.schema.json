@@ -416,11 +416,11 @@
         "investigations": {
           "$ref": "#/$defs/FeatureGroupInvestigations"
         },
-        "responding": {
-          "$ref": "#/$defs/FeatureGroupResponding"
+        "respond": {
+          "$ref": "#/$defs/FeatureGroupRespond"
         },
-        "monitoring": {
-          "$ref": "#/$defs/FeatureGroupMonitoring"
+        "monitor": {
+          "$ref": "#/$defs/FeatureGroupMonitor"
         }
       }
     },
@@ -886,11 +886,11 @@
         }
       }
     },
-    "FeatureGroupResponding": {
+    "FeatureGroupRespond": {
       "type": "object",
       "properties": {
         "rapid_response": {
-          "$ref": "#/$defs/FeatureGroupResponding/$defs/RapidResponse"
+          "$ref": "#/$defs/FeatureGroupRespond/$defs/RapidResponse"
         }
       },
       "$defs": {
@@ -906,20 +906,20 @@
         }
       }
     },
-    "FeatureGroupMonitoring": {
+    "FeatureGroupMonitor": {
       "type": "object",
       "properties": {
         "app_checks": {
-          "$ref": "#/$defs/FeatureGroupMonitoring/$defs/AppChecks"
+          "$ref": "#/$defs/FeatureGroupMonitor/$defs/AppChecks"
         },
         "java_management_extensions": {
-          "$ref": "#/$defs/FeatureGroupMonitoring/$defs/JavaManagementExtensions"
+          "$ref": "#/$defs/FeatureGroupMonitor/$defs/JavaManagementExtensions"
         },
         "prometheus": {
-          "$ref": "#/$defs/FeatureGroupMonitoring/$defs/Prometheus"
+          "$ref": "#/$defs/FeatureGroupMonitor/$defs/Prometheus"
         },
         "statsd": {
-          "$ref": "#/$defs/FeatureGroupMonitoring/$defs/Statsd"
+          "$ref": "#/$defs/FeatureGroupMonitor/$defs/Statsd"
         }
       },
       "$defs": {

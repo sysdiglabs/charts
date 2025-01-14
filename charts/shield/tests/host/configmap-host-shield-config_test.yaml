@@ -26,7 +26,7 @@ tests:
               posture:
                 host_posture:
                   enabled: false
-              responding:
+              respond:
                 rapid_response:
                   enabled: false
               vulnerability_management:
@@ -53,7 +53,7 @@ tests:
               posture:
                 host_posture:
                   enabled: true
-              responding:
+              respond:
                 rapid_response:
                   enabled: false
               vulnerability_management:
@@ -80,7 +80,7 @@ tests:
               posture:
                 host_posture:
                   enabled: false
-              responding:
+              respond:
                 rapid_response:
                   enabled: false
               vulnerability_management:
@@ -107,7 +107,7 @@ tests:
               posture:
                 host_posture:
                   enabled: false
-              responding:
+              respond:
                 rapid_response:
                   enabled: false
               vulnerability_management:
@@ -134,7 +134,7 @@ tests:
               posture:
                 host_posture:
                   enabled: false
-              responding:
+              respond:
                 rapid_response:
                   enabled: false
               vulnerability_management:
@@ -156,7 +156,7 @@ tests:
               posture:
                 host_posture:
                   enabled: false
-              responding:
+              respond:
                 rapid_response:
                   enabled: false
               vulnerability_management:
@@ -186,7 +186,7 @@ tests:
               posture:
                 host_posture:
                   enabled: true
-              responding:
+              respond:
                 rapid_response:
                   enabled: false
               vulnerability_management:
@@ -215,7 +215,7 @@ tests:
               posture:
                 host_posture:
                   enabled: true
-              responding:
+              respond:
                 rapid_response:
                   enabled: false
               vulnerability_management:
@@ -228,7 +228,7 @@ tests:
   - it: Enable Rapid Response
     set:
       features:
-        responding:
+        respond:
           rapid_response:
             enabled: true
     asserts:
@@ -242,7 +242,7 @@ tests:
               posture:
                 host_posture:
                   enabled: false
-              responding:
+              respond:
                 rapid_response:
                   enabled: true
               vulnerability_management:
@@ -269,7 +269,7 @@ tests:
               posture:
                 host_posture:
                   enabled: false
-              responding:
+              respond:
                 rapid_response:
                   enabled: false
               vulnerability_management:
