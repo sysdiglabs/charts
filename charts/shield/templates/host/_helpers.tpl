@@ -148,3 +148,24 @@ true
 - SYS_PTRACE
 - SYS_RESOURCE
 {{- end -}}
+
+{{- define "host.security_context" -}}
+{{- if .Values.host.custom_security_context }}
+  {{- toYaml .Values.host.custom_security_context -}}
+{{- else if .Values.host.privileged }}
+privileged: true
+runAsNonRoot: false
+runAsUser: 0
+readOnlyRootFilesystem: false
+allowPrivilegeEscalation: true
+{{- else }}
+allowPrivilegeEscalation: false
+seccompProfile:
+  type: Unconfined
+capabilities:
+  drop:
+    - ALL
+  add:
+    {{- include "host.capabilities" . | nindent 4 }}
+{{- end }}
+{{- end -}}
