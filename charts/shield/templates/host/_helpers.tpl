@@ -169,3 +169,51 @@ capabilities:
     {{- include "host.capabilities" . | nindent 4 }}
 {{- end }}
 {{- end -}}
+
+{{- define "host.respond_key" }}
+{{- if hasKey . "respond" }}
+{{- print "respond" }}
+{{- else }}
+{{- print "responding" }}
+{{- end }}
+{{- end }}
+
+{{- define "host.rapid_response_enabled" }}
+{{- with .Values.features }}
+{{- if (dig (include "host.respond_key" .) "rapid_response" "enabled" false .) }}
+true
+{{- end }}
+{{- end }}
+{{- end }}
+
+{{- define "host.monitor_key" }}
+{{- if hasKey . "monitor" }}
+{{- print "monitor" }}
+{{- else }}
+{{- print "monitoring" }}
+{{- end }}
+{{- end }}
+
+{{- define "host.app_checks_enabled" }}
+{{- if dig (include "host.monitor_key" .) "app_checks" "enabled" false . }}
+true
+{{- end }}
+{{- end }}
+
+{{- define "host.jmx_enabled" }}
+{{- if dig (include "host.monitor_key" .) "java_mangement_extensions" "enabled" false . }}
+true
+{{- end }}
+{{- end }}
+
+{{- define "host.prometheus_enabled" }}
+{{- if dig (include "host.monitor_key" .) "prometheus" "enabled" false . }}
+true
+{{- end }}
+{{- end }}
+
+{{- define "host.statsd_enabled" }}
+{{- if dig (include "host.monitor_key" .) "statsd" "enabled" false . }}
+true
+{{- end }}
+{{- end }}

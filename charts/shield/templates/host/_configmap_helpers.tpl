@@ -42,10 +42,10 @@ true
 {{- end }}
 
 {{- define "host.features.monitor_enabled" }}
-{{- if  or .Values.features.monitoring.app_checks.enabled
-           .Values.features.monitoring.java_management_extensions.enabled
-           .Values.features.monitoring.prometheus.enabled
-           .Values.features.monitoring.statsd.enabled
+{{- if  or (dig (include "host.monitor_key" .) "app_checks" "enabled" false .Values.features)
+           (dig (include "host.monitor_key" .) "java_management_extensions" "enabled" false .Values.features)
+           (dig (include "host.monitor_key" .) "prometheus" "enabled" false .Values.features)
+           (dig (include "host.monitor_key" .) "statsd" "enabled" false .Values.features)
            (dig "app_checks_enabled" false .Values.host.additional_settings)
            (dig "jmx" "enabled" false .Values.host.additional_settings)
            (dig "prometheus" "enabled" false .Values.host.additional_settings)
@@ -70,13 +70,13 @@ true
 {{/* TODO: Kubernetes metadata */}}
 {{- with .Values.features }}
 {{- $config := dict
-  "app_checks_enabled" .monitoring.app_checks.enabled
+  "app_checks_enabled" ((dig (include "host.monitor_key" .) "app_checks" "enabled" false .))
   "audit_tap"
     (dict "enabled" .investigations.audit_tap.enabled)
   "drift_control"
     (dict "enabled" .detections.drift_control.enabled)
   "jmx"
-    (dict "enabled" .monitoring.java_management_extensions.enabled)
+    (dict "enabled" (dig (include "host.monitor_key" .) "java_management_extensions" "enabled" false .))
   "live_logs"
     (dict "enabled" .investigations.live_logs.enabled)
   "local_forwarder"
@@ -86,11 +86,11 @@ true
   "network_topology"
     (dict "enabled" .investigations.network_security.enabled)
   "prometheus"
-    (dict "enabled" .monitoring.prometheus.enabled)
+    (dict "enabled" (dig (include "host.monitor_key" .) "prometheus" "enabled" false .))
   "secure_audit_streams"
     (dict "enabled" .investigations.activity_audit.enabled)
   "statsd"
-    (dict "enabled" .monitoring.statsd.enabled)
+    (dict "enabled" (dig (include "host.monitor_key" .) "statsd" "enabled" false .))
   "sysdig_capture_enabled" .investigations.captures.enabled }}
 {{- $config | toYaml }}
 {{- end }}
@@ -113,7 +113,7 @@ true
 {{- if (include "common.proxy.enabled" . ) }}
 {{- $config := merge $config (dict "http_proxy" (include "host.proxy_config" . | fromYaml)) }}
 {{- end }}
-{{- if .Values.features.responding.rapid_response.enabled }}
+{{- if (include "host.rapid_response_enabled" .) }}
 {{- $config = merge $config (dict "rapid_response" (dict "enabled" true)) }}
 {{- end }}
 {{- $config = merge $config (include "host.parse_features" . | fromYaml) }}
