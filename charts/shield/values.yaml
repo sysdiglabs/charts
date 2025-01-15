@@ -157,6 +157,8 @@ host:
   driver: kmod
   # Additional settings to be passed to the host shield (overrides the helm generated settings)
   additional_settings: {}
+  # Allows overriding the Security Context of the Agent pod(s). Primarily intended resolving targeted incidents and debugging
+  custom_security_context: {}
   image:
     # The registry where the host shield images are stored
     registry: quay.io

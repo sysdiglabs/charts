@@ -105,22 +105,7 @@ spec:
           resources:
             {{- (include "host.resources" .) | nindent 12 }}
           securityContext:
-            {{- if .Values.host.privileged }}
-            privileged: true
-            runAsNonRoot: false
-            runAsUser: 0
-            readOnlyRootFilesystem: false
-            allowPrivilegeEscalation: true
-            {{- else }}
-            allowPrivilegeEscalation: false
-            seccompProfile:
-              type: Unconfined
-            capabilities:
-              drop:
-                - ALL
-              add:
-                {{- include "host.capabilities" . | nindent 16 }}
-            {{- end }}
+            {{- (include "host.security_context" .) | nindent 12 }}
           env:
             - name: K8S_NODE
               valueFrom:
