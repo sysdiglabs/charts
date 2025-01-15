@@ -137,10 +137,10 @@ features:
       enabled: false
       integrations: []
       transmit_message_types: []
-  respond:
+  responding:
     rapid_response:
       enabled: false
-  monitor:
+  monitoring:
     app_checks:
       enabled: false
     java_management_extensions:
