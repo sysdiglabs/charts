@@ -1,20 +1,21 @@
 # Can be set to true to show debug logging, useful for troubleshooting.
 debug: false
 
-httpProxy: null
-httpsProxy: null
-noProxy: null
-sslVerifyCertificate: null
+httpProxy:
+httpsProxy:
+noProxy:
+sslVerifyCertificate:
 natsMaxReconnect: 0
 natsMaxReconnectFailures: 60
 # Namespace to deploy to (Optional: Will default to release namespace)
-namespace: null
+namespace:
+
 # Default values for Sysdig KSPM Collector
 global:
   clusterConfig: {}
   sysdig:
     region: "us1"
-  sslVerifyCertificate: null
+  sslVerifyCertificate:
   proxy: {}
   kspm:
     deploy: true
@@ -44,15 +45,18 @@ global:
       #       -----END CERTIFICATE-----
 
       # Filename that is used when creating the secret.  Required if cert is provided.
-      keyName: null
+      keyName:
+
       # Provide the name of an existing Secret that contains the CA required
-      existingCaSecret: null
+      existingCaSecret:
       # Provide the filename that is defined inside the existing Secret.  Required if existingCaSecret is set.
-      existingCaSecretKeyName: null
+      existingCaSecretKeyName:
+
       # Provide the name of an existing ConfigMap that contains the CA required
-      existingCaConfigMap: null
+      existingCaConfigMap:
       # Provide the filename that is defined inside the existing ConfigMap.  Required if existingCaConfigMap is set.
-      existingCaConfigMapKeyName: null
+      existingCaConfigMapKeyName:
+
 sysdig:
   # Required: You need your Sysdig access key before running agents, either specifying 'accessKey' here, or using 'existingAccessKeySecret'
   accessKey: ""
@@ -75,9 +79,10 @@ clusterName: ""
 image:
   repository: sysdig/kspm-collector
   tag: 1.39.7
-  digest: null
+  digest:
   registry: quay.io
-  pullPolicy: null
+  pullPolicy:
+
 # Set image pull secret name
 # Example
 # imagePullSecrets:
@@ -153,7 +158,8 @@ tolerations:
     value: arm64
     effect: NoSchedule
 
-priorityClassName: null
+priorityClassName:
+
 # arch and os will be used to template out a node affinity block matching everything in each list. If affinity is
 # defined, these fields will be ignored
 arch:
@@ -194,15 +200,18 @@ ssl:
     #       -----END CERTIFICATE-----
 
     # Filename that is used when creating the secret.  Required if cert is provided.
-    keyName: null
+    keyName:
+
     # Provide the name of an existing Secret that contains the CA required
-    existingCaSecret: null
+    existingCaSecret:
     # Provide the filename that is defined inside the existing Secret.  Required if existingCaSecret is set.
-    existingCaSecretKeyName: null
+    existingCaSecretKeyName:
+
     # Provide the name of an existing ConfigMap that contains the CA required
-    existingCaConfigMap: null
+    existingCaConfigMap:
     # Provide the filename that is defined inside the existing ConfigMap.  Required if existingCaConfigMap is set.
-    existingCaConfigMapKeyName: null
+    existingCaConfigMapKeyName:
+
 tests:
   skip: false
   timeout: 300s
