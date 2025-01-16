@@ -36,25 +36,21 @@ global:
       #       -----END CERTIFICATE-----
 
       # Filename that is used when creating the secret.  Required if cert is provided.
-      keyName:
-
+      keyName: null
       # Provide the name of an existing Secret that contains the CA required
-      existingCaSecret:
+      existingCaSecret: null
       # Provide the filename that is defined inside the existing Secret.  Required if existingCaSecret is set.
-      existingCaSecretKeyName:
-
+      existingCaSecretKeyName: null
       # Provide the name of an existing ConfigMap that contains the CA required
-      existingCaConfigMap:
+      existingCaConfigMap: null
       # Provide the filename that is defined inside the existing ConfigMap.  Required if existingCaConfigMap is set.
-      existingCaConfigMapKeyName:
-
+      existingCaConfigMapKeyName: null
 image:
   # This is a hack to support RELATED_IMAGE_<identifier> feature in Helm based
   # Operators
   #
   # As long as I don't want to people to use this, I will keep it undocumented
-  overrideValue:
-
+  overrideValue: null
   registry: quay.io
 
 gke:
@@ -74,8 +70,7 @@ daemonset:
     # You can also customize maxUnavailable
     rollingUpdate:
       maxUnavailable: 1
-      maxSurge:
-
+      maxSurge: null
 rbac:
   # true here enables creation of rbac resources
   create: true
@@ -134,9 +129,9 @@ nodeAnalyzer:
   debug: false
 
   # Proxy configuration variables
-  httpProxy:
-  httpsProxy:
-  noProxy:
+  httpProxy: null
+  httpsProxy: null
+  noProxy: null
   # NATS max reconnect attempts
   natsMaxReconnect: 0
   natsMaxReconnectFailures: 60
@@ -164,11 +159,9 @@ nodeAnalyzer:
   createPriorityClass: false
 
   # Set nodeAnalyzer daemonset priorityClassName
-  priorityClassName:
-
+  priorityClassName: null
   # Set the value for the Priority Class (if it is to be created)
-  priorityClassValue:
-
+  priorityClassValue: null
   # Allow the DaemonSet to set labels
   labels: {}
   # Use this pullSecret to pull images from a private registry
@@ -190,14 +183,12 @@ nodeAnalyzer:
     image:
       repository: sysdig/node-image-analyzer
       tag: 0.1.36
-      digest:
-      pullPolicy:
-
+      digest: null
+      pullPolicy: null
     # Proxy configuration variables
-    httpProxy:
-    httpsProxy:
-    noProxy:
-
+    httpProxy: null
+    httpsProxy: null
+    noProxy: null
     # The Docker socket path.
     # If a custom path is specified, ensure it is correctly mounted from the host inside the container.
     # dockerSocketPath: unix:///var/run/docker.sock
@@ -248,14 +239,12 @@ nodeAnalyzer:
     image:
       repository: sysdig/host-analyzer
       tag: 0.1.23
-      digest:
-      pullPolicy:
-
+      digest: null
+      pullPolicy: null
     # Proxy configuration variables
-    httpProxy:
-    httpsProxy:
-    noProxy:
-
+    httpProxy: null
+    httpsProxy: null
+    noProxy: null
     # The scanning schedule specification for the host analyzer expressed as a crontab string such as “5 4 * * *”.
     # The default value of @dailydefault instructs the analyzer to automatically pick a schedule that will start
     # shortly after it is deployed and will perform a scan every 24 hours.
@@ -284,14 +273,12 @@ nodeAnalyzer:
     image:
       repository: sysdig/compliance-benchmark-runner
       tag: 1.1.1.4
-      digest:
-      pullPolicy:
-
+      digest: null
+      pullPolicy: null
     # Proxy configuration variables
-    httpProxy:
-    httpsProxy:
-    noProxy:
-
+    httpProxy: null
+    httpsProxy: null
+    noProxy: null
     resources:
       requests:
         cpu: 150m
@@ -314,15 +301,13 @@ nodeAnalyzer:
     image:
       repository: sysdig/vuln-runtime-scanner
       tag: "1.8.1"
-      digest:
-      pullPolicy:
-
+      digest: null
+      pullPolicy: null
     # Proxy configuration variables
-    httpProxy:
-    httpsProxy:
-    noProxy:
-
-    storageClassName:
+    httpProxy: null
+    httpsProxy: null
+    noProxy: null
+    storageClassName: null
     extraMounts: []
     # example for bottlerocket
     # extraMounts:
@@ -366,11 +351,9 @@ nodeAnalyzer:
       image:
         repository: sysdig/eveclient-api
         tag: 1.1.4
-        digest:
-        pullPolicy:
-
-      priorityClassName:
-
+        digest: null
+        pullPolicy: null
+      priorityClassName: null
       resources:
         requests:
           cpu: 100m
@@ -407,14 +390,12 @@ nodeAnalyzer:
     image:
       repository: sysdig/vuln-host-scanner
       tag: "0.12.3"
-      digest:
-      pullPolicy:
-
+      digest: null
+      pullPolicy: null
     # Proxy configuration variables
-    httpProxy:
-    httpsProxy:
-    noProxy:
-
+    httpProxy: null
+    httpsProxy: null
+    noProxy: null
     # Prometheus configuration
     prometheus:
       enabled: false
@@ -455,17 +436,15 @@ nodeAnalyzer:
     image:
       repository: sysdig/kspm-analyzer
       tag: 1.44.20
-      digest:
-      pullPolicy:
-
+      digest: null
+      pullPolicy: null
     # Permissions for OCP4, previously only added for benchmarkrunner
     includeSensitivePermissions: false
 
     # Proxy configuration variables
-    httpProxy:
-    httpsProxy:
-    noProxy:
-
+    httpProxy: null
+    httpsProxy: null
+    noProxy: null
     resources:
       requests:
         cpu: 150m
@@ -511,18 +490,15 @@ nodeAnalyzer:
       #       -----END CERTIFICATE-----
 
       # Filename that is used when creating the secret.  Required if cert is provided.
-      keyName:
-
+      keyName: null
       # Provide the name of an existing Secret that contains the CA required
-      existingCaSecret:
+      existingCaSecret: null
       # Provide the filename that is defined inside the existing Secret.  Required if existingCaSecret is set.
-      existingCaSecretKeyName:
-
+      existingCaSecretKeyName: null
       # Provide the name of an existing ConfigMap that contains the CA required
-      existingCaConfigMap:
+      existingCaConfigMap: null
       # Provide the filename that is defined inside the existing ConfigMap.  Required if existingCaConfigMap is set.
-      existingCaConfigMapKeyName:
-
+      existingCaConfigMapKeyName: null
       # If Bottlerocket is enabled then the apiclient and api socket will be mounted
   bottlerocket:
     enabled: false
@@ -536,7 +512,7 @@ tests:
   timeout: 300s
   image:
     repo: bitnami/kubectl
-    tag: 1.32.0
+    tag: 1.32.1
 
 # Allow to modify DNS policy
 dnsPolicy: null
