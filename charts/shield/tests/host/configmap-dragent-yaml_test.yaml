@@ -693,7 +693,7 @@ tests:
   - it: Enable App Checks
     set:
       features:
-        monitor:
+        monitoring:
           app_checks:
             enabled: true
     asserts:
@@ -731,7 +731,7 @@ tests:
   - it: Enable JMX
     set:
       features:
-        monitor:
+        monitoring:
           java_management_extensions:
             enabled: true
     asserts:
@@ -796,7 +796,7 @@ tests:
   - it: Enable Prometheus
     set:
       features:
-        monitor:
+        monitoring:
           prometheus:
             enabled: true
     asserts:
@@ -822,7 +822,7 @@ tests:
   - it: Enable StatsD
     set:
       features:
-        monitor:
+        monitoring:
           statsd:
             enabled: true
     asserts:
@@ -963,7 +963,7 @@ tests:
   - it: Test manual override of feature mode
     set:
       features:
-        monitor:
+        monitoring:
           app_checks:
             enabled: true
       host:
@@ -1006,7 +1006,7 @@ tests:
   - it: Test enabling a monitor feature forces agent mode to monitor
     set:
       features:
-        monitor:
+        monitoring:
           app_checks:
             enabled: true
     asserts:
@@ -1110,7 +1110,7 @@ tests:
   - it: Check prometheus.yaml key is created when needed
     set:
       features:
-        monitor:
+        monitoring:
           prometheus:
             enabled: true
     asserts:
@@ -1120,7 +1120,7 @@ tests:
   - it: Check that expected content is present in prometheus.yaml
     set:
       features:
-        monitor:
+        monitoring:
           prometheus:
             enabled: true
             prometheus_yaml:
@@ -1140,7 +1140,7 @@ tests:
   - it: Check prometheus.yaml key is not created when not needed
     set:
       features:
-        monitor:
+        monitoring:
           prometheus:
             enabled: false
     asserts:

@@ -10,6 +10,12 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.6.2
+### New Features
+* **shield** [78198a3a](https://github.com/sysdiglabs/charts/commit/78198a3a9c842d8fa03dc4e3f2f6398778de5e3b): restore legacy monitoring and responding key names ([#2111](https://github.com/sysdiglabs/charts/issues/2111))
+# v0.6.1
+### New Features
+* **shield** [46850feb](https://github.com/sysdiglabs/charts/commit/46850feb11f0682e3955951b849c360d1d1b58c1): [SMAGENT-8607] Allow for custom security context ([#2112](https://github.com/sysdiglabs/charts/issues/2112))
 # v0.6.0
 ### New Features
 * **shield** [0d9dedfb](https://github.com/sysdiglabs/charts/commit/0d9dedfb29b9ce89cf38482c600beb58db75381c): rename monitoring and responding keys ([#2100](https://github.com/sysdiglabs/charts/issues/2100))
