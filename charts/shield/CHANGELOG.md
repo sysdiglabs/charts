@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.6.3
+### New Features
+* **shield** [66f365df](https://github.com/sysdiglabs/charts/commit/66f365df382b47efa21dcd580c26da2769c8e9b8): [SMAGENT-8138] add full securityContext to host-shield chart ([#2114](https://github.com/sysdiglabs/charts/issues/2114))
 # v0.6.2
 ### New Features
 * **shield** [78198a3a](https://github.com/sysdiglabs/charts/commit/78198a3a9c842d8fa03dc4e3f2f6398778de5e3b): restore legacy monitoring and responding key names ([#2111](https://github.com/sysdiglabs/charts/issues/2111))
