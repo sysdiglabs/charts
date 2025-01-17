@@ -406,7 +406,7 @@ nodeAnalyzer:
 
     image:
       repository: sysdig/vuln-host-scanner
-      tag: "0.12.3"
+      tag: "0.13.0"
       digest:
       pullPolicy:
 
@@ -536,7 +536,7 @@ tests:
   timeout: 300s
   image:
     repo: bitnami/kubectl
-    tag: 1.32.0
+    tag: 1.32.1
 
 # Allow to modify DNS policy
 dnsPolicy: null

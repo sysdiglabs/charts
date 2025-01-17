@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.34.7
+### Chores
+* **ci** [ca48817c](https://github.com/sysdiglabs/charts/commit/ca48817ca3532f8367509f1a9582923ff8020d29): bump bitnami/kubectl image references ([#2115](https://github.com/sysdiglabs/charts/issues/2115))
 # v1.34.6
 ### New Features
 * **agent** [3dfcf311](https://github.com/sysdiglabs/charts/commit/3dfcf311d7585421ab0f6ad8f3ea36b9912f34c3): [SMAGENT-8138][SMAGENT-8501] add full securityContext to agent charts ([#2102](https://github.com/sysdiglabs/charts/issues/2102))
