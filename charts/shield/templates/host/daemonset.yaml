@@ -44,9 +44,13 @@ spec:
           securityContext:
             privileged: true
             runAsNonRoot: false
+            runAsGroup: 0
             runAsUser: 0
             readOnlyRootFilesystem: false
             allowPrivilegeEscalation: true
+            capabilities:
+              drop:
+                - ALL
           resources:
             {{- (include "host.kmodule_resources" .) | nindent 12 }}
           env:
