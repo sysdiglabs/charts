@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.34.2
+### Chores
+* **node-analyzer** [c80bff85](https://github.com/sysdiglabs/charts/commit/c80bff859d7bd5fe981bdf9e9e75ce74cb72eadd): Bump benchmark runner 1.1.1.5 ([#1997](https://github.com/sysdiglabs/charts/issues/1997))
 # v1.34.1
 ### Chores
 * **node-analyzer** [35bdc40f](https://github.com/sysdiglabs/charts/commit/35bdc40f4c2eeee6bb8ccc5439705068d673d948): release kspm-analyzer v1.44.21 ([#2121](https://github.com/sysdiglabs/charts/issues/2121))

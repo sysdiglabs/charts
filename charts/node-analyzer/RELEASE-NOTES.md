@@ -1,5 +1,5 @@
 # What's Changed
 
 ### Chores
-- **node-analyzer** [35bdc40f](https://github.com/sysdiglabs/charts/commit/35bdc40f4c2eeee6bb8ccc5439705068d673d948): release kspm-analyzer v1.44.21 ([#2121](https://github.com/sysdiglabs/charts/issues/2121))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.34.0...node-analyzer-1.34.1
+- **node-analyzer** [c80bff85](https://github.com/sysdiglabs/charts/commit/c80bff859d7bd5fe981bdf9e9e75ce74cb72eadd): Bump benchmark runner 1.1.1.5 ([#1997](https://github.com/sysdiglabs/charts/issues/1997))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.34.1...node-analyzer-1.34.2
