@@ -32,7 +32,7 @@ data:
   {{ include "cluster.tls_certificates.private_key_file_name" . }}: {{ $cert.Key }}
   {{ include "cluster.tls_certificates.ca_cert_file_name" . }}: {{ $cert.CACert }}
 {{- end }}
-{{- if and .Values.cluster.admissionregistration.create (include "cluster.audit_enabled" .) }}
+{{- if and .Values.cluster.validatingwebhookconfiguration.create (include "cluster.audit_enabled" .) }}
 ---
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
@@ -54,21 +54,9 @@ webhooks:
     {{ end }}
     matchPolicy: Equivalent
     rules:
-      - apiGroups:
-          - ""
-          - apps
-          - autoscaling
-          - batch
-          - networking.k8s.io
-          - rbac.authorization.k8s.io
-          - extensions
-        apiVersions:
-          - '*'
-        operations:
-          - '*'
-        resources:
-          - '*/*'
-        scope: '*'
+    {{- with .Values.features.detections.kubernetes_audit.webhook_rules }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
     clientConfig:
       service:
         namespace: {{ .Release.Namespace }}
@@ -81,7 +69,7 @@ webhooks:
     timeoutSeconds: {{ .Values.features.detections.kubernetes_audit.timeout }}
     failurePolicy: Ignore
 {{- end }}
-{{- if and .Values.cluster.admissionregistration.create (include "cluster.admission_control_enabled" .) }}
+{{- if and .Values.cluster.validatingwebhookconfiguration.create (include "cluster.admission_control_enabled" .) }}
 ---
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
@@ -128,10 +116,6 @@ webhooks:
     admissionReviewVersions: ["v1", "v1beta1"]
     sideEffects: None
     timeoutSeconds: {{ .Values.features.admission_control.timeout }}
-    {{- if .Values.features.admission_control.deny_on_error }}
-    failurePolicy: Fail
-    {{- else }}
-    failurePolicy: Ignore
-    {{- end }}
+    failurePolicy: {{ .Values.features.admission_control.failure_policy }}
 {{- end }}
 {{- end }}

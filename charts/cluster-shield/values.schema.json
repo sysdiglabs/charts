@@ -542,6 +542,36 @@
               },
               "description": "List of namespaces to exclude from the audit feature",
               "default": []
+            },
+            "webhook_rules": {
+              "description": "List of rules used to determine if a request should be audited",
+              "type": "array",
+              "items": {
+                "type": "object"
+              },
+              "default": [
+                {
+                  "apiGroups": [
+                    "",
+                    "apps",
+                    "autoscaling",
+                    "batch",
+                    "networking.k8s.io",
+                    "rbac.authorization.k8s.io",
+                    "extensions"
+                  ],
+                  "apiVersions": [
+                    "*"
+                  ],
+                  "operations": [
+                    "*"
+                  ],
+                  "resources": [
+                    "*/*"
+                  ],
+                  "scope": "*"
+                }
+              ]
             }
           },
           "required": [
@@ -576,7 +606,7 @@
             "tags": {
               "type": "object",
               "propertyNames": {
-                "pattern": "^[a-zA-Z0-9_-]{1,255}$",
+                "pattern": "^[a-zA-Z0-9_.-]{1,255}$",
                 "description": "The tag name",
                 "examples": [
                   "env",
@@ -981,10 +1011,14 @@
               "description": "Specify if the Admission Control is enabled",
               "default": false
             },
-            "deny_on_error": {
-              "type": "boolean",
-              "description": "Deny request when an error happens inside the evaluation phase",
-              "default": false
+            "failure_policy": {
+              "type": "string",
+              "description": "The policy to apply when a request is denied",
+              "enum": [
+                "Ignore",
+                "Fail"
+              ],
+              "default": "Ignore"
             },
             "dry_run": {
               "type": "boolean",
@@ -1017,7 +1051,7 @@
           },
           "required": [
             "enabled",
-            "deny_on_error",
+            "failure_policy",
             "http_port"
           ],
           "$defs": {

@@ -34,17 +34,49 @@
 {{- dict "features" $config | toYaml }}
 {{- end }}
 
+{{- define "host.features.netsec_enabled" }}
+{{- if or .Values.features.investigations.network_security.enabled
+          (dig "network_topology" "enabled" false .Values.host.additional_settings) }}
+true
+{{- end }}
+{{- end }}
+
+{{- define "host.features.monitor_enabled" }}
+{{- if  or (dig (include "host.monitor_key" .) "app_checks" "enabled" false .Values.features)
+           (dig (include "host.monitor_key" .) "java_management_extensions" "enabled" false .Values.features)
+           (dig (include "host.monitor_key" .) "prometheus" "enabled" false .Values.features)
+           (dig (include "host.monitor_key" .) "statsd" "enabled" false .Values.features)
+           (dig "app_checks_enabled" false .Values.host.additional_settings)
+           (dig "jmx" "enabled" false .Values.host.additional_settings)
+           (dig "prometheus" "enabled" false .Values.host.additional_settings)
+           (dig "statsd" "enabled" false .Values.host.additional_settings) }}
+true
+{{- end }}
+{{- end }}
+
+{{/* Calculate the agent mode based on enabled features */}}
+{{- define "host.configmap.agent_mode" }}
+{{- $mode := "secure_light" }}
+{{- if (include "host.features.netsec_enabled" .) }}
+{{- $mode = "secure" }}
+{{- end }}
+{{- if (include "host.features.monitor_enabled" .) }}
+{{- $mode = "monitor" }}
+{{- end }}
+{{- dict "feature" (dict "mode" $mode) | toYaml -}}
+{{- end }}
+
 {{- define "host.parse_features" }}
 {{/* TODO: Kubernetes metadata */}}
 {{- with .Values.features }}
 {{- $config := dict
-  "app_checks_enabled" .monitoring.app_checks.enabled
+  "app_checks_enabled" ((dig (include "host.monitor_key" .) "app_checks" "enabled" false .))
   "audit_tap"
     (dict "enabled" .investigations.audit_tap.enabled)
   "drift_control"
     (dict "enabled" .detections.drift_control.enabled)
   "jmx"
-    (dict "enabled" .monitoring.java_management_extensions.enabled)
+    (dict "enabled" (dig (include "host.monitor_key" .) "java_management_extensions" "enabled" false .))
   "live_logs"
     (dict "enabled" .investigations.live_logs.enabled)
   "local_forwarder"
@@ -54,12 +86,12 @@
   "network_topology"
     (dict "enabled" .investigations.network_security.enabled)
   "prometheus"
-    (dict "enabled" .monitoring.prometheus.enabled)
+    (dict "enabled" (dig (include "host.monitor_key" .) "prometheus" "enabled" false .))
   "secure_audit_streams"
     (dict "enabled" .investigations.activity_audit.enabled)
   "statsd"
-    (dict "enabled" .monitoring.statsd.enabled)
-  "sysdig_captures_enabled" .investigations.captures.enabled }}
+    (dict "enabled" (dig (include "host.monitor_key" .) "statsd" "enabled" false .))
+  "sysdig_capture_enabled" .investigations.captures.enabled }}
 {{- $config | toYaml }}
 {{- end }}
 {{- end }}
@@ -68,12 +100,20 @@
 {{- $config := dict
   "k8s_cluster_name" .Values.cluster_config.name
   "collector" (include "common.collector_endpoint" .)
-  "collector_port" .Values.sysdig_endpoint.collector.port }}
+}}
+{{- if .Values.features.kubernetes_metadata.enabled }}
+  {{- $_ := set $config "k8s_delegated_nodes" (dig "k8s_delegated_nodes" 0 .Values.host.additional_settings) -}}
+{{- else if hasKey .Values.host.additional_settings "k8s_delegated_nodes" }}
+  {{- $_ := set $config "k8s_delegated_nodes" (get $config "k8s_delegated_nodes") }}
+{{- end }}
+{{- if .Values.sysdig_endpoint.collector.port }}
+{{- $config = merge $config (dict "collector_port" .Values.sysdig_endpoint.collector.port) }}
+{{- end }}
 {{- $config = merge $config (dict "sysdig_api_endpoint" (include "common.secure_api_endpoint" .)) }}
 {{- if (include "common.proxy.enabled" . ) }}
 {{- $config := merge $config (dict "http_proxy" (include "host.proxy_config" . | fromYaml)) }}
 {{- end }}
-{{- if .Values.features.responding.rapid_response.enabled }}
+{{- if (include "host.rapid_response_enabled" .) }}
 {{- $config = merge $config (dict "rapid_response" (dict "enabled" true)) }}
 {{- end }}
 {{- $config = merge $config (include "host.parse_features" . | fromYaml) }}
@@ -88,6 +128,9 @@
     {{- $config = merge $config (dict "host_scanner" (dict "host_fs_mount_path" "/host")) }}
   {{- end }}
 {{- end }}
+{{- if or .Values.features.posture.host_posture.enabled (dig "kspm_analyzer" "enabled" false .Values.host.additional_settings) }}
+  {{- $config = merge $config (dict "kspm_analyzer" (dict "agent_app_name" (include "shield.name" .))) }}
+{{- end }}
 {{- if .Values.cluster_config.tags -}}
   {{- $tagList := list }}
   {{- range $k, $v := .Values.cluster_config.tags }}
@@ -100,8 +143,9 @@
 {{- $config = merge $config (dict "local_forwarder" (dict "enabled" .enabled "transmit_message_types" .transmit_message_types)) }}
 {{- end }}
 {{- end }}
+{{- $config = merge $config (include "host.configmap.agent_mode" . | fromYaml) }}
 {{- if .Values.host.additional_settings }}
-{{- $config = merge $config (include "host.config_override" . | fromYaml) }}
+{{- $config = mergeOverwrite $config (include "host.config_override" . | fromYaml) }}
 {{- end }}
 {{- $config | toYaml }}
 {{- end }}

@@ -688,7 +688,7 @@ tests:
       - matchRegex:
           path: data['dragent.yaml']
           pattern: |
-            sysdig_captures_enabled: false
+            sysdig_capture_enabled: false
 
   - it: Enable App Checks
     set:
@@ -842,7 +842,7 @@ tests:
       - matchRegex:
           path: data['dragent.yaml']
           pattern: |
-            sysdig_captures_enabled: true
+            sysdig_capture_enabled: true
 
   - it: Ensure Host Scanner root FS path is set
     set:
@@ -886,3 +886,263 @@ tests:
           path: data['dragent.yaml']
           pattern: |
             tags: AgentTag3:AgentTagValue3,agentTag1:agentTagValue1,agentTag2:agentTagValue2
+
+  - it: Enabling Host Posture sets the agent app version setting
+    set:
+      features:
+        posture:
+          host_posture:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            kspm_analyzer:
+              agent_app_name: shield
+
+  - it: Enabling Host Posture via additional_settings sets the agent app version setting
+    set:
+      host:
+        additional_settings:
+          kspm_analyzer :
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            kspm_analyzer:
+              agent_app_name: shield
+
+  - it: The agent_app_setting field is not present if host posture is not enabled
+    asserts:
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            kspm_analyzer:
+              agent_app_name: shield
+
+  - it: Test with Custom CA In Values
+    set:
+      proxy:
+        https_proxy: "https://proxy.example.com:8080"
+      ssl:
+        ca:
+          certs:
+            - "test certificate"
+          key_name: "custom-ca-from-values.crt"
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              ca_certificate: certificates/custom-ca-from-values.crt
+
+  - it: Test with Custom CA In Existing Secret
+    set:
+      proxy:
+        https_proxy: "https://proxy.example.com:8080"
+      ssl:
+        ca:
+          existing_ca_secret: "fake-secret-name"
+          existing_ca_secret_key_name: "custom-ca-from-secret.crt"
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              ca_certificate: certificates/custom-ca-from-secret.crt
+
+  - it: Test secure_light by default
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            feature:
+              mode: secure_light
+
+  - it: Test manual override of feature mode
+    set:
+      features:
+        monitoring:
+          app_checks:
+            enabled: true
+      host:
+        additional_settings:
+          feature:
+            mode: troubleshooting
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            feature:
+              mode: troubleshooting
+
+  - it: Test enabling NetSec flips agent to secure mode
+    set:
+      features:
+        investigations:
+          network_security:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            feature:
+              mode: secure
+
+  - it: Test enabling NetSec in additional_settings flips agent to secure mode
+    set:
+      host:
+        additional_settings:
+          network_topology:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            feature:
+              mode: secure
+
+  - it: Test enabling a monitor feature forces agent mode to monitor
+    set:
+      features:
+        monitoring:
+          app_checks:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            feature:
+              mode: monitor
+
+  - it: Test enabling a monitor feature in additional_settings forces agent mode to monitor
+    set:
+      host:
+        additional_settings:
+          app_checks_enabled: true
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            feature:
+              mode: monitor
+
+  - it: Default Delegated Nodes Number (Kubernetes Metadata feature enabled)
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            k8s_delegated_nodes: 0
+
+  - it: Manually specified Delegated Nodes Number (Kubernetes Metadata feature enabled)
+    set:
+      host:
+        additional_settings:
+          k8s_delegated_nodes: 1
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            k8s_delegated_nodes: 1
+
+  - it: Default Delegated Nodes Number (Kubernetes Metadata feature disabled)
+    set:
+      features:
+        kubernetes_metadata:
+          enabled: false
+    asserts:
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            k8s_delegated_nodes: .*
+
+  - it: Manually specified Delegated Nodes Number (Kubernetes Metadata feature disabled)
+    set:
+      features:
+        kubernetes_metadata:
+          enabled: false
+      host:
+        additional_settings:
+          k8s_delegated_nodes: 1
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            k8s_delegated_nodes: 1
+
+  - it: Ensure collector_port is set when given
+    set:
+      sysdig_endpoint:
+        collector:
+          url: example.com
+          port: 1234
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            collector_port: 1234
+
+  - it: Ensure collector_port is not set when a region is provided
+    set:
+      sysdig_endpoint:
+        region: us1
+        collector:
+          port: null
+    asserts:
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            collector_port: .*
+
+  - it: Validate port can be overridden for region if provided
+    set:
+      sysdig_endpoint:
+        region: us1
+        collector:
+          port: 1234
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            collector_port: 1234
+
+  - it: Check prometheus.yaml key is created when needed
+    set:
+      features:
+        monitoring:
+          prometheus:
+            enabled: true
+    asserts:
+      - exists:
+          path: data["prometheus.yaml"]
+
+  - it: Check that expected content is present in prometheus.yaml
+    set:
+      features:
+        monitoring:
+          prometheus:
+            enabled: true
+            prometheus_yaml:
+              scrape_configs:
+                - job_name: kubernetes-pods
+                  kubernetes_sd_configs:
+                    - role: pod
+    asserts:
+      - matchRegex:
+          path: data['prometheus.yaml']
+          pattern: |
+            scrape_configs:
+            - job_name: kubernetes-pods
+              kubernetes_sd_configs:
+              - role: pod
+
+  - it: Check prometheus.yaml key is not created when not needed
+    set:
+      features:
+        monitoring:
+          prometheus:
+            enabled: false
+    asserts:
+      - notExists:
+          path: data["prometheus.yaml"]

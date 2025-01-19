@@ -30,6 +30,16 @@ spec:
         {{ toYaml .Values.global.image.pullSecrets | nindent 8 }}
       {{- end }}
       securityContext:
+        privileged: true
+        {{- if ( semverCompare ">= 1.31.0" (.Capabilities.KubeVersion.GitVersion )) }}
+        runAsNonRoot: false
+        runAsGroup: 0
+        {{- end }}
+        readOnlyRootFilesystem: false
+        allowPrivilegeEscalation: true
+        capabilities:
+          add:
+            - ALL
         windowsOptions:
           hostProcess: true
           runAsUserName: "NT AUTHORITY\\SYSTEM"
@@ -42,7 +52,7 @@ spec:
             httpGet:
               host: 127.0.0.1
               path: /healthz
-              port: 24484
+              port: {{ if eq (include "agent.enableWindowsProbesSinglePort" .) "true" }}24483{{ else }}24484{{ end }}
             initialDelaySeconds: 60
             periodSeconds: 30
             timeoutSeconds: 10
@@ -50,7 +60,7 @@ spec:
             httpGet:
               host: 127.0.0.1
               path: /healthz
-              port: 24484
+              port: {{ if eq (include "agent.enableWindowsProbesSinglePort" .) "true" }}24483{{ else }}24484{{ end }}
             initialDelaySeconds: 60
             timeoutSeconds: 10
           resources:

@@ -26,3 +26,18 @@ tests:
       - contains:
           path: users
           content: "system:serviceaccount:shield-namespace:release-name-shield-cluster"
+
+  - it: Creates SecurityContextConstraints when the extraCapability has been set
+    set:
+      extra_capabilities_api_versions:
+        - security.openshift.io/v1
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: SecurityContextConstraints
+          apiVersion: security.openshift.io/v1
+          name: release-name-shield-cluster
+      - contains:
+          path: users
+          content: "system:serviceaccount:shield-namespace:release-name-shield-cluster"

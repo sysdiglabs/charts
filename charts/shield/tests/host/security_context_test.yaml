@@ -1,0 +1,163 @@
+suite: Security Context tests
+templates:
+  - templates/host/daemonset.yaml
+kubernetesProvider:
+  scheme:
+    "v1/Node":
+      gvr:
+        version: "v1"
+        resource: "nodes"
+      namespaced: false
+  objects:
+  - apiVersion: v1
+    kind: Node
+    metadata:
+      name: fakenode
+    status:
+      nodeInfo:
+        osImage: fake-os-image
+values:
+  - ../values/base.yaml
+tests:
+  - it: Ensure the securityContext for a privileged agent is exactly what was defined
+    set:
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].securityContext
+          value:
+            allowPrivilegeEscalation: true
+            privileged: true
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+            runAsUser: 0
+            runAsGroup: 0
+            capabilities:
+              drop:
+                - ALL
+
+  - it: Ensure the securityContext for a non-privileged agent contains the keys defined
+    set:
+      host:
+        privileged: false
+        driver: universal_ebpf
+    asserts:
+      - isSubset:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].securityContext
+          content:
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: Unconfined
+      - isNotSubset:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].securityContext
+          content:
+            allowPrivilegeEscalation: false
+            privileged: true
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+            runAsUser: 0
+
+  - it: Ensure the custom_security_context is honored
+    set:
+      host:
+        custom_security_context:
+          allowPrivilegeEscalation: true
+          readOnlyRootFilesystem: false
+          runAsNonRoot: false
+          runAsUser: 0
+          seLinuxOptions:
+            type: super_t
+          seccompProfile:
+            type: Unconfined
+          capabilities:
+            add:
+              - AUDIT_CONTROL
+              - BLOCK_SUSPEND
+              - DAC_READ_SEARCH
+              - IPC_LOCK
+              - IPC_OWNER
+              - LEASE
+              - LINUX_IMMUTABLE
+              - MAC_ADMIN
+              - MAC_OVERRIDE
+              - NET_ADMIN
+              - NET_BROADCAST
+              - SYSLOG
+              - SYS_ADMIN
+              - SYS_BOOT
+              - SYS_MODULE
+              - SYS_NICE
+              - SYS_PACCT
+              - SYS_PTRACE
+              - SYS_RAWIO
+              - SYS_RESOURCE
+              - SYS_TIME
+              - SYS_TTY_CONFIG
+              - WAKE_ALARM
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].securityContext
+          value:
+            allowPrivilegeEscalation: true
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+            runAsUser: 0
+            seLinuxOptions:
+              type: super_t
+            seccompProfile:
+              type: Unconfined
+            capabilities:
+              add:
+                - AUDIT_CONTROL
+                - BLOCK_SUSPEND
+                - DAC_READ_SEARCH
+                - IPC_LOCK
+                - IPC_OWNER
+                - LEASE
+                - LINUX_IMMUTABLE
+                - MAC_ADMIN
+                - MAC_OVERRIDE
+                - NET_ADMIN
+                - NET_BROADCAST
+                - SYSLOG
+                - SYS_ADMIN
+                - SYS_BOOT
+                - SYS_MODULE
+                - SYS_NICE
+                - SYS_PACCT
+                - SYS_PTRACE
+                - SYS_RAWIO
+                - SYS_RESOURCE
+                - SYS_TIME
+                - SYS_TTY_CONFIG
+                - WAKE_ALARM
+  - it: Ensure the securityContext contains the mandatory keys
+    asserts:
+      - isSubset:
+          path: spec.template.spec['initContainers','containers'][:].securityContext.capabilities
+          content:
+            drop:
+              - ALL
+      - exists:
+          path: spec.template.spec.initContainers[:].securityContext.runAsNonRoot
+      - exists:
+          path: spec.template.spec.containers[:].securityContext.runAsNonRoot
+      - exists:
+          path: spec.template.spec.initContainers[:].securityContext.runAsUser
+      - exists:
+          path: spec.template.spec.containers[:].securityContext.runAsUser
+      - exists:
+          path: spec.template.spec.initContainers[:].securityContext.runAsGroup
+      - exists:
+          path: spec.template.spec.containers[:].securityContext.runAsGroup
+      - exists:
+          path: spec.template.spec.initContainers[:].securityContext.privileged
+      - exists:
+          path: spec.template.spec.containers[:].securityContext.privileged
+      - exists:
+          path: spec.template.spec.initContainers[:].securityContext.allowPrivilegeEscalation
+      - exists:
+          path: spec.template.spec.containers[:].securityContext.allowPrivilegeEscalation
+      - exists:
+          path: spec.template.spec.initContainers[:].securityContext.readOnlyRootFilesystem
+      - exists:
+          path: spec.template.spec.containers[:].securityContext.readOnlyRootFilesystem

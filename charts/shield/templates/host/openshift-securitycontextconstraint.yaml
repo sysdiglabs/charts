@@ -1,4 +1,4 @@
-{{- if .Capabilities.APIVersions.Has "security.openshift.io/v1" }}
+{{- if or (.Capabilities.APIVersions.Has "security.openshift.io/v1") (has "security.openshift.io/v1" .Values.extra_capabilities_api_versions) }}
 apiVersion: security.openshift.io/v1
 kind: SecurityContextConstraints
 metadata:
@@ -12,10 +12,15 @@ allowHostDirVolumePlugin: true
 allowHostIPC: false
 allowHostNetwork: true
 allowHostPID: true
-allowHostPorts: false
+allowHostPorts: {{ or .Values.features.posture.host_posture.enabled (dig "kspm_analyzer" "enabled" false .Values.host.additional_settings) }}
 allowPrivilegeEscalation: true
 allowPrivilegedContainer: true
+{{- if .Values.host.privileged }}
 allowedCapabilities: []
+{{- else }}
+allowedCapabilities:
+  {{- include "host.capabilities" . | nindent 2 }}
+{{- end }}
 allowedUnsafeSysctls: []
 defaultAddCapabilities: []
 fsGroup:

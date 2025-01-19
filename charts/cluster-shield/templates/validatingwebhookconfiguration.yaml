@@ -26,21 +26,9 @@ webhooks:
             {{- end }}
     {{ end }}
     rules:
-      - apiGroups:
-          - ""
-          - apps
-          - autoscaling
-          - batch
-          - networking.k8s.io
-          - rbac.authorization.k8s.io
-          - extensions
-        apiVersions:
-          - '*'
-        operations:
-          - '*'
-        resources:
-          - '*/*'
-        scope: '*'
+    {{- with .Values.cluster_shield.features.audit.webhook_rules }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
     clientConfig:
       service:
         namespace: {{ .Release.Namespace }}
@@ -92,11 +80,7 @@ webhooks:
     admissionReviewVersions: [ "v1", "v1beta1" ]
     sideEffects: None
     timeoutSeconds: {{ .Values.cluster_shield.features.admission_control.timeout }}
-    {{- if .Values.cluster_shield.features.admission_control.deny_on_error }}
-    failurePolicy: Fail
-    {{- else }}
-    failurePolicy: Ignore
-    {{- end }}
+    failurePolicy: {{ .Values.cluster_shield.features.admission_control.failure_policy }}
   {{- end }}
 {{- end }}
 ---

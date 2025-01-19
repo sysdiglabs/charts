@@ -10,6 +10,91 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.74.2
+### Chores
+* **node-analyzer** [35bdc40f](https://github.com/sysdiglabs/charts/commit/35bdc40f4c2eeee6bb8ccc5439705068d673d948): release kspm-analyzer v1.44.21 ([#2121](https://github.com/sysdiglabs/charts/issues/2121))
+# v1.74.1
+### Chores
+* **sysdig-deploy** [2bbefec5](https://github.com/sysdiglabs/charts/commit/2bbefec5493e2cbca751ac8fd706079e32046430): Automatic version bump due to updated dependencies ([#2120](https://github.com/sysdiglabs/charts/issues/2120))
+# v1.74.0
+# v1.73.3
+### Chores
+* **sysdig-deploy** [d0f24b72](https://github.com/sysdiglabs/charts/commit/d0f24b729f05f70d9d5868c4e76d69a85efb61f7): Automatic version bump due to updated dependencies ([#2106](https://github.com/sysdiglabs/charts/issues/2106))
+# v1.73.2
+### Chores
+* **cluster-shield,sysdig-deploy,shield** [9edcb32f](https://github.com/sysdiglabs/charts/commit/9edcb32f47d5b3338b15f229d6eadc2cece9492e): Automatic bump to version 1.7.1 ([#2104](https://github.com/sysdiglabs/charts/issues/2104))
+# v1.73.1
+### New Features
+* **agent** [3dfcf311](https://github.com/sysdiglabs/charts/commit/3dfcf311d7585421ab0f6ad8f3ea36b9912f34c3): [SMAGENT-8138][SMAGENT-8501] add full securityContext to agent charts ([#2102](https://github.com/sysdiglabs/charts/issues/2102))
+# v1.73.0
+### Chores
+* **cluster-shield,sysdig-deploy** [fda74488](https://github.com/sysdiglabs/charts/commit/fda744888d283c69a65d883cb4528dc270061c60): Automatic bump to version 1.7.0 ([#2101](https://github.com/sysdiglabs/charts/issues/2101))
+# v1.72.8
+### Chores
+* **sysdig-deploy** [c74a8ba4](https://github.com/sysdiglabs/charts/commit/c74a8ba4c6c88b997c444e0bb16b7bfde9942291): Automatic version bump due to updated dependencies ([#2097](https://github.com/sysdiglabs/charts/issues/2097))
+# v1.72.7
+### Chores
+* **sysdig-deploy** [95dfa5a9](https://github.com/sysdiglabs/charts/commit/95dfa5a90ae259a2118bbb4ff1e697fedff2c562): Automatic version bump due to updated dependencies ([#2096](https://github.com/sysdiglabs/charts/issues/2096))
+# v1.72.6
+### Chores
+* **sysdig-deploy** [676622c0](https://github.com/sysdiglabs/charts/commit/676622c08bf7ada2b7d178c2b95059aef87150cb): Automatic version bump due to updated dependencies ([#2093](https://github.com/sysdiglabs/charts/issues/2093))
+# v1.72.5
+### Chores
+* **sysdig-deploy** [8720e678](https://github.com/sysdiglabs/charts/commit/8720e6787f9467ba17c842b54e8d7c436d381fb3): Automatic version bump due to updated dependencies ([#2082](https://github.com/sysdiglabs/charts/issues/2082))
+# v1.72.4
+### New Features
+* **agent** [a65d52c3](https://github.com/sysdiglabs/charts/commit/a65d52c363277573f7c6b70dab172e065c38f59f): REVERT [SMAGENT-8138] add full securityContext to agent charts ([#2084](https://github.com/sysdiglabs/charts/issues/2084))
+# v1.72.3
+### New Features
+* **agent** [550c06fa](https://github.com/sysdiglabs/charts/commit/550c06fad7140b7e98d6063ba61337be4341498a): [SMAGENT-8138] add full securityContext to agent charts ([#2017](https://github.com/sysdiglabs/charts/issues/2017))
+# v1.72.2
+### Chores
+* **sysdig-deploy** [ac8d8396](https://github.com/sysdiglabs/charts/commit/ac8d83966f9789d124fdd2fd3d0251e39bee6078): Automatic version bump due to updated dependencies ([#2080](https://github.com/sysdiglabs/charts/issues/2080))
+# v1.72.1
+### Chores
+* **sysdig-deploy** [b053c4ce](https://github.com/sysdiglabs/charts/commit/b053c4ce566aac3fe04aabc4298398cb26b7cf4b): Automatic version bump due to updated dependencies ([#2078](https://github.com/sysdiglabs/charts/issues/2078))
+# v1.72.0
+### Chores
+* **cluster-shield,sysdig-deploy** [7b050fb3](https://github.com/sysdiglabs/charts/commit/7b050fb38e47d2fdb780ee5870e535bb046fbfc1): bump cluster-shield to version 1.6.0 ([#2073](https://github.com/sysdiglabs/charts/issues/2073))
+# v1.71.0
+### New Features
+* **agent** [2f61bf41](https://github.com/sysdiglabs/charts/commit/2f61bf415127e76a6f628d962916d74cb1870997): [SMAGENT-8424] Allow for custom security context ([#2062](https://github.com/sysdiglabs/charts/issues/2062))
+# v1.70.0
+### New Features
+* **agent,shield** [e48080ae](https://github.com/sysdiglabs/charts/commit/e48080aee167e1a324e09ff092676378abb4c3f1): release agent 13.7.0 ([#2069](https://github.com/sysdiglabs/charts/issues/2069))
+# v1.69.0
+### New Features
+* **agent** [3453bc7d](https://github.com/sysdiglabs/charts/commit/3453bc7dccad55c9c8f2cd67948e132d6b4eb120): Support single healthProbe port for Windows version with tag greater than 1.2.0 ([#1990](https://github.com/sysdiglabs/charts/issues/1990))
+# v1.68.1
+### Chores
+* **sysdig-deploy** [837ccb6c](https://github.com/sysdiglabs/charts/commit/837ccb6ca56082a100d2d88e0295e91af270827e): Automatic version bump due to updated dependencies ([#2048](https://github.com/sysdiglabs/charts/issues/2048))
+# v1.68.0
+### New Features
+* **agent,sysdig-deploy** [9304b56c](https://github.com/sysdiglabs/charts/commit/9304b56c81553823b8457c4d031f29a83fb9a932): release agent 13.6.1 ([#2031](https://github.com/sysdiglabs/charts/issues/2031))
+# v1.67.6
+### Chores
+* **sysdig-deploy,shield** [4d9a268f](https://github.com/sysdiglabs/charts/commit/4d9a268fb941a3bf737131238c6207ef4ec0fc6b): Automatic version bump due to updated dependencies ([#2037](https://github.com/sysdiglabs/charts/issues/2037))
+# v1.67.5
+### Chores
+* **sysdig-deploy** [115f9dc1](https://github.com/sysdiglabs/charts/commit/115f9dc1fa6ce8cda5d525d01b2dd20950a560ad): Automatic version bump due to updated dependencies ([#2028](https://github.com/sysdiglabs/charts/issues/2028))
+# v1.67.4
+### Chores
+* **kspm-collector,node-analyzer** [5189fe6b](https://github.com/sysdiglabs/charts/commit/5189fe6b544cc097d10e803cb88e5653b22f1a81): release kspm-collector & node-analyzer ([#2020](https://github.com/sysdiglabs/charts/issues/2020))
+# v1.67.3
+### Chores
+* **cluster-shield,sysdig-deploy** [0b00754b](https://github.com/sysdiglabs/charts/commit/0b00754b0e3e24a7a9ce906180f019e268036423): bump cluster-shield to version 1.5.0 ([#2015](https://github.com/sysdiglabs/charts/issues/2015))
+# v1.67.2
+### Chores
+* **sysdig-deploy** [be1fca58](https://github.com/sysdiglabs/charts/commit/be1fca586d3f28663d52e65d06307f10314b32b3): Automatic version bump due to updated dependencies ([#2004](https://github.com/sysdiglabs/charts/issues/2004))
+# v1.67.1
+### Chores
+* **sysdig-deploy** [2f706ae3](https://github.com/sysdiglabs/charts/commit/2f706ae30d2a7ef8909ee0ce66c0fbaa48bac032): Automatic version bump due to updated dependencies ([#2002](https://github.com/sysdiglabs/charts/issues/2002))
+# v1.67.0
+### New Features
+* **agent,sysdg-deploy,shield** [aa507cd5](https://github.com/sysdiglabs/charts/commit/aa507cd50bde037ec9c407dd7282677641beafaa): release agent 13.5.0 ([#2000](https://github.com/sysdiglabs/charts/issues/2000))
+# v1.66.9
+### Chores
+* **sysdig-deploy** [89faaee3](https://github.com/sysdiglabs/charts/commit/89faaee3d272f00129706d6f8582ed15cd128aa8): Automatic version bump due to updated dependencies ([#1993](https://github.com/sysdiglabs/charts/issues/1993))
 # v1.66.8
 ### Chores
 * **sysdig-deploy** [86b3cbd2](https://github.com/sysdiglabs/charts/commit/86b3cbd29bedb95ecb453bedec6e76b272aebadc): Automatic version bump due to updated dependencies ([#1989](https://github.com/sysdiglabs/charts/issues/1989))

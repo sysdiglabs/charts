@@ -10,6 +10,21 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.7.1
+### Chores
+* **cluster-shield,sysdig-deploy,shield** [9edcb32f](https://github.com/sysdiglabs/charts/commit/9edcb32f47d5b3338b15f229d6eadc2cece9492e): Automatic bump to version 1.7.1 ([#2104](https://github.com/sysdiglabs/charts/issues/2104))
+# v1.7.0
+### Chores
+* **cluster-shield,sysdig-deploy** [fda74488](https://github.com/sysdiglabs/charts/commit/fda744888d283c69a65d883cb4528dc270061c60): Automatic bump to version 1.7.0 ([#2101](https://github.com/sysdiglabs/charts/issues/2101))
+# v1.6.0
+### Chores
+* **cluster-shield,sysdig-deploy** [7b050fb3](https://github.com/sysdiglabs/charts/commit/7b050fb38e47d2fdb780ee5870e535bb046fbfc1): bump cluster-shield to version 1.6.0 ([#2073](https://github.com/sysdiglabs/charts/issues/2073))
+# v1.5.1
+### Chores
+* **cluster-shield** [2c0505ce](https://github.com/sysdiglabs/charts/commit/2c0505ce3fcd19f1beda92eda89bcee96622c729): Automatic bump to version 1.5.1 ([#2036](https://github.com/sysdiglabs/charts/issues/2036))
+# v1.5.0
+### Chores
+* **cluster-shield,sysdig-deploy** [0b00754b](https://github.com/sysdiglabs/charts/commit/0b00754b0e3e24a7a9ce906180f019e268036423): bump cluster-shield to version 1.5.0 ([#2015](https://github.com/sysdiglabs/charts/issues/2015))
 # v1.4.2
 ### Bug Fixes
 * **cluster-shield** [f4262f0a](https://github.com/sysdiglabs/charts/commit/f4262f0aa956aa5042ef253765efa56f40e4de40): fix type casting for ssl.verify ([#1988](https://github.com/sysdiglabs/charts/issues/1988))

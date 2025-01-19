@@ -10,3 +10,5 @@
 /charts/cloud-connector      @sysdiglabs/cloud-native
 /charts/cloud-scanning       @sysdiglabs/cloud-native
 /charts/registry-scanner     @sysdiglabs/cloud-native @sysdiglabs/vm-scanners
+
+/rh-shield-operator/ @sysdiglabs/team-tools-agent

@@ -17,7 +17,7 @@ tests:
       - equal:
           path: metadata.namespace
           value: shield-namespace
-      - isNotNull:
+      - isNotNullOrEmpty:
           path: .spec.ports[?(@.name == "monitoring")]
       - equal:
           path: spec.ports[?(@.name == "monitoring")].port
@@ -45,7 +45,7 @@ tests:
       - equal:
           path: metadata.namespace
           value: shield-namespace
-      - isNotNull:
+      - isNotNullOrEmpty:
           path: .spec.ports[?(@.name == "monitoring")]
       - equal:
           path: spec.ports[?(@.name == "monitoring")].port
@@ -73,7 +73,7 @@ tests:
       - equal:
           path: metadata.namespace
           value: shield-namespace
-      - isNotNull:
+      - isNotNullOrEmpty:
           path: .spec.ports[?(@.name == "monitoring")]
       - equal:
           path: spec.ports[?(@.name == "monitoring")].port
@@ -97,7 +97,7 @@ tests:
     asserts:
       - isKind:
           of: Service
-      - isNotNull:
+      - isNotNullOrEmpty:
           path: .spec.ports[?(@.name == "audit")]
       - equal:
           path: spec.ports[?(@.name == "audit")].port
@@ -123,7 +123,7 @@ tests:
     asserts:
       - isKind:
           of: Service
-      - isNotNull:
+      - isNotNullOrEmpty:
           path: .spec.ports[?(@.name == "audit")]
       - equal:
           path: spec.ports[?(@.name == "audit")].port
@@ -148,7 +148,7 @@ tests:
     asserts:
       - isKind:
           of: Service
-      - isNotNull:
+      - isNotNullOrEmpty:
           path: .spec.ports[?(@.name == "audit")]
       - equal:
           path: spec.ports[?(@.name == "audit")].port
@@ -172,7 +172,7 @@ tests:
     asserts:
       - isKind:
           of: Service
-      - isNotNull:
+      - isNotNullOrEmpty:
           path: .spec.ports[?(@.name == "admission")]
       - equal:
           path: spec.ports[?(@.name == "admission")].port
@@ -198,7 +198,7 @@ tests:
     asserts:
       - isKind:
           of: Service
-      - isNotNull:
+      - isNotNullOrEmpty:
           path: .spec.ports[?(@.name == "admission")]
       - equal:
           path: spec.ports[?(@.name == "admission")].port
@@ -223,7 +223,7 @@ tests:
     asserts:
       - isKind:
           of: Service
-      - isNotNull:
+      - isNotNullOrEmpty:
           path: .spec.ports[?(@.name == "admission")]
       - equal:
           path: spec.ports[?(@.name == "admission")].port
@@ -252,9 +252,9 @@ tests:
       - lengthEqual:
           path: spec.ports
           count: 3
-      - isNotNull:
+      - isNotNullOrEmpty:
           path: .spec.ports[?(@.name == "monitoring")]
-      - isNotNull:
+      - isNotNullOrEmpty:
           path: .spec.ports[?(@.name == "audit")]
-      - isNotNull:
+      - isNotNullOrEmpty:
           path: .spec.ports[?(@.name == "admission")]

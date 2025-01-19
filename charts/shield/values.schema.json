@@ -29,6 +29,19 @@
     },
     "volume_mounts": {
       "$ref": "#/$defs/VolumeMounts"
+    },
+    "proxy": {
+      "$ref": "#/$defs/Proxy"
+    },
+    "extra_capabilities_api_versions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "Capabilities of the cluster",
+        "examples": [
+          "security.openshift.io/v1"
+        ]
+      }
     }
   },
   "required": [
@@ -57,11 +70,11 @@
           "type": "string",
           "description": "Type of Kubernetes cluster",
           "enum": [
-            "other",
+            "generic",
             "gke-autopilot"
           ],
           "examples": [
-            "other"
+            "generic"
           ]
         },
         "root_namespace": {
@@ -75,7 +88,7 @@
           "type": "object",
           "description": "Tags you want to apply to the metadata sent to the Sysdig Backend.",
           "propertyNames": {
-            "pattern": "^[a-zA-Z0-9_-]{1,255}$",
+            "pattern": "^[a-zA-Z0-9_.-]{1,255}$",
             "description": "The tag name",
             "examples": [ "env", "region" ]
           },
@@ -419,9 +432,14 @@
           "type": "boolean",
           "description": "Specify if the Admission Control is enabled"
         },
-        "deny_on_error": {
-          "type": "boolean",
-          "description": "Deny request when an error happens inside the evaluation phase"
+        "failure_policy": {
+          "type": "string",
+          "description": "The policy to apply when a request is denied",
+          "enum": [
+            "Ignore",
+            "Fail"
+          ],
+          "default": "Ignore"
         },
         "dry_run": {
           "type": "boolean",
@@ -730,6 +748,36 @@
                 "type": "string"
               },
               "description": "List of namespaces to exclude from the audit feature"
+            },
+            "webhook_rules": {
+              "description": "List of rules used to determine if a request should be audited",
+              "type": "array",
+              "items": {
+                "type": "object"
+              },
+              "default": [
+                {
+                  "apiGroups": [
+                    "",
+                    "apps",
+                    "autoscaling",
+                    "batch",
+                    "networking.k8s.io",
+                    "rbac.authorization.k8s.io",
+                    "extensions"
+                  ],
+                  "apiVersions": [
+                    "*"
+                  ],
+                  "operations": [
+                    "*"
+                  ],
+                  "resources": [
+                    "*/*"
+                  ],
+                  "scope": "*"
+                }
+              ]
             }
           }
         }
@@ -897,11 +945,16 @@
         },
         "Prometheus": {
           "type": "object",
-          "additionalProperties": true,
+          "additionalProperties": false,
           "properties": {
             "enabled": {
               "type": "boolean",
               "description": "Specify if the Prometheus feature is enabled"
+            },
+            "prometheus_yaml": {
+              "type": "object",
+              "description": "The prometheus.yaml configuration file used by the Host Shield",
+              "additionalProperties": true
             }
           }
         },
@@ -985,6 +1038,38 @@
           "mountPath"
         ]
       }
+    },
+    "Proxy": {
+      "type": "object",
+      "properties": {
+        "http_proxy": {
+          "type": ["string", "null"],
+          "format": "uri",
+          "description": "HTTP Proxy URL"
+        },
+        "http_proxy_existing_secret": {
+          "type": ["string", "null"],
+          "description": "The name of the secret containing the HTTP Proxy URL"
+        },
+        "https_proxy": {
+          "type": ["string", "null"],
+          "format": "uri",
+          "description": "HTTPS Proxy URL"
+        },
+        "https_proxy_existing_secret": {
+          "type": ["string", "null"],
+          "description": "The name of the secret containing the HTTPS Proxy URL"
+        },
+        "no_proxy": {
+          "type": ["string", "null"],
+          "description": "No Proxy URL"
+        },
+        "no_proxy_existing_secret": {
+          "type": ["string", "null"],
+          "description": "The name of the secret containing the No Proxy URL"
+        }
+      },
+      "additionalProperties": false
     }
   }
 }

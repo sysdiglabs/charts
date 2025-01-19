@@ -1,5 +1,5 @@
 # What's Changed
 
-### Bug Fixes
-- **cluster-shield** [f4262f0a](https://github.com/sysdiglabs/charts/commit/f4262f0aa956aa5042ef253765efa56f40e4de40): fix type casting for ssl.verify ([#1988](https://github.com/sysdiglabs/charts/issues/1988))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/cluster-shield-1.4.1...cluster-shield-1.4.2
+### Chores
+- **cluster-shield,sysdig-deploy,shield** [9edcb32f](https://github.com/sysdiglabs/charts/commit/9edcb32f47d5b3338b15f229d6eadc2cece9492e): Automatic bump to version 1.7.1 ([#2104](https://github.com/sysdiglabs/charts/issues/2104))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/cluster-shield-1.7.0...cluster-shield-1.7.1

@@ -1,0 +1,6 @@
+# Use the 'create api' subcommand to add watches to this file.
+- group: shield.sysdig.com
+  version: v1alpha1
+  kind: Shield
+  chart: helm-charts/shield
+#+kubebuilder:scaffold:watch

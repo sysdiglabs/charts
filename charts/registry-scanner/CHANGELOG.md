@@ -10,6 +10,18 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.6.1
+### Chores
+* **registry-scanner** [4a9364e6](https://github.com/sysdiglabs/charts/commit/4a9364e65e785027276a17b80d473c6a79802acc): Update to v0.7.1 ([#2095](https://github.com/sysdiglabs/charts/issues/2095))
+# v1.6.0
+### Chores
+* **registry-scanner** [f0502afd](https://github.com/sysdiglabs/charts/commit/f0502afd7d1c14a81b2ee30e8a61ac39f1ef0684): Update to v0.7.0 ([#2083](https://github.com/sysdiglabs/charts/issues/2083))
+# v1.5.1
+### Chores
+* **registry-scanner** [01f5be70](https://github.com/sysdiglabs/charts/commit/01f5be701753c8e6b802a7ded3e619a8ed589cc4): Update to v0.6.1 ([#2024](https://github.com/sysdiglabs/charts/issues/2024))
+# v1.5.0
+### New Features
+* **registry-scanner** [550e0b9d](https://github.com/sysdiglabs/charts/commit/550e0b9d297d014587b42513e81d07e7a4ed6a4c): Bump app version to 0.6.0 ([#2021](https://github.com/sysdiglabs/charts/issues/2021))
 # v1.4.2
 ### Bug Fixes
 * [80d9f7e6](https://github.com/sysdiglabs/charts/commit/80d9f7e629baa61611c72a71df5a77ac328c6eed): cronjob schedule check ([#1987](https://github.com/sysdiglabs/charts/issues/1987))

@@ -39,10 +39,10 @@ tests:
               admission_control:
                 container_vulnerability_management:
                   enabled: false
-                deny_on_error: false
                 dry_run: true
                 enabled: false
                 excluded_namespaces: \[\]
+                failure_policy: Ignore
                 http_port: 8443
                 timeout: 10
               audit:
@@ -50,6 +50,22 @@ tests:
                 excluded_namespaces: \[\]
                 http_port: 6443
                 timeout: 10
+                webhook_rules:
+                - apiGroups:
+                  - ""
+                  - apps
+                  - autoscaling
+                  - batch
+                  - networking.k8s.io
+                  - rbac.authorization.k8s.io
+                  - extensions
+                  apiVersions:
+                  - '\*'
+                  operations:
+                  - '\*'
+                  resources:
+                  - '\*/\*'
+                  scope: '\*'
               container_vulnerability_management:
                 enabled: false
                 in_use:
@@ -61,7 +77,7 @@ tests:
                 registry_ssl:
                   verify: true
               kubernetes_metadata:
-                enabled: false
+                enabled: true
               posture:
                 enabled: false
             kubernetes:
@@ -77,6 +93,64 @@ tests:
             sysdig_endpoint:
               api_url: https://fake.api.url.com
               collector: fake.collector.host:6443
+              region: custom
+
+  - it: Disable Kubernetes Metadata feature
+    set:
+      features:
+        kubernetes_metadata:
+          enabled: false
+    asserts:
+      - exists:
+          path: data["cluster-shield.yaml"]
+      - matchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: |
+            features:
+              admission_control:
+                container_vulnerability_management:
+                  enabled: false
+                dry_run: true
+                enabled: false
+                excluded_namespaces: \[\]
+                failure_policy: Ignore
+                http_port: 8443
+                timeout: 10
+              audit:
+                enabled: false
+                excluded_namespaces: \[\]
+                http_port: 6443
+                timeout: 10
+                webhook_rules:
+                - apiGroups:
+                  - ""
+                  - apps
+                  - autoscaling
+                  - batch
+                  - networking.k8s.io
+                  - rbac.authorization.k8s.io
+                  - extensions
+                  apiVersions:
+                  - '\*'
+                  operations:
+                  - '\*'
+                  resources:
+                  - '\*/\*'
+                  scope: '\*'
+              container_vulnerability_management:
+                enabled: false
+                in_use:
+                  enabled: false
+                  integration_enabled: false
+                local_cluster:
+                  registry_secrets: \[\]
+                platform_services_enabled: true
+                registry_ssl:
+                  verify: true
+              kubernetes_metadata:
+                enabled: false
+              posture:
+                enabled: false
 
   - it: Sets NATS Url and Lock Name when Container Vulnerability Management is enabled
     set:
@@ -110,10 +184,10 @@ tests:
           pattern: |
             cluster_scanner:
               image_sbom_extractor:
-                nats_url: nats://release-name-shield-cluster-container-vulnerability-management:4222
+                nats_url: nats://release-name-shield-cluster-container-vm:4222
               leader_election_lock_name: release-name-shield-cluster-container-vulnerability-management
 
-  - it: Sets t he GRPC Endpoint when Admission Control is enabled with Container Vulnerability Management
+  - it: Sets the GRPC Endpoint when Admission Control is enabled with Container Vulnerability Management
     set:
       cluster_config:
         name: shield-cluster
@@ -146,13 +220,13 @@ tests:
           pattern: |
             cluster_scanner:
               image_sbom_extractor:
-                nats_url: nats://release-name-shield-cluster-container-vulnerability-management:4222
+                nats_url: nats://release-name-shield-cluster-container-vm:4222
               leader_election_lock_name: release-name-shield-cluster-container-vulnerability-management
       - matchRegex:
           path: data['cluster-shield.yaml']
           pattern: |
             admission_controller_secure:
-              rsi_grpc_endpoint: release-name-shield-cluster-container-vulnerability-management:9999
+              rsi_grpc_endpoint: release-name-shield-cluster-container-vm:9999
 
   - it: Secure API Token - Fail if kubernetes audit is enabled with On Premise Versions < 6.12.0 and Secure API Token is not set
     set:

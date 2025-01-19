@@ -24,6 +24,9 @@ If release name contains chart name it will be used as a full name.
     {{- $host := split ":" $parsedProxyConfig.host -}}
     {{- $_ := set $proxyConfig "proxy_host" $host._0 -}}
     {{- $_ := set $proxyConfig "proxy_port" $host._1 -}}
+    {{- if (include "common.custom_ca.enabled" .) }}
+      {{- $_ = set $proxyConfig "ca_certificate" (include "common.custom_ca.path" (merge (dict) . (dict "CACertsPath" "certificates/"))) }}
+    {{- end }}
     {{- $proxyConfig | toYaml -}}
 {{- end -}}
 {{- end -}}
@@ -134,3 +137,87 @@ true
 {{- . | toYaml -}}
 {{- end -}}
 {{- end -}}
+
+{{- define "host.capabilities" -}}
+- DAC_READ_SEARCH
+- KILL
+- SETGID
+- SETUID
+- SYS_ADMIN
+- SYS_CHROOT
+- SYS_PTRACE
+- SYS_RESOURCE
+{{- end -}}
+
+{{- define "host.security_context" -}}
+{{- if .Values.host.custom_security_context }}
+  {{- toYaml .Values.host.custom_security_context -}}
+{{- else if .Values.host.privileged }}
+privileged: true
+runAsNonRoot: false
+runAsUser: 0
+runAsGroup: 0
+readOnlyRootFilesystem: false
+allowPrivilegeEscalation: true
+capabilities:
+  drop:
+    - ALL
+{{- else }}
+allowPrivilegeEscalation: false
+seccompProfile:
+  type: Unconfined
+capabilities:
+  drop:
+    - ALL
+  add:
+    {{- include "host.capabilities" . | nindent 4 }}
+{{- end }}
+{{- end -}}
+
+{{- define "host.respond_key" }}
+{{- if hasKey . "respond" }}
+{{- print "respond" }}
+{{- else }}
+{{- print "responding" }}
+{{- end }}
+{{- end }}
+
+{{- define "host.rapid_response_enabled" }}
+{{- with .Values.features }}
+{{- if (dig (include "host.respond_key" .) "rapid_response" "enabled" false .) }}
+true
+{{- end }}
+{{- end }}
+{{- end }}
+
+{{- define "host.monitor_key" }}
+{{- if hasKey . "monitor" }}
+{{- print "monitor" }}
+{{- else }}
+{{- print "monitoring" }}
+{{- end }}
+{{- end }}
+
+{{- define "host.app_checks_enabled" }}
+{{- if dig (include "host.monitor_key" .) "app_checks" "enabled" false . }}
+true
+{{- end }}
+{{- end }}
+
+{{- define "host.jmx_enabled" }}
+{{- if dig (include "host.monitor_key" .) "java_mangement_extensions" "enabled" false . }}
+true
+{{- end }}
+{{- end }}
+
+{{- define "host.prometheus_enabled" }}
+{{- if dig (include "host.monitor_key" .) "prometheus" "enabled" false . }}
+true
+{{- end }}
+{{- end }}
+
+{{- define "host.statsd_enabled" }}
+{{- if dig (include "host.monitor_key" .) "statsd" "enabled" false . }}
+true
+{{- end }}
+{{- end }}

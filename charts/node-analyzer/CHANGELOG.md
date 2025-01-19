@@ -10,6 +10,46 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.34.1
+### Chores
+* **node-analyzer** [35bdc40f](https://github.com/sysdiglabs/charts/commit/35bdc40f4c2eeee6bb8ccc5439705068d673d948): release kspm-analyzer v1.44.21 ([#2121](https://github.com/sysdiglabs/charts/issues/2121))
+# v1.34.0
+# v1.33.8
+### Chores
+* **ci** [ca48817c](https://github.com/sysdiglabs/charts/commit/ca48817ca3532f8367509f1a9582923ff8020d29): bump bitnami/kubectl image references ([#2115](https://github.com/sysdiglabs/charts/issues/2115))
+# v1.33.7
+### Chores
+* **kspm-collector,node-analyzer** [91a82fc6](https://github.com/sysdiglabs/charts/commit/91a82fc6702b3368f6cf8f40d82f46879973ebc0): release kspm-collector & node-analyzer ([#2107](https://github.com/sysdiglabs/charts/issues/2107))
+# v1.33.6
+### New Features
+* **node-analyzer** [0a52525c](https://github.com/sysdiglabs/charts/commit/0a52525c97642fb37efc87e540e90bc2276538c5): Bump nodeanalyzer to 1.44.19 ([#2058](https://github.com/sysdiglabs/charts/issues/2058))
+# v1.33.5
+### Chores
+* **ci** [e3167692](https://github.com/sysdiglabs/charts/commit/e316769250d0ab94519de59436be0d16fb5df3e1): bump bitnami/kubectl image references ([#2053](https://github.com/sysdiglabs/charts/issues/2053))
+# v1.33.4
+### Bug Fixes
+* **node-analyzer** [f45ed3bc](https://github.com/sysdiglabs/charts/commit/f45ed3bcdda05cd59582b5ac1553af9e4ef06cc5): Fix path execution node-analyzer ([#2079](https://github.com/sysdiglabs/charts/issues/2079))
+# v1.33.3
+### Bug Fixes
+* **node-analyzer** [e0bdf2fd](https://github.com/sysdiglabs/charts/commit/e0bdf2fdc42c45add4c431f1bea2f458e26d6ad1): Modify permissions from node-analyzer ([#2066](https://github.com/sysdiglabs/charts/issues/2066))
+# v1.33.2
+### Bug Fixes
+* **node-analyzer** [f1aa8910](https://github.com/sysdiglabs/charts/commit/f1aa89100fe080353d32eadd687043b901d3c07a): Bump nodeanalyzer to 1.44.17 ([#2047](https://github.com/sysdiglabs/charts/issues/2047))
+# v1.33.1
+### New Features
+* **node-analyzer** [06903836](https://github.com/sysdiglabs/charts/commit/069038368fc5a9ed955e1eec14673b59b909d702): Add support for ubuntu24, coreos and suse ([#2022](https://github.com/sysdiglabs/charts/issues/2022))
+# v1.33.0
+### Chores
+* **kspm-collector,node-analyzer** [5189fe6b](https://github.com/sysdiglabs/charts/commit/5189fe6b544cc097d10e803cb88e5653b22f1a81): release kspm-collector & node-analyzer ([#2020](https://github.com/sysdiglabs/charts/issues/2020))
+# v1.32.15
+### Chores
+* **node-analyzer** [0fe56283](https://github.com/sysdiglabs/charts/commit/0fe56283e6b6e71f6bf8bc4364d2c48d406528a3): bump nia to v0.1.36 ([#2003](https://github.com/sysdiglabs/charts/issues/2003))
+# v1.32.14
+### Chores
+* **node-analyzer** [60a31a80](https://github.com/sysdiglabs/charts/commit/60a31a801bd271ae0619687313677c86f8c5c322): bump host analyzer version to v0.1.23 ([#2001](https://github.com/sysdiglabs/charts/issues/2001))
+# v1.32.13
+### Chores
+* **node-analyzer** [9f2377a3](https://github.com/sysdiglabs/charts/commit/9f2377a336c251bf25a1975c00466275b1c6e40e): bump sysdig/vuln-runtime-scanner to v1.8.1 ([#1998](https://github.com/sysdiglabs/charts/issues/1998))
 # v1.32.12
 ### Chores
 * **ci** [24341099](https://github.com/sysdiglabs/charts/commit/2434109978fc1b1703fcac72ec225f8c0823f50b): bump bitnami/kubectl image references ([#1992](https://github.com/sysdiglabs/charts/issues/1992))
