@@ -1,5 +1,5 @@
 # What's Changed
 
 ### Chores
-- **sysdig-deploy** [2bbefec5](https://github.com/sysdiglabs/charts/commit/2bbefec5493e2cbca751ac8fd706079e32046430): Automatic version bump due to updated dependencies ([#2120](https://github.com/sysdiglabs/charts/issues/2120))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.74.0...sysdig-deploy-1.74.1
+- **node-analyzer** [35bdc40f](https://github.com/sysdiglabs/charts/commit/35bdc40f4c2eeee6bb8ccc5439705068d673d948): release kspm-analyzer v1.44.21 ([#2121](https://github.com/sysdiglabs/charts/issues/2121))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.74.1...sysdig-deploy-1.74.2
