@@ -98,8 +98,6 @@ spec:
             - mountPath: /host/etc/os-release
               name: osrel
               readOnly: true
-            - mountPath: /root/.sysdig
-              name: bpf-probes
           {{- end }}
       {{- end }}
       containers:
@@ -126,7 +124,7 @@ spec:
             {{- if (include "host.driver.is_universal_ebpf" .) }}
             - name: SYSDIG_AGENT_DRIVER
               value: universal_ebpf
-            {{- else if (include "host.driver.is_legacy_ebpf" .) }}
+            {{- else if and (include "host.driver.is_legacy_ebpf" .) (not (include "common.cluster_type.is_gke_autopilot" .)) }}
             - name: SYSDIG_AGENT_DRIVER
               value: legacy_ebpf
             {{- end }}
@@ -214,8 +212,6 @@ spec:
               readOnly: true
             - mountPath: /host/var/run/containerd/containerd.sock
               name: containerdsock-vol
-            - mountPath: /root/.sysdig
-              name: bpf-probes
           {{- end }}
 
           {{- if (include "host.need_host_root" .) }}
@@ -313,8 +309,6 @@ spec:
         - name: osrel
           hostPath:
             path: /etc/os-release
-        - name: bpf-probes
-          emptyDir: {}
         - name: containerdsock-vol
           hostPath:
             path: /var/run/containerd/containerd.sock
