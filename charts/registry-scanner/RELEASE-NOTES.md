@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **registry-scanner** [4a9364e6](https://github.com/sysdiglabs/charts/commit/4a9364e65e785027276a17b80d473c6a79802acc): Update to v0.7.1 ([#2095](https://github.com/sysdiglabs/charts/issues/2095))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-1.6.0...registry-scanner-1.6.1
+### New Features
+- **registry-scanner** [a19ed0d2](https://github.com/sysdiglabs/charts/commit/a19ed0d22881e76b6b4d2bd6951e26fa36c8c048): Typo edit ([#2118](https://github.com/sysdiglabs/charts/issues/2118))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-1.6.1...registry-scanner-1.6.2
