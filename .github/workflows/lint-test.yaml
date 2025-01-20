@@ -68,7 +68,7 @@ jobs:
       - name: Create testing cluster
         uses: jupyterhub/action-k3s-helm@v4
         with:
-          k3s-version: v1.23.9+k3s1
+          k3s-version: v1.31.4+k3s1
 
       - name: Run chart-testing (install)
         run: ct install --upgrade --target-branch=main --excluded-charts cluster-shield,common,sysdig-stackdriver-bridge,sysdig-mcm-navmenu
