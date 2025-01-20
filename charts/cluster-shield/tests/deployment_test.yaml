@@ -553,3 +553,25 @@ tests:
           path: spec.template.metadata.annotations.hello
           value: world
     template: templates/deployment.yaml
+
+  - it: Test adding CA certificate of OpenShift
+    template: templates/deployment.yaml
+    capabilities:
+      apiVersions:
+        - security.openshift.io/v1
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].volumeMounts
+          content:
+            name: openshift-ca-cert
+            mountPath: /ca-certs
+            readOnly: true
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: openshift-ca-cert
+            configMap:
+              name: openshift-service-ca.crt
+              items:
+              - key: service-ca.crt
+                path: service-ca.crt

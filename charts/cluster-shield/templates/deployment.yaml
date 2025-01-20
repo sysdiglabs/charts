@@ -105,6 +105,11 @@ spec:
               mountPath: /ca-certs
               readOnly: true
             {{- end }}
+            {{- if .Capabilities.APIVersions.Has "security.openshift.io/v1" }}
+            - name: openshift-ca-cert
+              mountPath: /ca-certs
+              readOnly: true
+            {{- end }}
             {{- with .Values.volumeMounts }}
             {{- toYaml . | nindent 12 }}
             {{- end }}
@@ -172,6 +177,14 @@ spec:
         - name: ca-cert
           configMap:
             name:  {{ .Values.ca.existingCaConfigMap | default .Values.global.ssl.ca.existingCaConfigMap }}
+        {{- end }}
+        {{- if .Capabilities.APIVersions.Has "security.openshift.io/v1" }}
+        - name: openshift-ca-cert
+          configMap:
+            name: openshift-service-ca.crt
+            items:
+            - key: service-ca.crt
+              path: service-ca.crt
         {{- end }}
         {{- with .Values.volumes }}
         {{- toYaml . | nindent 8 }}
