@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.34.3
+### Documentation
+* **node-analyzer** [cf029052](https://github.com/sysdiglabs/charts/commit/cf02905238e2c9e629936de08ada766b0642816e): fix link in README.md ([#2123](https://github.com/sysdiglabs/charts/issues/2123))
 # v1.34.2
 ### Chores
 * **node-analyzer** [c80bff85](https://github.com/sysdiglabs/charts/commit/c80bff859d7bd5fe981bdf9e9e75ce74cb72eadd): Bump benchmark runner 1.1.1.5 ([#1997](https://github.com/sysdiglabs/charts/issues/1997))
