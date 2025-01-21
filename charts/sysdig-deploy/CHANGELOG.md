@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.75.0
+### New Features
+* **agent** [a3b4239a](https://github.com/sysdiglabs/charts/commit/a3b4239ad6c476fc9ede903694a4e04d4f9ece7c): add "sysdig_api_endpoint" in dragent.yaml based on the region ([#2072](https://github.com/sysdiglabs/charts/issues/2072))
 # v1.74.4
 ### Chores
 * **sysdig-deploy** [836da109](https://github.com/sysdiglabs/charts/commit/836da109f173966078820a0ab9b7e13e04576222): Automatic version bump due to updated dependencies ([#2124](https://github.com/sysdiglabs/charts/issues/2124))
