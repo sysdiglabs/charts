@@ -118,3 +118,16 @@ tests:
             second: example
             .*
     template: configmap-deployment.yaml
+
+  - it: Testing custom API Endpoint take precedence over default
+    set:
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+        settings:
+          region: us2
+          sysdig_api_endpoint: test.sysdig-example.com
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: .*sysdig_api_endpoint:.*test\.sysdig-example\.com.*
+    template: configmap.yaml
