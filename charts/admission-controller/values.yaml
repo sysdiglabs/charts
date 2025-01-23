@@ -188,8 +188,6 @@ webhook:
       type: ClusterIP
       # Configure port for the V2 webhook service
       port: 6443
-    
-      
     # KSPM Admission Controller container image
     image:
       # The KSPM Admission Controller image registry
