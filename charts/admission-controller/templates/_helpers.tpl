@@ -103,11 +103,11 @@ If release name contains chart name it will be used as a full name.
 {{- end -}}
 
 {{- define "admissionController.webhook.defaultSecurityContext" -}}
-  {{- if (lt (int .Values.webhook.http.port) 1024) -}}
-    {{- toYaml (dict "runAsUser" 0 "runAsNonRoot" false) -}}
-  {{- else -}}
-    {{- toYaml (dict "runAsUser" 1000 "runAsNonRoot" true) -}}
-  {{- end -}}
+ {{- if (lt (int .Values.webhook.http.port) 1024) -}}
+        {{- toYaml (dict "runAsUser" 0 "runAsNonRoot" false) -}}
+    {{- else -}}
+        {{- toYaml (dict "runAsUser" 1000 "runAsNonRoot" true) -}}
+    {{- end -}}
 {{- end -}}
 
 {{/*
@@ -135,8 +135,8 @@ Sysdig NATS service URL
 {{- end -}}
 
 {{/*
-Sysdig HTTP service URL
-
+Sysdig http service URL
+*/}}
 {{- if eq .Values.webhook.v2.transportLayer "http" -}}
 {{- define "admissionController.httpUrl" -}}
 {{- if .Values.webhook.v2.http.url -}}
@@ -145,7 +145,7 @@ Sysdig HTTP service URL
     https://{{ include "admissionController.apiEndpoint" . }}
 {{- end -}}
 {{- end -}}
-{{- end -}}*/}}
+{{- end -}}
 
 {{/*
 Common labels
