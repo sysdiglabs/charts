@@ -168,6 +168,16 @@ podMonitors:
 
 webhook:
   v2:
+    #allow to connect from ac to acprovider via: "nats"/"http"
+    transportLayer: "nats"
+    http:
+     #sysdig api endpoint
+     url: ""
+     # Allow insecure TLS certificates in backend connection to HTTP service
+     insecure: false
+
+     # HTTP serve port where the requests will be served from
+     port: 6443
     nats:
       # Allow insecure TLS certificates in backend connection to NATS service
       insecure: false
@@ -178,17 +188,16 @@ webhook:
       type: ClusterIP
       # Configure port for the V2 webhook service
       port: 6443
-    http:
-      # HTTP serve port where the requests will be served from
-      port: 6443
-      # KSPM Admission Controller container image
+    
+      
+    # KSPM Admission Controller container image
     image:
       # The KSPM Admission Controller image registry
       registry: quay.io
       # The KSPM Admission Controller image repository
       repository: sysdig/secure-admission-controller
       # The KSPM Admission Controller image tag
-      tag: 1.27.5
+      tag: 1.27.6-rc
       # Specifies the image digest value.  If set, this value is used instead of the tag value
       digest:
       # The PullPolicy for KSPM Admission Controller image
