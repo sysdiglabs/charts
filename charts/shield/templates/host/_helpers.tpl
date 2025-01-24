@@ -150,8 +150,8 @@ true
 {{- end -}}
 
 {{- define "host.security_context" -}}
-{{- if .Values.host.custom_security_context }}
-  {{- toYaml .Values.host.custom_security_context -}}
+{{- if .Values.host.security_context }}
+  {{- toYaml .Values.host.security_context -}}
 {{- else if .Values.host.privileged }}
 privileged: true
 runAsNonRoot: false
