@@ -22,14 +22,14 @@ data:
   {{- if .Values.features.kspmAdmissionController}}
   SERVICE_PORT: "{{ .Values.webhook.v2.http.port }}"
   CERT_LOCATION: /cert
-  {{- if eq .Values.webhook.v2.transportLayer "nats" -}}
+  {{- if eq .Values.webhook.v2.transportLayer "nats"}}
   EXTERNAL_NATS_URL:  {{ include "admissionController.natsUrl" . }}
   NATS_INSECURE: "{{.Values.webhook.v2.nats.insecure}}"
-  {{- end -}}
-  {{- if eq .Values.webhook.v2.transportLayer "http" -}}
+  {{- end}}
+  {{- if eq .Values.webhook.v2.transportLayer "http"}}
   BACKEND_URL: {{ include "admissionController.httpUrl" . }}
   VERIFY_SSL: "{{.Values.webhook.v2.http.insecure}}"
-  {{- end -}}
+  {{- end}}
   {{- end}}
   {{- if .Values.webhook.acConfig }}
   CACHE_FLUSH_PERIOD: "{{ .Values.webhook.cacheFlushPeriod | default "24h" }}"
