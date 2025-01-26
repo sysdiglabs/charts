@@ -109,7 +109,7 @@ features:
   kspmAdmissionController: false
 
   # [Admission Webhook Configuration rules](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#matching-requests-rules) for the Audit Detections
-  k8sAuditDetectionsRules:  # +doc-gen:break
+  k8sAuditDetectionsRules: # +doc-gen:break
     - apiGroups:
         - ""
         - apps
@@ -266,7 +266,7 @@ webhook:
   imagePullSecrets: []
 
   # Resource request and limits for webhook.
-  resources:  # +doc-gen:break
+  resources: # +doc-gen:break
     limits:
       cpu: 250m
       memory: 256Mi
@@ -275,7 +275,6 @@ webhook:
       memory: 256Mi
 
   autoscaling:
-
     # The minimum replicas to use while autoscaling the webhook.
     minReplicas: 2
     # The maximum replicas to use while autoscaling the webhook.
@@ -309,7 +308,6 @@ webhook:
     # Reuse existing TLS Secret during chart upgrade.
     reuseTLSSecret: false
     ca:
-
       # Used for outbound connections, such as Secure backend and proxy.
       # <br/>Used also for inbound connections to serve HttpRequests as Kubernetes Webhook.
       # <br/>A PEM-encoded x509 certificate authority.
@@ -346,7 +344,6 @@ webhook:
       # Provide the filename that is defined inside the existing ConfigMap.  Required if existingCaConfigMap is set.
       existingCaConfigMapKeyName:
 
-
   # The custom entrypoint for the webhook
   # <br/>Remember to provide the webhook valid arguments with `--tls_cert_file` and `--tls_private_key_file`.
   # <br/>default: `/bin/webhook --tls_cert_file /cert/tls.crt --tls_private_key_file /cert/tls.key`
@@ -356,7 +353,7 @@ webhook:
     # The HTTP serve port where the requests will be served from.
     port: 5000
 
-scc:
+scc:yaml validator
   # Enable the creation of Security Context Constraints in Openshift.
   create: true
 
@@ -400,7 +397,7 @@ scanner:
   noProxy: kubernetes,10.0.0.0/8
 
   # Specifies the Scanner pod annotations.
-  podAnnotations:  # +doc-gen:break
+  podAnnotations: # +doc-gen:break
     prometheus.io/scrape: "true"
     prometheus.io/path: "/metrics"
     prometheus.io/port: "8080"
@@ -419,10 +416,10 @@ scanner:
   dockerCfgSecretName: ""
 
   # Configure securityContext for scanner.
-  securityContext:  # +doc-gen:break
+  securityContext: # +doc-gen:break
     capabilities:
       drop:
-        - ALL
+        -yaml validator ALL
     readOnlyRootFilesystem: true
     runAsNonRoot: true
 
