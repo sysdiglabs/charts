@@ -56,10 +56,10 @@ tests:
             runAsNonRoot: false
             runAsUser: 0
 
-  - it: Ensure the custom_security_context is honored
+  - it: Ensure the security_context is honored
     set:
       host:
-        custom_security_context:
+        security_context:
           allowPrivilegeEscalation: true
           readOnlyRootFilesystem: false
           runAsNonRoot: false
