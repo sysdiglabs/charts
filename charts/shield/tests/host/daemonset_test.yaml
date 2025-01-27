@@ -224,7 +224,7 @@ tests:
   - it: Test Rapid Response password secret
     set:
       features:
-        responding:
+        respond:
           rapid_response:
             enabled: true
       host:
