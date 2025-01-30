@@ -89,6 +89,11 @@ windows:
       memory: 512Mi
   affinity: {}
   tolerations: []
+  extraVolumes:
+    volumes: []
+    mounts: []
+    # Allow passing extra volumes to the windows agent to mount secrets or certificates
+    # to authenticate in different services. (See extraVolumes in the linux agent)
 # Specify a predefined resource profile.
 #
 # Available options are:
