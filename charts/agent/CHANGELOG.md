@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.35.1
+### Bug Fixes
+* **agent** [83ed9fa2](https://github.com/sysdiglabs/charts/commit/83ed9fa258aee51b76691cfa8709e9ea0405ea75): update windows agent ds template to remove not needed security context ([#2132](https://github.com/sysdiglabs/charts/issues/2132))
 # v1.35.0
 ### New Features
 * **agent** [a3b4239a](https://github.com/sysdiglabs/charts/commit/a3b4239ad6c476fc9ede903694a4e04d4f9ece7c): add "sysdig_api_endpoint" in dragent.yaml based on the region ([#2072](https://github.com/sysdiglabs/charts/issues/2072))
