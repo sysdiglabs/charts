@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.35.2
+### Chores
+* **agent** [bc06d306](https://github.com/sysdiglabs/charts/commit/bc06d306993009dad0ab5c6288fb16260e50a60e): Bump Windows Agent release to 1.3.2 ([#2135](https://github.com/sysdiglabs/charts/issues/2135))
 # v1.35.1
 ### Bug Fixes
 * **agent** [83ed9fa2](https://github.com/sysdiglabs/charts/commit/83ed9fa258aee51b76691cfa8709e9ea0405ea75): update windows agent ds template to remove not needed security context ([#2132](https://github.com/sysdiglabs/charts/issues/2132))
