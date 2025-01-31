@@ -70,7 +70,7 @@ spec:
             name: sysdig-agent-http-proxy-secrets
           {{- end }}
           {{- if .Values.windows.extraVolumes.mounts }}
-            {{ toYaml .Values.windows.extraVolumes.mounts | nindent 12 }}
+            {{ toYaml .Values.windows.extraVolumes.mounts | nindent 10 }}
           {{- end }}
       terminationGracePeriodSeconds: 0
       volumes:
@@ -103,7 +103,7 @@ spec:
           name: {{ include "sysdig.custom_ca.existingConfigMap" (dict "global" .Values.global.ssl "component" .Values.ssl) }}
       {{- end }}
       {{- if .Values.windows.extraVolumes.volumes }}
-        {{ toYaml .Values.windows.extraVolumes.volumes | nindent 8 }}
+        {{ toYaml .Values.windows.extraVolumes.volumes | nindent 6 }}
       {{- end }}
       nodeSelector:
       {{- if .Values.windows.nodeSelector }}
