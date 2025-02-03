@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.35.3
+### New Features
+* **agent** [03866ed5](https://github.com/sysdiglabs/charts/commit/03866ed5831d48d71706ef0e93d5c31b68f2dfad): [SMAGENT-8176] enable extraVolumes for the Windows agent ([#2134](https://github.com/sysdiglabs/charts/issues/2134))
 # v1.35.2
 ### Chores
 * **agent** [bc06d306](https://github.com/sysdiglabs/charts/commit/bc06d306993009dad0ab5c6288fb16260e50a60e): Bump Windows Agent release to 1.3.2 ([#2135](https://github.com/sysdiglabs/charts/issues/2135))
