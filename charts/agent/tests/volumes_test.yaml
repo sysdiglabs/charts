@@ -2,6 +2,7 @@ suite: Host volumes are available for agent
 templates:
   - daemonset.yaml
   - deployment.yaml
+  - daemonset-windows.yaml
 kubernetesProvider:
   scheme:
     "v1/Node":
@@ -343,3 +344,30 @@ tests:
           path: spec.template.spec.initContainers[*].volumeMounts[?(@.name == "custom-vol")]
     templates:
       - templates/daemonset.yaml
+
+  - it: Check windows extra volumes/mounts
+    set:
+      windows:
+        image:
+          tag: 1.2.5
+        enabled: true
+        extraVolumes:
+          volumes:
+            - name: sysdig-new-secret
+              secret:
+                secretName: my-secret
+          mounts:
+            - mountPath: Sysdig/Agent/Secrets/http_proxy
+              name: sysdig-new-secret
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[*].volumeMounts[?(@.name == "sysdig-new-secret")].mountPath
+          value: Sysdig/Agent/Secrets/http_proxy
+      - equal:
+          path: spec.template.spec.volumes[?(@.name == "sysdig-new-secret")]
+          value:
+            name: sysdig-new-secret
+            secret:
+              secretName: my-secret
+    templates:
+      - templates/daemonset-windows.yaml
