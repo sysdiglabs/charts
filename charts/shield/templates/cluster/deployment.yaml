@@ -36,7 +36,8 @@ spec:
     spec:
       serviceAccountName: {{ include "cluster.service_account_name" . }}
       automountServiceAccountToken: true
-      securityContext: {}
+      securityContext:
+        {{- toYaml .Values.cluster.security_context | nindent 8 }}
       {{- $nodeSelector := (include "cluster.node_selector" .) }}
       {{- if $nodeSelector }}
       nodeSelector:

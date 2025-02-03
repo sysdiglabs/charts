@@ -318,6 +318,9 @@
         "env": {
           "$ref": "#/$defs/EnvVars"
         },
+        "security_context": {
+          "type": "object"
+        },
         "volumes": {
           "$ref": "#/$defs/Volumes"
         },
