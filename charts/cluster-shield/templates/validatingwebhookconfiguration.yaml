@@ -10,7 +10,7 @@ so the template is executed just once
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
 metadata:
-  name: {{ include "cluster-shield.fullname" . }}-audit
+  name: {{ include "cluster-shield.fullname" . }}
 webhooks:
   {{- if .Values.cluster_shield.features.audit.enabled }}
   - name: audit.secure.sysdig.com
