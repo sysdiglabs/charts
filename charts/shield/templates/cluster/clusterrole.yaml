@@ -121,7 +121,7 @@ rules:
   verbs:
     - get
 {{- end }}
-{{- if (include "cluster.kubernetes_metadata_enabled" .) }}
+{{- if or (include "cluster.kubernetes_metadata_enabled" .) (include "host.features.netsec_enabled" .) }}
 - apiGroups:
     - ""
   resources:
@@ -172,6 +172,7 @@ rules:
     - networking.k8s.io
   resources:
     - ingresses
+    - networkpolicies
   verbs:
     - get
     - list
