@@ -121,7 +121,7 @@ rules:
   verbs:
     - get
 {{- end }}
-{{- if or (include "cluster.kubernetes_metadata_enabled" .) (include "host.features.netsec_enabled" .) }}
+{{- if or (include "cluster.kubernetes_metadata_enabled" .) .Values.features.investigations.network_security.enabled }}
 - apiGroups:
     - ""
   resources:
