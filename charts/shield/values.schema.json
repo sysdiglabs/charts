@@ -649,6 +649,64 @@
                 }
               }
             },
+            "filters": {
+              "type": "object",
+              "description": "Filters to apply to the images to scan",
+              "properties": {
+                "rules": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "enum": [
+                          "include",
+                          "exclude"
+                        ]
+                      },
+                      "field": {
+                        "enum": [
+                          "k8s.container.image"
+                        ],
+                        "description": "The field to run the filter against"
+                      },
+                      "value": {
+                        "type": "string",
+                        "description": "The value to run the filter against",
+                        "examples": [
+                          "docker.io*",
+                          "cd.docker-registry.corp.yahoo.co.jp:4443*",
+                          "library*"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "type"
+                    ],
+                    "examples": [
+                      {
+                        "type": "include",
+                        "field": "docker.io*",
+                        "value": "k8s.container.image"
+                      }
+                    ],
+                    "additionalProperties": false
+                  },
+                  "examples": [
+                    [
+                      {
+                        "type": "include",
+                        "field": "k8s.container.image",
+                        "value": "docker.io*"
+                      },
+                      {
+                        "type": "exclude"
+                      }
+                    ]
+                  ]
+                }
+              }
+            },
             "parallel_files_analysis_count": {
               "type": "integer",
               "description": "Maximum number of files that are analyzed in parallel"
@@ -660,6 +718,11 @@
             "max_file_size_bytes_in_memory": {
               "type": "integer",
               "description": "Maximum size in bytes for a file to be analyzed in memory; file whose size is bigger than this are temporarily copied on to the filesystem"
+            },
+            "memory_optimized_k8s_mode": {
+              "type": "boolean",
+              "description": "Enable memory-optimized access to Kubernetes API. Enabled by default, queries K8s using the Metadata API for all resources but Pods. Set this to false if you need to see the replicas counters, but it will require more memory.",
+              "default": true
             }
           }
         },
