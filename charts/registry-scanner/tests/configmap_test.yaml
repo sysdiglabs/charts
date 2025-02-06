@@ -188,3 +188,29 @@ tests:
       - matchRegex:
           path: data['config.yaml']
           pattern: scan:((.|\n)*)disablePlatformScanning:\s*true
+  - it: fips is requested with inlineScanImage set
+    set:
+      scanOnStart:
+        enabled: true
+      image:
+        tag: "bananas"
+        fips: true
+      config.scan.inlineScanImage: foo:bar
+    asserts:
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: "scan:((.|\n)*)inlineScanImage:.foo:bar-fips"
+  - it: fips is NOT requested with inlineScanImage set
+    set:
+      scanOnStart:
+        enabled: true
+      image:
+        tag: "bananas"
+      config.scan.inlineScanImage: foo:bar
+    asserts:
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: "scan:((.|\n)*)inlineScanImage: foo:bar"
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: "scan:((.|\n)*)inlineScanImage: foo:bar"
