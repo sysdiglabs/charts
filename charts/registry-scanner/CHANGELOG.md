@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.6.5
+### Code Refactoring
+* **registry-scanner** [126c7150](https://github.com/sysdiglabs/charts/commit/126c715001ad8d4a4488468bbea2e0abf3c120f1): rename scan on start job name [SSPROD-51637] ([#2144](https://github.com/sysdiglabs/charts/issues/2144))
 # v1.6.4
 ### Chores
 * **registry-scanner** [46f6a77c](https://github.com/sysdiglabs/charts/commit/46f6a77ca5be4804e3eeaa29e1fc12b85181a465): Update to v0.7.3 ([#2138](https://github.com/sysdiglabs/charts/issues/2138))
