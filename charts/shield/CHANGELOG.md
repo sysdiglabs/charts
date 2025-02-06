@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.8.0
+### New Features
+* **shield** [97157a7e](https://github.com/sysdiglabs/charts/commit/97157a7eb9ba1948ea6373eb6c6ed1d8991bcb4c): cluster shield 1.8.0 ([#2142](https://github.com/sysdiglabs/charts/issues/2142))
 # v0.7.0
 ### New Features
 * **shield** [3d75369f](https://github.com/sysdiglabs/charts/commit/3d75369f67f8bfc67f5c04e4be898a793dd5a64b): allow to specify the security context for the Cluster Shield in the shield chart ([#2130](https://github.com/sysdiglabs/charts/issues/2130))
