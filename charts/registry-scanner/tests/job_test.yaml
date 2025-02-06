@@ -68,3 +68,34 @@ tests:
     asserts:
       - isNull:
           path: spec.ttlSecondsAfterFinished
+  - it: fips is requested
+    set:
+      scanOnStart:
+        enabled: true
+      image:
+        fips: true
+    asserts:
+      - matchRegex:
+          path: spec.template.spec.containers[0].image
+          pattern: ".*-fips$"
+  - it: fips is requested along with a custom tag
+    set:
+      scanOnStart:
+        enabled: true
+      image:
+        tag: "bananas"
+        fips: true
+    asserts:
+      - matchRegex:
+          path: spec.template.spec.containers[0].image
+          pattern: ".*:bananas-fips$"
+  - it: fips is NOT requested but custom tag is
+    set:
+      scanOnStart:
+        enabled: true
+      image:
+        tag: "bananas"
+    asserts:
+      - matchRegex:
+          path: spec.template.spec.containers[0].image
+          pattern: ".*:bananas$"

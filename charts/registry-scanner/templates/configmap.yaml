@@ -83,7 +83,7 @@ data:
             memory: {{ .Values.config.scan.jobs.resources.limits.memory }}
         temporaryVolumeSizeLimit: {{ .Values.config.scan.jobs.temporaryVolumeSizeLimit }}
       {{- if .Values.config.scan.inlineScanImage }}
-      inlineScanImage: {{ .Values.config.scan.inlineScanImage }}
+      inlineScanImage: {{ include "registry-scanner.inlineScanImage" . }}
       {{- end }}
       {{- if .Values.imagePullSecrets }}
       pullSecrets: {{ include "registry-scanner.pullSecretList" . }}
