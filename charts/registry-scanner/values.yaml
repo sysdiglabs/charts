@@ -166,6 +166,7 @@ image:
   tag:
   # The PullPolicy for Registry Scanner image.
   pullPolicy: Always
+  # Whether or not to use a Federal Information Processing Standard (FIPS) compliant image.
   fips: false
 
 serviceAccount:
