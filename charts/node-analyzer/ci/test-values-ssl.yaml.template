@@ -3,3 +3,5 @@ sysdig:
 nodeAnalyzer:
   apiEndpoint: secure.sysdig.com
   sslVerifyCertificate: false
+  benchmarkRunner:
+    deploy: false
