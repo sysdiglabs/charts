@@ -109,7 +109,7 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | image.repository                                 | The Sysdig Registry Scanner image repository.                                                                                                                                                                                              | <code>sysdig/registry-scanner</code>          |
 | image.tag                                        | The Registry Scanner image tag. If empty, default to appVersion in `Chart.yaml`.                                                                                                                                                           | <code></code>                                 |
 | image.pullPolicy                                 | The PullPolicy for Registry Scanner image.                                                                                                                                                                                                 | <code>Always</code>                           |
-| image.fips                                       |                                                                                                                                                                                                                                            | <code>false</code>                            |
+| image.fips                                       | Whether or not to use a Federal Information Processing Standard (FIPS) compliant image.                                                                                                                                                    | <code>false</code>                            |
 | serviceAccount.create                            | Specifies whether a service account should be created.                                                                                                                                                                                     | <code>true</code>                             |
 | serviceAccount.annotations                       | The additional annotations to add to the service account.                                                                                                                                                                                  | <code>{}</code>                               |
 | serviceAccount.name                              | The name of the service account to use. If the value is not set and create is set to `true`, a name is generated using the fullname template.                                                                                              | <code>""</code>                               |
@@ -136,7 +136,7 @@ Use the following command to deploy:
 helm upgrade --install registry-scanner \
    --namespace sysdig-agent \
    --create-namespace \
-   --version=1.6.5 \
+   --version=1.6.6 \
    --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
    --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
    --set config.secureSkipTLS=true \
