@@ -6,3 +6,5 @@ nodeAnalyzer:
     deploy: true
   hostScanner:
     deploy: true
+  benchmarkRunner:
+    deploy: false
