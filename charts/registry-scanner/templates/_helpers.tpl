@@ -115,7 +115,11 @@ Allow overriding registry and repository for air-gapped environments
 
 {{- define "registry-scanner.inlineScanImage" -}}
 {{- if .Values.image.fips -}}
-    {{- .Values.config.scan.inlineScanImage -}} -fips
+    {{- if hasSuffix "-fips" .Values.config.scan.inlineScanImage -}}
+        {{- .Values.config.scan.inlineScanImage -}}
+    {{- else -}}
+        {{- .Values.config.scan.inlineScanImage -}}-fips
+    {{- end -}}
 {{- else -}}
     {{- .Values.config.scan.inlineScanImage -}}
 {{- end -}}

@@ -199,7 +199,19 @@ tests:
     asserts:
       - matchRegex:
           path: data['config.yaml']
-          pattern: "scan:((.|\n)*)inlineScanImage:.foo:bar-fips"
+          pattern: "scan:((.|\n)*)inlineScanImage:.foo:bar-fips\n"
+  - it: fips is requested with inlineScanImage already including fips suffix
+    set:
+      scanOnStart:
+        enabled: true
+      image:
+        tag: "bananas"
+        fips: true
+      config.scan.inlineScanImage: foo:bar-fips
+    asserts:
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: "scan:((.|\n)*)inlineScanImage:.foo:bar-fips\n"
   - it: fips is NOT requested with inlineScanImage set
     set:
       scanOnStart:
@@ -210,7 +222,7 @@ tests:
     asserts:
       - matchRegex:
           path: data['config.yaml']
-          pattern: "scan:((.|\n)*)inlineScanImage: foo:bar"
+          pattern: "scan:((.|\n)*)inlineScanImage: foo:bar\n"
       - matchRegex:
           path: data['config.yaml']
-          pattern: "scan:((.|\n)*)inlineScanImage: foo:bar"
+          pattern: "scan:((.|\n)*)inlineScanImage: foo:bar\n"
