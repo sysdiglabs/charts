@@ -89,6 +89,19 @@ tests:
       - matchRegex:
           path: spec.template.spec.containers[0].image
           pattern: ".*:bananas-fips$"
+
+  - it: fips is requested along with a custom tag that already includes fips
+    set:
+      scanOnStart:
+        enabled: true
+      image:
+        tag: "bananas-fips"
+        fips: true
+    asserts:
+      - matchRegex:
+          path: spec.template.spec.containers[0].image
+          pattern: ".*:bananas-fips$"
+
   - it: fips is NOT requested but custom tag is
     set:
       scanOnStart:
