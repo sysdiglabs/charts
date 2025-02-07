@@ -106,7 +106,9 @@ Allow overriding registry and repository for air-gapped environments
     {{- $imageTag = (printf "job-%s" .Chart.AppVersion) -}}
     {{- end -}}
     {{- if .Values.image.fips -}}
-    {{- $imageTag = (printf "%s-fips" $imageTag) -}}
+      {{- if not (hasSuffix "-fips" $imageTag) -}}
+        {{- $imageTag = (printf "%s-fips" $imageTag) -}}
+      {{- end -}}
     {{- end -}}
     {{- $globalRegistry := (default .Values.global dict).imageRegistry -}}
     {{- $globalRegistry | default $imageRegistry | default "quay.io" -}} / {{- $imageRepository -}} : {{- $imageTag -}}
