@@ -132,6 +132,16 @@ Sysdig NATS service URL
 {{- end -}}
 {{- end -}}
 
+{{/*
+Sysdig http service URL
+*/}}
+{{- define "admissionController.httpUrl" -}}
+{{- if .Values.webhook.v2.http.url -}}
+    {{- .Values.webhook.v2.http.url -}}
+{{- else -}}
+    https://{{ include "admissionController.apiEndpoint" . }}
+{{- end -}}
+{{- end -}}
 
 {{/*
 Common labels
