@@ -1,5 +1,5 @@
 # What's Changed
 
-### Bug Fixes
-- **registry-scanner** [872ea38e](https://github.com/sysdiglabs/charts/commit/872ea38e8dbd32f9f7956c314d3de828fe798be3): avoid duplicated fips suffix ([#2146](https://github.com/sysdiglabs/charts/issues/2146))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-1.6.6...registry-scanner-1.6.7
+### Chores
+- **registry-scanner** [8d9cfd01](https://github.com/sysdiglabs/charts/commit/8d9cfd0129baf4f550ed896c830cd490fd823cdd): Update to v0.7.4 ([#2147](https://github.com/sysdiglabs/charts/issues/2147))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-1.6.7...registry-scanner-1.6.8
