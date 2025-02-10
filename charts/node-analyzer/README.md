@@ -40,7 +40,8 @@ helm install sysdig-agent --namespace sysdig-agent --create-namespace \
 --set nodeAnalyzer.secure.vulnerabilityManagement.newEngineOnly=true \
 --set global.kspm.deploy=true \
 --set nodeAnalyzer.nodeAnalyzer.benchmarkRunner.deploy=false \
---set nodeAnalyzer.nodeAnalyzer.hostScanner.deploy=true
+--set nodeAnalyzer.nodeAnalyzer.hostScanner.deploy=true \
+--set nodeAnalyzer.nodeAnalyzer.sslVerifyCertificate=false \
 --set global.clusterConfig.name=<CLUSTER_NAME> \
 sysdig/sysdig-deploy
 ```
