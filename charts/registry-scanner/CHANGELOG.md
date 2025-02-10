@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.6.8
+### Chores
+* **registry-scanner** [8d9cfd01](https://github.com/sysdiglabs/charts/commit/8d9cfd0129baf4f550ed896c830cd490fd823cdd): Update to v0.7.4 ([#2147](https://github.com/sysdiglabs/charts/issues/2147))
 # v1.6.7
 ### Bug Fixes
 * **registry-scanner** [872ea38e](https://github.com/sysdiglabs/charts/commit/872ea38e8dbd32f9f7956c314d3de828fe798be3): avoid duplicated fips suffix ([#2146](https://github.com/sysdiglabs/charts/issues/2146))
