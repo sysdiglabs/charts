@@ -209,9 +209,8 @@ tests:
         fips: true
       config.scan.inlineScanImage: foo:bar-fips
     asserts:
-      - matchRegex:
-          path: data['config.yaml']
-          pattern: "scan:((.|\n)*)inlineScanImage:.foo:bar-fips\n"
+      - failedTemplate:
+          errorMessage: "use `image.fips: true` instead of manually setting fips tag"
   - it: fips is NOT requested with inlineScanImage set
     set:
       scanOnStart:

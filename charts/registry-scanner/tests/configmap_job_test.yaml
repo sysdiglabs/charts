@@ -1,0 +1,123 @@
+suite: Registry Scanner - configmap and job
+templates:
+  - templates/configmap.yaml
+  - templates/job.yaml
+tests:
+  - it: fips is requested without inlineScanImage set
+    set:
+      scanOnStart:
+        enabled: true
+      image:
+        fips: true
+    asserts:
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: "scan:((.|\n)*)inlineScanImage:.quay.io/sysdig/registry-scanner:job-0.7.4-fips\n"
+        template: templates/configmap.yaml
+      - matchRegex:
+          path: spec.template.spec.containers[0].image
+          pattern: "quay.io/sysdig/registry-scanner:job-0.7.4-fips$"
+        template: templates/job.yaml
+  - it: fips is requested with inlineScanImage set
+    set:
+      scanOnStart:
+        enabled: true
+      image:
+        fips: true
+      config.scan.inlineScanImage: bananas/foo:bar
+    asserts:
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: "scan:((.|\n)*)inlineScanImage:.bananas/foo:bar-fips\n"
+        template: templates/configmap.yaml
+      - matchRegex:
+          path: spec.template.spec.containers[0].image
+          pattern: "quay.io/sysdig/registry-scanner:job-0.7.4-fips$"
+        template: templates/job.yaml
+  - it: fips is requested with inlineScanImage set and custom image repo
+    set:
+      scanOnStart:
+        enabled: true
+      image:
+        registry: bananas
+        repository: foo
+        tag: bar
+        fips: true
+      config.scan.inlineScanImage: something/different:boo
+    asserts:
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: "scan:((.|\n)*)inlineScanImage:.something/different:boo-fips\n"
+        template: templates/configmap.yaml
+      - matchRegex:
+          path: spec.template.spec.containers[0].image
+          pattern: "bananas/foo:bar-fips$"
+        template: templates/job.yaml
+  - it: fips is requested with inlineScanImage already including fips, fails
+    set:
+      scanOnStart:
+        enabled: true
+      image:
+        registry: bananas
+        repository: foo
+        tag: bar
+        fips: true
+      config.scan.inlineScanImage: something/different:boo-fips
+    asserts:
+      - failedTemplate:
+          errorMessage: "use `image.fips: true` instead of manually setting fips tag"
+        template: templates/configmap.yaml
+  - it: fips is requested without inlineScanImage set and custom image repo
+    set:
+      scanOnStart:
+        enabled: true
+      image:
+        registry: bananas
+        repository: foo
+        tag: bar
+        fips: true
+    asserts:
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: "scan:((.|\n)*)inlineScanImage:.bananas/foo:bar-fips\n"
+        template: templates/configmap.yaml
+      - matchRegex:
+          path: spec.template.spec.containers[0].image
+          pattern: "bananas/foo:bar-fips$"
+        template: templates/job.yaml
+  - it: custom repo and it does not set inlineScanImage
+    set:
+      scanOnStart:
+        enabled: true
+      image:
+        registry: bananas
+        repository: foo
+        tag: bar
+    asserts:
+      - notMatchRegex:
+          path: data['config.yaml']
+          pattern: "scan:((.|\n)*)inlineScanImage"
+        template: templates/configmap.yaml
+      - matchRegex:
+          path: spec.template.spec.containers[0].image
+          pattern: "bananas/foo:bar$"
+        template: templates/job.yaml
+
+  - it: custom repo and custom inlineScanImage
+    set:
+      scanOnStart:
+        enabled: true
+      image:
+        registry: bananas
+        repository: foo
+        tag: bar
+      config.scan.inlineScanImage: something/different:boo-fips
+    asserts:
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: "scan:((.|\n)*)inlineScanImage:.something/different:boo-fips"
+        template: templates/configmap.yaml
+      - matchRegex:
+          path: spec.template.spec.containers[0].image
+          pattern: "bananas/foo:bar$"
+        template: templates/job.yaml
