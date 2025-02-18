@@ -619,3 +619,35 @@ tests:
       - equal:
           path: spec.template.spec.volumes[?(@.name == "vardata-vol")].hostPath.type
           value: DirectoryOrCreate
+
+  - it: No metrics port if promex is not enabled
+    asserts:
+      - isNullOrEmpty:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].ports
+
+  - it: Enabling promex creates the metrics port
+    set:
+      host:
+        additional_settings:
+          prometheus_exporter:
+            enabled: true
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].ports
+          content:
+            containerPort: 9544
+            name: metrics
+
+  - it: Setting custom metrics port values works as expected
+    set:
+      host:
+        additional_settings:
+          prometheus_exporter:
+            enabled: true
+            listen_url: 0.0.0.0:1234
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].ports
+          content:
+            containerPort: 1234
+            name: metrics
