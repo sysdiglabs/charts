@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.34.6
+### Chores
+* **ci** [6a044942](https://github.com/sysdiglabs/charts/commit/6a04494288df8bf5944ab60f0a2dce1d93ee73fa): bump bitnami/kubectl image references ([#2152](https://github.com/sysdiglabs/charts/issues/2152))
 # v1.34.5
 ### Chores
 * **node-analyzer** [5603c97c](https://github.com/sysdiglabs/charts/commit/5603c97c1ec4650a2abf8727f0ce5715330e8505): bump host-scanner to v0.13.1 ([#2141](https://github.com/sysdiglabs/charts/issues/2141))
