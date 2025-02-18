@@ -1,5 +1,5 @@
 # What's Changed
 
 ### Chores
-- **ci** [ca48817c](https://github.com/sysdiglabs/charts/commit/ca48817ca3532f8367509f1a9582923ff8020d29): bump bitnami/kubectl image references ([#2115](https://github.com/sysdiglabs/charts/issues/2115))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.17.2...kspm-collector-0.17.3
+- **ci** [6a044942](https://github.com/sysdiglabs/charts/commit/6a04494288df8bf5944ab60f0a2dce1d93ee73fa): bump bitnami/kubectl image references ([#2152](https://github.com/sysdiglabs/charts/issues/2152))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.17.3...kspm-collector-0.17.4
