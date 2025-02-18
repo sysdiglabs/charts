@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.8.1
+### New Features
+* **shield** [fb7e2ffa](https://github.com/sysdiglabs/charts/commit/fb7e2ffa7535e1e1b2dd55720680d05e2911b49f): add metrics port when promex is enabled ([#2151](https://github.com/sysdiglabs/charts/issues/2151))
 # v0.8.0
 ### New Features
 * **shield** [97157a7e](https://github.com/sysdiglabs/charts/commit/97157a7eb9ba1948ea6373eb6c6ed1d8991bcb4c): cluster shield 1.8.0 ([#2142](https://github.com/sysdiglabs/charts/issues/2142))
