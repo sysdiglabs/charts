@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.77.0
+### New Features
+* **agent,shield** [534e572c](https://github.com/sysdiglabs/charts/commit/534e572c6b66cce6f270dab07c4bd0b113a38912): release agent 13.8.0 ([#2154](https://github.com/sysdiglabs/charts/issues/2154))
 # v1.76.3
 # v1.76.2
 ### Chores
