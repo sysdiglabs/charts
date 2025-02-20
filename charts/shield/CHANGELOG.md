@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.9.2
+### Bug Fixes
+* **shield** [590ce969](https://github.com/sysdiglabs/charts/commit/590ce969048c0e848edad49699cc1509d57e3913): allow audit tap in local forwarder ([#2158](https://github.com/sysdiglabs/charts/issues/2158))
 # v0.9.1
 ### New Features
 * **shield** [6d0d6c7d](https://github.com/sysdiglabs/charts/commit/6d0d6c7da344ba0ef17c64b06d3d604dc730072d): reintroduce key rename ([#2157](https://github.com/sysdiglabs/charts/issues/2157))
