@@ -634,31 +634,7 @@ tests:
       - matchRegex:
           path: data['dragent.yaml']
           pattern: |
-            app_checks_enabled: false
-      - matchRegex:
-          path: data['dragent.yaml']
-          pattern: |
             audit_tap:
-              enabled: false
-      - matchRegex:
-          path: data['dragent.yaml']
-          pattern: |
-            drift_control:
-              enabled: false
-      - matchRegex:
-          path: data['dragent.yaml']
-          pattern: |
-            jmx:
-              enabled: false
-      - matchRegex:
-          path: data['dragent.yaml']
-          pattern: |
-            live_logs:
-              enabled: false
-      - matchRegex:
-          path: data['dragent.yaml']
-          pattern: |
-            local_forwarder:
               enabled: false
       - matchRegex:
           path: data['dragent.yaml']
@@ -668,39 +644,7 @@ tests:
       - matchRegex:
           path: data['dragent.yaml']
           pattern: |
-            network_topology:
-              enabled: false
-      - matchRegex:
-          path: data['dragent.yaml']
-          pattern: |
-            prometheus:
-              enabled: false
-      - matchRegex:
-          path: data['dragent.yaml']
-          pattern: |
-            secure_audit_streams:
-              enabled: false
-      - matchRegex:
-          path: data['dragent.yaml']
-          pattern: |
-            statsd:
-              enabled: false
-      - matchRegex:
-          path: data['dragent.yaml']
-          pattern: |
             sysdig_capture_enabled: false
-
-  - it: Enable App Checks
-    set:
-      features:
-        monitor:
-          app_checks:
-            enabled: true
-    asserts:
-      - matchRegex:
-          path: data['dragent.yaml']
-          pattern: |
-            app_checks_enabled: true
 
   - it: Enable Audit Tap
     set:
@@ -715,58 +659,6 @@ tests:
             audit_tap:
               enabled: true
 
-  - it: Enable Drift Control
-    set:
-      features:
-        detections:
-          drift_control:
-            enabled: true
-    asserts:
-      - matchRegex:
-          path: data['dragent.yaml']
-          pattern: |
-            drift_control:
-              enabled: true
-
-  - it: Enable JMX
-    set:
-      features:
-        monitor:
-          java_management_extensions:
-            enabled: true
-    asserts:
-      - matchRegex:
-          path: data['dragent.yaml']
-          pattern: |
-            jmx:
-              enabled: true
-
-  - it: Enable Live Logs
-    set:
-      features:
-        investigations:
-          live_logs:
-            enabled: true
-    asserts:
-      - matchRegex:
-          path: data['dragent.yaml']
-          pattern: |
-            live_logs:
-              enabled: true
-
-  - it: Enable Local Forwarder
-    set:
-      features:
-        investigations:
-          event_forwarder:
-            enabled: true
-    asserts:
-      - matchRegex:
-          path: data['dragent.yaml']
-          pattern: |
-            local_forwarder:
-              enabled: true
-
   - it: Enable Malware Control
     set:
       features:
@@ -778,58 +670,6 @@ tests:
           path: data['dragent.yaml']
           pattern: |
             malware_control:
-              enabled: true
-
-  - it: Enable Network Security
-    set:
-      features:
-        investigations:
-          network_security:
-            enabled: true
-    asserts:
-      - matchRegex:
-          path: data['dragent.yaml']
-          pattern: |
-            network_topology:
-              enabled: true
-
-  - it: Enable Prometheus
-    set:
-      features:
-        monitor:
-          prometheus:
-            enabled: true
-    asserts:
-      - matchRegex:
-          path: data['dragent.yaml']
-          pattern: |
-            prometheus:
-              enabled: true
-
-  - it: Enable Secure Audit Streams
-    set:
-      features:
-        investigations:
-          activity_audit:
-            enabled: true
-    asserts:
-      - matchRegex:
-          path: data['dragent.yaml']
-          pattern: |
-            secure_audit_streams:
-              enabled: true
-
-  - it: Enable StatsD
-    set:
-      features:
-        monitor:
-          statsd:
-            enabled: true
-    asserts:
-      - matchRegex:
-          path: data['dragent.yaml']
-          pattern: |
-            statsd:
               enabled: true
 
   - it: Enable Captures

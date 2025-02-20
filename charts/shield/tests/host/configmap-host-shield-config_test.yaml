@@ -19,16 +19,45 @@ tests:
       - matchRegex:
           path: data['host-shield.yaml']
           pattern: |
-            features:
+            .*
               detections:
                 ml_policies:
                   enabled: false
+            .*
+      - matchRegex:
+          path: data['host-shield.yaml']
+          pattern: |
+            .*
+              monitor:
+                app_checks:
+                  enabled: false
+                java_management_extensions:
+                  enabled: false
+                prometheus:
+                  enabled: false
+                statsd:
+                  enabled: false
+            .*
+      - matchRegex:
+          path: data['host-shield.yaml']
+          pattern: |
+            .*
               posture:
                 host_posture:
                   enabled: false
+            .*
+      - matchRegex:
+          path: data['host-shield.yaml']
+          pattern: |
+            .*
               respond:
                 rapid_response:
                   enabled: false
+            .*
+      - matchRegex:
+          path: data['host-shield.yaml']
+          pattern: |
+            .*
               vulnerability_management:
                 host_vulnerability_management:
                   enabled: false
@@ -46,49 +75,11 @@ tests:
       - matchRegex:
           path: data['host-shield.yaml']
           pattern: |
-            features:
-              detections:
-                ml_policies:
-                  enabled: false
+            .*
               posture:
                 host_posture:
                   enabled: true
-              respond:
-                rapid_response:
-                  enabled: false
-              vulnerability_management:
-                host_vulnerability_management:
-                  enabled: false
-                in_use:
-                  enabled: false
-                  integration_enabled: false
-
-  - it: Posture configs are not present when not enabled
-    set:
-      features:
-        posture:
-          host_posture:
-            enabled: false
-    asserts:
-      - matchRegex:
-          path: data['host-shield.yaml']
-          pattern: |
-            features:
-              detections:
-                ml_policies:
-                  enabled: false
-              posture:
-                host_posture:
-                  enabled: false
-              respond:
-                rapid_response:
-                  enabled: false
-              vulnerability_management:
-                host_vulnerability_management:
-                  enabled: false
-                in_use:
-                  enabled: false
-                  integration_enabled: false
+            .*
 
   - it: Ensure Host Vulnerability Management is enabled when requested
     set:
@@ -100,68 +91,10 @@ tests:
       - matchRegex:
           path: data['host-shield.yaml']
           pattern: |
-            features:
-              detections:
-                ml_policies:
-                  enabled: false
-              posture:
-                host_posture:
-                  enabled: false
-              respond:
-                rapid_response:
-                  enabled: false
+            .*
               vulnerability_management:
                 host_vulnerability_management:
                   enabled: true
-                in_use:
-                  enabled: false
-                  integration_enabled: false
-
-  - it: Host Vulnerability Management configs are not present when not enabled
-    set:
-      features:
-        vulnerability_management:
-          host_vulnerability_management:
-            enabled: false
-    asserts:
-      - matchRegex:
-          path: data['host-shield.yaml']
-          pattern: |
-            features:
-              detections:
-                ml_policies:
-                  enabled: false
-              posture:
-                host_posture:
-                  enabled: false
-              respond:
-                rapid_response:
-                  enabled: false
-              vulnerability_management:
-                host_vulnerability_management:
-                  enabled: false
-                in_use:
-                  enabled: false
-                  integration_enabled: false
-
-  - it: Host Vulnerability Management is disabled by default
-    asserts:
-      - matchRegex:
-          path: data['host-shield.yaml']
-          pattern: |
-            features:
-              detections:
-                ml_policies:
-                  enabled: false
-              posture:
-                host_posture:
-                  enabled: false
-              respond:
-                rapid_response:
-                  enabled: false
-              vulnerability_management:
-                host_vulnerability_management:
-                  enabled: false
                 in_use:
                   enabled: false
                   integration_enabled: false
@@ -179,19 +112,21 @@ tests:
       - matchRegex:
           path: data['host-shield.yaml']
           pattern: |-
-            features:
-              detections:
-                ml_policies:
-                  enabled: false
+            .*
               posture:
                 host_posture:
                   enabled: true
-              respond:
-                rapid_response:
-                  enabled: false
+            .*
+      - matchRegex:
+          path: data['host-shield.yaml']
+          pattern: |
+            .*
               vulnerability_management:
                 host_vulnerability_management:
                   enabled: true
+                in_use:
+                  enabled: false
+            .*
 
   - it: Enable Posture, Vulnerability Management, and set in_use to true
     set:
@@ -208,22 +143,21 @@ tests:
       - matchRegex:
           path: data['host-shield.yaml']
           pattern: |-
-            features:
-              detections:
-                ml_policies:
-                  enabled: false
+            .*
               posture:
                 host_posture:
                   enabled: true
-              respond:
-                rapid_response:
-                  enabled: false
+            .*
+      - matchRegex:
+          path: data['host-shield.yaml']
+          pattern: |
+            .*
               vulnerability_management:
                 host_vulnerability_management:
                   enabled: true
                 in_use:
                   enabled: true
-                  integration_enabled: false
+            .*
 
   - it: Enable Rapid Response
     set:
@@ -235,22 +169,11 @@ tests:
       - matchRegex:
           path: data['host-shield.yaml']
           pattern: |-
-            features:
-              detections:
-                ml_policies:
-                  enabled: false
-              posture:
-                host_posture:
-                  enabled: false
+            .*
               respond:
                 rapid_response:
                   enabled: true
-              vulnerability_management:
-                host_vulnerability_management:
-                  enabled: false
-                in_use:
-                  enabled: false
-                  integration_enabled: false
+            .*
 
   - it: Enable ML Policies
     set:
@@ -262,19 +185,128 @@ tests:
       - matchRegex:
           path: data['host-shield.yaml']
           pattern: |-
-            features:
+            .*
               detections:
                 ml_policies:
                   enabled: true
-              posture:
-                host_posture:
-                  enabled: false
-              respond:
-                rapid_response:
-                  enabled: false
-              vulnerability_management:
-                host_vulnerability_management:
-                  enabled: false
-                in_use:
-                  enabled: false
-                  integration_enabled: false
+            .*
+
+  - it: Enable App Checks
+    set:
+      features:
+        monitor:
+          app_checks:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['host-shield.yaml']
+          pattern: |
+            .*
+                app_checks:
+                  enabled: true
+            .*
+
+  - it: Enable JMX
+    set:
+      features:
+        monitor:
+          java_management_extensions:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['host-shield.yaml']
+          pattern: |
+            .*
+                java_management_extensions:
+                  enabled: true
+            .*
+
+  - it: Enable Prometheus
+    set:
+      features:
+        monitor:
+          prometheus:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['host-shield.yaml']
+          pattern: |
+            .*
+                prometheus:
+                  enabled: true
+            .*
+
+  - it: Enable StatsD
+    set:
+      features:
+        monitor:
+          statsd:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['host-shield.yaml']
+          pattern: |
+            .*
+                statsd:
+                  enabled: true
+            .*
+
+  - it: Enable Activity Audit
+    set:
+      features:
+        investigations:
+          activity_audit:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['host-shield.yaml']
+          pattern: |
+            .*
+                activity_audit:
+                  enabled: true
+            .*
+
+  - it: Enable Event Forwarder
+    set:
+      features:
+        investigations:
+          event_forwarder:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['host-shield.yaml']
+          pattern: |
+            .*
+                event_forwarder:
+                  enabled: true
+            .*
+
+  - it: Enable Live Logs
+    set:
+      features:
+        investigations:
+          live_logs:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['host-shield.yaml']
+          pattern: |
+            .*
+                live_logs:
+                  enabled: true
+            .*
+
+  - it: Enable Network Security
+    set:
+      features:
+        investigations:
+          network_security:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['host-shield.yaml']
+          pattern: |
+            .*
+                network_security:
+                  enabled: true
+            .*

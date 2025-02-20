@@ -134,7 +134,7 @@ spec:
             {{- include "common.proxy.envs" . | nindent 12 }}
             {{- end }}
             {{- include "common.custom_ca.envs" (merge (dict) . (dict "CACertsPath" "/opt/draios/certificates/")) | nindent 12 }}
-            {{- if (include "host.rapid_response_enabled" .) }}
+            {{- if .Values.features.respond.rapid_response.enabled }}
             - name: PASSWORD
               valueFrom:
                 secretKeyRef:
