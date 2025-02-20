@@ -1,5 +1,5 @@
 # What's Changed
 
 ### New Features
-- **shield** [fb7e2ffa](https://github.com/sysdiglabs/charts/commit/fb7e2ffa7535e1e1b2dd55720680d05e2911b49f): add metrics port when promex is enabled ([#2151](https://github.com/sysdiglabs/charts/issues/2151))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-0.8.0...shield-0.8.1
+- **agent,shield** [534e572c](https://github.com/sysdiglabs/charts/commit/534e572c6b66cce6f270dab07c4bd0b113a38912): release agent 13.8.0 ([#2154](https://github.com/sysdiglabs/charts/issues/2154))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-0.8.1...shield-0.9.0
