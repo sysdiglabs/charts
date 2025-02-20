@@ -175,10 +175,10 @@ capabilities:
 {{- end -}}
 
 {{- define "host.respond_key" }}
-{{- if hasKey . "respond" }}
-{{- print "respond" }}
-{{- else }}
+{{- if hasKey . "responding" }}
 {{- print "responding" }}
+{{- else }}
+{{- print "respond" }}
 {{- end }}
 {{- end }}
 
@@ -191,10 +191,10 @@ true
 {{- end }}
 
 {{- define "host.monitor_key" }}
-{{- if hasKey . "monitor" }}
-{{- print "monitor" }}
-{{- else }}
+{{- if hasKey . "monitoring" }}
 {{- print "monitoring" }}
+{{- else }}
+{{- print "monitor" }}
 {{- end }}
 {{- end }}
 
