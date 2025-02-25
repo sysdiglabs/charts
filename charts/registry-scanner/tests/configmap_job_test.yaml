@@ -12,11 +12,11 @@ tests:
     asserts:
       - matchRegex:
           path: data['config.yaml']
-          pattern: "scan:((.|\n)*)inlineScanImage:.quay.io/sysdig/registry-scanner:job-0.7.4-fips\n"
+          pattern: "scan:((.|\n)*)inlineScanImage:.quay.io/sysdig/registry-scanner:job-[0-9]+\\.[0-9]+\\.[0-9]+-fips\n"
         template: templates/configmap.yaml
       - matchRegex:
           path: spec.template.spec.containers[0].image
-          pattern: "quay.io/sysdig/registry-scanner:job-0.7.4-fips$"
+          pattern: "quay.io/sysdig/registry-scanner:job-[0-9]+\\.[0-9]+\\.[0-9]+-fips$"
         template: templates/job.yaml
   - it: fips is requested with inlineScanImage set
     set:
@@ -32,7 +32,7 @@ tests:
         template: templates/configmap.yaml
       - matchRegex:
           path: spec.template.spec.containers[0].image
-          pattern: "quay.io/sysdig/registry-scanner:job-0.7.4-fips$"
+          pattern: "quay.io/sysdig/registry-scanner:job-[0-9]+\\.[0-9]+\\.[0-9]+-fips$"
         template: templates/job.yaml
   - it: fips is requested with inlineScanImage set and custom image repo
     set:
