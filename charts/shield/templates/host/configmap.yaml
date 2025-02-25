@@ -7,17 +7,17 @@ metadata:
     {{- include "host.labels" . | nindent 4 }}
 data:
   host-shield.yaml: |
-    {{- include "host.host_shield_config" . | nindent 4 }}
+    {{- include "host.host_shield_yaml" . | nindent 4 }}
   dragent.yaml: |
-    {{- include "host.configmap" . | nindent 4 }}
+    {{- include "host.dragent_yaml" . | nindent 4 }}
   {{- if .Values.features.investigations.event_forwarder.enabled }}
   local_forwarder_config.yaml: |
     integrations:
       {{- toYaml .Values.features.investigations.event_forwarder.integrations | nindent 6 }}
   {{- end }}
-  {{- if (include "host.prometheus_enabled" .Values.features) }}
+  {{- if .Values.features.monitor.prometheus.enabled}}
   prometheus.yaml: |
     {{- with .Values.features }}
-    {{- toYaml (dig (include "host.monitor_key" .) "prometheus" "prometheus_yaml" list .) | nindent 4 }}
+    {{- toYaml .monitor.prometheus.prometheus_yaml | nindent 4 }}
     {{- end }}
   {{- end }}
