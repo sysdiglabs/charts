@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.9.3
+### Chores
+* **cluster-shield,shield,sysdig-deploy** [a0a64555](https://github.com/sysdiglabs/charts/commit/a0a645551a9718380cd51ab9ad428b1b660c3528): Automatic bump to version 1.8.1 ([#2164](https://github.com/sysdiglabs/charts/issues/2164))
 # v0.9.2
 ### Bug Fixes
 * **shield** [590ce969](https://github.com/sysdiglabs/charts/commit/590ce969048c0e848edad49699cc1509d57e3913): allow audit tap in local forwarder ([#2158](https://github.com/sysdiglabs/charts/issues/2158))
