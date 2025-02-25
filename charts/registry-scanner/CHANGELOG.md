@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.6.10
+### Chores
+* **registry-scanner** [9928e993](https://github.com/sysdiglabs/charts/commit/9928e99335efd5e259999ed1985a4b88f8f3964d): Update to v0.7.5 ([#2163](https://github.com/sysdiglabs/charts/issues/2163))
 # v1.6.9
 ### Bug Fixes
 * **registry-scanner** [4f7f204f](https://github.com/sysdiglabs/charts/commit/4f7f204f7f32a58f825aaffc58498f582b689e6d): handle error for fips image ([#2149](https://github.com/sysdiglabs/charts/issues/2149))
