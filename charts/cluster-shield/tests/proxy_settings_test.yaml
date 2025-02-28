@@ -31,6 +31,7 @@ tests:
           kind: Secret
           apiVersion: v1
           name: sysdig-cluster-shield
+          namespace: shield-namespace
         template: templates/secrets.yaml
 
   - it: Test proxy configuration are stored in a secret and mounted as env vars
@@ -80,6 +81,7 @@ tests:
           kind: Secret
           apiVersion: v1
           name: sysdig-cluster-shield-proxy
+          namespace: shield-namespace
         template: templates/secrets.yaml
         documentIndex: 1
       - equal:
@@ -149,6 +151,7 @@ tests:
           kind: Secret
           apiVersion: v1
           name: sysdig-cluster-shield-proxy
+          namespace: shield-namespace
         template: templates/secrets.yaml
         documentIndex: 1
       - equal:
