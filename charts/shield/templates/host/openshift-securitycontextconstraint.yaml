@@ -21,7 +21,6 @@ allowedCapabilities: []
 allowedCapabilities:
   {{- include "host.capabilities" . | nindent 2 }}
 {{- end }}
-allowedUnsafeSysctls: []
 defaultAddCapabilities: []
 fsGroup:
   type: RunAsAny

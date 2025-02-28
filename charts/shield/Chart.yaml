@@ -13,5 +13,5 @@ maintainers:
   - name: mavimo
     email: marcovito.moscaritolo@sysdig.com
 type: application
-version: 0.9.4
+version: 0.9.5
 appVersion: "1.0.0"
