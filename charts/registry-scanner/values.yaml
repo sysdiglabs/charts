@@ -108,6 +108,8 @@ config:
         limits:
           # The memory limit for the scanner job.
           memory: 2Gi
+          # The CPU limit for the scanner job.
+          cpu: 1
       # The size limit for the emptyDir volume used by the scanner job.<br/>
       # This volume is used to store both the vulnerability database and the image to scan.
       temporaryVolumeSizeLimit: 2Gi
