@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.36.1
+### Bug Fixes
+* **agent,cluster-shield,node-analyzer,shield,kspm-collector,admission-controller,rapid-response** [f71edde3](https://github.com/sysdiglabs/charts/commit/f71edde32e4f1894bf015b94fe55f4d720b79513): remove unused allowedUnsafeSysctls constraint ([#2005](https://github.com/sysdiglabs/charts/issues/2005))
 # v1.36.0
 ### New Features
 * **agent,shield** [534e572c](https://github.com/sysdiglabs/charts/commit/534e572c6b66cce6f270dab07c4bd0b113a38912): release agent 13.8.0 ([#2154](https://github.com/sysdiglabs/charts/issues/2154))
