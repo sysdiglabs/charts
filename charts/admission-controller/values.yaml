@@ -268,6 +268,10 @@ webhook:
       cpu: 100m
       memory: 256Mi
 
+  pdb:
+    # Specifies the minimum number of pods that must remain available during disruptions (such as updates or maintenance).
+    minAvailable: 1
+
   autoscaling:
 
     # The minimum replicas to use while autoscaling the webhook.
