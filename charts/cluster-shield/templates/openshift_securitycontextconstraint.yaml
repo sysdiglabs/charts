@@ -16,6 +16,7 @@ allowHostPorts: false
 allowPrivilegeEscalation: true
 allowPrivilegedContainer: true
 allowedCapabilities: []
+allowedUnsafeSysctls: []
 defaultAddCapabilities: []
 fsGroup:
   type: RunAsAny
