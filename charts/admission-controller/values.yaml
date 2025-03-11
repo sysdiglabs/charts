@@ -273,7 +273,8 @@ webhook:
     minAvailable: 1
 
   autoscaling:
-
+    # Whether the autocaling feature is enabled or not.
+    enabled: true
     # The minimum replicas to use while autoscaling the webhook.
     minReplicas: 2
     # The maximum replicas to use while autoscaling the webhook.
