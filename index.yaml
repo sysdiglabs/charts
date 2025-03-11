@@ -14870,6 +14870,27 @@ entries:
     version: 0.1.1
   cluster-shield:
   - apiVersion: v2
+    appVersion: 1.9.0
+    created: "2025-03-11T11:30:01.688392907Z"
+    description: Cluster Shield Helm Chart for Kubernetes
+    digest: e327db613bff0cbfc004c1b33e8bc208af49abbc642dfd961184020e1ec47304
+    maintainers:
+    - email: alberto.barba@sysdig.com
+      name: AlbertoBarba
+    - email: adam.roberts@sysdig.com
+      name: aroberts87
+    - email: francesco.furlan@sysdig.com
+      name: francesco-furlan
+    - email: gerlando.falauto@sysdig.com
+      name: iurly
+    - email: marcovito.moscaritolo@sysdig.com
+      name: mavimo
+    name: cluster-shield
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/cluster-shield-1.9.0/cluster-shield-1.9.0.tgz
+    version: 1.9.0
+  - apiVersion: v2
     appVersion: 1.8.2
     created: "2025-03-07T09:42:44.910580278Z"
     description: Cluster Shield Helm Chart for Kubernetes
@@ -33000,6 +33021,27 @@ entries:
   shield:
   - apiVersion: v2
     appVersion: 1.0.0
+    created: "2025-03-11T11:30:02.087198816Z"
+    description: A chart with various Sysdig components for Kubernetes
+    digest: ad174704d7067e399129cc6c86e79175d9d34cc70f2bc6f95361844bd1608347
+    maintainers:
+    - email: alberto.barba@sysdig.com
+      name: AlbertoBarba
+    - email: adam.roberts@sysdig.com
+      name: aroberts87
+    - email: francesco.furlan@sysdig.com
+      name: francesco-furlan
+    - email: gerlando.falauto@sysdig.com
+      name: iurly
+    - email: marcovito.moscaritolo@sysdig.com
+      name: mavimo
+    name: shield
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/shield-0.10.0/shield-0.10.0.tgz
+    version: 0.10.0
+  - apiVersion: v2
+    appVersion: 1.0.0
     created: "2025-03-07T09:42:45.408193637Z"
     description: A chart with various Sysdig components for Kubernetes
     digest: dde37233650e7da8ff5f28d8e38a4ec662daff8c8d132592db1372e972585c50
@@ -41892,6 +41934,67 @@ entries:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-1.7.15/sysdig-1.7.15.tgz
     version: 1.7.15
   sysdig-deploy:
+  - apiVersion: v2
+    created: "2025-03-11T11:30:02.330659735Z"
+    dependencies:
+    - alias: admissionController
+      condition: admissionController.enabled
+      name: admission-controller
+      repository: file://../admission-controller
+      version: ~0.16.8
+    - alias: agent
+      condition: agent.enabled
+      name: agent
+      repository: file://../agent
+      version: ~1.36.0
+    - name: common
+      repository: file://../common
+      version: ~1.3.1
+    - alias: nodeAnalyzer
+      condition: nodeAnalyzer.enabled
+      name: node-analyzer
+      repository: file://../node-analyzer
+      version: ~1.34.7
+    - alias: clusterScanner
+      condition: clusterScanner.enabled
+      name: cluster-scanner
+      repository: file://../cluster-scanner
+      version: ~0.14.2
+    - alias: kspmCollector
+      condition: kspmCollector.enabled,global.kspm.deploy
+      name: kspm-collector
+      repository: file://../kspm-collector
+      version: ~0.17.4
+    - alias: rapidResponse
+      condition: rapidResponse.enabled
+      name: rapid-response
+      repository: file://../rapid-response
+      version: ~0.9.17
+    - alias: clusterShield
+      condition: clusterShield.enabled
+      name: cluster-shield
+      repository: file://../cluster-shield
+      version: ~1.9.0
+    description: A chart with various Sysdig components for Kubernetes
+    digest: 52687017b2997f6317e665353de12a57ef5acc6bf7852110f5ac9642001391ce
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    maintainers:
+    - email: alberto.barba@sysdig.com
+      name: AlbertoBarba
+    - email: adam.roberts@sysdig.com
+      name: aroberts87
+    - email: francesco.furlan@sysdig.com
+      name: francesco-furlan
+    - email: gerlando.falauto@sysdig.com
+      name: iurly
+    - email: marcovito.moscaritolo@sysdig.com
+      name: mavimo
+    name: sysdig-deploy
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/sysdig-deploy-1.78.0/sysdig-deploy-1.78.0.tgz
+    version: 1.78.0
   - apiVersion: v2
     created: "2025-02-28T09:41:46.547382341Z"
     dependencies:
@@ -72840,4 +72943,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2025-03-11T09:31:46.406413639Z"
+generated: "2025-03-11T11:30:02.333519833Z"
