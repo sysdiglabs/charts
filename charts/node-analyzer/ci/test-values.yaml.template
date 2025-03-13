@@ -2,3 +2,5 @@ sysdig:
   accessKey: ${SECURE_AGENT_TOKEN}
 nodeAnalyzer:
   apiEndpoint: secure.sysdig.com
+  benchmarkRunner:
+    deploy: false

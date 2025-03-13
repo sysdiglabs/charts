@@ -150,8 +150,8 @@ true
 {{- end -}}
 
 {{- define "host.security_context" -}}
-{{- if .Values.host.custom_security_context }}
-  {{- toYaml .Values.host.custom_security_context -}}
+{{- if .Values.host.security_context }}
+  {{- toYaml .Values.host.security_context -}}
 {{- else if .Values.host.privileged }}
 privileged: true
 runAsNonRoot: false
@@ -175,10 +175,10 @@ capabilities:
 {{- end -}}
 
 {{- define "host.respond_key" }}
-{{- if hasKey . "respond" }}
-{{- print "respond" }}
-{{- else }}
+{{- if hasKey . "responding" }}
 {{- print "responding" }}
+{{- else }}
+{{- print "respond" }}
 {{- end }}
 {{- end }}
 
@@ -191,10 +191,10 @@ true
 {{- end }}
 
 {{- define "host.monitor_key" }}
-{{- if hasKey . "monitor" }}
-{{- print "monitor" }}
-{{- else }}
+{{- if hasKey . "monitoring" }}
 {{- print "monitoring" }}
+{{- else }}
+{{- print "monitor" }}
 {{- end }}
 {{- end }}
 

@@ -92,7 +92,7 @@ rules:
     - secrets
   verbs: ["get", "list", "watch"]
 {{- end }}
-{{- if .Values.cluster_shield.features.kubernetes_metadata.enabled }}
+{{- if or .Values.cluster_shield.features.kubernetes_metadata.enabled (dig "investigations" "network_security" "enabled" false .Values.cluster_shield.features) }}
 - apiGroups:
     - ""
   resources:
@@ -143,6 +143,7 @@ rules:
     - networking.k8s.io
   resources:
     - ingresses
+    - networkpolicies
   verbs:
     - get
     - list

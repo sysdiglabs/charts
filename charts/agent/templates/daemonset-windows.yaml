@@ -30,16 +30,6 @@ spec:
         {{ toYaml .Values.global.image.pullSecrets | nindent 8 }}
       {{- end }}
       securityContext:
-        privileged: true
-        {{- if ( semverCompare ">= 1.31.0" (.Capabilities.KubeVersion.GitVersion )) }}
-        runAsNonRoot: false
-        runAsGroup: 0
-        {{- end }}
-        readOnlyRootFilesystem: false
-        allowPrivilegeEscalation: true
-        capabilities:
-          add:
-            - ALL
         windowsOptions:
           hostProcess: true
           runAsUserName: "NT AUTHORITY\\SYSTEM"
@@ -79,6 +69,9 @@ spec:
           - mountPath: Sysdig/Agent/Secrets/http_proxy
             name: sysdig-agent-http-proxy-secrets
           {{- end }}
+          {{- if .Values.windows.extraVolumes.mounts }}
+            {{ toYaml .Values.windows.extraVolumes.mounts | nindent 10 }}
+          {{- end }}
       terminationGracePeriodSeconds: 0
       volumes:
       - name: config
@@ -108,6 +101,9 @@ spec:
       - name: ca-cert
         configMap:
           name: {{ include "sysdig.custom_ca.existingConfigMap" (dict "global" .Values.global.ssl "component" .Values.ssl) }}
+      {{- end }}
+      {{- if .Values.windows.extraVolumes.volumes }}
+        {{ toYaml .Values.windows.extraVolumes.volumes | nindent 6 }}
       {{- end }}
       nodeSelector:
       {{- if .Values.windows.nodeSelector }}

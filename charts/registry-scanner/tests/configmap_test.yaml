@@ -188,3 +188,40 @@ tests:
       - matchRegex:
           path: data['config.yaml']
           pattern: scan:((.|\n)*)disablePlatformScanning:\s*true
+  - it: fips is requested with inlineScanImage set
+    set:
+      scanOnStart:
+        enabled: true
+      image:
+        tag: "bananas"
+        fips: true
+      config.scan.inlineScanImage: foo:bar
+    asserts:
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: "scan:((.|\n)*)inlineScanImage:.foo:bar-fips\n"
+  - it: fips is requested with inlineScanImage already including fips suffix
+    set:
+      scanOnStart:
+        enabled: true
+      image:
+        tag: "bananas"
+        fips: true
+      config.scan.inlineScanImage: foo:bar-fips
+    asserts:
+      - failedTemplate:
+          errorMessage: "use `image.fips: true` instead of manually setting fips tag"
+  - it: fips is NOT requested with inlineScanImage set
+    set:
+      scanOnStart:
+        enabled: true
+      image:
+        tag: "bananas"
+      config.scan.inlineScanImage: foo:bar
+    asserts:
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: "scan:((.|\n)*)inlineScanImage: foo:bar\n"
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: "scan:((.|\n)*)inlineScanImage: foo:bar\n"

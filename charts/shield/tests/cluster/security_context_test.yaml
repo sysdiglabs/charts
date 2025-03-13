@@ -1,0 +1,33 @@
+suite: Security Context tests
+templates:
+  - templates/cluster/deployment.yaml
+  - templates/cluster/tls-certificates-admissionregistration.yaml
+values:
+  - ../values/base.yaml
+tests:
+  - it: Validate the default security context
+    asserts:
+      - equal:
+          path: spec.template.spec.securityContext
+          value: {}
+    template: templates/cluster/deployment.yaml
+
+  - it: Validate the possibility to override the security context
+    set:
+      cluster:
+        security_context:
+          runAsUser: 1000
+          runAsGroup: 1000
+          fsGroup: 2000
+          appArmorProfile:
+            type: RuntimeDefault
+    asserts:
+      - equal:
+          path: spec.template.spec.securityContext
+          value:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 2000
+            appArmorProfile:
+              type: RuntimeDefault
+    template: templates/cluster/deployment.yaml

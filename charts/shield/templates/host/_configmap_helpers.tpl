@@ -9,7 +9,7 @@
 {{- end }}
 
 {{- define "host.configmap.responding" }}
-{{- dict "responding" (pick . "rapid_response") | toYaml }}
+{{- dict "respond" (pick . "rapid_response") | toYaml }}
 {{- end }}
 
 {{- define "host.configmap.detections" }}
@@ -25,7 +25,7 @@
 {{- with .Values.features.vulnerability_management }}
 {{- $config = merge $config ((include "host.configmap.vm" .) | fromYaml) }}
 {{- end }}
-{{- with .Values.features.responding }}
+{{- with .Values.features.respond }}
 {{- $config = merge $config ((include "host.configmap.responding" .) | fromYaml) }}
 {{- end }}
 {{- with .Values.features.detections }}

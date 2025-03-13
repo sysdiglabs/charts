@@ -60,7 +60,7 @@ Adds kubernetes related keys to the configuration.
 {{- $_ := set $conf "cluster_scanner" (merge (include "cluster-shield.configurationClusterScanner" . | fromYaml) (.Values.cluster_shield.cluster_scanner | default dict)) -}}
 {{- end -}}
 {{- if and (.Values.cluster_shield.features.admission_control.enabled) (.Values.cluster_shield.features.admission_control.container_vulnerability_management.enabled)}}
-{{- $_ := set $conf "admission_controller_secure" (include "cluster-shield.configurationAdmissionControllerSecure" . | fromYaml) -}}
+{{- $_ := set $conf "admission_controller_secure" (merge (include "cluster-shield.configurationAdmissionControllerSecure" . | fromYaml) (.Values.cluster_shield.admission_controller_secure | default dict)) -}}
 {{- end}}
 {{- $_ := unset $conf.sysdig_endpoint "access_key" -}}
 {{- $_ := unset $conf.sysdig_endpoint "secure_api_token" -}}
@@ -150,9 +150,11 @@ Cluster Scanner Lock Name
 
 {{/*
 Cluster Scanner Service Name
+As per DNS naming spec, the length of a service name should be less than 63 characters;
+so we truncate the fullname to 47 characters since we append "-cluster-scanner" to it.
 */}}
 {{- define "cluster-shield.clusterScannerServiceName" -}}
-    {{- include "cluster-shield.fullname" . -}}-cluster-scanner
+    {{- (include "cluster-shield.fullname" .) | trunc 47 -}}-cluster-scanner
 {{- end }}
 
 {{/*

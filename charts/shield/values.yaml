@@ -137,10 +137,10 @@ features:
       enabled: false
       integrations: []
       transmit_message_types: []
-  responding:
+  respond:
     rapid_response:
       enabled: false
-  monitoring:
+  monitor:
     app_checks:
       enabled: false
     java_management_extensions:
@@ -158,7 +158,7 @@ host:
   # Additional settings to be passed to the host shield (overrides the helm generated settings)
   additional_settings: {}
   # Allows overriding the Security Context of the Agent pod(s). Primarily intended resolving targeted incidents and debugging
-  custom_security_context: {}
+  security_context: {}
   image:
     # The registry where the host shield images are stored
     registry: quay.io
@@ -169,7 +169,7 @@ host:
     # The image name for the host shield
     shield_name: agent-slim
     # The tag for the host shield images
-    tag: 13.7.2
+    tag: 13.8.0
     # The pull policy for the host shield images
     pull_policy: IfNotPresent
     # The pull secrets for the host shield images
@@ -297,7 +297,7 @@ cluster:
     # The repository where the cluster shield image is stored
     repository: sysdig/cluster-shield
     # The tag for the cluster shield image
-    tag: 1.7.1
+    tag: 1.9.0
     # The pull policy for the cluster shield image
     pull_policy: IfNotPresent
     # The pull secrets for the cluster shield image
@@ -324,6 +324,8 @@ cluster:
     labels: {}
     # The annotations for the service account
     annotations: {}
+  # The default security context of the cluster shield pods
+  security_context: {}
   validatingwebhookconfiguration:
     # Create the validatingwebhookconfiguration resources for the cluster shield
     create: true

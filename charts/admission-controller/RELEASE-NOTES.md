@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **admission-controller** [d1267cf6](https://github.com/sysdiglabs/charts/commit/d1267cf668829b16a91d66fcb05be9dedbb70df0): Bump Admission-controller to 0.16.7 ([#2105](https://github.com/sysdiglabs/charts/issues/2105))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/admission-controller-0.16.6...admission-controller-0.16.7
+### Bug Fixes
+- **agent,cluster-shield,node-analyzer,shield,kspm-collector,admission-controller,rapid-response** [f71edde3](https://github.com/sysdiglabs/charts/commit/f71edde32e4f1894bf015b94fe55f4d720b79513): remove unused allowedUnsafeSysctls constraint ([#2005](https://github.com/sysdiglabs/charts/issues/2005))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/admission-controller-0.16.8...admission-controller-0.16.9

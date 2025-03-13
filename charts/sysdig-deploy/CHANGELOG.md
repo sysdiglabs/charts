@@ -10,6 +10,37 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.78.0
+### Chores
+* **cluster-shield,shield,sysdig-deploy** [638ca265](https://github.com/sysdiglabs/charts/commit/638ca265259e0d350f92e75da063924f00de1bd3): Automatic bump to version 1.9.0 ([#2173](https://github.com/sysdiglabs/charts/issues/2173))
+# v1.77.4
+### Chores
+* **cluster-shield,shield,sysdig-deploy** [b087bfa5](https://github.com/sysdiglabs/charts/commit/b087bfa5fba13e559a6a9ffbc6c01bd1ca00622b): Automatic bump to version 1.8.2 ([#2168](https://github.com/sysdiglabs/charts/issues/2168))
+# v1.77.3
+### Chores
+* **sysdig-deploy** [ba0f8088](https://github.com/sysdiglabs/charts/commit/ba0f8088fc5344193a4a2c50800cc9882db30fbe): Automatic version bump due to updated dependencies ([#2167](https://github.com/sysdiglabs/charts/issues/2167))
+# v1.77.2
+### Chores
+* **cluster-shield,shield,sysdig-deploy** [a0a64555](https://github.com/sysdiglabs/charts/commit/a0a645551a9718380cd51ab9ad428b1b660c3528): Automatic bump to version 1.8.1 ([#2164](https://github.com/sysdiglabs/charts/issues/2164))
+# v1.77.1
+### Chores
+* **sysdig-deploy** [7ebe5d26](https://github.com/sysdiglabs/charts/commit/7ebe5d261172b75aa6a6bd9c9a67655e646e3239): Automatic version bump due to updated dependencies ([#2137](https://github.com/sysdiglabs/charts/issues/2137))
+# v1.77.0
+### New Features
+* **agent,shield** [534e572c](https://github.com/sysdiglabs/charts/commit/534e572c6b66cce6f270dab07c4bd0b113a38912): release agent 13.8.0 ([#2154](https://github.com/sysdiglabs/charts/issues/2154))
+# v1.76.3
+# v1.76.2
+### Chores
+* **node-analyzer** [5603c97c](https://github.com/sysdiglabs/charts/commit/5603c97c1ec4650a2abf8727f0ce5715330e8505): bump host-scanner to v0.13.1 ([#2141](https://github.com/sysdiglabs/charts/issues/2141))
+# v1.76.1
+### Chores
+* **node-analyzer** [1e803f14](https://github.com/sysdiglabs/charts/commit/1e803f14368ab312f60b6a40ad624db07cd63863): bump runtime-scanner to v1.8.2 ([#2139](https://github.com/sysdiglabs/charts/issues/2139))
+# v1.76.0
+### Chores
+* **cluster-shield,sysdig-deploy** [13050097](https://github.com/sysdiglabs/charts/commit/1305009755b646fbd8e869aaca470ff4406f726c): Automatic bump to version 1.8.0 ([#2140](https://github.com/sysdiglabs/charts/issues/2140))
+# v1.75.1
+### Chores
+* **sysdig-deploy** [4a519f53](https://github.com/sysdiglabs/charts/commit/4a519f53127e4559ceded88c60eb0714db1d73fa): Automatic version bump due to updated dependencies ([#2133](https://github.com/sysdiglabs/charts/issues/2133))
 # v1.75.0
 ### New Features
 * **agent** [a3b4239a](https://github.com/sysdiglabs/charts/commit/a3b4239ad6c476fc9ede903694a4e04d4f9ece7c): add "sysdig_api_endpoint" in dragent.yaml based on the region ([#2072](https://github.com/sysdiglabs/charts/issues/2072))

@@ -34,7 +34,7 @@ tests:
       - containsDocument:
           kind: ValidatingWebhookConfiguration
           apiVersion: admissionregistration.k8s.io/v1
-          name: shield-release-cluster-shield-audit
+          name: shield-release-cluster-shield
       - notExists:
           path: metadata.namespace
       - exists:
@@ -83,7 +83,7 @@ tests:
       - containsDocument:
           kind: ValidatingWebhookConfiguration
           apiVersion: admissionregistration.k8s.io/v1
-          name: shield-release-cluster-shield-audit
+          name: shield-release-cluster-shield
       - notExists:
           path: metadata.namespace
       - exists:
@@ -119,7 +119,7 @@ tests:
       - containsDocument:
           kind: ValidatingWebhookConfiguration
           apiVersion: admissionregistration.k8s.io/v1
-          name: shield-release-cluster-shield-audit
+          name: shield-release-cluster-shield
       - exists:
           path: .webhooks[?(@.name == "audit.secure.sysdig.com")]
       - notExists:
@@ -160,7 +160,7 @@ tests:
       - containsDocument:
           kind: ValidatingWebhookConfiguration
           apiVersion: admissionregistration.k8s.io/v1
-          name: shield-release-cluster-shield-audit
+          name: shield-release-cluster-shield
       - exists:
           path: .webhooks[?(@.name == "vac.secure.sysdig.com")]
       - exists:
@@ -263,7 +263,7 @@ tests:
       - containsDocument:
           kind: ValidatingWebhookConfiguration
           apiVersion: admissionregistration.k8s.io/v1
-          name: shield-release-cluster-shield-audit
+          name: shield-release-cluster-shield
       - exists:
           path: .webhooks[?(@.name == "vac.secure.sysdig.com")]
       - exists:
@@ -336,7 +336,7 @@ tests:
       - containsDocument:
           kind: ValidatingWebhookConfiguration
           apiVersion: admissionregistration.k8s.io/v1
-          name: shield-release-cluster-shield-audit
+          name: shield-release-cluster-shield
         not: true
       - isNotNullOrEmpty:
           path: data["tls.crt"]
@@ -364,7 +364,7 @@ tests:
       - containsDocument:
           kind: ValidatingWebhookConfiguration
           apiVersion: admissionregistration.k8s.io/v1
-          name: shield-release-cluster-shield-audit
+          name: shield-release-cluster-shield
       - exists:
           path: .webhooks[?(@.name == "audit.secure.sysdig.com")]
       - exists:
@@ -398,7 +398,7 @@ tests:
       - containsDocument:
           kind: ValidatingWebhookConfiguration
           apiVersion: admissionregistration.k8s.io/v1
-          name: shield-release-cluster-shield-audit
+          name: shield-release-cluster-shield
       - exists:
           path: .webhooks[?(@.name == "vac.secure.sysdig.com")]
       - exists:
@@ -427,7 +427,7 @@ tests:
       - containsDocument:
           kind: ValidatingWebhookConfiguration
           apiVersion: admissionregistration.k8s.io/v1
-          name: shield-release-cluster-shield-audit
+          name: shield-release-cluster-shield
       - exists:
           path: .webhooks[?(@.name == "audit.secure.sysdig.com")]
       - exists:
@@ -490,7 +490,7 @@ tests:
       - containsDocument:
           kind: ValidatingWebhookConfiguration
           apiVersion: admissionregistration.k8s.io/v1
-          name: shield-release-cluster-shield-audit
+          name: shield-release-cluster-shield
       - exists:
           path: .webhooks[?(@.name == "audit.secure.sysdig.com")]
       - exists:

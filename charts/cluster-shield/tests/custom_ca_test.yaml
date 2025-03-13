@@ -18,6 +18,7 @@ tests:
           kind: Secret
           apiVersion: v1
           name: cluster-shield-ca
+          namespace: shield-namespace
         not: true
         template: templates/secrets.yaml
       - notExists:
@@ -48,6 +49,7 @@ tests:
           kind: Secret
           apiVersion: v1
           name: cluster-shield-ca
+          namespace: shield-namespace
         template: templates/secrets.yaml
         documentIndex: 1
       - equal:
@@ -89,6 +91,7 @@ tests:
           kind: Secret
           apiVersion: v1
           name: cluster-shield-ca
+          namespace: shield-namespace
         template: templates/secrets.yaml
         not: true
       - isSubset:
@@ -124,6 +127,7 @@ tests:
           kind: Secret
           apiVersion: v1
           name: cluster-shield-ca
+          namespace: shield-namespace
         template: templates/secrets.yaml
         not: true
       - isSubset:
@@ -162,6 +166,7 @@ tests:
           kind: Secret
           apiVersion: v1
           name: cluster-shield-ca
+          namespace: shield-namespace
         template: templates/secrets.yaml
         documentIndex: 1
       - equal:
@@ -205,6 +210,7 @@ tests:
           kind: Secret
           apiVersion: v1
           name: cluster-shield-ca
+          namespace: shield-namespace
         template: templates/secrets.yaml
         not: true
       - isSubset:
@@ -242,6 +248,7 @@ tests:
           kind: Secret
           apiVersion: v1
           name: cluster-shield-ca
+          namespace: shield-namespace
         template: templates/secrets.yaml
         not: true
       - isSubset:

@@ -10,6 +10,24 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.36.1
+### Bug Fixes
+* **agent,cluster-shield,node-analyzer,shield,kspm-collector,admission-controller,rapid-response** [f71edde3](https://github.com/sysdiglabs/charts/commit/f71edde32e4f1894bf015b94fe55f4d720b79513): remove unused allowedUnsafeSysctls constraint ([#2005](https://github.com/sysdiglabs/charts/issues/2005))
+# v1.36.0
+### New Features
+* **agent,shield** [534e572c](https://github.com/sysdiglabs/charts/commit/534e572c6b66cce6f270dab07c4bd0b113a38912): release agent 13.8.0 ([#2154](https://github.com/sysdiglabs/charts/issues/2154))
+# v1.35.4
+### Chores
+* **ci** [6a044942](https://github.com/sysdiglabs/charts/commit/6a04494288df8bf5944ab60f0a2dce1d93ee73fa): bump bitnami/kubectl image references ([#2152](https://github.com/sysdiglabs/charts/issues/2152))
+# v1.35.3
+### New Features
+* **agent** [03866ed5](https://github.com/sysdiglabs/charts/commit/03866ed5831d48d71706ef0e93d5c31b68f2dfad): [SMAGENT-8176] enable extraVolumes for the Windows agent ([#2134](https://github.com/sysdiglabs/charts/issues/2134))
+# v1.35.2
+### Chores
+* **agent** [bc06d306](https://github.com/sysdiglabs/charts/commit/bc06d306993009dad0ab5c6288fb16260e50a60e): Bump Windows Agent release to 1.3.2 ([#2135](https://github.com/sysdiglabs/charts/issues/2135))
+# v1.35.1
+### Bug Fixes
+* **agent** [83ed9fa2](https://github.com/sysdiglabs/charts/commit/83ed9fa258aee51b76691cfa8709e9ea0405ea75): update windows agent ds template to remove not needed security context ([#2132](https://github.com/sysdiglabs/charts/issues/2132))
 # v1.35.0
 ### New Features
 * **agent** [a3b4239a](https://github.com/sysdiglabs/charts/commit/a3b4239ad6c476fc9ede903694a4e04d4f9ece7c): add "sysdig_api_endpoint" in dragent.yaml based on the region ([#2072](https://github.com/sysdiglabs/charts/issues/2072))

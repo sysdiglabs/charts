@@ -10,6 +10,27 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.6.10
+### Chores
+* **registry-scanner** [9928e993](https://github.com/sysdiglabs/charts/commit/9928e99335efd5e259999ed1985a4b88f8f3964d): Update to v0.7.5 ([#2163](https://github.com/sysdiglabs/charts/issues/2163))
+# v1.6.9
+### Bug Fixes
+* **registry-scanner** [4f7f204f](https://github.com/sysdiglabs/charts/commit/4f7f204f7f32a58f825aaffc58498f582b689e6d): handle error for fips image ([#2149](https://github.com/sysdiglabs/charts/issues/2149))
+# v1.6.8
+### Chores
+* **registry-scanner** [8d9cfd01](https://github.com/sysdiglabs/charts/commit/8d9cfd0129baf4f550ed896c830cd490fd823cdd): Update to v0.7.4 ([#2147](https://github.com/sysdiglabs/charts/issues/2147))
+# v1.6.7
+### Bug Fixes
+* **registry-scanner** [872ea38e](https://github.com/sysdiglabs/charts/commit/872ea38e8dbd32f9f7956c314d3de828fe798be3): avoid duplicated fips suffix ([#2146](https://github.com/sysdiglabs/charts/issues/2146))
+# v1.6.6
+### Documentation
+* **registry-scanner** [c171960e](https://github.com/sysdiglabs/charts/commit/c171960ebd92a64df6971e98f16a9b92420e48e5): add description to new param ([#2145](https://github.com/sysdiglabs/charts/issues/2145))
+# v1.6.5
+### Code Refactoring
+* **registry-scanner** [126c7150](https://github.com/sysdiglabs/charts/commit/126c715001ad8d4a4488468bbea2e0abf3c120f1): rename scan on start job name [SSPROD-51637] ([#2144](https://github.com/sysdiglabs/charts/issues/2144))
+# v1.6.4
+### Chores
+* **registry-scanner** [46f6a77c](https://github.com/sysdiglabs/charts/commit/46f6a77ca5be4804e3eeaa29e1fc12b85181a465): Update to v0.7.3 ([#2138](https://github.com/sysdiglabs/charts/issues/2138))
 # v1.6.3
 ### Chores
 * **registry-scanner** [6ac1a871](https://github.com/sysdiglabs/charts/commit/6ac1a871055d0b8ea8bcdad8da5040859be0f84c): Update to v0.7.2 ([#2131](https://github.com/sysdiglabs/charts/issues/2131))

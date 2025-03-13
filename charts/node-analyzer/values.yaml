@@ -313,7 +313,7 @@ nodeAnalyzer:
     probesPort: 7002
     image:
       repository: sysdig/vuln-runtime-scanner
-      tag: "1.8.1"
+      tag: "1.8.2"
       digest:
       pullPolicy:
 
@@ -406,7 +406,7 @@ nodeAnalyzer:
 
     image:
       repository: sysdig/vuln-host-scanner
-      tag: "0.13.0"
+      tag: "0.13.2"
       digest:
       pullPolicy:
 
@@ -536,7 +536,7 @@ tests:
   timeout: 300s
   image:
     repo: bitnami/kubectl
-    tag: 1.32.1
+    tag: 1.32.2
 
 # Allow to modify DNS policy
 dnsPolicy: null

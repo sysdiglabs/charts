@@ -105,8 +105,28 @@ Allow overriding registry and repository for air-gapped environments
     {{- if not .Values.image.tag -}}
     {{- $imageTag = (printf "job-%s" .Chart.AppVersion) -}}
     {{- end -}}
+    {{- if .Values.image.fips -}}
+      {{- if not (hasSuffix "-fips" $imageTag) -}}
+        {{- $imageTag = (printf "%s-fips" $imageTag) -}}
+      {{- end -}}
+    {{- end -}}
     {{- $globalRegistry := (default .Values.global dict).imageRegistry -}}
     {{- $globalRegistry | default $imageRegistry | default "quay.io" -}} / {{- $imageRepository -}} : {{- $imageTag -}}
+{{- end -}}
+{{- end -}}
+
+{{- define "registry-scanner.inlineScanImage" -}}
+{{- if .Values.image.fips -}}
+    {{- if hasSuffix "-fips" .Values.config.scan.inlineScanImage -}}
+        {{ fail "use `image.fips: true` instead of manually setting fips tag" }}
+    {{- end -}}
+    {{- if not .Values.config.scan.inlineScanImage -}}
+        {{- (include "registry-scanner.image" .) -}}
+    {{- else -}}
+        {{- .Values.config.scan.inlineScanImage -}}-fips
+    {{- end -}}
+{{- else -}}
+    {{- .Values.config.scan.inlineScanImage -}}
 {{- end -}}
 {{- end -}}
 

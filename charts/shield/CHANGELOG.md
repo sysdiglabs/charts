@@ -10,6 +10,36 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.10.0
+### Chores
+* **cluster-shield,shield,sysdig-deploy** [638ca265](https://github.com/sysdiglabs/charts/commit/638ca265259e0d350f92e75da063924f00de1bd3): Automatic bump to version 1.9.0 ([#2173](https://github.com/sysdiglabs/charts/issues/2173))
+# v0.9.5
+### Bug Fixes
+* **agent,cluster-shield,node-analyzer,shield,kspm-collector,admission-controller,rapid-response** [f71edde3](https://github.com/sysdiglabs/charts/commit/f71edde32e4f1894bf015b94fe55f4d720b79513): remove unused allowedUnsafeSysctls constraint ([#2005](https://github.com/sysdiglabs/charts/issues/2005))
+# v0.9.4
+### Chores
+* **cluster-shield,shield,sysdig-deploy** [b087bfa5](https://github.com/sysdiglabs/charts/commit/b087bfa5fba13e559a6a9ffbc6c01bd1ca00622b): Automatic bump to version 1.8.2 ([#2168](https://github.com/sysdiglabs/charts/issues/2168))
+# v0.9.3
+### Chores
+* **cluster-shield,shield,sysdig-deploy** [a0a64555](https://github.com/sysdiglabs/charts/commit/a0a645551a9718380cd51ab9ad428b1b660c3528): Automatic bump to version 1.8.1 ([#2164](https://github.com/sysdiglabs/charts/issues/2164))
+# v0.9.2
+### Bug Fixes
+* **shield** [590ce969](https://github.com/sysdiglabs/charts/commit/590ce969048c0e848edad49699cc1509d57e3913): allow audit tap in local forwarder ([#2158](https://github.com/sysdiglabs/charts/issues/2158))
+# v0.9.1
+### New Features
+* **shield** [6d0d6c7d](https://github.com/sysdiglabs/charts/commit/6d0d6c7da344ba0ef17c64b06d3d604dc730072d): reintroduce key rename ([#2157](https://github.com/sysdiglabs/charts/issues/2157))
+# v0.9.0
+### New Features
+* **agent,shield** [534e572c](https://github.com/sysdiglabs/charts/commit/534e572c6b66cce6f270dab07c4bd0b113a38912): release agent 13.8.0 ([#2154](https://github.com/sysdiglabs/charts/issues/2154))
+# v0.8.1
+### New Features
+* **shield** [fb7e2ffa](https://github.com/sysdiglabs/charts/commit/fb7e2ffa7535e1e1b2dd55720680d05e2911b49f): add metrics port when promex is enabled ([#2151](https://github.com/sysdiglabs/charts/issues/2151))
+# v0.8.0
+### New Features
+* **shield** [97157a7e](https://github.com/sysdiglabs/charts/commit/97157a7eb9ba1948ea6373eb6c6ed1d8991bcb4c): cluster shield 1.8.0 ([#2142](https://github.com/sysdiglabs/charts/issues/2142))
+# v0.7.0
+### New Features
+* **shield** [3d75369f](https://github.com/sysdiglabs/charts/commit/3d75369f67f8bfc67f5c04e4be898a793dd5a64b): allow to specify the security context for the Cluster Shield in the shield chart ([#2130](https://github.com/sysdiglabs/charts/issues/2130))
 # v0.6.4
 ### New Features
 * **agent,shield** [58350609](https://github.com/sysdiglabs/charts/commit/5835060974d9e807f59a59845ec5228ce98bfe15): release agent 13.7.2 ([#2119](https://github.com/sysdiglabs/charts/issues/2119))
