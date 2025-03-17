@@ -10,6 +10,12 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.9.19
+### Chores
+* **rapid-response** [261b9f2d](https://github.com/sysdiglabs/charts/commit/261b9f2d087230881c41014dd3001be72093a93d): bump rapid-response version to 0.5.4 ([#2172](https://github.com/sysdiglabs/charts/issues/2172))
+# v0.9.18
+### Bug Fixes
+* **agent,cluster-shield,node-analyzer,shield,kspm-collector,admission-controller,rapid-response** [f71edde3](https://github.com/sysdiglabs/charts/commit/f71edde32e4f1894bf015b94fe55f4d720b79513): remove unused allowedUnsafeSysctls constraint ([#2005](https://github.com/sysdiglabs/charts/issues/2005))
 # v0.9.17
 ### Chores
 * **ci** [6a044942](https://github.com/sysdiglabs/charts/commit/6a04494288df8bf5944ab60f0a2dce1d93ee73fa): bump bitnami/kubectl image references ([#2152](https://github.com/sysdiglabs/charts/issues/2152))
