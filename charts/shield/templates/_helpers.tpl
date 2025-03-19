@@ -24,6 +24,22 @@ If release name contains chart name it will be used as a full name.
 {{- end }}
 
 {{/*
+Same as "shield.fullname" but for Windows
+*/}}
+{{- define "shield.windows.fullname" -}}
+    {{- if .Values.fullname_override }}
+        {{- printf "%s-%s" "windows" .Values.fullname_override | trunc 63 | trimSuffix "-" }}
+    {{- else }}
+        {{- $name := (include "shield.name" .) }}
+        {{- if contains $name .Release.Name }}
+            {{- printf "%s-%s" "windows" .Release.Name | trunc 63 | trimSuffix "-" }}
+        {{- else }}
+            {{- printf "%s-%s-%s" "windows" .Release.Name $name | trunc 63 | trimSuffix "-" }}
+        {{- end }}
+    {{- end }}
+{{- end }}
+
+{{/*
 Create chart name and version as used by the chart label.
 */}}
 {{- define "shield.chart" -}}
