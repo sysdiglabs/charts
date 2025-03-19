@@ -7,6 +7,9 @@ If release name contains chart name it will be used as a full name.
     {{- printf "%s-host" (include "shield.fullname" . | trunc 57 | trimSuffix "-") }}
 {{- end }}
 
+{{- define "host.windows.fullname" -}}
+    {{- printf "%s-host" (include "shield.windows.fullname" . | trunc 57 | trimSuffix "-") }}
+{{- end }}
 
 {{- define "host.proxy_config" -}}
 {{- if (include "common.proxy.enabled" . ) -}}
