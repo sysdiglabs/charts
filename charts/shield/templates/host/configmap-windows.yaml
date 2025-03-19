@@ -1,3 +1,4 @@
+{{- if .Values.host_windows.enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -10,3 +11,4 @@ data:
     {{- include "host.windows.host_shield_config" . | nindent 4 }}
   dragent.yaml: |
     {{- include "host.windows.configmap" . | nindent 4 }}
+{{- end }}
