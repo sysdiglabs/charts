@@ -153,22 +153,36 @@ features:
       enabled: false
 
 host_windows:
+  # Enable the host shield for Windows
   enabled: false
+  # Additional settings to be passed to the host shield (overrides the helm generated settings)
   additional_settings:
     monitoring_port: 8081
+  # The agent-runtime additional settings (overrides dragent.yaml)
+  runtime_additional_settings: {}
   image:
+    # The registry where the host shield images are stored
     registry: quay.io
+    # The repository where the host shield images are stored
     repository: sysdig
+    # The image name for the host shield
     name: host-shield
-    tag: 0.7.0
+    # The tag for the host shield images
+    tag: 0.7.0-rc1
+    # The pull policy for the host shield images
     pull_policy: IfNotPresent
+    # The pull secrets for the host shield images
     pull_secrets: []
   resources:
     limits:
+      # The CPU limit for the host shield
       cpu: 1000m
+      # The memory limit for the host shield
       memory: 1Gi
     requests:
+      # The CPU request for the host shield
       cpu: 250m
+      # The memory request for the host shield
       memory: 384Mi
   # The annotations for the host shield workloads (metadata.annotations)
   workload_annotations: {}
