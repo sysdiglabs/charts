@@ -155,11 +155,11 @@ features:
 host_windows:
   # Enable the host shield for Windows
   enabled: false
-  # Additional settings to be passed to the host shield (overrides the helm generated settings)
-  additional_settings:
-    monitoring_port: 8081
   # The agent-runtime additional settings (overrides dragent.yaml)
-  runtime_additional_settings: {}
+  additional_settings: {}
+  # Additional settings to be passed to the host shield (overrides the helm generated settings)
+  shield_additional_settings:
+    monitoring_port: 8081
   image:
     # The registry where the host shield images are stored
     registry: quay.io
