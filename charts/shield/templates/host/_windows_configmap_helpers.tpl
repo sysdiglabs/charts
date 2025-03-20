@@ -31,13 +31,27 @@
 {{- $featuresConfig = merge $featuresConfig ((include "host.windows.configmap.vm" .) | fromYaml) }}
 {{- end }}
 {{- $_ := set $config "features" $featuresConfig -}}
-{{- $override := (include "host.windows.config_override" .) | fromYaml }}
+{{- $clusterConfig := dict "name" .Values.cluster_config.name -}}
+{{- if .Values.cluster_config.tags -}}
+  {{- $_ := set $clusterConfig "tags" .Values.cluster_config.tags -}}
+{{- end -}}
+{{- $_ := set $config "cluster_config" $clusterConfig -}}
+{{- $override := (include "host.windows.shield_config_override" .) | fromYaml }}
 {{- $finalConfig := mergeOverwrite $config $override }}
 {{- $finalConfig | toYaml }}
 {{- end }}
 
 {{- define "host.windows.configmap" }}
-{{- $config := dict }}
+{{- $config := dict
+  "k8s_cluster_name" .Values.cluster_config.name
+}}
+{{- if .Values.cluster_config.tags -}}
+  {{- $tagList := list }}
+  {{- range $k, $v := .Values.cluster_config.tags }}
+    {{- $tagList = append $tagList (printf "%s:%s" $k $v) }}
+  {{- end }}
+  {{- $_ := set $config "tags" (join "," $tagList) -}}
+{{- end -}}
 {{- if (include "common.proxy.enabled" . ) }}
 {{- $config := merge $config (dict "http_proxy" (include "host.proxy_config" . | fromYaml)) }}
 {{- end }}
