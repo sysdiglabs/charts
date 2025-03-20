@@ -80,8 +80,10 @@ spec:
           volumeMounts:
           - name: host-shield-config
             mountPath: Sysdig/Shield/Config
-          - name: host-shield-secrets
-            mountPath: Sysdig/Shield/Secrets
+          # Agent still expects the access key to be in the AccessKey directory
+          # TODO: remove this when the agent is ready.
+          - name: access-key-secrets
+            mountPath: Sysdig/Shield/Secrets/AccessKey
           {{- /* Custom CA */}}
           {{- include "common.custom_ca.volume_mount" (merge (dict) . (dict "CACertsPath" "Sysdig/Shield/certificates/")) | nindent 10 }}
           {{- include "host.windows.volume_mounts" . | nindent 10 }}
@@ -91,7 +93,7 @@ spec:
         - name: host-shield-config
           configMap:
             name: {{ include "host.windows.fullname" . }}
-        - name: host-shield-secrets
+        - name: access-key-secrets
           secret:
             secretName: {{ include "common.credentials.access_key_secret_name" . }}
         {{- $customCAVolume := (include "common.custom_ca.volume" .) }}
