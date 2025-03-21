@@ -229,6 +229,8 @@ service:
   audit_port:
   # Additional service labels
   labels: {}
+  # Additional service annotations
+  annotations: {}
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
