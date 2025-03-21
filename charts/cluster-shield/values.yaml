@@ -114,7 +114,7 @@ cluster_shield:
       # The list of namespaces to exclude from the audit feature
       excluded_namespaces: []
       # List of rules used to determine if a request should be audited
-      webhook_rules:  # +doc-gen:break
+      webhook_rules: # +doc-gen:break
         - apiGroups:
             - ""
             - apps
@@ -227,6 +227,8 @@ service:
   admission_control_port:
   # The Service port used to expose audit endpoints
   audit_port:
+  # Additional service labels
+  labels: {}
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
