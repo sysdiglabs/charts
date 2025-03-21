@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.36.2
+### Chores
+* **ci** [9738928a](https://github.com/sysdiglabs/charts/commit/9738928aa139b0d8b05ca7fd58f31af625aaf095): bump bitnami/kubectl image references ([#2178](https://github.com/sysdiglabs/charts/issues/2178))
 # v1.36.1
 ### Bug Fixes
 * **agent,cluster-shield,node-analyzer,shield,kspm-collector,admission-controller,rapid-response** [f71edde3](https://github.com/sysdiglabs/charts/commit/f71edde32e4f1894bf015b94fe55f4d720b79513): remove unused allowedUnsafeSysctls constraint ([#2005](https://github.com/sysdiglabs/charts/issues/2005))
