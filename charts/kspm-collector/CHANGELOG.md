@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.17.7
+### Chores
+* **ci** [9738928a](https://github.com/sysdiglabs/charts/commit/9738928aa139b0d8b05ca7fd58f31af625aaf095): bump bitnami/kubectl image references ([#2178](https://github.com/sysdiglabs/charts/issues/2178))
 # v0.17.6
 # v0.17.5
 ### Bug Fixes
