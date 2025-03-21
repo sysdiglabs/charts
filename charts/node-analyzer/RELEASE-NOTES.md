@@ -1,5 +1,5 @@
 # What's Changed
 
 ### Chores
-- **host-scanner** [5c072ad2](https://github.com/sysdiglabs/charts/commit/5c072ad2848b04e172fa5e38670452030f6b31f2): release vuln-host-scanner 0.13.4 ([#2181](https://github.com/sysdiglabs/charts/issues/2181))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.34.8...node-analyzer-1.34.9
+- **ci** [9738928a](https://github.com/sysdiglabs/charts/commit/9738928aa139b0d8b05ca7fd58f31af625aaf095): bump bitnami/kubectl image references ([#2178](https://github.com/sysdiglabs/charts/issues/2178))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.34.9...node-analyzer-1.34.10

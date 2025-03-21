@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.34.10
+### Chores
+* **ci** [9738928a](https://github.com/sysdiglabs/charts/commit/9738928aa139b0d8b05ca7fd58f31af625aaf095): bump bitnami/kubectl image references ([#2178](https://github.com/sysdiglabs/charts/issues/2178))
 # v1.34.9
 ### Chores
 * **host-scanner** [5c072ad2](https://github.com/sysdiglabs/charts/commit/5c072ad2848b04e172fa5e38670452030f6b31f2): release vuln-host-scanner 0.13.4 ([#2181](https://github.com/sysdiglabs/charts/issues/2181))
