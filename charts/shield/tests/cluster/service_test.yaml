@@ -13,6 +13,8 @@ tests:
           kind: Service
           apiVersion: v1
           name: release-name-shield-cluster
+      - notExists:
+          path: metadata.annotations
       - equal:
           path: metadata.namespace
           value: shield-namespace
@@ -210,3 +212,68 @@ tests:
       - equal:
           path: metadata.labels["sysdig/component"]
           value: cluster
+
+  - it: Service setup with different service type
+    set:
+      cluster:
+        service:
+          type: NodePort
+    asserts:
+      - containsDocument:
+          kind: Service
+          apiVersion: v1
+          name: release-name-shield-cluster
+      - equal:
+          path: spec.type
+          value: NodePort
+
+  - it: Custom Lables
+    set:
+      cluster:
+        service:
+          labels:
+            custom-1: label-1
+            custom-2: label-2
+    asserts:
+      - isKind:
+          of: Service
+      - equal:
+          path: metadata.name
+          value: release-name-shield-cluster
+      - equal:
+          path: metadata.labels["app.kubernetes.io/name"]
+          value: shield
+      - equal:
+          path: metadata.labels["app.kubernetes.io/instance"]
+          value: release-name
+      - equal:
+          path: metadata.labels["app.kubernetes.io/managed-by"]
+          value: Helm
+      - equal:
+          path: metadata.labels["custom-1"]
+          value: label-1
+      - equal:
+          path: metadata.labels["custom-2"]
+          value: label-2
+
+  - it: Custom Annotations
+    set:
+      cluster:
+        service:
+          annotations:
+            custom-1: annotation-1
+            custom-2: annotation-2
+    asserts:
+      - isKind:
+          of: Service
+      - equal:
+          path: metadata.name
+          value: release-name-shield-cluster
+      - exists:
+          path: metadata.annotations
+      - equal:
+          path: metadata.annotations["custom-1"]
+          value: annotation-1
+      - equal:
+          path: metadata.annotations["custom-2"]
+          value: annotation-2

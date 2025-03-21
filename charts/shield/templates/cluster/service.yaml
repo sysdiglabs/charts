@@ -5,8 +5,15 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "cluster.labels" . | nindent 4 }}
+    {{- with .Values.cluster.service.labels }}
+        {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- if .Values.cluster.service.annotations }}
+  annotations:
+    {{- toYaml .Values.cluster.service.annotations | nindent 4 }}
+  {{- end }}
 spec:
-  type: ClusterIP
+  type: {{ .Values.cluster.service.type }}
   ports:
     - port: {{ .Values.cluster.additional_settings.monitoring_port }}
       targetPort: monitoring

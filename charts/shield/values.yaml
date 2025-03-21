@@ -297,7 +297,7 @@ cluster:
     # The repository where the cluster shield image is stored
     repository: sysdig/cluster-shield
     # The tag for the cluster shield image
-    tag: 1.9.0
+    tag: 1.9.1
     # The pull policy for the cluster shield image
     pull_policy: IfNotPresent
     # The pull secrets for the cluster shield image
@@ -323,6 +323,13 @@ cluster:
     # The labels for the service account
     labels: {}
     # The annotations for the service account
+    annotations: {}
+  service:
+    # The Cluster Shield service type
+    type: ClusterIP
+    # Additional service labels
+    labels: {}
+    # Additional service annotations
     annotations: {}
   # The default security context of the cluster shield pods
   security_context: {}
