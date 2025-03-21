@@ -81,6 +81,7 @@ data:
             cpu: {{ .Values.config.scan.jobs.resources.requests.cpu }}
           limits:
             memory: {{ .Values.config.scan.jobs.resources.limits.memory }}
+            cpu: {{ .Values.config.scan.jobs.resources.limits.cpu }}
         temporaryVolumeSizeLimit: {{ .Values.config.scan.jobs.temporaryVolumeSizeLimit }}
       {{- if  or .Values.config.scan.inlineScanImage .Values.image.fips }}
       inlineScanImage: {{ include "registry-scanner.inlineScanImage" . }}
