@@ -10,6 +10,19 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.78.5
+### Chores
+* **sysdig-deploy** [5c9da1fb](https://github.com/sysdiglabs/charts/commit/5c9da1fb8dcb069bbc608dbda7d37d3e760553b8): Automatic version bump due to updated dependencies ([#2190](https://github.com/sysdiglabs/charts/issues/2190))
+# v1.78.4
+### Chores
+* **sysdig-deploy,cluster-shield** [06778ccb](https://github.com/sysdiglabs/charts/commit/06778ccbf00f193d4a0e5a423321c807c39fe005): Automatic bump to version 1.9.1 ([#2187](https://github.com/sysdiglabs/charts/issues/2187))
+# v1.78.3
+### Chores
+* **sysdig-deploy** [ac2fab25](https://github.com/sysdiglabs/charts/commit/ac2fab2539c3b39f9263b235fbcd0a22d8a370fc): Automatic version bump due to updated dependencies ([#2186](https://github.com/sysdiglabs/charts/issues/2186))
+# v1.78.2
+### Chores
+* **sysdig-deploy** [7ffcc07b](https://github.com/sysdiglabs/charts/commit/7ffcc07b02637de5158750710afb4765b9772e8a): Automatic version bump due to updated dependencies ([#2171](https://github.com/sysdiglabs/charts/issues/2171))
+# v1.78.1
 # v1.78.0
 ### Chores
 * **cluster-shield,shield,sysdig-deploy** [638ca265](https://github.com/sysdiglabs/charts/commit/638ca265259e0d350f92e75da063924f00de1bd3): Automatic bump to version 1.9.0 ([#2173](https://github.com/sysdiglabs/charts/issues/2173))

@@ -5,8 +5,19 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "cluster.labels" . | nindent 4 }}
+    {{- if and .Values.cluster.service .Values.cluster.service.labels }}
+      {{- toYaml .Values.cluster.service.labels | nindent 4 }}
+    {{- end }}
+  {{- if and .Values.cluster.service .Values.cluster.service.annotations }}
+  annotations:
+    {{- toYaml .Values.cluster.service.annotations | nindent 4 }}
+  {{- end }}
 spec:
+  {{- if and .Values.cluster.service .Values.cluster.service.type }}
+  type: {{ .Values.cluster.service.type }}
+  {{- else }}
   type: ClusterIP
+  {{- end }}
   ports:
     - port: {{ .Values.cluster.additional_settings.monitoring_port }}
       targetPort: monitoring
