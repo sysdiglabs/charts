@@ -112,3 +112,33 @@ tests:
       - matchRegex:
           path: spec.template.spec.containers[0].image
           pattern: ".*:bananas$"
+  - it: uses generated secret name when existingSecretName is not set
+    set:
+      config.registryType: "ecr"
+      scanOnStart.enabled: true
+      existingSecretName: ""
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: AWS_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: RELEASE-NAME-registry-scanner
+                key: aws_secret_access_key
+
+  - it: uses existingSecretName when set
+    set:
+      config.registryType: "ecr"
+      scanOnStart.enabled: true
+      existingSecretName: my-existing-secret
+      Release.Name: test
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: AWS_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: my-existing-secret
+                key: aws_secret_access_key
