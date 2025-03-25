@@ -74,6 +74,9 @@
           {{- end }}
           {{- if eq .Values.config.registryType "ecr" }}
           - name: AWS_ACCESS_KEY_ID
+            {{- if contains "true" (include "registry-scanner.eksWithSA" .)}}
+            value: ""
+            {{- else }}
             valueFrom:
               secretKeyRef:
                 {{- if not .Values.existingSecretName }}
@@ -82,7 +85,11 @@
                 name: {{ .Values.existingSecretName }}
                 {{- end }}
                 key: aws_access_key_id
+            {{- end }}
           - name: AWS_SECRET_ACCESS_KEY
+            {{- if contains "true" (include "registry-scanner.eksWithSA" .)}}
+            value: ""
+            {{- else }}
             valueFrom:
               secretKeyRef:
                 {{- if not .Values.existingSecretName }}
@@ -91,6 +98,7 @@
                 name: {{ .Values.existingSecretName }}
                 {{- end }}
                 key: aws_secret_access_key
+            {{- end }}
           - name: AWS_REGION
             valueFrom:
               secretKeyRef:
