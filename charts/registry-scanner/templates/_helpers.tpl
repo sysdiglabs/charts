@@ -180,3 +180,13 @@ Check cronjob value
     {{- end -}}
   {{- end -}}
 {{- end -}}
+
+{/*
+{{/*
+EKS with AWS Service Account
+*/}}
+{{- define "registry-scanner.eksWithSA" -}}
+  {{- if hasKey .Values.serviceAccount.annotations "eks.amazonaws.com/role-arn" }}
+     true
+  {{- end }}
+{{- end }}
