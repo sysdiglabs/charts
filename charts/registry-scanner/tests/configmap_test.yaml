@@ -91,7 +91,7 @@ tests:
     asserts:
       - matchRegex:
           path: data['config.yaml']
-          pattern: requests:\n\s*memory:\s*500Mi\n\s*cpu:\s*500m\n\s*limits:\s*memory:\s*2Gi
+          pattern: requests:\n\s*memory:\s*500Mi\n\s*cpu:\s*500m\n\s*limits:\s*memory:\s*2Gi\n\s*cpu:\s*1
   - it: resource request and limit wires if custom setup is given
     set:
       config.scan.jobs.resources:
@@ -99,11 +99,12 @@ tests:
           memory: 1Mi
           cpu: 1m
         limits:
-            memory: 2Mi
+          memory: 2Mi
+          cpu: 2m
     asserts:
       - matchRegex:
           path: data['config.yaml']
-          pattern: requests:\n\s*memory:\s*1Mi\n\s*cpu:\s*1m\n\s*limits:\s*memory:\s*2Mi
+          pattern: requests:\n\s*memory:\s*1Mi\n\s*cpu:\s*1m\n\s*limits:\s*memory:\s*2Mi\n\s*cpu:\s*2m
   - it: sets the temporaryVolumeSizeLimit on job
     set:
       config:
