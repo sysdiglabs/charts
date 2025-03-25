@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.6.11
+### Bug Fixes
+* **registry-scanner** [a6033d51](https://github.com/sysdiglabs/charts/commit/a6033d51a251699b58e5f822b608707141f41496): do not set secrets when using an AWS Service Account  ([#2193](https://github.com/sysdiglabs/charts/issues/2193))
 # v1.6.10
 ### Chores
 * **registry-scanner** [9928e993](https://github.com/sysdiglabs/charts/commit/9928e99335efd5e259999ed1985a4b88f8f3964d): Update to v0.7.5 ([#2163](https://github.com/sysdiglabs/charts/issues/2163))
