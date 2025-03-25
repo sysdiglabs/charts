@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.7.0
+### New Features
+* **registry-scanner** [30a88bdb](https://github.com/sysdiglabs/charts/commit/30a88bdb1a3e040c886c55b2b278438bbb9f37e1): add worker job cpu limits ([#2169](https://github.com/sysdiglabs/charts/issues/2169))
 # v1.6.11
 ### Bug Fixes
 * **registry-scanner** [a6033d51](https://github.com/sysdiglabs/charts/commit/a6033d51a251699b58e5f822b608707141f41496): do not set secrets when using an AWS Service Account  ([#2193](https://github.com/sysdiglabs/charts/issues/2193))

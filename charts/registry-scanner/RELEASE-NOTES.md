@@ -1,5 +1,5 @@
 # What's Changed
 
-### Bug Fixes
-- **registry-scanner** [a6033d51](https://github.com/sysdiglabs/charts/commit/a6033d51a251699b58e5f822b608707141f41496): do not set secrets when using an AWS Service Account  ([#2193](https://github.com/sysdiglabs/charts/issues/2193))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-1.6.10...registry-scanner-1.6.11
+### New Features
+- **registry-scanner** [30a88bdb](https://github.com/sysdiglabs/charts/commit/30a88bdb1a3e040c886c55b2b278438bbb9f37e1): add worker job cpu limits ([#2169](https://github.com/sysdiglabs/charts/issues/2169))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-1.6.11...registry-scanner-1.7.0
