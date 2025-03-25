@@ -1,0 +1,332 @@
+suite: Host Windows - Configmap [host-shield.yaml]
+templates:
+  - templates/host/configmap-windows.yaml
+release:
+  name: release-name
+  namespace: shield-namespace
+values:
+  - ../values/windows.yaml
+kubernetesProvider:
+  scheme:
+    "v1/Secret":
+      gvr:
+        version: "v1"
+        resource: "secrets"
+      namespaced: true
+  objects:
+    - apiVersion: v1
+      kind: Secret
+      metadata:
+        name: proxy-secret
+        namespace: shield-namespace
+      data:
+        http_proxy: aHR0cDovL3Byb3h5LWV4aXN0aW5nLmV4YW1wbGUuY29tOjgwODA= # http://proxy-existing.example.com:8080
+        https_proxy: aHR0cHM6Ly9wcm94eS1leGlzdGluZy5leGFtcGxlLmNvbTo4MDgw # https://proxy-existing.example.com:8080
+        no_proxy: ZXhhbXBsZS5jb20K # example.com
+tests:
+  - it: Everything is disabled by default
+    asserts:
+      - matchRegex:
+          path: data["host-shield.yaml"]
+          pattern: |
+            features:
+              posture:
+                host_posture:
+                  enabled: false
+              vulnerability_management:
+                host_vulnerability_management:
+                  enabled: false
+                in_use:
+                  enabled: false
+
+  - it: Ensure Posture is enabled when requested
+    set:
+      features:
+        posture:
+          host_posture:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data["host-shield.yaml"]
+          pattern: |
+            features:
+              posture:
+                host_posture:
+                  enabled: true
+              vulnerability_management:
+                host_vulnerability_management:
+                  enabled: false
+                in_use:
+                  enabled: false
+
+  - it: Posture configs are not present when not enabled
+    set:
+      features:
+        posture:
+          host_posture:
+            enabled: false
+    asserts:
+      - matchRegex:
+          path: data["host-shield.yaml"]
+          pattern: |
+            features:
+              posture:
+                host_posture:
+                  enabled: false
+              vulnerability_management:
+                host_vulnerability_management:
+                  enabled: false
+                in_use:
+                  enabled: false
+
+  - it: Ensure Host Vulnerability Management is enabled when requested
+    set:
+      features:
+        vulnerability_management:
+          host_vulnerability_management:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data["host-shield.yaml"]
+          pattern: |
+            features:
+              posture:
+                host_posture:
+                  enabled: false
+              vulnerability_management:
+                host_vulnerability_management:
+                  enabled: true
+                in_use:
+                  enabled: false
+
+  - it: Host Vulnerability Management configs are not present when not enabled
+    set:
+      features:
+        vulnerability_management:
+          host_vulnerability_management:
+            enabled: false
+    asserts:
+      - matchRegex:
+          path: data["host-shield.yaml"]
+          pattern: |
+            features:
+              posture:
+                host_posture:
+                  enabled: false
+              vulnerability_management:
+                host_vulnerability_management:
+                  enabled: false
+                in_use:
+                  enabled: false
+
+  - it: Host Vulnerability Management is disabled by default
+    asserts:
+      - matchRegex:
+          path: data["host-shield.yaml"]
+          pattern: |
+            features:
+              posture:
+                host_posture:
+                  enabled: false
+              vulnerability_management:
+                host_vulnerability_management:
+                  enabled: false
+                in_use:
+                  enabled: false
+
+  - it: Enable Posture and Vulnerability Management
+    set:
+      features:
+        posture:
+          host_posture:
+            enabled: true
+        vulnerability_management:
+          host_vulnerability_management:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data["host-shield.yaml"]
+          pattern: |-
+            features:
+              posture:
+                host_posture:
+                  enabled: true
+              vulnerability_management:
+                host_vulnerability_management:
+                  enabled: true
+
+  - it: Enable Posture, Vulnerability Management, and set in_use to true
+    set:
+      features:
+        posture:
+          host_posture:
+            enabled: true
+        vulnerability_management:
+          host_vulnerability_management:
+            enabled: true
+          in_use:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data["host-shield.yaml"]
+          pattern: |-
+            features:
+              posture:
+                host_posture:
+                  enabled: true
+              vulnerability_management:
+                host_vulnerability_management:
+                  enabled: true
+                in_use:
+                  enabled: true
+
+  - it: Default No Proxy
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: windows-release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["host-shield.yaml"]
+      - matchRegex:
+          path: data["host-shield.yaml"]
+          pattern: |-
+            proxy:
+              no_proxy: 127.0.0.1,localhost,169.254.0.0/16,.cluster.local
+
+  - it: With Only HTTP Proxy (http protocol)
+    set:
+      proxy:
+        http_proxy: "http://proxy.example.com:8080"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: windows-release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["host-shield.yaml"]
+      - matchRegex:
+          path: data["host-shield.yaml"]
+          pattern: |-
+            proxy:
+              http_proxy: http://proxy.example.com:8080
+
+  - it: With Only HTTP Proxy (http protocol) [Existing Secret]
+    set:
+      proxy:
+        http_proxy_existing_secret: "proxy-secret"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: windows-release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["host-shield.yaml"]
+      - matchRegex:
+          path: data["host-shield.yaml"]
+          pattern: |-
+            proxy:
+              http_proxy: http://proxy-existing.example.com:8080
+
+  - it: With Only HTTPS Proxy (https protocol)
+    set:
+      proxy:
+        https_proxy: "https://proxy.example.com:8080"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: windows-release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["host-shield.yaml"]
+      - matchRegex:
+          path: data["host-shield.yaml"]
+          pattern: |
+            proxy:
+              https_proxy: https://proxy.example.com:8080
+
+  - it: With Only HTTPS Proxy (https protocol) [Existing Secret]
+    set:
+      proxy:
+        https_proxy_existing_secret: "proxy-secret"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: windows-release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["host-shield.yaml"]
+      - matchRegex:
+          path: data["host-shield.yaml"]
+          pattern: |
+            proxy:
+              https_proxy: https://proxy-existing.example.com:8080
+
+  - it: With Only NO Proxy
+    set:
+      proxy:
+        no_proxy: "example.com"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: windows-release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["host-shield.yaml"]
+      - matchRegex:
+          path: data["host-shield.yaml"]
+          pattern: |
+            proxy:
+              no_proxy: example.com,127.0.0.1,localhost,169.254.0.0/16,.cluster.local
+
+  - it: With Only NO Proxy [Existing Secret]
+    set:
+      proxy:
+        no_proxy_existing_secret: "proxy-secret"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: windows-release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["host-shield.yaml"]
+      - matchRegex:
+          path: data["host-shield.yaml"]
+          pattern: |
+            proxy:
+              no_proxy: example.com

@@ -1,0 +1,640 @@
+suite: Windows Host - Configmap [dragent.yaml]
+templates:
+  - templates/host/configmap-windows.yaml
+release:
+  name: release-name
+  namespace: shield-namespace
+values:
+  - ../values/windows.yaml
+kubernetesProvider:
+  scheme:
+    "v1/Secret":
+      gvr:
+        version: "v1"
+        resource: "secrets"
+      namespaced: true
+  objects:
+    - apiVersion: v1
+      kind: Secret
+      metadata:
+        name: proxy-without-credentials-http-protocol
+        namespace: shield-namespace
+      data:
+        http_proxy: aHR0cDovL3Byb3h5LWV4aXN0aW5nLmV4YW1wbGUuY29tOjgwODA= # http://proxy-existing.example.com:8080
+        https_proxy: aHR0cDovL3Byb3h5LWV4aXN0aW5nLmV4YW1wbGUuY29tOjgwODA= # http://proxy-existing.example.com:8080
+    - apiVersion: v1
+      kind: Secret
+      metadata:
+        name: proxy-with-credentials-http-protocol
+        namespace: shield-namespace
+      data:
+        http_proxy: aHR0cDovL3VzZXJleGlzdGluZzpwYXNzd29yZGV4aXN0aW5nQHByb3h5LWV4aXN0aW5nLmV4YW1wbGUuY29tOjgwODA= # http://userexisting:passwordexisting@proxy-existing.example.com:8080
+        https_proxy: aHR0cDovL3VzZXJleGlzdGluZzpwYXNzd29yZGV4aXN0aW5nQHByb3h5LWV4aXN0aW5nLmV4YW1wbGUuY29tOjgwODA= # http://userexisting:passwordexisting@proxy-existing.example.com:8080
+    - apiVersion: v1
+      kind: Secret
+      metadata:
+        name: proxy-without-credentials-https-protocol
+        namespace: shield-namespace
+      data:
+        http_proxy: aHR0cHM6Ly9wcm94eS1leGlzdGluZy5leGFtcGxlLmNvbTo4MDgw # https://proxy-existing.example.com:8080
+        https_proxy: aHR0cHM6Ly9wcm94eS1leGlzdGluZy5leGFtcGxlLmNvbTo4MDgw # https://proxy-existing.example.com:8080
+    - apiVersion: v1
+      kind: Secret
+      metadata:
+        name: proxy-with-credentials-https-protocol
+        namespace: shield-namespace
+      data:
+        http_proxy: aHR0cHM6Ly91c2VyZXhpc3Rpbmc6cGFzc3dvcmRleGlzdGluZ0Bwcm94eS1leGlzdGluZy5leGFtcGxlLmNvbTo4MDgw # https://userexisting:passwordexisting@proxy-existing.example.com:8080
+        https_proxy: aHR0cHM6Ly91c2VyZXhpc3Rpbmc6cGFzc3dvcmRleGlzdGluZ0Bwcm94eS1leGlzdGluZy5leGFtcGxlLmNvbTo4MDgw # https://userexisting:passwordexisting@proxy-existing.example.com:8080
+tests:
+  - it: No Proxy
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: windows-release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+      - notExists:
+          path: data["dragent.yaml"].http_proxy
+
+  - it: With Only HTTP Proxy (http protocol)
+    set:
+      proxy:
+        http_proxy: "http://proxy.example.com:8080"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: windows-release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              proxy_host: proxy.example.com
+              proxy_port: "8080"
+              ssl: false
+
+  - it: With Only HTTP Proxy (http protocol) [Existing Secret]
+    set:
+      proxy:
+        http_proxy_existing_secret: "proxy-without-credentials-http-protocol"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: windows-release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              proxy_host: proxy-existing.example.com
+              proxy_port: "8080"
+              ssl: false
+
+  - it: With Only HTTP Proxy (http protocol + authentication)
+    set:
+      proxy:
+        http_proxy: "http://user:password@proxy.example.com:8080"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: windows-release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              proxy_host: proxy.example.com
+              proxy_password: password
+              proxy_port: "8080"
+              proxy_user: user
+              ssl: false
+
+  - it: With Only HTTP Proxy (http protocol + authentication) [Existing Secret]
+    set:
+      proxy:
+        http_proxy_existing_secret: "proxy-with-credentials-http-protocol"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: windows-release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              proxy_host: proxy-existing.example.com
+              proxy_password: passwordexisting
+              proxy_port: "8080"
+              proxy_user: userexisting
+              ssl: false
+
+  - it: With Only HTTP Proxy (https protocol)
+    set:
+      proxy:
+        http_proxy: "https://proxy.example.com:8080"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: windows-release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              proxy_host: proxy.example.com
+              proxy_port: "8080"
+              ssl: true
+
+  - it: With Only HTTP Proxy (https protocol) [Existing Secret]
+    set:
+      proxy:
+        http_proxy_existing_secret: "proxy-without-credentials-https-protocol"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: windows-release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              proxy_host: proxy-existing.example.com
+              proxy_port: "8080"
+              ssl: true
+
+  - it: With Only HTTP Proxy (https protocol + authentication)
+    set:
+      proxy:
+        http_proxy: "https://user:password@proxy.example.com:8080"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: windows-release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              proxy_host: proxy.example.com
+              proxy_password: password
+              proxy_port: "8080"
+              proxy_user: user
+              ssl: true
+
+  - it: With Only HTTP Proxy (https protocol + authentication) [Existing Secret]
+    set:
+      proxy:
+        http_proxy_existing_secret: "proxy-with-credentials-https-protocol"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: windows-release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              proxy_host: proxy-existing.example.com
+              proxy_password: passwordexisting
+              proxy_port: "8080"
+              proxy_user: userexisting
+              ssl: true
+
+  - it: With Only HTTPS Proxy (http protocol)
+    set:
+      proxy:
+        https_proxy: "http://proxy.example.com:8080"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: windows-release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              proxy_host: proxy.example.com
+              proxy_port: "8080"
+              ssl: false
+
+  - it: With Only HTTPS Proxy (http protocol) [Existing Secret]
+    set:
+      proxy:
+        https_proxy_existing_secret: "proxy-without-credentials-http-protocol"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: windows-release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              proxy_host: proxy-existing.example.com
+              proxy_port: "8080"
+              ssl: false
+
+  - it: With Only HTTPS Proxy (http protocol + authentication)
+    set:
+      proxy:
+        https_proxy: "http://user:password@proxy.example.com:8080"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: windows-release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              proxy_host: proxy.example.com
+              proxy_password: password
+              proxy_port: "8080"
+              proxy_user: user
+              ssl: false
+
+  - it: With Only HTTPS Proxy (http protocol + authentication) [Existing Secret]
+    set:
+      proxy:
+        https_proxy_existing_secret: "proxy-with-credentials-http-protocol"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: windows-release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              proxy_host: proxy-existing.example.com
+              proxy_password: passwordexisting
+              proxy_port: "8080"
+              proxy_user: userexisting
+              ssl: false
+
+  - it: With Only HTTPS Proxy (https protocol)
+    set:
+      proxy:
+        https_proxy: "https://proxy.example.com:8080"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: windows-release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              proxy_host: proxy.example.com
+              proxy_port: "8080"
+              ssl: true
+
+  - it: With Only HTTPS Proxy (https protocol) [Existing Secret]
+    set:
+      proxy:
+        https_proxy_existing_secret: "proxy-without-credentials-https-protocol"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: windows-release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              proxy_host: proxy-existing.example.com
+              proxy_port: "8080"
+              ssl: true
+
+  - it: With Only HTTPS Proxy (https protocol + authentication)
+    set:
+      proxy:
+        https_proxy: "https://user:password@proxy.example.com:8080"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: windows-release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              proxy_host: proxy.example.com
+              proxy_password: password
+              proxy_port: "8080"
+              proxy_user: user
+              ssl: true
+
+  - it: With Only HTTP Proxy (https protocol + authentication) [Existing Secret]
+    set:
+      proxy:
+        https_proxy_existing_secret: "proxy-with-credentials-https-protocol"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: windows-release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              proxy_host: proxy-existing.example.com
+              proxy_password: passwordexisting
+              proxy_port: "8080"
+              proxy_user: userexisting
+              ssl: true
+
+  - it: With HTTP and HTTPS Proxy (http protocol + authentication)
+    set:
+      proxy:
+        http_proxy: "https://proxy.example.com:8080"
+        https_proxy: "http://user:password@proxy.example.com:8080"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: windows-release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              proxy_host: proxy.example.com
+              proxy_password: password
+              proxy_port: "8080"
+              proxy_user: user
+              ssl: false
+
+  - it: With HTTP and HTTPS Proxy (http protocol + authentication) [Existing Secret]
+    set:
+      proxy:
+        http_proxy_existing_secret: "proxy-without-credentials-http-protocol"
+        https_proxy_existing_secret: "proxy-with-credentials-http-protocol"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: windows-release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              proxy_host: proxy-existing.example.com
+              proxy_password: passwordexisting
+              proxy_port: "8080"
+              proxy_user: userexisting
+              ssl: false
+
+  - it: With HTTP and HTTPS Proxy (https protocol + authentication)
+    set:
+      proxy:
+        http_proxy: "http://proxy.example.com:8080"
+        https_proxy: "https://user:password@proxy.example.com:8080"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: windows-release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              proxy_host: proxy.example.com
+              proxy_password: password
+              proxy_port: "8080"
+              proxy_user: user
+              ssl: true
+
+  - it: With HTTP and HTTPS Proxy (https protocol + authentication) [Existing Secret]
+    set:
+      proxy:
+        http_proxy_existing_secret: "proxy-without-credentials-https-protocol"
+        https_proxy_existing_secret: "proxy-with-credentials-https-protocol"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: windows-release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["dragent.yaml"]
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              proxy_host: proxy-existing.example.com
+              proxy_password: passwordexisting
+              proxy_port: "8080"
+              proxy_user: userexisting
+              ssl: true
+
+  - it: Set Cluster name
+    set:
+      cluster_config:
+        name: demo-cluster
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            k8s_cluster_name: demo-cluster
+
+  - it: Tags
+    set:
+      cluster_config:
+        tags:
+          agentTag1: agentTagValue1
+          agentTag2: agentTagValue2
+          AgentTag3: AgentTagValue3
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            tags: AgentTag3:AgentTagValue3,agentTag1:agentTagValue1,agentTag2:agentTagValue2
+
+  - it: Test with Custom CA In Values
+    set:
+      proxy:
+        https_proxy: "https://proxy.example.com:8080"
+      ssl:
+        ca:
+          certs:
+            - "test certificate"
+          key_name: "custom-ca-from-values.crt"
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              ca_certificate: certificates/custom-ca-from-values.crt
+
+  - it: Test with Custom CA In Existing Secret
+    set:
+      proxy:
+        https_proxy: "https://proxy.example.com:8080"
+      ssl:
+        ca:
+          existing_ca_secret: "fake-secret-name"
+          existing_ca_secret_key_name: "custom-ca-from-secret.crt"
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            http_proxy:
+              ca_certificate: certificates/custom-ca-from-secret.crt

@@ -36,6 +36,7 @@
   {{- $_ := set $clusterConfig "tags" .Values.cluster_config.tags -}}
 {{- end -}}
 {{- $_ := set $config "cluster_config" $clusterConfig -}}
+{{- $config := merge $config (dict "proxy" (include "common.proxy_config" . | fromYaml)) }}
 {{- $override := (include "host.windows.shield_config_override" .) | fromYaml }}
 {{- $finalConfig := mergeOverwrite $config $override }}
 {{- $finalConfig | toYaml }}

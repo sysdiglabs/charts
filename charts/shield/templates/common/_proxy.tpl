@@ -98,3 +98,24 @@ Proxy Envs
     {{- end -}}
   {{- end -}}
 {{- end -}}
+
+{{- define "common.proxy_config" -}}
+  {{- $proxy := dict -}}
+  {{- if (include "common.proxy.https_proxy_value" .) -}}
+    {{- $_ := set $proxy "https_proxy" (include "common.proxy.https_proxy_value" .) -}}
+  {{- end -}}
+  {{- if (include "common.proxy.http_proxy_value" .) -}}
+    {{- $_ := set $proxy "http_proxy" (include "common.proxy.http_proxy_value" .) -}}
+  {{- end -}}
+  {{- if .Values.proxy.no_proxy_existing_secret -}}
+    {{- $secret := lookup "v1" "Secret" .Release.Namespace .Values.proxy.no_proxy_existing_secret -}}
+    {{- if $secret -}}
+        {{- $_ := set $proxy "no_proxy" (printf "%s" (index $secret.data "no_proxy" | b64dec)) -}}
+    {{- else -}}
+        {{- fail (printf "Secret '%s' not found" .Values.proxy.no_proxy_existing_secret) -}}
+    {{- end -}}
+  {{- else -}}
+  {{- $_ := set $proxy "no_proxy" (include "common.proxy.no_proxy" .) -}}
+  {{- end -}}
+  {{- $proxy | toYaml -}}
+{{- end -}}
