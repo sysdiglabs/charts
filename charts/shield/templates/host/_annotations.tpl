@@ -11,7 +11,7 @@
     {{- $_ := set $podAnnotations "autopilot.gke.io/no-connect" "true" -}}
   {{- end -}}
   {{- if not .Values.host.privileged -}}
-    {{- $_ := set $podAnnotations "container.apparmor.security.beta.kubernetes.io/sysdig" "unconfined" -}}
+    {{- $_ := set $podAnnotations "container.apparmor.security.beta.kubernetes.io/sysdig-host-shield" "unconfined" -}}
   {{- end -}}
   {{- $podAnnotations | toYaml -}}
 {{- end -}}
