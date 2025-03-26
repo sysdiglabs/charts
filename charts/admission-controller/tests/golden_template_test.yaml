@@ -1,8 +1,5 @@
 suite: Testing pre-generated values and best-known edge cases
 templates:
-  - scanner/deployment.yaml
-  - scanner/configmap.yaml
-  - scanner/secret.yaml
   - webhook/deployment.yaml
   - webhook/configmap.yaml
   - webhook/secret.yaml
@@ -21,15 +18,7 @@ tests:
       - equal:
           path: stringData.SECURE_API_TOKEN
           value: standard_token
-        template: scanner/secret.yaml
-      - equal:
-          path: stringData.SECURE_API_TOKEN
-          value: standard_token
         template: webhook/secret.yaml
-      - equal:
-          path: data.SECURE_BASE_URL
-          value: https://us2.app.sysdig.com
-        template: scanner/configmap.yaml
       - equal:
           path: data.SECURE_URL
           value: https://us2.app.sysdig.com
@@ -45,10 +34,6 @@ tests:
         apiEndpoint: my-endpoint.sysdig.com
       clusterName: test-k8s
     asserts:
-      - equal:
-          path: data.SECURE_BASE_URL
-          value: https://my-endpoint.sysdig.com
-        template: scanner/configmap.yaml
       - equal:
           path: data.SECURE_URL
           value: https://my-endpoint.sysdig.com

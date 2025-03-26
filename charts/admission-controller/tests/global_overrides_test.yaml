@@ -1,8 +1,5 @@
 suite: Test subchart overrides of global values
 templates:
-  - scanner/deployment.yaml
-  - scanner/configmap.yaml
-  - scanner/secret.yaml
   - webhook/deployment.yaml
   - webhook/configmap.yaml
   - webhook/secret.yaml
@@ -17,10 +14,6 @@ tests:
       clusterName: test-k8s
       version: 0.7.3
     asserts:
-      - equal:
-          path: stringData.SECURE_API_TOKEN
-          value: standard_token
-        template: scanner/secret.yaml
       - equal:
           path: stringData.SECURE_API_TOKEN
           value: standard_token
@@ -40,10 +33,6 @@ tests:
       - equal:
           path: stringData.SECURE_API_TOKEN
           value: standard_token
-        template: scanner/secret.yaml
-      - equal:
-          path: stringData.SECURE_API_TOKEN
-          value: standard_token
         template: webhook/secret.yaml
 
   - it: check value of secure_API_TOKEN with local chart override
@@ -57,10 +46,6 @@ tests:
         url: secure_url.com
         secureAPIToken: override_token
     asserts:
-      - equal:
-          path: stringData.SECURE_API_TOKEN
-          value: override_token
-        template: scanner/secret.yaml
       - equal:
           path: stringData.SECURE_API_TOKEN
           value: override_token
@@ -133,10 +118,6 @@ tests:
       clusterName: test-k8s
     asserts:
       - equal:
-          path: spec.template.spec.containers[0].envFrom[1].secretRef.name
-          value: standard_token
-        template: scanner/deployment.yaml
-      - equal:
           path: spec.template.spec.containers[0].envFrom[0].secretRef.name
           value: standard_token
         template: webhook/deployment.yaml
@@ -151,10 +132,6 @@ tests:
       sysdig:
         url: secure_url.com
     asserts:
-      - equal:
-          path: spec.template.spec.containers[0].envFrom[1].secretRef.name
-          value: standard_token
-        template: scanner/deployment.yaml
       - equal:
           path: spec.template.spec.containers[0].envFrom[0].secretRef.name
           value: standard_token
@@ -171,10 +148,6 @@ tests:
         url: secure_url.com
         existingSecureAPITokenSecret: override_token
     asserts:
-      - equal:
-          path: spec.template.spec.containers[0].envFrom[1].secretRef.name
-          value: override_token
-        template: scanner/deployment.yaml
       - equal:
           path: spec.template.spec.containers[0].envFrom[0].secretRef.name
           value: override_token
@@ -288,10 +261,6 @@ tests:
         kspmAdmissionController: true
     asserts:
       - equal:
-          path: data.SECURE_BASE_URL
-          value: https://eu1.app.sysdig.com
-        template: scanner/configmap.yaml
-      - equal:
           path: data.SECURE_URL
           value: https://eu1.app.sysdig.com
         template: webhook/configmap.yaml
@@ -316,7 +285,6 @@ tests:
           value:
             - test
     templates:
-      - scanner/deployment.yaml
       - webhook/deployment.yaml
 
   - it: check imagePullSecrets with legacy
@@ -338,7 +306,6 @@ tests:
           value:
             - test
     templates:
-      - scanner/deployment.yaml
       - webhook/deployment.yaml
 
   - it: check imagePullSecrets with local override
@@ -363,7 +330,6 @@ tests:
           value:
             - test_override
     templates:
-      - scanner/deployment.yaml
       - webhook/deployment.yaml
 
   - it: check imagePullPolicy with global
@@ -380,7 +346,6 @@ tests:
           path: spec.template.spec.containers[0].imagePullPolicy
           value: Always
     templates:
-      - scanner/deployment.yaml
       - webhook/deployment.yaml
 
   - it: check imagePullPolicy with legacy
@@ -401,7 +366,6 @@ tests:
           path: spec.template.spec.containers[0].imagePullPolicy
           value: Always
     templates:
-      - scanner/deployment.yaml
       - webhook/deployment.yaml
 
   - it: check imagePullPolicy with local override
@@ -424,5 +388,4 @@ tests:
           path: spec.template.spec.containers[0].imagePullPolicy
           value: Never
     templates:
-      - scanner/deployment.yaml
       - webhook/deployment.yaml
