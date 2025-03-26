@@ -117,7 +117,7 @@ tests:
       - isSubset:
           path: spec.template.metadata.annotations
           content:
-            container.apparmor.security.beta.kubernetes.io/sysdig: unconfined
+            container.apparmor.security.beta.kubernetes.io/sysdig-host-shield: unconfined
       - isSubset:
           path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].securityContext
           content:
