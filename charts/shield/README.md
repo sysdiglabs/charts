@@ -1,8 +1,5 @@
 # Shield
 
-> [!NOTE]
-> This chart is still in Technical Preview.
-
 [Sysdig Shield](https://docs.sysdig.com/).
 <br/>This chart deploys the Sysdig Host & Cluster Shield in your Kubernetes cluster.
 

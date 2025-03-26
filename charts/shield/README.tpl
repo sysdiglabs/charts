@@ -1,8 +1,5 @@
 # Shield
 
-> [!NOTE]
-> This chart is still in Technical Preview.
-
 [{{ .Project.Name }}]({{ .Project.URL }}).
 <br/>{{ .Project.Description }}
 
