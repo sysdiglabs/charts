@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.34.12
+### Bug Fixes
+* **kspm-analyzer** [d9599e0a](https://github.com/sysdiglabs/charts/commit/d9599e0a25b6f48793d28d6bb32b464f0033a1e6): Fix openshift audit execution ([#2196](https://github.com/sysdiglabs/charts/issues/2196))
 # v1.34.11
 ### Chores
 * **nodeanalyzer** [5e9f94e3](https://github.com/sysdiglabs/charts/commit/5e9f94e3f85fa7480334a725ad2e883c1ea8fb9f): bumped kspm-analyzer to version 1.44.37  ([#2189](https://github.com/sysdiglabs/charts/issues/2189))
