@@ -268,8 +268,13 @@ webhook:
       cpu: 100m
       memory: 256Mi
 
-  autoscaling:
+  pdb:
+    # Specifies the minimum number of pods that must remain available during disruptions (such as updates or maintenance).
+    minAvailable: 1
 
+  autoscaling:
+    # Whether the autocaling feature is enabled or not.
+    enabled: true
     # The minimum replicas to use while autoscaling the webhook.
     minReplicas: 2
     # The maximum replicas to use while autoscaling the webhook.
@@ -355,8 +360,8 @@ scc:
   create: true
 
 scanner:
-  # If you only want the Kubernetes Audit Log functionality then disable this option and it will disable the Admission Controller Scanning Policy functionality.
-  enabled: true
+  # (Deprecated) If you only want the Kubernetes Audit Log functionality then disable this option and it will disable the Admission Controller Scanning Policy functionality.
+  enabled: false
   # The service name for Scanner deployment.
   name: scanner
   # The amount of replicas for scanner.
