@@ -96,6 +96,7 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | config.scan.jobs.resources.requests.memory       | The memory request for the scanner job.                                                                                                                                                                                                    | <code>500Mi</code>                            |
 | config.scan.jobs.resources.requests.cpu          | The CPU request for the scanner job.                                                                                                                                                                                                       | <code>500m</code>                             |
 | config.scan.jobs.resources.limits.memory         | The memory limit for the scanner job.                                                                                                                                                                                                      | <code>2Gi</code>                              |
+| config.scan.jobs.resources.limits.cpu            | The CPU limit for the scanner job.                                                                                                                                                                                                         | <code>1</code>                                |
 | config.scan.jobs.temporaryVolumeSizeLimit        | The size limit for the emptyDir volume used by the scanner job.<br/> This volume is used to store both the vulnerability database and the image to scan.                                                                                   | <code>2Gi</code>                              |
 | config.scan.jobs.nodeSelector                    | NodeSelector for child jobs. If only .Values.nodeSelector is specified, child jobs will inherit the same nodeSelector as the main pod                                                                                                      | <code>{}</code>                               |
 | config.scan.disablePlatformScanning              | Force the scan to happen on the client component rather than relying on backend scanning                                                                                                                                                   | <code>false</code>                            |
@@ -136,7 +137,7 @@ Use the following command to deploy:
 helm upgrade --install registry-scanner \
    --namespace sysdig-agent \
    --create-namespace \
-   --version=1.6.10 \
+   --version=1.7.0 \
    --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
    --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
    --set config.secureSkipTLS=true \

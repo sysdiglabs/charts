@@ -227,6 +227,10 @@ service:
   admission_control_port:
   # The Service port used to expose audit endpoints
   audit_port:
+  # Additional service labels
+  labels: {}
+  # Additional service annotations
+  annotations: {}
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
