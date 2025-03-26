@@ -83,21 +83,21 @@ If release name contains chart name it will be used as a full name.
 {{- end }}
 
 {{- define "host.driver.is_ebpf" }}
-{{- if or (include "host.driver.is_legacy_ebpf" .) (include "host.driver.is_universal_ebpf" .) }}
+{{- if or (include "host.driver.is_legacy_ebpf" .) (include "common.cluster_type.is_gke_autopilot" .) }}
 true
 {{- else }}
 {{- end }}
 {{- end }}
 
 {{- define "host.driver.is_legacy_ebpf" }}
-{{- if eq "legacy_ebpf" .Values.host.driver }}
+{{- if and (eq "legacy_ebpf" .Values.host.driver) (not (include "common.cluster_type.is_gke_autopilot" .)) }}
 true
 {{- else }}
 {{- end }}
 {{- end }}
 
 {{- define "host.driver.is_universal_ebpf" }}
-{{- if eq "universal_ebpf" .Values.host.driver }}
+{{- if or (eq "universal_ebpf" .Values.host.driver) (include "common.cluster_type.is_gke_autopilot" .) }}
 true
 {{- else }}
 {{- end }}
