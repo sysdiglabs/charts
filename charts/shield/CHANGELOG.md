@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.0.0
+### New Features
+* **shield** [d2e3a095](https://github.com/sysdiglabs/charts/commit/d2e3a09566344f580a7f89878230cfbe68b1ef82): GA release of the shield chart ([#2202](https://github.com/sysdiglabs/charts/issues/2202))
 # v0.10.3
 ### New Features
 * **host-shield** [59118afe](https://github.com/sysdiglabs/charts/commit/59118afec130f35b67d533592a3236ecd5c916fd): add proper container name when unprivileged mode is set ([#2201](https://github.com/sysdiglabs/charts/issues/2201))
