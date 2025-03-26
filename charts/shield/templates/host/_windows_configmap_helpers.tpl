@@ -36,7 +36,7 @@
   {{- $_ := set $clusterConfig "tags" .Values.cluster_config.tags -}}
 {{- end -}}
 {{- $_ := set $config "cluster_config" $clusterConfig -}}
-{{- $config := merge $config (dict "proxy" (include "common.proxy_config" . | fromYaml)) }}
+{{- $config := merge $config (dict "proxy" (include "host.proxy_config" . | fromYaml)) }}
 {{- $override := (include "host.windows.shield_config_override" .) | fromYaml }}
 {{- $finalConfig := mergeOverwrite $config $override }}
 {{- $finalConfig | toYaml }}
@@ -54,7 +54,7 @@
   {{- $_ := set $config "tags" (join "," $tagList) -}}
 {{- end -}}
 {{- if (include "common.proxy.enabled" . ) }}
-{{- $config := merge $config (dict "http_proxy" (include "host.proxy_config" . | fromYaml)) }}
+{{- $config := merge $config (dict "http_proxy" (include "host.dragent_proxy_config" . | fromYaml)) }}
 {{- end }}
 {{- $override := (include "host.windows.runtime_config_override" .) | fromYaml }}
 {{- $finalConfig := mergeOverwrite $config $override }}
