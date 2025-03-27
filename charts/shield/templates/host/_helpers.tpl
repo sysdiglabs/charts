@@ -83,7 +83,7 @@ If release name contains chart name it will be used as a full name.
 {{- end }}
 
 {{- define "host.driver.is_ebpf" }}
-{{- if or (include "host.driver.is_legacy_ebpf" .) (include "common.cluster_type.is_gke_autopilot" .) }}
+{{- if or (include "host.driver.is_legacy_ebpf" .) (include "host.driver.is_universal_ebpf" .) }}
 true
 {{- else }}
 {{- end }}
