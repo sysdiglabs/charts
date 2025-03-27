@@ -84,6 +84,7 @@ tests:
           path: data['dragent.yaml']
           pattern: |
             http_proxy:
+              ca_certificate: Certs/cacert.pem
               proxy_host: proxy.example.com
               proxy_port: "8080"
               ssl: false
@@ -109,6 +110,7 @@ tests:
           path: data['dragent.yaml']
           pattern: |
             http_proxy:
+              ca_certificate: Certs/cacert.pem
               proxy_host: proxy-existing.example.com
               proxy_port: "8080"
               ssl: false
@@ -134,6 +136,7 @@ tests:
           path: data['dragent.yaml']
           pattern: |
             http_proxy:
+              ca_certificate: Certs/cacert.pem
               proxy_host: proxy.example.com
               proxy_password: password
               proxy_port: "8080"
@@ -161,6 +164,7 @@ tests:
           path: data['dragent.yaml']
           pattern: |
             http_proxy:
+              ca_certificate: Certs/cacert.pem
               proxy_host: proxy-existing.example.com
               proxy_password: passwordexisting
               proxy_port: "8080"
@@ -188,6 +192,7 @@ tests:
           path: data['dragent.yaml']
           pattern: |
             http_proxy:
+              ca_certificate: Certs/cacert.pem
               proxy_host: proxy.example.com
               proxy_port: "8080"
               ssl: true
@@ -213,6 +218,7 @@ tests:
           path: data['dragent.yaml']
           pattern: |
             http_proxy:
+              ca_certificate: Certs/cacert.pem
               proxy_host: proxy-existing.example.com
               proxy_port: "8080"
               ssl: true
@@ -238,6 +244,7 @@ tests:
           path: data['dragent.yaml']
           pattern: |
             http_proxy:
+              ca_certificate: Certs/cacert.pem
               proxy_host: proxy.example.com
               proxy_password: password
               proxy_port: "8080"
@@ -265,6 +272,7 @@ tests:
           path: data['dragent.yaml']
           pattern: |
             http_proxy:
+              ca_certificate: Certs/cacert.pem
               proxy_host: proxy-existing.example.com
               proxy_password: passwordexisting
               proxy_port: "8080"
@@ -292,6 +300,7 @@ tests:
           path: data['dragent.yaml']
           pattern: |
             http_proxy:
+              ca_certificate: Certs/cacert.pem
               proxy_host: proxy.example.com
               proxy_port: "8080"
               ssl: false
@@ -317,6 +326,7 @@ tests:
           path: data['dragent.yaml']
           pattern: |
             http_proxy:
+              ca_certificate: Certs/cacert.pem
               proxy_host: proxy-existing.example.com
               proxy_port: "8080"
               ssl: false
@@ -342,6 +352,7 @@ tests:
           path: data['dragent.yaml']
           pattern: |
             http_proxy:
+              ca_certificate: Certs/cacert.pem
               proxy_host: proxy.example.com
               proxy_password: password
               proxy_port: "8080"
@@ -369,6 +380,7 @@ tests:
           path: data['dragent.yaml']
           pattern: |
             http_proxy:
+              ca_certificate: Certs/cacert.pem
               proxy_host: proxy-existing.example.com
               proxy_password: passwordexisting
               proxy_port: "8080"
@@ -395,6 +407,7 @@ tests:
           path: data['dragent.yaml']
           pattern: |
             http_proxy:
+              ca_certificate: Certs/cacert.pem
               proxy_host: proxy.example.com
               proxy_port: "8080"
               ssl: true
@@ -420,6 +433,7 @@ tests:
           path: data['dragent.yaml']
           pattern: |
             http_proxy:
+              ca_certificate: Certs/cacert.pem
               proxy_host: proxy-existing.example.com
               proxy_port: "8080"
               ssl: true
@@ -444,6 +458,7 @@ tests:
           path: data['dragent.yaml']
           pattern: |
             http_proxy:
+              ca_certificate: Certs/cacert.pem
               proxy_host: proxy.example.com
               proxy_password: password
               proxy_port: "8080"
@@ -471,6 +486,7 @@ tests:
           path: data['dragent.yaml']
           pattern: |
             http_proxy:
+              ca_certificate: Certs/cacert.pem
               proxy_host: proxy-existing.example.com
               proxy_password: passwordexisting
               proxy_port: "8080"
@@ -498,6 +514,7 @@ tests:
           path: data['dragent.yaml']
           pattern: |
             http_proxy:
+              ca_certificate: Certs/cacert.pem
               proxy_host: proxy.example.com
               proxy_password: password
               proxy_port: "8080"
@@ -525,6 +542,7 @@ tests:
           path: data['dragent.yaml']
           pattern: |
             http_proxy:
+              ca_certificate: Certs/cacert.pem
               proxy_host: proxy-existing.example.com
               proxy_password: passwordexisting
               proxy_port: "8080"
@@ -552,6 +570,7 @@ tests:
           path: data['dragent.yaml']
           pattern: |
             http_proxy:
+              ca_certificate: Certs/cacert.pem
               proxy_host: proxy.example.com
               proxy_password: password
               proxy_port: "8080"
@@ -579,6 +598,7 @@ tests:
           path: data['dragent.yaml']
           pattern: |
             http_proxy:
+              ca_certificate: Certs/cacert.pem
               proxy_host: proxy-existing.example.com
               proxy_password: passwordexisting
               proxy_port: "8080"
