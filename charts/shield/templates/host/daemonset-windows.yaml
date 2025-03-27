@@ -49,6 +49,14 @@ spec:
           env:
             - name: AGENT_APP_NAME
               value: {{ include "shield.name" . }}
+            - name: K8S_NODE
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: K8S_NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
             {{ if .Values.features.posture.host_posture.enabled }}
             - name: POD_NAMESPACE
               valueFrom:
