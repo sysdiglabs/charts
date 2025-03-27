@@ -47,6 +47,8 @@ spec:
           resources:
             {{- (include "host.windows.resources" .) | nindent 12 }}
           env:
+            - name: AGENT_APP_NAME
+              value: {{ include "shield.name" . }}
             {{ if .Values.features.posture.host_posture.enabled }}
             - name: POD_NAMESPACE
               valueFrom:
