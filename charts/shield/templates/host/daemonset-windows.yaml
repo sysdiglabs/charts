@@ -1,4 +1,4 @@
-{{- if .Values.host_windows.enabled }}
+{{- if and .Values.host_windows .Values.host_windows.enabled }}
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
