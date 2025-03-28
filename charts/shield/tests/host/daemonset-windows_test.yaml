@@ -14,7 +14,7 @@ tests:
           count: 1
       - equal:
           path: metadata.name
-          value: windows-release-name-shield-host
+          value: release-name-shield-host-windows
 
   - it: Test without Custom CA Settings
     asserts:
@@ -117,7 +117,7 @@ tests:
       - containsDocument:
           kind: DaemonSet
           apiVersion: apps/v1
-          name: windows-release-name-shield-host
+          name: release-name-shield-host-windows
           namespace: shield-namespace
       - isSubset:
           path: metadata.labels
@@ -138,7 +138,7 @@ tests:
       - containsDocument:
           kind: DaemonSet
           apiVersion: apps/v1
-          name: windows-release-name-shield-host
+          name: release-name-shield-host-windows
           namespace: shield-namespace
       - isSubset:
           path: spec.template.metadata.labels

@@ -54,7 +54,7 @@ tests:
       - containsDocument:
           kind: ConfigMap
           apiVersion: v1
-          name: windows-release-name-shield-host
+          name: release-name-shield-host-windows
       - equal:
           path: metadata.namespace
           value: shield-namespace
@@ -73,7 +73,7 @@ tests:
       - containsDocument:
           kind: ConfigMap
           apiVersion: v1
-          name: windows-release-name-shield-host
+          name: release-name-shield-host-windows
       - equal:
           path: metadata.namespace
           value: shield-namespace
@@ -99,7 +99,7 @@ tests:
       - containsDocument:
           kind: ConfigMap
           apiVersion: v1
-          name: windows-release-name-shield-host
+          name: release-name-shield-host-windows
       - equal:
           path: metadata.namespace
           value: shield-namespace
@@ -125,7 +125,7 @@ tests:
       - containsDocument:
           kind: ConfigMap
           apiVersion: v1
-          name: windows-release-name-shield-host
+          name: release-name-shield-host-windows
       - equal:
           path: metadata.namespace
           value: shield-namespace
@@ -153,7 +153,7 @@ tests:
       - containsDocument:
           kind: ConfigMap
           apiVersion: v1
-          name: windows-release-name-shield-host
+          name: release-name-shield-host-windows
       - equal:
           path: metadata.namespace
           value: shield-namespace
@@ -181,7 +181,7 @@ tests:
       - containsDocument:
           kind: ConfigMap
           apiVersion: v1
-          name: windows-release-name-shield-host
+          name: release-name-shield-host-windows
       - equal:
           path: metadata.namespace
           value: shield-namespace
@@ -207,7 +207,7 @@ tests:
       - containsDocument:
           kind: ConfigMap
           apiVersion: v1
-          name: windows-release-name-shield-host
+          name: release-name-shield-host-windows
       - equal:
           path: metadata.namespace
           value: shield-namespace
@@ -233,7 +233,7 @@ tests:
       - containsDocument:
           kind: ConfigMap
           apiVersion: v1
-          name: windows-release-name-shield-host
+          name: release-name-shield-host-windows
       - equal:
           path: metadata.namespace
           value: shield-namespace
@@ -261,7 +261,7 @@ tests:
       - containsDocument:
           kind: ConfigMap
           apiVersion: v1
-          name: windows-release-name-shield-host
+          name: release-name-shield-host-windows
       - equal:
           path: metadata.namespace
           value: shield-namespace
@@ -289,7 +289,7 @@ tests:
       - containsDocument:
           kind: ConfigMap
           apiVersion: v1
-          name: windows-release-name-shield-host
+          name: release-name-shield-host-windows
       - equal:
           path: metadata.namespace
           value: shield-namespace
@@ -315,7 +315,7 @@ tests:
       - containsDocument:
           kind: ConfigMap
           apiVersion: v1
-          name: windows-release-name-shield-host
+          name: release-name-shield-host-windows
       - equal:
           path: metadata.namespace
           value: shield-namespace
@@ -341,7 +341,7 @@ tests:
       - containsDocument:
           kind: ConfigMap
           apiVersion: v1
-          name: windows-release-name-shield-host
+          name: release-name-shield-host-windows
       - equal:
           path: metadata.namespace
           value: shield-namespace
@@ -369,7 +369,7 @@ tests:
       - containsDocument:
           kind: ConfigMap
           apiVersion: v1
-          name: windows-release-name-shield-host
+          name: release-name-shield-host-windows
       - equal:
           path: metadata.namespace
           value: shield-namespace
@@ -397,7 +397,7 @@ tests:
       - containsDocument:
           kind: ConfigMap
           apiVersion: v1
-          name: windows-release-name-shield-host
+          name: release-name-shield-host-windows
       - equal:
           path: metadata.namespace
           value: shield-namespace
@@ -422,7 +422,7 @@ tests:
       - containsDocument:
           kind: ConfigMap
           apiVersion: v1
-          name: windows-release-name-shield-host
+          name: release-name-shield-host-windows
       - equal:
           path: metadata.namespace
           value: shield-namespace
@@ -448,7 +448,7 @@ tests:
       - containsDocument:
           kind: ConfigMap
           apiVersion: v1
-          name: windows-release-name-shield-host
+          name: release-name-shield-host-windows
       - equal:
           path: metadata.namespace
           value: shield-namespace
@@ -475,7 +475,7 @@ tests:
       - containsDocument:
           kind: ConfigMap
           apiVersion: v1
-          name: windows-release-name-shield-host
+          name: release-name-shield-host-windows
       - equal:
           path: metadata.namespace
           value: shield-namespace
@@ -504,7 +504,7 @@ tests:
       - containsDocument:
           kind: ConfigMap
           apiVersion: v1
-          name: windows-release-name-shield-host
+          name: release-name-shield-host-windows
       - equal:
           path: metadata.namespace
           value: shield-namespace
@@ -532,7 +532,7 @@ tests:
       - containsDocument:
           kind: ConfigMap
           apiVersion: v1
-          name: windows-release-name-shield-host
+          name: release-name-shield-host-windows
       - equal:
           path: metadata.namespace
           value: shield-namespace
@@ -560,7 +560,7 @@ tests:
       - containsDocument:
           kind: ConfigMap
           apiVersion: v1
-          name: windows-release-name-shield-host
+          name: release-name-shield-host-windows
       - equal:
           path: metadata.namespace
           value: shield-namespace
@@ -588,7 +588,7 @@ tests:
       - containsDocument:
           kind: ConfigMap
           apiVersion: v1
-          name: windows-release-name-shield-host
+          name: release-name-shield-host-windows
       - equal:
           path: metadata.namespace
           value: shield-namespace
