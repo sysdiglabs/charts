@@ -47,7 +47,7 @@ targets:
       versionincrement: auto
 
   updateShieldChart:
-    name: "update the the shield chart"
+    name: "update the shield chart"
     kind: helmchart
     scmid: github
     spec:
@@ -55,3 +55,13 @@ targets:
       file: values.yaml
       key: "$.host.image.tag"
       versionincrement: auto
+
+  updateShieldReadme:
+    name: "update the shield readme"
+    kind: shell
+    scmid: github
+    dependson:
+      - updateShieldChart
+    spec:
+      shell: /bin/bash
+      command: make docs
