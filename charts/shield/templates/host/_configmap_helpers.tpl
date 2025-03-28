@@ -111,7 +111,7 @@ true
 {{- end }}
 {{- $config = merge $config (dict "sysdig_api_endpoint" (include "common.secure_api_endpoint" .)) }}
 {{- if (include "common.proxy.enabled" . ) }}
-{{- $config := merge $config (dict "http_proxy" (include "host.proxy_config" . | fromYaml)) }}
+{{- $config := merge $config (dict "http_proxy" (include "host.dragent_proxy_config" . | fromYaml)) }}
 {{- end }}
 {{- if (include "host.rapid_response_enabled" .) }}
 {{- $config = merge $config (dict "rapid_response" (dict "enabled" true)) }}

@@ -21,6 +21,9 @@
     "host": {
       "$ref": "#/$defs/Host"
     },
+    "host_windows": {
+      "$ref": "#/$defs/HostWindows"
+    },
     "env": {
       "$ref": "#/$defs/EnvVars"
     },
@@ -358,6 +361,21 @@
       "required": [
         "driver"
       ]
+    },
+    "HostWindows": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "env": {
+          "$ref": "#/$defs/EnvVars"
+        },
+        "volumes": {
+          "$ref": "#/$defs/Volumes"
+        },
+        "volume_mounts": {
+          "$ref": "#/$defs/VolumeMounts"
+        }
+      }
     },
     "SSL": {
       "type": "object",
