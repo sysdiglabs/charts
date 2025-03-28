@@ -1,0 +1,14 @@
+{{- if (include "common.cluster_type.is_gke_autopilot" .) -}}
+apiVersion: auto.gke.io/v1
+kind: AllowlistSynchronizer
+metadata:
+  name: sysdig-agent-allowlist-synchronizer
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    helm.sh/hook: "pre-install,pre-upgrade"
+  labels:
+    {{- include "host.labels" . | nindent 4 }}
+spec:
+  allowlistPaths:
+    - "Sysdig/agent/*"
+{{- end -}}
