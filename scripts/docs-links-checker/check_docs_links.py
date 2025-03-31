@@ -9,16 +9,15 @@ DOCS_BASE = "https://docs.sysdig.com"
 LINK_PATTERN = re.compile(r'https?://docs\.sysdig\.com(/[^\s\'"<>]+)')
 MAX_WORKERS = 10
 EXCLUDE_DIRS = {'node_modules', 'dist', 'build', '.git', 'vendor'}
-
 def find_links_in_repo(repo_path=None):
     """Find all docs.sysdig.com links with progress tracking"""
     if repo_path is None:
         # Go up two levels from current directory to reach the root
         repo_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
-    
+
     links = set()
     supported_extensions = ('.html', '.js', '.jsx', '.ts', '.tsx', '.py', '.yaml')
-    
+
     # First count all files to scan for progress bar
     print("🔍 Counting files to scan...")
     total_files = 0
@@ -26,7 +25,7 @@ def find_links_in_repo(repo_path=None):
         dirs[:] = [d for d in dirs if d not in EXCLUDE_DIRS]
         files = [f for f in os.listdir(root) if f.endswith(supported_extensions)]
         total_files += len(files)
-    
+
     # Now scan files with progress bar
     print(f"📂 Scanning {total_files} files in {repo_path} for links...")
     with tqdm(total=total_files, unit='file') as pbar:
@@ -72,20 +71,20 @@ def generate_report(results, output_file='link_report.md'):
     """Generate a Markdown report of the results"""
     working = [r for r in results if r[2]]
     broken = [r for r in results if not r[2]]
-    
+
     with open(output_file, 'w', encoding='utf-8') as f:
         f.write("# Documentation Links Status Report\n\n")
         f.write(f"## Summary\n")
         f.write(f"- Total links checked: {len(results)}\n")
         f.write(f"- Working links: {len(working)}\n")
         f.write(f"- Broken links: {len(broken)}\n\n")
-        
+
         if broken:
             f.write("## Broken Links\n")
             for url, source_file, _, status in broken:
                 f.write(f"- {url} (in `{source_file}`)\n")
                 f.write(f"  - Status: {status}\n")
-        
+
         f.write("\n## All Links Checked\n")
         for url, source_file, is_working, status in results:
             status_emoji = "✅" if is_working else "❌"
@@ -95,15 +94,15 @@ if __name__ == "__main__":
     # Find links with progress
     links = find_links_in_repo()
     print(f"📊 Found {len(links)} unique links to check")
-    
+
     # Check links with progress
     print("\n🔗 Checking link statuses...")
     results = check_links_concurrently(links)
-    
+
     # Generate report
     print("\n📝 Generating report...")
     generate_report(results)
-    
+
     broken_count = sum(1 for r in results if not r[2])
     if broken_count > 0:
         print(f"\n❌ Found {broken_count} broken links! See 'link_report.md' for details.")
