@@ -19,19 +19,25 @@
 {{/* Generate the 'host_shield_config.yaml' content */}}
 {{- define "host.host_shield_config" }}
 {{- $config := dict }}
+
+{{- $featuresConfig := dict -}}
 {{- with .Values.features.posture }}
-{{- $config = merge $config ((include "host.configmap.posture" .) | fromYaml) }}
+{{- $featuresConfig = merge $featuresConfig ((include "host.configmap.posture" .) | fromYaml) }}
 {{- end }}
 {{- with .Values.features.vulnerability_management }}
-{{- $config = merge $config ((include "host.configmap.vm" .) | fromYaml) }}
+{{- $featuresConfig = merge $featuresConfig ((include "host.configmap.vm" .) | fromYaml) }}
 {{- end }}
 {{- with .Values.features.respond }}
-{{- $config = merge $config ((include "host.configmap.responding" .) | fromYaml) }}
+{{- $featuresConfig = merge $featuresConfig ((include "host.configmap.responding" .) | fromYaml) }}
 {{- end }}
 {{- with .Values.features.detections }}
-{{- $config = merge $config ((include "host.configmap.detections" .) | fromYaml)}}
+{{- $featuresConfig = merge $featuresConfig ((include "host.configmap.detections" .) | fromYaml)}}
 {{- end }}
-{{- dict "features" $config | toYaml }}
+{{- $_ := set $config "features" $featuresConfig -}}
+
+{{- $override := (include "host.shield_config_override" .) | fromYaml }}
+{{- $finalConfig := mergeOverwrite $config $override }}
+{{- $finalConfig | toYaml }}
 {{- end }}
 
 {{- define "host.features.netsec_enabled" }}
