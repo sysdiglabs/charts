@@ -149,5 +149,5 @@ Chart.lock
 # ASDF config
 .tool-versions
 
-# Broken links .mdx file
+# Broken links .md file
 link_report.md
