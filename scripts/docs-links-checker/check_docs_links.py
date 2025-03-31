@@ -106,6 +106,6 @@ if __name__ == "__main__":
     
     broken_count = sum(1 for r in results if not r[2])
     if broken_count > 0:
-        print("\n❌ Found {broken_count} broken links! See 'link_report.md' for details.")
+        print(f"\n❌ Found {broken_count} broken links! See 'link_report.md' for details.")
     else:
         print("\n🎉 All links are working! Report saved to 'link_report.md'")
