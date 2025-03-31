@@ -109,4 +109,3 @@ if __name__ == "__main__":
         print(f"\n❌ Found {broken_count} broken links! See 'link_report.md' for details.")
     else:
         print("\n🎉 All links are working! Report saved to 'link_report.md'")
-        
