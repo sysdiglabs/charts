@@ -76,7 +76,7 @@ spec:
             httpGet:
               host: 127.0.0.1
               path: /healthz
-              port: {{ .Values.host_windows.shield_additional_settings.monitoring_port }}
+              port: {{ .Values.host_windows.additional_settings.monitoring_port }}
             initialDelaySeconds: 60
             periodSeconds: 30
             timeoutSeconds: 10
@@ -84,7 +84,7 @@ spec:
             httpGet:
               host: 127.0.0.1
               path: /healthz
-              port: {{ .Values.host_windows.shield_additional_settings.monitoring_port }}
+              port: {{ .Values.host_windows.additional_settings.monitoring_port }}
             initialDelaySeconds: 60
             timeoutSeconds: 10
           volumeMounts:

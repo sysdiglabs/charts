@@ -63,10 +63,6 @@ If release name contains chart name it will be used as a full name.
 {{ .Values.host.additional_settings | toYaml }}
 {{- end -}}
 
-{{- define "host.shield_config_override" -}}
-{{ .Values.host.shield_additional_settings | toYaml }}
-{{- end -}}
-
 {{- define "host.has_priority_class" -}}
 {{- if or .Values.host.priority_class.create .Values.host.priority_class.name }}
 {{- true -}}

@@ -52,11 +52,11 @@
 {{- end -}}
 
 {{- define "host.windows.runtime_config_override" -}}
-{{ .Values.host_windows.additional_settings | toYaml }}
+{{ .Values.host_windows.agent_runtime_additional_settings | toYaml }}
 {{- end -}}
 
 {{- define "host.windows.shield_config_override" -}}
-{{ .Values.host_windows.shield_additional_settings | toYaml }}
+{{ .Values.host_windows.additional_settings | toYaml }}
 {{- end -}}
 
 {{- define "host.windows.need_host_root" }}
