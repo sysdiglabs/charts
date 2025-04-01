@@ -1,0 +1,37 @@
+## ⛓️‍💥Broken docs links checker⛓️‍💥
+This script checks for broken links to docs.sysdig.com in the UI repository. The docs team can fix these broken links by updating the links in the affected files.
+
+### Pre-requisites
+- python3
+- pip
+
+To run this script, do the following:
+
+1. Clone the UI repository.
+2. `cd scripts/docs-links-checker`
+3. In your terminal, create a virtual environment. This prevents conflicts between system Python packages and those installed by package managers like Homebrew.
+    ```bash
+    python3 -m venv linkchecker-venv
+    ```
+4. Activate the virtual environment.
+    - On macOS and Linux:
+        ```bash
+        source linkchecker-venv/bin/activate
+        ```
+    - On Windows:
+        ```bash
+        linkchecker-venv\Scripts\activate.bat
+        ```
+5. Install the required packages.
+    ```bash
+    pip install requests beautifulsoup4 tqdm
+    ```
+6. Run the script.
+    ```bash
+    python3 check_docs_links.py
+    ```
+7. The script creates a new *link_report.md* file. This file lists all the broken links found in the UI repository with locations. Don't push this file to the repo. Instead, use it to fix the broken links in the affected files.
+8. Deactivate the virtual environment.
+    ```bash
+    deactivate
+    ```
