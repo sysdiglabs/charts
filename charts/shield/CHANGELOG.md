@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.2.0
+### New Features
+* **shield** [fb1452be](https://github.com/sysdiglabs/charts/commit/fb1452be8411019f47b7d8c3901b9f97f4cd2f60): add support for windows host-shield ([#2184](https://github.com/sysdiglabs/charts/issues/2184))
 # v1.1.0
 ### New Features
 * **shield** [351986ea](https://github.com/sysdiglabs/charts/commit/351986eae6d9093d454edf744ad92a2ac7eb2361): add host support (universal_ebpf) on gke-autopilot ([#2076](https://github.com/sysdiglabs/charts/issues/2076))
