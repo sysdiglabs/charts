@@ -244,13 +244,13 @@ sysdig:
   accessKey: ""
   # Alternatively, specify the name of a Kubernetes secret containing an 'access-key' entry
   existingAccessKeySecret: ""
-  # Disable capture functionality. See https://docs.sysdig.com/en/disable-captures.html
+  # Disable capture functionality. (See https://docs.sysdig.com/en/disable-captures.html)
   disableCaptures: false
   # Advanced settings. Any option in here will be directly translated into dragent.yaml in the Configmap
   settings: {}
   ### Example: Agent tags
   # tags: linux:ubuntu,dept:dev,local:nyc
-  ### Example: Proxy configuration. See https://docs.sysdig.com/en/enable-http-proxy-for-agents.html
+  ### Example: Proxy configuration. (See https://docs.sysdig.com/en/enable-http-proxy-for-agents.html)
   # ssl: false
   # http_proxy:
   #   proxy_host: squid.yourdomain.com
