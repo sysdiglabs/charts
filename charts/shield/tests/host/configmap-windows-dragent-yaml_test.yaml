@@ -60,8 +60,10 @@ tests:
           value: shield-namespace
       - exists:
           path: data["dragent.yaml"]
-      - notExists:
-          path: data["dragent.yaml"].http_proxy
+      - notMatchRegex:
+          path: data["dragent.yaml"]
+          pattern: |
+            http_proxy:
 
   - it: With Only HTTP Proxy (http protocol)
     set:
@@ -661,8 +663,10 @@ tests:
 
   - it: Test no additional_settings log_level
     asserts:
-      - notExists:
-          path: data["dragent.yaml"].log
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            log:
 
   - it: Test additional_settings log_level info
     set:
@@ -704,7 +708,7 @@ tests:
     set:
       host_windows:
         additional_settings:
-          log_level: error
+          log_level: err
     asserts:
       - matchRegex:
           path: data['dragent.yaml']
@@ -712,11 +716,14 @@ tests:
             log:
               console_priority: error
 
-  - it: Test additional_settings log_level unsupported
+  - it: Test additional_settings log_level trace
     set:
       host_windows:
         additional_settings:
           log_level: trace
     asserts:
-      - notExists:
-          path: data["dragent.yaml"].log
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            log:
+              console_priority: debug

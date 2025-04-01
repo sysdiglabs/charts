@@ -18,10 +18,10 @@
     {{- printf "info" -}}
   {{- else if eq $log_level "warn" -}}
     {{- printf "warning" -}}
-  {{- else if eq $log_level "error" -}}
+  {{- else if eq $log_level "err" -}}
     {{- printf "error" -}}
-  {{- else -}}
-    {{- printf "info" -}}
+  {{- else if eq $log_level "trace" -}}
+    {{- printf "debug" -}}
   {{- end -}}
 {{- end -}}
 {{- end }}
