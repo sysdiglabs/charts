@@ -75,7 +75,7 @@ sysdig:
     # Alternatively, specify the name of a Kubernetes secret containing an 'sysdig_secure_api_token' entry
     existingSecureAPITokenSecret: ""
 
-    # Sysdig backend URL (SaaS Regions API endpoints are listed here: https://docs.sysdig.com/en/docs/administration/saas-regions-and-ip-ranges/
+    # Sysdig backend URL (SaaS Regions API endpoints are listed here: https://docs.sysdig.com/en/docs/administration/saas-regions-and-ip-ranges/)
     url: "https://secure.sysdig.com"
     verifySSL: true
 
