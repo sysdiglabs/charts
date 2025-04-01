@@ -50,6 +50,7 @@
 {{- define "host.windows.configmap" }}
 {{- $config := dict
   "k8s_cluster_name" .Values.cluster_config.name
+  "collector" (include "common.collector_endpoint" .)
 }}
 {{- if .Values.cluster_config.tags -}}
   {{- $tagList := list }}
