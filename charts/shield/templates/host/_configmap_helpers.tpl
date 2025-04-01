@@ -35,9 +35,7 @@
 {{- end }}
 {{- $_ := set $config "features" $featuresConfig -}}
 
-{{- $override := (include "host.shield_config_override" .) | fromYaml }}
-{{- $finalConfig := mergeOverwrite $config $override }}
-{{- $finalConfig | toYaml }}
+{{- $config | toYaml }}
 {{- end }}
 
 {{- define "host.features.netsec_enabled" }}
