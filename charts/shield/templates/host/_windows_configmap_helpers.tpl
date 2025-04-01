@@ -8,6 +8,24 @@
 {{- dict "vulnerability_management" (pick . "host_vulnerability_management" "in_use") | toYaml }}
 {{- end }}
 
+{{- define "host.windows.agent_runtime.log_level" }}
+{{- $config := ((include "host.windows.shield_config_override" .) | fromYaml) -}}
+{{- if and $config $config.log_level -}}
+  {{- $log_level := $config.log_level -}}
+  {{- if eq $log_level "debug" -}}
+    {{- printf "debug" -}}
+  {{- else if eq $log_level "info" -}}
+    {{- printf "info" -}}
+  {{- else if eq $log_level "warn" -}}
+    {{- printf "warning" -}}
+  {{- else if eq $log_level "error" -}}
+    {{- printf "error" -}}
+  {{- else -}}
+    {{- printf "info" -}}
+  {{- end -}}
+{{- end -}}
+{{- end }}
+
 {{/* Generate the 'host-shield.yaml' content */}}
 {{- define "host.windows.host_shield_config" }}
 {{- $config := dict }}
@@ -66,6 +84,11 @@
   {{- if (not $http_proxy.ca_certificate) -}}
     {{- $_ := set $http_proxy "ca_certificate" "Certs/cacert.pem" -}}
   {{- end -}}
+{{- end }}
+
+{{- if (include "host.windows.agent_runtime.log_level" . ) -}}
+  {{- $console_priority := dict "console_priority" (include "host.windows.agent_runtime.log_level" .) -}}
+  {{- $_ := set $config "log" $console_priority -}}
 {{- end }}
 
 {{- $override := (include "host.windows.runtime_config_override" .) | fromYaml }}

@@ -658,3 +658,65 @@ tests:
           pattern: |
             http_proxy:
               ca_certificate: certificates/custom-ca-from-secret.crt
+
+  - it: Test no additional_settings log_level
+    asserts:
+      - notExists:
+          path: data["dragent.yaml"].log
+
+  - it: Test additional_settings log_level info
+    set:
+      host_windows:
+        additional_settings:
+          log_level: info
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            log:
+              console_priority: info
+
+  - it: Test additional_settings log_level warn
+    set:
+      host_windows:
+        additional_settings:
+          log_level: warn
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            log:
+              console_priority: warning
+
+  - it: Test additional_settings log_level debug
+    set:
+      host_windows:
+        additional_settings:
+          log_level: debug
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            log:
+              console_priority: debug
+
+  - it: Test additional_settings log_level error
+    set:
+      host_windows:
+        additional_settings:
+          log_level: error
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            log:
+              console_priority: error
+
+  - it: Test additional_settings log_level unsupported
+    set:
+      host_windows:
+        additional_settings:
+          log_level: trace
+    asserts:
+      - notExists:
+          path: data["dragent.yaml"].log
