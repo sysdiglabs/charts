@@ -19,19 +19,23 @@
 {{/* Generate the 'host_shield_config.yaml' content */}}
 {{- define "host.host_shield_config" }}
 {{- $config := dict }}
+
+{{- $featuresConfig := dict -}}
 {{- with .Values.features.posture }}
-{{- $config = merge $config ((include "host.configmap.posture" .) | fromYaml) }}
+{{- $featuresConfig = merge $featuresConfig ((include "host.configmap.posture" .) | fromYaml) }}
 {{- end }}
 {{- with .Values.features.vulnerability_management }}
-{{- $config = merge $config ((include "host.configmap.vm" .) | fromYaml) }}
+{{- $featuresConfig = merge $featuresConfig ((include "host.configmap.vm" .) | fromYaml) }}
 {{- end }}
 {{- with .Values.features.respond }}
-{{- $config = merge $config ((include "host.configmap.responding" .) | fromYaml) }}
+{{- $featuresConfig = merge $featuresConfig ((include "host.configmap.responding" .) | fromYaml) }}
 {{- end }}
 {{- with .Values.features.detections }}
-{{- $config = merge $config ((include "host.configmap.detections" .) | fromYaml)}}
+{{- $featuresConfig = merge $featuresConfig ((include "host.configmap.detections" .) | fromYaml)}}
 {{- end }}
-{{- dict "features" $config | toYaml }}
+{{- $_ := set $config "features" $featuresConfig -}}
+
+{{- $config | toYaml }}
 {{- end }}
 
 {{- define "host.features.netsec_enabled" }}
@@ -111,7 +115,7 @@ true
 {{- end }}
 {{- $config = merge $config (dict "sysdig_api_endpoint" (include "common.secure_api_endpoint" .)) }}
 {{- if (include "common.proxy.enabled" . ) }}
-{{- $config := merge $config (dict "http_proxy" (include "host.proxy_config" . | fromYaml)) }}
+{{- $config := merge $config (dict "http_proxy" (include "host.dragent_proxy_config" . | fromYaml)) }}
 {{- end }}
 {{- if (include "host.rapid_response_enabled" .) }}
 {{- $config = merge $config (dict "rapid_response" (dict "enabled" true)) }}

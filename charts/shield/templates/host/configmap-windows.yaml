@@ -1,0 +1,14 @@
+{{- if and .Values.host_windows .Values.host_windows.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "host.windows.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "host.labels" . | nindent 4 }}
+data:
+  host-shield.yaml: |
+    {{- include "host.windows.host_shield_config" . | nindent 4 }}
+  dragent.yaml: |
+    {{- include "host.windows.configmap" . | nindent 4 }}
+{{- end }}
