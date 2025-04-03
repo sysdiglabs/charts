@@ -14,11 +14,11 @@ tests:
       - equal:
           path: metadata.name
           value: shield-release-cluster-shield-cluster-scanner
-      - notExists:
-          path: metadata.annotations
       - equal:
           path: metadata.namespace
           value: shield-namespace
+      - notExists:
+          path: metadata.annotations
       - lengthEqual:
           path: spec.ports
           count: 2
