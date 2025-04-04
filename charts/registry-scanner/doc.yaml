@@ -1,7 +1,7 @@
 project:
   name: Sysdig Registry Scanner
   shortName: Registry Scanner
-  url: https://docs.sysdig.com/en/docs/sysdig-secure/scanning/registry-scanner/
+  url: https://docs.sysdig.com/en/docs/sysdig-secure/vulnerabilities/findings/registry/
   description: This chart deploys the Sysdig Registry Scanner as a scheduled Cronjob in your Kubernetes cluster and allows you to integrate Sysdig Secure with different image registries.
   app: the Sysdig Registry Scanner
 repository:
