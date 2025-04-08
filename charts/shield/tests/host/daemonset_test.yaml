@@ -651,3 +651,18 @@ tests:
           content:
             containerPort: 1234
             name: metrics
+
+  - it: Validate default DNS Policy
+    asserts:
+      - equal:
+          path: spec.template.spec.dnsPolicy
+          value: ClusterFirstWithHostNet
+
+  - it: Validate custom DNS Policy
+    set:
+      host:
+        dns_policy: ClusterFirst
+    asserts:
+      - equal:
+          path: spec.template.spec.dnsPolicy
+          value: ClusterFirst

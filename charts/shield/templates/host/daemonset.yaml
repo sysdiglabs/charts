@@ -22,7 +22,7 @@ spec:
         {{- include "host.pod_annotations" . | nindent 8 }}
     spec:
       hostNetwork: true
-      dnsPolicy: ClusterFirstWithHostNet
+      dnsPolicy: {{ default "ClusterFirstWithHostNet" .Values.host.dns_policy }}
       hostPID: true
       serviceAccountName: {{ include "host.service_account_name" . }}
       {{- if (include "host.has_priority_class" .) }}
