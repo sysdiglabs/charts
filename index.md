@@ -11,12 +11,13 @@ If you are installing, configuring, or upgrading Sysdig components on a Kubernet
 
 ## Core Component Charts
 
-To install the core components of Sysdig Monitor and Sysdig Secure, use the **sysdig-deploy** parent chart, which invokes a variety of child charts as needed. 
+To install the core components of Sysdig Monitor and Sysdig Secure, use the **shield** chart.
 
 Additional Sysdig Secure components provide scanning for vulnerabilities in various parts of the environment and the CI/CD lifecycle.
 
 | Parent Chart                                   | Subcharts                                              | Description                                                  |
 | ---------------------------------------------- | :----------------------------------------------------- | ------------------------------------------------------------ |
+| [`shield`](/charts/shield)                     |                                                        | Installs, configures, and updates Sysdig applications ( _Host Shield_ and _Cluster Shield_ ) in your environment. This is the helm chart we recommend for new installations. |
 | [`sysdig-deploy`](/charts/sysdig-deploy)       |                                                        | Installs, configures, and upgrades the Sysdig Agent and a variety of Sysdig Secure components. The parent chart deploys multiple child charts. |
 |                                                | [`cluster-shield`](/charts/cluster-shield)             | Deploys the Sysdig Cluster Shield in your Kubernetes cluster. The Sysdig Cluster Shield streamlines the deployment, management, and configuration of the Sysdig suite of security and compliance tools at the cluster level. |
 |                                                | [`sysdig-agent`](/charts/agent)                        | Processes syscall events, metrics and creates capture files. It provides detailed visibility into container and host activity, helping to detect and prevent threats. |
