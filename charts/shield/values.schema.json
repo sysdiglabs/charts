@@ -349,14 +349,22 @@
           ]
         },
         "dns_policy": {
-          "type": "string",
-          "description": "The DNS policy to use for the Host Shield pods",
-          "enum": [
-            "Default",
-            "ClusterFirst",
-            "ClusterFirstWithHostNet"
+          "type": [
+            "string",
+            "null"
           ],
-          "default": "ClusterFirstWithHostNet"
+          "description": "The DNS policy to use for the Host Shield pods",
+          "default": "ClusterFirstWithHostNet",
+          "if": {
+            "type": "string"
+          },
+          "then": {
+            "enum": [
+              "Default",
+              "ClusterFirst",
+              "ClusterFirstWithHostNet"
+            ]
+          }
         },
         "env": {
           "$ref": "#/$defs/EnvVars"

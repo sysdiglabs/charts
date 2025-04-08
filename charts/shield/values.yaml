@@ -363,7 +363,7 @@ host:
   # The custom volume mounts for the host shield
   volume_mounts: []
   # The dns policy for the host shield
-  dns_policy: ClusterFirstWithHostNet
+  dns_policy:
 
 cluster:
   image:
