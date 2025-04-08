@@ -4467,6 +4467,43 @@ entries:
   agent:
   - apiVersion: v2
     appVersion: 13.8.1
+    created: "2025-04-08T06:22:58.250455439Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      version: ~1.3.1
+    description: Sysdig Monitor and Secure agent
+    digest: 69aeb1c0453479d1ba641831f240b0d9c49c2bdce6df29347bd83fdc3ca84201
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: alberto.barba@sysdig.com
+      name: AlbertoBarba
+    - email: adam.roberts@sysdig.com
+      name: aroberts87
+    - email: francesco.furlan@sysdig.com
+      name: francesco-furlan
+    - email: gerlando.falauto@sysdig.com
+      name: iurly
+    - email: marcovito.moscaritolo@sysdig.com
+      name: mavimo
+    name: agent
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/agent-1.36.5/agent-1.36.5.tgz
+    version: 1.36.5
+  - apiVersion: v2
+    appVersion: 13.8.1
     created: "2025-03-25T18:32:13.427679163Z"
     dependencies:
     - name: common
@@ -30442,6 +30479,20 @@ entries:
     - https://github.com/sysdiglabs/charts/releases/download/rapid-response-0.1.0/rapid-response-0.1.0.tgz
     version: 0.1.0
   registry-scanner:
+  - apiVersion: v2
+    appVersion: 0.8.0
+    created: "2025-04-08T06:22:58.470879721Z"
+    description: Sysdig Registry Scanner
+    digest: a9ee35a3b974f7151ae531b5121e4acfb6e974dc2ff76f760a8af6f27461de85
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    maintainers:
+    - name: sysdiglabs
+    name: registry-scanner
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/registry-scanner-1.7.1/registry-scanner-1.7.1.tgz
+    version: 1.7.1
   - apiVersion: v2
     appVersion: 0.8.0
     created: "2025-03-25T14:19:41.123757746Z"
@@ -74101,4 +74152,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2025-04-03T16:45:09.863347042Z"
+generated: "2025-04-08T06:22:58.717463042Z"
