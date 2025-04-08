@@ -179,11 +179,21 @@
 {{- end }}
 
 {{- define "common.collector_endpoint" }}
-  {{- $regions := fromYaml (include "common.regions" .) }}
-  {{- if ne "custom" .Values.sysdig_endpoint.region }}
-    {{- get (get $regions .Values.sysdig_endpoint.region) "collector_endpoint"  }}
-  {{- else }}
+  {{- if .Values.sysdig_endpoint.collector.host }}
     {{- .Values.sysdig_endpoint.collector.host }}
+  {{- else }}
+    {{- if ne "custom" .Values.sysdig_endpoint.region }}
+      {{- $regions := fromYaml (include "common.regions" .) }}
+      {{- get (get $regions .Values.sysdig_endpoint.region) "collector_endpoint"  }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+
+{{- define "common.collector_port" }}
+  {{- if .Values.sysdig_endpoint.collector.port }}
+    {{- .Values.sysdig_endpoint.collector.port }}
+  {{- else }}
+    6443
   {{- end }}
 {{- end }}
 

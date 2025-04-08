@@ -1107,6 +1107,18 @@ tests:
           pattern: |
             collector_port: 1234
 
+  - it: Validate collector endpoing can be overridden for region if provided
+    set:
+      sysdig_endpoint:
+        region: us1
+        collector:
+          host: ingest-alt-us1.app.sysdig.com
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            collector: ingest-alt-us1.app.sysdig.com
+
   - it: Check prometheus.yaml key is created when needed
     set:
       features:

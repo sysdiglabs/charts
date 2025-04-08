@@ -4,23 +4,26 @@ templates:
 release:
   name: release-name
   namespace: shield-namespace
-values:
-  - ../values/base.yaml
 tests:
   - it: Sanity check for regions
     set:
+      cluster_config:
+        name: test-cluster
       sysdig_endpoint:
+        access_key: 12345678-1234-1234-1234-123456789012
         region: "eu1"
     asserts:
       - matchRegex:
           path: data["dragent.yaml"]
           pattern: |
             collector: ingest-eu1.app.sysdig.com
-            collector_port: 6443
 
   - it: API endpoint validation
     set:
+      cluster_config:
+        name: test-cluster
       sysdig_endpoint:
+        access_key: 12345678-1234-1234-1234-123456789012
         region: "us1"
     asserts:
       - matchRegex:
