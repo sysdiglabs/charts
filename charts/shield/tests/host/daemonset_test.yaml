@@ -233,13 +233,17 @@ tests:
             password: abc123
     asserts:
       - contains:
-          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].env
+          path: spec.template.spec.volumes
           content:
-            name: PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: release-name-shield-host-rapid-response
-                key: password
+            name: rapid-response-secret
+            secret:
+              secretName: release-name-shield-host-rapid-response
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].volumeMounts
+          content:
+            mountPath: /opt/draios/etc/kubernetes/secrets/rapid-response/password
+            name: rapid-response-secret
+            subPath: password
 
   - it: Host root and tmp not mounted by default
     asserts:

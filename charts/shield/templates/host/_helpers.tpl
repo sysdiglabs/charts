@@ -214,6 +214,17 @@ true
 {{- end }}
 {{- end }}
 
+# Taking the rapid_response password from host.additional_settings or from the features section
+{{- define "host.rapid_response_password" }}
+{{- if (dig "rapid_response" "password" "" .Values.host.additional_settings) }}
+  {{- (dig "rapid_response" "password" "" .Values.host.additional_settings) }}
+{{- else }}
+  {{- with .Values.features }}
+  {{- (dig (include "host.respond_key" .) "rapid_response" "password" "" .) }}
+  {{- end }}
+{{- end }}
+{{- end }}
+
 {{- define "host.monitor_key" }}
 {{- if hasKey . "monitoring" }}
 {{- print "monitoring" }}

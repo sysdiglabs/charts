@@ -100,6 +100,7 @@ true
 {{- end }}
 {{- end }}
 
+{{/* Generate the 'dragent.yaml' content */}}
 {{- define "host.configmap" }}
 {{- $config := dict
   "k8s_cluster_name" .Values.cluster_config.name
