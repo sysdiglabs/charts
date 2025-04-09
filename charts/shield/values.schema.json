@@ -348,6 +348,24 @@
             "universal_ebpf"
           ]
         },
+        "dns_policy": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The DNS policy to use for the Host Shield pods",
+          "default": "ClusterFirstWithHostNet",
+          "if": {
+            "type": "string"
+          },
+          "then": {
+            "enum": [
+              "Default",
+              "ClusterFirst",
+              "ClusterFirstWithHostNet"
+            ]
+          }
+        },
         "env": {
           "$ref": "#/$defs/EnvVars"
         },
