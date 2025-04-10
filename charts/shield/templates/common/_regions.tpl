@@ -180,8 +180,8 @@
 
 {{- define "common.collector_endpoint" }}
   {{- $regions := fromYaml (include "common.regions" .) }}
-  {{- if not .Values.sysdig_endpoint.collector.host }}
-    {{- get (get $regions .Values.sysdig_endpoint.region) "collector_endpoint" }}
+  {{- if ne "custom" .Values.sysdig_endpoint.region }}
+    {{- get (get $regions .Values.sysdig_endpoint.region) "collector_endpoint"  }}
   {{- else }}
     {{- .Values.sysdig_endpoint.collector.host }}
   {{- end }}
@@ -189,7 +189,7 @@
 
 {{- define "common.monitor_api_endpoint" }}
   {{- $regions := fromYaml (include "common.regions" .) }}
-  {{- if not .Values.sysdig_endpoint.api_url }}
+  {{- if hasKey $regions .Values.sysdig_endpoint.region }}
     {{- get (get $regions .Values.sysdig_endpoint.region) "monitor_api_endpoint" }}
   {{- else }}
     {{- .Values.sysdig_endpoint.api_url }}
@@ -198,7 +198,7 @@
 
 {{- define "common.secure_api_endpoint" }}
   {{- $regions := fromYaml (include "common.regions" .) }}
-  {{- if not .Values.sysdig_endpoint.api_url }}
+  {{- if ne "custom" .Values.sysdig_endpoint.region }}
     {{- get (get $regions .Values.sysdig_endpoint.region) "secure_api_endpoint" }}
   {{- else }}
     {{- .Values.sysdig_endpoint.api_url }}
@@ -207,9 +207,9 @@
 
 {{- define "common.secure_ui" }}
   {{- $regions := fromYaml (include "common.regions" .) }}
-  {{- if not .Values.sysdig_endpoint.api_url }}
+  {{- if ne "custom" .Values.sysdig_endpoint.region }}
     {{- get (get $regions .Values.sysdig_endpoint.region) "secure_ui" }}
   {{- else }}
-    {{- .Values.sysdig_endpoint.api_url }}
+    {{- .Values.sysdig_endpoint.api_url}}
   {{- end }}
 {{- end }}
