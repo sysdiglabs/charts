@@ -42,6 +42,9 @@
     {{- if and .Values.sysdig_endpoint.collector.host .Values.sysdig_endpoint.collector.port -}}
       {{- $_ := set $sysdigEndpointConfig "collector" (printf "%s:%d" .Values.sysdig_endpoint.collector.host (.Values.sysdig_endpoint.collector.port | int)) -}}
     {{- end -}}
+    {{- if and (not .Values.sysdig_endpoint.api_url) (ne "custom" .Values.sysdig_endpoint.region) -}}
+      {{- $_ := unset $sysdigEndpointConfig "api_url" -}}
+    {{- end -}}
     {{- $_ := set $config "sysdig_endpoint" $sysdigEndpointConfig -}}
     {{- $_ := set $config "cluster_config" (dict "name" .Values.cluster_config.name) -}}
     {{- $clusterConfig := dict "name" .Values.cluster_config.name -}}

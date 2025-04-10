@@ -306,3 +306,21 @@ tests:
             enabled: true
     asserts:
       - notFailedTemplate: {}
+
+  - it: Doesn't set api_url when region is us2 and collector host and port are set
+    set:
+      cluster_config:
+        name: shield-cluster
+      sysdig_endpoint:
+        region: us2
+        api_url:
+        collector:
+          host: fake.collector.host
+          port: 6443
+    asserts:
+      - matchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: |
+            sysdig_endpoint:
+              collector: fake.collector.host:6443
+              region: us2
