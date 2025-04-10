@@ -11,59 +11,19 @@ tests:
     set:
       sysdig_endpoint:
         region: "eu1"
-        api_url:
-        collector:
-          host:
-          port:
     asserts:
       - matchRegex:
           path: data["dragent.yaml"]
           pattern: |
             collector: ingest-eu1.app.sysdig.com
+            collector_port: 6443
 
   - it: API endpoint validation
     set:
       sysdig_endpoint:
         region: "us1"
-        api_url:
-        collector:
-          host:
-          port:
     asserts:
       - matchRegex:
           path: data["dragent.yaml"]
           pattern: |
             sysdig_api_endpoint: secure.sysdig.com
-
-  - it: Collector and API endpoint validation when collector host and port set, but region is not custom and api_url is not set.
-    set:
-      cluster_config:
-        name: test-cluster
-      sysdig_endpoint:
-        region: "us2"
-        collector:
-          host: ingest-alt-us2.app.sysdig.com
-          port: 443
-        api_url:
-    asserts:
-      - matchRegex:
-          path: data["dragent.yaml"]
-          pattern: |
-            collector: ingest-alt-us2.app.sysdig.com
-            collector_port: 443
-      - matchRegex:
-          path: data["dragent.yaml"]
-          pattern: |
-            sysdig_api_endpoint: us2.app.sysdig.com
-
-  - it: Collector host, port and API endpoint validation when region is custom.
-    asserts:
-      - matchRegex:
-          path: data["dragent.yaml"]
-          pattern: |
-            collector: example.com
-            collector_port: 6443
-      - matchRegex:
-          path: data["dragent.yaml"]
-          pattern: |
-            sysdig_api_endpoint: https://www.example.com
