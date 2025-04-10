@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.3.2
+### New Features
+* **shield** [579aa4c4](https://github.com/sysdiglabs/charts/commit/579aa4c423bb1f2e7ed5a456eb557299a8b90c8d): improve regions handling logic to allow override region specific settings without setting region to custom ([#2216](https://github.com/sysdiglabs/charts/issues/2216))
 # v1.3.1
 ### New Features
 * **shield** [919709d1](https://github.com/sysdiglabs/charts/commit/919709d1246817ebf6e2b38b8908e032bcbbaf73): Allow configurable DNS Policy for Host Shield ([#2213](https://github.com/sysdiglabs/charts/issues/2213))
