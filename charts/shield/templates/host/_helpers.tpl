@@ -227,6 +227,13 @@ true
 {{- dig "response_actions" "enabled" false $additional_respond -}}
 {{- else if hasKey $feature_respond "response_actions" }}
 {{- dig "response_actions" "enabled" false $feature_respond -}}
+
+{{- define "host.rapid_response_password" }}
+{{- $feature_respond := get .Values.features (include "host.respond_key" .Values.features) }}
+{{- if ne (dig "rapid_response" "password" "" $feature_respond) "" }}
+{{- $feature_respond.rapid_response.password }}
+{{- else }}
+{{- dig "rapid_response" "password" "" .Values.host.additional_settings }}
 {{- end }}
 {{- end }}
 
