@@ -1146,3 +1146,59 @@ tests:
     asserts:
       - notExists:
           path: data["prometheus.yaml"]
+
+  - it: ssl.verify=false disables certificate verification in components
+    set:
+      ssl:
+        verify: false
+      features:
+        respond:
+          rapid_response:
+            enabled: true
+        vulnerability_management:
+          host_vulnerability_management:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            ssl_verify_certificate: false
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            rapid_response:
+              .*
+              tls_skip_check: true
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            host_scanner:
+              .*
+              verify_certificate: false
+
+  - it: ensure ssl verification is not disabled by default
+    set:
+      features:
+        respond:
+          rapid_response:
+            enabled: true
+        vulnerability_management:
+          host_vulnerability_management:
+            enabled: true
+    asserts:
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            ssl_verify_certificate: false
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            rapid_response:
+              .*
+              tls_skip_check: true
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            host_scanner:
+              .*
+              verify_certificate: false
