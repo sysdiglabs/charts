@@ -239,6 +239,13 @@ true
 {{- end }}
 {{- end }}
 
+{{- define "host.host_scanner_enabled" }}
+{{- if or .Values.features.vulnerability_management.host_vulnerability_management.enabled
+          (dig "host_scanner" "enabled" false .Values.host.additional_settings) }}
+true
+{{- end }}
+{{- end }}
+
 {{- define "host.monitor_key" }}
 {{- if hasKey . "monitoring" }}
 {{- print "monitoring" }}

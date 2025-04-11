@@ -112,11 +112,36 @@ true
 {{- end }}
 {{- end }}
 
+{{- define "host.dragent_yaml.host_scanner" }}
+  {{- $config := dict }}
+  {{- $config = merge $config (dict "host_fs_mount_path" "/host") }}
+  {{- if not .Values.ssl.verify }}
+    {{- $config = merge $config (dict "verify_certificate" false) }}
+  {{- end }}
+  {{- if hasKey .Values.host.additional_settings "host_scanner" }}
+  {{- $config = mergeOverwrite $config (dig "host_scanner" dict .Values.host.additional_settings) }}
+  {{- end }}
+  {{ $config | toJson }}
+{{- end }}
+
+{{- define "host.dragent_yaml.rapid_response" }}
+  {{- $config := dict }}
+  {{- $respond := get .Values.features (include "host.respond_key" .Values.features) }}
+  {{- $rapid_response := omit (get $respond "rapid_response") "password" }}
+  {{- if not .Values.ssl.verify }}
+    {{- $rapid_response = merge $rapid_response (dict "tls_skip_check" true) }}
+  {{- end }}
+  {{ $rapid_response | toJson }}
+{{- end }}
+
 {{- define "host.configmap" }}
 {{- $config := dict
   "k8s_cluster_name" .Values.cluster_config.name
   "collector" (include "common.collector_endpoint" .)
 }}
+{{- if not .Values.ssl.verify }}
+  {{- $config = merge $config (dict "ssl_verify_certificate" false) }}
+{{- end }}
 {{- if .Values.features.kubernetes_metadata.enabled }}
   {{- $_ := set $config "k8s_delegated_nodes" (dig "k8s_delegated_nodes" 0 .Values.host.additional_settings) -}}
 {{- else if hasKey .Values.host.additional_settings "k8s_delegated_nodes" }}
@@ -130,21 +155,14 @@ true
 {{- $config := merge $config (dict "http_proxy" (include "host.dragent_proxy_config" . | fromYaml)) }}
 {{- end }}
 {{- if (include "host.rapid_response_enabled" .) }}
-{{- $respond := get .Values.features (include "host.respond_key" .Values.features) }}
-{{- $rapid_response := omit (get $respond "rapid_response") "password" }}
-{{- $config = merge $config (dict "rapid_response" $rapid_response) }}
+{{- $config = merge $config (dict "rapid_response" (include "host.dragent_yaml.rapid_response" .| fromJson)) }}
 {{- end }}
 {{- $config = merge $config (include "host.parse_features" . | fromYaml) }}
 {{/* Host Scanner requires setting the host fs mount path variable, but that
      parameter has not been mapped into the new schema yet. As a result,
      it still needs to be set in the dragent.yaml file. */}}
 {{- if .Values.features.vulnerability_management.host_vulnerability_management.enabled }}
-{{/* Currently this pins the path to /host, but that is only because the final location of the
-     parameters has not been determined. */}}
- {{- if and .Values.features.vulnerability_management.host_vulnerability_management.enabled
-            (not (dig "host_scanner" "host_fs_mount_path" nil .Values.host.additional_settings)) }}
-    {{- $config = merge $config (dict "host_scanner" (dict "host_fs_mount_path" "/host")) }}
-  {{- end }}
+  {{- $config = merge $config (dict "host_scanner" (include "host.dragent_yaml.host_scanner" . | fromJson)) }}
 {{- end }}
 {{- if or .Values.features.posture.host_posture.enabled (dig "kspm_analyzer" "enabled" false .Values.host.additional_settings) }}
   {{- $config = merge $config (dict "kspm_analyzer" (dict "agent_app_name" (include "shield.name" .))) }}
