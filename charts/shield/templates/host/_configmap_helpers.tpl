@@ -100,11 +100,25 @@ true
 {{- end }}
 {{- end }}
 
+{{- define "host.no_ssl_verify" }}
+  {{- $config := dict "ssl_verify_certificate" false }}
+  {{- if (include "host.rapid_response_enabled" .) }}
+    {{- $config = merge $config (dict "rapid_response" (dict "tls_skip_check" true)) }}
+  {{- end }}
+  {{- if (include "host.host_scanner_enabled" .) }}
+    {{- $config = merge $config (dict "host_scanner" (dict "verify_certificate" false)) }}
+  {{- end }}
+  {{- $config | toYaml }}
+{{- end }}
+
 {{- define "host.configmap" }}
 {{- $config := dict
   "k8s_cluster_name" .Values.cluster_config.name
   "collector" (include "common.collector_endpoint" .)
 }}
+{{- if not .Values.ssl.verify }}
+  {{- $config = merge $config (include "host.no_ssl_verify" . | fromYaml) }}
+{{- end }}
 {{- if .Values.features.kubernetes_metadata.enabled }}
   {{- $_ := set $config "k8s_delegated_nodes" (dig "k8s_delegated_nodes" 0 .Values.host.additional_settings) -}}
 {{- else if hasKey .Values.host.additional_settings "k8s_delegated_nodes" }}
