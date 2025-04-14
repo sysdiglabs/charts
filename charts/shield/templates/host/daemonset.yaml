@@ -198,6 +198,7 @@ spec:
               name: varrun-vol
             - mountPath: /host/sys/fs
               name: sysfs-vol
+              readOnly: true
             {{- if (include "host.driver.is_ebpf" .) }}
             - mountPath: /root/.sysdig
               name: bpf-probes
@@ -273,7 +274,6 @@ spec:
       {{- /* Autopilot = false */}}
       {{- if not  (include "common.cluster_type.is_gke_autopilot" .) }}
         - name: sysfs-vol
-          readOnly: true
           hostPath:
             path: /sys/fs
         - name: modprobe-d
