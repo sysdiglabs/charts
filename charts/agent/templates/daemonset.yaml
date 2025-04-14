@@ -290,6 +290,7 @@ spec:
           {{- if and (not .Values.slim.enabled) (not (include "agent.gke.autopilot" .)) }}
             - mountPath: /host/sys/fs
               name: sysfs-vol
+              readOnly: true
             - mountPath: /etc/modprobe.d
               name: modprobe-d
               readOnly: true
@@ -330,6 +331,7 @@ spec:
               name: varrun-vol
             - mountPath: /host/sys/fs
               name: sysfs-vol
+              readOnly: true
             {{- if (include "agent.ebpfEnabled" .) }}
             - mountPath: /root/.sysdig
               name: bpf-probes
@@ -436,7 +438,6 @@ spec:
       {{- /* Slim = false, Autopilot = false */}}
       {{- if and (not .Values.slim.enabled) (not (include "agent.gke.autopilot" .)) }}
         - name: sysfs-vol
-          readOnly: true
           hostPath:
             path: /sys/fs
         - name: modprobe-d
@@ -472,7 +473,6 @@ spec:
       {{- /* Slim = true, Autopilot = false */}}
       {{- if and (.Values.slim.enabled) (not (include "agent.gke.autopilot" .)) }}
         - name: sysfs-vol
-          readOnly: true
           hostPath:
             path: /sys/fs
         - name: modprobe-d
