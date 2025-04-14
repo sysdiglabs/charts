@@ -148,3 +148,6 @@ Chart.lock
 
 # ASDF config
 .tool-versions
+
+# Broken links .md file
+link_report.md

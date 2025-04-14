@@ -7,8 +7,32 @@ If release name contains chart name it will be used as a full name.
     {{- printf "%s-host" (include "shield.fullname" . | trunc 57 | trimSuffix "-") }}
 {{- end }}
 
+{{- define "host.windows.fullname" -}}
+    {{- printf "%s-host-windows" (include "shield.fullname" . | trunc 50 | trimSuffix "-") }}
+{{- end }}
 
 {{- define "host.proxy_config" -}}
+  {{- $proxy := dict -}}
+  {{- if (include "common.proxy.https_proxy_value" .) -}}
+    {{- $_ := set $proxy "https_proxy" (include "common.proxy.https_proxy_value" .) -}}
+  {{- end -}}
+  {{- if (include "common.proxy.http_proxy_value" .) -}}
+    {{- $_ := set $proxy "http_proxy" (include "common.proxy.http_proxy_value" .) -}}
+  {{- end -}}
+  {{- if .Values.proxy.no_proxy_existing_secret -}}
+    {{- $secret := lookup "v1" "Secret" .Release.Namespace .Values.proxy.no_proxy_existing_secret -}}
+    {{- if $secret -}}
+        {{- $_ := set $proxy "no_proxy" (printf "%s" (index $secret.data "no_proxy" | b64dec)) -}}
+    {{- else -}}
+        {{- fail (printf "Secret '%s' not found" .Values.proxy.no_proxy_existing_secret) -}}
+    {{- end -}}
+  {{- else -}}
+  {{- $_ := set $proxy "no_proxy" (include "common.proxy.no_proxy" .) -}}
+  {{- end -}}
+  {{- $proxy | toYaml -}}
+{{- end -}}
+
+{{- define "host.dragent_proxy_config" -}}
 {{- if (include "common.proxy.enabled" . ) -}}
     {{- $proxyConfig := dict -}}
     {{- $parsedProxyConfig := urlParse (coalesce
@@ -90,14 +114,14 @@ true
 {{- end }}
 
 {{- define "host.driver.is_legacy_ebpf" }}
-{{- if eq "legacy_ebpf" .Values.host.driver }}
+{{- if and (eq "legacy_ebpf" .Values.host.driver) (not (include "common.cluster_type.is_gke_autopilot" .)) }}
 true
 {{- else }}
 {{- end }}
 {{- end }}
 
 {{- define "host.driver.is_universal_ebpf" }}
-{{- if eq "universal_ebpf" .Values.host.driver }}
+{{- if or (eq "universal_ebpf" .Values.host.driver) (include "common.cluster_type.is_gke_autopilot" .) }}
 true
 {{- else }}
 {{- end }}

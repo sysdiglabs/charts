@@ -21,6 +21,9 @@
     "host": {
       "$ref": "#/$defs/Host"
     },
+    "host_windows": {
+      "$ref": "#/$defs/HostWindows"
+    },
     "env": {
       "$ref": "#/$defs/EnvVars"
     },
@@ -345,6 +348,24 @@
             "universal_ebpf"
           ]
         },
+        "dns_policy": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The DNS policy to use for the Host Shield pods",
+          "default": "ClusterFirstWithHostNet",
+          "if": {
+            "type": "string"
+          },
+          "then": {
+            "enum": [
+              "Default",
+              "ClusterFirst",
+              "ClusterFirstWithHostNet"
+            ]
+          }
+        },
         "env": {
           "$ref": "#/$defs/EnvVars"
         },
@@ -358,6 +379,21 @@
       "required": [
         "driver"
       ]
+    },
+    "HostWindows": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "env": {
+          "$ref": "#/$defs/EnvVars"
+        },
+        "volumes": {
+          "$ref": "#/$defs/Volumes"
+        },
+        "volume_mounts": {
+          "$ref": "#/$defs/VolumeMounts"
+        }
+      }
     },
     "SSL": {
       "type": "object",

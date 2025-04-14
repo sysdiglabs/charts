@@ -1,0 +1,25 @@
+suite: Host - Service
+templates:
+  - templates/host/gke-allowlist-synchronizer.yaml
+release:
+  name: release-name
+  namespace: shield-namespace
+values:
+  - ../values/gke-autopilot.yaml
+tests:
+  - it: Contains the agent GKE AllowlistSynchronizer resource
+    asserts:
+      - containsDocument:
+          kind: AllowlistSynchronizer
+          apiVersion: auto.gke.io/v1
+          name: sysdig-agent-allowlist-synchronizer
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - equal:
+          path: metadata.annotations["helm.sh/hook"]
+          value: pre-install,pre-upgrade
+      - equal:
+          path: spec.allowlistPaths
+          value:
+            - "Sysdig/agent/*"

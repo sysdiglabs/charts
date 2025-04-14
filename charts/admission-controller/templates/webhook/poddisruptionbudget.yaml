@@ -1,0 +1,10 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "admissionController.webhook.fullname" . }}-pdb
+  namespace: {{ include "admissionController.namespace" . }}
+spec:
+  minAvailable: {{ .Values.webhook.pdb.minAvailable }}
+  selector:
+    matchLabels:
+      {{- include "admissionController.webhook.selectorLabels" . | nindent 6 }}

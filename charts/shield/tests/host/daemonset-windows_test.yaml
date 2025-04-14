@@ -1,11 +1,11 @@
-suite: Host - DaemonSet
+suite: Host Windows - DaemonSet
 templates:
-  - templates/host/daemonset.yaml
+  - templates/host/daemonset-windows.yaml
 release:
   name: release-name
   namespace: shield-namespace
 values:
-  - ../values/base.yaml
+  - ../values/windows.yaml
 tests:
   - it: DaemonSet Sanity Check
     asserts:
@@ -14,7 +14,7 @@ tests:
           count: 1
       - equal:
           path: metadata.name
-          value: release-name-shield-host
+          value: release-name-shield-host-windows
 
   - it: Test without Custom CA Settings
     asserts:
@@ -37,12 +37,12 @@ tests:
           path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].env[?(@.name == "SSL_CERT_FILE")]
           value:
             name: SSL_CERT_FILE
-            value: /opt/draios/certificates/custom-ca-from-values.crt
+            value: Sysdig/Shield/certificates/custom-ca-from-values.crt
       - contains:
           path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].volumeMounts
           content:
             name: ca-certs
-            mountPath: /opt/draios/certificates/
+            mountPath: Sysdig/Shield/certificates/
             readOnly: true
       - contains:
           path: spec.template.spec.volumes
@@ -62,12 +62,12 @@ tests:
           path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].env[?(@.name == "SSL_CERT_FILE")]
           value:
             name: SSL_CERT_FILE
-            value: /opt/draios/certificates/custom-ca-from-secret.crt
+            value: Sysdig/Shield/certificates/custom-ca-from-secret.crt
       - contains:
           path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].volumeMounts
           content:
             name: ca-certs
-            mountPath: /opt/draios/certificates/
+            mountPath: Sysdig/Shield/certificates/
             readOnly: true
       - contains:
           path: spec.template.spec.volumes
@@ -75,74 +75,6 @@ tests:
             name: ca-certs
             secret:
               secretName: fake-secret-name
-
-  - it: Test host.privileged=true
-    set:
-      host:
-        privileged: true
-    asserts:
-      - isNullOrEmpty:
-          path: spec.template.metadata.annotations
-      - isSubset:
-          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].securityContext
-          content:
-            privileged: true
-            runAsNonRoot: false
-            readOnlyRootFilesystem: false
-            allowPrivilegeEscalation: true
-      - isNotSubset:
-          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].securityContext
-          content:
-            allowPrivilegeEscalation: false
-            seccompProfile:
-              type: Unconfined
-            capabilities:
-              drop:
-                - ALL
-              add:
-                - DAC_READ_SEARCH
-                - KILL
-                - SETGID
-                - SETUID
-                - SYS_ADMIN
-                - SYS_CHROOT
-                - SYS_PTRACE
-                - SYS_RESOURCE
-
-  - it: Test host.privileged=false
-    set:
-      host:
-        privileged: false
-    asserts:
-      - isSubset:
-          path: spec.template.metadata.annotations
-          content:
-            container.apparmor.security.beta.kubernetes.io/sysdig-host-shield: unconfined
-      - isSubset:
-          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].securityContext
-          content:
-            allowPrivilegeEscalation: false
-            seccompProfile:
-              type: Unconfined
-            capabilities:
-              drop:
-                - ALL
-              add:
-                - DAC_READ_SEARCH
-                - KILL
-                - SETGID
-                - SETUID
-                - SYS_ADMIN
-                - SYS_CHROOT
-                - SYS_PTRACE
-                - SYS_RESOURCE
-      - isNotSubset:
-          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].securityContext
-          content:
-            privileged: true
-            runAsNonRoot: false
-            readOnlyRootFilesystem: false
-            allowPrivilegeEscalation: true
 
   - it: Test user specified priority class
     set:
@@ -168,27 +100,24 @@ tests:
 
   - it: Test default container images
     set:
-      host:
+      host_windows:
         image:
           tag: latest
     asserts:
       - equal:
-          path: spec.template.spec.initContainers[?(@.name == "sysdig-host-shield-kmodule")].image
-          value: quay.io/sysdig/agent-kmodule:latest
-      - equal:
           path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].image
-          value: quay.io/sysdig/agent-slim:latest
+          value: quay.io/sysdig/host-shield:latest
 
   - it: Default workload labels
     set:
-      host:
+      host_windows:
         image:
           tag: 11.11.11
     asserts:
       - containsDocument:
           kind: DaemonSet
           apiVersion: apps/v1
-          name: release-name-shield-host
+          name: release-name-shield-host-windows
           namespace: shield-namespace
       - isSubset:
           path: metadata.labels
@@ -202,14 +131,14 @@ tests:
 
   - it: Default pod labels
     set:
-      host:
+      host_windows:
         image:
           tag: 11.11.11
     asserts:
       - containsDocument:
           kind: DaemonSet
           apiVersion: apps/v1
-          name: release-name-shield-host
+          name: release-name-shield-host-windows
           namespace: shield-namespace
       - isSubset:
           path: spec.template.metadata.labels
@@ -221,85 +150,12 @@ tests:
             sysdig/component: host
             sysdig/component-version: 11.11.11
 
-  - it: Test Rapid Response password secret
-    set:
-      features:
-        respond:
-          rapid_response:
-            enabled: true
-      host:
-        additional_settings:
-          rapid_response:
-            password: abc123
+  - it: Test default nodeSelector
     asserts:
-      - contains:
-          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].env
-          content:
-            name: PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: release-name-shield-host-rapid-response
-                key: password
-
-  - it: Host root and tmp not mounted by default
-    asserts:
-      - notExists:
-          path: spec.template.spec.volumes[?(@.name == "host-root")]
-      - notExists:
-          path: spec.template.spec.volumes[?(@.name == "host-tmp")]
-
-  - it: Host root mounted when host scanner is enabled
-    set:
-      features:
-        vulnerability_management:
-          host_vulnerability_management:
-            enabled: true
-    asserts:
-      - contains:
-          path: spec.template.spec.volumes
-          content:
-            name: host-root
-            hostPath:
-              path: /
-      - contains:
-          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].volumeMounts
-          content:
-            name: host-root
-            mountPath: /host
-            readOnly: true
-      - notExists:
-          path: spec.template.spec.volumes[?(@.name == "host-tmp")]
-
-  - it: Host root and tmp mounted when kspm-analyzer is enabled
-    set:
-      features:
-        posture:
-          host_posture:
-            enabled: true
-    asserts:
-      - contains:
-          path: spec.template.spec.volumes
-          content:
-            name: host-root
-            hostPath:
-              path: /
-      - contains:
-          path: spec.template.spec.volumes
-          content:
-            name: host-tmp
-            hostPath:
-              path: /tmp
-      - contains:
-          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].volumeMounts
-          content:
-            name: host-root
-            mountPath: /host
-            readOnly: true
-      - contains:
-          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].volumeMounts
-          content:
-            name: host-tmp
-            mountPath: /host/tmp
+      - equal:
+          path: spec.template.spec.nodeSelector
+          value:
+            kubernetes.io/os: windows
 
   - it: Test default affinity settings
     asserts:
@@ -314,17 +170,14 @@ tests:
                       operator: In
                       values:
                       - amd64
-                      - arm64
-                      - ppc64le
-                      - s390x
                     - key: kubernetes.io/os
                       operator: In
                       values:
-                      - linux
+                      - windows
 
   - it: Test custom affinity settings
     set:
-      host:
+      host_windows:
         affinity:
           nodeAffinity:
             requiredDuringSchedulingIgnoredDuringExecution:
@@ -333,11 +186,11 @@ tests:
                   - key: kubernetes.io/arch
                     operator: In
                     values:
-                    - amd64
+                    - arm64
                   - key: kubernetes.io/os
                     operator: In
                     values:
-                    - linux
+                    - windows
     asserts:
       - equal:
           path: spec.template.spec.affinity
@@ -349,11 +202,11 @@ tests:
                     - key: kubernetes.io/arch
                       operator: In
                       values:
-                      - amd64
+                      - arm64
                     - key: kubernetes.io/os
                       operator: In
                       values:
-                      - linux
+                      - windows
 
   - it: Test default host tolerations
     asserts:
@@ -361,25 +214,12 @@ tests:
           path: spec.template.spec.tolerations
           value:
             - effect: NoSchedule
-              key: node-role.kubernetes.io/master
-            - effect: NoSchedule
-              key: node-role.kubernetes.io/control-plane
-            - effect: NoSchedule
-              key: node-role.kubernetes.io/controlplane
-              operator: Equal
-              value: "true"
-            - effect: NoExecute
-              key: node-role.kubernetes.io/etcd
-              operator: Equal
-              value: "true"
-            - effect: NoExecute
-              key: CriticalAddonsOnly
-              operator: Equal
-              value: "true"
+              key: os
+              value: Windows
 
   - it: Test custom host tolerations
     set:
-      host:
+      host_windows:
         tolerations:
           - my: specialtoleration
     asserts:
@@ -392,7 +232,7 @@ tests:
     set:
       tolerations:
         - my: specialdefaulttoleration
-      host:
+      host_windows:
         tolerations:
           - my: specialhosttoleration
     asserts:
@@ -419,7 +259,7 @@ tests:
       env:
         - name: MY_ENV_VAR
           value: my-value
-      host:
+      host_windows:
         env:
           - name: MY_HOST_ENV_VAR
             value: my-host-value
@@ -441,7 +281,7 @@ tests:
         env:
           - name: MY_CLUSTER_ENV_VAR
             value: my-cluster-value
-      host:
+      host_windows:
         env:
           - name: MY_HOST_ENV_VAR
             value: my-host-value
@@ -485,7 +325,7 @@ tests:
       volume_mounts:
         - name: my-volume
           mountPath: /host/my-mount-path
-      host:
+      host_windows:
         volumes:
           - name: my-host-volume
             emptyDir: {}
@@ -523,7 +363,7 @@ tests:
         volume_mounts:
           - name: my-cluster-volume
             mountPath: /host/my-cluster-mount-path
-      host:
+      host_windows:
         volumes:
           - name: my-host-volume
             emptyDir: {}
@@ -565,28 +405,11 @@ tests:
             name: POD_NAMESPACE
             valueFrom:
               fieldRef:
-                  fieldPath: metadata.namespace
-      - contains:
-          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].ports
-          content:
-            containerPort: 12000
-            name: kspm-analyzer
-
-  - it: Ensure port and env var not set when host posture is disabled
-    asserts:
-      - notContains:
-          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].env
-          content:
-            name: POD_NAMESPACE
-            valueFrom:
-              fieldRef:
                 fieldPath: metadata.namespace
-      - isNullOrEmpty:
-          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].ports
 
   - it: Image pull secrets are populated
     set:
-      host:
+      host_windows:
         image:
           pull_secrets:
             - name: my-secret
@@ -597,7 +420,7 @@ tests:
 
   - it: Multiple pull secrets
     set:
-      host:
+      host_windows:
         image:
           pull_secrets:
             - name: my-secret
@@ -613,56 +436,3 @@ tests:
     asserts:
       - isNullOrEmpty:
           path: spec.template.spec.imagePullSecrets
-
-  - it: Test that /var/data is type DirectoryOrCreate
-    asserts:
-      - equal:
-          path: spec.template.spec.volumes[?(@.name == "vardata-vol")].hostPath.type
-          value: DirectoryOrCreate
-
-  - it: No metrics port if promex is not enabled
-    asserts:
-      - isNullOrEmpty:
-          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].ports
-
-  - it: Enabling promex creates the metrics port
-    set:
-      host:
-        additional_settings:
-          prometheus_exporter:
-            enabled: true
-    asserts:
-      - contains:
-          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].ports
-          content:
-            containerPort: 9544
-            name: metrics
-
-  - it: Setting custom metrics port values works as expected
-    set:
-      host:
-        additional_settings:
-          prometheus_exporter:
-            enabled: true
-            listen_url: 0.0.0.0:1234
-    asserts:
-      - contains:
-          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].ports
-          content:
-            containerPort: 1234
-            name: metrics
-
-  - it: Validate default DNS Policy
-    asserts:
-      - equal:
-          path: spec.template.spec.dnsPolicy
-          value: ClusterFirstWithHostNet
-
-  - it: Validate custom DNS Policy
-    set:
-      host:
-        dns_policy: ClusterFirst
-    asserts:
-      - equal:
-          path: spec.template.spec.dnsPolicy
-          value: ClusterFirst

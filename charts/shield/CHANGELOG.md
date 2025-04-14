@@ -10,6 +10,33 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.3.3
+### Bug Fixes
+* **shield** [d1a43057](https://github.com/sysdiglabs/charts/commit/d1a430574b6f0d41de2550daba1696493c4984c5): revert shield chart update ([#2219](https://github.com/sysdiglabs/charts/issues/2219))
+# v1.3.2
+### New Features
+* **shield** [579aa4c4](https://github.com/sysdiglabs/charts/commit/579aa4c423bb1f2e7ed5a456eb557299a8b90c8d): improve regions handling logic to allow override region specific settings without setting region to custom ([#2216](https://github.com/sysdiglabs/charts/issues/2216))
+# v1.3.1
+### New Features
+* **shield** [919709d1](https://github.com/sysdiglabs/charts/commit/919709d1246817ebf6e2b38b8908e032bcbbaf73): Allow configurable DNS Policy for Host Shield ([#2213](https://github.com/sysdiglabs/charts/issues/2213))
+# v1.3.0
+### Chores
+* **cluster-shield** [8df60680](https://github.com/sysdiglabs/charts/commit/8df60680c6ca6888277c60efbdac2fa2532f2810): Automatic bump to version 1.10.0 ([#2208](https://github.com/sysdiglabs/charts/issues/2208))
+# v1.2.0
+### New Features
+* **shield** [fb1452be](https://github.com/sysdiglabs/charts/commit/fb1452be8411019f47b7d8c3901b9f97f4cd2f60): add support for windows host-shield ([#2184](https://github.com/sysdiglabs/charts/issues/2184))
+# v1.1.0
+### New Features
+* **shield** [351986ea](https://github.com/sysdiglabs/charts/commit/351986eae6d9093d454edf744ad92a2ac7eb2361): add host support (universal_ebpf) on gke-autopilot ([#2076](https://github.com/sysdiglabs/charts/issues/2076))
+# v1.0.0
+### New Features
+* **shield** [d2e3a095](https://github.com/sysdiglabs/charts/commit/d2e3a09566344f580a7f89878230cfbe68b1ef82): GA release of the shield chart ([#2202](https://github.com/sysdiglabs/charts/issues/2202))
+# v0.10.3
+### New Features
+* **host-shield** [59118afe](https://github.com/sysdiglabs/charts/commit/59118afec130f35b67d533592a3236ecd5c916fd): add proper container name when unprivileged mode is set ([#2201](https://github.com/sysdiglabs/charts/issues/2201))
+# v0.10.2
+### New Features
+* **agent,shield** [d5f56650](https://github.com/sysdiglabs/charts/commit/d5f56650a4fb76b74f126334445716ff42d6046e): release agent 13.8.1 ([#2197](https://github.com/sysdiglabs/charts/issues/2197))
 # v0.10.1
 ### Chores
 * **shield** [f326a300](https://github.com/sysdiglabs/charts/commit/f326a300db4bbb14911bf33d17c122ec76c230ce): bump cluster-shield to 1.9.1 ([#2191](https://github.com/sysdiglabs/charts/issues/2191))
