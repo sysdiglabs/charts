@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.3.5
+### Chores
+* **shield** [308cdece](https://github.com/sysdiglabs/charts/commit/308cdece594e170393852353afdffb893a95543f): bump host-shield windows to 0.7.1 ([#2226](https://github.com/sysdiglabs/charts/issues/2226))
 # v1.3.4
 ### Chores
 * **agent,sysdig-deploy,shield** [d9cb1168](https://github.com/sysdiglabs/charts/commit/d9cb11684f11a3d60b8c1346b1dd2c76ba04ae20): add /sys/fs mount ([#2223](https://github.com/sysdiglabs/charts/issues/2223))
