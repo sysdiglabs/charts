@@ -216,19 +216,17 @@ true
 
 {{/*
   This function checks if the response_actions feature is enabled for the host.
-  It first checks the additional_settings and than the features.
+  It first checks the additional_settings and then the features.
   If neither is found, it defaults to false.
 */}}
 {{- define "host.response_actions_enabled" }}
-{{- $feature_respond := get .Values.features (include "host.respond_key" .Values.features) }}
-{{- $additional_features := default (dict) (get .Values.host.additional_settings "features") }}
-{{- $additional_respond := get $additional_features (include "host.respond_key" $additional_features) }}
-{{- if (and (eq (typeOf $additional_respond) "map[string]interface {}") (hasKey $additional_respond "response_actions")) }}
+{{- $feature_respond := dig (include "host.respond_key" .Values.features) (dict) .Values.features }}
+{{- $additional_features := dig "features" (dict) .Values.host.additional_settings }}
+{{- $additional_respond := dig (include "host.respond_key" $additional_features) (dict) $additional_features }}
+{{- if hasKey $additional_respond "response_actions" }}
 {{- dig "response_actions" "enabled" false $additional_respond -}}
-{{- else if (and (eq (typeOf $feature_respond) "map[string]interface {}") (hasKey $feature_respond "response_actions")) }}
+{{- else if hasKey $feature_respond "response_actions" }}
 {{- dig "response_actions" "enabled" false $feature_respond -}}
-{{- else }}
-{{- false -}}
 {{- end }}
 {{- end }}
 
