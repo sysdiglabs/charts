@@ -248,6 +248,80 @@ tests:
       - notExists:
           path: spec.template.spec.volumes[?(@.name == "host-tmp")]
 
+  - it: Host root mounted when response_actions is enabled (additional_settings)
+    set:
+      host:
+        additional_settings:
+          features:
+            respond:
+              response_actions:
+                enabled: true
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: host-root
+            hostPath:
+              path: /
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].volumeMounts
+          content:
+            name: host-root
+            mountPath: /host
+            readOnly: true
+      - notExists:
+          path: spec.template.spec.volumes[?(@.name == "host-tmp")]
+
+  - it: Host root mounted when response_actions is enabled (features)
+    set:
+      features:
+        respond:
+          response_actions:
+            enabled: true
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: host-root
+            hostPath:
+              path: /
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].volumeMounts
+          content:
+            name: host-root
+            mountPath: /host
+            readOnly: true
+      - notExists:
+          path: spec.template.spec.volumes[?(@.name == "host-tmp")]
+
+  - it: Host root mounted when response_actions is enabled (only on additional_settings)
+    set:
+      features:
+        respond:
+          response_actions:
+            enabled: false
+      host:
+        additional_settings:
+          features:
+            respond:
+              response_actions:
+                enabled: true
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: host-root
+            hostPath:
+              path: /
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].volumeMounts
+          content:
+            name: host-root
+            mountPath: /host
+            readOnly: true
+      - notExists:
+          path: spec.template.spec.volumes[?(@.name == "host-tmp")]
+
   - it: Host root mounted when host scanner is enabled
     set:
       features:

@@ -136,7 +136,7 @@ true
 {{- end }}
 
 {{- define "host.need_host_root" }}
-{{- if or .Values.features.posture.host_posture.enabled .Values.features.vulnerability_management.host_vulnerability_management.enabled }}
+{{- if or (eq (include "host.response_actions_enabled" .) "true") .Values.features.posture.host_posture.enabled .Values.features.vulnerability_management.host_vulnerability_management.enabled }}
 {{- true -}}
 {{- end }}
 {{- end }}
@@ -211,6 +211,24 @@ capabilities:
 {{- if (dig (include "host.respond_key" .) "rapid_response" "enabled" false .) }}
 true
 {{- end }}
+{{- end }}
+{{- end }}
+
+{{/*
+  This function checks if the response_actions feature is enabled for the host.
+  It first checks the additional_settings and than the features.
+  If neither is found, it defaults to false.
+*/}}
+{{- define "host.response_actions_enabled" }}
+{{- $feature_respond := get .Values.features (include "host.respond_key" .Values.features) }}
+{{- $additional_features := default (dict) (get .Values.host.additional_settings "features") }}
+{{- $additional_respond := get $additional_features (include "host.respond_key" $additional_features) }}
+{{- if (and (eq (typeOf $additional_respond) "map[string]interface {}") (hasKey $additional_respond "response_actions")) }}
+{{- dig "response_actions" "enabled" false $additional_respond -}}
+{{- else if (and (eq (typeOf $feature_respond) "map[string]interface {}") (hasKey $feature_respond "response_actions")) }}
+{{- dig "response_actions" "enabled" false $feature_respond -}}
+{{- else }}
+{{- false -}}
 {{- end }}
 {{- end }}
 
