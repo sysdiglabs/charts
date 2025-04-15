@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.80.3
+### Chores
+* **agent,sysdig-deploy,shield** [d9cb1168](https://github.com/sysdiglabs/charts/commit/d9cb11684f11a3d60b8c1346b1dd2c76ba04ae20): add /sys/fs mount ([#2223](https://github.com/sysdiglabs/charts/issues/2223))
 # v1.80.2
 ### Chores
 * **sysdig-deploy** [ab16e77a](https://github.com/sysdiglabs/charts/commit/ab16e77aab9ba0175f84c1b49e4f37f7bdd0e854): Automatic version bump due to updated dependencies ([#2218](https://github.com/sysdiglabs/charts/issues/2218))
