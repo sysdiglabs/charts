@@ -81,9 +81,6 @@
 {{- if (include "common.proxy.enabled" . ) }}
   {{- $http_proxy := (include "host.dragent_proxy_config" . | fromYaml) -}}
   {{- $config := merge $config (dict "http_proxy" $http_proxy) -}}
-  {{- if (not $http_proxy.ca_certificate) -}}
-    {{- $_ := set $http_proxy "ca_certificate" "Certs/cacert.pem" -}}
-  {{- end -}}
 {{- end }}
 
 {{- if (include "host.windows.agent_runtime.log_level" . ) -}}
