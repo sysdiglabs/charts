@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.3.6
+### Chores
+* **shield** [289ff486](https://github.com/sysdiglabs/charts/commit/289ff486fa96b82a0d5783eecc2859000b5d53f8): remove default ca_certificate on http_proxy config for windows ([#2228](https://github.com/sysdiglabs/charts/issues/2228))
 # v1.3.5
 ### Chores
 * **shield** [308cdece](https://github.com/sysdiglabs/charts/commit/308cdece594e170393852353afdffb893a95543f): bump host-shield windows to 0.7.1 ([#2226](https://github.com/sysdiglabs/charts/issues/2226))
