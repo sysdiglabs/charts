@@ -220,13 +220,15 @@ true
   If neither is found, it defaults to false.
 */}}
 {{- define "host.response_actions_enabled" }}
-{{- $feature_respond := dig (include "host.respond_key" .Values.features) (dict) .Values.features }}
+{{- $feature_respond := dig "respond" (dict) .Values.features }}
 {{- $additional_features := dig "features" (dict) .Values.host.additional_settings }}
-{{- $additional_respond := dig (include "host.respond_key" $additional_features) (dict) $additional_features }}
+{{- $additional_respond := dig "respond" (dict) $additional_features }}
 {{- if hasKey $additional_respond "response_actions" }}
 {{- dig "response_actions" "enabled" false $additional_respond -}}
 {{- else if hasKey $feature_respond "response_actions" }}
 {{- dig "response_actions" "enabled" false $feature_respond -}}
+{{- end }}
+{{- end }}
 
 {{- define "host.rapid_response_password" }}
 {{- $feature_respond := get .Values.features (include "host.respond_key" .Values.features) }}

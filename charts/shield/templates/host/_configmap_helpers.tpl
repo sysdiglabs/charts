@@ -13,7 +13,7 @@
 {{- $featureRespond := get . (include "host.respond_key" .) }}
 {{- $rapid_response := dict "rapid_response" (pick $featureRespond.rapid_response "enabled") }}
 {{- $respond = merge $respond $rapid_response -}}
-{{- $respond = merge $respond (pick $featureRespond "response_actions") -}}
+{{- $respond = merge $respond (pick .respond "response_actions") -}}
 {{- dict "respond" $respond | toYaml }}
 {{- end }}
 
