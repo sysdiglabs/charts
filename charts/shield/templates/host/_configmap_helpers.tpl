@@ -8,8 +8,13 @@
 {{- dict "vulnerability_management" (pick . "host_vulnerability_management" "in_use") | toYaml }}
 {{- end }}
 
-{{- define "host.configmap.responding" }}
-{{- dict "respond" (pick . "rapid_response") | toYaml }}
+{{- define "host.configmap.respond" }}
+{{- $respond := dict -}}
+{{- $featureRespond := get . (include "host.respond_key" .) }}
+{{- $rapid_response := dict "rapid_response" (pick $featureRespond.rapid_response "enabled") }}
+{{- $respond = merge $respond $rapid_response -}}
+{{- $respond = merge $respond (pick .respond "response_actions") -}}
+{{- dict "respond" $respond | toYaml }}
 {{- end }}
 
 {{- define "host.configmap.detections" }}
@@ -27,9 +32,9 @@
 {{- with .Values.features.vulnerability_management }}
 {{- $featuresConfig = merge $featuresConfig ((include "host.configmap.vm" .) | fromYaml) }}
 {{- end }}
-{{- with .Values.features.respond }}
-{{- $featuresConfig = merge $featuresConfig ((include "host.configmap.responding" .) | fromYaml) }}
-{{- end }}
+
+{{- $featuresConfig = merge $featuresConfig ((include "host.configmap.respond" .Values.features) | fromYaml) }}
+
 {{- with .Values.features.detections }}
 {{- $featuresConfig = merge $featuresConfig ((include "host.configmap.detections" .) | fromYaml)}}
 {{- end }}
@@ -118,7 +123,9 @@ true
 {{- $config := merge $config (dict "http_proxy" (include "host.dragent_proxy_config" . | fromYaml)) }}
 {{- end }}
 {{- if (include "host.rapid_response_enabled" .) }}
-{{- $config = merge $config (dict "rapid_response" (dict "enabled" true)) }}
+{{- $respond := get .Values.features (include "host.respond_key" .Values.features) }}
+{{- $rapid_response := omit (get $respond "rapid_response") "password" }}
+{{- $config = merge $config (dict "rapid_response" $rapid_response) }}
 {{- end }}
 {{- $config = merge $config (include "host.parse_features" . | fromYaml) }}
 {{/* Host Scanner requires setting the host fs mount path variable, but that

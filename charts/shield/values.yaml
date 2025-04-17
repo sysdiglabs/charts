@@ -140,6 +140,8 @@ features:
   respond:
     rapid_response:
       enabled: false
+    response_actions:
+      enabled: false
   monitor:
     app_checks:
       enabled: false
