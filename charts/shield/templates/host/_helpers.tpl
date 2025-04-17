@@ -230,6 +230,15 @@ true
 {{- end }}
 {{- end }}
 
+{{- define "host.rapid_response_password" }}
+{{- $feature_respond := get .Values.features (include "host.respond_key" .Values.features) }}
+{{- if ne (dig "rapid_response" "password" "" $feature_respond) "" }}
+{{- $feature_respond.rapid_response.password }}
+{{- else }}
+{{- dig "rapid_response" "password" "" .Values.host.additional_settings }}
+{{- end }}
+{{- end }}
+
 {{- define "host.monitor_key" }}
 {{- if hasKey . "monitoring" }}
 {{- print "monitoring" }}
