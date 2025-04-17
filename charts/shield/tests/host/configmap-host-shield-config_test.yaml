@@ -247,7 +247,25 @@ tests:
         respond:
           rapid_response:
             enabled: true
+            password: test1234
     asserts:
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            rapid_response:
+              enabled: true
+              password: test1234
+      - notMatchRegex:
+          path: data['host-shield.yaml']
+          pattern: |-
+            rapid_response:
+              enabled: true
+              password: test1234
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            rapid_response:
+              enabled: true
       - matchRegex:
           path: data['host-shield.yaml']
           pattern: |-
