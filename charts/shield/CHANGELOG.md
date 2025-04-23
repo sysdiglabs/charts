@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.3.8
+### Chores
+* **shield** [75351907](https://github.com/sysdiglabs/charts/commit/75351907679b400b286cf6f8883285b8c6ae0f40): add support to rapid_response pwd also on features section ([#2229](https://github.com/sysdiglabs/charts/issues/2229))
 # v1.3.7
 ### Chores
 * **shield** [185a2661](https://github.com/sysdiglabs/charts/commit/185a2661e30d2f2df75f02c9c73d6739d54dcd59): add support to rapid_response and response_actions features ([#2221](https://github.com/sysdiglabs/charts/issues/2221))
