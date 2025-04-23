@@ -29,6 +29,8 @@ tests:
               respond:
                 rapid_response:
                   enabled: false
+                response_actions:
+                  enabled: false
               vulnerability_management:
                 host_vulnerability_management:
                   enabled: false
@@ -55,6 +57,8 @@ tests:
                   enabled: true
               respond:
                 rapid_response:
+                  enabled: false
+                response_actions:
                   enabled: false
               vulnerability_management:
                 host_vulnerability_management:
@@ -83,6 +87,8 @@ tests:
               respond:
                 rapid_response:
                   enabled: false
+                response_actions:
+                  enabled: false
               vulnerability_management:
                 host_vulnerability_management:
                   enabled: false
@@ -109,6 +115,8 @@ tests:
                   enabled: false
               respond:
                 rapid_response:
+                  enabled: false
+                response_actions:
                   enabled: false
               vulnerability_management:
                 host_vulnerability_management:
@@ -137,6 +145,8 @@ tests:
               respond:
                 rapid_response:
                   enabled: false
+                response_actions:
+                  enabled: false
               vulnerability_management:
                 host_vulnerability_management:
                   enabled: false
@@ -158,6 +168,8 @@ tests:
                   enabled: false
               respond:
                 rapid_response:
+                  enabled: false
+                response_actions:
                   enabled: false
               vulnerability_management:
                 host_vulnerability_management:
@@ -189,6 +201,8 @@ tests:
               respond:
                 rapid_response:
                   enabled: false
+                response_actions:
+                  enabled: false
               vulnerability_management:
                 host_vulnerability_management:
                   enabled: true
@@ -218,6 +232,8 @@ tests:
               respond:
                 rapid_response:
                   enabled: false
+                response_actions:
+                  enabled: false
               vulnerability_management:
                 host_vulnerability_management:
                   enabled: true
@@ -230,6 +246,53 @@ tests:
       features:
         respond:
           rapid_response:
+            enabled: true
+            password: test1234
+    asserts:
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            rapid_response:
+              enabled: true
+              password: test1234
+      - notMatchRegex:
+          path: data['host-shield.yaml']
+          pattern: |-
+            rapid_response:
+              enabled: true
+              password: test1234
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            rapid_response:
+              enabled: true
+      - matchRegex:
+          path: data['host-shield.yaml']
+          pattern: |-
+            features:
+              detections:
+                ml_policies:
+                  enabled: false
+              posture:
+                host_posture:
+                  enabled: false
+              respond:
+                rapid_response:
+                  enabled: true
+                response_actions:
+                  enabled: false
+              vulnerability_management:
+                host_vulnerability_management:
+                  enabled: false
+                in_use:
+                  enabled: false
+                  integration_enabled: false
+
+  - it: Enable Response Actions
+    set:
+      features:
+        respond:
+          response_actions:
             enabled: true
     asserts:
       - matchRegex:
@@ -244,6 +307,8 @@ tests:
                   enabled: false
               respond:
                 rapid_response:
+                  enabled: false
+                response_actions:
                   enabled: true
               vulnerability_management:
                 host_vulnerability_management:
@@ -271,6 +336,8 @@ tests:
                   enabled: false
               respond:
                 rapid_response:
+                  enabled: false
+                response_actions:
                   enabled: false
               vulnerability_management:
                 host_vulnerability_management:
