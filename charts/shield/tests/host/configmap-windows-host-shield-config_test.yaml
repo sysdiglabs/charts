@@ -330,3 +330,29 @@ tests:
           pattern: |
             proxy:
               no_proxy: example.com
+
+  - it: Alternative regions
+    set:
+      sysdig_endpoint:
+        region: "eu1-alt"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: release-name-shield-host-windows
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["host-shield.yaml"]
+      - matchRegex:
+          path: data["host-shield.yaml"]
+          pattern: |
+            sysdig_endpoint:
+              api_url: https://eu1.app.sysdig.com
+              collector:
+                host: ingest-alt-eu1.app.sysdig.com
+                port: 6443
+              region: custom

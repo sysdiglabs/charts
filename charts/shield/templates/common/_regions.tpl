@@ -3,7 +3,15 @@
                                    "monitor_api_endpoint" "app.au1.sysdig.com"
                                    "secure_api_endpoint"  "app.au1.sysdig.com"
                                    "secure_ui"           "app.au1.sysdig.com/secure")
+                       "au1-alt" (dict "collector_endpoint"  "ingest-alt.au1.sysdig.com"
+                                   "monitor_api_endpoint" "app.au1.sysdig.com"
+                                   "secure_api_endpoint"  "app.au1.sysdig.com"
+                                   "secure_ui"           "app.au1.sysdig.com/secure")
                        "eu1" (dict "collector_endpoint"  "ingest-eu1.app.sysdig.com"
+                                   "monitor_api_endpoint" "eu1.app.sysdig.com"
+                                   "secure_api_endpoint"  "eu1.app.sysdig.com"
+                                   "secure_ui"           "eu1.app.sysdig.com/secure")
+                       "eu1-alt" (dict "collector_endpoint"  "ingest-alt-eu1.app.sysdig.com"
                                    "monitor_api_endpoint" "eu1.app.sysdig.com"
                                    "secure_api_endpoint"  "eu1.app.sysdig.com"
                                    "secure_ui"           "eu1.app.sysdig.com/secure")
@@ -11,7 +19,15 @@
                                    "monitor_api_endpoint" "app.in1.sysdig.com"
                                    "secure_api_endpoint"  "app.in1.sysdig.com"
                                    "secure_ui"           "app.in1.sysdig.com/secure")
+                       "in1-alt" (dict "collector_endpoint"  "ingest-alt.in1.sysdig.com"
+                                   "monitor_api_endpoint" "app.in1.sysdig.com"
+                                   "secure_api_endpoint"  "app.in1.sysdig.com"
+                                   "secure_ui"           "app.in1.sysdig.com/secure")
                        "me2" (dict "collector_endpoint"  "ingest.me2.sysdig.com"
+                                   "monitor_api_endpoint" "app.me2.sysdig.com"
+                                   "secure_api_endpoint"  "app.me2.sysdig.com"
+                                   "secure_ui"           "app.me2.sysdig.com/secure")
+                       "me2-alt" (dict "collector_endpoint"  "ingest-alt.me2.sysdig.com"
                                    "monitor_api_endpoint" "app.me2.sysdig.com"
                                    "secure_api_endpoint"  "app.me2.sysdig.com"
                                    "secure_ui"           "app.me2.sysdig.com/secure")
@@ -19,7 +35,15 @@
                                    "monitor_api_endpoint" "app.sysdigcloud.com"
                                    "secure_api_endpoint"  "secure.sysdig.com"
                                    "secure_ui"           "secure.sysdig.com")
+                       "us1-alt" (dict "collector_endpoint"  "collector-alt.sysdigcloud.com"
+                                   "monitor_api_endpoint" "app.sysdigcloud.com"
+                                   "secure_api_endpoint"  "secure.sysdig.com"
+                                   "secure_ui"           "secure.sysdig.com")
                        "us2" (dict "collector_endpoint"  "ingest-us2.app.sysdig.com"
+                                   "monitor_api_endpoint" "us2.app.sysdig.com"
+                                   "secure_api_endpoint"  "us2.app.sysdig.com"
+                                   "secure_ui"           "us2.app.sysdig.com/secure")
+                       "us2-alt" (dict "collector_endpoint"  "ingest-alt-us2.app.sysdig.com"
                                    "monitor_api_endpoint" "us2.app.sysdig.com"
                                    "secure_api_endpoint"  "us2.app.sysdig.com"
                                    "secure_ui"           "us2.app.sysdig.com/secure")
@@ -27,7 +51,15 @@
                                    "monitor_api_endpoint" "app.us3.sysdig.com"
                                    "secure_api_endpoint"  "app.us3.sysdig.com"
                                    "secure_ui"           "app.us3.sysdig.com/secure")
+                       "us3-alt" (dict "collector_endpoint"  "ingest-alt.us3.sysdig.com"
+                                   "monitor_api_endpoint" "app.us3.sysdig.com"
+                                   "secure_api_endpoint"  "app.us3.sysdig.com"
+                                   "secure_ui"           "app.us3.sysdig.com/secure")
                        "us4" (dict "collector_endpoint"  "ingest.us4.sysdig.com"
+                                   "monitor_api_endpoint" "app.us4.sysdig.com"
+                                   "secure_api_endpoint"  "app.us4.sysdig.com"
+                                   "secure_ui"           "app.us4.sysdig.com/secure")
+                       "us4-alt" (dict "collector_endpoint"  "ingest-alt.us4.sysdig.com"
                                    "monitor_api_endpoint" "app.us4.sysdig.com"
                                    "secure_api_endpoint"  "app.us4.sysdig.com"
                                    "secure_ui"           "app.us4.sysdig.com/secure")
@@ -213,3 +245,19 @@
     {{- .Values.sysdig_endpoint.api_url}}
   {{- end }}
 {{- end }}
+
+{{- define "common.is_alt_region" -}}
+  {{- $altRegions := list
+    "au1-alt"
+    "eu1-alt"
+    "in1-alt"
+    "me2-alt"
+    "us1-alt"
+    "us2-alt"
+    "us3-alt"
+    "us4-alt"
+  -}}
+  {{- if has .Values.sysdig_endpoint.region $altRegions -}}
+    {{- true -}}
+  {{- end -}}
+{{- end -}}

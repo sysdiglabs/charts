@@ -142,6 +142,9 @@ true
 {{- if not .Values.ssl.verify }}
   {{- $config = merge $config (dict "ssl_verify_certificate" false) }}
 {{- end }}
+{{- if (include "common.is_alt_region" .) -}}
+  {{- $_ := set $config "collector_port" 6443 -}}
+{{- end -}}
 {{- if .Values.features.kubernetes_metadata.enabled }}
   {{- $_ := set $config "k8s_delegated_nodes" (dig "k8s_delegated_nodes" 0 .Values.host.additional_settings) -}}
 {{- else if hasKey .Values.host.additional_settings "k8s_delegated_nodes" }}

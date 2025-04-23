@@ -41,6 +41,12 @@
         {{- $_ := set $sysdigEndpointConfig $k $v -}}
     {{- end -}}
 {{- end -}}
+{{- if (include "common.is_alt_region" .) -}}
+  {{- $_ := set $sysdigEndpointConfig "region" "custom" -}}
+  {{- $_ := set $sysdigEndpointConfig "api_url" (printf "https://%s" (include "common.secure_api_endpoint" .)) -}}
+  {{- $_ := set $sysdigEndpointConfig.collector "host" (include "common.collector_endpoint" .) -}}
+  {{- $_ := set $sysdigEndpointConfig.collector "port" 6443 -}}
+{{- end -}}
 {{- $_ := set $config "sysdig_endpoint" $sysdigEndpointConfig -}}
 
 {{- with .Values.features.posture }}
@@ -70,6 +76,9 @@
   "k8s_cluster_name" .Values.cluster_config.name
   "collector" (include "common.collector_endpoint" .)
 }}
+{{- if (include "common.is_alt_region" .) -}}
+  {{- $_ := set $config "collector_port" 6443 -}}
+{{- end -}}
 {{- if .Values.cluster_config.tags -}}
   {{- $tagList := list }}
   {{- range $k, $v := .Values.cluster_config.tags }}
