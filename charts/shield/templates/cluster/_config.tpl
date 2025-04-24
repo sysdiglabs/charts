@@ -60,7 +60,7 @@
       "ca_cert_file" (printf "%s%s" (include "cluster.tls_certificates.mount_path" .) (include "cluster.tls_certificates.ca_cert_file_name" .))
     ) -}}
     {{- if (include "cluster.audit_enabled" .) -}}
-      {{- if regexMatch "^v?([0-9]+)(\\.[0-9]+)?(\\.[0-9]+)?(-([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?(\\+([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?$" (.Values.on_prem_version | default "") -}}
+      {{- if (include "common.semver.is_valid" (.Values.on_prem_version | default "")) -}}
         {{- if semverCompare "< 6.12.0" .Values.on_prem_version -}}
           {{- if not (include "common.credentials.has_secure_api_token" . ) -}}
             {{- fail "Secure API Token is required for kubernetes audit with On Premise Versions < 6.12.0" -}}
@@ -83,7 +83,7 @@
       {{- $_ := set $clusterScannerConfig "leader_election_lock_name" (include "cluster.container_vulnerability_management_lease_name" .) -}}
       {{- $_ := set $config "cluster_scanner" $clusterScannerConfig -}}
 
-      {{- if regexMatch "^v?([0-9]+)(\\.[0-9]+)?(\\.[0-9]+)?(-([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?(\\+([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?$" (.Values.on_prem_version | default "") -}}
+      {{- if (include "common.semver.is_valid" (.Values.on_prem_version | default "")) -}}
         {{- if semverCompare "< 6.12.0" .Values.on_prem_version -}}
           {{- $_ := set $config.features.container_vulnerability_management "platform_services_enabled" false -}}
         {{- end -}}

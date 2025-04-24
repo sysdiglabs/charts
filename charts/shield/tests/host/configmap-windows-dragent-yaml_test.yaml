@@ -708,7 +708,6 @@ tests:
             log:
               console_priority: debug
 
-
   - it: Alternative regions
     set:
       sysdig_endpoint:

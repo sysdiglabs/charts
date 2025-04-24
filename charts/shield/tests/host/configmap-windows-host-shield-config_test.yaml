@@ -331,7 +331,7 @@ tests:
             proxy:
               no_proxy: example.com
 
-  - it: Alternative regions
+  - it: Alternative regions (default)
     set:
       sysdig_endpoint:
         region: "eu1-alt"
@@ -356,3 +356,62 @@ tests:
                 host: ingest-alt-eu1.app.sysdig.com
                 port: 6443
               region: custom
+
+  - it: Alternative regions (host-shield windows version <= 0.7.1)
+    set:
+      sysdig_endpoint:
+        region: "eu1-alt"
+      host_windows:
+        image:
+          tag: "0.7.1"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: release-name-shield-host-windows
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["host-shield.yaml"]
+      - matchRegex:
+          path: data["host-shield.yaml"]
+          pattern: |
+            sysdig_endpoint:
+              api_url: https://eu1.app.sysdig.com
+              collector:
+                host: ingest-alt-eu1.app.sysdig.com
+                port: 6443
+              region: custom
+
+  - it: Alternative regions (host-shield windows version > 0.7.1)
+    set:
+      sysdig_endpoint:
+        region: "eu1-alt"
+        api_url:
+        collector:
+          host:
+          port:
+      host_windows:
+        image:
+          tag: "0.7.2"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: release-name-shield-host-windows
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["host-shield.yaml"]
+      - matchRegex:
+          path: data["host-shield.yaml"]
+          pattern: |
+            sysdig_endpoint:
+              collector: {}
+              region: eu1-alt
