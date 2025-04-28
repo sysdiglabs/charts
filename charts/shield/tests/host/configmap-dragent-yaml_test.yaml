@@ -786,6 +786,8 @@ tests:
         investigations:
           network_security:
             enabled: true
+      image:
+        tag: 13.8.0
     asserts:
       - matchRegex:
           path: data['dragent.yaml']
@@ -991,6 +993,21 @@ tests:
           pattern: |
             feature:
               mode: secure
+
+  - it: Test enabling NetSec does not flip agent to secure mode for unknown version
+    set:
+      features:
+        investigations:
+          network_security:
+            enabled: true
+      image:
+        tag: notAVersion
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            feature:
+              mode: secure_light
 
   - it: Test enabling NetSec does not flip agent to secure mode for 13.9.0
     set:
