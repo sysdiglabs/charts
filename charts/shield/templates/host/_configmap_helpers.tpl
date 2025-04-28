@@ -43,6 +43,13 @@
 {{- $config | toYaml }}
 {{- end }}
 
+{{/* Check if semver. The regex is from the code of the library Helm uses for semver. */}}
+{{- define "agent.isSemVer" -}}
+    {{- if regexMatch "^v?([0-9]+)(\\.[0-9]+)?(\\.[0-9]+)?(-([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?(\\+([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?$" . }}
+        true
+    {{- end -}}
+{{- end -}}
+
 {{- define "host.features.netsec_enabled" }}
 {{- if or .Values.features.investigations.network_security.enabled
           (dig "network_topology" "enabled" false .Values.host.additional_settings) }}
@@ -66,7 +73,7 @@ true
 {{/* Calculate the agent mode based on enabled features */}}
 {{- define "host.configmap.agent_mode" }}
 {{- $mode := "secure_light" }}
-{{- if (include "host.features.netsec_enabled" .) }}
+{{- if and (include "host.features.netsec_enabled" .) (include "agent.isSemVer" .Values.image.tag) (semverCompare "< 13.9.0" .Values.image.tag) }}
 {{- $mode = "secure" }}
 {{- end }}
 {{- if (include "host.features.monitor_enabled" .) }}

@@ -983,6 +983,8 @@ tests:
         investigations:
           network_security:
             enabled: true
+      image:
+        tag: 13.8.0
     asserts:
       - matchRegex:
           path: data['dragent.yaml']
@@ -990,18 +992,50 @@ tests:
             feature:
               mode: secure
 
+  - it: Test enabling NetSec does not flip agent to secure mode for 13.9.0
+    set:
+      features:
+        investigations:
+          network_security:
+            enabled: true
+      image:
+        tag: 13.9.0
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            feature:
+              mode: secure_light
+
   - it: Test enabling NetSec in additional_settings flips agent to secure mode
     set:
       host:
         additional_settings:
           network_topology:
             enabled: true
+      image:
+        tag: 13.8.0
     asserts:
       - matchRegex:
           path: data['dragent.yaml']
           pattern: |
             feature:
               mode: secure
+
+  - it: Test enabling NetSec in additional_settings does not flip agent to secure mode for 13.9.0
+    set:
+      host:
+        additional_settings:
+          network_topology:
+            enabled: true
+      image:
+        tag: 13.9.0
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            feature:
+              mode: secure_light
 
   - it: Test enabling a monitor feature forces agent mode to monitor
     set:
