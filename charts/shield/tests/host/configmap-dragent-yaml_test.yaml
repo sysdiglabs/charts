@@ -985,8 +985,9 @@ tests:
         investigations:
           network_security:
             enabled: true
-      image:
-        tag: 13.8.0
+      host:
+        image:
+          tag: 13.8.0
     asserts:
       - matchRegex:
           path: data['dragent.yaml']
@@ -1000,8 +1001,9 @@ tests:
         investigations:
           network_security:
             enabled: true
-      image:
-        tag: notAVersion
+      host:
+        image:
+          tag: notAVersion
     asserts:
       - matchRegex:
           path: data['dragent.yaml']
@@ -1015,8 +1017,9 @@ tests:
         investigations:
           network_security:
             enabled: true
-      image:
-        tag: 13.9.0
+      host:
+        image:
+          tag: 13.9.0
     asserts:
       - matchRegex:
           path: data['dragent.yaml']
