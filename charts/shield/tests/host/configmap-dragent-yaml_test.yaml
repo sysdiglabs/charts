@@ -786,8 +786,9 @@ tests:
         investigations:
           network_security:
             enabled: true
-      image:
-        tag: 13.8.0
+      host:
+          image:
+            tag: 13.8.0
     asserts:
       - matchRegex:
           path: data['dragent.yaml']
@@ -1033,8 +1034,8 @@ tests:
         additional_settings:
           network_topology:
             enabled: true
-      image:
-        tag: 13.8.0
+        image:
+          tag: 13.8.0
     asserts:
       - matchRegex:
           path: data['dragent.yaml']
@@ -1048,8 +1049,8 @@ tests:
         additional_settings:
           network_topology:
             enabled: true
-      image:
-        tag: 13.9.0
+        image:
+          tag: 13.9.0
     asserts:
       - matchRegex:
           path: data['dragent.yaml']
