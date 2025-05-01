@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.4.1
+### New Features
+* **shield** [2a3f2d2a](https://github.com/sysdiglabs/charts/commit/2a3f2d2a75827e4742ee79de656e66b79962959b): use secure_light for netsec_enabled ([#2233](https://github.com/sysdiglabs/charts/issues/2233))
 # v1.4.0
 ### New Features
 * **agent,shield** [a0aceaa6](https://github.com/sysdiglabs/charts/commit/a0aceaa6c40b30d43678109d43fa5691c2feebc0): release agent 13.9.0 ([#2234](https://github.com/sysdiglabs/charts/issues/2234))
