@@ -786,9 +786,6 @@ tests:
         investigations:
           network_security:
             enabled: true
-      host:
-          image:
-            tag: 13.8.0
     asserts:
       - matchRegex:
           path: data['dragent.yaml']

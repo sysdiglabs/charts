@@ -44,7 +44,7 @@
 {{- end }}
 
 {{/* Check if semver. The regex is from the code of the library Helm uses for semver. */}}
-{{- define "shield.isSemVer" -}}
+{{- define "shield.is_semver" -}}
     {{- if regexMatch "^v?([0-9]+)(\\.[0-9]+)?(\\.[0-9]+)?(-([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?(\\+([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?$" . }}
         true
     {{- end -}}
@@ -73,7 +73,7 @@ true
 {{/* Calculate the agent mode based on enabled features */}}
 {{- define "host.configmap.agent_mode" }}
 {{- $mode := "secure_light" }}
-{{- if and (include "host.features.netsec_enabled" .) (include "shield.isSemVer" .Values.host.image.tag) (semverCompare "< 13.9.0" .Values.host.image.tag) }}
+{{- if and (include "host.features.netsec_enabled" .) (include "shield.is_semver" .Values.host.image.tag) (semverCompare "< 13.9.0" .Values.host.image.tag) }}
 {{- $mode = "secure" }}
 {{- end }}
 {{- if (include "host.features.monitor_enabled" .) }}
