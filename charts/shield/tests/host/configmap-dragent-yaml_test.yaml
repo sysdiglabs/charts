@@ -1227,7 +1227,9 @@ tests:
       - matchRegex:
           path: data['dragent.yaml']
           pattern: |-
-            verify_certificate: false
+            host_scanner:
+              host_fs_mount_path: /host
+              verify_certificate: false
 
   - it: Disable SSL verification [Agent >= 13.10.0]
     set:
@@ -1248,13 +1250,13 @@ tests:
           path: data['dragent.yaml']
           pattern: |
             ssl_verify_certificate: false
-      - matchRegex:
+      - notMatchRegex:
           path: data['dragent.yaml']
           pattern: |
             rapid_response:
               enabled: true
               tls_skip_check: true
-      - matchRegex:
+      - notMatchRegex:
           path: data['dragent.yaml']
           pattern: |
             host_scanner:

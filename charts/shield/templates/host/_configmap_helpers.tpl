@@ -115,7 +115,7 @@ true
 {{- define "host.dragent_yaml.host_scanner" }}
   {{- $config := dict }}
   {{- $config = merge $config (dict "host_fs_mount_path" "/host") }}
-  {{- if not .Values.ssl.verify }}
+  {{- if and (include "shield.is_semver" .Values.host.image.tag) (semverCompare "< 13.10.0" .Values.host.image.tag) (not .Values.ssl.verify) }}
     {{- $config = merge $config (dict "verify_certificate" false) }}
   {{- end }}
   {{- if hasKey .Values.host.additional_settings "host_scanner" }}
@@ -128,7 +128,7 @@ true
   {{- $config := dict }}
   {{- $respond := get .Values.features (include "host.respond_key" .Values.features) }}
   {{- $rapid_response := omit (get $respond "rapid_response") "password" }}
-  {{- if not .Values.ssl.verify }}
+  {{- if and (include "shield.is_semver" .Values.host.image.tag) (semverCompare "< 13.10.0" .Values.host.image.tag) (not .Values.ssl.verify) }}
     {{- $rapid_response = merge $rapid_response (dict "tls_skip_check" true) }}
   {{- end }}
   {{ $rapid_response | toJson }}
