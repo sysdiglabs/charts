@@ -1198,3 +1198,148 @@ tests:
     asserts:
       - notExists:
           path: data["prometheus.yaml"]
+
+  - it: Disable SSL verification [Agent < 13.10.0]
+    set:
+      host:
+        image:
+          tag: 13.9.0
+      ssl:
+        verify: false
+      features:
+        respond:
+          rapid_response:
+            enabled: true
+        vulnerability_management:
+          host_vulnerability_management:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            ssl_verify_certificate: false
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            rapid_response:
+              enabled: true
+              tls_skip_check: true
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            host_scanner:
+              host_fs_mount_path: /host
+              verify_certificate: false
+
+  - it: Disable SSL verification [Agent >= 13.10.0]
+    set:
+      host:
+        image:
+          tag: 13.10.0
+      ssl:
+        verify: false
+      features:
+        respond:
+          rapid_response:
+            enabled: true
+        vulnerability_management:
+          host_vulnerability_management:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            ssl_verify_certificate: false
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            rapid_response:
+              enabled: true
+              tls_skip_check: true
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            host_scanner:
+              host_fs_mount_path: /host
+              verify_certificate: false
+
+  - it: Ensure ssl verification is not disabled by default
+    set:
+      features:
+        respond:
+          rapid_response:
+            enabled: true
+        vulnerability_management:
+          host_vulnerability_management:
+            enabled: true
+    asserts:
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            ssl_verify_certificate: false
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            rapid_response:
+              enabled: true
+              tls_skip_check: true
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            host_scanner:
+              host_fs_mount_path: /host
+              verify_certificate: false
+
+  - it: Validate rapid response cert verification can be overridden
+    set:
+      host:
+        additional_settings:
+          rapid_response:
+            tls_skip_check: false
+      ssl:
+        verify: false
+      features:
+        respond:
+          rapid_response:
+            enabled: true
+        vulnerability_management:
+          host_vulnerability_management:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            ssl_verify_certificate: false
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            rapid_response:
+              enabled: true
+              tls_skip_check: false
+
+  - it: Validate host scanner cert verification can be overridden
+    set:
+      host:
+        additional_settings:
+          host_scanner:
+            verify_certificate: true
+      ssl:
+        verify: false
+      features:
+        respond:
+          rapid_response:
+            enabled: true
+        vulnerability_management:
+          host_vulnerability_management:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            ssl_verify_certificate: false
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            host_scanner:
+              host_fs_mount_path: /host
+              verify_certificate: true
