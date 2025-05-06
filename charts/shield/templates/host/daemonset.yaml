@@ -217,7 +217,9 @@ spec:
           {{- if (include "host.need_host_root" .) }}
             - mountPath: /host
               name: host-root
+          {{- if not (eq (include "host.response_actions_enabled" .) "true") }}
               readOnly: true
+          {{- end }}
           {{- if .Values.features.posture.host_posture.enabled }}
             - mountPath: /host/tmp
               name: host-tmp
