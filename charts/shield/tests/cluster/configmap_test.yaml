@@ -78,6 +78,11 @@ tests:
                   verify: true
               kubernetes_metadata:
                 enabled: true
+              monitor:
+                kube_state_metrics:
+                  enabled: false
+                kubernetes_events:
+                  enabled: false
               posture:
                 enabled: false
             kubernetes:
@@ -149,6 +154,11 @@ tests:
                   verify: true
               kubernetes_metadata:
                 enabled: false
+              monitor:
+                kube_state_metrics:
+                  enabled: false
+                kubernetes_events:
+                  enabled: false
               posture:
                 enabled: false
 
