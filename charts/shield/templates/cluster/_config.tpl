@@ -1,10 +1,12 @@
 {{- define "cluster.features_config" -}}
+  {{- $monitorFeature := (dig "monitor" nil .Values.features) -}}
   {{- $features := list
       (dict "posture" (dig "posture" "cluster_posture" nil .Values.features ))
       (dict "container_vulnerability_management" (dig "vulnerability_management" "container_vulnerability_management" nil .Values.features ))
       (dict "audit" (dig "detections" "kubernetes_audit" nil .Values.features ))
       (dict "admission_control" (dig "admission_control" nil .Values.features ))
       (dict "kubernetes_metadata" (dig "kubernetes_metadata" nil .Values.features ))
+      (dict "monitor" (pick $monitorFeature "kube_state_metrics" "kubernetes_events"))
   -}}
   {{- $featuresConfig := dict -}}
   {{- range $feature := $features }}

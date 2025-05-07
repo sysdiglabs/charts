@@ -153,6 +153,12 @@ features:
       prometheus_yaml: {}
     statsd:
       enabled: false
+    kube_state_metrics:
+      # Enable the Kubernetes State Metrics feature
+      enabled: false
+    kubernetes_events:
+      # Enable the Kubernetes Events feature
+      enabled: false
 
 host_windows:
   # Enable the host shield for Windows
@@ -374,7 +380,7 @@ cluster:
     # The repository where the cluster shield image is stored
     repository: sysdig/cluster-shield
     # The tag for the cluster shield image
-    tag: 1.10.0
+    tag: 1.11.0
     # The pull policy for the cluster shield image
     pull_policy: IfNotPresent
     # The pull secrets for the cluster shield image
