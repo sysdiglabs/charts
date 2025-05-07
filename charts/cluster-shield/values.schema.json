@@ -690,6 +690,7 @@
                 "au-syd-private-secure",
                 "au-syd-secure",
                 "au1",
+                "au1-alt",
                 "br-sao-monitor",
                 "br-sao-private-monitor",
                 "br-sao-private-secure",
@@ -707,7 +708,9 @@
                 "eu-gb-private-secure",
                 "eu-gb-secure",
                 "eu1",
+                "eu1-alt",
                 "in1",
+                "in1-alt",
                 "jp-osa-monitor",
                 "jp-osa-private-monitor",
                 "jp-osa-private-secure",
@@ -717,6 +720,7 @@
                 "jp-tok-private-secure",
                 "jp-tok-secure",
                 "me2",
+                "me2-alt",
                 "us-east-monitor",
                 "us-east-private-monitor",
                 "us-east-private-secure",
@@ -726,9 +730,13 @@
                 "us-south-private-secure",
                 "us-south-secure",
                 "us1",
+                "us1-alt",
                 "us2",
+                "us2-alt",
                 "us3",
+                "us3-alt",
                 "us4",
+                "us4-alt",
                 null
               ]
             }
@@ -1055,6 +1063,62 @@
             }
           }
         },
+        "Monitor": {
+          "type": "object",
+          "properties": {
+            "kube_state_metrics": {
+              "description": "Influences the behaviour of Kubernetes State metrics generation",
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/KubeStateMetrics"
+            },
+            "kubernetes_events": {
+              "type": "object",
+              "description": "Configuration for the Kubernetes events",
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/KubernetesEvents"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "kube_state_metrics",
+            "kubernetes_events"
+          ]
+        },
+        "KubeStateMetrics": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Controls the enablement of Kube State Metrics generation",
+              "default": false
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "enabled"
+          ],
+          "$defs": {
+            "IsEnabled": {
+              "properties": {
+                "enabled": {
+                  "const": true
+                }
+              }
+            }
+          }
+        },
+        "KubernetesEvents": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Controls the enablement of Kubernetes events collection",
+              "default": false
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "enabled"
+          ]
+        },
         "Posture": {
           "type": "object",
           "properties": {
@@ -1147,6 +1211,11 @@
               "description": "Configurations for the container vulnerability management feature",
               "$ref": "#/$defs/ClusterShieldConfiguration/$defs/ContainerVulnerabilityManagement"
             },
+            "monitor": {
+              "type": "object",
+              "description": "Configurations for the monitor features",
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/Monitor"
+            },
             "kubernetes_metadata": {
               "description": "Configurations for the kubernetes metadata feature",
               "$ref": "#/$defs/ClusterShieldConfiguration/$defs/KubernetesMetadata"
@@ -1161,6 +1230,7 @@
             "audit",
             "container_vulnerability_management",
             "kubernetes_metadata",
+            "monitor",
             "posture"
           ]
         },

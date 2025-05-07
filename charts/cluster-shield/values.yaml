@@ -114,7 +114,7 @@ cluster_shield:
       # The list of namespaces to exclude from the audit feature
       excluded_namespaces: []
       # List of rules used to determine if a request should be audited
-      webhook_rules:  # +doc-gen:break
+      webhook_rules: # +doc-gen:break
         - apiGroups:
             - ""
             - apps
@@ -162,6 +162,13 @@ cluster_shield:
     kubernetes_metadata:
       # Enable the Kubernetes Metadata feature
       enabled: false
+    monitor:
+      kube_state_metrics:
+        # Enable the Kubernetes State Metrics feature
+        enabled: false
+      kubernetes_events:
+        # Enable the Kubernetes Events feature
+        enabled: false
 ca:
   # A PEM-encoded x509 certificate. This can also be a bundle with multiple certificates.
   certs: []
