@@ -162,6 +162,13 @@ cluster_shield:
     kubernetes_metadata:
       # Enable the Kubernetes Metadata feature
       enabled: false
+    monitor:
+      kube_state_metrics:
+        # Enable the Kubernetes State Metrics feature
+        enabled: false
+      kubernetes_events:
+        # Enable the Kubernetes Events feature
+        enabled: false
 ca:
   # A PEM-encoded x509 certificate. This can also be a bundle with multiple certificates.
   certs: []
