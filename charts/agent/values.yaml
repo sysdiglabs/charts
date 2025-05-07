@@ -406,7 +406,7 @@ tests:
   timeout: 300s
   image:
     repo: bitnami/kubectl
-    tag: 1.32.3
+    tag: 1.33.0
 # Allow to modify DNS policy
 dnsPolicy: null
 customSecurityContext: {}
