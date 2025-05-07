@@ -268,7 +268,6 @@ tests:
           content:
             name: host-root
             mountPath: /host
-            readOnly: true
       - notExists:
           path: spec.template.spec.volumes[?(@.name == "host-tmp")]
 
@@ -290,7 +289,6 @@ tests:
           content:
             name: host-root
             mountPath: /host
-            readOnly: true
       - notExists:
           path: spec.template.spec.volumes[?(@.name == "host-tmp")]
 
@@ -318,7 +316,6 @@ tests:
           content:
             name: host-root
             mountPath: /host
-            readOnly: true
       - notExists:
           path: spec.template.spec.volumes[?(@.name == "host-tmp")]
 
