@@ -1343,3 +1343,25 @@ tests:
             host_scanner:
               host_fs_mount_path: /host
               verify_certificate: true
+
+  - it: Alternative regions
+    set:
+      sysdig_endpoint:
+        region: "eu1-alt"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: release-name-shield-host
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data['dragent.yaml']
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            collector: ingest-alt-eu1.app.sysdig.com
+            collector_port: 6443

@@ -41,6 +41,14 @@
         {{- $_ := set $sysdigEndpointConfig $k $v -}}
     {{- end -}}
 {{- end -}}
+{{- if (include "common.is_alt_region" .) -}}
+  {{- if not (include "host.windows.supports_alt_regions" .) -}}
+    {{- $_ := set $sysdigEndpointConfig "region" "custom" -}}
+    {{- $_ := set $sysdigEndpointConfig "api_url" (printf "https://%s" (include "common.secure_api_endpoint" .)) -}}
+    {{- $_ := set $sysdigEndpointConfig.collector "host" (include "common.collector_endpoint" .) -}}
+    {{- $_ := set $sysdigEndpointConfig.collector "port" 6443 -}}
+  {{- end -}}
+{{- end -}}
 {{- $_ := set $config "sysdig_endpoint" $sysdigEndpointConfig -}}
 
 {{- with .Values.features.posture }}
@@ -64,12 +72,25 @@
 {{- $finalConfig | toYaml }}
 {{- end }}
 
+{{- define "host.windows.supports_alt_regions" -}}
+  {{- if (include "common.semver.is_valid" (.Values.host_windows.image.tag | default "")) -}}
+    {{- if semverCompare "> 0.7.1" .Values.host_windows.image.tag -}}
+      {{- true -}}
+    {{- end -}}
+  {{- else -}}
+    {{- true -}}
+  {{- end -}}
+{{- end -}}
+
 {{/* Generate the 'dragent.yaml' content */}}
 {{- define "host.windows.configmap" }}
 {{- $config := dict
   "k8s_cluster_name" .Values.cluster_config.name
   "collector" (include "common.collector_endpoint" .)
 }}
+{{- if (include "common.is_alt_region" .) -}}
+  {{- $_ := set $config "collector_port" 6443 -}}
+{{- end -}}
 {{- if .Values.cluster_config.tags -}}
   {{- $tagList := list }}
   {{- range $k, $v := .Values.cluster_config.tags }}

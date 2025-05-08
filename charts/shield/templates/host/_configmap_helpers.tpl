@@ -43,13 +43,6 @@
 {{- $config | toYaml }}
 {{- end }}
 
-{{/* Check if semver. The regex is from the code of the library Helm uses for semver. */}}
-{{- define "shield.is_semver" -}}
-    {{- if regexMatch "^v?([0-9]+)(\\.[0-9]+)?(\\.[0-9]+)?(-([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?(\\+([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?$" . }}
-        true
-    {{- end -}}
-{{- end -}}
-
 {{- define "host.features.netsec_enabled" }}
 {{- if or .Values.features.investigations.network_security.enabled
           (dig "network_topology" "enabled" false .Values.host.additional_settings) }}
@@ -73,7 +66,7 @@ true
 {{/* Calculate the agent mode based on enabled features */}}
 {{- define "host.configmap.agent_mode" }}
 {{- $mode := "secure_light" }}
-{{- if and (include "host.features.netsec_enabled" .) (include "shield.is_semver" .Values.host.image.tag) (semverCompare "< 13.9.0" .Values.host.image.tag) }}
+{{- if and (include "host.features.netsec_enabled" .) (include "common.semver.is_valid" .Values.host.image.tag) (semverCompare "< 13.9.0" .Values.host.image.tag) }}
 {{- $mode = "secure" }}
 {{- end }}
 {{- if (include "host.features.monitor_enabled" .) }}
@@ -115,7 +108,7 @@ true
 {{- define "host.dragent_yaml.host_scanner" }}
   {{- $config := dict }}
   {{- $config = merge $config (dict "host_fs_mount_path" "/host") }}
-  {{- if and (include "shield.is_semver" .Values.host.image.tag) (semverCompare "< 13.10.0" .Values.host.image.tag) (not .Values.ssl.verify) }}
+  {{- if and (include "common.semver.is_valid" .Values.host.image.tag) (semverCompare "< 13.10.0" .Values.host.image.tag) (not .Values.ssl.verify) }}
     {{- $config = merge $config (dict "verify_certificate" false) }}
   {{- end }}
   {{- if hasKey .Values.host.additional_settings "host_scanner" }}
@@ -128,7 +121,7 @@ true
   {{- $config := dict }}
   {{- $respond := get .Values.features (include "host.respond_key" .Values.features) }}
   {{- $rapid_response := omit (get $respond "rapid_response") "password" }}
-  {{- if and (include "shield.is_semver" .Values.host.image.tag) (semverCompare "< 13.10.0" .Values.host.image.tag) (not .Values.ssl.verify) }}
+  {{- if and (include "common.semver.is_valid" .Values.host.image.tag) (semverCompare "< 13.10.0" .Values.host.image.tag) (not .Values.ssl.verify) }}
     {{- $rapid_response = merge $rapid_response (dict "tls_skip_check" true) }}
   {{- end }}
   {{ $rapid_response | toJson }}
@@ -142,6 +135,9 @@ true
 {{- if not .Values.ssl.verify }}
   {{- $config = merge $config (dict "ssl_verify_certificate" false) }}
 {{- end }}
+{{- if (include "common.is_alt_region" .) -}}
+  {{- $_ := set $config "collector_port" 6443 -}}
+{{- end -}}
 {{- if .Values.features.kubernetes_metadata.enabled }}
   {{- $_ := set $config "k8s_delegated_nodes" (dig "k8s_delegated_nodes" 0 .Values.host.additional_settings) -}}
 {{- else if hasKey .Values.host.additional_settings "k8s_delegated_nodes" }}
