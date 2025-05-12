@@ -94,4 +94,5 @@ Sysdig Secure chart and their default values:
 | `proxy.noProxy`                              | Specifies the comma-separated list of domain extensions proxy should not be used for. Includes the internal IP of the kube API server. | ` `                                       |
 | `cliScanning.enabled`                     | Enables the CLI Scanning feature.                         | `true`                                    |
 | `cliScanning.image`                       | Specifies the pullstring for the CLI Scanner Image.                         | `alpine:latest`                                    |
+| `cliScanning.existingSecureAPITokenSecret`                       | Specifies the existing secret name with API Token to access Sysdig Secure                         | `{{ include "harbor-scanner-sysdig-secure.fullname" . }}`                                    |
 | `asyncMode.enabled`                          | Enables the Async-Mode feature.                              | `false`                                   |

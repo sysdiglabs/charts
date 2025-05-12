@@ -77,7 +77,7 @@ spec:
             - name: NAMESPACE_NAME
               value: {{ .Release.Namespace }}
             - name: SECRET_NAME
-              value: {{ include "harbor-scanner-sysdig-secure.fullname" . }}
+              value: {{ .Values.cliScanning.existingSecureAPITokenSecret | default (include "harbor-scanner-sysdig-secure.fullname" .) }}
             - name: CLI_SCANNER_IMAGE
               value: {{ .Values.cliScanning.image | quote }}
             {{- end }}
