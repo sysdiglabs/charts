@@ -443,7 +443,7 @@ nodeAnalyzer:
 
     # http or nats
     transportLayer: nats
-  
+
     # Proxy configuration variables
     httpProxy: null
     httpsProxy: null
