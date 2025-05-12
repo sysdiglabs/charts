@@ -1,0 +1,24 @@
+{{- if not (include "nodeAnalyzer.gke.autopilot" .) }}
+{{- if and (include "deploy-na" .) .Values.rbac.create }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ .Release.Name }}-node-analyzer
+  namespace: {{ include "nodeAnalyzer.namespace" . }}
+  labels:
+{{ include "nodeAnalyzer.labels" . | indent 4 }}
+rules:
+{{- if and .Values.global.kspm.deploy (eq .Values.nodeAnalyzer.kspmAnalyzer.transportLayer "http") }}
+- apiGroups: ["", "coordination.k8s.io"]
+  resources:
+    - "leases"
+  resourceNames:
+    - "kspm-analyzer-leader-election"
+  verbs: ["*"]
+- apiGroups: ["", "coordination.k8s.io"]
+  resources:
+    - "leases"
+  verbs: ["create"]
+{{- end }}
+{{- end }}
+{{- end }}

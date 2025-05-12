@@ -248,6 +248,12 @@ spec:
                 name: {{ .Release.Name }}-kspm-analyzer
                 key: nats_insecure
                 optional: true
+          - name: TRANSPORT_LAYER
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-kspm-analyzer
+                key: transport_layer
+                optional: true
           - name: HTTP_PROXY
             valueFrom:
               configMapKeyRef:
