@@ -11,7 +11,7 @@ data:
 {{- $env := "PRODUCTION" -}}
 {{ if (.Values.nodeAnalyzer.kspmAnalyzer.debug | default .Values.nodeAnalyzer.debug) }}
   {{- $env = "DEVELOPMENT" -}}
-{{ end}}
+{{ end }}
   environment: {{ $env }}
   external_nats_url: {{ include "nodeAnalyzer.natsUrl" . }}
   nats_max_reconnect: {{ .Values.nodeAnalyzer.natsMaxReconnect | default 0 | quote }}

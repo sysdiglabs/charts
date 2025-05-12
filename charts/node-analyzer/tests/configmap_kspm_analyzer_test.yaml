@@ -1,0 +1,62 @@
+suite: Node Analyzer KSPM Analyzer ConfigigMap Tests
+templates:
+  - templates/configmap-kspm-analyzer.yaml
+tests:
+  - it: Should not create document if kspm.deploy is false
+    set:
+      global:
+        kspm:
+          deploy: false
+      nodeAnalyzer:
+        deploy: true
+    asserts:
+      - containsDocument:
+          apiVersion: v1
+          kind: ConfigMap
+        not: true
+
+  - it: Should not create document if GKE Autopilot is active
+    set:
+      global:
+        gke:
+          autopilot:
+            true
+        kspm:
+          deploy: true
+      nodeAnalyzer:
+        deploy: true
+        gke:
+          autopilot: true
+    asserts:
+      - containsDocument:
+          apiVersion: v1
+          kind: ConfigMap
+        not: true
+
+  - it: Uses nats as default transport layer
+    set:
+      clusterName: "test"
+      global:
+        kspm:
+          deploy: true
+      nodeAnalyzer:
+        deploy: true
+    asserts:
+      - equal:
+          path: data.transport_layer
+          value: nats
+
+  - it: Sets transport layer according to value
+    set:
+      clusterName: "test"
+      global:
+        kspm:
+          deploy: true
+      nodeAnalyzer:
+        deploy: true
+        kspmAnalyzer:
+          transportLayer: http
+    asserts:
+      - equal:
+          path: data.transport_layer
+          value: http
