@@ -1,0 +1,96 @@
+suite: Node Analyzer Role Tests
+templates:
+  - templates/role-node-analyzer.yaml
+tests:
+  - it: Should not create document if nodeAnalyzer.deploy is false
+    set:
+      nodeAnalyzer:
+        deploy: false
+    asserts:
+      - containsDocument:
+          apiVersion: rbac.authorization.k8s.io/v1
+          kind: Role
+        not: true
+
+  - it: Should not create document if GKE Autopilot is active
+    set:
+      global:
+        gke:
+          autopilot: true
+    asserts:
+      - containsDocument:
+          apiVersion: rbac.authorization.k8s.io/v1
+          kind: Role
+        not: true
+
+  - it: Should not create document if rbac.create is false
+    set:
+      rbac:
+        create: false
+    asserts:
+      - containsDocument:
+          apiVersion: rbac.authorization.k8s.io/v1
+          kind: Role
+        not: true
+
+  - it: Should not create rules if kspm.deploy is false
+    set:
+      global:
+        kspm:
+          deploy: false
+      nodeAnalyzer:
+        deploy: true
+    asserts:
+      - isNullOrEmpty:
+          path: rules
+
+  - it: Should not create rules if transportLayer is not http
+    set:
+      global:
+        kspm:
+          deploy: true
+      nodeAnalyzer:
+        deploy: true
+        kspmAnalyzer:
+          transportLayer: nats
+    asserts:
+      - isNullOrEmpty:
+          path: rules
+
+  - it: Should grant permissions to create lease if transport is http
+    set:
+      global:
+        kspm:
+          deploy: true
+      nodeAnalyzer:
+        deploy: true
+        kspmAnalyzer:
+          transportLayer: http
+    asserts:
+      - contains:
+          path: rules
+          content:
+            apiGroups: ["", "coordination.k8s.io"]
+            resources:
+              - "leases"
+            verbs: ["create"]
+
+  - it: Should grant all permissions on kspm-analyzer lease if transport is http
+    set:
+      global:
+        kspm:
+          deploy: true
+      nodeAnalyzer:
+        deploy: true
+        kspmAnalyzer:
+          transportLayer: http
+    asserts:
+      - contains:
+          path: rules
+          content:
+            apiGroups: ["", "coordination.k8s.io"]
+            resources:
+              - "leases"
+            resourceNames:
+              - "kspm-analyzer-leader-election"
+            verbs: ["*"]
