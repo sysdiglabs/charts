@@ -441,6 +441,9 @@ nodeAnalyzer:
     # Permissions for OCP4, previously only added for benchmarkrunner
     includeSensitivePermissions: false
 
+    # http or nats
+    transportLayer: nats
+
     # Proxy configuration variables
     httpProxy: null
     httpsProxy: null
