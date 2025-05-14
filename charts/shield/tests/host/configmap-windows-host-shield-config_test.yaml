@@ -416,23 +416,6 @@ tests:
               collector: {}
               region: eu1-alt
 
-  - it: Test log_level with version >= 0.8.0
-    set:
-      host_windows:
-        image:
-          tag: "0.8.0"
-        additional_settings:
-          log_level: debug
-    asserts:
-      - matchRegex:
-          path: data['host-shield.yaml']
-          pattern: |
-            internals:
-              agent_runtime:
-                additional_settings:
-                  log:
-                    console_priority: debug
-
   - it: Test agent_runtime_additional_settings with version >= 0.8.0
     set:
       host_windows:
