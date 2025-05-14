@@ -72,9 +72,19 @@ natsUrl: ""
 # Setting a cluster name allows you to filter events from this cluster using kubernetes.cluster.name
 clusterName: ""
 
+# Determine the transport used by the collector to receive tasks from the backend and send results back to it.
+# Valid values are "nats" and "http".
+transportLayer: http
+
+# Provide values required to acquire a lease from the k8s api for the leader election mechanism
+# used to prevent multiple instances of the collector to run simultaneously.
+# This is done to reduce the load on the k8s api in case of http transport.
+leaderElection:
+  lockName: kspm-collector-leader-election
+
 image:
   repository: sysdig/kspm-collector
-  tag: 1.39.11
+  tag: 1.39.12-rc7
   digest: null
   registry: quay.io
   pullPolicy: null
@@ -83,6 +93,12 @@ image:
 # imagePullSecrets:
 #   - name: my-super-secret-pull
 imagePullSecrets: []
+
+# set additional environment variables
+# Example
+# env:
+#   MY_ENV_VAR_NAME: "my-env-var-value"
+env: {}
 
 rbac:
   # true here enables creation of rbac resources

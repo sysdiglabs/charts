@@ -11,6 +11,7 @@ data:
   {{- $env = "DEVELOPMENT" -}}
 {{ end}}
   environment: {{ $env }}
+  api_endpoint: {{ include "kspmCollector.apiEndpoint" . }}
   included_namespaces: {{ .Values.namespaces.included | quote}}
   excluded_namespaces: {{ .Values.namespaces.excluded | quote }}
   included_workloads: {{ .Values.workloads.included | quote }}
@@ -21,6 +22,9 @@ data:
   nats_max_reconnect_failures: {{ .Values.natsMaxReconnectFailures | default 60 | quote }}
   cluster_name: {{ required "A valid clusterName is required" (include "kspmCollector.clusterName" .) }}
   nats_insecure: {{ include "kspmCollector.natsInsecure" . }}
+  transport_layer: {{ include "kspmCollector.transportLayer" . }}
+  leader_election_lease_lock_name: {{ include "kspmCollector.leaderElectionLeaseLockName" . }}
+  leader_election_lease_lock_namespace: {{ include "kspmCollector.namespace" . }}
   {{- if (.Values.httpProxy | default .Values.global.proxy.httpProxy) }}
   http_proxy: {{ .Values.httpProxy | default .Values.global.proxy.httpProxy }}
   {{- end -}}
