@@ -67,6 +67,16 @@
 
 {{- $config := merge $config (dict "proxy" (include "host.proxy_config" . | fromYaml)) }}
 
+{{- if and (include "common.semver.is_valid" .Values.host_windows.image.tag) (semverCompare ">= 0.8.0" .Values.host_windows.image.tag) }}
+{{- $runtimeAdditionalSettings := dict }}
+{{- if (include "host.windows.agent_runtime.log_level" . ) -}}
+  {{- $console_priority := dict "console_priority" (include "host.windows.agent_runtime.log_level" .) -}}
+  {{- $_ := set $runtimeAdditionalSettings "log" $console_priority -}}
+{{- end }}
+{{- $runtimeAdditionalSettings = mergeOverwrite $runtimeAdditionalSettings ((include "host.windows.runtime_config_override" .) | fromYaml) }}
+{{- $config := merge $config (dict "internals" (dict "agent_runtime" (dict "additional_settings" $runtimeAdditionalSettings))) }}
+{{- end }}
+
 {{- $override := (include "host.windows.shield_config_override" .) | fromYaml }}
 {{- $finalConfig := mergeOverwrite $config $override }}
 {{- $finalConfig | toYaml }}

@@ -729,3 +729,16 @@ tests:
           pattern: |
             collector: ingest-alt-eu1.app.sysdig.com
             collector_port: 6443
+
+  - it: Test agent_runtime_additional_settings with version < 0.8.0
+    set:
+      host_windows:
+        image:
+          tag: "0.7.1"
+        agent_runtime_additional_settings:
+          connection_timeout: 1000
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            connection_timeout: 1000
