@@ -424,6 +424,8 @@ tests:
         agent_runtime_additional_settings:
           connection_timeout: 1000
     asserts:
+      - notExists:
+          path: data['dragent.yaml']
       - matchRegex:
           path: data['host-shield.yaml']
           pattern: |
