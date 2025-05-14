@@ -1,0 +1,16 @@
+suite: KSPM Collector Deployment Env Var Tests
+templates:
+  - deployment.yaml
+tests:
+  - it: check that KUBE_POD_NAME is set with the name of the pod
+    set:
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[?(@.name=="kspm-collector")].env
+          content:
+            name: KUBE_POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name

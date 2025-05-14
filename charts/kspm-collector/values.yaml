@@ -72,6 +72,16 @@ natsUrl: ""
 # Setting a cluster name allows you to filter events from this cluster using kubernetes.cluster.name
 clusterName: ""
 
+# Determine the transport used by the collector to receive tasks from the backend and send results back to it.
+# Valid values are "nats" and "http".
+transportLayer: nats
+
+# Provide values required to acquire a lease from the k8s api for the leader election mechanism
+# used to prevent multiple instances of the collector to run simultaneously.
+# This is done to reduce the load on the k8s api in case of http transport.
+leaderElection:
+  lockName: kspm-analyzer-leader-election
+
 image:
   repository: sysdig/kspm-collector
   tag: 1.39.11
