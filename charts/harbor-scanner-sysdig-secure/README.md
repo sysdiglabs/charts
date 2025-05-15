@@ -85,14 +85,14 @@ Sysdig Secure chart and their default values:
 | `nodeSelector`                               | Specifies the nodeSelector for scheduling.                   | `{}`                                      |
 | `tolerations`                                | Specifies the tolerations for scheduling.                    | `[]`                                      |
 | `affinity`                                   | Enables affinity rules                                       | `{}`                                      |
-| `sysdig.secure.apiToken`                     | Specifies the API Token to access Sysdig Secure. This value is **mandatory**. | ` `                                       |
+| `sysdig.secure.apiToken`                     | Specifies the API Token to access Sysdig Secure. This value is **required** if the `sysdig.secure.existingSecureAPITokenSecret` is not specified. | ` `                                       |
 | `sysdig.secure.existingSecureAPITokenSecret` | Specifies the existing secret name with API Token to access Sysdig Secure <br/>Alternatively, you can specify the name of a Kubernetes secret containing `sysdig_secure_api_token` entry. <br/><br/>If both are not configured, you must  provide the deployment with the `SECURE_API_TOKEN` environment variables. | ` `                                       |
 | `sysdig.secure.url`                          | Specifies the Sysdig Secure endpoint.                        | `https://secure.sysdig.com`               |
 | `sysdig.secure.verifySSL`                    | Verifies whether SSL certificate when connecting to Sysdig Secure endpoint. | `true`                                    |
-| `proxy.httpProxy`                            | Specifies the URL of the proxy for HTTP connections. Leave empty if not using proxy. It sets the `http_proxy` environment variable. | ` `                                       |
+| `proxy.httpProxy`                            | Specifies the URL of the proxy for HTTP connections. Leave empty if not using proxy. It sets the `http_proxy` environment variable.    | ` `                                       |
 | `proxy.httpsProxy`                           | Specifies the URL of the proxy for HTTPS connections. Leave empty if not using proxy.  It sets the `https_proxy` environment variable. | ` `                                       |
 | `proxy.noProxy`                              | Specifies the comma-separated list of domain extensions proxy should not be used for. Includes the internal IP of the kube API server. | ` `                                       |
-| `cliScanning.enabled`                     | Enables the CLI Scanning feature.                         | `true`                                    |
-| `cliScanning.image`                       | Specifies the pullstring for the CLI Scanner Image.                         | `alpine:latest`                                    |
-| `cliScanning.existingSecureAPITokenSecret`                       | Specifies the existing secret name with API Token to access Sysdig Secure                         | `{{ include "harbor-scanner-sysdig-secure.fullname" . }}`                                    |
+| `cliScanning.enabled`                        | Enables the CLI Scanning feature.                            | `true`                                    |
+| `cliScanning.image`                          | Specifies the pullstring for the CLI Scanner Image.          | `alpine:latest`                           |
+| `cliScanning.existingSecureAPITokenSecret`   | Specifies the existing secret name with API Token to access Sysdig Secure                         | `{{ include "harbor-scanner-sysdig-secure.fullname" . }}`                                    |
 | `asyncMode.enabled`                          | Enables the Async-Mode feature.                              | `false`                                   |
