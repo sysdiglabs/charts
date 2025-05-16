@@ -10,18 +10,18 @@ tests:
     asserts:
       - equal:
           path: data.transport_layer
-          value: nats
+          value: http
 
   - it: check that transport_layer is set with overridden value
     set:
       sysdig:
         accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
       clusterName: test-cluster
-      transportLayer: http
+      transportLayer: nats
     asserts:
       - equal:
           path: data.transport_layer
-          value: http
+          value: nats
 
   - it: check that leader_election_lease_lock_name is set with default value
     set:
@@ -31,7 +31,7 @@ tests:
     asserts:
       - equal:
           path: data.leader_election_lease_lock_name
-          value: kspm-analyzer-leader-election
+          value: kspm-collector-leader-election
 
   - it: check that leader_election_lease_lock_name is set with overridden value
     set:

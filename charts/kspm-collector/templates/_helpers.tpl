@@ -145,7 +145,7 @@ Sysdig NATS service URL
 Returns the transport layer
 */}}
 {{- define "kspmCollector.transportLayer" -}}
-    {{ .Values.transportLayer | default "nats" }}
+    {{ .Values.transportLayer | default "http" }}
 {{- end -}}
 
 {{/*
