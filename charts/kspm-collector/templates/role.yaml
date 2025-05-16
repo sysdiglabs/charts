@@ -1,0 +1,22 @@
+{{- if .Values.rbac.create }}
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: {{ template "kspmCollector.fullname" . }}
+  namespace: {{ include "kspmCollector.namespace" . }}
+  labels:
+{{ include "kspmCollector.labels" . | indent 4 }}
+rules:
+{{- if eq (include "kspmCollector.transportLayer" .) "http" }}
+- apiGroups: ["", "coordination.k8s.io"]
+  resources:
+    - "leases"
+  resourceNames:
+    - {{ include "kspmCollector.leaderElectionLeaseLockName" . }}
+  verbs: ["*"]
+- apiGroups: ["", "coordination.k8s.io"]
+  resources:
+    - "leases"
+  verbs: ["create"]
+{{- end }}
+{{- end }}

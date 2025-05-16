@@ -1,0 +1,48 @@
+suite: KSPM Collector Role Tests
+templates:
+  - templates/role.yaml
+tests:
+  - it: Should not create document if rbac.create is false
+    set:
+      rbac:
+        create: false
+    asserts:
+      - containsDocument:
+          apiVersion: rbac.authorization.k8s.io/v1
+          kind: Role
+        not: true
+
+  - it: Should not create rules if transportLayer is not http
+    set:
+      transportLayer: nats
+    asserts:
+      - isNullOrEmpty:
+          path: rules
+
+  - it: Should grant permissions to create lease if transport is http
+    set:
+      transportLayer: http
+    asserts:
+      - contains:
+          path: rules
+          content:
+            apiGroups: ["", "coordination.k8s.io"]
+            resources:
+              - "leases"
+            verbs: ["create"]
+
+  - it: Should grant all permissions on specific lease if transport is http
+    set:
+      transportLayer: http
+      leaderElection:
+        lockName: test-lock-name
+    asserts:
+      - contains:
+          path: rules
+          content:
+            apiGroups: ["", "coordination.k8s.io"]
+            resources:
+              - "leases"
+            resourceNames:
+              - "test-lock-name"
+            verbs: ["*"]
