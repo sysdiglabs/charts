@@ -90,6 +90,8 @@ proxy:
 cliScanning:
   enabled: true
   image: alpine:latest
+  # specify the name of a Kubernetes secret containing an 'sysdig_secure_api_token' entry, defaults to harbor-scanner-sysdig-secure.fullname
+  existingSecureAPITokenSecret: ""
 
 asyncMode:
   enabled: true
