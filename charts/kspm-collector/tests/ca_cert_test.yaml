@@ -21,11 +21,19 @@ tests:
             name: SSL_CERT_FILE
             value: "/ca-certs/global_root_ca.crt"
         template: deployment.yaml
-      - isEmpty:
+      - notContains:
           path: spec.template.spec.volumes
+          content:
+            name: ca-cert
+            secret:
+              secretName: release-name-kspm-collector-ca
         template: deployment.yaml
-      - isEmpty:
+      - notContains:
           path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: ca-cert
+            mountPath: /ca-certs
+            readOnly: true
         template: deployment.yaml
 
   - it: Check Custom CA Cert defined with Values

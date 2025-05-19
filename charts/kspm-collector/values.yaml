@@ -98,8 +98,7 @@ imagePullSecrets: []
 # Example
 # env:
 #   MY_ENV_VAR_NAME: "my-env-var-value"
-env:
-  MEMORY_OPTIMIZED_DECOUPLED_CLIENT_DISABLE: "true"
+env: {}
 
 rbac:
   # true here enables creation of rbac resources
