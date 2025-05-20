@@ -19,7 +19,7 @@ This chart deploys the Sysdig Shield as a Deployment on a [Kubernetes](http://ku
 
 - Helm 3.6
 - Sysdig AccessKey
-- Sysdig Secure API Token
+- Sysdig Secure API Token (required for Kubernetes Audit with on-premise installations)
 - Sysdig Secure API URL
 - Sysdig Secure Collector
 
