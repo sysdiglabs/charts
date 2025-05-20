@@ -112,26 +112,28 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.name
-          - name: KUBE_LEADER_ELECTION_LEASE_LOCK_NAME
-            valueFrom:
-              configMapKeyRef:
-                name: {{ template "kspmCollector.fullname" . }}
-                key: leader_election_lease_lock_name
-          - name: TRANSPORT_LAYER
-            valueFrom:
-              configMapKeyRef:
-                name: {{ template "kspmCollector.fullname" . }}
-                key: transport_layer
-          - name: KUBE_LEADER_ELECTION_LEASE_LOCK_NAMESPACE
-            valueFrom:
-              configMapKeyRef:
-                name: {{ template "kspmCollector.fullname" . }}
-                key: leader_election_lease_lock_namespace
           - name: CLUSTER_NAME
             valueFrom:
               configMapKeyRef:
                 name: {{ template "kspmCollector.fullname" . }}
                 key: cluster_name
+          - name: TRANSPORT_LAYER
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "kspmCollector.fullname" . }}
+                key: transport_layer
+          - name: KUBE_LEADER_ELECTION_LEASE_LOCK_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "kspmCollector.fullname" . }}
+                key: leader_election_lease_lock_name
+                optional: true
+          - name: KUBE_LEADER_ELECTION_LEASE_LOCK_NAMESPACE
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "kspmCollector.fullname" . }}
+                key: leader_election_lease_lock_namespace
+                optional: true
           - name: INCLUDED_NAMESPACES
             valueFrom:
               configMapKeyRef:
