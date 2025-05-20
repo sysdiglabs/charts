@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.7.2
+### Chores
+* **registry-scanner** [ccb06cf2](https://github.com/sysdiglabs/charts/commit/ccb06cf2e5e8f82b9d5b69d562bfa2cd1ae16d3a): Update to v0.8.1 ([#2258](https://github.com/sysdiglabs/charts/issues/2258))
 # v1.7.1
 # v1.7.0
 ### New Features
