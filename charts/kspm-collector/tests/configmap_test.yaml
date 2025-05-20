@@ -1,0 +1,85 @@
+suite: KSPM Collector ConfigMap Tests
+templates:
+  - configmap.yaml
+tests:
+  - it: check that transport_layer is set with default value
+    set:
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+      clusterName: test-cluster
+    asserts:
+      - equal:
+          path: data.transport_layer
+          value: http
+
+  - it: check that transport_layer is set with overridden value
+    set:
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+      clusterName: test-cluster
+      transportLayer: nats
+    asserts:
+      - equal:
+          path: data.transport_layer
+          value: nats
+
+  - it: check that leader_election_lease_lock_name is set with default value
+    set:
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+      clusterName: test-cluster
+    asserts:
+      - equal:
+          path: data.leader_election_lease_lock_name
+          value: kspm-collector-leader-election
+
+  - it: check that leader_election_lease_lock_name is set with overridden value
+    set:
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+      clusterName: test-cluster
+      leaderElection:
+        lockName: test-lock
+    asserts:
+      - equal:
+          path: data.leader_election_lease_lock_name
+          value: test-lock
+
+  - it: check that leader_election_lease_lock_name is required when transport is http
+    set:
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+      clusterName: test-cluster
+      transportLayer: http
+      leaderElection:
+        lockName: ""
+    asserts:
+      - failedTemplate:
+          errorMessage: A valid lock name for the leader election is required when transport is http
+
+  - it: check that leader_election_lease_lock_namespace is equal to release namespace
+    set:
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+      clusterName: test-cluster
+      transportLayer: http
+    release:
+      namespace: test-namespace-release
+    asserts:
+      - equal:
+          path: data.leader_election_lease_lock_namespace
+          value: test-namespace-release
+
+  - it: check that leader_election_lease_lock_namespace is equal to namespace value if set
+    set:
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+      clusterName: test-cluster
+      transportLayer: http
+      namespace: test-namespace-value
+    release:
+      namespace: test-namespace-release
+    asserts:
+      - equal:
+          path: data.leader_election_lease_lock_namespace
+          value: test-namespace-value
