@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.6.2
+### Chores
+* **shield** [ad7d02b3](https://github.com/sysdiglabs/charts/commit/ad7d02b3ceb4a3c408e0e5b2521e32e633cb5388): add cluster name mapping to windows host-shield config ([#2262](https://github.com/sysdiglabs/charts/issues/2262))
 # v1.4.1
 ### New Features
 * **shield** [2a3f2d2a](https://github.com/sysdiglabs/charts/commit/2a3f2d2a75827e4742ee79de656e66b79962959b): use secure_light for netsec_enabled ([#2233](https://github.com/sysdiglabs/charts/issues/2233))
