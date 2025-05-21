@@ -418,6 +418,8 @@ tests:
 
   - it: Test agent_runtime_additional_settings with version >= 0.8.0
     set:
+      cluster_config:
+        name: "test-cluster"
       host_windows:
         image:
           tag: "0.8.0"
@@ -433,3 +435,4 @@ tests:
               agent_runtime:
                 additional_settings:
                   connection_timeout: 1000
+                  k8s_cluster_name: test-cluster

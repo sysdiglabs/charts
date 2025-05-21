@@ -69,6 +69,7 @@
 
 {{- if and (include "common.semver.is_valid" .Values.host_windows.image.tag) (semverCompare ">= 0.8.0" .Values.host_windows.image.tag) }}
 {{- $runtimeAdditionalSettings := (include "host.windows.runtime_config_override" .) | fromYaml }}
+{{- $_ := set $runtimeAdditionalSettings "k8s_cluster_name" .Values.cluster_config.name -}}
 {{- $config := merge $config (dict "internals" (dict "agent_runtime" (dict "additional_settings" $runtimeAdditionalSettings))) }}
 {{- end }}
 
