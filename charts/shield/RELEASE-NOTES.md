@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **shield** [ad7d02b3](https://github.com/sysdiglabs/charts/commit/ad7d02b3ceb4a3c408e0e5b2521e32e633cb5388): add cluster name mapping to windows host-shield config ([#2262](https://github.com/sysdiglabs/charts/issues/2262))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.6.1...shield-1.6.2
+### New Features
+- **agent,shield,sysdig-deploy** [a32a879d](https://github.com/sysdiglabs/charts/commit/a32a879d1122dbc533817035b114bb94395876b1): release agent 13.9.2 ([#2264](https://github.com/sysdiglabs/charts/issues/2264))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.6.2...shield-1.6.3
