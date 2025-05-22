@@ -73,6 +73,7 @@ config:
   maxWorkers: 5
   filter:
     # The list of regular expressions.<br/>Images matching any of these expressions are *always* included when scanning.
+    # To ensure that only included images are scanned and all others are explicitly excluded, set `exclude` to [".*"].
     include: []
     # The list of regular expressions.<br/>Images matching any of these expressions are excluded when scanning.
     exclude: []
