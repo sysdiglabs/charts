@@ -5,7 +5,7 @@ release:
   name: release-name
   namespace: shield-namespace
 values:
-  - ../values/windows.yaml
+  - ../values/windows_dragent.yaml
 kubernetesProvider:
   scheme:
     "v1/Secret":

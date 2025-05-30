@@ -335,6 +335,10 @@ tests:
     set:
       sysdig_endpoint:
         region: "eu1-alt"
+        api_url:
+        collector:
+          host:
+          port:
     asserts:
       - hasDocuments:
           count: 1
@@ -351,11 +355,8 @@ tests:
           path: data["host-shield.yaml"]
           pattern: |
             sysdig_endpoint:
-              api_url: https://eu1.app.sysdig.com
-              collector:
-                host: ingest-alt-eu1.app.sysdig.com
-                port: 6443
-              region: custom
+              collector: {}
+              region: eu1-alt
 
   - it: Alternative regions (host-shield windows version <= 0.7.1)
     set:
