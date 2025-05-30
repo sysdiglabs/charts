@@ -10,6 +10,7 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.7.1
 # v1.7.0
 ### Chores
 * **shield** [d49c6020](https://github.com/sysdiglabs/charts/commit/d49c6020c87418233968824ca7e60927fa7d4a71): bump host-shield windows 0.8.0 ([#2268](https://github.com/sysdiglabs/charts/issues/2268))
