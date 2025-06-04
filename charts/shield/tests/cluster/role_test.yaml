@@ -116,3 +116,33 @@ tests:
             resourceNames:
               - "release-name-shield-cluster-container-vm"
             verbs: ["*"]
+
+  - it: Posture
+    set:
+      features:
+        posture:
+          cluster_posture:
+            enabled: true
+    asserts:
+      - containsDocument:
+          kind: Role
+          apiVersion: rbac.authorization.k8s.io/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - contains:
+          path: rules
+          content:
+            apiGroups: ["", "coordination.k8s.io"]
+            resources:
+              - "leases"
+            resourceNames:
+              - "release-name-shield-cluster-posture"
+            verbs: ["*"]
+
+      - contains:
+          path: rules
+          content:
+            apiGroups: ["", "coordination.k8s.io"]
+            resources:
+              - "leases"
+            verbs: ["create"]
