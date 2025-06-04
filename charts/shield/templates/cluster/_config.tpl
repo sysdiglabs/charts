@@ -94,6 +94,13 @@
         "rsi_grpc_endpoint" (printf "%s:9999" (include "cluster.container_vulnerability_management_service_name" .))
       ) -}}
     {{- end -}}
+    {{- if (include "cluster.posture_enabled" .) -}}
+      {{- $kspmCollectorConfig := dig "kspm_collector" (dict) $config -}}
+      {{- if (include "cluster.need_posture_lease" .) -}}
+        {{- $_ := set $kspmCollectorConfig "leader_election_lock_name" (include "cluster.posture_lease_name" .) -}}
+      {{- end -}}
+      {{- $_ := set $config "kspm_collector" $kspmCollectorConfig -}}
+    {{- end -}}
     {{- $_ := set $config "ssl" (dict "verify" .Values.ssl.verify) -}}
     {{- $_ := mergeOverwrite $config .Values.cluster.additional_settings -}}
     {{- $config | toYaml -}}
@@ -167,6 +174,16 @@
 {{- define "cluster.kubernetes_metadata_enabled" -}}
   {{- $featureConfig := (include "cluster.features_config" . | fromYaml) -}}
   {{- if dig "kubernetes_metadata" "enabled" false $featureConfig -}}
+    {{- true -}}
+  {{- end -}}
+{{- end }}
+
+{{/*
+  Checks if the cluster requires the lease configuration for the posture feature.
+  (either by the feature config or additional settings)
+*/}}
+{{- define "cluster.need_posture_lease" -}}
+  {{- if and (eq (include "cluster.posture_enabled" .) "true") (eq (dig "kspm_collector" "transport_layer" "http" .Values.cluster.additional_settings) "http") -}}
     {{- true -}}
   {{- end -}}
 {{- end }}

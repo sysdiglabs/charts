@@ -23,6 +23,10 @@ If release name contains chart name it will be used as a full name.
   {{- default (printf "%s-container-vulnerability-management" (include "cluster.fullname" .)) (dig "cluster_scanner" "leader_election_lock_name" nil .Values.cluster.additional_settings) -}}
 {{- end }}
 
+{{- define "cluster.posture_lease_name" -}}
+  {{- default (printf "%s-posture" (include "cluster.fullname" .)) (dig "kspm_collector" "leader_election_lock_name" nil .Values.cluster.additional_settings) -}}
+{{- end }}
+
 {{- define "cluster.admission_control_service_port" -}}
   {{ .Values.features.admission_control.http_port }}
 {{- end }}

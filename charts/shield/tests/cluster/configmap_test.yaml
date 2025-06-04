@@ -238,6 +238,119 @@ tests:
             admission_controller_secure:
               rsi_grpc_endpoint: release-name-shield-cluster-container-vm:9999
 
+  - it: Sets Lock Name when Posture is enabled and transport_layer is set to http
+    set:
+      cluster_config:
+        name: shield-cluster
+      sysdig_endpoint:
+        api_url: https://fake.api.url.com
+        collector:
+          host: fake.collector.host
+          port: 6443
+        access_key: fake-access-key
+        secure_api_token: fake-secure-api-token
+      features:
+        posture:
+          cluster_posture:
+            enabled: true
+      cluster:
+        additional_settings:
+          kspm_collector:
+            transport_layer: http
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: release-name-shield-cluster
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["cluster-shield.yaml"]
+      - matchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: |
+            kspm_collector:
+              leader_election_lock_name: release-name-shield-cluster-posture
+              transport_layer: http
+
+  - it: Does not set Lock Name when Posture is enabled and transport_layer is set to nats
+    set:
+      cluster_config:
+        name: shield-cluster
+      sysdig_endpoint:
+        api_url: https://fake.api.url.com
+        collector:
+          host: fake.collector.host
+          port: 6443
+        access_key: fake-access-key
+        secure_api_token: fake-secure-api-token
+      features:
+        posture:
+          cluster_posture:
+            enabled: true
+      cluster:
+        additional_settings:
+          kspm_collector:
+            transport_layer: nats
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: release-name-shield-cluster
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["cluster-shield.yaml"]
+      - notMatchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: |
+            kspm_collector:
+              leader_election_lock_name: .*
+      - matchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: |
+            kspm_collector:
+              transport_layer: nats
+
+  - it: Sets Lock Name when Posture is enabled
+    set:
+      cluster_config:
+        name: shield-cluster
+      sysdig_endpoint:
+        api_url: https://fake.api.url.com
+        collector:
+          host: fake.collector.host
+          port: 6443
+        access_key: fake-access-key
+        secure_api_token: fake-secure-api-token
+      features:
+        posture:
+          cluster_posture:
+            enabled: true
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: release-name-shield-cluster
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["cluster-shield.yaml"]
+      - matchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: |
+            kspm_collector:
+              leader_election_lock_name: release-name-shield-cluster-posture
+
   - it: Secure API Token - Fail if kubernetes audit is enabled with On Premise Versions < 6.12.0 and Secure API Token is not set
     set:
       on_prem_version: 6.11.0
