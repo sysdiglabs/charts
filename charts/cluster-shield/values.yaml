@@ -104,6 +104,9 @@ cluster_shield:
       container_vulnerability_management:
         # Enable the container vulnerability management feature on the admission control
         enabled: false
+      posture:
+        # Enable the posture feature on the admission control
+        enabled: true
     audit:
       # Enable the Kubernetes Audit feature
       enabled: false

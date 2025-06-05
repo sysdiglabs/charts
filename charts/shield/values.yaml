@@ -48,6 +48,9 @@ features:
     container_vulnerability_management:
       # Enable the container vulnerability management feature on the admission control
       enabled: false
+    posture:
+      # Enable the posture feature on the admission control
+      enabled: true
 
   kubernetes_metadata:
     # Enable the Kubernetes Metadata feature on cluster shield

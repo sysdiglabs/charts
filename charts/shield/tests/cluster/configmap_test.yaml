@@ -44,6 +44,8 @@ tests:
                 excluded_namespaces: \[\]
                 failure_policy: Ignore
                 http_port: 8443
+                posture:
+                  enabled: true
                 timeout: 10
               audit:
                 enabled: false
@@ -76,6 +78,9 @@ tests:
                 platform_services_enabled: true
                 registry_ssl:
                   verify: true
+              investigations:
+                network_security:
+                  enabled: false
               kubernetes_metadata:
                 enabled: true
               monitor:
@@ -120,6 +125,8 @@ tests:
                 excluded_namespaces: \[\]
                 failure_policy: Ignore
                 http_port: 8443
+                posture:
+                  enabled: true
                 timeout: 10
               audit:
                 enabled: false
@@ -152,6 +159,9 @@ tests:
                 platform_services_enabled: true
                 registry_ssl:
                   verify: true
+              investigations:
+                network_security:
+                  enabled: false
               kubernetes_metadata:
                 enabled: false
               monitor:
@@ -161,6 +171,65 @@ tests:
                   enabled: false
               posture:
                 enabled: false
+
+  - it: Enable investigations.network_security
+    set:
+      features:
+        investigations:
+          network_security:
+            enabled: true
+    asserts:
+      - exists:
+          path: data["cluster-shield.yaml"]
+      - matchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: |
+            features:
+              admission_control:
+                container_vulnerability_management:
+                  enabled: false
+                dry_run: true
+                enabled: false
+                excluded_namespaces: \[\]
+                failure_policy: Ignore
+                http_port: 8443
+                posture:
+                  enabled: true
+                timeout: 10
+              audit:
+                enabled: false
+                excluded_namespaces: \[\]
+                http_port: 6443
+                timeout: 10
+                webhook_rules:
+                - apiGroups:
+                  - ""
+                  - apps
+                  - autoscaling
+                  - batch
+                  - networking.k8s.io
+                  - rbac.authorization.k8s.io
+                  - extensions
+                  apiVersions:
+                  - '\*'
+                  operations:
+                  - '\*'
+                  resources:
+                  - '\*/\*'
+                  scope: '\*'
+              container_vulnerability_management:
+                enabled: false
+                in_use:
+                  enabled: false
+                  integration_enabled: false
+                local_cluster:
+                  registry_secrets: \[\]
+                platform_services_enabled: true
+                registry_ssl:
+                  verify: true
+              investigations:
+                network_security:
+                  enabled: true
 
   - it: Sets NATS Url and Lock Name when Container Vulnerability Management is enabled
     set:
