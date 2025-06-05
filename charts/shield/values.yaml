@@ -137,6 +137,10 @@ features:
       enabled: false
       integrations: []
       transmit_message_types: []
+    investigations:
+      network_security:
+        # Enable the network security feature
+        enabled: false
   respond:
     rapid_response:
       enabled: false
@@ -380,7 +384,7 @@ cluster:
     # The repository where the cluster shield image is stored
     repository: sysdig/cluster-shield
     # The tag for the cluster shield image
-    tag: 1.11.0
+    tag: 1.12.0
     # The pull policy for the cluster shield image
     pull_policy: IfNotPresent
     # The pull secrets for the cluster shield image
