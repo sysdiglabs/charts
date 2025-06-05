@@ -370,14 +370,14 @@ metadata:
       ]
     capabilities: Basic Install
     categories: Security, Monitoring
-    createdAt: "2025-01-02T15:51:05Z"
+    createdAt: "2025-06-05T18:41:48Z"
     description: |
       The Sysdig Shield Operator provides a way to deploy Sysdig Shield components on an OpenShift cluster.
     operators.operatorframework.io/builder: operator-sdk-v1.38.0
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
     repository: https://github.com/sysdiglabs/charts
     support: https://sysdig.com
-  name: rh-shield-operator.v0.2.0
+  name: rh-shield-operator.v0.3.0
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -528,7 +528,7 @@ spec:
                 - --leader-elect
                 - --health-probe-bind-address=:8081
                 - --leader-election-id=rh-shield-operator
-                image: quay.io/sysdig/rh-shield-operator:v0.2.0
+                image: quay.io/sysdig/rh-shield-operator:v0.3.0
                 livenessProbe:
                   httpGet:
                     path: /healthz
@@ -632,4 +632,4 @@ spec:
   provider:
     name: Sysdig
     url: https://sysdig.com
-  version: 0.2.0
+  version: 0.3.0
