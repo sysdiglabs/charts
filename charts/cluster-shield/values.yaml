@@ -114,7 +114,7 @@ cluster_shield:
       # The list of namespaces to exclude from the audit feature
       excluded_namespaces: []
       # List of rules used to determine if a request should be audited
-      webhook_rules:  # +doc-gen:break
+      webhook_rules: # +doc-gen:break
         - apiGroups:
             - ""
             - apps
@@ -159,6 +159,10 @@ cluster_shield:
         # If set to false it allows insecure connections to registries,
         # Such as for registries with self-signed or private certificates.
         verify: true
+    investigations:
+      network_security:
+        # Enable the network security feature
+        enabled: false
     kubernetes_metadata:
       # Enable the Kubernetes Metadata feature
       enabled: false
