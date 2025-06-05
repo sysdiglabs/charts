@@ -1,0 +1,22 @@
+project:
+  name: Harbor Scanner Adapter for Sysdig Secure
+  shortName: Harbor Adapter
+  url: https://github.com/sysdiglabs/harbor-scanner-sysdig-secure
+  description: This chart deploys the Sysdig Harbor Scanner Adapter in your Kubernetes cluster.
+  app: Harbor Scanner Adapter for Sysdig Secure
+repository:
+  url: https://charts.sysdig.com
+  name: sysdig
+chart:
+  name: harbor-scanner-sysdig-secure
+  #  version: v0.9.0-rc.0
+  #  values: "-- generate from values file --"
+  valuesExample: "sysdig.secure.apiToken=<SECURE-API-TOKEN>"
+prerequisites:
+  - "Helm 3.6"
+  - "Kubernetes v1.16+"
+  - "Sysdig Secure API Token"
+
+release:
+  name: sysdig-harbor-scanner
+  namespace: sysdig-harbor-scanner

@@ -2,17 +2,25 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# Specifies the number of replicas for the Scanner Adapter.
 replicaCount: 1
 
 image:
+  # Specifies the image repository to pull the image from.
   repository: sysdiglabs/harbor-scanner-sysdig-secure
-  # tag: latest
+  # Specifies the image tag to pull.
+  tag:
+  # Specifies the image pull policy.
   pullPolicy: IfNotPresent
 
+# Specifies the image pull secrets.
 imagePullSecrets: []
+# Specifies the chart name override.
 nameOverride: ""
+# Specifies the chart full name override
 fullnameOverride: ""
 
+# Specifies the custom pod annotations.
 podAnnotations: {}
 
 serviceAccount:
@@ -25,11 +33,14 @@ serviceAccount:
   name:
 
 rbac:
+  # Creates and uses RBAC resources.
   create: true
 
+# Enables deployment PSPs.
 podSecurityContext: {}
   # fsGroup: 2000
 
+# Enables securityContext.
 securityContext: {}
   # capabilities:
   #   drop:
@@ -39,9 +50,12 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
+  # Specifies the service type.
   type: ClusterIP
+  # Specifies the port for the service.
   port: 5000
 
+# Specifies the resources of the pod.
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
@@ -54,44 +68,51 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
 
+# Specifies the nodeSelector for scheduling.
 nodeSelector: {}
 
+# Specifies the tolerations for scheduling.
 tolerations: []
 
+# Enables affinity rules
 affinity: {}
 
-# Custom entrypoint for the harbor plugin
+# Overrides the container entrypoint.
 customEntryPoint: []
 
 sysdig:
   secure:
 
-    # **required**
-    # API Token to access Sysdig Secure.
-    # If neither this value nor `sysdig.secure.existingSecureAPITokenSecret` are configured, the
-    # user will be required to provide the deployment the `SECURE_API_TOKEN` environment variables.
+    # Specifies the API Token to access Sysdig Secure. This value is **required** if the `sysdig.secure.existingSecureAPITokenSecret` is not specified.
     apiToken: ""
 
-    # Alternatively, specify the name of a Kubernetes secret containing an 'sysdig_secure_api_token' entry
+    # Specifies the existing secret name with API Token to access Sysdig Secure. Specify the name of a Kubernetes secret containing an 'sysdig_secure_api_token' entry
+    # If both are not configured, you must provide the deployment with the `SECURE_API_TOKEN` environment variable.
     existingSecureAPITokenSecret: ""
 
-    # Sysdig backend URL (SaaS Regions API endpoints are listed here: https://docs.sysdig.com/en/docs/administration/saas-regions-and-ip-ranges/)
+    # Sysdig backend URL. SaaS Regions API endpoints are listed [here](https://docs.sysdig.com/en/docs/administration/saas-regions-and-ip-ranges/)
     url: "https://secure.sysdig.com"
+    # Verifies whether SSL certificate when connecting to Sysdig Secure endpoint.
     verifySSL: true
 
 proxy:
+  # Specifies the URL of the proxy for HTTP connections. Leave empty if not using proxy. It sets the `http_proxy` environment variable.
   httpProxy:
+  # Specifies the URL of the proxy for HTTPS connections. Leave empty if not using proxy. It sets the `https_proxy` environment variable.
   httpsProxy:
   # Comma-separated list of domain extensions proxy should not be used for.
-  # Include in noProxy the internal IP of the kubeapi server,
+  # Include in `noProxy` the internal IP of the kubeapi server,
   # and you probably need to add your registry if it is inside the cluster
   noProxy:
 
 cliScanning:
+  # Enables the CLI Scanning feature.
   enabled: true
-  image: alpine:latest
-  # specify the name of a Kubernetes secret containing an 'sysdig_secure_api_token' entry, defaults to harbor-scanner-sysdig-secure.fullname
+  # Specifies the pullstring for the CLI Scanner Image.
+  image: quay.io/sysdig/sysdig-cli-scanner:latest
+  # Specifies the existing secret name with API Token to access Sysdig Secure
   existingSecureAPITokenSecret: ""
 
 asyncMode:
+  # Enables the Async-Mode feature.
   enabled: true
