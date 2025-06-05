@@ -104,6 +104,9 @@ cluster_shield:
       container_vulnerability_management:
         # Enable the container vulnerability management feature on the admission control
         enabled: false
+      posture:
+        # Enable the posture feature on the admission control
+        enabled: true
     audit:
       # Enable the Kubernetes Audit feature
       enabled: false
@@ -159,6 +162,10 @@ cluster_shield:
         # If set to false it allows insecure connections to registries,
         # Such as for registries with self-signed or private certificates.
         verify: true
+    investigations:
+      network_security:
+        # Enable the network security feature
+        enabled: false
     kubernetes_metadata:
       # Enable the Kubernetes Metadata feature
       enabled: false
