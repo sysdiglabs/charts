@@ -502,6 +502,16 @@
             }
           }
         },
+        "posture": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Enable the posture feature on the admission control"
+            }
+          }
+        },
         "http_port": {
           "type": "integer",
           "minimum": 1,

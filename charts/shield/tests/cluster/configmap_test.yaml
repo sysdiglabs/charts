@@ -44,6 +44,8 @@ tests:
                 excluded_namespaces: \[\]
                 failure_policy: Ignore
                 http_port: 8443
+                posture:
+                  enabled: true
                 timeout: 10
               audit:
                 enabled: false
@@ -76,6 +78,9 @@ tests:
                 platform_services_enabled: true
                 registry_ssl:
                   verify: true
+              investigations:
+                network_security:
+                  enabled: false
               kubernetes_metadata:
                 enabled: true
               monitor:
@@ -120,6 +125,8 @@ tests:
                 excluded_namespaces: \[\]
                 failure_policy: Ignore
                 http_port: 8443
+                posture:
+                  enabled: true
                 timeout: 10
               audit:
                 enabled: false
@@ -152,6 +159,9 @@ tests:
                 platform_services_enabled: true
                 registry_ssl:
                   verify: true
+              investigations:
+                network_security:
+                  enabled: false
               kubernetes_metadata:
                 enabled: false
               monitor:
@@ -161,6 +171,65 @@ tests:
                   enabled: false
               posture:
                 enabled: false
+
+  - it: Enable investigations.network_security
+    set:
+      features:
+        investigations:
+          network_security:
+            enabled: true
+    asserts:
+      - exists:
+          path: data["cluster-shield.yaml"]
+      - matchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: |
+            features:
+              admission_control:
+                container_vulnerability_management:
+                  enabled: false
+                dry_run: true
+                enabled: false
+                excluded_namespaces: \[\]
+                failure_policy: Ignore
+                http_port: 8443
+                posture:
+                  enabled: true
+                timeout: 10
+              audit:
+                enabled: false
+                excluded_namespaces: \[\]
+                http_port: 6443
+                timeout: 10
+                webhook_rules:
+                - apiGroups:
+                  - ""
+                  - apps
+                  - autoscaling
+                  - batch
+                  - networking.k8s.io
+                  - rbac.authorization.k8s.io
+                  - extensions
+                  apiVersions:
+                  - '\*'
+                  operations:
+                  - '\*'
+                  resources:
+                  - '\*/\*'
+                  scope: '\*'
+              container_vulnerability_management:
+                enabled: false
+                in_use:
+                  enabled: false
+                  integration_enabled: false
+                local_cluster:
+                  registry_secrets: \[\]
+                platform_services_enabled: true
+                registry_ssl:
+                  verify: true
+              investigations:
+                network_security:
+                  enabled: true
 
   - it: Sets NATS Url and Lock Name when Container Vulnerability Management is enabled
     set:
@@ -237,6 +306,119 @@ tests:
           pattern: |
             admission_controller_secure:
               rsi_grpc_endpoint: release-name-shield-cluster-container-vm:9999
+
+  - it: Sets Lock Name when Posture is enabled and transport_layer is set to http
+    set:
+      cluster_config:
+        name: shield-cluster
+      sysdig_endpoint:
+        api_url: https://fake.api.url.com
+        collector:
+          host: fake.collector.host
+          port: 6443
+        access_key: fake-access-key
+        secure_api_token: fake-secure-api-token
+      features:
+        posture:
+          cluster_posture:
+            enabled: true
+      cluster:
+        additional_settings:
+          kspm_collector:
+            transport_layer: http
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: release-name-shield-cluster
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["cluster-shield.yaml"]
+      - matchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: |
+            kspm_collector:
+              leader_election_lock_name: release-name-shield-cluster-posture
+              transport_layer: http
+
+  - it: Does not set Lock Name when Posture is enabled and transport_layer is set to nats
+    set:
+      cluster_config:
+        name: shield-cluster
+      sysdig_endpoint:
+        api_url: https://fake.api.url.com
+        collector:
+          host: fake.collector.host
+          port: 6443
+        access_key: fake-access-key
+        secure_api_token: fake-secure-api-token
+      features:
+        posture:
+          cluster_posture:
+            enabled: true
+      cluster:
+        additional_settings:
+          kspm_collector:
+            transport_layer: nats
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: release-name-shield-cluster
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["cluster-shield.yaml"]
+      - notMatchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: |
+            kspm_collector:
+              leader_election_lock_name: .*
+      - matchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: |
+            kspm_collector:
+              transport_layer: nats
+
+  - it: Sets Lock Name when Posture is enabled
+    set:
+      cluster_config:
+        name: shield-cluster
+      sysdig_endpoint:
+        api_url: https://fake.api.url.com
+        collector:
+          host: fake.collector.host
+          port: 6443
+        access_key: fake-access-key
+        secure_api_token: fake-secure-api-token
+      features:
+        posture:
+          cluster_posture:
+            enabled: true
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: release-name-shield-cluster
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["cluster-shield.yaml"]
+      - matchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: |
+            kspm_collector:
+              leader_election_lock_name: release-name-shield-cluster-posture
 
   - it: Secure API Token - Fail if kubernetes audit is enabled with On Premise Versions < 6.12.0 and Secure API Token is not set
     set:
