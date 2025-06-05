@@ -128,6 +128,7 @@ features:
     live_logs:
       enabled: false
     network_security:
+      # Enable the network security feature
       enabled: false
     audit_tap:
       enabled: false
@@ -137,10 +138,6 @@ features:
       enabled: false
       integrations: []
       transmit_message_types: []
-    investigations:
-      network_security:
-        # Enable the network security feature
-        enabled: false
   respond:
     rapid_response:
       enabled: false
