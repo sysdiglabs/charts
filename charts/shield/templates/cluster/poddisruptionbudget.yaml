@@ -1,0 +1,12 @@
+{{- if dig "pod_disruption_budget" "create" true .Values.cluster }}
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "cluster.fullname" . | trunc 60 }}-pdb
+  namespace: {{ .Release.Namespace }}
+spec:
+  minAvailable: {{ dig "pod_disruption_budget" "min_available" 1 .Values.cluster }}
+  selector:
+    matchLabels:
+      {{ include "cluster.selector_labels" . | nindent 6 }}
+{{- end }}

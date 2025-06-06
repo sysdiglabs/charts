@@ -1,0 +1,46 @@
+suite: Cluster - PodDisruptionBudget
+templates:
+  - templates/cluster/poddisruptionbudget.yaml
+release:
+  name: release-name
+  namespace: shield-namespace
+values:
+  - ../values/base.yaml
+tests:
+  - it: PodDisruptionBudget is created
+    asserts:
+      - isKind:
+          of: PodDisruptionBudget
+      - isSubset:
+          path: metadata
+          content:
+            name: release-name-shield-cluster-pdb
+            namespace: shield-namespace
+      - equal:
+          path: spec.minAvailable
+          value: 1
+      - isSubset:
+          path: spec.selector.matchLabels
+          content:
+            app.kubernetes.io/instance: release-name
+            app.kubernetes.io/name: shield
+            sysdig/component: cluster
+
+  - it: PodDisruptionBudget is not created when disabled
+    set:
+      cluster:
+        pod_disruption_budget:
+          create: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: PodDisruptionBudget minAvailable is configurable
+    set:
+      cluster:
+        pod_disruption_budget:
+          min_available: 2
+    asserts:
+      - equal:
+          path: spec.minAvailable
+          value: 2
