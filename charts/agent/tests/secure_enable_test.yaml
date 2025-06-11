@@ -103,8 +103,42 @@ tests:
       - matchRegex:
           path: data['dragent.yaml']
           pattern: |-
+            security:
+              enabled: true
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
             feature:
               mode: secure_light
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            app_checks_enabled: false
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            jmx:
+              enabled: false
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            prometheus:
+              enabled: false
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            statsd:
+              enabled: false
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            commandlines_capture:
+              enabled: false
+      - notMatchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            secure_audit_streams:
+              enabled: false
 
   - it: Test secure.enabled with secure mode on image >= 14.0.0
     set:
