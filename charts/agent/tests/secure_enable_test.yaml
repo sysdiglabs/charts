@@ -89,12 +89,52 @@ tests:
           path: data['dragent.yaml']
           pattern: security:\n\ {2}enabled:\ false\n {2}k8s_audit_server_enabled:\ true\n\ {2}k8s_audit_server_port:\ 7765\n\ {2}k8s_audit_server_url:\ 0\.0\.0\.0
 
-  - it: Test secure.enabled with secure_light mode specified
+  - it: Test secure.enabled on image >= 14.0.0 (secure_light mode should be default)
     set:
       monitor:
         enabled: false
       secure:
         enabled: true
+      image:
+        tag: 14.0.0
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            feature:
+              mode: secure_light
+
+  - it: Test secure.enabled with secure mode on image >= 14.0.0
+    set:
+      monitor:
+        enabled: false
+      secure:
+        enabled: true
+      image:
+        tag: 14.0.0
+      settings:
+        sysdig:
+          feature:
+            mode: secure
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |-
+            feature:
+              mode: secure
+
+  - it: Test secure.enabled with secure_light mode specified on image < 14.0.0
+    set:
+      monitor:
+        enabled: false
+      secure:
+        enabled: true
+      image:
+        tag: 13.9.2
       sysdig:
         settings:
           feature:
