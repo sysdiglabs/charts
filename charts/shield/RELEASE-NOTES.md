@@ -1,5 +1,5 @@
 # What's Changed
 
-### Bug Fixes
-- **shield** [4becb83a](https://github.com/sysdiglabs/charts/commit/4becb83ad262c67fe12f09522299303d1270cee2): set port 443 on host when alt region is selected ([#2285](https://github.com/sysdiglabs/charts/issues/2285))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/cluster-shield-1.12.1...shield-1.8.2
+### Chores
+- **shield** [c8b0cde7](https://github.com/sysdiglabs/charts/commit/c8b0cde7b8d890050e23a94de383748f0533a23b): add ssl config mapping for windows host-shield ([#2286](https://github.com/sysdiglabs/charts/issues/2286))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.8.2...shield-1.8.3
