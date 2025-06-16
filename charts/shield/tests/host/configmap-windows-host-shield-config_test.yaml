@@ -384,7 +384,7 @@ tests:
               api_url: https://eu1.app.sysdig.com
               collector:
                 host: ingest-alt-eu1.app.sysdig.com
-                port: 6443
+                port: 443
               region: custom
 
   - it: Alternative regions (host-shield windows version > 0.7.1)

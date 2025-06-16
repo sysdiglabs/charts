@@ -46,7 +46,7 @@
     {{- $_ := set $sysdigEndpointConfig "region" "custom" -}}
     {{- $_ := set $sysdigEndpointConfig "api_url" (printf "https://%s" (include "common.secure_api_endpoint" .)) -}}
     {{- $_ := set $sysdigEndpointConfig.collector "host" (include "common.collector_endpoint" .) -}}
-    {{- $_ := set $sysdigEndpointConfig.collector "port" 6443 -}}
+    {{- $_ := set $sysdigEndpointConfig.collector "port" 443 -}}
   {{- end -}}
 {{- end -}}
 {{- $_ := set $config "sysdig_endpoint" $sysdigEndpointConfig -}}
@@ -95,7 +95,7 @@
   "collector" (include "common.collector_endpoint" .)
 }}
 {{- if (include "common.is_alt_region" .) -}}
-  {{- $_ := set $config "collector_port" 6443 -}}
+  {{- $_ := set $config "collector_port" 443 -}}
 {{- end -}}
 {{- if .Values.cluster_config.tags -}}
   {{- $tagList := list }}
