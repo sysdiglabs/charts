@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.8.2
+### Bug Fixes
+* **shield** [4becb83a](https://github.com/sysdiglabs/charts/commit/4becb83ad262c67fe12f09522299303d1270cee2): set port 443 on host when alt region is selected ([#2285](https://github.com/sysdiglabs/charts/issues/2285))
 # v1.8.1
 ### Chores
 * **shield,cluster-shield,sysdig-deploy** [376fca85](https://github.com/sysdiglabs/charts/commit/376fca85c6f942c2ddc9b494211b29bdddd9b257): Automatic bump to version 1.12.1 ([#2278](https://github.com/sysdiglabs/charts/issues/2278))
