@@ -437,3 +437,22 @@ tests:
                 additional_settings:
                   connection_timeout: 1000
                   k8s_cluster_name: test-cluster
+
+  - it: Test ssl custom ca settings
+    set:
+      ssl:
+        verify: true
+        ca:
+          certs:
+            - "-----BEGIN CERTIFICATE-----\nMIID...==\n-----END CERTIFICATE-----"
+          key_name: "rootCA.crt"
+    asserts:
+      - notExists:
+          path: data['dragent.yaml']
+      - matchRegex:
+          path: data['host-shield.yaml']
+          pattern: |
+            ssl:
+              ca:
+                cert_path: certificates/rootCA.crt
+              verify: true
