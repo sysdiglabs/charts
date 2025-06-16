@@ -65,6 +65,14 @@
 {{- end -}}
 {{- $_ := set $config "cluster_config" $clusterConfig -}}
 
+{{- $sslConfig := dict "verify" .Values.ssl.verify -}}
+{{- if (include "common.custom_ca.enabled" .) }}
+  {{- $path := (include "common.custom_ca.path" (merge (dict) . (dict "CACertsPath" "certificates/"))) }}
+  {{- $_ := set $sslConfig "ca" (dict "cert_path" $path) }}
+{{- end -}}
+
+{{- $_ := set $config "ssl" $sslConfig -}}
+
 {{- $config := merge $config (dict "proxy" (include "host.proxy_config" . | fromYaml)) }}
 
 {{- if and (include "common.semver.is_valid" .Values.host_windows.image.tag) (semverCompare ">= 0.8.0" .Values.host_windows.image.tag) }}
