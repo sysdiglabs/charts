@@ -329,6 +329,24 @@
         "env": {
           "$ref": "#/$defs/EnvVars"
         },
+        "pod_disruption_budget": {
+          "type": "object",
+          "description": "Pod disruption budget configuration for the Cluster Shield pods",
+          "properties": {
+            "create": {
+              "type": "boolean",
+              "description": "Create a Pod Disruption Budget for the Cluster Shield pods",
+              "default": true
+            },
+            "min_available": {
+              "type": ["integer", "string"],
+              "description": "Minimum number of pods that must be available",
+              "default": 1,
+              "minimum": 1
+            }
+          },
+          "additionalProperties": false
+        },
         "security_context": {
           "type": "object"
         },
