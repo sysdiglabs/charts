@@ -339,7 +339,7 @@
               "default": true
             },
             "min_available": {
-              "type": ["integer"],
+              "type": ["integer", "string"],
               "description": "Minimum number of pods that must be available",
               "default": 1,
               "minimum": 1

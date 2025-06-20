@@ -44,3 +44,13 @@ tests:
       - equal:
           path: spec.minAvailable
           value: 2
+
+  - it: PodDisruptionBudget can use percentage values when provided
+    set:
+      cluster:
+        pod_disruption_budget:
+          min_available: 50%
+    asserts:
+      - equal:
+          path: spec.minAvailable
+          value: 50%
