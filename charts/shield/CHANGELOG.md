@@ -10,6 +10,18 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.9.0
+### Chores
+* **agent,sysdig-deploy,shield** [43fd8ff4](https://github.com/sysdiglabs/charts/commit/43fd8ff4d53320b6330b3921d6fa6e507abb3436): bump agent to 14.0.0 ([#2277](https://github.com/sysdiglabs/charts/issues/2277))
+# v1.8.3
+### Chores
+* **shield** [c8b0cde7](https://github.com/sysdiglabs/charts/commit/c8b0cde7b8d890050e23a94de383748f0533a23b): add ssl config mapping for windows host-shield ([#2286](https://github.com/sysdiglabs/charts/issues/2286))
+# v1.8.2
+### Bug Fixes
+* **shield** [4becb83a](https://github.com/sysdiglabs/charts/commit/4becb83ad262c67fe12f09522299303d1270cee2): set port 443 on host when alt region is selected ([#2285](https://github.com/sysdiglabs/charts/issues/2285))
+# v1.8.1
+### Chores
+* **shield,cluster-shield,sysdig-deploy** [376fca85](https://github.com/sysdiglabs/charts/commit/376fca85c6f942c2ddc9b494211b29bdddd9b257): Automatic bump to version 1.12.1 ([#2278](https://github.com/sysdiglabs/charts/issues/2278))
 # v1.8.0
 ### Chores
 * **cluster-shield,sysdig-deploy,shield** [d76fccf8](https://github.com/sysdiglabs/charts/commit/d76fccf80af45038011114192624b37e81411c64): Automatic bump to version 1.12.0 ([#2272](https://github.com/sysdiglabs/charts/issues/2272))

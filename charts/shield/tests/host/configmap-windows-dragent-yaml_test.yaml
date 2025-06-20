@@ -728,7 +728,7 @@ tests:
           path: data['dragent.yaml']
           pattern: |
             collector: ingest-alt-eu1.app.sysdig.com
-            collector_port: 6443
+            collector_port: 443
 
   - it: Test agent_runtime_additional_settings with version < 0.8.0
     set:

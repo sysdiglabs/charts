@@ -46,7 +46,7 @@
     {{- $_ := set $sysdigEndpointConfig "region" "custom" -}}
     {{- $_ := set $sysdigEndpointConfig "api_url" (printf "https://%s" (include "common.secure_api_endpoint" .)) -}}
     {{- $_ := set $sysdigEndpointConfig.collector "host" (include "common.collector_endpoint" .) -}}
-    {{- $_ := set $sysdigEndpointConfig.collector "port" 6443 -}}
+    {{- $_ := set $sysdigEndpointConfig.collector "port" 443 -}}
   {{- end -}}
 {{- end -}}
 {{- $_ := set $config "sysdig_endpoint" $sysdigEndpointConfig -}}
@@ -64,6 +64,14 @@
   {{- $_ := set $clusterConfig "tags" .Values.cluster_config.tags -}}
 {{- end -}}
 {{- $_ := set $config "cluster_config" $clusterConfig -}}
+
+{{- $sslConfig := dict "verify" .Values.ssl.verify -}}
+{{- if (include "common.custom_ca.enabled" .) }}
+  {{- $path := (include "common.custom_ca.path" (merge (dict) . (dict "CACertsPath" "certificates/"))) }}
+  {{- $_ := set $sslConfig "ca" (dict "cert_path" $path) }}
+{{- end -}}
+
+{{- $_ := set $config "ssl" $sslConfig -}}
 
 {{- $config := merge $config (dict "proxy" (include "host.proxy_config" . | fromYaml)) }}
 
@@ -95,7 +103,7 @@
   "collector" (include "common.collector_endpoint" .)
 }}
 {{- if (include "common.is_alt_region" .) -}}
-  {{- $_ := set $config "collector_port" 6443 -}}
+  {{- $_ := set $config "collector_port" 443 -}}
 {{- end -}}
 {{- if .Values.cluster_config.tags -}}
   {{- $tagList := list }}
