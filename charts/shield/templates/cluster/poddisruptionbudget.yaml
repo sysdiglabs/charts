@@ -2,7 +2,7 @@
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
-  name: {{ include "cluster.fullname" . | trunc 60 }}-pdb
+  name: {{ include "cluster.fullname" . | trunc 59 }}-pdb
   namespace: {{ .Release.Namespace }}
 spec:
   minAvailable: {{ dig "pod_disruption_budget" "min_available" 1 .Values.cluster }}
