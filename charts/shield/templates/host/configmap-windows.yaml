@@ -9,7 +9,7 @@ metadata:
 data:
   host-shield.yaml: |
     {{- include "host.windows.host_shield_config" . | nindent 4 }}
-{{- if and (include "common.semver.is_valid" .Values.host_windows.image.tag) (semverCompare "< 0.8.0" .Values.host_windows.image.tag) }}
+{{- if and (include "common.semver.is_valid" .Values.host_windows.image.tag) (semverCompare "< 0.8.0-0" .Values.host_windows.image.tag) }}
   dragent.yaml: |
     {{- include "host.windows.configmap" . | nindent 4 }}
 {{- end }}
