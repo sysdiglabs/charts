@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v2.1.0
+### New Features
+* **agent** [26e1c8a1](https://github.com/sysdiglabs/charts/commit/26e1c8a141c637e17acba2f590a87645dcda5ab7): convert alf config to secret ([#2294](https://github.com/sysdiglabs/charts/issues/2294))
 # v2.0.0
 ### Chores
 * **agent,sysdig-deploy,shield** [43fd8ff4](https://github.com/sysdiglabs/charts/commit/43fd8ff4d53320b6330b3921d6fa6e507abb3436): bump agent to 14.0.0 ([#2277](https://github.com/sysdiglabs/charts/issues/2277))

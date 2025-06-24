@@ -618,9 +618,9 @@ true
     {{- end -}}
 {{- end -}}
 
-{{/* Return the name of the local forwarder configmap */}}
-{{- define "agent.localForwarderConfigMapName" }}
-{{- include "agent.configmapName" . | trunc 46 | trimSuffix "-" | printf "%s-local-forwarder" }}
+{{/* Return the name of the local forwarder secret */}}
+{{- define "agent.localForwarderSecretName" }}
+{{- include "agent.fullname" . | trunc 46 | trimSuffix "-" | printf "%s-local-forwarder" }}
 {{- end }}
 
 {{- define "agent.enableHttpProbes" }}
