@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.10.0
+### Chores
+* **shield** [ef94b53d](https://github.com/sysdiglabs/charts/commit/ef94b53d8f655805a0afca228e6be8b806991396): bump host-shield windows to 0.9.0 ([#2295](https://github.com/sysdiglabs/charts/issues/2295))
 # v1.9.1
 ### Chores
 * **shield** [ca78c8ad](https://github.com/sysdiglabs/charts/commit/ca78c8adc1a1b4c20f151fe6a2cad289e0daccd9): add support for RCs on windows config checks ([#2293](https://github.com/sysdiglabs/charts/issues/2293))
