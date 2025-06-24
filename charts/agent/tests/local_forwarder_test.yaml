@@ -1,7 +1,7 @@
 suite: Test enabling the agent local forwarder
 templates:
   - configmap.yaml
-  - configmap-local-forwarder.yaml
+  - secrets.yaml
   - daemonset.yaml
 kubernetesProvider:
   scheme:
@@ -18,6 +18,11 @@ kubernetesProvider:
     status:
       nodeInfo:
         osImage: fake-os-image
+release:
+  name: sysdig
+set:
+  sysdig:
+    accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
 tests:
   - it: Check the enabling the forwarder
     set:
@@ -32,16 +37,11 @@ tests:
             type: LOCAL
     asserts:
       - equal:
-          path: data["local_forwarder_config.yaml"]
-          value: |
-            integrations:
-              - channels:
-                - SECURE_EVENTS_POLICIES
-                - ACTIVITY_AUDIT
-                configuration:
-                  output: stdout
-                type: LOCAL
-        template: configmap-local-forwarder.yaml
+          path: data
+          value:
+            local_forwarder_config.yaml: aW50ZWdyYXRpb25zOgotIGNoYW5uZWxzOgogIC0gU0VDVVJFX0VWRU5UU19QT0xJQ0lFUwogIC0gQUNUSVZJVFlfQVVESVQKICBjb25maWd1cmF0aW9uOgogICAgb3V0cHV0OiBzdGRvdXQKICB0eXBlOiBMT0NBTA==
+        documentIndex: 1
+        template: secrets.yaml
       - matchRegex:
           path: data["dragent.yaml"]
           pattern: |
@@ -55,9 +55,8 @@ tests:
           path: spec.template.spec.volumes
           content:
             name: local-forwarder-config
-            configMap:
-              name: sysdig-agent-local-forwarder
-              optional: true
+            secret:
+              secretName: sysdig-agent-local-forwarder
         template: daemonset.yaml
       - contains:
           path: spec.template.spec.containers[0].volumeMounts
