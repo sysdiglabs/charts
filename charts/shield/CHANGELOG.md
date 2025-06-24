@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.11.0
+### New Features
+* **shield** [2b2d78b7](https://github.com/sysdiglabs/charts/commit/2b2d78b77931665aa6e9c319e664db663293f474): pod disruption budget support for the cluster shield ([#2275](https://github.com/sysdiglabs/charts/issues/2275))
 # v1.10.0
 ### Chores
 * **shield** [ef94b53d](https://github.com/sysdiglabs/charts/commit/ef94b53d8f655805a0afca228e6be8b806991396): bump host-shield windows to 0.9.0 ([#2295](https://github.com/sysdiglabs/charts/issues/2295))
