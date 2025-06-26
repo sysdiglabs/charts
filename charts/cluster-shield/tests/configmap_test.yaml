@@ -246,6 +246,35 @@ tests:
       - failedTemplate:
           errorMessage: Custom region requires cluster_shield.sysdig_endpoint.collector to be defined.
 
+  - it: Local custom region requires Collector when audit feature is enabled and use_falco is true
+    set:
+      cluster_shield:
+        sysdig_endpoint:
+          region: "custom"
+          api_url: "https://www.example.com"
+          collector: null
+        features:
+          audit:
+            enabled: true
+            use_falco: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Custom region requires cluster_shield.sysdig_endpoint.collector to be defined.
+
+  - it: Local custom region does not require Collector when audit feature is disabled and use_falco is true
+    set:
+      cluster_shield:
+        sysdig_endpoint:
+          region: "custom"
+          api_url: "https://www.example.com"
+          collector: null
+        features:
+          audit:
+            enabled: false
+            use_falco: true
+    asserts:
+      - notFailedTemplate: {}
+
   - it: Global custom region requires Collector when kubernetes_metadata feature is enabled
     set:
       global:
