@@ -97,7 +97,7 @@ Adds kubernetes related keys to the configuration.
 {{- if not $conf.sysdig_endpoint.api_url -}}
 {{- fail "Custom region requires one of global.sysdig.apiHost or cluster_shield.sysdig_endpoint.api_url to be defined." -}}
 {{- end -}}
-{{- if and ($conf.features.kubernetes_metadata.enabled) (not $conf.sysdig_endpoint.collector) -}}
+{{- if and (or $conf.features.kubernetes_metadata.enabled (and $conf.features.audit.enabled $conf.features.audit.use_falco)) (not $conf.sysdig_endpoint.collector) -}}
 {{- fail "Custom region requires cluster_shield.sysdig_endpoint.collector to be defined." -}}
 {{- end -}}
 {{- end -}}
@@ -489,3 +489,37 @@ run-all-namespaced
 {{- $tag._0 }}: {{ $tag._1 | quote }}
 {{ end -}}
 {{- end -}}
+
+{{- define "cluster.response_actions_enabled" -}}
+{{- with .Values.cluster_shield.features.respond.response_actions.enabled }}
+    {{- . }}
+{{- else }}
+    false
+{{- end }}
+{{- end }}
+
+{{/*
+Response Actions: Cluster actions
+In the future we will have more complex logic to determine if the action is enabled or not.
+*/}}
+{{- define "cluster.response_actions.rollout_restart.enabled" }}
+    {{- include "cluster.response_actions_enabled" . }}
+{{- end}}
+{{- define "cluster.response_actions.delete_pod.enabled" }}
+    {{- include "cluster.response_actions_enabled" . }}
+{{- end}}
+{{- define "cluster.response_actions.isolate_network.enabled" }}
+    {{- include "cluster.response_actions_enabled" . }}
+{{- end}}
+{{- define "cluster.response_actions.delete_network_policy.enabled" }}
+    {{- include "cluster.response_actions_enabled" . }}
+{{- end}}
+{{- define "cluster.response_actions.get_logs.enabled" }}
+    {{- include "cluster.response_actions_enabled" . }}
+{{- end}}
+{{- define "cluster.response_actions.volume_snapshot.enabled" }}
+    {{- include "cluster.response_actions_enabled" . }}
+{{- end}}
+{{- define "cluster.response_actions.delete_volume_snapshot.enabled" }}
+    {{- include "cluster.response_actions_enabled" . }}
+{{- end}}
