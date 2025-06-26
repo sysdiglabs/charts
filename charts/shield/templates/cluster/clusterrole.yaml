@@ -219,3 +219,126 @@ rules:
     - watch
 {{- end }}
 {{- end }}
+
+{{- if eq "true" (include "cluster.response_actions_enabled" .) }}
+- apiGroups:
+    - ""
+  resources:
+    - events
+  verbs:
+    - create
+    - patch
+{{- end }}
+
+{{- if eq "true" (include "cluster.response_actions.rollout_restart.enabled" .) }}
+- apiGroups: ["apps"]
+  resources:
+    - daemonsets
+    - deployments
+    - statefulsets
+  verbs:
+    - get
+    - update # needed for rollout restart
+    - watch
+{{- end }}
+
+{{- if eq "true" (include "cluster.response_actions.delete_pod.enabled" .) }}
+- apiGroups:
+  - ""
+  resources:
+    - pods
+  verbs:
+    - delete
+    - get
+{{- end }}
+
+{{- if eq "true" (include "cluster.response_actions.isolate_network.enabled" .) }}
+- apiGroups:
+  - apps
+  resources:
+    - daemonsets
+    - deployments
+    - statefulsets
+  verbs:
+    - get # needed to identify the pods to isolate
+
+- apiGroups:
+    - networking.k8s.io
+  resources:
+    - networkpolicies
+  verbs:
+    - create
+{{- end }}
+
+{{- if eq "true" (include "cluster.response_actions.delete_network_policy.enabled" .) }}
+- apiGroups:
+    - networking.k8s.io
+  resources:
+    - networkpolicies
+  verbs:
+    - get
+    - delete
+{{- end }}
+
+{{- if eq "true" (include "cluster.response_actions.get_logs.enabled" .) }}
+- apiGroups:
+    - apps
+  resources:
+    - daemonsets
+    - deployments
+    - statefulsets
+  verbs:
+    - get # needed to identify the pods to get logs from
+
+- apiGroups:
+    - ""
+  resources:
+    - pods
+  verbs:
+    - list
+
+- apiGroups:
+    - ""
+  resources:
+    - pods/log
+  verbs:
+    - get
+{{- end }}
+
+{{- if eq "true" (include "cluster.response_actions.volume_snapshot.enabled" .) }}
+- apiGroups:
+    - apps
+  resources:
+    - daemonsets
+    - deployments
+    - statefulsets
+  verbs:
+    - get # needed to identify the pods with PVCs
+
+- apiGroups:
+    - ""
+  resources:
+    - pods
+  verbs:
+    - list
+
+- apiGroups:
+    - snapshot.storage.k8s.io
+  resources:
+    - volumesnapshots
+  verbs:
+    - create
+    - watch
+{{- end }}
+
+{{- if eq "true" (include "cluster.response_actions.delete_volume_snapshot.enabled" .) }}
+- apiGroups:
+    - snapshot.storage.k8s.io
+  resources:
+    - volumesnapshots
+  verbs:
+    - delete
+    - get
+    - watch
+    - patch # needed to remove finalizers, which could prevent deletion
+{{- end }}
