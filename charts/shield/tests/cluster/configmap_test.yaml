@@ -92,6 +92,8 @@ tests:
                 enabled: false
               respond:
                 response_actions:
+                  cluster:
+                    volume_snapshot_class: ""
                   enabled: false
             kubernetes:
               ca_cert_file: /etc/sysdig/tls-certificates/ca.crt
