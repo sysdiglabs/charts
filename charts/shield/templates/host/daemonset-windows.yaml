@@ -21,6 +21,11 @@ spec:
         {{- include "host.windows.pod_labels" . | nindent 8 }}
       annotations:
         {{- include "host.windows.pod_annotations" . | nindent 8 }}
+        {{- if .Values.host_windows.enable_prometheus_scraping }}
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/metrics"
+        prometheus.io/port: {{ .Values.host_windows.additional_settings.monitoring_port | quote }}
+        {{- end }}
     spec:
       securityContext:
         windowsOptions:

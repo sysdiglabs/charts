@@ -737,3 +737,82 @@ tests:
       - equal:
           path: spec.template.spec.dnsPolicy
           value: ClusterFirst
+
+  - it: Default pod annotations with prometheus scraping enabled
+    set:
+      host:
+        additional_settings:
+          prometheus_exporter:
+            enabled: true
+    asserts:
+      - equal:
+          path: spec.template.metadata.annotations["prometheus.io/scrape"]
+          value: "true"
+      - equal:
+          path: spec.template.metadata.annotations["prometheus.io/path"]
+          value: "/metrics"
+      - equal:
+          path: spec.template.metadata.annotations["prometheus.io/port"]
+          value: "9544"
+
+  - it: Default pod annotations with prometheus exporter not enabled
+    asserts:
+      - notExists:
+          path: spec.template.metadata.annotations["prometheus.io/scrape"]
+      - notExists:
+          path: spec.template.metadata.annotations["prometheus.io/path"]
+      - notExists:
+          path: spec.template.metadata.annotations["prometheus.io/port"]
+
+  - it: Default pod annotations with prometheus exporter and prometheus scraping not enabled
+    set:
+      host:
+        enable_prometheus_scraping: false
+    asserts:
+      - notExists:
+          path: spec.template.metadata.annotations["prometheus.io/scrape"]
+      - notExists:
+          path: spec.template.metadata.annotations["prometheus.io/path"]
+      - notExists:
+          path: spec.template.metadata.annotations["prometheus.io/port"]
+
+  - it: Default pod annotations with prometheus scraping not enabled
+    set:
+      host:
+        enable_prometheus_scraping: false
+        additional_settings:
+          prometheus_exporter:
+            enabled: true
+    asserts:
+      - notExists:
+          path: spec.template.metadata.annotations["prometheus.io/scrape"]
+      - notExists:
+          path: spec.template.metadata.annotations["prometheus.io/path"]
+      - notExists:
+          path: spec.template.metadata.annotations["prometheus.io/port"]
+
+  - it: Custom pod annotations
+    set:
+      host:
+        additional_settings:
+          prometheus_exporter:
+            enabled: true # Enabling this to add the neeeded annotations and verify that the template has no issues
+        pod_annotations:
+          custom/annotation1: "custom-value1"
+          custom/annotation2: "custom-value2"
+    asserts:
+      - equal:
+          path: spec.template.metadata.annotations["prometheus.io/scrape"]
+          value: "true"
+      - equal:
+          path: spec.template.metadata.annotations["prometheus.io/path"]
+          value: "/metrics"
+      - equal:
+          path: spec.template.metadata.annotations["prometheus.io/port"]
+          value: "9544"
+      - equal:
+          path: spec.template.metadata.annotations["custom/annotation1"]
+          value: "custom-value1"
+      - equal:
+          path: spec.template.metadata.annotations["custom/annotation2"]
+          value: "custom-value2"
