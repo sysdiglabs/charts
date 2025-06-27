@@ -126,37 +126,3 @@ If release name contains chart name it will be used as a full name.
 {{- . | toYaml -}}
 {{- end -}}
 {{- end -}}
-
-{{- define "cluster.response_actions_enabled" -}}
-{{- with .Values.features.respond.response_actions.enabled }}
-    {{- . }}
-{{- else }}
-    false
-{{- end }}
-{{- end }}
-
-{{/*
-Response Actions: Cluster actions
-In the future we will have more complex logic to determine if the action is enabled or not.
-*/}}
-{{- define "cluster.response_actions.rollout_restart.enabled" }}
-    {{- include "cluster.response_actions_enabled" . }}
-{{- end}}
-{{- define "cluster.response_actions.delete_pod.enabled" }}
-    {{- include "cluster.response_actions_enabled" . }}
-{{- end}}
-{{- define "cluster.response_actions.isolate_network.enabled" }}
-    {{- include "cluster.response_actions_enabled" . }}
-{{- end}}
-{{- define "cluster.response_actions.delete_network_policy.enabled" }}
-    {{- include "cluster.response_actions_enabled" . }}
-{{- end}}
-{{- define "cluster.response_actions.get_logs.enabled" }}
-    {{- include "cluster.response_actions_enabled" . }}
-{{- end}}
-{{- define "cluster.response_actions.volume_snapshot.enabled" }}
-    {{- include "cluster.response_actions_enabled" . }}
-{{- end}}
-{{- define "cluster.response_actions.delete_volume_snapshot.enabled" }}
-    {{- include "cluster.response_actions_enabled" . }}
-{{- end}}
