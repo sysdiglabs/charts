@@ -90,6 +90,9 @@ tests:
                   enabled: false
               posture:
                 enabled: false
+              respond:
+                response_actions:
+                  enabled: false
             kubernetes:
               ca_cert_file: /etc/sysdig/tls-certificates/ca.crt
               root_namespace: kube-system
