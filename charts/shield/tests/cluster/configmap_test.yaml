@@ -90,6 +90,9 @@ tests:
                   enabled: false
               posture:
                 enabled: false
+              respond:
+                response_actions:
+                  enabled: false
             kubernetes:
               ca_cert_file: /etc/sysdig/tls-certificates/ca.crt
               root_namespace: kube-system
@@ -230,6 +233,86 @@ tests:
               investigations:
                 network_security:
                   enabled: true
+
+  - it: Enable respond.response_actions
+    set:
+      features:
+        respond:
+          response_actions:
+            enabled: true
+            queue_length: 1000
+            timeout: 10
+            cluster:
+              volume_snapshot_class: "a-volume-snapshot-class"
+            another_config_not_relevant: "not-relevant"
+    asserts:
+      - exists:
+          path: data["cluster-shield.yaml"]
+      - matchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: |
+            features:
+              admission_control:
+                container_vulnerability_management:
+                  enabled: false
+                dry_run: true
+                enabled: false
+                excluded_namespaces: \[\]
+                failure_policy: Ignore
+                http_port: 8443
+                posture:
+                  enabled: true
+                timeout: 10
+              audit:
+                enabled: false
+                excluded_namespaces: \[\]
+                http_port: 6443
+                timeout: 10
+                webhook_rules:
+                - apiGroups:
+                  - ""
+                  - apps
+                  - autoscaling
+                  - batch
+                  - networking.k8s.io
+                  - rbac.authorization.k8s.io
+                  - extensions
+                  apiVersions:
+                  - '\*'
+                  operations:
+                  - '\*'
+                  resources:
+                  - '\*/\*'
+                  scope: '\*'
+              container_vulnerability_management:
+                enabled: false
+                in_use:
+                  enabled: false
+                  integration_enabled: false
+                local_cluster:
+                  registry_secrets: \[\]
+                platform_services_enabled: true
+                registry_ssl:
+                  verify: true
+              investigations:
+                network_security:
+                  enabled: false
+              kubernetes_metadata:
+                enabled: true
+              monitor:
+                kube_state_metrics:
+                  enabled: false
+                kubernetes_events:
+                  enabled: false
+              posture:
+                enabled: false
+              respond:
+                response_actions:
+                  cluster:
+                    volume_snapshot_class: a-volume-snapshot-class
+                  enabled: true
+                  queue_length: 1000
+                  timeout: 10
 
   - it: Sets NATS Url and Lock Name when Container Vulnerability Management is enabled
     set:
