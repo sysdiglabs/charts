@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.12.1
+### Chores
+* **shield** [563dd11a](https://github.com/sysdiglabs/charts/commit/563dd11a1001119b76439916ccea7220474f5714): handle respond mapping on cluster-shield ([#2299](https://github.com/sysdiglabs/charts/issues/2299))
 # v1.12.0
 ### Chores
 * **cluster-shield,shield,sysdig-deploy** [d0784daf](https://github.com/sysdiglabs/charts/commit/d0784dafa3ec6651de22632232cfd0f5e9547c4b): Automatic bump to version 1.13.0 ([#2297](https://github.com/sysdiglabs/charts/issues/2297))
