@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.12.2
+### Chores
+* **shield** [642e60fe](https://github.com/sysdiglabs/charts/commit/642e60fec21ef59f326dc0cf11a7338c6cfc1d52): add cluster.volume_snapshot_class default on cluster-shield ([#2300](https://github.com/sysdiglabs/charts/issues/2300))
 # v1.12.1
 ### Chores
 * **shield** [563dd11a](https://github.com/sysdiglabs/charts/commit/563dd11a1001119b76439916ccea7220474f5714): handle respond mapping on cluster-shield ([#2299](https://github.com/sysdiglabs/charts/issues/2299))
