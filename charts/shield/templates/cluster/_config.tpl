@@ -2,6 +2,9 @@
   {{- $monitorFeature := (dig "monitor" nil .Values.features) -}}
   {{- $investigationsFeature := (dig "investigations" nil .Values.features) -}}
   {{- $respondFeature := (dig "respond" nil .Values.features) -}}
+  {{- if not (hasKey $respondFeature.response_actions "cluster") }}
+    {{- $_ := set $respondFeature.response_actions "cluster" (dict "volume_snapshot_class" "") }}
+  {{- end }}
   {{- $features := list
       (dict "posture" (dig "posture" "cluster_posture" nil .Values.features ))
       (dict "container_vulnerability_management" (dig "vulnerability_management" "container_vulnerability_management" nil .Values.features ))
