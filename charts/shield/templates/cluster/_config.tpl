@@ -1,6 +1,10 @@
 {{- define "cluster.features_config" -}}
   {{- $monitorFeature := (dig "monitor" nil .Values.features) -}}
   {{- $investigationsFeature := (dig "investigations" nil .Values.features) -}}
+  {{- $respondFeature := (dig "respond" nil .Values.features) -}}
+  {{- if not (hasKey $respondFeature.response_actions "cluster") }}
+    {{- $_ := set $respondFeature.response_actions "cluster" (dict "volume_snapshot_class" "") }}
+  {{- end }}
   {{- $features := list
       (dict "posture" (dig "posture" "cluster_posture" nil .Values.features ))
       (dict "container_vulnerability_management" (dig "vulnerability_management" "container_vulnerability_management" nil .Values.features ))
@@ -9,6 +13,7 @@
       (dict "kubernetes_metadata" (dig "kubernetes_metadata" nil .Values.features ))
       (dict "monitor" (pick $monitorFeature "kube_state_metrics" "kubernetes_events"))
       (dict "investigations" (pick $investigationsFeature "investigations" "network_security"))
+      (dict "respond" (pick $respondFeature "response_actions"))
   -}}
   {{- $featuresConfig := dict -}}
   {{- range $feature := $features }}
@@ -17,6 +22,7 @@
     {{- end -}}
   {{- end }}
   {{- $_ := set $featuresConfig.container_vulnerability_management "in_use" .Values.features.vulnerability_management.in_use -}}
+  {{- $_ := set $featuresConfig.respond "response_actions" (pick $featuresConfig.respond.response_actions "enabled" "queue_length" "timeout" "cluster") -}}
   {{- $additionalFeaturesSettings := (dig "features" (dict) .Values.cluster.additional_settings) -}}
   {{- (mergeOverwrite $featuresConfig $additionalFeaturesSettings) | toYaml -}}
 {{- end }}
@@ -189,3 +195,40 @@
     {{- true -}}
   {{- end -}}
 {{- end }}
+
+{{/*
+  Checks if the cluster has the response actions feature enabled.
+  (either by the feature config or additional settings)
+*/}}
+{{- define "cluster.response_actions_enabled" -}}
+  {{- $featureConfig := (include "cluster.features_config" . | fromYaml) -}}
+  {{- if dig "respond" "response_actions" "enabled" false $featureConfig -}}
+    {{- true -}}
+  {{- end -}}
+{{- end }}
+
+{{/*
+Response Actions: Cluster actions
+In the future we will have more complex logic to determine if the action is enabled or not.
+*/}}
+{{- define "cluster.response_actions.rollout_restart.enabled" }}
+    {{- include "cluster.response_actions_enabled" . }}
+{{- end}}
+{{- define "cluster.response_actions.delete_pod.enabled" }}
+    {{- include "cluster.response_actions_enabled" . }}
+{{- end}}
+{{- define "cluster.response_actions.isolate_network.enabled" }}
+    {{- include "cluster.response_actions_enabled" . }}
+{{- end}}
+{{- define "cluster.response_actions.delete_network_policy.enabled" }}
+    {{- include "cluster.response_actions_enabled" . }}
+{{- end}}
+{{- define "cluster.response_actions.get_logs.enabled" }}
+    {{- include "cluster.response_actions_enabled" . }}
+{{- end}}
+{{- define "cluster.response_actions.volume_snapshot.enabled" }}
+    {{- include "cluster.response_actions_enabled" . }}
+{{- end}}
+{{- define "cluster.response_actions.delete_volume_snapshot.enabled" }}
+    {{- include "cluster.response_actions_enabled" . }}
+{{- end}}

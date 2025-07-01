@@ -169,6 +169,10 @@ cluster_shield:
     kubernetes_metadata:
       # Enable the Kubernetes Metadata feature
       enabled: false
+    respond:
+      # Enable the responder feature
+      response_actions:
+        enabled: false
     monitor:
       kube_state_metrics:
         # Enable the Kubernetes State Metrics feature
@@ -324,3 +328,10 @@ volumeMounts: []
 # - name: my-volume
 #   mountPath: /host/path/to/mount/folder
 #   readOnly: true
+
+# Define Pod Disruption Budget
+podDisruptionBudget:
+  # Specifies whether a Pod Disruption Budget should be created
+  create: true
+  # The minimum number of pods that must be available during a disruption
+  minAvailable: 1

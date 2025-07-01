@@ -393,9 +393,8 @@ spec:
             optional: true
         {{- if .Values.localForwarder.enabled }}
         - name: local-forwarder-config
-          configMap:
-            name: {{ include "agent.localForwarderConfigMapName" . }}
-            optional: true
+          secret:
+            secretName: {{ include "agent.localForwarderSecretName" . }}
         {{- end }}
         - name: sysdig-agent-secrets
           secret:

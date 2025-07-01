@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **agent,sysdig-deploy,shield** [43fd8ff4](https://github.com/sysdiglabs/charts/commit/43fd8ff4d53320b6330b3921d6fa6e507abb3436): bump agent to 14.0.0 ([#2277](https://github.com/sysdiglabs/charts/issues/2277))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-1.38.2...agent-2.0.0
+### New Features
+- **agent,sydig-deploy,shield** [17645dc7](https://github.com/sysdiglabs/charts/commit/17645dc7efdac5d9e422baa89de21f50df2dbc78): release agent 14.0.1 ([#2296](https://github.com/sysdiglabs/charts/issues/2296))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-2.1.0...agent-2.1.1

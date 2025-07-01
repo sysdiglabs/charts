@@ -10,6 +10,27 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.12.2
+### Chores
+* **shield** [642e60fe](https://github.com/sysdiglabs/charts/commit/642e60fec21ef59f326dc0cf11a7338c6cfc1d52): add cluster.volume_snapshot_class default on cluster-shield ([#2300](https://github.com/sysdiglabs/charts/issues/2300))
+# v1.12.1
+### Chores
+* **shield** [563dd11a](https://github.com/sysdiglabs/charts/commit/563dd11a1001119b76439916ccea7220474f5714): handle respond mapping on cluster-shield ([#2299](https://github.com/sysdiglabs/charts/issues/2299))
+# v1.12.0
+### Chores
+* **cluster-shield,shield,sysdig-deploy** [d0784daf](https://github.com/sysdiglabs/charts/commit/d0784dafa3ec6651de22632232cfd0f5e9547c4b): Automatic bump to version 1.13.0 ([#2297](https://github.com/sysdiglabs/charts/issues/2297))
+# v1.11.1
+### New Features
+* **agent,sydig-deploy,shield** [17645dc7](https://github.com/sysdiglabs/charts/commit/17645dc7efdac5d9e422baa89de21f50df2dbc78): release agent 14.0.1 ([#2296](https://github.com/sysdiglabs/charts/issues/2296))
+# v1.11.0
+### New Features
+* **shield** [2b2d78b7](https://github.com/sysdiglabs/charts/commit/2b2d78b77931665aa6e9c319e664db663293f474): pod disruption budget support for the cluster shield ([#2275](https://github.com/sysdiglabs/charts/issues/2275))
+# v1.10.0
+### Chores
+* **shield** [ef94b53d](https://github.com/sysdiglabs/charts/commit/ef94b53d8f655805a0afca228e6be8b806991396): bump host-shield windows to 0.9.0 ([#2295](https://github.com/sysdiglabs/charts/issues/2295))
+# v1.9.1
+### Chores
+* **shield** [ca78c8ad](https://github.com/sysdiglabs/charts/commit/ca78c8adc1a1b4c20f151fe6a2cad289e0daccd9): add support for RCs on windows config checks ([#2293](https://github.com/sysdiglabs/charts/issues/2293))
 # v1.9.0
 ### Chores
 * **agent,sysdig-deploy,shield** [43fd8ff4](https://github.com/sysdiglabs/charts/commit/43fd8ff4d53320b6330b3921d6fa6e507abb3436): bump agent to 14.0.0 ([#2277](https://github.com/sysdiglabs/charts/issues/2277))
