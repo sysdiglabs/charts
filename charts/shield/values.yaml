@@ -143,6 +143,7 @@ features:
   respond:
     rapid_response:
       enabled: false
+      password:
     response_actions:
       enabled: false
   monitor:
