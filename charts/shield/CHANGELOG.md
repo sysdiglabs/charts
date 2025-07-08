@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.12.3
+### Chores
+* **shield** [9a3c5a0c](https://github.com/sysdiglabs/charts/commit/9a3c5a0c8198ab82276ab27bc98b62c765f7a1c1): update docs with rapid response password ([#2306](https://github.com/sysdiglabs/charts/issues/2306))
 # v1.12.2
 ### Chores
 * **shield** [642e60fe](https://github.com/sysdiglabs/charts/commit/642e60fec21ef59f326dc0cf11a7338c6cfc1d52): add cluster.volume_snapshot_class default on cluster-shield ([#2300](https://github.com/sysdiglabs/charts/issues/2300))
