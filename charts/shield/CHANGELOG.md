@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.12.4
+### Bug Fixes
+* **shield** [157192b0](https://github.com/sysdiglabs/charts/commit/157192b05926c85c4abd3706441365d5eeabbb6e): openshift scc should set allowHostPorts to true when the cluster-shield is set to run on the host network ([#2307](https://github.com/sysdiglabs/charts/issues/2307))
 # v1.12.3
 ### Chores
 * **shield** [9a3c5a0c](https://github.com/sysdiglabs/charts/commit/9a3c5a0c8198ab82276ab27bc98b62c765f7a1c1): update docs with rapid response password ([#2306](https://github.com/sysdiglabs/charts/issues/2306))
