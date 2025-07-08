@@ -13,5 +13,7 @@
   {{- if not .Values.host.privileged -}}
     {{- $_ := set $podAnnotations "container.apparmor.security.beta.kubernetes.io/sysdig-host-shield" "unconfined" -}}
   {{- end -}}
-  {{- $podAnnotations | toYaml -}}
+  {{- with $podAnnotations -}}
+    {{- . | toYaml -}}
+  {{- end -}}
 {{- end -}}

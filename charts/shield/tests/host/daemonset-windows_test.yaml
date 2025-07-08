@@ -436,3 +436,50 @@ tests:
     asserts:
       - isNullOrEmpty:
           path: spec.template.spec.imagePullSecrets
+
+  - it: Default pod annotations with prometheus scraping enabled
+    asserts:
+      - equal:
+          path: spec.template.metadata.annotations["prometheus.io/scrape"]
+          value: "true"
+      - equal:
+          path: spec.template.metadata.annotations["prometheus.io/path"]
+          value: "/metrics"
+      - equal:
+          path: spec.template.metadata.annotations["prometheus.io/port"]
+          value: "8081"
+
+  - it: Default pod annotations with prometheus scraping disabled
+    set:
+      host_windows:
+        enable_prometheus_scraping: false
+    asserts:
+      - notExists:
+          path: spec.template.metadata.annotations["prometheus.io/scrape"]
+      - notExists:
+          path: spec.template.metadata.annotations["prometheus.io/path"]
+      - notExists:
+          path: spec.template.metadata.annotations["prometheus.io/port"]
+
+  - it: Custom pod annotations
+    set:
+      host_windows:
+        pod_annotations:
+          custom/annotation1: "custom-value1"
+          custom/annotation2: "custom-value2"
+    asserts:
+      - equal:
+          path: spec.template.metadata.annotations["prometheus.io/scrape"]
+          value: "true"
+      - equal:
+          path: spec.template.metadata.annotations["prometheus.io/path"]
+          value: "/metrics"
+      - equal:
+          path: spec.template.metadata.annotations["prometheus.io/port"]
+          value: "8081"
+      - equal:
+          path: spec.template.metadata.annotations["custom/annotation1"]
+          value: "custom-value1"
+      - equal:
+          path: spec.template.metadata.annotations["custom/annotation2"]
+          value: "custom-value2"

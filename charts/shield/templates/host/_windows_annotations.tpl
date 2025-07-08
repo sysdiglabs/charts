@@ -7,5 +7,7 @@
 
 {{- define "host.windows.pod_annotations" -}}
   {{- $podAnnotations := merge (dict) .Values.pod_annotations .Values.host_windows.pod_annotations -}}
-  {{- $podAnnotations | toYaml -}}
+  {{- with $podAnnotations -}}
+    {{- . | toYaml -}}
+  {{- end -}}
 {{- end -}}
