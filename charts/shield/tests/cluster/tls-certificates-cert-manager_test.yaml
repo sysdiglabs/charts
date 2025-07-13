@@ -1,0 +1,192 @@
+suite: Cluster - TLS Certificates Cert Manager Integration
+templates:
+  - templates/cluster/tls-certificates-admissionregistration.yaml
+  - templates/cluster/certificate.yaml
+release:
+  name: shield-release
+  namespace: shield-namespace
+values:
+  - ../values/base.yaml
+
+tests:
+  - it: Cert Manager Integration Basic Audit
+    set:
+      features:
+        detections:
+          kubernetes_audit:
+            enabled: true
+      cluster:
+        tls_certificates:
+          create: false
+          cert_manager:
+            enabled: true
+            issuer_name: shield-cluster-issuer
+    asserts:
+      - hasDocuments:
+          count: 1
+          template: templates/cluster/certificate.yaml
+      - hasDocuments:
+          count: 1
+          template: templates/cluster/tls-certificates-admissionregistration.yaml
+      - containsDocument:
+          kind: Certificate
+          apiVersion: cert-manager.io/v1
+          name: shield-cluster-certificate
+          namespace: shield-namespace
+        template: templates/cluster/certificate.yaml
+      - containsDocument:
+          kind: ValidatingWebhookConfiguration
+          apiVersion: admissionregistration.k8s.io/v1
+          name: shield-release-cluster-audit
+        template: templates/cluster/tls-certificates-admissionregistration.yaml
+      - contains:
+          path: spec.dnsNames
+          content:
+            localhost
+        template: templates/cluster/certificate.yaml
+      - contains:
+          path: spec.dnsNames
+          content:
+            shield-release-cluster
+        template: templates/cluster/certificate.yaml
+      - contains:
+          path: spec.dnsNames
+          content:
+            '*.shield-release-cluster'
+        template: templates/cluster/certificate.yaml
+      - contains:
+          path: spec.dnsNames
+          content:
+            '*.shield-release-cluster.shield-namespace.svc'
+        template: templates/cluster/certificate.yaml
+      - contains:
+          path: spec.dnsNames
+          content:
+            '*.shield-release-cluster-container-vm.shield-namespace.svc.cluster.local'
+        template: templates/cluster/certificate.yaml
+      - equal:
+          path: spec.secretName
+          value: shield-release-cluster-tls-certificates
+        template: templates/cluster/certificate.yaml
+      - equal:
+          path: spec.issuerRef.name
+          value: shield-cluster-issuer
+        template: templates/cluster/certificate.yaml
+      - equal:
+          path: metadata.annotations["cert-manager.io/inject-ca-from"]
+          value: shield-namespace/shield-cluster-certificate
+        template: templates/cluster/tls-certificates-admissionregistration.yaml
+      - notExists:
+          path: webhooks[0].clientConfig.caBundle
+        template: templates/cluster/tls-certificates-admissionregistration.yaml
+
+  - it: Cert Manager Integration Basic Admission
+    set:
+      features:
+        admission_control:
+          enabled: true
+      cluster:
+        tls_certificates:
+          create: false
+          cert_manager:
+            enabled: true
+            issuer_name: shield-cluster-issuer
+    asserts:
+      - hasDocuments:
+          count: 1
+          template: templates/cluster/certificate.yaml
+      - hasDocuments:
+          count: 1
+          template: templates/cluster/tls-certificates-admissionregistration.yaml
+      - containsDocument:
+          kind: Certificate
+          apiVersion: cert-manager.io/v1
+          name: shield-cluster-certificate
+          namespace: shield-namespace
+        template: templates/cluster/certificate.yaml
+      - containsDocument:
+          kind: ValidatingWebhookConfiguration
+          apiVersion: admissionregistration.k8s.io/v1
+          name: shield-release-cluster-admission-control
+        template: templates/cluster/tls-certificates-admissionregistration.yaml
+      - equal:
+          path: metadata.annotations["cert-manager.io/inject-ca-from"]
+          value: shield-namespace/shield-cluster-certificate
+        template: templates/cluster/tls-certificates-admissionregistration.yaml
+      - notExists:
+          path: webhooks[0].clientConfig.caBundle
+        template: templates/cluster/tls-certificates-admissionregistration.yaml
+
+  - it: Cert Manager Integration CA Cert
+    set:
+      features:
+        detections:
+          kubernetes_audit:
+            enabled: true
+      cluster:
+        tls_certificates:
+          create: false
+          cert_manager:
+            enabled: true
+            issuer_name: shield-cluster-issuer
+            ca_certificate_name: shield-cluster-ca-certificate
+    asserts:
+      - hasDocuments:
+          count: 1
+          template: templates/cluster/certificate.yaml
+      - hasDocuments:
+          count: 1
+          template: templates/cluster/tls-certificates-admissionregistration.yaml
+      - containsDocument:
+          kind: Certificate
+          apiVersion: cert-manager.io/v1
+          name: shield-cluster-certificate
+          namespace: shield-namespace
+        template: templates/cluster/certificate.yaml
+      - containsDocument:
+          kind: ValidatingWebhookConfiguration
+          apiVersion: admissionregistration.k8s.io/v1
+          name: shield-release-cluster-audit
+        template: templates/cluster/tls-certificates-admissionregistration.yaml
+      - contains:
+          path: spec.dnsNames
+          content:
+            localhost
+        template: templates/cluster/certificate.yaml
+      - contains:
+          path: spec.dnsNames
+          content:
+            shield-release-cluster
+        template: templates/cluster/certificate.yaml
+      - contains:
+          path: spec.dnsNames
+          content:
+            '*.shield-release-cluster'
+        template: templates/cluster/certificate.yaml
+      - contains:
+          path: spec.dnsNames
+          content:
+            '*.shield-release-cluster.shield-namespace.svc'
+        template: templates/cluster/certificate.yaml
+      - contains:
+          path: spec.dnsNames
+          content:
+            '*.shield-release-cluster-container-vm.shield-namespace.svc.cluster.local'
+        template: templates/cluster/certificate.yaml
+      - equal:
+          path: spec.secretName
+          value: shield-release-cluster-tls-certificates
+        template: templates/cluster/certificate.yaml
+      - equal:
+          path: spec.issuerRef.name
+          value: shield-cluster-issuer
+        template: templates/cluster/certificate.yaml
+      - equal:
+          path: metadata.annotations["cert-manager.io/inject-ca-from"]
+          value: shield-namespace/shield-cluster-ca-certificate
+        template: templates/cluster/tls-certificates-admissionregistration.yaml
+      - notExists:
+          path: webhooks[0].clientConfig.caBundle
+        template: templates/cluster/tls-certificates-admissionregistration.yaml
+
+

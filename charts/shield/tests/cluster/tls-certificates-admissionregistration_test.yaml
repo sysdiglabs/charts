@@ -635,3 +635,34 @@ tests:
               - pods
             scope: Namespaced
         documentIndex: 1
+
+  - it: Cert Manager Integration exclusive with tls create cert
+    set:
+      features:
+        detections:
+          kubernetes_audit:
+            enabled: true
+      cluster:
+        tls_certificates:
+          create: true
+          cert_manager:
+            enabled: true
+    asserts:
+      - failedTemplate:
+          errorPattern: "Cannot specify both"
+
+  - it: Cert Manager Integration exclusive with tls secret name
+    set:
+      features:
+        detections:
+          kubernetes_audit:
+            enabled: true
+      cluster:
+        tls_certificates:
+          secret_name: foo
+          cert_manager:
+            enabled: true
+    asserts:
+      - failedTemplate:
+          errorPattern: "Cannot specify both"
+

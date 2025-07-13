@@ -1,0 +1,39 @@
+{{- if .Values.cluster | dig "tls_certificates" "cert_manager" "enabled" false -}}
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ include "cluster.tls_certificates.cert_manager_certificate_name" . }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  secretName: {{ include "cluster.tls_certificates.secret_name" . }}
+
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS1
+    size: 2048
+
+  duration: 720h
+  renewBefore: 360h
+
+  isCA: false
+  usages:
+    - server auth
+    - client auth
+
+  subject:
+    organizations:
+      - "Sysdig, Inc."
+
+  dnsNames:
+    {{- range $v := include "cluster.tls_certificates.dns_names" . | fromYamlArray }}
+    - {{ $v | quote }}
+    {{- end }}
+
+  ipAddresses:
+    - 127.0.0.1
+
+  # Issuer references are always required.
+  issuerRef:
+    name: {{ include "cluster.tls_certificates.cert_manager_issuer_name" . }}
+    kind: Issuer
+{{- end }}

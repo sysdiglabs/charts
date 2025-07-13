@@ -1,5 +1,7 @@
 {{- if (include "cluster.tls_certificates.required" .) }}
+{{- include "cluster.tls_certificates.check_conflicts" . -}}
 {{- $cert := dict -}}
+{{- if not (.Values.cluster | dig "tls_certificates" "cert_manager" "enabled" false) -}}
 {{- $existingTlsCertificatesSecret := lookup "v1" "Secret" .Release.Namespace (include "cluster.tls_certificates.secret_name" .) -}}
 {{- if $existingTlsCertificatesSecret -}}
   {{- $_ := set $cert "Cert" (index $existingTlsCertificatesSecret.data (include "cluster.tls_certificates.cert_file_name" .)) -}}
@@ -32,12 +34,17 @@ data:
   {{ include "cluster.tls_certificates.private_key_file_name" . }}: {{ $cert.Key }}
   {{ include "cluster.tls_certificates.ca_cert_file_name" . }}: {{ $cert.CACert }}
 {{- end }}
+{{- end }}
 {{- if and .Values.cluster.validatingwebhookconfiguration.create (include "cluster.audit_enabled" .) }}
 ---
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
 metadata:
   name: {{ include "cluster.audit_webhook_name" . }}
+  {{- if .Values.cluster | dig "tls_certificates" "cert_manager" "enabled" false }}
+  annotations:
+    cert-manager.io/inject-ca-from: {{ (printf "%s/%s" .Release.Namespace (include "cluster.tls_certificates.cert_manager_ca_cert_name" .)) | quote }}
+  {{- end }}
   labels:
     {{- include "cluster.labels" . | nindent 4 }}
 webhooks:
@@ -63,7 +70,9 @@ webhooks:
         name: {{ include "cluster.service_name" . }}
         path: /k8s-audit
         port: {{ include "cluster.audit_service_port" . }}
+      {{- if not (.Values.cluster | dig "tls_certificates" "cert_manager" "enabled" false) }}
       caBundle: {{ $cert.CACert }}
+      {{- end }}
     admissionReviewVersions: ["v1", "v1beta1"]
     sideEffects: None
     timeoutSeconds: {{ .Values.features.detections.kubernetes_audit.timeout }}
@@ -75,6 +84,10 @@ apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
 metadata:
   name: {{ include "cluster.admission_control_webhook_name" . }}
+  {{- if .Values.cluster | dig "tls_certificates" "cert_manager" "enabled" false }}
+  annotations:
+    cert-manager.io/inject-ca-from: {{ (printf "%s/%s" .Release.Namespace (include "cluster.tls_certificates.cert_manager_ca_cert_name" .)) | quote }}
+  {{- end }}
   labels:
     {{- include "cluster.labels" . | nindent 4 }}
 webhooks:
@@ -112,7 +125,9 @@ webhooks:
         name: {{ include "cluster.service_name" . }}
         path: /validate
         port: {{ include "cluster.admission_control_service_port" . }}
+      {{- if not (.Values.cluster | dig "tls_certificates" "cert_manager" "enabled" false) }}
       caBundle: {{ $cert.CACert }}
+      {{- end }}
     admissionReviewVersions: ["v1", "v1beta1"]
     sideEffects: None
     timeoutSeconds: {{ .Values.features.admission_control.timeout }}
