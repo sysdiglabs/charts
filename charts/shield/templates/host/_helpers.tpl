@@ -277,3 +277,13 @@ true
 true
 {{- end }}
 {{- end }}
+
+{{- define "host.prometheus_exporter_enabled" }}
+  {{- if dig "prometheus_exporter" "enabled" false .Values.host.additional_settings }}
+  true
+  {{- end }}
+{{- end }}
+
+{{- define "host.metrics_port" }}
+  {{- regexFind "[0-9]+$" (dig "prometheus_exporter" "listen_url" "0.0.0.0:9544" .Values.host.additional_settings) -}}
+{{- end }}
