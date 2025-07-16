@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.12.6
+### Bug Fixes
+* **shield** [fb017637](https://github.com/sysdiglabs/charts/commit/fb0176372125f24426486343f79da36f041a0b0d): do not set proxy configuration on host-shield when proxy is not configured ([#2319](https://github.com/sysdiglabs/charts/issues/2319))
 # v1.12.5
 ### Bug Fixes
 * **shield** [abfcc12b](https://github.com/sysdiglabs/charts/commit/abfcc12b0396d65c207ee64cb70ebc6d5ab030a4): remove unbalanced quote ([#2309](https://github.com/sysdiglabs/charts/issues/2309))
