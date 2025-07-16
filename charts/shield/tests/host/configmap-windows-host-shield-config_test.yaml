@@ -180,7 +180,7 @@ tests:
                 in_use:
                   enabled: true
 
-  - it: Default No Proxy
+  - it: Default Proxy
     asserts:
       - hasDocuments:
           count: 1
@@ -193,11 +193,10 @@ tests:
           value: shield-namespace
       - exists:
           path: data["host-shield.yaml"]
-      - matchRegex:
+      - notMatchRegex:
           path: data["host-shield.yaml"]
-          pattern: |-
-            proxy:
-              no_proxy: 127.0.0.1,localhost,169.254.0.0/16,.cluster.local
+          pattern: |
+            proxy: .*
 
   - it: With Only HTTP Proxy (http protocol)
     set:
@@ -220,6 +219,7 @@ tests:
           pattern: |-
             proxy:
               http_proxy: http://proxy.example.com:8080
+              no_proxy: 127.0.0.1,localhost,169.254.0.0/16,.cluster.local
 
   - it: With Only HTTP Proxy (http protocol) [Existing Secret]
     set:
@@ -242,6 +242,7 @@ tests:
           pattern: |-
             proxy:
               http_proxy: http://proxy-existing.example.com:8080
+              no_proxy: 127.0.0.1,localhost,169.254.0.0/16,.cluster.local
 
   - it: With Only HTTPS Proxy (https protocol)
     set:
@@ -264,6 +265,7 @@ tests:
           pattern: |
             proxy:
               https_proxy: https://proxy.example.com:8080
+              no_proxy: 127.0.0.1,localhost,169.254.0.0/16,.cluster.local
 
   - it: With Only HTTPS Proxy (https protocol) [Existing Secret]
     set:
@@ -286,6 +288,7 @@ tests:
           pattern: |
             proxy:
               https_proxy: https://proxy-existing.example.com:8080
+              no_proxy: 127.0.0.1,localhost,169.254.0.0/16,.cluster.local
 
   - it: With Only NO Proxy
     set:
@@ -303,11 +306,10 @@ tests:
           value: shield-namespace
       - exists:
           path: data["host-shield.yaml"]
-      - matchRegex:
+      - notMatchRegex:
           path: data["host-shield.yaml"]
           pattern: |
-            proxy:
-              no_proxy: example.com,127.0.0.1,localhost,169.254.0.0/16,.cluster.local
+            proxy: .*
 
   - it: With Only NO Proxy [Existing Secret]
     set:
@@ -325,10 +327,61 @@ tests:
           value: shield-namespace
       - exists:
           path: data["host-shield.yaml"]
-      - matchRegex:
+      - notMatchRegex:
           path: data["host-shield.yaml"]
           pattern: |
+            proxy: .*
+
+  - it: With No Proxy
+    set:
+      proxy:
+        http_proxy: "http://proxy.example.com:8080"
+        https_proxy: "https://proxy.example.com:8080"
+        no_proxy: "example.com"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: release-name-shield-host-windows
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["host-shield.yaml"]
+      - matchRegex:
+          path: data["host-shield.yaml"]
+          pattern: |-
             proxy:
+              http_proxy: http://proxy.example.com:8080
+              https_proxy: https://proxy.example.com:8080
+              no_proxy: example.com,127.0.0.1,localhost,169.254.0.0/16,.cluster.local
+
+  - it: With No Proxy [Existing Secret]
+    set:
+      proxy:
+        http_proxy_existing_secret: "proxy-secret"
+        https_proxy_existing_secret: "proxy-secret"
+        no_proxy_existing_secret: "proxy-secret"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: release-name-shield-host-windows
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["host-shield.yaml"]
+      - matchRegex:
+          path: data["host-shield.yaml"]
+          pattern: |-
+            proxy:
+              http_proxy: http://proxy-existing.example.com:8080
+              https_proxy: https://proxy-existing.example.com:8080
               no_proxy: example.com
 
   - it: Alternative regions (default)
