@@ -294,6 +294,42 @@ tests:
         respond:
           response_actions:
             enabled: true
+            queue_length: 1000
+            timeout: 10
+            cluster:
+              volume_snapshot_class: "a-volume-snapshot-class"
+            rollout_restart:
+              trigger: all
+            delete_pod:
+              trigger: none
+            isolate_network:
+              trigger: all
+            delete_network_policy:
+              trigger: none
+            get_logs:
+              trigger: all
+            volume_snapshot:
+              trigger: none
+            delete_volume_snapshot:
+              trigger: all
+            kill_process:
+              trigger: none
+            file_quarantine:
+              trigger: all
+            file_unquarantine:
+              trigger: all
+            file_acquire:
+              trigger: none
+            kill_container:
+              trigger: all
+            stop_container:
+              trigger: none
+            start_container:
+              trigger: all
+            pause_container:
+              trigger: none
+            unpause_container:
+              trigger: all
     asserts:
       - matchRegex:
           path: data['host-shield.yaml']
@@ -310,6 +346,26 @@ tests:
                   enabled: false
                 response_actions:
                   enabled: true
+                  file_acquire:
+                    trigger: none
+                  file_quarantine:
+                    trigger: all
+                  file_unquarantine:
+                    trigger: all
+                  kill_container:
+                    trigger: all
+                  kill_process:
+                    trigger: none
+                  pause_container:
+                    trigger: none
+                  queue_length: 1000
+                  start_container:
+                    trigger: all
+                  stop_container:
+                    trigger: none
+                  timeout: 10
+                  unpause_container:
+                    trigger: all
               vulnerability_management:
                 host_vulnerability_management:
                   enabled: false

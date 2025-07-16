@@ -246,6 +246,38 @@ tests:
             timeout: 10
             cluster:
               volume_snapshot_class: "a-volume-snapshot-class"
+            rollout_restart:
+              trigger: all
+            delete_pod:
+              trigger: none
+            isolate_network:
+              trigger: all
+            delete_network_policy:
+              trigger: none
+            get_logs:
+              trigger: all
+            volume_snapshot:
+              trigger: none
+            delete_volume_snapshot:
+              trigger: all
+            kill_process:
+              trigger: none
+            file_quarantine:
+              trigger: all
+            file_unquarantine:
+              trigger: all
+            file_acquire:
+              trigger: none
+            kill_container:
+              trigger: all
+            stop_container:
+              trigger: none
+            start_container:
+              trigger: all
+            pause_container:
+              trigger: none
+            unpause_container:
+              trigger: all
             another_config_not_relevant: "not-relevant"
     asserts:
       - exists:
@@ -312,9 +344,23 @@ tests:
                 response_actions:
                   cluster:
                     volume_snapshot_class: a-volume-snapshot-class
+                  delete_network_policy:
+                    trigger: none
+                  delete_pod:
+                    trigger: none
+                  delete_volume_snapshot:
+                    trigger: all
                   enabled: true
+                  get_logs:
+                    trigger: all
+                  isolate_network:
+                    trigger: all
                   queue_length: 1000
+                  rollout_restart:
+                    trigger: all
                   timeout: 10
+                  volume_snapshot:
+                    trigger: none
 
   - it: Sets NATS Url and Lock Name when Container Vulnerability Management is enabled
     set:

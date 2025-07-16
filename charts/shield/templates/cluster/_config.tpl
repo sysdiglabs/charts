@@ -13,7 +13,6 @@
       (dict "kubernetes_metadata" (dig "kubernetes_metadata" nil .Values.features ))
       (dict "monitor" (pick $monitorFeature "kube_state_metrics" "kubernetes_events"))
       (dict "investigations" (pick $investigationsFeature "investigations" "network_security"))
-      (dict "respond" (pick $respondFeature "response_actions"))
   -}}
   {{- $featuresConfig := dict -}}
   {{- range $feature := $features }}
@@ -22,7 +21,8 @@
     {{- end -}}
   {{- end }}
   {{- $_ := set $featuresConfig.container_vulnerability_management "in_use" .Values.features.vulnerability_management.in_use -}}
-  {{- $_ := set $featuresConfig.respond "response_actions" (pick $featuresConfig.respond.response_actions "enabled" "queue_length" "timeout" "cluster") -}}
+  {{- $respond := (include "cluster.configmap.respond" .) | fromYaml }}
+  {{- $_ := set $featuresConfig "respond" $respond -}}
   {{- $additionalFeaturesSettings := (dig "features" (dict) .Values.cluster.additional_settings) -}}
   {{- (mergeOverwrite $featuresConfig $additionalFeaturesSettings) | toYaml -}}
 {{- end }}
@@ -232,3 +232,26 @@ In the future we will have more complex logic to determine if the action is enab
 {{- define "cluster.response_actions.delete_volume_snapshot.enabled" }}
     {{- include "cluster.response_actions_enabled" . }}
 {{- end}}
+
+
+{{- define "cluster.configmap.respond" }}
+{{- $response_actions_feature := (dig "respond" "response_actions" nil .Values.features) }}
+{{- $base_fields := list "enabled" "queue_length" "timeout" "cluster" }}
+{{- $actions := list
+  "rollout_restart"
+  "delete_pod"
+  "isolate_network"
+  "delete_network_policy"
+  "get_logs"
+  "volume_snapshot"
+  "delete_volume_snapshot"
+}}
+{{- $fields := (concat $base_fields $actions) }}
+{{- $response_actions := dict }}
+{{- range $field := $fields }}
+  {{- if hasKey $response_actions_feature $field}}
+    {{- $response_actions := set $response_actions $field (index $response_actions_feature $field) }}
+  {{- end}}
+{{- end }}
+{{- dict "response_actions" $response_actions | toYaml -}}
+{{- end }}
