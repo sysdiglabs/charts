@@ -236,7 +236,7 @@ In the future we will have more complex logic to determine if the action is enab
 
 {{- define "cluster.configmap.respond" }}
 {{- $response_actions_feature := (dig "respond" "response_actions" nil .Values.features) }}
-{{- $base_fields := list "enabled" "queue_length" "timeout" "cluster" }}
+{{- $fields := list "enabled" "queue_length" "timeout" "cluster" }}
 {{- $actions := list
   "rollout_restart"
   "delete_pod"
@@ -246,7 +246,9 @@ In the future we will have more complex logic to determine if the action is enab
   "volume_snapshot"
   "delete_volume_snapshot"
 }}
-{{- $fields := (concat $base_fields $actions) }}
+{{- if and (include "common.semver.is_valid" .Values.cluster.image.tag) (semverCompare ">= 1.14.0" .Values.cluster.image.tag) }}
+  {{- $fields = (concat $fields $actions) }}
+{{- end }}
 {{- $response_actions := dict }}
 {{- range $field := $fields }}
   {{- if hasKey $response_actions_feature $field}}

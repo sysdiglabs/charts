@@ -288,8 +288,11 @@ tests:
                   enabled: false
                   integration_enabled: false
 
-  - it: Enable Response Actions
+  - it: Enable Response Actions with permissions
     set:
+      host:
+        image:
+          tag: "14.1.0"
       features:
         respond:
           response_actions:
@@ -373,6 +376,75 @@ tests:
                   enabled: false
                   integration_enabled: false
 
+  - it: Enable Response Actions without permissions
+    set:
+      host:
+        image:
+          tag: "14.0.1"
+      features:
+        respond:
+          response_actions:
+            enabled: true
+            queue_length: 1000
+            timeout: 10
+            cluster:
+              volume_snapshot_class: "a-volume-snapshot-class"
+            rollout_restart:
+              trigger: all
+            delete_pod:
+              trigger: none
+            isolate_network:
+              trigger: all
+            delete_network_policy:
+              trigger: none
+            get_logs:
+              trigger: all
+            volume_snapshot:
+              trigger: none
+            delete_volume_snapshot:
+              trigger: all
+            kill_process:
+              trigger: none
+            file_quarantine:
+              trigger: all
+            file_unquarantine:
+              trigger: all
+            file_acquire:
+              trigger: none
+            kill_container:
+              trigger: all
+            stop_container:
+              trigger: none
+            start_container:
+              trigger: all
+            pause_container:
+              trigger: none
+            unpause_container:
+              trigger: all
+    asserts:
+      - matchRegex:
+          path: data['host-shield.yaml']
+          pattern: |-
+            features:
+              detections:
+                ml_policies:
+                  enabled: false
+              posture:
+                host_posture:
+                  enabled: false
+              respond:
+                rapid_response:
+                  enabled: false
+                response_actions:
+                  enabled: true
+                  queue_length: 1000
+                  timeout: 10
+              vulnerability_management:
+                host_vulnerability_management:
+                  enabled: false
+                in_use:
+                  enabled: false
+                  integration_enabled: false
   - it: Enable ML Policies
     set:
       features:
