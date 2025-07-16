@@ -13,8 +13,28 @@
 {{- $featureRespond := get . (include "host.respond_key" .) }}
 {{- $rapid_response := dict "rapid_response" (pick $featureRespond.rapid_response "enabled") }}
 {{- $respond = merge $respond $rapid_response -}}
-{{- $respond = merge $respond (pick .respond "response_actions") -}}
-{{- dict "respond" $respond | toYaml }}
+{{- $response_actions := index $featureRespond "response_actions" }}
+{{- $host_response_actions := dict }}
+{{- $base_fields := list "enabled" "queue_length" "timeout" "host" }}
+{{- $actions := list
+  "kill_process"
+  "file_acquire"
+  "file_quarantine"
+  "file_unquarantine"
+  "kill_container"
+  "stop_container"
+  "start_container"
+  "pause_container"
+  "unpause_container"
+}}
+{{- $fields := (concat $base_fields $actions) }}
+{{- range $field := $fields }}
+  {{- if hasKey $response_actions $field}}
+    {{- $host_response_actions := set $host_response_actions $field (index $response_actions $field) }}
+  {{- end}}
+{{- end }}
+{{- $respond = merge $respond (dict "response_actions" $host_response_actions) }}
+{{ dict "respond" $respond | toYaml }}
 {{- end }}
 
 {{- define "host.configmap.detections" }}
