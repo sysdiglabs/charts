@@ -236,6 +236,13 @@ rules:
 
 {{- if eq "true" (include "cluster.response_actions.isolate_network.enabled" .) }}
 - apiGroups:
+    - batch
+  resources:
+    - jobs
+  verbs:
+    - get # needed to identify the pods to isolate
+
+- apiGroups:
   - apps
   resources:
     - daemonsets
@@ -264,11 +271,19 @@ rules:
 
 {{- if eq "true" (include "cluster.response_actions.get_logs.enabled" .) }}
 - apiGroups:
+    - batch
+  resources:
+    - jobs
+  verbs:
+    - get # needed to identify the pods to get logs from
+
+- apiGroups:
     - apps
   resources:
     - daemonsets
     - deployments
     - statefulsets
+    - replicasets
   verbs:
     - get # needed to identify the pods to get logs from
 
@@ -289,11 +304,19 @@ rules:
 
 {{- if eq "true" (include "cluster.response_actions.volume_snapshot.enabled" .) }}
 - apiGroups:
+    - batch
+  resources:
+    - jobs
+  verbs:
+    - get # needed to identify the pods with PVCs
+
+- apiGroups:
     - apps
   resources:
     - daemonsets
     - deployments
     - statefulsets
+    - replicasets
   verbs:
     - get # needed to identify the pods with PVCs
 
