@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.18.1
+### Chores
+* **kspm-collector** [901dd7ac](https://github.com/sysdiglabs/charts/commit/901dd7ac632a8d1e6986c56d108a43f41b6f39c0): release KSPM Collector v1.39.13 ([#2321](https://github.com/sysdiglabs/charts/issues/2321))
 # v0.18.0
 # v0.17.7
 ### Chores
