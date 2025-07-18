@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.36.2
+### Chores
+* **nodeanalyzer** [a6020521](https://github.com/sysdiglabs/charts/commit/a602052122dc6b110891a5a8b7aa20fd5cd8d640): bumped kspm-analyzer to the latest released version ([#2323](https://github.com/sysdiglabs/charts/issues/2323))
 # v1.36.1
 # v1.36.0
 ### New Features
