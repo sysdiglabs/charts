@@ -12,7 +12,7 @@ allowHostDirVolumePlugin: true
 allowHostIPC: false
 allowHostNetwork: true
 allowHostPID: true
-allowHostPorts: false
+allowHostPorts: {{ .Values.cluster.host_network }}
 allowPrivilegeEscalation: true
 allowPrivilegedContainer: true
 allowedCapabilities: []

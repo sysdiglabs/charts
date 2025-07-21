@@ -54,7 +54,7 @@ tests:
         existingAccessKeySecret: standard_key
     asserts:
       - equal:
-          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.name
+          path: spec.template.spec.containers[0].env[?(@.name=="ACCESS_KEY")].valueFrom.secretKeyRef.name
           value: standard_key
         template: deployment.yaml
 
@@ -67,7 +67,7 @@ tests:
           accessKeySecret: standard_key
     asserts:
       - equal:
-          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.name
+          path: spec.template.spec.containers[0].env[?(@.name=="ACCESS_KEY")].valueFrom.secretKeyRef.name
           value: standard_key
         template: deployment.yaml
 
@@ -82,7 +82,7 @@ tests:
         existingAccessKeySecret: override_key
     asserts:
       - equal:
-          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.name
+          path: spec.template.spec.containers[0].env[?(@.name=="ACCESS_KEY")].valueFrom.secretKeyRef.name
           value: override_key
         template: deployment.yaml
 

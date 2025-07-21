@@ -94,6 +94,11 @@ spec:
         resources:
 {{ toYaml .Values.resources | indent 10 }}
         env:
+          - name: API_ENDPOINT
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "kspmCollector.fullname" . }}
+                key: api_endpoint
           - name: ACCESS_KEY
             valueFrom:
               secretKeyRef:
@@ -103,11 +108,32 @@ spec:
                 name: {{ ( include "kspmCollector.accessKeySecret" .) }}
                 {{- end }}
                 key: access-key
+          - name: KUBE_POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
           - name: CLUSTER_NAME
             valueFrom:
               configMapKeyRef:
                 name: {{ template "kspmCollector.fullname" . }}
                 key: cluster_name
+          - name: TRANSPORT_LAYER
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "kspmCollector.fullname" . }}
+                key: transport_layer
+          - name: KUBE_LEADER_ELECTION_LEASE_LOCK_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "kspmCollector.fullname" . }}
+                key: leader_election_lease_lock_name
+                optional: true
+          - name: KUBE_LEADER_ELECTION_LEASE_LOCK_NAMESPACE
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "kspmCollector.fullname" . }}
+                key: leader_election_lease_lock_namespace
+                optional: true
           - name: INCLUDED_NAMESPACES
             valueFrom:
               configMapKeyRef:
@@ -203,12 +229,18 @@ spec:
           - name: TLS_CA_PATHS
             value: /ca-certs/{{- include "sysdig.custom_ca.keyName"  (dict "global" .Values.global.ssl "component" .Values.ssl) -}}
           {{- end }}
+          {{- range $key, $value := .Values.env }}
+          - name: "{{ $key }}"
+            value: "{{ $value }}"
+          {{- end }}
         volumeMounts:
           {{- if eq (include "sysdig.custom_ca.enabled"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
           - mountPath: /ca-certs
             name: ca-cert
             readOnly: true
           {{- end }}
+          - mountPath: /tmp
+            name: tmp-dir
       volumes:
         {{- if eq (include "sysdig.custom_ca.useValues"  (dict "global" .Values.global.ssl "component" .Values.ssl)) "true" }}
         - name: ca-cert
@@ -223,3 +255,5 @@ spec:
           configMap:
             name: {{ include "sysdig.custom_ca.existingConfigMap" (dict "global" .Values.global.ssl "component" .Values.ssl) }}
         {{- end }}
+        - name: tmp-dir
+          emptyDir: {}

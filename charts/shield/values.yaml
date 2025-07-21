@@ -28,7 +28,6 @@ sysdig_endpoint:
   secure_api_token:
   # The API token for the Sysdig Secure instance (existing secret)
   secure_api_token_existing_secret:
-
 # Features
 
 features:
@@ -48,6 +47,9 @@ features:
     container_vulnerability_management:
       # Enable the container vulnerability management feature on the admission control
       enabled: false
+    posture:
+      # Enable the posture feature on the admission control
+      enabled: true
 
   kubernetes_metadata:
     # Enable the Kubernetes Metadata feature on cluster shield
@@ -128,6 +130,7 @@ features:
     live_logs:
       enabled: false
     network_security:
+      # Enable the network security feature
       enabled: false
     audit_tap:
       enabled: false
@@ -140,6 +143,7 @@ features:
   respond:
     rapid_response:
       enabled: false
+      password:
     response_actions:
       enabled: false
   monitor:
@@ -176,7 +180,7 @@ host_windows:
     # The image name for the host shield
     name: host-shield
     # The tag for the host shield images
-    tag: 0.7.1
+    tag: 0.9.0
     # The pull policy for the host shield images
     pull_policy: IfNotPresent
     # The pull secrets for the host shield images
@@ -250,7 +254,7 @@ host:
     # The image name for the host shield
     shield_name: agent-slim
     # The tag for the host shield images
-    tag: 13.9.1
+    tag: 14.0.1
     # The pull policy for the host shield images
     pull_policy: IfNotPresent
     # The pull secrets for the host shield images
@@ -372,7 +376,6 @@ host:
   volume_mounts: []
   # The dns policy for the host shield
   dns_policy:
-
 cluster:
   image:
     # The registry where the cluster shield image is stored
@@ -380,7 +383,7 @@ cluster:
     # The repository where the cluster shield image is stored
     repository: sysdig/cluster-shield
     # The tag for the cluster shield image
-    tag: 1.11.0
+    tag: 1.13.0
     # The pull policy for the cluster shield image
     pull_policy: IfNotPresent
     # The pull secrets for the cluster shield image
@@ -491,6 +494,13 @@ cluster:
   # The custom volume mounts for cluster shield
   volume_mounts: []
 
+  # Defines the PodDisruptionBudget for the cluster shield
+  pod_disruption_budget:
+    # Create the PodDisruptionBudget for the cluster shield
+    create: true
+    # The minimum number of available pods for the cluster shield
+    min_available: 1
+
 ssl:
   # Enable SSL verification
   verify: true
@@ -521,7 +531,6 @@ ssl:
     existing_ca_secret:
     # Provide the filename that is defined inside the existing Secret
     existing_ca_secret_key_name:
-
 proxy:
   # HTTP proxy to use for all HTTP requests
   http_proxy:
@@ -535,7 +544,6 @@ proxy:
   no_proxy:
   # Provide the name of an existing Secret that contains the no proxy hosts
   no_proxy_existing_secret:
-
 # Additional .APIVersions in .Capabilities, e.g. "security.openshift.io/v1"
 extra_capabilities_api_versions: []
 
@@ -563,7 +571,6 @@ volume_mounts: []
 name_override:
 # Overrides the default full resource identifier ex. <override>-cluster
 fullname_override:
-
 # Optional parameter used to check the compatibility of shield
 # component versions with the on-premised backend version.
 #

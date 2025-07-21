@@ -62,6 +62,9 @@ Adds kubernetes related keys to the configuration.
 {{- if and (.Values.cluster_shield.features.admission_control.enabled) (.Values.cluster_shield.features.admission_control.container_vulnerability_management.enabled)}}
 {{- $_ := set $conf "admission_controller_secure" (merge (include "cluster-shield.configurationAdmissionControllerSecure" . | fromYaml) (.Values.cluster_shield.admission_controller_secure | default dict)) -}}
 {{- end}}
+{{- if eq "true" (include "cluster-shield.postureEnabled" .) -}}
+{{- $_ := set $conf "kspm_collector" (merge (include "cluster-shield.configurationKspmCollector" . | fromYaml) (.Values.cluster_shield.kspm_collector | default dict)) -}}
+{{- end -}}
 {{- $_ := unset $conf.sysdig_endpoint "access_key" -}}
 {{- $_ := unset $conf.sysdig_endpoint "secure_api_token" -}}
 {{/* sysdig-deploy support start */}}
@@ -94,7 +97,7 @@ Adds kubernetes related keys to the configuration.
 {{- if not $conf.sysdig_endpoint.api_url -}}
 {{- fail "Custom region requires one of global.sysdig.apiHost or cluster_shield.sysdig_endpoint.api_url to be defined." -}}
 {{- end -}}
-{{- if and ($conf.features.kubernetes_metadata.enabled) (not $conf.sysdig_endpoint.collector) -}}
+{{- if and (or $conf.features.kubernetes_metadata.enabled (and $conf.features.audit.enabled $conf.features.audit.use_falco)) (not $conf.sysdig_endpoint.collector) -}}
 {{- fail "Custom region requires cluster_shield.sysdig_endpoint.collector to be defined." -}}
 {{- end -}}
 {{- end -}}
@@ -149,6 +152,13 @@ Cluster Scanner Lock Name
 {{- end }}
 
 {{/*
+KSPM Collector Lock Name
+*/}}
+{{- define "cluster-shield.kspmCollectorLockName" -}}
+    {{- (include "cluster-shield.fullname" .) -}}-kspm-collector
+{{- end }}
+
+{{/*
 Cluster Scanner Service Name
 As per DNS naming spec, the length of a service name should be less than 63 characters;
 so we truncate the fullname to 47 characters since we append "-cluster-scanner" to it.
@@ -185,6 +195,12 @@ Admission Controller Secure Configuration
 rsi_grpc_endpoint: {{ include "cluster-shield.clusterScannerServiceName" . }}:9999
 {{- end }}
 
+{{/*
+KSPM Collector Configuration
+*/}}
+{{- define "cluster-shield.configurationKspmCollector" -}}
+leader_election_lock_name: {{ include "cluster-shield.kspmCollectorLockName" . }}
+{{- end }}
 
 {{/*
 Verify if certs needs to be generated and mounted inside the pod
@@ -376,6 +392,20 @@ Check if Container Vulnerability Management is enabled
 {{- end -}}
 
 {{/*
+Check if Posture is enabled
+*/}}
+{{- define "cluster-shield.postureEnabled" -}}
+    {{- .Values.cluster_shield.features.posture.enabled -}}
+{{- end -}}
+
+{{/*
+Check if Kspm Collector needs to acquire leases from k8s
+*/}}
+{{- define "cluster-shield.postureNeedsLease" -}}
+    {{- and (eq (include "cluster-shield.postureEnabled" .) "true") (not (eq (.Values.cluster_shield | dig "kspm_collector" "transport_layer" "" ) "nats")) -}}
+{{- end -}}
+
+{{/*
 Proxy Secret Name
 */}}
 {{- define "cluster-shield.proxyEnabled" -}}
@@ -459,3 +489,37 @@ run-all-namespaced
 {{- $tag._0 }}: {{ $tag._1 | quote }}
 {{ end -}}
 {{- end -}}
+
+{{- define "cluster.response_actions_enabled" -}}
+{{- with .Values.cluster_shield.features.respond.response_actions.enabled }}
+    {{- . }}
+{{- else }}
+    false
+{{- end }}
+{{- end }}
+
+{{/*
+Response Actions: Cluster actions
+In the future we will have more complex logic to determine if the action is enabled or not.
+*/}}
+{{- define "cluster.response_actions.rollout_restart.enabled" }}
+    {{- include "cluster.response_actions_enabled" . }}
+{{- end}}
+{{- define "cluster.response_actions.delete_pod.enabled" }}
+    {{- include "cluster.response_actions_enabled" . }}
+{{- end}}
+{{- define "cluster.response_actions.isolate_network.enabled" }}
+    {{- include "cluster.response_actions_enabled" . }}
+{{- end}}
+{{- define "cluster.response_actions.delete_network_policy.enabled" }}
+    {{- include "cluster.response_actions_enabled" . }}
+{{- end}}
+{{- define "cluster.response_actions.get_logs.enabled" }}
+    {{- include "cluster.response_actions_enabled" . }}
+{{- end}}
+{{- define "cluster.response_actions.volume_snapshot.enabled" }}
+    {{- include "cluster.response_actions_enabled" . }}
+{{- end}}
+{{- define "cluster.response_actions.delete_volume_snapshot.enabled" }}
+    {{- include "cluster.response_actions_enabled" . }}
+{{- end}}

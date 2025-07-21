@@ -1364,4 +1364,4 @@ tests:
           path: data['dragent.yaml']
           pattern: |
             collector: ingest-alt-eu1.app.sysdig.com
-            collector_port: 6443
+            collector_port: 443

@@ -4,6 +4,12 @@ metadata:
   name: {{ include "cluster-shield.fullname" . }}
   namespace: {{ .Release.Namespace }}
 rules:
+{{- if or (eq "true" (include "cluster-shield.containerVulnerabilityManagementEnabled" .)) (eq "true" (include "cluster-shield.postureNeedsLease" .)) }}
+- apiGroups: ["", "coordination.k8s.io"]
+  resources:
+    - "leases"
+  verbs: ["create"]
+{{- end }}
 {{- if eq "true" (include "cluster-shield.containerVulnerabilityManagementEnabled" .) }}
 - apiGroups: ["", "coordination.k8s.io"]
   resources:
@@ -11,10 +17,6 @@ rules:
   resourceNames:
     - {{ include "cluster-shield.clusterScannerLockName" . }}
   verbs: ["*"]
-- apiGroups: ["", "coordination.k8s.io"]
-  resources:
-    - "leases"
-  verbs: ["create"]
 - apiGroups: ["*"]
   resources:
     - "endpoints"
@@ -26,5 +28,13 @@ rules:
     - "endpoints/restricted"
   resourceNames:
     - {{ include "cluster-shield.clusterScannerServiceName" . }}
+  verbs: ["*"]
+{{- end }}
+{{- if eq "true" (include "cluster-shield.postureNeedsLease" .) }}
+- apiGroups: ["", "coordination.k8s.io"]
+  resources:
+    - "leases"
+  resourceNames:
+    - {{ include "cluster-shield.kspmCollectorLockName" . }}
   verbs: ["*"]
 {{- end }}

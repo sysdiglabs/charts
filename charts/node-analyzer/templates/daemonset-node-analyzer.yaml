@@ -208,6 +208,11 @@ spec:
                 name: {{ ( include "nodeAnalyzer.accessKeySecret" .) }}
                 {{- end }}
                 key: access-key
+          - name: API_ENDPOINT
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-kspm-analyzer
+                key: api_endpoint
           - name: ENVIRONMENT
             valueFrom:
               configMapKeyRef:

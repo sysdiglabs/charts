@@ -10,6 +10,56 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.89.3
+### Chores
+* **sysdig-deploy** [0a595c62](https://github.com/sysdiglabs/charts/commit/0a595c620fb7bd9ea7b08c44c20ab1fcfbbc0619): Automatic version bump due to updated dependencies ([#2324](https://github.com/sysdiglabs/charts/issues/2324))
+# v1.89.2
+### Chores
+* **sysdig-deploy** [e36fe9e2](https://github.com/sysdiglabs/charts/commit/e36fe9e27e9074c097bb388c671026eb3bf3cc81): Automatic version bump due to updated dependencies ([#2322](https://github.com/sysdiglabs/charts/issues/2322))
+# v1.89.1
+### Chores
+* **sysdig-deploy** [ddc410e5](https://github.com/sysdiglabs/charts/commit/ddc410e56c1aa51f8ba22a2fecbc79c83b456728): Automatic version bump due to updated dependencies ([#2314](https://github.com/sysdiglabs/charts/issues/2314))
+# v1.89.0
+### New Features
+* **kspm-analyzer** [4c275a63](https://github.com/sysdiglabs/charts/commit/4c275a63cde563ee419af0e201f8b828a2b565c6): release kspm-analyzer 1.45.0 ([#2302](https://github.com/sysdiglabs/charts/issues/2302))
+# v1.88.0
+### Chores
+* **cluster-shield,shield,sysdig-deploy** [d0784daf](https://github.com/sysdiglabs/charts/commit/d0784dafa3ec6651de22632232cfd0f5e9547c4b): Automatic bump to version 1.13.0 ([#2297](https://github.com/sysdiglabs/charts/issues/2297))
+# v1.87.1
+### New Features
+* **agent,sydig-deploy,shield** [17645dc7](https://github.com/sysdiglabs/charts/commit/17645dc7efdac5d9e422baa89de21f50df2dbc78): release agent 14.0.1 ([#2296](https://github.com/sysdiglabs/charts/issues/2296))
+# v1.87.0
+### New Features
+* **agent** [26e1c8a1](https://github.com/sysdiglabs/charts/commit/26e1c8a141c637e17acba2f590a87645dcda5ab7): convert alf config to secret ([#2294](https://github.com/sysdiglabs/charts/issues/2294))
+# v1.86.1
+### Chores
+* **sysdig-deploy** [27343eea](https://github.com/sysdiglabs/charts/commit/27343eea1f1525db3e1296955e8d06f9253f4b25): Automatic version bump due to updated dependencies ([#2292](https://github.com/sysdiglabs/charts/issues/2292))
+# v1.86.0
+### Chores
+* **agent,sysdig-deploy,shield** [43fd8ff4](https://github.com/sysdiglabs/charts/commit/43fd8ff4d53320b6330b3921d6fa6e507abb3436): bump agent to 14.0.0 ([#2277](https://github.com/sysdiglabs/charts/issues/2277))
+# v1.85.4
+### Chores
+* **sysdig-deploy** [20ac03a2](https://github.com/sysdiglabs/charts/commit/20ac03a29aa985a740db482e7775ae14496df50d): Automatic version bump due to updated dependencies ([#2284](https://github.com/sysdiglabs/charts/issues/2284))
+# v1.85.3
+### Chores
+* **sysdig-deploy** [f6825b2c](https://github.com/sysdiglabs/charts/commit/f6825b2c88bf298efca1b8162dc1454ba4ce31d5): Automatic version bump due to updated dependencies ([#2281](https://github.com/sysdiglabs/charts/issues/2281))
+# v1.85.2
+### Chores
+* **shield,cluster-shield,sysdig-deploy** [376fca85](https://github.com/sysdiglabs/charts/commit/376fca85c6f942c2ddc9b494211b29bdddd9b257): Automatic bump to version 1.12.1 ([#2278](https://github.com/sysdiglabs/charts/issues/2278))
+# v1.85.1
+# v1.85.0
+### Chores
+* **cluster-shield,sysdig-deploy,shield** [d76fccf8](https://github.com/sysdiglabs/charts/commit/d76fccf80af45038011114192624b37e81411c64): Automatic bump to version 1.12.0 ([#2272](https://github.com/sysdiglabs/charts/issues/2272))
+# v1.84.3
+### Chores
+* **sysdig-deploy** [474cafa6](https://github.com/sysdiglabs/charts/commit/474cafa6d751b665da0926d93d2fd119864609f5): Automatic version bump due to updated dependencies ([#2267](https://github.com/sysdiglabs/charts/issues/2267))
+# v1.84.2
+### New Features
+* **agent,shield,sysdig-deploy** [a32a879d](https://github.com/sysdiglabs/charts/commit/a32a879d1122dbc533817035b114bb94395876b1): release agent 13.9.2 ([#2264](https://github.com/sysdiglabs/charts/issues/2264))
+# v1.84.1
+### Chores
+* **sysdig-deploy** [a45650c3](https://github.com/sysdiglabs/charts/commit/a45650c3c3e66d8fde6e9bfcea16bbaab969ca49): Automatic version bump due to updated dependencies ([#2257](https://github.com/sysdiglabs/charts/issues/2257))
+# v1.84.0
 # v1.81.0
 ### New Features
 * **agent,shield** [a0aceaa6](https://github.com/sysdiglabs/charts/commit/a0aceaa6c40b30d43678109d43fa5691c2feebc0): release agent 13.9.0 ([#2234](https://github.com/sysdiglabs/charts/issues/2234))

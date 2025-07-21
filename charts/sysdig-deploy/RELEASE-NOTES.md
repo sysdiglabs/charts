@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **agent,shield** [a0aceaa6](https://github.com/sysdiglabs/charts/commit/a0aceaa6c40b30d43678109d43fa5691c2feebc0): release agent 13.9.0 ([#2234](https://github.com/sysdiglabs/charts/issues/2234))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.80.3...sysdig-deploy-1.81.0
+### Chores
+- **sysdig-deploy** [0a595c62](https://github.com/sysdiglabs/charts/commit/0a595c620fb7bd9ea7b08c44c20ab1fcfbbc0619): Automatic version bump due to updated dependencies ([#2324](https://github.com/sysdiglabs/charts/issues/2324))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.89.2...sysdig-deploy-1.89.3

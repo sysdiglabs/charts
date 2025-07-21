@@ -10,6 +10,64 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.12.6
+### Bug Fixes
+* **shield** [fb017637](https://github.com/sysdiglabs/charts/commit/fb0176372125f24426486343f79da36f041a0b0d): do not set proxy configuration on host-shield when proxy is not configured ([#2319](https://github.com/sysdiglabs/charts/issues/2319))
+# v1.12.5
+### Bug Fixes
+* **shield** [abfcc12b](https://github.com/sysdiglabs/charts/commit/abfcc12b0396d65c207ee64cb70ebc6d5ab030a4): remove unbalanced quote ([#2309](https://github.com/sysdiglabs/charts/issues/2309))
+# v1.12.4
+### Bug Fixes
+* **shield** [157192b0](https://github.com/sysdiglabs/charts/commit/157192b05926c85c4abd3706441365d5eeabbb6e): openshift scc should set allowHostPorts to true when the cluster-shield is set to run on the host network ([#2307](https://github.com/sysdiglabs/charts/issues/2307))
+# v1.12.3
+### Chores
+* **shield** [9a3c5a0c](https://github.com/sysdiglabs/charts/commit/9a3c5a0c8198ab82276ab27bc98b62c765f7a1c1): update docs with rapid response password ([#2306](https://github.com/sysdiglabs/charts/issues/2306))
+# v1.12.2
+### Chores
+* **shield** [642e60fe](https://github.com/sysdiglabs/charts/commit/642e60fec21ef59f326dc0cf11a7338c6cfc1d52): add cluster.volume_snapshot_class default on cluster-shield ([#2300](https://github.com/sysdiglabs/charts/issues/2300))
+# v1.12.1
+### Chores
+* **shield** [563dd11a](https://github.com/sysdiglabs/charts/commit/563dd11a1001119b76439916ccea7220474f5714): handle respond mapping on cluster-shield ([#2299](https://github.com/sysdiglabs/charts/issues/2299))
+# v1.12.0
+### Chores
+* **cluster-shield,shield,sysdig-deploy** [d0784daf](https://github.com/sysdiglabs/charts/commit/d0784dafa3ec6651de22632232cfd0f5e9547c4b): Automatic bump to version 1.13.0 ([#2297](https://github.com/sysdiglabs/charts/issues/2297))
+# v1.11.1
+### New Features
+* **agent,sydig-deploy,shield** [17645dc7](https://github.com/sysdiglabs/charts/commit/17645dc7efdac5d9e422baa89de21f50df2dbc78): release agent 14.0.1 ([#2296](https://github.com/sysdiglabs/charts/issues/2296))
+# v1.11.0
+### New Features
+* **shield** [2b2d78b7](https://github.com/sysdiglabs/charts/commit/2b2d78b77931665aa6e9c319e664db663293f474): pod disruption budget support for the cluster shield ([#2275](https://github.com/sysdiglabs/charts/issues/2275))
+# v1.10.0
+### Chores
+* **shield** [ef94b53d](https://github.com/sysdiglabs/charts/commit/ef94b53d8f655805a0afca228e6be8b806991396): bump host-shield windows to 0.9.0 ([#2295](https://github.com/sysdiglabs/charts/issues/2295))
+# v1.9.1
+### Chores
+* **shield** [ca78c8ad](https://github.com/sysdiglabs/charts/commit/ca78c8adc1a1b4c20f151fe6a2cad289e0daccd9): add support for RCs on windows config checks ([#2293](https://github.com/sysdiglabs/charts/issues/2293))
+# v1.9.0
+### Chores
+* **agent,sysdig-deploy,shield** [43fd8ff4](https://github.com/sysdiglabs/charts/commit/43fd8ff4d53320b6330b3921d6fa6e507abb3436): bump agent to 14.0.0 ([#2277](https://github.com/sysdiglabs/charts/issues/2277))
+# v1.8.3
+### Chores
+* **shield** [c8b0cde7](https://github.com/sysdiglabs/charts/commit/c8b0cde7b8d890050e23a94de383748f0533a23b): add ssl config mapping for windows host-shield ([#2286](https://github.com/sysdiglabs/charts/issues/2286))
+# v1.8.2
+### Bug Fixes
+* **shield** [4becb83a](https://github.com/sysdiglabs/charts/commit/4becb83ad262c67fe12f09522299303d1270cee2): set port 443 on host when alt region is selected ([#2285](https://github.com/sysdiglabs/charts/issues/2285))
+# v1.8.1
+### Chores
+* **shield,cluster-shield,sysdig-deploy** [376fca85](https://github.com/sysdiglabs/charts/commit/376fca85c6f942c2ddc9b494211b29bdddd9b257): Automatic bump to version 1.12.1 ([#2278](https://github.com/sysdiglabs/charts/issues/2278))
+# v1.8.0
+### Chores
+* **cluster-shield,sysdig-deploy,shield** [d76fccf8](https://github.com/sysdiglabs/charts/commit/d76fccf80af45038011114192624b37e81411c64): Automatic bump to version 1.12.0 ([#2272](https://github.com/sysdiglabs/charts/issues/2272))
+# v1.7.1
+# v1.7.0
+### Chores
+* **shield** [d49c6020](https://github.com/sysdiglabs/charts/commit/d49c6020c87418233968824ca7e60927fa7d4a71): bump host-shield windows 0.8.0 ([#2268](https://github.com/sysdiglabs/charts/issues/2268))
+# v1.6.3
+### New Features
+* **agent,shield,sysdig-deploy** [a32a879d](https://github.com/sysdiglabs/charts/commit/a32a879d1122dbc533817035b114bb94395876b1): release agent 13.9.2 ([#2264](https://github.com/sysdiglabs/charts/issues/2264))
+# v1.6.2
+### Chores
+* **shield** [ad7d02b3](https://github.com/sysdiglabs/charts/commit/ad7d02b3ceb4a3c408e0e5b2521e32e633cb5388): add cluster name mapping to windows host-shield config ([#2262](https://github.com/sysdiglabs/charts/issues/2262))
 # v1.4.1
 ### New Features
 * **shield** [2a3f2d2a](https://github.com/sysdiglabs/charts/commit/2a3f2d2a75827e4742ee79de656e66b79962959b): use secure_light for netsec_enabled ([#2233](https://github.com/sysdiglabs/charts/issues/2233))

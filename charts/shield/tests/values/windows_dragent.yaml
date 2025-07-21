@@ -1,0 +1,15 @@
+cluster_config:
+  name: test-cluster
+
+sysdig_endpoint:
+  region: custom
+  access_key: 12345678-1234-1234-1234-123456789012
+  api_url: https://www.example.com
+  collector:
+    host: example.com
+    port: 6443
+
+host_windows:
+  image:
+    tag: 0.7.1
+  enabled: true

@@ -103,7 +103,7 @@ webhooks:
           - replicasets
           - statefulsets
           - daemonsets
-          - jobs"
+          - jobs
           - cronjobs
         scope: Namespaced
     clientConfig:

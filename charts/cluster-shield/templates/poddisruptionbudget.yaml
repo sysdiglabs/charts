@@ -1,0 +1,14 @@
+{{- if hasKey .Values "podDisruptionBudget" }}
+{{- if .Values.podDisruptionBudget.create }}
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "cluster-shield.fullname" . | trunc 59 }}-pdb
+  namespace: {{ .Release.Namespace }}
+spec:
+  minAvailable: {{ .Values.podDisruptionBudget.minAvailable }}
+  selector:
+    matchLabels:
+      {{ include "cluster-shield.selectorLabels" . | nindent 6 }}
+{{- end }}
+{{- end }}

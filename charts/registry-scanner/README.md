@@ -84,7 +84,7 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | config.secureOnPrem                              | Specify that Sysdig Secure installation is on-prem.                                                                                                                                                                                        | <code>false</code>                            |
 | config.secureSkipTLS                             | Ignore Sysdig Secure TLS certificate errors.                                                                                                                                                                                               | <code>false</code>                            |
 | config.maxWorkers                                | The maximum number of parallel job scan workers to spawn.                                                                                                                                                                                  | <code>5</code>                                |
-| config.filter.include                            | The list of regular expressions.<br/>Images matching any of these expressions are *always* included when scanning.                                                                                                                         | <code>[]</code>                               |
+| config.filter.include                            | The list of regular expressions.<br/>Images matching any of these expressions are *always* included when scanning. To ensure that only included images are scanned and all others are explicitly excluded, set `exclude` to [".*"].        | <code>[]</code>                               |
 | config.filter.exclude                            | The list of regular expressions.<br/>Images matching any of these expressions are excluded when scanning.                                                                                                                                  | <code>[]</code>                               |
 | config.filter.maxAgeDays                         | Based on its creation date, excludes images older than the specified number of days.<br/>The maximum is 365 days.                                                                                                                          | <code>90</code>                               |
 | config.filter.maxTagsPerRepository               | Based on its creation date, newer ones take precedence, the maximum number of tags to scan per repository.<br/>The maximum is 50.                                                                                                          | <code>5</code>                                |
@@ -137,7 +137,7 @@ Use the following command to deploy:
 helm upgrade --install registry-scanner \
    --namespace sysdig-agent \
    --create-namespace \
-   --version=1.7.1 \
+   --version=1.7.3 \
    --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
    --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
    --set config.secureSkipTLS=true \

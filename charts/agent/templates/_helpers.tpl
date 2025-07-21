@@ -459,6 +459,14 @@ agent config to prevent a backend push from enabling them after installation.
             {{- end }}
         {{- end }}
     {{- end }}
+
+    {{- $isAgent14OrAbove := and (include "agent.isSemVer" .Values.image.tag) (semverCompare ">= 14.0.0" .Values.image.tag) }}
+
+    {{/* from Host Shield >= 14.0.0 when monitor is disabled we set secure_light mode */}}
+    {{- if and $isAgent14OrAbove (not .Values.monitor.enabled) }}
+        {{- $secureLightMode = true }}
+    {{- end }}
+
     {{- if (not .Values.secure.enabled) }}
         {{- range $secureFeature := (list
             "commandlines_capture"
@@ -470,26 +478,31 @@ agent config to prevent a backend push from enabling them after installation.
             "secure_audit_streams") }}
             {{- $_ := set $secureConfig $secureFeature (dict "enabled" false) }}
         {{- end }}
-    {{ else if and (include "agent.enableFalcoBaselineSecureLight" .) $secureLightMode }}
-        {{- range $secureFeature := (list
-            "network_topology") }}
-            {{- $_ := set $secureConfig $secureFeature (dict "enabled" false) }}
+    {{- else if (not $isAgent14OrAbove) }}
+        {{ if and (include "agent.enableFalcoBaselineSecureLight" .) $secureLightMode }}
+            {{- range $secureFeature := (list
+                "network_topology") }}
+                {{- $_ := set $secureConfig $secureFeature (dict "enabled" false) }}
+            {{- end }}
+            {{- if not (hasKey .Values.sysdig.settings "memdump") }}
+                {{- $_ := set $secureConfig "memdump" (dict "enabled" false) }}
+            {{- end }}
+        {{ else if $secureLightMode }}
+            {{- range $secureFeature := (list
+                "drift_control"
+                "drift_killer"
+                "falcobaseline"
+                "network_topology") }}
+                {{- $_ := set $secureConfig $secureFeature (dict "enabled" false) }}
+            {{- end }}
+            {{- if not (hasKey .Values.sysdig.settings "memdump") }}
+                {{- $_ := set $secureConfig "memdump" (dict "enabled" false) }}
+            {{- end }}
         {{- end }}
-        {{- if not (hasKey .Values.sysdig.settings "memdump") }}
-            {{- $_ := set $secureConfig "memdump" (dict "enabled" false) }}
-        {{- end }}
-    {{ else if $secureLightMode }}
-        {{- range $secureFeature := (list
-            "drift_control"
-            "drift_killer"
-            "falcobaseline"
-            "network_topology") }}
-            {{- $_ := set $secureConfig $secureFeature (dict "enabled" false) }}
-        {{- end }}
-        {{- if not (hasKey .Values.sysdig.settings "memdump") }}
-            {{- $_ := set $secureConfig "memdump" (dict "enabled" false) }}
-        {{- end }}
+    {{- else if $secureLightMode }}
+        {{- $_ := set $secureConfig "feature" (dict "mode" "secure_light") }}
     {{- end }}
+
     {{- if include "agent.gke.autopilot" . }}
         {{- $_ := set $secureConfig "drift_control" (dict "enabled" false) }}
         {{- $_ := set $secureConfig "drift_killer" (dict "enabled" false) }}
@@ -605,9 +618,9 @@ true
     {{- end -}}
 {{- end -}}
 
-{{/* Return the name of the local forwarder configmap */}}
-{{- define "agent.localForwarderConfigMapName" }}
-{{- include "agent.configmapName" . | trunc 46 | trimSuffix "-" | printf "%s-local-forwarder" }}
+{{/* Return the name of the local forwarder secret */}}
+{{- define "agent.localForwarderSecretName" }}
+{{- include "agent.fullname" . | trunc 46 | trimSuffix "-" | printf "%s-local-forwarder" }}
 {{- end }}
 
 {{- define "agent.enableHttpProbes" }}

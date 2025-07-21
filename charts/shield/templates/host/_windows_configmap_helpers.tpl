@@ -46,7 +46,7 @@
     {{- $_ := set $sysdigEndpointConfig "region" "custom" -}}
     {{- $_ := set $sysdigEndpointConfig "api_url" (printf "https://%s" (include "common.secure_api_endpoint" .)) -}}
     {{- $_ := set $sysdigEndpointConfig.collector "host" (include "common.collector_endpoint" .) -}}
-    {{- $_ := set $sysdigEndpointConfig.collector "port" 6443 -}}
+    {{- $_ := set $sysdigEndpointConfig.collector "port" 443 -}}
   {{- end -}}
 {{- end -}}
 {{- $_ := set $config "sysdig_endpoint" $sysdigEndpointConfig -}}
@@ -65,10 +65,21 @@
 {{- end -}}
 {{- $_ := set $config "cluster_config" $clusterConfig -}}
 
-{{- $config := merge $config (dict "proxy" (include "host.proxy_config" . | fromYaml)) }}
+{{- $sslConfig := dict "verify" .Values.ssl.verify -}}
+{{- if (include "common.custom_ca.enabled" .) }}
+  {{- $path := (include "common.custom_ca.path" (merge (dict) . (dict "CACertsPath" "certificates/"))) }}
+  {{- $_ := set $sslConfig "ca" (dict "cert_path" $path) }}
+{{- end -}}
 
-{{- if and (include "common.semver.is_valid" .Values.host_windows.image.tag) (semverCompare ">= 0.8.0" .Values.host_windows.image.tag) }}
+{{- $_ := set $config "ssl" $sslConfig -}}
+
+{{- if (include "common.proxy.enabled" . ) }}
+  {{- $config := merge $config (dict "proxy" (include "host.proxy_config" . | fromYaml)) }}
+{{- end }}
+
+{{- if and (include "common.semver.is_valid" .Values.host_windows.image.tag) (semverCompare ">= 0.8.0-0" .Values.host_windows.image.tag) }}
 {{- $runtimeAdditionalSettings := (include "host.windows.runtime_config_override" .) | fromYaml }}
+{{- $_ := set $runtimeAdditionalSettings "k8s_cluster_name" .Values.cluster_config.name -}}
 {{- $config := merge $config (dict "internals" (dict "agent_runtime" (dict "additional_settings" $runtimeAdditionalSettings))) }}
 {{- end }}
 
@@ -94,7 +105,7 @@
   "collector" (include "common.collector_endpoint" .)
 }}
 {{- if (include "common.is_alt_region" .) -}}
-  {{- $_ := set $config "collector_port" 6443 -}}
+  {{- $_ := set $config "collector_port" 443 -}}
 {{- end -}}
 {{- if .Values.cluster_config.tags -}}
   {{- $tagList := list }}

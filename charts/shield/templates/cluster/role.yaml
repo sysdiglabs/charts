@@ -11,6 +11,18 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 rules:
+{{- if (and (include "cluster.posture_enabled" .) (include "cluster.need_posture_lease" .) .) }}
+  - apiGroups: ["", "coordination.k8s.io"]
+    resources:
+      - "leases"
+    resourceNames:
+      - {{ include "cluster.posture_lease_name" . }}
+    verbs: ["*"]
+  - apiGroups: ["", "coordination.k8s.io"]
+    resources:
+      - "leases"
+    verbs: ["create"]
+{{- end }}
 {{- if (include "cluster.container_vulnerability_management_enabled" .) }}
   - apiGroups: ["", "coordination.k8s.io"]
     resources:
