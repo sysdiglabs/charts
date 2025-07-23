@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.12.8
+### Documentation
+* **shield** [51fbd0dc](https://github.com/sysdiglabs/charts/commit/51fbd0dce642a90de73d15b29d7941d5da4e0c86): add more information on when privileged can be disabled. ([#2327](https://github.com/sysdiglabs/charts/issues/2327))
 # v1.12.7
 ### Chores
 * **shield** [0e2f4c75](https://github.com/sysdiglabs/charts/commit/0e2f4c75557cdec263ac748eb73e97be92327f96): update README to specify secure api token requirements ([#2259](https://github.com/sysdiglabs/charts/issues/2259))
