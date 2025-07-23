@@ -270,7 +270,7 @@ host:
     labels: {}
     # The annotations for the priority class
     annotations: {}
-  # Sets the host shield to run in privileged mode
+  # Sets the host shield to run in privileged mode. This requires to use Universal eBPF driver and must be enabled if you need Posture or Vulnerability Management functionalities.
   privileged: true
   rbac:
     # Create the RBAC resources for the host shield
