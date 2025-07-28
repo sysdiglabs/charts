@@ -213,7 +213,7 @@ host_windows:
       key: os
       value: Windows
   # The affinity for the host shield
-  affinity:   # +doc-gen:break
+  affinity:  # +doc-gen:break
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
