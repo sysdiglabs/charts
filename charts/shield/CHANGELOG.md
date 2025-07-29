@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.14.0
+### Chores
+* **shield** [cf14ab7b](https://github.com/sysdiglabs/charts/commit/cf14ab7b9dbc26cbb86720accbfb116987ae2cc8): bump host-shield windows to 0.10.0 ([#2330](https://github.com/sysdiglabs/charts/issues/2330))
 # v1.13.0
 ### New Features
 * **agent,shield,sysdig-deploy** [c1708a09](https://github.com/sysdiglabs/charts/commit/c1708a09161c7b410858ba8b5d346efd7c59108e): release agent 14.1.0 ([#2329](https://github.com/sysdiglabs/charts/issues/2329))
