@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.36.3
+### Chores
+* **sysdig-deploy,node-analyzer** [91bc80db](https://github.com/sysdiglabs/charts/commit/91bc80db072d995f7ca36f6b4f5e52765d8adbe4): bump runtime-scanner to v1.8.4 ([#2331](https://github.com/sysdiglabs/charts/issues/2331))
 # v1.36.2
 ### Chores
 * **nodeanalyzer** [a6020521](https://github.com/sysdiglabs/charts/commit/a602052122dc6b110891a5a8b7aa20fd5cd8d640): bumped kspm-analyzer to the latest released version ([#2323](https://github.com/sysdiglabs/charts/issues/2323))
