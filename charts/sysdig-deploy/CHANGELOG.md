@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.91.0
+### Chores
+* **cluster-shield,sysdig-deploy** [43070907](https://github.com/sysdiglabs/charts/commit/4307090721541412594aab33a8cf3120b44c22d7): Automatic bump to version 1.14.0 ([#2333](https://github.com/sysdiglabs/charts/issues/2333))
 # v1.90.1
 ### Chores
 * **sysdig-deploy,node-analyzer** [91bc80db](https://github.com/sysdiglabs/charts/commit/91bc80db072d995f7ca36f6b4f5e52765d8adbe4): bump runtime-scanner to v1.8.4 ([#2331](https://github.com/sysdiglabs/charts/issues/2331))
