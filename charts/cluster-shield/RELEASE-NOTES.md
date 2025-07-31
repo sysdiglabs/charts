@@ -1,5 +1,5 @@
 # What's Changed
 
 ### Chores
-- **cluster-shield,shield,sysdig-deploy** [d0784daf](https://github.com/sysdiglabs/charts/commit/d0784dafa3ec6651de22632232cfd0f5e9547c4b): Automatic bump to version 1.13.0 ([#2297](https://github.com/sysdiglabs/charts/issues/2297))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/cluster-shield-1.12.1...cluster-shield-1.13.0
+- **cluster-shield,sysdig-deploy** [43070907](https://github.com/sysdiglabs/charts/commit/4307090721541412594aab33a8cf3120b44c22d7): Automatic bump to version 1.14.0 ([#2333](https://github.com/sysdiglabs/charts/issues/2333))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/cluster-shield-1.13.0...cluster-shield-1.14.0
