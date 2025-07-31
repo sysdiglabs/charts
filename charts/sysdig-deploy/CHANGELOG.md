@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.90.1
+### Chores
+* **sysdig-deploy,node-analyzer** [91bc80db](https://github.com/sysdiglabs/charts/commit/91bc80db072d995f7ca36f6b4f5e52765d8adbe4): bump runtime-scanner to v1.8.4 ([#2331](https://github.com/sysdiglabs/charts/issues/2331))
 # v1.90.0
 ### New Features
 * **agent,shield,sysdig-deploy** [c1708a09](https://github.com/sysdiglabs/charts/commit/c1708a09161c7b410858ba8b5d346efd7c59108e): release agent 14.1.0 ([#2329](https://github.com/sysdiglabs/charts/issues/2329))
