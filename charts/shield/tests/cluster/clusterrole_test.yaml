@@ -508,6 +508,15 @@ tests:
           path: rules
           content:
             apiGroups:
+              - batch
+            resources:
+              - jobs
+            verbs:
+              - get
+      - contains:
+          path: rules
+          content:
+            apiGroups:
               - apps
             resources:
               - daemonsets
@@ -536,6 +545,7 @@ tests:
               - daemonsets
               - deployments
               - statefulsets
+              - replicasets
             verbs:
               - get
       - contains:
@@ -566,6 +576,7 @@ tests:
               - daemonsets
               - deployments
               - statefulsets
+              - replicasets
             verbs:
               - get
       - contains:
@@ -595,6 +606,7 @@ tests:
               - daemonsets
               - deployments
               - statefulsets
+              - replicasets
             verbs:
               - get
       - contains:
