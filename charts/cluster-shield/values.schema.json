@@ -1101,42 +1101,64 @@
               "default": 60,
               "minimum": 1,
               "maximum": 65535,
-              "description": "Global timeout in seconds for actions."
+              "description": "Global timeout for executing the actions, in seconds."
             },
             "cluster": {
               "$ref": "#/$defs/ClusterShieldConfiguration/$defs/RespondResponseActionsCluster"
+            },
+            "delete_pod": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/BaseActionConfiguration"
+            },
+            "rollout_restart": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/BaseActionConfiguration"
+            },
+            "isolate_network": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/BaseActionConfiguration"
+            },
+            "delete_network_policy": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/BaseActionConfiguration"
+            },
+            "get_logs": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/BaseActionConfiguration"
+            },
+            "volume_snapshot": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/BaseActionConfiguration"
+            },
+            "delete_volume_snapshot": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/BaseActionConfiguration"
             }
           },
           "required": [
             "enabled"
-          ],
-          "$defs": {
-            "IsEnabled": {
-              "properties": {
-                "enabled": {
-                  "const": true
-                }
-              }
-            },
-            "SetRequired": {
-              "required": [
-                "cluster"
-              ]
-            }
-          }
+          ]
         },
         "RespondResponseActionsCluster": {
           "type": "object",
           "properties": {
             "volume_snapshot_class": {
               "type": "string",
-              "description": "The VolumeSnapshotClass used for snapshots."
+              "description": "The VolumeSnapshotClass to use for creating Volume snapshots."
             }
           },
-          "required": [
-            "volume_snapshot_class"
-          ],
           "additionalProperties": false
+        },
+        "BaseActionConfiguration": {
+          "type": "object",
+          "properties": {
+            "trigger": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/ActionTrigger"
+            }
+          },
+          "additionalProperties": false
+        },
+        "ActionTrigger": {
+          "type": "string",
+          "enum": [
+            "none",
+            "all"
+          ],
+          "default": "all",
+          "description": "Controls functionality how this action can be triggered. `none` effectively turns off the action."
         },
         "Respond": {
           "type": "object",
@@ -1334,7 +1356,7 @@
               "$ref": "#/$defs/ClusterShieldConfiguration/$defs/KubernetesMetadata"
             },
             "respond": {
-              "description": "Configurations for the respond feature",
+              "description": "Configurations for the response feature",
               "$ref": "#/$defs/ClusterShieldConfiguration/$defs/Respond"
             },
             "posture": {

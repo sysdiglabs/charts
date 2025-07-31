@@ -51,6 +51,13 @@ Adds kubernetes related keys to the configuration.
 {{- define "cluster-shield.configMap" -}}
 {{- $conf := deepCopy .Values.cluster_shield -}}
 {{- $_ := set $conf "kubernetes" (include "cluster-shield.configurationKubernetes" . | fromYaml) -}}
+{{- if regexMatch "^v?([0-9]+)(\\.[0-9]+)?(\\.[0-9]+)?(-([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?(\\+([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?$" (.Values.onPremCompatibilityVersion | default "") -}}
+    {{- if semverCompare "< 7.3.0" .Values.onPremCompatibilityVersion -}}
+        {{- if hasKey $conf.features "respond" -}}
+            {{- $_ := unset $conf.features "respond" -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
 {{- if eq "true" (include "cluster-shield.containerVulnerabilityManagementEnabled" .) -}}
 {{- if regexMatch "^v?([0-9]+)(\\.[0-9]+)?(\\.[0-9]+)?(-([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?(\\+([0-9A-Za-z\\-]+(\\.[0-9A-Za-z\\-]+)*))?$" (.Values.onPremCompatibilityVersion | default "") -}}
 {{- if semverCompare "< 6.12.0" .Values.onPremCompatibilityVersion -}}
@@ -499,27 +506,46 @@ run-all-namespaced
 {{- end }}
 
 {{/*
+Generic helper: checks if .Values.cluster_shield.features.respond.response_actions.cluster.<action>.trigger == "all"
+Usage: {{ include "cluster.response_actions.is_enabled" (dict "Action" "delete_pod" "Context" .) }}
+*/}}
+{{- define "cluster.response_actions.is_enabled" -}}
+    {{- $action := .Action }}
+    {{- $ctx := .Context }}
+    {{- with $ctx.Values.cluster_shield.features.respond.response_actions -}}
+        {{- $entry := index . $action }}
+        {{- if and $entry (eq $entry.trigger "none") -}}
+            false
+        {{- else -}}
+            true
+        {{- end -}}
+    {{- else -}}
+        true
+    {{- end -}}
+{{- end -}}
+
+{{/*
 Response Actions: Cluster actions
 In the future we will have more complex logic to determine if the action is enabled or not.
 */}}
 {{- define "cluster.response_actions.rollout_restart.enabled" }}
-    {{- include "cluster.response_actions_enabled" . }}
+    {{- include "cluster.response_actions.is_enabled" (dict "Action" "rollout_restart" "Context" .) }}
 {{- end}}
 {{- define "cluster.response_actions.delete_pod.enabled" }}
-    {{- include "cluster.response_actions_enabled" . }}
+    {{- include "cluster.response_actions.is_enabled" (dict "Action" "delete_pod" "Context" .) }}
 {{- end}}
 {{- define "cluster.response_actions.isolate_network.enabled" }}
-    {{- include "cluster.response_actions_enabled" . }}
+    {{- include "cluster.response_actions.is_enabled" (dict "Action" "isolate_network" "Context" .) }}
 {{- end}}
 {{- define "cluster.response_actions.delete_network_policy.enabled" }}
-    {{- include "cluster.response_actions_enabled" . }}
+    {{- include "cluster.response_actions.is_enabled" (dict "Action" "delete_network_policy" "Context" .) }}
 {{- end}}
 {{- define "cluster.response_actions.get_logs.enabled" }}
-    {{- include "cluster.response_actions_enabled" . }}
+    {{- include "cluster.response_actions.is_enabled" (dict "Action" "get_logs" "Context" .) }}
 {{- end}}
 {{- define "cluster.response_actions.volume_snapshot.enabled" }}
-    {{- include "cluster.response_actions_enabled" . }}
+    {{- include "cluster.response_actions.is_enabled" (dict "Action" "volume_snapshot" "Context" .) }}
 {{- end}}
-{{- define "cluster.response_actions.delete_volume_snapshot.enabled" }}
-    {{- include "cluster.response_actions_enabled" . }}
+{{- define "cluster.response_actions.delete_volume_snapshot.enabled" -}}
+    {{- include "cluster.response_actions.is_enabled" (dict "Action" "delete_volume_snapshot" "Context" .) -}}
 {{- end}}

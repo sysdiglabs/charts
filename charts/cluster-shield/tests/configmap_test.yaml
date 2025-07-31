@@ -485,3 +485,49 @@ tests:
               tags:
                 key1: value1
                 key2: "true"
+
+  - it: Test Cluster Config Response Actions with on prem >= 7.3.0
+    set:
+      onPremCompatibilityVersion: v7.3.0
+      cluster_shield:
+        features:
+          respond:
+            response_actions:
+              enabled: true
+    asserts:
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+      - hasDocuments:
+          count: 1
+      - exists:
+          path: data
+      - exists:
+          path: data["cluster-shield.yaml"]
+      - matchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: |
+            response_actions:
+
+  - it: Test Cluster Config Response Actions with on prem < 7.3.0
+    set:
+      onPremCompatibilityVersion: v7.2.0
+      cluster_shield:
+        features:
+          respond:
+            response_actions:
+              enabled: true
+    asserts:
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+      - hasDocuments:
+          count: 1
+      - exists:
+          path: data
+      - exists:
+          path: data["cluster-shield.yaml"]
+      - notMatchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: |
+            response_actions:
