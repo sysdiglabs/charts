@@ -19,6 +19,23 @@ tests:
       - contains:
           path: users
           content: "system:serviceaccount:shield-namespace:shield-release-cluster-shield"
+      - equal:
+          path: allowHostPorts
+          value: false
+
+  - it: Test run-all-namespaced mode with host network enabled
+    set:
+      run_command: "run-all-namespaced"
+      hostNetwork: true
+    asserts:
+      - isKind:
+          of: SecurityContextConstraints
+      - contains:
+          path: users
+          content: "system:serviceaccount:shield-namespace:shield-release-cluster-shield"
+      - equal:
+          path: allowHostPorts
+          value: true
 
   - it: Test run-all-namespaced mode with custom service account name
     set:
