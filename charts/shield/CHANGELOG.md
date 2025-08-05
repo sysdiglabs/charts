@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.15.2
+### New Features
+* **agent,shield** [62c6f923](https://github.com/sysdiglabs/charts/commit/62c6f923ba84c97589b9ea85686ccf41a4043940): release agent 14.1.1 ([#2337](https://github.com/sysdiglabs/charts/issues/2337))
 # v1.15.1
 ### Bug Fixes
 * **response actions** [a5e8559b](https://github.com/sysdiglabs/charts/commit/a5e8559b9c3374ffdce4f2de3d156c2af27afea9): Add necessary permissions for jobs and replicasets ([#2334](https://github.com/sysdiglabs/charts/issues/2334))
