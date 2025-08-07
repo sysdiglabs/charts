@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **agent,shield** [62c6f923](https://github.com/sysdiglabs/charts/commit/62c6f923ba84c97589b9ea85686ccf41a4043940): release agent 14.1.1 ([#2337](https://github.com/sysdiglabs/charts/issues/2337))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.15.1...shield-1.15.2
+### Documentation
+- **agent** [1f478085](https://github.com/sysdiglabs/charts/commit/1f47808574f81c12f656a762c23464f458e1e524): Add App Checks example as comments ([#2340](https://github.com/sysdiglabs/charts/issues/2340))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.15.2...shield-1.15.3
