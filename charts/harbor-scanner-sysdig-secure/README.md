@@ -1,4 +1,18 @@
-# Chart: Harbor Scanner Adapter for Sysdig Secure
+<!--
+TODO: Correct content is now in README.md, being refactories. We will copy back to README.tpl once finished
+
+DO NOT MODIFY README.md MANUALLY!! CHANGE README.tpl instead!!
+
+README.md IS AUTO-GENERATED vía README.tpl with pre-comit plugin
+this is under construction so it must be launched manually
+
+in the project root, run:
+$ pre-commit install
+$ pre-commit run -a
+
+-->
+
+# Harbor Scanner Adapter for Sysdig Secure
 
 This chart deploys the [Harbor Scanner Adapter](https://github.com/sysdiglabs/harbor-scanner-sysdig-secure) for Sysdig Secure on your Kubernetes cluster.
 
@@ -14,7 +28,7 @@ To install the chart:
 ```console
 helm repo add sysdig https://charts.sysdig.com
 helm repo update
-helm install harbor-scanner-sysdig-secure --namespace harbor-scanner-sysdig-secure --create-namespace -f values.yaml sysdig/harbor-scanner-sysdig-secure
+helm install sysdig-harbor-scanner --namespace sysdig-harbor-scanner --create-namespace -f values.yaml sysdig/harbor-scanner-sysdig-secure
 ```
 
 ## Verify the integrity and origin
@@ -44,55 +58,63 @@ Specify each parameter using the `--set key=value[,key=value]` argument to the `
 
 For example:
 
-```console
-helm install harborscanner-release \
-    --set sysdig.secure.apiToken=<SECURE-API-TOKEN> \
-    sysdig/harbor-scanner-sysdig-secure
+```bash
+helm upgrade --install sysdig-harbor-scanner sysdig/harbor-scanner-sysdig-secure \
+    --create-namespace -n sysdig-harbor-scanner --version=0.9.0  \
+    --set sysdig.secure.apiToken=<SECURE-API-TOKEN>
 ```
 
 ### Using values.yaml
 
-The `values.yaml` file specifies the values for the configuration parameters.  You can add the configuration to the `values.yaml` file, then use it in the `helm install` command.
+The `values.yaml` file specifies the values for the admission controller configuration parameters.  You can add the configuration to the `values.yaml` file, then use it in the `helm install` command.
 
-```console
-$ helm install harborscanner-release -f values.yaml sysdig/harbor-scanner-sysdig-secure
+For example:
+
+```bash
+helm upgrade --install sysdig-harbor-scanner sysdig/harbor-scanner-sysdig-secure \
+     --create-namespace -n sysdig-harbor-scanner --version=0.9.0  \
+    --values values.yaml
+
 ```
+
+See the default [`values.yaml`](./values.yaml) file for more information.
+
 
 ## Configuration Parameters
 
-The following table lists the configurable parameters of the Harbor Scanner
-Sysdig Secure chart and their default values:
+The following table lists the configurable parameters of the `harbor-scanner-sysdig-secure` chart and their default values.
 
-| Parameter                                    | Description                                                  | Default                                   |
-| -------------------------------------------- | ------------------------------------------------------------ | ----------------------------------------- |
-| `customEntryPoint`                           | Overrides the container entrypoint.                          | `[]`                                      |
-| `replicaCount`                               | Specifies the number of replicas for the Scanner Adapter.    | `1`                                       |
-| `image.repository`                           | Specifies the image repository to pull the image from.       | `sysdiglabs/harbor-scanner-sysdig-secure` |
-| `image.tag`                                  | Specifies the image tag to pull.                             | `{{ Chart.AppVersion }}`                  |
-| `image.pullPolicy`                           | Specifies the image pull policy.                             | `IfNotPresent`                            |
-| `imagePullSecrets`                           | Specifies the image pull secrets.                            | `[]`                                      |
-| `nameOverride`                               | Specifies the chart name override.                           | ` `                                       |
-| `fullnameOverride`                           | Specifies the chart full name override                       | ` `                                       |
-| `serviceAccount.create`                      | Creates the service account.                                 | `true`                                    |
-| `serviceAccount.annotations`                 | Specifies the extra annotations for serviceAccount.          | `{}`                                      |
-| `serviceAccount.name`                        | Specifies the serviceAccount name.                           | ` `                                       |
-| `rbac.create`                                | Creates and uses RBAC resources.                             | `true`                                    |
-| `podAnnotations`                             | Specifies the custom pod annotations.                        | `{}`                                      |
-| `podSecurityContext`                         | Enables deployment PSPs.                                     | `{}`                                      |
-| `securityContext`                            | Enables securityContext.                                     | `{}`                                      |
-| `service.type`                               | Specifies the service type.                                  | `ClusterIP`                               |
-| `service.port`                               | Specifies the port for the service.                          | `5000`                                    |
-| `nodeSelector`                               | Specifies the nodeSelector for scheduling.                   | `{}`                                      |
-| `tolerations`                                | Specifies the tolerations for scheduling.                    | `[]`                                      |
-| `affinity`                                   | Enables affinity rules                                       | `{}`                                      |
-| `sysdig.secure.apiToken`                     | Specifies the API Token to access Sysdig Secure. This value is **required** if the `sysdig.secure.existingSecureAPITokenSecret` is not specified. | ` `                                       |
-| `sysdig.secure.existingSecureAPITokenSecret` | Specifies the existing secret name with API Token to access Sysdig Secure <br/>Alternatively, you can specify the name of a Kubernetes secret containing `sysdig_secure_api_token` entry. <br/><br/>If both are not configured, you must  provide the deployment with the `SECURE_API_TOKEN` environment variables. | ` `                                       |
-| `sysdig.secure.url`                          | Specifies the Sysdig Secure endpoint.                        | `https://secure.sysdig.com`               |
-| `sysdig.secure.verifySSL`                    | Verifies whether SSL certificate when connecting to Sysdig Secure endpoint. | `true`                                    |
-| `proxy.httpProxy`                            | Specifies the URL of the proxy for HTTP connections. Leave empty if not using proxy. It sets the `http_proxy` environment variable.    | ` `                                       |
-| `proxy.httpsProxy`                           | Specifies the URL of the proxy for HTTPS connections. Leave empty if not using proxy.  It sets the `https_proxy` environment variable. | ` `                                       |
-| `proxy.noProxy`                              | Specifies the comma-separated list of domain extensions proxy should not be used for. Includes the internal IP of the kube API server. | ` `                                       |
-| `cliScanning.enabled`                        | Enables the CLI Scanning feature.                            | `true`                                    |
-| `cliScanning.image`                          | Specifies the pullstring for the CLI Scanner Image.          | `alpine:latest`                           |
-| `cliScanning.existingSecureAPITokenSecret`   | Specifies the existing secret name with API Token to access Sysdig Secure                         | `{{ include "harbor-scanner-sysdig-secure.fullname" . }}`                                    |
-| `asyncMode.enabled`                          | Enables the Async-Mode feature.                              | `false`                                   |
+|                 Parameter                  |                                                                                                                                  Description                                                                                                                                   |                        Default                        |
+|--------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------|
+| replicaCount                               | Specifies the number of replicas for the Scanner Adapter.                                                                                                                                                                                                                      | <code>1</code>                                        |
+| image.repository                           | Specifies the image repository to pull the image from.                                                                                                                                                                                                                         | <code>sysdiglabs/harbor-scanner-sysdig-secure</code>  |
+| image.tag                                  | Specifies the image tag to pull.                                                                                                                                                                                                                                               | <code></code>                                         |
+| image.pullPolicy                           | Specifies the image pull policy.                                                                                                                                                                                                                                               | <code>IfNotPresent</code>                             |
+| imagePullSecrets                           | Specifies the image pull secrets.                                                                                                                                                                                                                                              | <code>[]</code>                                       |
+| nameOverride                               | Specifies the chart name override.                                                                                                                                                                                                                                             | <code>""</code>                                       |
+| fullnameOverride                           | Specifies the chart full name override                                                                                                                                                                                                                                         | <code>""</code>                                       |
+| podAnnotations                             | Specifies the custom pod annotations.                                                                                                                                                                                                                                          | <code>{}</code>                                       |
+| serviceAccount.create                      | Specifies whether a service account should be created                                                                                                                                                                                                                          | <code>true</code>                                     |
+| serviceAccount.annotations                 | Annotations to add to the service account                                                                                                                                                                                                                                      | <code>{}</code>                                       |
+| serviceAccount.name                        | The name of the service account to use. If not set and create is true, a name is generated using the fullname template                                                                                                                                                         | <code></code>                                         |
+| rbac.create                                | Creates and uses RBAC resources.                                                                                                                                                                                                                                               | <code>true</code>                                     |
+| podSecurityContext                         | Enables deployment PSPs.                                                                                                                                                                                                                                                       | <code>{}</code>                                       |
+| securityContext                            | Enables securityContext.                                                                                                                                                                                                                                                       | <code>{}</code>                                       |
+| service.type                               | Specifies the service type.                                                                                                                                                                                                                                                    | <code>ClusterIP</code>                                |
+| service.port                               | Specifies the port for the service.                                                                                                                                                                                                                                            | <code>5000</code>                                     |
+| resources                                  | Specifies the resources of the pod.                                                                                                                                                                                                                                            | <code>{}</code>                                       |
+| nodeSelector                               | Specifies the nodeSelector for scheduling.                                                                                                                                                                                                                                     | <code>{}</code>                                       |
+| tolerations                                | Specifies the tolerations for scheduling.                                                                                                                                                                                                                                      | <code>[]</code>                                       |
+| affinity                                   | Enables affinity rules                                                                                                                                                                                                                                                         | <code>{}</code>                                       |
+| customEntryPoint                           | Overrides the container entrypoint.                                                                                                                                                                                                                                            | <code>[]</code>                                       |
+| sysdig.secure.apiToken                     | Specifies the API Token to access Sysdig Secure. This value is **required** if the `sysdig.secure.existingSecureAPITokenSecret` is not specified.                                                                                                                              | <code>""</code>                                       |
+| sysdig.secure.existingSecureAPITokenSecret | Specifies the existing secret name with API Token to access Sysdig Secure. Specify the name of a Kubernetes secret containing an 'sysdig_secure_api_token' entry If both are not configured, you must provide the deployment with the `SECURE_API_TOKEN` environment variable. | <code>""</code>                                       |
+| sysdig.secure.url                          | Sysdig backend URL. SaaS Regions API endpoints are listed [here](https://docs.sysdig.com/en/docs/administration/saas-regions-and-ip-ranges/)                                                                                                                                   | <code>"https://secure.sysdig.com"</code>              |
+| sysdig.secure.verifySSL                    | Verifies whether SSL certificate when connecting to Sysdig Secure endpoint.                                                                                                                                                                                                    | <code>true</code>                                     |
+| proxy.httpProxy                            | Specifies the URL of the proxy for HTTP connections. Leave empty if not using proxy. It sets the `http_proxy` environment variable.                                                                                                                                            | <code></code>                                         |
+| proxy.httpsProxy                           | Specifies the URL of the proxy for HTTPS connections. Leave empty if not using proxy. It sets the `https_proxy` environment variable.                                                                                                                                          | <code></code>                                         |
+| proxy.noProxy                              | Comma-separated list of domain extensions proxy should not be used for. Include in `noProxy` the internal IP of the kubeapi server, and you probably need to add your registry if it is inside the cluster                                                                     | <code></code>                                         |
+| cliScanning.enabled                        | Enables the CLI Scanning feature.                                                                                                                                                                                                                                              | <code>true</code>                                     |
+| cliScanning.image                          | Specifies the pullstring for the CLI Scanner Image.                                                                                                                                                                                                                            | <code>quay.io/sysdig/sysdig-cli-scanner:latest</code> |
+| cliScanning.existingSecureAPITokenSecret   | Specifies the existing secret name with API Token to access Sysdig Secure                                                                                                                                                                                                      | <code>""</code>                                       |
+| asyncMode.enabled                          | Enables the Async-Mode feature.                                                                                                                                                                                                                                                | <code>true</code>                                     |
