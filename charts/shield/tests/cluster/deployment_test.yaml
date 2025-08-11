@@ -32,6 +32,21 @@ tests:
           value: myregistry.io/ext/sysdig/cluster-shield:1.4.0
     template: templates/cluster/deployment.yaml
 
+  - it: Specify digest in tag
+    set:
+      cluster:
+        image:
+          tag: 1.4.0@sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].image
+          value: quay.io/sysdig/cluster-shield:1.4.0@sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      - isSubset:
+          path: metadata.labels
+          content:
+            sysdig/component-version: 1.4.0
+    template: templates/cluster/deployment.yaml
+
   - it: Does not contain proxy environment variables
     asserts:
       - containsDocument:

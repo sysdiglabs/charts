@@ -179,6 +179,20 @@ tests:
           path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].image
           value: quay.io/sysdig/agent-slim:latest
 
+  - it: Digest in image tag
+    set:
+      host:
+        image:
+          tag: 14.1.0@sha256:2c6401018cfe3f5fcbd0713b64b096c38d47de1b5cd6c11de4691912752263fc
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].image
+          value: quay.io/sysdig/agent-slim:14.1.0@sha256:2c6401018cfe3f5fcbd0713b64b096c38d47de1b5cd6c11de4691912752263fc
+      - isSubset:
+          path: metadata.labels
+          content:
+            sysdig/component-version: 14.1.0
+
   - it: Default workload labels
     set:
       host:

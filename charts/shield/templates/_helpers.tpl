@@ -56,7 +56,7 @@ Component labels
 {{- define "shield.component_labels" -}}
 {{ include "shield.component_name_label" .}}: {{ required "A valid component name must be provided" .name }}
 {{- if .version }}
-{{ include "shield.component_version_label" .}}: {{ .version }}
+{{ include "shield.component_version_label" .}}: {{ .version | regexFind "^[^@]+" | trunc 63 }}
 {{- end }}
 {{- end }}
 
