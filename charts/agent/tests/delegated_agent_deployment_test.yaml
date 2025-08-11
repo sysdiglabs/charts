@@ -257,13 +257,13 @@ tests:
   - it: Test container image
     set:
       image:
-        tag: 86.753.09
+        tag: 86.753.9
       delegatedAgentDeployment:
         enabled: true
     asserts:
       - equal:
           path: spec.template.spec.containers[0].image
-          value: "quay.io/sysdig/agent-slim:86.753.09"
+          value: "quay.io/sysdig/agent-slim:86.753.9"
       - equal:
           path: spec.template.spec.containers[0].imagePullPolicy
           value: IfNotPresent
