@@ -15,6 +15,14 @@
                                    "monitor_api_endpoint" "eu1.app.sysdig.com"
                                    "secure_api_endpoint"  "eu1.app.sysdig.com"
                                    "secure_ui"           "eu1.app.sysdig.com/secure")
+                       "eu2" (dict "collector_endpoint"  "ingest.eu2.sysdig.com"
+                                   "monitor_api_endpoint" "app.eu2.sysdig.com"
+                                   "secure_api_endpoint"  "app.eu2.sysdig.com"
+                                   "secure_ui"           "app.eu2.sysdig.com/secure")
+                       "eu2-alt" (dict "collector_endpoint"  "ingest-alt.eu2.sysdig.com"
+                                   "monitor_api_endpoint" "app.eu2.sysdig.com"
+                                   "secure_api_endpoint"  "app.eu2.sysdig.com"
+                                   "secure_ui"           "app.eu2.sysdig.com/secure")
                        "in1" (dict "collector_endpoint"  "ingest.in1.sysdig.com"
                                    "monitor_api_endpoint" "app.in1.sysdig.com"
                                    "secure_api_endpoint"  "app.in1.sysdig.com"
@@ -71,6 +79,10 @@
                                                "monitor_api_endpoint" "br-sao.monitoring.cloud.ibm.com"
                                                "secure_api_endpoint"  "br-sao.security-compliance-secure.cloud.ibm.com"
                                                "secure_ui"           "br-sao.security-compliance-secure.cloud.ibm.com")
+                      "ca-mon-monitor"   (dict "collector_endpoint"  "ingest.ca-mon.monitoring.cloud.ibm.com"
+                                               "monitor_api_endpoint" "ca-mon.monitoring.cloud.ibm.com"
+                                               "secure_api_endpoint"  "ca-mon.security-compliance-secure.cloud.ibm.com"
+                                               "secure_ui"           "ca-mon.security-compliance-secure.cloud.ibm.com")
                       "ca-tor-monitor"   (dict "collector_endpoint"  "ingest.ca-tor.monitoring.cloud.ibm.com"
                                                "monitor_api_endpoint" "ca-tor.monitoring.cloud.ibm.com"
                                                "secure_api_endpoint"  "ca-tor.security-compliance-secure.cloud.ibm.com"
@@ -107,6 +119,10 @@
                                                        "monitor_api_endpoint" "private.br-sao.monitoring.cloud.ibm.com"
                                                        "secure_api_endpoint"  "private.br-sao.security-compliance-secure.cloud.ibm.com"
                                                        "secure_ui"           "private.br-sao.security-compliance-secure.cloud.ibm.com")
+                      "ca-mon-private-monitor"   (dict "collector_endpoint"  "ingest.private.ca-mon.monitoring.cloud.ibm.com"
+                                                       "monitor_api_endpoint" "private.ca-mon.monitoring.cloud.ibm.com"
+                                                       "secure_api_endpoint"  "private.ca-mon.security-compliance-secure.cloud.ibm.com"
+                                                       "secure_ui"           "private.ca-mon.security-compliance-secure.cloud.ibm.com")
                       "ca-tor-private-monitor"   (dict "collector_endpoint"  "ingest.private.ca-tor.monitoring.cloud.ibm.com"
                                                        "monitor_api_endpoint" "private.ca-tor.monitoring.cloud.ibm.com"
                                                        "secure_api_endpoint"  "private.ca-tor.security-compliance-secure.cloud.ibm.com"
@@ -143,6 +159,10 @@
                                               "monitor_api_endpoint" "br-sao.monitoring.cloud.ibm.com"
                                               "secure_api_endpoint"  "br-sao.security-compliance-secure.cloud.ibm.com"
                                               "secure_ui"           "br-sao.security-compliance-secure.cloud.ibm.com")
+                      "ca-mon-secure"   (dict "collector_endpoint"  "ingest.ca-mon.security-compliance-secure.cloud.ibm.com"
+                                               "monitor_api_endpoint" "ca-mon.monitoring.cloud.ibm.com"
+                                               "secure_api_endpoint"  "ca-mon.security-compliance-secure.cloud.ibm.com"
+                                               "secure_ui"           "ca-mon.security-compliance-secure.cloud.ibm.com")
                       "ca-tor-secure"   (dict "collector_endpoint"  "ingest.ca-tor.security-compliance-secure.cloud.ibm.com"
                                               "monitor_api_endpoint" "ca-tor.monitoring.cloud.ibm.com"
                                               "secure_api_endpoint"  "ca-tor.security-compliance-secure.cloud.ibm.com"
@@ -179,6 +199,10 @@
                                                       "monitor_api_endpoint" "private.br-sao.monitoring.cloud.ibm.com"
                                                       "secure_api_endpoint"  "private.br-sao.security-compliance-secure.cloud.ibm.com"
                                                       "secure_ui"           "private.br-sao.security-compliance-secure.cloud.ibm.com")
+                      "ca-mon-private-secure"   (dict "collector_endpoint"  "ingest.private.ca-mon.security-compliance-secure.cloud.ibm.com"
+                                                      "monitor_api_endpoint" "private.ca-mon.monitoring.cloud.ibm.com"
+                                                      "secure_api_endpoint"  "private.ca-mon.security-compliance-secure.cloud.ibm.com"
+                                                      "secure_ui"           "private.ca-mon.security-compliance-secure.cloud.ibm.com")
                       "ca-tor-private-secure"   (dict "collector_endpoint"  "ingest.private.ca-tor.security-compliance-secure.cloud.ibm.com"
                                                       "monitor_api_endpoint" "private.ca-tor.monitoring.cloud.ibm.com"
                                                       "secure_api_endpoint"  "private.ca-tor.security-compliance-secure.cloud.ibm.com"
@@ -250,6 +274,7 @@
   {{- $altRegions := list
     "au1-alt"
     "eu1-alt"
+    "eu2-alt"
     "in1-alt"
     "me2-alt"
     "us1-alt"
