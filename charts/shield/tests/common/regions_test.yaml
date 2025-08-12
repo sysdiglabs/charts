@@ -1,29 +1,112 @@
 suite: Common - Regions
 templates:
   - templates/host/configmap.yaml
+  - templates/cluster/configmap.yaml
+  - templates/host/configmap-windows.yaml
 release:
   name: release-name
   namespace: shield-namespace
 values:
   - ../values/base.yaml
 tests:
-  - it: Sanity check for regions
+  - it: Sanity check for regions (host)
     set:
       sysdig_endpoint:
         region: "eu1"
+    template: host/configmap.yaml
     asserts:
       - matchRegex:
           path: data["dragent.yaml"]
           pattern: |
             collector: ingest-eu1.app.sysdig.com
             collector_port: 6443
+      - matchRegex:
+          path: data["dragent.yaml"]
+          pattern: |
+            sysdig_api_endpoint: eu1.app.sysdig.com
 
-  - it: API endpoint validation
+  - it: Sanity check for alternate regions (host)
     set:
       sysdig_endpoint:
-        region: "us1"
+        region: "eu1-alt"
+    template: host/configmap.yaml
     asserts:
       - matchRegex:
           path: data["dragent.yaml"]
           pattern: |
-            sysdig_api_endpoint: secure.sysdig.com
+            collector: ingest-alt-eu1.app.sysdig.com
+            collector_port: 443
+      - matchRegex:
+          path: data["dragent.yaml"]
+          pattern: |
+            sysdig_api_endpoint: eu1.app.sysdig.com
+
+  - it: Sanity check for regions (cluster)
+    set:
+      sysdig_endpoint:
+        region: "eu1"
+        api_url:
+        collector:
+          host:
+          port:
+    template: cluster/configmap.yaml
+    asserts:
+      - matchRegex:
+          path: data["cluster-shield.yaml"]
+          pattern: |
+            sysdig_endpoint:
+              region: eu1
+
+  - it: Sanity check for alternate regions (cluster)
+    set:
+      sysdig_endpoint:
+        region: "eu1-alt"
+        api_url:
+        collector:
+          host:
+          port:
+    template: cluster/configmap.yaml
+    asserts:
+      - matchRegex:
+          path: data["cluster-shield.yaml"]
+          pattern: |
+            sysdig_endpoint:
+              region: eu1-alt
+
+  - it: Sanity check for regions (host-windows)
+    set:
+      host_windows:
+        enabled: true
+      sysdig_endpoint:
+        region: "eu1"
+        api_url:
+        collector:
+          host:
+          port:
+    template: host/configmap-windows.yaml
+    asserts:
+      - matchRegex:
+          path: data["host-shield.yaml"]
+          pattern: |
+            sysdig_endpoint:
+              collector: {}
+              region: eu1
+
+  - it: Sanity check for alternate regions (host-windows)
+    set:
+      host_windows:
+        enabled: true
+      sysdig_endpoint:
+        region: "eu1-alt"
+        api_url:
+        collector:
+          host:
+          port:
+    template: host/configmap-windows.yaml
+    asserts:
+      - matchRegex:
+          path: data["host-shield.yaml"]
+          pattern: |
+            sysdig_endpoint:
+              collector: {}
+              region: eu1-alt
