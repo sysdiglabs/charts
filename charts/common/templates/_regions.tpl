@@ -7,6 +7,10 @@
                                    "monitorApiEndpoint" "eu1.app.sysdig.com"
                                    "secureApiEndpoint"  "eu1.app.sysdig.com"
                                    "secureUi"           "eu1.app.sysdig.com/secure")
+                       "eu2" (dict "collectorEndpoint"  "ingest.eu2.sysdig.com"
+                                   "monitorApiEndpoint" "app.eu2.sysdig.com"
+                                   "secureApiEndpoint"  "app.eu2.sysdig.com"
+                                   "secureUi"           "app.eu2.sysdig.com/secure")
                        "in1" (dict "collectorEndpoint"  "ingest.in1.sysdig.com"
                                    "monitorApiEndpoint" "app.in1.sysdig.com"
                                    "secureApiEndpoint"  "app.in1.sysdig.com"
@@ -39,6 +43,10 @@
                                                "monitorApiEndpoint" "br-sao.monitoring.cloud.ibm.com"
                                                "secureApiEndpoint"  "br-sao.security-compliance-secure.cloud.ibm.com"
                                                "secureUi"           "br-sao.security-compliance-secure.cloud.ibm.com")
+                      "ca-mon-monitor"   (dict "collectorEndpoint"  "ingest.ca-mon.monitoring.cloud.ibm.com"
+                                               "monitorApiEndpoint" "ca-mon.monitoring.cloud.ibm.com"
+                                               "secureApiEndpoint"  "ca-mon.security-compliance-secure.cloud.ibm.com"
+                                               "secureUi"           "ca-mon.security-compliance-secure.cloud.ibm.com")
                       "ca-tor-monitor"   (dict "collectorEndpoint"  "ingest.ca-tor.monitoring.cloud.ibm.com"
                                                "monitorApiEndpoint" "ca-tor.monitoring.cloud.ibm.com"
                                                "secureApiEndpoint"  "ca-tor.security-compliance-secure.cloud.ibm.com"
@@ -75,6 +83,10 @@
                                                        "monitorApiEndpoint" "private.br-sao.monitoring.cloud.ibm.com"
                                                        "secureApiEndpoint"  "private.br-sao.security-compliance-secure.cloud.ibm.com"
                                                        "secureUi"           "private.br-sao.security-compliance-secure.cloud.ibm.com")
+                      "ca-mon-private-monitor"   (dict "collectorEndpoint"  "ingest.private.ca-mon.monitoring.cloud.ibm.com"
+                                                       "monitorApiEndpoint" "private.ca-mon.monitoring.cloud.ibm.com"
+                                                       "secureApiEndpoint"  "private.ca-mon.security-compliance-secure.cloud.ibm.com"
+                                                       "secureUi"           "private.ca-mon.security-compliance-secure.cloud.ibm.com")
                       "ca-tor-private-monitor"   (dict "collectorEndpoint"  "ingest.private.ca-tor.monitoring.cloud.ibm.com"
                                                        "monitorApiEndpoint" "private.ca-tor.monitoring.cloud.ibm.com"
                                                        "secureApiEndpoint"  "private.ca-tor.security-compliance-secure.cloud.ibm.com"
@@ -111,6 +123,10 @@
                                               "monitorApiEndpoint" "br-sao.monitoring.cloud.ibm.com"
                                               "secureApiEndpoint"  "br-sao.security-compliance-secure.cloud.ibm.com"
                                               "secureUi"           "br-sao.security-compliance-secure.cloud.ibm.com")
+                      "ca-mon-secure"   (dict "collectorEndpoint"  "ingest.ca-mon.security-compliance-secure.cloud.ibm.com"
+                                              "monitorApiEndpoint" "ca-mon.monitoring.cloud.ibm.com"
+                                              "secureApiEndpoint"  "ca-mon.security-compliance-secure.cloud.ibm.com"
+                                              "secureUi"           "ca-mon.security-compliance-secure.cloud.ibm.com")
                       "ca-tor-secure"   (dict "collectorEndpoint"  "ingest.ca-tor.security-compliance-secure.cloud.ibm.com"
                                               "monitorApiEndpoint" "ca-tor.monitoring.cloud.ibm.com"
                                               "secureApiEndpoint"  "ca-tor.security-compliance-secure.cloud.ibm.com"
@@ -147,6 +163,10 @@
                                                       "monitorApiEndpoint" "private.br-sao.monitoring.cloud.ibm.com"
                                                       "secureApiEndpoint"  "private.br-sao.security-compliance-secure.cloud.ibm.com"
                                                       "secureUi"           "private.br-sao.security-compliance-secure.cloud.ibm.com")
+                      "ca-mon-private-secure"   (dict "collectorEndpoint"  "ingest.private.ca-mon.security-compliance-secure.cloud.ibm.com"
+                                                      "monitorApiEndpoint" "private.ca-mon.monitoring.cloud.ibm.com"
+                                                      "secureApiEndpoint"  "private.ca-mon.security-compliance-secure.cloud.ibm.com"
+                                                      "secureUi"           "private.ca-mon.security-compliance-secure.cloud.ibm.com")
                       "ca-tor-private-secure"   (dict "collectorEndpoint"  "ingest.private.ca-tor.security-compliance-secure.cloud.ibm.com"
                                                       "monitorApiEndpoint" "private.ca-tor.monitoring.cloud.ibm.com"
                                                       "secureApiEndpoint"  "private.ca-tor.security-compliance-secure.cloud.ibm.com"
