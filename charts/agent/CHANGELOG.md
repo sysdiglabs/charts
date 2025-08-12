@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v2.2.3
+### Chores
+* [1973ead0](https://github.com/sysdiglabs/charts/commit/1973ead049d57fc70d4ffa7feee92cbdbaca8b6c): bump the helm unittest plugin version ([#2347](https://github.com/sysdiglabs/charts/issues/2347))
 # v2.2.2
 ### Documentation
 * **agent** [1f478085](https://github.com/sysdiglabs/charts/commit/1f47808574f81c12f656a762c23464f458e1e524): Add App Checks example as comments ([#2340](https://github.com/sysdiglabs/charts/issues/2340))
