@@ -1,5 +1,5 @@
 # What's Changed
 
-### Documentation
-- **agent** [1f478085](https://github.com/sysdiglabs/charts/commit/1f47808574f81c12f656a762c23464f458e1e524): Add App Checks example as comments ([#2340](https://github.com/sysdiglabs/charts/issues/2340))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.15.2...shield-1.15.3
+### Bug Fixes
+- **shield** [ff026255](https://github.com/sysdiglabs/charts/commit/ff026255c116a35e16c6835473ee8bda578a8ac8): Sanitize version label on shield objects ([#2346](https://github.com/sysdiglabs/charts/issues/2346))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.15.3...shield-1.15.4
