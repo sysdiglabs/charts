@@ -67,7 +67,7 @@ spec:
       containers:
         - name: "cluster-shield"
           imagePullPolicy: {{ .Values.cluster.image.pull_policy }}
-          image: "{{ .Values.cluster.image.registry }}/{{ .Values.cluster.image.repository }}:{{ .Values.cluster.image.tag }}"
+          image: "{{ .Values.cluster.image.registry }}/{{ .Values.cluster.image.repository }}{{ include "cluster.tag_separator" . }}{{ .Values.cluster.image.tag }}"
           args: [ {{ (include "cluster.run_command" .) | quote }} ]
           {{- if not (include "cluster.is_single_process_mode" .) }}
           securityContext:

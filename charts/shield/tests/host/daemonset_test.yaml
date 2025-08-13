@@ -193,6 +193,49 @@ tests:
           content:
             sysdig/component-version: 14.1.0
 
+  - it: Specify digest only
+    set:
+      host:
+        image:
+          tag: sha256:2c6401018cfe3f5fcbd0713b64b096c38d47de1b5cd6c11de4691912752263fc
+        driver: universal_ebpf
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].image
+          value: quay.io/sysdig/agent-slim@sha256:2c6401018cfe3f5fcbd0713b64b096c38d47de1b5cd6c11de4691912752263fc
+      - equal:
+          path: metadata.labels["sysdig/component-version"]
+          value: sha256_2c6401018cfe3f5fcbd0713b64b096c38d47de1b5cd6c11de4691912
+
+  - it: Digest is not used when tag is specified in kmodule image
+    set:
+      host:
+        image:
+          tag: 14.1.0@sha256:2c6401018cfe3f5fcbd0713b64b096c38d47de1b5cd6c11de4691912752263fc
+    asserts:
+      - equal:
+          path: spec.template.spec.initContainers[?(@.name == "sysdig-host-shield-kmodule")].image
+          value: quay.io/sysdig/agent-kmodule:14.1.0
+
+  - it: Digest only can't be used when tag is not specified and kmodule image is required
+    set:
+      host:
+        image:
+          tag: sha256:2c6401018cfe3f5fcbd0713b64b096c38d47de1b5cd6c11de4691912752263fc
+    asserts:
+      - failedTemplate:
+          errorMessage: Image tag sha256:2c6401018cfe3f5fcbd0713b64b096c38d47de1b5cd6c11de4691912752263fc can't be speficied when not using universal_ebpf driver
+
+  - it: Digest only can't be used when tag is not specified and kmodule image is required
+    set:
+      host:
+        driver: universal_ebpf
+        image:
+          tag: sha256:2c6401018cfe3f5fcbd0713b64b096c38d47de1b5cd6c11de4691912752263fc
+    asserts:
+      - notExists:
+          path: spec.template.spec.initContainers[?(@.name == "sysdig-host-shield-kmodule")]
+
   - it: Default workload labels
     set:
       host:

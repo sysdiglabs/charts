@@ -27,7 +27,15 @@
 {{- end }}
 
 {{- define "host.windows.shield_image" }}
-{{- .Values.host_windows.image.registry -}} / {{- .Values.host_windows.image.repository -}} / {{- .Values.host_windows.image.name -}} : {{- .Values.host_windows.image.tag }}
+{{- .Values.host_windows.image.registry -}} / {{- .Values.host_windows.image.repository -}} / {{- .Values.host_windows.image.name -}} {{- include "host.windows.tag_separator" . -}} {{- .Values.host_windows.image.tag }}
+{{- end }}
+
+{{- define "host.windows.tag_separator" -}}
+  {{- if (hasPrefix "sha256:" .Values.host_windows.image.tag) -}}
+    @
+  {{- else -}}
+    :
+  {{- end -}}
 {{- end }}
 
 {{- define "host.windows.env" -}}
