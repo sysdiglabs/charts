@@ -436,3 +436,30 @@ tests:
     asserts:
       - isNullOrEmpty:
           path: spec.template.spec.imagePullSecrets
+
+  - it: Digest in image tag
+    set:
+      host_windows:
+        image:
+          tag: 0.10.0@sha256:61fdf83f6ec198919d595ea1e6dc093258dfcdc3d75db81fe060b65cd6d7aba0
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].image
+          value: quay.io/sysdig/host-shield:0.10.0@sha256:61fdf83f6ec198919d595ea1e6dc093258dfcdc3d75db81fe060b65cd6d7aba0
+      - isSubset:
+          path: metadata.labels
+          content:
+            sysdig/component-version: 0.10.0
+
+  - it: Specify digest only
+    set:
+      host_windows:
+        image:
+          tag: sha256:61fdf83f6ec198919d595ea1e6dc093258dfcdc3d75db81fe060b65cd6d7aba0
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].image
+          value: quay.io/sysdig/host-shield@sha256:61fdf83f6ec198919d595ea1e6dc093258dfcdc3d75db81fe060b65cd6d7aba0
+      - equal:
+          path: metadata.labels["sysdig/component-version"]
+          value: sha256_61fdf83f6ec198919d595ea1e6dc093258dfcdc3d75db81fe060b65c

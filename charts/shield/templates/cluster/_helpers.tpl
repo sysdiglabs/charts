@@ -57,6 +57,14 @@ If release name contains chart name it will be used as a full name.
   {{- end -}}
 {{- end }}
 
+{{- define "cluster.tag_separator" -}}
+  {{- if (hasPrefix "sha256:" .Values.cluster.image.tag) -}}
+    @
+  {{- else -}}
+    :
+  {{- end -}}
+{{- end }}
+
 {{- define "cluster.has_priority_class" -}}
   {{- if or .Values.cluster.priority_class.create .Values.cluster.priority_class.name }}
     {{- true -}}
