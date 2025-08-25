@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v2.2.4
+### Chores
+* **ci** [307dab9a](https://github.com/sysdiglabs/charts/commit/307dab9ab32b7406044c68e8d6a47a667ac03466): bump bitnami/kubectl image references ([#2310](https://github.com/sysdiglabs/charts/issues/2310))
 # v2.2.3
 ### Chores
 * [1973ead0](https://github.com/sysdiglabs/charts/commit/1973ead049d57fc70d4ffa7feee92cbdbaca8b6c): bump the helm unittest plugin version ([#2347](https://github.com/sysdiglabs/charts/issues/2347))
