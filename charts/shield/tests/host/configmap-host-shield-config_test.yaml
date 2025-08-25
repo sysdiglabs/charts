@@ -473,3 +473,29 @@ tests:
                 in_use:
                   enabled: false
                   integration_enabled: false
+
+  - it: Ensure Local Forwarder
+    set:
+      features:
+        investigations:
+          event_forwarder:
+            enabled: true
+            integrations:
+              - channels:
+                  - SECURE_EVENTS_POLICIES
+                  - ACTIVITY_AUDIT
+                configuration:
+                  output: stdout
+                type: LOCAL
+            transmit_message_types:
+              - POLICY_EVENTS
+              - SECURE_AUDIT
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: |
+            local_forwarder:
+              enabled: true
+              transmit_message_types:
+              - POLICY_EVENTS
+              - SECURE_AUDIT
