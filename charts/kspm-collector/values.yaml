@@ -84,7 +84,7 @@ leaderElection:
 
 image:
   repository: sysdig/kspm-collector
-  tag: 1.39.12
+  tag: 1.39.14
   digest: null
   registry: quay.io
   pullPolicy: null
@@ -224,4 +224,4 @@ tests:
   timeout: 300s
   image:
     repo: bitnami/kubectl
-    tag: 1.33.1
+    tag: 1.33.4

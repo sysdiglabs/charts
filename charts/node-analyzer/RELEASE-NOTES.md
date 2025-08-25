@@ -1,5 +1,5 @@
 # What's Changed
 
 ### Chores
-- **nodeanalyzer** [e193ee19](https://github.com/sysdiglabs/charts/commit/e193ee197d33ee94f6087f8de8bade1544727619): Update host-scanner to the latest released version ([#2291](https://github.com/sysdiglabs/charts/issues/2291))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.35.10...node-analyzer-1.35.11
+- **ci** [307dab9a](https://github.com/sysdiglabs/charts/commit/307dab9ab32b7406044c68e8d6a47a667ac03466): bump bitnami/kubectl image references ([#2310](https://github.com/sysdiglabs/charts/issues/2310))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.36.5...node-analyzer-1.36.6

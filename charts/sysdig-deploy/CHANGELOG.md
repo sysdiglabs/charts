@@ -10,6 +10,42 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.91.5
+### Chores
+* **sysdig-deploy** [52cce09f](https://github.com/sysdiglabs/charts/commit/52cce09fa1d095f5ad436b1137e1d553efbdf8bd): Automatic version bump due to updated dependencies ([#2354](https://github.com/sysdiglabs/charts/issues/2354))
+# v1.91.4
+### Chores
+* **sysdig-deploy** [ee9a28aa](https://github.com/sysdiglabs/charts/commit/ee9a28aa0067aa018371e9b57abb6756ba7b1169): Automatic version bump due to updated dependencies ([#2348](https://github.com/sysdiglabs/charts/issues/2348))
+# v1.91.3
+### Chores
+* **sysdig-deploy** [4fdc2e48](https://github.com/sysdiglabs/charts/commit/4fdc2e489371acb06bdf4c3e047017a0322ecff5): Automatic version bump due to updated dependencies ([#2345](https://github.com/sysdiglabs/charts/issues/2345))
+# v1.91.2
+### Chores
+* **sysdig-deploy** [db430b5c](https://github.com/sysdiglabs/charts/commit/db430b5c595c5134a0061ca445a20b30c8bbacf4): Automatic version bump due to updated dependencies ([#2341](https://github.com/sysdiglabs/charts/issues/2341))
+# v1.91.1
+### Chores
+* **sysdig-deploy** [009fdec1](https://github.com/sysdiglabs/charts/commit/009fdec1727fa8951f687cfa71c47fb81bef2ad6): Automatic version bump due to updated dependencies ([#2338](https://github.com/sysdiglabs/charts/issues/2338))
+# v1.91.0
+### Chores
+* **cluster-shield,sysdig-deploy** [43070907](https://github.com/sysdiglabs/charts/commit/4307090721541412594aab33a8cf3120b44c22d7): Automatic bump to version 1.14.0 ([#2333](https://github.com/sysdiglabs/charts/issues/2333))
+# v1.90.1
+### Chores
+* **sysdig-deploy,node-analyzer** [91bc80db](https://github.com/sysdiglabs/charts/commit/91bc80db072d995f7ca36f6b4f5e52765d8adbe4): bump runtime-scanner to v1.8.4 ([#2331](https://github.com/sysdiglabs/charts/issues/2331))
+# v1.90.0
+### New Features
+* **agent,shield,sysdig-deploy** [c1708a09](https://github.com/sysdiglabs/charts/commit/c1708a09161c7b410858ba8b5d346efd7c59108e): release agent 14.1.0 ([#2329](https://github.com/sysdiglabs/charts/issues/2329))
+# v1.89.3
+### Chores
+* **sysdig-deploy** [0a595c62](https://github.com/sysdiglabs/charts/commit/0a595c620fb7bd9ea7b08c44c20ab1fcfbbc0619): Automatic version bump due to updated dependencies ([#2324](https://github.com/sysdiglabs/charts/issues/2324))
+# v1.89.2
+### Chores
+* **sysdig-deploy** [e36fe9e2](https://github.com/sysdiglabs/charts/commit/e36fe9e27e9074c097bb388c671026eb3bf3cc81): Automatic version bump due to updated dependencies ([#2322](https://github.com/sysdiglabs/charts/issues/2322))
+# v1.89.1
+### Chores
+* **sysdig-deploy** [ddc410e5](https://github.com/sysdiglabs/charts/commit/ddc410e56c1aa51f8ba22a2fecbc79c83b456728): Automatic version bump due to updated dependencies ([#2314](https://github.com/sysdiglabs/charts/issues/2314))
+# v1.89.0
+### New Features
+* **kspm-analyzer** [4c275a63](https://github.com/sysdiglabs/charts/commit/4c275a63cde563ee419af0e201f8b828a2b565c6): release kspm-analyzer 1.45.0 ([#2302](https://github.com/sysdiglabs/charts/issues/2302))
 # v1.88.0
 ### Chores
 * **cluster-shield,shield,sysdig-deploy** [d0784daf](https://github.com/sysdiglabs/charts/commit/d0784dafa3ec6651de22632232cfd0f5e9547c4b): Automatic bump to version 1.13.0 ([#2297](https://github.com/sysdiglabs/charts/issues/2297))

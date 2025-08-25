@@ -143,6 +143,7 @@ features:
   respond:
     rapid_response:
       enabled: false
+      password:
     response_actions:
       enabled: false
   monitor:
@@ -179,7 +180,7 @@ host_windows:
     # The image name for the host shield
     name: host-shield
     # The tag for the host shield images
-    tag: 0.9.0
+    tag: 0.10.0
     # The pull policy for the host shield images
     pull_policy: IfNotPresent
     # The pull secrets for the host shield images
@@ -253,7 +254,7 @@ host:
     # The image name for the host shield
     shield_name: agent-slim
     # The tag for the host shield images
-    tag: 14.0.1
+    tag: 14.1.1
     # The pull policy for the host shield images
     pull_policy: IfNotPresent
     # The pull secrets for the host shield images
@@ -269,7 +270,7 @@ host:
     labels: {}
     # The annotations for the priority class
     annotations: {}
-  # Sets the host shield to run in privileged mode
+  # Sets the host shield to run in privileged mode. Disabling requires the use of the Universal eBPF driver. Must be enabled for Posture and Vulnerability Management functionalities.
   privileged: true
   rbac:
     # Create the RBAC resources for the host shield
@@ -382,7 +383,7 @@ cluster:
     # The repository where the cluster shield image is stored
     repository: sysdig/cluster-shield
     # The tag for the cluster shield image
-    tag: 1.13.0
+    tag: 1.14.0
     # The pull policy for the cluster shield image
     pull_policy: IfNotPresent
     # The pull secrets for the cluster shield image

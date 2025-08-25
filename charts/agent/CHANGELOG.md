@@ -10,6 +10,21 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v2.2.4
+### Chores
+* **ci** [307dab9a](https://github.com/sysdiglabs/charts/commit/307dab9ab32b7406044c68e8d6a47a667ac03466): bump bitnami/kubectl image references ([#2310](https://github.com/sysdiglabs/charts/issues/2310))
+# v2.2.3
+### Chores
+* [1973ead0](https://github.com/sysdiglabs/charts/commit/1973ead049d57fc70d4ffa7feee92cbdbaca8b6c): bump the helm unittest plugin version ([#2347](https://github.com/sysdiglabs/charts/issues/2347))
+# v2.2.2
+### Documentation
+* **agent** [1f478085](https://github.com/sysdiglabs/charts/commit/1f47808574f81c12f656a762c23464f458e1e524): Add App Checks example as comments ([#2340](https://github.com/sysdiglabs/charts/issues/2340))
+# v2.2.1
+### New Features
+* **agent,shield** [62c6f923](https://github.com/sysdiglabs/charts/commit/62c6f923ba84c97589b9ea85686ccf41a4043940): release agent 14.1.1 ([#2337](https://github.com/sysdiglabs/charts/issues/2337))
+# v2.2.0
+### New Features
+* **agent,shield,sysdig-deploy** [c1708a09](https://github.com/sysdiglabs/charts/commit/c1708a09161c7b410858ba8b5d346efd7c59108e): release agent 14.1.0 ([#2329](https://github.com/sysdiglabs/charts/issues/2329))
 # v2.1.1
 ### New Features
 * **agent,sydig-deploy,shield** [17645dc7](https://github.com/sysdiglabs/charts/commit/17645dc7efdac5d9e422baa89de21f50df2dbc78): release agent 14.0.1 ([#2296](https://github.com/sysdiglabs/charts/issues/2296))

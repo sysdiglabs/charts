@@ -15,7 +15,7 @@ jobs:
       release_version: ${{ steps.get-operator-version.outputs.release_version }}
     steps:
       - name: Checkout charts repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: '1'
 
@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout charts repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: '1'
 
@@ -57,7 +57,7 @@ jobs:
       - determine-operator-version
     steps:
       - name: Checkout charts repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: '1'
 
@@ -112,7 +112,7 @@ jobs:
             image checksum, as well as adjusting some metadata that is required for certification.
 
       - name: Wait for Pull Request to be merged
-        uses: Wandalen/wretry.action@v3.7.3
+        uses: Wandalen/wretry.action@v3.8.0
         with:
           command: gh pr view ${{ steps.open-pr.outputs.pull-request-number }} --json state -q .state | grep MERGED
           attempt_limit: 240  # Results in 2 hours of waiting
@@ -131,7 +131,7 @@ jobs:
       - determine-operator-version
     steps:
       - name: Checkout charts repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: '1'
 

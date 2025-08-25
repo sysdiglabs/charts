@@ -299,7 +299,7 @@ tests:
               - replicasets
               - statefulsets
               - daemonsets
-              - jobs"
+              - jobs
               - cronjobs
             scope: Namespaced
         documentIndex: 1

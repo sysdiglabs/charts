@@ -41,3 +41,36 @@ tests:
       - contains:
           path: users
           content: "system:serviceaccount:shield-namespace:release-name-shield-cluster"
+
+  - it: SecurityContextConstraints - default allowHostPorts
+    capabilities:
+      apiVersions:
+        - security.openshift.io/v1
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: SecurityContextConstraints
+          apiVersion: security.openshift.io/v1
+          name: release-name-shield-cluster
+      - equal:
+          path: allowHostPorts
+          value: false
+
+  - it: SecurityContextConstraints - with host network enabled
+    capabilities:
+      apiVersions:
+        - security.openshift.io/v1
+    set:
+      cluster:
+        host_network: true
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: SecurityContextConstraints
+          apiVersion: security.openshift.io/v1
+          name: release-name-shield-cluster
+      - equal:
+          path: allowHostPorts
+          value: true

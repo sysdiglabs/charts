@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **agent,sydig-deploy,shield** [17645dc7](https://github.com/sysdiglabs/charts/commit/17645dc7efdac5d9e422baa89de21f50df2dbc78): release agent 14.0.1 ([#2296](https://github.com/sysdiglabs/charts/issues/2296))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-2.1.0...agent-2.1.1
+### Chores
+- **ci** [307dab9a](https://github.com/sysdiglabs/charts/commit/307dab9ab32b7406044c68e8d6a47a667ac03466): bump bitnami/kubectl image references ([#2310](https://github.com/sysdiglabs/charts/issues/2310))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-2.2.3...agent-2.2.4

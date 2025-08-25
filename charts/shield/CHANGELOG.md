@@ -10,6 +10,45 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.15.4
+### Bug Fixes
+* **shield** [ff026255](https://github.com/sysdiglabs/charts/commit/ff026255c116a35e16c6835473ee8bda578a8ac8): Sanitize version label on shield objects ([#2346](https://github.com/sysdiglabs/charts/issues/2346))
+# v1.15.3
+### Documentation
+* **agent** [1f478085](https://github.com/sysdiglabs/charts/commit/1f47808574f81c12f656a762c23464f458e1e524): Add App Checks example as comments ([#2340](https://github.com/sysdiglabs/charts/issues/2340))
+# v1.15.2
+### New Features
+* **agent,shield** [62c6f923](https://github.com/sysdiglabs/charts/commit/62c6f923ba84c97589b9ea85686ccf41a4043940): release agent 14.1.1 ([#2337](https://github.com/sysdiglabs/charts/issues/2337))
+# v1.15.1
+### Bug Fixes
+* **response actions** [a5e8559b](https://github.com/sysdiglabs/charts/commit/a5e8559b9c3374ffdce4f2de3d156c2af27afea9): Add necessary permissions for jobs and replicasets ([#2334](https://github.com/sysdiglabs/charts/issues/2334))
+# v1.15.0
+### Chores
+* **shield** [85d9d631](https://github.com/sysdiglabs/charts/commit/85d9d631c8cb679ae253204f07a9930ade7b4e45): cluster shield release 1.14.0 ([#2332](https://github.com/sysdiglabs/charts/issues/2332))
+# v1.14.0
+### Chores
+* **shield** [cf14ab7b](https://github.com/sysdiglabs/charts/commit/cf14ab7b9dbc26cbb86720accbfb116987ae2cc8): bump host-shield windows to 0.10.0 ([#2330](https://github.com/sysdiglabs/charts/issues/2330))
+# v1.13.0
+### New Features
+* **agent,shield,sysdig-deploy** [c1708a09](https://github.com/sysdiglabs/charts/commit/c1708a09161c7b410858ba8b5d346efd7c59108e): release agent 14.1.0 ([#2329](https://github.com/sysdiglabs/charts/issues/2329))
+# v1.12.8
+### Documentation
+* **shield** [51fbd0dc](https://github.com/sysdiglabs/charts/commit/51fbd0dce642a90de73d15b29d7941d5da4e0c86): add more information on when privileged can be disabled. ([#2327](https://github.com/sysdiglabs/charts/issues/2327))
+# v1.12.7
+### Chores
+* **shield** [0e2f4c75](https://github.com/sysdiglabs/charts/commit/0e2f4c75557cdec263ac748eb73e97be92327f96): update README to specify secure api token requirements ([#2259](https://github.com/sysdiglabs/charts/issues/2259))
+# v1.12.6
+### Bug Fixes
+* **shield** [fb017637](https://github.com/sysdiglabs/charts/commit/fb0176372125f24426486343f79da36f041a0b0d): do not set proxy configuration on host-shield when proxy is not configured ([#2319](https://github.com/sysdiglabs/charts/issues/2319))
+# v1.12.5
+### Bug Fixes
+* **shield** [abfcc12b](https://github.com/sysdiglabs/charts/commit/abfcc12b0396d65c207ee64cb70ebc6d5ab030a4): remove unbalanced quote ([#2309](https://github.com/sysdiglabs/charts/issues/2309))
+# v1.12.4
+### Bug Fixes
+* **shield** [157192b0](https://github.com/sysdiglabs/charts/commit/157192b05926c85c4abd3706441365d5eeabbb6e): openshift scc should set allowHostPorts to true when the cluster-shield is set to run on the host network ([#2307](https://github.com/sysdiglabs/charts/issues/2307))
+# v1.12.3
+### Chores
+* **shield** [9a3c5a0c](https://github.com/sysdiglabs/charts/commit/9a3c5a0c8198ab82276ab27bc98b62c765f7a1c1): update docs with rapid response password ([#2306](https://github.com/sysdiglabs/charts/issues/2306))
 # v1.12.2
 ### Chores
 * **shield** [642e60fe](https://github.com/sysdiglabs/charts/commit/642e60fec21ef59f326dc0cf11a7338c6cfc1d52): add cluster.volume_snapshot_class default on cluster-shield ([#2300](https://github.com/sysdiglabs/charts/issues/2300))

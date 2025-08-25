@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **shield** [642e60fe](https://github.com/sysdiglabs/charts/commit/642e60fec21ef59f326dc0cf11a7338c6cfc1d52): add cluster.volume_snapshot_class default on cluster-shield ([#2300](https://github.com/sysdiglabs/charts/issues/2300))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.12.1...shield-1.12.2
+### Bug Fixes
+- **shield** [ff026255](https://github.com/sysdiglabs/charts/commit/ff026255c116a35e16c6835473ee8bda578a8ac8): Sanitize version label on shield objects ([#2346](https://github.com/sysdiglabs/charts/issues/2346))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.15.3...shield-1.15.4

@@ -51,7 +51,7 @@ image:
   overrideValue: null
   registry: quay.io
   repository: sysdig/agent
-  tag: 14.0.1
+  tag: 14.1.1
   # Specify a imagePullPolicy
   # Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
   # ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -256,6 +256,22 @@ sysdig:
   #   proxy_host: squid.yourdomain.com
   #   proxy_port: 3128
   #   ssl: false
+  ### Example: Configure app checks (See https://docs.sysdig.com/en/integrate-applications-default-app-checks)
+  # app_checks:
+  #   - name: redis-6380
+  #     check_module: redisdb
+  #     pattern:
+  #       comm: redis-server
+  #     conf:
+  #       host: 127.0.0.1
+  #       port: 6380
+  #       password: <changeme>
+  #   - name: ntp
+  #     interval: 60
+  #     pattern:
+  #       comm: systemd
+  #     conf:
+  #       host: us.pool.ntp.org
 secure:
   # true here enables Sysdig Secure: container run-time security & forensics
   enabled: true
@@ -406,7 +422,7 @@ tests:
   timeout: 300s
   image:
     repo: bitnami/kubectl
-    tag: 1.33.1
+    tag: 1.33.4
 # Allow to modify DNS policy
 dnsPolicy: null
 customSecurityContext: {}

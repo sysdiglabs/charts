@@ -55,6 +55,14 @@ If release name contains chart name it will be used as a full name.
 {{- end -}}
 {{- end -}}
 
+{{- define "host.tag_separator" -}}
+  {{- if (hasPrefix "sha256:" .Values.host.image.tag) -}}
+    @
+  {{- else -}}
+    :
+  {{- end -}}
+{{- end }}
+
 {{- define "host.service_account_name" -}}
 {{- default (include "host.fullname" .) .Values.host.rbac.service_account_name }}
 {{- end }}
@@ -128,11 +136,14 @@ true
 {{- end }}
 
 {{- define "host.shield_image" }}
-{{- .Values.host.image.registry -}} / {{- .Values.host.image.repository -}} / {{- .Values.host.image.shield_name -}} : {{- .Values.host.image.tag }}
+{{- .Values.host.image.registry -}} / {{- .Values.host.image.repository -}} / {{- .Values.host.image.shield_name -}} {{- include "host.tag_separator" . -}} {{- .Values.host.image.tag }}
 {{- end }}
 
 {{- define "host.kmodule_image" }}
-{{- .Values.host.image.registry -}} / {{- .Values.host.image.repository -}} / {{- .Values.host.image.kmodule_name -}} : {{- .Values.host.image.tag }}
+{{- if hasPrefix "sha256" .Values.host.image.tag -}}
+  {{- fail (printf "Image tag %s can't be speficied when not using universal_ebpf driver" .Values.host.image.tag ) }}
+{{- end -}}
+{{- .Values.host.image.registry -}} / {{- .Values.host.image.repository -}} / {{- .Values.host.image.kmodule_name -}} : {{- .Values.host.image.tag | regexFind "^[^@]+" }}
 {{- end }}
 
 {{- define "host.need_host_root" }}
@@ -232,7 +243,7 @@ true
 
 {{- define "host.rapid_response_password" }}
 {{- $feature_respond := get .Values.features (include "host.respond_key" .Values.features) }}
-{{- if ne (dig "rapid_response" "password" "" $feature_respond) "" }}
+{{- if (dig "rapid_response" "password" nil $feature_respond) }}
 {{- $feature_respond.rapid_response.password }}
 {{- else }}
 {{- dig "rapid_response" "password" "" .Values.host.additional_settings }}

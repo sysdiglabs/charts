@@ -73,7 +73,9 @@
 
 {{- $_ := set $config "ssl" $sslConfig -}}
 
-{{- $config := merge $config (dict "proxy" (include "host.proxy_config" . | fromYaml)) }}
+{{- if (include "common.proxy.enabled" . ) }}
+  {{- $config := merge $config (dict "proxy" (include "host.proxy_config" . | fromYaml)) }}
+{{- end }}
 
 {{- if and (include "common.semver.is_valid" .Values.host_windows.image.tag) (semverCompare ">= 0.8.0-0" .Values.host_windows.image.tag) }}
 {{- $runtimeAdditionalSettings := (include "host.windows.runtime_config_override" .) | fromYaml }}
