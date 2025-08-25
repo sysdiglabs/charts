@@ -112,7 +112,7 @@ jobs:
             image checksum, as well as adjusting some metadata that is required for certification.
 
       - name: Wait for Pull Request to be merged
-        uses: Wandalen/wretry.action@v3.7.3
+        uses: Wandalen/wretry.action@v3.8.0
         with:
           command: gh pr view ${{ steps.open-pr.outputs.pull-request-number }} --json state -q .state | grep MERGED
           attempt_limit: 240  # Results in 2 hours of waiting
