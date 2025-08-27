@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.16.0
+### Chores
+* **shield** [d66857d1](https://github.com/sysdiglabs/charts/commit/d66857d1435c8421ae4e05dabe609134c9ea2a79): release host-shield windows 0.11.0 ([#2358](https://github.com/sysdiglabs/charts/issues/2358))
 # v1.15.4
 ### Bug Fixes
 * **shield** [ff026255](https://github.com/sysdiglabs/charts/commit/ff026255c116a35e16c6835473ee8bda578a8ac8): Sanitize version label on shield objects ([#2346](https://github.com/sysdiglabs/charts/issues/2346))
