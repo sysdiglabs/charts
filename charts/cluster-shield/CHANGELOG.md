@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.15.0
+### Chores
+* **shield,common,sysdig-deploy,admission-controller,agent,cluster-scanner,cluster-shield,kspm-collector,node-analyzer,rapid-response** [1b992fbc](https://github.com/sysdiglabs/charts/commit/1b992fbc14ffd5b1f63be3896ee40deb5a858d06): bump cluster-shield to 1.15.0 ([#2360](https://github.com/sysdiglabs/charts/issues/2360))
 # v1.14.0
 ### Chores
 * **cluster-shield,sysdig-deploy** [43070907](https://github.com/sysdiglabs/charts/commit/4307090721541412594aab33a8cf3120b44c22d7): Automatic bump to version 1.14.0 ([#2333](https://github.com/sysdiglabs/charts/issues/2333))
