@@ -12,7 +12,7 @@ on:
           - "cluster"
           - "host-windows"
           - "host-linux"
-      latest_release:
+      latest_release_version:
         description: 'Latest release version'
         required: true
       next_release_version:
@@ -23,7 +23,7 @@ permissions:
   contents: write
 
 env:
-  CURRENT_RELEASE_BRANCH: ${{ inputs.kind }}-shield-release-${{ inputs.latest_release}}
+  CURRENT_RELEASE_BRANCH: ${{ inputs.kind }}-shield-release-${{ inputs.latest_release_version}}
   NEXT_RELEASE_BRANCH: ${{ inputs.kind }}-shield-release-${{ inputs.next_release_version}}
 
 jobs:
