@@ -54,6 +54,7 @@ jobs:
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
           ./scripts/shield/rebase.sh
+          git push --force-with-lease
 
   update-next-release-branch:
     runs-on: ubuntu-latest
@@ -82,3 +83,4 @@ jobs:
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
           ./scripts/shield/rebase.sh
+          git push --force-with-lease

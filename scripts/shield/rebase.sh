@@ -33,5 +33,3 @@ else
     echo "Rebase conflicts detected"
     check_conflicts
 fi
-
-git push -f
