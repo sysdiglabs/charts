@@ -9,12 +9,54 @@
 {{- end }}
 
 {{- define "cluster.tls_certificates.secret_name" -}}
-  {{- if .Values.cluster.tls_certificates.create -}}
+  {{- if or .Values.cluster.tls_certificates.create .Values.cluster.tls_certificates.cert_manager.enabled -}}
     {{- include "cluster.fullname" . }}-tls-certificates
   {{- else if .Values.cluster.tls_certificates.secret_name -}}
     {{- .Values.cluster.tls_certificates.secret_name -}}
   {{- else -}}
     {{- fail "TLS Certificates must be generated or specified with the current configuration" -}}
+  {{- end -}}
+{{- end }}
+
+{{- define "cluster.tls_certificates.check_conflicts" -}}
+  {{- if and .Values.cluster.tls_certificates.create .Values.cluster.tls_certificates.cert_manager.enabled -}}
+    {{- fail "Cannot specify both tls_certificates.create and tls_certificates.cert_manager.enabled" -}}
+  {{- end -}}
+  {{- if and (not (quote .Values.cluster.tls_certificates.secret_name | empty)) .Values.cluster.tls_certificates.cert_manager.enabled -}}
+    {{- fail "Cannot specify both tls_certificates.cert_manager.enabled and tls_certificates.secret_name" -}}
+  {{- end -}}
+{{- end }}
+
+{{- define "cluster.tls_certificates.cert_manager_enabled" -}}
+  {{- if .Values.cluster | dig "tls_certificates" "cert_manager" "enabled" false -}}
+    {{- if .Values.cluster | dig "tls_certificates" "create" true -}}
+      {{- fail "Cannot specify both tls_certificates.create and tls_certificates.cert_manager.enabled" -}}
+    {{- end -}}
+    {{- if .Values.cluster | dig ".tls_certificates" "secret_name" "" -}}
+      {{- fail "Cannot specify both tls_certificates.secret_name and tls_certificates.cert_manager.enabled" -}}
+    {{- end -}}
+    true
+  {{- else -}}
+    false
+  {{- end -}}
+{{- end }}
+
+{{- define "cluster.tls_certificates.cert_manager_certificate_name" -}}
+  shield-cluster-certificate
+{{- end }}
+
+{{- define "cluster.tls_certificates.cert_manager_issuer_name" -}}
+  {{- if not .Values.cluster.tls_certificates.cert_manager.issuer_name -}}
+    {{- fail "cert_manager.issuer_name must be specified when cert_manager.enabled is true" -}}
+  {{- end -}}
+  {{- .Values.cluster.tls_certificates.cert_manager.issuer_name -}}
+{{- end }}
+
+{{- define "cluster.tls_certificates.cert_manager_ca_cert_name" -}}
+  {{- if .Values.cluster.tls_certificates.cert_manager.ca_certificate_name -}}
+    {{- .Values.cluster.tls_certificates.cert_manager.ca_certificate_name -}}
+  {{- else -}}
+    {{- include "cluster.tls_certificates.cert_manager_certificate_name" . -}}
   {{- end -}}
 {{- end }}
 
