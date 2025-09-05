@@ -24,6 +24,10 @@ spec:
       hostNetwork: true
       dnsPolicy: {{ default "ClusterFirstWithHostNet" .Values.host.dns_policy }}
       hostPID: true
+      {{- if .Values.host.host_aliases }}
+      hostAliases:
+        {{ toYaml .Values.host.host_aliases | nindent 8 }}
+      {{- end }}
       serviceAccountName: {{ include "host.service_account_name" . }}
       {{- if (include "host.has_priority_class" .) }}
       priorityClassName: "{{ include "host.priority_class_name" . }}"

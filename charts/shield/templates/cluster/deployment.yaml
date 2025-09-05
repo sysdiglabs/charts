@@ -64,6 +64,10 @@ spec:
       {{- else if .Values.cluster.dns_policy }}
       dnsPolicy: {{ .Values.cluster.dns_policy }}
       {{- end }}
+      {{- if .Values.cluster.host_aliases }}
+      hostAliases:
+        {{ toYaml .Values.cluster.host_aliases | nindent 8 }}
+      {{- end }}
       containers:
         - name: "cluster-shield"
           imagePullPolicy: {{ .Values.cluster.image.pull_policy }}
