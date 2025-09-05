@@ -1,27 +1,22 @@
 # Shield
 
 [{{ .Project.Name }}]({{ .Project.URL }}).
-<br/>{{ .Project.Description }}
+{{ .Project.Description }}
 
+- [Prerequisites](#prerequisites)
+- [Installing the Chart](#installing-the-chart)
 - [Configuration](#configuration)
-- [Usages](#usages)
-- [Confirm Working Status](#confirm-working-status)
-- [Troubleshooting](#troubleshooting)
-
-<br/><br/>
 
 ## Introduction
 
 This chart deploys {{ .Project.App }} as a Deployment on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
-
 
 ### Prerequisites
 {{ range .Prerequisites }}
 - {{ . }}
 {{- end }}
 
-
-###  Installing the Chart
+### Installing the Chart
 
 To install the chart  create a `values.yaml` file. Set your values and decide which features you would like to enable.
 ```yaml
