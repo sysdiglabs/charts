@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **shield** [c22a4804](https://github.com/sysdiglabs/charts/commit/c22a480409bcd5df16001322d0b4ba9a9a0d0c8d): fix broken links in README file ([#2369](https://github.com/sysdiglabs/charts/issues/2369))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.18.0...shield-1.18.1
+### New Features
+- **shield** [83af9d3d](https://github.com/sysdiglabs/charts/commit/83af9d3db8bd6352c28efcbf5f44c69e32c8dc87): Add support for hostAliases ([#2370](https://github.com/sysdiglabs/charts/issues/2370))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.18.1...shield-1.19.0
