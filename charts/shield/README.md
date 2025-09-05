@@ -1,19 +1,15 @@
 # Shield
 
 [Sysdig Shield](https://docs.sysdig.com/).
-<br/>This chart deploys the Sysdig Host & Cluster Shield in your Kubernetes cluster.
+This chart deploys the Sysdig Host & Cluster Shield in your Kubernetes cluster.
 
+- [Prerequisites](#prerequisites)
+- [Installing the Chart](#installing-the-chart)
 - [Configuration](#configuration)
-- [Usages](#usages)
-- [Confirm Working Status](#confirm-working-status)
-- [Troubleshooting](#troubleshooting)
-
-<br/><br/>
 
 ## Introduction
 
 This chart deploys the Sysdig Shield as a Deployment on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
-
 
 ### Prerequisites
 
@@ -23,8 +19,7 @@ This chart deploys the Sysdig Shield as a Deployment on a [Kubernetes](http://ku
 - Sysdig Secure API URL
 - Sysdig Secure Collector
 
-
-###  Installing the Chart
+### Installing the Chart
 
 To install the chart  create a `values.yaml` file. Set your values and decide which features you would like to enable.
 ```yaml
