@@ -335,6 +335,9 @@
         "env": {
           "$ref": "#/$defs/EnvVars"
         },
+        "host_aliases": {
+          "$ref": "#/$defs/HostAliases"
+        },
         "pod_disruption_budget": {
           "type": "object",
           "description": "Pod disruption budget configuration for the Cluster Shield pods",
@@ -401,6 +404,9 @@
         "env": {
           "$ref": "#/$defs/EnvVars"
         },
+        "host_aliases": {
+          "$ref": "#/$defs/HostAliases"
+        },
         "volumes": {
           "$ref": "#/$defs/Volumes"
         },
@@ -418,6 +424,9 @@
       "properties": {
         "env": {
           "$ref": "#/$defs/EnvVars"
+        },
+        "host_aliases": {
+          "$ref": "#/$defs/HostAliases"
         },
         "volumes": {
           "$ref": "#/$defs/Volumes"
@@ -1215,6 +1224,38 @@
         }
       },
       "additionalProperties": false
+    },
+    "HostAliases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "description": "Define host aliases for the pod",
+        "properties": {
+          "ip": {
+            "type": "string",
+            "description": "The IP address to alias"
+          },
+          "hostnames": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The list of hostname to be assicated to the IP addresses"
+          }
+        },
+        "required": [
+          "ip",
+          "hostnames"
+        ]
+      },
+      "examples": [
+        [
+          {
+            "ip": "1.2.3.4",
+            "hostnames": ["acme.internal", "acme.alias"]
+          }
+        ]
+      ]
     }
   }
 }

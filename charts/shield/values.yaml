@@ -196,6 +196,8 @@ host_windows:
       cpu: 250m
       # The memory request for the host shield
       memory: 384Mi
+  # The host aliases for the windows host shield workloads
+  host_aliases: []
   # The annotations for the host shield workloads (metadata.annotations)
   workload_annotations: {}
   # The labels for the host shield workloads (metadata.labels)
@@ -304,6 +306,8 @@ host:
         cpu: 250m
         # The memory request for the host shield
         memory: 384Mi
+  # The host aliases for the linux host shield workloads
+  host_aliases: []
   # The annotations for the host shield workloads (metadata.annotations)
   workload_annotations: {}
   # The labels for the host shield workloads (metadata.labels)
@@ -438,6 +442,8 @@ cluster:
       cpu: 1500m
       # The memory limit for the cluster shield
       memory: 1536Mi
+  # The host aliases for the cluster shield workloads
+  host_aliases: []
   # The annotations for the cluster shield workloads (metadata.annotations)
   workload_annotations: {}
   # The labels for the cluster shield workloads (metadata.labels)
