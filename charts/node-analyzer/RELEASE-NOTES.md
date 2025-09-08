@@ -1,5 +1,5 @@
 # What's Changed
 
 ### Chores
-- **shield,common,sysdig-deploy,admission-controller,agent,cluster-scanner,cluster-shield,kspm-collector,node-analyzer,rapid-response** [1b992fbc](https://github.com/sysdiglabs/charts/commit/1b992fbc14ffd5b1f63be3896ee40deb5a858d06): bump cluster-shield to 1.15.0 ([#2360](https://github.com/sysdiglabs/charts/issues/2360))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.36.6...node-analyzer-1.36.7
+- **node-analyzer** [802c5fb7](https://github.com/sysdiglabs/charts/commit/802c5fb7cb05075442447aaccabffade0c8ec3c8): update kspm-analyzer to version 1.45.3 ([#2372](https://github.com/sysdiglabs/charts/issues/2372))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.36.7...node-analyzer-1.36.8
