@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.19.1
+### New Features
+* **agent,shield,sysdig-deploy** [32be15a2](https://github.com/sysdiglabs/charts/commit/32be15a2247281ff9b325c27a570a8c48d118a20): release agent 14.2.1 ([#2374](https://github.com/sysdiglabs/charts/issues/2374))
 # v1.19.0
 ### New Features
 * **shield** [83af9d3d](https://github.com/sysdiglabs/charts/commit/83af9d3db8bd6352c28efcbf5f44c69e32c8dc87): Add support for hostAliases ([#2370](https://github.com/sysdiglabs/charts/issues/2370))
