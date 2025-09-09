@@ -107,7 +107,7 @@ features:
       # The list of namespaces that will be excluded from the audit feature
       excluded_namespaces: []
       # List of rules used to determine if a request should be audited
-      webhook_rules:  # +doc-gen:break
+      webhook_rules: # +doc-gen:break
         - apiGroups:
             - ""
             - apps
@@ -215,7 +215,7 @@ host_windows:
       key: os
       value: Windows
   # The affinity for the host shield
-  affinity:  # +doc-gen:break
+  affinity: # +doc-gen:break
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
@@ -256,7 +256,7 @@ host:
     # The image name for the host shield
     shield_name: agent-slim
     # The tag for the host shield images
-    tag: 14.2.0
+    tag: 14.2.1
     # The pull policy for the host shield images
     pull_policy: IfNotPresent
     # The pull secrets for the host shield images
@@ -319,7 +319,7 @@ host:
   # The node selector for the host shield
   node_selector: {}
   # The tolerations for the host shield
-  tolerations:  # +doc-gen:break
+  tolerations: # +doc-gen:break
     - effect: NoSchedule
       key: node-role.kubernetes.io/master
     - effect: NoSchedule
@@ -337,7 +337,7 @@ host:
       operator: Equal
       value: "true"
   # The affinity for the host shield
-  affinity:  # +doc-gen:break
+  affinity: # +doc-gen:break
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
@@ -361,7 +361,7 @@ host:
       periodSeconds: 10
       # The readiness probe failure threshold
       failureThreshold: 9
-    liveness:  # TODO: Currently host does not have liveness probe. Should we add it?
+    liveness: # TODO: Currently host does not have liveness probe. Should we add it?
       # The liveness probe initial delay
       initialDelaySeconds: 90
       # The liveness probe period
