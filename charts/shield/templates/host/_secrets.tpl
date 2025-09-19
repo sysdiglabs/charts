@@ -1,12 +1,12 @@
-{{- define "host.existing_rapid_response_secret" }}
+{{- define "host.rapid_response_existing_secret" }}
 {{- if and (hasKey .Values.features.respond.rapid_response "existing_secret") (not (empty .Values.features.respond.rapid_response.existing_secret)) }}
 {{- .Values.features.respond.rapid_response.existing_secret }}
 {{- end }}
 {{- end }}
 
 {{- define "host.rapid_response_secret" }}
-{{- if (include "host.existing_rapid_response_secret" .) }}
-{{- (include "host.existing_rapid_response_secret" .) }}
+{{- if (include "host.rapid_response_existing_secret" .) }}
+{{- (include "host.rapid_response_existing_secret" .) }}
 {{- else }}
 {{- printf "%s-host-rapid-response" (include "shield.fullname" . | trunc 43 | trimSuffix "-") }}
 {{- end }}
