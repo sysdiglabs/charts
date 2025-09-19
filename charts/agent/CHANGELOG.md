@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v2.3.3
+### New Features
+* **agent** [5a2d5f6a](https://github.com/sysdiglabs/charts/commit/5a2d5f6ae10ab7f2737cada4922bcb8af8a1806d): Enable the possibility to specify an existing secret containing the local forwarder configuration [FR-2992] ([#2382](https://github.com/sysdiglabs/charts/issues/2382))
 # v2.3.2
 ### Chores
 * **agent,kspm-collector,node-analyzer** [bd84e2d2](https://github.com/sysdiglabs/charts/commit/bd84e2d2159856df26b636f9b0e2e7fcfd0c7a3d): remove bitnami/kubectl usage ([#2385](https://github.com/sysdiglabs/charts/issues/2385))
