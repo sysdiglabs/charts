@@ -1,4 +1,4 @@
-name: update bitnami/kubectl image tag for helm tests
+name: update sysdig/sysdig-kubectl image tag for helm tests
 
 scms:
   github:
@@ -19,24 +19,24 @@ actions:
     scmid: "github"
     spec:
       automerge: true
-      description: 'bump bitnami/kubectl image references'
+      description: 'bump sysdig/sysdig-kubectl image references'
       labels:
         - "automated PR"
       mergemethod: squash
-      title: 'chore(ci): bump bitnami/kubectl image references'
+      title: 'chore(ci): bump sysdig/sysdig-kubectl image references'
 
 sources:
-  bitnamiKubectlImage:
+  sysdigKubectlImage:
     kind: dockerimage
     spec:
-      image: bitnami/kubectl
+      image: quay.io/sysdig/sysdig-kubectl
       versionfilter:
-        kind: semver
-        strict: true
+        kind: regex
+        pattern: '[0-9]+\.[0-9]+\.[0-9]+\-[0-9]+\.[0-9]+\.[0-9]+$'
 
 targets:
   bumpAgentChart:
-    name: "bump the bitnami/kubectl image reference in the agent chart"
+    name: "bump the sysdig/sysdig-kubectl image reference in the agent chart"
     kind: helmchart
     scmid: github
     spec:
@@ -45,7 +45,7 @@ targets:
       versionincrement: patch
 
   bumpKspmCollectorChart:
-    name: "bump the bitnami/kubectl image reference in the kspm-collector chart"
+    name: "bump the sysdig/sysdig-kubectl image reference in the kspm-collector chart"
     kind: helmchart
     scmid: github
     spec:
@@ -54,7 +54,7 @@ targets:
       versionincrement: patch
 
   bumpNodeAnalyzerChart:
-    name: "bump the bitnami/kubectl image reference in the node-analyzer chart"
+    name: "bump the sysdig/sysdig-kubectl image reference in the node-analyzer chart"
     kind: helmchart
     scmid: github
     spec:
@@ -63,7 +63,7 @@ targets:
       versionincrement: patch
 
   bumpRapidResponseChart:
-    name: "bump the bitnami/kubectl image reference in the rapid-response chart"
+    name: "bump the sysdig/sysdig-kubectl image reference in the rapid-response chart"
     kind: helmchart
     scmid: github
     spec:
