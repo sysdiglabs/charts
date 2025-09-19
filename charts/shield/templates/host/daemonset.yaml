@@ -141,7 +141,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: {{ include "host.rapid_response_secret" . }}
-                  key: password
+                  key: {{ include "host.rapid_response_secret_password_key" . }}
             {{- end }}
             {{- include "host.env" . | nindent 12 }}
             {{ if or .Values.features.posture.host_posture.enabled (dig "kspm_analyzer" "enabled" false .Values.host.additional_settings) }}
