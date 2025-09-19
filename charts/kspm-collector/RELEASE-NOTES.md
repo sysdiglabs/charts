@@ -1,5 +1,5 @@
 # What's Changed
 
 ### Chores
-- **deps** [3379418d](https://github.com/sysdiglabs/charts/commit/3379418d6f2241168397f3eba3da9fc6a40d7e6e): bump kspm-collector to 1.39.15 ([#2378](https://github.com/sysdiglabs/charts/issues/2378))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.18.4...kspm-collector-0.18.5
+- **agent,kspm-collector,node-analyzer** [bd84e2d2](https://github.com/sysdiglabs/charts/commit/bd84e2d2159856df26b636f9b0e2e7fcfd0c7a3d): remove bitnami/kubectl usage ([#2385](https://github.com/sysdiglabs/charts/issues/2385))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.18.5...kspm-collector-0.18.6

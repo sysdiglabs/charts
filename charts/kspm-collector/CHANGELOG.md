@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.18.6
+### Chores
+* **agent,kspm-collector,node-analyzer** [bd84e2d2](https://github.com/sysdiglabs/charts/commit/bd84e2d2159856df26b636f9b0e2e7fcfd0c7a3d): remove bitnami/kubectl usage ([#2385](https://github.com/sysdiglabs/charts/issues/2385))
 # v0.18.5
 ### Chores
 * **deps** [3379418d](https://github.com/sysdiglabs/charts/commit/3379418d6f2241168397f3eba3da9fc6a40d7e6e): bump kspm-collector to 1.39.15 ([#2378](https://github.com/sysdiglabs/charts/issues/2378))
