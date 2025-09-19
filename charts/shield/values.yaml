@@ -144,6 +144,10 @@ features:
     rapid_response:
       enabled: false
       password:
+      # The name of the existing Rapid Response secret
+      existing_secret:
+      # The key used in the existing Rapid Response secret for the password
+      existing_secret_password_key:
     response_actions:
       enabled: false
   monitor:
