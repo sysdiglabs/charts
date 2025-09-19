@@ -146,7 +146,7 @@ features:
       password:
       # The name of the existing Rapid Response secret
       existing_secret:
-      # The key used in the existing Rapid Response secret for the password
+      # The key used in the existing Rapid Response secret for the password (default: password)
       existing_secret_password_key:
     response_actions:
       enabled: false
