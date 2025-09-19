@@ -226,3 +226,66 @@ tests:
       - matchRegex:
           path: data['config.yaml']
           pattern: "scan:((.|\n)*)inlineScanImage: foo:bar\n"
+
+  - it: imageAnalyzer options default if no custom setup is given
+    asserts:
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: "maxFileSizeBytes: 104857600"
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: "maxFileSizeBytesInMemory: 5242880"
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: "parallelFileAnalysisCount: 15"
+
+  - it: maxFileSizeBytes wires if custom setup is given
+    set:
+      config:
+        scan:
+          imageAnalyzer:
+            maxFileSizeBytes: 666
+    asserts:
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: "maxFileSizeBytes: 666"
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: "maxFileSizeBytesInMemory: 5242880"
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: "parallelFileAnalysisCount: 15"
+
+  - it: maxFileSizeBytesInMemory wires if custom setup is given
+    set:
+      config:
+        scan:
+          imageAnalyzer:
+            maxFileSizeBytesInMemory: 666
+    asserts:
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: "maxFileSizeBytes: 104857600"
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: "maxFileSizeBytesInMemory: 666"
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: "parallelFileAnalysisCount: 15"
+
+  - it: parallelFileAnalysisCount wires if custom setup is given
+    set:
+      config:
+        scan:
+          imageAnalyzer:
+            parallelFileAnalysisCount: 666
+    asserts:
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: "maxFileSizeBytes: 104857600"
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: "maxFileSizeBytesInMemory: 5242880"
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: "parallelFileAnalysisCount: 666"

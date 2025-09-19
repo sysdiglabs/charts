@@ -72,6 +72,11 @@ data:
       namespace: {{ .Release.Namespace }}
       workers: {{ .Values.config.maxWorkers }}
       disablePlatformScanning: {{ default false .Values.config.scan.disablePlatformScanning }}
+      imageAnalyzer:
+        maxFileSizeBytes: {{ default 104857600 .Values.config.scan.imageAnalyzer.maxFileSizeBytes | int64 }}
+        maxFileSizeBytesInMemory: {{ default 5242880 .Values.config.scan.imageAnalyzer.maxFileSizeBytesInMemory | int64 }}
+        parallelFileAnalysisCount: {{ default 15 .Values.config.scan.imageAnalyzer.parallelFileAnalysisCount }}
+
       jobs:
         ttlSecondsAfterFinished: {{ .Values.config.scan.jobs.ttlSecondsAfterFinished }}
         serviceAccountName: {{ include "registry-scanner.serviceAccountName" . }}
