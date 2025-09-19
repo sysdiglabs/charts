@@ -329,6 +329,10 @@ spec:
       {{- if .Values.features.investigations.event_forwarder.enabled }}
         - name: local-forwarder-config
           secret:
+            {{- if eq .Values.features.investigations.event_forwarder.existing_secret_name "" }}
             secretName: {{ include "host.local_forwarder_secret_name" . }}
+            {{- else }}
+            secretName: {{ .Values.features.investigations.event_forwarder.existing_secret_name }}
+            {{- end }}
       {{- end }}
       {{- include "host.volumes" . | nindent 8 }}
