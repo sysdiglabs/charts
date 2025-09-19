@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v2.3.2
+### Chores
+* **agent,kspm-collector,node-analyzer** [bd84e2d2](https://github.com/sysdiglabs/charts/commit/bd84e2d2159856df26b636f9b0e2e7fcfd0c7a3d): remove bitnami/kubectl usage ([#2385](https://github.com/sysdiglabs/charts/issues/2385))
 # v2.3.1
 ### New Features
 * **agent,shield,sysdig-deploy** [32be15a2](https://github.com/sysdiglabs/charts/commit/32be15a2247281ff9b325c27a570a8c48d118a20): release agent 14.2.1 ([#2374](https://github.com/sysdiglabs/charts/issues/2374))

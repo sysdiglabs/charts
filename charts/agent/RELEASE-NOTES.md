@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **agent,shield,sysdig-deploy** [32be15a2](https://github.com/sysdiglabs/charts/commit/32be15a2247281ff9b325c27a570a8c48d118a20): release agent 14.2.1 ([#2374](https://github.com/sysdiglabs/charts/issues/2374))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-2.3.0...agent-2.3.1
+### Chores
+- **agent,kspm-collector,node-analyzer** [bd84e2d2](https://github.com/sysdiglabs/charts/commit/bd84e2d2159856df26b636f9b0e2e7fcfd0c7a3d): remove bitnami/kubectl usage ([#2385](https://github.com/sysdiglabs/charts/issues/2385))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-2.3.1...agent-2.3.2

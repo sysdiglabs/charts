@@ -435,7 +435,7 @@ nodeAnalyzer:
     debug: false
     image:
       repository: sysdig/kspm-analyzer
-      tag: 1.45.3
+      tag: 1.45.4
       digest: null
       pullPolicy: null
     # Permissions for OCP4, previously only added for benchmarkrunner
@@ -514,8 +514,8 @@ tests:
   skip: false
   timeout: 300s
   image:
-    repo: bitnami/kubectl
-    tag: 1.33.4
+    repo: quay.io/sysdig/sysdig-kubectl
+    tag: 1.34.1-1.5.17
 
 # Allow to modify DNS policy
 dnsPolicy: null

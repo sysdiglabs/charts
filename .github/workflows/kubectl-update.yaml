@@ -1,5 +1,5 @@
 ---
-name: Update bitnami/kubectl image reference for Helm tests
+name: Update sysdig/sysdig-kubectl image reference for Helm tests
 
 on:
   schedule:
@@ -20,6 +20,6 @@ jobs:
         uses: updatecli/updatecli-action@v2.92.0
 
       - name: Run Updatecli
-        run: "updatecli apply --config .github/updatecli.d/config-update-bitnami-kubectl-image.yaml"
+        run: "updatecli apply --config .github/updatecli.d/config-update-kubectl-image.yaml"
         env:
           GITHUB_TOKEN: "${{ secrets.TOOLS_JENKINS_ADMIN_ACCESS_GITHUB_TOKEN }}"
