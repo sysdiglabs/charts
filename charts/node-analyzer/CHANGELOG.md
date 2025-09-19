@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.36.10
+### Chores
+* **agent,kspm-collector,node-analyzer** [bd84e2d2](https://github.com/sysdiglabs/charts/commit/bd84e2d2159856df26b636f9b0e2e7fcfd0c7a3d): remove bitnami/kubectl usage ([#2385](https://github.com/sysdiglabs/charts/issues/2385))
 # v1.36.9
 ### Chores
 * **nodeanalyzer** [ac7a53c4](https://github.com/sysdiglabs/charts/commit/ac7a53c44c46b557cb3db8d7886cbf40c4658888): bumped host scanner to the latest release ([#2375](https://github.com/sysdiglabs/charts/issues/2375))
