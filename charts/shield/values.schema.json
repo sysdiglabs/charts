@@ -356,6 +356,11 @@
           },
           "additionalProperties": false
         },
+        "exclude_lease_creation": {
+          "type": "boolean",
+          "description": "Exclude creation of lease objects for leader election",
+          "default": false
+        },
         "security_context": {
           "type": "object"
         },
