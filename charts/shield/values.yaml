@@ -507,6 +507,9 @@ cluster:
     # The minimum number of available pods for the cluster shield
     min_available: 1
 
+  # Exclude creation of lease objects for leader election
+  exclude_lease_creation: false
+
 ssl:
   # Enable SSL verification
   verify: true
