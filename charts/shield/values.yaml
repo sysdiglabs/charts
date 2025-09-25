@@ -140,11 +140,11 @@ features:
       enabled: false
       integrations: []
       transmit_message_types: []
-      # If existing_secret_name is set to anything different than an empty string
+      # If existing_secret is set to anything different than an empty string
       # the local forwarder secret generation is skipped and the existing secret
       # name is used to mount the secret volume instead of the one defined in
       # the secrets template
-      existing_secret_name: ""
+      existing_secret: ""
   respond:
     rapid_response:
       enabled: false
