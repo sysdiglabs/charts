@@ -10,6 +10,21 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.36.11
+### Chores
+* **node-analyzer** [212c12c9](https://github.com/sysdiglabs/charts/commit/212c12c98c213e4083b772f2d619edf1331f0012): bump sysdig/kspm-analyzer to 1.45.4 ([#2384](https://github.com/sysdiglabs/charts/issues/2384))
+# v1.36.10
+### Chores
+* **agent,kspm-collector,node-analyzer** [bd84e2d2](https://github.com/sysdiglabs/charts/commit/bd84e2d2159856df26b636f9b0e2e7fcfd0c7a3d): remove bitnami/kubectl usage ([#2385](https://github.com/sysdiglabs/charts/issues/2385))
+# v1.36.9
+### Chores
+* **nodeanalyzer** [ac7a53c4](https://github.com/sysdiglabs/charts/commit/ac7a53c44c46b557cb3db8d7886cbf40c4658888): bumped host scanner to the latest release ([#2375](https://github.com/sysdiglabs/charts/issues/2375))
+# v1.36.8
+### Chores
+* **node-analyzer** [802c5fb7](https://github.com/sysdiglabs/charts/commit/802c5fb7cb05075442447aaccabffade0c8ec3c8): update kspm-analyzer to version 1.45.3 ([#2372](https://github.com/sysdiglabs/charts/issues/2372))
+# v1.36.7
+### Chores
+* **shield,common,sysdig-deploy,admission-controller,agent,cluster-scanner,cluster-shield,kspm-collector,node-analyzer,rapid-response** [1b992fbc](https://github.com/sysdiglabs/charts/commit/1b992fbc14ffd5b1f63be3896ee40deb5a858d06): bump cluster-shield to 1.15.0 ([#2360](https://github.com/sysdiglabs/charts/issues/2360))
 # v1.36.6
 ### Chores
 * **ci** [307dab9a](https://github.com/sysdiglabs/charts/commit/307dab9ab32b7406044c68e8d6a47a667ac03466): bump bitnami/kubectl image references ([#2310](https://github.com/sysdiglabs/charts/issues/2310))

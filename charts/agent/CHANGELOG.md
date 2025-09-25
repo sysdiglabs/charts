@@ -10,6 +10,21 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v2.3.3
+### New Features
+* **agent** [5a2d5f6a](https://github.com/sysdiglabs/charts/commit/5a2d5f6ae10ab7f2737cada4922bcb8af8a1806d): Enable the possibility to specify an existing secret containing the local forwarder configuration [FR-2992] ([#2382](https://github.com/sysdiglabs/charts/issues/2382))
+# v2.3.2
+### Chores
+* **agent,kspm-collector,node-analyzer** [bd84e2d2](https://github.com/sysdiglabs/charts/commit/bd84e2d2159856df26b636f9b0e2e7fcfd0c7a3d): remove bitnami/kubectl usage ([#2385](https://github.com/sysdiglabs/charts/issues/2385))
+# v2.3.1
+### New Features
+* **agent,shield,sysdig-deploy** [32be15a2](https://github.com/sysdiglabs/charts/commit/32be15a2247281ff9b325c27a570a8c48d118a20): release agent 14.2.1 ([#2374](https://github.com/sysdiglabs/charts/issues/2374))
+# v2.3.0
+### New Features
+* **agent,shield,sysdig-deploy** [c8c11c3c](https://github.com/sysdiglabs/charts/commit/c8c11c3c0fca1b3fe177c3a97330bf8fe23334f0): release agent 14.2.0 ([#2361](https://github.com/sysdiglabs/charts/issues/2361))
+# v2.2.5
+### Chores
+* **shield,common,sysdig-deploy,admission-controller,agent,cluster-scanner,cluster-shield,kspm-collector,node-analyzer,rapid-response** [1b992fbc](https://github.com/sysdiglabs/charts/commit/1b992fbc14ffd5b1f63be3896ee40deb5a858d06): bump cluster-shield to 1.15.0 ([#2360](https://github.com/sysdiglabs/charts/issues/2360))
 # v2.2.4
 ### Chores
 * **ci** [307dab9a](https://github.com/sysdiglabs/charts/commit/307dab9ab32b7406044c68e8d6a47a667ac03466): bump bitnami/kubectl image references ([#2310](https://github.com/sysdiglabs/charts/issues/2310))

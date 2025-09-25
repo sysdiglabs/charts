@@ -463,3 +463,57 @@ tests:
       - equal:
           path: metadata.labels["sysdig/component-version"]
           value: sha256_61fdf83f6ec198919d595ea1e6dc093258dfcdc3d75db81fe060b65c
+
+
+  - it: Host Alias are not included by default
+    asserts:
+      - notContains:
+          path: spec.template.spec.hostAliases
+
+  - it: Single Host Alias is included if configured
+    set:
+      host_windows:
+        host_aliases:
+          - ip: 1.2.3.4
+            hostnames:
+              - acme.public
+              - acme.internal
+    asserts:
+      - equal:
+          path: spec.template.spec.hostAliases[0].ip
+          value: 1.2.3.4
+      - equal:
+          path: spec.template.spec.hostAliases[0].hostnames
+          value:
+            - acme.public
+            - acme.internal
+
+  - it: Multiple Host Alias are included if configured
+    set:
+      host_windows:
+        host_aliases:
+          - ip: 1.2.3.4
+            hostnames:
+              - acme.public
+              - acme.internal
+          - ip: 4.3.2.1
+            hostnames:
+              - company.public
+              - company.internal
+    asserts:
+      - equal:
+          path: spec.template.spec.hostAliases[0].ip
+          value: 1.2.3.4
+      - equal:
+          path: spec.template.spec.hostAliases[0].hostnames
+          value:
+            - acme.public
+            - acme.internal
+      - equal:
+          path: spec.template.spec.hostAliases[1].ip
+          value: 4.3.2.1
+      - equal:
+          path: spec.template.spec.hostAliases[1].hostnames
+          value:
+              - company.public
+              - company.internal

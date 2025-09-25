@@ -394,7 +394,11 @@ spec:
         {{- if .Values.localForwarder.enabled }}
         - name: local-forwarder-config
           secret:
+            {{- if eq .Values.localForwarder.existingSecretName "" }}
             secretName: {{ include "agent.localForwarderSecretName" . }}
+            {{- else }}
+            secretName: {{ .Values.localForwarder.existingSecretName }}
+            {{- end }}
         {{- end }}
         - name: sysdig-agent-secrets
           secret:

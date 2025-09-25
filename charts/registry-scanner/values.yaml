@@ -118,6 +118,13 @@ config:
       nodeSelector: {}
     # Force the scan to happen on the client component rather than relying on backend scanning
     disablePlatformScanning: false
+    imageAnalyzer:
+      # Maximum size (in bytes) of files that will be analyzed. Larger files, will be skipped during analysis. Default set to 100MB.
+      maxFileSizeBytes: 104857600
+      # Maximum size (in bytes) of files that will be analyzed in memory. Larger files will be first written to disk as temporary files. Default set to 5MB.
+      maxFileSizeBytesInMemory: 5242880
+      # Number of files that can be analyzed in parallel
+      parallelFileAnalysisCount: 15
   # Number of goroutines running in parallel in metadata phase for ECR Org setup.
   parallelGoRoutines: 100
 ssl:

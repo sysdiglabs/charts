@@ -10,6 +10,33 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.93.6
+### Chores
+* **sysdig-deploy** [e44e190a](https://github.com/sysdiglabs/charts/commit/e44e190a0145b7612026ad9e76921b6995762232): Automatic version bump due to updated dependencies ([#2387](https://github.com/sysdiglabs/charts/issues/2387))
+# v1.93.5
+### Chores
+* **sysdig-deploy** [bb6a61fa](https://github.com/sysdiglabs/charts/commit/bb6a61fa7e5a1df166713c1aec997e20beb643be): Automatic version bump due to updated dependencies ([#2380](https://github.com/sysdiglabs/charts/issues/2380))
+# v1.93.4
+### Chores
+* **sysdig-deploy** [28204b6e](https://github.com/sysdiglabs/charts/commit/28204b6ead63885a08be28b677e33a758e538b7c): Automatic version bump due to updated dependencies ([#2379](https://github.com/sysdiglabs/charts/issues/2379))
+# v1.93.3
+### Chores
+* **sysdig-deploy** [603d20c0](https://github.com/sysdiglabs/charts/commit/603d20c03b3fd7646b359d8e56c162089fa4fc89): Automatic version bump due to updated dependencies ([#2376](https://github.com/sysdiglabs/charts/issues/2376))
+# v1.93.2
+### New Features
+* **agent,shield,sysdig-deploy** [32be15a2](https://github.com/sysdiglabs/charts/commit/32be15a2247281ff9b325c27a570a8c48d118a20): release agent 14.2.1 ([#2374](https://github.com/sysdiglabs/charts/issues/2374))
+# v1.93.1
+### Chores
+* **sysdig-deploy** [307c485c](https://github.com/sysdiglabs/charts/commit/307c485ceb1df7c8b8fa8b84f38094f9cc8a209e): Automatic version bump due to updated dependencies ([#2373](https://github.com/sysdiglabs/charts/issues/2373))
+# v1.93.0
+### New Features
+* **agent,shield,sysdig-deploy** [c8c11c3c](https://github.com/sysdiglabs/charts/commit/c8c11c3c0fca1b3fe177c3a97330bf8fe23334f0): release agent 14.2.0 ([#2361](https://github.com/sysdiglabs/charts/issues/2361))
+# v1.92.0
+### Chores
+* **shield,common,sysdig-deploy,admission-controller,agent,cluster-scanner,cluster-shield,kspm-collector,node-analyzer,rapid-response** [1b992fbc](https://github.com/sysdiglabs/charts/commit/1b992fbc14ffd5b1f63be3896ee40deb5a858d06): bump cluster-shield to 1.15.0 ([#2360](https://github.com/sysdiglabs/charts/issues/2360))
+# v1.91.6
+### Chores
+* **sysdig-deploy** [776e7253](https://github.com/sysdiglabs/charts/commit/776e7253bd47dbd9ba5ffb88db8964791bc4cea1): Automatic version bump due to updated dependencies ([#2357](https://github.com/sysdiglabs/charts/issues/2357))
 # v1.91.5
 ### Chores
 * **sysdig-deploy** [52cce09f](https://github.com/sysdiglabs/charts/commit/52cce09fa1d095f5ad436b1137e1d553efbdf8bd): Automatic version bump due to updated dependencies ([#2354](https://github.com/sysdiglabs/charts/issues/2354))

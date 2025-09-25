@@ -10,6 +10,30 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.19.3
+### New Features
+* **shield** [29d1f1ac](https://github.com/sysdiglabs/charts/commit/29d1f1acf6b2c54be6de03a7afd3602b45f75426): add support for rapid-response password_existing_secret ([#2386](https://github.com/sysdiglabs/charts/issues/2386))
+# v1.19.2
+### Chores
+* **shield** [4c40822a](https://github.com/sysdiglabs/charts/commit/4c40822aa42e0a8022795df5d1d541dd6a0e6fe2): remove allowedUnsafeSysctls from the cluster openshift SecurityContextConstraints  ([#2390](https://github.com/sysdiglabs/charts/issues/2390))
+# v1.19.1
+### New Features
+* **agent,shield,sysdig-deploy** [32be15a2](https://github.com/sysdiglabs/charts/commit/32be15a2247281ff9b325c27a570a8c48d118a20): release agent 14.2.1 ([#2374](https://github.com/sysdiglabs/charts/issues/2374))
+# v1.19.0
+### New Features
+* **shield** [83af9d3d](https://github.com/sysdiglabs/charts/commit/83af9d3db8bd6352c28efcbf5f44c69e32c8dc87): Add support for hostAliases ([#2370](https://github.com/sysdiglabs/charts/issues/2370))
+# v1.18.1
+### Chores
+* **shield** [c22a4804](https://github.com/sysdiglabs/charts/commit/c22a480409bcd5df16001322d0b4ba9a9a0d0c8d): fix broken links in README file ([#2369](https://github.com/sysdiglabs/charts/issues/2369))
+# v1.18.0
+### New Features
+* **agent,shield,sysdig-deploy** [c8c11c3c](https://github.com/sysdiglabs/charts/commit/c8c11c3c0fca1b3fe177c3a97330bf8fe23334f0): release agent 14.2.0 ([#2361](https://github.com/sysdiglabs/charts/issues/2361))
+# v1.17.0
+### Chores
+* **shield,common,sysdig-deploy,admission-controller,agent,cluster-scanner,cluster-shield,kspm-collector,node-analyzer,rapid-response** [1b992fbc](https://github.com/sysdiglabs/charts/commit/1b992fbc14ffd5b1f63be3896ee40deb5a858d06): bump cluster-shield to 1.15.0 ([#2360](https://github.com/sysdiglabs/charts/issues/2360))
+# v1.16.0
+### Chores
+* **shield** [d66857d1](https://github.com/sysdiglabs/charts/commit/d66857d1435c8421ae4e05dabe609134c9ea2a79): release host-shield windows 0.11.0 ([#2358](https://github.com/sysdiglabs/charts/issues/2358))
 # v1.15.4
 ### Bug Fixes
 * **shield** [ff026255](https://github.com/sysdiglabs/charts/commit/ff026255c116a35e16c6835473ee8bda578a8ac8): Sanitize version label on shield objects ([#2346](https://github.com/sysdiglabs/charts/issues/2346))

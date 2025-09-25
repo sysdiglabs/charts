@@ -1,0 +1,86 @@
+name: Shield Release Branch Updater
+
+on:
+  workflow_dispatch:
+    inputs:
+      kind:
+        description: 'Shield component'
+        required: true
+        default: "cluster"
+        type: choice
+        options:
+          - "cluster"
+          - "host-windows"
+          - "host-linux"
+      latest_release_version:
+        description: 'Latest release version'
+        required: true
+      next_release_version:
+        description: 'Next release version'
+        required: true
+
+permissions:
+  contents: write
+
+env:
+  CURRENT_RELEASE_BRANCH: ${{ inputs.kind }}-shield-release-${{ inputs.latest_release_version}}
+  NEXT_RELEASE_BRANCH: ${{ inputs.kind }}-shield-release-${{ inputs.next_release_version}}
+
+jobs:
+  update-current-release-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout current release branch
+        id: checkout
+        uses: actions/checkout@v5
+        continue-on-error: true
+        with:
+          ref: ${{ env.CURRENT_RELEASE_BRANCH }}
+          fetch-depth: 0
+
+      - name: Checkout main branch
+        if: steps.checkout.outcome == 'failure'
+        uses: actions/checkout@v5
+
+      - name: Create current release branch
+        if: steps.checkout.outcome == 'failure'
+        run: |
+          git checkout -b ${{ env.CURRENT_RELEASE_BRANCH }}
+          git push -u origin ${{ env.CURRENT_RELEASE_BRANCH }}
+
+      - name: Update current release branch
+        if: steps.checkout.outcome == 'success'
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          ./scripts/shield/rebase.sh
+          git push --force-with-lease
+
+  update-next-release-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout next release branch
+        id: checkout
+        uses: actions/checkout@v5
+        continue-on-error: true
+        with:
+          ref: ${{ env.NEXT_RELEASE_BRANCH }}
+          fetch-depth: 0
+
+      - name: Checkout main branch
+        if: steps.checkout.outcome == 'failure'
+        uses: actions/checkout@v5
+
+      - name: Create next release branch
+        if: steps.checkout.outcome == 'failure'
+        run: |
+          git checkout -b ${{ env.NEXT_RELEASE_BRANCH }}
+          git push -u origin ${{ env.NEXT_RELEASE_BRANCH }}
+
+      - name: Update next release branch
+        if: steps.checkout.outcome == 'success'
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          ./scripts/shield/rebase.sh
+          git push --force-with-lease

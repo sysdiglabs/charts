@@ -1438,3 +1438,59 @@ tests:
             name: my-cluster-volume
             mountPath: /host/my-cluster-mount-path
     template: templates/cluster/deployment.yaml
+
+  - it: Host Alias are not included by default
+    asserts:
+      - notContains:
+          path: spec.template.spec.hostAliases
+    template: templates/cluster/deployment.yaml
+
+  - it: Single Host Alias is included if configured
+    set:
+      cluster:
+        host_aliases:
+          - ip: 1.2.3.4
+            hostnames:
+              - acme.public
+              - acme.internal
+    asserts:
+      - equal:
+          path: spec.template.spec.hostAliases[0].ip
+          value: 1.2.3.4
+      - equal:
+          path: spec.template.spec.hostAliases[0].hostnames
+          value:
+            - acme.public
+            - acme.internal
+    template: templates/cluster/deployment.yaml
+
+  - it: Multiple Host Alias are included if configured
+    set:
+      cluster:
+        host_aliases:
+          - ip: 1.2.3.4
+            hostnames:
+              - acme.public
+              - acme.internal
+          - ip: 4.3.2.1
+            hostnames:
+              - company.public
+              - company.internal
+    asserts:
+      - equal:
+          path: spec.template.spec.hostAliases[0].ip
+          value: 1.2.3.4
+      - equal:
+          path: spec.template.spec.hostAliases[0].hostnames
+          value:
+            - acme.public
+            - acme.internal
+      - equal:
+          path: spec.template.spec.hostAliases[1].ip
+          value: 4.3.2.1
+      - equal:
+          path: spec.template.spec.hostAliases[1].hostnames
+          value:
+              - company.public
+              - company.internal
+    template: templates/cluster/deployment.yaml

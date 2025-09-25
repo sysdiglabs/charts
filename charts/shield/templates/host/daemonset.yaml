@@ -24,6 +24,10 @@ spec:
       hostNetwork: true
       dnsPolicy: {{ default "ClusterFirstWithHostNet" .Values.host.dns_policy }}
       hostPID: true
+      {{- if .Values.host.host_aliases }}
+      hostAliases:
+        {{ toYaml .Values.host.host_aliases | nindent 8 }}
+      {{- end }}
       serviceAccountName: {{ include "host.service_account_name" . }}
       {{- if (include "host.has_priority_class" .) }}
       priorityClassName: "{{ include "host.priority_class_name" . }}"
@@ -136,8 +140,8 @@ spec:
             - name: PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "host.rapid_response_secret" . }}
-                  key: password
+                  name: {{ include "host.rapid_response_password_secret" . }}
+                  key: {{ include "host.rapid_response_password_secret_key" . }}
             {{- end }}
             {{- include "host.env" . | nindent 12 }}
             {{ if or .Values.features.posture.host_posture.enabled (dig "kspm_analyzer" "enabled" false .Values.host.additional_settings) }}

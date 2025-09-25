@@ -1,5 +1,5 @@
 # What's Changed
 
 ### Chores
-- **ci** [307dab9a](https://github.com/sysdiglabs/charts/commit/307dab9ab32b7406044c68e8d6a47a667ac03466): bump bitnami/kubectl image references ([#2310](https://github.com/sysdiglabs/charts/issues/2310))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.36.5...node-analyzer-1.36.6
+- **node-analyzer** [212c12c9](https://github.com/sysdiglabs/charts/commit/212c12c98c213e4083b772f2d619edf1331f0012): bump sysdig/kspm-analyzer to 1.45.4 ([#2384](https://github.com/sysdiglabs/charts/issues/2384))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.36.10...node-analyzer-1.36.11

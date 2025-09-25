@@ -27,6 +27,10 @@ spec:
           hostProcess: true
           runAsUserName: "NT AUTHORITY\\SYSTEM"
       hostNetwork: true
+      {{- if .Values.host_windows.host_aliases }}
+      hostAliases:
+        {{ toYaml .Values.host_windows.host_aliases | nindent 8 }}
+      {{- end }}
       serviceAccountName: {{ include "host.service_account_name" . }}
       {{- if (include "host.has_priority_class" .) }}
       priorityClassName: "{{ include "host.priority_class_name" . }}"

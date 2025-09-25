@@ -10,6 +10,12 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.16.12
+### Chores
+* **admission-controller** [77f43b1f](https://github.com/sysdiglabs/charts/commit/77f43b1fdcd5b75a0ba8d1817847a59cf2338fa3): Update to v3.9.54 ([#2343](https://github.com/sysdiglabs/charts/issues/2343))
+# v0.16.11
+### Chores
+* **shield,common,sysdig-deploy,admission-controller,agent,cluster-scanner,cluster-shield,kspm-collector,node-analyzer,rapid-response** [1b992fbc](https://github.com/sysdiglabs/charts/commit/1b992fbc14ffd5b1f63be3896ee40deb5a858d06): bump cluster-shield to 1.15.0 ([#2360](https://github.com/sysdiglabs/charts/issues/2360))
 # v0.16.10
 ### New Features
 * **admission-controller** [121520c3](https://github.com/sysdiglabs/charts/commit/121520c380dc7c53983e442bbf36c64c32afc4ad): add PDB, enable HPA and deprecate scanning ([#2174](https://github.com/sysdiglabs/charts/issues/2174))

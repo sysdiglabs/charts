@@ -60,6 +60,7 @@ targets:
     name: "update the shield readme"
     kind: shell
     scmid: github
+    disablesourceinput: true
     dependson:
       - updateShieldChart
     spec:

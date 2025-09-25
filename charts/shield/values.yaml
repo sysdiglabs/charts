@@ -149,6 +149,10 @@ features:
     rapid_response:
       enabled: false
       password:
+      # The name of the existing Rapid Response password secret
+      password_existing_secret:
+      # The key used in the existing Rapid Response secret for the password (default: password)
+      password_existing_secret_key:
     response_actions:
       enabled: false
   monitor:
@@ -185,7 +189,7 @@ host_windows:
     # The image name for the host shield
     name: host-shield
     # The tag for the host shield images
-    tag: 0.10.0
+    tag: 0.11.0
     # The pull policy for the host shield images
     pull_policy: IfNotPresent
     # The pull secrets for the host shield images
@@ -201,6 +205,8 @@ host_windows:
       cpu: 250m
       # The memory request for the host shield
       memory: 384Mi
+  # The host aliases for the windows host shield workloads
+  host_aliases: []
   # The annotations for the host shield workloads (metadata.annotations)
   workload_annotations: {}
   # The labels for the host shield workloads (metadata.labels)
@@ -259,7 +265,7 @@ host:
     # The image name for the host shield
     shield_name: agent-slim
     # The tag for the host shield images
-    tag: 14.1.1
+    tag: 14.2.1
     # The pull policy for the host shield images
     pull_policy: IfNotPresent
     # The pull secrets for the host shield images
@@ -309,6 +315,8 @@ host:
         cpu: 250m
         # The memory request for the host shield
         memory: 384Mi
+  # The host aliases for the linux host shield workloads
+  host_aliases: []
   # The annotations for the host shield workloads (metadata.annotations)
   workload_annotations: {}
   # The labels for the host shield workloads (metadata.labels)
@@ -388,7 +396,7 @@ cluster:
     # The repository where the cluster shield image is stored
     repository: sysdig/cluster-shield
     # The tag for the cluster shield image
-    tag: 1.14.0
+    tag: 1.15.0
     # The pull policy for the cluster shield image
     pull_policy: IfNotPresent
     # The pull secrets for the cluster shield image
@@ -443,6 +451,8 @@ cluster:
       cpu: 1500m
       # The memory limit for the cluster shield
       memory: 1536Mi
+  # The host aliases for the cluster shield workloads
+  host_aliases: []
   # The annotations for the cluster shield workloads (metadata.annotations)
   workload_annotations: {}
   # The labels for the cluster shield workloads (metadata.labels)

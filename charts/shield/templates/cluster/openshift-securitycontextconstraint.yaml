@@ -16,7 +16,6 @@ allowHostPorts: {{ .Values.cluster.host_network }}
 allowPrivilegeEscalation: true
 allowPrivilegedContainer: true
 allowedCapabilities: []
-allowedUnsafeSysctls: []
 defaultAddCapabilities: []
 fsGroup:
   type: RunAsAny
