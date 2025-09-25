@@ -116,6 +116,8 @@ config:
       temporaryVolumeSizeLimit: 2Gi
       # NodeSelector for child jobs. If only .Values.nodeSelector is specified, child jobs will inherit the same nodeSelector as the main pod
       nodeSelector: {}
+      # Tolerations for child jobs. If only .Values.tolerations is specified, child jobs will inherit the same tolerations as the main pod
+      tolerations: []
     # Force the scan to happen on the client component rather than relying on backend scanning
     disablePlatformScanning: false
     imageAnalyzer:

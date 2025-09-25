@@ -109,6 +109,13 @@ data:
       nodeSelector:
         {{- toYaml .Values.nodeSelector | nindent 8 }}
       {{- end }}
+      {{- if .Values.config.scan.jobs.tolerations }}
+      tolerations:
+        {{- toYaml .Values.config.scan.jobs.tolerations | nindent 8 }}
+      {{- else if .Values.tolerations }}
+      tolerations:
+        {{- toYaml .Values.tolerations | nindent 8 }}
+      {{- end }}
       {{- if .Values.config.scan.securityContext }}
       securityContext:
         {{- include "registry-scanner.scan.securityContext" . | nindent 8}}
