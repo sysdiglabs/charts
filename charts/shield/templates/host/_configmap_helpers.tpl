@@ -142,7 +142,7 @@ true
 {{- define "host.dragent_yaml.rapid_response" }}
   {{- $config := dict }}
   {{- $respond := get .Values.features (include "host.respond_key" .Values.features) }}
-  {{- $rapid_response := omit (get $respond "rapid_response") "password" "existing_secret" "existing_secret_password_key" }}
+  {{- $rapid_response := omit (get $respond "rapid_response") "password" "password_existing_secret" "password_existing_secret_key" }}
   {{- if and (include "common.semver.is_valid" .Values.host.image.tag) (semverCompare "< 13.10.0" .Values.host.image.tag) (not .Values.ssl.verify) }}
     {{- $rapid_response = merge $rapid_response (dict "tls_skip_check" true) }}
   {{- end }}
