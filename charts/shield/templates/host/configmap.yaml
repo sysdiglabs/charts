@@ -10,11 +10,6 @@ data:
     {{- include "host.host_shield_config" . | nindent 4 }}
   dragent.yaml: |
     {{- include "host.configmap" . | nindent 4 }}
-  {{- if .Values.features.investigations.event_forwarder.enabled }}
-  local_forwarder_config.yaml: |
-    integrations:
-      {{- toYaml .Values.features.investigations.event_forwarder.integrations | nindent 6 }}
-  {{- end }}
   {{- if (include "host.prometheus_enabled" .Values.features) }}
   prometheus.yaml: |
     {{- with .Values.features }}
