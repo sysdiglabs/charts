@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **agent,kspm-collector,node-analyzer** [bd84e2d2](https://github.com/sysdiglabs/charts/commit/bd84e2d2159856df26b636f9b0e2e7fcfd0c7a3d): remove bitnami/kubectl usage ([#2385](https://github.com/sysdiglabs/charts/issues/2385))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.18.5...kspm-collector-0.18.6
+### Bug Fixes
+- **kspm-collector,node-analyzer** [ee2507c3](https://github.com/sysdiglabs/charts/commit/ee2507c3a7ddb81e5c0950b6c3d49f8b90c483c5): change TLS_SKIP_VERIFY env variable to TLS_INSECURE ([#2395](https://github.com/sysdiglabs/charts/issues/2395))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.18.6...kspm-collector-0.18.7
