@@ -247,7 +247,7 @@ spec:
                 name: {{ .Release.Name }}-kspm-analyzer
                 key: nats_insecure
                 optional: true
-          - name: TLS_SKIP_VERIFY
+          - name: TLS_INSECURE
             valueFrom:
               configMapKeyRef:
                 name: {{ .Release.Name }}-kspm-analyzer
