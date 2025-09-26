@@ -307,7 +307,15 @@ nodeAnalyzer:
     httpProxy: null
     httpsProxy: null
     noProxy: null
+    # If set, a PersistentVolumeClaim will be created to store temporary files for the runtime-scanner's ephemeral
+    # storage using this StorageClass. The data stored in this volume is temporary and not intended for long-term
+    # retention.
+    # When specified, you must also set 'ephemeralVolumeRequestStorage' to define the requested storage size.
     storageClassName: null
+    # Set the requested storage size for the ephemeral volumeClaimTemplate.
+    # This value is used as the 'requests.storage' in the volumeClaimTemplate only when storageClassName is set.
+    # Example: "4Gi"
+    ephemeralVolumeRequestStorage: "4Gi"
     extraMounts: []
     # example for bottlerocket
     # extraMounts:

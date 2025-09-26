@@ -114,9 +114,7 @@ spec:
                 storageClassName: {{ .Values.nodeAnalyzer.runtimeScanner.storageClassName }}
                 resources:
                   requests:
-                    storage: {{ index .Values.nodeAnalyzer.runtimeScanner.resources.requests "ephemeral-storage" }}
-                  limits:
-                    storage: {{ index .Values.nodeAnalyzer.runtimeScanner.resources.limits "ephemeral-storage" }}
+                    storage: {{ .Values.nodeAnalyzer.runtimeScanner.ephemeralVolumeRequestStorage }}
           {{- else }}
           emptyDir: {}
           {{- end }}
@@ -683,7 +681,18 @@ spec:
         securityContext:
             privileged: true
         resources:
-{{ toYaml .Values.nodeAnalyzer.runtimeScanner.resources | indent 10 }}
+          requests:
+            cpu: {{ .Values.nodeAnalyzer.runtimeScanner.resources.requests.cpu }}
+            memory: {{ .Values.nodeAnalyzer.runtimeScanner.resources.requests.memory }}
+            {{- if not .Values.nodeAnalyzer.runtimeScanner.storageClassName }}
+            ephemeral-storage: {{ index .Values.nodeAnalyzer.runtimeScanner.resources.requests "ephemeral-storage" | quote }}
+            {{- end }}
+          limits:
+            cpu: {{ .Values.nodeAnalyzer.runtimeScanner.resources.limits.cpu }}
+            memory: {{ .Values.nodeAnalyzer.runtimeScanner.resources.limits.memory }}
+            {{- if not .Values.nodeAnalyzer.runtimeScanner.storageClassName }}
+            ephemeral-storage: {{ index .Values.nodeAnalyzer.runtimeScanner.resources.limits "ephemeral-storage" | quote }}
+            {{- end }}
         # Custom volume mount here
         env:
           - name: TMPDIR
