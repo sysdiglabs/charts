@@ -10,8 +10,8 @@ metadata:
     app.kubernetes.io/component: registry-scanner-orchestrator
     app.kubernetes.io/version: "0.7.5"
     app.kubernetes.io/managed-by: Helm
-    
-spec:  
+
+spec:
     backoffLimit: 0
     ttlSecondsAfterFinished: 3600
     template:
@@ -24,7 +24,7 @@ spec:
               app.kubernetes.io/component: registry-scanner-orchestrator
               app.kubernetes.io/version: "0.7.5"
               app.kubernetes.io/managed-by: Helm
-              
+
       spec:
         serviceAccountName: RELEASE-NAME-registry-scanner
         securityContext:
@@ -57,7 +57,7 @@ spec:
                 secretKeyRef:
                   name: RELEASE-NAME-registry-scanner
                   key: aws_region
-            
+
             - name: GROUP_LIMIT
               value: "100"
             - name: REGISTRYSCANNER_CRONJOB_SCHEDULE

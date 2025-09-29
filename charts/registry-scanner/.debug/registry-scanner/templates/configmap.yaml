@@ -15,10 +15,10 @@ data:
 
     # Registry configuration
     registry:
-      url: 
+      url:
       user: from-secret
       pass: from-secret
-      type: 
+      type:
       skipTLS: false
       maxRetries: 10
       maxRetryWait: 10m
