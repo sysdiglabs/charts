@@ -187,7 +187,7 @@ spec:
                 key: no_proxy
                 name: {{ template "kspmCollector.fullname" . }}
                 optional: true
-          - name: TLS_SKIP_VERIFY
+          - name: TLS_INSECURE
             valueFrom:
               configMapKeyRef:
                 key: nats_insecure

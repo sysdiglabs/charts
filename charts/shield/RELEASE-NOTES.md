@@ -1,5 +1,5 @@
 # What's Changed
 
 ### Chores
-- **shield** [4c40822a](https://github.com/sysdiglabs/charts/commit/4c40822aa42e0a8022795df5d1d541dd6a0e6fe2): remove allowedUnsafeSysctls from the cluster openshift SecurityContextConstraints  ([#2390](https://github.com/sysdiglabs/charts/issues/2390))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.19.1...shield-1.19.2
+- **cluster-shield,sysdig-deploy,shield** [f2021042](https://github.com/sysdiglabs/charts/commit/f2021042c3f4e644263444c0ae6026fb2734a9e8): release cluster-shield 1.16.0 ([#2397](https://github.com/sysdiglabs/charts/issues/2397))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.19.4...shield-1.20.0

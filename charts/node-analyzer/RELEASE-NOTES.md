@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **node-analyzer** [212c12c9](https://github.com/sysdiglabs/charts/commit/212c12c98c213e4083b772f2d619edf1331f0012): bump sysdig/kspm-analyzer to 1.45.4 ([#2384](https://github.com/sysdiglabs/charts/issues/2384))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.36.10...node-analyzer-1.36.11
+### Bug Fixes
+- **kspm-collector,node-analyzer** [ee2507c3](https://github.com/sysdiglabs/charts/commit/ee2507c3a7ddb81e5c0950b6c3d49f8b90c483c5): change TLS_SKIP_VERIFY env variable to TLS_INSECURE ([#2395](https://github.com/sysdiglabs/charts/issues/2395))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.36.11...node-analyzer-1.36.12

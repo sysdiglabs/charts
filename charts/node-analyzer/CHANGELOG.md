@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.36.12
+### Bug Fixes
+* **kspm-collector,node-analyzer** [ee2507c3](https://github.com/sysdiglabs/charts/commit/ee2507c3a7ddb81e5c0950b6c3d49f8b90c483c5): change TLS_SKIP_VERIFY env variable to TLS_INSECURE ([#2395](https://github.com/sysdiglabs/charts/issues/2395))
 # v1.36.11
 ### Chores
 * **node-analyzer** [212c12c9](https://github.com/sysdiglabs/charts/commit/212c12c98c213e4083b772f2d619edf1331f0012): bump sysdig/kspm-analyzer to 1.45.4 ([#2384](https://github.com/sysdiglabs/charts/issues/2384))

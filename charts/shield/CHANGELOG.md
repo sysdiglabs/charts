@@ -10,6 +10,15 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.20.0
+### Chores
+* **cluster-shield,sysdig-deploy,shield** [f2021042](https://github.com/sysdiglabs/charts/commit/f2021042c3f4e644263444c0ae6026fb2734a9e8): release cluster-shield 1.16.0 ([#2397](https://github.com/sysdiglabs/charts/issues/2397))
+# v1.19.4
+### New Features
+* **shield** [1d062f15](https://github.com/sysdiglabs/charts/commit/1d062f159423910f51145eda01e3f177de213f3e): convert alf config to secret ([#2303](https://github.com/sysdiglabs/charts/issues/2303))
+# v1.19.3
+### New Features
+* **shield** [29d1f1ac](https://github.com/sysdiglabs/charts/commit/29d1f1acf6b2c54be6de03a7afd3602b45f75426): add support for rapid-response password_existing_secret ([#2386](https://github.com/sysdiglabs/charts/issues/2386))
 # v1.19.2
 ### Chores
 * **shield** [4c40822a](https://github.com/sysdiglabs/charts/commit/4c40822aa42e0a8022795df5d1d541dd6a0e6fe2): remove allowedUnsafeSysctls from the cluster openshift SecurityContextConstraints  ([#2390](https://github.com/sysdiglabs/charts/issues/2390))

@@ -140,8 +140,8 @@ spec:
             - name: PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "host.rapid_response_secret" . }}
-                  key: password
+                  name: {{ include "host.rapid_response_password_secret" . }}
+                  key: {{ include "host.rapid_response_password_secret_key" . }}
             {{- end }}
             {{- include "host.env" . | nindent 12 }}
             {{ if or .Values.features.posture.host_posture.enabled (dig "kspm_analyzer" "enabled" false .Values.host.additional_settings) }}
@@ -332,8 +332,11 @@ spec:
       {{- end }}
       {{- if .Values.features.investigations.event_forwarder.enabled }}
         - name: local-forwarder-config
-          configMap:
-            name: {{ include "host.fullname" . }}
-            optional: true
+          secret:
+            {{- if eq .Values.features.investigations.event_forwarder.existing_secret "" }}
+            secretName: {{ include "host.local_forwarder_secret_name" . }}
+            {{- else }}
+            secretName: {{ .Values.features.investigations.event_forwarder.existing_secret }}
+            {{- end }}
       {{- end }}
       {{- include "host.volumes" . | nindent 8 }}

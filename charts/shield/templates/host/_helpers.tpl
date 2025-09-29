@@ -288,3 +288,8 @@ true
 true
 {{- end }}
 {{- end }}
+
+{{/* Return the name of the local forwarder secret */}}
+{{- define "host.local_forwarder_secret_name" }}
+{{- include "host.fullname" . | trunc 46 | trimSuffix "-" | printf "%s-local-forwarder" }}
+{{- end }}

@@ -140,10 +140,19 @@ features:
       enabled: false
       integrations: []
       transmit_message_types: []
+      # If existing_secret is set to anything different than an empty string
+      # the local forwarder secret generation is skipped and the existing secret
+      # name is used to mount the secret volume instead of the one defined in
+      # the secrets template
+      existing_secret: ""
   respond:
     rapid_response:
       enabled: false
       password:
+      # The name of the existing Rapid Response password secret
+      password_existing_secret:
+      # The key used in the existing Rapid Response secret for the password (default: password)
+      password_existing_secret_key:
     response_actions:
       enabled: false
   monitor:
@@ -387,7 +396,7 @@ cluster:
     # The repository where the cluster shield image is stored
     repository: sysdig/cluster-shield
     # The tag for the cluster shield image
-    tag: 1.15.0
+    tag: 1.16.0
     # The pull policy for the cluster shield image
     pull_policy: IfNotPresent
     # The pull secrets for the cluster shield image
