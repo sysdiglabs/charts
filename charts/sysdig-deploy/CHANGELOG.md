@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.94.0
+### Chores
+* **cluster-shield,sysdig-deploy,shield** [f2021042](https://github.com/sysdiglabs/charts/commit/f2021042c3f4e644263444c0ae6026fb2734a9e8): release cluster-shield 1.16.0 ([#2397](https://github.com/sysdiglabs/charts/issues/2397))
 # v1.93.7
 ### Chores
 * **sysdig-deploy** [c98ab468](https://github.com/sysdiglabs/charts/commit/c98ab46873a1471ad2629334e5ae70df2af9e0b2): Automatic version bump due to updated dependencies ([#2396](https://github.com/sysdiglabs/charts/issues/2396))
