@@ -1,5 +1,5 @@
 # What's Changed
 
 ### Chores
-- **cluster-shield,sysdig-deploy,shield** [f2021042](https://github.com/sysdiglabs/charts/commit/f2021042c3f4e644263444c0ae6026fb2734a9e8): release cluster-shield 1.16.0 ([#2397](https://github.com/sysdiglabs/charts/issues/2397))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.19.4...shield-1.20.0
+- **shield** [a7cf58d2](https://github.com/sysdiglabs/charts/commit/a7cf58d2a10198e34f70cccc70bef4f5040231eb): release host-shield windows 0.12.0 ([#2398](https://github.com/sysdiglabs/charts/issues/2398))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.20.0...shield-1.21.0
