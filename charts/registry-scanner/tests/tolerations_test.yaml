@@ -6,6 +6,7 @@ templates:
 tests:
   # Main pod tolerations tests
   - it: applies tolerations to cronjob pod spec
+    template: templates/cronjob.yaml
     set:
       tolerations:
         - key: node.kubernetes.io/not-ready
@@ -30,6 +31,7 @@ tests:
               effect: NoSchedule
 
   - it: applies tolerations to scanOnStart job pod spec
+    template: templates/job.yaml
     set:
       scanOnStart:
         enabled: true
@@ -48,12 +50,14 @@ tests:
               tolerationSeconds: 300
 
   - it: does not set tolerations when not configured
+    template: templates/cronjob.yaml
     asserts:
       - isNull:
           path: spec.jobTemplate.spec.template.spec.tolerations
 
   # Child job tolerations tests via configmap
   - it: applies specific child job tolerations to configmap
+    template: templates/configmap.yaml
     set:
       config:
         scan:
@@ -80,6 +84,7 @@ tests:
                   operator: Exists
 
   - it: inherits main pod tolerations for child jobs when job-specific tolerations not set
+    template: templates/configmap.yaml
     set:
       tolerations:
         - key: main-pod-toleration
@@ -97,6 +102,7 @@ tests:
                   value: "true"
 
   - it: prefers job-specific tolerations over main pod tolerations
+    template: templates/configmap.yaml
     set:
       tolerations:
         - key: main-pod-toleration
@@ -125,13 +131,15 @@ tests:
           pattern: main-pod-toleration
 
   - it: does not set tolerations in configmap when neither are configured
+    template: templates/configmap.yaml
     asserts:
       - notMatchRegex:
           path: data['config.yaml']
-          pattern: tolerations:
+          pattern: "tolerations:"
 
-  # Complex tolerations scenarios
+# Complex tolerations scenarios
   - it: handles multiple complex tolerations correctly
+    template: templates/configmap.yaml
     set:
       config:
         scan:
@@ -174,6 +182,7 @@ tests:
                   operator: Exists
 
   - it: handles tolerations with various operators
+    template: templates/cronjob.yaml
     set:
       tolerations:
         - key: test-key
