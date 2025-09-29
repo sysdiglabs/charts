@@ -1035,6 +1035,10 @@
                 ]
               },
               "uniqueItems": true
+            },
+            "existing_secret": {
+              "type": "string",
+              "description": "name of an existing secret containing local forwarder configuration data"
             }
           }
         }
