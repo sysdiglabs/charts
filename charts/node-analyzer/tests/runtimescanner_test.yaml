@@ -172,3 +172,115 @@ tests:
           path: spec.template.spec.containers[?(@.name == "sysdig-runtime-scanner")].env[?(@.name == "EVE_ENABLED")]
       - isNotNull:
           path: spec.template.spec.containers[?(@.name == "sysdig-runtime-scanner")].env[?(@.name == "EVE_INTEGRATION_ENABLED")]
+
+  - it: "sets runtime-scanner requests/limits and volumes correctly when the storageClassName is not provided"
+    set:
+      secure.vulnerabilityManagement.newEngineOnly: true
+      global:
+        clusterConfig:
+          name: "test"
+      nodeAnalyzer:
+        runtimeScanner:
+          deploy: true
+          resources:
+              requests:
+                cpu: 123m
+                memory: 456Mi
+                ephemeral-storage: "69Gi"
+              limits:
+                cpu: 789m
+                memory: 101112Mi
+                ephemeral-storage: 420Gi
+    templates:
+      - ../templates/daemonset-node-analyzer.yaml
+    asserts:
+      - equal:
+          path: "spec.template.spec.containers[1].name"
+          value: "sysdig-runtime-scanner"
+      - equal:
+          path: "spec.template.spec.containers[1].resources.requests.cpu"
+          value: "123m"
+      - equal:
+          path: "spec.template.spec.containers[1].resources.requests.memory"
+          value: "456Mi"
+      - equal:
+          path: "spec.template.spec.containers[1].resources.requests.ephemeral-storage"
+          value: "69Gi"
+      - equal:
+          path: "spec.template.spec.containers[1].resources.limits.cpu"
+          value: "789m"
+      - equal:
+          path: "spec.template.spec.containers[1].resources.limits.memory"
+          value: "101112Mi"
+      - equal:
+          path: "spec.template.spec.containers[1].resources.limits.ephemeral-storage"
+          value: "420Gi"
+      - equal:
+          path: "spec.template.spec.volumes[7].name"
+          value: "tmp-vol"
+      - equal:
+          path: "spec.template.spec.volumes[7].emptyDir"
+          value: {}
+
+  - it: "sets runtime-scanner requests/limits and volumes correctly when the storageClassName is provided"
+    set:
+      secure.vulnerabilityManagement.newEngineOnly: true
+      global:
+        clusterConfig:
+          name: "test"
+      nodeAnalyzer:
+        runtimeScanner:
+          deploy: true
+          storageClassName: "standard-rwo"
+          ephemeralVolumeRequestStorage: "90Gi"
+          resources:
+            requests:
+              cpu: 123m
+              memory: 456Mi
+              ephemeral-storage: "69Gi"
+            limits:
+              cpu: 789m
+              memory: 101112Mi
+              ephemeral-storage: 420Gi
+    templates:
+      - ../templates/daemonset-node-analyzer.yaml
+    asserts:
+      - equal:
+          path: "spec.template.spec.containers[1].name"
+          value: "sysdig-runtime-scanner"
+      - equal:
+          path: "spec.template.spec.containers[1].resources.requests.cpu"
+          value: "123m"
+      - equal:
+          path: "spec.template.spec.containers[1].resources.requests.memory"
+          value: "456Mi"
+      - notExists:
+          path: "spec.template.spec.containers[1].resources.requests.ephemeral-storage"
+      - equal:
+          path: "spec.template.spec.containers[1].resources.limits.cpu"
+          value: "789m"
+      - equal:
+          path: "spec.template.spec.containers[1].resources.limits.memory"
+          value: "101112Mi"
+      - notExists:
+          path: "spec.template.spec.containers[1].resources.limits.ephemeral-storage"
+      - equal:
+          path: "spec.template.spec.volumes[7].name"
+          value: "tmp-vol"
+      - notExists:
+          path: "spec.template.spec.volumes[7].emptyDir"
+      - equal:
+          path: "spec.template.spec.volumes[7]"
+          value:
+            name: tmp-vol
+            ephemeral:
+              volumeClaimTemplate:
+                metadata:
+                  labels:
+                    type: "standard-rwo"
+                spec:
+                  accessModes: [ "ReadWriteOnce" ]
+                  storageClassName: "standard-rwo"
+                  resources:
+                    requests:
+                      storage: 90Gi
