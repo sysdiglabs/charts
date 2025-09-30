@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.95.0
+### New Features
+* **node-analyzer** [1db3bb0b](https://github.com/sysdiglabs/charts/commit/1db3bb0b42d03e84df51b248f57999cc886a3b82): added configurable request storage size when specifying a storageClassName in runtime-scanner ([#2393](https://github.com/sysdiglabs/charts/issues/2393))
 # v1.94.0
 ### Chores
 * **cluster-shield,sysdig-deploy,shield** [f2021042](https://github.com/sysdiglabs/charts/commit/f2021042c3f4e644263444c0ae6026fb2734a9e8): release cluster-shield 1.16.0 ([#2397](https://github.com/sysdiglabs/charts/issues/2397))
