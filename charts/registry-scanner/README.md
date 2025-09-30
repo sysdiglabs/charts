@@ -99,6 +99,7 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | config.scan.jobs.resources.limits.cpu               | The CPU limit for the scanner job.                                                                                                                                                                                                         | <code>1</code>                                |
 | config.scan.jobs.temporaryVolumeSizeLimit           | The size limit for the emptyDir volume used by the scanner job.<br/> This volume is used to store both the vulnerability database and the image to scan.                                                                                   | <code>2Gi</code>                              |
 | config.scan.jobs.nodeSelector                       | NodeSelector for child jobs. If only .Values.nodeSelector is specified, child jobs will inherit the same nodeSelector as the main pod                                                                                                      | <code>{}</code>                               |
+| config.scan.jobs.tolerations                        | Tolerations for child jobs. If only .Values.tolerations is specified, child jobs will inherit the same tolerations as the main pod                                                                                                         | <code>[]</code>                               |
 | config.scan.disablePlatformScanning                 | Force the scan to happen on the client component rather than relying on backend scanning                                                                                                                                                   | <code>false</code>                            |
 | config.scan.imageAnalyzer.maxFileSizeBytes          | Maximum size (in bytes) of files that will be analyzed. Larger files, will be skipped during analysis. Default set to 100MB.                                                                                                               | <code>104857600</code>                        |
 | config.scan.imageAnalyzer.maxFileSizeBytesInMemory  | Maximum size (in bytes) of files that will be analyzed in memory. Larger files will be first written to disk as temporary files. Default set to 5MB.                                                                                       | <code>5242880</code>                          |
@@ -140,7 +141,7 @@ Use the following command to deploy:
 helm upgrade --install registry-scanner \
    --namespace sysdig-agent \
    --create-namespace \
-   --version=1.8.0 \
+   --version=1.9.0 \
    --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
    --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
    --set config.secureSkipTLS=true \

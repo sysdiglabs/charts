@@ -1,0 +1,215 @@
+suite: Registry Scanner - Tolerations
+templates:
+  - templates/cronjob.yaml
+  - templates/job.yaml
+  - templates/configmap.yaml
+tests:
+  # Main pod tolerations tests
+  - it: applies tolerations to cronjob pod spec
+    template: templates/cronjob.yaml
+    set:
+      tolerations:
+        - key: node.kubernetes.io/not-ready
+          operator: Exists
+          effect: NoExecute
+          tolerationSeconds: 300
+        - key: registry-scanner
+          operator: Equal
+          value: "true"
+          effect: NoSchedule
+    asserts:
+      - equal:
+          path: spec.jobTemplate.spec.template.spec.tolerations
+          value:
+            - key: node.kubernetes.io/not-ready
+              operator: Exists
+              effect: NoExecute
+              tolerationSeconds: 300
+            - key: registry-scanner
+              operator: Equal
+              value: "true"
+              effect: NoSchedule
+
+  - it: applies tolerations to scanOnStart job pod spec
+    template: templates/job.yaml
+    set:
+      scanOnStart:
+        enabled: true
+      tolerations:
+        - key: node.kubernetes.io/not-ready
+          operator: Exists
+          effect: NoExecute
+          tolerationSeconds: 300
+    asserts:
+      - equal:
+          path: spec.template.spec.tolerations
+          value:
+            - key: node.kubernetes.io/not-ready
+              operator: Exists
+              effect: NoExecute
+              tolerationSeconds: 300
+
+  - it: does not set tolerations when not configured
+    template: templates/cronjob.yaml
+    asserts:
+      - isNull:
+          path: spec.jobTemplate.spec.template.spec.tolerations
+
+  # Child job tolerations tests via configmap
+  - it: applies specific child job tolerations to configmap
+    template: templates/configmap.yaml
+    set:
+      config:
+        scan:
+          jobs:
+            tolerations:
+              - key: scanner-node
+                operator: Equal
+                value: "dedicated"
+                effect: NoSchedule
+              - key: node.kubernetes.io/disk-pressure
+                operator: Exists
+                effect: NoExecute
+    asserts:
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: |
+            tolerations:
+                - effect: NoSchedule
+                  key: scanner-node
+                  operator: Equal
+                  value: dedicated
+                - effect: NoExecute
+                  key: node\.kubernetes\.io/disk-pressure
+                  operator: Exists
+
+  - it: inherits main pod tolerations for child jobs when job-specific tolerations not set
+    template: templates/configmap.yaml
+    set:
+      tolerations:
+        - key: main-pod-toleration
+          operator: Equal
+          value: "true"
+          effect: NoSchedule
+    asserts:
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: |
+            tolerations:
+                - effect: NoSchedule
+                  key: main-pod-toleration
+                  operator: Equal
+                  value: "true"
+
+  - it: prefers job-specific tolerations over main pod tolerations
+    template: templates/configmap.yaml
+    set:
+      tolerations:
+        - key: main-pod-toleration
+          operator: Equal
+          value: "true"
+          effect: NoSchedule
+      config:
+        scan:
+          jobs:
+            tolerations:
+              - key: job-specific-toleration
+                operator: Equal
+                value: "dedicated"
+                effect: NoSchedule
+    asserts:
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: |
+            tolerations:
+                - effect: NoSchedule
+                  key: job-specific-toleration
+                  operator: Equal
+                  value: dedicated
+      - notMatchRegex:
+          path: data['config.yaml']
+          pattern: main-pod-toleration
+
+  - it: does not set tolerations in configmap when neither are configured
+    template: templates/configmap.yaml
+    asserts:
+      - notMatchRegex:
+          path: data['config.yaml']
+          pattern: "tolerations:"
+
+# Complex tolerations scenarios
+  - it: handles multiple complex tolerations correctly
+    template: templates/configmap.yaml
+    set:
+      config:
+        scan:
+          jobs:
+            tolerations:
+              - key: node.kubernetes.io/not-ready
+                operator: Exists
+                effect: NoExecute
+                tolerationSeconds: 300
+              - key: node.kubernetes.io/unreachable
+                operator: Exists
+                effect: NoExecute
+                tolerationSeconds: 300
+              - key: registry-scanner
+                operator: Equal
+                value: "true"
+                effect: NoSchedule
+              - key: high-memory
+                operator: Exists
+                effect: NoSchedule
+    asserts:
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: |
+            tolerations:
+                - effect: NoExecute
+                  key: node\.kubernetes\.io/not-ready
+                  operator: Exists
+                  tolerationSeconds: 300
+                - effect: NoExecute
+                  key: node\.kubernetes\.io/unreachable
+                  operator: Exists
+                  tolerationSeconds: 300
+                - effect: NoSchedule
+                  key: registry-scanner
+                  operator: Equal
+                  value: "true"
+                - effect: NoSchedule
+                  key: high-memory
+                  operator: Exists
+
+  - it: handles tolerations with various operators
+    template: templates/cronjob.yaml
+    set:
+      tolerations:
+        - key: test-key
+          operator: Equal
+          value: "test-value"
+          effect: NoSchedule
+        - key: exists-key
+          operator: Exists
+          effect: NoExecute
+        - effect: NoExecute
+          tolerationSeconds: 600
+    asserts:
+      - equal:
+          path: spec.jobTemplate.spec.template.spec.tolerations[0]
+          value:
+            key: test-key
+            operator: Equal
+            value: "test-value"
+            effect: NoSchedule
+      - equal:
+          path: spec.jobTemplate.spec.template.spec.tolerations[1]
+          value:
+            key: exists-key
+            operator: Exists
+            effect: NoExecute
+      - equal:
+          path: spec.jobTemplate.spec.template.spec.tolerations[2]
+          value:
+            effect: NoExecute
+            tolerationSeconds: 600
