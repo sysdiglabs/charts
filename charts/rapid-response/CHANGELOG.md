@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.9.28
+### Chores
+* **rapid-response** [c537b5a8](https://github.com/sysdiglabs/charts/commit/c537b5a8428300e2719d27f954c6b878d8300121): bump rapid-response version to latest ([#2402](https://github.com/sysdiglabs/charts/issues/2402))
 # v0.9.27
 ### Chores
 * **agent,kspm-collector,node-analyzer** [bd84e2d2](https://github.com/sysdiglabs/charts/commit/bd84e2d2159856df26b636f9b0e2e7fcfd0c7a3d): remove bitnami/kubectl usage ([#2385](https://github.com/sysdiglabs/charts/issues/2385))
