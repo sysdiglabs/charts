@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.95.1
+### Chores
+* **sysdig-deploy** [02e6ffb4](https://github.com/sysdiglabs/charts/commit/02e6ffb470ed874bdd8f5365ff32049651b8e2f2): Automatic version bump due to updated dependencies ([#2400](https://github.com/sysdiglabs/charts/issues/2400))
 # v1.95.0
 ### New Features
 * **node-analyzer** [1db3bb0b](https://github.com/sysdiglabs/charts/commit/1db3bb0b42d03e84df51b248f57999cc886a3b82): added configurable request storage size when specifying a storageClassName in runtime-scanner ([#2393](https://github.com/sysdiglabs/charts/issues/2393))
