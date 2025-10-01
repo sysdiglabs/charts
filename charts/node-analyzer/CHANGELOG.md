@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.37.1
+### Chores
+* **node-analyzer** [89e118ce](https://github.com/sysdiglabs/charts/commit/89e118ceac4980bf223f5732513c23454071c80a): bump sysdig/kspm-analyzer to 1.45.5 ([#2399](https://github.com/sysdiglabs/charts/issues/2399))
 # v1.37.0
 ### New Features
 * **node-analyzer** [1db3bb0b](https://github.com/sysdiglabs/charts/commit/1db3bb0b42d03e84df51b248f57999cc886a3b82): added configurable request storage size when specifying a storageClassName in runtime-scanner ([#2393](https://github.com/sysdiglabs/charts/issues/2393))
