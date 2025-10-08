@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **shield** [a7cf58d2](https://github.com/sysdiglabs/charts/commit/a7cf58d2a10198e34f70cccc70bef4f5040231eb): release host-shield windows 0.12.0 ([#2398](https://github.com/sysdiglabs/charts/issues/2398))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.20.0...shield-1.21.0
+### New Features
+- **agent,shield,sysdig-deploy** [1eb395b7](https://github.com/sysdiglabs/charts/commit/1eb395b7320bf7d0f5de52e024ce2ec3fbd612eb): release agent 14.2.2 ([#2405](https://github.com/sysdiglabs/charts/issues/2405))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.21.0...shield-1.21.1
