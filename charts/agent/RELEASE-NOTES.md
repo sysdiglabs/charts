@@ -1,5 +1,5 @@
 # What's Changed
 
 ### New Features
-- **agent** [5a2d5f6a](https://github.com/sysdiglabs/charts/commit/5a2d5f6ae10ab7f2737cada4922bcb8af8a1806d): Enable the possibility to specify an existing secret containing the local forwarder configuration [FR-2992] ([#2382](https://github.com/sysdiglabs/charts/issues/2382))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-2.3.2...agent-2.3.3
+- **agent,shield,sysdig-deploy** [1eb395b7](https://github.com/sysdiglabs/charts/commit/1eb395b7320bf7d0f5de52e024ce2ec3fbd612eb): release agent 14.2.2 ([#2405](https://github.com/sysdiglabs/charts/issues/2405))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-2.3.3...agent-2.3.4
