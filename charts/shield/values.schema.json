@@ -559,8 +559,7 @@
               "properties": {
                 "enabled": {
                   "type": "boolean",
-                  "description": "Enable supply chain image signature checks",
-                  "default": false
+                  "description": "Enable supply chain image signature checks"
                 },
                 "cosign": {
                   "type": "object",
