@@ -109,7 +109,7 @@ rules:
     - list
     - watch
 {{- end }}
-{{- if (include "cluster.admission_control_container_vulnerability_management_enabled" .) }}
+{{- if or (include "cluster.admission_control_container_vulnerability_management_enabled" .) (include "cluster.admission_control_image_signature_enabled" .) }}
 - apiGroups:
     - ""
   resources:
