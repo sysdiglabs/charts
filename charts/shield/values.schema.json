@@ -545,6 +545,46 @@
             }
           }
         },
+        "supply_chain": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Enable the supply chain feature on the admission control"
+            },
+            "image_signature": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "enabled": {
+                  "type": "boolean",
+                  "description": "Enable supply chain image signature checks",
+                  "default": false
+                },
+                "cosign": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "description": "Cosign-like initialization parameters for image signature enforcer",
+                  "properties": {
+                    "mirror": {
+                      "type": "string",
+                      "description": "The URL of The Update Framework (TUF) server used for retrieving sigstore-compliant trust information. If not specified, the default public sigstore TUF url will be used."
+                    },
+                    "root": {
+                      "type": "string",
+                      "description": "The filepath or URL where an out-of-the-band copy of The Update Framework (TUF) root JSON file is available. In case a filepath is used, it can be made available through a custom volume mount pointing at a dedicated secret and/or configmap."
+                    },
+                    "root_checksum": {
+                      "type": "string",
+                      "description": "The checksum for The Update Framework (TUF) root JSON file. Checksum value should be in the format: <algorithm>:<value> where supported algorithms are: sha256 and sha512. If no algorithm is specified, sha256 will be used."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "http_port": {
           "type": "integer",
           "minimum": 1,
