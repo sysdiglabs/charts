@@ -46,6 +46,14 @@ tests:
                 http_port: 8443
                 posture:
                   enabled: true
+                supply_chain:
+                  enabled: false
+                  image_signature:
+                    cosign:
+                      mirror: null
+                      root: null
+                      root_checksum: null
+                    enabled: false
                 timeout: 10
               audit:
                 enabled: false
@@ -132,6 +140,14 @@ tests:
                 http_port: 8443
                 posture:
                   enabled: true
+                supply_chain:
+                  enabled: false
+                  image_signature:
+                    cosign:
+                      mirror: null
+                      root: null
+                      root_checksum: null
+                    enabled: false
                 timeout: 10
               audit:
                 enabled: false
@@ -200,6 +216,14 @@ tests:
                 http_port: 8443
                 posture:
                   enabled: true
+                supply_chain:
+                  enabled: false
+                  image_signature:
+                    cosign:
+                      mirror: null
+                      root: null
+                      root_checksum: null
+                    enabled: false
                 timeout: 10
               audit:
                 enabled: false
@@ -299,6 +323,14 @@ tests:
                 http_port: 8443
                 posture:
                   enabled: true
+                supply_chain:
+                  enabled: false
+                  image_signature:
+                    cosign:
+                      mirror: null
+                      root: null
+                      root_checksum: null
+                    enabled: false
                 timeout: 10
               audit:
                 enabled: false
@@ -428,6 +460,14 @@ tests:
                 http_port: 8443
                 posture:
                   enabled: true
+                supply_chain:
+                  enabled: false
+                  image_signature:
+                    cosign:
+                      mirror: null
+                      root: null
+                      root_checksum: null
+                    enabled: false
                 timeout: 10
               audit:
                 enabled: false
@@ -777,6 +817,14 @@ tests:
                 http_port: 8443
                 posture:
                   enabled: true
+                supply_chain:
+                  enabled: false
+                  image_signature:
+                    cosign:
+                      mirror: null
+                      root: null
+                      root_checksum: null
+                    enabled: false
                 timeout: 10
               audit:
                 enabled: false
@@ -851,6 +899,14 @@ tests:
                 http_port: 8443
                 posture:
                   enabled: true
+                supply_chain:
+                  enabled: false
+                  image_signature:
+                    cosign:
+                      mirror: null
+                      root: null
+                      root_checksum: null
+                    enabled: false
                 timeout: 10
               audit:
                 enabled: false

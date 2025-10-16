@@ -356,7 +356,33 @@ tests:
               - namespaces
             verbs:
               - get
-
+  - it: Admission Control with Image Signature
+    set:
+      features:
+        admission_control:
+          enabled: true
+          supply_chain:
+            enabled: true
+            image_signature:
+              enabled: true
+    asserts:
+      - containsDocument:
+          kind: ClusterRole
+          apiVersion: rbac.authorization.k8s.io/v1
+          name: release-name-shield-cluster
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - pods
+              - configmaps
+              - secrets
+              - serviceaccounts
+              - namespaces
+            verbs:
+              - get
   - it: Kubernetes Metadata
     set:
       features:

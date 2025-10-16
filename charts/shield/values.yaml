@@ -50,7 +50,19 @@ features:
     posture:
       # Enable the posture feature on the admission control
       enabled: true
-
+    supply_chain:
+      # Enable the supply chain feature on the admission control
+      enabled: false
+      # Enable the image signature supply chain feature on the admission control
+      image_signature:
+        enabled: false
+        cosign:
+          # The URL of The Update Framework (TUF) server used for retrieving sigstore-compliant trust information. If not specified, the default public sigstore TUF url will be used.
+          mirror:
+          # The filepath or URL where an out-of-the-band copy of The Update Framework (TUF) root JSON file is available. In case a filepath is used, it can be made available through a custom volume mount pointing at a dedicated secret and/or configmap.
+          root:
+          # The checksum for The Update Framework (TUF) root JSON file. Checksum value should be in the format: <algorithm>:<value> where supported algorithms are: sha256 and sha512. If no algorithm is specified, sha256 will be used.
+          root_checksum:
   kubernetes_metadata:
     # Enable the Kubernetes Metadata feature on cluster shield
     enabled: true
