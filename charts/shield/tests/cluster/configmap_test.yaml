@@ -50,9 +50,9 @@ tests:
                   enabled: false
                   image_signature:
                     cosign:
-                      mirror: ""
-                      root: ""
-                      root_checksum: ""
+                      mirror: null
+                      root: null
+                      root_checksum: null
                     enabled: false
                 timeout: 10
               audit:
@@ -144,9 +144,9 @@ tests:
                   enabled: false
                   image_signature:
                     cosign:
-                      mirror: ""
-                      root: ""
-                      root_checksum: ""
+                      mirror: null
+                      root: null
+                      root_checksum: null
                     enabled: false
                 timeout: 10
               audit:
@@ -220,9 +220,9 @@ tests:
                   enabled: false
                   image_signature:
                     cosign:
-                      mirror: ""
-                      root: ""
-                      root_checksum: ""
+                      mirror: null
+                      root: null
+                      root_checksum: null
                     enabled: false
                 timeout: 10
               audit:
@@ -327,9 +327,9 @@ tests:
                   enabled: false
                   image_signature:
                     cosign:
-                      mirror: ""
-                      root: ""
-                      root_checksum: ""
+                      mirror: null
+                      root: null
+                      root_checksum: null
                     enabled: false
                 timeout: 10
               audit:
@@ -464,9 +464,9 @@ tests:
                   enabled: false
                   image_signature:
                     cosign:
-                      mirror: ""
-                      root: ""
-                      root_checksum: ""
+                      mirror: null
+                      root: null
+                      root_checksum: null
                     enabled: false
                 timeout: 10
               audit:
@@ -821,9 +821,9 @@ tests:
                   enabled: false
                   image_signature:
                     cosign:
-                      mirror: ""
-                      root: ""
-                      root_checksum: ""
+                      mirror: null
+                      root: null
+                      root_checksum: null
                     enabled: false
                 timeout: 10
               audit:
@@ -903,9 +903,9 @@ tests:
                   enabled: false
                   image_signature:
                     cosign:
-                      mirror: ""
-                      root: ""
-                      root_checksum: ""
+                      mirror: null
+                      root: null
+                      root_checksum: null
                     enabled: false
                 timeout: 10
               audit:
