@@ -1,5 +1,5 @@
 # What's Changed
 
 ### Chores
-- **node-analyzer** [e3323f15](https://github.com/sysdiglabs/charts/commit/e3323f15f81a20b5cd52b7184ba1c1815824500a): bump sysdig/kspm-analyzer to 1.45.6 ([#2407](https://github.com/sysdiglabs/charts/issues/2407))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.37.1...node-analyzer-1.37.2
+- **node-analyzer** [150103a7](https://github.com/sysdiglabs/charts/commit/150103a7eade0373218308fadbcd6a1cb61f8ddd): bump sysdig/vuln-host-scanner to v0.13.12 ([#2409](https://github.com/sysdiglabs/charts/issues/2409))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.37.2...node-analyzer-1.37.3
