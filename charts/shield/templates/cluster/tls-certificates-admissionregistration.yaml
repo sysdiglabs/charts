@@ -1,5 +1,7 @@
 {{- if (include "cluster.tls_certificates.required" .) }}
+{{- include "cluster.tls_certificates.check_conflicts" . -}}
 {{- $cert := dict -}}
+{{- if not (include "cluster.tls_certificates.use_cert_manager" .) }}
 {{- $existingTlsCertificatesSecret := lookup "v1" "Secret" .Release.Namespace (include "cluster.tls_certificates.secret_name" .) -}}
 {{- if $existingTlsCertificatesSecret -}}
   {{- $_ := set $cert "Cert" (index $existingTlsCertificatesSecret.data (include "cluster.tls_certificates.cert_file_name" .)) -}}
@@ -17,6 +19,7 @@
   {{- $_ := set $cert "Cert" ($tlsCert.Cert | b64enc) -}}
   {{- $_ := set $cert "Key" ($tlsCert.Key | b64enc) -}}
   {{- $_ := set $cert "CACert" ($ca.Cert | b64enc) -}}
+{{- end -}}
 {{- end -}}
 {{- if .Values.cluster.tls_certificates.create }}
 ---
@@ -40,6 +43,14 @@ metadata:
   name: {{ include "cluster.audit_webhook_name" . }}
   labels:
     {{- include "cluster.labels" . | nindent 4 }}
+  {{- if (include "cluster.tls_certificates.use_cert_manager" .) }}
+  annotations:
+    {{- if (include "cluster.tls_certificates.cm_use_ca_secret" .) }}
+    cert-manager.io/inject-ca-from-secret: {{ include "cluster.tls_certificates.cm_issuer_namespace" . }}/{{ include "cluster.tls_certificates.cm_ca_secret_name" . }}
+    {{- else }}
+    cert-manager.io/inject-ca-from: {{ .Release.Namespace }}/{{ include "cluster.tls_certificates.cm_certificate_name" . }}
+    {{- end }}
+  {{- end }}
 webhooks:
   - name: audit.secure.sysdig.com
     {{ with .Values.features.detections.kubernetes_audit.excluded_namespaces }}
@@ -63,7 +74,9 @@ webhooks:
         name: {{ include "cluster.service_name" . }}
         path: /k8s-audit
         port: {{ include "cluster.audit_service_port" . }}
+      {{- if not (include "cluster.tls_certificates.use_cert_manager" .) }}
       caBundle: {{ $cert.CACert }}
+      {{- end }}
     admissionReviewVersions: ["v1", "v1beta1"]
     sideEffects: None
     timeoutSeconds: {{ .Values.features.detections.kubernetes_audit.timeout }}
@@ -77,6 +90,14 @@ metadata:
   name: {{ include "cluster.admission_control_webhook_name" . }}
   labels:
     {{- include "cluster.labels" . | nindent 4 }}
+  {{- if (include "cluster.tls_certificates.use_cert_manager" .) }}
+  annotations:
+    {{- if (include "cluster.tls_certificates.cm_use_ca_secret" .) }}
+    cert-manager.io/inject-ca-from-secret: {{ include "cluster.tls_certificates.cm_issuer_namespace" . }}/{{ include "cluster.tls_certificates.cm_ca_secret_name" . }}
+    {{- else }}
+    cert-manager.io/inject-ca-from: {{ .Release.Namespace }}/{{ include "cluster.tls_certificates.cm_certificate_name" . }}
+    {{- end }}
+  {{- end }}
 webhooks:
   - name: vac.secure.sysdig.com
     namespaceSelector:
@@ -112,7 +133,9 @@ webhooks:
         name: {{ include "cluster.service_name" . }}
         path: /validate
         port: {{ include "cluster.admission_control_service_port" . }}
+      {{- if not (include "cluster.tls_certificates.use_cert_manager" .) }}
       caBundle: {{ $cert.CACert }}
+      {{- end }}
     admissionReviewVersions: ["v1", "v1beta1"]
     sideEffects: None
     timeoutSeconds: {{ .Values.features.admission_control.timeout }}

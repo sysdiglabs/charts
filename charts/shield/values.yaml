@@ -445,6 +445,33 @@ cluster:
     create: true
     # The name of the secret that contains the TLS certificates
     secret_name:
+    cert_manager:
+      # Enable cert-manager for certificate management
+      enabled: false
+      ca:
+        # Generate the CA certificate using cert-manager
+        generate: false
+        # The template for the CA certificate secret (if generate is true)
+        # will automatically add the annotation `cert-manager.io/allow-direct-injection: "true"` if not present
+        secret_template: {}
+        # The name of the existing CA certificate secret (if generate is false)
+        # has to be annotated with `cert-manager.io/allow-direct-injection: "true"`
+        secret_name: ""
+        # The namespace of the existing CA certificate secret (if generate is false)
+        secret_namespace: ""
+      issuer:
+        # Generate the Issuer instead of using an existing one
+        generate: false
+        # The name of the existing issuer
+        name: ""
+        # The kind of the existing issuer (Issuer, ClusterIssuer)
+        kind: Issuer
+        # The group of the existing issuer
+        group: cert-manager.io
+      # Certificate duration (default: 30 days)
+      duration: "720h"
+      # How long before expiry to renew (default: 15 days)
+      renew_before: "360h"
   resources:
     requests:
       # The CPU request for the cluster shield
