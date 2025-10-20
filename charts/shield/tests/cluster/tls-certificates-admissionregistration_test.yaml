@@ -635,3 +635,160 @@ tests:
               - pods
             scope: Namespaced
         documentIndex: 1
+
+  - it: Cert Manager Integration exclusive with tls create cert
+    set:
+      features:
+        detections:
+          kubernetes_audit:
+            enabled: true
+      cluster:
+        tls_certificates:
+          create: true
+          cert_manager:
+            enabled: true
+    asserts:
+      - failedTemplate:
+          errorPattern: "Cannot specify both"
+
+  - it: Cert Manager Integration exclusive with tls secret name
+    set:
+      features:
+        detections:
+          kubernetes_audit:
+            enabled: true
+      cluster:
+        tls_certificates:
+          secret_name: foo
+          cert_manager:
+            enabled: true
+    asserts:
+      - failedTemplate:
+          errorPattern: "Cannot specify both"
+
+
+  - it: Audit webhook with cert-manager annotations (generated issuer)
+    set:
+      features:
+        detections:
+          kubernetes_audit:
+            enabled: true
+      cluster:
+        tls_certificates:
+          create: false
+          cert_manager:
+            enabled: true
+            ca:
+              generate: false
+              secret_name: external-ca-secret
+              secret_namespace: cert-manager
+            issuer:
+              generate: true
+    asserts:
+      - containsDocument:
+          kind: ValidatingWebhookConfiguration
+          apiVersion: admissionregistration.k8s.io/v1
+          name: shield-release-cluster-audit
+        template: templates/cluster/tls-certificates-admissionregistration.yaml
+      - equal:
+          path: metadata.annotations["cert-manager.io/inject-ca-from-secret"]
+          value: cert-manager/external-ca-secret
+        template: templates/cluster/tls-certificates-admissionregistration.yaml
+      - notExists:
+          path: .webhooks[0].clientConfig.caBundle
+        template: templates/cluster/tls-certificates-admissionregistration.yaml
+
+  - it: Audit webhook with cert-manager annotations (existing issuer)
+    set:
+      features:
+        detections:
+          kubernetes_audit:
+            enabled: true
+      cluster:
+        tls_certificates:
+          create: false
+          cert_manager:
+            enabled: true
+            ca:
+              generate: false
+              secret_name: external-ca-secret
+              secret_namespace: cert-manager
+            issuer:
+              generate: false
+              name: my-existing-issuer
+              kind: ClusterIssuer
+    asserts:
+      - containsDocument:
+          kind: ValidatingWebhookConfiguration
+          apiVersion: admissionregistration.k8s.io/v1
+          name: shield-release-cluster-audit
+        template: templates/cluster/tls-certificates-admissionregistration.yaml
+      - equal:
+          path: metadata.annotations["cert-manager.io/inject-ca-from"]
+          value: shield-namespace/shield-release-cluster-cm-tls
+        template: templates/cluster/tls-certificates-admissionregistration.yaml
+      - notExists:
+          path: .webhooks[0].clientConfig.caBundle
+        template: templates/cluster/tls-certificates-admissionregistration.yaml
+
+  - it: Admission control webhook with cert-manager annotations (generated issuer)
+    set:
+      features:
+        admission_control:
+          enabled: true
+      cluster:
+        tls_certificates:
+          create: false
+          cert_manager:
+            enabled: true
+            ca:
+              generate: false
+              secret_name: external-ca-secret
+              secret_namespace: cert-manager
+            issuer:
+              generate: true
+    asserts:
+      - containsDocument:
+          kind: ValidatingWebhookConfiguration
+          apiVersion: admissionregistration.k8s.io/v1
+          name: shield-release-cluster-admission-control
+        template: templates/cluster/tls-certificates-admissionregistration.yaml
+      - equal:
+          path: metadata.annotations["cert-manager.io/inject-ca-from-secret"]
+          value: cert-manager/external-ca-secret
+        template: templates/cluster/tls-certificates-admissionregistration.yaml
+      - notExists:
+          path: .webhooks[0].clientConfig.caBundle
+        template: templates/cluster/tls-certificates-admissionregistration.yaml
+
+  - it: Admission control webhook with cert-manager annotations (existing issuer)
+    set:
+      features:
+        admission_control:
+          enabled: true
+      cluster:
+        tls_certificates:
+          create: false
+          cert_manager:
+            enabled: true
+            ca:
+              generate: false
+              secret_name: external-ca-secret
+              secret_namespace: cert-manager
+            issuer:
+              generate: false
+              name: my-existing-issuer
+              kind: ClusterIssuer
+    asserts:
+      - containsDocument:
+          kind: ValidatingWebhookConfiguration
+          apiVersion: admissionregistration.k8s.io/v1
+          name: shield-release-cluster-admission-control
+        template: templates/cluster/tls-certificates-admissionregistration.yaml
+      - equal:
+          path: metadata.annotations["cert-manager.io/inject-ca-from"]
+          value: shield-namespace/shield-release-cluster-cm-tls
+        template: templates/cluster/tls-certificates-admissionregistration.yaml
+      - notExists:
+          path: .webhooks[0].clientConfig.caBundle
+        template: templates/cluster/tls-certificates-admissionregistration.yaml
