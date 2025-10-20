@@ -59,7 +59,7 @@
   {{- end -}}
 {{- end }}
 
-{{- define "cluster.tls_certificates.use_cert_manager" -}}
+{{- define "cluster.tls_certificates.validate_cert_manager" -}}
   {{- if and .Values.cluster.tls_certificates.cert_manager .Values.cluster.tls_certificates.cert_manager.enabled -}}
     {{- if and (not .Values.cluster.tls_certificates.cert_manager.ca.generate) (not .Values.cluster.tls_certificates.cert_manager.ca.secret_name) -}}
       {{- fail "cert_manager.ca.secret_name must be specified when CA generation is disabled" -}}
@@ -67,6 +67,11 @@
     {{- if and (not .Values.cluster.tls_certificates.cert_manager.issuer.generate) (not .Values.cluster.tls_certificates.cert_manager.issuer.name) -}}
       {{- fail "cert_manager.issuer.name must be specified when Issuer generation is disabled" -}}
     {{- end -}}
+  {{- end -}}
+{{- end }}
+
+{{- define "cluster.tls_certificates.use_cert_manager" -}}
+  {{- if and .Values.cluster.tls_certificates.cert_manager .Values.cluster.tls_certificates.cert_manager.enabled -}}
     {{- true -}}
   {{- end -}}
 {{- end }}
