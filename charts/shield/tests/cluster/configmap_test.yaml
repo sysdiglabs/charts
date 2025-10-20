@@ -49,10 +49,6 @@ tests:
                 supply_chain:
                   enabled: false
                   image_signature:
-                    cosign:
-                      mirror: null
-                      root: null
-                      root_checksum: null
                     enabled: false
                 timeout: 10
               audit:
@@ -143,10 +139,6 @@ tests:
                 supply_chain:
                   enabled: false
                   image_signature:
-                    cosign:
-                      mirror: null
-                      root: null
-                      root_checksum: null
                     enabled: false
                 timeout: 10
               audit:
@@ -219,10 +211,6 @@ tests:
                 supply_chain:
                   enabled: false
                   image_signature:
-                    cosign:
-                      mirror: null
-                      root: null
-                      root_checksum: null
                     enabled: false
                 timeout: 10
               audit:
@@ -326,10 +314,6 @@ tests:
                 supply_chain:
                   enabled: false
                   image_signature:
-                    cosign:
-                      mirror: null
-                      root: null
-                      root_checksum: null
                     enabled: false
                 timeout: 10
               audit:
@@ -463,10 +447,6 @@ tests:
                 supply_chain:
                   enabled: false
                   image_signature:
-                    cosign:
-                      mirror: null
-                      root: null
-                      root_checksum: null
                     enabled: false
                 timeout: 10
               audit:
@@ -820,10 +800,6 @@ tests:
                 supply_chain:
                   enabled: false
                   image_signature:
-                    cosign:
-                      mirror: null
-                      root: null
-                      root_checksum: null
                     enabled: false
                 timeout: 10
               audit:
@@ -902,10 +878,6 @@ tests:
                 supply_chain:
                   enabled: false
                   image_signature:
-                    cosign:
-                      mirror: null
-                      root: null
-                      root_checksum: null
                     enabled: false
                 timeout: 10
               audit:
