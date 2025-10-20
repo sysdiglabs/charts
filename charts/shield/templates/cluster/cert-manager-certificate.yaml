@@ -1,4 +1,5 @@
 {{- if (include "cluster.tls_certificates.use_cert_manager" .) }}
+{{- include "cluster.tls_certificates.validate_cert_manager" . -}}
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
