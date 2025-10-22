@@ -20,7 +20,6 @@
   {{- $_ := set $cert "Key" ($tlsCert.Key | b64enc) -}}
   {{- $_ := set $cert "CACert" ($ca.Cert | b64enc) -}}
 {{- end -}}
-{{- end -}}
 {{- if .Values.cluster.tls_certificates.create }}
 ---
 apiVersion: v1
@@ -35,6 +34,7 @@ data:
   {{ include "cluster.tls_certificates.private_key_file_name" . }}: {{ $cert.Key }}
   {{ include "cluster.tls_certificates.ca_cert_file_name" . }}: {{ $cert.CACert }}
 {{- end }}
+{{- end -}}
 {{- if and .Values.cluster.validatingwebhookconfiguration.create (include "cluster.audit_enabled" .) }}
 ---
 apiVersion: admissionregistration.k8s.io/v1

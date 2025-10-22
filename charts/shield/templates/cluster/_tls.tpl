@@ -9,7 +9,7 @@
 {{- end }}
 
 {{- define "cluster.tls_certificates.secret_name" -}}
-  {{- if .Values.cluster.tls_certificates.create -}}
+  {{- if and (.Values.cluster.tls_certificates.create) (not (include "cluster.tls_certificates.use_cert_manager" .)) -}}
     {{- include "cluster.fullname" . }}-tls-certificates
   {{- else if (include "cluster.tls_certificates.use_cert_manager" .) -}}
     {{- include "cluster.tls_certificates.cm_certificate_name" . -}}
@@ -51,9 +51,6 @@
 {{- end }}
 
 {{- define "cluster.tls_certificates.check_conflicts" -}}
-  {{- if and .Values.cluster.tls_certificates.create .Values.cluster.tls_certificates.cert_manager.enabled -}}
-    {{- fail "Cannot specify both tls_certificates.create and tls_certificates.cert_manager.enabled" -}}
-  {{- end -}}
   {{- if and (not (quote .Values.cluster.tls_certificates.secret_name | empty)) .Values.cluster.tls_certificates.cert_manager.enabled -}}
     {{- fail "Cannot specify both tls_certificates.cert_manager.enabled and tls_certificates.secret_name" -}}
   {{- end -}}
