@@ -47,6 +47,8 @@ tests:
             allowPrivilegeEscalation: false
             seccompProfile:
               type: Unconfined
+            seLinuxOptions:
+              type: control_t
       - isNotSubset:
           path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].securityContext
           content:
