@@ -636,21 +636,6 @@ tests:
             scope: Namespaced
         documentIndex: 1
 
-  - it: Cert Manager Integration exclusive with tls create cert
-    set:
-      features:
-        detections:
-          kubernetes_audit:
-            enabled: true
-      cluster:
-        tls_certificates:
-          create: true
-          cert_manager:
-            enabled: true
-    asserts:
-      - failedTemplate:
-          errorPattern: "Cannot specify both"
-
   - it: Cert Manager Integration exclusive with tls secret name
     set:
       features:
@@ -675,7 +660,7 @@ tests:
             enabled: true
       cluster:
         tls_certificates:
-          create: false
+          create: true
           cert_manager:
             enabled: true
             ca:
@@ -706,7 +691,7 @@ tests:
             enabled: true
       cluster:
         tls_certificates:
-          create: false
+          create: true
           cert_manager:
             enabled: true
             ca:
@@ -738,7 +723,7 @@ tests:
           enabled: true
       cluster:
         tls_certificates:
-          create: false
+          create: true
           cert_manager:
             enabled: true
             ca:
@@ -768,7 +753,7 @@ tests:
           enabled: true
       cluster:
         tls_certificates:
-          create: false
+          create: true
           cert_manager:
             enabled: true
             ca:

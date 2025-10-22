@@ -51,7 +51,7 @@ tests:
     set:
       cluster:
         tls_certificates:
-          create: false
+          create: true
           cert_manager:
             enabled: true
             ca:
@@ -68,7 +68,7 @@ tests:
     set:
       cluster:
         tls_certificates:
-          create: false
+          create: true
           cert_manager:
             enabled: true
             ca:
@@ -87,7 +87,7 @@ tests:
     set:
       cluster:
         tls_certificates:
-          create: false
+          create: true
           cert_manager:
             enabled: true
             ca:
@@ -111,7 +111,7 @@ tests:
     set:
       cluster:
         tls_certificates:
-          create: false
+          create: true
           cert_manager:
             enabled: true
             ca:
@@ -151,7 +151,7 @@ tests:
     set:
       cluster:
         tls_certificates:
-          create: false
+          create: true
           cert_manager:
             enabled: true
             ca:
@@ -189,7 +189,7 @@ tests:
     set:
       cluster:
         tls_certificates:
-          create: false
+          create: true
           cert_manager:
             enabled: true
             ca:
@@ -238,7 +238,7 @@ tests:
     set:
       cluster:
         tls_certificates:
-          create: false
+          create: true
           cert_manager:
             enabled: true
             ca:
@@ -270,7 +270,7 @@ tests:
     set:
       cluster:
         tls_certificates:
-          create: false
+          create: true
           cert_manager:
             enabled: true
             ca:
@@ -310,7 +310,7 @@ tests:
             enabled: true
       cluster:
         tls_certificates:
-          create: false
+          create: true
           cert_manager:
             enabled: true
             ca:
@@ -357,7 +357,7 @@ tests:
             enabled: true
       cluster:
         tls_certificates:
-          create: false
+          create: true
           cert_manager:
             enabled: true
             ca:
@@ -379,7 +379,7 @@ tests:
             enabled: true
       cluster:
         tls_certificates:
-          create: false
+          create: true
           cert_manager:
             enabled: true
             ca:
@@ -410,7 +410,7 @@ tests:
             enabled: true
       cluster:
         tls_certificates:
-          create: false
+          create: true
           cert_manager:
             enabled: true
             ca:
