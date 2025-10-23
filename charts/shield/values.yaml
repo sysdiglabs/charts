@@ -449,8 +449,8 @@ cluster:
       # Enable cert-manager for certificate management
       enabled: false
       ca:
-        # Generate the CA certificate using cert-manager
-        generate: false
+        # Create the CA certificate using cert-manager
+        create: false
         # The template for the CA certificate secret (if generate is true)
         # will automatically add the annotation `cert-manager.io/allow-direct-injection: "true"` if not present
         secret_template: {}
@@ -460,8 +460,8 @@ cluster:
         # The namespace of the existing CA certificate secret (if generate is false)
         secret_namespace: ""
       issuer:
-        # Generate the Issuer instead of using an existing one
-        generate: false
+        # Create the Issuer instead of using an existing one
+        create: false
         # The name of the existing issuer
         name: ""
         # The kind of the existing issuer (Issuer, ClusterIssuer)
