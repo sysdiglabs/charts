@@ -664,11 +664,11 @@ tests:
           cert_manager:
             enabled: true
             ca:
-              generate: false
+              create: false
               secret_name: external-ca-secret
               secret_namespace: cert-manager
             issuer:
-              generate: true
+              create: true
     asserts:
       - containsDocument:
           kind: ValidatingWebhookConfiguration
@@ -695,11 +695,11 @@ tests:
           cert_manager:
             enabled: true
             ca:
-              generate: false
+              create: false
               secret_name: external-ca-secret
               secret_namespace: cert-manager
             issuer:
-              generate: false
+              create: false
               name: my-existing-issuer
               kind: ClusterIssuer
     asserts:
@@ -727,11 +727,11 @@ tests:
           cert_manager:
             enabled: true
             ca:
-              generate: false
+              create: false
               secret_name: external-ca-secret
               secret_namespace: cert-manager
             issuer:
-              generate: true
+              create: true
     asserts:
       - containsDocument:
           kind: ValidatingWebhookConfiguration
@@ -757,11 +757,11 @@ tests:
           cert_manager:
             enabled: true
             ca:
-              generate: false
+              create: false
               secret_name: external-ca-secret
               secret_namespace: cert-manager
             issuer:
-              generate: false
+              create: false
               name: my-existing-issuer
               kind: ClusterIssuer
     asserts:

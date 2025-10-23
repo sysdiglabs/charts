@@ -58,10 +58,10 @@
 
 {{- define "cluster.tls_certificates.validate_cert_manager" -}}
   {{- if and .Values.cluster.tls_certificates.cert_manager .Values.cluster.tls_certificates.cert_manager.enabled -}}
-    {{- if and (not .Values.cluster.tls_certificates.cert_manager.ca.generate) (not .Values.cluster.tls_certificates.cert_manager.ca.secret_name) -}}
+    {{- if and (not .Values.cluster.tls_certificates.cert_manager.ca.create) (not .Values.cluster.tls_certificates.cert_manager.ca.secret_name) -}}
       {{- fail "cert_manager.ca.secret_name must be specified when CA generation is disabled" -}}
     {{- end -}}
-    {{- if and (not .Values.cluster.tls_certificates.cert_manager.issuer.generate) (not .Values.cluster.tls_certificates.cert_manager.issuer.name) -}}
+    {{- if and (not .Values.cluster.tls_certificates.cert_manager.issuer.create) (not .Values.cluster.tls_certificates.cert_manager.issuer.name) -}}
       {{- fail "cert_manager.issuer.name must be specified when Issuer generation is disabled" -}}
     {{- end -}}
   {{- end -}}
@@ -78,7 +78,7 @@
 {{- end }}
 
 {{- define "cluster.tls_certificates.cm_ca_secret_name" -}}
-  {{- if .Values.cluster.tls_certificates.cert_manager.ca.generate -}}
+  {{- if .Values.cluster.tls_certificates.cert_manager.ca.create -}}
     {{- printf "%s-cm-ca" ((include "cluster.fullname" .) | trimSuffix "-" | trunc 58) -}}
   {{- else -}}
     {{- .Values.cluster.tls_certificates.cert_manager.ca.secret_name -}}
@@ -86,19 +86,19 @@
 {{- end }}
 
 {{- define "cluster.tls_certificates.cm_generate_ca" -}}
-  {{- if and (include "cluster.tls_certificates.use_cert_manager" .) (.Values.cluster.tls_certificates.cert_manager.ca.generate) -}}
+  {{- if and (include "cluster.tls_certificates.use_cert_manager" .) (.Values.cluster.tls_certificates.cert_manager.ca.create) -}}
     {{- true -}}
   {{- end -}}
 {{- end }}
 
 {{- define "cluster.tls_certificates.cm_generate_issuer" -}}
-  {{- if and (include "cluster.tls_certificates.use_cert_manager" .) (.Values.cluster.tls_certificates.cert_manager.issuer.generate) -}}
+  {{- if and (include "cluster.tls_certificates.use_cert_manager" .) (.Values.cluster.tls_certificates.cert_manager.issuer.create) -}}
     {{- true -}}
   {{- end -}}
 {{- end }}
 
 {{- define "cluster.tls_certificates.cm_issuer_name" -}}
-  {{- if .Values.cluster.tls_certificates.cert_manager.issuer.generate -}}
+  {{- if .Values.cluster.tls_certificates.cert_manager.issuer.create -}}
     {{- printf "%s-cm-self-issuer" ((include "cluster.fullname" .) | trimSuffix "-" | trunc 49) -}}
   {{- else -}}
     {{- .Values.cluster.tls_certificates.cert_manager.issuer.name -}}
@@ -106,8 +106,8 @@
 {{- end }}
 
 {{- define "cluster.tls_certificates.cm_issuer_namespace" -}}
-  {{- if .Values.cluster.tls_certificates.cert_manager.issuer.generate -}}
-    {{- if and (not .Values.cluster.tls_certificates.cert_manager.ca.generate) (not (empty .Values.cluster.tls_certificates.cert_manager.ca.secret_namespace)) -}}
+  {{- if .Values.cluster.tls_certificates.cert_manager.issuer.create -}}
+    {{- if and (not .Values.cluster.tls_certificates.cert_manager.ca.create) (not (empty .Values.cluster.tls_certificates.cert_manager.ca.secret_namespace)) -}}
       {{- .Values.cluster.tls_certificates.cert_manager.ca.secret_namespace -}}
     {{- else -}}
       {{- .Release.Namespace -}}
@@ -122,8 +122,8 @@
 {{- end }}
 
 {{- define "cluster.tls_certificates.cm_issuer_kind" -}}
-  {{- if .Values.cluster.tls_certificates.cert_manager.issuer.generate -}}
-    {{- if and (not .Values.cluster.tls_certificates.cert_manager.ca.generate) (not (empty .Values.cluster.tls_certificates.cert_manager.ca.secret_namespace)) -}}
+  {{- if .Values.cluster.tls_certificates.cert_manager.issuer.create -}}
+    {{- if and (not .Values.cluster.tls_certificates.cert_manager.ca.create) (not (empty .Values.cluster.tls_certificates.cert_manager.ca.secret_namespace)) -}}
       {{- "ClusterIssuer" -}}
     {{- else -}}
       {{- "Issuer" -}}
@@ -134,7 +134,7 @@
 {{- end }}
 
 {{- define "cluster.tls_certificates.cm_issuer_group" -}}
-  {{- if .Values.cluster.tls_certificates.cert_manager.issuer.generate -}}
+  {{- if .Values.cluster.tls_certificates.cert_manager.issuer.create -}}
     {{- "cert-manager.io" -}}
   {{- else -}}
     {{- .Values.cluster.tls_certificates.cert_manager.issuer.group -}}
