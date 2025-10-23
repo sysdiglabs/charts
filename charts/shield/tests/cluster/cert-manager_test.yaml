@@ -1,0 +1,439 @@
+---
+suite: Cluster - Cert Manager Integration
+templates:
+  - templates/cluster/tls-certificates-admissionregistration.yaml
+  - templates/cluster/cert-manager-certificate.yaml
+  - templates/cluster/cert-manager-self-generate.yaml
+release:
+  name: shield-release
+  namespace: shield-namespace
+values:
+  - ../values/base.yaml
+kubernetesProvider:
+  objects:
+    # Mock CA secret in cert-manager namespace
+    - apiVersion: v1
+      kind: Secret
+      metadata:
+        name: external-ca-secret
+        namespace: cert-manager
+      data:
+        tls.crt: Y2EgY2VydGlmaWNhdGU=  # "ca certificate"
+        tls.key: Y2Ega2V5  # "ca key"
+    # Mock CA secret in same namespace
+    - apiVersion: v1
+      kind: Secret
+      metadata:
+        name: external-ca-secret
+        namespace: shield-namespace
+      data:
+        tls.crt: Y2EgY2VydGlmaWNhdGU=  # "ca certificate"
+        tls.key: Y2Ega2V5  # "ca key"
+
+tests:
+  - it: Cert Manager disabled by default
+    set:
+      features:
+        detections:
+          kubernetes_audit:
+            enabled: true
+        vulnerability_management:
+          container_vulnerability_management:
+            enabled: true
+    asserts:
+      - hasDocuments:
+          count: 0
+    templates:
+      - templates/cluster/cert-manager-certificate.yaml
+      - templates/cluster/cert-manager-self-generate.yaml
+
+  - it: Cert Manager validation - missing CA secret name when generate is false
+    set:
+      cluster:
+        tls_certificates:
+          create: true
+          cert_manager:
+            enabled: true
+            ca:
+              create: false
+              secret_name: ""  # Missing secret name
+            issuer:
+              create: true
+    asserts:
+      - failedTemplate:
+          errorPattern: "cert_manager.ca.secret_name must be specified"
+        template: templates/cluster/cert-manager-certificate.yaml
+
+  - it: Cert Manager validation - missing issuer name when generate is false
+    set:
+      cluster:
+        tls_certificates:
+          create: true
+          cert_manager:
+            enabled: true
+            ca:
+              create: false
+              secret_name: external-ca-secret
+              secret_namespace: cert-manager
+            issuer:
+              create: false
+              name: ""  # Missing issuer name
+    asserts:
+      - failedTemplate:
+          errorPattern: "cert_manager.issuer.name must be specified"
+        template: templates/cluster/cert-manager-certificate.yaml
+
+  - it: Cert Manager with custom duration and renew_before
+    set:
+      cluster:
+        tls_certificates:
+          create: true
+          cert_manager:
+            enabled: true
+            ca:
+              create: false
+              secret_name: external-ca-secret
+              secret_namespace: cert-manager
+            issuer:
+              create: true
+            duration: "168h"  # 7 days
+            renew_before: "24h"  # 1 day
+    asserts:
+      - equal:
+          path: spec.duration
+          value: "168h"
+      - equal:
+          path: spec.renewBefore
+          value: "24h"
+    template: templates/cluster/cert-manager-certificate.yaml
+
+  - it: Cert Manager with CA secret in same namespace (Issuer)
+    set:
+      cluster:
+        tls_certificates:
+          create: true
+          cert_manager:
+            enabled: true
+            ca:
+              create: false
+              secret_name: external-ca-secret
+              secret_namespace: ""  # Same namespace
+            issuer:
+              create: true
+    asserts:
+      - containsDocument:
+          kind: Issuer
+          apiVersion: cert-manager.io/v1
+          name: shield-release-cluster-cm-self-issuer
+          namespace: shield-namespace
+        template: templates/cluster/cert-manager-self-generate.yaml
+      - containsDocument:
+          kind: Certificate
+          apiVersion: cert-manager.io/v1
+          name: shield-release-cluster-cm-tls
+          namespace: shield-namespace
+        template: templates/cluster/cert-manager-certificate.yaml
+      - equal:
+          path: spec.ca.secretName
+          value: external-ca-secret
+        documentIndex: 0
+        template: templates/cluster/cert-manager-self-generate.yaml
+      - equal:
+          path: spec.issuerRef.name
+          value: shield-release-cluster-cm-self-issuer
+        template: templates/cluster/cert-manager-certificate.yaml
+      - equal:
+          path: spec.issuerRef.kind
+          value: Issuer
+        template: templates/cluster/cert-manager-certificate.yaml
+
+  - it: Cert Manager with CA secret in different namespace (ClusterIssuer)
+    set:
+      cluster:
+        tls_certificates:
+          create: true
+          cert_manager:
+            enabled: true
+            ca:
+              create: false
+              secret_name: external-ca-secret
+              secret_namespace: cert-manager  # Different namespace
+            issuer:
+              create: true
+    asserts:
+      - containsDocument:
+          kind: ClusterIssuer
+          apiVersion: cert-manager.io/v1
+          name: shield-release-cluster-cm-self-issuer
+        template: templates/cluster/cert-manager-self-generate.yaml
+      - containsDocument:
+          kind: Certificate
+          apiVersion: cert-manager.io/v1
+          name: shield-release-cluster-cm-tls
+          namespace: shield-namespace
+        template: templates/cluster/cert-manager-certificate.yaml
+      - equal:
+          path: spec.ca.secretName
+          value: external-ca-secret
+        template: templates/cluster/cert-manager-self-generate.yaml
+      - equal:
+          path: spec.issuerRef.name
+          value: shield-release-cluster-cm-self-issuer
+        template: templates/cluster/cert-manager-certificate.yaml
+      - equal:
+          path: spec.issuerRef.kind
+          value: ClusterIssuer
+        template: templates/cluster/cert-manager-certificate.yaml
+
+  - it: Cert Manager with generated CA (same namespace)
+    set:
+      cluster:
+        tls_certificates:
+          create: true
+          cert_manager:
+            enabled: true
+            ca:
+              create: true
+            issuer:
+              create: true
+    asserts:
+      - containsDocument:
+          kind: Issuer
+          apiVersion: cert-manager.io/v1
+          name: shield-release-cluster-cm-self-ca
+          namespace: shield-namespace
+        documentIndex: 0
+        template: templates/cluster/cert-manager-self-generate.yaml
+      - containsDocument:
+          kind: Certificate
+          apiVersion: cert-manager.io/v1
+          name: shield-release-cluster-cm-self-ca
+          namespace: shield-namespace
+        documentIndex: 1
+        template: templates/cluster/cert-manager-self-generate.yaml
+      - containsDocument:
+          kind: Issuer
+          apiVersion: cert-manager.io/v1
+          name: shield-release-cluster-cm-self-issuer
+          namespace: shield-namespace
+        documentIndex: 2
+        template: templates/cluster/cert-manager-self-generate.yaml
+      - equal:
+          path: spec.selfSigned
+          value: {}
+        documentIndex: 0
+        template: templates/cluster/cert-manager-self-generate.yaml
+      - equal:
+          path: spec.isCA
+          value: true
+        documentIndex: 1
+        template: templates/cluster/cert-manager-self-generate.yaml
+      - equal:
+          path: spec.secretName
+          value: shield-release-cluster-cm-ca
+        documentIndex: 1
+        template: templates/cluster/cert-manager-self-generate.yaml
+
+  - it: Cert Manager with custom CA secret template
+    set:
+      cluster:
+        tls_certificates:
+          create: true
+          cert_manager:
+            enabled: true
+            ca:
+              create: true
+              secret_template:
+                labels:
+                  app.kubernetes.io/name: sysdig-ca
+                  app.kubernetes.io/component: ca
+                annotations:
+                  sysdig.com/created-by: cert-manager
+            issuer:
+              create: true
+    asserts:
+      - equal:
+          path: spec.secretTemplate.labels["app.kubernetes.io/name"]
+          value: sysdig-ca
+        documentIndex: 1
+      - equal:
+          path: spec.secretTemplate.labels["app.kubernetes.io/component"]
+          value: ca
+        documentIndex: 1
+      - equal:
+          path: spec.secretTemplate.annotations["sysdig.com/created-by"]
+          value: cert-manager
+        documentIndex: 1
+    template: templates/cluster/cert-manager-self-generate.yaml
+
+  - it: Cert Manager with existing issuer
+    set:
+      cluster:
+        tls_certificates:
+          create: true
+          cert_manager:
+            enabled: true
+            ca:
+              create: false
+              secret_name: external-ca-secret
+              secret_namespace: cert-manager
+            issuer:
+              create: false
+              name: my-existing-issuer
+              kind: ClusterIssuer
+              group: cert-manager.io
+    asserts:
+      - containsDocument:
+          kind: Certificate
+          apiVersion: cert-manager.io/v1
+          name: shield-release-cluster-cm-tls
+          namespace: shield-namespace
+        template: templates/cluster/cert-manager-certificate.yaml
+      - equal:
+          path: spec.issuerRef.name
+          value: my-existing-issuer
+        template: templates/cluster/cert-manager-certificate.yaml
+      - equal:
+          path: spec.issuerRef.kind
+          value: ClusterIssuer
+        template: templates/cluster/cert-manager-certificate.yaml
+      - equal:
+          path: spec.issuerRef.group
+          value: cert-manager.io
+        template: templates/cluster/cert-manager-certificate.yaml
+
+  - it: Cert Manager with container vulnerability management enabled
+    set:
+      features:
+        vulnerability_management:
+          container_vulnerability_management:
+            enabled: true
+      cluster:
+        tls_certificates:
+          create: true
+          cert_manager:
+            enabled: true
+            ca:
+              create: false
+              secret_name: external-ca-secret
+              secret_namespace: cert-manager
+            issuer:
+              create: true
+    asserts:
+      - containsDocument:
+          kind: ClusterIssuer
+          apiVersion: cert-manager.io/v1
+          name: shield-release-cluster-cm-self-issuer
+        template: templates/cluster/cert-manager-self-generate.yaml
+      - containsDocument:
+          kind: Certificate
+          apiVersion: cert-manager.io/v1
+          name: shield-release-cluster-cm-tls
+          namespace: shield-namespace
+        template: templates/cluster/cert-manager-certificate.yaml
+      - equal:
+          path: spec.dnsNames
+          value:
+            - localhost
+            - shield-release-cluster
+            - "*.shield-release-cluster"
+            - "*.shield-release-cluster.shield-namespace.svc"
+            - shield-release-cluster.shield-namespace.svc
+            - "*.shield-release-cluster.shield-namespace.svc.cluster.local"
+            - shield-release-cluster.shield-namespace.svc.cluster.local
+            - shield-release-cluster-container-vm
+            - "*.shield-release-cluster-container-vm"
+            - "*.shield-release-cluster-container-vm.shield-namespace.svc"
+            - shield-release-cluster-container-vm.shield-namespace.svc
+            - "*.shield-release-cluster-container-vm.shield-namespace.svc.cluster.local"
+            - shield-release-cluster-container-vm.shield-namespace.svc.cluster.local
+        template: templates/cluster/cert-manager-certificate.yaml
+
+  - it: Auto-injection annotation added when both CA and Issuer generated
+    set:
+      features:
+        detections:
+          kubernetes_audit:
+            enabled: true
+      cluster:
+        tls_certificates:
+          create: true
+          cert_manager:
+            enabled: true
+            ca:
+              create: true
+            issuer:
+              create: true
+    asserts:
+      - equal:
+          path: spec.secretTemplate.annotations["cert-manager.io/allow-direct-injection"]
+          value: "true"
+        documentIndex: 1
+        template: templates/cluster/cert-manager-self-generate.yaml
+
+  - it: Custom labels preserved in secret template
+    set:
+      features:
+        detections:
+          kubernetes_audit:
+            enabled: true
+      cluster:
+        tls_certificates:
+          create: true
+          cert_manager:
+            enabled: true
+            ca:
+              create: true
+              secret_template:
+                labels:
+                  custom.label: test-value
+                  app.kubernetes.io/name: sysdig-ca
+            issuer:
+              create: true
+    asserts:
+      - equal:
+          path: spec.secretTemplate.labels["custom.label"]
+          value: test-value
+        documentIndex: 1
+        template: templates/cluster/cert-manager-self-generate.yaml
+      - equal:
+          path: spec.secretTemplate.labels["app.kubernetes.io/name"]
+          value: sysdig-ca
+        documentIndex: 1
+        template: templates/cluster/cert-manager-self-generate.yaml
+
+  - it: Custom annotations merged with injection annotation
+    set:
+      features:
+        detections:
+          kubernetes_audit:
+            enabled: true
+      cluster:
+        tls_certificates:
+          create: true
+          cert_manager:
+            enabled: true
+            ca:
+              create: true
+              secret_template:
+                annotations:
+                  custom.annotation: test-value
+                  sysdig.com/created-by: cert-manager
+            issuer:
+              create: true
+    asserts:
+      - equal:
+          path: spec.secretTemplate.annotations["custom.annotation"]
+          value: test-value
+        documentIndex: 1
+        template: templates/cluster/cert-manager-self-generate.yaml
+      - equal:
+          path: spec.secretTemplate.annotations["sysdig.com/created-by"]
+          value: cert-manager
+        documentIndex: 1
+        template: templates/cluster/cert-manager-self-generate.yaml
+      - equal:
+          path: spec.secretTemplate.annotations["cert-manager.io/allow-direct-injection"]
+          value: "true"
+        documentIndex: 1
+        template: templates/cluster/cert-manager-self-generate.yaml
