@@ -201,7 +201,7 @@ capabilities:
 allowPrivilegeEscalation: false
 seccompProfile:
   type: Unconfined
-{{- if (include "common.cluster_type.is_bottlerocket" .) }}
+{{- if and (eq (include "host.response_actions_enabled" .) "true") (include "common.cluster_type.is_bottlerocket" .) }}
 seLinuxOptions:
   type: control_t
 {{- end }}

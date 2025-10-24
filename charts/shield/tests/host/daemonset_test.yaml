@@ -150,6 +150,10 @@ tests:
         privileged: false
       cluster_config:
         cluster_type: bottlerocket
+      features:
+        respond:
+          response_actions:
+            enabled: true
     asserts:
       - isSubset:
           path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].securityContext
