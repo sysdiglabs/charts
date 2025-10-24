@@ -74,7 +74,8 @@
           "description": "Type of Kubernetes cluster",
           "enum": [
             "generic",
-            "gke-autopilot"
+            "gke-autopilot",
+            "bottlerocket"
           ],
           "examples": [
             "generic"

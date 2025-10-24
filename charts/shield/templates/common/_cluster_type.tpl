@@ -6,3 +6,9 @@ Proxy Secret Name
     {{- true -}}
   {{- end -}}
 {{- end -}}
+
+{{- define "common.cluster_type.is_bottlerocket" -}}
+  {{- if eq "bottlerocket" .Values.cluster_config.cluster_type -}}
+    {{- true -}}
+  {{- end -}}
+{{- end -}}

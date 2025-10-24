@@ -144,6 +144,53 @@ tests:
             readOnlyRootFilesystem: false
             allowPrivilegeEscalation: true
 
+  - it: Test host.privileged=false with bottlerocket cluster_type adds seLinuxOptions
+    set:
+      host:
+        privileged: false
+      cluster_config:
+        cluster_type: bottlerocket
+    asserts:
+      - isSubset:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].securityContext
+          content:
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: Unconfined
+            seLinuxOptions:
+              type: control_t
+            capabilities:
+              drop:
+                - ALL
+              add:
+                - DAC_READ_SEARCH
+                - KILL
+                - SETGID
+                - SETUID
+                - SYS_ADMIN
+                - SYS_CHROOT
+                - SYS_PTRACE
+                - SYS_RESOURCE
+
+  - it: Test host.privileged=false with generic cluster_type does not add seLinuxOptions
+    set:
+      host:
+        privileged: false
+      cluster_config:
+        cluster_type: generic
+    asserts:
+      - isSubset:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].securityContext
+          content:
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: Unconfined
+      - isNotSubset:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].securityContext
+          content:
+            seLinuxOptions:
+              type: control_t
+
   - it: Test user specified priority class
     set:
       host:

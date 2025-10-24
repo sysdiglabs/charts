@@ -201,6 +201,10 @@ capabilities:
 allowPrivilegeEscalation: false
 seccompProfile:
   type: Unconfined
+{{- if (include "common.cluster_type.is_bottlerocket" .) }}
+seLinuxOptions:
+  type: control_t
+{{- end }}
 capabilities:
   drop:
     - ALL
