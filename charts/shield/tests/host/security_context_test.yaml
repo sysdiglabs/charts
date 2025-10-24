@@ -56,13 +56,17 @@ tests:
             runAsNonRoot: false
             runAsUser: 0
 
-  - it: Ensure the securityContext for bottlerocket includes seLinuxOptions
+  - it: Ensure the securityContext for bottlerocket with response_actions includes seLinuxOptions
     set:
       host:
         privileged: false
         driver: universal_ebpf
       cluster_config:
         cluster_type: bottlerocket
+      features:
+        respond:
+          response_actions:
+            enabled: true
     asserts:
       - isSubset:
           path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].securityContext
@@ -70,6 +74,52 @@ tests:
             allowPrivilegeEscalation: false
             seccompProfile:
               type: Unconfined
+            seLinuxOptions:
+              type: control_t
+
+  - it: Ensure the securityContext for bottlerocket without response_actions does not include seLinuxOptions
+    set:
+      host:
+        privileged: false
+        driver: universal_ebpf
+      cluster_config:
+        cluster_type: bottlerocket
+      features:
+        respond:
+          response_actions:
+            enabled: false
+    asserts:
+      - isSubset:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].securityContext
+          content:
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: Unconfined
+      - isNotSubset:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].securityContext
+          content:
+            seLinuxOptions:
+              type: control_t
+
+  - it: Ensure the securityContext for non-bottlerocket with response_actions does not include seLinuxOptions
+    set:
+      host:
+        privileged: false
+        driver: universal_ebpf
+      features:
+        respond:
+          response_actions:
+            enabled: true
+    asserts:
+      - isSubset:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].securityContext
+          content:
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: Unconfined
+      - isNotSubset:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].securityContext
+          content:
             seLinuxOptions:
               type: control_t
 
