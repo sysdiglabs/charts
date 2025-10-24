@@ -844,7 +844,7 @@ tests:
 
   - it: Host Alias are not included by default
     asserts:
-      - notContains:
+      - isNull:
           path: spec.template.spec.hostAliases
 
   - it: Single Host Alias is included if configured

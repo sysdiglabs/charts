@@ -1441,7 +1441,7 @@ tests:
 
   - it: Host Alias are not included by default
     asserts:
-      - notContains:
+      - isNull:
           path: spec.template.spec.hostAliases
     template: templates/cluster/deployment.yaml
 
