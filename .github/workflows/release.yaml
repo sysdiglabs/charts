@@ -78,7 +78,7 @@ jobs:
           done
 
       - name: Stash changelog files
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: generated-changelogs
           path: |
