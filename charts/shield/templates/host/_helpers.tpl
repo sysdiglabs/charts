@@ -201,7 +201,7 @@ capabilities:
 allowPrivilegeEscalation: false
 seccompProfile:
   type: Unconfined
-{{- if and (eq (include "host.response_actions_enabled" .) "true") (include "common.cluster_type.is_bottlerocket" .) }}
+{{- if eq (include "host.response_actions_needs_higher_privileges" .) "true" }}
 seLinuxOptions:
   type: control_t
 {{- end }}
@@ -242,6 +242,31 @@ true
 {{- dig "response_actions" "enabled" false $additional_respond -}}
 {{- else if hasKey $feature_respond "response_actions" }}
 {{- dig "response_actions" "enabled" false $feature_respond -}}
+{{- end }}
+{{- end }}
+
+{{/*
+  This function checks if response actions that need higher privileges are enabled.
+  These include: file_acquire, file_quarantine, and get_logs.
+  Returns true if response_actions is enabled AND at least one of these actions has trigger != "none".
+*/}}
+{{- define "host.response_actions_needs_higher_privileges" }}
+{{- if eq (include "host.response_actions_enabled" .) "true" }}
+{{- $feature_respond := dig "respond" (dict) .Values.features }}
+{{- $additional_features := dig "features" (dict) .Values.host.additional_settings }}
+{{- $additional_respond := dig "respond" (dict) $additional_features }}
+{{- $response_actions := dict }}
+{{- if hasKey $additional_respond "response_actions" }}
+  {{- $response_actions = get $additional_respond "response_actions" }}
+{{- else if hasKey $feature_respond "response_actions" }}
+  {{- $response_actions = get $feature_respond "response_actions" }}
+{{- end }}
+{{- $file_acquire_trigger := dig "file_acquire" "trigger" "all" $response_actions }}
+{{- $file_quarantine_trigger := dig "file_quarantine" "trigger" "all" $response_actions }}
+{{- $get_logs_trigger := dig "get_logs" "trigger" "all" $response_actions }}
+{{- if or (ne $file_acquire_trigger "none") (ne $file_quarantine_trigger "none") (ne $get_logs_trigger "none") }}
+{{- true -}}
+{{- end }}
 {{- end }}
 {{- end }}
 

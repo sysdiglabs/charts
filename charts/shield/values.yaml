@@ -3,7 +3,7 @@ cluster_config:
   name:
   # The domain of the cluster
   cluster_domain: cluster.local
-  # The type of the cluster (Accepted Values: gke-autopilot, bottlerocket, generic)
+  # The type of the cluster (Accepted Values: gke-autopilot, generic)
   cluster_type: generic
   # The root namespace of the cluster
   root_namespace: kube-system
