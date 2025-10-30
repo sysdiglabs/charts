@@ -50,7 +50,12 @@ features:
     posture:
       # Enable the posture feature on the admission control
       enabled: true
-
+    supply_chain:
+      # Enable the supply chain feature on the admission control
+      enabled: false
+      # Enable the image signature supply chain feature on the admission control
+      image_signature:
+        enabled: false
   kubernetes_metadata:
     # Enable the Kubernetes Metadata feature on cluster shield
     enabled: true
@@ -396,7 +401,7 @@ cluster:
     # The repository where the cluster shield image is stored
     repository: sysdig/cluster-shield
     # The tag for the cluster shield image
-    tag: 1.16.1
+    tag: 1.17.0
     # The pull policy for the cluster shield image
     pull_policy: IfNotPresent
     # The pull secrets for the cluster shield image
