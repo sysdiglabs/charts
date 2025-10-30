@@ -201,6 +201,8 @@ capabilities:
 allowPrivilegeEscalation: false
 seccompProfile:
   type: Unconfined
+seLinuxOptions:
+  type: control_t
 capabilities:
   drop:
     - ALL
