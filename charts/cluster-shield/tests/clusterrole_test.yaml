@@ -1581,3 +1581,184 @@ tests:
               - get
               - watch
               - patch # needed to remove finalizers, which could prevent deletion
+  - it: Test image_signature enabled
+    set:
+      cluster_shield:
+        features:
+          admission_control:
+            enabled: true
+            supply_chain:
+              enabled: true
+              image_signature:
+                enabled: true
+    asserts:
+      - isKind:
+          of: ClusterRole
+      - isAPIVersion:
+          of: rbac.authorization.k8s.io/v1
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - pods
+              - configmaps
+              - secrets
+              - serviceaccounts
+              - namespaces
+            verbs:
+              - get
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - apps
+            resources:
+              - daemonsets
+              - deployments
+              - statefulsets
+            verbs:
+              - get
+              - update
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - pods
+            verbs:
+              - delete
+              - get
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - batch
+            resources:
+              - jobs
+            verbs:
+              - get
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - apps
+            resources:
+              - daemonsets
+              - deployments
+              - statefulsets
+            verbs:
+              - get
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - networking.k8s.io
+            resources:
+              - networkpolicies
+            verbs:
+              - create
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - networking.k8s.io
+            resources:
+              - networkpolicies
+            verbs:
+              - get
+              - delete
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - batch
+            resources:
+              - jobs
+            verbs:
+              - get
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - apps
+            resources:
+              - daemonsets
+              - deployments
+              - statefulsets
+              - replicasets
+            verbs:
+              - get
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - pods
+            verbs:
+              - list
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - pods/log
+            verbs:
+              - get
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - batch
+            resources:
+              - jobs
+            verbs:
+              - get
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - apps
+            resources:
+              - daemonsets
+              - deployments
+              - statefulsets
+              - replicasets
+            verbs:
+              - get
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - pods
+            verbs:
+              - list
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - snapshot.storage.k8s.io
+            resources:
+              - volumesnapshots
+            verbs:
+              - create
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - snapshot.storage.k8s.io
+            resources:
+              - volumesnapshots
+            verbs:
+              - delete
+              - get
+              - watch
+              - patch
