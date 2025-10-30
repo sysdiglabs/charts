@@ -1,5 +1,5 @@
 # What's Changed
 
 ### New Features
-- **agent,shield,sysdig-deploy** [1eb395b7](https://github.com/sysdiglabs/charts/commit/1eb395b7320bf7d0f5de52e024ce2ec3fbd612eb): release agent 14.2.2 ([#2405](https://github.com/sysdiglabs/charts/issues/2405))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-2.3.3...agent-2.3.4
+- **agent,shield** [42a47497](https://github.com/sysdiglabs/charts/commit/42a4749775625628ac8087542037cb645ef853af): release agent 14.2.3 ([#2420](https://github.com/sysdiglabs/charts/issues/2420))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-2.3.4...agent-2.3.5
