@@ -155,6 +155,21 @@
 {{- end }}
 
 {{/*
+  Checks if the cluster has the admission control container image signature feature enabled.
+  (either by the feature config or additional settings)
+*/}}
+{{- define "cluster.admission_control_image_signature_enabled" -}}
+  {{- $featureConfig := (include "cluster.features_config" . | fromYaml) -}}
+  {{- if and
+    (dig "admission_control" "enabled" false $featureConfig)
+    (dig "admission_control" "supply_chain" "enabled" false $featureConfig)
+    (dig "admission_control" "supply_chain" "image_signature" "enabled" false $featureConfig)
+  -}}
+    {{- true -}}
+  {{- end -}}
+{{- end }}
+
+{{/*
   Checks if the cluster has the audit feature enabled.
   (either by the feature config or additional settings)
 */}}

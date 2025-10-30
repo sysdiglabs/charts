@@ -107,6 +107,12 @@ cluster_shield:
       container_vulnerability_management:
         # Enable the container vulnerability management feature on the admission control
         enabled: false
+      supply_chain:
+        # Enables the supply_chain feature on the admission control
+        enabled: false
+        image_signature:
+          # Enables the image signature verification sub-feature of the supply chain feature
+          enabled: false
     audit:
       # Enable the Kubernetes Audit feature
       enabled: false
