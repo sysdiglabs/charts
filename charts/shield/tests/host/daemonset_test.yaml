@@ -144,16 +144,16 @@ tests:
             readOnlyRootFilesystem: false
             allowPrivilegeEscalation: true
 
-  - it: Test host.privileged=false with bottlerocket cluster_type adds seLinuxOptions
+  - it: Test host.privileged=false with response_actions needing higher privileges adds seLinuxOptions
     set:
       host:
         privileged: false
-      cluster_config:
-        cluster_type: bottlerocket
       features:
         respond:
           response_actions:
             enabled: true
+            file_acquire:
+              trigger: all
     asserts:
       - isSubset:
           path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].securityContext
@@ -176,12 +176,20 @@ tests:
                 - SYS_PTRACE
                 - SYS_RESOURCE
 
-  - it: Test host.privileged=false with generic cluster_type does not add seLinuxOptions
+  - it: Test host.privileged=false without higher privilege response_actions does not add seLinuxOptions
     set:
       host:
         privileged: false
-      cluster_config:
-        cluster_type: generic
+      features:
+        respond:
+          response_actions:
+            enabled: true
+            file_acquire:
+              trigger: none
+            file_quarantine:
+              trigger: none
+            get_logs:
+              trigger: none
     asserts:
       - isSubset:
           path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].securityContext
@@ -192,6 +200,24 @@ tests:
       - isNotSubset:
           path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].securityContext
           content:
+            seLinuxOptions:
+              type: control_t
+
+  - it: Test host.privileged=false with response_actions defaults to enabled when not specified
+    set:
+      host:
+        privileged: false
+      features:
+        respond:
+          response_actions:
+            enabled: true
+    asserts:
+      - isSubset:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].securityContext
+          content:
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: Unconfined
             seLinuxOptions:
               type: control_t
 
