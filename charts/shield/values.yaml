@@ -451,13 +451,13 @@ cluster:
       ca:
         # Create the CA certificate using cert-manager
         create: false
-        # The template for the CA certificate secret (if generate is true)
+        # The template for the CA certificate secret (if create=true)
         # will automatically add the annotation `cert-manager.io/allow-direct-injection: "true"` if not present
         secret_template: {}
-        # The name of the existing CA certificate secret (if generate is false)
+        # The name of the existing CA certificate secret (if create=false)
         # has to be annotated with `cert-manager.io/allow-direct-injection: "true"`
         secret_name: ""
-        # The namespace of the existing CA certificate secret (if generate is false)
+        # The namespace of the existing CA certificate secret (if create=false)
         secret_namespace: ""
       issuer:
         # Create the Issuer instead of using an existing one
