@@ -201,6 +201,10 @@ capabilities:
 allowPrivilegeEscalation: false
 seccompProfile:
   type: Unconfined
+{{- if eq (include "host.response_actions_needs_higher_privileges" .) "true" }}
+seLinuxOptions:
+  type: control_t
+{{- end }}
 capabilities:
   drop:
     - ALL
@@ -227,17 +231,45 @@ true
 
 {{/*
   This function checks if the response_actions feature is enabled for the host.
-  It first checks the additional_settings and then the features.
+  It first checks host.additional_settings.features.respond/responding, then features.respond/responding.
   If neither is found, it defaults to false.
 */}}
 {{- define "host.response_actions_enabled" }}
-{{- $feature_respond := dig "respond" (dict) .Values.features }}
+{{- $respondKey := include "host.respond_key" .Values.features }}
 {{- $additional_features := dig "features" (dict) .Values.host.additional_settings }}
-{{- $additional_respond := dig "respond" (dict) $additional_features }}
+{{- $additional_respond := dig $respondKey (dict) $additional_features }}
+{{- $feature_respond := dig $respondKey (dict) .Values.features }}
 {{- if hasKey $additional_respond "response_actions" }}
 {{- dig "response_actions" "enabled" false $additional_respond -}}
 {{- else if hasKey $feature_respond "response_actions" }}
 {{- dig "response_actions" "enabled" false $feature_respond -}}
+{{- end }}
+{{- end }}
+
+{{/*
+  This function checks if response actions that need higher privileges are enabled.
+  These include: file_acquire, file_quarantine, and get_logs.
+  Returns true if response_actions is enabled AND at least one of these actions has trigger != "none".
+  Checks host.additional_settings first, then features.
+*/}}
+{{- define "host.response_actions_needs_higher_privileges" }}
+{{- if eq (include "host.response_actions_enabled" .) "true" }}
+{{- $respondKey := include "host.respond_key" .Values.features }}
+{{- $additional_features := dig "features" (dict) .Values.host.additional_settings }}
+{{- $additional_respond := dig $respondKey (dict) $additional_features }}
+{{- $feature_respond := dig $respondKey (dict) .Values.features }}
+{{- $response_actions := dict }}
+{{- if hasKey $additional_respond "response_actions" }}
+  {{- $response_actions = get $additional_respond "response_actions" }}
+{{- else if hasKey $feature_respond "response_actions" }}
+  {{- $response_actions = get $feature_respond "response_actions" }}
+{{- end }}
+{{- $file_acquire_trigger := dig "file_acquire" "trigger" "all" $response_actions }}
+{{- $file_quarantine_trigger := dig "file_quarantine" "trigger" "all" $response_actions }}
+{{- $get_logs_trigger := dig "get_logs" "trigger" "all" $response_actions }}
+{{- if or (ne $file_acquire_trigger "none") (ne $file_quarantine_trigger "none") (ne $get_logs_trigger "none") }}
+{{- true -}}
+{{- end }}
 {{- end }}
 {{- end }}
 

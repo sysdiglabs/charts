@@ -56,6 +56,140 @@ tests:
             runAsNonRoot: false
             runAsUser: 0
 
+  - it: Ensure the securityContext with response_actions file_acquire includes seLinuxOptions
+    set:
+      host:
+        privileged: false
+        driver: universal_ebpf
+      features:
+        respond:
+          response_actions:
+            enabled: true
+            file_acquire:
+              trigger: all
+    asserts:
+      - isSubset:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].securityContext
+          content:
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: Unconfined
+            seLinuxOptions:
+              type: control_t
+
+  - it: Ensure the securityContext with response_actions file_quarantine includes seLinuxOptions
+    set:
+      host:
+        privileged: false
+        driver: universal_ebpf
+      features:
+        respond:
+          response_actions:
+            enabled: true
+            file_quarantine:
+              trigger: all
+    asserts:
+      - isSubset:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].securityContext
+          content:
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: Unconfined
+            seLinuxOptions:
+              type: control_t
+
+  - it: Ensure the securityContext with response_actions get_logs includes seLinuxOptions
+    set:
+      host:
+        privileged: false
+        driver: universal_ebpf
+      features:
+        respond:
+          response_actions:
+            enabled: true
+            get_logs:
+              trigger: all
+    asserts:
+      - isSubset:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].securityContext
+          content:
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: Unconfined
+            seLinuxOptions:
+              type: control_t
+
+  - it: Ensure the securityContext without response_actions does not include seLinuxOptions
+    set:
+      host:
+        privileged: false
+        driver: universal_ebpf
+      features:
+        respond:
+          response_actions:
+            enabled: false
+    asserts:
+      - isSubset:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].securityContext
+          content:
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: Unconfined
+      - isNotSubset:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].securityContext
+          content:
+            seLinuxOptions:
+              type: control_t
+
+  - it: Ensure the securityContext with response_actions but no higher privilege actions does not include seLinuxOptions
+    set:
+      host:
+        privileged: false
+        driver: universal_ebpf
+      features:
+        respond:
+          response_actions:
+            enabled: true
+            file_acquire:
+              trigger: none
+            file_quarantine:
+              trigger: none
+            get_logs:
+              trigger: none
+            kill_process:
+              trigger: all
+    asserts:
+      - isSubset:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].securityContext
+          content:
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: Unconfined
+      - isNotSubset:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].securityContext
+          content:
+            seLinuxOptions:
+              type: control_t
+
+  - it: Ensure the securityContext with response_actions defaults to enabled when actions not specified
+    set:
+      host:
+        privileged: false
+        driver: universal_ebpf
+      features:
+        respond:
+          response_actions:
+            enabled: true
+    asserts:
+      - isSubset:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].securityContext
+          content:
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: Unconfined
+            seLinuxOptions:
+              type: control_t
+
   - it: Ensure the security_context is honored
     set:
       host:
