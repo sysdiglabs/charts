@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **shield** [2dc3c590](https://github.com/sysdiglabs/charts/commit/2dc3c5903d2e3a556a4010d156ffdcdfa59bd43a): add support to cert-manager on cluster-shield ([#2411](https://github.com/sysdiglabs/charts/issues/2411))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.22.0...shield-1.23.0
+### Bug Fixes
+- **shield** [4997d445](https://github.com/sysdiglabs/charts/commit/4997d44564451cac5bd46f6c6b7a5de9db240b4c): set seLinuxOptions to control_t for unprivileged host shield bottlerocket deployment ([#2416](https://github.com/sysdiglabs/charts/issues/2416))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.23.0...shield-1.23.1

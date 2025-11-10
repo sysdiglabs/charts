@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.23.1
+### Bug Fixes
+* **shield** [4997d445](https://github.com/sysdiglabs/charts/commit/4997d44564451cac5bd46f6c6b7a5de9db240b4c): set seLinuxOptions to control_t for unprivileged host shield bottlerocket deployment ([#2416](https://github.com/sysdiglabs/charts/issues/2416))
 # v1.23.0
 ### New Features
 * **shield** [2dc3c590](https://github.com/sysdiglabs/charts/commit/2dc3c5903d2e3a556a4010d156ffdcdfa59bd43a): add support to cert-manager on cluster-shield ([#2411](https://github.com/sysdiglabs/charts/issues/2411))
