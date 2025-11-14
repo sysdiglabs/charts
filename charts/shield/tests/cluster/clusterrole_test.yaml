@@ -30,6 +30,7 @@ tests:
               - persistentvolumes
               - persistentvolumeclaims
               - configmaps
+              - secrets
             verbs:
               - get
               - list
@@ -410,6 +411,7 @@ tests:
               - persistentvolumes
               - persistentvolumeclaims
               - configmaps
+              - secrets
             verbs:
               - get
               - list
@@ -514,6 +516,17 @@ tests:
               - events.k8s.io
             resources:
               - events
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - coordination.k8s.io
+            resources:
+              - leases
             verbs:
               - get
               - list
