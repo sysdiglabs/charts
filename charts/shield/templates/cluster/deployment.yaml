@@ -113,6 +113,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.podIP
+            - name: SYSDIG_SHIELD_CHART_NAME
+              value: "{{ $.Chart.Name }}"
+            - name: SYSDIG_SHIELD_CHART_VERSION
+              value: "{{ $.Chart.Version }}"
             {{- if (include "cluster.container_vulnerability_management_enabled" .) }}
             - name: KUBE_SERVICE_NAME
               value: {{ include "cluster.container_vulnerability_management_service_name" . }}
