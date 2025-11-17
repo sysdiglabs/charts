@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.37.6
+### Chores
+* **node-analyzer** [5011f582](https://github.com/sysdiglabs/charts/commit/5011f58235a7dd8580019b889b5cf77f9aa7e7bd): bump sysdig/vuln-host-scanner to v0.13.13 ([#2434](https://github.com/sysdiglabs/charts/issues/2434))
 # v1.37.5
 ### New Features
 * **node-analyzer** [a3165d21](https://github.com/sysdiglabs/charts/commit/a3165d21a86763aa87214a6fd58bd7ff03d50c41): release kspm-analyzer v1.46.0 ([#2437](https://github.com/sysdiglabs/charts/issues/2437))
