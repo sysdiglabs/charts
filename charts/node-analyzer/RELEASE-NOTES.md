@@ -1,5 +1,5 @@
 # What's Changed
 
 ### New Features
-- **nodeanalyzer** [44e7c9a3](https://github.com/sysdiglabs/charts/commit/44e7c9a3cdc06b51e295d6a996bc904e6ea47008): kspm-analyzer v1.45.7 ([#2429](https://github.com/sysdiglabs/charts/issues/2429))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.37.3...node-analyzer-1.37.4
+- **node-analyzer** [a3165d21](https://github.com/sysdiglabs/charts/commit/a3165d21a86763aa87214a6fd58bd7ff03d50c41): release kspm-analyzer v1.46.0 ([#2437](https://github.com/sysdiglabs/charts/issues/2437))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.37.4...node-analyzer-1.37.5
