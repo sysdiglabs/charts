@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **sysdig-deploy** [697021fb](https://github.com/sysdiglabs/charts/commit/697021fb24b63e2559e02b4b124c244a2e1275ca): Automatic version bump due to updated dependencies ([#2438](https://github.com/sysdiglabs/charts/issues/2438))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.96.2...sysdig-deploy-1.96.3
+### New Features
+- **agent,shield,sysdig-deploy** [a7b8be93](https://github.com/sysdiglabs/charts/commit/a7b8be93ed03afe44b263a4b94992f9a55f9641c): release agent 14.2.4 ([#2439](https://github.com/sysdiglabs/charts/issues/2439))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.96.3...sysdig-deploy-1.96.4
