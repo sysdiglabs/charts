@@ -32,7 +32,7 @@ jobs:
     steps:
       - name: Checkout current release branch
         id: checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         continue-on-error: true
         with:
           ref: ${{ env.CURRENT_RELEASE_BRANCH }}
@@ -40,7 +40,7 @@ jobs:
 
       - name: Checkout main branch
         if: steps.checkout.outcome == 'failure'
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Create current release branch
         if: steps.checkout.outcome == 'failure'
@@ -61,7 +61,7 @@ jobs:
     steps:
       - name: Checkout next release branch
         id: checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         continue-on-error: true
         with:
           ref: ${{ env.NEXT_RELEASE_BRANCH }}
@@ -69,7 +69,7 @@ jobs:
 
       - name: Checkout main branch
         if: steps.checkout.outcome == 'failure'
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Create next release branch
         if: steps.checkout.outcome == 'failure'
