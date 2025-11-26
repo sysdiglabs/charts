@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.23.4
+### New Features
+* **agent,shield** [0ad0ad88](https://github.com/sysdiglabs/charts/commit/0ad0ad88386442934b239a21f2695b1852e67a12): release agent 14.2.5 ([#2442](https://github.com/sysdiglabs/charts/issues/2442))
 # v1.23.3
 ### Chores
 * **shield** [15cbb8b6](https://github.com/sysdiglabs/charts/commit/15cbb8b6dceddc126bd2e61bd8832665f37d6e21): release host-shield windows 0.12.2 ([#2441](https://github.com/sysdiglabs/charts/issues/2441))
