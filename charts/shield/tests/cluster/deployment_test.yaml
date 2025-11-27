@@ -2,6 +2,8 @@ suite: Cluster - Deployment
 templates:
   - templates/cluster/deployment.yaml
   - templates/cluster/tls-certificates-admissionregistration.yaml
+chart:
+  version: 1.2.3-helmtest
 release:
   name: release-name
   namespace: shield-namespace
@@ -1013,6 +1015,10 @@ tests:
               valueFrom:
                 fieldRef:
                   fieldPath: status.podIP
+            - name: SYSDIG_SHIELD_CHART_NAME
+              value: shield
+            - name: SYSDIG_SHIELD_CHART_VERSION
+              value: 1.2.3-helmtest
       - equal:
           path: spec.template.spec.volumes
           value:
@@ -1052,6 +1058,10 @@ tests:
               valueFrom:
                 fieldRef:
                   fieldPath: status.podIP
+            - name: SYSDIG_SHIELD_CHART_NAME
+              value: shield
+            - name: SYSDIG_SHIELD_CHART_VERSION
+              value: 1.2.3-helmtest
       - equal:
           path: spec.template.spec.volumes
           value:
@@ -1099,6 +1109,10 @@ tests:
               valueFrom:
                 fieldRef:
                   fieldPath: status.podIP
+            - name: SYSDIG_SHIELD_CHART_NAME
+              value: shield
+            - name: SYSDIG_SHIELD_CHART_VERSION
+              value: 1.2.3-helmtest
       - equal:
           path: spec.template.spec.volumes
           value:
@@ -1146,6 +1160,10 @@ tests:
               valueFrom:
                 fieldRef:
                   fieldPath: status.podIP
+            - name: SYSDIG_SHIELD_CHART_NAME
+              value: shield
+            - name: SYSDIG_SHIELD_CHART_VERSION
+              value: 1.2.3-helmtest
       - equal:
           path: spec.template.spec.volumes
           value:
@@ -1493,4 +1511,18 @@ tests:
           value:
               - company.public
               - company.internal
+    template: templates/cluster/deployment.yaml
+
+  - it: Shield env vars
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env
+          content:
+            name: SYSDIG_SHIELD_CHART_NAME
+            value: shield
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env
+          content:
+            name: SYSDIG_SHIELD_CHART_VERSION
+            value: 1.2.3-helmtest
     template: templates/cluster/deployment.yaml
