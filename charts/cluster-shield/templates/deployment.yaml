@@ -119,6 +119,10 @@ spec:
                   fieldPath: status.podIP
             - name: KUBE_SERVICE_NAME
               value: {{ include "cluster-shield.clusterScannerServiceName" . }}
+            - name: SYSDIG_SHIELD_CHART_NAME
+              value: "{{ $.Chart.Name }}"
+            - name: SYSDIG_SHIELD_CHART_VERSION
+              value: "{{ $.Chart.Version }}"
             {{- if eq (include "cluster-shield.custom_ca.enabled" .) "true" }}
             - name: SSL_CERT_FILE
               value: /ca-certs/{{- include "cluster-shield.custom_ca.keyName" . -}}

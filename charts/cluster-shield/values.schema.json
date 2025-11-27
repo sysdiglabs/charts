@@ -491,16 +491,8 @@
       "type": "object",
       "properties": {
         "log_level": {
-          "type": "string",
-          "description": "Minimum log severity to be reported in logs.",
           "default": "warn",
-          "enum": [
-            "err",
-            "warn",
-            "info",
-            "debug",
-            "trace"
-          ]
+          "$ref": "#/$defs/ClusterShieldConfiguration/$defs/LogLevel"
         },
         "cluster_config": {
           "$ref": "#/$defs/ClusterShieldConfiguration/$defs/ClusterConfig",
@@ -1183,7 +1175,6 @@
               "$ref": "#/$defs/ClusterShieldConfiguration/$defs/KubeStateMetrics"
             },
             "kubernetes_events": {
-              "type": "object",
               "description": "Configuration for the Kubernetes events",
               "$ref": "#/$defs/ClusterShieldConfiguration/$defs/KubernetesEvents"
             }
@@ -1356,7 +1347,6 @@
               "$ref": "#/$defs/ClusterShieldConfiguration/$defs/ContainerVulnerabilityManagement"
             },
             "monitor": {
-              "type": "object",
               "description": "Configurations for the monitor features",
               "$ref": "#/$defs/ClusterShieldConfiguration/$defs/Monitor"
             },
@@ -1387,15 +1377,6 @@
             "posture",
             "investigations"
           ]
-        },
-        "Responder": {
-          "type": "object",
-          "description": "Configuration for the Responder component",
-          "properties": {
-            "resources": {
-              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/Resources"
-            }
-          }
         },
         "AdmissionControlContainerVulnerabilityManagement": {
           "type": "object",
@@ -1536,6 +1517,17 @@
             }
           },
           "additionalProperties": false
+        },
+        "LogLevel": {
+          "type": "string",
+          "description": "Minimum log severity to be reported in logs.",
+          "enum": [
+            "err",
+            "warn",
+            "info",
+            "debug",
+            "trace"
+          ]
         }
       },
       "required": [

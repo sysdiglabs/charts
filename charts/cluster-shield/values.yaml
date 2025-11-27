@@ -123,7 +123,7 @@ cluster_shield:
       # The list of namespaces to exclude from the audit feature
       excluded_namespaces: []
       # List of rules used to determine if a request should be audited
-      webhook_rules:  # +doc-gen:break
+      webhook_rules: # +doc-gen:break
         - apiGroups:
             - ""
             - apps
