@@ -636,6 +636,56 @@ tests:
             scope: Namespaced
         documentIndex: 1
 
+  - it: Enable pod resources when image signature is enabled
+    set:
+      features:
+        admission_control:
+          enabled: true
+          supply_chain:
+            enabled: true
+            image_signature:
+              enabled: true
+        container_vulnerability_management:
+          enabled: false
+        failure_policy: Fail
+    asserts:
+      - hasDocuments:
+          count: 2
+      - containsDocument:
+          kind: ValidatingWebhookConfiguration
+          apiVersion: admissionregistration.k8s.io/v1
+          name: shield-release-cluster-admission-control
+        documentIndex: 1
+      - exists:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")]
+        documentIndex: 1
+      - exists:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].rules
+        documentIndex: 1
+      - lengthEqual:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].rules
+          count: 1
+        documentIndex: 1
+      - contains:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].rules
+          content:
+            apiGroups:
+              - ""
+              - apps
+              - batch
+            apiVersions: [ "v1" ]
+            operations: [ "CREATE", "UPDATE" ]
+            resources:
+              - pods
+              - deployments
+              - replicasets
+              - statefulsets
+              - daemonsets
+              - jobs
+              - cronjobs
+            scope: Namespaced
+        documentIndex: 1
+
   - it: Cert Manager Integration exclusive with tls secret name
     set:
       features:

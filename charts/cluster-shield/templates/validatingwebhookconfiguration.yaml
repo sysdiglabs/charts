@@ -60,7 +60,7 @@ webhooks:
         apiVersions: [ "v1" ]
         operations: [ "CREATE", "UPDATE" ]
         resources:
-          {{- if .Values.cluster_shield.features.admission_control.container_vulnerability_management.enabled }}
+          {{- if or .Values.cluster_shield.features.admission_control.container_vulnerability_management.enabled (and (.Values.cluster_shield.features.admission_control.supply_chain).enabled ((.Values.cluster_shield.features.admission_control.supply_chain).image_signature).enabled)}}
           - "pods"
           {{- end }}
           - "deployments"
