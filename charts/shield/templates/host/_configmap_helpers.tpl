@@ -40,7 +40,7 @@
 {{- end }}
 
 {{- define "host.configmap.detections" }}
-{{- dict "detections" (pick . "ml_policies") | toYaml }}
+{{- dict "detections" (pick . "ml_policies" "file_integrity_monitoring") | toYaml }}
 {{- end }}
 
 {{/* Generate the 'host_shield_config.yaml' content */}}
@@ -106,6 +106,8 @@ true
     (dict "enabled" .investigations.audit_tap.enabled)
   "drift_control"
     (dict "enabled" .detections.drift_control.enabled)
+  "file_integrity_monitoring"
+    (dict "enabled" .detections.file_integrity_monitoring.enabled)
   "jmx"
     (dict "enabled" (dig (include "host.monitor_key" .) "java_management_extensions" "enabled" false .))
   "live_logs"

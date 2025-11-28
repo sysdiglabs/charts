@@ -883,6 +883,9 @@
         },
         "kubernetes_audit": {
           "$ref": "#/$defs/FeatureGroupDetections/$defs/KubernetesAudit"
+        },
+        "file_integrity_monitoring": {
+          "$ref": "#/$defs/FeatureGroupDetections/$defs/FileIntegrityMonitoring"
         }
       },
       "$defs": {
@@ -970,6 +973,16 @@
                   "scope": "*"
                 }
               ]
+            }
+          }
+        },
+        "FileIntegrityMonitoring": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Specify if the File Integrity Monitoring feature is enabled"
             }
           }
         }
