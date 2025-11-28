@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **shield,cluster-shield,sysdig-deploy** [4154614f](https://github.com/sysdiglabs/charts/commit/4154614fc8123a56be42b17f6680a335a260edad): release cluster-shield 1.18.0 ([#2451](https://github.com/sysdiglabs/charts/issues/2451))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.96.5...sysdig-deploy-1.97.0
+### Chores
+- **sysdig-deploy** [947ae6ac](https://github.com/sysdiglabs/charts/commit/947ae6ac143443b0b33e1af0a8ac9c3e31a185d4): Automatic version bump due to updated dependencies ([#2453](https://github.com/sysdiglabs/charts/issues/2453))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.97.0...sysdig-deploy-1.97.1
