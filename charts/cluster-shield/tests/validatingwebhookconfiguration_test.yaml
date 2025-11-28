@@ -525,3 +525,49 @@ tests:
             resources:
               - pods
             scope: Namespaced
+  - it: Enable pod resources when image signature is enabled
+    set:
+      cluster_shield:
+        features:
+          admission_control:
+            enabled: true
+            supply_chain:
+              enabled: true
+              image_signature:
+                enabled: true
+            container_vulnerability_management:
+              enabled: false
+            failure_policy: Fail
+    documentIndex: 0
+    asserts:
+      - hasDocuments:
+          count: 2
+      - containsDocument:
+          kind: ValidatingWebhookConfiguration
+          apiVersion: admissionregistration.k8s.io/v1
+          name: shield-release-cluster-shield
+      - exists:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")]
+      - exists:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].rules
+      - lengthEqual:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].rules
+          count: 1
+      - contains:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")].rules
+          content:
+            apiGroups:
+              - ""
+              - apps
+              - batch
+            apiVersions: [ "v1" ]
+            operations: [ "CREATE", "UPDATE" ]
+            resources:
+              - pods
+              - deployments
+              - replicasets
+              - statefulsets
+              - daemonsets
+              - jobs
+              - cronjobs
+            scope: Namespaced
