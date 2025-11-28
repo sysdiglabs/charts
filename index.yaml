@@ -15978,6 +15978,27 @@ entries:
   cluster-shield:
   - apiVersion: v2
     appVersion: 1.18.0
+    created: "2025-11-28T09:13:26.427566312Z"
+    description: Cluster Shield Helm Chart for Kubernetes
+    digest: 74f8b30119e778a0d2060ffaa3decfe13c5a6444f483c63e6ba46b249b05cf98
+    maintainers:
+    - email: alberto.barba@sysdig.com
+      name: AlbertoBarba
+    - email: adam.roberts@sysdig.com
+      name: aroberts87
+    - email: francesco.furlan@sysdig.com
+      name: francesco-furlan
+    - email: gerlando.falauto@sysdig.com
+      name: iurly
+    - email: marcovito.moscaritolo@sysdig.com
+      name: mavimo
+    name: cluster-shield
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/cluster-shield-1.18.1/cluster-shield-1.18.1.tgz
+    version: 1.18.1
+  - apiVersion: v2
+    appVersion: 1.18.0
     created: "2025-11-27T17:30:35.490453878Z"
     description: Cluster Shield Helm Chart for Kubernetes
     digest: b040e62e4ea545ad13d4e56e3218372d4d4bc44bf8b0e5ecce77889847f1474e
@@ -36280,6 +36301,27 @@ entries:
     - https://github.com/sysdiglabs/charts/releases/download/registry-scanner-0.0.1/registry-scanner-0.0.1.tgz
     version: 0.0.1
   shield:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2025-11-28T09:13:26.668759354Z"
+    description: A chart with various Sysdig components for Kubernetes
+    digest: 2c438199407e6538c2a0f5a41d3234abdb1a256b75370d66a4d59c6d79ba8ca3
+    maintainers:
+    - email: alberto.barba@sysdig.com
+      name: AlbertoBarba
+    - email: adam.roberts@sysdig.com
+      name: aroberts87
+    - email: francesco.furlan@sysdig.com
+      name: francesco-furlan
+    - email: gerlando.falauto@sysdig.com
+      name: iurly
+    - email: marcovito.moscaritolo@sysdig.com
+      name: mavimo
+    name: shield
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/shield-1.24.1/shield-1.24.1.tgz
+    version: 1.24.1
   - apiVersion: v2
     appVersion: 1.0.0
     created: "2025-11-27T17:30:35.757901701Z"
@@ -82110,4 +82152,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2025-11-27T17:30:35.932514921Z"
+generated: "2025-11-28T09:13:26.89307928Z"
