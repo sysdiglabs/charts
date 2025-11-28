@@ -15,7 +15,7 @@ jobs:
       release_version: ${{ steps.get-operator-version.outputs.release_version }}
     steps:
       - name: Checkout charts repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: '1'
 
@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout charts repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: '1'
 
@@ -57,7 +57,7 @@ jobs:
       - determine-operator-version
     steps:
       - name: Checkout charts repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: '1'
 
@@ -131,7 +131,7 @@ jobs:
       - determine-operator-version
     steps:
       - name: Checkout charts repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: '1'
 
