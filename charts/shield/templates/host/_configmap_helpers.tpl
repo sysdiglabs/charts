@@ -40,7 +40,7 @@
 {{- end }}
 
 {{- define "host.configmap.detections" }}
-{{- dict "detections" (pick . "ml_policies") | toYaml }}
+{{- dict "detections" (pick . "ml_policies" "file_integrity_monitoring") | toYaml }}
 {{- end }}
 
 {{/* Generate the 'host_shield_config.yaml' content */}}

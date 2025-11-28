@@ -21,6 +21,8 @@ tests:
           pattern: |
             features:
               detections:
+                file_integrity_monitoring:
+                  enabled: false
                 ml_policies:
                   enabled: false
               posture:
@@ -50,6 +52,8 @@ tests:
           pattern: |
             features:
               detections:
+                file_integrity_monitoring:
+                  enabled: false
                 ml_policies:
                   enabled: false
               posture:
@@ -79,6 +83,8 @@ tests:
           pattern: |
             features:
               detections:
+                file_integrity_monitoring:
+                  enabled: false
                 ml_policies:
                   enabled: false
               posture:
@@ -108,6 +114,8 @@ tests:
           pattern: |
             features:
               detections:
+                file_integrity_monitoring:
+                  enabled: false
                 ml_policies:
                   enabled: false
               posture:
@@ -137,6 +145,8 @@ tests:
           pattern: |
             features:
               detections:
+                file_integrity_monitoring:
+                  enabled: false
                 ml_policies:
                   enabled: false
               posture:
@@ -161,6 +171,8 @@ tests:
           pattern: |
             features:
               detections:
+                file_integrity_monitoring:
+                  enabled: false
                 ml_policies:
                   enabled: false
               posture:
@@ -193,6 +205,8 @@ tests:
           pattern: |-
             features:
               detections:
+                file_integrity_monitoring:
+                  enabled: false
                 ml_policies:
                   enabled: false
               posture:
@@ -224,6 +238,8 @@ tests:
           pattern: |-
             features:
               detections:
+                file_integrity_monitoring:
+                  enabled: false
                 ml_policies:
                   enabled: false
               posture:
@@ -271,6 +287,8 @@ tests:
           pattern: |-
             features:
               detections:
+                file_integrity_monitoring:
+                  enabled: false
                 ml_policies:
                   enabled: false
               posture:
@@ -339,6 +357,8 @@ tests:
           pattern: |-
             features:
               detections:
+                file_integrity_monitoring:
+                  enabled: false
                 ml_policies:
                   enabled: false
               posture:
@@ -427,6 +447,8 @@ tests:
           pattern: |-
             features:
               detections:
+                file_integrity_monitoring:
+                  enabled: false
                 ml_policies:
                   enabled: false
               posture:
@@ -457,8 +479,41 @@ tests:
           pattern: |-
             features:
               detections:
+                file_integrity_monitoring:
+                  enabled: false
                 ml_policies:
                   enabled: true
+              posture:
+                host_posture:
+                  enabled: false
+              respond:
+                rapid_response:
+                  enabled: false
+                response_actions:
+                  enabled: false
+              vulnerability_management:
+                host_vulnerability_management:
+                  enabled: false
+                in_use:
+                  enabled: false
+                  integration_enabled: false
+
+  - it: Enable File Integrity Monitoring
+    set:
+      features:
+        detections:
+          file_integrity_monitoring:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['host-shield.yaml']
+          pattern: |-
+            features:
+              detections:
+                file_integrity_monitoring:
+                  enabled: true
+                ml_policies:
+                  enabled: false
               posture:
                 host_posture:
                   enabled: false

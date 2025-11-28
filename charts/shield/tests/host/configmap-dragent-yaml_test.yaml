@@ -648,11 +648,6 @@ tests:
       - matchRegex:
           path: data['dragent.yaml']
           pattern: |
-            file_integrity_monitoring:
-              enabled: false
-      - matchRegex:
-          path: data['dragent.yaml']
-          pattern: |
             jmx:
               enabled: false
       - matchRegex:
