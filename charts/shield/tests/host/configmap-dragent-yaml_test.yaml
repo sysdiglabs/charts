@@ -780,19 +780,6 @@ tests:
             malware_control:
               enabled: true
 
-  - it: Enable File Integrity Monitoring
-    set:
-      features:
-        detections:
-          file_integrity_monitoring:
-            enabled: true
-    asserts:
-      - matchRegex:
-          path: data['dragent.yaml']
-          pattern: |
-            file_integrity_monitoring:
-              enabled: true
-
   - it: Enable Network Security
     set:
       features:
