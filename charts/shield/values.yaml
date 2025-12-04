@@ -128,6 +128,8 @@ features:
           resources:
             - '*/*'
           scope: '*'
+    file_integrity_monitoring:
+      enabled: false
 
   investigations:
     activity_audit:
@@ -270,7 +272,7 @@ host:
     # The image name for the host shield
     shield_name: agent-slim
     # The tag for the host shield images
-    tag: 14.2.5
+    tag: 14.3.0
     # The pull policy for the host shield images
     pull_policy: IfNotPresent
     # The pull secrets for the host shield images
