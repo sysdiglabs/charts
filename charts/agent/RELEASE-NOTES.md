@@ -1,5 +1,5 @@
 # What's Changed
 
 ### New Features
-- **agent,shield** [0ad0ad88](https://github.com/sysdiglabs/charts/commit/0ad0ad88386442934b239a21f2695b1852e67a12): release agent 14.2.5 ([#2442](https://github.com/sysdiglabs/charts/issues/2442))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-2.3.6...agent-2.3.7
+- **agent,shield** [c719a458](https://github.com/sysdiglabs/charts/commit/c719a458182b7a122da3cbfe04366423dd324437): release agent 14.3.0 with FIM ([#2461](https://github.com/sysdiglabs/charts/issues/2461))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-2.3.7...agent-2.4.0
