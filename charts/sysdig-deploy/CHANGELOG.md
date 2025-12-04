@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.99.0
+### New Features
+* **agent,shield** [c719a458](https://github.com/sysdiglabs/charts/commit/c719a458182b7a122da3cbfe04366423dd324437): release agent 14.3.0 with FIM ([#2461](https://github.com/sysdiglabs/charts/issues/2461))
 # v1.98.0
 ### New Features
 * **nodeanalyzer** [b1f449fe](https://github.com/sysdiglabs/charts/commit/b1f449feceae2a19cd13cab376ecd7a268495d09): bump host-scanner to the latest 0.14.0 version ([#2454](https://github.com/sysdiglabs/charts/issues/2454))
