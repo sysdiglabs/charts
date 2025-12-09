@@ -207,7 +207,7 @@ jobs:
               "features.operators.openshift.io/token-auth-azure": "false",
               "features.operators.openshift.io/token-auth-gcp": "false"
             }' rh-shield-operator/bundle/manifests/rh-shield-operator.clusterserviceversion.yaml
-            yq e -i '.annotations."com.redhat.openshift.versions" = "v4.8-v4.17"' rh-shield-operator/bundle/metadata/annotations.yaml
+            yq e -i '.annotations."com.redhat.openshift.versions" = "v4.8-v4.20"' rh-shield-operator/bundle/metadata/annotations.yaml
 
       - name: Open Pull Request for Bundle update
         uses: peter-evans/create-pull-request@v7
