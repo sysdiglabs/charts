@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **agent,shield** [c719a458](https://github.com/sysdiglabs/charts/commit/c719a458182b7a122da3cbfe04366423dd324437): release agent 14.3.0 with FIM ([#2461](https://github.com/sysdiglabs/charts/issues/2461))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.98.1...sysdig-deploy-1.99.0
+### Chores
+- **node-analyzer** [4b1b0b52](https://github.com/sysdiglabs/charts/commit/4b1b0b52ba4ea956d53378c6d55b3cff85eeaf09): bump sysdig/kspm-analyzer to 1.46.2 ([#2463](https://github.com/sysdiglabs/charts/issues/2463))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.99.0...sysdig-deploy-1.99.1
