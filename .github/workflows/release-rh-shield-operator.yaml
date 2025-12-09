@@ -214,6 +214,9 @@ jobs:
         id: open-pr
         with:
           token: ${{ secrets.TOOLS_JENKINS_ADMIN_ACCESS_GITHUB_TOKEN }}
+          add-paths: |
+            rh-shield-operator/bundle/
+            rh-shield-operator/config/
           commit-message: "chore(rh-shield-operator): update bundle for rh-shield-operator:v${{ needs.validate-prerequisites.outputs.release_version }}"
           title: "chore(rh-shield-operator): update bundle for rh-shield-operator:v${{ needs.validate-prerequisites.outputs.release_version }}"
           body: |
