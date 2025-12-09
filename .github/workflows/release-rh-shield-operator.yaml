@@ -41,29 +41,29 @@ jobs:
           echo "image_tag_base=$IMAGE_TAG_BASE" >> $GITHUB_OUTPUT
         working-directory: rh-shield-operator
 
-      - name: Login to Docker registry
-        uses: docker/login-action@v3
-        with:
-          registry: quay.io
-          username: ${{ secrets.QUAY_RH_SHIELD_OPERATOR_USERNAME }}
-          password: ${{ secrets.QUAY_RH_SHIELD_OPERATOR_PASSWORD }}
-
-      - name: Check if Version Already Released
-        id: check-existing
-        run: |
-          # Check if this version already exists in the registry
-          IMAGE="${{ steps.get-image-base.outputs.image_tag_base }}:v${{ steps.get-operator-version.outputs.release_version }}"
-
-          echo "Checking if $IMAGE already exists..."
-
-          # This will fail if image doesn't exist, which is what we want
-          if docker manifest inspect "$IMAGE" > /dev/null 2>&1; then
-            echo "⚠️ WARNING: Image $IMAGE already exists in registry"
-            echo "should_skip=true" >> $GITHUB_OUTPUT
-          else
-            echo "✅ Version is new, proceeding with build"
-            echo "should_skip=false" >> $GITHUB_OUTPUT
-          fi
+#      - name: Login to Docker registry
+#        uses: docker/login-action@v3
+#        with:
+#          registry: quay.io
+#          username: ${{ secrets.QUAY_RH_SHIELD_OPERATOR_USERNAME }}
+#          password: ${{ secrets.QUAY_RH_SHIELD_OPERATOR_PASSWORD }}
+#
+#      - name: Check if Version Already Released
+#        id: check-existing
+#        run: |
+#          # Check if this version already exists in the registry
+#          IMAGE="${{ steps.get-image-base.outputs.image_tag_base }}:v${{ steps.get-operator-version.outputs.release_version }}"
+#
+#          echo "Checking if $IMAGE already exists..."
+#
+#          # This will fail if image doesn't exist, which is what we want
+#          if docker manifest inspect "$IMAGE" > /dev/null 2>&1; then
+#            echo "⚠️ WARNING: Image $IMAGE already exists in registry"
+#            echo "should_skip=true" >> $GITHUB_OUTPUT
+#          else
+#            echo "✅ Version is new, proceeding with build"
+#            echo "should_skip=false" >> $GITHUB_OUTPUT
+#          fi
 
   build-operator:
     name: Build the Operator Image
