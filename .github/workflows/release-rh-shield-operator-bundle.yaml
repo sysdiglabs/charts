@@ -7,8 +7,6 @@ jobs:
   validate-and-prepare:
     name: Validate Bundle PR
     runs-on: ubuntu-latest
-    # Only run if PR was actually merged (not just closed)
-    if: github.event.pull_request.merged == true
     outputs:
       release_version: ${{ steps.get-version.outputs.release_version }}
       image_tag_base: ${{ steps.get-image-base.outputs.image_tag_base }}
