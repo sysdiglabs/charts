@@ -1,12 +1,7 @@
 name: Build and Certify Shield Operator Bundle
 
 on:
-  pull_request:
-    types: [closed]
-    branches:
-      - main
-    paths:
-      - 'rh-shield-operator/bundle/**'
+  workflow_dispatch:
 
 jobs:
   validate-and-prepare:
