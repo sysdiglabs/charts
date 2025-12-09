@@ -3,6 +3,6 @@ resources:
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 images:
-- name: controller
+- digest: sha256:63968b41789b1b4c63ce4dcf639efd02aa5d1c6a623d56644e17053a82f6d362
+  name: controller
   newName: quay.io/sysdig/rh-shield-operator
-  newTag: v0.3.0
