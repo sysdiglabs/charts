@@ -1,7 +1,12 @@
 name: Build Shield Operator Bundle
 
 on:
-  workflow_dispatch:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+    paths:
+      - 'rh-shield-operator/bundle/**'
 
 jobs:
   validate-and-prepare:
