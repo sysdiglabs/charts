@@ -84,7 +84,7 @@ config:
     # The number of repositories to scan per registry.<br/>The maximum is 10000.
     maxRepositoriesPerRegistry: 500
   scan:
-    # Override the default image for the inline scanner job.
+    # Override the default image for the workers. If not set and any image field (registry, repository, tag) is configured, automatically uses the same image as the main orchestrator.
     inlineScanImage: ""
     # The security context for the Inline Scanner container.
     securityContext: {}
@@ -170,11 +170,11 @@ proxy:
   noProxy:
 
 image:
-  # The Sysdig Registry Scanner image registry.
+  # The Sysdig Registry Scanner image registry. This also sets the registry for the worker image unless explicitly overridden.
   registry: quay.io
-  # The Sysdig Registry Scanner image repository.
+  # The Sysdig Registry Scanner image repository. This also sets the repository for the worker image unless explicitly overridden.
   repository: sysdig/registry-scanner
-  # The Registry Scanner image tag. If empty, default to appVersion in `Chart.yaml`.
+  # The Registry Scanner image tag. If empty, default to appVersion in `Chart.yaml`. This also sets the tag for the worker image unless explicitly overridden.
   tag:
   # The PullPolicy for Registry Scanner image.
   pullPolicy: Always

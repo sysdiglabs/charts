@@ -289,3 +289,83 @@ tests:
       - matchRegex:
           path: data['config.yaml']
           pattern: "parallelFileAnalysisCount: 666"
+
+  - it: inlineScanImage defaults to registry-scanner image when no inlineScanImage is configured
+    set:
+      image:
+        registry: custom-registry.com
+        repository: custom/registry-scanner
+        tag: "v1.2.3"
+    asserts:
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: "scan:((.|\n)*)inlineScanImage: custom-registry.com/custom/registry-scanner:v1.2.3\n"
+
+  - it: inlineScanImage uses custom registry with default repository and tag
+    set:
+      image:
+        registry: my-registry.io
+    asserts:
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: "scan:((.|\n)*)inlineScanImage: my-registry.io/sysdig/registry-scanner:job-.*\n"
+
+  - it: inlineScanImage uses custom repository with default registry and tag
+    set:
+      image:
+        repository: myorg/custom-scanner
+    asserts:
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: "scan:((.|\n)*)inlineScanImage: quay.io/myorg/custom-scanner:job-.*\n"
+
+  - it: inlineScanImage uses custom tag with default registry and repository
+    set:
+      image:
+        tag: "custom-tag"
+    asserts:
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: "scan:((.|\n)*)inlineScanImage: quay.io/sysdig/registry-scanner:custom-tag\n"
+
+  - it: inlineScanImage is not set when no image fields configured and no explicit inlineScanImage
+    asserts:
+      - notMatchRegex:
+          path: data['config.yaml']
+          pattern: "scan:((.|\n)*)inlineScanImage"
+
+  - it: explicit inlineScanImage takes precedence over auto-generated from image fields
+    set:
+      image:
+        registry: custom-registry.com
+        repository: custom/scanner
+        tag: "v1.0.0"
+      config:
+        scan:
+          inlineScanImage: "explicit-registry.com/explicit/image:explicit-tag"
+    asserts:
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: "scan:((.|\n)*)inlineScanImage: explicit-registry.com/explicit/image:explicit-tag\n"
+
+  - it: inlineScanImage with fips enabled and custom tag
+    set:
+      image:
+        tag: "v1.0.0"
+        fips: true
+    asserts:
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: "scan:((.|\n)*)inlineScanImage: quay.io/sysdig/registry-scanner:v1.0.0-fips\n"
+
+  - it: inlineScanImage with fips enabled and complete custom image settings
+    set:
+      image:
+        registry: custom-registry.com
+        repository: custom/scanner
+        tag: "v1.0.0"
+        fips: true
+    asserts:
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: "scan:((.|\n)*)inlineScanImage: custom-registry.com/custom/scanner:v1.0.0-fips\n"

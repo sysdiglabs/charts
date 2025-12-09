@@ -88,7 +88,7 @@ data:
             memory: {{ .Values.config.scan.jobs.resources.limits.memory }}
             cpu: {{ .Values.config.scan.jobs.resources.limits.cpu }}
         temporaryVolumeSizeLimit: {{ .Values.config.scan.jobs.temporaryVolumeSizeLimit }}
-      {{- if  or .Values.config.scan.inlineScanImage .Values.image.fips }}
+      {{- if or .Values.config.scan.inlineScanImage .Values.image.fips (and .Values.image.registry (ne .Values.image.registry "quay.io")) (and .Values.image.repository (ne .Values.image.repository "sysdig/registry-scanner")) .Values.image.tag }}
       inlineScanImage: {{ include "registry-scanner.inlineScanImage" . }}
       {{- end }}
       {{- if .Values.imagePullSecrets }}
