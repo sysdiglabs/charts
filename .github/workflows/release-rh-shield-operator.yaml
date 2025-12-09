@@ -1,18 +1,16 @@
 name: Build and Push the Shield Operator
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'rh-shield-operator/Makefile'  # Updated by the release pipelines
+  workflow_dispatch:
 
 jobs:
-  determine-operator-version:
-    name: Determine the Operator Version
+  validate-prerequisites:
+    name: Validate Prerequisites
     runs-on: ubuntu-latest
     outputs:
       release_version: ${{ steps.get-operator-version.outputs.release_version }}
+      image_tag_base: ${{ steps.get-image-base.outputs.image_tag_base }}
+      should_skip: ${{ steps.check-existing.outputs.should_skip }}
     steps:
       - name: Checkout charts repo
         uses: actions/checkout@v6
@@ -23,13 +21,58 @@ jobs:
         id: get-operator-version
         run: |
           VERSION=$(awk '/^VERSION/{print $3}' Makefile)
-          echo "Discovered release version is $VERSION"
+          if [ -z "$VERSION" ]; then
+            echo "❌ ERROR: VERSION not found in Makefile"
+            exit 1
+          fi
+          echo "✅ Discovered release version is $VERSION"
           echo "release_version=$VERSION" >> $GITHUB_OUTPUT
         working-directory: rh-shield-operator
+
+      - name: Get Image Tag Base
+        id: get-image-base
+        run: |
+          IMAGE_TAG_BASE=$(awk '/^IMAGE_TAG_BASE/{print $3}' Makefile)
+          if [ -z "$IMAGE_TAG_BASE" ]; then
+            echo "❌ ERROR: IMAGE_TAG_BASE not found in Makefile"
+            exit 1
+          fi
+          echo "✅ Image tag base: $IMAGE_TAG_BASE"
+          echo "image_tag_base=$IMAGE_TAG_BASE" >> $GITHUB_OUTPUT
+        working-directory: rh-shield-operator
+
+      - name: Login to Docker registry
+        uses: docker/login-action@v3
+        with:
+          registry: quay.io
+          username: ${{ secrets.QUAY_RH_SHIELD_OPERATOR_USERNAME }}
+          password: ${{ secrets.QUAY_RH_SHIELD_OPERATOR_PASSWORD }}
+
+      - name: Check if Version Already Released
+        id: check-existing
+        run: |
+          # Check if this version already exists in the registry
+          IMAGE="${{ steps.get-image-base.outputs.image_tag_base }}:v${{ steps.get-operator-version.outputs.release_version }}"
+
+          echo "Checking if $IMAGE already exists..."
+
+          # This will fail if image doesn't exist, which is what we want
+          if docker manifest inspect "$IMAGE" > /dev/null 2>&1; then
+            echo "⚠️ WARNING: Image $IMAGE already exists in registry"
+            echo "should_skip=true" >> $GITHUB_OUTPUT
+          else
+            echo "✅ Version is new, proceeding with build"
+            echo "should_skip=false" >> $GITHUB_OUTPUT
+          fi
 
   build-operator:
     name: Build the Operator Image
     runs-on: ubuntu-latest
+    needs: validate-prerequisites
+    if: needs.validate-prerequisites.outputs.should_skip != 'true'
+    outputs:
+      image_digest: ${{ steps.get-digest.outputs.digest }}
+      image_tag: ${{ steps.set-image-tag.outputs.image_tag }}
     steps:
       - name: Checkout charts repo
         uses: actions/checkout@v6
@@ -43,18 +86,82 @@ jobs:
           username: ${{ secrets.QUAY_RH_SHIELD_OPERATOR_USERNAME }}
           password: ${{ secrets.QUAY_RH_SHIELD_OPERATOR_PASSWORD }}
 
+      - name: Set Image Tag
+        id: set-image-tag
+        run: |
+          IMAGE_TAG="${{ needs.validate-prerequisites.outputs.image_tag_base }}:v${{ needs.validate-prerequisites.outputs.release_version }}"
+          echo "image_tag=$IMAGE_TAG" >> $GITHUB_OUTPUT
+          echo "Building image: $IMAGE_TAG"
+
       - name: Build and Push Operator Image
-        id: build-operator
+        id: build-push
         run: |
           make docker-build docker-push
         working-directory: rh-shield-operator
+        env:
+          VERSION: ${{ needs.validate-prerequisites.outputs.release_version }}
+          IMAGE_TAG_BASE: ${{ needs.validate-prerequisites.outputs.image_tag_base }}
 
-  build-operator-bundle:
-    name: Build the Operator Bundle
+      - name: Get Image Digest
+        id: get-digest
+        run: |
+          IMAGE_TAG="${{ steps.set-image-tag.outputs.image_tag }}"
+
+          # Pull the image to get its digest
+          docker pull "$IMAGE_TAG"
+
+          # Get the full digest reference
+          DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' "$IMAGE_TAG")
+
+          if [ -z "$DIGEST" ]; then
+            echo "❌ ERROR: Failed to get image digest"
+            exit 1
+          fi
+
+          echo "✅ Image digest: $DIGEST"
+          echo "digest=$DIGEST" >> $GITHUB_OUTPUT
+
+  certify-operator-image:
+    name: Certify the Operator Image with Preflight
     runs-on: ubuntu-latest
     needs:
       - build-operator
-      - determine-operator-version
+      - validate-prerequisites
+    steps:
+      - name: Checkout charts repo
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: '1'
+
+      - name: Install Preflight
+        uses: redhat-actions/openshift-tools-installer@v1
+        with:
+          source: "github"
+          preflight: "latest"
+          github_pat: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run Preflight checks
+        run: |
+          IMAGE_TAG="${{ needs.build-operator.outputs.image_tag }}"
+
+          echo "Running Preflight certification on: $IMAGE_TAG"
+
+          preflight check container \
+            "$IMAGE_TAG" \
+            --pyxis-api-token ${{ secrets.RH_SHIELD_OPERATOR_PYXIS_API_TOKEN }} \
+            --certification-project-id ${{ secrets.RH_SHIELD_OPERATOR_CERTIFICATION_PROJECT_ID }}
+
+          echo "✅ Operator image certification completed"
+
+  generate-bundle-pr:
+    name: Generate and Submit Bundle PR
+    runs-on: ubuntu-latest
+    needs:
+      - build-operator
+      - validate-prerequisites
+    outputs:
+      pr_number: ${{ steps.open-pr.outputs.pull-request-number }}
+      pr_url: ${{ steps.open-pr.outputs.pull-request-url }}
     steps:
       - name: Checkout charts repo
         uses: actions/checkout@v6
@@ -73,8 +180,13 @@ jobs:
         # to generate the image digest. As a result, this step must be after the operator image has been
         # generated and pushed to the registry.
         run: |
+          echo "Generating bundle with image digest: ${{ needs.build-operator.outputs.image_digest }}"
           USE_IMAGE_DIGESTS=true make bundle
         working-directory: rh-shield-operator
+        env:
+          VERSION: ${{ needs.validate-prerequisites.outputs.release_version }}
+          IMG: ${{ needs.build-operator.outputs.image_digest }}
+          IMAGE_TAG_BASE: ${{ needs.validate-prerequisites.outputs.image_tag_base }}
 
       - name: Set Labels and Annotations required for Certification on the Bundle
         uses: mikefarah/yq@v4
@@ -102,52 +214,75 @@ jobs:
         id: open-pr
         with:
           token: ${{ secrets.TOOLS_JENKINS_ADMIN_ACCESS_GITHUB_TOKEN }}
-          commit-message: |
-            "chore(rh-shield-operator): update bundle for rh-shield-operator:v${{ steps.determine-operator-version.outputs.release_version }}"
-          title: |
-            "chore(rh-shield-operator): update bundle for rh-shield-operator:v${{ steps.determine-operator-version.outputs.release_version }}"
+          commit-message: "chore(rh-shield-operator): update bundle for rh-shield-operator:v${{ needs.validate-prerequisites.outputs.release_version }}"
+          title: "chore(rh-shield-operator): update bundle for rh-shield-operator:v${{ needs.validate-prerequisites.outputs.release_version }}"
           body: |
-            This is an automated pull request that is generated as a part of the rh-shield-operator release pipeline.
-            The changes here update the bundle metadata using the newly published Operator image to generate the
-            image checksum, as well as adjusting some metadata that is required for certification.
+            This is an automated pull request generated as part of the rh-shield-operator release pipeline.
 
-      - name: Wait for Pull Request to be merged
-        uses: Wandalen/wretry.action@v3.8.0
-        with:
-          command: gh pr view ${{ steps.open-pr.outputs.pull-request-number }} --json state -q .state | grep MERGED
-          attempt_limit: 240  # Results in 2 hours of waiting
-          attempt_delay: 30000  # 30 seconds
+            ## Changes
+            - Updates bundle metadata using the newly published Operator image
+            - Generates image checksum using digest: `${{ needs.build-operator.outputs.image_digest }}`
+            - Adjusts metadata required for Red Hat certification
 
-      - name: Build and Push Bundle Image
+            ## Release Information
+            - **Version:** v${{ needs.validate-prerequisites.outputs.release_version }}
+            - **Operator Image:** ${{ needs.build-operator.outputs.image_tag }}
+            - **Workflow Run:** ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+            ## Next Steps
+            After merging this PR, the bundle image will be automatically built and certified.
+          branch: bundle-update-v${{ needs.validate-prerequisites.outputs.release_version }}
+          delete-branch: true
+          labels: |
+            automated PR
+
+      - name: Comment on PR with Instructions
+        if: steps.open-pr.outputs.pull-request-number != ''
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          make bundle-build bundle-push
-        working-directory: rh-shield-operator
+          gh pr comment ${{ steps.open-pr.outputs.pull-request-number }} \
+            --body "✅ **Operator Release Completed**
 
-  certify-operator-image:
-    name: Certify the Operator Image with Preflight
+          The operator image has been built and certified successfully.
+
+          **Review and merge this PR** to trigger the bundle build workflow.
+
+          - Operator Image: \`${{ needs.build-operator.outputs.image_tag }}\`
+          - Certification: ✅ Passed
+          - Workflow: [View Run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+          "
+
+  notify-completion:
+    name: Notify Workflow Completion
     runs-on: ubuntu-latest
     needs:
+      - validate-prerequisites
       - build-operator
-      - determine-operator-version
+      - certify-operator-image
+      - generate-bundle-pr
+    if: always()
     steps:
-      - name: Checkout charts repo
-        uses: actions/checkout@v6
-        with:
-          fetch-depth: '1'
-
-      - name: Install Preflight
-        uses: redhat-actions/openshift-tools-installer@v1
-        with:
-          source: "github"
-          preflight: "latest"
-          github_pat: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Run Preflight checks
+      - name: Report Success
+        if: needs.build-operator.result == 'success' && needs.certify-operator-image.result == 'success' && needs.generate-bundle-pr.result == 'success'
         run: |
-          IMAGE_TAG_BASE=$(awk '/^IMAGE_TAG_BASE/{print $3}' Makefile)
+          echo "🎉 Operator Release Workflow Completed Successfully"
+          echo ""
+          echo "Version: v${{ needs.validate-prerequisites.outputs.release_version }}"
+          echo "Image: ${{ needs.build-operator.outputs.image_tag }}"
+          echo "PR: ${{ needs.generate-bundle-pr.outputs.pr_url }}"
+          echo ""
+          echo "Next step: Review and merge PR #${{ needs.generate-bundle-pr.outputs.pr_number }} to build the bundle"
 
-          preflight check container \
-            $IMAGE_TAG_BASE:v${{ needs.determine-operator-version.outputs.release_version }} \
-            --pyxis-api-token ${{ secrets.RH_SHIELD_OPERATOR_PYXIS_API_TOKEN }} \
-            --certification-project-id ${{ secrets.RH_SHIELD_OPERATOR_CERTIFICATION_PROJECT_ID }}
-        working-directory: rh-shield-operator
+      - name: Report Failure
+        if: needs.build-operator.result == 'failure' || needs.certify-operator-image.result == 'failure' || needs.generate-bundle-pr.result == 'failure'
+        run: |
+          echo "❌ Operator Release Workflow Failed"
+          echo ""
+          echo "Version: v${{ needs.validate-prerequisites.outputs.release_version }}"
+          echo "Build Status: ${{ needs.build-operator.result }}"
+          echo "Certification Status: ${{ needs.certify-operator-image.result }}"
+          echo "PR Generation Status: ${{ needs.generate-bundle-pr.result }}"
+          echo ""
+          echo "Check workflow logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          exit 1
