@@ -181,7 +181,7 @@ jobs:
         # generated and pushed to the registry.
         run: |
           echo "Generating bundle with image digest: ${{ needs.build-operator.outputs.image_digest }}"
-          USE_IMAGE_DIGESTS=true make bundle
+          USE_IMAGE_DIGESTS=true LOCALBIN=$(pwd)/bin make bundle
         working-directory: rh-shield-operator
         env:
           VERSION: ${{ needs.validate-prerequisites.outputs.release_version }}
