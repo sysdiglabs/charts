@@ -1,0 +1,188 @@
+name: Build and Certify Shield Operator Bundle
+
+on:
+  workflow_dispatch:
+
+jobs:
+  validate-and-prepare:
+    name: Validate Bundle PR
+    runs-on: ubuntu-latest
+    # Only run if PR was actually merged (not just closed)
+    if: github.event.pull_request.merged == true
+    outputs:
+      release_version: ${{ steps.get-version.outputs.release_version }}
+      image_tag_base: ${{ steps.get-image-base.outputs.image_tag_base }}
+    steps:
+      - name: Checkout charts repo
+        uses: actions/checkout@v6
+        with:
+          ref: main  # Use the merged version
+          fetch-depth: '1'
+
+      - name: Get Operator Version
+        id: get-version
+        run: |
+          VERSION=$(awk '/^VERSION/{print $3}' Makefile)
+          if [ -z "$VERSION" ]; then
+            echo "❌ ERROR: VERSION not found in Makefile"
+            exit 1
+          fi
+          echo "✅ Bundle version: $VERSION"
+          echo "release_version=$VERSION" >> $GITHUB_OUTPUT
+        working-directory: rh-shield-operator
+
+      - name: Get Image Tag Base
+        id: get-image-base
+        run: |
+          IMAGE_TAG_BASE=$(awk '/^IMAGE_TAG_BASE/{print $3}' Makefile)
+          if [ -z "$IMAGE_TAG_BASE" ]; then
+            echo "❌ ERROR: IMAGE_TAG_BASE not found in Makefile"
+            exit 1
+          fi
+          echo "✅ Image tag base: $IMAGE_TAG_BASE"
+          echo "image_tag_base=$IMAGE_TAG_BASE" >> $GITHUB_OUTPUT
+        working-directory: rh-shield-operator
+
+  build-operator-bundle:
+    name: Build and Push Bundle Image
+    runs-on: ubuntu-latest
+    needs: validate-and-prepare
+    outputs:
+      bundle_image: ${{ steps.set-bundle-image.outputs.bundle_image }}
+    steps:
+      - name: Checkout charts repo
+        uses: actions/checkout@v6
+        with:
+          ref: main  # Ensure we're using the merged version
+          fetch-depth: '1'
+
+      - name: Login to Docker registry
+        uses: docker/login-action@v3
+        with:
+          registry: quay.io
+          username: ${{ secrets.QUAY_RH_SHIELD_OPERATOR_USERNAME }}
+          password: ${{ secrets.QUAY_RH_SHIELD_OPERATOR_PASSWORD }}
+
+      - name: Set Bundle Image
+        id: set-bundle-image
+        run: |
+          IMAGE_TAG_BASE="${{ needs.validate-and-prepare.outputs.image_tag_base }}"
+          BUNDLE_IMAGE="${IMAGE_TAG_BASE}-bundle:v${{ needs.validate-and-prepare.outputs.release_version }}"
+          echo "bundle_image=$BUNDLE_IMAGE" >> $GITHUB_OUTPUT
+          echo "Building bundle image: $BUNDLE_IMAGE"
+        working-directory: rh-shield-operator
+
+      - name: Build and Push Bundle Image
+        run: |
+          make bundle-build bundle-push
+        working-directory: rh-shield-operator
+        env:
+          VERSION: ${{ needs.validate-and-prepare.outputs.release_version }}
+          IMAGE_TAG_BASE: ${{ needs.validate-and-prepare.outputs.image_tag_base }}
+
+      - name: Verify Bundle Image
+        run: |
+          BUNDLE_IMAGE="${{ steps.set-bundle-image.outputs.bundle_image }}"
+
+          # Pull the bundle image to verify it was pushed
+          docker pull "$BUNDLE_IMAGE"
+
+          echo "✅ Bundle image built and pushed successfully: $BUNDLE_IMAGE"
+
+  certify-bundle-image:
+    name: Certify the Bundle Image with Preflight
+    runs-on: ubuntu-latest
+    needs:
+      - validate-and-prepare
+      - build-operator-bundle
+    steps:
+      - name: Checkout charts repo
+        uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: '1'
+
+      - name: Install Preflight
+        uses: redhat-actions/openshift-tools-installer@v1
+        with:
+          source: "github"
+          preflight: "latest"
+          github_pat: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run Preflight checks on Bundle
+        run: |
+          BUNDLE_IMAGE="${{ needs.build-operator-bundle.outputs.bundle_image }}"
+
+          echo "Running Preflight certification on: $BUNDLE_IMAGE"
+
+          preflight check container \
+            "$BUNDLE_IMAGE" \
+            --pyxis-api-token ${{ secrets.RH_SHIELD_OPERATOR_PYXIS_API_TOKEN }} \
+            --certification-project-id ${{ secrets.RH_SHIELD_BUNDLE_CERTIFICATION_PROJECT_ID }}
+
+          echo "✅ Bundle image certification completed"
+
+  notify-completion:
+    name: Notify Bundle Release Completion
+    runs-on: ubuntu-latest
+    needs:
+      - validate-and-prepare
+      - build-operator-bundle
+      - certify-bundle-image
+    if: always()
+    steps:
+      - name: Report Success
+        if: needs.build-operator-bundle.result == 'success' && needs.certify-bundle-image.result == 'success'
+        run: |
+          echo "🎉 Bundle Release Workflow Completed Successfully"
+          echo ""
+          echo "Version: v${{ needs.validate-and-prepare.outputs.release_version }}"
+          echo "Bundle Image: ${{ needs.build-operator-bundle.outputs.bundle_image }}"
+          echo "Certification: ✅ Passed"
+          echo ""
+          echo "The rh-shield-operator release is now complete!"
+
+      - name: Report Failure
+        if: needs.build-operator-bundle.result == 'failure' || needs.certify-bundle-image.result == 'failure'
+        run: |
+          echo "❌ Bundle Release Workflow Failed"
+          echo ""
+          echo "Version: v${{ needs.validate-and-prepare.outputs.release_version }}"
+          echo "Build Status: ${{ needs.build-operator-bundle.result }}"
+          echo "Certification Status: ${{ needs.certify-bundle-image.result }}"
+          echo ""
+          echo "Check workflow logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          exit 1
+
+      - name: Comment on PR with Results
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR_NUMBER="${{ github.event.pull_request.number }}"
+
+          if [ "${{ needs.build-operator-bundle.result }}" == "success" ] && [ "${{ needs.certify-bundle-image.result }}" == "success" ]; then
+            gh pr comment "$PR_NUMBER" \
+              --body "✅ **Bundle Build and Certification Completed**
+
+          The bundle image has been built and certified successfully!
+
+          - Bundle Image: \`${{ needs.build-operator-bundle.outputs.bundle_image }}\`
+          - Certification: ✅ Passed
+          - Workflow: [View Run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+
+          🎉 **Release v${{ needs.validate-and-prepare.outputs.release_version }} is complete!**
+          "
+          else
+            gh pr comment "$PR_NUMBER" \
+              --body "❌ **Bundle Build Failed**
+
+          There was an error building or certifying the bundle image.
+
+          - Build Status: ${{ needs.build-operator-bundle.result }}
+          - Certification Status: ${{ needs.certify-bundle-image.result }}
+          - Workflow: [View Run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+
+          Please check the workflow logs for details.
+          "
+          fi
