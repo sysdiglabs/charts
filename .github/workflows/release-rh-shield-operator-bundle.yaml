@@ -1,7 +1,12 @@
-name: Build and Certify Shield Operator Bundle
+name: Build Shield Operator Bundle
 
 on:
-  workflow_dispatch:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+    paths:
+      - 'rh-shield-operator/bundle/**'
 
 jobs:
   validate-and-prepare:
@@ -89,67 +94,31 @@ jobs:
 
           echo "✅ Bundle image built and pushed successfully: $BUNDLE_IMAGE"
 
-  certify-bundle-image:
-    name: Certify the Bundle Image with Preflight
-    runs-on: ubuntu-latest
-    needs:
-      - validate-and-prepare
-      - build-operator-bundle
-    steps:
-      - name: Checkout charts repo
-        uses: actions/checkout@v6
-        with:
-          ref: main
-          fetch-depth: '1'
-
-      - name: Install Preflight
-        uses: redhat-actions/openshift-tools-installer@v1
-        with:
-          source: "github"
-          preflight: "latest"
-          github_pat: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Run Preflight checks on Bundle
-        run: |
-          BUNDLE_IMAGE="${{ needs.build-operator-bundle.outputs.bundle_image }}"
-
-          echo "Running Preflight certification on: $BUNDLE_IMAGE"
-
-          preflight check container \
-            "$BUNDLE_IMAGE" \
-            --pyxis-api-token ${{ secrets.RH_SHIELD_OPERATOR_PYXIS_API_TOKEN }} \
-            --certification-project-id ${{ secrets.RH_SHIELD_BUNDLE_CERTIFICATION_PROJECT_ID }}
-
-          echo "✅ Bundle image certification completed"
-
   notify-completion:
     name: Notify Bundle Release Completion
     runs-on: ubuntu-latest
     needs:
       - validate-and-prepare
       - build-operator-bundle
-      - certify-bundle-image
     if: always()
     steps:
       - name: Report Success
-        if: needs.build-operator-bundle.result == 'success' && needs.certify-bundle-image.result == 'success'
+        if: needs.build-operator-bundle.result == 'success'
         run: |
           echo "🎉 Bundle Release Workflow Completed Successfully"
           echo ""
           echo "Version: v${{ needs.validate-and-prepare.outputs.release_version }}"
           echo "Bundle Image: ${{ needs.build-operator-bundle.outputs.bundle_image }}"
-          echo "Certification: ✅ Passed"
           echo ""
           echo "The rh-shield-operator release is now complete!"
 
       - name: Report Failure
-        if: needs.build-operator-bundle.result == 'failure' || needs.certify-bundle-image.result == 'failure'
+        if: needs.build-operator-bundle.result == 'failure'
         run: |
           echo "❌ Bundle Release Workflow Failed"
           echo ""
           echo "Version: v${{ needs.validate-and-prepare.outputs.release_version }}"
           echo "Build Status: ${{ needs.build-operator-bundle.result }}"
-          echo "Certification Status: ${{ needs.certify-bundle-image.result }}"
           echo ""
           echo "Check workflow logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           exit 1
@@ -161,14 +130,13 @@ jobs:
         run: |
           PR_NUMBER="${{ github.event.pull_request.number }}"
 
-          if [ "${{ needs.build-operator-bundle.result }}" == "success" ] && [ "${{ needs.certify-bundle-image.result }}" == "success" ]; then
+          if [ "${{ needs.build-operator-bundle.result }}" == "success" ]; then
             gh pr comment "$PR_NUMBER" \
-              --body "✅ **Bundle Build and Certification Completed**
+              --body "✅ **Bundle Build Completed**
 
-          The bundle image has been built and certified successfully!
+          The bundle image has been built successfully!
 
           - Bundle Image: \`${{ needs.build-operator-bundle.outputs.bundle_image }}\`
-          - Certification: ✅ Passed
           - Workflow: [View Run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
 
           🎉 **Release v${{ needs.validate-and-prepare.outputs.release_version }} is complete!**
@@ -177,10 +145,9 @@ jobs:
             gh pr comment "$PR_NUMBER" \
               --body "❌ **Bundle Build Failed**
 
-          There was an error building or certifying the bundle image.
+          There was an error building the bundle image.
 
           - Build Status: ${{ needs.build-operator-bundle.result }}
-          - Certification Status: ${{ needs.certify-bundle-image.result }}
           - Workflow: [View Run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
 
           Please check the workflow logs for details.

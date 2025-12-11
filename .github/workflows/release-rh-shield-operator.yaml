@@ -149,7 +149,7 @@ jobs:
           preflight check container \
             "$IMAGE_TAG" \
             --pyxis-api-token ${{ secrets.RH_SHIELD_OPERATOR_PYXIS_API_TOKEN }} \
-            --certification-project-id ${{ secrets.RH_SHIELD_OPERATOR_CERTIFICATION_PROJECT_ID }}
+            --certification-component-id ${{ secrets.RH_SHIELD_OPERATOR_CERTIFICATION_PROJECT_ID }}
 
           echo "✅ Operator image certification completed"
 
@@ -167,6 +167,7 @@ jobs:
         uses: actions/checkout@v6
         with:
           fetch-depth: '1'
+          ref: 'main'
 
       - name: Login to Docker registry
         uses: docker/login-action@v3
@@ -181,7 +182,7 @@ jobs:
         # generated and pushed to the registry.
         run: |
           echo "Generating bundle with image digest: ${{ needs.build-operator.outputs.image_digest }}"
-          USE_IMAGE_DIGESTS=true make bundle
+          USE_IMAGE_DIGESTS=true LOCALBIN=$(pwd)/bin make bundle
         working-directory: rh-shield-operator
         env:
           VERSION: ${{ needs.validate-prerequisites.outputs.release_version }}
@@ -207,13 +208,16 @@ jobs:
               "features.operators.openshift.io/token-auth-azure": "false",
               "features.operators.openshift.io/token-auth-gcp": "false"
             }' rh-shield-operator/bundle/manifests/rh-shield-operator.clusterserviceversion.yaml
-            yq e -i '.annotations."com.redhat.openshift.versions" = "v4.8-v4.17"' rh-shield-operator/bundle/metadata/annotations.yaml
+            yq e -i '.annotations."com.redhat.openshift.versions" = "v4.8-v4.20"' rh-shield-operator/bundle/metadata/annotations.yaml
 
       - name: Open Pull Request for Bundle update
         uses: peter-evans/create-pull-request@v8
         id: open-pr
         with:
           token: ${{ secrets.TOOLS_JENKINS_ADMIN_ACCESS_GITHUB_TOKEN }}
+          add-paths: |
+            rh-shield-operator/bundle/
+            rh-shield-operator/config/
           commit-message: "chore(rh-shield-operator): update bundle for rh-shield-operator:v${{ needs.validate-prerequisites.outputs.release_version }}"
           title: "chore(rh-shield-operator): update bundle for rh-shield-operator:v${{ needs.validate-prerequisites.outputs.release_version }}"
           body: |
