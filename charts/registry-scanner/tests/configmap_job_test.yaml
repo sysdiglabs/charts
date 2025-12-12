@@ -85,7 +85,7 @@ tests:
           path: spec.template.spec.containers[0].image
           pattern: "bananas/foo:bar-fips$"
         template: templates/job.yaml
-  - it: custom repo and it does not set inlineScanImage
+  - it: custom repo auto-sets inlineScanImage to match
     set:
       scanOnStart:
         enabled: true
@@ -94,9 +94,9 @@ tests:
         repository: foo
         tag: bar
     asserts:
-      - notMatchRegex:
+      - matchRegex:
           path: data['config.yaml']
-          pattern: "scan:((.|\n)*)inlineScanImage"
+          pattern: "scan:((.|\n)*)inlineScanImage:.bananas/foo:bar\n"
         template: templates/configmap.yaml
       - matchRegex:
           path: spec.template.spec.containers[0].image
