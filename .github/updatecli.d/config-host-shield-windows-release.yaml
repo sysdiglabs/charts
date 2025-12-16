@@ -49,6 +49,7 @@ targets:
     name: "update the shield chart values according to the linter"
     kind: shell
     scmid: github
+    disablesourceinput: true
     dependson:
       - updateShieldChart
     spec:
