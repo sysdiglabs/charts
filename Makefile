@@ -4,6 +4,7 @@ deps-docs:
 	go install kubepack.dev/chart-doc-gen@v0.4.7
 
 docs: deps-docs
+	sed -i 's/: # /:  # /g' charts/shield/values.yaml
 	find . -name "doc.yaml" | \
 		xargs -L1 dirname | \
 		xargs -I% sh -c \

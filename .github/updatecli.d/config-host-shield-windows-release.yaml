@@ -45,24 +45,13 @@ targets:
       key: "$.host_windows.image.tag"
       versionincrement: auto
 
-  fixLinting:
-    name: "update the shield chart values according to the linter"
-    kind: shell
-    scmid: github
-    disablesourceinput: true
-    dependson:
-      - updateShieldChart
-    spec:
-      shell: /bin/bash
-      command: "sed -i 's/: # /:  # /g' charts/shield/values.yaml"
-
   updateShieldReadme:
     name: "update the shield readme"
     kind: shell
     scmid: github
     disablesourceinput: true
     dependson:
-      - fixLinting
+      - updateShieldChart
     spec:
       shell: /bin/bash
       command: make docs
