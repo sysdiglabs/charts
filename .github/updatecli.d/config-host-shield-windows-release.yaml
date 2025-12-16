@@ -10,7 +10,7 @@ scms:
       repository: "charts"
       token: '{{ requiredEnv "GITHUB_TOKEN" }}'
       username: draios-jenkins
-      branch: "main"
+      branch: "ci/host-shield-windows-release"
 
 actions:
   github:
