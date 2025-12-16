@@ -1,0 +1,33 @@
+---
+name: Update charts for Host Shield release
+
+on:
+  workflow_dispatch:
+    inputs:
+      release:
+        description: 'Host Shield Version'
+        required: true
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  agent-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - uses: actions/setup-go@v6
+        with:
+          go-version: "1.24"
+
+      - name: Install Updatecli in the runner
+        uses: updatecli/updatecli-action@v2.97.0
+
+      - name: Run Updatecli in apply mode
+        run: "updatecli apply --config .github/updatecli.d/config-host-shield-windows-release.yaml"
+        env:
+          HOST_SHIELD_RELEASE: "${{ inputs.release }}"
+          GITHUB_TOKEN: "${{ secrets.TOOLS_JENKINS_ADMIN_ACCESS_GITHUB_TOKEN }}"
