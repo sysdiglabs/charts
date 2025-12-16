@@ -2,11 +2,7 @@
 name: Update charts for Host Shield release
 
 on:
-  workflow_dispatch:
-    inputs:
-      release:
-        description: 'Host Shield Version'
-        required: true
+  pull_request: {}
 
 permissions:
   contents: read
@@ -29,5 +25,5 @@ jobs:
       - name: Run Updatecli in apply mode
         run: "updatecli apply --config .github/updatecli.d/config-host-shield-windows-release.yaml"
         env:
-          HOST_SHIELD_RELEASE: "${{ inputs.release }}"
+          HOST_SHIELD_RELEASE: "0.12.3"
           GITHUB_TOKEN: "${{ secrets.TOOLS_JENKINS_ADMIN_ACCESS_GITHUB_TOKEN }}"
