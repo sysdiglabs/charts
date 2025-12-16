@@ -54,7 +54,7 @@ targets:
       - updateShieldChart
     spec:
       shell: /bin/bash
-      command: "sed -i 's/: # /:  # /g' values.yaml"
+      command: "sed -i 's/: # /:  # /g' charts/shield/values.yaml"
 
   updateShieldReadme:
     name: "update the shield readme"
