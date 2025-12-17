@@ -121,6 +121,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: spec.nodeName
+            - name: KUBE_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
             {{- if and (include "host.driver.is_ebpf" .) (not (include "host.driver.is_universal_ebpf" .)) }}
             - name: SYSDIG_BPF_PROBE
               value:
