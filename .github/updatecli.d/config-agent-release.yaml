@@ -65,4 +65,4 @@ targets:
       - updateShieldChart
     spec:
       shell: /bin/bash
-      command: make docs
+      command: "sed -i 's/: # /:  # /g' charts/shield/values.yaml && make docs"
