@@ -1,0 +1,57 @@
+name: update shield charts for new host-shield windows release
+
+scms:
+  github:
+    kind: "github"
+    spec:
+      user: "updatecli"
+      email: "updatecli@sysdig.com"
+      owner: "sysdiglabs"
+      repository: "charts"
+      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
+      username: draios-jenkins
+      branch: "main"
+
+actions:
+  github:
+    kind: "github/pullrequest"
+    scmid: "github"
+    spec:
+      automerge: true
+      description: 'bump host-shield image tags for `shield` chart to {{ requiredEnv "HOST_SHIELD_RELEASE" }}'
+      labels:
+        - "automated PR"
+      mergemethod: squash
+      title: 'feat(shield): release host-shield windows {{ requiredEnv "HOST_SHIELD_RELEASE" }}'
+
+sources:
+  hostShieldRelease:
+    kind: dockerimage
+    spec:
+      image: quay.io/sysdig/host-shield
+      tagfilter: '{{ requiredEnv "HOST_SHIELD_RELEASE" }}'
+      versionfilter:
+        kind: regex
+        pattern: '[0-9]+\.[0-9]+\.[0-9]+$'
+
+targets:
+  updateShieldChart:
+    name: "update the shield chart"
+    kind: helmchart
+    scmid: github
+    spec:
+      name: "charts/shield"
+      file: values.yaml
+      key: "$.host_windows.image.tag"
+      versionincrement: auto
+
+  updateShieldReadme:
+    name: "update the shield readme"
+    kind: shell
+    scmid: github
+    disablesourceinput: true
+    dependson:
+      - updateShieldChart
+    spec:
+      shell: /bin/bash
+      command: "sed -i 's/: # /:  # /g' charts/shield/values.yaml && make docs"
