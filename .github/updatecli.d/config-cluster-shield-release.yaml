@@ -1,0 +1,57 @@
+name: update shield charts for new cluster-shield release
+
+scms:
+  github:
+    kind: "github"
+    spec:
+      user: "updatecli"
+      email: "updatecli@sysdig.com"
+      owner: "sysdiglabs"
+      repository: "charts"
+      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
+      username: draios-jenkins
+      branch: "main"
+
+actions:
+  github:
+    kind: "github/pullrequest"
+    scmid: "github"
+    spec:
+      automerge: true
+      description: 'bump cluster-shield image tags for `shield` chart to {{ requiredEnv "CLUSTER_SHIELD_RELEASE" }}'
+      labels:
+        - "automated PR"
+      mergemethod: squash
+      title: 'feat(shield): release cluster-shield {{ requiredEnv "CLUSTER_SHIELD_RELEASE" }}'
+
+sources:
+  clusterShieldRelease:
+    kind: dockerimage
+    spec:
+      image: quay.io/sysdig/cluster-shield
+      tagfilter: '{{ requiredEnv "CLUSTER_SHIELD_RELEASE" }}'
+      versionfilter:
+        kind: regex
+        pattern: '[0-9]+\.[0-9]+\.[0-9]+$'
+
+targets:
+  updateShieldChart:
+    name: "update the shield chart"
+    kind: helmchart
+    scmid: github
+    spec:
+      name: "charts/shield"
+      file: values.yaml
+      key: "$.cluster.image.tag"
+      versionincrement: auto
+
+  updateShieldReadme:
+    name: "update the shield readme"
+    kind: shell
+    scmid: github
+    disablesourceinput: true
+    dependson:
+      - updateShieldChart
+    spec:
+      shell: /bin/bash
+      command: "sed -i 's/: # /:  # /g' charts/shield/values.yaml && make docs"
