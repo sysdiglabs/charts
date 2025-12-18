@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.18.2
+### Chores
+* **cluster-shield** [82aacf62](https://github.com/sysdiglabs/charts/commit/82aacf624774030e82ae7edcb01489657683bba2): Automatic bump to version 1.18.1 ([#2490](https://github.com/sysdiglabs/charts/issues/2490))
 # v1.18.1
 ### Bug Fixes
 * **shield,cluster-shield** [970ff5ae](https://github.com/sysdiglabs/charts/commit/970ff5ae99ac97d83f1a6e3475e839fd1bd6bf3e): fixed shield and cluster-shield charts for AC with image-signature only ([#2448](https://github.com/sysdiglabs/charts/issues/2448))
