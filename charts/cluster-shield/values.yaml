@@ -61,6 +61,8 @@ global:
       existingCaConfigMap: null
       # Provide the filename that is defined inside the existing ConfigMap
       existingCaConfigMapKeyName: null
+
+
 cluster_shield:
   cluster_config:
     # The name of the cluster. Make sure to set a unique value for all the
@@ -83,9 +85,11 @@ cluster_shield:
     # Region name for Sysdig.
     # When no region is suitable (e.g. on-premise installations) set the value to "custom"
     region:
+
   kubernetes:
     # The system namespace of your Kubernetes cluster
     root_namespace: kube-system
+
   # Features
   features:
     admission_control:
@@ -142,6 +146,7 @@ cluster_shield:
     posture:
       # Enable the posture feature
       enabled: false
+
     container_vulnerability_management:
       # Enable the container vulnerability management feature
       enabled: false
@@ -168,17 +173,21 @@ cluster_shield:
         # If set to false it allows insecure connections to registries,
         # Such as for registries with self-signed or private certificates.
         verify: true
+
     investigations:
       network_security:
         # Enable the network security feature
         enabled: false
+
     kubernetes_metadata:
       # Enable the Kubernetes Metadata feature
       enabled: false
+
     respond:
       # Enable the responder feature
       response_actions:
         enabled: false
+
     monitor:
       kube_state_metrics:
         # Enable the Kubernetes State Metrics feature
@@ -186,6 +195,7 @@ cluster_shield:
       kubernetes_events:
         # Enable the Kubernetes Events feature
         enabled: false
+
 ca:
   # A PEM-encoded x509 certificate. This can also be a bundle with multiple certificates.
   certs: []
@@ -207,8 +217,10 @@ ca:
   existingCaConfigMap: null
   # Provide the filename that is defined inside the existing ConfigMap
   existingCaConfigMapKeyName: null
+
 # The command executed by the Cluster Shield POD
 run_command: "run-all-namespaced"
+
 image:
   # The Sysdig Registry Scanner image registry.
   registry: quay.io
@@ -216,6 +228,7 @@ image:
   repository: sysdig/cluster-shield
   # The Cluster Shield container image pull policy
   pullPolicy:
+
 proxy:
   # Sets the HTTP Proxy address.
   httpProxy:
@@ -223,9 +236,10 @@ proxy:
   httpsProxy:
   # Sets IPs/URLs that should not pass trough a Proxy Server.
   noProxy:
+
 # The Cluster Shield container image pull secrets
 imagePullSecrets: []
-# - name: regcred
+  # - name: regcred
 
 probes:
   liveness:
@@ -238,10 +252,12 @@ probes:
     initialDelaySeconds: 10
     # The readiness probe period
     periodSeconds: 5
+
 # Additional pod annotations
 podAnnotations: {}
 # Additional pod labels
 podLabels: {}
+
 service:
   # The Cluster Shield service type
   type: ClusterIP
@@ -255,6 +271,7 @@ service:
   labels: {}
   # Additional service annotations
   annotations: {}
+
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
@@ -264,17 +281,18 @@ serviceAccount:
   labels: {}
   # Additional service account annotations
   annotations: {}
+
 resources: {}
-# We usually recommend not to specify default resources and to leave this as a conscious
-# choice for the user. This also increases chances charts run on environments with little
-# resources, such as Minikube. If you do want to specify resources, uncomment the following
-# lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-# limits:
-#   cpu: 100m
-#   memory: 128Mi
-# requests:
-#   cpu: 100m
-#   memory: 128Mi
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
 
 # Set Cluster Shield deployment priorityClassName
 priorityClassName:
@@ -282,19 +300,25 @@ priorityClassName:
 createPriorityClass: false
 # Set Cluster Shield deployment priorityClassValue
 priorityClassValue: 10
+
 # Node labels for pod assignment
 nodeSelector: {}
+
 # Tolerations for pod assignment
 tolerations: []
+
 # Affinity for pod assignment
 affinity: {}
+
 # The number of replicas for the Cluster Shield deployment
 replicaCount: 2
+
 updateStrategy:
   # The update strategy for the Cluster Shield deployment
   type: RollingUpdate
   # The rolling update strategy for the Cluster Shield deployment
   rollingUpdate: {}
+
 # Optional parameter used to check the compatibility of cluster-shield
 # component versions with the on-premised backend version.
 #
@@ -303,12 +327,15 @@ updateStrategy:
 #
 # If you are runinng on SaaS, do NOT provide this parameter.
 onPremCompatibilityVersion:
+
 # Specifies if Cluster Shield should be started in hostNetwork mode.
 # This field is required if you are using a custom CNI where the control plane nodes are unable to initiate
 # network connections to the pods, for example, using Calico CNI plugin on EKS.
 hostNetwork: false
+
 # Define Cluster Shield Pods DNS Policy
 dnsPolicy:
+
 existingTLSSecret:
   # Provide the name of an existing Secret that contains the TLS certificate required
   name:
@@ -318,22 +345,23 @@ existingTLSSecret:
   tlsCertKeyName:
   # Provide the certificate authority filename that is defined inside the existing Secret (default ca.crt)
   caCertName:
+
 # Optional parameter used to add environment variables to the Cluster Shield pods
 env: []
-# - name: MY_ENV_VAR
-#   value: my-env-var-value
+  # - name: MY_ENV_VAR
+  #   value: my-env-var-value
 
 # Optional parameter to specify additional host volumes for the Cluster Shield pods
 volumes: []
-# - name: my-volume
-#   hostPath:
-#     path: /path/to/host/folder
+  # - name: my-volume
+  #   hostPath:
+  #     path: /path/to/host/folder
 
 # Optional parameter to specify additional volume mounts for the Cluster Shield pods
 volumeMounts: []
-# - name: my-volume
-#   mountPath: /host/path/to/mount/folder
-#   readOnly: true
+  # - name: my-volume
+  #   mountPath: /host/path/to/mount/folder
+  #   readOnly: true
 
 # Define Pod Disruption Budget
 podDisruptionBudget:
