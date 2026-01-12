@@ -77,11 +77,11 @@ config:
     include: []
     # The list of regular expressions.<br/>Images matching any of these expressions are excluded when scanning.
     exclude: []
-    # Based on its creation date, excludes images older than the specified number of days.<br/>The maximum is 365 days.
+    # Based on its creation date, excludes images older than the specified number of days.<br/>The maximum is 5 years.
     maxAgeDays: 90
-    # Based on its creation date, newer ones take precedence, the maximum number of tags to scan per repository.<br/>The maximum is 50.
+    # Based on its creation date, newer ones take precedence, the maximum number of tags to scan per repository.<br/>The maximum is 100.
     maxTagsPerRepository: 5
-    # The number of repositories to scan per registry.<br/>The maximum is 10000.
+    # The number of repositories to scan per registry.<br/>The maximum is 20000.
     maxRepositoriesPerRegistry: 500
   scan:
     # Override the default image for the workers. If not set and any image field (registry, repository, tag) is configured, automatically uses the same image as the main orchestrator.
