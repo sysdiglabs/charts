@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **agent,shield** [068939b2](https://github.com/sysdiglabs/charts/commit/068939b20abca83c3409d29a7e17504f3144bb7f): release agent 14.3.2 ([#2503](https://github.com/sysdiglabs/charts/issues/2503))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.25.3...shield-1.25.4
+### Bug Fixes
+- **shield** [8ef97b3a](https://github.com/sysdiglabs/charts/commit/8ef97b3ad0c9d9a18a363371960c41ccdf104e83): add missing ca-cert volume mount on host-shield initContainer ([#2506](https://github.com/sysdiglabs/charts/issues/2506))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.25.4...shield-1.25.5
