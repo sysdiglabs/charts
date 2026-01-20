@@ -69,6 +69,8 @@ spec:
             {{- end }}
             {{- include "common.custom_ca.envs" (merge (dict) . (dict "CACertsPath" "/opt/draios/certificates/")) | nindent 12 }}
           volumeMounts:
+            {{- /* Custom CA */}}
+            - {{- include "common.custom_ca.volume_mount" (merge (dict) . (dict "CACertsPath" "/opt/draios/certificates/")) | nindent 12 }}
             {{- /* Autopilot = false */}}
             {{- if not (include "common.cluster_type.is_gke_autopilot" .) }}
             - mountPath: /etc/modprobe.d
