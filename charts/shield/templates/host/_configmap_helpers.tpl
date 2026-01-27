@@ -5,7 +5,11 @@
 {{- end }}
 
 {{- define "host.configmap.vm" }}
-{{- dict "vulnerability_management" (pick . "host_vulnerability_management" "in_use") | toYaml }}
+{{- $vm := pick . "host_vulnerability_management" "in_use" }}
+{{- with .container_vulnerability_management.target_workloads }}
+{{- $_ := set $vm "container_vulnerability_management" (dict "target_workloads" .) }}
+{{- end }}
+{{- dict "vulnerability_management" $vm | toYaml }}
 {{- end }}
 
 {{- define "host.configmap.respond" }}

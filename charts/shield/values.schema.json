@@ -724,6 +724,71 @@
               "type": "boolean",
               "description": "Specify if the Container VulnerabilityManagement feature is enabled"
             },
+            "target_workloads": {
+              "type": "object",
+              "description": "The type of workload for which container vulnerability management should operate, either \\\"kubernetes\\\" or \\\"non_orchestrated_containers\\\".",
+              "properties": {
+                "kubernetes": {
+                  "type": "object",
+                  "description": "Defines if Container Vulnerability Management should target kubernetes workloads and provides configurations on how the scan should be performed.",
+                  "properties": {
+                    "enabled": {
+                      "type": "boolean",
+                      "description": "Enables Container Vulnerability Management for kubernetes workloads",
+                      "default": false,
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "image_source": {
+                      "type": "string",
+                      "enum": ["registry","node","node+registry"],
+                      "description": "Specifies where container images are obtained from for vulnerability scanning. When setting \\\"registry\\\", images are pulled directly from the configured remote container registries. With \\\"node\\\", images are retrieved from the Kubernetes cluster nodes by interacting with the local container runtimes, limiting scans to images that are currently present on the nodes. With \\\"node+registry\\\", images are primarily retrieved from cluster nodes, with a fallback to remote registries for workloads whose images are not yet present on any node (for example, scheduled but not yet running CronJobs).",
+                      "default": "registry",
+                      "examples": [
+                        "node+registry",
+                        "node",
+                        "registry"
+                      ]
+                    }
+                  }
+                },
+                "non_orchestrated_containers": {
+                  "type": "object",
+                  "description": "Defines if Container Vulnerability Management should target non-orchestrated containers only, and provides configurations on how the scan should be performed",
+                  "properties": {
+                    "enabled": {
+                      "type": "boolean",
+                      "description": "Enables Container Vulnerability Management for non-orchestrated containers workloads",
+                      "default": false,
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "ignore_init_failures": {
+                      "type": "boolean",
+                      "description": "Instructs the Container Vulnerability Management feature to ignore errors on container scanning initialization and fallback on host-only scanning",
+                      "default": false,
+                      "examples": [
+                        true
+                      ]
+                    }
+                  }
+                }
+              },
+              "anyOf": [
+                {
+                  "required": [
+                    "kubernetes"
+                  ]
+                },
+                {
+                  "required": [
+                    "non_orchestrated_containers"
+                  ]
+                }
+              ]
+            },
             "registry_ssl": {
               "description": "Verify SSL certificate when connecting to the registry",
               "type": "object",

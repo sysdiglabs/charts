@@ -34,6 +34,14 @@ tests:
                 response_actions:
                   enabled: false
               vulnerability_management:
+                container_vulnerability_management:
+                  target_workloads:
+                    kubernetes:
+                      enabled: false
+                      image_source: registry
+                    non_orchestrated_containers:
+                      enabled: false
+                      ignore_init_failures: false
                 host_vulnerability_management:
                   enabled: false
                 in_use:
@@ -65,6 +73,14 @@ tests:
                 response_actions:
                   enabled: false
               vulnerability_management:
+                container_vulnerability_management:
+                  target_workloads:
+                    kubernetes:
+                      enabled: false
+                      image_source: registry
+                    non_orchestrated_containers:
+                      enabled: false
+                      ignore_init_failures: false
                 host_vulnerability_management:
                   enabled: false
                 in_use:
@@ -96,6 +112,14 @@ tests:
                 response_actions:
                   enabled: false
               vulnerability_management:
+                container_vulnerability_management:
+                  target_workloads:
+                    kubernetes:
+                      enabled: false
+                      image_source: registry
+                    non_orchestrated_containers:
+                      enabled: false
+                      ignore_init_failures: false
                 host_vulnerability_management:
                   enabled: false
                 in_use:
@@ -127,6 +151,14 @@ tests:
                 response_actions:
                   enabled: false
               vulnerability_management:
+                container_vulnerability_management:
+                  target_workloads:
+                    kubernetes:
+                      enabled: false
+                      image_source: registry
+                    non_orchestrated_containers:
+                      enabled: false
+                      ignore_init_failures: false
                 host_vulnerability_management:
                   enabled: true
                 in_use:
@@ -158,6 +190,14 @@ tests:
                 response_actions:
                   enabled: false
               vulnerability_management:
+                container_vulnerability_management:
+                  target_workloads:
+                    kubernetes:
+                      enabled: false
+                      image_source: registry
+                    non_orchestrated_containers:
+                      enabled: false
+                      ignore_init_failures: false
                 host_vulnerability_management:
                   enabled: false
                 in_use:
@@ -184,6 +224,14 @@ tests:
                 response_actions:
                   enabled: false
               vulnerability_management:
+                container_vulnerability_management:
+                  target_workloads:
+                    kubernetes:
+                      enabled: false
+                      image_source: registry
+                    non_orchestrated_containers:
+                      enabled: false
+                      ignore_init_failures: false
                 host_vulnerability_management:
                   enabled: false
                 in_use:
@@ -218,8 +266,19 @@ tests:
                 response_actions:
                   enabled: false
               vulnerability_management:
+                container_vulnerability_management:
+                  target_workloads:
+                    kubernetes:
+                      enabled: false
+                      image_source: registry
+                    non_orchestrated_containers:
+                      enabled: false
+                      ignore_init_failures: false
                 host_vulnerability_management:
                   enabled: true
+                in_use:
+                  enabled: false
+                  integration_enabled: false
 
   - it: Enable Posture, Vulnerability Management, and set in_use to true
     set:
@@ -251,6 +310,14 @@ tests:
                 response_actions:
                   enabled: false
               vulnerability_management:
+                container_vulnerability_management:
+                  target_workloads:
+                    kubernetes:
+                      enabled: false
+                      image_source: registry
+                    non_orchestrated_containers:
+                      enabled: false
+                      ignore_init_failures: false
                 host_vulnerability_management:
                   enabled: true
                 in_use:
@@ -300,6 +367,14 @@ tests:
                 response_actions:
                   enabled: false
               vulnerability_management:
+                container_vulnerability_management:
+                  target_workloads:
+                    kubernetes:
+                      enabled: false
+                      image_source: registry
+                    non_orchestrated_containers:
+                      enabled: false
+                      ignore_init_failures: false
                 host_vulnerability_management:
                   enabled: false
                 in_use:
@@ -390,6 +465,14 @@ tests:
                   unpause_container:
                     trigger: all
               vulnerability_management:
+                container_vulnerability_management:
+                  target_workloads:
+                    kubernetes:
+                      enabled: false
+                      image_source: registry
+                    non_orchestrated_containers:
+                      enabled: false
+                      ignore_init_failures: false
                 host_vulnerability_management:
                   enabled: false
                 in_use:
@@ -462,6 +545,14 @@ tests:
                   queue_length: 1000
                   timeout: 10
               vulnerability_management:
+                container_vulnerability_management:
+                  target_workloads:
+                    kubernetes:
+                      enabled: false
+                      image_source: registry
+                    non_orchestrated_containers:
+                      enabled: false
+                      ignore_init_failures: false
                 host_vulnerability_management:
                   enabled: false
                 in_use:
@@ -492,6 +583,14 @@ tests:
                 response_actions:
                   enabled: false
               vulnerability_management:
+                container_vulnerability_management:
+                  target_workloads:
+                    kubernetes:
+                      enabled: false
+                      image_source: registry
+                    non_orchestrated_containers:
+                      enabled: false
+                      ignore_init_failures: false
                 host_vulnerability_management:
                   enabled: false
                 in_use:
@@ -523,6 +622,14 @@ tests:
                 response_actions:
                   enabled: false
               vulnerability_management:
+                container_vulnerability_management:
+                  target_workloads:
+                    kubernetes:
+                      enabled: false
+                      image_source: registry
+                    non_orchestrated_containers:
+                      enabled: false
+                      ignore_init_failures: false
                 host_vulnerability_management:
                   enabled: false
                 in_use:

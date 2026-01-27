@@ -70,8 +70,24 @@ features:
     host_vulnerability_management:
       enabled: false
     container_vulnerability_management:
-      # Enable the container vulnerability management feature on cluster shield
+      # Enable the container vulnerability management feature
       enabled: false
+      # The type of workload for which container vulnerability management should operate, either "kubernetes" or "non_orchestrated_containers"
+      target_workloads:
+        # Defines if Container Vulnerability Management should target kubernetes workloads and provides configurations on how the scan should be performed.
+        kubernetes:
+          enabled: false
+          # Specifies where container images are obtained from for vulnerability scanning.
+          # When setting "registry", images are pulled directly from the configured remote container registries.
+          # With "node", images are retrieved from the Kubernetes cluster nodes by interacting with the local container runtimes, limiting scans to images that are currently present on the nodes.
+          # With "node+registry", images are primarily retrieved from cluster nodes, with a fallback to remote registries for workloads whose images are not yet present on any node (for example, scheduled but not yet running CronJobs).
+          # Expected one of: `registry` ,`node` ,`node+registry`.
+          image_source: registry
+        non_orchestrated_containers:
+          # Target non-orchestrated containers only, and provides configurations on how the scan should be performed
+          enabled: false
+          # Ignore errors on container scanning initialization and fallback on host-only scanning
+          ignore_init_failures: false
       local_cluster:
         # Restrict access to specific Docker secrets when Cluster Scanner is running.
         # The default behavior is listing all secrets.
