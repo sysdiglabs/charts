@@ -37,7 +37,7 @@ tests:
                 container_vulnerability_management:
                   target_workloads:
                     kubernetes:
-                      enabled: false
+                      enabled: true
                       image_source: registry
                     non_orchestrated_containers:
                       enabled: false
@@ -76,7 +76,7 @@ tests:
                 container_vulnerability_management:
                   target_workloads:
                     kubernetes:
-                      enabled: false
+                      enabled: true
                       image_source: registry
                     non_orchestrated_containers:
                       enabled: false
@@ -115,7 +115,7 @@ tests:
                 container_vulnerability_management:
                   target_workloads:
                     kubernetes:
-                      enabled: false
+                      enabled: true
                       image_source: registry
                     non_orchestrated_containers:
                       enabled: false
@@ -154,7 +154,7 @@ tests:
                 container_vulnerability_management:
                   target_workloads:
                     kubernetes:
-                      enabled: false
+                      enabled: true
                       image_source: registry
                     non_orchestrated_containers:
                       enabled: false
@@ -193,7 +193,7 @@ tests:
                 container_vulnerability_management:
                   target_workloads:
                     kubernetes:
-                      enabled: false
+                      enabled: true
                       image_source: registry
                     non_orchestrated_containers:
                       enabled: false
@@ -227,7 +227,7 @@ tests:
                 container_vulnerability_management:
                   target_workloads:
                     kubernetes:
-                      enabled: false
+                      enabled: true
                       image_source: registry
                     non_orchestrated_containers:
                       enabled: false
@@ -269,7 +269,7 @@ tests:
                 container_vulnerability_management:
                   target_workloads:
                     kubernetes:
-                      enabled: false
+                      enabled: true
                       image_source: registry
                     non_orchestrated_containers:
                       enabled: false
@@ -313,7 +313,7 @@ tests:
                 container_vulnerability_management:
                   target_workloads:
                     kubernetes:
-                      enabled: false
+                      enabled: true
                       image_source: registry
                     non_orchestrated_containers:
                       enabled: false
@@ -370,7 +370,7 @@ tests:
                 container_vulnerability_management:
                   target_workloads:
                     kubernetes:
-                      enabled: false
+                      enabled: true
                       image_source: registry
                     non_orchestrated_containers:
                       enabled: false
@@ -468,7 +468,7 @@ tests:
                 container_vulnerability_management:
                   target_workloads:
                     kubernetes:
-                      enabled: false
+                      enabled: true
                       image_source: registry
                     non_orchestrated_containers:
                       enabled: false
@@ -548,7 +548,7 @@ tests:
                 container_vulnerability_management:
                   target_workloads:
                     kubernetes:
-                      enabled: false
+                      enabled: true
                       image_source: registry
                     non_orchestrated_containers:
                       enabled: false
@@ -586,7 +586,7 @@ tests:
                 container_vulnerability_management:
                   target_workloads:
                     kubernetes:
-                      enabled: false
+                      enabled: true
                       image_source: registry
                     non_orchestrated_containers:
                       enabled: false
@@ -625,7 +625,7 @@ tests:
                 container_vulnerability_management:
                   target_workloads:
                     kubernetes:
-                      enabled: false
+                      enabled: true
                       image_source: registry
                     non_orchestrated_containers:
                       enabled: false

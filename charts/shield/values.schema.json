@@ -735,7 +735,7 @@
                     "enabled": {
                       "type": "boolean",
                       "description": "Enables Container Vulnerability Management for kubernetes workloads",
-                      "default": false,
+                      "default": true,
                       "examples": [
                         true
                       ]

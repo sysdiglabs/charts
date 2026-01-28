@@ -76,7 +76,7 @@ features:
       target_workloads:
         # Defines if Container Vulnerability Management should target kubernetes workloads and provides configurations on how the scan should be performed.
         kubernetes:
-          enabled: false
+          enabled: true
           # Specifies where container images are obtained from for vulnerability scanning.
           # When setting "registry", images are pulled directly from the configured remote container registries.
           # With "node", images are retrieved from the Kubernetes cluster nodes by interacting with the local container runtimes, limiting scans to images that are currently present on the nodes.
