@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.27.0
+### New Features
+* **shield** [e558ae6c](https://github.com/sysdiglabs/charts/commit/e558ae6c51c3a9d751cd1f6a5976ab88fb090a66): release cluster-shield 1.19.0 ([#2517](https://github.com/sysdiglabs/charts/issues/2517))
 # v1.26.0
 ### New Features
 * **shield** [0e107a6f](https://github.com/sysdiglabs/charts/commit/0e107a6f35fb8821af8339458523abb2630def92): release host-shield windows 0.13.0 ([#2512](https://github.com/sysdiglabs/charts/issues/2512))
