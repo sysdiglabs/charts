@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.100.5
+### Chores
+* **sysdig-deploy** [e3ea01fc](https://github.com/sysdiglabs/charts/commit/e3ea01fcf917831cfc31cce8fcbae60bcd33f318): Automatic version bump due to updated dependencies ([#2516](https://github.com/sysdiglabs/charts/issues/2516))
 # v1.100.4
 ### Bug Fixes
 * **node-analyzer** [880ed2af](https://github.com/sysdiglabs/charts/commit/880ed2af8e35510bb4f0a70ab3b9e1961b753300): bumped kspm-analyzer to 1.47.1 and added missing KUBE_POD_NAME env var ([#2514](https://github.com/sysdiglabs/charts/issues/2514))
