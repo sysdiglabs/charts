@@ -112,7 +112,7 @@ features:
       # The list of namespaces that will be excluded from the audit feature
       excluded_namespaces: []
       # List of rules used to determine if a request should be audited
-      webhook_rules:  # +doc-gen:break
+      webhook_rules: # +doc-gen:break
         - apiGroups:
             - ""
             - apps
@@ -231,7 +231,7 @@ host_windows:
       key: os
       value: Windows
   # The affinity for the host shield
-  affinity:  # +doc-gen:break
+  affinity: # +doc-gen:break
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
@@ -335,7 +335,7 @@ host:
   # The node selector for the host shield
   node_selector: {}
   # The tolerations for the host shield
-  tolerations:  # +doc-gen:break
+  tolerations: # +doc-gen:break
     - effect: NoSchedule
       key: node-role.kubernetes.io/master
     - effect: NoSchedule
@@ -353,7 +353,7 @@ host:
       operator: Equal
       value: "true"
   # The affinity for the host shield
-  affinity:  # +doc-gen:break
+  affinity: # +doc-gen:break
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
@@ -377,7 +377,7 @@ host:
       periodSeconds: 10
       # The readiness probe failure threshold
       failureThreshold: 9
-    liveness:  # TODO: Currently host does not have liveness probe. Should we add it?
+    liveness: # TODO: Currently host does not have liveness probe. Should we add it?
       # The liveness probe initial delay
       initialDelaySeconds: 90
       # The liveness probe period
@@ -403,7 +403,7 @@ cluster:
     # The repository where the cluster shield image is stored
     repository: sysdig/cluster-shield
     # The tag for the cluster shield image
-    tag: 1.18.1
+    tag: 1.19.0
     # The pull policy for the cluster shield image
     pull_policy: IfNotPresent
     # The pull secrets for the cluster shield image
