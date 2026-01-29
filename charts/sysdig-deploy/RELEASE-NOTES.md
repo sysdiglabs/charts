@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **sysdig-deploy** [19424fad](https://github.com/sysdiglabs/charts/commit/19424fad711a20ab695760b2a6c53d0c6f7c20ff): Automatic version bump due to updated dependencies ([#2510](https://github.com/sysdiglabs/charts/issues/2510))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.100.2...sysdig-deploy-1.100.3
+### Bug Fixes
+- **node-analyzer** [880ed2af](https://github.com/sysdiglabs/charts/commit/880ed2af8e35510bb4f0a70ab3b9e1961b753300): bumped kspm-analyzer to 1.47.1 and added missing KUBE_POD_NAME env var ([#2514](https://github.com/sysdiglabs/charts/issues/2514))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.100.3...sysdig-deploy-1.100.4
