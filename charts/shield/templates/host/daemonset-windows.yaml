@@ -61,6 +61,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: spec.nodeName
+            - name: KUBE_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
             {{ if .Values.features.posture.host_posture.enabled }}
             - name: POD_NAMESPACE
               valueFrom:
