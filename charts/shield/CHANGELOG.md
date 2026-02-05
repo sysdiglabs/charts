@@ -10,6 +10,27 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.27.0
+### New Features
+* **shield** [e558ae6c](https://github.com/sysdiglabs/charts/commit/e558ae6c51c3a9d751cd1f6a5976ab88fb090a66): release cluster-shield 1.19.0 ([#2517](https://github.com/sysdiglabs/charts/issues/2517))
+# v1.26.0
+### New Features
+* **shield** [0e107a6f](https://github.com/sysdiglabs/charts/commit/0e107a6f35fb8821af8339458523abb2630def92): release host-shield windows 0.13.0 ([#2512](https://github.com/sysdiglabs/charts/issues/2512))
+# v1.25.5
+### Bug Fixes
+* **shield** [8ef97b3a](https://github.com/sysdiglabs/charts/commit/8ef97b3ad0c9d9a18a363371960c41ccdf104e83): add missing ca-cert volume mount on host-shield initContainer ([#2506](https://github.com/sysdiglabs/charts/issues/2506))
+# v1.25.4
+### New Features
+* **agent,shield** [068939b2](https://github.com/sysdiglabs/charts/commit/068939b20abca83c3409d29a7e17504f3144bb7f): release agent 14.3.2 ([#2503](https://github.com/sysdiglabs/charts/issues/2503))
+# v1.25.3
+### New Features
+* **agent,shield** [7507cad7](https://github.com/sysdiglabs/charts/commit/7507cad7b0819e3f1b63d2408fd9170ce4225480): release agent 14.3.1 ([#2495](https://github.com/sysdiglabs/charts/issues/2495))
+# v1.25.2
+### New Features
+* **shield** [808e86bc](https://github.com/sysdiglabs/charts/commit/808e86bc8cca575f8e00b5d3faefea5871936f62): release cluster-shield 1.18.1 ([#2492](https://github.com/sysdiglabs/charts/issues/2492))
+# v1.25.1
+### New Features
+* **shield** [c4acd4c4](https://github.com/sysdiglabs/charts/commit/c4acd4c47cda65066a0bba831941ccedefe9c636): release host-shield windows 0.12.3 ([#2484](https://github.com/sysdiglabs/charts/issues/2484))
 # v1.25.0
 ### New Features
 * **agent,shield** [c719a458](https://github.com/sysdiglabs/charts/commit/c719a458182b7a122da3cbfe04366423dd324437): release agent 14.3.0 with FIM ([#2461](https://github.com/sysdiglabs/charts/issues/2461))

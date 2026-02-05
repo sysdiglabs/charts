@@ -21,6 +21,8 @@ tests:
       - notExists:
           path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].env[?(@.name == "SSL_CERT_FILE")]
       - notExists:
+          path: spec.template.spec.initContainers[?(@.name == "sysdig-host-shield-kmodule")].volumeMounts[?(@.name == "ca-certs")]
+      - notExists:
           path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].volumeMounts[?(@.name == "ca-certs")]
       - notExists:
           path: spec.template.spec.volumes[?(@.name == "ca-certs")]
@@ -38,6 +40,12 @@ tests:
           value:
             name: SSL_CERT_FILE
             value: /opt/draios/certificates/custom-ca-from-values.crt
+      - contains:
+          path: spec.template.spec.initContainers[?(@.name == "sysdig-host-shield-kmodule")].volumeMounts
+          content:
+            name: ca-certs
+            mountPath: /opt/draios/certificates/
+            readOnly: true
       - contains:
           path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].volumeMounts
           content:
@@ -63,6 +71,12 @@ tests:
           value:
             name: SSL_CERT_FILE
             value: /opt/draios/certificates/custom-ca-from-secret.crt
+      - contains:
+          path: spec.template.spec.initContainers[?(@.name == "sysdig-host-shield-kmodule")].volumeMounts
+          content:
+            name: ca-certs
+            mountPath: /opt/draios/certificates/
+            readOnly: true
       - contains:
           path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].volumeMounts
           content:

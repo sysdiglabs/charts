@@ -10,6 +10,21 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.39.3
+### Bug Fixes
+* **node-analyzer** [880ed2af](https://github.com/sysdiglabs/charts/commit/880ed2af8e35510bb4f0a70ab3b9e1961b753300): bumped kspm-analyzer to 1.47.1 and added missing KUBE_POD_NAME env var ([#2514](https://github.com/sysdiglabs/charts/issues/2514))
+# v1.39.2
+### Chores
+* **node-analyzer** [f4084fce](https://github.com/sysdiglabs/charts/commit/f4084fceb8eaf127e4bae300d34e91ffff280e2d): bump sysdig/vuln-runtime-scanner to v1.8.7 ([#2513](https://github.com/sysdiglabs/charts/issues/2513))
+# v1.39.1
+### Chores
+* **node-analyzer** [dbd08181](https://github.com/sysdiglabs/charts/commit/dbd0818105857a570264f8c685184e0970c8586d): bump sysdig/vuln-host-scanner to v0.14.2 ([#2509](https://github.com/sysdiglabs/charts/issues/2509))
+# v1.39.0
+### Chores
+* **node-analyzer** [a9cc1b2f](https://github.com/sysdiglabs/charts/commit/a9cc1b2f16147d1291de3f1dd1d5d1b658906028): bump sysdig/kspm-analyzer to 1.47.0 ([#2508](https://github.com/sysdiglabs/charts/issues/2508))
+# v1.38.3
+### Chores
+* **node-analyzer** [ad9ba25b](https://github.com/sysdiglabs/charts/commit/ad9ba25b5de544aa4f9dd6bf99d66dad91b8c2d7): bump sysdig/vuln-runtime-scanner to v1.8.6 ([#2477](https://github.com/sysdiglabs/charts/issues/2477))
 # v1.38.2
 ### Chores
 * **node-analyzer** [4b1b0b52](https://github.com/sysdiglabs/charts/commit/4b1b0b52ba4ea956d53378c6d55b3cff85eeaf09): bump sysdig/kspm-analyzer to 1.46.2 ([#2463](https://github.com/sysdiglabs/charts/issues/2463))

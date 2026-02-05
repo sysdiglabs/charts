@@ -1,11 +1,11 @@
 ---
-name: Update charts for Agent release
+name: Update charts for Cluster Shield release
 
 on:
   workflow_dispatch:
     inputs:
       release:
-        description: 'Agent Version'
+        description: 'Cluster Shield Version'
         required: true
 
 permissions:
@@ -13,7 +13,7 @@ permissions:
   pull-requests: write
 
 jobs:
-  agent-release:
+  cluster-shield-release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -27,7 +27,7 @@ jobs:
         uses: updatecli/updatecli-action@v2.98.0
 
       - name: Run Updatecli in apply mode
-        run: "updatecli apply --config .github/updatecli.d/config-agent-release.yaml"
+        run: "updatecli apply --config .github/updatecli.d/config-cluster-shield-release.yaml"
         env:
-          AGENT_RELEASE: "${{ inputs.release }}"
+          CLUSTER_SHIELD_RELEASE: "${{ inputs.release }}"
           GITHUB_TOKEN: "${{ secrets.TOOLS_JENKINS_ADMIN_ACCESS_GITHUB_TOKEN }}"

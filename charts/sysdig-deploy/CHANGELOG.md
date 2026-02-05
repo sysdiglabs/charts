@@ -10,6 +10,45 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.101.0
+### Chores
+* **cluster-shield** [e530ee7c](https://github.com/sysdiglabs/charts/commit/e530ee7c37f865942611de12294e37f10032837a): Automatic bump to version 1.19.0 ([#2518](https://github.com/sysdiglabs/charts/issues/2518))
+# v1.100.5
+### Chores
+* **sysdig-deploy** [e3ea01fc](https://github.com/sysdiglabs/charts/commit/e3ea01fcf917831cfc31cce8fcbae60bcd33f318): Automatic version bump due to updated dependencies ([#2516](https://github.com/sysdiglabs/charts/issues/2516))
+# v1.100.4
+### Bug Fixes
+* **node-analyzer** [880ed2af](https://github.com/sysdiglabs/charts/commit/880ed2af8e35510bb4f0a70ab3b9e1961b753300): bumped kspm-analyzer to 1.47.1 and added missing KUBE_POD_NAME env var ([#2514](https://github.com/sysdiglabs/charts/issues/2514))
+# v1.100.3
+### Chores
+* **sysdig-deploy** [19424fad](https://github.com/sysdiglabs/charts/commit/19424fad711a20ab695760b2a6c53d0c6f7c20ff): Automatic version bump due to updated dependencies ([#2510](https://github.com/sysdiglabs/charts/issues/2510))
+# v1.100.2
+### Chores
+* **node-analyzer** [f4084fce](https://github.com/sysdiglabs/charts/commit/f4084fceb8eaf127e4bae300d34e91ffff280e2d): bump sysdig/vuln-runtime-scanner to v1.8.7 ([#2513](https://github.com/sysdiglabs/charts/issues/2513))
+# v1.100.1
+### Chores
+* **node-analyzer** [dbd08181](https://github.com/sysdiglabs/charts/commit/dbd0818105857a570264f8c685184e0970c8586d): bump sysdig/vuln-host-scanner to v0.14.2 ([#2509](https://github.com/sysdiglabs/charts/issues/2509))
+# v1.100.0
+### Chores
+* **node-analyzer** [a9cc1b2f](https://github.com/sysdiglabs/charts/commit/a9cc1b2f16147d1291de3f1dd1d5d1b658906028): bump sysdig/kspm-analyzer to 1.47.0 ([#2508](https://github.com/sysdiglabs/charts/issues/2508))
+# v1.99.7
+### Chores
+* **sysdig-deploy** [23b00372](https://github.com/sysdiglabs/charts/commit/23b003725a4b09ff9aabbf35b6c3552909324a97): Automatic version bump due to updated dependencies ([#2504](https://github.com/sysdiglabs/charts/issues/2504))
+# v1.99.6
+### Chores
+* **sysdig-deploy** [2bea565a](https://github.com/sysdiglabs/charts/commit/2bea565a6f5019f81f821f36ff1bc25daf1b5f64): Automatic version bump due to updated dependencies ([#2498](https://github.com/sysdiglabs/charts/issues/2498))
+# v1.99.5
+### Chores
+* **sysdig-deploy** [979dcf23](https://github.com/sysdiglabs/charts/commit/979dcf23be6ab02003b22a7fb0b4928758a5f3c1): Automatic version bump due to updated dependencies ([#2496](https://github.com/sysdiglabs/charts/issues/2496))
+# v1.99.4
+### New Features
+* **shield** [808e86bc](https://github.com/sysdiglabs/charts/commit/808e86bc8cca575f8e00b5d3faefea5871936f62): release cluster-shield 1.18.1 ([#2492](https://github.com/sysdiglabs/charts/issues/2492))
+# v1.99.3
+### Chores
+* **sysdig-deploy** [15428cf7](https://github.com/sysdiglabs/charts/commit/15428cf704b2a80530f68ccb00b7f6d50e257cda): Automatic version bump due to updated dependencies ([#2478](https://github.com/sysdiglabs/charts/issues/2478))
+# v1.99.2
+### Chores
+* **node-analyzer** [ad9ba25b](https://github.com/sysdiglabs/charts/commit/ad9ba25b5de544aa4f9dd6bf99d66dad91b8c2d7): bump sysdig/vuln-runtime-scanner to v1.8.6 ([#2477](https://github.com/sysdiglabs/charts/issues/2477))
 # v1.99.1
 ### Chores
 * **node-analyzer** [4b1b0b52](https://github.com/sysdiglabs/charts/commit/4b1b0b52ba4ea956d53378c6d55b3cff85eeaf09): bump sysdig/kspm-analyzer to 1.46.2 ([#2463](https://github.com/sysdiglabs/charts/issues/2463))
