@@ -1,5 +1,5 @@
 # What's Changed
 
-### Bug Fixes
-- **node-analyzer** [880ed2af](https://github.com/sysdiglabs/charts/commit/880ed2af8e35510bb4f0a70ab3b9e1961b753300): bumped kspm-analyzer to 1.47.1 and added missing KUBE_POD_NAME env var ([#2514](https://github.com/sysdiglabs/charts/issues/2514))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.39.2...node-analyzer-1.39.3
+### Chores
+- **node-analyzer** [6d52d695](https://github.com/sysdiglabs/charts/commit/6d52d695063f97ab729c6075ebda44397ca7535b): Bumped kspm-analyzer version to 1.47.2 ([#2521](https://github.com/sysdiglabs/charts/issues/2521))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.39.3...node-analyzer-1.39.4
