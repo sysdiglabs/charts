@@ -1,5 +1,5 @@
 # What's Changed
 
 ### Chores
-- **rapid-response** [3f810ae9](https://github.com/sysdiglabs/charts/commit/3f810ae9858978ddd92210b01b2eb0ec7f535244): bump rapid-response version to latest ([#2515](https://github.com/sysdiglabs/charts/issues/2515))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/rapid-response-0.9.31...rapid-response-0.9.32
+- **rapid-response** [2f47fcda](https://github.com/sysdiglabs/charts/commit/2f47fcdae7da2e93227750cdf214db4574d6bbdf): bump rapid-response version to latest ([#2524](https://github.com/sysdiglabs/charts/issues/2524))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/rapid-response-0.9.32...rapid-response-0.9.33
