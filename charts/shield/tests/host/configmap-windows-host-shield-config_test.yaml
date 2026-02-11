@@ -509,3 +509,50 @@ tests:
               ca:
                 cert_path: certificates/rootCA.crt
               verify: true
+
+  - it: Test tags with version < 0.14.0
+    set:
+      cluster_config:
+        name: "test-cluster"
+        tags:
+          environment: "test"
+          team: "devops"
+      host_windows:
+        image:
+          tag: "0.13.0"
+    asserts:
+      - notExists:
+          path: data['dragent.yaml']
+      - matchRegex:
+          path: data['host-shield.yaml']
+          pattern: |
+            cluster_config:
+              name: test-cluster
+              tags:
+                environment: test
+                team: devops
+
+  - it: Test tags with version >= 0.14.0
+    set:
+      cluster_config:
+        name: "test-cluster"
+        tags:
+          environment: "test"
+          team: "devops"
+      host_windows:
+        image:
+          tag: "0.14.0"
+    asserts:
+      - notExists:
+          path: data['dragent.yaml']
+      - matchRegex:
+          path: data['host-shield.yaml']
+          pattern: |
+            cluster_config:
+              name: test-cluster
+      - matchRegex:
+          path: data['host-shield.yaml']
+          pattern: |
+            tags:
+              environment: test
+              team: devops
