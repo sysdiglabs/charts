@@ -1,0 +1,62 @@
+suite: Registry Scanner - Role
+release:
+  name: my-release
+  namespace: my-namespace
+
+values:
+  - ./ocp_test_values.yaml
+
+tests:
+  - it: should not have secrets permission for non-OCP registries
+    set:
+      config.registryType: ecr
+    asserts:
+      - containsDocument:
+          kind: Role
+          apiVersion: rbac.authorization.k8s.io/v1
+      - equal:
+          path: metadata.name
+          value: my-release-registry-scanner
+      - notContains:
+          path: rules
+          content:
+            apiGroups: [""]
+            resources: ["secrets"]
+            verbs: ["list"]
+    template: templates/role.yaml
+
+  - it: should have secrets list permission for OCP registry
+    set:
+      config.registryType: ocp
+    asserts:
+      - containsDocument:
+          kind: Role
+          apiVersion: rbac.authorization.k8s.io/v1
+      - equal:
+          path: metadata.name
+          value: my-release-registry-scanner
+      - contains:
+          path: rules
+          content:
+            apiGroups: [""]
+            resources: ["secrets"]
+            verbs: ["list"]
+    template: templates/role.yaml
+
+  - it: should have standard permissions for all registry types
+    set:
+      config.registryType: ocp
+    asserts:
+      - contains:
+          path: rules
+          content:
+            apiGroups: ["batch"]
+            resources: ["jobs"]
+            verbs: ["create", "get", "delete", "watch"]
+      - contains:
+          path: rules
+          content:
+            apiGroups: [""]
+            resources: ["pods", "pods/log"]
+            verbs: ["get", "list"]
+    template: templates/role.yaml
