@@ -5,8 +5,10 @@ metadata:
   name: {{ include "host.fullname" . }}
   labels:
     {{- include "host.rbac_labels" . | nindent 4 }}
-  {{- with .Values.host.rbac.annotations }}
   annotations:
+    helm.sh/hook: "pre-install,pre-upgrade"
+    helm.sh/hook-weight: "-5"
+  {{- with .Values.host.rbac.annotations }}
     {{- toYaml . | nindent 4 }}
   {{- end }}
 rules:
@@ -113,6 +115,16 @@ rules:
       - get
       - list
       - watch
+{{- if (include "common.cluster_type.is_gke_autopilot" .) }}
+  - apiGroups:
+      - auto.gke.io
+    resources:
+      - allowlistsynchronizers
+    verbs:
+      - get
+      - list
+      - watch
+{{- end }}
 {{- if or (.Capabilities.APIVersions.Has "rbac.authorization.k8s.io/v1beta1/PodSecurityPolicy") (has "rbac.authorization.k8s.io/v1beta1/PodSecurityPolicy" .Values.extra_capabilities_api_versions) }}
 
   - apiGroups:
