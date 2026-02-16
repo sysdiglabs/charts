@@ -22,7 +22,7 @@ spec:
       serviceAccountName: {{ include "host.service_account_name" . }}
       containers:
       - name: wait-for-allowlist
-        image: bitnami/kubectl:latest
+        image: quay.io/sysdig/sysdig-kubectl
         imagePullPolicy: IfNotPresent
         command:
         - /bin/bash
