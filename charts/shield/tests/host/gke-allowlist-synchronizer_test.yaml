@@ -1,6 +1,10 @@
-suite: Host - Service
+suite: Host - GKE Autopilot Allowlist
 templates:
   - templates/host/gke-allowlist-synchronizer.yaml
+  - templates/host/gke-allowlist-waiter-serviceaccount.yaml
+  - templates/host/gke-allowlist-waiter-clusterrole.yaml
+  - templates/host/gke-allowlist-waiter-clusterrolebinding.yaml
+  - templates/host/gke-allowlist-waiter-job.yaml
 release:
   name: release-name
   namespace: shield-namespace
@@ -23,3 +27,115 @@ tests:
           path: spec.allowlistPaths
           value:
             - "Sysdig/agent/*"
+    template: templates/host/gke-allowlist-synchronizer.yaml
+
+  - it: Should not be created when rbac.create is false
+    set:
+      host.rbac.create: false
+    asserts:
+      - hasDocuments:
+          count: 0
+        template: templates/host/gke-allowlist-waiter-serviceaccount.yaml
+      - hasDocuments:
+          count: 0
+        template: templates/host/gke-allowlist-waiter-clusterrole.yaml
+      - hasDocuments:
+          count: 0
+        template: templates/host/gke-allowlist-waiter-clusterrolebinding.yaml
+
+  - it: Contains the GKE Allowlist Waiter ServiceAccount resource
+    asserts:
+      - containsDocument:
+          kind: ServiceAccount
+          apiVersion: v1
+          name: release-name-shield-host-allowlist-waiter
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - equal:
+          path: metadata.annotations["helm.sh/hook"]
+          value: pre-install,pre-upgrade
+      - equal:
+          path: metadata.annotations["helm.sh/hook-weight"]
+          value: "-5"
+    template: templates/host/gke-allowlist-waiter-serviceaccount.yaml
+
+  - it: Contains the GKE Allowlist Waiter ClusterRole resource
+    asserts:
+      - containsDocument:
+          kind: ClusterRole
+          apiVersion: rbac.authorization.k8s.io/v1
+          name: release-name-shield-host-allowlist-waiter
+      - equal:
+          path: metadata.annotations["helm.sh/hook"]
+          value: pre-install,pre-upgrade
+      - equal:
+          path: metadata.annotations["helm.sh/hook-weight"]
+          value: "-5"
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - auto.gke.io
+            resources:
+              - allowlistsynchronizers
+            verbs:
+              - get
+              - list
+              - watch
+    template: templates/host/gke-allowlist-waiter-clusterrole.yaml
+
+  - it: Contains the GKE Allowlist Waiter ClusterRoleBinding resource
+    asserts:
+      - containsDocument:
+          kind: ClusterRoleBinding
+          apiVersion: rbac.authorization.k8s.io/v1
+          name: release-name-shield-host-allowlist-waiter
+      - equal:
+          path: metadata.annotations["helm.sh/hook"]
+          value: pre-install,pre-upgrade
+      - equal:
+          path: metadata.annotations["helm.sh/hook-weight"]
+          value: "-5"
+      - equal:
+          path: roleRef.kind
+          value: ClusterRole
+      - equal:
+          path: roleRef.name
+          value: release-name-shield-host-allowlist-waiter
+      - equal:
+          path: subjects[0].kind
+          value: ServiceAccount
+      - equal:
+          path: subjects[0].namespace
+          value: shield-namespace
+      - equal:
+          path: subjects[0].name
+          value: release-name-shield-host-allowlist-waiter
+    template: templates/host/gke-allowlist-waiter-clusterrolebinding.yaml
+
+  - it: Contains the GKE Allowlist Waiter Job resource
+    asserts:
+      - containsDocument:
+          kind: Job
+          apiVersion: batch/v1
+          name: release-name-shield-host-allowlist-waiter
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - equal:
+          path: metadata.annotations["helm.sh/hook"]
+          value: pre-install,pre-upgrade
+      - equal:
+          path: metadata.annotations["helm.sh/hook-weight"]
+          value: "5"
+      - equal:
+          path: metadata.annotations["helm.sh/hook-delete-policy"]
+          value: before-hook-creation,hook-succeeded
+      - equal:
+          path: spec.template.spec.serviceAccountName
+          value: release-name-shield-host-allowlist-waiter
+      - equal:
+          path: spec.template.spec.containers[0].name
+          value: wait-for-allowlist
+    template: templates/host/gke-allowlist-waiter-job.yaml

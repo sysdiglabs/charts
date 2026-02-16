@@ -19,7 +19,7 @@ spec:
         {{- include "host.labels" . | nindent 8 }}
     spec:
       restartPolicy: OnFailure
-      serviceAccountName: {{ include "host.service_account_name" . }}
+      serviceAccountName: {{ include "host.allowlist_waiter.service_account_name" . }}
       containers:
       - name: wait-for-allowlist
         image: quay.io/sysdig/sysdig-kubectl
