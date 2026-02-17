@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.10.3
+### Chores
+* **registry-scanner** [c099708c](https://github.com/sysdiglabs/charts/commit/c099708cab3a8dc47d64f55dcc5c0fa30c584da0): Update to v0.11.2 ([#2531](https://github.com/sysdiglabs/charts/issues/2531))
 # v1.10.2
 ### Bug Fixes
 * **registry-scanner** [4cc00275](https://github.com/sysdiglabs/charts/commit/4cc002755bbcdb8b7720e357dc47e977a2cf4c8b): add list secrets permissions for ocp ([#2527](https://github.com/sysdiglabs/charts/issues/2527))
