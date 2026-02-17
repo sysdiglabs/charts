@@ -288,7 +288,7 @@ host:
     # The image name for the host shield
     shield_name: agent-slim
     # The tag for the host shield images
-    tag: 14.3.2
+    tag: 14.4.0
     # The pull policy for the host shield images
     pull_policy: IfNotPresent
     # The pull secrets for the host shield images
@@ -419,7 +419,7 @@ cluster:
     # The repository where the cluster shield image is stored
     repository: sysdig/cluster-shield
     # The tag for the cluster shield image
-    tag: 1.18.1
+    tag: 1.19.0
     # The pull policy for the cluster shield image
     pull_policy: IfNotPresent
     # The pull secrets for the cluster shield image
