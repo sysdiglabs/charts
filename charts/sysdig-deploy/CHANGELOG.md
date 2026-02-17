@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.103.0
+### New Features
+* **shield,agent,sysdig-deploy** [0af1f0cf](https://github.com/sysdiglabs/charts/commit/0af1f0cf781713404852ef89b907f14ef9ec10e6): release agent 14.4.0 ([#2533](https://github.com/sysdiglabs/charts/issues/2533))
 # v1.102.0
 ### Chores
 * **node-analyzer** [713c6b02](https://github.com/sysdiglabs/charts/commit/713c6b02bc14d1c1f1a0821593002884e6d66e7b): release host-scanner 0.15.1 ([#2523](https://github.com/sysdiglabs/charts/issues/2523))
