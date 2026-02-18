@@ -95,7 +95,7 @@ secure:
 
 sysdig:
   # Required: You need your Sysdig access key before running agents, either specifying 'accessKey' here, or using 'existingAccessKeySecret'
-  accessKey: "asdf"
+  accessKey: ""
   # Alternatively, specify the name of a Kubernetes secret containing an 'access-key' entry
   existingAccessKeySecret: ""
 

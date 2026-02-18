@@ -152,9 +152,8 @@ Return the proper image name for the CSPM Analyzer
 {{- $sslVerifyCertificate := coalesce (.Values.nodeAnalyzer.benchmarkRunner.sslVerifyCertificate | quote) (.Values.nodeAnalyzer.sslVerifyCertificate | quote) (.Values.global.sslVerifyCertificate | quote) ("true" | quote) -}}
 {{ $sslVerifyCertificate }}
 {{- end -}}
-{{
 
-/*
+{{/*
  Helper to define if to enable tls_insecure
 */}}
 {{- define "kspmAnalyzer.tlsInsecure" -}}
