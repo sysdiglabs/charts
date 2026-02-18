@@ -154,19 +154,6 @@ Return the proper image name for the CSPM Analyzer
 {{- end -}}
 
 {{/*
- Helper to define if to enable nats_insecure
-*/}}
-{{- define "kspmAnalyzer.natsInsecure" -}}
-{{- if (.Values.nodeAnalyzer.kspmAnalyzer.sslVerifyCertificate | default .Values.nodeAnalyzer.sslVerifyCertificate | default .Values.global.sslVerifyCertificate) -}}
-    "false"
-{{- else if or (eq .Values.nodeAnalyzer.kspmAnalyzer.sslVerifyCertificate false) (eq .Values.nodeAnalyzer.sslVerifyCertificate false) (eq .Values.global.sslVerifyCertificate false) -}}
-    "true"
-{{- else -}}
-    "false"
-{{- end -}}
-{{- end -}}
-
-{{/*
 Node Analyzer labels
 */}}
 {{- define "nodeAnalyzer.labels" -}}
@@ -251,17 +238,6 @@ Determine collector endpoint based on provided region or .Values.nodeAnalyzer.ap
 {{- define "deploy-na" -}}
 {{- if .Values.nodeAnalyzer.deploy -}}
 true
-{{- end -}}
-{{- end -}}
-
-{{/*
-Sysdig NATS service URL
-*/}}
-{{- define "nodeAnalyzer.natsUrl" -}}
-{{- if .Values.natsUrl -}}
-    {{- .Values.natsUrl -}}
-{{- else -}}
-    wss://{{ ( include "nodeAnalyzer.apiEndpoint" .) }}:443
 {{- end -}}
 {{- end -}}
 
