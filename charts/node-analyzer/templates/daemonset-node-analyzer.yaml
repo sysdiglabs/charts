@@ -242,7 +242,7 @@ spec:
             valueFrom:
               configMapKeyRef:
                 name: {{ .Release.Name }}-kspm-analyzer
-                key: nats_insecure
+                key: tls_insecure
                 optional: true
           - name: HTTP_PROXY
             valueFrom:

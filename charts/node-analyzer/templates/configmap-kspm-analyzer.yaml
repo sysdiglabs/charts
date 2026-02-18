@@ -16,6 +16,7 @@ data:
   api_endpoint: {{ include "nodeAnalyzer.apiEndpoint" . }}
   cluster_name: {{ required "A valid clusterName is required" (include "nodeAnalyzer.clusterName" .) }}
   agent_app_name: {{ include "nodeAnalyzer.name" . }}
+  tls_insecure: {{ include "kspmAnalyzer.tlsInsecure" .}}
   {{- if (.Values.nodeAnalyzer.kspmAnalyzer.httpProxy | default .Values.nodeAnalyzer.httpProxy | default .Values.global.proxy.httpProxy) }}
   http_proxy: {{ .Values.nodeAnalyzer.kspmAnalyzer.httpProxy | default .Values.nodeAnalyzer.httpProxy | default .Values.global.proxy.httpProxy }}
   {{- end -}}
