@@ -325,3 +325,12 @@ true
 {{- define "host.local_forwarder_secret_name" }}
 {{- include "host.fullname" . | trunc 46 | trimSuffix "-" | printf "%s-local-forwarder" }}
 {{- end }}
+
+{{/* GKE Allowlist Waiter helpers */}}
+{{- define "host.allowlist_waiter.fullname" -}}
+{{- printf "%s-allowlist-waiter" (include "host.fullname" . | trunc 45 | trimSuffix "-") }}
+{{- end }}
+
+{{- define "host.allowlist_waiter.service_account_name" -}}
+{{- default (include "host.allowlist_waiter.fullname" .) .Values.host.rbac.allowlist_waiter_service_account_name }}
+{{- end }}
