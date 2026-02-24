@@ -212,7 +212,7 @@ host_windows:
     # The image name for the host shield
     name: host-shield
     # The tag for the host shield images
-    tag: 0.13.0
+    tag: 0.14.0
     # The pull policy for the host shield images
     pull_policy: IfNotPresent
     # The pull secrets for the host shield images
