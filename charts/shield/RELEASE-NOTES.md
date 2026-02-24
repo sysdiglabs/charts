@@ -1,5 +1,5 @@
 # What's Changed
 
 ### New Features
-- **shield,agent,sysdig-deploy** [0af1f0cf](https://github.com/sysdiglabs/charts/commit/0af1f0cf781713404852ef89b907f14ef9ec10e6): release agent 14.4.0 ([#2533](https://github.com/sysdiglabs/charts/issues/2533))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/cluster-shield-1.19.0...shield-1.28.0
+- **shield** [e12232b0](https://github.com/sysdiglabs/charts/commit/e12232b0cc89e439c98fc848667b7f729e482aca): release host-shield windows 0.14.0 ([#2537](https://github.com/sysdiglabs/charts/issues/2537))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.28.0...shield-1.29.0
