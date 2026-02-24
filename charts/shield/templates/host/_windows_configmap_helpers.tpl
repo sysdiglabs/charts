@@ -61,7 +61,11 @@
 
 {{- $clusterConfig := dict "name" .Values.cluster_config.name -}}
 {{- if .Values.cluster_config.tags -}}
-  {{- $_ := set $clusterConfig "tags" .Values.cluster_config.tags -}}
+  {{- if and (include "common.semver.is_valid" .Values.host_windows.image.tag) (semverCompare "< 0.14.0-0" .Values.host_windows.image.tag) }}
+    {{- $_ := set $clusterConfig "tags" .Values.cluster_config.tags -}}
+  {{- else -}}
+    {{- $_ := set $config "tags" .Values.cluster_config.tags -}}
+  {{- end -}}
 {{- end -}}
 {{- $_ := set $config "cluster_config" $clusterConfig -}}
 
