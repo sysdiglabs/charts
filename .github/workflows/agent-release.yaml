@@ -24,7 +24,7 @@ jobs:
           go-version: "1.24"
 
       - name: Install Updatecli in the runner
-        uses: updatecli/updatecli-action@v2.98.0
+        uses: updatecli/updatecli-action@v2.100.0
 
       - name: Run Updatecli in apply mode
         run: "updatecli apply --config .github/updatecli.d/config-agent-release.yaml"
