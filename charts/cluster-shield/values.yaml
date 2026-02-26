@@ -150,6 +150,14 @@ cluster_shield:
     container_vulnerability_management:
       # Enable the container vulnerability management feature
       enabled: false
+      target_workloads:
+        kubernetes:
+          # Enable detection of kubernetes workloads
+          enabled: true
+          # Set the image source to the registry(ies) configured on the kubernetes cluster
+          image_source: registry
+        non_orchestrated_containers:
+          enabled: false
       in_use:
         # Allows to retrieve the list of running packages.
         enabled: true
