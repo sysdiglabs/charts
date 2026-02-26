@@ -86,9 +86,6 @@ psp:
 # Setting a cluster name allows you to filter events from this cluster using kubernetes.cluster.name
 clusterName: ""
 
-# Override value for the NATS service endpoint
-natsUrl: ""
-
 secure:
   # true here enables Sysdig Secure: container run-time security & forensics
   enabled: true
@@ -132,9 +129,6 @@ nodeAnalyzer:
   httpProxy: null
   httpsProxy: null
   noProxy: null
-  # NATS max reconnect attempts
-  natsMaxReconnect: 0
-  natsMaxReconnectFailures: 60
 
   # Allow sysdig Node Image Analyzer to run on Kubernetes 1.6 masters
   tolerations:
@@ -448,9 +442,6 @@ nodeAnalyzer:
       pullPolicy: null
     # Permissions for OCP4, previously only added for benchmarkrunner
     includeSensitivePermissions: false
-
-    # http or nats
-    transportLayer: http
 
     # Proxy configuration variables
     httpProxy: null

@@ -14,7 +14,7 @@ tests:
       - templates/configmap-kspm-analyzer.yaml
     asserts:
       - equal:
-          path: data.nats_insecure
+          path: data.tls_insecure
           value: "false"
 
   - it: "Global SSL certificate validation disabled"
@@ -30,7 +30,7 @@ tests:
       - templates/configmap-kspm-analyzer.yaml
     asserts:
       - equal:
-          path: data.nats_insecure
+          path: data.tls_insecure
           value: "true"
 
   - it: "SSL certificate validation disabled [Node Analyzer POD]"
@@ -46,7 +46,7 @@ tests:
       - templates/configmap-kspm-analyzer.yaml
     asserts:
       - equal:
-          path: data.nats_insecure
+          path: data.tls_insecure
           value: "true"
 
   - it: "SSL certificate validation disabled [Node Analyzer container]"
@@ -63,5 +63,5 @@ tests:
       - templates/configmap-kspm-analyzer.yaml
     asserts:
       - equal:
-          path: data.nats_insecure
+          path: data.tls_insecure
           value: "true"
