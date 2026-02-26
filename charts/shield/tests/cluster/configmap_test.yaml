@@ -82,6 +82,13 @@ tests:
                 platform_services_enabled: true
                 registry_ssl:
                   verify: true
+                target_workloads:
+                  kubernetes:
+                    enabled: true
+                    image_source: registry
+                  non_orchestrated_containers:
+                    enabled: false
+                    ignore_init_failures: false
               investigations:
                 network_security:
                   enabled: false
@@ -172,6 +179,13 @@ tests:
                 platform_services_enabled: true
                 registry_ssl:
                   verify: true
+                target_workloads:
+                  kubernetes:
+                    enabled: true
+                    image_source: registry
+                  non_orchestrated_containers:
+                    enabled: false
+                    ignore_init_failures: false
               investigations:
                 network_security:
                   enabled: false
@@ -244,6 +258,13 @@ tests:
                 platform_services_enabled: true
                 registry_ssl:
                   verify: true
+                target_workloads:
+                  kubernetes:
+                    enabled: true
+                    image_source: registry
+                  non_orchestrated_containers:
+                    enabled: false
+                    ignore_init_failures: false
               investigations:
                 network_security:
                   enabled: true
@@ -347,6 +368,13 @@ tests:
                 platform_services_enabled: true
                 registry_ssl:
                   verify: true
+                target_workloads:
+                  kubernetes:
+                    enabled: true
+                    image_source: registry
+                  non_orchestrated_containers:
+                    enabled: false
+                    ignore_init_failures: false
               investigations:
                 network_security:
                   enabled: false
@@ -480,6 +508,13 @@ tests:
                 platform_services_enabled: true
                 registry_ssl:
                   verify: true
+                target_workloads:
+                  kubernetes:
+                    enabled: true
+                    image_source: registry
+                  non_orchestrated_containers:
+                    enabled: false
+                    ignore_init_failures: false
               investigations:
                 network_security:
                   enabled: false
@@ -833,6 +868,13 @@ tests:
                 platform_services_enabled: true
                 registry_ssl:
                   verify: true
+                target_workloads:
+                  kubernetes:
+                    enabled: true
+                    image_source: registry
+                  non_orchestrated_containers:
+                    enabled: false
+                    ignore_init_failures: false
               investigations:
                 network_security:
                   enabled: false
@@ -911,6 +953,13 @@ tests:
                 platform_services_enabled: true
                 registry_ssl:
                   verify: true
+                target_workloads:
+                  kubernetes:
+                    enabled: true
+                    image_source: registry
+                  non_orchestrated_containers:
+                    enabled: false
+                    ignore_init_failures: false
               investigations:
                 network_security:
                   enabled: false
