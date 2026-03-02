@@ -939,6 +939,32 @@ tests:
               - company.public
               - company.internal
 
+  - it: GKE Autopilot labels on workload and pod when gke-autopilot enabled
+    values:
+      - ../values/gke-autopilot.yaml
+    asserts:
+      - isSubset:
+          path: metadata.labels
+          content:
+            autopilot.gke.io/no-connect: "true"
+            cloud.google.com/matching-allowlist: sysdig-agent-v1.1.4
+      - isSubset:
+          path: spec.template.metadata.labels
+          content:
+            autopilot.gke.io/no-connect: "true"
+            cloud.google.com/matching-allowlist: sysdig-agent-v1.1.4
+
+  - it: GKE Autopilot labels not present when gke-autopilot is disabled
+    asserts:
+      - isNotSubset:
+          path: metadata.labels
+          content:
+            autopilot.gke.io/no-connect: "true"
+      - isNotSubset:
+          path: spec.template.metadata.labels
+          content:
+            autopilot.gke.io/no-connect: "true"
+
   - it: No Local Forwarder items if not enabled
     asserts:
       - notExists:

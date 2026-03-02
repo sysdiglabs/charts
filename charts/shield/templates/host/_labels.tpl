@@ -1,8 +1,17 @@
 {{/*
+GKE Autopilot labels
+*/}}
+{{- define "host.gke_autopilot_labels" -}}
+  {{- if (include "common.cluster_type.is_gke_autopilot" .) -}}
+    {{- dict "autopilot.gke.io/no-connect" "true" "cloud.google.com/matching-allowlist" "sysdig-agent-v1.1.4" | toYaml -}}
+  {{- end -}}
+{{- end }}
+
+{{/*
 Common labels
 */}}
 {{- define "host.labels" -}}
-  {{- $labels := merge (dict) (include "host.self_labels" . | fromYaml) (include "shield.labels" . | fromYaml) }}
+  {{- $labels := merge (dict) (include "host.gke_autopilot_labels" . | fromYaml) (include "host.self_labels" . | fromYaml) (include "shield.labels" . | fromYaml) }}
   {{- with $labels -}}
     {{- . | toYaml -}}
   {{- end -}}
