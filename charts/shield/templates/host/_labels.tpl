@@ -2,7 +2,7 @@
 GKE Autopilot labels
 */}}
 {{- define "host.gke_autopilot_labels" -}}
-{{- $gkeAllowlistVersion := .Values.gke_allowlist_version | default "sysdig-agent-v1.1.4" -}}
+{{- $gkeAllowlistVersion := .Values.gke_autopilot_allowlist | default "sysdig-agent-v1.1.4" -}}
 {{- if (include "common.cluster_type.is_gke_autopilot" .) -}}
 "autopilot.gke.io/no-connect": "true"
 "cloud.google.com/matching-allowlist": "{{ $gkeAllowlistVersion }}"
