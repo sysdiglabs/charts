@@ -644,3 +644,6 @@ fullname_override:
 #
 # If you are runinng on SaaS, do NOT provide this parameter.
 on_prem_version:
+
+# Optional parameter used to set the Allowlist to use for GKE Autopilot clusters.
+gke_autopilot_allowlist:
