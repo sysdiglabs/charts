@@ -42,7 +42,7 @@ jobs:
         working-directory: rh-shield-operator
 
       - name: Login to Docker registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: quay.io
           username: ${{ secrets.QUAY_RH_SHIELD_OPERATOR_USERNAME }}
@@ -80,7 +80,7 @@ jobs:
           fetch-depth: '1'
 
       - name: Login to Docker registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: quay.io
           username: ${{ secrets.QUAY_RH_SHIELD_OPERATOR_USERNAME }}
@@ -170,7 +170,7 @@ jobs:
           ref: 'main'
 
       - name: Login to Docker registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: quay.io
           username: ${{ secrets.QUAY_RH_SHIELD_OPERATOR_USERNAME }}
