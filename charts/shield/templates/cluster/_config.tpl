@@ -7,7 +7,7 @@
   {{- end }}
   {{- $features := list
       (dict "posture" (dig "posture" "cluster_posture" nil .Values.features ))
-      (dict "container_vulnerability_management" (omit (dig "vulnerability_management" "container_vulnerability_management" (dict) .Values.features) "target_workloads"))
+      (dict "container_vulnerability_management" (dig "vulnerability_management" "container_vulnerability_management" (dict) .Values.features))
       (dict "audit" (dig "detections" "kubernetes_audit" nil .Values.features ))
       (dict "admission_control" (dig "admission_control" nil .Values.features ))
       (dict "kubernetes_metadata" (dig "kubernetes_metadata" nil .Values.features ))

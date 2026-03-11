@@ -212,7 +212,7 @@ host_windows:
     # The image name for the host shield
     name: host-shield
     # The tag for the host shield images
-    tag: 0.13.0
+    tag: 0.14.0
     # The pull policy for the host shield images
     pull_policy: IfNotPresent
     # The pull secrets for the host shield images
@@ -419,7 +419,7 @@ cluster:
     # The repository where the cluster shield image is stored
     repository: sysdig/cluster-shield
     # The tag for the cluster shield image
-    tag: 1.19.0
+    tag: 1.20.0
     # The pull policy for the cluster shield image
     pull_policy: IfNotPresent
     # The pull secrets for the cluster shield image
@@ -644,3 +644,6 @@ fullname_override:
 #
 # If you are runinng on SaaS, do NOT provide this parameter.
 on_prem_version:
+
+# Optional parameter used to set the Allowlist to use for GKE Autopilot clusters.
+gke_autopilot_allowlist:
