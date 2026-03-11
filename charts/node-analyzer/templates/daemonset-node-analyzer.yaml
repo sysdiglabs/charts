@@ -216,11 +216,6 @@ spec:
               configMapKeyRef:
                 name: {{ .Release.Name }}-kspm-analyzer
                 key: environment
-          - name: EXTERNAL_NATS_URL
-            valueFrom:
-              configMapKeyRef:
-                name: {{ .Release.Name }}-kspm-analyzer
-                key: external_nats_url
           - name: CLUSTER_NAME
             valueFrom:
               configMapKeyRef:
@@ -243,23 +238,11 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.name
-          - name: NATS_INSECURE
-            valueFrom:
-              configMapKeyRef:
-                name: {{ .Release.Name }}-kspm-analyzer
-                key: nats_insecure
-                optional: true
           - name: TLS_INSECURE
             valueFrom:
               configMapKeyRef:
                 name: {{ .Release.Name }}-kspm-analyzer
-                key: nats_insecure
-                optional: true
-          - name: TRANSPORT_LAYER
-            valueFrom:
-              configMapKeyRef:
-                name: {{ .Release.Name }}-kspm-analyzer
-                key: transport_layer
+                key: tls_insecure
                 optional: true
           - name: HTTP_PROXY
             valueFrom:
@@ -284,18 +267,6 @@ spec:
               configMapKeyRef:
                 name: {{ .Release.Name }}-kspm-analyzer
                 key: agent_port
-                optional: true
-          - name: NATS_MAX_RECONNECT
-            valueFrom:
-              configMapKeyRef:
-                name: {{ .Release.Name }}-kspm-analyzer
-                key: nats_max_reconnect
-                optional: true
-          - name: NATS_MAX_RECONNECT_FAILURES
-            valueFrom:
-              configMapKeyRef:
-                name: {{ .Release.Name }}-kspm-analyzer
-                key: nats_max_reconnect_failures
                 optional: true
           {{- if .Values.global.sysdig.tags }}
           - name: TAGS

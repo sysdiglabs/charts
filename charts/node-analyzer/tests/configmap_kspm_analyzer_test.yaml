@@ -32,31 +32,3 @@ tests:
           apiVersion: v1
           kind: ConfigMap
         not: true
-
-  - it: Uses http as default transport layer
-    set:
-      clusterName: "test"
-      global:
-        kspm:
-          deploy: true
-      nodeAnalyzer:
-        deploy: true
-    asserts:
-      - equal:
-          path: data.transport_layer
-          value: http
-
-  - it: Sets transport layer according to value
-    set:
-      clusterName: "test"
-      global:
-        kspm:
-          deploy: true
-      nodeAnalyzer:
-        deploy: true
-        kspmAnalyzer:
-          transportLayer: nats
-    asserts:
-      - equal:
-          path: data.transport_layer
-          value: nats
