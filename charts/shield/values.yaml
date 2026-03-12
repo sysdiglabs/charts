@@ -288,7 +288,7 @@ host:
     # The image name for the host shield
     shield_name: agent-slim
     # The tag for the host shield images
-    tag: 14.4.0
+    tag: 14.4.1
     # The pull policy for the host shield images
     pull_policy: IfNotPresent
     # The pull secrets for the host shield images
@@ -644,6 +644,5 @@ fullname_override:
 #
 # If you are runinng on SaaS, do NOT provide this parameter.
 on_prem_version:
-
 # Optional parameter used to set the Allowlist to use for GKE Autopilot clusters.
 gke_autopilot_allowlist:
