@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.30.2
+### New Features
+* **agent,shield** [35e73084](https://github.com/sysdiglabs/charts/commit/35e73084439e03043be403f1b0eaad1db30c0101): release agent 14.4.1 ([#2557](https://github.com/sysdiglabs/charts/issues/2557))
 # v1.30.1
 ### New Features
 * **shield** [f2a4b131](https://github.com/sysdiglabs/charts/commit/f2a4b131fea31dc13b2642d4a827d6d850471343): add gke-autopilot Allowlist labels to host resources ([#2546](https://github.com/sysdiglabs/charts/issues/2546))

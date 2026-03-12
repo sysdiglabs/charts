@@ -1,5 +1,5 @@
 # What's Changed
 
 ### New Features
-- **shield** [f2a4b131](https://github.com/sysdiglabs/charts/commit/f2a4b131fea31dc13b2642d4a827d6d850471343): add gke-autopilot Allowlist labels to host resources ([#2546](https://github.com/sysdiglabs/charts/issues/2546))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/cluster-shield-1.20.0...shield-1.30.1
+- **agent,shield** [35e73084](https://github.com/sysdiglabs/charts/commit/35e73084439e03043be403f1b0eaad1db30c0101): release agent 14.4.1 ([#2557](https://github.com/sysdiglabs/charts/issues/2557))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.30.1...shield-1.30.2
