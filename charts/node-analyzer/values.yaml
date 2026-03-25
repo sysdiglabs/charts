@@ -391,7 +391,7 @@ nodeAnalyzer:
 
     image:
       repository: sysdig/vuln-host-scanner
-      tag: "0.16.0"
+      tag: "0.16.1"
       digest: null
       pullPolicy: null
     # Proxy configuration variables
