@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.42.2
+### New Features
+* **node-analyzer** [1a0f3de3](https://github.com/sysdiglabs/charts/commit/1a0f3de37f51dd248b0d960a2c9324dc34ef45e1): release host scanner 0.16.2 ([#2562](https://github.com/sysdiglabs/charts/issues/2562))
 # v1.42.1
 ### New Features
 * **node-analyzer** [4ab4f706](https://github.com/sysdiglabs/charts/commit/4ab4f706c2ea123a3eeb0e4be70a70faa28ac49e): Release host scanner 0.16.1 ([#2559](https://github.com/sysdiglabs/charts/issues/2559))
