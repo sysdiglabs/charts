@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.42.1
+### New Features
+* **node-analyzer** [4ab4f706](https://github.com/sysdiglabs/charts/commit/4ab4f706c2ea123a3eeb0e4be70a70faa28ac49e): Release host scanner 0.16.1 ([#2559](https://github.com/sysdiglabs/charts/issues/2559))
 # v1.42.0
 ### Chores
 * **node-analyzer** [8524e85b](https://github.com/sysdiglabs/charts/commit/8524e85bdbbc937263c3247f54d89f7686f2b0b2): bump sysdig/kspm-analyzer to 1.48.0 ([#2535](https://github.com/sysdiglabs/charts/issues/2535))
