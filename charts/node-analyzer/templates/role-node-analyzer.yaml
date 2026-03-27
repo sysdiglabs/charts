@@ -8,7 +8,7 @@ metadata:
   labels:
 {{ include "nodeAnalyzer.labels" . | indent 4 }}
 rules:
-{{- if and .Values.global.kspm.deploy (eq .Values.nodeAnalyzer.kspmAnalyzer.transportLayer "http") }}
+{{- if .Values.global.kspm.deploy }}
 - apiGroups: ["", "coordination.k8s.io"]
   resources:
     - "leases"

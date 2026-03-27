@@ -8,12 +8,7 @@ global:
   kspm:
     deploy: true
 admissionController:
-  enabled: true
-  webhook:
-    resources:
-      requests:
-        cpu: 25m
-        memory: 200Mi
+  enabled: false
 agent:
   resources:
     requests:
@@ -37,6 +32,9 @@ kspmCollector:
       cpu: 25m
       memory: 200Mi
 nodeAnalyzer:
+  secure:
+    vulnerabilityManagement:
+      newEngineOnly: true
   nodeAnalyzer:
     benchmarkRunner:
       deploy: false
