@@ -1,0 +1,22 @@
+{{- if (include "common.cluster_type.is_gke_autopilot" .) -}}
+{{- if .Values.host.rbac.create }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "host.allowlist_waiter.fullname" . }}
+  labels:
+    {{- include "host.rbac_labels" . | nindent 4 }}
+  annotations:
+    helm.sh/hook: "pre-install,pre-upgrade"
+    helm.sh/hook-weight: "-5"
+rules:
+  - apiGroups:
+      - auto.gke.io
+    resources:
+      - allowlistsynchronizers
+    verbs:
+      - get
+      - list
+      - watch
+{{- end }}
+{{- end -}}
