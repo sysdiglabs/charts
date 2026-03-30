@@ -35,6 +35,7 @@ tests:
                 - list
                 - update
                 - watch
+                - delete
 
   - it: Ensure the Role is not created when not requested
     set:
