@@ -21,4 +21,5 @@ rules:
       - list
       - update
       - watch
+      - delete
 {{- end }}
