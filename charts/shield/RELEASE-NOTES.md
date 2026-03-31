@@ -1,5 +1,5 @@
 # What's Changed
 
-### Bug Fixes
-- **hostshield** [09ac4a23](https://github.com/sysdiglabs/charts/commit/09ac4a239d4754ca81c9158f0dcd3d5666e8c5f1): add delete authorization to Leases RBAC ([#2567](https://github.com/sysdiglabs/charts/issues/2567))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.31.0...shield-1.31.1
+### New Features
+- **shield** [eebd6e0f](https://github.com/sysdiglabs/charts/commit/eebd6e0f45f2cae05188903f79228aa0b7f138f1): release host-shield windows 0.15.0 ([#2568](https://github.com/sysdiglabs/charts/issues/2568))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/cluster-shield-1.21.0...shield-1.32.0
