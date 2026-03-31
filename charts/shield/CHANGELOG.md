@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.32.0
+### New Features
+* **shield** [eebd6e0f](https://github.com/sysdiglabs/charts/commit/eebd6e0f45f2cae05188903f79228aa0b7f138f1): release host-shield windows 0.15.0 ([#2568](https://github.com/sysdiglabs/charts/issues/2568))
 # v1.31.1
 ### Bug Fixes
 * **hostshield** [09ac4a23](https://github.com/sysdiglabs/charts/commit/09ac4a239d4754ca81c9158f0dcd3d5666e8c5f1): add delete authorization to Leases RBAC ([#2567](https://github.com/sysdiglabs/charts/issues/2567))
