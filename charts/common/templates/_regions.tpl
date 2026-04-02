@@ -59,6 +59,10 @@
                                                "monitorApiEndpoint" "eu-gb.monitoring.cloud.ibm.com"
                                                "secureApiEndpoint"  "eu-gb.security-compliance-secure.cloud.ibm.com"
                                                "secureUi"           "eu-gb.security-compliance-secure.cloud.ibm.com")
+                      "in-che-monitor"   (dict "collectorEndpoint"  "ingest.in-che.monitoring.cloud.ibm.com"
+                                               "monitorApiEndpoint" "in-che.monitoring.cloud.ibm.com"
+                                               "secureApiEndpoint"  "in-che.security-compliance-secure.cloud.ibm.com"
+                                               "secureUi"           "in-che.security-compliance-secure.cloud.ibm.com")
                       "jp-osa-monitor"   (dict "collectorEndpoint"  "ingest.jp-osa.monitoring.cloud.ibm.com"
                                                "monitorApiEndpoint" "jp-osa.monitoring.cloud.ibm.com"
                                                "secureApiEndpoint"  "jp-osa.security-compliance-secure.cloud.ibm.com"
@@ -99,6 +103,10 @@
                                                        "monitorApiEndpoint" "private.eu-gb.monitoring.cloud.ibm.com"
                                                        "secureApiEndpoint"  "private.eu-gb.security-compliance-secure.cloud.ibm.com"
                                                        "secureUi"           "private.eu-gb.security-compliance-secure.cloud.ibm.com")
+                      "in-che-private-monitor"   (dict "collectorEndpoint"  "ingest.private.in-che.monitoring.cloud.ibm.com"
+                                                       "monitorApiEndpoint" "private.in-che.monitoring.cloud.ibm.com"
+                                                       "secureApiEndpoint"  "private.in-che.security-compliance-secure.cloud.ibm.com"
+                                                       "secureUi"           "private.in-che.security-compliance-secure.cloud.ibm.com")
                       "jp-osa-private-monitor"   (dict "collectorEndpoint"  "ingest.private.jp-osa.monitoring.cloud.ibm.com"
                                                        "monitorApiEndpoint" "private.jp-osa.monitoring.cloud.ibm.com"
                                                        "secureApiEndpoint"  "private.jp-osa.security-compliance-secure.cloud.ibm.com"
@@ -139,6 +147,10 @@
                                               "monitorApiEndpoint" "eu-gb.monitoring.cloud.ibm.com"
                                               "secureApiEndpoint"  "eu-gb.security-compliance-secure.cloud.ibm.com"
                                               "secureUi"           "eu-gb.security-compliance-secure.cloud.ibm.com")
+                      "in-che-secure"   (dict "collectorEndpoint"  "ingest.in-che.security-compliance-secure.cloud.ibm.com"
+                                              "monitorApiEndpoint" "in-che.monitoring.cloud.ibm.com"
+                                              "secureApiEndpoint"  "in-che.security-compliance-secure.cloud.ibm.com"
+                                              "secureUi"           "in-che.security-compliance-secure.cloud.ibm.com")
                       "jp-osa-secure"   (dict "collectorEndpoint"  "ingest.jp-osa.security-compliance-secure.cloud.ibm.com"
                                               "monitorApiEndpoint" "jp-osa.monitoring.cloud.ibm.com"
                                               "secureApiEndpoint"  "jp-osa.security-compliance-secure.cloud.ibm.com"
@@ -179,6 +191,10 @@
                                                       "monitorApiEndpoint" "private.eu-gb.monitoring.cloud.ibm.com"
                                                       "secureApiEndpoint"  "private.eu-gb.security-compliance-secure.cloud.ibm.com"
                                                       "secureUi"           "private.eu-gb.security-compliance-secure.cloud.ibm.com")
+                      "in-che-private-secure"   (dict "collectorEndpoint"  "ingest.private.in-che.security-compliance-secure.cloud.ibm.com"
+                                                      "monitorApiEndpoint" "private.in-che.monitoring.cloud.ibm.com"
+                                                      "secureApiEndpoint"  "private.in-che.security-compliance-secure.cloud.ibm.com"
+                                                      "secureUi"           "private.in-che.security-compliance-secure.cloud.ibm.com")
                       "jp-osa-private-secure"   (dict "collectorEndpoint"  "ingest.private.jp-osa.security-compliance-secure.cloud.ibm.com"
                                                       "monitorApiEndpoint" "private.jp-osa.monitoring.cloud.ibm.com"
                                                       "secureApiEndpoint"  "private.jp-osa.security-compliance-secure.cloud.ibm.com"
