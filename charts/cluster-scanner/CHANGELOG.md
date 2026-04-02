@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.15.0
+### New Features
+* **shield,sysdig-deploy,common** [5415a9d0](https://github.com/sysdiglabs/charts/commit/5415a9d0dff64fa3f692b75e462961249684ba63): add in-che region support [SMAGENT-10149] ([#2550](https://github.com/sysdiglabs/charts/issues/2550))
 # v0.14.3
 ### Chores
 * **shield,common,sysdig-deploy,admission-controller,agent,cluster-scanner,cluster-shield,kspm-collector,node-analyzer,rapid-response** [1b992fbc](https://github.com/sysdiglabs/charts/commit/1b992fbc14ffd5b1f63be3896ee40deb5a858d06): bump cluster-shield to 1.15.0 ([#2360](https://github.com/sysdiglabs/charts/issues/2360))
