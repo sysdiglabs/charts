@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **kspm-collector** [9e249e90](https://github.com/sysdiglabs/charts/commit/9e249e90b5aa3c052cf2baa3c06587239ab0ed07): release v1.39.18 ([#2507](https://github.com/sysdiglabs/charts/issues/2507))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.18.9...kspm-collector-0.18.10
+### New Features
+- **shield,sysdig-deploy,common** [5415a9d0](https://github.com/sysdiglabs/charts/commit/5415a9d0dff64fa3f692b75e462961249684ba63): add in-che region support [SMAGENT-10149] ([#2550](https://github.com/sysdiglabs/charts/issues/2550))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.18.10...kspm-collector-0.19.0
