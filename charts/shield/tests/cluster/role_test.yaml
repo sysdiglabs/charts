@@ -33,17 +33,25 @@ tests:
       - contains:
           path: rules
           content:
-            apiGroups: ["", "coordination.k8s.io"]
+            apiGroups: ["coordination.k8s.io"]
             resources:
               - "leases"
             resourceNames:
               - "release-name-shield-cluster-container-vulnerability-management"
-            verbs: ["*"]
+            verbs:
+              - create
+              - delete
+              - deletecollection
+              - get
+              - list
+              - patch
+              - update
+              - watch
 
       - contains:
           path: rules
           content:
-            apiGroups: ["", "coordination.k8s.io"]
+            apiGroups: ["coordination.k8s.io"]
             resources:
               - "leases"
             verbs: ["create"]
@@ -51,7 +59,7 @@ tests:
       - contains:
           path: rules
           content:
-            apiGroups: ["*"]
+            apiGroups: [""]
             resources:
               - "endpoints"
             verbs: ["get", "watch", "list"]
@@ -59,13 +67,21 @@ tests:
       - contains:
           path: rules
           content:
-            apiGroups: ["*"]
+            apiGroups: [""]
             resources:
               - "endpoints"
               - "endpoints/restricted"
             resourceNames:
               - "release-name-shield-cluster-container-vm"
-            verbs: ["*"]
+            verbs:
+              - create
+              - delete
+              - deletecollection
+              - get
+              - list
+              - patch
+              - update
+              - watch
 
   - it: Admission Control withContainer Vulnerability Management
     set:
@@ -83,17 +99,25 @@ tests:
       - contains:
           path: rules
           content:
-            apiGroups: ["", "coordination.k8s.io"]
+            apiGroups: ["coordination.k8s.io"]
             resources:
               - "leases"
             resourceNames:
               - "release-name-shield-cluster-container-vulnerability-management"
-            verbs: ["*"]
+            verbs:
+              - create
+              - delete
+              - deletecollection
+              - get
+              - list
+              - patch
+              - update
+              - watch
 
       - contains:
           path: rules
           content:
-            apiGroups: ["", "coordination.k8s.io"]
+            apiGroups: ["coordination.k8s.io"]
             resources:
               - "leases"
             verbs: ["create"]
@@ -101,7 +125,7 @@ tests:
       - contains:
           path: rules
           content:
-            apiGroups: ["*"]
+            apiGroups: [""]
             resources:
               - "endpoints"
             verbs: ["get", "watch", "list"]
@@ -109,13 +133,21 @@ tests:
       - contains:
           path: rules
           content:
-            apiGroups: ["*"]
+            apiGroups: [""]
             resources:
               - "endpoints"
               - "endpoints/restricted"
             resourceNames:
               - "release-name-shield-cluster-container-vm"
-            verbs: ["*"]
+            verbs:
+              - create
+              - delete
+              - deletecollection
+              - get
+              - list
+              - patch
+              - update
+              - watch
 
   - it: Posture
     set:
@@ -132,17 +164,25 @@ tests:
       - contains:
           path: rules
           content:
-            apiGroups: ["", "coordination.k8s.io"]
+            apiGroups: ["coordination.k8s.io"]
             resources:
               - "leases"
             resourceNames:
               - "release-name-shield-cluster-posture"
-            verbs: ["*"]
+            verbs:
+              - create
+              - delete
+              - deletecollection
+              - get
+              - list
+              - patch
+              - update
+              - watch
 
       - contains:
           path: rules
           content:
-            apiGroups: ["", "coordination.k8s.io"]
+            apiGroups: ["coordination.k8s.io"]
             resources:
               - "leases"
             verbs: ["create"]
