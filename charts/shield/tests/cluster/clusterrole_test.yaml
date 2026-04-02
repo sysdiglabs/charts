@@ -200,20 +200,51 @@ tests:
           content:
             apiGroups:
               - ""
-              - apps
-              - batch
-              - extensions
             resources:
-              - cronjobs
-              - daemonsets
-              - deployments
-              - jobs
               - namespaces
               - nodes
               - pods
-              - replicasets
               - replicationcontrollers
               - secrets
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - apps
+            resources:
+              - daemonsets
+              - deployments
+              - replicasets
+              - statefulsets
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - batch
+            resources:
+              - cronjobs
+              - jobs
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - extensions
+            resources:
+              - daemonsets
+              - deployments
+              - replicasets
               - statefulsets
             verbs:
               - get
@@ -260,53 +291,140 @@ tests:
           content:
             apiGroups:
               - ""
-              - rbac.authorization.k8s.io
-              - extensions
-              - apps
-              - batch
-              - networking.k8s.io
-              - autoscaling
-              - policy
-              - storage.k8s.io
-              - config.openshift.io
             resources:
-              - pods
-              - pods/log
-              - namespaces
-              - deployments
-              - daemonsets
-              - statefulsets
-              - jobs
-              - cronjobs
-              - clusterroles
-              - clusterrolebindings
-              - roles
-              - rolebindings
-              - services
-              - serviceaccounts
-              - nodes
-              - ingresses
-              - ingressclasses
-              - networkpolicies
-              - replicasets
               - configmaps
               - events
               - limitranges
-              - persistentvolumes
+              - namespaces
+              - nodes
               - persistentvolumeclaims
+              - persistentvolumes
+              - pods
+              - pods/log
               - replicationcontrollers
               - resourcequotas
-              - controllerrevisions
-              - horizontalpodautoscalers
-              - podsecuritypolicies
-              - storageclasses
-              - volumeattachments
-              - clusterversions
               - secrets
+              - serviceaccounts
+              - services
             verbs:
               - get
               - list
               - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - apps
+            resources:
+              - controllerrevisions
+              - daemonsets
+              - deployments
+              - replicasets
+              - statefulsets
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - autoscaling
+            resources:
+              - horizontalpodautoscalers
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - batch
+            resources:
+              - cronjobs
+              - jobs
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - config.openshift.io
+            resources:
+              - clusterversions
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - extensions
+            resources:
+              - daemonsets
+              - deployments
+              - ingresses
+              - replicasets
+              - statefulsets
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - networking.k8s.io
+            resources:
+              - ingresses
+              - ingressclasses
+              - networkpolicies
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - policy
+            resources:
+              - podsecuritypolicies
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - rbac.authorization.k8s.io
+            resources:
+              - clusterroles
+              - clusterrolebindings
+              - roles
+              - rolebindings
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - storage.k8s.io
+            resources:
+              - storageclasses
+              - volumeattachments
+            verbs:
+              - get
+              - list
+              - watch
+
 
   - it: Admission Control with Container Vulnerability Management
     set:
@@ -325,20 +443,51 @@ tests:
           content:
             apiGroups:
               - ""
-              - apps
-              - batch
-              - extensions
             resources:
-              - cronjobs
-              - daemonsets
-              - deployments
-              - jobs
               - namespaces
               - nodes
               - pods
-              - replicasets
               - replicationcontrollers
               - secrets
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - apps
+            resources:
+              - daemonsets
+              - deployments
+              - replicasets
+              - statefulsets
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - batch
+            resources:
+              - cronjobs
+              - jobs
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - extensions
+            resources:
+              - daemonsets
+              - deployments
+              - replicasets
               - statefulsets
             verbs:
               - get

@@ -12,39 +12,63 @@ metadata:
   {{- end }}
 rules:
 {{- if (and (include "cluster.posture_enabled" .) (include "cluster.need_posture_lease" .) .) }}
-  - apiGroups: ["", "coordination.k8s.io"]
+  - apiGroups: ["coordination.k8s.io"]
     resources:
       - "leases"
     resourceNames:
       - {{ include "cluster.posture_lease_name" . }}
-    verbs: ["*"]
-  - apiGroups: ["", "coordination.k8s.io"]
+    verbs:
+      - create
+      - delete
+      - deletecollection
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups: ["coordination.k8s.io"]
     resources:
       - "leases"
     verbs: ["create"]
 {{- end }}
 {{- if (include "cluster.container_vulnerability_management_enabled" .) }}
-  - apiGroups: ["", "coordination.k8s.io"]
+  - apiGroups: ["coordination.k8s.io"]
     resources:
       - "leases"
     resourceNames:
       - {{ include "cluster.container_vulnerability_management_lease_name" . }}
-    verbs: ["*"]
-  - apiGroups: ["", "coordination.k8s.io"]
+    verbs:
+      - create
+      - delete
+      - deletecollection
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups: ["coordination.k8s.io"]
     resources:
       - "leases"
     verbs: ["create"]
-  - apiGroups: ["*"]
+  - apiGroups: [""]
     resources:
       - "endpoints"
     verbs: ["get", "watch", "list"]
-  - apiGroups: ["*"]
+  - apiGroups: [""]
     resources:
       - "endpoints"
       # Following is required for OpenShift. See https://docs.openshift.com/container-platform/3.11/architecture/core_concepts/pods_and_services.html#endpoints
       - "endpoints/restricted"
     resourceNames:
       - {{ include "cluster.container_vulnerability_management_service_name" . }}
-    verbs: ["*"]
+    verbs:
+      - create
+      - delete
+      - deletecollection
+      - get
+      - list
+      - patch
+      - update
+      - watch
   {{- end }}
 {{- end }}
