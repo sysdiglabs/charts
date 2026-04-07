@@ -83,49 +83,108 @@ rules:
 {{- if (include "cluster.posture_enabled" .) }}
 - apiGroups:
     - ""
-    - rbac.authorization.k8s.io
-    - extensions
-    - apps
-    - batch
-    - networking.k8s.io
-    - autoscaling
-    - policy
-    - storage.k8s.io
-    - config.openshift.io
   resources:
+    - configmaps
+    - events
+    - limitranges
+    - namespaces
+    - nodes
+    - persistentvolumeclaims
+    - persistentvolumes
     - pods
     - pods/log
-    - namespaces
-    - deployments
+    - replicationcontrollers
+    - resourcequotas
+    - secrets
+    - serviceaccounts
+    - services
+  verbs:
+    - get
+    - list
+    - watch
+- apiGroups:
+    - apps
+  resources:
+    - controllerrevisions
     - daemonsets
+    - deployments
+    - replicasets
     - statefulsets
-    - jobs
+  verbs:
+    - get
+    - list
+    - watch
+- apiGroups:
+    - autoscaling
+  resources:
+    - horizontalpodautoscalers
+  verbs:
+    - get
+    - list
+    - watch
+- apiGroups:
+    - batch
+  resources:
     - cronjobs
+    - jobs
+  verbs:
+    - get
+    - list
+    - watch
+- apiGroups:
+    - config.openshift.io
+  resources:
+    - clusterversions
+  verbs:
+    - get
+    - list
+    - watch
+- apiGroups:
+    - extensions
+  resources:
+    - daemonsets
+    - deployments
+    - ingresses
+    - replicasets
+    - statefulsets
+  verbs:
+    - get
+    - list
+    - watch
+- apiGroups:
+    - networking.k8s.io
+  resources:
+    - ingresses
+    - ingressclasses
+    - networkpolicies
+  verbs:
+    - get
+    - list
+    - watch
+- apiGroups:
+    - policy
+  resources:
+    - podsecuritypolicies
+  verbs:
+    - get
+    - list
+    - watch
+- apiGroups:
+    - rbac.authorization.k8s.io
+  resources:
     - clusterroles
     - clusterrolebindings
     - roles
     - rolebindings
-    - services
-    - serviceaccounts
-    - nodes
-    - ingresses
-    - ingressclasses
-    - networkpolicies
-    - replicasets
-    - configmaps
-    - events
-    - limitranges
-    - persistentvolumes
-    - persistentvolumeclaims
-    - replicationcontrollers
-    - resourcequotas
-    - controllerrevisions
-    - horizontalpodautoscalers
-    - podsecuritypolicies
+  verbs:
+    - get
+    - list
+    - watch
+- apiGroups:
+    - storage.k8s.io
+  resources:
     - storageclasses
     - volumeattachments
-    - clusterversions
-    - secrets
   verbs:
     - get
     - list
