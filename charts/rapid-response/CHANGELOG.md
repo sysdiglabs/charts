@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.10.1
+### Chores
+* **rapid-response** [858d55d9](https://github.com/sysdiglabs/charts/commit/858d55d9c8b57ac2541b0b835633309341fd24ed): bump rapid-response version to latest ([#2573](https://github.com/sysdiglabs/charts/issues/2573))
 # v0.10.0
 ### New Features
 * **shield,sysdig-deploy,common** [5415a9d0](https://github.com/sysdiglabs/charts/commit/5415a9d0dff64fa3f692b75e462961249684ba63): add in-che region support [SMAGENT-10149] ([#2550](https://github.com/sysdiglabs/charts/issues/2550))
