@@ -102,7 +102,21 @@ tests:
           path: allowHostPorts
           value: true
 
-  - it: SecurityContextConstraints allowHostPorts is false when features.posture.host_posture.enabled and host.additional_settings.kspm_analyzer.enabled are false
+  - it: SecurityContextConstraints allowHostPorts is true when host.additional_settings.prometheus_exporter.enabled is true
+    capabilities:
+      apiVersions:
+        - security.openshift.io/v1
+    set:
+      host:
+        additional_settings:
+          prometheus_exporter:
+            enabled: true
+    asserts:
+      - equal:
+          path: allowHostPorts
+          value: true
+
+  - it: SecurityContextConstraints allowHostPorts is false when features.posture.host_posture.enabled, host.additional_settings.kspm_analyzer.enabled and host.additional_settings.prometheus_exporter.enabled are false
     capabilities:
       apiVersions:
         - security.openshift.io/v1
@@ -114,6 +128,8 @@ tests:
       host:
         additional_settings:
           kspm_analyzer:
+            enabled: false
+          prometheus_exporter:
             enabled: false
     asserts:
       - equal:
