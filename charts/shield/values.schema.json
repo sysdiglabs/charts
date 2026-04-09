@@ -746,11 +746,10 @@
                     },
                     "image_source": {
                       "type": "string",
-                      "enum": ["registry","node","node+registry"],
-                      "description": "Specifies where container images are obtained from for vulnerability scanning. When setting \\\"registry\\\", images are pulled directly from the configured remote container registries. With \\\"node\\\", images are retrieved from the Kubernetes cluster nodes by interacting with the local container runtimes, limiting scans to images that are currently present on the nodes. With \\\"node+registry\\\", images are primarily retrieved from cluster nodes, with a fallback to remote registries for workloads whose images are not yet present on any node (for example, scheduled but not yet running CronJobs).",
+                      "enum": ["registry","node"],
+                      "description": "Specifies where container images are obtained from for vulnerability scanning. When setting \\\"registry\\\", images are pulled directly from the configured remote container registries. With \\\"node\\\", images are retrieved from the Kubernetes cluster nodes by interacting with the local container runtimes, limiting scans to images that are currently present on the nodes.",
                       "default": "registry",
                       "examples": [
-                        "node+registry",
                         "node",
                         "registry"
                       ]
