@@ -80,8 +80,7 @@ features:
           # Specifies where container images are obtained from for vulnerability scanning.
           # When setting "registry", images are pulled directly from the configured remote container registries.
           # With "node", images are retrieved from the Kubernetes cluster nodes by interacting with the local container runtimes, limiting scans to images that are currently present on the nodes.
-          # With "node+registry", images are primarily retrieved from cluster nodes, with a fallback to remote registries for workloads whose images are not yet present on any node (for example, scheduled but not yet running CronJobs).
-          # Expected one of: `registry` ,`node` ,`node+registry`.
+          # Expected one of: `registry` ,`node`.
           image_source: registry
         non_orchestrated_containers:
           # Target non-orchestrated containers only, and provides configurations on how the scan should be performed
