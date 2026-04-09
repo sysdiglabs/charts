@@ -117,7 +117,9 @@
             "SCC",
             "LOCAL",
             "ELASTIC",
-            "S3"
+            "S3",
+            "KINESIS_DATA_STREAMS",
+            "KINESIS_FIREHOSE"
           ]
         }
       }

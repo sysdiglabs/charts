@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.109.1
+### Chores
+* **agent,sysdig-deploy** [37a0c246](https://github.com/sysdiglabs/charts/commit/37a0c2467fc36037f4c6c3a0f10fbc256acb4707): Add KINESIS_FIREHOSE and KINESIS_DATA_STREAMS to local forwarder integration types ([#2576](https://github.com/sysdiglabs/charts/issues/2576))
 # v1.109.0
 ### New Features
 * **shield,sysdig-deploy,common** [5415a9d0](https://github.com/sysdiglabs/charts/commit/5415a9d0dff64fa3f692b75e462961249684ba63): add in-che region support [SMAGENT-10149] ([#2550](https://github.com/sysdiglabs/charts/issues/2550))
