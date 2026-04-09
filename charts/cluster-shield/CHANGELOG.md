@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.21.1
+### Bug Fixes
+* [6970f804](https://github.com/sysdiglabs/charts/commit/6970f8040ecec4dd015658955466630374654a4d): remove unused param value ([#2578](https://github.com/sysdiglabs/charts/issues/2578))
 # v1.21.0
 ### Chores
 * **cluster-shield** [bb44e702](https://github.com/sysdiglabs/charts/commit/bb44e702d261e88dd72e4343eec7cd85593ecaf1): Automatic bump to version 1.21.0 ([#2565](https://github.com/sysdiglabs/charts/issues/2565))

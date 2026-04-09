@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **cluster-shield** [bb44e702](https://github.com/sysdiglabs/charts/commit/bb44e702d261e88dd72e4343eec7cd85593ecaf1): Automatic bump to version 1.21.0 ([#2565](https://github.com/sysdiglabs/charts/issues/2565))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/cluster-shield-1.20.0...cluster-shield-1.21.0
+### Bug Fixes
+- [6970f804](https://github.com/sysdiglabs/charts/commit/6970f8040ecec4dd015658955466630374654a4d): remove unused param value ([#2578](https://github.com/sysdiglabs/charts/issues/2578))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/cluster-shield-1.21.0...cluster-shield-1.21.1
