@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.34.2
+### Bug Fixes
+* **shield** [1a6fbfad](https://github.com/sysdiglabs/charts/commit/1a6fbfad5b8cc0153141e4286ffb44ee6e31f643): correct RBAC apiGroups and replace wildcard verbs ([#2572](https://github.com/sysdiglabs/charts/issues/2572))
 # v1.34.1
 ### Bug Fixes
 * [6970f804](https://github.com/sysdiglabs/charts/commit/6970f8040ecec4dd015658955466630374654a4d): remove unused param value ([#2578](https://github.com/sysdiglabs/charts/issues/2578))
