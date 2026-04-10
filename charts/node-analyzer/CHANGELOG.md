@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.43.1
+### Chores
+* **node-analyzer** [e3c8b677](https://github.com/sysdiglabs/charts/commit/e3c8b677c7def94f828acc02b039c9a8b02242b2): bumped kspm-analyzer to 1.48.2 ([#2579](https://github.com/sysdiglabs/charts/issues/2579))
 # v1.43.0
 ### New Features
 * **shield,sysdig-deploy,common** [5415a9d0](https://github.com/sysdiglabs/charts/commit/5415a9d0dff64fa3f692b75e462961249684ba63): add in-che region support [SMAGENT-10149] ([#2550](https://github.com/sysdiglabs/charts/issues/2550))
