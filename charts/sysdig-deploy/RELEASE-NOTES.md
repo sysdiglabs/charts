@@ -1,5 +1,5 @@
 # What's Changed
 
 ### Chores
-- **agent,sysdig-deploy** [37a0c246](https://github.com/sysdiglabs/charts/commit/37a0c2467fc36037f4c6c3a0f10fbc256acb4707): Add KINESIS_FIREHOSE and KINESIS_DATA_STREAMS to local forwarder integration types ([#2576](https://github.com/sysdiglabs/charts/issues/2576))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.109.0...sysdig-deploy-1.109.1
+- **node-analyzer** [e3c8b677](https://github.com/sysdiglabs/charts/commit/e3c8b677c7def94f828acc02b039c9a8b02242b2): bumped kspm-analyzer to 1.48.2 ([#2579](https://github.com/sysdiglabs/charts/issues/2579))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.109.1...sysdig-deploy-1.109.2
