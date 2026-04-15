@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **agent,sysdig-deploy** [37a0c246](https://github.com/sysdiglabs/charts/commit/37a0c2467fc36037f4c6c3a0f10fbc256acb4707): Add KINESIS_FIREHOSE and KINESIS_DATA_STREAMS to local forwarder integration types ([#2576](https://github.com/sysdiglabs/charts/issues/2576))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-2.7.0...agent-2.7.1
+### New Features
+- **agent,shield** [ff8972c3](https://github.com/sysdiglabs/charts/commit/ff8972c3805aa0ddfb9ac294f7a9c05f00204c0b): release agent 14.5.1 ([#2584](https://github.com/sysdiglabs/charts/issues/2584))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-2.7.1...agent-2.7.2
