@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.34.4
+### New Features
+* **agent,shield** [ff8972c3](https://github.com/sysdiglabs/charts/commit/ff8972c3805aa0ddfb9ac294f7a9c05f00204c0b): release agent 14.5.1 ([#2584](https://github.com/sysdiglabs/charts/issues/2584))
 # v1.34.3
 ### Bug Fixes
 * **shield** [518d644d](https://github.com/sysdiglabs/charts/commit/518d644d98f250992a10c131e9d3b2d95b7b613f): allowHostPorts when promex is enabled ([#2580](https://github.com/sysdiglabs/charts/issues/2580))
