@@ -120,6 +120,8 @@ features:
     kubernetes_audit:
       # Enable the Kubernetes Audit feature on cluster shield
       enabled: false
+      # Method to use: validating_webhook (emulated) or audit_backend (real audit logs)
+      method: validating_webhook
       # The timeout for the audit feature
       timeout: 10
       # The port that will be used to expose the audit endpoints

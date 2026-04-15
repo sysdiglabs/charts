@@ -258,6 +258,23 @@ tests:
           value: 1234
         documentIndex: 1
 
+  - it: Audit AdmissionRegistration not created (audit_backend method)
+    set:
+      features:
+        detections:
+          kubernetes_audit:
+            enabled: true
+            method: audit_backend
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: Secret
+          apiVersion: v1
+          name: shield-release-cluster-tls-certificates
+          namespace: shield-namespace
+        documentIndex: 0
+
   - it: Admission Control AdmissionRegistration (Generate TLS)
     set:
       features:
