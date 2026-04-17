@@ -827,3 +827,61 @@ tests:
       - notExists:
           path: .webhooks[0].clientConfig.caBundle
         template: templates/cluster/tls-certificates-admissionregistration.yaml
+
+  - it: Admission Control AdmissionRegistration (Webhook creation disabled)
+    set:
+      cluster:
+        validatingwebhookconfiguration:
+          create: false
+      features:
+        admission_control:
+          enabled: true
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: Secret
+          apiVersion: v1
+          name: shield-release-cluster-tls-certificates
+          namespace: shield-namespace
+        documentIndex: 0
+
+  - it: Audit AdmissionRegistration (Webhook creation disabled)
+    set:
+      cluster:
+        validatingwebhookconfiguration:
+          create: false
+      features:
+        detections:
+          kubernetes_audit:
+            enabled: true
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: Secret
+          apiVersion: v1
+          name: shield-release-cluster-tls-certificates
+          namespace: shield-namespace
+        documentIndex: 0
+
+  - it: Admission Control and Audit AdmissionRegistration (Webhook creation disabled)
+    set:
+      cluster:
+        validatingwebhookconfiguration:
+          create: false
+      features:
+        admission_control:
+          enabled: true
+        detections:
+          kubernetes_audit:
+            enabled: true
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: Secret
+          apiVersion: v1
+          name: shield-release-cluster-tls-certificates
+          namespace: shield-namespace
+        documentIndex: 0
