@@ -256,6 +256,52 @@ tests:
             periodSeconds: 5
     template: templates/cluster/deployment.yaml
 
+  - it: Default startup probe
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].startupProbe
+          value:
+            httpGet:
+              path: /healthz
+              port: 8080
+            failureThreshold: 30
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            timeoutSeconds: 3
+    template: templates/cluster/deployment.yaml
+
+  - it: Custom startup probe
+    set:
+      cluster:
+        probes:
+          startup:
+            failureThreshold: 5
+            initialDelaySeconds: 2
+            periodSeconds: 3
+            timeoutSeconds: 1
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].startupProbe
+          value:
+            httpGet:
+              path: /healthz
+              port: 8080
+            failureThreshold: 5
+            initialDelaySeconds: 2
+            periodSeconds: 3
+            timeoutSeconds: 1
+    template: templates/cluster/deployment.yaml
+
+  - it: Disabled startup probe
+    set:
+      cluster:
+        probes:
+          startup: null
+    asserts:
+      - notExists:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].startupProbe
+    template: templates/cluster/deployment.yaml
+
   - it: Custom readiness probe
     set:
       cluster:

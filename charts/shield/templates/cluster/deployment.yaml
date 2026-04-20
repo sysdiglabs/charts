@@ -132,6 +132,13 @@ spec:
             {{- include "cluster.env" . | nindent 12 }}
           resources:
             {{- toYaml .Values.cluster.resources | nindent 12 }}
+          {{- if .Values.cluster.probes.startup }}
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: {{ .Values.cluster.additional_settings.monitoring_port }}
+            {{- .Values.cluster.probes.startup | toYaml | nindent 12 }}
+          {{- end }}
           livenessProbe:
             httpGet:
               path: /healthz

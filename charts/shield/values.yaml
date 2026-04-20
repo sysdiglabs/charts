@@ -537,6 +537,18 @@ cluster:
       periodSeconds: 5
       # The readiness probe failure threshold
       failureThreshold: 9
+    startup:
+      # The startup probe initial delay
+      initialDelaySeconds: 15
+      # The startup probe period
+      periodSeconds: 10
+      # The startup probe failure threshold. Combined with periodSeconds, it gives
+      # the container ~5 minutes to finish warmup before liveness takes over. This
+      # protects slow-booting clusters (e.g. GKE Windows) from being killed by the
+      # liveness probe during initial health-check warmup.
+      failureThreshold: 30
+      # The startup probe timeout
+      timeoutSeconds: 3
   # The number of replicas for the cluster shield
   replica_count: 2
   update_strategy:
