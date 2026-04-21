@@ -523,6 +523,15 @@ cluster:
   # Automatically adds the Prometheus annotations to the Cluster Shield pods
   enable_prometheus_scraping: true
   probes:
+    startup:
+      # The startup probe period — gives the container time to initialize before
+      # liveness/readiness checks begin. Required on slow-starting platforms such as
+      # Windows Server 2019 where cluster-shield needs ~90 s to reach /healthz.
+      # failureThreshold * periodSeconds defines the maximum startup budget (default
+      # 18 * 10s = 180 s).  Set to null/empty to disable the startup probe.
+      periodSeconds: 10
+      # The startup probe failure threshold
+      failureThreshold: 18
     readiness:
       # The readiness probe initial delay
       initialDelaySeconds: 10
