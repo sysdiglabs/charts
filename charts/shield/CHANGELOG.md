@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.34.6
+### New Features
+* **agent,shield** [6a9944e0](https://github.com/sysdiglabs/charts/commit/6a9944e006d08a53bdc3b55b2eabdf2cfdbaddde): release agent 14.5.2 ([#2593](https://github.com/sysdiglabs/charts/issues/2593))
 # v1.34.5
 ### Chores
 * **shield** [6d66f745](https://github.com/sysdiglabs/charts/commit/6d66f745501235c3d9f1d122f32ae042ad639a19): add tests to verify that cluster.validatingwebhookconfiguration.create works as expected ([#2587](https://github.com/sysdiglabs/charts/issues/2587))
