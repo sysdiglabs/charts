@@ -182,7 +182,7 @@ true
 - SYS_CHROOT
 - SYS_PTRACE
 - SYS_RESOURCE
-{{- if or .Values.features.posture.host_posture.enabled .Values.features.vulnerability_management.host_vulnerability_management.enabled }}
+{{- if .Values.features.posture.host_posture.enabled }}
 - AUDIT_READ
 - NET_ADMIN
 {{- end }}

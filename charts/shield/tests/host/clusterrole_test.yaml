@@ -57,7 +57,7 @@ tests:
               - get
               - list
 
-  - it: Adds posture/VM RBAC rules when host_posture is enabled
+  - it: Adds posture RBAC rules when host_posture is enabled
     set:
       features:
         posture:
@@ -112,14 +112,17 @@ tests:
               - get
               - list
 
-  - it: Adds posture/VM RBAC rules when host_vulnerability_management is enabled
+  - it: Does not add posture RBAC rules when only host_vulnerability_management is enabled
     set:
       features:
+        posture:
+          host_posture:
+            enabled: false
         vulnerability_management:
           host_vulnerability_management:
             enabled: true
     asserts:
-      - contains:
+      - notContains:
           path: rules
           content:
             apiGroups:
@@ -128,7 +131,7 @@ tests:
               - clusterrolebindings
             verbs:
               - list
-      - contains:
+      - notContains:
           path: rules
           content:
             apiGroups:
@@ -215,7 +218,7 @@ tests:
               - get
               - list
 
-  - it: Does not add OpenShift rules when OpenShift API is detected but posture/VM are disabled
+  - it: Does not add OpenShift rules when OpenShift API is detected but posture is disabled
     capabilities:
       apiVersions:
         - security.openshift.io/v1
