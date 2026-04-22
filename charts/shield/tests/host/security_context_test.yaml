@@ -56,7 +56,7 @@ tests:
             runAsNonRoot: false
             runAsUser: 0
 
-  - it: Ensure the non-privileged securityContext does not grant AUDIT_READ / NET_ADMIN when Posture and Host VM are disabled
+  - it: Ensure the non-privileged securityContext does not grant AUDIT_READ / NET_ADMIN when Host Posture is disabled
     set:
       host:
         privileged: false
@@ -102,22 +102,28 @@ tests:
           path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].securityContext.capabilities.add
           content: DAC_READ_SEARCH
 
-  - it: Ensure the non-privileged securityContext grants AUDIT_READ and NET_ADMIN when Host Vulnerability Management is enabled
+  - it: Ensure the non-privileged securityContext does not grant AUDIT_READ / NET_ADMIN when only Host Vulnerability Management is enabled
     set:
       host:
         privileged: false
         driver: universal_ebpf
       features:
+        posture:
+          host_posture:
+            enabled: false
         vulnerability_management:
           host_vulnerability_management:
             enabled: true
     asserts:
-      - contains:
+      - notContains:
           path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].securityContext.capabilities.add
           content: AUDIT_READ
-      - contains:
+      - notContains:
           path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].securityContext.capabilities.add
           content: NET_ADMIN
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].securityContext.capabilities.add
+          content: DAC_READ_SEARCH
 
   - it: Ensure the securityContext with response_actions file_acquire includes seLinuxOptions
     set:
