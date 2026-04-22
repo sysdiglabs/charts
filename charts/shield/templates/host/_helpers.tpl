@@ -182,6 +182,10 @@ true
 - SYS_CHROOT
 - SYS_PTRACE
 - SYS_RESOURCE
+{{- if .Values.features.posture.host_posture.enabled }}
+- AUDIT_READ
+- NET_ADMIN
+{{- end }}
 {{- end -}}
 
 {{- define "host.security_context" -}}
