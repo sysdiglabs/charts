@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.22.0
+### New Features
+* **shield,cluster-shield,sysdig-deploy** [6543dd49](https://github.com/sysdiglabs/charts/commit/6543dd4958ed8e6fda8ac3300acea52400f40189): release cluster-shield 1.22.0 ([#2597](https://github.com/sysdiglabs/charts/issues/2597))
 # v1.21.1
 ### Bug Fixes
 * [6970f804](https://github.com/sysdiglabs/charts/commit/6970f8040ecec4dd015658955466630374654a4d): remove unused param value ([#2578](https://github.com/sysdiglabs/charts/issues/2578))
