@@ -1,5 +1,5 @@
 # What's Changed
 
 ### Chores
-- **sysdig-deploy** [6729701a](https://github.com/sysdiglabs/charts/commit/6729701ad80a9a7b631df1fb5a10ab59f78729be): Automatic version bump due to updated dependencies ([#2594](https://github.com/sysdiglabs/charts/issues/2594))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.109.6...sysdig-deploy-1.109.7
+- **node-analyzer** [308fef1c](https://github.com/sysdiglabs/charts/commit/308fef1c72f571af0c4336a9f856993d85e0b6bf): bump sysdig/vuln-host-scanner to v0.16.5 ([#2595](https://github.com/sysdiglabs/charts/issues/2595))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.109.7...sysdig-deploy-1.109.8
