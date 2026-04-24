@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **node-analyzer** [308fef1c](https://github.com/sysdiglabs/charts/commit/308fef1c72f571af0c4336a9f856993d85e0b6bf): bump sysdig/vuln-host-scanner to v0.16.5 ([#2595](https://github.com/sysdiglabs/charts/issues/2595))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.109.7...sysdig-deploy-1.109.8
+### New Features
+- **shield,cluster-shield,sysdig-deploy** [6543dd49](https://github.com/sysdiglabs/charts/commit/6543dd4958ed8e6fda8ac3300acea52400f40189): release cluster-shield 1.22.0 ([#2597](https://github.com/sysdiglabs/charts/issues/2597))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.109.8...sysdig-deploy-1.110.0

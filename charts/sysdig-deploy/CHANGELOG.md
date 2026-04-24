@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.110.0
+### New Features
+* **shield,cluster-shield,sysdig-deploy** [6543dd49](https://github.com/sysdiglabs/charts/commit/6543dd4958ed8e6fda8ac3300acea52400f40189): release cluster-shield 1.22.0 ([#2597](https://github.com/sysdiglabs/charts/issues/2597))
 # v1.109.8
 ### Chores
 * **node-analyzer** [308fef1c](https://github.com/sysdiglabs/charts/commit/308fef1c72f571af0c4336a9f856993d85e0b6bf): bump sysdig/vuln-host-scanner to v0.16.5 ([#2595](https://github.com/sysdiglabs/charts/issues/2595))
