@@ -220,7 +220,7 @@ Verify if certs needs to be generated and mounted inside the pod
 Verify if ValidatingWebhookConfiguration needs to be generated
 */}}
 {{- define "cluster-shield.needWebhooks"}}
-{{- or .Values.cluster_shield.features.audit.enabled .Values.cluster_shield.features.admission_control.enabled }}
+{{- or (and .Values.cluster_shield.features.audit.enabled (eq (.Values.cluster_shield.features.audit.method | default "validating_webhook") "validating_webhook")) .Values.cluster_shield.features.admission_control.enabled }}
 {{- end -}}
 
 {{/*

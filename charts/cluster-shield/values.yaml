@@ -143,6 +143,8 @@ cluster_shield:
           resources:
             - '*/*'
           scope: '*'
+      # Method used to collect Kubernetes audit events. Use validating_webhook to intercept requests through the admission webhook, or audit_backend when using the Kubernetes audit backend integration.
+      method: validating_webhook
     posture:
       # Enable the posture feature
       enabled: false

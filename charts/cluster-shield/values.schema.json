@@ -583,6 +583,15 @@
                   "scope": "*"
                 }
               ]
+            },
+            "method": {
+              "type": "string",
+              "description": "The method used by the audit feature to ingest audit events",
+              "enum": [
+                "validating_webhook",
+                "audit_backend"
+              ],
+              "default": "validating_webhook"
             }
           },
           "required": [
