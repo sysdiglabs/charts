@@ -12,7 +12,7 @@ kind: ValidatingWebhookConfiguration
 metadata:
   name: {{ include "cluster-shield.fullname" . }}
 webhooks:
-  {{- if .Values.cluster_shield.features.audit.enabled }}
+  {{- if and .Values.cluster_shield.features.audit.enabled (eq (.Values.cluster_shield.features.audit.method | default "validating_webhook") "validating_webhook") }}
   - name: audit.secure.sysdig.com
     matchPolicy: Equivalent
     {{ with .Values.cluster_shield.features.audit.excluded_namespaces }}

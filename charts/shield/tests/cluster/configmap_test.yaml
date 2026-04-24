@@ -55,6 +55,7 @@ tests:
                 enabled: false
                 excluded_namespaces: \[\]
                 http_port: 6443
+                method: validating_webhook
                 timeout: 10
                 webhook_rules:
                 - apiGroups:
@@ -152,6 +153,7 @@ tests:
                 enabled: false
                 excluded_namespaces: \[\]
                 http_port: 6443
+                method: validating_webhook
                 timeout: 10
                 webhook_rules:
                 - apiGroups:
@@ -231,6 +233,7 @@ tests:
                 enabled: false
                 excluded_namespaces: \[\]
                 http_port: 6443
+                method: validating_webhook
                 timeout: 10
                 webhook_rules:
                 - apiGroups:
@@ -341,6 +344,7 @@ tests:
                 enabled: false
                 excluded_namespaces: \[\]
                 http_port: 6443
+                method: validating_webhook
                 timeout: 10
                 webhook_rules:
                 - apiGroups:
@@ -481,6 +485,7 @@ tests:
                 enabled: false
                 excluded_namespaces: \[\]
                 http_port: 6443
+                method: validating_webhook
                 timeout: 10
                 webhook_rules:
                 - apiGroups:
@@ -841,6 +846,7 @@ tests:
                 enabled: false
                 excluded_namespaces: \[\]
                 http_port: 6443
+                method: validating_webhook
                 timeout: 10
                 webhook_rules:
                 - apiGroups:
@@ -926,6 +932,7 @@ tests:
                 enabled: false
                 excluded_namespaces: \[\]
                 http_port: 6443
+                method: validating_webhook
                 timeout: 10
                 webhook_rules:
                 - apiGroups:
