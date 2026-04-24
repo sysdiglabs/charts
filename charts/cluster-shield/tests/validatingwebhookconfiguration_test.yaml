@@ -104,6 +104,48 @@ tests:
           path: .webhooks[?(@.name == "vac.secure.sysdig.com")].clientConfig.service.port
           value: 8443
 
+  - it: Does not create the audit webhook when audit method is audit_backend
+    set:
+      cluster_shield:
+        features:
+          admission_control:
+            enabled: true
+          audit:
+            enabled: true
+            method: audit_backend
+    documentIndex: 0
+    asserts:
+      - hasDocuments:
+          count: 2
+      - containsDocument:
+          kind: ValidatingWebhookConfiguration
+          apiVersion: admissionregistration.k8s.io/v1
+          name: shield-release-cluster-shield
+      - notExists:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")]
+      - exists:
+          path: .webhooks[?(@.name == "vac.secure.sysdig.com")]
+
+  - it: Creates a ValidatingWebhookConfiguration resource when audit feature is enabled with validating_webhook method
+    set:
+      cluster_shield:
+        features:
+          admission_control:
+            enabled: false
+          audit:
+            enabled: true
+            method: validating_webhook
+    documentIndex: 0
+    asserts:
+      - hasDocuments:
+          count: 2
+      - containsDocument:
+          kind: ValidatingWebhookConfiguration
+          apiVersion: admissionregistration.k8s.io/v1
+          name: shield-release-cluster-shield
+      - exists:
+          path: .webhooks[?(@.name == "audit.secure.sysdig.com")]
+
   - it: Creates a ValidatingWebhookConfiguration resource when audit feature is enabled
     set:
       cluster_shield:
