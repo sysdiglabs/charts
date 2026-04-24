@@ -120,6 +120,8 @@ features:
     kubernetes_audit:
       # Enable the Kubernetes Audit feature on cluster shield
       enabled: false
+      # Method used to collect Kubernetes audit events. Use validating_webhook to intercept requests through the admission webhook, or audit_backend when using the Kubernetes audit backend integration.
+      method: validating_webhook
       # The timeout for the audit feature
       timeout: 10
       # The port that will be used to expose the audit endpoints
@@ -418,7 +420,7 @@ cluster:
     # The repository where the cluster shield image is stored
     repository: sysdig/cluster-shield
     # The tag for the cluster shield image
-    tag: 1.21.0
+    tag: 1.22.0
     # The pull policy for the cluster shield image
     pull_policy: IfNotPresent
     # The pull secrets for the cluster shield image
