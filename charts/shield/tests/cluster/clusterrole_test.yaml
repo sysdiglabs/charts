@@ -680,6 +680,19 @@ tests:
               - list
               - watch
 
+  - it: No ClusterRole rendered when cluster.rbac.create is false
+    set:
+      cluster:
+        rbac:
+          create: false
+      features:
+        respond:
+          response_actions:
+            enabled: true
+    asserts:
+      - hasDocuments:
+          count: 0
+
   - it: Test response_actions enabled
     set:
       features:
