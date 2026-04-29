@@ -308,7 +308,6 @@ rules:
     - list
     - watch
 {{- end }}
-{{- end }}
 
 {{- if eq "true" (include "cluster.response_actions_enabled" .) }}
 - apiGroups:
@@ -454,4 +453,5 @@ rules:
     - get
     - watch
     - patch # needed to remove finalizers, which could prevent deletion
+{{- end }}
 {{- end }}
