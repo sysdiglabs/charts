@@ -312,10 +312,37 @@ host:
     create: true
     # The name of the service account for the host shield (if create is set to false, this will be used as the name of the existing service account)
     service_account_name:
+    # The name of the service account for the GKE Autopilot AllowlistSynchronizer waiter Job (if create is set to false, this will be used as the name of the existing service account)
+    allowlist_waiter_service_account_name:
     # The labels for the service account
     labels: {}
     # The annotations for the service account
     annotations: {}
+  # Configuration for the GKE Autopilot AllowlistSynchronizer waiter Job. Only takes effect when
+  # cluster_config.cluster_type is "gke-autopilot" AND the top-level gke_autopilot_wait_for_allowlist_sync flag is true.
+  allowlist_waiter:
+    image:
+      # The registry where the kubectl image is stored
+      registry: quay.io
+      # The repository where the kubectl image is stored
+      repository: sysdig/sysdig-kubectl
+      # The tag for the kubectl image (auto-bumped by .github/updatecli.d/config-update-kubectl-image.yaml)
+      tag: 1.34.1-1.5.17
+      # The pull policy for the kubectl image
+      pull_policy: IfNotPresent
+    # Maximum time the waiter Job will block on the AllowlistSynchronizer reaching Ready
+    timeout: 120s
+    resources:
+      limits:
+        # The CPU limit for the allowlist waiter Job
+        cpu: 100m
+        # The memory limit for the allowlist waiter Job
+        memory: 128Mi
+      requests:
+        # The CPU request for the allowlist waiter Job
+        cpu: 50m
+        # The memory request for the allowlist waiter Job
+        memory: 64Mi
   resources:
     kmodule:
       limits:
@@ -647,3 +674,8 @@ fullname_override:
 on_prem_version:
 # Optional parameter used to set the Allowlist to use for GKE Autopilot clusters.
 gke_autopilot_allowlist:
+# When true (and cluster_config.cluster_type is "gke-autopilot"), the chart renders a
+# pre-install/pre-upgrade hook Job that waits for AllowlistSynchronizer/sysdig-agent-allowlist-synchronizer
+# to reach Ready before the host-shield DaemonSet is rolled out. This avoids a race where Autopilot
+# blocks DaemonSet pods until the allowlist matches them. No-op on non-Autopilot clusters.
+gke_autopilot_wait_for_allowlist_sync: false
