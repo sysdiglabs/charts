@@ -1,0 +1,25 @@
+{{- if (include "host.allowlist_waiter.enabled" .) -}}
+{{- if .Values.host.rbac.create }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "host.allowlist_waiter.fullname" . }}
+  labels:
+    {{- include "host.rbac_labels" . | nindent 4 }}
+  annotations:
+    helm.sh/hook: "pre-install,pre-upgrade"
+    helm.sh/hook-weight: "-5"
+    helm.sh/hook-delete-policy: "before-hook-creation,hook-succeeded"
+    {{- with .Values.host.rbac.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ include "host.allowlist_waiter.fullname" . }}
+subjects:
+  - kind: ServiceAccount
+    namespace: {{ .Release.Namespace }}
+    name: {{ include "host.allowlist_waiter.service_account_name" . }}
+{{- end }}
+{{- end -}}
