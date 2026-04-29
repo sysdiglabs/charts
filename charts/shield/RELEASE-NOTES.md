@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **shield** [5a6df40b](https://github.com/sysdiglabs/charts/commit/5a6df40b54ee381bae5f6b477ff6d590ea634e9b): release host-shield windows 0.16.0 ([#2601](https://github.com/sysdiglabs/charts/issues/2601))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/cluster-shield-1.22.0...shield-1.36.0
+### Bug Fixes
+- **shield** [9694ac96](https://github.com/sysdiglabs/charts/commit/9694ac969fa38025845d8c2215b9727c9eb7229e): correct response_actions ClusterRole RBAC scoping ([#2605](https://github.com/sysdiglabs/charts/issues/2605))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.36.0...shield-1.36.1
