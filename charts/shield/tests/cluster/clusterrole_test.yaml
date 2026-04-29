@@ -837,3 +837,97 @@ tests:
             verbs:
               - create
               - patch
+
+  - it: response_actions disabled by default does not leak per-action RBAC
+    asserts:
+      - containsDocument:
+          kind: ClusterRole
+          apiVersion: rbac.authorization.k8s.io/v1
+          name: release-name-shield-cluster
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - pods
+            verbs:
+              - delete
+              - get
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - networking.k8s.io
+            resources:
+              - networkpolicies
+            verbs:
+              - get
+              - delete
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - snapshot.storage.k8s.io
+            resources:
+              - volumesnapshots
+            verbs:
+              - delete
+              - get
+              - watch
+              - patch
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - pods/log
+            verbs:
+              - get
+
+  - it: response_actions enabled with delete_pod trigger none suppresses only delete_pod rule
+    set:
+      features:
+        respond:
+          response_actions:
+            enabled: true
+            delete_pod:
+              trigger: none
+    asserts:
+      - containsDocument:
+          kind: ClusterRole
+          apiVersion: rbac.authorization.k8s.io/v1
+          name: release-name-shield-cluster
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - pods
+            verbs:
+              - delete
+              - get
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - networking.k8s.io
+            resources:
+              - networkpolicies
+            verbs:
+              - get
+              - delete
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - snapshot.storage.k8s.io
+            resources:
+              - volumesnapshots
+            verbs:
+              - delete
+              - get
+              - watch
+              - patch

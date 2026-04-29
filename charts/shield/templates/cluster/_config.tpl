@@ -224,21 +224,28 @@
 {{- end }}
 
 {{/*
-Generic helper: checks if .Values.features.respond.response_actions.<action>.trigger == "all"
+Generic helper: returns "true" when the response_actions feature is enabled at
+the master level (.Values.features.respond.response_actions.enabled) AND the
+specific per-action trigger is not explicitly set to "none". Returns "false"
+otherwise.
 Usage: {{ include "cluster.response_actions.is_enabled" (dict "Action" "delete_pod" "Context" .) }}
 */}}
 {{- define "cluster.response_actions.is_enabled" -}}
     {{- $action := .Action }}
     {{- $ctx := .Context }}
-    {{- with $ctx.Values.features.respond.response_actions -}}
-        {{- $entry := index . $action }}
-        {{- if and $entry (eq $entry.trigger "none") -}}
-            false
+    {{- if eq "true" (include "cluster.response_actions_enabled" $ctx) -}}
+        {{- with $ctx.Values.features.respond.response_actions -}}
+            {{- $entry := index . $action }}
+            {{- if and $entry (eq $entry.trigger "none") -}}
+                false
+            {{- else -}}
+                true
+            {{- end -}}
         {{- else -}}
             true
         {{- end -}}
     {{- else -}}
-        true
+        false
     {{- end -}}
 {{- end -}}
 
