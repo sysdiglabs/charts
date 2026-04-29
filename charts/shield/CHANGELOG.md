@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.37.0
+### New Features
+* **shield** [33c28e80](https://github.com/sysdiglabs/charts/commit/33c28e800ed3485750718dbfc33f4cfc6f600fe0): pre-install AllowlistSynchronizer waiter for GKE Autopilot ([#2606](https://github.com/sysdiglabs/charts/issues/2606))
 # v1.36.1
 ### Bug Fixes
 * **shield** [9694ac96](https://github.com/sysdiglabs/charts/commit/9694ac969fa38025845d8c2215b9727c9eb7229e): correct response_actions ClusterRole RBAC scoping ([#2605](https://github.com/sysdiglabs/charts/issues/2605))
