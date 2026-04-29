@@ -16,7 +16,10 @@ spec:
     metadata:
       name: {{ include "host.allowlist_waiter.fullname" . }}
       labels:
-        {{- include "host.labels" . | nindent 8 }}
+        {{- /* Intentionally NOT host.labels: that set carries
+               cloud.google.com/matching-allowlist, which would make GKE Autopilot
+               block this Pod on the very allowlist it is waiting to load. */}}
+        {{- include "shield.labels" . | nindent 8 }}
     spec:
       restartPolicy: OnFailure
       serviceAccountName: {{ include "host.allowlist_waiter.service_account_name" . }}
