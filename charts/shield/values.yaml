@@ -666,9 +666,9 @@ gke_autopilot:
       # The registry where the kubectl image is stored
       registry: quay.io
       # The repository where the kubectl image is stored
-      repository: sysdig/sysdig-kubectl
+      repository: sysdig/kubectl
       # The tag for the kubectl image (auto-bumped by .github/updatecli.d/config-update-kubectl-image.yaml)
-      tag: 1.34.1-1.5.17
+      tag: 1.34.3-1.6.21
       # The pull policy for the kubectl image
       pull_policy: IfNotPresent
       # The pull secrets for the kubectl image

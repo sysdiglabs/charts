@@ -24,6 +24,9 @@ tests:
           path: metadata.annotations["helm.sh/hook"]
           value: pre-install,pre-upgrade
       - equal:
+          path: metadata.annotations["helm.sh/hook-delete-policy"]
+          value: before-hook-creation
+      - equal:
           path: spec.allowlistPaths
           value:
             - "Sysdig/agent/*"
@@ -188,7 +191,7 @@ tests:
           value: wait-for-allowlist
       - equal:
           path: spec.template.spec.containers[0].image
-          value: quay.io/sysdig/sysdig-kubectl:1.34.1-1.5.17
+          value: quay.io/sysdig/kubectl:1.34.3-1.6.21
       - matchRegex:
           path: spec.template.spec.containers[0].command[2]
           pattern: "--timeout=120s"
