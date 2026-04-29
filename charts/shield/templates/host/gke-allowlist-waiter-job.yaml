@@ -20,7 +20,7 @@ spec:
     spec:
       restartPolicy: OnFailure
       serviceAccountName: {{ include "host.allowlist_waiter.service_account_name" . }}
-      {{- with .Values.host.image.pull_secrets }}
+      {{- with .Values.gke_autopilot.allowlist_waiter.image.pull_secrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}

@@ -671,6 +671,8 @@ gke_autopilot:
       tag: 1.34.1-1.5.17
       # The pull policy for the kubectl image
       pull_policy: IfNotPresent
+      # The pull secrets for the kubectl image
+      pull_secrets: []
     resources:
       limits:
         # The CPU limit for the allowlist waiter Job

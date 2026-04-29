@@ -194,6 +194,26 @@ tests:
           pattern: "--timeout=120s"
     template: templates/host/gke-allowlist-waiter-job.yaml
 
+  - it: Renders imagePullSecrets when gke_autopilot.allowlist_waiter.image.pull_secrets is set
+    set:
+      gke_autopilot.allowlist_waiter.enabled: true
+      gke_autopilot.allowlist_waiter.image.pull_secrets:
+        - name: my-registry-secret
+    asserts:
+      - equal:
+          path: spec.template.spec.imagePullSecrets
+          value:
+            - name: my-registry-secret
+    template: templates/host/gke-allowlist-waiter-job.yaml
+
+  - it: Omits imagePullSecrets when gke_autopilot.allowlist_waiter.image.pull_secrets is empty
+    set:
+      gke_autopilot.allowlist_waiter.enabled: true
+    asserts:
+      - notExists:
+          path: spec.template.spec.imagePullSecrets
+    template: templates/host/gke-allowlist-waiter-job.yaml
+
   - it: Honors gke_autopilot.allowlist_waiter.service_account_name override
     set:
       gke_autopilot.allowlist_waiter.enabled: true
