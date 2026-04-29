@@ -27,7 +27,7 @@ spec:
       containers:
         - name: wait-for-allowlist
           image: {{ include "host.allowlist_waiter.image" . | replace " " "" }}
-          imagePullPolicy: {{ .Values.host.allowlist_waiter.image.pull_policy }}
+          imagePullPolicy: {{ .Values.gke_autopilot.allowlist_waiter.image.pull_policy }}
           command:
             - /bin/bash
             - -c
@@ -37,8 +37,8 @@ spec:
               kubectl wait --for=condition=Ready \
                 allowlistsynchronizer/sysdig-agent-allowlist-synchronizer \
                 -n {{ .Release.Namespace }} \
-                --timeout={{ .Values.host.allowlist_waiter.timeout }}
+                --timeout={{ .Values.gke_autopilot.allowlist_waiter.timeout }}
               echo "AllowlistSynchronizer is Ready."
           resources:
-            {{- toYaml .Values.host.allowlist_waiter.resources | nindent 12 }}
+            {{- toYaml .Values.gke_autopilot.allowlist_waiter.resources | nindent 12 }}
 {{- end -}}

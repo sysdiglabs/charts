@@ -47,7 +47,7 @@ tests:
   - it: Does not render the waiter on non-Autopilot clusters even when the flag is on
     set:
       cluster_config.cluster_type: generic
-      gke_autopilot_wait_for_allowlist_sync: true
+      gke_autopilot.allowlist_waiter.enabled: true
     asserts:
       - hasDocuments:
           count: 0
@@ -64,7 +64,7 @@ tests:
 
   - it: Does not render waiter SA/CR/CRB when host.rbac.create is false
     set:
-      gke_autopilot_wait_for_allowlist_sync: true
+      gke_autopilot.allowlist_waiter.enabled: true
       host.rbac.create: false
     asserts:
       - hasDocuments:
@@ -82,7 +82,7 @@ tests:
 
   - it: Renders the waiter ServiceAccount with hook annotations
     set:
-      gke_autopilot_wait_for_allowlist_sync: true
+      gke_autopilot.allowlist_waiter.enabled: true
     asserts:
       - containsDocument:
           kind: ServiceAccount
@@ -104,7 +104,7 @@ tests:
 
   - it: Renders the waiter ClusterRole limited to allowlistsynchronizers
     set:
-      gke_autopilot_wait_for_allowlist_sync: true
+      gke_autopilot.allowlist_waiter.enabled: true
     asserts:
       - containsDocument:
           kind: ClusterRole
@@ -131,7 +131,7 @@ tests:
 
   - it: Renders the waiter ClusterRoleBinding wired to the waiter SA
     set:
-      gke_autopilot_wait_for_allowlist_sync: true
+      gke_autopilot.allowlist_waiter.enabled: true
     asserts:
       - containsDocument:
           kind: ClusterRoleBinding
@@ -162,7 +162,7 @@ tests:
 
   - it: Renders the waiter Job with the configured image and timeout
     set:
-      gke_autopilot_wait_for_allowlist_sync: true
+      gke_autopilot.allowlist_waiter.enabled: true
     asserts:
       - containsDocument:
           kind: Job
@@ -194,10 +194,10 @@ tests:
           pattern: "--timeout=120s"
     template: templates/host/gke-allowlist-waiter-job.yaml
 
-  - it: Honors host.rbac.allowlist_waiter_service_account_name override
+  - it: Honors gke_autopilot.allowlist_waiter.service_account_name override
     set:
-      gke_autopilot_wait_for_allowlist_sync: true
-      host.rbac.allowlist_waiter_service_account_name: my-custom-waiter-sa
+      gke_autopilot.allowlist_waiter.enabled: true
+      gke_autopilot.allowlist_waiter.service_account_name: my-custom-waiter-sa
     asserts:
       - equal:
           path: metadata.name

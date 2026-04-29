@@ -77,5 +77,5 @@ targets:
     scmid: github
     spec:
       name: "charts/shield"
-      key: "$.host.allowlist_waiter.image.tag"
+      key: "$.gke_autopilot.allowlist_waiter.image.tag"
       versionincrement: patch

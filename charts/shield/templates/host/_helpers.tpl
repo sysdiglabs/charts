@@ -328,7 +328,7 @@ true
 
 {{/* GKE Autopilot AllowlistSynchronizer pre-install/pre-upgrade waiter helpers */}}
 {{- define "host.allowlist_waiter.enabled" -}}
-{{- if and (include "common.cluster_type.is_gke_autopilot" .) .Values.gke_autopilot_wait_for_allowlist_sync -}}
+{{- if and (include "common.cluster_type.is_gke_autopilot" .) .Values.gke_autopilot.allowlist_waiter.enabled -}}
 true
 {{- end -}}
 {{- end }}
@@ -338,9 +338,9 @@ true
 {{- end }}
 
 {{- define "host.allowlist_waiter.service_account_name" -}}
-{{- default (include "host.allowlist_waiter.fullname" .) .Values.host.rbac.allowlist_waiter_service_account_name }}
+{{- default (include "host.allowlist_waiter.fullname" .) .Values.gke_autopilot.allowlist_waiter.service_account_name }}
 {{- end }}
 
 {{- define "host.allowlist_waiter.image" -}}
-{{- .Values.host.allowlist_waiter.image.registry -}} / {{- .Values.host.allowlist_waiter.image.repository -}} : {{- .Values.host.allowlist_waiter.image.tag }}
+{{- .Values.gke_autopilot.allowlist_waiter.image.registry -}} / {{- .Values.gke_autopilot.allowlist_waiter.image.repository -}} : {{- .Values.gke_autopilot.allowlist_waiter.image.tag }}
 {{- end }}

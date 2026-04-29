@@ -954,7 +954,7 @@ tests:
             autopilot.gke.io/no-connect: "true"
             cloud.google.com/matching-allowlist: sysdig-agent-v1.1.4
 
-  - it: GKE Autopilot labels with specific version on workload and pod when gke-autopilot enabled
+  - it: GKE Autopilot labels with specific version on workload and pod when gke-autopilot enabled (deprecated top-level key)
     values:
       - ../values/gke-autopilot.yaml
     set:
@@ -970,6 +970,39 @@ tests:
           content:
             autopilot.gke.io/no-connect: "true"
             cloud.google.com/matching-allowlist: sysdig-agent-v2.0.0
+
+  - it: GKE Autopilot labels honor gke_autopilot.allowlist_version on workload and pod when gke-autopilot enabled
+    values:
+      - ../values/gke-autopilot.yaml
+    set:
+      gke_autopilot.allowlist_version: sysdig-agent-v2.0.0
+    asserts:
+      - isSubset:
+          path: metadata.labels
+          content:
+            autopilot.gke.io/no-connect: "true"
+            cloud.google.com/matching-allowlist: sysdig-agent-v2.0.0
+      - isSubset:
+          path: spec.template.metadata.labels
+          content:
+            autopilot.gke.io/no-connect: "true"
+            cloud.google.com/matching-allowlist: sysdig-agent-v2.0.0
+
+  - it: GKE Autopilot labels prefer gke_autopilot.allowlist_version over the deprecated top-level gke_autopilot_allowlist
+    values:
+      - ../values/gke-autopilot.yaml
+    set:
+      gke_autopilot.allowlist_version: sysdig-agent-v3.0.0
+      gke_autopilot_allowlist: sysdig-agent-v2.0.0
+    asserts:
+      - isSubset:
+          path: metadata.labels
+          content:
+            cloud.google.com/matching-allowlist: sysdig-agent-v3.0.0
+      - isSubset:
+          path: spec.template.metadata.labels
+          content:
+            cloud.google.com/matching-allowlist: sysdig-agent-v3.0.0
 
   - it: GKE Autopilot labels not present when gke-autopilot is disabled
     asserts:
