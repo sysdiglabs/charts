@@ -886,6 +886,28 @@ tests:
             verbs:
               - get
 
+  - it: cluster.rbac.create false renders no ClusterRole
+    set:
+      cluster:
+        rbac:
+          create: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: cluster.rbac.create false with response_actions enabled still renders no ClusterRole
+    set:
+      cluster:
+        rbac:
+          create: false
+      features:
+        respond:
+          response_actions:
+            enabled: true
+    asserts:
+      - hasDocuments:
+          count: 0
+
   - it: response_actions enabled with delete_pod trigger none suppresses only delete_pod rule
     set:
       features:
