@@ -70,12 +70,3 @@ targets:
       name: "charts/rapid-response"
       key: "$.tests.image.tag"
       versionincrement: patch
-
-  bumpShieldChart:
-    name: "bump the sysdig/sysdig-kubectl image reference in the shield chart"
-    kind: helmchart
-    scmid: github
-    spec:
-      name: "charts/shield"
-      key: "$.gke_autopilot.allowlist_waiter.image.tag"
-      versionincrement: patch
