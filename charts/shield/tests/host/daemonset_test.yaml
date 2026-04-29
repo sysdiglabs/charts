@@ -988,12 +988,12 @@ tests:
             autopilot.gke.io/no-connect: "true"
             cloud.google.com/matching-allowlist: sysdig-agent-v2.0.0
 
-  - it: GKE Autopilot labels prefer gke_autopilot.allowlist_version over the deprecated top-level gke_autopilot_allowlist
+  - it: GKE Autopilot labels prefer the deprecated top-level gke_autopilot_allowlist over gke_autopilot.allowlist_version when both are set
     values:
       - ../values/gke-autopilot.yaml
     set:
-      gke_autopilot.allowlist_version: sysdig-agent-v3.0.0
-      gke_autopilot_allowlist: sysdig-agent-v2.0.0
+      gke_autopilot.allowlist_version: sysdig-agent-v2.0.0
+      gke_autopilot_allowlist: sysdig-agent-v3.0.0
     asserts:
       - isSubset:
           path: metadata.labels
