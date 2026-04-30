@@ -347,6 +347,14 @@ host:
     labels: {}
     # The annotations for the RBAC resources
     annotations: {}
+    # Authorization mode used to grant the host shield read access to kubelet
+    # log endpoints when features.investigations.live_logs.enabled is true.
+    # When live_logs is disabled (the default), no kubelet-log permission is
+    # granted regardless of this setting.
+    #   auto:         detect from the cluster K8s version (>=1.36 ⇒ fine_grained, otherwise legacy)
+    #   fine_grained: grant `nodes/log` (KEP-2862, stable in Kubernetes 1.36+) — recommended
+    #   legacy:       grant `nodes/proxy` (broad, RCE-prone — only required on Kubernetes <1.36)
+    kubelet_authorization_mode: auto
   resources:
     kmodule:
       limits:

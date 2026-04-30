@@ -39,6 +39,232 @@ tests:
           apiVersion: rbac.authorization.k8s.io/v1
           name: release-name-shield-host
 
+  - it: Default values do not grant nodes/proxy or nodes/log
+    asserts:
+      - containsDocument:
+          kind: ClusterRole
+          apiVersion: rbac.authorization.k8s.io/v1
+          name: release-name-shield-host
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - nodes/proxy
+            verbs:
+              - get
+              - list
+              - watch
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - nodes/log
+            verbs:
+              - get
+              - list
+              - watch
+
+  - it: Always-present base rule keeps nodes and nodes/metrics but never nodes/proxy
+    asserts:
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - pods
+              - replicationcontrollers
+              - services
+              - endpoints
+              - events
+              - limitranges
+              - namespaces
+              - nodes
+              - nodes/metrics
+              - resourcequotas
+              - persistentvolumes
+              - persistentvolumeclaims
+              - configmaps
+            verbs:
+              - get
+              - list
+              - watch
+
+  - it: Live logs enabled on K8s 1.36 grants the narrow nodes/log subresource
+    capabilities:
+      majorVersion: "1"
+      minorVersion: "36"
+    set:
+      features:
+        investigations:
+          live_logs:
+            enabled: true
+    asserts:
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - nodes/log
+            verbs:
+              - get
+              - list
+              - watch
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - nodes/proxy
+            verbs:
+              - get
+              - list
+              - watch
+
+  - it: Live logs enabled on K8s 1.35 falls back to nodes/proxy
+    capabilities:
+      majorVersion: "1"
+      minorVersion: "35"
+    set:
+      features:
+        investigations:
+          live_logs:
+            enabled: true
+    asserts:
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - nodes/proxy
+            verbs:
+              - get
+              - list
+              - watch
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - nodes/log
+            verbs:
+              - get
+              - list
+              - watch
+
+  - it: Override kubelet_authorization_mode=legacy grants nodes/proxy on a modern cluster
+    capabilities:
+      majorVersion: "1"
+      minorVersion: "40"
+    set:
+      features:
+        investigations:
+          live_logs:
+            enabled: true
+      host:
+        rbac:
+          kubelet_authorization_mode: legacy
+    asserts:
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - nodes/proxy
+            verbs:
+              - get
+              - list
+              - watch
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - nodes/log
+            verbs:
+              - get
+              - list
+              - watch
+
+  - it: Override kubelet_authorization_mode=fine_grained grants nodes/log on an old cluster
+    capabilities:
+      majorVersion: "1"
+      minorVersion: "30"
+    set:
+      features:
+        investigations:
+          live_logs:
+            enabled: true
+      host:
+        rbac:
+          kubelet_authorization_mode: fine_grained
+    asserts:
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - nodes/log
+            verbs:
+              - get
+              - list
+              - watch
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - nodes/proxy
+            verbs:
+              - get
+              - list
+              - watch
+
+  - it: Live logs explicitly disabled grants neither subresource
+    capabilities:
+      majorVersion: "1"
+      minorVersion: "36"
+    set:
+      features:
+        investigations:
+          live_logs:
+            enabled: false
+    asserts:
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - nodes/log
+            verbs:
+              - get
+              - list
+              - watch
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - nodes/proxy
+            verbs:
+              - get
+              - list
+              - watch
+
   - it: Creates the ClusterRole with baseline rules by default
     asserts:
       - isKind:

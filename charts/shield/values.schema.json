@@ -1440,6 +1440,12 @@
         "annotations": {
           "type": "object",
           "description": "Annotations applied to RBAC resources created by the chart."
+        },
+        "kubelet_authorization_mode": {
+          "type": "string",
+          "enum": ["auto", "fine_grained", "legacy"],
+          "description": "Host-only. Authorization mode for kubelet log access RBAC. Inert when features.investigations.live_logs is disabled.",
+          "default": "auto"
         }
       },
       "additionalProperties": false

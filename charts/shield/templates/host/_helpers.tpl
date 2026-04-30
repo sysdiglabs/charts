@@ -380,3 +380,43 @@ true
 {{- define "host.allowlist_waiter.image" -}}
 {{- .Values.gke_autopilot.allowlist_waiter.image.registry -}} / {{- .Values.gke_autopilot.allowlist_waiter.image.repository -}} {{- include "host.allowlist_waiter.tag_separator" . -}} {{- .Values.gke_autopilot.allowlist_waiter.image.tag }}
 {{- end }}
+
+{{/*
+  Kubelet log access RBAC helpers.
+
+  The host-shield's Live Logs feature reads container logs through the kubelet
+  API. Historically this required the broad `nodes/proxy` subresource — the
+  same permission flagged as a Remote Code Execution vector by security scans.
+  Kubernetes 1.36 promotes KEP-2862 (Fine-grained API authorization) to stable,
+  exposing `nodes/log` as a narrow subresource scoped to log retrieval only.
+
+  These helpers gate the kubelet-log RBAC rule on `features.investigations.
+  live_logs.enabled` and pick the right subresource based on cluster version
+  (auto) or an explicit override (`fine_grained` / `legacy`).
+*/}}
+{{- define "host.kubelet_log_access.enabled" -}}
+{{- if .Values.features.investigations.live_logs.enabled -}}
+true
+{{- end -}}
+{{- end }}
+
+{{- define "host.kubelet_log_access.is_fine_grained_capable" -}}
+{{- $kubeMajor := .Capabilities.KubeVersion.Major | toString | trimSuffix "+" | int -}}
+{{- $kubeMinor := .Capabilities.KubeVersion.Minor | toString | trimSuffix "+" | int -}}
+{{- if or (gt $kubeMajor 1) (and (eq $kubeMajor 1) (ge $kubeMinor 36)) -}}
+true
+{{- end -}}
+{{- end }}
+
+{{- define "host.kubelet_log_access.subresource" -}}
+{{- $mode := default "auto" .Values.host.rbac.kubelet_authorization_mode -}}
+{{- if eq $mode "fine_grained" -}}
+nodes/log
+{{- else if eq $mode "legacy" -}}
+nodes/proxy
+{{- else if eq (include "host.kubelet_log_access.is_fine_grained_capable" .) "true" -}}
+nodes/log
+{{- else -}}
+nodes/proxy
+{{- end -}}
+{{- end }}
