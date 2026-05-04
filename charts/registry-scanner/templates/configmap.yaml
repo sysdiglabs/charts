@@ -144,4 +144,11 @@ data:
     reportPath: /output/registry-scanner-{DATE}.json
     {{- end }}
 
+    {{- if .Values.config.features }}
+    features:
+      {{- if hasKey .Values.config.features "force_scan_status_enabled" }}
+      force_scan_status_enabled: {{ .Values.config.features.force_scan_status_enabled }}
+      {{- end }}
+    {{- end }}
+
     vulnerabilityDBVersion: {{ .Values.config.vulnerabilityDBVersion | default "v2" | quote }}
