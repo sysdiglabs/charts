@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.110.3
+### Chores
+* **sysdig-deploy** [b5ba40e9](https://github.com/sysdiglabs/charts/commit/b5ba40e91745c88a1a3bd0a582a376a82e2a27fc): Automatic version bump due to updated dependencies ([#2616](https://github.com/sysdiglabs/charts/issues/2616))
 # v1.110.2
 ### Chores
 * **node-analyzer** [29212a4e](https://github.com/sysdiglabs/charts/commit/29212a4e7952b9f96cb6fd41a3e3444f63c0392b): bumped kspm-analyzer to 1.48.4 ([#2614](https://github.com/sysdiglabs/charts/issues/2614))
