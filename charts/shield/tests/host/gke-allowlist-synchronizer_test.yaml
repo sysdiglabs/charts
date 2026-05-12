@@ -176,7 +176,7 @@ tests:
           value: "-5"
       - equal:
           path: metadata.annotations["helm.sh/hook-delete-policy"]
-          value: before-hook-creation,hook-succeeded
+          value: before-hook-creation
     template: templates/host/gke-allowlist-waiter-serviceaccount.yaml
 
   - it: Renders the waiter ClusterRole limited to allowlistsynchronizers
@@ -193,6 +193,9 @@ tests:
       - equal:
           path: metadata.annotations["helm.sh/hook-weight"]
           value: "-5"
+      - equal:
+          path: metadata.annotations["helm.sh/hook-delete-policy"]
+          value: before-hook-creation
       - contains:
           path: rules
           content:
@@ -220,6 +223,9 @@ tests:
       - equal:
           path: metadata.annotations["helm.sh/hook-weight"]
           value: "-5"
+      - equal:
+          path: metadata.annotations["helm.sh/hook-delete-policy"]
+          value: before-hook-creation
       - equal:
           path: roleRef.kind
           value: ClusterRole
@@ -256,7 +262,7 @@ tests:
           value: "5"
       - equal:
           path: metadata.annotations["helm.sh/hook-delete-policy"]
-          value: before-hook-creation,hook-succeeded
+          value: before-hook-creation,hook-succeeded,hook-failed
       - equal:
           path: spec.template.spec.serviceAccountName
           value: release-name-shield-host-allowlist-waiter
