@@ -274,7 +274,12 @@ tests:
           pattern: "^quay\\.io/sysdig/kubectl:[^\\s]+$"
       - matchRegex:
           path: spec.template.spec.containers[0].command[2]
-          pattern: "--timeout=120s"
+          pattern: "TIMEOUT=120s"
+      # The waiter script must dump AllowlistSynchronizer state on wait failure
+      # so the next on-caller has actionable diagnostics instead of a bare exit.
+      - matchRegex:
+          path: spec.template.spec.containers[0].command[2]
+          pattern: "kubectl describe .* allowlistsynchronizer"
       # The waiter Pod must NOT carry cloud.google.com/matching-allowlist —
       # otherwise GKE Autopilot would block it on the very allowlist it waits to load.
       - notExists:
