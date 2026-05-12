@@ -953,3 +953,187 @@ tests:
               - get
               - watch
               - patch
+
+  - it: Posture OCP routes enabled
+    set:
+      features:
+        posture:
+          cluster_posture:
+            enabled: true
+      cluster:
+        additional_settings:
+          kspm_collector:
+            ocp_route_enabled: true
+    asserts:
+      - containsDocument:
+          kind: ClusterRole
+          apiVersion: rbac.authorization.k8s.io/v1
+          name: release-name-shield-cluster
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - route.openshift.io
+            resources:
+              - routes
+            verbs:
+              - get
+              - list
+              - watch
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - apps.openshift.io
+            resources:
+              - deploymentconfigs
+
+  - it: Posture OCP routes not granted when posture disabled
+    set:
+      features:
+        posture:
+          cluster_posture:
+            enabled: false
+      cluster:
+        additional_settings:
+          kspm_collector:
+            ocp_route_enabled: true
+    asserts:
+      - containsDocument:
+          kind: ClusterRole
+          apiVersion: rbac.authorization.k8s.io/v1
+          name: release-name-shield-cluster
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - route.openshift.io
+            resources:
+              - routes
+
+  - it: Posture OCP deploymentconfigs enabled
+    set:
+      features:
+        posture:
+          cluster_posture:
+            enabled: true
+      cluster:
+        additional_settings:
+          kspm_collector:
+            ocp_deploymentconfig_enabled: true
+    asserts:
+      - containsDocument:
+          kind: ClusterRole
+          apiVersion: rbac.authorization.k8s.io/v1
+          name: release-name-shield-cluster
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - apps.openshift.io
+            resources:
+              - deploymentconfigs
+            verbs:
+              - get
+              - list
+              - watch
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - route.openshift.io
+            resources:
+              - routes
+
+  - it: Posture OCP deploymentconfigs not granted when posture disabled
+    set:
+      features:
+        posture:
+          cluster_posture:
+            enabled: false
+      cluster:
+        additional_settings:
+          kspm_collector:
+            ocp_deploymentconfig_enabled: true
+    asserts:
+      - containsDocument:
+          kind: ClusterRole
+          apiVersion: rbac.authorization.k8s.io/v1
+          name: release-name-shield-cluster
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - apps.openshift.io
+            resources:
+              - deploymentconfigs
+
+  - it: Posture OCP routes and deploymentconfigs both enabled
+    set:
+      features:
+        posture:
+          cluster_posture:
+            enabled: true
+      cluster:
+        additional_settings:
+          kspm_collector:
+            ocp_route_enabled: true
+            ocp_deploymentconfig_enabled: true
+    asserts:
+      - containsDocument:
+          kind: ClusterRole
+          apiVersion: rbac.authorization.k8s.io/v1
+          name: release-name-shield-cluster
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - route.openshift.io
+            resources:
+              - routes
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - apps.openshift.io
+            resources:
+              - deploymentconfigs
+            verbs:
+              - get
+              - list
+              - watch
+
+  - it: When posture is disabled OCP routes and deploymentconfigs both disabled
+    set:
+      features:
+        posture:
+          cluster_posture:
+            enabled: false
+      cluster:
+        additional_settings:
+          kspm_collector:
+            ocp_route_enabled: true
+            ocp_deploymentconfig_enabled: true
+    asserts:
+      - containsDocument:
+          kind: ClusterRole
+          apiVersion: rbac.authorization.k8s.io/v1
+          name: release-name-shield-cluster
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - route.openshift.io
+            resources:
+              - routes
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - apps.openshift.io
+            resources:
+              - deploymentconfigs
