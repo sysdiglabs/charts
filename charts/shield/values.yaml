@@ -707,6 +707,11 @@ gke_autopilot:
     enabled: false
     # Maximum time the Job will block on the AllowlistSynchronizer reaching Ready
     timeout: 120s
+    # Maximum seconds the waiter Pod is allowed to run before Kubernetes terminates it.
+    # Acts as a Job-level guard against the pod hanging before the inner `kubectl wait`
+    # timeout fires (image-pull stalls, scheduler delays, admission webhook hangs).
+    # Should be greater than `timeout` to leave headroom for pod startup.
+    active_deadline_seconds: 300
     # Override the name of the waiter ServiceAccount (defaults to <host fullname>-allowlist-waiter)
     service_account_name:
     # RBAC controls for the waiter Job. Independent of `host.rbac.*` so the waiter can be

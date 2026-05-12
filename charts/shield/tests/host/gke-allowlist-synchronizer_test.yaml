@@ -280,12 +280,27 @@ tests:
       - matchRegex:
           path: spec.template.spec.containers[0].command[2]
           pattern: "kubectl describe .* allowlistsynchronizer"
+      # Job-level guard against pod hangs before the inner `kubectl wait` timeout fires
+      # (image-pull stalls, scheduler delays, admission webhook hangs).
+      - equal:
+          path: spec.activeDeadlineSeconds
+          value: 300
       # The waiter Pod must NOT carry cloud.google.com/matching-allowlist —
       # otherwise GKE Autopilot would block it on the very allowlist it waits to load.
       - notExists:
           path: spec.template.metadata.labels["cloud.google.com/matching-allowlist"]
       - notExists:
           path: spec.template.metadata.labels["autopilot.gke.io/no-connect"]
+    template: templates/host/gke-allowlist-waiter-job.yaml
+
+  - it: Honors gke_autopilot.allowlist_waiter.active_deadline_seconds override
+    set:
+      gke_autopilot.allowlist_waiter.enabled: true
+      gke_autopilot.allowlist_waiter.active_deadline_seconds: 600
+    asserts:
+      - equal:
+          path: spec.activeDeadlineSeconds
+          value: 600
     template: templates/host/gke-allowlist-waiter-job.yaml
 
   - it: Renders imagePullSecrets when gke_autopilot.allowlist_waiter.image.pull_secrets is set
