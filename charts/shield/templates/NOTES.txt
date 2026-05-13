@@ -13,3 +13,30 @@ Host Labels
 Host Selector Labels
 
 {{ include "host.selector_labels" . }}
+
+{{- if or (and .Values.sysdig_endpoint.access_key (not .Values.sysdig_endpoint.access_key_existing_secret)) (and .Values.sysdig_endpoint.secure_api_token (not .Values.sysdig_endpoint.secure_api_token_existing_secret)) }}
+
+⚠️  SECURITY NOTICE: Sysdig credentials were supplied inline via values.
+
+{{- if and .Values.sysdig_endpoint.access_key (not .Values.sysdig_endpoint.access_key_existing_secret) }}
+  - sysdig_endpoint.access_key
+{{- end }}
+{{- if and .Values.sysdig_endpoint.secure_api_token (not .Values.sysdig_endpoint.secure_api_token_existing_secret) }}
+  - sysdig_endpoint.secure_api_token
+{{- end }}
+
+These values are persisted by Helm in its release storage
+(`sh.helm.release.v1.{{ .Release.Name }}.v<rev>` Secret in `{{ .Release.Namespace }}`)
+as base64-encoded plaintext. Anyone with get/list access to that Secret
+— or to the output of `helm get values`, `helm get manifest`, or any
+GitOps tool that snapshots rendered manifests — can recover them.
+
+For sensitive environments, pre-create a Secret (e.g. via Vault, External
+Secrets, SOPS, or sealed-secrets) and reference it instead:
+
+  sysdig_endpoint:
+    access_key_existing_secret: my-access-key-secret
+    secure_api_token_existing_secret: my-api-token-secret
+
+See https://github.com/sysdiglabs/charts/issues/2622 for context.
+{{- end }}
