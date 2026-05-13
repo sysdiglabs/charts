@@ -684,3 +684,21 @@ gke_autopilot:
         cpu: 50m
         # The memory request for the allowlist waiter Job
         memory: 64Mi
+    # Pod-level securityContext for the waiter Job. Defaults satisfy the
+    # Kubernetes PodSecurity "restricted" profile and OpenShift "restricted-v2"
+    # SCC so the pre-install hook is admitted on hardened clusters.
+    pod_security_context:
+      runAsNonRoot: true
+      runAsUser: 65532
+      runAsGroup: 65532
+      seccompProfile:
+        type: RuntimeDefault
+    # Container-level securityContext for the waiter Job. The wait-for-allowlist
+    # container only runs `kubectl wait`, so root, escalation, and capabilities
+    # are not required.
+    security_context:
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: true
+      capabilities:
+        drop:
+          - ALL

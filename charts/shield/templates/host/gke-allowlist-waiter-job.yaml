@@ -23,6 +23,8 @@ spec:
     spec:
       restartPolicy: OnFailure
       serviceAccountName: {{ include "host.allowlist_waiter.service_account_name" . }}
+      securityContext:
+        {{- toYaml .Values.gke_autopilot.allowlist_waiter.pod_security_context | nindent 8 }}
       {{- with .Values.gke_autopilot.allowlist_waiter.image.pull_secrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
@@ -31,6 +33,8 @@ spec:
         - name: wait-for-allowlist
           image: {{ include "host.allowlist_waiter.image" . | replace " " "" }}
           imagePullPolicy: {{ .Values.gke_autopilot.allowlist_waiter.image.pull_policy }}
+          securityContext:
+            {{- toYaml .Values.gke_autopilot.allowlist_waiter.security_context | nindent 12 }}
           command:
             - /bin/bash
             - -c
