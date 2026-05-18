@@ -27,21 +27,45 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      volumes:
+        - name: attempt-state
+          emptyDir: {}
       containers:
         - name: wait-for-allowlist
           image: {{ include "host.allowlist_waiter.image" . | replace " " "" }}
           imagePullPolicy: {{ .Values.gke_autopilot.allowlist_waiter.image.pull_policy }}
+          volumeMounts:
+            - name: attempt-state
+              mountPath: /attempt-state
           command:
-            - /bin/bash
+            - /bin/sh
             - -c
             - |
               set -euo pipefail
-              echo "Waiting for AllowlistSynchronizer/sysdig-agent-allowlist-synchronizer to become Ready..."
-              kubectl wait --for=condition=Ready \
-                allowlistsynchronizer/sysdig-agent-allowlist-synchronizer \
-                -n {{ .Release.Namespace }} \
-                --timeout={{ .Values.gke_autopilot.allowlist_waiter.timeout }}
-              echo "AllowlistSynchronizer is Ready."
+
+              COUNTER_FILE=/attempt-state/attempt_number
+              ATTEMPT=1
+              if [ -f "$COUNTER_FILE" ]; then
+                ATTEMPT=$(( $(cat "$COUNTER_FILE") + 1 ))
+              fi
+              echo "$ATTEMPT" > "$COUNTER_FILE"
+              echo "DEBUG: attempt #$ATTEMPT"
+
+              if [ "$ATTEMPT" -eq 1 ]; then
+                echo "DEBUG attempt 1: simulating timeout (exit 124)..."
+                timeout 10 sleep 99999
+              elif [ "$ATTEMPT" -eq 2 ]; then
+                echo "DEBUG attempt 2: simulating error (exit 1)..."
+                exit 1
+              else
+                echo "DEBUG attempt 3+: running real kubectl wait..."
+                echo "Waiting for AllowlistSynchronizer/sysdig-agent-allowlist-synchronizer to become Ready..."
+                kubectl wait --for=condition=Ready \
+                  allowlistsynchronizer/sysdig-agent-allowlist-synchronizer \
+                  -n {{ .Release.Namespace }} \
+                  --timeout={{ .Values.gke_autopilot.allowlist_waiter.timeout }}
+                echo "AllowlistSynchronizer is Ready."
+              fi
           resources:
             {{- toYaml .Values.gke_autopilot.allowlist_waiter.resources | nindent 12 }}
 {{- end -}}
