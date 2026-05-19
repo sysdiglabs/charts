@@ -124,4 +124,57 @@ rules:
     verbs:
       - "use"
 {{- end }}
+{{- if .Values.features.posture.host_posture.enabled }}
+  - apiGroups:
+      - rbac.authorization.k8s.io
+    resources:
+      - clusterrolebindings
+    verbs:
+      - list
+  - apiGroups:
+      - flowcontrol.apiserver.k8s.io
+    resources:
+      - flowschemas
+    verbs:
+      - get
+      - list
+  - apiGroups:
+      - ""
+    resources:
+      - secrets
+    verbs:
+      - get
+  - apiGroups:
+      - ""
+    resources:
+      - pods/exec
+    verbs:
+      - create
+{{- if eq (include "common.is_openshift" .) "true" }}
+  - apiGroups:
+      - security.openshift.io
+    resources:
+      - securitycontextconstraints
+    verbs:
+      - get
+      - list
+  - apiGroups:
+      - operator.openshift.io
+    resources:
+      - kubeapiservers
+    verbs:
+      - get
+      - list
+  - apiGroups:
+      - config.openshift.io
+    resources:
+      - oauths
+      - apiservers
+      - networks
+      - images
+    verbs:
+      - get
+      - list
+{{- end }}
+{{- end }}
 {{- end }}
