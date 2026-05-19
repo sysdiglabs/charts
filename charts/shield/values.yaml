@@ -21,7 +21,7 @@ sysdig_endpoint:
     # The port of the Sysdig Secure collector (required only when region is custom)
     port:
   # The access key for the Sysdig Secure instance.
-  # ⚠️  Supplying credentials inline here persists them in Helm release
+  # WARNING: Supplying credentials inline here persists them in Helm release
   # metadata (sh.helm.release.v1.<release>.v<rev> Secret) as base64
   # plaintext, and exposes them through `helm get values` / GitOps
   # snapshots. For sensitive environments, prefer pre-creating a Secret
@@ -32,7 +32,7 @@ sysdig_endpoint:
   # value above is ignored. RECOMMENDED for production deployments.
   access_key_existing_secret:
   # The API token for the Sysdig Secure instance.
-  # ⚠️  Same trade-off as access_key above — prefer
+  # WARNING: Same trade-off as access_key above -- prefer
   # secure_api_token_existing_secret for sensitive environments.
   secure_api_token:
   # Name of a pre-existing Secret with the `SECURE_API_TOKEN` key. When
@@ -301,7 +301,7 @@ host:
     # The image name for the host shield
     shield_name: agent-slim
     # The tag for the host shield images
-    tag: 14.5.2
+    tag: 14.6.0
     # The pull policy for the host shield images
     pull_policy: IfNotPresent
     # The pull secrets for the host shield images
@@ -317,7 +317,8 @@ host:
     labels: {}
     # The annotations for the priority class
     annotations: {}
-  # Sets the host shield to run in privileged mode. Disabling requires the use of the Universal eBPF driver. Must be enabled for Posture and Vulnerability Management functionalities.
+  # Sets the host shield to run in privileged mode. Disabling requires the use of the Universal eBPF driver.
+  # When disabled, the required Linux capabilities are granted automatically.
   privileged: true
   rbac:
     # Create the RBAC resources for the host shield
