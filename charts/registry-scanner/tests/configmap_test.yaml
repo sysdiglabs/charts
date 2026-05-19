@@ -369,3 +369,42 @@ tests:
       - matchRegex:
           path: data['config.yaml']
           pattern: "scan:((.|\n)*)inlineScanImage: custom-registry.com/custom/scanner:v1.0.0-fips\n"
+
+  - it: features section is not present by default
+    asserts:
+      - notMatchRegex:
+          path: data['config.yaml']
+          pattern: "features:"
+
+  - it: features section is present when force_scan_status_enabled is set to false
+    set:
+      config:
+        features:
+          force_scan_status_enabled: false
+    asserts:
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: "features:\n\\s*force_scan_status_enabled: false"
+
+  - it: features section is present when force_scan_status_enabled is set to true
+    set:
+      config:
+        features:
+          force_scan_status_enabled: true
+    asserts:
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: "features:\n\\s*force_scan_status_enabled: true"
+
+  - it: features section handles only defined fields
+    set:
+      config:
+        features:
+          force_scan_status_enabled: true
+    asserts:
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: "features:\n\\s*force_scan_status_enabled: true"
+      - notMatchRegex:
+          path: data['config.yaml']
+          pattern: "features:((.|\n)*)other_field"

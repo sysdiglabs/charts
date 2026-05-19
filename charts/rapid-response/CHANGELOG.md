@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.10.2
+### Chores
+* **rapid-response** [3aab87e3](https://github.com/sysdiglabs/charts/commit/3aab87e3ba59e47aefc2df9adcf27e2ee2abc99a): bump rapid-response version to latest ([#2615](https://github.com/sysdiglabs/charts/issues/2615))
 # v0.10.1
 ### Chores
 * **rapid-response** [858d55d9](https://github.com/sysdiglabs/charts/commit/858d55d9c8b57ac2541b0b835633309341fd24ed): bump rapid-response version to latest ([#2573](https://github.com/sysdiglabs/charts/issues/2573))

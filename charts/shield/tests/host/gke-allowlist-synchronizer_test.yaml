@@ -1,13 +1,17 @@
-suite: Host - Service
+suite: Host - GKE Autopilot Allowlist
 templates:
   - templates/host/gke-allowlist-synchronizer.yaml
+  - templates/host/gke-allowlist-waiter-serviceaccount.yaml
+  - templates/host/gke-allowlist-waiter-clusterrole.yaml
+  - templates/host/gke-allowlist-waiter-clusterrolebinding.yaml
+  - templates/host/gke-allowlist-waiter-job.yaml
 release:
   name: release-name
   namespace: shield-namespace
 values:
   - ../values/gke-autopilot.yaml
 tests:
-  - it: Contains the agent GKE AllowlistSynchronizer resource
+  - it: Renders the AllowlistSynchronizer on Autopilot regardless of the waiter flag
     asserts:
       - containsDocument:
           kind: AllowlistSynchronizer
@@ -20,6 +24,219 @@ tests:
           path: metadata.annotations["helm.sh/hook"]
           value: pre-install,pre-upgrade
       - equal:
+          path: metadata.annotations["helm.sh/hook-delete-policy"]
+          value: before-hook-creation
+      - equal:
           path: spec.allowlistPaths
           value:
             - "Sysdig/agent/*"
+    template: templates/host/gke-allowlist-synchronizer.yaml
+
+  - it: Does not render any waiter resources by default (flag off)
+    asserts:
+      - hasDocuments:
+          count: 0
+        template: templates/host/gke-allowlist-waiter-serviceaccount.yaml
+      - hasDocuments:
+          count: 0
+        template: templates/host/gke-allowlist-waiter-clusterrole.yaml
+      - hasDocuments:
+          count: 0
+        template: templates/host/gke-allowlist-waiter-clusterrolebinding.yaml
+      - hasDocuments:
+          count: 0
+        template: templates/host/gke-allowlist-waiter-job.yaml
+
+  - it: Does not render the waiter on non-Autopilot clusters even when the flag is on
+    set:
+      cluster_config.cluster_type: generic
+      gke_autopilot.allowlist_waiter.enabled: true
+    asserts:
+      - hasDocuments:
+          count: 0
+        template: templates/host/gke-allowlist-waiter-serviceaccount.yaml
+      - hasDocuments:
+          count: 0
+        template: templates/host/gke-allowlist-waiter-clusterrole.yaml
+      - hasDocuments:
+          count: 0
+        template: templates/host/gke-allowlist-waiter-clusterrolebinding.yaml
+      - hasDocuments:
+          count: 0
+        template: templates/host/gke-allowlist-waiter-job.yaml
+
+  - it: Does not render waiter SA/CR/CRB when host.rbac.create is false
+    set:
+      gke_autopilot.allowlist_waiter.enabled: true
+      host.rbac.create: false
+    asserts:
+      - hasDocuments:
+          count: 0
+        template: templates/host/gke-allowlist-waiter-serviceaccount.yaml
+      - hasDocuments:
+          count: 0
+        template: templates/host/gke-allowlist-waiter-clusterrole.yaml
+      - hasDocuments:
+          count: 0
+        template: templates/host/gke-allowlist-waiter-clusterrolebinding.yaml
+      - hasDocuments:
+          count: 1
+        template: templates/host/gke-allowlist-waiter-job.yaml
+
+  - it: Renders the waiter ServiceAccount with hook annotations
+    set:
+      gke_autopilot.allowlist_waiter.enabled: true
+    asserts:
+      - containsDocument:
+          kind: ServiceAccount
+          apiVersion: v1
+          name: release-name-shield-host-allowlist-waiter
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - equal:
+          path: metadata.annotations["helm.sh/hook"]
+          value: pre-install,pre-upgrade
+      - equal:
+          path: metadata.annotations["helm.sh/hook-weight"]
+          value: "-5"
+      - equal:
+          path: metadata.annotations["helm.sh/hook-delete-policy"]
+          value: before-hook-creation,hook-succeeded
+    template: templates/host/gke-allowlist-waiter-serviceaccount.yaml
+
+  - it: Renders the waiter ClusterRole limited to allowlistsynchronizers
+    set:
+      gke_autopilot.allowlist_waiter.enabled: true
+    asserts:
+      - containsDocument:
+          kind: ClusterRole
+          apiVersion: rbac.authorization.k8s.io/v1
+          name: release-name-shield-host-allowlist-waiter
+      - equal:
+          path: metadata.annotations["helm.sh/hook"]
+          value: pre-install,pre-upgrade
+      - equal:
+          path: metadata.annotations["helm.sh/hook-weight"]
+          value: "-5"
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - auto.gke.io
+            resources:
+              - allowlistsynchronizers
+            verbs:
+              - get
+              - list
+              - watch
+    template: templates/host/gke-allowlist-waiter-clusterrole.yaml
+
+  - it: Renders the waiter ClusterRoleBinding wired to the waiter SA
+    set:
+      gke_autopilot.allowlist_waiter.enabled: true
+    asserts:
+      - containsDocument:
+          kind: ClusterRoleBinding
+          apiVersion: rbac.authorization.k8s.io/v1
+          name: release-name-shield-host-allowlist-waiter
+      - equal:
+          path: metadata.annotations["helm.sh/hook"]
+          value: pre-install,pre-upgrade
+      - equal:
+          path: metadata.annotations["helm.sh/hook-weight"]
+          value: "-5"
+      - equal:
+          path: roleRef.kind
+          value: ClusterRole
+      - equal:
+          path: roleRef.name
+          value: release-name-shield-host-allowlist-waiter
+      - equal:
+          path: subjects[0].kind
+          value: ServiceAccount
+      - equal:
+          path: subjects[0].namespace
+          value: shield-namespace
+      - equal:
+          path: subjects[0].name
+          value: release-name-shield-host-allowlist-waiter
+    template: templates/host/gke-allowlist-waiter-clusterrolebinding.yaml
+
+  - it: Renders the waiter Job with the configured image and timeout
+    set:
+      gke_autopilot.allowlist_waiter.enabled: true
+    asserts:
+      - containsDocument:
+          kind: Job
+          apiVersion: batch/v1
+          name: release-name-shield-host-allowlist-waiter
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - equal:
+          path: metadata.annotations["helm.sh/hook"]
+          value: pre-install,pre-upgrade
+      - equal:
+          path: metadata.annotations["helm.sh/hook-weight"]
+          value: "5"
+      - equal:
+          path: metadata.annotations["helm.sh/hook-delete-policy"]
+          value: before-hook-creation,hook-succeeded
+      - equal:
+          path: spec.template.spec.serviceAccountName
+          value: release-name-shield-host-allowlist-waiter
+      - equal:
+          path: spec.template.spec.containers[0].name
+          value: wait-for-allowlist
+      - matchRegex:
+          path: spec.template.spec.containers[0].image
+          pattern: "^quay\\.io/sysdig/kubectl:[^\\s]+$"
+      - matchRegex:
+          path: spec.template.spec.containers[0].command[2]
+          pattern: "--timeout=120s"
+      # The waiter Pod must NOT carry cloud.google.com/matching-allowlist —
+      # otherwise GKE Autopilot would block it on the very allowlist it waits to load.
+      - notExists:
+          path: spec.template.metadata.labels["cloud.google.com/matching-allowlist"]
+      - notExists:
+          path: spec.template.metadata.labels["autopilot.gke.io/no-connect"]
+    template: templates/host/gke-allowlist-waiter-job.yaml
+
+  - it: Renders imagePullSecrets when gke_autopilot.allowlist_waiter.image.pull_secrets is set
+    set:
+      gke_autopilot.allowlist_waiter.enabled: true
+      gke_autopilot.allowlist_waiter.image.pull_secrets:
+        - name: my-registry-secret
+    asserts:
+      - equal:
+          path: spec.template.spec.imagePullSecrets
+          value:
+            - name: my-registry-secret
+    template: templates/host/gke-allowlist-waiter-job.yaml
+
+  - it: Omits imagePullSecrets when gke_autopilot.allowlist_waiter.image.pull_secrets is empty
+    set:
+      gke_autopilot.allowlist_waiter.enabled: true
+    asserts:
+      - notExists:
+          path: spec.template.spec.imagePullSecrets
+    template: templates/host/gke-allowlist-waiter-job.yaml
+
+  - it: Honors gke_autopilot.allowlist_waiter.service_account_name override
+    set:
+      gke_autopilot.allowlist_waiter.enabled: true
+      gke_autopilot.allowlist_waiter.service_account_name: my-custom-waiter-sa
+    asserts:
+      - equal:
+          path: metadata.name
+          value: my-custom-waiter-sa
+        template: templates/host/gke-allowlist-waiter-serviceaccount.yaml
+      - equal:
+          path: subjects[0].name
+          value: my-custom-waiter-sa
+        template: templates/host/gke-allowlist-waiter-clusterrolebinding.yaml
+      - equal:
+          path: spec.template.spec.serviceAccountName
+          value: my-custom-waiter-sa
+        template: templates/host/gke-allowlist-waiter-job.yaml

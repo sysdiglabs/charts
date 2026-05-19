@@ -10,6 +10,19 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.110.5
+# v1.110.4
+### Chores
+* **node-analyzer** [a60b57d6](https://github.com/sysdiglabs/charts/commit/a60b57d63c7f79f8ea06c36e657c445ad7a301cd): bump sysdig/vuln-host-scanner to v0.16.6 ([#2617](https://github.com/sysdiglabs/charts/issues/2617))
+# v1.110.3
+### Chores
+* **sysdig-deploy** [b5ba40e9](https://github.com/sysdiglabs/charts/commit/b5ba40e91745c88a1a3bd0a582a376a82e2a27fc): Automatic version bump due to updated dependencies ([#2616](https://github.com/sysdiglabs/charts/issues/2616))
+# v1.110.2
+### Chores
+* **node-analyzer** [29212a4e](https://github.com/sysdiglabs/charts/commit/29212a4e7952b9f96cb6fd41a3e3444f63c0392b): bumped kspm-analyzer to 1.48.4 ([#2614](https://github.com/sysdiglabs/charts/issues/2614))
+# v1.110.1
+### Chores
+* **sysdig-deploy** [9d98c4fe](https://github.com/sysdiglabs/charts/commit/9d98c4fe04d808894896767475615a54e13189f1): Automatic version bump due to updated dependencies ([#2613](https://github.com/sysdiglabs/charts/issues/2613))
 # v1.110.0
 ### New Features
 * **shield,cluster-shield,sysdig-deploy** [6543dd49](https://github.com/sysdiglabs/charts/commit/6543dd4958ed8e6fda8ac3300acea52400f40189): release cluster-shield 1.22.0 ([#2597](https://github.com/sysdiglabs/charts/issues/2597))

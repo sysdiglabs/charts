@@ -1,0 +1,47 @@
+{{- if (include "host.allowlist_waiter.enabled" .) -}}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "host.allowlist_waiter.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "host.labels" . | nindent 4 }}
+  annotations:
+    helm.sh/hook: "pre-install,pre-upgrade"
+    helm.sh/hook-weight: "5"
+    helm.sh/hook-delete-policy: "before-hook-creation,hook-succeeded"
+spec:
+  backoffLimit: 3
+  template:
+    metadata:
+      name: {{ include "host.allowlist_waiter.fullname" . }}
+      labels:
+        {{- /* Intentionally NOT host.labels: that set carries
+               cloud.google.com/matching-allowlist, which would make GKE Autopilot
+               block this Pod on the very allowlist it is waiting to load. */}}
+        {{- include "shield.labels" . | nindent 8 }}
+    spec:
+      restartPolicy: OnFailure
+      serviceAccountName: {{ include "host.allowlist_waiter.service_account_name" . }}
+      {{- with .Values.gke_autopilot.allowlist_waiter.image.pull_secrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: wait-for-allowlist
+          image: {{ include "host.allowlist_waiter.image" . | replace " " "" }}
+          imagePullPolicy: {{ .Values.gke_autopilot.allowlist_waiter.image.pull_policy }}
+          command:
+            - /bin/bash
+            - -c
+            - |
+              set -euo pipefail
+              echo "Waiting for AllowlistSynchronizer/sysdig-agent-allowlist-synchronizer to become Ready..."
+              kubectl wait --for=condition=Ready \
+                allowlistsynchronizer/sysdig-agent-allowlist-synchronizer \
+                -n {{ .Release.Namespace }} \
+                --timeout={{ .Values.gke_autopilot.allowlist_waiter.timeout }}
+              echo "AllowlistSynchronizer is Ready."
+          resources:
+            {{- toYaml .Values.gke_autopilot.allowlist_waiter.resources | nindent 12 }}
+{{- end -}}

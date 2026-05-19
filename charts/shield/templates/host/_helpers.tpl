@@ -329,3 +329,30 @@ true
 {{- define "host.local_forwarder_secret_name" }}
 {{- include "host.fullname" . | trunc 46 | trimSuffix "-" | printf "%s-local-forwarder" }}
 {{- end }}
+
+{{/* GKE Autopilot AllowlistSynchronizer pre-install/pre-upgrade waiter helpers */}}
+{{- define "host.allowlist_waiter.enabled" -}}
+{{- if and (include "common.cluster_type.is_gke_autopilot" .) .Values.gke_autopilot.allowlist_waiter.enabled -}}
+true
+{{- end -}}
+{{- end }}
+
+{{- define "host.allowlist_waiter.fullname" -}}
+{{- printf "%s-allowlist-waiter" (include "host.fullname" . | trunc 45 | trimSuffix "-") }}
+{{- end }}
+
+{{- define "host.allowlist_waiter.service_account_name" -}}
+{{- default (include "host.allowlist_waiter.fullname" .) .Values.gke_autopilot.allowlist_waiter.service_account_name }}
+{{- end }}
+
+{{- define "host.allowlist_waiter.tag_separator" -}}
+  {{- if (hasPrefix "sha256:" .Values.gke_autopilot.allowlist_waiter.image.tag) -}}
+    @
+  {{- else -}}
+    :
+  {{- end -}}
+{{- end }}
+
+{{- define "host.allowlist_waiter.image" -}}
+{{- .Values.gke_autopilot.allowlist_waiter.image.registry -}} / {{- .Values.gke_autopilot.allowlist_waiter.image.repository -}} {{- include "host.allowlist_waiter.tag_separator" . -}} {{- .Values.gke_autopilot.allowlist_waiter.image.tag }}
+{{- end }}
