@@ -13,8 +13,8 @@ allowHostIPC: false
 allowHostNetwork: true
 allowHostPID: true
 allowHostPorts: {{ or .Values.features.posture.host_posture.enabled (dig "prometheus_exporter" "enabled" false .Values.host.additional_settings) (dig "kspm_analyzer" "enabled" false .Values.host.additional_settings) }}
-allowPrivilegeEscalation: true
-allowPrivilegedContainer: true
+allowPrivilegeEscalation: {{ .Values.host.privileged }}
+allowPrivilegedContainer: {{ .Values.host.privileged }}
 {{- if .Values.host.privileged }}
 allowedCapabilities: []
 {{- else }}

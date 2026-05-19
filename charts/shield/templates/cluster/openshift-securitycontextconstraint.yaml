@@ -13,8 +13,9 @@ allowHostIPC: false
 allowHostNetwork: true
 allowHostPID: true
 allowHostPorts: {{ .Values.cluster.host_network }}
-allowPrivilegeEscalation: true
-allowPrivilegedContainer: true
+{{- $clusterPrivileged := not (include "cluster.is_single_process_mode" .) }}
+allowPrivilegeEscalation: {{ $clusterPrivileged }}
+allowPrivilegedContainer: {{ $clusterPrivileged }}
 allowedCapabilities: []
 defaultAddCapabilities: []
 fsGroup:
