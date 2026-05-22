@@ -68,35 +68,19 @@ If release name contains chart name it will be used as a full name.
 {{- end }}
 
 {{/*
-RBAC sub-toggles. Each helper returns "true" when the corresponding resource
-should be created. The sub-toggle inherits .Values.host.rbac.create unless
-the user explicitly sets the sub-toggle to a boolean (true/false).
+RBAC sub-toggle wrappers. Each delegates to common.rbac.sub_toggle_enabled so
+the inheritance logic lives in a single place.
 */}}
 {{- define "host.rbac.service_account.create" -}}
-{{- $val := dig "service_account" "create" nil .Values.host.rbac -}}
-{{- if kindIs "bool" $val -}}
-  {{- if $val -}}true{{- end -}}
-{{- else if .Values.host.rbac.create -}}
-true
-{{- end -}}
+{{- include "common.rbac.sub_toggle_enabled" (dict "rbac" .Values.host.rbac "key" "service_account") -}}
 {{- end }}
 
 {{- define "host.rbac.cluster_role.create" -}}
-{{- $val := dig "cluster_role" "create" nil .Values.host.rbac -}}
-{{- if kindIs "bool" $val -}}
-  {{- if $val -}}true{{- end -}}
-{{- else if .Values.host.rbac.create -}}
-true
-{{- end -}}
+{{- include "common.rbac.sub_toggle_enabled" (dict "rbac" .Values.host.rbac "key" "cluster_role") -}}
 {{- end }}
 
 {{- define "host.rbac.role.create" -}}
-{{- $val := dig "role" "create" nil .Values.host.rbac -}}
-{{- if kindIs "bool" $val -}}
-  {{- if $val -}}true{{- end -}}
-{{- else if .Values.host.rbac.create -}}
-true
-{{- end -}}
+{{- include "common.rbac.sub_toggle_enabled" (dict "rbac" .Values.host.rbac "key" "role") -}}
 {{- end }}
 
 {{- define "host.config_override" -}}

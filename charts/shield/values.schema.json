@@ -1405,7 +1405,8 @@
           "description": "Per-resource toggle for the ServiceAccount. Inherits `create` when unset.",
           "properties": {
             "create": {
-              "type": ["boolean", "null"]
+              "type": ["boolean", "null"],
+              "description": "Override the umbrella `create` for the ServiceAccount."
             }
           },
           "additionalProperties": false
@@ -1415,7 +1416,8 @@
           "description": "Per-resource toggle for the ClusterRole + ClusterRoleBinding. Inherits `create` when unset.",
           "properties": {
             "create": {
-              "type": ["boolean", "null"]
+              "type": ["boolean", "null"],
+              "description": "Override the umbrella `create` for the ClusterRole and ClusterRoleBinding."
             }
           },
           "additionalProperties": false
@@ -1425,7 +1427,8 @@
           "description": "Per-resource toggle for the Role + RoleBinding. Inherits `create` when unset.",
           "properties": {
             "create": {
-              "type": ["boolean", "null"]
+              "type": ["boolean", "null"],
+              "description": "Override the umbrella `create` for the Role and RoleBinding."
             }
           },
           "additionalProperties": false
