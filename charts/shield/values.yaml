@@ -709,6 +709,18 @@ gke_autopilot:
     timeout: 120s
     # Override the name of the waiter ServiceAccount (defaults to <host fullname>-allowlist-waiter)
     service_account_name:
+    # RBAC controls for the waiter Job. Independent of `host.rbac.*` so the waiter can be
+    # disabled, BYO-SA'd, or self-managed without affecting the main host-shield RBAC.
+    rbac:
+      # Create the RBAC resources for the waiter Job. Acts as the default for the
+      # sub-toggles below; set any sub-toggle explicitly to override it.
+      create: true
+      service_account:
+        # Override `rbac.create` for the waiter ServiceAccount only.
+        create:
+      cluster_role:
+        # Override `rbac.create` for the waiter ClusterRole and ClusterRoleBinding.
+        create:
     image:
       # The registry where the kubectl image is stored
       registry: quay.io

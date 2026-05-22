@@ -361,6 +361,14 @@ true
 {{- default (include "host.allowlist_waiter.fullname" .) .Values.gke_autopilot.allowlist_waiter.service_account_name }}
 {{- end }}
 
+{{- define "host.allowlist_waiter.rbac.service_account.create" -}}
+{{- include "common.rbac.sub_toggle_enabled" (dict "rbac" .Values.gke_autopilot.allowlist_waiter.rbac "key" "service_account") -}}
+{{- end }}
+
+{{- define "host.allowlist_waiter.rbac.cluster_role.create" -}}
+{{- include "common.rbac.sub_toggle_enabled" (dict "rbac" .Values.gke_autopilot.allowlist_waiter.rbac "key" "cluster_role") -}}
+{{- end }}
+
 {{- define "host.allowlist_waiter.tag_separator" -}}
   {{- if (hasPrefix "sha256:" .Values.gke_autopilot.allowlist_waiter.image.tag) -}}
     @
