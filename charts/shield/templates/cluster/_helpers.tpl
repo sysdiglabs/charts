@@ -11,6 +11,38 @@ If release name contains chart name it will be used as a full name.
   {{- default (include "cluster.fullname" .) .Values.cluster.rbac.service_account_name -}}
 {{- end }}
 
+{{/*
+RBAC sub-toggles. Each helper returns "true" when the corresponding resource
+should be created. The sub-toggle inherits .Values.cluster.rbac.create unless
+the user explicitly sets the sub-toggle to a boolean (true/false).
+*/}}
+{{- define "cluster.rbac.service_account.create" -}}
+{{- $val := dig "service_account" "create" nil .Values.cluster.rbac -}}
+{{- if kindIs "bool" $val -}}
+  {{- if $val -}}true{{- end -}}
+{{- else if .Values.cluster.rbac.create -}}
+true
+{{- end -}}
+{{- end }}
+
+{{- define "cluster.rbac.cluster_role.create" -}}
+{{- $val := dig "cluster_role" "create" nil .Values.cluster.rbac -}}
+{{- if kindIs "bool" $val -}}
+  {{- if $val -}}true{{- end -}}
+{{- else if .Values.cluster.rbac.create -}}
+true
+{{- end -}}
+{{- end }}
+
+{{- define "cluster.rbac.role.create" -}}
+{{- $val := dig "role" "create" nil .Values.cluster.rbac -}}
+{{- if kindIs "bool" $val -}}
+  {{- if $val -}}true{{- end -}}
+{{- else if .Values.cluster.rbac.create -}}
+true
+{{- end -}}
+{{- end }}
+
 {{- define "cluster.service_name" -}}
   {{- include "cluster.fullname" . }}
 {{- end }}

@@ -1,5 +1,5 @@
 {{- if (include "host.allowlist_waiter.enabled" .) -}}
-{{- if .Values.host.rbac.create }}
+{{- if (include "host.rbac.cluster_role.create" .) }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:

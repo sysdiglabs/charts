@@ -67,6 +67,38 @@ If release name contains chart name it will be used as a full name.
 {{- default (include "host.fullname" .) .Values.host.rbac.service_account_name }}
 {{- end }}
 
+{{/*
+RBAC sub-toggles. Each helper returns "true" when the corresponding resource
+should be created. The sub-toggle inherits .Values.host.rbac.create unless
+the user explicitly sets the sub-toggle to a boolean (true/false).
+*/}}
+{{- define "host.rbac.service_account.create" -}}
+{{- $val := dig "service_account" "create" nil .Values.host.rbac -}}
+{{- if kindIs "bool" $val -}}
+  {{- if $val -}}true{{- end -}}
+{{- else if .Values.host.rbac.create -}}
+true
+{{- end -}}
+{{- end }}
+
+{{- define "host.rbac.cluster_role.create" -}}
+{{- $val := dig "cluster_role" "create" nil .Values.host.rbac -}}
+{{- if kindIs "bool" $val -}}
+  {{- if $val -}}true{{- end -}}
+{{- else if .Values.host.rbac.create -}}
+true
+{{- end -}}
+{{- end }}
+
+{{- define "host.rbac.role.create" -}}
+{{- $val := dig "role" "create" nil .Values.host.rbac -}}
+{{- if kindIs "bool" $val -}}
+  {{- if $val -}}true{{- end -}}
+{{- else if .Values.host.rbac.create -}}
+true
+{{- end -}}
+{{- end }}
+
 {{- define "host.config_override" -}}
 {{ .Values.host.additional_settings | toYaml }}
 {{- end -}}

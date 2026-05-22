@@ -321,13 +321,28 @@ host:
   # When disabled, the required Linux capabilities are granted automatically.
   privileged: true
   rbac:
-    # Create the RBAC resources for the host shield
+    # Create the RBAC resources for the host shield. Acts as the default for the
+    # sub-toggles below; set any sub-toggle explicitly to override it.
     create: true
-    # The name of the service account for the host shield (if create is set to false, this will be used as the name of the existing service account)
+    # The name of the service account for the host shield. Used as the SA name whether
+    # the chart creates the SA or references an externally-managed one.
     service_account_name:
-    # The labels for the service account
+    # Fine-grained creation toggles. Each sub-toggle inherits `rbac.create` when unset.
+    # Set true/false to override independently - e.g. `service_account.create: false`
+    # together with `service_account_name: my-existing-sa` lets you bring your own SA
+    # while still letting the chart manage the ClusterRole, Role, and bindings.
+    service_account:
+      create:
+    # Controls ClusterRole + ClusterRoleBinding (also the OpenShift cluster-monitoring-view
+    # binding and the GKE Autopilot allowlist-waiter ClusterRole/ClusterRoleBinding).
+    cluster_role:
+      create:
+    # Controls Role + RoleBinding (namespaced lease coordination).
+    role:
+      create:
+    # The labels for the RBAC resources
     labels: {}
-    # The annotations for the service account
+    # The annotations for the RBAC resources
     annotations: {}
   resources:
     kmodule:
@@ -452,13 +467,27 @@ cluster:
     # The annotations for the priority class
     annotations: {}
   rbac:
-    # Create the RBAC resources for the cluster shield
+    # Create the RBAC resources for the cluster shield. Acts as the default for the
+    # sub-toggles below; set any sub-toggle explicitly to override it.
     create: true
-    # The name of the service account for the cluster shield (if create is set to false, this will be used as the name of the existing service account)
+    # The name of the service account for the cluster shield. Used as the SA name whether
+    # the chart creates the SA or references an externally-managed one.
     service_account_name:
-    # The labels for the service account
+    # Fine-grained creation toggles. Each sub-toggle inherits `rbac.create` when unset.
+    # Set true/false to override independently - e.g. `service_account.create: false`
+    # together with `service_account_name: my-existing-sa` lets you bring your own SA
+    # while still letting the chart manage the ClusterRole, Role, and bindings.
+    service_account:
+      create:
+    # Controls ClusterRole + ClusterRoleBinding.
+    cluster_role:
+      create:
+    # Controls Role + RoleBinding (namespaced lease coordination).
+    role:
+      create:
+    # The labels for the RBAC resources
     labels: {}
-    # The annotations for the service account
+    # The annotations for the RBAC resources
     annotations: {}
   service:
     # The Cluster Shield service type
