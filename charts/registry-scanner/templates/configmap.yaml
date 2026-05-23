@@ -10,10 +10,13 @@ data:
 
     # Registry configuration
     registry:
-      url: {{ .Values.config.registryURL }}
-      user: from-secret
+{{ if eq .Values.config.registryType "gitlab" }}      url: "http://localhost:{{ default 5000 .Values.config.gitlab.proxyPort }}"
+{{ else }}      url: {{ .Values.config.registryURL }}
+{{ end }}      user: from-secret
       pass: from-secret
-      type: {{ .Values.config.registryType }}
+{{ if eq .Values.config.registryType "gitlab" }}      type: dockerv2
+{{ else }}      type: {{ .Values.config.registryType }}
+{{ end }}
       {{- if .Values.config.registryAccountId }}
       accountId: {{ .Values.config.registryAccountId }}
       {{- end }}
@@ -152,3 +155,267 @@ data:
     {{- end }}
 
     vulnerabilityDBVersion: {{ .Values.config.vulnerabilityDBVersion | default "v2" | quote }}
+{{- if eq .Values.config.registryType "gitlab" }}
+  # gitlab-proxy.py is the Docker Registry v2 proxy sidecar script.
+  # It translates GitLab REST API responses into Docker v2 API format,
+  # enabling the scanner to discover repositories without admin credentials.
+  gitlab-proxy.py: |
+    #!/usr/bin/env python3
+    """
+    GitLab Container Registry Proxy
+    ================================
+    Implements Docker Registry HTTP API v2 backed by the GitLab REST API.
+    Allows Sysdig registry-scanner (registryType: dockerv2 internally) to
+    enumerate and scan GitLab images using only read_api + read_registry scopes.
+
+    Endpoints:
+      GET /v2/                        Registry ping / auth challenge
+      GET /v2/auth                    Dummy bearer-token issuance
+      GET /v2/_catalog                All repos via GitLab Groups/Projects API
+      GET /v2/<name>/tags/list        Tags via GitLab Tags API (keyset pagination)
+      GET|HEAD /v2/<name>/manifests/  Proxied to actual GitLab registry (JWT auth)
+      GET|HEAD /v2/<name>/blobs/      Proxied to actual GitLab registry (JWT auth)
+      GET /health                     Liveness / readiness probe
+    """
+    from __future__ import annotations
+    import base64, json, logging, os, threading, time, urllib.parse
+    from functools import wraps
+    from typing import Dict, List, Optional
+    import requests
+    from flask import Flask, Response, jsonify, request
+
+    _LOG_LEVEL = os.environ.get("LOG_LEVEL", "INFO").upper()
+    logging.basicConfig(level=getattr(logging, _LOG_LEVEL, logging.INFO),
+                        format="%(asctime)s %(levelname)s %(name)s: %(message)s")
+    logger = logging.getLogger("gitlab-proxy")
+
+    GITLAB_URL           = os.environ["GITLAB_URL"].rstrip("/")
+    GITLAB_TOKEN         = os.environ["GITLAB_TOKEN"]
+    GITLAB_REGISTRY_HOST = os.environ.get("GITLAB_REGISTRY_HOST", "registry.gitlab.com")
+    GITLAB_GROUPS: List[str] = [g.strip() for g in os.environ.get("GITLAB_GROUPS", "").split(",") if g.strip()]
+    GITLAB_SKIP_TLS = os.environ.get("GITLAB_SKIP_TLS", "false").lower() == "true"
+    GITLAB_API_URL  = f"{GITLAB_URL}/api/v4"
+    PROXY_USER      = os.environ.get("PROXY_USER", "gitlab-scanner")
+    PROXY_PASSWORD  = os.environ.get("PROXY_PASSWORD", "")
+    PROXY_PORT      = int(os.environ.get("PROXY_PORT", "5000"))
+    CACHE_TTL_SECS  = int(os.environ.get("CACHE_TTL_SECS", "300"))
+    TOKEN_TTL_SECS  = int(os.environ.get("TOKEN_TTL_SECS", "240"))
+
+    _session = requests.Session()
+    _session.verify = not GITLAB_SKIP_TLS
+
+    _repo_cache: Dict[str, dict] = {}
+    _repo_cache_lock = threading.Lock()
+    _repo_cache_ts: float = 0.0
+    _token_cache: Dict[str, dict] = {}
+    _token_cache_lock = threading.Lock()
+
+    def _gl_headers():
+        return {"PRIVATE-TOKEN": GITLAB_TOKEN}
+
+    def _paginate(url, params=None):
+        results, page = [], 1
+        while True:
+            p = {**(params or {}), "page": page, "per_page": 100}
+            try:
+                resp = _session.get(url, headers=_gl_headers(), params=p, timeout=30)
+            except requests.RequestException as exc:
+                logger.error("HTTP error %s: %s", url, exc); break
+            if resp.status_code == 404: break
+            if resp.status_code != 200:
+                logger.warning("API %s → %d: %s", url, resp.status_code, resp.text[:300]); break
+            data = resp.json()
+            if not data: break
+            results.extend(data)
+            if page >= int(resp.headers.get("X-Total-Pages", "1")): break
+            page += 1
+        return results
+
+    def _fetch_all_repositories():
+        if GITLAB_GROUPS:
+            repos = []
+            for group in GITLAB_GROUPS:
+                enc = urllib.parse.quote(group, safe="")
+                batch = _paginate(f"{GITLAB_API_URL}/groups/{enc}/registry/repositories")
+                logger.info("Group '%s': %d repos", group, len(batch))
+                repos.extend(batch)
+            return repos
+        projects = _paginate(f"{GITLAB_API_URL}/projects", {"membership": True, "min_access_level": 10})
+        repos = []
+        for proj in projects:
+            repos.extend(_paginate(f"{GITLAB_API_URL}/projects/{proj['id']}/registry/repositories"))
+        return repos
+
+    def _strip_host(path):
+        prefix = GITLAB_REGISTRY_HOST + "/"
+        return path[len(prefix):] if path.startswith(prefix) else path
+
+    def _refresh_cache(force=False):
+        global _repo_cache, _repo_cache_ts
+        with _repo_cache_lock:
+            if not force and (time.monotonic() - _repo_cache_ts) < CACHE_TTL_SECS: return
+            logger.info("Refreshing repository cache…")
+            try:
+                raw = _fetch_all_repositories()
+                cache, seen = {}, set()
+                for repo in raw:
+                    full = repo.get("location") or repo.get("path", "")
+                    norm = _strip_host(full)
+                    if not norm or norm in seen: continue
+                    seen.add(norm)
+                    cache[norm] = {"project_id": repo.get("project_id"), "repo_id": repo.get("id")}
+                _repo_cache = cache
+                _repo_cache_ts = time.monotonic()
+                logger.info("Cache refreshed: %d repos", len(cache))
+            except Exception: logger.exception("Cache refresh failed")
+
+    def _fetch_tags(project_id, repo_id):
+        tags = []
+        url = f"{GITLAB_API_URL}/projects/{project_id}/registry/repositories/{repo_id}/tags"
+        params = {"per_page": 100}
+        while url:
+            try:
+                resp = _session.get(url, headers=_gl_headers(), params=params, timeout=30)
+            except requests.RequestException as exc:
+                logger.error("Tags error: %s", exc); break
+            if resp.status_code != 200:
+                logger.warning("Tags API → %d", resp.status_code); break
+            tags.extend(t["name"] for t in resp.json())
+            link, url, params = resp.headers.get("Link", ""), None, {}
+            if 'rel="next"' in link:
+                for part in link.split(","):
+                    if 'rel="next"' in part:
+                        url = part.split(";")[0].strip().strip("<>"); break
+        return tags
+
+    def _registry_token(image_path):
+        with _token_cache_lock:
+            e = _token_cache.get(image_path)
+            if e and e["expires_at"] > time.monotonic(): return e["token"]
+        try:
+            resp = requests.get(f"{GITLAB_URL}/jwt/auth",
+                                params={"service": "container_registry",
+                                        "scope": f"repository:{image_path}:pull",
+                                        "client_id": "registry-scanner-gitlab-proxy"},
+                                auth=(PROXY_USER, GITLAB_TOKEN),
+                                verify=not GITLAB_SKIP_TLS, timeout=10)
+            if resp.status_code == 200:
+                token = resp.json().get("token")
+                if token:
+                    with _token_cache_lock:
+                        _token_cache[image_path] = {"token": token,
+                                                     "expires_at": time.monotonic() + TOKEN_TTL_SECS}
+                    return token
+            logger.warning("JWT auth '%s' → %d", image_path, resp.status_code)
+        except Exception as exc:
+            logger.warning("JWT auth failed '%s': %s", image_path, exc)
+        return None
+
+    app = Flask(__name__)
+
+    def _auth_ok():
+        if not PROXY_PASSWORD: return True
+        auth = request.authorization
+        if auth and auth.username == PROXY_USER and auth.password == PROXY_PASSWORD: return True
+        return request.headers.get("Authorization", "").startswith("Bearer ")
+
+    def _challenge():
+        return Response(json.dumps({"errors": [{"code": "UNAUTHORIZED", "message": "authentication required"}]}),
+                        status=401, headers={"Content-Type": "application/json",
+                                             "Docker-Distribution-API-Version": "registry/2.0",
+                                             "WWW-Authenticate": 'Basic realm="GitLab Registry Proxy"'})
+
+    def require_auth(f):
+        @wraps(f)
+        def w(*a, **kw):
+            if not _auth_ok(): return _challenge()
+            return f(*a, **kw)
+        return w
+
+    @app.route("/v2/", methods=["GET", "HEAD"])
+    def v2_ping():
+        if PROXY_PASSWORD and not _auth_ok(): return _challenge()
+        return Response("{}", status=200, headers={"Content-Type": "application/json",
+                                                   "Docker-Distribution-API-Version": "registry/2.0"})
+
+    @app.route("/v2/auth", methods=["GET"])
+    def v2_auth():
+        auth = request.authorization
+        if PROXY_PASSWORD and (not auth or auth.username != PROXY_USER or auth.password != PROXY_PASSWORD):
+            return Response(json.dumps({"errors": [{"code": "UNAUTHORIZED", "message": "invalid credentials"}]}),
+                            status=401, headers={"Content-Type": "application/json"})
+        payload = json.dumps({"sub": auth.username if auth else "anon", "exp": int(time.time()) + 3600}).encode()
+        token = base64.urlsafe_b64encode(payload).decode().rstrip("=")
+        return jsonify({"token": token, "expires_in": 3600,
+                        "issued_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())})
+
+    @app.route("/v2/_catalog", methods=["GET"])
+    @require_auth
+    def catalog():
+        try:
+            _refresh_cache()
+            with _repo_cache_lock: paths = sorted(_repo_cache.keys())
+            logger.info("Catalog: %d repositories", len(paths))
+            return jsonify({"repositories": paths})
+        except Exception as exc:
+            logger.exception("Catalog error")
+            return Response(json.dumps({"errors": [{"code": "INTERNAL_ERROR", "message": str(exc)}]}),
+                            status=500, headers={"Content-Type": "application/json"})
+
+    @app.route("/v2/<path:name>/tags/list", methods=["GET"])
+    @require_auth
+    def tags_list(name):
+        try:
+            _refresh_cache()
+            with _repo_cache_lock: info = _repo_cache.get(name)
+            if not info:
+                return Response(json.dumps({"errors": [{"code": "NAME_UNKNOWN",
+                                                        "message": f"repository not found: {name}"}]}),
+                                status=404, headers={"Content-Type": "application/json"})
+            tags = _fetch_tags(info["project_id"], info["repo_id"])
+            logger.info("Tags '%s': %d", name, len(tags))
+            return jsonify({"name": name, "tags": tags})
+        except Exception as exc:
+            logger.exception("Tags error '%s'", name)
+            return Response(json.dumps({"errors": [{"code": "INTERNAL_ERROR", "message": str(exc)}]}),
+                            status=500, headers={"Content-Type": "application/json"})
+
+    def _proxy(name, suffix):
+        target = f"https://{GITLAB_REGISTRY_HOST}/v2/{name}/{suffix}"
+        if request.query_string: target += "?" + request.query_string.decode()
+        token = _registry_token(name)
+        auth_val = f"Bearer {token}" if token else "Basic " + base64.b64encode(f"gitlab-ci-token:{GITLAB_TOKEN}".encode()).decode()
+        fwd = {"Authorization": auth_val, "Accept": request.headers.get("Accept", "*/*")}
+        if "User-Agent" in request.headers: fwd["User-Agent"] = request.headers["User-Agent"]
+        try:
+            up = requests.request(request.method, target, headers=fwd,
+                                  stream=True, timeout=120, verify=not GITLAB_SKIP_TLS, allow_redirects=True)
+        except requests.RequestException as exc:
+            logger.error("Upstream error %s: %s", target, exc)
+            return Response(json.dumps({"errors": [{"code": "UNAVAILABLE", "message": str(exc)}]}),
+                            status=503, headers={"Content-Type": "application/json"})
+        skip = {"content-encoding", "content-length", "transfer-encoding", "connection"}
+        hdrs = {k: v for k, v in up.headers.items() if k.lower() not in skip}
+        return Response(up.iter_content(65536), status=up.status_code, headers=hdrs)
+
+    @app.route("/v2/<path:name>/manifests/<ref>", methods=["GET", "HEAD"])
+    @require_auth
+    def manifests(name, ref): return _proxy(name, f"manifests/{ref}")
+
+    @app.route("/v2/<path:name>/blobs/<digest>", methods=["GET", "HEAD"])
+    @require_auth
+    def blobs(name, digest): return _proxy(name, f"blobs/{digest}")
+
+    @app.route("/health", methods=["GET"])
+    def health():
+        return jsonify({"status": "ok", "gitlab_url": GITLAB_URL,
+                        "registry_host": GITLAB_REGISTRY_HOST,
+                        "groups": GITLAB_GROUPS or "all-visible",
+                        "cached_repos": len(_repo_cache),
+                        "cache_age_seconds": int(time.monotonic() - _repo_cache_ts)})
+
+    threading.Thread(target=lambda: _refresh_cache(force=True), daemon=True, name="cache-warmer").start()
+
+    if __name__ == "__main__":
+        app.run(host="0.0.0.0", port=PROXY_PORT, threaded=True)
+{{- end }}

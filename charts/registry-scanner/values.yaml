@@ -28,8 +28,46 @@ config:
   registryUser: ""
   # The password for registry authentication.
   registryPassword: ""
-  # **required**<br/>The registry Type. Supported types: artifactory, ecr, icr, acr, quay, harbor, gar, gcr, nexus, ocp and dockerv2.
+  # **required**<br/>The registry Type. Supported types: artifactory, ecr, icr, acr, quay, harbor, gar, gcr, nexus, ocp, dockerv2 and gitlab.
   registryType: ""
+  # GitLab Container Registry configuration.
+  # Only used when registryType is set to "gitlab".
+  # The scanner discovers repositories via the GitLab REST API (no admin token needed)
+  # and pulls images through an in-pod proxy sidecar that bridges Docker v2 ↔ GitLab API.
+  gitlab:
+    # GitLab instance base URL (no trailing slash).
+    # Examples: https://gitlab.com  |  https://gitlab.example.com
+    url: "https://gitlab.com"
+    # Hostname of the GitLab container registry.
+    # Examples: registry.gitlab.com  |  registry.example.com
+    registryHost: "registry.gitlab.com"
+    # GitLab Personal Access Token or Group Access Token.
+    # Required scopes: read_api + read_registry
+    # A Group Access Token scoped to the target group is sufficient;
+    # no instance-admin role is required.
+    # Leave empty when using existingSecretName (key: gitlabToken).
+    token: ""
+    # Comma-separated list of GitLab group paths to scope the scan.
+    # Sub-groups are included automatically. Leave empty to scan all
+    # projects the token has access to.
+    # Examples: "myorg"  |  "myorg/platform,myorg/security"
+    groups: ""
+    # Skip TLS verification when talking to GitLab API / registry.
+    # Not recommended for production.
+    skipTLS: false
+    # Port the in-pod proxy sidecar listens on. Change only if 5000 conflicts.
+    proxyPort: 5000
+    # Repo-list cache TTL in seconds (how often the proxy re-queries GitLab API).
+    cacheTTLSeconds: 300
+    # JWT token cache TTL in seconds (must be less than GitLab JWT lifetime ~300s).
+    tokenTTLSeconds: 240
+    # Image used for both the pip-install init-container and the proxy sidecar.
+    # Override with a pre-built image (see Dockerfile in this chart) to skip
+    # the pip-install step and speed up pod starts.
+    proxyImage:
+      repository: python
+      tag: "3.12-slim"
+      pullPolicy: IfNotPresent
   # The account ID. Applicable only for ICR registry type.
   registryAccountId: ""
   # The ICR IAM API. Applicable only for ICR registry type.
