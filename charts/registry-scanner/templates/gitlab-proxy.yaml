@@ -65,6 +65,8 @@ spec:
             value: {{ required "config.gitlab.registryHost is required when registryType is gitlab" .Values.config.gitlab.registryHost | quote }}
           - name: GITLAB_GROUPS
             value: {{ default "" .Values.config.gitlab.groups | quote }}
+          - name: GITLAB_REGISTRY_SCHEME
+            value: {{ default "https" .Values.config.gitlab.registryScheme | quote }}
           - name: GITLAB_SKIP_TLS
             value: {{ default false .Values.config.gitlab.skipTLS | quote }}
           - name: GITLAB_TOKEN

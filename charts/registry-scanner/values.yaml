@@ -33,7 +33,7 @@ config:
   # GitLab Container Registry configuration.
   # Only used when registryType is set to "gitlab".
   # The scanner discovers repositories via the GitLab REST API (no admin token needed)
-  # and pulls images through an in-pod proxy sidecar that bridges Docker v2 ↔ GitLab API.
+  # and pulls images through a standalone proxy Deployment that bridges Docker v2 ↔ GitLab API.
   gitlab:
     # GitLab instance base URL (no trailing slash).
     # Examples: https://gitlab.com  |  https://gitlab.example.com
@@ -41,6 +41,11 @@ config:
     # Hostname of the GitLab container registry.
     # Examples: registry.gitlab.com  |  registry.example.com
     registryHost: "registry.gitlab.com"
+    # Scheme used to reach the GitLab container registry.
+    # Use "https" for registries with a valid or self-signed TLS cert (most common).
+    # Use "http" only for plain-HTTP registries (no TLS at all).
+    # When "https" and the cert is self-signed, also set skipTLS: true.
+    registryScheme: "https"
     # GitLab Personal Access Token or Group Access Token.
     # Required scopes: read_api + read_registry
     # A Group Access Token scoped to the target group is sufficient;
@@ -53,9 +58,10 @@ config:
     # Examples: "myorg"  |  "myorg/platform,myorg/security"
     groups: ""
     # Skip TLS verification when talking to GitLab API / registry.
-    # Not recommended for production.
+    # Set to true when the GitLab instance uses a self-signed certificate.
+    # Not required when the registry uses a CA-signed certificate.
     skipTLS: false
-    # Port the in-pod proxy sidecar listens on. Change only if 5000 conflicts.
+    # Port the standalone proxy Deployment listens on. Change only if 5000 conflicts.
     proxyPort: 5000
     # Repo-list cache TTL in seconds (how often the proxy re-queries GitLab API).
     cacheTTLSeconds: 300

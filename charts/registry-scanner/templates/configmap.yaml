@@ -189,9 +189,10 @@ data:
                         format="%(asctime)s %(levelname)s %(name)s: %(message)s")
     logger = logging.getLogger("gitlab-proxy")
 
-    GITLAB_URL           = os.environ["GITLAB_URL"].rstrip("/")
-    GITLAB_TOKEN         = os.environ["GITLAB_TOKEN"]
-    GITLAB_REGISTRY_HOST = os.environ.get("GITLAB_REGISTRY_HOST", "registry.gitlab.com")
+    GITLAB_URL             = os.environ["GITLAB_URL"].rstrip("/")
+    GITLAB_TOKEN           = os.environ["GITLAB_TOKEN"]
+    GITLAB_REGISTRY_HOST   = os.environ.get("GITLAB_REGISTRY_HOST", "registry.gitlab.com")
+    GITLAB_REGISTRY_SCHEME = os.environ.get("GITLAB_REGISTRY_SCHEME", "https").lower()
     GITLAB_GROUPS: List[str] = [g.strip() for g in os.environ.get("GITLAB_GROUPS", "").split(",") if g.strip()]
     GITLAB_SKIP_TLS = os.environ.get("GITLAB_SKIP_TLS", "false").lower() == "true"
     GITLAB_API_URL  = f"{GITLAB_URL}/api/v4"
@@ -381,7 +382,7 @@ data:
                             status=500, headers={"Content-Type": "application/json"})
 
     def _proxy(name, suffix):
-        target = f"https://{GITLAB_REGISTRY_HOST}/v2/{name}/{suffix}"
+        target = f"{GITLAB_REGISTRY_SCHEME}://{GITLAB_REGISTRY_HOST}/v2/{name}/{suffix}"
         if request.query_string: target += "?" + request.query_string.decode()
         token = _registry_token(name)
         auth_val = f"Bearer {token}" if token else "Basic " + base64.b64encode(f"gitlab-ci-token:{GITLAB_TOKEN}".encode()).decode()
@@ -410,6 +411,7 @@ data:
     def health():
         return jsonify({"status": "ok", "gitlab_url": GITLAB_URL,
                         "registry_host": GITLAB_REGISTRY_HOST,
+                        "registry_scheme": GITLAB_REGISTRY_SCHEME,
                         "groups": GITLAB_GROUPS or "all-visible",
                         "cached_repos": len(_repo_cache),
                         "cache_age_seconds": int(time.monotonic() - _repo_cache_ts)})
