@@ -10,7 +10,7 @@ data:
 
     # Registry configuration
     registry:
-{{ if eq .Values.config.registryType "gitlab" }}      url: "http://localhost:{{ default 5000 .Values.config.gitlab.proxyPort }}"
+{{ if eq .Values.config.registryType "gitlab" }}      url: "https://{{ include "registry-scanner.fullname" . }}-proxy:{{ default 5000 .Values.config.gitlab.proxyPort }}"
 {{ else }}      url: {{ .Values.config.registryURL }}
 {{ end }}      user: from-secret
       pass: from-secret

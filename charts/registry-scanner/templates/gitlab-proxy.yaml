@@ -1,0 +1,160 @@
+{{- if eq .Values.config.registryType "gitlab" }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "registry-scanner.fullname" . }}-proxy
+  labels:
+{{ include "registry-scanner.labels" . | indent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "registry-scanner.name" . }}-proxy
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "registry-scanner.name" . }}-proxy
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      initContainers:
+      - name: gitlab-proxy-deps
+        image: "{{ .Values.config.gitlab.proxyImage.repository }}:{{ .Values.config.gitlab.proxyImage.tag }}"
+        imagePullPolicy: {{ .Values.config.gitlab.proxyImage.pullPolicy }}
+        command: ["pip", "install", "--no-cache-dir", "--target=/deps",
+                  "flask>=3.0,<4", "requests>=2.32,<3", "gunicorn>=22,<24", "pyopenssl>=24"]
+        volumeMounts:
+        - name: gitlab-proxy-deps
+          mountPath: /deps
+      containers:
+      - name: gitlab-registry-proxy
+        image: "{{ .Values.config.gitlab.proxyImage.repository }}:{{ .Values.config.gitlab.proxyImage.tag }}"
+        imagePullPolicy: {{ .Values.config.gitlab.proxyImage.pullPolicy }}
+        workingDir: /app
+        command:
+          - /bin/sh
+          - -c
+          - |
+            python3 -c "
+            from OpenSSL import crypto
+            k = crypto.PKey()
+            k.generate_key(crypto.TYPE_RSA, 2048)
+            cert = crypto.X509()
+            cert.get_subject().CN = 'registry-scanner-gitlab-proxy'
+            cert.set_serial_number(1)
+            cert.gmtime_adj_notBefore(0)
+            cert.gmtime_adj_notAfter(365*24*3600)
+            cert.set_issuer(cert.get_subject())
+            cert.set_pubkey(k)
+            cert.sign(k, 'sha256')
+            open('/tmp/proxy.crt','wb').write(crypto.dump_certificate(crypto.FILETYPE_PEM, cert))
+            open('/tmp/proxy.key','wb').write(crypto.dump_privatekey(crypto.FILETYPE_PEM, k))
+            "
+            exec /deps/bin/gunicorn \
+              --workers 2 \
+              --bind "0.0.0.0:{{ default 5000 .Values.config.gitlab.proxyPort }}" \
+              --timeout 120 \
+              --access-logfile - \
+              --certfile /tmp/proxy.crt \
+              --keyfile /tmp/proxy.key \
+              app:app
+        env:
+          - name: GITLAB_URL
+            value: {{ required "config.gitlab.url is required when registryType is gitlab" .Values.config.gitlab.url | quote }}
+          - name: GITLAB_REGISTRY_HOST
+            value: {{ required "config.gitlab.registryHost is required when registryType is gitlab" .Values.config.gitlab.registryHost | quote }}
+          - name: GITLAB_GROUPS
+            value: {{ default "" .Values.config.gitlab.groups | quote }}
+          - name: GITLAB_SKIP_TLS
+            value: {{ default false .Values.config.gitlab.skipTLS | quote }}
+          - name: GITLAB_TOKEN
+            valueFrom:
+              secretKeyRef:
+                {{- if not .Values.existingSecretName }}
+                name: {{ include "registry-scanner.fullname" . }}
+                {{- else }}
+                name: {{ .Values.existingSecretName }}
+                {{- end }}
+                key: gitlabToken
+          - name: PROXY_USER
+            valueFrom:
+              secretKeyRef:
+                {{- if not .Values.existingSecretName }}
+                name: {{ include "registry-scanner.fullname" . }}
+                {{- else }}
+                name: {{ .Values.existingSecretName }}
+                {{- end }}
+                key: registryUser
+          - name: PROXY_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                {{- if not .Values.existingSecretName }}
+                name: {{ include "registry-scanner.fullname" . }}
+                {{- else }}
+                name: {{ .Values.existingSecretName }}
+                {{- end }}
+                key: registryPassword
+          - name: CACHE_TTL_SECS
+            value: {{ default 300 .Values.config.gitlab.cacheTTLSeconds | quote }}
+          - name: TOKEN_TTL_SECS
+            value: {{ default 240 .Values.config.gitlab.tokenTTLSeconds | quote }}
+          - name: PROXY_PORT
+            value: {{ default 5000 .Values.config.gitlab.proxyPort | quote }}
+          - name: LOG_LEVEL
+            value: {{ .Values.config.logging | upper | quote }}
+          - name: PYTHONPATH
+            value: "/deps"
+        ports:
+          - name: gl-proxy
+            containerPort: {{ default 5000 .Values.config.gitlab.proxyPort }}
+            protocol: TCP
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: gl-proxy
+            scheme: HTTPS
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 6
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: gl-proxy
+            scheme: HTTPS
+          initialDelaySeconds: 30
+          periodSeconds: 30
+          timeoutSeconds: 10
+          failureThreshold: 3
+        volumeMounts:
+        - name: gitlab-proxy-script
+          mountPath: /app
+        - name: gitlab-proxy-deps
+          mountPath: /deps
+      volumes:
+      - name: gitlab-proxy-script
+        configMap:
+          name: {{ include "registry-scanner.fullname" . }}
+          items:
+            - key: gitlab-proxy.py
+              path: app.py
+          defaultMode: 0444
+      - name: gitlab-proxy-deps
+        emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "registry-scanner.fullname" . }}-proxy
+  labels:
+{{ include "registry-scanner.labels" . | indent 4 }}
+spec:
+  selector:
+    app.kubernetes.io/name: {{ include "registry-scanner.name" . }}-proxy
+    app.kubernetes.io/instance: {{ .Release.Name }}
+  ports:
+    - name: gl-proxy
+      port: {{ default 5000 .Values.config.gitlab.proxyPort }}
+      targetPort: gl-proxy
+      protocol: TCP
+{{- end }}
