@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.40.0
+### Bug Fixes
+* **shield** [a3329c99](https://github.com/sysdiglabs/charts/commit/a3329c9923977ebd3d86a8f3d11ac8c5b0e0ef36): prevent stuck allowlist-waiter Job after hook failure ([#2619](https://github.com/sysdiglabs/charts/issues/2619))
 # v1.39.0
 ### New Features
 * **shield** [cb2b82a7](https://github.com/sysdiglabs/charts/commit/cb2b82a742833f18e8648cfbaa22d562191ff995): split rbac.create into per-resource sub-toggles ([#2633](https://github.com/sysdiglabs/charts/issues/2633))
