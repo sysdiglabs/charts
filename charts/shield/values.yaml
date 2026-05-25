@@ -321,13 +321,31 @@ host:
   # When disabled, the required Linux capabilities are granted automatically.
   privileged: true
   rbac:
-    # Create the RBAC resources for the host shield
+    # Create the RBAC resources for the host shield. Acts as the default for the
+    # sub-toggles below; set any sub-toggle explicitly to override it.
     create: true
-    # The name of the service account for the host shield (if create is set to false, this will be used as the name of the existing service account)
+    # The name of the service account for the host shield. Used as the SA name whether
+    # the chart creates the SA or references an externally-managed one. To reference an
+    # existing SA without having the chart create one, also set `service_account.create: false`.
     service_account_name:
-    # The labels for the service account
+    # Fine-grained creation toggles. Each sub-toggle inherits `rbac.create` when unset.
+    # Set true/false to override independently - e.g. `service_account.create: false`
+    # together with `service_account_name: my-existing-sa` lets you bring your own SA
+    # while still letting the chart manage the ClusterRole, Role, and bindings.
+    service_account:
+      # Override `rbac.create` for the ServiceAccount only.
+      create:
+    cluster_role:
+      # Override `rbac.create` for the ClusterRole and ClusterRoleBinding (also the
+      # OpenShift cluster-monitoring-view binding and the GKE Autopilot allowlist-waiter
+      # ClusterRole/ClusterRoleBinding).
+      create:
+    role:
+      # Override `rbac.create` for the Role and RoleBinding (namespaced lease coordination).
+      create:
+    # The labels for the RBAC resources
     labels: {}
-    # The annotations for the service account
+    # The annotations for the RBAC resources
     annotations: {}
   resources:
     kmodule:
@@ -452,13 +470,29 @@ cluster:
     # The annotations for the priority class
     annotations: {}
   rbac:
-    # Create the RBAC resources for the cluster shield
+    # Create the RBAC resources for the cluster shield. Acts as the default for the
+    # sub-toggles below; set any sub-toggle explicitly to override it.
     create: true
-    # The name of the service account for the cluster shield (if create is set to false, this will be used as the name of the existing service account)
+    # The name of the service account for the cluster shield. Used as the SA name whether
+    # the chart creates the SA or references an externally-managed one. To reference an
+    # existing SA without having the chart create one, also set `service_account.create: false`.
     service_account_name:
-    # The labels for the service account
+    # Fine-grained creation toggles. Each sub-toggle inherits `rbac.create` when unset.
+    # Set true/false to override independently - e.g. `service_account.create: false`
+    # together with `service_account_name: my-existing-sa` lets you bring your own SA
+    # while still letting the chart manage the ClusterRole, Role, and bindings.
+    service_account:
+      # Override `rbac.create` for the ServiceAccount only.
+      create:
+    cluster_role:
+      # Override `rbac.create` for the ClusterRole and ClusterRoleBinding.
+      create:
+    role:
+      # Override `rbac.create` for the Role and RoleBinding (namespaced lease coordination).
+      create:
+    # The labels for the RBAC resources
     labels: {}
-    # The annotations for the service account
+    # The annotations for the RBAC resources
     annotations: {}
   service:
     # The Cluster Shield service type
@@ -675,6 +709,18 @@ gke_autopilot:
     timeout: 120s
     # Override the name of the waiter ServiceAccount (defaults to <host fullname>-allowlist-waiter)
     service_account_name:
+    # RBAC controls for the waiter Job. Independent of `host.rbac.*` so the waiter can be
+    # disabled, BYO-SA'd, or self-managed without affecting the main host-shield RBAC.
+    rbac:
+      # Create the RBAC resources for the waiter Job. Acts as the default for the
+      # sub-toggles below; set any sub-toggle explicitly to override it.
+      create: true
+      service_account:
+        # Override `rbac.create` for the waiter ServiceAccount only.
+        create:
+      cluster_role:
+        # Override `rbac.create` for the waiter ClusterRole and ClusterRoleBinding.
+        create:
     image:
       # The registry where the kubectl image is stored
       registry: quay.io
