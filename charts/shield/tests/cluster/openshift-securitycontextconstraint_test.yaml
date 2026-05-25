@@ -74,3 +74,44 @@ tests:
       - equal:
           path: allowHostPorts
           value: true
+
+  - it: SecurityContextConstraints - allowPrivilegeEscalation/allowPrivilegedContainer are true in default (multi-process) mode
+    capabilities:
+      apiVersions:
+        - security.openshift.io/v1
+    asserts:
+      - equal:
+          path: allowPrivilegeEscalation
+          value: true
+      - equal:
+          path: allowPrivilegedContainer
+          value: true
+
+  - it: SecurityContextConstraints - allowPrivilegeEscalation/allowPrivilegedContainer are false in single-process mode
+    capabilities:
+      apiVersions:
+        - security.openshift.io/v1
+    set:
+      cluster:
+        run_mode: single-process
+    asserts:
+      - equal:
+          path: allowPrivilegeEscalation
+          value: false
+      - equal:
+          path: allowPrivilegedContainer
+          value: false
+
+  - it: SecurityContextConstraints - allowPrivilegeEscalation/allowPrivilegedContainer are false on GKE Autopilot
+    capabilities:
+      apiVersions:
+        - security.openshift.io/v1
+    values:
+      - ../values/gke-autopilot.yaml
+    asserts:
+      - equal:
+          path: allowPrivilegeEscalation
+          value: false
+      - equal:
+          path: allowPrivilegedContainer
+          value: false

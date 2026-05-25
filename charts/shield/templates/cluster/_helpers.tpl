@@ -11,6 +11,22 @@ If release name contains chart name it will be used as a full name.
   {{- default (include "cluster.fullname" .) .Values.cluster.rbac.service_account_name -}}
 {{- end }}
 
+{{/*
+RBAC sub-toggle wrappers. Each delegates to common.rbac.sub_toggle_enabled so
+the inheritance logic lives in a single place.
+*/}}
+{{- define "cluster.rbac.service_account.create" -}}
+{{- include "common.rbac.sub_toggle_enabled" (dict "rbac" .Values.cluster.rbac "key" "service_account") -}}
+{{- end }}
+
+{{- define "cluster.rbac.cluster_role.create" -}}
+{{- include "common.rbac.sub_toggle_enabled" (dict "rbac" .Values.cluster.rbac "key" "cluster_role") -}}
+{{- end }}
+
+{{- define "cluster.rbac.role.create" -}}
+{{- include "common.rbac.sub_toggle_enabled" (dict "rbac" .Values.cluster.rbac "key" "role") -}}
+{{- end }}
+
 {{- define "cluster.service_name" -}}
   {{- include "cluster.fullname" . }}
 {{- end }}

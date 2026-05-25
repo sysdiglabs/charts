@@ -54,6 +54,37 @@ tests:
           path: allowedCapabilities
           value: []
 
+  - it: SecurityContextConstraints allowPrivilegeEscalation/allowPrivilegedContainer are true when host.privileged is true
+    capabilities:
+      apiVersions:
+        - security.openshift.io/v1
+    set:
+      host:
+        privileged: true
+    asserts:
+      - equal:
+          path: allowPrivilegeEscalation
+          value: true
+      - equal:
+          path: allowPrivilegedContainer
+          value: true
+
+  - it: SecurityContextConstraints allowPrivilegeEscalation/allowPrivilegedContainer are false when host.privileged is false
+    capabilities:
+      apiVersions:
+        - security.openshift.io/v1
+    set:
+      host:
+        privileged: false
+        driver: universal_ebpf
+    asserts:
+      - equal:
+          path: allowPrivilegeEscalation
+          value: false
+      - equal:
+          path: allowPrivilegedContainer
+          value: false
+
   - it: SecurityContextConstraints allowedCapabilities is not empty when host.privileged is false
     capabilities:
       apiVersions:

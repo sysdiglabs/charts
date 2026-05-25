@@ -65,10 +65,10 @@ tests:
           count: 0
         template: templates/host/gke-allowlist-waiter-job.yaml
 
-  - it: Does not render waiter SA/CR/CRB when host.rbac.create is false
+  - it: Does not render waiter SA/CR/CRB when allowlist_waiter.rbac.create is false
     set:
       gke_autopilot.allowlist_waiter.enabled: true
-      host.rbac.create: false
+      gke_autopilot.allowlist_waiter.rbac.create: false
     asserts:
       - hasDocuments:
           count: 0
@@ -78,6 +78,80 @@ tests:
         template: templates/host/gke-allowlist-waiter-clusterrole.yaml
       - hasDocuments:
           count: 0
+        template: templates/host/gke-allowlist-waiter-clusterrolebinding.yaml
+      - hasDocuments:
+          count: 1
+        template: templates/host/gke-allowlist-waiter-job.yaml
+
+  - it: Waiter RBAC is independent of host.rbac.create
+    set:
+      gke_autopilot.allowlist_waiter.enabled: true
+      host.rbac.create: false
+    asserts:
+      - hasDocuments:
+          count: 1
+        template: templates/host/gke-allowlist-waiter-serviceaccount.yaml
+      - hasDocuments:
+          count: 1
+        template: templates/host/gke-allowlist-waiter-clusterrole.yaml
+      - hasDocuments:
+          count: 1
+        template: templates/host/gke-allowlist-waiter-clusterrolebinding.yaml
+      - hasDocuments:
+          count: 1
+        template: templates/host/gke-allowlist-waiter-job.yaml
+
+  - it: service_account.create false suppresses only the waiter SA; CR and CRB still render
+    set:
+      gke_autopilot.allowlist_waiter.enabled: true
+      gke_autopilot.allowlist_waiter.rbac.service_account.create: false
+    asserts:
+      - hasDocuments:
+          count: 0
+        template: templates/host/gke-allowlist-waiter-serviceaccount.yaml
+      - hasDocuments:
+          count: 1
+        template: templates/host/gke-allowlist-waiter-clusterrole.yaml
+      - hasDocuments:
+          count: 1
+        template: templates/host/gke-allowlist-waiter-clusterrolebinding.yaml
+      - hasDocuments:
+          count: 1
+        template: templates/host/gke-allowlist-waiter-job.yaml
+
+  - it: cluster_role.create false suppresses only the waiter CR and CRB; SA still renders
+    set:
+      gke_autopilot.allowlist_waiter.enabled: true
+      gke_autopilot.allowlist_waiter.rbac.cluster_role.create: false
+    asserts:
+      - hasDocuments:
+          count: 1
+        template: templates/host/gke-allowlist-waiter-serviceaccount.yaml
+      - hasDocuments:
+          count: 0
+        template: templates/host/gke-allowlist-waiter-clusterrole.yaml
+      - hasDocuments:
+          count: 0
+        template: templates/host/gke-allowlist-waiter-clusterrolebinding.yaml
+      - hasDocuments:
+          count: 1
+        template: templates/host/gke-allowlist-waiter-job.yaml
+
+  - it: sub-toggles override allowlist_waiter.rbac.create false
+    set:
+      gke_autopilot.allowlist_waiter.enabled: true
+      gke_autopilot.allowlist_waiter.rbac.create: false
+      gke_autopilot.allowlist_waiter.rbac.service_account.create: true
+      gke_autopilot.allowlist_waiter.rbac.cluster_role.create: true
+    asserts:
+      - hasDocuments:
+          count: 1
+        template: templates/host/gke-allowlist-waiter-serviceaccount.yaml
+      - hasDocuments:
+          count: 1
+        template: templates/host/gke-allowlist-waiter-clusterrole.yaml
+      - hasDocuments:
+          count: 1
         template: templates/host/gke-allowlist-waiter-clusterrolebinding.yaml
       - hasDocuments:
           count: 1
@@ -102,7 +176,7 @@ tests:
           value: "-5"
       - equal:
           path: metadata.annotations["helm.sh/hook-delete-policy"]
-          value: before-hook-creation,hook-succeeded
+          value: before-hook-creation
     template: templates/host/gke-allowlist-waiter-serviceaccount.yaml
 
   - it: Renders the waiter ClusterRole limited to allowlistsynchronizers
@@ -119,6 +193,9 @@ tests:
       - equal:
           path: metadata.annotations["helm.sh/hook-weight"]
           value: "-5"
+      - equal:
+          path: metadata.annotations["helm.sh/hook-delete-policy"]
+          value: before-hook-creation
       - contains:
           path: rules
           content:
@@ -146,6 +223,9 @@ tests:
       - equal:
           path: metadata.annotations["helm.sh/hook-weight"]
           value: "-5"
+      - equal:
+          path: metadata.annotations["helm.sh/hook-delete-policy"]
+          value: before-hook-creation
       - equal:
           path: roleRef.kind
           value: ClusterRole
@@ -182,7 +262,7 @@ tests:
           value: "5"
       - equal:
           path: metadata.annotations["helm.sh/hook-delete-policy"]
-          value: before-hook-creation,hook-succeeded
+          value: before-hook-creation,hook-succeeded,hook-failed
       - equal:
           path: spec.template.spec.serviceAccountName
           value: release-name-shield-host-allowlist-waiter
@@ -194,13 +274,33 @@ tests:
           pattern: "^quay\\.io/sysdig/kubectl:[^\\s]+$"
       - matchRegex:
           path: spec.template.spec.containers[0].command[2]
-          pattern: "--timeout=120s"
+          pattern: "TIMEOUT=120s"
+      # The waiter script must dump AllowlistSynchronizer state on wait failure
+      # so the next on-caller has actionable diagnostics instead of a bare exit.
+      - matchRegex:
+          path: spec.template.spec.containers[0].command[2]
+          pattern: "kubectl describe .* allowlistsynchronizer"
+      # Job-level guard against pod hangs before the inner `kubectl wait` timeout fires
+      # (image-pull stalls, scheduler delays, admission webhook hangs).
+      - equal:
+          path: spec.activeDeadlineSeconds
+          value: 300
       # The waiter Pod must NOT carry cloud.google.com/matching-allowlist —
       # otherwise GKE Autopilot would block it on the very allowlist it waits to load.
       - notExists:
           path: spec.template.metadata.labels["cloud.google.com/matching-allowlist"]
       - notExists:
           path: spec.template.metadata.labels["autopilot.gke.io/no-connect"]
+    template: templates/host/gke-allowlist-waiter-job.yaml
+
+  - it: Honors gke_autopilot.allowlist_waiter.active_deadline_seconds override
+    set:
+      gke_autopilot.allowlist_waiter.enabled: true
+      gke_autopilot.allowlist_waiter.active_deadline_seconds: 600
+    asserts:
+      - equal:
+          path: spec.activeDeadlineSeconds
+          value: 600
     template: templates/host/gke-allowlist-waiter-job.yaml
 
   - it: Renders imagePullSecrets when gke_autopilot.allowlist_waiter.image.pull_secrets is set

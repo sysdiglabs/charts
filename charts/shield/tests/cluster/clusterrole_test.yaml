@@ -895,6 +895,29 @@ tests:
       - hasDocuments:
           count: 0
 
+  - it: cluster.rbac.cluster_role.create false suppresses the ClusterRole even when rbac.create is true
+    set:
+      cluster:
+        rbac:
+          cluster_role:
+            create: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: cluster.rbac.cluster_role.create true overrides rbac.create false
+    set:
+      cluster:
+        rbac:
+          create: false
+          cluster_role:
+            create: true
+    asserts:
+      - containsDocument:
+          kind: ClusterRole
+          apiVersion: rbac.authorization.k8s.io/v1
+          name: release-name-shield-cluster
+
   - it: cluster.rbac.create false with response_actions enabled still renders no ClusterRole
     set:
       cluster:

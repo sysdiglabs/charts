@@ -10,6 +10,18 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.40.0
+### Bug Fixes
+* **shield** [a3329c99](https://github.com/sysdiglabs/charts/commit/a3329c9923977ebd3d86a8f3d11ac8c5b0e0ef36): prevent stuck allowlist-waiter Job after hook failure ([#2619](https://github.com/sysdiglabs/charts/issues/2619))
+# v1.39.0
+### New Features
+* **shield** [cb2b82a7](https://github.com/sysdiglabs/charts/commit/cb2b82a742833f18e8648cfbaa22d562191ff995): split rbac.create into per-resource sub-toggles ([#2633](https://github.com/sysdiglabs/charts/issues/2633))
+# v1.38.1
+### Bug Fixes
+* **shield** [27aac2af](https://github.com/sysdiglabs/charts/commit/27aac2af964e248a8586a12b22f34f91bcb04252): warn when Sysdig credentials are supplied inline (helm release metadata exposure) ([#2627](https://github.com/sysdiglabs/charts/issues/2627))
+# v1.38.0
+### New Features
+* **agent,shield,sysdig-deploy** [1278cfe9](https://github.com/sysdiglabs/charts/commit/1278cfe9ecee8470e221b968b1a71bdab3cb71db): release agent 14.6.0 ([#2632](https://github.com/sysdiglabs/charts/issues/2632))
 # v1.37.1
 ### Bug Fixes
 * **shield** [226da1c3](https://github.com/sysdiglabs/charts/commit/226da1c3f52ec4db5f54548f06432aed91395b5d): support digest pinning for allowlist waiter image ([#2607](https://github.com/sysdiglabs/charts/issues/2607))

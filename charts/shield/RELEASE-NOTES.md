@@ -1,5 +1,5 @@
 # What's Changed
 
 ### Bug Fixes
-- **shield** [226da1c3](https://github.com/sysdiglabs/charts/commit/226da1c3f52ec4db5f54548f06432aed91395b5d): support digest pinning for allowlist waiter image ([#2607](https://github.com/sysdiglabs/charts/issues/2607))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.37.0...shield-1.37.1
+- **shield** [a3329c99](https://github.com/sysdiglabs/charts/commit/a3329c9923977ebd3d86a8f3d11ac8c5b0e0ef36): prevent stuck allowlist-waiter Job after hook failure ([#2619](https://github.com/sysdiglabs/charts/issues/2619))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.39.0...shield-1.40.0

@@ -363,6 +363,9 @@
         "security_context": {
           "type": "object"
         },
+        "rbac": {
+          "$ref": "#/$defs/Rbac"
+        },
         "volumes": {
           "$ref": "#/$defs/Volumes"
         },
@@ -410,6 +413,9 @@
         },
         "host_aliases": {
           "$ref": "#/$defs/HostAliases"
+        },
+        "rbac": {
+          "$ref": "#/$defs/Rbac"
         },
         "volumes": {
           "$ref": "#/$defs/Volumes"
@@ -1380,6 +1386,63 @@
           }
         ]
       ]
+    },
+    "Rbac": {
+      "type": "object",
+      "description": "RBAC resource creation controls. The `create` field is the default for the per-resource sub-toggles; set any sub-toggle explicitly to override it.",
+      "properties": {
+        "create": {
+          "type": "boolean",
+          "description": "Create the RBAC resources. Acts as the default for the per-resource sub-toggles.",
+          "default": true
+        },
+        "service_account_name": {
+          "type": ["string", "null"],
+          "description": "Name of the service account. Used whether the chart creates the SA or references an externally-managed one."
+        },
+        "service_account": {
+          "type": ["object", "null"],
+          "description": "Per-resource toggle for the ServiceAccount. Inherits `create` when unset.",
+          "properties": {
+            "create": {
+              "type": ["boolean", "null"],
+              "description": "Override the umbrella `create` for the ServiceAccount."
+            }
+          },
+          "additionalProperties": false
+        },
+        "cluster_role": {
+          "type": ["object", "null"],
+          "description": "Per-resource toggle for the ClusterRole + ClusterRoleBinding. Inherits `create` when unset.",
+          "properties": {
+            "create": {
+              "type": ["boolean", "null"],
+              "description": "Override the umbrella `create` for the ClusterRole and ClusterRoleBinding."
+            }
+          },
+          "additionalProperties": false
+        },
+        "role": {
+          "type": ["object", "null"],
+          "description": "Per-resource toggle for the Role + RoleBinding. Inherits `create` when unset.",
+          "properties": {
+            "create": {
+              "type": ["boolean", "null"],
+              "description": "Override the umbrella `create` for the Role and RoleBinding."
+            }
+          },
+          "additionalProperties": false
+        },
+        "labels": {
+          "type": "object",
+          "description": "Labels applied to RBAC resources created by the chart."
+        },
+        "annotations": {
+          "type": "object",
+          "description": "Annotations applied to RBAC resources created by the chart."
+        }
+      },
+      "additionalProperties": false
     }
   }
 }
