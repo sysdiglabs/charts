@@ -65,10 +65,10 @@ tests:
           count: 0
         template: templates/host/gke-allowlist-waiter-job.yaml
 
-  - it: Does not render waiter SA/CR/CRB when host.rbac.create is false
+  - it: Does not render waiter SA/CR/CRB when allowlist_waiter.rbac.create is false
     set:
       gke_autopilot.allowlist_waiter.enabled: true
-      host.rbac.create: false
+      gke_autopilot.allowlist_waiter.rbac.create: false
     asserts:
       - hasDocuments:
           count: 0
@@ -78,6 +78,80 @@ tests:
         template: templates/host/gke-allowlist-waiter-clusterrole.yaml
       - hasDocuments:
           count: 0
+        template: templates/host/gke-allowlist-waiter-clusterrolebinding.yaml
+      - hasDocuments:
+          count: 1
+        template: templates/host/gke-allowlist-waiter-job.yaml
+
+  - it: Waiter RBAC is independent of host.rbac.create
+    set:
+      gke_autopilot.allowlist_waiter.enabled: true
+      host.rbac.create: false
+    asserts:
+      - hasDocuments:
+          count: 1
+        template: templates/host/gke-allowlist-waiter-serviceaccount.yaml
+      - hasDocuments:
+          count: 1
+        template: templates/host/gke-allowlist-waiter-clusterrole.yaml
+      - hasDocuments:
+          count: 1
+        template: templates/host/gke-allowlist-waiter-clusterrolebinding.yaml
+      - hasDocuments:
+          count: 1
+        template: templates/host/gke-allowlist-waiter-job.yaml
+
+  - it: service_account.create false suppresses only the waiter SA; CR and CRB still render
+    set:
+      gke_autopilot.allowlist_waiter.enabled: true
+      gke_autopilot.allowlist_waiter.rbac.service_account.create: false
+    asserts:
+      - hasDocuments:
+          count: 0
+        template: templates/host/gke-allowlist-waiter-serviceaccount.yaml
+      - hasDocuments:
+          count: 1
+        template: templates/host/gke-allowlist-waiter-clusterrole.yaml
+      - hasDocuments:
+          count: 1
+        template: templates/host/gke-allowlist-waiter-clusterrolebinding.yaml
+      - hasDocuments:
+          count: 1
+        template: templates/host/gke-allowlist-waiter-job.yaml
+
+  - it: cluster_role.create false suppresses only the waiter CR and CRB; SA still renders
+    set:
+      gke_autopilot.allowlist_waiter.enabled: true
+      gke_autopilot.allowlist_waiter.rbac.cluster_role.create: false
+    asserts:
+      - hasDocuments:
+          count: 1
+        template: templates/host/gke-allowlist-waiter-serviceaccount.yaml
+      - hasDocuments:
+          count: 0
+        template: templates/host/gke-allowlist-waiter-clusterrole.yaml
+      - hasDocuments:
+          count: 0
+        template: templates/host/gke-allowlist-waiter-clusterrolebinding.yaml
+      - hasDocuments:
+          count: 1
+        template: templates/host/gke-allowlist-waiter-job.yaml
+
+  - it: sub-toggles override allowlist_waiter.rbac.create false
+    set:
+      gke_autopilot.allowlist_waiter.enabled: true
+      gke_autopilot.allowlist_waiter.rbac.create: false
+      gke_autopilot.allowlist_waiter.rbac.service_account.create: true
+      gke_autopilot.allowlist_waiter.rbac.cluster_role.create: true
+    asserts:
+      - hasDocuments:
+          count: 1
+        template: templates/host/gke-allowlist-waiter-serviceaccount.yaml
+      - hasDocuments:
+          count: 1
+        template: templates/host/gke-allowlist-waiter-clusterrole.yaml
+      - hasDocuments:
+          count: 1
         template: templates/host/gke-allowlist-waiter-clusterrolebinding.yaml
       - hasDocuments:
           count: 1

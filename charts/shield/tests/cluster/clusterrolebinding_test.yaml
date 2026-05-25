@@ -1,0 +1,71 @@
+suite: Cluster - ClusterRoleBinding
+templates:
+  - templates/cluster/clusterrolebinding.yaml
+release:
+  name: release-name
+  namespace: shield-namespace
+values:
+  - ../values/base.yaml
+tests:
+  - it: Renders the ClusterRoleBinding by default
+    asserts:
+      - containsDocument:
+          kind: ClusterRoleBinding
+          apiVersion: rbac.authorization.k8s.io/v1
+          name: release-name-shield-cluster
+      - equal:
+          path: roleRef
+          value:
+            apiGroup: rbac.authorization.k8s.io
+            kind: ClusterRole
+            name: release-name-shield-cluster
+      - equal:
+          path: subjects
+          value:
+            - kind: ServiceAccount
+              namespace: shield-namespace
+              name: release-name-shield-cluster
+
+  - it: cluster.rbac.create false renders no ClusterRoleBinding
+    set:
+      cluster:
+        rbac:
+          create: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: cluster.rbac.cluster_role.create false suppresses the ClusterRoleBinding
+    set:
+      cluster:
+        rbac:
+          cluster_role:
+            create: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: cluster.rbac.cluster_role.create true overrides rbac.create false
+    set:
+      cluster:
+        rbac:
+          create: false
+          cluster_role:
+            create: true
+    asserts:
+      - containsDocument:
+          kind: ClusterRoleBinding
+          apiVersion: rbac.authorization.k8s.io/v1
+          name: release-name-shield-cluster
+
+  - it: Subject references externally-managed service_account_name
+    set:
+      cluster:
+        rbac:
+          service_account_name: my-existing-sa
+          service_account:
+            create: false
+    asserts:
+      - equal:
+          path: subjects[0].name
+          value: my-existing-sa

@@ -67,6 +67,22 @@ If release name contains chart name it will be used as a full name.
 {{- default (include "host.fullname" .) .Values.host.rbac.service_account_name }}
 {{- end }}
 
+{{/*
+RBAC sub-toggle wrappers. Each delegates to common.rbac.sub_toggle_enabled so
+the inheritance logic lives in a single place.
+*/}}
+{{- define "host.rbac.service_account.create" -}}
+{{- include "common.rbac.sub_toggle_enabled" (dict "rbac" .Values.host.rbac "key" "service_account") -}}
+{{- end }}
+
+{{- define "host.rbac.cluster_role.create" -}}
+{{- include "common.rbac.sub_toggle_enabled" (dict "rbac" .Values.host.rbac "key" "cluster_role") -}}
+{{- end }}
+
+{{- define "host.rbac.role.create" -}}
+{{- include "common.rbac.sub_toggle_enabled" (dict "rbac" .Values.host.rbac "key" "role") -}}
+{{- end }}
+
 {{- define "host.config_override" -}}
 {{ .Values.host.additional_settings | toYaml }}
 {{- end -}}
@@ -343,6 +359,14 @@ true
 
 {{- define "host.allowlist_waiter.service_account_name" -}}
 {{- default (include "host.allowlist_waiter.fullname" .) .Values.gke_autopilot.allowlist_waiter.service_account_name }}
+{{- end }}
+
+{{- define "host.allowlist_waiter.rbac.service_account.create" -}}
+{{- include "common.rbac.sub_toggle_enabled" (dict "rbac" .Values.gke_autopilot.allowlist_waiter.rbac "key" "service_account") -}}
+{{- end }}
+
+{{- define "host.allowlist_waiter.rbac.cluster_role.create" -}}
+{{- include "common.rbac.sub_toggle_enabled" (dict "rbac" .Values.gke_autopilot.allowlist_waiter.rbac "key" "cluster_role") -}}
 {{- end }}
 
 {{- define "host.allowlist_waiter.tag_separator" -}}

@@ -30,6 +30,37 @@ tests:
       - hasDocuments:
           count: 0
 
+  - it: Does not create the ClusterRoleBinding if cluster_role.create is false
+    capabilities:
+      apiVersions:
+        - monitoring.openshift.io/v1
+    set:
+      host:
+        rbac:
+          cluster_role:
+            create: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: cluster_role.create true overrides rbac.create false for the OpenShift binding
+    capabilities:
+      apiVersions:
+        - monitoring.openshift.io/v1
+    set:
+      host:
+        rbac:
+          create: false
+          cluster_role:
+            create: true
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          apiVersion: rbac.authorization.k8s.io/v1
+          kind: ClusterRoleBinding
+          name: release-name-shield-host-cluster-monitoring-view
+
   - it: Does not create the ClusterRoleBinding if the ClusterRole exists and monitoring.openshift.io/v1 is not supported
     asserts:
       - hasDocuments:

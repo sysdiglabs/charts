@@ -7,6 +7,43 @@ release:
 values:
   - ../values/base.yaml
 tests:
+  - it: cluster.rbac.create false renders no Role
+    set:
+      cluster:
+        rbac:
+          create: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: cluster.rbac.role.create false suppresses the Role even when rbac.create is true
+    set:
+      cluster:
+        rbac:
+          role:
+            create: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: cluster.rbac.role.create true overrides rbac.create false
+    set:
+      cluster:
+        rbac:
+          create: false
+          role:
+            create: true
+      features:
+        vulnerability_management:
+          container_vulnerability_management:
+            enabled: true
+    asserts:
+      - containsDocument:
+          kind: Role
+          apiVersion: rbac.authorization.k8s.io/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+
   - it: Default Role
     asserts:
       - containsDocument:
