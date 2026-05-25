@@ -1,0 +1,139 @@
+suite: Host - GKE Allowlist Waiter Job
+templates:
+  - templates/host/gke-allowlist-waiter-job.yaml
+release:
+  name: release-name
+  namespace: shield-namespace
+values:
+  - ../values/gke-autopilot.yaml
+tests:
+  - it: Doesn't render when allowlist_waiter is disabled (default)
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: Renders the Job when allowlist_waiter is enabled
+    set:
+      gke_autopilot:
+        allowlist_waiter:
+          enabled: true
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: Job
+          apiVersion: batch/v1
+          name: release-name-shield-host-allowlist-waiter
+
+  - it: Job has PSA Restricted compatible pod securityContext by default
+    set:
+      gke_autopilot:
+        allowlist_waiter:
+          enabled: true
+    asserts:
+      - equal:
+          path: spec.template.spec.securityContext.runAsNonRoot
+          value: true
+      - equal:
+          path: spec.template.spec.securityContext.runAsUser
+          value: 65532
+      - equal:
+          path: spec.template.spec.securityContext.runAsGroup
+          value: 65532
+      - equal:
+          path: spec.template.spec.securityContext.seccompProfile.type
+          value: RuntimeDefault
+
+  - it: Container has PSA Restricted compatible securityContext by default
+    set:
+      gke_autopilot:
+        allowlist_waiter:
+          enabled: true
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].securityContext.allowPrivilegeEscalation
+          value: false
+      - equal:
+          path: spec.template.spec.containers[0].securityContext.readOnlyRootFilesystem
+          value: true
+      - equal:
+          path: spec.template.spec.containers[0].securityContext.capabilities.drop
+          value:
+            - ALL
+
+  - it: Pod securityContext is overridable via values
+    set:
+      gke_autopilot:
+        allowlist_waiter:
+          enabled: true
+          pod_security_context:
+            runAsNonRoot: true
+            runAsUser: 1000
+            fsGroup: 1000
+    asserts:
+      - equal:
+          path: spec.template.spec.securityContext.runAsUser
+          value: 1000
+      - equal:
+          path: spec.template.spec.securityContext.fsGroup
+          value: 1000
+
+  - it: Container securityContext is overridable via values
+    set:
+      gke_autopilot:
+        allowlist_waiter:
+          enabled: true
+          security_context:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: false
+            capabilities:
+              drop:
+                - ALL
+              add:
+                - NET_BIND_SERVICE
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].securityContext.readOnlyRootFilesystem
+          value: false
+      - equal:
+          path: spec.template.spec.containers[0].securityContext.capabilities.add
+          value:
+            - NET_BIND_SERVICE
+
+  - it: Job pre-install hook annotations are preserved
+    set:
+      gke_autopilot:
+        allowlist_waiter:
+          enabled: true
+    asserts:
+      - equal:
+          path: metadata.annotations["helm.sh/hook"]
+          value: pre-install,pre-upgrade
+      - equal:
+          path: metadata.annotations["helm.sh/hook-weight"]
+          value: "5"
+
+  - it: Pod template has no annotations block when global pod_annotations is empty
+    set:
+      gke_autopilot:
+        allowlist_waiter:
+          enabled: true
+    asserts:
+      - notExists:
+          path: spec.template.metadata.annotations
+
+  - it: Pod template renders global pod_annotations
+    set:
+      gke_autopilot:
+        allowlist_waiter:
+          enabled: true
+      pod_annotations:
+        example.com/foo: bar
+        example.com/baz: qux
+    asserts:
+      - equal:
+          path: spec.template.metadata.annotations["example.com/foo"]
+          value: bar
+      - equal:
+          path: spec.template.metadata.annotations["example.com/baz"]
+          value: qux
