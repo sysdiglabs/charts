@@ -9,9 +9,10 @@ metadata:
   annotations:
     helm.sh/hook: "pre-install,pre-upgrade"
     helm.sh/hook-weight: "5"
-    helm.sh/hook-delete-policy: "before-hook-creation,hook-succeeded"
+    helm.sh/hook-delete-policy: "before-hook-creation,hook-succeeded,hook-failed"
 spec:
   backoffLimit: 3
+  activeDeadlineSeconds: {{ .Values.gke_autopilot.allowlist_waiter.active_deadline_seconds }}
   template:
     metadata:
       name: {{ include "host.allowlist_waiter.fullname" . }}
@@ -35,12 +36,26 @@ spec:
             - /bin/bash
             - -c
             - |
-              set -euo pipefail
-              echo "Waiting for AllowlistSynchronizer/sysdig-agent-allowlist-synchronizer to become Ready..."
+              set -uo pipefail
+              NAMESPACE={{ .Release.Namespace }}
+              SYNC_NAME=sysdig-agent-allowlist-synchronizer
+              TIMEOUT={{ .Values.gke_autopilot.allowlist_waiter.timeout }}
+
+              echo "Waiting for AllowlistSynchronizer/$SYNC_NAME to become Ready (timeout $TIMEOUT)..."
               kubectl wait --for=condition=Ready \
-                allowlistsynchronizer/sysdig-agent-allowlist-synchronizer \
-                -n {{ .Release.Namespace }} \
-                --timeout={{ .Values.gke_autopilot.allowlist_waiter.timeout }}
+                allowlistsynchronizer/"$SYNC_NAME" \
+                -n "$NAMESPACE" \
+                --timeout="$TIMEOUT"
+              ec=$?
+
+              if [ "$ec" -ne 0 ]; then
+                echo "---" >&2
+                echo "kubectl wait failed (exit $ec). Dumping AllowlistSynchronizer state for diagnostics:" >&2
+                kubectl describe -n "$NAMESPACE" allowlistsynchronizer/"$SYNC_NAME" >&2 || true
+                echo "---" >&2
+                kubectl get -n "$NAMESPACE" allowlistsynchronizer/"$SYNC_NAME" -o yaml >&2 || true
+                exit "$ec"
+              fi
               echo "AllowlistSynchronizer is Ready."
           resources:
             {{- toYaml .Values.gke_autopilot.allowlist_waiter.resources | nindent 12 }}
