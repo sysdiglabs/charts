@@ -112,3 +112,28 @@ tests:
       - equal:
           path: metadata.annotations["helm.sh/hook-weight"]
           value: "5"
+
+  - it: Pod template has no annotations block when global pod_annotations is empty
+    set:
+      gke_autopilot:
+        allowlist_waiter:
+          enabled: true
+    asserts:
+      - notExists:
+          path: spec.template.metadata.annotations
+
+  - it: Pod template renders global pod_annotations
+    set:
+      gke_autopilot:
+        allowlist_waiter:
+          enabled: true
+      pod_annotations:
+        example.com/foo: bar
+        example.com/baz: qux
+    asserts:
+      - equal:
+          path: spec.template.metadata.annotations["example.com/foo"]
+          value: bar
+      - equal:
+          path: spec.template.metadata.annotations["example.com/baz"]
+          value: qux

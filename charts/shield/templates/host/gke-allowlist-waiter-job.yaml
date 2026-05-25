@@ -21,6 +21,10 @@ spec:
                cloud.google.com/matching-allowlist, which would make GKE Autopilot
                block this Pod on the very allowlist it is waiting to load. */}}
         {{- include "shield.labels" . | nindent 8 }}
+      {{- with .Values.pod_annotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
     spec:
       restartPolicy: OnFailure
       serviceAccountName: {{ include "host.allowlist_waiter.service_account_name" . }}
