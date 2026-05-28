@@ -213,6 +213,24 @@
 {{- end }}
 
 {{/*
+  Checks if posture is enabled and OCP Route collection is enabled.
+*/}}
+{{- define "cluster.posture_ocp_routes_enabled" -}}
+  {{- if and (include "cluster.posture_enabled" .) (dig "kspm_collector" "ocp_route_enabled" false .Values.cluster.additional_settings) -}}
+    {{- true -}}
+  {{- end -}}
+{{- end }}
+
+{{/*
+  Checks if posture is enabled and OCP DeploymentConfig collection is enabled.
+*/}}
+{{- define "cluster.posture_ocp_deploymentconfig_enabled" -}}
+  {{- if and (include "cluster.posture_enabled" .) (dig "kspm_collector" "ocp_deploymentconfig_enabled" false .Values.cluster.additional_settings) -}}
+    {{- true -}}
+  {{- end -}}
+{{- end }}
+
+{{/*
   Checks if the cluster has the response actions feature enabled.
   (either by the feature config or additional settings)
 */}}
