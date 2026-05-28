@@ -1581,6 +1581,163 @@ tests:
               - get
               - watch
               - patch # needed to remove finalizers, which could prevent deletion
+
+  - it: Test posture enabled, default OCP config
+    set:
+      cluster_shield:
+        features:
+          posture:
+            enabled: true
+    asserts:
+      - isKind:
+          of: ClusterRole
+      - isAPIVersion:
+          of: rbac.authorization.k8s.io/v1
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - route.openshift.io
+            resources:
+              - routes
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - apps.openshift.io
+            resources:
+              - deploymentconfigs
+
+  - it: Test posture disabled, ignore OCP flags
+    set:
+      cluster_shield:
+        features:
+          posture:
+            enabled: false
+        kspm_collector:
+          ocp_route_enabled: true
+          ocp_deploymentconfig_enabled: true
+    asserts:
+      - isKind:
+          of: ClusterRole
+      - isAPIVersion:
+          of: rbac.authorization.k8s.io/v1
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - route.openshift.io
+            resources:
+              - routes
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - apps.openshift.io
+            resources:
+              - deploymentconfigs
+
+  - it: Test posture enabled, OCP routes enabled
+    set:
+      cluster_shield:
+        features:
+          posture:
+            enabled: true
+        kspm_collector:
+          ocp_route_enabled: true
+    asserts:
+      - isKind:
+          of: ClusterRole
+      - isAPIVersion:
+          of: rbac.authorization.k8s.io/v1
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - route.openshift.io
+            resources:
+              - routes
+            verbs:
+              - get
+              - list
+              - watch
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - apps.openshift.io
+            resources:
+              - deploymentconfigs
+
+  - it: Test posture enabled, OCP deploymentconfigs enabled
+    set:
+      cluster_shield:
+        features:
+          posture:
+            enabled: true
+        kspm_collector:
+          ocp_deploymentconfig_enabled: true
+    asserts:
+      - isKind:
+          of: ClusterRole
+      - isAPIVersion:
+          of: rbac.authorization.k8s.io/v1
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - apps.openshift.io
+            resources:
+              - deploymentconfigs
+            verbs:
+              - get
+              - list
+              - watch
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - route.openshift.io
+            resources:
+              - routes
+
+  - it: Test posture enabled, OCP routes and deploymentconfigs both enabled
+    set:
+      cluster_shield:
+        features:
+          posture:
+            enabled: true
+        kspm_collector:
+          ocp_route_enabled: true
+          ocp_deploymentconfig_enabled: true
+    asserts:
+      - isKind:
+          of: ClusterRole
+      - isAPIVersion:
+          of: rbac.authorization.k8s.io/v1
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - route.openshift.io
+            resources:
+              - routes
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - apps.openshift.io
+            resources:
+              - deploymentconfigs
+            verbs:
+              - get
+              - list
+              - watch
+
   - it: Test image_signature enabled
     set:
       cluster_shield:
