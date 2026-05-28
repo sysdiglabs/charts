@@ -62,6 +62,8 @@
                 "eu-gb-secure",
                 "eu1",
                 "in1",
+                "jp1",
+                "jp1-alt",
                 "jp-osa-monitor",
                 "jp-osa-private-monitor",
                 "jp-osa-private-secure",
@@ -486,80 +488,202 @@
       }
     },
     "ClusterShieldConfiguration": {
-      "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "title": "Settings",
-      "type": "object",
-      "properties": {
-        "log_level": {
-          "default": "warn",
-          "$ref": "#/$defs/ClusterShieldConfiguration/$defs/LogLevel"
-        },
-        "cluster_config": {
-          "$ref": "#/$defs/ClusterShieldConfiguration/$defs/ClusterConfig",
-          "description": "The cluster configuration"
-        },
-        "sysdig_endpoint": {
-          "description": "Configuration for the sysdig services.",
-          "$ref": "#/$defs/ClusterShieldConfiguration/$defs/SysdigEndpoint"
-        },
-        "ssl": {
-          "description": "SSL configurations.",
-          "$ref": "#/$defs/ClusterShieldConfiguration/$defs/SSL"
-        },
-        "features": {
-          "description": "Features configurations",
-          "$ref": "#/$defs/ClusterShieldConfiguration/$defs/Features"
-        },
-        "monitoring_port": {
-          "type": "integer",
-          "default": 8080,
-          "minimum": 1,
-          "maximum": 65535,
-          "description": "HTTP Server port used to expose healthcheck and prometheus metrics."
-        },
-        "cache": {
-          "$ref": "#/$defs/ClusterShieldConfiguration/$defs/Cache"
-        },
-        "kubernetes": {
-          "$ref": "#/$defs/ClusterShieldConfiguration/$defs/Kubernetes",
-          "description": "Kubernetes configurations"
-        }
-      },
       "$defs": {
-        "Audit": {
-          "type": "object",
+        "ActionTrigger": {
+          "default": "all",
+          "description": "Controls functionality how this action can be triggered. `none` effectively turns off the action.",
+          "enum": [
+            "none",
+            "all"
+          ],
+          "type": "string"
+        },
+        "AdmissionControl": {
+          "$defs": {
+            "IsEnabled": {
+              "properties": {
+                "enabled": {
+                  "const": true
+                }
+              }
+            }
+          },
           "properties": {
+            "container_vulnerability_management": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/AdmissionControlContainerVulnerabilityManagement"
+            },
+            "dry_run": {
+              "default": true,
+              "description": "Dry Run requests",
+              "type": "boolean"
+            },
             "enabled": {
-              "type": "boolean",
-              "description": "Specify if the audit feature is enabled",
-              "default": false
-            },
-            "http_port": {
-              "type": "integer",
-              "default": 6443,
-              "minimum": 1,
-              "maximum": 65535,
-              "description": "HTTP Server port used to expose the webhook web server."
-            },
-            "timeout": {
-              "type": "integer",
-              "description": "The number of seconds for the request to time out",
-              "default": 5
+              "default": false,
+              "description": "Specify if the Admission Control is enabled",
+              "type": "boolean"
             },
             "excluded_namespaces": {
-              "type": "array",
+              "default": [],
+              "description": "List of namespaces to exclude from the admission control feature",
               "items": {
                 "type": "string"
               },
+              "type": "array"
+            },
+            "failure_policy": {
+              "default": "Ignore",
+              "description": "The policy to apply when an error occurs during validation",
+              "enum": [
+                "Ignore",
+                "Fail"
+              ],
+              "type": "string"
+            },
+            "http_port": {
+              "default": 8443,
+              "description": "HTTP Server port used to expose the webhook web server.",
+              "maximum": 65535,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "posture": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/AdmissionControlPosture"
+            },
+            "supply_chain": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/AdmissionControlSupplyChain"
+            },
+            "timeout": {
+              "default": 5,
+              "description": "The number of seconds for the request to time out",
+              "type": "integer"
+            }
+          },
+          "required": [
+            "enabled",
+            "failure_policy",
+            "http_port"
+          ],
+          "type": "object"
+        },
+        "AdmissionControlContainerVulnerabilityManagement": {
+          "properties": {
+            "enabled": {
+              "default": true,
+              "description": "Enable container vulnerability management checks",
+              "type": "boolean"
+            }
+          },
+          "type": "object"
+        },
+        "AdmissionControlPosture": {
+          "properties": {
+            "enabled": {
+              "default": true,
+              "description": "Enable Posture checks",
+              "type": "boolean"
+            }
+          },
+          "type": "object"
+        },
+        "AdmissionControlSupplyChain": {
+          "properties": {
+            "enabled": {
+              "default": false,
+              "description": "Enable Supply Chain checks",
+              "type": "boolean"
+            },
+            "image_signature": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/AdmissionControlSupplyChainImage",
+              "type": "object"
+            }
+          },
+          "type": "object"
+        },
+        "AdmissionControlSupplyChainImage": {
+          "properties": {
+            "cosign": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/AdmissionControlSupplyChainImageCosign",
+              "type": "object"
+            },
+            "enabled": {
+              "default": false,
+              "description": "Enable Supply Chain checks",
+              "type": "boolean"
+            }
+          },
+          "type": "object"
+        },
+        "AdmissionControlSupplyChainImageCosign": {
+          "description": "Cosign-like initialization parameters for image signature enforcer",
+          "properties": {
+            "mirror": {
+              "description": "The URL of The Update Framework (TUF) server used for retrieving sigstore-compliant trust information. If not specified, the default public sigstore TUF url will be used.",
+              "type": "string"
+            },
+            "root": {
+              "description": "The filepath or URL where an out-of-the-band copy of The Update Framework (TUF) root JSON file is available. In case a filepath is used, it can be made available through a custom volume mount pointing at a dedicated secret and/or configmap.",
+              "type": "string"
+            },
+            "root_checksum": {
+              "description": "The checksum for The Update Framework (TUF) root JSON file. Checksum value should be in the format: <algorithm>:<value> where supported algorithms are: sha256 and sha512. If no algorithm is specified, sha256 will be used.",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "Audit": {
+          "$defs": {
+            "IsEnabled": {
+              "properties": {
+                "enabled": {
+                  "const": true
+                }
+              }
+            },
+            "UseFalco": {
+              "properties": {
+                "use_falco": {
+                  "const": true
+                }
+              }
+            }
+          },
+          "properties": {
+            "enabled": {
+              "default": false,
+              "description": "Specify if the audit feature is enabled",
+              "type": "boolean"
+            },
+            "excluded_namespaces": {
+              "default": [],
               "description": "List of namespaces to exclude from the audit feature",
-              "default": []
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "http_port": {
+              "default": 6443,
+              "description": "HTTP Server port used to expose the webhook web server.",
+              "maximum": 65535,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "method": {
+              "default": "validating_webhook",
+              "description": "The method used by the audit feature to ingest audit events",
+              "enum": [
+                "validating_webhook",
+                "audit_backend"
+              ],
+              "type": "string"
+            },
+            "timeout": {
+              "default": 5,
+              "description": "The number of seconds for the request to time out",
+              "type": "integer"
             },
             "webhook_rules": {
-              "description": "List of rules used to determine if a request should be audited",
-              "type": "array",
-              "items": {
-                "type": "object"
-              },
               "default": [
                 {
                   "apiGroups": [
@@ -582,16 +706,12 @@
                   ],
                   "scope": "*"
                 }
-              ]
-            },
-            "method": {
-              "type": "string",
-              "description": "The method used by the audit feature to ingest audit events",
-              "enum": [
-                "validating_webhook",
-                "audit_backend"
               ],
-              "default": "validating_webhook"
+              "description": "List of rules used to determine if a request should be audited",
+              "items": {
+                "type": "object"
+              },
+              "type": "array"
             }
           },
           "required": [
@@ -599,963 +719,19 @@
             "http_port",
             "timeout"
           ],
-          "$defs": {
-            "IsEnabled": {
-              "properties": {
-                "enabled": {
-                  "const": true
-                }
-              }
-            },
-            "UseFalco": {
-              "properties": {
-                "use_falco": {
-                  "const": true
-                }
-              }
-            }
-          }
-        },
-        "ClusterConfig": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": [
-                "string",
-                "null"
-              ],
-              "description": "The name of the cluster. Make sure to set a unique value for all the clusters being inspected",
-              "examples": [
-                "my-cluster"
-              ]
-            },
-            "tags": {
-              "type": "object",
-              "propertyNames": {
-                "pattern": "^[a-zA-Z0-9_.-]{1,255}$",
-                "description": "The tag name",
-                "examples": [
-                  "env",
-                  "region"
-                ]
-              },
-              "additionalProperties": {
-                "type": "string",
-                "maxLength": 255
-              },
-              "description": "Tags you want to apply to the metadata sent to the Sysdig BE. They are used for instance as additional labels to the KSM metrics, with format `agent_tag_<tag_name>`",
-              "examples": [
-                {
-                  "env": "staging",
-                  "region": "us-west-1"
-                }
-              ]
-            }
-          },
-          "required": [],
-          "additionalProperties": false
-        },
-        "SysdigEndpoint": {
-          "type": "object",
-          "properties": {
-            "access_key": {
-              "type": [
-                "string",
-                "null"
-              ],
-              "description": "Sysdig Agent Access Key",
-              "examples": [
-                "12345678-1234-1234-1234-123456789012"
-              ]
-            },
-            "api_url": {
-              "type": [
-                "string",
-                "null"
-              ],
-              "description": "Sysdig backend host",
-              "format": "uri",
-              "examples": [
-                "https://www.example.com"
-              ]
-            },
-            "secure_api_token": {
-              "type": [
-                "string",
-                "null"
-              ],
-              "description": "The API Token to access Sysdig Secure",
-              "examples": [
-                "12345678-1234-1234-1234-123456789012"
-              ]
-            },
-            "collector": {
-              "type": [
-                "string",
-                "null"
-              ],
-              "description": "Host and port to access Sysdig Collector endpoint",
-              "format": "hostport",
-              "examples": [
-                "collector.example.com:6443",
-                "192.168.0.1:6443",
-                "[2001:db8:1f70::999:de8:7648:6e8]:6443"
-              ]
-            },
-            "region": {
-              "type": [
-                "string",
-                "null"
-              ],
-              "description": "The region where the collector is located",
-              "default": "custom",
-              "enum": [
-                "custom",
-                "au-syd-monitor",
-                "au-syd-private-monitor",
-                "au-syd-private-secure",
-                "au-syd-secure",
-                "au1",
-                "au1-alt",
-                "br-sao-monitor",
-                "br-sao-private-monitor",
-                "br-sao-private-secure",
-                "br-sao-secure",
-                "ca-mon-monitor",
-                "ca-mon-private-monitor",
-                "ca-mon-private-secure",
-                "ca-mon-secure",
-                "ca-tor-monitor",
-                "ca-tor-private-monitor",
-                "ca-tor-private-secure",
-                "ca-tor-secure",
-                "eu-de-monitor",
-                "eu-de-private-monitor",
-                "eu-de-private-secure",
-                "eu-de-secure",
-                "eu-gb-monitor",
-                "eu-gb-private-monitor",
-                "eu-gb-private-secure",
-                "eu-gb-secure",
-                "eu1",
-                "eu1-alt",
-                "eu2",
-                "eu2-alt",
-                "in1",
-                "in1-alt",
-                "in-che-monitor",
-                "in-che-private-monitor",
-                "in-che-private-secure",
-                "in-che-secure",
-                "jp-osa-monitor",
-                "jp-osa-private-monitor",
-                "jp-osa-private-secure",
-                "jp-osa-secure",
-                "jp-tok-monitor",
-                "jp-tok-private-monitor",
-                "jp-tok-private-secure",
-                "jp-tok-secure",
-                "me2",
-                "me2-alt",
-                "us-east-monitor",
-                "us-east-private-monitor",
-                "us-east-private-secure",
-                "us-east-secure",
-                "us-south-monitor",
-                "us-south-private-monitor",
-                "us-south-private-secure",
-                "us-south-secure",
-                "us1",
-                "us1-alt",
-                "us2",
-                "us2-alt",
-                "us3",
-                "us3-alt",
-                "us4",
-                "us4-alt",
-                null
-              ]
-            }
-          },
-          "required": [],
-          "additionalProperties": false,
-          "$defs": {
-            "IsCustomRegion": {
-              "properties": {
-                "region": {
-                  "const": "custom"
-                }
-              }
-            },
-            "SetCollectorRequired": {
-              "collector": {
-                "type": "string"
-              },
-              "required": [
-                "collector"
-              ]
-            }
-          }
-        },
-        "SSL": {
-          "type": "object",
-          "properties": {
-            "verify": {
-              "type": "boolean",
-              "default": true,
-              "description": "Define if the client must verify the backend SSL certificate."
-            }
-          },
-          "required": [
-            "verify"
-          ],
-          "additionalProperties": false
-        },
-        "ContainerVulnerabilityManagement": {
-          "type": "object",
-          "properties": {
-            "enabled": {
-              "type": "boolean",
-              "description": "Specify if the scanning feature is enabled",
-              "default": false
-            },
-            "in_use": {
-              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/ContainerVulnerabilityManagementInUse"
-            },
-            "target_workloads": {
-              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/ContainerVulnerabilityManagementTargetWorkloads"
-            },
-            "registry_ssl": {
-              "description": "Verify SSL certificate when connecting to the registry",
-              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/SSL"
-            },
-            "platform_services_enabled": {
-              "type": "boolean",
-              "description": "Specify if the platform services are enabled",
-              "default": true
-            },
-            "local_cluster": {
-              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/ContainerVulnerabilityManagementLocal"
-            },
-            "filters": {
-              "type": "object",
-              "description": "Filters to apply to the images to scan",
-              "properties": {
-                "rules": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/ClusterShieldConfiguration/$defs/ContainerVulnerabilityManagementFilter"
-                  },
-                  "examples": [
-                    [
-                      {
-                        "type": "include",
-                        "field": "k8s.container.image",
-                        "value": "docker.io*"
-                      },
-                      {
-                        "type": "exclude"
-                      }
-                    ]
-                  ]
-                }
-              }
-            },
-            "parallel_files_analysis_count": {
-              "type": "integer",
-              "description": "Maximum number of files that are analyzed in parallel",
-              "default": 5
-            },
-            "max_file_size_bytes": {
-              "type": "integer",
-              "description": "Maximum size in bytes for a file to be analyzed",
-              "default": 104857600
-            },
-            "max_file_size_bytes_in_memory": {
-              "type": "integer",
-              "description": "Maximum size in bytes for a file to be analyzed in memory; file whose size is bigger than this are temporarily copied on to the filesystem",
-              "default": 26214400
-            },
-            "memory_optimized_k8s_mode": {
-              "type": "boolean",
-              "description": "Enable memory-optimized access to Kubernetes API. Enabled by default, queries K8s using the Metadata API for all resources but Pods. Set this to false if you need to see the replicas counters, but it will require more memory.",
-              "default": true
-            }
-          },
-          "required": [
-            "enabled",
-            "local_cluster",
-            "in_use",
-            "registry_ssl"
-          ],
-          "$defs": {
-            "IsEnabled": {
-              "properties": {
-                "enabled": {
-                  "const": true
-                }
-              }
-            }
-          }
-        },
-        "ContainerVulnerabilityManagementInUse": {
-          "type": "object",
-          "properties": {
-            "enabled": {
-              "type": "boolean",
-              "description": "Retrieve in-use information from the backend and aggregate them on the scan results",
-              "default": true
-            },
-            "integration_enabled": {
-              "type": "boolean",
-              "description": "Share in-use information with the external integrations",
-              "default": false
-            }
-          },
-          "required": [
-            "enabled",
-            "integration_enabled"
-          ],
-          "additionalProperties": false
-        },
-        "ContainerVulnerabilityManagementLocal": {
-          "type": "object",
-          "properties": {
-            "registry_secrets": {
-              "type": "array",
-              "items": {
-                "$ref": "#/$defs/ClusterShieldConfiguration/$defs/ContainerVulnerabilityManagementLocalRegistrySecret"
-              },
-              "examples": [
-                [
-                  {
-                    "namespace": "sysdig-agent",
-                    "secrets": [
-                      "registry-secret"
-                    ]
-                  }
-                ]
-              ]
-            }
-          }
-        },
-        "ContainerVulnerabilityManagementLocalRegistrySecret": {
-          "type": "object",
-          "properties": {
-            "namespace": {
-              "type": "string"
-            },
-            "secrets": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
-          },
-          "required": [
-            "namespace",
-            "secrets"
-          ],
-          "additionalProperties": false
-        },
-        "ContainerVulnerabilityManagementFilter": {
-          "type": "object",
-          "properties": {
-            "type": {
-              "enum": [
-                "include",
-                "exclude"
-              ]
-            },
-            "field": {
-              "enum": [
-                "k8s.container.image"
-              ],
-              "description": "The field to run the filter against"
-            },
-            "value": {
-              "type": "string",
-              "description": "The value to run the filter against",
-              "examples": [
-                "docker.io*",
-                "cd.docker-registry.corp.yahoo.co.jp:4443*",
-                "library*"
-              ]
-            }
-          },
-          "required": [
-            "type"
-          ],
-          "examples": [
-            {
-              "type": "include",
-              "field": "docker.io*",
-              "value": "k8s.container.image"
-            }
-          ],
-          "additionalProperties": false
-        },
-        "ContainerVulnerabilityManagementTargetWorkloads": {
-          "type": "object",
-          "description": "The type of workload for which container vulnerability management should operate, either \\\"kubernetes\\\" or \\\"non_orchestrated_containers\\\".",
-          "properties": {
-            "kubernetes": {
-              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/ContainerVulnerabilityManagementTargetWorkloadsKubernetes"
-            },
-            "non_orchestrated_containers": {
-              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/ContainerVulnerabilityManagementTargetWorkloadsNonOrchestratedContainers"
-            }
-          },
-          "anyOf": [
-            {
-              "required": [
-                "kubernetes"
-              ]
-            },
-            {
-              "required": [
-                "non_orchestrated_containers"
-              ]
-            }
-          ]
-        },
-        "ContainerVulnerabilityManagementTargetWorkloadsKubernetes": {
-          "type": "object",
-          "description": "Defines if Container Vulnerability Management should target kubernetes workloads and provides configurations on how the scan should be performed.",
-          "properties": {
-            "enabled": {
-              "type": "boolean",
-              "description": "Enables Container Vulnerability Management for kubernetes workloads",
-              "default": true,
-              "examples": [
-                true
-              ]
-            },
-            "image_source": {
-              "type": "string",
-              "enum": [
-                "registry",
-                "node"
-              ],
-              "description": "Specifies where container images are obtained from for vulnerability scanning. When setting \\\"registry\\\", images are pulled directly from the configured remote container registries. With \\\"node\\\", images are retrieved from the Kubernetes cluster nodes by interacting with the local container runtimes, limiting scans to images that are currently present on the nodes.",
-              "default": "registry",
-              "examples": [
-                "node",
-                "registry"
-              ]
-            }
-          },
-          "required": [
-            "enabled"
-          ]
-        },
-        "ContainerVulnerabilityManagementTargetWorkloadsNonOrchestratedContainers": {
-          "type": "object",
-          "description": "Defines if Container Vulnerability Management should target non-orchestrated containers only, and provides configurations on how the scan should be performed",
-          "properties": {
-            "enabled": {
-              "type": "boolean",
-              "description": "Enables Container Vulnerability Management for non-orchestrated containers workloads",
-              "default": false,
-              "examples": [
-                true
-              ]
-            },
-            "ignore_init_failures": {
-              "type": "boolean",
-              "description": "Instructs the Container Vulnerability Management feature to ignore errors on container scanning initialization and fallback on host-only scanning",
-              "default": false,
-              "examples": [
-                true
-              ]
-            }
-          },
-          "required": [
-            "enabled"
-          ]
-        },
-        "Kubernetes": {
-          "type": "object",
-          "properties": {
-            "root_namespace": {
-              "type": "string",
-              "description": "Root namespace to use for the kubernetes resources",
-              "default": "kube-system",
-              "examples": [
-                "kube-system"
-              ]
-            },
-            "tls_cert_file": {
-              "type": "string",
-              "$comment": "HELM-AUTOGENERATED",
-              "description": "Path to the TLS Certificate file",
-              "examples": [
-                "/cert/tls.crt"
-              ]
-            },
-            "tls_private_key_file": {
-              "type": "string",
-              "$comment": "HELM-AUTOGENERATED",
-              "description": "Path to the TLS Private Key file",
-              "examples": [
-                "/cert/tls.key"
-              ]
-            },
-            "ca_cert_file": {
-              "type": "string",
-              "description": "Path to the CA Certificate file",
-              "$comment": "HELM-AUTOGENERATED",
-              "examples": [
-                "/cert/ca.crt"
-              ]
-            }
-          },
-          "additionalProperties": false,
-          "$defs": {
-            "SetRequired": {
-              "required": [
-                "root_namespace",
-                "running_namespace"
-              ]
-            },
-            "SetTLSRequired": {
-              "required": [
-                "tls_cert_file",
-                "tls_private_key_file",
-                "ca_cert_file"
-              ]
-            }
-          }
-        },
-        "KubernetesMetadata": {
-          "type": "object",
-          "properties": {
-            "enabled": {
-              "type": "boolean",
-              "description": "Specify if the Kubernetes Metadata feature is enabled",
-              "default": false
-            },
-            "annotations_allowlist": {
-              "type": "object",
-              "propertyNames": {
-                "pattern": "^[a-z]*$",
-                "description": "The resource name in lowercase plural form",
-                "examples": [
-                  "nodes",
-                  "pods"
-                ]
-              },
-              "additionalProperties": {
-                "type": "array",
-                "items": {
-                  "type": "string",
-                  "description": "The annotation key",
-                  "format": "k8s-qualified-name-with-wildcard",
-                  "examples": [
-                    "kubernetes.io/team"
-                  ]
-                }
-              },
-              "description": "List of Kubernetes annotations keys that will be sent to the Sysdig BE e.g. for generating KSM metrics. To include them, provide a list of resource names in their plural form and Kubernetes annotation keys you would like to allow for them. Annotation keys can contain wildcard character '*'. A single '*' can be provided per resource to allow any annotation. By default, no annotations are allowed for any resource.",
-              "examples": [
-                {
-                  "nodes": [
-                    "kubernetes.io/team",
-                    "kubernetes.io/role"
-                  ]
-                }
-              ]
-            }
-          },
-          "additionalProperties": false,
-          "required": [
-            "enabled"
-          ],
-          "$defs": {
-            "IsEnabled": {
-              "properties": {
-                "enabled": {
-                  "const": true
-                }
-              }
-            }
-          }
-        },
-        "RespondResponseActions": {
-          "type": "object",
-          "properties": {
-            "enabled": {
-              "type": "boolean",
-              "description": "Enable Response Actions",
-              "default": false
-            },
-            "timeout": {
-              "type": "integer",
-              "default": 60,
-              "minimum": 1,
-              "maximum": 65535,
-              "description": "Global timeout for executing the actions, in seconds."
-            },
-            "cluster": {
-              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/RespondResponseActionsCluster"
-            },
-            "delete_pod": {
-              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/BaseActionConfiguration"
-            },
-            "rollout_restart": {
-              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/BaseActionConfiguration"
-            },
-            "isolate_network": {
-              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/BaseActionConfiguration"
-            },
-            "delete_network_policy": {
-              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/BaseActionConfiguration"
-            },
-            "get_logs": {
-              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/BaseActionConfiguration"
-            },
-            "volume_snapshot": {
-              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/BaseActionConfiguration"
-            },
-            "delete_volume_snapshot": {
-              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/BaseActionConfiguration"
-            }
-          },
-          "required": [
-            "enabled"
-          ]
-        },
-        "RespondResponseActionsCluster": {
-          "type": "object",
-          "properties": {
-            "volume_snapshot_class": {
-              "type": "string",
-              "description": "The VolumeSnapshotClass to use for creating Volume snapshots."
-            }
-          },
-          "additionalProperties": false
+          "type": "object"
         },
         "BaseActionConfiguration": {
-          "type": "object",
+          "additionalProperties": false,
           "properties": {
             "trigger": {
               "$ref": "#/$defs/ClusterShieldConfiguration/$defs/ActionTrigger"
             }
           },
-          "additionalProperties": false
-        },
-        "ActionTrigger": {
-          "type": "string",
-          "enum": [
-            "none",
-            "all"
-          ],
-          "default": "all",
-          "description": "Controls functionality how this action can be triggered. `none` effectively turns off the action."
-        },
-        "Respond": {
-          "type": "object",
-          "properties": {
-            "response_actions": {
-              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/RespondResponseActions"
-            }
-          },
-          "additionalProperties": false
-        },
-        "Monitor": {
-          "type": "object",
-          "properties": {
-            "kube_state_metrics": {
-              "description": "Influences the behaviour of Kubernetes State metrics generation",
-              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/KubeStateMetrics"
-            },
-            "kubernetes_events": {
-              "description": "Configuration for the Kubernetes events",
-              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/KubernetesEvents"
-            }
-          },
-          "additionalProperties": false,
-          "required": [
-            "kube_state_metrics",
-            "kubernetes_events"
-          ]
-        },
-        "KubeStateMetrics": {
-          "type": "object",
-          "properties": {
-            "enabled": {
-              "type": "boolean",
-              "description": "Controls the enablement of Kube State Metrics generation",
-              "default": false
-            }
-          },
-          "additionalProperties": false,
-          "required": [
-            "enabled"
-          ],
-          "$defs": {
-            "IsEnabled": {
-              "properties": {
-                "enabled": {
-                  "const": true
-                }
-              }
-            }
-          }
-        },
-        "KubernetesEvents": {
-          "type": "object",
-          "properties": {
-            "enabled": {
-              "type": "boolean",
-              "description": "Controls the enablement of Kubernetes events collection",
-              "default": false
-            }
-          },
-          "additionalProperties": false,
-          "required": [
-            "enabled"
-          ]
-        },
-        "Investigations": {
-          "type": "object",
-          "properties": {
-            "network_security": {
-              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/NetworkSecurity"
-            }
-          },
-          "additionalProperties": false,
-          "required": [
-            "network_security"
-          ]
-        },
-        "NetworkSecurity": {
-          "type": "object",
-          "properties": {
-            "enabled": {
-              "type": "boolean",
-              "description": "Specify if the Network Security feature is enabled",
-              "default": false
-            }
-          },
-          "additionalProperties": false,
-          "required": [
-            "enabled"
-          ]
-        },
-        "Posture": {
-          "type": "object",
-          "properties": {
-            "enabled": {
-              "type": "boolean",
-              "description": "Specify if the Posture feature is enabled",
-              "default": false
-            }
-          },
-          "additionalProperties": false,
-          "required": [
-            "enabled"
-          ]
-        },
-        "AdmissionControl": {
-          "type": "object",
-          "properties": {
-            "enabled": {
-              "type": "boolean",
-              "description": "Specify if the Admission Control is enabled",
-              "default": false
-            },
-            "failure_policy": {
-              "type": "string",
-              "description": "The policy to apply when an error occurs during validation",
-              "enum": [
-                "Ignore",
-                "Fail"
-              ],
-              "default": "Ignore"
-            },
-            "dry_run": {
-              "type": "boolean",
-              "description": "Dry Run requests",
-              "default": true
-            },
-            "container_vulnerability_management": {
-              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/AdmissionControlContainerVulnerabilityManagement"
-            },
-            "posture": {
-              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/AdmissionControlPosture"
-            },
-            "supply_chain": {
-              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/AdmissionControlSupplyChain"
-            },
-            "http_port": {
-              "type": "integer",
-              "default": 8443,
-              "minimum": 1,
-              "maximum": 65535,
-              "description": "HTTP Server port used to expose the webhook web server."
-            },
-            "timeout": {
-              "type": "integer",
-              "description": "The number of seconds for the request to time out",
-              "default": 5
-            },
-            "excluded_namespaces": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "description": "List of namespaces to exclude from the admission control feature",
-              "default": []
-            }
-          },
-          "required": [
-            "enabled",
-            "failure_policy",
-            "http_port"
-          ],
-          "$defs": {
-            "IsEnabled": {
-              "properties": {
-                "enabled": {
-                  "const": true
-                }
-              }
-            }
-          }
-        },
-        "Features": {
-          "type": "object",
-          "title": "Features",
-          "description": "Features configurations",
-          "properties": {
-            "admission_control": {
-              "description": "Configurations for the admission control feature",
-              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/AdmissionControl"
-            },
-            "audit": {
-              "description": "Configurations for the audit feature",
-              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/Audit"
-            },
-            "container_vulnerability_management": {
-              "description": "Configurations for the container vulnerability management feature",
-              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/ContainerVulnerabilityManagement"
-            },
-            "monitor": {
-              "description": "Configurations for the monitor features",
-              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/Monitor"
-            },
-            "kubernetes_metadata": {
-              "description": "Configurations for the kubernetes metadata feature",
-              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/KubernetesMetadata"
-            },
-            "respond": {
-              "description": "Configurations for the response feature",
-              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/Respond"
-            },
-            "posture": {
-              "description": "Configurations for the posture feature",
-              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/Posture"
-            },
-            "investigations": {
-              "description": "Configurations for the investigation features",
-              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/Investigations"
-            }
-          },
-          "required": [
-            "admission_control",
-            "audit",
-            "container_vulnerability_management",
-            "kubernetes_metadata",
-            "respond",
-            "monitor",
-            "posture",
-            "investigations"
-          ]
-        },
-        "AdmissionControlContainerVulnerabilityManagement": {
-          "type": "object",
-          "properties": {
-            "enabled": {
-              "type": "boolean",
-              "description": "Enable container vulnerability management checks",
-              "default": true
-            }
-          }
-        },
-        "AdmissionControlPosture": {
-          "type": "object",
-          "properties": {
-            "enabled": {
-              "type": "boolean",
-              "description": "Enable Posture checks",
-              "default": true
-            }
-          }
-        },
-        "AdmissionControlSupplyChain": {
-          "type": "object",
-          "properties": {
-            "enabled": {
-              "type": "boolean",
-              "description": "Enable Supply Chain checks",
-              "default": false
-            },
-            "image_signature": {
-              "type": "object",
-              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/AdmissionControlSupplyChainImage"
-            }
-          }
-        },
-        "AdmissionControlSupplyChainImage": {
-          "type": "object",
-          "properties": {
-            "enabled": {
-              "type": "boolean",
-              "description": "Enable Supply Chain checks",
-              "default": false
-            },
-            "cosign": {
-              "type": "object",
-              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/AdmissionControlSupplyChainImageCosign"
-            }
-          }
-        },
-        "AdmissionControlSupplyChainImageCosign": {
-          "type": "object",
-          "description": "Cosign-like initialization parameters for image signature enforcer",
-          "properties": {
-            "mirror": {
-              "type": "string",
-              "description": "The URL of The Update Framework (TUF) server used for retrieving sigstore-compliant trust information. If not specified, the default public sigstore TUF url will be used."
-            },
-            "root": {
-              "type": "string",
-              "description": "The filepath or URL where an out-of-the-band copy of The Update Framework (TUF) root JSON file is available. In case a filepath is used, it can be made available through a custom volume mount pointing at a dedicated secret and/or configmap."
-            },
-            "root_checksum": {
-              "type": "string",
-              "description": "The checksum for The Update Framework (TUF) root JSON file. Checksum value should be in the format: <algorithm>:<value> where supported algorithms are: sha256 and sha512. If no algorithm is specified, sha256 will be used."
-            }
-          }
+          "type": "object"
         },
         "Cache": {
-          "type": "object",
-          "description": "Configuration for the cluster shield cache",
-          "properties": {
-            "backend": {
-              "type": "string",
-              "description": "Define the cache backend to use",
-              "enum": [
-                "redis"
-              ]
-            },
-            "redis": {
-              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/CacheRedis"
-            }
-          },
           "additionalProperties": false,
-          "required": [],
           "allOf": [
             {
               "if": {
@@ -1571,10 +747,25 @@
                 ]
               }
             }
-          ]
+          ],
+          "description": "Configuration for the cluster shield cache",
+          "properties": {
+            "backend": {
+              "description": "Define the cache backend to use",
+              "enum": [
+                "redis"
+              ],
+              "type": "string"
+            },
+            "redis": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/CacheRedis"
+            }
+          },
+          "required": [],
+          "type": "object"
         },
         "CacheRedis": {
-          "type": "object",
+          "additionalProperties": false,
           "description": "Configuration for the cluster shield redis cache",
           "properties": {
             "address": {
@@ -1611,10 +802,516 @@
               "type": "string"
             }
           },
-          "additionalProperties": false
+          "type": "object"
+        },
+        "ClusterConfig": {
+          "additionalProperties": false,
+          "properties": {
+            "name": {
+              "description": "The name of the cluster. Make sure to set a unique value for all the clusters being inspected",
+              "examples": [
+                "my-cluster"
+              ],
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "tags": {
+              "additionalProperties": {
+                "maxLength": 255,
+                "type": "string"
+              },
+              "description": "Tags you want to apply to the metadata sent to the Sysdig BE. They are used for instance as additional labels to the KSM metrics, with format `agent_tag_<tag_name>`",
+              "examples": [
+                {
+                  "env": "staging",
+                  "region": "us-west-1"
+                }
+              ],
+              "propertyNames": {
+                "description": "The tag name",
+                "examples": [
+                  "env",
+                  "region"
+                ],
+                "pattern": "^[a-zA-Z0-9_.-]{1,255}$"
+              },
+              "type": "object"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "ContainerVulnerabilityManagement": {
+          "$defs": {
+            "IsEnabled": {
+              "properties": {
+                "enabled": {
+                  "const": true
+                }
+              }
+            }
+          },
+          "properties": {
+            "enabled": {
+              "default": false,
+              "description": "Specify if the scanning feature is enabled",
+              "type": "boolean"
+            },
+            "filters": {
+              "description": "Filters to apply to the images to scan",
+              "properties": {
+                "rules": {
+                  "examples": [
+                    [
+                      {
+                        "field": "k8s.container.image",
+                        "type": "include",
+                        "value": "docker.io*"
+                      },
+                      {
+                        "type": "exclude"
+                      }
+                    ]
+                  ],
+                  "items": {
+                    "$ref": "#/$defs/ClusterShieldConfiguration/$defs/ContainerVulnerabilityManagementFilter"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            },
+            "in_use": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/ContainerVulnerabilityManagementInUse"
+            },
+            "local_cluster": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/ContainerVulnerabilityManagementLocal"
+            },
+            "max_file_size_bytes": {
+              "default": 104857600,
+              "description": "Maximum size in bytes for a file to be analyzed",
+              "type": "integer"
+            },
+            "max_file_size_bytes_in_memory": {
+              "default": 26214400,
+              "description": "Maximum size in bytes for a file to be analyzed in memory; file whose size is bigger than this are temporarily copied on to the filesystem",
+              "type": "integer"
+            },
+            "memory_optimized_k8s_mode": {
+              "default": true,
+              "description": "Enable memory-optimized access to Kubernetes API. Enabled by default, queries K8s using the Metadata API for all resources but Pods. Set this to false if you need to see the replicas counters, but it will require more memory.",
+              "type": "boolean"
+            },
+            "parallel_files_analysis_count": {
+              "default": 5,
+              "description": "Maximum number of files that are analyzed in parallel",
+              "type": "integer"
+            },
+            "platform_services_enabled": {
+              "default": true,
+              "description": "Specify if the platform services are enabled",
+              "type": "boolean"
+            },
+            "registry_ssl": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/SSL",
+              "description": "Verify SSL certificate when connecting to the registry"
+            },
+            "target_workloads": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/ContainerVulnerabilityManagementTargetWorkloads"
+            }
+          },
+          "required": [
+            "enabled",
+            "local_cluster",
+            "in_use",
+            "registry_ssl"
+          ],
+          "type": "object"
+        },
+        "ContainerVulnerabilityManagementFilter": {
+          "additionalProperties": false,
+          "examples": [
+            {
+              "field": "docker.io*",
+              "type": "include",
+              "value": "k8s.container.image"
+            }
+          ],
+          "properties": {
+            "field": {
+              "description": "The field to run the filter against",
+              "enum": [
+                "k8s.container.image"
+              ]
+            },
+            "type": {
+              "enum": [
+                "include",
+                "exclude"
+              ]
+            },
+            "value": {
+              "description": "The value to run the filter against",
+              "examples": [
+                "docker.io*",
+                "cd.docker-registry.corp.yahoo.co.jp:4443*",
+                "library*"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "type"
+          ],
+          "type": "object"
+        },
+        "ContainerVulnerabilityManagementInUse": {
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "default": true,
+              "description": "Retrieve in-use information from the backend and aggregate them on the scan results",
+              "type": "boolean"
+            },
+            "integration_enabled": {
+              "default": false,
+              "description": "Share in-use information with the external integrations",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "enabled",
+            "integration_enabled"
+          ],
+          "type": "object"
+        },
+        "ContainerVulnerabilityManagementLocal": {
+          "properties": {
+            "registry_secrets": {
+              "examples": [
+                [
+                  {
+                    "namespace": "sysdig-agent",
+                    "secrets": [
+                      "registry-secret"
+                    ]
+                  }
+                ]
+              ],
+              "items": {
+                "$ref": "#/$defs/ClusterShieldConfiguration/$defs/ContainerVulnerabilityManagementLocalRegistrySecret"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
+        "ContainerVulnerabilityManagementLocalRegistrySecret": {
+          "additionalProperties": false,
+          "properties": {
+            "namespace": {
+              "type": "string"
+            },
+            "secrets": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "namespace",
+            "secrets"
+          ],
+          "type": "object"
+        },
+        "ContainerVulnerabilityManagementTargetWorkloads": {
+          "anyOf": [
+            {
+              "required": [
+                "kubernetes"
+              ]
+            },
+            {
+              "required": [
+                "non_orchestrated_containers"
+              ]
+            }
+          ],
+          "description": "The type of workload for which container vulnerability management should operate, either \\\"kubernetes\\\" or \\\"non_orchestrated_containers\\\".",
+          "properties": {
+            "kubernetes": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/ContainerVulnerabilityManagementTargetWorkloadsKubernetes"
+            },
+            "non_orchestrated_containers": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/ContainerVulnerabilityManagementTargetWorkloadsNonOrchestratedContainers"
+            }
+          },
+          "type": "object"
+        },
+        "ContainerVulnerabilityManagementTargetWorkloadsKubernetes": {
+          "description": "Defines if Container Vulnerability Management should target kubernetes workloads and provides configurations on how the scan should be performed.",
+          "properties": {
+            "enabled": {
+              "default": true,
+              "description": "Enables Container Vulnerability Management for kubernetes workloads",
+              "examples": [
+                true
+              ],
+              "type": "boolean"
+            },
+            "image_source": {
+              "default": "registry",
+              "description": "Specifies where container images are obtained from for vulnerability scanning. When setting \\\"registry\\\", images are pulled directly from the configured remote container registries. With \\\"node\\\", images are retrieved from the Kubernetes cluster nodes by interacting with the local container runtimes, limiting scans to images that are currently present on the nodes.",
+              "enum": [
+                "registry",
+                "node"
+              ],
+              "examples": [
+                "node",
+                "registry"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "enabled"
+          ],
+          "type": "object"
+        },
+        "ContainerVulnerabilityManagementTargetWorkloadsNonOrchestratedContainers": {
+          "description": "Defines if Container Vulnerability Management should target non-orchestrated containers only, and provides configurations on how the scan should be performed",
+          "properties": {
+            "enabled": {
+              "default": false,
+              "description": "Enables Container Vulnerability Management for non-orchestrated containers workloads",
+              "examples": [
+                true
+              ],
+              "type": "boolean"
+            },
+            "ignore_init_failures": {
+              "default": false,
+              "description": "Instructs the Container Vulnerability Management feature to ignore errors on container scanning initialization and fallback on host-only scanning",
+              "examples": [
+                true
+              ],
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "enabled"
+          ],
+          "type": "object"
+        },
+        "Features": {
+          "description": "Features configurations",
+          "properties": {
+            "admission_control": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/AdmissionControl",
+              "description": "Configurations for the admission control feature"
+            },
+            "audit": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/Audit",
+              "description": "Configurations for the audit feature"
+            },
+            "container_vulnerability_management": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/ContainerVulnerabilityManagement",
+              "description": "Configurations for the container vulnerability management feature"
+            },
+            "investigations": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/Investigations",
+              "description": "Configurations for the investigation features"
+            },
+            "kubernetes_metadata": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/KubernetesMetadata",
+              "description": "Configurations for the kubernetes metadata feature"
+            },
+            "monitor": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/Monitor",
+              "description": "Configurations for the monitor features"
+            },
+            "posture": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/Posture",
+              "description": "Configurations for the posture feature"
+            },
+            "respond": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/Respond",
+              "description": "Configurations for the response feature"
+            }
+          },
+          "required": [
+            "admission_control",
+            "audit",
+            "container_vulnerability_management",
+            "kubernetes_metadata",
+            "respond",
+            "monitor",
+            "posture",
+            "investigations"
+          ],
+          "title": "Features",
+          "type": "object"
+        },
+        "Investigations": {
+          "additionalProperties": false,
+          "properties": {
+            "network_security": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/NetworkSecurity"
+            }
+          },
+          "required": [
+            "network_security"
+          ],
+          "type": "object"
+        },
+        "KubeStateMetrics": {
+          "$defs": {
+            "IsEnabled": {
+              "properties": {
+                "enabled": {
+                  "const": true
+                }
+              }
+            }
+          },
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "default": false,
+              "description": "Controls the enablement of Kube State Metrics generation",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "enabled"
+          ],
+          "type": "object"
+        },
+        "Kubernetes": {
+          "$defs": {
+            "SetRequired": {
+              "required": [
+                "root_namespace",
+                "running_namespace"
+              ]
+            },
+            "SetTLSRequired": {
+              "required": [
+                "tls_cert_file",
+                "tls_private_key_file",
+                "ca_cert_file"
+              ]
+            }
+          },
+          "additionalProperties": false,
+          "properties": {
+            "ca_cert_file": {
+              "$comment": "HELM-AUTOGENERATED",
+              "description": "Path to the CA Certificate file",
+              "examples": [
+                "/cert/ca.crt"
+              ],
+              "type": "string"
+            },
+            "root_namespace": {
+              "default": "kube-system",
+              "description": "Root namespace to use for the kubernetes resources",
+              "examples": [
+                "kube-system"
+              ],
+              "type": "string"
+            },
+            "tls_cert_file": {
+              "$comment": "HELM-AUTOGENERATED",
+              "description": "Path to the TLS Certificate file",
+              "examples": [
+                "/cert/tls.crt"
+              ],
+              "type": "string"
+            },
+            "tls_private_key_file": {
+              "$comment": "HELM-AUTOGENERATED",
+              "description": "Path to the TLS Private Key file",
+              "examples": [
+                "/cert/tls.key"
+              ],
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "KubernetesEvents": {
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "default": false,
+              "description": "Controls the enablement of Kubernetes events collection",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "enabled"
+          ],
+          "type": "object"
+        },
+        "KubernetesMetadata": {
+          "$defs": {
+            "IsEnabled": {
+              "properties": {
+                "enabled": {
+                  "const": true
+                }
+              }
+            }
+          },
+          "additionalProperties": false,
+          "properties": {
+            "annotations_allowlist": {
+              "additionalProperties": {
+                "items": {
+                  "description": "The annotation key",
+                  "examples": [
+                    "kubernetes.io/team"
+                  ],
+                  "format": "k8s-qualified-name-with-wildcard",
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "description": "List of Kubernetes annotations keys that will be sent to the Sysdig BE e.g. for generating KSM metrics. To include them, provide a list of resource names in their plural form and Kubernetes annotation keys you would like to allow for them. Annotation keys can contain wildcard character '*'. A single '*' can be provided per resource to allow any annotation. By default, no annotations are allowed for any resource.",
+              "examples": [
+                {
+                  "nodes": [
+                    "kubernetes.io/team",
+                    "kubernetes.io/role"
+                  ]
+                }
+              ],
+              "propertyNames": {
+                "description": "The resource name in lowercase plural form",
+                "examples": [
+                  "nodes",
+                  "pods"
+                ],
+                "pattern": "^[a-z]*$"
+              },
+              "type": "object"
+            },
+            "enabled": {
+              "default": false,
+              "description": "Specify if the Kubernetes Metadata feature is enabled",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "enabled"
+          ],
+          "type": "object"
         },
         "LogLevel": {
-          "type": "string",
           "description": "Minimum log severity to be reported in logs.",
           "enum": [
             "err",
@@ -1622,7 +1319,312 @@
             "info",
             "debug",
             "trace"
-          ]
+          ],
+          "type": "string"
+        },
+        "Monitor": {
+          "additionalProperties": false,
+          "properties": {
+            "kube_state_metrics": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/KubeStateMetrics",
+              "description": "Influences the behaviour of Kubernetes State metrics generation"
+            },
+            "kubernetes_events": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/KubernetesEvents",
+              "description": "Configuration for the Kubernetes events"
+            }
+          },
+          "required": [
+            "kube_state_metrics",
+            "kubernetes_events"
+          ],
+          "type": "object"
+        },
+        "NetworkSecurity": {
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "default": false,
+              "description": "Specify if the Network Security feature is enabled",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "enabled"
+          ],
+          "type": "object"
+        },
+        "Posture": {
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "default": false,
+              "description": "Specify if the Posture feature is enabled",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "enabled"
+          ],
+          "type": "object"
+        },
+        "Respond": {
+          "additionalProperties": false,
+          "properties": {
+            "response_actions": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/RespondResponseActions"
+            }
+          },
+          "type": "object"
+        },
+        "RespondResponseActions": {
+          "properties": {
+            "cluster": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/RespondResponseActionsCluster"
+            },
+            "delete_network_policy": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/BaseActionConfiguration"
+            },
+            "delete_pod": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/BaseActionConfiguration"
+            },
+            "delete_volume_snapshot": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/BaseActionConfiguration"
+            },
+            "enabled": {
+              "default": false,
+              "description": "Enable Response Actions",
+              "type": "boolean"
+            },
+            "get_logs": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/BaseActionConfiguration"
+            },
+            "isolate_network": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/BaseActionConfiguration"
+            },
+            "rollout_restart": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/BaseActionConfiguration"
+            },
+            "timeout": {
+              "default": 60,
+              "description": "Global timeout for executing the actions, in seconds.",
+              "maximum": 65535,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "volume_snapshot": {
+              "$ref": "#/$defs/ClusterShieldConfiguration/$defs/BaseActionConfiguration"
+            }
+          },
+          "required": [
+            "enabled"
+          ],
+          "type": "object"
+        },
+        "RespondResponseActionsCluster": {
+          "additionalProperties": false,
+          "properties": {
+            "volume_snapshot_class": {
+              "description": "The VolumeSnapshotClass to use for creating Volume snapshots.",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "SSL": {
+          "additionalProperties": false,
+          "properties": {
+            "verify": {
+              "default": true,
+              "description": "Define if the client must verify the backend SSL certificate.",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "verify"
+          ],
+          "type": "object"
+        },
+        "SysdigEndpoint": {
+          "$defs": {
+            "IsCustomRegion": {
+              "properties": {
+                "region": {
+                  "const": "custom"
+                }
+              }
+            },
+            "SetCollectorRequired": {
+              "collector": {
+                "type": "string"
+              },
+              "required": [
+                "collector"
+              ]
+            }
+          },
+          "additionalProperties": false,
+          "properties": {
+            "access_key": {
+              "description": "Sysdig Agent Access Key",
+              "examples": [
+                "12345678-1234-1234-1234-123456789012"
+              ],
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "api_url": {
+              "description": "Sysdig backend host",
+              "examples": [
+                "https://www.example.com"
+              ],
+              "format": "uri",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "collector": {
+              "description": "Host and port to access Sysdig Collector endpoint",
+              "examples": [
+                "collector.example.com:6443",
+                "192.168.0.1:6443",
+                "[2001:db8:1f70::999:de8:7648:6e8]:6443"
+              ],
+              "format": "hostport",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "region": {
+              "default": "custom",
+              "description": "The region where the collector is located",
+              "enum": [
+                "au-syd-monitor",
+                "au-syd-private-monitor",
+                "au-syd-private-secure",
+                "au-syd-secure",
+                "au1",
+                "au1-alt",
+                "br-sao-monitor",
+                "br-sao-private-monitor",
+                "br-sao-private-secure",
+                "br-sao-secure",
+                "ca-mon-monitor",
+                "ca-mon-private-monitor",
+                "ca-mon-private-secure",
+                "ca-mon-secure",
+                "ca-tor-monitor",
+                "ca-tor-private-monitor",
+                "ca-tor-private-secure",
+                "ca-tor-secure",
+                "custom",
+                "eu-de-monitor",
+                "eu-de-private-monitor",
+                "eu-de-private-secure",
+                "eu-de-secure",
+                "eu-gb-monitor",
+                "eu-gb-private-monitor",
+                "eu-gb-private-secure",
+                "eu-gb-secure",
+                "eu1",
+                "eu1-alt",
+                "eu2",
+                "eu2-alt",
+                "in-che-monitor",
+                "in-che-private-monitor",
+                "in-che-private-secure",
+                "in-che-secure",
+                "in1",
+                "in1-alt",
+                "jp-osa-monitor",
+                "jp-osa-private-monitor",
+                "jp-osa-private-secure",
+                "jp-osa-secure",
+                "jp-tok-monitor",
+                "jp-tok-private-monitor",
+                "jp-tok-private-secure",
+                "jp-tok-secure",
+                "jp1",
+                "jp1-alt",
+                "me2",
+                "me2-alt",
+                "us-east-monitor",
+                "us-east-private-monitor",
+                "us-east-private-secure",
+                "us-east-secure",
+                "us-south-monitor",
+                "us-south-private-monitor",
+                "us-south-private-secure",
+                "us-south-secure",
+                "us1",
+                "us1-alt",
+                "us2",
+                "us2-alt",
+                "us3",
+                "us3-alt",
+                "us4",
+                "us4-alt",
+                null
+              ],
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "secure_api_token": {
+              "description": "The API Token to access Sysdig Secure",
+              "examples": [
+                "12345678-1234-1234-1234-123456789012"
+              ],
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [],
+          "type": "object"
+        }
+      },
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "properties": {
+        "cache": {
+          "$ref": "#/$defs/ClusterShieldConfiguration/$defs/Cache"
+        },
+        "cluster_config": {
+          "$ref": "#/$defs/ClusterShieldConfiguration/$defs/ClusterConfig",
+          "description": "The cluster configuration"
+        },
+        "features": {
+          "$ref": "#/$defs/ClusterShieldConfiguration/$defs/Features",
+          "description": "Features configurations"
+        },
+        "kubernetes": {
+          "$ref": "#/$defs/ClusterShieldConfiguration/$defs/Kubernetes",
+          "description": "Kubernetes configurations"
+        },
+        "log_level": {
+          "$ref": "#/$defs/ClusterShieldConfiguration/$defs/LogLevel",
+          "default": "warn"
+        },
+        "monitoring_port": {
+          "default": 8080,
+          "description": "HTTP Server port used to expose healthcheck and prometheus metrics.",
+          "maximum": 65535,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "ssl": {
+          "$ref": "#/$defs/ClusterShieldConfiguration/$defs/SSL",
+          "description": "SSL configurations."
+        },
+        "sysdig_endpoint": {
+          "$ref": "#/$defs/ClusterShieldConfiguration/$defs/SysdigEndpoint",
+          "description": "Configuration for the sysdig services."
         }
       },
       "required": [
@@ -1631,7 +1633,9 @@
         "log_level",
         "sysdig_endpoint",
         "features"
-      ]
+      ],
+      "title": "Settings",
+      "type": "object"
     }
   }
 }

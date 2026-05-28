@@ -413,6 +413,20 @@ Check if Kspm Collector needs to acquire leases from k8s
 {{- end -}}
 
 {{/*
+Check if posture is enabled and OCP Route collection is enabled
+*/}}
+{{- define "cluster-shield.postureOCPRoutesEnabled" -}}
+    {{- and (eq (include "cluster-shield.postureEnabled" .) "true") (.Values.cluster_shield | dig "kspm_collector" "ocp_route_enabled" false) -}}
+{{- end -}}
+
+{{/*
+Check if posture is enabled and OCP DeploymentConfig collection is enabled
+*/}}
+{{- define "cluster-shield.postureOCPDeploymentConfigEnabled" -}}
+    {{- and (eq (include "cluster-shield.postureEnabled" .) "true") (.Values.cluster_shield | dig "kspm_collector" "ocp_deploymentconfig_enabled" false) -}}
+{{- end -}}
+
+{{/*
 Proxy Secret Name
 */}}
 {{- define "cluster-shield.proxyEnabled" -}}
