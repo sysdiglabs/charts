@@ -1,5 +1,5 @@
 # What's Changed
 
 ### New Features
-- **shield** [38d6ed9d](https://github.com/sysdiglabs/charts/commit/38d6ed9de0dcc2bef6817db5ed28d2e430447897): release host-shield windows 0.17.0 ([#2636](https://github.com/sysdiglabs/charts/issues/2636))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.40.1...shield-1.41.0
+- **shield** [76a473b5](https://github.com/sysdiglabs/charts/commit/76a473b530d5a3dc3ff0783e62537231c48d16d0): release cluster-shield 1.23.0 ([#2639](https://github.com/sysdiglabs/charts/issues/2639))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.41.0...shield-1.42.0
