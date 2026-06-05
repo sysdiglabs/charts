@@ -480,23 +480,12 @@ agent config to prevent a backend push from enabling them after installation.
         {{- end }}
     {{- else if (not $isAgent14OrAbove) }}
         {{ if and (include "agent.enableFalcoBaselineSecureLight" .) $secureLightMode }}
-            {{- range $secureFeature := (list
-                "network_topology") }}
-                {{- $_ := set $secureConfig $secureFeature (dict "enabled" false) }}
-            {{- end }}
-            {{- if not (hasKey .Values.sysdig.settings "memdump") }}
-                {{- $_ := set $secureConfig "memdump" (dict "enabled" false) }}
-            {{- end }}
         {{ else if $secureLightMode }}
             {{- range $secureFeature := (list
                 "drift_control"
                 "drift_killer"
-                "falcobaseline"
-                "network_topology") }}
+                "falcobaseline") }}
                 {{- $_ := set $secureConfig $secureFeature (dict "enabled" false) }}
-            {{- end }}
-            {{- if not (hasKey .Values.sysdig.settings "memdump") }}
-                {{- $_ := set $secureConfig "memdump" (dict "enabled" false) }}
             {{- end }}
         {{- end }}
     {{- else if $secureLightMode }}

@@ -200,12 +200,12 @@ tests:
           pattern: |-
             statsd:
               enabled: false
-      - matchRegex:
+      - notMatchRegex:
           path: data['dragent.yaml']
           pattern: |-
             memdump:
               enabled: false
-      - matchRegex:
+      - notMatchRegex:
           path: data['dragent.yaml']
           pattern: |-
             network_topology:
