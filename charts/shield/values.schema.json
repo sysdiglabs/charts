@@ -328,6 +328,10 @@
     "Cluster": {
       "type": "object",
       "properties": {
+        "nats_password_existing_secret": {
+          "type": "string",
+          "description": "Name of an existing Secret containing the NATS password (key: sysdig-cluster-nats-password). When set, suppresses random password generation."
+        },
         "run_mode": {
           "type": "string",
           "description": "The mode in which the cluster is running",

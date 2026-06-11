@@ -586,6 +586,10 @@ cluster:
       periodSeconds: 5
       # The readiness probe failure threshold
       failureThreshold: 9
+  # Name of an existing Secret containing the NATS password (key: sysdig-cluster-nats-password).
+  # When set, the chart uses this Secret instead of generating a random password - useful for
+  # GitOps workflows where helm template is pre-rendered and committed to Git.
+  nats_password_existing_secret: ""
   # The number of replicas for the cluster shield
   replica_count: 2
   update_strategy:

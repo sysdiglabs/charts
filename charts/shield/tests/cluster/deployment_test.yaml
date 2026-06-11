@@ -1042,6 +1042,28 @@ tests:
               mountPath: /etc/sysdig/secret-files/release-name-shield-cluster
     template: templates/cluster/deployment.yaml
 
+  - it: Existing NATS secret is mounted when nats_password_existing_secret is set
+    set:
+      cluster:
+        nats_password_existing_secret: existing-nats-password-secret
+      features:
+        vulnerability_management:
+          container_vulnerability_management:
+            enabled: true
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: secret-existing-nats-password-secret
+            secret:
+              secretName: existing-nats-password-secret
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].volumeMounts
+          content:
+            name: secret-existing-nats-password-secret
+            mountPath: /etc/sysdig/secret-files/existing-nats-password-secret
+    template: templates/cluster/deployment.yaml
+
   - it: Default Values (with both access key and secure api token)
     set:
       sysdig_endpoint:

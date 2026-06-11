@@ -117,6 +117,7 @@ the inheritance logic lives in a single place.
     (include "common.credentials.access_key_secret_name" .)
     (include "common.credentials.secure_api_token_secret_name" .)
     (include "cluster.fullname" .)
+    .Values.cluster.nats_password_existing_secret
     (dig "cluster_scanner" "runtime_status_integrator" "nats_server" "password_existing_secret" nil .Values.cluster.additional_settings)
   -}}
   {{- (uniq (compact $secrets)) | toYaml -}}
