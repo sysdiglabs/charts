@@ -22,7 +22,6 @@ rules:
       - namespaces
       - nodes
       - nodes/metrics
-      - nodes/proxy
       - resourcequotas
       - persistentvolumes
       - persistentvolumeclaims
@@ -113,6 +112,16 @@ rules:
       - get
       - list
       - watch
+{{- if .Values.features.investigations.live_logs.enabled }}
+  - apiGroups:
+      - ""
+    resources:
+      - nodes/proxy
+    verbs:
+      - get
+      - list
+      - watch
+{{- end }}
 {{- if or (.Capabilities.APIVersions.Has "rbac.authorization.k8s.io/v1beta1/PodSecurityPolicy") (has "rbac.authorization.k8s.io/v1beta1/PodSecurityPolicy" .Values.extra_capabilities_api_versions) }}
 
   - apiGroups:
