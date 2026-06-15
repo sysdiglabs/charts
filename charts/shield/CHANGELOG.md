@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.43.1
+### New Features
+* **agent,shield** [3e671373](https://github.com/sysdiglabs/charts/commit/3e6713737450a7bd8b8703a21a396394891f9408): release agent 14.6.2 ([#2656](https://github.com/sysdiglabs/charts/issues/2656))
 # v1.43.0
 ### New Features
 * **shield** [9e371376](https://github.com/sysdiglabs/charts/commit/9e371376313fa4f2c7aa8136613896328e37681f): gate nodes/proxy on live_logs in host ClusterRole ([#2655](https://github.com/sysdiglabs/charts/issues/2655))
