@@ -4520,6 +4520,43 @@ entries:
     version: 0.1.0
   agent:
   - apiVersion: v2
+    appVersion: 14.6.2
+    created: "2026-06-15T11:50:48.779408441Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      version: ~1.5.0
+    description: Sysdig Monitor and Secure agent
+    digest: b54ea7fb1f83543a7e874979c99469a74ded1dbd19a23f46bd5af89a3a99e0e0
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: alberto.barba@sysdig.com
+      name: AlbertoBarba
+    - email: adam.roberts@sysdig.com
+      name: aroberts87
+    - email: francesco.furlan@sysdig.com
+      name: francesco-furlan
+    - email: gerlando.falauto@sysdig.com
+      name: iurly
+    - email: marcovito.moscaritolo@sysdig.com
+      name: mavimo
+    name: agent
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/agent-2.8.2/agent-2.8.2.tgz
+    version: 2.8.2
+  - apiVersion: v2
     appVersion: 14.6.1
     created: "2026-06-03T14:31:40.737233434Z"
     dependencies:
@@ -38248,6 +38285,27 @@ entries:
     - https://github.com/sysdiglabs/charts/releases/download/registry-scanner-0.0.1/registry-scanner-0.0.1.tgz
     version: 0.0.1
   shield:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2026-06-15T11:50:48.989152075Z"
+    description: A chart with various Sysdig components for Kubernetes
+    digest: 21c3d4a9c446eb5466cd9e6dd23abb7c40da78adf08bb75f60b195dbf15667b9
+    maintainers:
+    - email: alberto.barba@sysdig.com
+      name: AlbertoBarba
+    - email: adam.roberts@sysdig.com
+      name: aroberts87
+    - email: francesco.furlan@sysdig.com
+      name: francesco-furlan
+    - email: gerlando.falauto@sysdig.com
+      name: iurly
+    - email: marcovito.moscaritolo@sysdig.com
+      name: mavimo
+    name: shield
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/shield-1.43.1/shield-1.43.1.tgz
+    version: 1.43.1
   - apiVersion: v2
     appVersion: 1.0.0
     created: "2026-06-12T12:52:14.92660083Z"
@@ -87886,4 +87944,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2026-06-12T12:52:15.095795861Z"
+generated: "2026-06-15T11:50:48.992261725Z"
