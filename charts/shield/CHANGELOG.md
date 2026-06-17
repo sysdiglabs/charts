@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.43.2
+### Bug Fixes
+* **shield** [98190d56](https://github.com/sysdiglabs/charts/commit/98190d56bfd4e5ac3d7d73019278d780b6536e7c): remove nats passowrd configuration from the configmap if specified in additional_settings ([#2658](https://github.com/sysdiglabs/charts/issues/2658))
 # v1.43.1
 ### New Features
 * **agent,shield** [3e671373](https://github.com/sysdiglabs/charts/commit/3e6713737450a7bd8b8703a21a396394891f9408): release agent 14.6.2 ([#2656](https://github.com/sysdiglabs/charts/issues/2656))
