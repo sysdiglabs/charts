@@ -5,6 +5,11 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "cluster.labels" . | nindent 4 }}
+  {{- $annotations := (include "shield.annotations" .) }}
+  {{- if $annotations }}
+  annotations:
+    {{- $annotations | nindent 4 }}
+  {{- end }}
 data:
   cluster-shield.yaml: |
     {{- include "cluster.configmap" . | fromYaml | toYaml | nindent 4 }}
