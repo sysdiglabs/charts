@@ -1527,6 +1527,72 @@ tests:
             value: 1.2.3-helmtest
     template: templates/cluster/deployment.yaml
 
+  - it: Global labels applied to workload metadata
+    set:
+      labels:
+        global-label-key: global-label-value
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - equal:
+          path: metadata.labels["global-label-key"]
+          value: global-label-value
+    template: templates/cluster/deployment.yaml
+
+  - it: Global labels applied to pod metadata
+    set:
+      labels:
+        global-label-key: global-label-value
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - equal:
+          path: spec.template.metadata.labels["global-label-key"]
+          value: global-label-value
+    template: templates/cluster/deployment.yaml
+
+  - it: Global labels merged with component workload and pod labels
+    set:
+      labels:
+        global-key: global-value
+      workload_labels:
+        global-workload-key: global-workload-value
+      pod_labels:
+        global-pod-key: global-pod-value
+      cluster:
+        image:
+          tag: 1.1.1
+        workload_labels:
+          component-workload-key: component-workload-value
+        pod_labels:
+          component-pod-key: component-pod-value
+    asserts:
+      - equal:
+          path: metadata.labels["global-key"]
+          value: global-value
+      - equal:
+          path: metadata.labels["global-workload-key"]
+          value: global-workload-value
+      - equal:
+          path: metadata.labels["component-workload-key"]
+          value: component-workload-value
+      - equal:
+          path: spec.template.metadata.labels["global-key"]
+          value: global-value
+      - equal:
+          path: spec.template.metadata.labels["global-pod-key"]
+          value: global-pod-value
+      - equal:
+          path: spec.template.metadata.labels["component-pod-key"]
+          value: component-pod-value
+    template: templates/cluster/deployment.yaml
+
   - it: Global annotations applied to workload metadata
     set:
       annotations:

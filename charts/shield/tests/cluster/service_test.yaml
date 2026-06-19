@@ -278,6 +278,17 @@ tests:
           path: metadata.annotations["custom-2"]
           value: annotation-2
 
+  - it: Global labels applied to Service
+    set:
+      labels:
+        global-label-key: global-label-value
+    asserts:
+      - isKind:
+          of: Service
+      - equal:
+          path: metadata.labels["global-label-key"]
+          value: global-label-value
+
   - it: Global annotations applied to Service
     set:
       annotations:
