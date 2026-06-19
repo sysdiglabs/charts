@@ -1085,3 +1085,28 @@ tests:
       - equal:
           path: metadata.annotations["cluster-key"]
           value: cluster-value
+
+  - it: cluster.labels applied to ConfigMap
+    set:
+      cluster:
+        labels:
+          cluster-label-key: cluster-label-value
+    asserts:
+      - equal:
+          path: metadata.labels["cluster-label-key"]
+          value: cluster-label-value
+
+  - it: cluster.labels merged with global labels on ConfigMap
+    set:
+      labels:
+        global-key: global-value
+      cluster:
+        labels:
+          cluster-key: cluster-value
+    asserts:
+      - equal:
+          path: metadata.labels["global-key"]
+          value: global-value
+      - equal:
+          path: metadata.labels["cluster-key"]
+          value: cluster-value

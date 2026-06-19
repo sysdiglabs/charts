@@ -2,7 +2,7 @@
 Common labels
 */}}
 {{- define "cluster.labels" -}}
-  {{- $labels := merge (dict) (include "cluster.self_labels" . | fromYaml) (include "shield.labels" . | fromYaml) }}
+  {{- $labels := merge (dict) .Values.cluster.labels (include "cluster.self_labels" . | fromYaml) (include "shield.labels" . | fromYaml) }}
   {{- with $labels -}}
     {{- . | toYaml -}}
   {{- end -}}
