@@ -19,7 +19,7 @@ jobs:
       image_tag_base: ${{ steps.get-image-base.outputs.image_tag_base }}
     steps:
       - name: Checkout charts repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: main  # Use the merged version
           fetch-depth: '1'
@@ -56,7 +56,7 @@ jobs:
       bundle_image: ${{ steps.set-bundle-image.outputs.bundle_image }}
     steps:
       - name: Checkout charts repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: main  # Ensure we're using the merged version
           fetch-depth: '1'
