@@ -43,6 +43,13 @@
         "type": "string"
       }
     },
+    "labels": {
+      "type": "object",
+      "description": "Additional labels applied to all resources created by the chart.",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
     "extra_capabilities_api_versions": {
       "type": "array",
       "items": {
