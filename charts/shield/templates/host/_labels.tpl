@@ -13,7 +13,7 @@ GKE Autopilot labels
 Common labels
 */}}
 {{- define "host.labels" -}}
-  {{- $labels := merge (dict) (include "host.gke_autopilot_labels" . | fromYaml) (include "host.self_labels" . | fromYaml) (include "shield.labels" . | fromYaml) }}
+  {{- $labels := merge (dict) .Values.host.labels (include "host.gke_autopilot_labels" . | fromYaml) (include "host.self_labels" . | fromYaml) (include "shield.labels" . | fromYaml) }}
   {{- with $labels -}}
     {{- . | toYaml -}}
   {{- end -}}

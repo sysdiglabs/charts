@@ -1710,3 +1710,56 @@ tests:
           path: metadata.annotations["workload-key"]
           value: workload-value
     template: templates/cluster/deployment.yaml
+
+  - it: cluster.labels applied to Deployment workload metadata
+    set:
+      cluster:
+        labels:
+          cluster-label-key: cluster-label-value
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - equal:
+          path: metadata.labels["cluster-label-key"]
+          value: cluster-label-value
+    template: templates/cluster/deployment.yaml
+
+  - it: cluster.labels applied to Deployment pod metadata
+    set:
+      cluster:
+        labels:
+          cluster-label-key: cluster-label-value
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - equal:
+          path: spec.template.metadata.labels["cluster-label-key"]
+          value: cluster-label-value
+    template: templates/cluster/deployment.yaml
+
+  - it: cluster.labels merged with global and workload labels
+    set:
+      labels:
+        global-key: global-value
+      cluster:
+        labels:
+          cluster-key: cluster-value
+        workload_labels:
+          workload-key: workload-value
+    asserts:
+      - equal:
+          path: metadata.labels["global-key"]
+          value: global-value
+      - equal:
+          path: metadata.labels["cluster-key"]
+          value: cluster-value
+      - equal:
+          path: metadata.labels["workload-key"]
+          value: workload-value
+    template: templates/cluster/deployment.yaml
