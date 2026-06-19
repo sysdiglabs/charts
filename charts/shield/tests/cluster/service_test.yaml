@@ -1,6 +1,8 @@
 suite: Cluster - Service
 templates:
   - templates/cluster/service.yaml
+chart:
+  version: 1.2.3-helmtest
 release:
   name: release-name
   namespace: shield-namespace
@@ -226,6 +228,18 @@ tests:
       - equal:
           path: spec.type
           value: NodePort
+
+  - it: Default labels present on Service
+    asserts:
+      - isSubset:
+          path: metadata.labels
+          content:
+            helm.sh/chart: shield-1.2.3-helmtest
+            app.kubernetes.io/name: shield
+            app.kubernetes.io/instance: release-name
+            app.kubernetes.io/version: "1.0.0"
+            app.kubernetes.io/managed-by: Helm
+            sysdig/component: cluster
 
   - it: Custom Lables
     set:
