@@ -1212,3 +1212,43 @@ tests:
       - equal:
           path: metadata.annotations["workload-key"]
           value: workload-value
+
+  - it: host.labels applied to DaemonSet workload metadata
+    set:
+      host:
+        labels:
+          host-label-key: host-label-value
+    asserts:
+      - equal:
+          path: metadata.labels["host-label-key"]
+          value: host-label-value
+
+  - it: host.labels applied to DaemonSet pod metadata
+    set:
+      host:
+        labels:
+          host-label-key: host-label-value
+    asserts:
+      - equal:
+          path: spec.template.metadata.labels["host-label-key"]
+          value: host-label-value
+
+  - it: host.labels merged with global and workload labels
+    set:
+      labels:
+        global-key: global-value
+      host:
+        labels:
+          host-key: host-value
+        workload_labels:
+          workload-key: workload-value
+    asserts:
+      - equal:
+          path: metadata.labels["global-key"]
+          value: global-value
+      - equal:
+          path: metadata.labels["host-key"]
+          value: host-value
+      - equal:
+          path: metadata.labels["workload-key"]
+          value: workload-value

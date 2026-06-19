@@ -398,6 +398,13 @@
           "additionalProperties": {
             "type": "string"
           }
+        },
+        "labels": {
+          "type": "object",
+          "description": "Additional labels applied to all cluster resources created by the chart.",
+          "additionalProperties": {
+            "type": "string"
+          }
         }
       },
       "required": [
@@ -456,6 +463,13 @@
           "additionalProperties": {
             "type": "string"
           }
+        },
+        "labels": {
+          "type": "object",
+          "description": "Additional labels applied to all host resources created by the chart.",
+          "additionalProperties": {
+            "type": "string"
+          }
         }
       },
       "required": [
@@ -481,6 +495,13 @@
         "annotations": {
           "type": "object",
           "description": "Additional annotations applied to all host_windows resources created by the chart.",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "labels": {
+          "type": "object",
+          "description": "Additional labels applied to all host_windows resources created by the chart.",
           "additionalProperties": {
             "type": "string"
           }

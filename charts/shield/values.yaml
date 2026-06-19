@@ -245,6 +245,8 @@ host_windows:
   host_aliases: []
   # Additional annotations for all host_windows resources (metadata.annotations)
   annotations: {}
+  # Additional labels for all host_windows resources (metadata.labels)
+  labels: {}
   # The annotations for the host shield workloads (metadata.annotations)
   workload_annotations: {}
   # The labels for the host shield workloads (metadata.labels)
@@ -376,6 +378,8 @@ host:
   host_aliases: []
   # Additional annotations for all host resources (metadata.annotations)
   annotations: {}
+  # Additional labels for all host resources (metadata.labels)
+  labels: {}
   # The annotations for the host shield workloads (metadata.annotations)
   workload_annotations: {}
   # The labels for the host shield workloads (metadata.labels)
@@ -557,6 +561,8 @@ cluster:
   host_aliases: []
   # Additional annotations for all cluster resources (metadata.annotations)
   annotations: {}
+  # Additional labels for all cluster resources (metadata.labels)
+  labels: {}
   # The annotations for the cluster shield workloads (metadata.annotations)
   workload_annotations: {}
   # The labels for the cluster shield workloads (metadata.labels)
