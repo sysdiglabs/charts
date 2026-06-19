@@ -1172,3 +1172,43 @@ tests:
       - equal:
           path: spec.template.metadata.annotations["component-pod-key"]
           value: component-pod-value
+
+  - it: host.annotations applied to DaemonSet workload metadata
+    set:
+      host:
+        annotations:
+          host-annotation-key: host-annotation-value
+    asserts:
+      - equal:
+          path: metadata.annotations["host-annotation-key"]
+          value: host-annotation-value
+
+  - it: host.annotations applied to DaemonSet pod metadata
+    set:
+      host:
+        annotations:
+          host-annotation-key: host-annotation-value
+    asserts:
+      - equal:
+          path: spec.template.metadata.annotations["host-annotation-key"]
+          value: host-annotation-value
+
+  - it: host.annotations merged with global annotations and workload annotations
+    set:
+      annotations:
+        global-key: global-value
+      host:
+        annotations:
+          host-key: host-value
+        workload_annotations:
+          workload-key: workload-value
+    asserts:
+      - equal:
+          path: metadata.annotations["global-key"]
+          value: global-value
+      - equal:
+          path: metadata.annotations["host-key"]
+          value: host-value
+      - equal:
+          path: metadata.annotations["workload-key"]
+          value: workload-value
