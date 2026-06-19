@@ -65,6 +65,15 @@ Component labels
 {{- end }}
 {{- end }}
 
+{{/*
+Common annotations
+*/}}
+{{- define "shield.annotations" -}}
+  {{- with .Values.annotations -}}
+    {{- . | toYaml -}}
+  {{- end -}}
+{{- end -}}
+
 {{- define "shield.component_name_label" -}}
 sysdig/component
 {{- end }}

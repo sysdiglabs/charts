@@ -1057,3 +1057,54 @@ tests:
             mountPath: /opt/draios/etc/local_forwarder_config.yaml
             subPath: local_forwarder_config.yaml
         template: host/daemonset.yaml
+
+  - it: Global annotations applied to DaemonSet workload metadata
+    set:
+      annotations:
+        global-annotation-key: global-annotation-value
+    asserts:
+      - equal:
+          path: metadata.annotations["global-annotation-key"]
+          value: global-annotation-value
+
+  - it: Global annotations applied to DaemonSet pod metadata
+    set:
+      annotations:
+        global-annotation-key: global-annotation-value
+    asserts:
+      - equal:
+          path: spec.template.metadata.annotations["global-annotation-key"]
+          value: global-annotation-value
+
+  - it: Global annotations merged with component workload and pod annotations
+    set:
+      annotations:
+        global-key: global-value
+      workload_annotations:
+        global-workload-key: global-workload-value
+      pod_annotations:
+        global-pod-key: global-pod-value
+      host:
+        workload_annotations:
+          component-workload-key: component-workload-value
+        pod_annotations:
+          component-pod-key: component-pod-value
+    asserts:
+      - equal:
+          path: metadata.annotations["global-key"]
+          value: global-value
+      - equal:
+          path: metadata.annotations["global-workload-key"]
+          value: global-workload-value
+      - equal:
+          path: metadata.annotations["component-workload-key"]
+          value: component-workload-value
+      - equal:
+          path: spec.template.metadata.annotations["global-key"]
+          value: global-value
+      - equal:
+          path: spec.template.metadata.annotations["global-pod-key"]
+          value: global-pod-value
+      - equal:
+          path: spec.template.metadata.annotations["component-pod-key"]
+          value: component-pod-value

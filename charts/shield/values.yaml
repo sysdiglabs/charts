@@ -660,6 +660,8 @@ proxy:
 # Additional .APIVersions in .Capabilities, e.g. "security.openshift.io/v1"
 extra_capabilities_api_versions: []
 
+# Additional annotations for all resources (metadata.annotations)
+annotations: {}
 # Additional annotations for the all the workloads (metadata.annotations)
 workload_annotations: {}
 # Additional labels for the all the workloads (metadata.labels)

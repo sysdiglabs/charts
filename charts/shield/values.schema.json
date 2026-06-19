@@ -36,6 +36,13 @@
     "proxy": {
       "$ref": "#/$defs/Proxy"
     },
+    "annotations": {
+      "type": "object",
+      "description": "Additional annotations applied to all resources created by the chart.",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
     "extra_capabilities_api_versions": {
       "type": "array",
       "items": {

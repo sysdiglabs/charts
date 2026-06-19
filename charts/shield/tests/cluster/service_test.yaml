@@ -277,3 +277,32 @@ tests:
       - equal:
           path: metadata.annotations["custom-2"]
           value: annotation-2
+
+  - it: Global annotations applied to Service
+    set:
+      annotations:
+        global-annotation-key: global-annotation-value
+    asserts:
+      - isKind:
+          of: Service
+      - equal:
+          path: metadata.annotations["global-annotation-key"]
+          value: global-annotation-value
+
+  - it: Global annotations merged with service annotations
+    set:
+      annotations:
+        global-key: global-value
+      cluster:
+        service:
+          annotations:
+            service-key: service-value
+    asserts:
+      - isKind:
+          of: Service
+      - equal:
+          path: metadata.annotations["global-key"]
+          value: global-value
+      - equal:
+          path: metadata.annotations["service-key"]
+          value: service-value

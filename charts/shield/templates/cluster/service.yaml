@@ -8,9 +8,12 @@ metadata:
     {{- if and .Values.cluster.service .Values.cluster.service.labels }}
       {{- toYaml .Values.cluster.service.labels | nindent 4 }}
     {{- end }}
-  {{- if and .Values.cluster.service .Values.cluster.service.annotations }}
+  {{- $shieldAnnotations := (include "shield.annotations" .) }}
+  {{- $serviceAnnotations := (dig "service" "annotations" dict .Values.cluster) }}
+  {{- $allAnnotations := merge (dict) $serviceAnnotations (fromYaml $shieldAnnotations) }}
+  {{- if $allAnnotations }}
   annotations:
-    {{- toYaml .Values.cluster.service.annotations | nindent 4 }}
+    {{- toYaml $allAnnotations | nindent 4 }}
   {{- end }}
 spec:
   {{- if and .Values.cluster.service .Values.cluster.service.type }}
