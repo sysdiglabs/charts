@@ -1,6 +1,8 @@
 suite: Host - DaemonSet
 templates:
   - templates/host/daemonset.yaml
+chart:
+  version: 1.2.3-helmtest
 release:
   name: release-name
   namespace: shield-namespace
@@ -341,12 +343,23 @@ tests:
       - isSubset:
           path: metadata.labels
           content:
+            helm.sh/chart: shield-1.2.3-helmtest
             app.kubernetes.io/instance: release-name
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: shield
             app.kubernetes.io/version: 1.0.0
             sysdig/component: host
             sysdig/component-version: 11.11.11
+
+  - it: No global annotations do not add workload annotations
+    asserts:
+      - containsDocument:
+          kind: DaemonSet
+          apiVersion: apps/v1
+          name: release-name-shield-host
+          namespace: shield-namespace
+      - isNullOrEmpty:
+          path: metadata.annotations
 
   - it: Default pod labels
     set:
