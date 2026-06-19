@@ -79,6 +79,7 @@ spec:
             {{- if $customCAEnvs }}
               {{- $customCAEnvs | nindent 12 }}
             {{- end }}
+            {{- include "common.go_runtime.envs" (dict "ContainerName" "sysdig-host-shield" "Limits" (dig "resources" "limits" (dict) .Values.host_windows)) | nindent 12 }}
             {{- include "host.windows.env" . | nindent 12 }}
           livenessProbe:
             httpGet:

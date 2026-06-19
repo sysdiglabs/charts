@@ -517,3 +517,34 @@ tests:
           value:
               - company.public
               - company.internal
+
+  - it: Sets Go runtime tuning env vars from container limits
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].env
+          content:
+            name: GOMAXPROCS
+            valueFrom:
+              resourceFieldRef:
+                containerName: sysdig-host-shield
+                resource: limits.cpu
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].env
+          content:
+            name: GOMEMLIMIT
+            valueFrom:
+              resourceFieldRef:
+                containerName: sysdig-host-shield
+                resource: limits.memory
+                divisor: "1"
+
+  - it: Omits Go runtime tuning env vars when limits are unset
+    set:
+      host_windows:
+        resources:
+          limits: null
+    asserts:
+      - notExists:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].env[?(@.name == "GOMAXPROCS")]
+      - notExists:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].env[?(@.name == "GOMEMLIMIT")]

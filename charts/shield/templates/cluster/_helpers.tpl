@@ -98,6 +98,19 @@ the inheritance logic lives in a single place.
 {{- end -}}
 {{- end -}}
 
+{{/*
+Returns "true" when the cluster-shield pod is pinned to Windows nodes via the
+effective nodeSelector carrying "kubernetes.io/os: windows". Used to enable Go
+runtime tuning (GOMAXPROCS/GOMEMLIMIT), since Windows containers have no cgroups
+for Go to auto-detect limits from. Affinity-only pinning is not detected here.
+*/}}
+{{- define "cluster.scheduled_on_windows" -}}
+{{- $nodeSelector := merge (dict) .Values.node_selector .Values.cluster.node_selector -}}
+{{- if eq (dig "kubernetes.io/os" "" $nodeSelector) "windows" -}}
+true
+{{- end -}}
+{{- end -}}
+
 {{- define "cluster.tolerations" -}}
 {{- $tollerations := concat .Values.tolerations .Values.cluster.tolerations -}}
 {{- with $tollerations -}}

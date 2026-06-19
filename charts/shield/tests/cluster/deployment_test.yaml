@@ -1526,3 +1526,59 @@ tests:
             name: SYSDIG_SHIELD_CHART_VERSION
             value: 1.2.3-helmtest
     template: templates/cluster/deployment.yaml
+
+  - it: Omits Go runtime tuning env vars on Linux nodes (default)
+    asserts:
+      - notExists:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "GOMAXPROCS")]
+      - notExists:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "GOMEMLIMIT")]
+    template: templates/cluster/deployment.yaml
+
+  - it: Sets Go runtime tuning env vars when scheduled on Windows nodes
+    set:
+      cluster:
+        node_selector:
+          kubernetes.io/os: windows
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env
+          content:
+            name: GOMAXPROCS
+            valueFrom:
+              resourceFieldRef:
+                containerName: cluster-shield
+                resource: limits.cpu
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env
+          content:
+            name: GOMEMLIMIT
+            valueFrom:
+              resourceFieldRef:
+                containerName: cluster-shield
+                resource: limits.memory
+                divisor: "1"
+    template: templates/cluster/deployment.yaml
+
+  - it: Detects Windows scheduling via global node_selector
+    set:
+      node_selector:
+        kubernetes.io/os: windows
+    asserts:
+      - exists:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "GOMAXPROCS")]
+    template: templates/cluster/deployment.yaml
+
+  - it: Omits Go runtime tuning env vars on Windows nodes when limits are unset
+    set:
+      cluster:
+        node_selector:
+          kubernetes.io/os: windows
+        resources:
+          limits: null
+    asserts:
+      - notExists:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "GOMAXPROCS")]
+      - notExists:
+          path: spec.template.spec.containers[?(@.name == "cluster-shield")].env[?(@.name == "GOMEMLIMIT")]
+    template: templates/cluster/deployment.yaml
