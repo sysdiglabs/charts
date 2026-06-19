@@ -1657,3 +1657,56 @@ tests:
           path: spec.template.metadata.annotations["component-pod-key"]
           value: component-pod-value
     template: templates/cluster/deployment.yaml
+
+  - it: cluster.annotations applied to Deployment workload metadata
+    set:
+      cluster:
+        annotations:
+          cluster-annotation-key: cluster-annotation-value
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - equal:
+          path: metadata.annotations["cluster-annotation-key"]
+          value: cluster-annotation-value
+    template: templates/cluster/deployment.yaml
+
+  - it: cluster.annotations applied to Deployment pod metadata
+    set:
+      cluster:
+        annotations:
+          cluster-annotation-key: cluster-annotation-value
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - equal:
+          path: spec.template.metadata.annotations["cluster-annotation-key"]
+          value: cluster-annotation-value
+    template: templates/cluster/deployment.yaml
+
+  - it: cluster.annotations merged with global annotations and workload annotations
+    set:
+      annotations:
+        global-key: global-value
+      cluster:
+        annotations:
+          cluster-key: cluster-value
+        workload_annotations:
+          workload-key: workload-value
+    asserts:
+      - equal:
+          path: metadata.annotations["global-key"]
+          value: global-value
+      - equal:
+          path: metadata.annotations["cluster-key"]
+          value: cluster-value
+      - equal:
+          path: metadata.annotations["workload-key"]
+          value: workload-value
+    template: templates/cluster/deployment.yaml
