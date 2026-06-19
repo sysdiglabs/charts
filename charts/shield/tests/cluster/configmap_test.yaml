@@ -1,6 +1,8 @@
 suite: Cluster - Configmap
 templates:
   - templates/cluster/configmap.yaml
+chart:
+  version: 1.2.3-helmtest
 release:
   name: release-name
   namespace: shield-namespace
@@ -1050,3 +1052,21 @@ tests:
       - matchRegex:
           path: data['cluster-shield.yaml']
           pattern: \A\S
+
+  - it: Default labels present on ConfigMap
+    asserts:
+      - isSubset:
+          path: metadata.labels
+          content:
+            helm.sh/chart: shield-1.2.3-helmtest
+            app.kubernetes.io/name: shield
+            app.kubernetes.io/instance: release-name
+            app.kubernetes.io/version: "1.0.0"
+            app.kubernetes.io/managed-by: Helm
+            sysdig/component: cluster
+
+  - it: No annotations by default on ConfigMap
+    asserts:
+      - exists:
+          path: metadata.annotations
+        not: true

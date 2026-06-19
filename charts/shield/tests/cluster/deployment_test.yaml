@@ -290,6 +290,7 @@ tests:
       - isSubset:
           path: metadata.labels
           content:
+            helm.sh/chart: shield-1.2.3-helmtest
             app.kubernetes.io/instance: release-name
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: shield
