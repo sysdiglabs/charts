@@ -7,7 +7,7 @@ metadata:
   annotations:
     helm.sh/hook: "pre-install,pre-upgrade"
     helm.sh/hook-delete-policy: "before-hook-creation"
-    {{- $shieldAnnotations := (include "shield.annotations" .) }}
+    {{- $shieldAnnotations := (include "host.annotations" .) }}
     {{- if $shieldAnnotations }}
     {{- $shieldAnnotations | nindent 4 }}
     {{- end }}
