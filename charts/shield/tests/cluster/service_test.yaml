@@ -366,3 +366,32 @@ tests:
       - equal:
           path: metadata.annotations["service-key"]
           value: service-value
+
+  - it: cluster.labels applied to Service
+    set:
+      cluster:
+        labels:
+          cluster-label-key: cluster-label-value
+    asserts:
+      - isKind:
+          of: Service
+      - equal:
+          path: metadata.labels["cluster-label-key"]
+          value: cluster-label-value
+
+  - it: cluster.labels merged with global labels on Service
+    set:
+      labels:
+        global-key: global-value
+      cluster:
+        labels:
+          cluster-key: cluster-value
+    asserts:
+      - isKind:
+          of: Service
+      - equal:
+          path: metadata.labels["global-key"]
+          value: global-value
+      - equal:
+          path: metadata.labels["cluster-key"]
+          value: cluster-value
