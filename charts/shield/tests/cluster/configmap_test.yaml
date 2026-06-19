@@ -1060,3 +1060,28 @@ tests:
       - exists:
           path: metadata.annotations
         not: true
+
+  - it: cluster.annotations applied to ConfigMap
+    set:
+      cluster:
+        annotations:
+          cluster-annotation-key: cluster-annotation-value
+    asserts:
+      - equal:
+          path: metadata.annotations["cluster-annotation-key"]
+          value: cluster-annotation-value
+
+  - it: cluster.annotations merged with global annotations on ConfigMap
+    set:
+      annotations:
+        global-key: global-value
+      cluster:
+        annotations:
+          cluster-key: cluster-value
+    asserts:
+      - equal:
+          path: metadata.annotations["global-key"]
+          value: global-value
+      - equal:
+          path: metadata.annotations["cluster-key"]
+          value: cluster-value

@@ -8,7 +8,7 @@ metadata:
     {{- if and .Values.cluster.service .Values.cluster.service.labels }}
       {{- toYaml .Values.cluster.service.labels | nindent 4 }}
     {{- end }}
-  {{- $shieldAnnotations := (include "shield.annotations" .) }}
+  {{- $shieldAnnotations := (include "cluster.annotations" .) }}
   {{- $serviceAnnotations := (dig "service" "annotations" dict .Values.cluster) }}
   {{- $allAnnotations := merge (dict) $serviceAnnotations (fromYaml $shieldAnnotations) }}
   {{- if $allAnnotations }}

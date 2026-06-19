@@ -385,6 +385,13 @@
         },
         "volume_mounts": {
           "$ref": "#/$defs/VolumeMounts"
+        },
+        "annotations": {
+          "type": "object",
+          "description": "Additional annotations applied to all cluster resources created by the chart.",
+          "additionalProperties": {
+            "type": "string"
+          }
         }
       },
       "required": [
@@ -436,6 +443,13 @@
         },
         "volume_mounts": {
           "$ref": "#/$defs/VolumeMounts"
+        },
+        "annotations": {
+          "type": "object",
+          "description": "Additional annotations applied to all host resources created by the chart.",
+          "additionalProperties": {
+            "type": "string"
+          }
         }
       },
       "required": [
@@ -457,6 +471,13 @@
         },
         "volume_mounts": {
           "$ref": "#/$defs/VolumeMounts"
+        },
+        "annotations": {
+          "type": "object",
+          "description": "Additional annotations applied to all host_windows resources created by the chart.",
+          "additionalProperties": {
+            "type": "string"
+          }
         }
       }
     },
