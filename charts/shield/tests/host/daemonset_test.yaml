@@ -1252,3 +1252,63 @@ tests:
       - equal:
           path: metadata.labels["workload-key"]
           value: workload-value
+
+  - it: host.annotations overrides global annotations on DaemonSet workload
+    set:
+      annotations:
+        env: global
+      host:
+        annotations:
+          env: host
+    asserts:
+      - equal:
+          path: metadata.annotations["env"]
+          value: host
+
+  - it: host.annotations overrides global annotations on DaemonSet pod
+    set:
+      annotations:
+        env: global
+      host:
+        annotations:
+          env: host
+    asserts:
+      - equal:
+          path: spec.template.metadata.annotations["env"]
+          value: host
+
+  - it: host.workload_annotations overrides host.annotations on DaemonSet workload
+    set:
+      host:
+        annotations:
+          env: component
+        workload_annotations:
+          env: workload
+    asserts:
+      - equal:
+          path: metadata.annotations["env"]
+          value: workload
+
+  - it: host.pod_annotations overrides host.annotations on DaemonSet pod
+    set:
+      host:
+        annotations:
+          env: component
+        pod_annotations:
+          env: pod
+    asserts:
+      - equal:
+          path: spec.template.metadata.annotations["env"]
+          value: pod
+
+  - it: host.workload_annotations overrides global workload_annotations on DaemonSet
+    set:
+      workload_annotations:
+        env: global-workload
+      host:
+        workload_annotations:
+          env: component-workload
+    asserts:
+      - equal:
+          path: metadata.annotations["env"]
+          value: component-workload
