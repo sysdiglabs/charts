@@ -24,14 +24,14 @@ Selector labels
 {{- end }}
 
 {{- define "cluster.workload_labels" -}}
-  {{- $workloadLabels := merge (dict) (dict) .Values.workload_labels .Values.cluster.workload_labels (include "cluster.labels" . | fromYaml) }}
+  {{- $workloadLabels := merge (dict) .Values.cluster.workload_labels .Values.workload_labels (include "cluster.labels" . | fromYaml) }}
   {{- with $workloadLabels -}}
     {{- . | toYaml -}}
   {{- end -}}
 {{- end -}}
 
 {{- define "cluster.pod_labels" -}}
-  {{- $podLabels := merge (dict) .Values.pod_labels .Values.cluster.pod_labels (include "cluster.labels" . | fromYaml) }}
+  {{- $podLabels := merge (dict) .Values.cluster.pod_labels .Values.pod_labels (include "cluster.labels" . | fromYaml) }}
   {{- with $podLabels -}}
     {{- . | toYaml -}}
   {{- end -}}
