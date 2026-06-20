@@ -1763,3 +1763,68 @@ tests:
           path: metadata.labels["workload-key"]
           value: workload-value
     template: templates/cluster/deployment.yaml
+
+  - it: cluster.annotations overrides global annotations on Deployment workload
+    set:
+      annotations:
+        env: global
+      cluster:
+        annotations:
+          env: cluster
+    asserts:
+      - equal:
+          path: metadata.annotations["env"]
+          value: cluster
+    template: templates/cluster/deployment.yaml
+
+  - it: cluster.annotations overrides global annotations on Deployment pod
+    set:
+      annotations:
+        env: global
+      cluster:
+        annotations:
+          env: cluster
+    asserts:
+      - equal:
+          path: spec.template.metadata.annotations["env"]
+          value: cluster
+    template: templates/cluster/deployment.yaml
+
+  - it: cluster.workload_annotations overrides cluster.annotations on Deployment workload
+    set:
+      cluster:
+        annotations:
+          env: component
+        workload_annotations:
+          env: workload
+    asserts:
+      - equal:
+          path: metadata.annotations["env"]
+          value: workload
+    template: templates/cluster/deployment.yaml
+
+  - it: cluster.pod_annotations overrides cluster.annotations on Deployment pod
+    set:
+      cluster:
+        annotations:
+          env: component
+        pod_annotations:
+          env: pod
+    asserts:
+      - equal:
+          path: spec.template.metadata.annotations["env"]
+          value: pod
+    template: templates/cluster/deployment.yaml
+
+  - it: cluster.workload_annotations overrides global workload_annotations on Deployment
+    set:
+      workload_annotations:
+        env: global-workload
+      cluster:
+        workload_annotations:
+          env: component-workload
+    asserts:
+      - equal:
+          path: metadata.annotations["env"]
+          value: component-workload
+    template: templates/cluster/deployment.yaml
