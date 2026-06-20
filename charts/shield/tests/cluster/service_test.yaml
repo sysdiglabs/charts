@@ -409,3 +409,17 @@ tests:
       - equal:
           path: metadata.annotations["env"]
           value: cluster
+
+  - it: cluster.labels overrides global labels on Service
+    set:
+      labels:
+        env: global
+      cluster:
+        labels:
+          env: cluster
+    asserts:
+      - isKind:
+          of: Service
+      - equal:
+          path: metadata.labels["env"]
+          value: cluster
