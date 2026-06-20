@@ -24,14 +24,14 @@ Selector labels
 {{- end }}
 
 {{- define "host.windows.workload_labels" -}}
-  {{- $workloadLabels := merge (dict) .Values.workload_labels .Values.host_windows.workload_labels (include "host.windows.labels" . | fromYaml) }}
+  {{- $workloadLabels := merge (dict) .Values.host_windows.workload_labels .Values.workload_labels (include "host.windows.labels" . | fromYaml) }}
   {{- with $workloadLabels -}}
     {{- . | toYaml -}}
   {{- end -}}
 {{- end -}}
 
 {{- define "host.windows.pod_labels" -}}
-  {{- $podLabels := merge (dict) .Values.pod_labels .Values.host_windows.pod_labels (include "host.windows.labels" . | fromYaml) }}
+  {{- $podLabels := merge (dict) .Values.host_windows.pod_labels .Values.pod_labels (include "host.windows.labels" . | fromYaml) }}
   {{- with $podLabels -}}
     {{- . | toYaml -}}
   {{- end -}}

@@ -1312,3 +1312,63 @@ tests:
       - equal:
           path: metadata.annotations["env"]
           value: component-workload
+
+  - it: host.labels overrides global labels on DaemonSet workload
+    set:
+      labels:
+        env: global
+      host:
+        labels:
+          env: host
+    asserts:
+      - equal:
+          path: metadata.labels["env"]
+          value: host
+
+  - it: host.labels overrides global labels on DaemonSet pod
+    set:
+      labels:
+        env: global
+      host:
+        labels:
+          env: host
+    asserts:
+      - equal:
+          path: spec.template.metadata.labels["env"]
+          value: host
+
+  - it: host.workload_labels overrides host.labels on DaemonSet workload
+    set:
+      host:
+        labels:
+          env: component
+        workload_labels:
+          env: workload
+    asserts:
+      - equal:
+          path: metadata.labels["env"]
+          value: workload
+
+  - it: host.pod_labels overrides host.labels on DaemonSet pod
+    set:
+      host:
+        labels:
+          env: component
+        pod_labels:
+          env: pod
+    asserts:
+      - equal:
+          path: spec.template.metadata.labels["env"]
+          value: pod
+
+  - it: host.workload_labels overrides global workload_labels on DaemonSet
+    set:
+      workload_labels:
+        env: global-workload
+      host:
+        workload_labels:
+          env: component-workload
+    asserts:
+      - equal:
+          path: metadata.labels["env"]
+          value: component-workload
