@@ -1,19 +1,19 @@
 {{- define "host.annotations" -}}
-  {{- $annotations := merge (dict) (include "shield.annotations" . | fromYaml) .Values.host.annotations -}}
+  {{- $annotations := merge (dict) .Values.host.annotations (include "shield.annotations" . | fromYaml) -}}
   {{- with $annotations -}}
     {{- . | toYaml -}}
   {{- end -}}
 {{- end -}}
 
 {{- define "host.workload_annotations" -}}
-  {{- $workloadAnnotations := merge (dict) (include "host.annotations" . | fromYaml) .Values.workload_annotations .Values.host.workload_annotations -}}
+  {{- $workloadAnnotations := merge (dict) .Values.host.workload_annotations .Values.workload_annotations (include "host.annotations" . | fromYaml) -}}
   {{- with $workloadAnnotations -}}
     {{- . | toYaml -}}
   {{- end -}}
 {{- end -}}
 
 {{- define "host.pod_annotations" -}}
-  {{- $podAnnotations := merge (dict) (include "host.annotations" . | fromYaml) .Values.pod_annotations .Values.host.pod_annotations -}}
+  {{- $podAnnotations := merge (dict) .Values.host.pod_annotations .Values.pod_annotations (include "host.annotations" . | fromYaml) -}}
   {{- if (include "common.cluster_type.is_gke_autopilot" . ) -}}
     {{- $_ := set $podAnnotations "autopilot.gke.io/no-connect" "true" -}}
   {{- end -}}
@@ -24,7 +24,7 @@
 {{- end -}}
 
 {{- define "host.rbac_annotations" -}}
-  {{- $rbacAnnotations := merge (dict) (include "host.annotations" . | fromYaml) .Values.host.rbac.annotations -}}
+  {{- $rbacAnnotations := merge (dict) .Values.host.rbac.annotations (include "host.annotations" . | fromYaml) -}}
   {{- with $rbacAnnotations -}}
     {{- . | toYaml -}}
   {{- end -}}

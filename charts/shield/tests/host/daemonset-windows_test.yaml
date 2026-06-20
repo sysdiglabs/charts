@@ -1,6 +1,8 @@
 suite: Host Windows - DaemonSet
 templates:
   - templates/host/daemonset-windows.yaml
+chart:
+  version: 1.2.3-helmtest
 release:
   name: release-name
   namespace: shield-namespace
@@ -517,3 +519,51 @@ tests:
           value:
               - company.public
               - company.internal
+
+  - it: host_windows.annotations overrides global annotations on DaemonSet workload
+    set:
+      annotations:
+        env: global
+      host_windows:
+        annotations:
+          env: host-windows
+    asserts:
+      - equal:
+          path: metadata.annotations["env"]
+          value: host-windows
+
+  - it: host_windows.annotations overrides global annotations on DaemonSet pod
+    set:
+      annotations:
+        env: global
+      host_windows:
+        annotations:
+          env: host-windows
+    asserts:
+      - equal:
+          path: spec.template.metadata.annotations["env"]
+          value: host-windows
+
+  - it: host_windows.workload_annotations overrides host_windows.annotations on DaemonSet workload
+    set:
+      host_windows:
+        annotations:
+          env: component
+        workload_annotations:
+          env: workload
+    asserts:
+      - equal:
+          path: metadata.annotations["env"]
+          value: workload
+
+  - it: host_windows.workload_annotations overrides global workload_annotations on DaemonSet
+    set:
+      workload_annotations:
+        env: global-workload
+      host_windows:
+        workload_annotations:
+          env: component-workload
+    asserts:
+      - equal:
+          path: metadata.annotations["env"]
+          value: component-workload
