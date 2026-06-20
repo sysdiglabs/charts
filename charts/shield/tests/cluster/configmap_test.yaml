@@ -1122,3 +1122,15 @@ tests:
       - equal:
           path: metadata.annotations["env"]
           value: cluster
+
+  - it: cluster.labels overrides global labels on ConfigMap
+    set:
+      labels:
+        env: global
+      cluster:
+        labels:
+          env: cluster
+    asserts:
+      - equal:
+          path: metadata.labels["env"]
+          value: cluster
