@@ -437,7 +437,7 @@ nodeAnalyzer:
     debug: false
     image:
       repository: sysdig/kspm-analyzer
-      tag: 1.49.0
+      tag: 1.49.1
       digest: null
       pullPolicy: null
     # Permissions for OCP4, previously only added for benchmarkrunner
