@@ -1,6 +1,8 @@
 suite: Cluster - Configmap
 templates:
   - templates/cluster/configmap.yaml
+chart:
+  version: 1.2.3-helmtest
 release:
   name: release-name
   namespace: shield-namespace
@@ -1040,3 +1042,95 @@ tests:
             cluster_scanner:
               runtime_status_integrator:
                 nats_server: {}
+
+  - it: Default labels present on ConfigMap
+    asserts:
+      - isSubset:
+          path: metadata.labels
+          content:
+            helm.sh/chart: shield-1.2.3-helmtest
+            app.kubernetes.io/name: shield
+            app.kubernetes.io/instance: release-name
+            app.kubernetes.io/version: "1.0.0"
+            app.kubernetes.io/managed-by: Helm
+            sysdig/component: cluster
+
+  - it: No annotations by default on ConfigMap
+    asserts:
+      - exists:
+          path: metadata.annotations
+        not: true
+
+  - it: cluster.annotations applied to ConfigMap
+    set:
+      cluster:
+        annotations:
+          cluster-annotation-key: cluster-annotation-value
+    asserts:
+      - equal:
+          path: metadata.annotations["cluster-annotation-key"]
+          value: cluster-annotation-value
+
+  - it: cluster.annotations merged with global annotations on ConfigMap
+    set:
+      annotations:
+        global-key: global-value
+      cluster:
+        annotations:
+          cluster-key: cluster-value
+    asserts:
+      - equal:
+          path: metadata.annotations["global-key"]
+          value: global-value
+      - equal:
+          path: metadata.annotations["cluster-key"]
+          value: cluster-value
+
+  - it: cluster.labels applied to ConfigMap
+    set:
+      cluster:
+        labels:
+          cluster-label-key: cluster-label-value
+    asserts:
+      - equal:
+          path: metadata.labels["cluster-label-key"]
+          value: cluster-label-value
+
+  - it: cluster.labels merged with global labels on ConfigMap
+    set:
+      labels:
+        global-key: global-value
+      cluster:
+        labels:
+          cluster-key: cluster-value
+    asserts:
+      - equal:
+          path: metadata.labels["global-key"]
+          value: global-value
+      - equal:
+          path: metadata.labels["cluster-key"]
+          value: cluster-value
+
+  - it: cluster.annotations overrides global annotations on ConfigMap
+    set:
+      annotations:
+        env: global
+      cluster:
+        annotations:
+          env: cluster
+    asserts:
+      - equal:
+          path: metadata.annotations["env"]
+          value: cluster
+
+  - it: cluster.labels overrides global labels on ConfigMap
+    set:
+      labels:
+        env: global
+      cluster:
+        labels:
+          env: cluster
+    asserts:
+      - equal:
+          path: metadata.labels["env"]
+          value: cluster
