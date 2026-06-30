@@ -129,6 +129,9 @@ spec:
             {{- if $customCAEnvs }}
               {{- $customCAEnvs | nindent 12 }}
             {{- end }}
+            {{- if (include "cluster.scheduled_on_windows" .) }}
+            {{- include "common.go_runtime.envs" (dict "ContainerName" "cluster-shield" "Limits" (dig "resources" "limits" (dict) .Values.cluster)) | nindent 12 }}
+            {{- end }}
             {{- include "cluster.env" . | nindent 12 }}
           resources:
             {{- toYaml .Values.cluster.resources | nindent 12 }}
