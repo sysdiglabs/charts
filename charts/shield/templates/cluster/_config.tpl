@@ -79,13 +79,6 @@
     {{- end -}}
     {{- if (include "cluster.container_vulnerability_management_enabled" .) -}}
       {{- $clusterScannerConfig := dig "cluster_scanner" (dict) $config -}}
-      {{- $natsConfig := dig "cluster_scanner" "runtime_status_integrator" "nats_server" (dict) $clusterScannerConfig -}}
-      {{- if hasKey $natsConfig "password" -}}
-        {{- $_ := unset $clusterScannerConfig.runtime_status_integrator.nats_server "password" -}}
-      {{- end -}}
-      {{- if hasKey $natsConfig "password_existing_secret" -}}
-        {{- $_ := unset $clusterScannerConfig.runtime_status_integrator.nats_server "password_existing_secret" -}}
-      {{- end -}}
       {{- $iseConfig := dig "image_sbom_extractor" (dict) $clusterScannerConfig -}}
       {{- $_ := set $iseConfig "nats_url" (printf "nats://%s:4222" (include "cluster.container_vulnerability_management_service_name" .)) -}}
       {{- $_ := set $clusterScannerConfig "image_sbom_extractor" $iseConfig -}}
@@ -112,6 +105,12 @@
     {{- end -}}
     {{- $_ := set $config "ssl" (dict "verify" .Values.ssl.verify) -}}
     {{- $_ := mergeOverwrite $config .Values.cluster.additional_settings -}}
+    {{- if dig "cluster_scanner" "runtime_status_integrator" "nats_server" "password" nil $config -}}
+      {{- $_ := unset $config.cluster_scanner.runtime_status_integrator.nats_server "password" -}}
+    {{- end -}}
+    {{- if dig "cluster_scanner" "runtime_status_integrator" "nats_server" "password_existing_secret" nil $config -}}
+      {{- $_ := unset $config.cluster_scanner.runtime_status_integrator.nats_server "password_existing_secret" -}}
+    {{- end -}}
     {{- $config | toYaml -}}
 {{- end }}
 

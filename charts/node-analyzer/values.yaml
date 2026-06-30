@@ -294,7 +294,7 @@ nodeAnalyzer:
     probesPort: 7002
     image:
       repository: sysdig/vuln-runtime-scanner
-      tag: "1.8.9"
+      tag: "1.8.10"
       digest: null
       pullPolicy: null
     # Proxy configuration variables
@@ -391,7 +391,7 @@ nodeAnalyzer:
 
     image:
       repository: sysdig/vuln-host-scanner
-      tag: "0.16.6"
+      tag: "0.16.7"
       digest: null
       pullPolicy: null
     # Proxy configuration variables
@@ -437,7 +437,7 @@ nodeAnalyzer:
     debug: false
     image:
       repository: sysdig/kspm-analyzer
-      tag: 1.48.4
+      tag: 1.49.1
       digest: null
       pullPolicy: null
     # Permissions for OCP4, previously only added for benchmarkrunner

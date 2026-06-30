@@ -10,6 +10,24 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.45.0
+### New Features
+* **shield** [b1be1dd6](https://github.com/sysdiglabs/charts/commit/b1be1dd6935efd55fa50db7683251112a061fad1): release host-shield windows 0.18.0 ([#2668](https://github.com/sysdiglabs/charts/issues/2668))
+# v1.44.0
+### New Features
+* **shield** [35f73631](https://github.com/sysdiglabs/charts/commit/35f736311c90d0029177f329eaf8abc5c745a1d2): release cluster-shield 1.24.0 ([#2664](https://github.com/sysdiglabs/charts/issues/2664))
+# v1.43.2
+### Bug Fixes
+* **shield** [98190d56](https://github.com/sysdiglabs/charts/commit/98190d56bfd4e5ac3d7d73019278d780b6536e7c): remove nats passowrd configuration from the configmap if specified in additional_settings ([#2658](https://github.com/sysdiglabs/charts/issues/2658))
+# v1.43.1
+### New Features
+* **agent,shield** [3e671373](https://github.com/sysdiglabs/charts/commit/3e6713737450a7bd8b8703a21a396394891f9408): release agent 14.6.2 ([#2656](https://github.com/sysdiglabs/charts/issues/2656))
+# v1.43.0
+### New Features
+* **shield** [9e371376](https://github.com/sysdiglabs/charts/commit/9e371376313fa4f2c7aa8136613896328e37681f): gate nodes/proxy on live_logs in host ClusterRole ([#2655](https://github.com/sysdiglabs/charts/issues/2655))
+# v1.42.1
+### New Features
+* **agent,shield** [dab5d9f6](https://github.com/sysdiglabs/charts/commit/dab5d9f6e5460b977e2cbbebee94463c41c2b7c3): release agent 14.6.1 ([#2642](https://github.com/sysdiglabs/charts/issues/2642))
 # v1.42.0
 ### New Features
 * **shield** [76a473b5](https://github.com/sysdiglabs/charts/commit/76a473b530d5a3dc3ff0783e62537231c48d16d0): release cluster-shield 1.23.0 ([#2639](https://github.com/sysdiglabs/charts/issues/2639))

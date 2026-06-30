@@ -10,6 +10,27 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.114.0
+### Chores
+* **cluster-shield** [f55d14ce](https://github.com/sysdiglabs/charts/commit/f55d14cee6bf83b78b6905d4c241d873970ecbaf): Automatic bump to version 1.24.0 ([#2665](https://github.com/sysdiglabs/charts/issues/2665))
+# v1.113.4
+### Chores
+* **node-analyzer** [4264d38f](https://github.com/sysdiglabs/charts/commit/4264d38fbce3d9a8fb3790e36d8b4a0e1d3dc71a): bump sysdig/kspm-analyzer to 1.49.1 ([#2662](https://github.com/sysdiglabs/charts/issues/2662))
+# v1.113.3
+### Chores
+* **sysdig-deploy** [277cadc1](https://github.com/sysdiglabs/charts/commit/277cadc1b4b64dfc46aa07ccb550940ec30b7292): Automatic version bump due to updated dependencies ([#2657](https://github.com/sysdiglabs/charts/issues/2657))
+# v1.113.2
+### Chores
+* **sysdig-deploy** [930ed280](https://github.com/sysdiglabs/charts/commit/930ed28049aad34b4f374f3653b3e8c501375b8b): Automatic version bump due to updated dependencies ([#2647](https://github.com/sysdiglabs/charts/issues/2647))
+# v1.113.1
+### Chores
+* **sysdig-deploy, node-analyzer** [a0e9ec29](https://github.com/sysdiglabs/charts/commit/a0e9ec2951a1f48150c9b8ecdbf022ccb743d789): bump host-scanner to v0.16.7 ([#2650](https://github.com/sysdiglabs/charts/issues/2650))
+# v1.113.0
+### Chores
+* **node-analyzer** [e235a024](https://github.com/sysdiglabs/charts/commit/e235a0243c5e441a621f997603f7c7a7b2ee8f2d): bumped kspm-analyzer to 1.49.0 ([#2645](https://github.com/sysdiglabs/charts/issues/2645))
+# v1.112.1
+### Chores
+* **sysdig-deploy** [cfec8838](https://github.com/sysdiglabs/charts/commit/cfec8838f186e644247e1b9fec3cafcc984b2281): Automatic version bump due to updated dependencies ([#2643](https://github.com/sysdiglabs/charts/issues/2643))
 # v1.112.0
 ### New Features
 * **shield** [76a473b5](https://github.com/sysdiglabs/charts/commit/76a473b530d5a3dc3ff0783e62537231c48d16d0): release cluster-shield 1.23.0 ([#2639](https://github.com/sysdiglabs/charts/issues/2639))

@@ -266,6 +266,58 @@ tests:
             verbs:
               - list
 
+  - it: Default values do not grant nodes/proxy
+    asserts:
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - nodes/proxy
+            verbs:
+              - get
+              - list
+              - watch
+
+  - it: live_logs enabled grants nodes/proxy
+    set:
+      features:
+        investigations:
+          live_logs:
+            enabled: true
+    asserts:
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - nodes/proxy
+            verbs:
+              - get
+              - list
+              - watch
+
+  - it: live_logs disabled does not grant nodes/proxy
+    set:
+      features:
+        investigations:
+          live_logs:
+            enabled: false
+    asserts:
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - nodes/proxy
+            verbs:
+              - get
+              - list
+              - watch
+
   - it: Propagates custom labels and annotations onto the ClusterRole
     set:
       host:

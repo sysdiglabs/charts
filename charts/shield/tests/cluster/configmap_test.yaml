@@ -986,3 +986,57 @@ tests:
                   enabled: true
                   queue_length: 1000
                   timeout: 10
+
+  - it: NATS Existing Secret doesn't appear
+    set:
+      cluster:
+        additional_settings:
+          cluster_scanner:
+            runtime_status_integrator:
+              nats_server:
+                password_existing_secret: test-nats-password-secret
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: release-name-shield-cluster
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["cluster-shield.yaml"]
+      - matchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: |
+            cluster_scanner:
+              runtime_status_integrator:
+                nats_server: {}
+
+  - it: NATS Password doesn't appear if specified
+    set:
+      cluster:
+        additional_settings:
+          cluster_scanner:
+            runtime_status_integrator:
+              nats_server:
+                password: test-nats-password
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: release-name-shield-cluster
+      - equal:
+          path: metadata.namespace
+          value: shield-namespace
+      - exists:
+          path: data["cluster-shield.yaml"]
+      - matchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: |
+            cluster_scanner:
+              runtime_status_integrator:
+                nats_server: {}
