@@ -119,7 +119,7 @@ tests:
               - watch
       - lengthEqual:
           path: rules
-          count: 12
+          count: 13
 
   - it: on host shield 14.8.0+ grants nodes/log only
     set:
@@ -165,3 +165,17 @@ tests:
               - nodes/log
             verbs:
               - get
+
+  - it: Test agent can watch EndpointSlices in kubernetes
+    asserts:
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - discovery.k8s.io
+            resources:
+              - endpointslices
+            verbs:
+              - get
+              - list
+              - watch
