@@ -80,6 +80,20 @@ tests:
               - get
               - list
 
+  - it: Grants endpointslices for network topology
+    asserts:
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - discovery.k8s.io
+            resources:
+              - endpointslices
+            verbs:
+              - get
+              - list
+              - watch
+
   - it: Do not add RBAC rules when host_posture is enabled and OpenShift API is not detected
     set:
       features:
