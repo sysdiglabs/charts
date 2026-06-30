@@ -80,6 +80,20 @@ tests:
               - get
               - list
 
+  - it: Grants endpointslices for network topology
+    asserts:
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - discovery.k8s.io
+            resources:
+              - endpointslices
+            verbs:
+              - get
+              - list
+              - watch
+
   - it: Adds posture RBAC rules when host_posture is enabled
     set:
       features:
