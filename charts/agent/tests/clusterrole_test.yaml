@@ -88,3 +88,17 @@ tests:
       - contains:
           path: rules[0].resources
           content: configmaps
+
+  - it: Test agent can watch EndpointSlices in kubernetes
+    asserts:
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - discovery.k8s.io
+            resources:
+              - endpointslices
+            verbs:
+              - get
+              - list
+              - watch
