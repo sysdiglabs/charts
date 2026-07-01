@@ -1,2 +1,2 @@
 sysdig:
-  accessKey: ${SECURE_AGENT_TOKEN}
+  accessKey: "${SECURE_AGENT_TOKEN}"
