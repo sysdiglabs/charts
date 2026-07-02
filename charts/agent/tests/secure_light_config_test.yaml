@@ -29,12 +29,12 @@ tests:
           pattern: |-
             falcobaseline:
               enabled: false
-      - matchRegex:
+      - notMatchRegex:
           path: data['dragent.yaml']
           pattern: |-
             memdump:
               enabled: false
-      - matchRegex:
+      - notMatchRegex:
           path: data['dragent.yaml']
           pattern: |-
             network_topology:
@@ -68,12 +68,12 @@ tests:
           pattern: |-
             falcobaseline:
               enabled: false
-      - matchRegex:
+      - notMatchRegex:
           path: data['dragent.yaml']
           pattern: |-
             memdump:
               enabled: false
-      - matchRegex:
+      - notMatchRegex:
           path: data['dragent.yaml']
           pattern: |-
             network_topology:
@@ -107,12 +107,12 @@ tests:
           pattern: |-
             falcobaseline:
               enabled: false
-      - matchRegex:
+      - notMatchRegex:
           path: data['dragent.yaml']
           pattern: |-
             memdump:
               enabled: false
-      - matchRegex:
+      - notMatchRegex:
           path: data['dragent.yaml']
           pattern: |-
             network_topology:
@@ -146,12 +146,12 @@ tests:
           pattern: |-
             falcobaseline:
               enabled: false
-      - matchRegex:
+      - notMatchRegex:
           path: data['dragent.yaml']
           pattern: |-
             memdump:
               enabled: false
-      - matchRegex:
+      - notMatchRegex:
           path: data['dragent.yaml']
           pattern: |-
             network_topology:
@@ -185,12 +185,12 @@ tests:
           pattern: |-
             falcobaseline:
               enabled: false
-      - matchRegex:
+      - notMatchRegex:
           path: data['dragent.yaml']
           pattern: |-
             memdump:
               enabled: false
-      - matchRegex:
+      - notMatchRegex:
           path: data['dragent.yaml']
           pattern: |-
             network_topology:
