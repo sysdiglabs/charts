@@ -99,6 +99,10 @@
                                                "monitor_api_endpoint" "in-che.monitoring.cloud.ibm.com"
                                                "secure_api_endpoint"  "in-che.security-compliance-secure.cloud.ibm.com"
                                                "secure_ui"           "in-che.security-compliance-secure.cloud.ibm.com")
+                      "in-mum-monitor"   (dict "collector_endpoint"  "ingest.in-mum.monitoring.cloud.ibm.com"
+                                               "monitor_api_endpoint" "in-mum.monitoring.cloud.ibm.com"
+                                               "secure_api_endpoint"  "in-mum.security-compliance-secure.cloud.ibm.com"
+                                               "secure_ui"           "in-mum.security-compliance-secure.cloud.ibm.com")
                       "jp-osa-monitor"   (dict "collector_endpoint"  "ingest.jp-osa.monitoring.cloud.ibm.com"
                                                "monitor_api_endpoint" "jp-osa.monitoring.cloud.ibm.com"
                                                "secure_api_endpoint"  "jp-osa.security-compliance-secure.cloud.ibm.com"
@@ -143,6 +147,10 @@
                                                        "monitor_api_endpoint" "private.in-che.monitoring.cloud.ibm.com"
                                                        "secure_api_endpoint"  "private.in-che.security-compliance-secure.cloud.ibm.com"
                                                        "secure_ui"           "private.in-che.security-compliance-secure.cloud.ibm.com")
+                      "in-mum-private-monitor"   (dict "collector_endpoint"  "ingest.private.in-mum.monitoring.cloud.ibm.com"
+                                                       "monitor_api_endpoint" "private.in-mum.monitoring.cloud.ibm.com"
+                                                       "secure_api_endpoint"  "private.in-mum.security-compliance-secure.cloud.ibm.com"
+                                                       "secure_ui"           "private.in-mum.security-compliance-secure.cloud.ibm.com")
                       "jp-osa-private-monitor"   (dict "collector_endpoint"  "ingest.private.jp-osa.monitoring.cloud.ibm.com"
                                                        "monitor_api_endpoint" "private.jp-osa.monitoring.cloud.ibm.com"
                                                        "secure_api_endpoint"  "private.jp-osa.security-compliance-secure.cloud.ibm.com"
@@ -187,6 +195,10 @@
                                               "monitor_api_endpoint" "in-che.monitoring.cloud.ibm.com"
                                               "secure_api_endpoint"  "in-che.security-compliance-secure.cloud.ibm.com"
                                               "secure_ui"           "in-che.security-compliance-secure.cloud.ibm.com")
+                      "in-mum-secure"   (dict "collector_endpoint"  "ingest.in-mum.security-compliance-secure.cloud.ibm.com"
+                                              "monitor_api_endpoint" "in-mum.monitoring.cloud.ibm.com"
+                                              "secure_api_endpoint"  "in-mum.security-compliance-secure.cloud.ibm.com"
+                                              "secure_ui"           "in-mum.security-compliance-secure.cloud.ibm.com")
                       "jp-osa-secure"   (dict "collector_endpoint"  "ingest.jp-osa.security-compliance-secure.cloud.ibm.com"
                                               "monitor_api_endpoint" "jp-osa.monitoring.cloud.ibm.com"
                                               "secure_api_endpoint"  "jp-osa.security-compliance-secure.cloud.ibm.com"
@@ -231,6 +243,10 @@
                                                       "monitor_api_endpoint" "private.in-che.monitoring.cloud.ibm.com"
                                                       "secure_api_endpoint"  "private.in-che.security-compliance-secure.cloud.ibm.com"
                                                       "secure_ui"           "private.in-che.security-compliance-secure.cloud.ibm.com")
+                      "in-mum-private-secure"   (dict "collector_endpoint"  "ingest.private.in-mum.security-compliance-secure.cloud.ibm.com"
+                                                      "monitor_api_endpoint" "private.in-mum.monitoring.cloud.ibm.com"
+                                                      "secure_api_endpoint"  "private.in-mum.security-compliance-secure.cloud.ibm.com"
+                                                      "secure_ui"           "private.in-mum.security-compliance-secure.cloud.ibm.com")
                       "jp-osa-private-secure"   (dict "collector_endpoint"  "ingest.private.jp-osa.security-compliance-secure.cloud.ibm.com"
                                                       "monitor_api_endpoint" "private.jp-osa.monitoring.cloud.ibm.com"
                                                       "secure_api_endpoint"  "private.jp-osa.security-compliance-secure.cloud.ibm.com"
