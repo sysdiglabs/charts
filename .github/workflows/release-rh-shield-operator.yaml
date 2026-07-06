@@ -13,7 +13,7 @@ jobs:
       should_skip: ${{ steps.check-existing.outputs.should_skip }}
     steps:
       - name: Checkout charts repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: '1'
 
@@ -75,7 +75,7 @@ jobs:
       image_tag: ${{ steps.set-image-tag.outputs.image_tag }}
     steps:
       - name: Checkout charts repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: '1'
 
@@ -129,7 +129,7 @@ jobs:
       - validate-prerequisites
     steps:
       - name: Checkout charts repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: '1'
 
@@ -164,7 +164,7 @@ jobs:
       pr_url: ${{ steps.open-pr.outputs.pull-request-url }}
     steps:
       - name: Checkout charts repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: '1'
           ref: 'main'
