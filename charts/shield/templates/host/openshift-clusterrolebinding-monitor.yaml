@@ -1,6 +1,5 @@
 {{- if or (.Capabilities.APIVersions.Has "monitoring.openshift.io/v1") (has "monitoring.openshift.io/v1" .Values.extra_capabilities_api_versions) }}
-{{- $clusterRole := lookup "rbac.authorization.k8s.io/v1" "ClusterRole" "" "cluster-monitoring-view" -}}
-{{- if and (include "host.rbac.cluster_role.create" .) $clusterRole }}
+{{- if (include "host.rbac.cluster_role.create" .) }}
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
