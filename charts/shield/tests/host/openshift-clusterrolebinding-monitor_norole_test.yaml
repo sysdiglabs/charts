@@ -1,4 +1,4 @@
-suite: Host - OpenShift ClusterRoleBinding Monitor (Role does not exist)
+suite: Host - OpenShift ClusterRoleBinding Monitor (offline / GitOps render, no lookup)
 templates:
   - templates/host/openshift-clusterrolebinding-monitor.yaml
 release:
@@ -7,7 +7,33 @@ release:
 values:
   - ../values/base.yaml
 tests:
-  - it: Does not create the ClusterRoleBinding if the ClusterRole does not exist and monitoring.openshift.io/v1 is supported
+  # No kubernetesProvider is configured, so `lookup` returns empty — this mirrors an
+  # ArgoCD / `helm template` / `--dry-run` render where there is no live cluster API.
+  - it: Creates the ClusterRoleBinding when monitoring.openshift.io/v1 is supported even though lookup is empty
+    capabilities:
+      apiVersions:
+        - monitoring.openshift.io/v1
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          apiVersion: rbac.authorization.k8s.io/v1
+          kind: ClusterRoleBinding
+          name: release-name-shield-host-cluster-monitoring-view
+
+  - it: Creates the ClusterRoleBinding when the monitoring API version is declared via extra_capabilities_api_versions (ArgoCD)
+    set:
+      extra_capabilities_api_versions:
+        - monitoring.openshift.io/v1
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          apiVersion: rbac.authorization.k8s.io/v1
+          kind: ClusterRoleBinding
+          name: release-name-shield-host-cluster-monitoring-view
+
+  - it: Does not create the ClusterRoleBinding if the monitoring API version is neither supported nor declared
     capabilities:
       apiVersions:
         - security.openshift.io/v1

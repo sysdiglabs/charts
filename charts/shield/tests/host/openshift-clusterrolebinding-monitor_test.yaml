@@ -6,19 +6,6 @@ release:
   namespace: shield-namespace
 values:
   - ../values/base.yaml
-kubernetesProvider:
-  scheme:
-    "rbac.authorization.k8s.io/v1/ClusterRole":
-      gvr:
-        group: "rbac.authorization.k8s.io"
-        version: "v1"
-        resource: "clusterroles"
-      namespaced: false
-  objects:
-  - apiVersion: rbac.authorization.k8s.io/v1
-    kind: ClusterRole
-    metadata:
-      name: cluster-monitoring-view
 
 tests:
   - it: Does not create the ClusterRoleBinding if rbac.create is false
@@ -61,12 +48,12 @@ tests:
           kind: ClusterRoleBinding
           name: release-name-shield-host-cluster-monitoring-view
 
-  - it: Does not create the ClusterRoleBinding if the ClusterRole exists and monitoring.openshift.io/v1 is not supported
+  - it: Does not create the ClusterRoleBinding if monitoring.openshift.io/v1 is not supported
     asserts:
       - hasDocuments:
           count: 0
 
-  - it: Does create the ClusterRoleBinding if the ClusterRole exists and monitoring.openshift.io/v1 is supported
+  - it: Does create the ClusterRoleBinding if monitoring.openshift.io/v1 is supported
     capabilities:
       apiVersions:
         - monitoring.openshift.io/v1
