@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.46.3
+### New Features
+* **agent,shield** [49a0e818](https://github.com/sysdiglabs/charts/commit/49a0e818982d260d0e717f2885f5dc2d02d583c3): release agent 14.7.1 ([#2675](https://github.com/sysdiglabs/charts/issues/2675))
 # v1.46.2
 ### Bug Fixes
 * **shield** [41d0bb6f](https://github.com/sysdiglabs/charts/commit/41d0bb6fc21fa86dba04f167783527a0d2d38465): render OpenShift monitoring ClusterRoleBinding under GitOps ([#2673](https://github.com/sysdiglabs/charts/issues/2673))

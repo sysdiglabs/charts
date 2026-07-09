@@ -1,5 +1,5 @@
 # What's Changed
 
-### Bug Fixes
-- **shield** [41d0bb6f](https://github.com/sysdiglabs/charts/commit/41d0bb6fc21fa86dba04f167783527a0d2d38465): render OpenShift monitoring ClusterRoleBinding under GitOps ([#2673](https://github.com/sysdiglabs/charts/issues/2673))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.46.1...shield-1.46.2
+### New Features
+- **agent,shield** [49a0e818](https://github.com/sysdiglabs/charts/commit/49a0e818982d260d0e717f2885f5dc2d02d583c3): release agent 14.7.1 ([#2675](https://github.com/sysdiglabs/charts/issues/2675))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.46.2...shield-1.46.3
