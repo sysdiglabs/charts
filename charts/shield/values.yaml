@@ -370,6 +370,32 @@ host:
         cpu: 250m
         # The memory request for the host shield
         memory: 384Mi
+  # A list of node-type profiles. When empty (default), a single host shield
+  # DaemonSet is rendered from the settings above. When set, the settings above
+  # act as the BASE and ONE DaemonSet is rendered per profile, each deep-merging
+  # its overrides over the base.
+  #
+  # IMPORTANT: each profile's node_selector MUST target a disjoint set of nodes.
+  # If two profiles can match the same node, two host shields will be scheduled
+  # on it and fight over hostNetwork/hostPID. Use labels that are mutually
+  # exclusive (e.g. distinct node-pool or instance-type labels).
+  #
+  # Example:
+  # profiles:
+  #   - name: heavy                       # required, unique, DNS-label safe
+  #     node_selector:                    # required - targeting + exclusivity
+  #       sysdig.com/node-size: heavy
+  #     resources:                        # optional - only what differs from base
+  #       shield:
+  #         limits: { cpu: "2", memory: 2Gi }
+  #     # affinity / tolerations optional - inherit the base when omitted
+  #   - name: light
+  #     node_selector:
+  #       sysdig.com/node-size: light
+  #     resources:
+  #       shield:
+  #         limits: { memory: 512Mi }
+  profiles: []
   # The host aliases for the linux host shield workloads
   host_aliases: []
   # The annotations for the host shield workloads (metadata.annotations)

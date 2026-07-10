@@ -7,6 +7,18 @@ If release name contains chart name it will be used as a full name.
     {{- printf "%s-host" (include "shield.fullname" . | trunc 57 | trimSuffix "-") }}
 {{- end }}
 
+{{/*
+DaemonSet name. When rendered for a named profile, suffix the profile name and
+truncate to the 63-char DNS limit. Without a profile it is exactly host.fullname.
+*/}}
+{{- define "host.daemonset.name" -}}
+{{- if .ProfileName -}}
+{{- printf "%s-%s" (include "host.fullname" .) .ProfileName | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- include "host.fullname" . -}}
+{{- end -}}
+{{- end }}
+
 {{- define "host.windows.fullname" -}}
     {{- printf "%s-host-windows" (include "shield.fullname" . | trunc 50 | trimSuffix "-") }}
 {{- end }}

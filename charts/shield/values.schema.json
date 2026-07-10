@@ -426,6 +426,35 @@
         },
         "volume_mounts": {
           "$ref": "#/$defs/VolumeMounts"
+        },
+        "profiles": {
+          "type": "array",
+          "description": "Node-type profiles. When set, one host shield DaemonSet is rendered per profile, each deep-merging its overrides over the base host settings. Each profile's node_selector must target a disjoint set of nodes.",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "node_selector"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "node_selector": {
+                "type": "object"
+              },
+              "affinity": {
+                "type": "object"
+              },
+              "tolerations": {
+                "type": "array"
+              },
+              "resources": {
+                "type": "object"
+              }
+            },
+            "additionalProperties": false
+          }
         }
       },
       "required": [
