@@ -698,7 +698,7 @@ gke_autopilot:
   # The Allowlist version label applied to host-shield workloads. Must match an
   # AllowlistSynchronizer the cluster knows about.
   # (Replaces the deprecated top-level "gke_autopilot_allowlist", which is still honored and takes precedence when set.)
-  allowlist_version: sysdig-agent-v1.1.4
+  allowlist_version: gar-sysdig-agent-v1.1.4
   # Pre-install/pre-upgrade hook Job that waits for AllowlistSynchronizer/sysdig-agent-allowlist-synchronizer
   # to reach Ready before the host-shield DaemonSet is rolled out. This avoids a race where Autopilot
   # blocks DaemonSet pods until the allowlist matches them.
