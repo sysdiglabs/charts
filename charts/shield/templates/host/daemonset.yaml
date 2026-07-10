@@ -1,7 +1,8 @@
+{{- define "host.daemonset" -}}
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: {{ template "host.fullname" . }}
+  name: {{ include "host.daemonset.name" . }}
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "host.workload_labels" . | nindent 4 }}
@@ -11,13 +12,19 @@ spec:
   selector:
     matchLabels:
       {{- include "host.selector_labels" . | nindent 6 }}
+      {{- if .ProfileName }}
+      sysdig/host-profile: {{ .ProfileName }}
+      {{- end }}
   updateStrategy:
     {{- toYaml .Values.host.update_strategy | nindent 4 }}
   template:
     metadata:
-      name: {{ template "host.fullname" . }}
+      name: {{ include "host.daemonset.name" . }}
       labels:
         {{- include "host.pod_labels" . | nindent 8 }}
+        {{- if .ProfileName }}
+        sysdig/host-profile: {{ .ProfileName }}
+        {{- end }}
       annotations:
         {{- include "host.pod_annotations" . | nindent 8 }}
     spec:
@@ -346,3 +353,15 @@ spec:
             {{- end }}
       {{- end }}
       {{- include "host.volumes" . | nindent 8 }}
+{{- end -}}
+{{- $profiles := .Values.host.profiles | default (list) -}}
+{{- if eq (len $profiles) 0 -}}
+{{- $profiles = list (dict) -}}
+{{- end -}}
+{{- range $profile := $profiles }}
+{{- $hostMerged := mergeOverwrite (deepCopy $.Values.host) (omit $profile "name") -}}
+{{- $valuesMerged := merge (dict "host" $hostMerged) (omit $.Values "host") -}}
+{{- $ctx := merge (dict "Values" $valuesMerged "ProfileName" ($profile.name | default "")) (omit $ "Values") -}}
+---
+{{ include "host.daemonset" $ctx | trim }}
+{{ end -}}
