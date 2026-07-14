@@ -290,6 +290,7 @@ tests:
       - isSubset:
           path: metadata.labels
           content:
+            helm.sh/chart: shield-1.2.3-helmtest
             app.kubernetes.io/instance: release-name
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: shield
@@ -1525,4 +1526,370 @@ tests:
           content:
             name: SYSDIG_SHIELD_CHART_VERSION
             value: 1.2.3-helmtest
+    template: templates/cluster/deployment.yaml
+
+  - it: Global labels applied to workload metadata
+    set:
+      labels:
+        global-label-key: global-label-value
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - equal:
+          path: metadata.labels["global-label-key"]
+          value: global-label-value
+    template: templates/cluster/deployment.yaml
+
+  - it: Global labels applied to pod metadata
+    set:
+      labels:
+        global-label-key: global-label-value
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - equal:
+          path: spec.template.metadata.labels["global-label-key"]
+          value: global-label-value
+    template: templates/cluster/deployment.yaml
+
+  - it: Global labels merged with component workload and pod labels
+    set:
+      labels:
+        global-key: global-value
+      workload_labels:
+        global-workload-key: global-workload-value
+      pod_labels:
+        global-pod-key: global-pod-value
+      cluster:
+        image:
+          tag: 1.1.1
+        workload_labels:
+          component-workload-key: component-workload-value
+        pod_labels:
+          component-pod-key: component-pod-value
+    asserts:
+      - equal:
+          path: metadata.labels["global-key"]
+          value: global-value
+      - equal:
+          path: metadata.labels["global-workload-key"]
+          value: global-workload-value
+      - equal:
+          path: metadata.labels["component-workload-key"]
+          value: component-workload-value
+      - equal:
+          path: spec.template.metadata.labels["global-key"]
+          value: global-value
+      - equal:
+          path: spec.template.metadata.labels["global-pod-key"]
+          value: global-pod-value
+      - equal:
+          path: spec.template.metadata.labels["component-pod-key"]
+          value: component-pod-value
+    template: templates/cluster/deployment.yaml
+
+  - it: Global annotations applied to workload metadata
+    set:
+      annotations:
+        global-annotation-key: global-annotation-value
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - equal:
+          path: metadata.annotations["global-annotation-key"]
+          value: global-annotation-value
+    template: templates/cluster/deployment.yaml
+
+  - it: Global annotations applied to pod metadata
+    set:
+      annotations:
+        global-annotation-key: global-annotation-value
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - equal:
+          path: spec.template.metadata.annotations["global-annotation-key"]
+          value: global-annotation-value
+    template: templates/cluster/deployment.yaml
+
+  - it: Global annotations merged with component workload and pod annotations
+    set:
+      annotations:
+        global-key: global-value
+      workload_annotations:
+        global-workload-key: global-workload-value
+      pod_annotations:
+        global-pod-key: global-pod-value
+      cluster:
+        workload_annotations:
+          component-workload-key: component-workload-value
+        pod_annotations:
+          component-pod-key: component-pod-value
+    asserts:
+      - equal:
+          path: metadata.annotations["global-key"]
+          value: global-value
+      - equal:
+          path: metadata.annotations["global-workload-key"]
+          value: global-workload-value
+      - equal:
+          path: metadata.annotations["component-workload-key"]
+          value: component-workload-value
+      - equal:
+          path: spec.template.metadata.annotations["global-key"]
+          value: global-value
+      - equal:
+          path: spec.template.metadata.annotations["global-pod-key"]
+          value: global-pod-value
+      - equal:
+          path: spec.template.metadata.annotations["component-pod-key"]
+          value: component-pod-value
+    template: templates/cluster/deployment.yaml
+
+  - it: cluster.annotations applied to Deployment workload metadata
+    set:
+      cluster:
+        annotations:
+          cluster-annotation-key: cluster-annotation-value
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - equal:
+          path: metadata.annotations["cluster-annotation-key"]
+          value: cluster-annotation-value
+    template: templates/cluster/deployment.yaml
+
+  - it: cluster.annotations applied to Deployment pod metadata
+    set:
+      cluster:
+        annotations:
+          cluster-annotation-key: cluster-annotation-value
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - equal:
+          path: spec.template.metadata.annotations["cluster-annotation-key"]
+          value: cluster-annotation-value
+    template: templates/cluster/deployment.yaml
+
+  - it: cluster.annotations merged with global annotations and workload annotations
+    set:
+      annotations:
+        global-key: global-value
+      cluster:
+        annotations:
+          cluster-key: cluster-value
+        workload_annotations:
+          workload-key: workload-value
+    asserts:
+      - equal:
+          path: metadata.annotations["global-key"]
+          value: global-value
+      - equal:
+          path: metadata.annotations["cluster-key"]
+          value: cluster-value
+      - equal:
+          path: metadata.annotations["workload-key"]
+          value: workload-value
+    template: templates/cluster/deployment.yaml
+
+  - it: cluster.labels applied to Deployment workload metadata
+    set:
+      cluster:
+        labels:
+          cluster-label-key: cluster-label-value
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - equal:
+          path: metadata.labels["cluster-label-key"]
+          value: cluster-label-value
+    template: templates/cluster/deployment.yaml
+
+  - it: cluster.labels applied to Deployment pod metadata
+    set:
+      cluster:
+        labels:
+          cluster-label-key: cluster-label-value
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - equal:
+          path: spec.template.metadata.labels["cluster-label-key"]
+          value: cluster-label-value
+    template: templates/cluster/deployment.yaml
+
+  - it: cluster.labels merged with global and workload labels
+    set:
+      labels:
+        global-key: global-value
+      cluster:
+        labels:
+          cluster-key: cluster-value
+        workload_labels:
+          workload-key: workload-value
+    asserts:
+      - equal:
+          path: metadata.labels["global-key"]
+          value: global-value
+      - equal:
+          path: metadata.labels["cluster-key"]
+          value: cluster-value
+      - equal:
+          path: metadata.labels["workload-key"]
+          value: workload-value
+    template: templates/cluster/deployment.yaml
+
+  - it: cluster.annotations overrides global annotations on Deployment workload
+    set:
+      annotations:
+        env: global
+      cluster:
+        annotations:
+          env: cluster
+    asserts:
+      - equal:
+          path: metadata.annotations["env"]
+          value: cluster
+    template: templates/cluster/deployment.yaml
+
+  - it: cluster.annotations overrides global annotations on Deployment pod
+    set:
+      annotations:
+        env: global
+      cluster:
+        annotations:
+          env: cluster
+    asserts:
+      - equal:
+          path: spec.template.metadata.annotations["env"]
+          value: cluster
+    template: templates/cluster/deployment.yaml
+
+  - it: cluster.workload_annotations overrides cluster.annotations on Deployment workload
+    set:
+      cluster:
+        annotations:
+          env: component
+        workload_annotations:
+          env: workload
+    asserts:
+      - equal:
+          path: metadata.annotations["env"]
+          value: workload
+    template: templates/cluster/deployment.yaml
+
+  - it: cluster.pod_annotations overrides cluster.annotations on Deployment pod
+    set:
+      cluster:
+        annotations:
+          env: component
+        pod_annotations:
+          env: pod
+    asserts:
+      - equal:
+          path: spec.template.metadata.annotations["env"]
+          value: pod
+    template: templates/cluster/deployment.yaml
+
+  - it: cluster.workload_annotations overrides global workload_annotations on Deployment
+    set:
+      workload_annotations:
+        env: global-workload
+      cluster:
+        workload_annotations:
+          env: component-workload
+    asserts:
+      - equal:
+          path: metadata.annotations["env"]
+          value: component-workload
+    template: templates/cluster/deployment.yaml
+
+  - it: cluster.labels overrides global labels on Deployment workload
+    set:
+      labels:
+        env: global
+      cluster:
+        labels:
+          env: cluster
+    asserts:
+      - equal:
+          path: metadata.labels["env"]
+          value: cluster
+    template: templates/cluster/deployment.yaml
+
+  - it: cluster.labels overrides global labels on Deployment pod
+    set:
+      labels:
+        env: global
+      cluster:
+        labels:
+          env: cluster
+    asserts:
+      - equal:
+          path: spec.template.metadata.labels["env"]
+          value: cluster
+    template: templates/cluster/deployment.yaml
+
+  - it: cluster.workload_labels overrides cluster.labels on Deployment workload
+    set:
+      cluster:
+        labels:
+          env: component
+        workload_labels:
+          env: workload
+    asserts:
+      - equal:
+          path: metadata.labels["env"]
+          value: workload
+    template: templates/cluster/deployment.yaml
+
+  - it: cluster.pod_labels overrides cluster.labels on Deployment pod
+    set:
+      cluster:
+        labels:
+          env: component
+        pod_labels:
+          env: pod
+    asserts:
+      - equal:
+          path: spec.template.metadata.labels["env"]
+          value: pod
+    template: templates/cluster/deployment.yaml
+
+  - it: cluster.workload_labels overrides global workload_labels on Deployment
+    set:
+      workload_labels:
+        env: global-workload
+      cluster:
+        workload_labels:
+          env: component-workload
+    asserts:
+      - equal:
+          path: metadata.labels["env"]
+          value: component-workload
     template: templates/cluster/deployment.yaml
