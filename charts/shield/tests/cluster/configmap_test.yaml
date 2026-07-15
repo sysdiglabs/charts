@@ -54,6 +54,7 @@ tests:
               audit:
                 enabled: false
                 excluded_namespaces: \[\]
+                gke_pub_sub_subscription: k8s-audit
                 http_port: 6443
                 method: validating_webhook
                 timeout: 10
@@ -152,6 +153,7 @@ tests:
               audit:
                 enabled: false
                 excluded_namespaces: \[\]
+                gke_pub_sub_subscription: k8s-audit
                 http_port: 6443
                 method: validating_webhook
                 timeout: 10
@@ -232,6 +234,7 @@ tests:
               audit:
                 enabled: false
                 excluded_namespaces: \[\]
+                gke_pub_sub_subscription: k8s-audit
                 http_port: 6443
                 method: validating_webhook
                 timeout: 10
@@ -343,6 +346,7 @@ tests:
               audit:
                 enabled: false
                 excluded_namespaces: \[\]
+                gke_pub_sub_subscription: k8s-audit
                 http_port: 6443
                 method: validating_webhook
                 timeout: 10
@@ -484,6 +488,7 @@ tests:
               audit:
                 enabled: false
                 excluded_namespaces: \[\]
+                gke_pub_sub_subscription: k8s-audit
                 http_port: 6443
                 method: validating_webhook
                 timeout: 10
@@ -845,6 +850,7 @@ tests:
               audit:
                 enabled: false
                 excluded_namespaces: \[\]
+                gke_pub_sub_subscription: k8s-audit
                 http_port: 6443
                 method: validating_webhook
                 timeout: 10
@@ -931,6 +937,7 @@ tests:
               audit:
                 enabled: false
                 excluded_namespaces: \[\]
+                gke_pub_sub_subscription: k8s-audit
                 http_port: 6443
                 method: validating_webhook
                 timeout: 10
