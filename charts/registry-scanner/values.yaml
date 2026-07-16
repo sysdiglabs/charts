@@ -30,8 +30,8 @@ config:
   registryPassword: ""
   # **required**<br/>The registry Type. Supported types: artifactory, ecr, icr, acr, quay, harbor, gar, gcr, nexus, ocp and dockerv2.
   registryType: ""
-  # Use Azure workload identity (AAD token) instead of username/password for ACR authentication.
-  # Requires registryType to be 'acr' and the pod to have azure.workload.identity annotations.
+  # Use an Azure AD access token from the init container (IMDS) instead of registryPassword for ACR authentication.
+  # Applies only when registryType is 'acr'. registryUser is still required; registryPassword is ignored.
   acr_workloadidentity: false
   # The account ID. Applicable only for ICR registry type.
   registryAccountId: ""
