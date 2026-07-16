@@ -21,6 +21,45 @@
       serviceAccountName: {{ include "registry-scanner.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 12 }}
+      {{- if and (eq .Values.config.registryType "acr") .Values.config.acr_workloadidentity }}
+      initContainers:
+      - name: aad-token-fetcher
+        image: {{ include "registry-scanner.initContainerImage" . }}
+        imagePullPolicy: {{ .Values.image.initContainerPullPolicy | default .Values.image.pullPolicy }}
+        command:
+          - /bin/sh
+          - -c
+          - |
+            set -e
+            # Fetch AAD token from IMDS for ACR
+            REGISTRY_URL="{{ .Values.config.registryURL }}"
+            ENDPOINT="http://169.254.169.254/metadata/identity/oauth2/token?api-version=2017-09-01&resource=https://${REGISTRY_URL}"
+            
+            MAX_RETRIES=5
+            RETRY_COUNT=0
+            while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
+              if TOKEN=$(curl -s -H "Metadata:true" "$ENDPOINT" 2>/dev/null | grep -o '"access_token":"[^"]*' | cut -d'"' -f4); then
+                if [ -n "$TOKEN" ]; then
+                  echo "$TOKEN" > /aad-token/token
+                  echo "AAD token fetched successfully"
+                  exit 0
+                fi
+              fi
+              RETRY_COUNT=$((RETRY_COUNT + 1))
+              if [ $RETRY_COUNT -lt $MAX_RETRIES ]; then
+                echo "Retrying IMDS token fetch ($RETRY_COUNT/$MAX_RETRIES)..."
+                sleep 2
+              fi
+            done
+            echo "Failed to fetch AAD token after $MAX_RETRIES attempts"
+            exit 1
+        volumeMounts:
+        - name: aad-token
+          mountPath: /aad-token
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 65534
+      {{- end }}
       containers:
       - name: {{ .Chart.Name }}
         securityContext:
@@ -34,6 +73,10 @@
         - name: config-volume
           mountPath: /config.yaml
           subPath: config.yaml
+        {{- if and (eq .Values.config.registryType "acr") .Values.config.acr_workloadidentity }}
+        - name: aad-token
+          mountPath: /aad-token
+        {{- end }}
         {{- if .Values.reportToPersistentVolumeClaim }}
         - name: report-storage
           mountPath: "/output"
@@ -120,6 +163,9 @@
                 key: registryUser
           {{- if ne .Values.config.registryType "ocp" }}
           - name: REGISTRYSCANNER_REGISTRY_PASSWORD
+            {{- if and (eq .Values.config.registryType "acr") .Values.config.acr_workloadidentity }}
+            value: ""
+            {{- else }}
             valueFrom:
               secretKeyRef:
                 {{- if not .Values.existingSecretName }}
@@ -128,6 +174,11 @@
                 name: {{ .Values.existingSecretName }}
                 {{- end }}
                 key: registryPassword
+            {{- end }}
+          {{- end }}
+          {{- if and (eq .Values.config.registryType "acr") .Values.config.acr_workloadidentity }}
+          - name: REGISTRYSCANNER_REGISTRY_PASSWORD_FILE
+            value: /aad-token/token
           {{- end }}
           {{- end }}
           {{ if .Values.config.parallelGoRoutines }}
@@ -160,6 +211,10 @@
       - name: config-volume
         configMap:
           name: {{ include "registry-scanner.fullname" . }}
+      {{- if and (eq .Values.config.registryType "acr") .Values.config.acr_workloadidentity }}
+      - name: aad-token
+        emptyDir: {}
+      {{- end }}
       {{- if .Values.ssl.ca.certs }}
       - name: ca-certs
         projected:
