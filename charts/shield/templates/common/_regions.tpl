@@ -103,6 +103,14 @@
                                                "monitor_api_endpoint" "in-mum.monitoring.cloud.ibm.com"
                                                "secure_api_endpoint"  "in-mum.security-compliance-secure.cloud.ibm.com"
                                                "secure_ui"           "in-mum.security-compliance-secure.cloud.ibm.com")
+                      "jp1" (dict "collector_endpoint"  "ingest.jp1.sysdig.com"
+                                   "monitor_api_endpoint" "app.jp1.sysdig.com"
+                                   "secure_api_endpoint"  "app.jp1.sysdig.com"
+                                   "secure_ui"           "app.jp1.sysdig.com/secure")
+                      "jp1-alt" (dict "collector_endpoint"  "ingest-alt.jp1.sysdig.com"
+                                   "monitor_api_endpoint" "app.jp1.sysdig.com"
+                                   "secure_api_endpoint"  "app.jp1.sysdig.com"
+                                   "secure_ui"           "app.jp1.sysdig.com/secure")
                       "jp-osa-monitor"   (dict "collector_endpoint"  "ingest.jp-osa.monitoring.cloud.ibm.com"
                                                "monitor_api_endpoint" "jp-osa.monitoring.cloud.ibm.com"
                                                "secure_api_endpoint"  "jp-osa.security-compliance-secure.cloud.ibm.com"
