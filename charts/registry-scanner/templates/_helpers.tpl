@@ -130,6 +130,16 @@ Allow overriding registry and repository for air-gapped environments
 {{- end -}}
 {{- end -}}
 
+{{/*
+Init container image for AAD token fetcher (ACR workload identity)
+*/}}
+{{- define "registry-scanner.initContainerImage" -}}
+{{- $initRegistry := .Values.image.initContainerRegistry | default .Values.image.registry | default "quay.io" -}}
+{{- $initRepository := .Values.image.initContainerRepository | default "library/curl" -}}
+{{- $initTag := .Values.image.initContainerTag | default "7.85.0" -}}
+{{- printf "%s/%s:%s" $initRegistry $initRepository $initTag -}}
+{{- end -}}
+
 {{- define "registry-scanner.rawPullSecretList" -}}
 {{- range .Values.imagePullSecrets }}{{- if . }}{{- .name}},{{- end}}{{- end}}
 {{- end -}}
