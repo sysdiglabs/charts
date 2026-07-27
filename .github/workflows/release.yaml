@@ -144,9 +144,11 @@ jobs:
           git worktree add ${tmp_folder} gh-pages
           rm -f -r ${tmp_folder}/charts
           cp -r charts ${tmp_folder}/
+          cp artifacthub-repo.yml ${tmp_folder}/
           pushd ${tmp_folder}
           git add -A "charts/**/README.md"
           git add -A "charts/**/values.yaml"
+          git add artifacthub-repo.yml
           echo "${GPG_PUBLIC_KEY}" > public.gpg
           git add public.gpg
           if ! git diff-index --quiet HEAD; then
