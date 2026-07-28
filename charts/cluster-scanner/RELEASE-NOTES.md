@@ -1,5 +1,5 @@
 # What's Changed
 
 ### New Features
-- **shield,sysdig-deploy,common** [5415a9d0](https://github.com/sysdiglabs/charts/commit/5415a9d0dff64fa3f692b75e462961249684ba63): add in-che region support [SMAGENT-10149] ([#2550](https://github.com/sysdiglabs/charts/issues/2550))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/cluster-scanner-0.14.3...cluster-scanner-0.15.0
+- **shield,sysdig-deploy** [75d740ba](https://github.com/sysdiglabs/charts/commit/75d740ba943acc21ab118f2402609e52bb5cca5a): add jp1 region codes support ([#2684](https://github.com/sysdiglabs/charts/issues/2684))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/cluster-scanner-0.15.0...cluster-scanner-0.16.0
