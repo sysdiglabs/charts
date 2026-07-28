@@ -1,5 +1,5 @@
 # What's Changed
 
-### Bug Fixes
-- **shield** [eb232ae7](https://github.com/sysdiglabs/charts/commit/eb232ae7d0ca61a9bf2451129ca590e34ab953da): fail fast when Rapid Response is enabled without a password ([#2691](https://github.com/sysdiglabs/charts/issues/2691))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.46.5...shield-1.46.6
+### New Features
+- **shield,sysdig-deploy** [75d740ba](https://github.com/sysdiglabs/charts/commit/75d740ba943acc21ab118f2402609e52bb5cca5a): add jp1 region codes support ([#2684](https://github.com/sysdiglabs/charts/issues/2684))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.46.6...shield-1.47.0

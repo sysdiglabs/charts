@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.47.0
+### New Features
+* **shield,sysdig-deploy** [75d740ba](https://github.com/sysdiglabs/charts/commit/75d740ba943acc21ab118f2402609e52bb5cca5a): add jp1 region codes support ([#2684](https://github.com/sysdiglabs/charts/issues/2684))
 # v1.46.6
 ### Bug Fixes
 * **shield** [eb232ae7](https://github.com/sysdiglabs/charts/commit/eb232ae7d0ca61a9bf2451129ca590e34ab953da): fail fast when Rapid Response is enabled without a password ([#2691](https://github.com/sysdiglabs/charts/issues/2691))
