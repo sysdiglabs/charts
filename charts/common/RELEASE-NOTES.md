@@ -1,5 +1,5 @@
 # What's Changed
 
 ### New Features
-- **common,shield** [50826f5f](https://github.com/sysdiglabs/charts/commit/50826f5fe73635cdf445d37faf23e48a222d3fb5): add in-mum region support ([#2641](https://github.com/sysdiglabs/charts/issues/2641))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/common-1.5.0...common-1.5.1
+- **shield,sysdig-deploy** [75d740ba](https://github.com/sysdiglabs/charts/commit/75d740ba943acc21ab118f2402609e52bb5cca5a): add jp1 region codes support ([#2684](https://github.com/sysdiglabs/charts/issues/2684))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/common-1.5.1...common-1.6.0
