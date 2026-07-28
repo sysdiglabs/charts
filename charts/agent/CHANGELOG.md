@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v2.10.0
+### New Features
+* **shield,sysdig-deploy** [75d740ba](https://github.com/sysdiglabs/charts/commit/75d740ba943acc21ab118f2402609e52bb5cca5a): add jp1 region codes support ([#2684](https://github.com/sysdiglabs/charts/issues/2684))
 # v2.9.2
 ### New Features
 * **agent,shield** [d72ec3c3](https://github.com/sysdiglabs/charts/commit/d72ec3c3449033fc74cf4bd7bfd6550867e4ee80): release agent 14.7.2 ([#2692](https://github.com/sysdiglabs/charts/issues/2692))
