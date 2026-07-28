@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **node-analyzer** [4264d38f](https://github.com/sysdiglabs/charts/commit/4264d38fbce3d9a8fb3790e36d8b4a0e1d3dc71a): bump sysdig/kspm-analyzer to 1.49.1 ([#2662](https://github.com/sysdiglabs/charts/issues/2662))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.44.2...node-analyzer-1.44.3
+### New Features
+- **shield,sysdig-deploy** [75d740ba](https://github.com/sysdiglabs/charts/commit/75d740ba943acc21ab118f2402609e52bb5cca5a): add jp1 region codes support ([#2684](https://github.com/sysdiglabs/charts/issues/2684))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.44.3...node-analyzer-1.45.0

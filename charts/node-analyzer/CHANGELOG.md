@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.45.0
+### New Features
+* **shield,sysdig-deploy** [75d740ba](https://github.com/sysdiglabs/charts/commit/75d740ba943acc21ab118f2402609e52bb5cca5a): add jp1 region codes support ([#2684](https://github.com/sysdiglabs/charts/issues/2684))
 # v1.44.3
 ### Chores
 * **node-analyzer** [4264d38f](https://github.com/sysdiglabs/charts/commit/4264d38fbce3d9a8fb3790e36d8b4a0e1d3dc71a): bump sysdig/kspm-analyzer to 1.49.1 ([#2662](https://github.com/sysdiglabs/charts/issues/2662))
