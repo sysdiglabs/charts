@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.48.0
+### New Features
+* **shield** [3abe4f1a](https://github.com/sysdiglabs/charts/commit/3abe4f1a1afccdfd0d328570000d12b1ccd66589): release host-shield windows 0.19.0 ([#2699](https://github.com/sysdiglabs/charts/issues/2699))
 # v1.47.0
 ### New Features
 * **shield,sysdig-deploy** [75d740ba](https://github.com/sysdiglabs/charts/commit/75d740ba943acc21ab118f2402609e52bb5cca5a): add jp1 region codes support ([#2684](https://github.com/sysdiglabs/charts/issues/2684))

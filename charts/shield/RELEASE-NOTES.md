@@ -1,5 +1,5 @@
 # What's Changed
 
 ### New Features
-- **shield,sysdig-deploy** [75d740ba](https://github.com/sysdiglabs/charts/commit/75d740ba943acc21ab118f2402609e52bb5cca5a): add jp1 region codes support ([#2684](https://github.com/sysdiglabs/charts/issues/2684))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.46.6...shield-1.47.0
+- **shield** [3abe4f1a](https://github.com/sysdiglabs/charts/commit/3abe4f1a1afccdfd0d328570000d12b1ccd66589): release host-shield windows 0.19.0 ([#2699](https://github.com/sysdiglabs/charts/issues/2699))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.47.0...shield-1.48.0
