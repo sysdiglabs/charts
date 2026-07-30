@@ -9,6 +9,9 @@
       labels:
         {{- include "registry-scanner.labels" . | nindent 12 }}
         {{- include "registry-scanner.customLabels" . | nindent 12 }}
+        {{- if and (eq .Values.config.registryType "acr") .Values.config.acr_workloadidentity }}
+            azure.workload.identity/use: "true"
+        {{- end }}
       {{- with .Values.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 12 }}
@@ -30,28 +33,54 @@
           - /bin/sh
           - -c
           - |
-            set -e
-            # Fetch AAD token from IMDS for ACR
+            # Obtain an ACR refresh token as the *federated* managed identity (the UAMI in the
+            # service account's azure.workload.identity/client-id annotation), NOT the node/kubelet
+            # identity. The azure-workload-identity webhook injects AZURE_CLIENT_ID / AZURE_TENANT_ID /
+            # AZURE_FEDERATED_TOKEN_FILE because the pod carries azure.workload.identity/use=true.
             REGISTRY_URL="{{ .Values.config.registryURL }}"
-            ENDPOINT="http://169.254.169.254/metadata/identity/oauth2/token?api-version=2017-09-01&resource=https://${REGISTRY_URL}"
-            
+            : "${AZURE_CLIENT_ID:?workload identity not injected (AZURE_CLIENT_ID unset) - check the SA azure.workload.identity/client-id annotation and the azure.workload.identity/use pod label}"
+            : "${AZURE_TENANT_ID:?workload identity not injected (AZURE_TENANT_ID unset)}"
+            : "${AZURE_FEDERATED_TOKEN_FILE:?workload identity not injected (AZURE_FEDERATED_TOKEN_FILE unset)}"
+            AUTHORITY_HOST="${AZURE_AUTHORITY_HOST:-https://login.microsoftonline.com/}"
+
+            fetch_token() {
+              FED_TOKEN="$(cat "$AZURE_FEDERATED_TOKEN_FILE")"
+              # 1) Federated client-assertion exchange -> AAD access token for the ACR data plane.
+              AAD_TOKEN="$(curl -s -X POST \
+                "${AUTHORITY_HOST}${AZURE_TENANT_ID}/oauth2/v2.0/token" \
+                -H 'Content-Type: application/x-www-form-urlencoded' \
+                --data-urlencode "client_id=${AZURE_CLIENT_ID}" \
+                --data-urlencode 'grant_type=client_credentials' \
+                --data-urlencode 'client_assertion_type=urn:ietf:params:oauth:client-assertion-type:jwt-bearer' \
+                --data-urlencode "client_assertion=${FED_TOKEN}" \
+                --data-urlencode 'scope=https://containerregistry.azure.net/.default' \
+                | grep -o '"access_token":"[^"]*' | cut -d'"' -f4)"
+              [ -n "$AAD_TOKEN" ] || return 1
+              # 2) Exchange the AAD token for an ACR refresh token (the docker password used with the
+              #    null-GUID username the chart sets as registryUser).
+              ACR_TOKEN="$(curl -s -X POST \
+                "https://${REGISTRY_URL}/oauth2/exchange" \
+                -H 'Content-Type: application/x-www-form-urlencoded' \
+                --data-urlencode 'grant_type=access_token' \
+                --data-urlencode "service=${REGISTRY_URL}" \
+                --data-urlencode "tenant=${AZURE_TENANT_ID}" \
+                --data-urlencode "access_token=${AAD_TOKEN}" \
+                | grep -o '"refresh_token":"[^"]*' | cut -d'"' -f4)"
+              [ -n "$ACR_TOKEN" ] || return 1
+              printf '%s' "$ACR_TOKEN" > /aad-token/token
+            }
+
             MAX_RETRIES=5
             RETRY_COUNT=0
             while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
-              if TOKEN=$(curl -s -H "Metadata:true" "$ENDPOINT" 2>/dev/null | grep -o '"access_token":"[^"]*' | cut -d'"' -f4); then
-                if [ -n "$TOKEN" ]; then
-                  echo "$TOKEN" > /aad-token/token
-                  echo "AAD token fetched successfully"
-                  exit 0
-                fi
+              if fetch_token; then
+                echo "ACR refresh token obtained via workload identity"
+                exit 0
               fi
               RETRY_COUNT=$((RETRY_COUNT + 1))
-              if [ $RETRY_COUNT -lt $MAX_RETRIES ]; then
-                echo "Retrying IMDS token fetch ($RETRY_COUNT/$MAX_RETRIES)..."
-                sleep 2
-              fi
+              [ $RETRY_COUNT -lt $MAX_RETRIES ] && { echo "Retrying ACR token fetch ($RETRY_COUNT/$MAX_RETRIES)..."; sleep 2; }
             done
-            echo "Failed to fetch AAD token after $MAX_RETRIES attempts"
+            echo "Failed to obtain ACR token via workload identity after $MAX_RETRIES attempts" >&2
             exit 1
         volumeMounts:
         - name: aad-token
