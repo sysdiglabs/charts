@@ -190,8 +190,8 @@ image:
   initContainerRegistry: ""
   # Init container image repository for AAD token fetcher. Defaults to curel/curl on the main registry.
   initContainerRepository: "curl/curl"
-  # Init container image tag. Defaults to 7.85.0
-  initContainerTag: "7.85.0"
+  # Init container image tag. Defaults to 8.21.0
+  initContainerTag: "8.21.0"
   # Init container pull policy. Defaults to the main pullPolicy.
   initContainerPullPolicy: ""
 
