@@ -45,7 +45,9 @@
 
             fetch_token() {
               FED_TOKEN="$(cat "$AZURE_FEDERATED_TOKEN_FILE")"
-              # 1) Federated client-assertion exchange -> AAD access token for the ACR data plane.
+              # 1) Federated client-assertion exchange -> AAD access token. ACR with
+              #    azureAdAuthenticationAsArmPolicy enabled expects the ARM audience; a token for
+              #    the ACR-specific audience yields a refresh token that lacks registry:catalog:*.
               AAD_TOKEN="$(curl -s -X POST \
                 "${AUTHORITY_HOST}${AZURE_TENANT_ID}/oauth2/v2.0/token" \
                 -H 'Content-Type: application/x-www-form-urlencoded' \
@@ -53,7 +55,7 @@
                 --data-urlencode 'grant_type=client_credentials' \
                 --data-urlencode 'client_assertion_type=urn:ietf:params:oauth:client-assertion-type:jwt-bearer' \
                 --data-urlencode "client_assertion=${FED_TOKEN}" \
-                --data-urlencode 'scope=https://containerregistry.azure.net/.default' \
+                --data-urlencode 'scope=https://management.azure.com/.default' \
                 | grep -o '"access_token":"[^"]*' | cut -d'"' -f4)"
               [ -n "$AAD_TOKEN" ] || return 1
               # 2) Exchange the AAD token for an ACR refresh token (the docker password used with the
@@ -86,15 +88,30 @@
         - name: aad-token
           mountPath: /aad-token
         securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+          readOnlyRootFilesystem: true
           runAsNonRoot: true
           runAsUser: 65534
+          runAsGroup: 65534
+          seccompProfile:
+            type: RuntimeDefault
       {{- end }}
       containers:
       - name: {{ .Chart.Name }}
         securityContext:
           {{- toYaml .Values.securityContext | nindent 14 }}
         image: {{ include "registry-scanner.image" . }}
+        {{- if and (eq .Values.config.registryType "acr") .Values.config.acr_workloadidentity }}
+        # The scanner binary ignores REGISTRYSCANNER_REGISTRY_PASSWORD_FILE; load the WIF-minted ACR
+        # token that the init container wrote into the password env, then exec the scanner.
+        command: ["/bin/sh", "-c", "export REGISTRYSCANNER_REGISTRY_PASSWORD=\"$(cat /aad-token/token)\"; exec /registry-scanner \"$@\"", "registry-scanner"]
+        args: ["--scan_runner=new-vm-scanner-k8s-job"]
+        {{- else }}
         args: [ "--scan_runner=new-vm-scanner-k8s-job"]
+        {{- end }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         resources:
           {{- toYaml .Values.resources | nindent 14 }}
