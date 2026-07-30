@@ -103,7 +103,7 @@ true
 {{- end }}
 
 {{- define "host.parse_features" }}
-{{/* TODO: Kubernetes metadata */}}
+{{- /* TODO: Kubernetes metadata */}}
 {{- with .Values.features }}
 {{- $config := dict
   "app_checks_enabled" ((dig (include "host.monitor_key" .) "app_checks" "enabled" false .))
@@ -181,7 +181,7 @@ true
 {{- $config = merge $config (dict "rapid_response" (include "host.dragent_yaml.rapid_response" .| fromJson)) }}
 {{- end }}
 {{- $config = merge $config (include "host.parse_features" . | fromYaml) }}
-{{/* Host Scanner requires setting the host fs mount path variable, but that
+{{- /* Host Scanner requires setting the host fs mount path variable, but that
      parameter has not been mapped into the new schema yet. As a result,
      it still needs to be set in the dragent.yaml file. */}}
 {{- if .Values.features.vulnerability_management.host_vulnerability_management.enabled }}

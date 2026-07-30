@@ -742,3 +742,16 @@ tests:
           path: data['dragent.yaml']
           pattern: |
             connection_timeout: 1000
+
+  # Regression test for https://github.com/sysdiglabs/charts/issues/2686: a
+  # `{{/* comment */}}` in a template's output stream emits a stray newline that
+  # `nindent 4` turns into a whitespace-only first line, which strict YAML
+  # parsers (e.g. YamlDotNet) reject with "found extra spaces in first line".
+  - it: ConfigMap values do not start with a newline
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: \A\S
+      - matchRegex:
+          path: data['host-shield.yaml']
+          pattern: \A\S

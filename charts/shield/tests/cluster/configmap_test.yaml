@@ -1040,3 +1040,13 @@ tests:
             cluster_scanner:
               runtime_status_integrator:
                 nats_server: {}
+
+  # Regression test for https://github.com/sysdiglabs/charts/issues/2686: a
+  # `{{/* comment */}}` in a template's output stream emits a stray newline that
+  # `nindent 4` turns into a whitespace-only first line, which strict YAML
+  # parsers (e.g. YamlDotNet) reject with "found extra spaces in first line".
+  - it: ConfigMap value does not start with a newline
+    asserts:
+      - matchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: \A\S
