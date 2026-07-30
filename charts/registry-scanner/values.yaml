@@ -30,8 +30,11 @@ config:
   registryPassword: ""
   # **required**<br/>The registry Type. Supported types: artifactory, ecr, icr, acr, quay, harbor, gar, gcr, nexus, ocp and dockerv2.
   registryType: ""
-  # Use an Azure AD access token from the init container (IMDS) instead of registryPassword for ACR authentication.
-  # Applies only when registryType is 'acr'. registryUser is still required; registryPassword is ignored.
+  # Authenticate to ACR as the federated managed identity (Azure Workload Identity) via an init
+  # container, instead of registryPassword. The init container exchanges the projected federated
+  # token for an ACR refresh token. Requires the service account to be annotated with
+  # azure.workload.identity/client-id; the chart adds the azure.workload.identity/use pod label.
+  # Applies only when registryType is 'acr'. registryUser is still required (null GUID); registryPassword is ignored.
   acr_workloadidentity: false
   # The account ID. Applicable only for ICR registry type.
   registryAccountId: ""
@@ -185,8 +188,8 @@ image:
   fips: false
   # Init container image registry for AAD token fetcher (when registryType is acr). Defaults to the main image registry.
   initContainerRegistry: ""
-  # Init container image repository for AAD token fetcher. Defaults to library/curl on the main registry.
-  initContainerRepository: "library/curl"
+  # Init container image repository for AAD token fetcher. Defaults to curel/curl on the main registry.
+  initContainerRepository: "curl/curl"
   # Init container image tag. Defaults to 7.85.0
   initContainerTag: "7.85.0"
   # Init container pull policy. Defaults to the main pullPolicy.
