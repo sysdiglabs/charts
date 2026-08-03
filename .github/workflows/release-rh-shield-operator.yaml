@@ -134,7 +134,7 @@ jobs:
           fetch-depth: '1'
 
       - name: Install Preflight
-        uses: redhat-actions/openshift-tools-installer@v1
+        uses: redhat-actions/openshift-tools-installer@v2
         with:
           source: "github"
           preflight: "latest"
