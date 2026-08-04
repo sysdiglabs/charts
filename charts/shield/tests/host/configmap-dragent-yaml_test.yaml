@@ -1344,6 +1344,60 @@ tests:
               host_fs_mount_path: /host
               verify_certificate: true
 
+  # Regression tests for https://github.com/sysdiglabs/charts/issues/2686.
+  # A `{{/* comment */}}` left in a template's output stream emits a stray
+  # newline, which `nindent 4` turns into a whitespace-only first line of the
+  # block scalar. Strict YAML parsers (e.g. YamlDotNet, used by Octopus Deploy)
+  # reject that with "found extra spaces in first line". `\A\S` asserts the
+  # value's very first character is non-whitespace.
+  - it: ConfigMap values do not start with a newline
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: \A\S
+      - matchRegex:
+          path: data['host-shield.yaml']
+          pattern: \A\S
+
+  - it: ConfigMap values do not start with a newline when features are enabled
+    set:
+      features:
+        monitor:
+          prometheus:
+            enabled: true
+          app_checks:
+            enabled: true
+        investigations:
+          event_forwarder:
+            enabled: true
+          network_security:
+            enabled: true
+        posture:
+          host_posture:
+            enabled: true
+        vulnerability_management:
+          host_vulnerability_management:
+            enabled: true
+        respond:
+          rapid_response:
+            enabled: true
+      proxy:
+        https_proxy: "https://user:password@proxy.example.com:8080"
+      cluster_config:
+        name: demo-cluster
+        tags:
+          agentTag1: agentTagValue1
+    asserts:
+      - matchRegex:
+          path: data['dragent.yaml']
+          pattern: \A\S
+      - matchRegex:
+          path: data['host-shield.yaml']
+          pattern: \A\S
+      - matchRegex:
+          path: data['prometheus.yaml']
+          pattern: \A\S
+
   - it: Alternative regions
     set:
       sysdig_endpoint:
