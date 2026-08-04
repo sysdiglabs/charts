@@ -80,14 +80,14 @@ tests:
               - get
               - list
 
-  - it: Adds posture RBAC rules when host_posture is enabled
+  - it: Do not add RBAC rules when host_posture is enabled and OpenShift API is not detected
     set:
       features:
         posture:
           host_posture:
             enabled: true
     asserts:
-      - contains:
+      - notContains:
           path: rules
           content:
             apiGroups:
@@ -96,7 +96,7 @@ tests:
               - clusterrolebindings
             verbs:
               - list
-      - contains:
+      - notContains:
           path: rules
           content:
             apiGroups:
@@ -106,7 +106,7 @@ tests:
             verbs:
               - get
               - list
-      - contains:
+      - notContains:
           path: rules
           content:
             apiGroups:
@@ -115,7 +115,7 @@ tests:
               - secrets
             verbs:
               - get
-      - contains:
+      - notContains:
           path: rules
           content:
             apiGroups:
@@ -178,6 +178,43 @@ tests:
           path: rules
           content:
             apiGroups:
+              - rbac.authorization.k8s.io
+            resources:
+              - clusterrolebindings
+            verbs:
+              - list
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - flowcontrol.apiserver.k8s.io
+            resources:
+              - flowschemas
+            verbs:
+              - get
+              - list
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - secrets
+            verbs:
+              - get
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - pods/exec
+            verbs:
+              - create
+      - contains:
+          path: rules
+          content:
+            apiGroups:
               - security.openshift.io
             resources:
               - securitycontextconstraints
@@ -221,6 +258,43 @@ tests:
           path: rules
           content:
             apiGroups:
+              - rbac.authorization.k8s.io
+            resources:
+              - clusterrolebindings
+            verbs:
+              - list
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - flowcontrol.apiserver.k8s.io
+            resources:
+              - flowschemas
+            verbs:
+              - get
+              - list
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - secrets
+            verbs:
+              - get
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - pods/exec
+            verbs:
+              - create
+      - contains:
+          path: rules
+          content:
+            apiGroups:
               - security.openshift.io
             resources:
               - securitycontextconstraints
@@ -246,6 +320,34 @@ tests:
       apiVersions:
         - security.openshift.io/v1
     asserts:
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - flowcontrol.apiserver.k8s.io
+            resources:
+              - flowschemas
+            verbs:
+              - get
+              - list
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - secrets
+            verbs:
+              - get
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - pods/exec
+            verbs:
+              - create
       - notContains:
           path: rules
           content:
