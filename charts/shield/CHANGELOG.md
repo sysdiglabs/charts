@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.49.2
+### New Features
+* **shield** [f855e461](https://github.com/sysdiglabs/charts/commit/f855e4613ce2558668076946d2232767ee8f22d8): reduce permisison not required if not in openshift ([#2704](https://github.com/sysdiglabs/charts/issues/2704))
 # v1.49.1
 ### Bug Fixes
 * **shield** [10914352](https://github.com/sysdiglabs/charts/commit/1091435225e3431d4fecc93c3bec6e8197057c60): strip leading newline from dragent.yaml ConfigMap block scalar ([#2701](https://github.com/sysdiglabs/charts/issues/2701))
