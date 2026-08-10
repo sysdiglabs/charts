@@ -1,5 +1,5 @@
 # What's Changed
 
 ### New Features
-- **shield,sysdig-deploy** [75d740ba](https://github.com/sysdiglabs/charts/commit/75d740ba943acc21ab118f2402609e52bb5cca5a): add jp1 region codes support ([#2684](https://github.com/sysdiglabs/charts/issues/2684))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-2.9.2...agent-2.10.0
+- **agent,shield** [e28b17ca](https://github.com/sysdiglabs/charts/commit/e28b17ca90200b8540e4795dd5142c8834f563a9): release agent 14.7.3 ([#2707](https://github.com/sysdiglabs/charts/issues/2707))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-2.10.0...agent-2.10.1
