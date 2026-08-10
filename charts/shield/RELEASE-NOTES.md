@@ -1,5 +1,5 @@
 # What's Changed
 
 ### New Features
-- **shield** [f855e461](https://github.com/sysdiglabs/charts/commit/f855e4613ce2558668076946d2232767ee8f22d8): reduce permisison not required if not in openshift ([#2704](https://github.com/sysdiglabs/charts/issues/2704))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.49.1...shield-1.49.2
+- **agent,shield** [e28b17ca](https://github.com/sysdiglabs/charts/commit/e28b17ca90200b8540e4795dd5142c8834f563a9): release agent 14.7.3 ([#2707](https://github.com/sysdiglabs/charts/issues/2707))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.49.2...shield-1.49.3

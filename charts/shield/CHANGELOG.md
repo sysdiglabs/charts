@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.49.3
+### New Features
+* **agent,shield** [e28b17ca](https://github.com/sysdiglabs/charts/commit/e28b17ca90200b8540e4795dd5142c8834f563a9): release agent 14.7.3 ([#2707](https://github.com/sysdiglabs/charts/issues/2707))
 # v1.49.2
 ### New Features
 * **shield** [f855e461](https://github.com/sysdiglabs/charts/commit/f855e4613ce2558668076946d2232767ee8f22d8): reduce permisison not required if not in openshift ([#2704](https://github.com/sysdiglabs/charts/issues/2704))
