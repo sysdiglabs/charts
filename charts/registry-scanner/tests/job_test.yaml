@@ -176,3 +176,77 @@ tests:
               secretKeyRef:
                 name: RELEASE-NAME-registry-scanner
                 key: aws_region
+
+  - it: wires ACR workload identity token fetcher and password file env vars
+    set:
+      scanOnStart.enabled: true
+      config.registryType: "acr"
+      config.registryUser: "dummy"
+      config.acr_workloadidentity: true
+    asserts:
+      - contains:
+          path: spec.template.spec.initContainers
+          content:
+            name: aad-token-fetcher
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: aad-token
+            emptyDir: {}
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: aad-token
+            mountPath: /aad-token
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: REGISTRYSCANNER_REGISTRY_PASSWORD
+            value: ""
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: REGISTRYSCANNER_REGISTRY_PASSWORD_FILE
+            value: /aad-token/token
+
+  - it: does not wire ACR workload identity token fetcher when flag is disabled
+    set:
+      scanOnStart.enabled: true
+      config.registryType: "acr"
+      config.registryUser: "dummy"
+      config.registryPassword: "dummy"
+      config.acr_workloadidentity: false
+    asserts:
+      - isNull:
+          path: spec.template.spec.initContainers
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: REGISTRYSCANNER_REGISTRY_PASSWORD_FILE
+            value: /aad-token/token
+
+  - it: does not wire ACR workload identity token fetcher for non-ACR registries
+    set:
+      scanOnStart.enabled: true
+      config.registryType: "quay"
+      config.registryUser: "dummy"
+      config.registryPassword: "dummy"
+      config.acr_workloadidentity: true
+    asserts:
+      - isNull:
+          path: spec.template.spec.initContainers
+      - notContains:
+          path: spec.template.spec.volumes
+          content:
+            name: aad-token
+            emptyDir: {}
+      - notContains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: aad-token
+            mountPath: /aad-token
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: REGISTRYSCANNER_REGISTRY_PASSWORD_FILE
+            value: /aad-token/token
