@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **shield,sysdig-deploy** [75d740ba](https://github.com/sysdiglabs/charts/commit/75d740ba943acc21ab118f2402609e52bb5cca5a): add jp1 region codes support ([#2684](https://github.com/sysdiglabs/charts/issues/2684))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.115.4...sysdig-deploy-1.116.0
+### Chores
+- **sysdig-deploy** [22b69275](https://github.com/sysdiglabs/charts/commit/22b69275bfe2347f55093bd897fb0fccf50b27ee): Automatic version bump due to updated dependencies ([#2708](https://github.com/sysdiglabs/charts/issues/2708))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/sysdig-deploy-1.116.0...sysdig-deploy-1.116.1
