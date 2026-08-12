@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **shield,sysdig-deploy** [75d740ba](https://github.com/sysdiglabs/charts/commit/75d740ba943acc21ab118f2402609e52bb5cca5a): add jp1 region codes support ([#2684](https://github.com/sysdiglabs/charts/issues/2684))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/admission-controller-0.17.0...admission-controller-0.18.0
+### Chores
+- **admission-controller** [f3038ecd](https://github.com/sysdiglabs/charts/commit/f3038ecd557e6c1fc6cf66d4c212a6cbf5132a29): Update to v3.9.61 ([#2651](https://github.com/sysdiglabs/charts/issues/2651))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/admission-controller-0.18.0...admission-controller-0.18.1
