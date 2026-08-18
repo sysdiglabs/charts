@@ -360,9 +360,14 @@ host:
         # The memory request for the kmodule
         memory: 384Mi
     shield:
+      # No CPU limit is set by default. The host shield sits in the syscall path and drains one
+      # ring buffer per CPU, so its work scales with the node's vCPU count and with container
+      # churn. A fixed CPU limit throttles the drain without reducing the per-syscall cost that
+      # is charged to the calling container, and on large or high-churn nodes the resulting
+      # event drops and container-runtime query backlog can degrade the node as a whole.
+      # Set a CPU limit only if your policy requires one, and size it to the node rather than
+      # to a flat value: `host.resources.shield.limits.cpu: 4000m`.
       limits:
-        # The CPU limit for the host shield
-        cpu: 1000m
         # The memory limit for the host shield
         memory: 1Gi
       requests:

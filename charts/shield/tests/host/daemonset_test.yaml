@@ -1057,3 +1057,31 @@ tests:
             mountPath: /opt/draios/etc/local_forwarder_config.yaml
             subPath: local_forwarder_config.yaml
         template: host/daemonset.yaml
+
+  - it: No CPU limit on the host shield by default
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].resources
+          value:
+            limits:
+              memory: 1Gi
+            requests:
+              cpu: 250m
+              memory: 384Mi
+        template: host/daemonset.yaml
+      - notExists:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].resources.limits.cpu
+        template: host/daemonset.yaml
+
+  - it: CPU limit is applied when explicitly set
+    set:
+      host:
+        resources:
+          shield:
+            limits:
+              cpu: 4000m
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].resources.limits.cpu
+          value: 4000m
+        template: host/daemonset.yaml
