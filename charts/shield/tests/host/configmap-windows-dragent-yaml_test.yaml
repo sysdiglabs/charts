@@ -1,4 +1,4 @@
-suite: Windows Host - Configmap [dragent.yaml]
+suite: Host Windows - Configmap [dragent.yaml]
 templates:
   - templates/host/configmap-windows.yaml
 release:
