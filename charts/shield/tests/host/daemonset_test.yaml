@@ -1057,3 +1057,69 @@ tests:
             mountPath: /opt/draios/etc/local_forwarder_config.yaml
             subPath: local_forwarder_config.yaml
         template: host/daemonset.yaml
+
+  - it: Renders exactly one DaemonSet with the default name when profiles is empty
+    asserts:
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: metadata.name
+          value: release-name-shield-host
+      - notExists:
+          path: spec.selector.matchLabels["sysdig/host-profile"]
+
+  - it: Renders one DaemonSet per profile with merged resources and node selectors
+    set:
+      host:
+        node_selector:
+          base-label: shared
+        profiles:
+          - name: heavy
+            node_selector:
+              sysdig.com/node-size: heavy
+            resources:
+              shield:
+                limits:
+                  memory: 2Gi
+          - name: light
+            node_selector:
+              sysdig.com/node-size: light
+            resources:
+              shield:
+                limits:
+                  memory: 512Mi
+    asserts:
+      - hasDocuments:
+          count: 2
+      - equal:
+          path: metadata.name
+          value: release-name-shield-host-heavy
+        documentIndex: 0
+      - equal:
+          path: metadata.name
+          value: release-name-shield-host-light
+        documentIndex: 1
+      - equal:
+          path: spec.selector.matchLabels["sysdig/host-profile"]
+          value: heavy
+        documentIndex: 0
+      - equal:
+          path: spec.template.spec.nodeSelector["sysdig.com/node-size"]
+          value: heavy
+        documentIndex: 0
+      - equal:
+          path: spec.template.spec.nodeSelector.base-label
+          value: shared
+        documentIndex: 0
+      - equal:
+          path: spec.template.spec.containers[0].resources.limits.memory
+          value: 2Gi
+        documentIndex: 0
+      - equal:
+          path: spec.template.spec.containers[0].resources.requests.memory
+          value: 384Mi
+        documentIndex: 0
+      - equal:
+          path: spec.template.spec.containers[0].resources.limits.memory
+          value: 512Mi
+        documentIndex: 1
