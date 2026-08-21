@@ -33220,6 +33220,36 @@ entries:
   rapid-response:
   - apiVersion: v2
     appVersion: latest
+    created: "2026-08-21T13:24:59.0553307Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      version: ~1.6.0
+    description: Sysdig Rapid Response
+    digest: 88c5ed68574b48fab29a30d46f14e99ad95432234f76d4795e9e2c53b877218f
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    maintainers:
+    - email: matteo.rolla@sysdig.com
+      name: mrolla
+    - email: daniele.delorenzi@sysdig.com
+      name: dark-vex
+    name: rapid-response
+    sources:
+    - https://github.com/sysdiglabs/charts/
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/rapid-response-0.11.1/rapid-response-0.11.1.tgz
+    version: 0.11.1
+  - apiVersion: v2
+    appVersion: latest
     created: "2026-07-28T13:26:23.710485305Z"
     dependencies:
     - name: common
@@ -89727,4 +89757,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2026-08-20T15:21:51.404005267Z"
+generated: "2026-08-21T13:24:59.264100668Z"
