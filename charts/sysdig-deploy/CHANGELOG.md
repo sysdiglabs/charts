@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.117.1
+### Chores
+* **sysdig-deploy** [9e5dcffa](https://github.com/sysdiglabs/charts/commit/9e5dcffa6f697ba7caae19877232520680cb3c85): Automatic version bump due to updated dependencies ([#2723](https://github.com/sysdiglabs/charts/issues/2723))
 # v1.117.0
 ### Chores
 * **node-analyzer** [66164b8d](https://github.com/sysdiglabs/charts/commit/66164b8d3687966c08a2f15e50f5603f2b26f1cb): bump host-scanner to v0.17.3 ([#2724](https://github.com/sysdiglabs/charts/issues/2724))
