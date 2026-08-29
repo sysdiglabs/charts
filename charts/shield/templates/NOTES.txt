@@ -40,3 +40,12 @@ Secrets, SOPS, or sealed-secrets) and reference it instead:
 
 See https://github.com/sysdiglabs/charts/issues/2622 for context.
 {{- end }}
+{{ if .Values.host.profiles }}
+NOTE: You have configured {{ len .Values.host.profiles }} host shield node profiles:
+{{- range .Values.host.profiles }}
+  - {{ .name }}
+{{- end }}
+Ensure each profile's node_selector targets a DISJOINT set of nodes. If two
+profiles can match the same node, two host shields will be scheduled on it and
+conflict over hostNetwork/hostPID.
+{{ end -}}
