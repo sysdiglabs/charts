@@ -13,7 +13,7 @@ GKE Autopilot labels
 Common labels
 */}}
 {{- define "host.labels" -}}
-  {{- $labels := merge (dict) (include "host.gke_autopilot_labels" . | fromYaml) (include "host.self_labels" . | fromYaml) (include "shield.labels" . | fromYaml) }}
+  {{- $labels := merge (dict) .Values.host.labels (include "host.gke_autopilot_labels" . | fromYaml) (include "host.self_labels" . | fromYaml) (include "shield.labels" . | fromYaml) }}
   {{- with $labels -}}
     {{- . | toYaml -}}
   {{- end -}}
@@ -35,14 +35,14 @@ Selector labels
 {{- end }}
 
 {{- define "host.workload_labels" -}}
-  {{- $workloadLabels := merge (dict) .Values.workload_labels .Values.host.workload_labels (include "host.labels" . | fromYaml) }}
+  {{- $workloadLabels := merge (dict) .Values.host.workload_labels .Values.workload_labels (include "host.labels" . | fromYaml) }}
   {{- with $workloadLabels -}}
     {{- . | toYaml -}}
   {{- end -}}
 {{- end -}}
 
 {{- define "host.pod_labels" -}}
-  {{- $podLabels := merge (dict) .Values.pod_labels .Values.host.pod_labels (include "host.labels" . | fromYaml) }}
+  {{- $podLabels := merge (dict) .Values.host.pod_labels .Values.pod_labels (include "host.labels" . | fromYaml) }}
   {{- with $podLabels -}}
     {{- . | toYaml -}}
   {{- end -}}
