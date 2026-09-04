@@ -127,11 +127,7 @@ config:
       maxFileSizeBytesInMemory: 5242880
       # Number of files that can be analyzed in parallel
       parallelFileAnalysisCount: 15
-  # Number of concurrent requests the scanner issues to the registry API while listing tags and
-  # fetching image metadata. Applies to every registry type, not only ECR Org.<br/>
-  # It is passed to the scanner as the `GROUP_LIMIT` environment variable.<br/>
-  # The load on the registry is this value multiplied by the number of Registry Scanner CronJobs
-  # running at the same time, so lower it when many scanners target the same registry instance.
+  # Number of concurrent requests to the registry API while listing tags and fetching image metadata.
   parallelGoRoutines: 100
 ssl:
   ca:
