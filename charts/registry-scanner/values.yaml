@@ -127,7 +127,7 @@ config:
       maxFileSizeBytesInMemory: 5242880
       # Number of files that can be analyzed in parallel
       parallelFileAnalysisCount: 15
-  # Number of goroutines running in parallel in metadata phase for ECR Org setup.
+  # Number of concurrent requests to the registry API while listing tags and fetching image metadata.
   parallelGoRoutines: 100
 ssl:
   ca:

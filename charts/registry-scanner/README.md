@@ -104,7 +104,7 @@ The following table lists the configurable parameters of the Sysdig Registry Sca
 | config.scan.imageAnalyzer.maxFileSizeBytes          | Maximum size (in bytes) of files that will be analyzed. Larger files, will be skipped during analysis. Default set to 100MB.                                                                                                               | <code>104857600</code>                        |
 | config.scan.imageAnalyzer.maxFileSizeBytesInMemory  | Maximum size (in bytes) of files that will be analyzed in memory. Larger files will be first written to disk as temporary files. Default set to 5MB.                                                                                       | <code>5242880</code>                          |
 | config.scan.imageAnalyzer.parallelFileAnalysisCount | Number of files that can be analyzed in parallel                                                                                                                                                                                           | <code>15</code>                               |
-| config.parallelGoRoutines                           | Number of goroutines running in parallel in metadata phase for ECR Org setup.                                                                                                                                                              | <code>100</code>                              |
+| config.parallelGoRoutines                           | Number of concurrent requests to the registry API while listing tags and fetching image metadata.                                                                                                                                          | <code>100</code>                              |
 | ssl.ca.certs                                        | For outbound connections. <br/>List of PEM-encoded x509 certificate authority.                                                                                                                                                             | <code>[]</code>                               |
 | customLabels                                        | The additional labels to add to CronJob and Scanning Jobs. The custom labels to be added to kubernetes manifests of all the resources created.                                                                                             | <code>{}</code>                               |
 | proxy.httpProxy                                     | The URL of the proxy for HTTP connections. Leave it empty if not using proxy, which sets the `http_proxy` environment variable.                                                                                                            | <code></code>                                 |
@@ -141,7 +141,7 @@ Use the following command to deploy:
 helm upgrade --install registry-scanner \
    --namespace sysdig-agent \
    --create-namespace \
-   --version=1.11.2 \
+   --version=1.11.3 \
    --set config.secureBaseURL=<SYSDIG_SECURE_URL> \
    --set config.secureAPIToken=<SYSDIG_SECURE_API_TOKEN> \
    --set config.secureSkipTLS=true \
