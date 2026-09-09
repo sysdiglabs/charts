@@ -23,16 +23,24 @@ patch=0
 # update_dependencies <subchart> <current_subchart_version> <new_subchart_version> <main_chart_path>
 update_dependencies() {
     # Translates to something like:
-    # sed -i'' 46s/0.3.1/0.3.2/ charts/sysdig-deploy/Chart.yaml
-    # sed -i'' instead of sed -i is used only to make it work in OSX
+    # sed 46s/0.3.1/0.3.2/ charts/sysdig-deploy/Chart.yaml
+    # writing to a temporary file instead of using `sed -i` keeps this working
+    # on both GNU and BSD sed, which disagree on the in-place suffix argument
     # https://stackoverflow.com/questions/4247068/sed-command-with-i-option-failing-on-mac-but-works-on-linux/14813278#14813278
-    sed -i'' "$(yq '( .dependencies[] | select(.name == "'"$1"'") | .version) | line' "charts/$4/Chart.yaml")s/$2/$3/" "charts/$4/Chart.yaml"
+    sed_in_place "$(yq '( .dependencies[] | select(.name == "'"$1"'") | .version) | line' "charts/$4/Chart.yaml")s/$2/$3/" "charts/$4/Chart.yaml"
 }
 
 # Usage:
 # update_main_chart <current_chart_version> <new_chart_version> <main_chart_path>
 update_main_chart() {
-    sed -i'' "$(yq '.version | line' "charts/$3/Chart.yaml")s/$1/$2/" "charts/$3/Chart.yaml"
+    sed_in_place "$(yq '.version | line' "charts/$3/Chart.yaml")s/$1/$2/" "charts/$3/Chart.yaml"
+}
+
+# Usage:
+# sed_in_place <sed_expression> <file>
+sed_in_place() {
+    sed "$1" "$2" > "$2.new"
+    mv "$2.new" "$2"
 }
 
 check_update_needed () {

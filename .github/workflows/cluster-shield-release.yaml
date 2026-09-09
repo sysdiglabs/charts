@@ -5,12 +5,16 @@ on:
   workflow_dispatch:
     inputs:
       release:
-        description: 'Cluster Shield Version'
+        description: 'Cluster Shield Version (X.Y.Z)'
         required: true
 
 permissions:
   contents: read
   pull-requests: write
+
+env:
+  GITHUB_USERNAME: draios-jenkins
+  GITHUB_USER_EMAIL: jenkins@sysdig.com
 
 jobs:
   cluster-shield-release:
@@ -23,11 +27,66 @@ jobs:
         with:
           go-version: "1.24"
 
-      - name: Install Updatecli in the runner
-        uses: updatecli/updatecli-action@v3.6.0
+      - name: Install YQ
+        uses: dcarbone/install-yq-action@v1.3.1
 
-      - name: Run Updatecli in apply mode
-        run: "updatecli apply --config .github/updatecli.d/config-cluster-shield-release.yaml"
+      - name: Check that the cluster-shield image has been published
+        run: |
+          published=$(curl -sfSL "https://quay.io/api/v1/repository/sysdig/cluster-shield/tag/?onlyActiveTags=true&specificTag=${CLUSTER_SHIELD_RELEASE}" | jq -r '.tags[0].name // empty')
+          if [[ "${published}" != "${CLUSTER_SHIELD_RELEASE}" ]]; then
+            echo "::error::quay.io/sysdig/cluster-shield:${CLUSTER_SHIELD_RELEASE} has not been published yet"
+            exit 1
+          fi
         env:
           CLUSTER_SHIELD_RELEASE: "${{ inputs.release }}"
-          GITHUB_TOKEN: "${{ secrets.TOOLS_JENKINS_ADMIN_ACCESS_GITHUB_TOKEN }}"
+
+      - name: Bump the cluster-shield and shield charts
+        run: scripts/cluster-shield/release-bump.sh "$CLUSTER_SHIELD_RELEASE"
+        env:
+          CLUSTER_SHIELD_RELEASE: "${{ inputs.release }}"
+
+      # picks up the new cluster-shield chart version from the dependency list
+      # and increments the sysdig-deploy version accordingly
+      - name: Bump the sysdig-deploy chart
+        run: scripts/sysdig-deploy/update-sysdig-deploy.sh
+
+      - name: Regenerate the chart docs
+        run: make docs
+
+      - name: Configure Git
+        run: |
+          git config user.name "$GITHUB_USERNAME"
+          git config user.email "$GITHUB_USER_EMAIL"
+
+      - name: Create Pull Request
+        id: pull-request
+        uses: peter-evans/create-pull-request@v8
+        with:
+          token: ${{ secrets.TOOLS_JENKINS_ADMIN_ACCESS_GITHUB_TOKEN }}
+          base: main
+          branch: cluster-shield/automatic-bump
+          delete-branch: true
+          labels: automated PR
+          title: "feat(shield,cluster-shield,sysdig-deploy): release cluster-shield ${{ inputs.release }}"
+          body: |
+            Bump the cluster-shield release to `${{ inputs.release }}`:
+
+            * `cluster-shield`: chart `version` and `appVersion`
+            * `shield`: `cluster.image.tag` and chart `version`
+            * `sysdig-deploy`: `cluster-shield` dependency and chart `version`
+          commit-message: "feat(shield,cluster-shield,sysdig-deploy): release cluster-shield ${{ inputs.release }}"
+          add-paths: |
+            charts/cluster-shield/Chart.yaml
+            charts/cluster-shield/README.md
+            charts/shield/Chart.yaml
+            charts/shield/values.yaml
+            charts/shield/README.md
+            charts/sysdig-deploy/Chart.yaml
+
+      - name: Enable auto-merge
+        if: steps.pull-request.outputs.pull-request-number
+        run: gh pr merge --squash --auto "$PULL_REQUEST_NUMBER"
+        env:
+          GH_REPO: "${{ github.repository }}"
+          GH_TOKEN: "${{ secrets.TOOLS_JENKINS_ADMIN_ACCESS_GITHUB_TOKEN }}"
+          PULL_REQUEST_NUMBER: "${{ steps.pull-request.outputs.pull-request-number }}"
