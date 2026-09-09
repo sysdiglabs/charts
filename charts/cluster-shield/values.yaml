@@ -145,6 +145,8 @@ cluster_shield:
           scope: '*'
       # Method used to collect Kubernetes audit events. Use validating_webhook to intercept requests through the admission webhook, or audit_backend when using the Kubernetes audit backend integration.
       method: validating_webhook
+      # Name of the GCP Pub/Sub subscription used to ingest GKE audit logs
+      gke_pub_sub_subscription: k8s-audit
     posture:
       # Enable the posture feature
       enabled: false
