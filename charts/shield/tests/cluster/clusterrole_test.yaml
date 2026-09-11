@@ -1160,3 +1160,407 @@ tests:
               - apps.openshift.io
             resources:
               - deploymentconfigs
+
+  - it: All OCP resources granted through ocp_resources
+    set:
+      features:
+        posture:
+          cluster_posture:
+            enabled: true
+      cluster:
+        additional_settings:
+          kspm_collector:
+            ocp_resources:
+              - route
+              - deploymentconfig
+              - securitycontextconstraints
+              - machineconfig
+              - machineconfigpool
+              - machineset
+              - buildconfig
+              - imagestream
+              - template
+              - clusteroperator
+              - clusterresourcequota
+    asserts:
+      - containsDocument:
+          kind: ClusterRole
+          apiVersion: rbac.authorization.k8s.io/v1
+          name: release-name-shield-cluster
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - route.openshift.io
+            resources:
+              - routes
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - apps.openshift.io
+            resources:
+              - deploymentconfigs
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - security.openshift.io
+            resources:
+              - securitycontextconstraints
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - machineconfiguration.openshift.io
+            resources:
+              - machineconfigs
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - machineconfiguration.openshift.io
+            resources:
+              - machineconfigpools
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - machine.openshift.io
+            resources:
+              - machinesets
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - build.openshift.io
+            resources:
+              - buildconfigs
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - image.openshift.io
+            resources:
+              - imagestreams
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - template.openshift.io
+            resources:
+              - templates
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - config.openshift.io
+            resources:
+              - clusteroperators
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - quota.openshift.io
+            resources:
+              - clusterresourcequotas
+            verbs:
+              - get
+              - list
+              - watch
+
+  - it: No OCP resource granted through ocp_resources when posture is disabled
+    set:
+      features:
+        posture:
+          cluster_posture:
+            enabled: false
+      cluster:
+        additional_settings:
+          kspm_collector:
+            ocp_resources:
+              - route
+              - deploymentconfig
+              - securitycontextconstraints
+              - machineconfig
+              - machineconfigpool
+              - machineset
+              - buildconfig
+              - imagestream
+              - template
+              - clusteroperator
+              - clusterresourcequota
+    asserts:
+      - containsDocument:
+          kind: ClusterRole
+          apiVersion: rbac.authorization.k8s.io/v1
+          name: release-name-shield-cluster
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - route.openshift.io
+            resources:
+              - routes
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - apps.openshift.io
+            resources:
+              - deploymentconfigs
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - security.openshift.io
+            resources:
+              - securitycontextconstraints
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - machineconfiguration.openshift.io
+            resources:
+              - machineconfigs
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - machineconfiguration.openshift.io
+            resources:
+              - machineconfigpools
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - machine.openshift.io
+            resources:
+              - machinesets
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - build.openshift.io
+            resources:
+              - buildconfigs
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - image.openshift.io
+            resources:
+              - imagestreams
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - template.openshift.io
+            resources:
+              - templates
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - config.openshift.io
+            resources:
+              - clusteroperators
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - quota.openshift.io
+            resources:
+              - clusterresourcequotas
+
+  - it: Only the OCP resources listed in ocp_resources are granted
+    set:
+      features:
+        posture:
+          cluster_posture:
+            enabled: true
+      cluster:
+        additional_settings:
+          kspm_collector:
+            ocp_resources:
+              - securitycontextconstraints
+              - buildconfig
+    asserts:
+      - containsDocument:
+          kind: ClusterRole
+          apiVersion: rbac.authorization.k8s.io/v1
+          name: release-name-shield-cluster
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - security.openshift.io
+            resources:
+              - securitycontextconstraints
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - build.openshift.io
+            resources:
+              - buildconfigs
+            verbs:
+              - get
+              - list
+              - watch
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - route.openshift.io
+            resources:
+              - routes
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - apps.openshift.io
+            resources:
+              - deploymentconfigs
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - image.openshift.io
+            resources:
+              - imagestreams
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - config.openshift.io
+            resources:
+              - clusteroperators
+
+  - it: An empty ocp_resources grants no OCP resource
+    set:
+      features:
+        posture:
+          cluster_posture:
+            enabled: true
+      cluster:
+        additional_settings:
+          kspm_collector:
+            ocp_resources: []
+    asserts:
+      - containsDocument:
+          kind: ClusterRole
+          apiVersion: rbac.authorization.k8s.io/v1
+          name: release-name-shield-cluster
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - route.openshift.io
+            resources:
+              - routes
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - security.openshift.io
+            resources:
+              - securitycontextconstraints
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - quota.openshift.io
+            resources:
+              - clusterresourcequotas
+
+  - it: Routes granted through ocp_resources while deploymentconfigs use the deprecated flag
+    set:
+      features:
+        posture:
+          cluster_posture:
+            enabled: true
+      cluster:
+        additional_settings:
+          kspm_collector:
+            ocp_resources:
+              - route
+            ocp_deploymentconfig_enabled: true
+    asserts:
+      - containsDocument:
+          kind: ClusterRole
+          apiVersion: rbac.authorization.k8s.io/v1
+          name: release-name-shield-cluster
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - route.openshift.io
+            resources:
+              - routes
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - apps.openshift.io
+            resources:
+              - deploymentconfigs
+            verbs:
+              - get
+              - list
+              - watch
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - security.openshift.io
+            resources:
+              - securitycontextconstraints
