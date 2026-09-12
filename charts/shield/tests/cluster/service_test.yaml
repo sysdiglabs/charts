@@ -1,6 +1,8 @@
 suite: Cluster - Service
 templates:
   - templates/cluster/service.yaml
+chart:
+  version: 1.2.3-helmtest
 release:
   name: release-name
   namespace: shield-namespace
@@ -227,6 +229,18 @@ tests:
           path: spec.type
           value: NodePort
 
+  - it: Default labels present on Service
+    asserts:
+      - isSubset:
+          path: metadata.labels
+          content:
+            helm.sh/chart: shield-1.2.3-helmtest
+            app.kubernetes.io/name: shield
+            app.kubernetes.io/instance: release-name
+            app.kubernetes.io/version: "1.0.0"
+            app.kubernetes.io/managed-by: Helm
+            sysdig/component: cluster
+
   - it: Custom Lables
     set:
       cluster:
@@ -277,3 +291,135 @@ tests:
       - equal:
           path: metadata.annotations["custom-2"]
           value: annotation-2
+
+  - it: Global labels applied to Service
+    set:
+      labels:
+        global-label-key: global-label-value
+    asserts:
+      - isKind:
+          of: Service
+      - equal:
+          path: metadata.labels["global-label-key"]
+          value: global-label-value
+
+  - it: Global annotations applied to Service
+    set:
+      annotations:
+        global-annotation-key: global-annotation-value
+    asserts:
+      - isKind:
+          of: Service
+      - equal:
+          path: metadata.annotations["global-annotation-key"]
+          value: global-annotation-value
+
+  - it: Global annotations merged with service annotations
+    set:
+      annotations:
+        global-key: global-value
+      cluster:
+        service:
+          annotations:
+            service-key: service-value
+    asserts:
+      - isKind:
+          of: Service
+      - equal:
+          path: metadata.annotations["global-key"]
+          value: global-value
+      - equal:
+          path: metadata.annotations["service-key"]
+          value: service-value
+
+  - it: cluster.annotations applied to Service
+    set:
+      cluster:
+        annotations:
+          cluster-annotation-key: cluster-annotation-value
+    asserts:
+      - isKind:
+          of: Service
+      - equal:
+          path: metadata.annotations["cluster-annotation-key"]
+          value: cluster-annotation-value
+
+  - it: cluster.annotations merged with global and service annotations on Service
+    set:
+      annotations:
+        global-key: global-value
+      cluster:
+        annotations:
+          cluster-key: cluster-value
+        service:
+          annotations:
+            service-key: service-value
+    asserts:
+      - isKind:
+          of: Service
+      - equal:
+          path: metadata.annotations["global-key"]
+          value: global-value
+      - equal:
+          path: metadata.annotations["cluster-key"]
+          value: cluster-value
+      - equal:
+          path: metadata.annotations["service-key"]
+          value: service-value
+
+  - it: cluster.labels applied to Service
+    set:
+      cluster:
+        labels:
+          cluster-label-key: cluster-label-value
+    asserts:
+      - isKind:
+          of: Service
+      - equal:
+          path: metadata.labels["cluster-label-key"]
+          value: cluster-label-value
+
+  - it: cluster.labels merged with global labels on Service
+    set:
+      labels:
+        global-key: global-value
+      cluster:
+        labels:
+          cluster-key: cluster-value
+    asserts:
+      - isKind:
+          of: Service
+      - equal:
+          path: metadata.labels["global-key"]
+          value: global-value
+      - equal:
+          path: metadata.labels["cluster-key"]
+          value: cluster-value
+
+  - it: cluster.annotations overrides global annotations on Service
+    set:
+      annotations:
+        env: global
+      cluster:
+        annotations:
+          env: cluster
+    asserts:
+      - isKind:
+          of: Service
+      - equal:
+          path: metadata.annotations["env"]
+          value: cluster
+
+  - it: cluster.labels overrides global labels on Service
+    set:
+      labels:
+        env: global
+      cluster:
+        labels:
+          env: cluster
+    asserts:
+      - isKind:
+          of: Service
+      - equal:
+          path: metadata.labels["env"]
+          value: cluster

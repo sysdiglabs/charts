@@ -5,6 +5,10 @@ metadata:
   annotations:
     kubernetes.io/description: |
       This provides the minimum requirements to the Sysdig Shield to run in the Openshift.
+    {{- $clusterAnnotations := (include "cluster.annotations" .) }}
+    {{- if $clusterAnnotations }}
+    {{- $clusterAnnotations | nindent 4 }}
+    {{- end }}
   name: {{ include "cluster.fullname" . }}
   labels:
     {{- include "cluster.labels" . | nindent 4 }}
