@@ -212,17 +212,28 @@
 {{- end }}
 
 {{/*
-  Checks if posture is enabled and the given OCP resource is listed in the
-  kspm_collector ocp_resources setting.
+  The first cluster shield version whose kspm_collector reads the ocp_resources
+  setting. An older image ignores the setting, so granting the permissions would
+  give the collector access it cannot use.
+*/}}
+{{- define "cluster.posture_ocp_resources_min_version" -}}1.27.0-0{{- end }}
+
+{{/*
+  Checks if posture is enabled, the cluster image is new enough to read the
+  setting, and the given OCP resource is listed in the kspm_collector
+  ocp_resources setting.
   Takes a list of two elements: the chart context and the resource name.
   Usage: include "cluster.posture_ocp_resource_enabled" (list . "route")
 */}}
 {{- define "cluster.posture_ocp_resource_enabled" -}}
   {{- $ctx := index . 0 -}}
   {{- $resource := index . 1 -}}
-  {{- $ocpResources := dig "kspm_collector" "ocp_resources" (list) $ctx.Values.cluster.additional_settings -}}
-  {{- if and (include "cluster.posture_enabled" $ctx) (has $resource ($ocpResources | default (list))) -}}
-    {{- true -}}
+  {{- $minVersion := include "cluster.posture_ocp_resources_min_version" $ctx -}}
+  {{- if and (include "common.semver.is_valid" $ctx.Values.cluster.image.tag) (semverCompare (printf ">= %s" $minVersion) $ctx.Values.cluster.image.tag) -}}
+    {{- $ocpResources := dig "kspm_collector" "ocp_resources" (list) $ctx.Values.cluster.additional_settings -}}
+    {{- if and (include "cluster.posture_enabled" $ctx) (has $resource ($ocpResources | default (list))) -}}
+      {{- true -}}
+    {{- end -}}
   {{- end -}}
 {{- end }}
 

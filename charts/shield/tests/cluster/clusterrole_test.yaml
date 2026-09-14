@@ -1168,6 +1168,8 @@ tests:
           cluster_posture:
             enabled: true
       cluster:
+        image:
+          tag: 1.27.0
         additional_settings:
           kspm_collector:
             ocp_resources:
@@ -1316,6 +1318,8 @@ tests:
           cluster_posture:
             enabled: false
       cluster:
+        image:
+          tag: 1.27.0
         additional_settings:
           kspm_collector:
             ocp_resources:
@@ -1420,6 +1424,8 @@ tests:
           cluster_posture:
             enabled: true
       cluster:
+        image:
+          tag: 1.27.0
         additional_settings:
           kspm_collector:
             ocp_resources:
@@ -1488,6 +1494,8 @@ tests:
           cluster_posture:
             enabled: true
       cluster:
+        image:
+          tag: 1.27.0
         additional_settings:
           kspm_collector:
             ocp_resources: []
@@ -1525,6 +1533,8 @@ tests:
           cluster_posture:
             enabled: true
       cluster:
+        image:
+          tag: 1.27.0
         additional_settings:
           kspm_collector:
             ocp_resources:
@@ -1564,3 +1574,116 @@ tests:
               - security.openshift.io
             resources:
               - securitycontextconstraints
+
+  - it: No OCP resource granted through ocp_resources on an older cluster image
+    set:
+      features:
+        posture:
+          cluster_posture:
+            enabled: true
+      cluster:
+        image:
+          tag: 1.26.0
+        additional_settings:
+          kspm_collector:
+            ocp_resources:
+              - route
+              - securitycontextconstraints
+              - buildconfig
+              - clusterresourcequota
+    asserts:
+      - containsDocument:
+          kind: ClusterRole
+          apiVersion: rbac.authorization.k8s.io/v1
+          name: release-name-shield-cluster
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - route.openshift.io
+            resources:
+              - routes
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - security.openshift.io
+            resources:
+              - securitycontextconstraints
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - build.openshift.io
+            resources:
+              - buildconfigs
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - quota.openshift.io
+            resources:
+              - clusterresourcequotas
+
+  - it: The deprecated OCP flags still grant RBAC on an older cluster image
+    set:
+      features:
+        posture:
+          cluster_posture:
+            enabled: true
+      cluster:
+        image:
+          tag: 1.26.0
+        additional_settings:
+          kspm_collector:
+            ocp_route_enabled: true
+            ocp_deploymentconfig_enabled: true
+    asserts:
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - route.openshift.io
+            resources:
+              - routes
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - apps.openshift.io
+            resources:
+              - deploymentconfigs
+            verbs:
+              - get
+              - list
+              - watch
+
+  - it: OCP resources granted through ocp_resources on a release candidate
+    set:
+      features:
+        posture:
+          cluster_posture:
+            enabled: true
+      cluster:
+        image:
+          tag: 1.27.0-rc1
+        additional_settings:
+          kspm_collector:
+            ocp_resources:
+              - securitycontextconstraints
+    asserts:
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - security.openshift.io
+            resources:
+              - securitycontextconstraints
+            verbs:
+              - get
+              - list
+              - watch
