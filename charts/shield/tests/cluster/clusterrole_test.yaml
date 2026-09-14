@@ -1169,7 +1169,7 @@ tests:
             enabled: true
       cluster:
         image:
-          tag: 1.27.0
+          tag: 1.26.0
         additional_settings:
           kspm_collector:
             ocp_resources:
@@ -1319,7 +1319,7 @@ tests:
             enabled: false
       cluster:
         image:
-          tag: 1.27.0
+          tag: 1.26.0
         additional_settings:
           kspm_collector:
             ocp_resources:
@@ -1425,7 +1425,7 @@ tests:
             enabled: true
       cluster:
         image:
-          tag: 1.27.0
+          tag: 1.26.0
         additional_settings:
           kspm_collector:
             ocp_resources:
@@ -1495,7 +1495,7 @@ tests:
             enabled: true
       cluster:
         image:
-          tag: 1.27.0
+          tag: 1.26.0
         additional_settings:
           kspm_collector:
             ocp_resources: []
@@ -1534,7 +1534,7 @@ tests:
             enabled: true
       cluster:
         image:
-          tag: 1.27.0
+          tag: 1.26.0
         additional_settings:
           kspm_collector:
             ocp_resources:
@@ -1583,7 +1583,7 @@ tests:
             enabled: true
       cluster:
         image:
-          tag: 1.26.0
+          tag: 1.25.1
         additional_settings:
           kspm_collector:
             ocp_resources:
@@ -1633,7 +1633,7 @@ tests:
             enabled: true
       cluster:
         image:
-          tag: 1.26.0
+          tag: 1.25.1
         additional_settings:
           kspm_collector:
             ocp_route_enabled: true
@@ -1670,7 +1670,7 @@ tests:
             enabled: true
       cluster:
         image:
-          tag: 1.27.0-rc1
+          tag: 1.26.0-rc1
         additional_settings:
           kspm_collector:
             ocp_resources:

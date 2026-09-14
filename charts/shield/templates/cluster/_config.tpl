@@ -216,7 +216,7 @@
   setting. An older image ignores the setting, so granting the permissions would
   give the collector access it cannot use.
 */}}
-{{- define "cluster.posture_ocp_resources_min_version" -}}1.27.0-0{{- end }}
+{{- define "cluster.posture_ocp_resources_min_version" -}}1.26.0-0{{- end }}
 
 {{/*
   Checks if posture is enabled, the cluster image is new enough to read the
