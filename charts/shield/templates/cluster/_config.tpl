@@ -212,19 +212,48 @@
 {{- end }}
 
 {{/*
-  Checks if posture is enabled and OCP Route collection is enabled.
+  The first cluster shield version whose kspm_collector reads the ocp_resources
+  setting. An older image ignores the setting, so granting the permissions would
+  give the collector access it cannot use.
+*/}}
+{{- define "cluster.posture_ocp_resources_min_version" -}}1.26.0-0{{- end }}
+
+{{/*
+  Checks if posture is enabled, the cluster image is new enough to read the
+  setting, and the given OCP resource is listed in the kspm_collector
+  ocp_resources setting.
+  Takes a list of two elements: the chart context and the resource name.
+  Usage: include "cluster.posture_ocp_resource_enabled" (list . "route")
+*/}}
+{{- define "cluster.posture_ocp_resource_enabled" -}}
+  {{- $ctx := index . 0 -}}
+  {{- $resource := index . 1 -}}
+  {{- $minVersion := include "cluster.posture_ocp_resources_min_version" $ctx -}}
+  {{- if and (include "common.semver.is_valid" $ctx.Values.cluster.image.tag) (semverCompare (printf ">= %s" $minVersion) $ctx.Values.cluster.image.tag) -}}
+    {{- $ocpResources := dig "kspm_collector" "ocp_resources" (list) $ctx.Values.cluster.additional_settings -}}
+    {{- if and (include "cluster.posture_enabled" $ctx) (has $resource ($ocpResources | default (list))) -}}
+      {{- true -}}
+    {{- end -}}
+  {{- end -}}
+{{- end }}
+
+{{/*
+  Checks if posture is enabled and OCP Route collection is enabled, either
+  through ocp_resources or through the deprecated ocp_route_enabled flag.
 */}}
 {{- define "cluster.posture_ocp_routes_enabled" -}}
-  {{- if and (include "cluster.posture_enabled" .) (dig "kspm_collector" "ocp_route_enabled" false .Values.cluster.additional_settings) -}}
+  {{- if or (include "cluster.posture_ocp_resource_enabled" (list . "route")) (and (include "cluster.posture_enabled" .) (dig "kspm_collector" "ocp_route_enabled" false .Values.cluster.additional_settings)) -}}
     {{- true -}}
   {{- end -}}
 {{- end }}
 
 {{/*
-  Checks if posture is enabled and OCP DeploymentConfig collection is enabled.
+  Checks if posture is enabled and OCP DeploymentConfig collection is enabled,
+  either through ocp_resources or through the deprecated
+  ocp_deploymentconfig_enabled flag.
 */}}
 {{- define "cluster.posture_ocp_deploymentconfig_enabled" -}}
-  {{- if and (include "cluster.posture_enabled" .) (dig "kspm_collector" "ocp_deploymentconfig_enabled" false .Values.cluster.additional_settings) -}}
+  {{- if or (include "cluster.posture_ocp_resource_enabled" (list . "deploymentconfig")) (and (include "cluster.posture_enabled" .) (dig "kspm_collector" "ocp_deploymentconfig_enabled" false .Values.cluster.additional_settings)) -}}
     {{- true -}}
   {{- end -}}
 {{- end }}

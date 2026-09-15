@@ -210,6 +210,96 @@ rules:
     - list
     - watch
 {{- end }}
+{{- if (include "cluster.posture_ocp_resource_enabled" (list . "securitycontextconstraints")) }}
+- apiGroups:
+    - security.openshift.io
+  resources:
+    - securitycontextconstraints
+  verbs:
+    - get
+    - list
+    - watch
+{{- end }}
+{{- if (include "cluster.posture_ocp_resource_enabled" (list . "machineconfig")) }}
+- apiGroups:
+    - machineconfiguration.openshift.io
+  resources:
+    - machineconfigs
+  verbs:
+    - get
+    - list
+    - watch
+{{- end }}
+{{- if (include "cluster.posture_ocp_resource_enabled" (list . "machineconfigpool")) }}
+- apiGroups:
+    - machineconfiguration.openshift.io
+  resources:
+    - machineconfigpools
+  verbs:
+    - get
+    - list
+    - watch
+{{- end }}
+{{- if (include "cluster.posture_ocp_resource_enabled" (list . "machineset")) }}
+- apiGroups:
+    - machine.openshift.io
+  resources:
+    - machinesets
+  verbs:
+    - get
+    - list
+    - watch
+{{- end }}
+{{- if (include "cluster.posture_ocp_resource_enabled" (list . "buildconfig")) }}
+- apiGroups:
+    - build.openshift.io
+  resources:
+    - buildconfigs
+  verbs:
+    - get
+    - list
+    - watch
+{{- end }}
+{{- if (include "cluster.posture_ocp_resource_enabled" (list . "imagestream")) }}
+- apiGroups:
+    - image.openshift.io
+  resources:
+    - imagestreams
+  verbs:
+    - get
+    - list
+    - watch
+{{- end }}
+{{- if (include "cluster.posture_ocp_resource_enabled" (list . "template")) }}
+- apiGroups:
+    - template.openshift.io
+  resources:
+    - templates
+  verbs:
+    - get
+    - list
+    - watch
+{{- end }}
+{{- if (include "cluster.posture_ocp_resource_enabled" (list . "clusteroperator")) }}
+- apiGroups:
+    - config.openshift.io
+  resources:
+    - clusteroperators
+  verbs:
+    - get
+    - list
+    - watch
+{{- end }}
+{{- if (include "cluster.posture_ocp_resource_enabled" (list . "clusterresourcequota")) }}
+- apiGroups:
+    - quota.openshift.io
+  resources:
+    - clusterresourcequotas
+  verbs:
+    - get
+    - list
+    - watch
+{{- end }}
 {{- if or (include "cluster.admission_control_container_vulnerability_management_enabled" .) (include "cluster.admission_control_image_signature_enabled" .) }}
 - apiGroups:
     - ""
