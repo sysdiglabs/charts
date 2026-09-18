@@ -29,6 +29,11 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "cluster.labels" . | nindent 4 }}
+  {{- $annotations := (include "cluster.annotations" .) }}
+  {{- if $annotations }}
+  annotations:
+    {{- $annotations | nindent 4 }}
+  {{- end }}
 data:
   {{ include "cluster.tls_certificates.cert_file_name" . }}: {{ $cert.Cert }}
   {{ include "cluster.tls_certificates.private_key_file_name" . }}: {{ $cert.Key }}
@@ -43,13 +48,17 @@ metadata:
   name: {{ include "cluster.audit_webhook_name" . }}
   labels:
     {{- include "cluster.labels" . | nindent 4 }}
+  {{- $annotations := (include "cluster.annotations" .) }}
   {{- if (include "cluster.tls_certificates.use_cert_manager" .) }}
-  annotations:
     {{- if (include "cluster.tls_certificates.cm_use_ca_secret" .) }}
-    cert-manager.io/inject-ca-from-secret: {{ include "cluster.tls_certificates.cm_issuer_namespace" . }}/{{ include "cluster.tls_certificates.cm_ca_secret_name" . }}
+    {{- $annotations := merge (dict) "cert-manager.io/inject-ca-from-secret" (concat (include "cluster.tls_certificates.cm_issuer_namespace" .) "/" (include "cluster.tls_certificates.cm_ca_secret_name" . )) }}
     {{- else }}
-    cert-manager.io/inject-ca-from: {{ .Release.Namespace }}/{{ include "cluster.tls_certificates.cm_certificate_name" . }}
+    {{- $annotations := merge (dict) "cert-manager.io/inject-ca-from" (concat (.Release.Namespace) "/" (include "cluster.tls_certificates.cm_ca_secret_name" . )) }}
     {{- end }}
+  {{- end }}
+  {{- if $annotations }}
+  annotations:
+    {{- $annotations | nindent 4 }}
   {{- end }}
 webhooks:
   - name: audit.secure.sysdig.com

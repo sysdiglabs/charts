@@ -43,3 +43,17 @@ Selector labels
     {{- . | toYaml -}}
   {{- end -}}
 {{- end -}}
+
+{{- define "cluster.priorityclass_labels" -}}
+  {{- $priorityClassLabels := merge (dict) .Values.cluster.priority_class.labels (include "cluster.labels" . | fromYaml) }}
+  {{- with $priorityClassLabels -}}
+    {{- . | toYaml -}}
+  {{- end -}}
+{{- end -}}
+
+{{- define "cluster.service_labels" -}}
+  {{- $serviceLabels := merge (dict) .Values.cluster.service.labels (include "cluster.labels" . | fromYaml) }}
+  {{- with $serviceLabels -}}
+    {{- . | toYaml -}}
+  {{- end -}}
+{{- end -}}
