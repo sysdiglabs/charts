@@ -164,6 +164,9 @@ features:
     activity_audit:
       enabled: false
     live_logs:
+      # Enable the live logs feature.
+      # Grants the host shield read access to container logs on the kubelet: the
+      # `nodes/log` subresource for host shield 14.8.0 and newer, `nodes/proxy` for older ones.
       enabled: false
     network_security:
       # Enable the network security feature
