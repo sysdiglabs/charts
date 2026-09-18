@@ -9,12 +9,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Git checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
 
       - name: Check if dependent charts were modified or not
-        uses: tj-actions/changed-files@v47
+        uses: tj-actions/changed-files@24d32ffd492484c1d75e0c0b894501ddb9d30d62 # v47.0.0
         id: dependent_files
         with:
           files: |
@@ -29,7 +29,7 @@ jobs:
 
       - name: Install YQ
         if: steps.dependent_files.outputs.any_changed == 'true'
-        uses: dcarbone/install-yq-action@v1.3.1
+        uses: dcarbone/install-yq-action@4075b4dca348d74bd83f2bf82d30f25d7c54539b # v1.3.1
 
       - name: run the script
         if: steps.dependent_files.outputs.any_changed == 'true'
@@ -43,7 +43,7 @@ jobs:
 
       - name: Create Pull Request
         if: steps.dependent_files.outputs.any_changed == 'true'
-        uses: peter-evans/create-pull-request@v8
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
         with:
           title: "chore(sysdig-deploy): Automatic version bump due to updated dependencies"
           base: main
