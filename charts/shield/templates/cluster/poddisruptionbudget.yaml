@@ -4,6 +4,13 @@ kind: PodDisruptionBudget
 metadata:
   name: {{ include "cluster.fullname" . | trunc 59 }}-pdb
   namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "cluster.labels" . | nindent 4 }}
+  {{- $annotations := (include "cluster.annotations" .) }}
+  {{- if $annotations }}
+  annotations:
+    {{- $annotations | nindent 4 }}
+  {{- end }}
 spec:
   minAvailable: {{ dig "pod_disruption_budget" "min_available" 1 .Values.cluster }}
   selector:

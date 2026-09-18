@@ -386,6 +386,9 @@
         "rbac": {
           "$ref": "#/$defs/Rbac"
         },
+        "service": {
+          "$ref": "#/$defs/Service"
+        },
         "volumes": {
           "$ref": "#/$defs/Volumes"
         },
@@ -1502,6 +1505,33 @@
         "annotations": {
           "type": "object",
           "description": "Annotations applied to RBAC resources created by the chart."
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "Service": {
+      "type": "object",
+      "description": "The service created to expose the Cluster Shield pods.",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "The type of the service.",
+          "enum": [
+            "ClusterIP",
+            "NodePort",
+            "LoadBalancer",
+            "ExternalName"
+          ],
+          "default": "ClusterIP"
+        },
+        "labels": {
+          "type": "object",
+          "description": "Labels applied to Service resources created by the chart."
+        },
+        "annotations": {
+          "type": "object",
+          "description": "Annotations applied to Service resources created by the chart."
         }
       },
       "additionalProperties": false

@@ -25,3 +25,17 @@
     {{- . | toYaml -}}
   {{- end -}}
 {{- end -}}
+
+{{- define "cluster.service_annotations" -}}
+  {{- $serviceAnnotations := merge (dict) .Values.cluster.service.annotations (include "cluster.annotations" . | fromYaml) -}}
+  {{- with $serviceAnnotations -}}
+    {{- . | toYaml -}}
+  {{- end -}}
+{{- end -}}
+
+{{- define "cluster.priorityclass_annotations" -}}
+  {{- $priorityClassAnnotations := merge (dict) .Values.cluster.priority_class.annotations (include "cluster.annotations" . | fromYaml) -}}
+  {{- with $priorityClassAnnotations -}}
+    {{- . | toYaml -}}
+  {{- end -}}
+{{- end -}}

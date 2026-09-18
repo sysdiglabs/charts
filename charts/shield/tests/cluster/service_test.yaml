@@ -396,6 +396,29 @@ tests:
           path: metadata.labels["cluster-key"]
           value: cluster-value
 
+  - it: cluster.labels merged with global and service labels on Service
+    set:
+      labels:
+        global-key: global-value
+      cluster:
+        labels:
+          cluster-key: cluster-value
+        service:
+          labels:
+            service-key: service-value
+    asserts:
+      - isKind:
+          of: Service
+      - equal:
+          path: metadata.labels["global-key"]
+          value: global-value
+      - equal:
+          path: metadata.labels["cluster-key"]
+          value: cluster-value
+      - equal:
+          path: metadata.labels["service-key"]
+          value: service-value
+
   - it: cluster.annotations overrides global annotations on Service
     set:
       annotations:
@@ -423,3 +446,37 @@ tests:
       - equal:
           path: metadata.labels["env"]
           value: cluster
+
+  - it: cluster.service.annotations overrides global and service annotations on Service
+    set:
+      annotations:
+        env: global
+      cluster:
+        annotations:
+          env: cluster
+        service:
+          annotations:
+            env: service
+    asserts:
+      - isKind:
+          of: Service
+      - equal:
+          path: metadata.annotations["env"]
+          value: service
+
+  - it: cluster.service.labels overrides global and service labels on Service
+    set:
+      labels:
+        env: global
+      cluster:
+        labels:
+          env: cluster
+        service:
+          labels:
+            env: service
+    asserts:
+      - isKind:
+          of: Service
+      - equal:
+          path: metadata.labels["env"]
+          value: service
