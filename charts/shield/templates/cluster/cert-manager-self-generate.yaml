@@ -6,6 +6,11 @@ metadata:
   namespace: {{ include "cluster.tls_certificates.cm_issuer_namespace" . }}
   labels:
     {{- include "cluster.labels" . | nindent 4 }}
+  {{- $annotations := (include "cluster.annotations" .) }}
+  {{- if $annotations }}
+  annotations:
+    {{- $annotations | nindent 4 }}
+  {{- end }}
 spec:
   selfSigned: {}
 ---
@@ -16,6 +21,11 @@ metadata:
   namespace: {{ include "cluster.tls_certificates.cm_issuer_namespace" . }}
   labels:
     {{- include "cluster.labels" . | nindent 4 }}
+  {{- $annotations := (include "cluster.annotations" .) }}
+  {{- if $annotations }}
+  annotations:
+    {{- $annotations | nindent 4 }}
+  {{- end }}
 spec:
   isCA: true
   commonName: {{ include "cluster.fullname" . }}
@@ -43,6 +53,11 @@ metadata:
   {{- end }}
   labels:
     {{- include "cluster.labels" . | nindent 4 }}
+  {{- $annotations := (include "cluster.annotations" .) }}
+  {{- if $annotations }}
+  annotations:
+    {{- $annotations | nindent 4 }}
+  {{- end }}
 spec:
   ca:
     secretName: {{ include "cluster.tls_certificates.cm_ca_secret_name" . }}

@@ -55,6 +55,12 @@ $ helm uninstall {{ .Release.Name }} -n {{ .Release.Namespace }}
 
 The command removes all the Kubernetes components associated with the chart and deletes the release.
 
+### Custom Annotations and Labels
+
+The chart supports applying custom annotations and labels to all rendered resources natively via the `annotations`/`labels` values (global) and the `cluster.annotations`/`cluster.labels`, `host.annotations`/`host.labels`, `host_windows.annotations`/`host_windows.labels` values (per component). Merge precedence, from lowest to highest, is: global, component, resource-specific (e.g. `cluster.workload_annotations`, `cluster.pod_annotations`). This covers common GitOps needs such as ArgoCD sync-wave annotations (`argoproj.io/sync-wave`).
+
+A Kustomize post-render step is not a supported alternative to these values: patches applied outside Helm's own render are not covered by chart support and can silently drift out of sync with future chart releases. Use the native `annotations`/`labels` values above instead.
+
 {{ if .Chart.Values -}}
 
 ## Configuration

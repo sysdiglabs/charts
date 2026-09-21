@@ -1893,3 +1893,24 @@ tests:
           path: metadata.labels["env"]
           value: component-workload
     template: templates/cluster/deployment.yaml
+
+  - it: cluster.labels cannot override the built-in sysdig/component identity label
+    set:
+      cluster:
+        labels:
+          sysdig/component: evil-override
+    asserts:
+      - equal:
+          path: metadata.labels["sysdig/component"]
+          value: cluster
+    template: templates/cluster/deployment.yaml
+
+  - it: global labels cannot override the built-in sysdig/component identity label
+    set:
+      labels:
+        sysdig/component: evil-override
+    asserts:
+      - equal:
+          path: metadata.labels["sysdig/component"]
+          value: cluster
+    template: templates/cluster/deployment.yaml
