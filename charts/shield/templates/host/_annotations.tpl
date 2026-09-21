@@ -29,3 +29,10 @@
     {{- . | toYaml -}}
   {{- end -}}
 {{- end -}}
+
+{{- define "host.priorityclass_annotations" -}}
+  {{- $priorityClassAnnotations := merge (dict) .Values.host.priority_class.annotations (include "host.annotations" . | fromYaml) -}}
+  {{- with $priorityClassAnnotations -}}
+    {{- . | toYaml -}}
+  {{- end -}}
+{{- end -}}
