@@ -35854,6 +35854,20 @@ entries:
     version: 0.1.0
   registry-scanner:
   - apiVersion: v2
+    appVersion: 0.12.3
+    created: "2026-09-21T15:54:41.130054244Z"
+    description: Sysdig Registry Scanner
+    digest: b42c4fc9d2581d1d12fbd379704d8bda7f0d15ac4ecbce096db4f587596b6f4c
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    maintainers:
+    - name: sysdiglabs
+    name: registry-scanner
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/registry-scanner-1.11.4/registry-scanner-1.11.4.tgz
+    version: 1.11.4
+  - apiVersion: v2
     appVersion: 0.12.2
     created: "2026-09-04T10:27:51.475237583Z"
     description: Sysdig Registry Scanner
@@ -39125,6 +39139,27 @@ entries:
     - https://github.com/sysdiglabs/charts/releases/download/registry-scanner-0.0.1/registry-scanner-0.0.1.tgz
     version: 0.0.1
   shield:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2026-09-21T15:54:41.309952914Z"
+    description: A chart with various Sysdig components for Kubernetes
+    digest: 411d62e890edef6de553c3285b70930ae71d66725a4e222f90b1c66d3fe801af
+    maintainers:
+    - email: alberto.barba@sysdig.com
+      name: AlbertoBarba
+    - email: adam.roberts@sysdig.com
+      name: aroberts87
+    - email: francesco.furlan@sysdig.com
+      name: francesco-furlan
+    - email: gerlando.falauto@sysdig.com
+      name: iurly
+    - email: marcovito.moscaritolo@sysdig.com
+      name: mavimo
+    name: shield
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/shield-1.49.6/shield-1.49.6.tgz
+    version: 1.49.6
   - apiVersion: v2
     appVersion: 1.0.0
     created: "2026-08-27T15:20:04.323711717Z"
@@ -90260,4 +90295,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2026-09-10T09:34:55.562790826Z"
+generated: "2026-09-21T15:54:41.472657706Z"
