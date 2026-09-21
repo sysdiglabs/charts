@@ -2,7 +2,7 @@
 Common labels
 */}}
 {{- define "host.windows.labels" -}}
-  {{- $labels := merge (dict) .Values.host_windows.labels (include "host.windows.self_labels" . | fromYaml) (include "shield.labels" . | fromYaml) }}
+  {{- $labels := merge (dict) (include "host.windows.self_labels" . | fromYaml) .Values.host_windows.labels (include "shield.labels" . | fromYaml) }}
   {{- with $labels -}}
     {{- . | toYaml -}}
   {{- end -}}

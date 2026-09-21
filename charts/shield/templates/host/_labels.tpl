@@ -13,7 +13,7 @@ GKE Autopilot labels
 Common labels
 */}}
 {{- define "host.labels" -}}
-  {{- $labels := merge (dict) .Values.host.labels (include "host.gke_autopilot_labels" . | fromYaml) (include "host.self_labels" . | fromYaml) (include "shield.labels" . | fromYaml) }}
+  {{- $labels := merge (dict) (include "host.self_labels" . | fromYaml) (include "host.gke_autopilot_labels" . | fromYaml) .Values.host.labels (include "shield.labels" . | fromYaml) }}
   {{- with $labels -}}
     {{- . | toYaml -}}
   {{- end -}}
@@ -51,6 +51,13 @@ Selector labels
 {{- define "host.rbac_labels" -}}
   {{- $rbacLabels := merge (dict) .Values.host.rbac.labels (include "host.labels" . | fromYaml) }}
   {{- with $rbacLabels -}}
+    {{- . | toYaml -}}
+  {{- end -}}
+{{- end -}}
+
+{{- define "host.priorityclass_labels" -}}
+  {{- $priorityClassLabels := merge (dict) .Values.host.priority_class.labels (include "host.labels" . | fromYaml) }}
+  {{- with $priorityClassLabels -}}
     {{- . | toYaml -}}
   {{- end -}}
 {{- end -}}
