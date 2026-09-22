@@ -34,12 +34,14 @@ Create chart name and version as used by the chart label.
 Common labels
 */}}
 {{- define "shield.labels" -}}
-helm.sh/chart: {{ include "shield.chart" . }}
-{{ include "shield.selector_labels" . }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
+  {{- $labels := dict "helm.sh/chart" (include "shield.chart" .) -}}
+  {{- $_ := merge $labels (include "shield.selector_labels" . | fromYaml) -}}
+  {{- if .Chart.AppVersion -}}
+    {{- $_ := set $labels "app.kubernetes.io/version" .Chart.AppVersion -}}
+  {{- end -}}
+  {{- $_ := set $labels "app.kubernetes.io/managed-by" .Release.Service -}}
+  {{- $_ := merge $labels .Values.labels -}}
+  {{- $labels | toYaml -}}
 {{- end }}
 
 {{/*
@@ -64,6 +66,15 @@ Component labels
   {{ include "shield.component_version_label" .}}: {{ $version | regexFind "^[^@]+" | trunc 63 }}
 {{- end }}
 {{- end }}
+
+{{/*
+Common annotations
+*/}}
+{{- define "shield.annotations" -}}
+  {{- with .Values.annotations -}}
+    {{- . | toYaml -}}
+  {{- end -}}
+{{- end -}}
 
 {{- define "shield.component_name_label" -}}
 sysdig/component

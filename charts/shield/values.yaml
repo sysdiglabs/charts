@@ -243,6 +243,10 @@ host_windows:
       memory: 384Mi
   # The host aliases for the windows host shield workloads
   host_aliases: []
+  # Additional annotations for all host_windows resources (metadata.annotations)
+  annotations: {}
+  # Additional labels for all host_windows resources (metadata.labels)
+  labels: {}
   # The annotations for the host shield workloads (metadata.annotations)
   workload_annotations: {}
   # The labels for the host shield workloads (metadata.labels)
@@ -372,6 +376,10 @@ host:
         memory: 384Mi
   # The host aliases for the linux host shield workloads
   host_aliases: []
+  # Additional annotations for all host resources (metadata.annotations)
+  annotations: {}
+  # Additional labels for all host resources (metadata.labels)
+  labels: {}
   # The annotations for the host shield workloads (metadata.annotations)
   workload_annotations: {}
   # The labels for the host shield workloads (metadata.labels)
@@ -551,6 +559,10 @@ cluster:
       memory: 1536Mi
   # The host aliases for the cluster shield workloads
   host_aliases: []
+  # Additional annotations for all cluster resources (metadata.annotations)
+  annotations: {}
+  # Additional labels for all cluster resources (metadata.labels)
+  labels: {}
   # The annotations for the cluster shield workloads (metadata.annotations)
   workload_annotations: {}
   # The labels for the cluster shield workloads (metadata.labels)
@@ -660,6 +672,10 @@ proxy:
 # Additional .APIVersions in .Capabilities, e.g. "security.openshift.io/v1"
 extra_capabilities_api_versions: []
 
+# Additional annotations for all resources (metadata.annotations)
+annotations: {}
+# Additional labels for all resources (metadata.labels)
+labels: {}
 # Additional annotations for the all the workloads (metadata.annotations)
 workload_annotations: {}
 # Additional labels for the all the workloads (metadata.labels)
