@@ -223,3 +223,40 @@ tests:
             resources:
               - "leases"
             verbs: ["create"]
+
+  - it: Discoverer
+    set:
+      cluster:
+        additional_settings:
+          discoverer:
+            enabled: true
+    asserts:
+      - containsDocument:
+          kind: Role
+          apiVersion: rbac.authorization.k8s.io/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - contains:
+          path: rules
+          content:
+            apiGroups: ["coordination.k8s.io"]
+            resources:
+              - "leases"
+            resourceNames:
+              - "cluster-shield-discoverer-leader"
+            verbs:
+              - create
+              - delete
+              - deletecollection
+              - get
+              - list
+              - patch
+              - update
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups: ["coordination.k8s.io"]
+            resources:
+              - "leases"
+            verbs: ["create"]

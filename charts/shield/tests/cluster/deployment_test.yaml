@@ -1277,6 +1277,21 @@ tests:
           value: 2
     template: templates/cluster/deployment.yaml
 
+  - it: Replicas with only the discoverer enabled
+    set:
+      features:
+        kubernetes_metadata:
+          enabled: false
+      cluster:
+        additional_settings:
+          discoverer:
+            enabled: true
+    asserts:
+      - equal:
+          path: spec.replicas
+          value: 2
+    template: templates/cluster/deployment.yaml
+
 
   - it: Replicas with no feature enabled (custom value)
     set:

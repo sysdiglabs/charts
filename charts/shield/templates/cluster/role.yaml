@@ -71,4 +71,24 @@ rules:
       - update
       - watch
   {{- end }}
+{{- if (include "cluster.discoverer_enabled" .) }}
+  - apiGroups: ["coordination.k8s.io"]
+    resources:
+      - "leases"
+    resourceNames:
+      - {{ include "cluster.discoverer_lease_name" . }}
+    verbs:
+      - create
+      - delete
+      - deletecollection
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups: ["coordination.k8s.io"]
+    resources:
+      - "leases"
+    verbs: ["create"]
+{{- end }}
 {{- end }}
