@@ -230,6 +230,16 @@
 {{- end }}
 
 {{/*
+  Checks if the discoverer is enabled.
+  (only by additional settings)
+*/}}
+{{- define "cluster.discoverer_enabled" -}}
+  {{- if dig "discoverer" "enabled" false .Values.cluster.additional_settings -}}
+    {{- true -}}
+  {{- end -}}
+{{- end }}
+
+{{/*
   Checks if the cluster has the response actions feature enabled.
   (either by the feature config or additional settings)
 */}}

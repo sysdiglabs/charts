@@ -1050,3 +1050,22 @@ tests:
       - matchRegex:
           path: data['cluster-shield.yaml']
           pattern: \A\S
+
+  - it: Discoverer and control plane are passed through additional settings
+    set:
+      cluster:
+        additional_settings:
+          discoverer:
+            enabled: true
+          control_plane:
+            enabled: true
+            configuration_update: false
+    asserts:
+      - matchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: |
+            control_plane:
+              configuration_update: false
+              enabled: true
+            discoverer:
+              enabled: true

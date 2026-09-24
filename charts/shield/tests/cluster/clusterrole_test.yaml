@@ -1160,3 +1160,179 @@ tests:
               - apps.openshift.io
             resources:
               - deploymentconfigs
+
+  - it: Discoverer enabled with every other feature disabled
+    set:
+      features:
+        kubernetes_metadata:
+          enabled: false
+        admission_control:
+          posture:
+            enabled: false
+      cluster:
+        additional_settings:
+          discoverer:
+            enabled: true
+    asserts:
+      - containsDocument:
+          kind: ClusterRole
+          apiVersion: rbac.authorization.k8s.io/v1
+          name: release-name-shield-cluster
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - namespaces
+              - nodes
+              - persistentvolumeclaims
+              - persistentvolumes
+              - pods
+              - replicationcontrollers
+              - resourcequotas
+              - secrets
+              - serviceaccounts
+              - services
+            verbs:
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - apps
+            resources:
+              - daemonsets
+              - deployments
+              - replicasets
+              - statefulsets
+            verbs:
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - batch
+            resources:
+              - cronjobs
+              - jobs
+            verbs:
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - networking.k8s.io
+            resources:
+              - ingresses
+              - networkpolicies
+            verbs:
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - rbac.authorization.k8s.io
+            resources:
+              - clusterrolebindings
+              - clusterroles
+              - rolebindings
+              - roles
+            verbs:
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - storage.k8s.io
+            resources:
+              - storageclasses
+            verbs:
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - policy
+            resources:
+              - poddisruptionbudgets
+            verbs:
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - autoscaling
+            resources:
+              - horizontalpodautoscalers
+            verbs:
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - certificates.k8s.io
+            resources:
+              - certificatesigningrequests
+            verbs:
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - namespaces
+            resourceNames:
+              - kube-system
+            verbs:
+              - get
+      - lengthEqual:
+          path: rules
+          count: 10
+
+  - it: Discoverer can get a custom root namespace
+    set:
+      cluster_config:
+        root_namespace: custom-root
+      cluster:
+        additional_settings:
+          discoverer:
+            enabled: true
+    asserts:
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - namespaces
+            resourceNames:
+              - custom-root
+            verbs:
+              - get
+
+  - it: Discoverer not granted by default
+    asserts:
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - rbac.authorization.k8s.io
+            resources:
+              - clusterrolebindings
+              - clusterroles
+              - rolebindings
+              - roles
+            verbs:
+              - list
+              - watch
