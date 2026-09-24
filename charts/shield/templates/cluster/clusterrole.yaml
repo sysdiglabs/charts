@@ -557,5 +557,14 @@ rules:
   verbs:
     - list
     - watch
+# The discoverer cannot start without this: it reads the root namespace to identify the cluster
+- apiGroups:
+    - ""
+  resources:
+    - namespaces
+  resourceNames:
+    - {{ .Values.cluster_config.root_namespace }}
+  verbs:
+    - get
 {{- end }}
 {{- end }}

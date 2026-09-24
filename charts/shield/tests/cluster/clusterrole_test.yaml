@@ -1285,9 +1285,41 @@ tests:
             verbs:
               - list
               - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - namespaces
+            resourceNames:
+              - kube-system
+            verbs:
+              - get
       - lengthEqual:
           path: rules
-          count: 9
+          count: 10
+
+  - it: Discoverer can get a custom root namespace
+    set:
+      cluster_config:
+        root_namespace: custom-root
+      cluster:
+        additional_settings:
+          discoverer:
+            enabled: true
+    asserts:
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - namespaces
+            resourceNames:
+              - custom-root
+            verbs:
+              - get
 
   - it: Discoverer not granted by default
     asserts:
