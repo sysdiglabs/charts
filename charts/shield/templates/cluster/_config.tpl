@@ -219,41 +219,33 @@
 {{- define "cluster.posture_ocp_resources_min_version" -}}1.26.0-0{{- end }}
 
 {{/*
-  Checks if posture is enabled, the cluster image is new enough to read the
-  setting, and the given OCP resource is listed in the kspm_collector
-  ocp_resources setting.
-  Takes a list of two elements: the chart context and the resource name.
-  Usage: include "cluster.posture_ocp_resource_enabled" (list . "route")
+  Checks if posture is enabled and the cluster is OpenShift.
 */}}
-{{- define "cluster.posture_ocp_resource_enabled" -}}
-  {{- $ctx := index . 0 -}}
-  {{- $resource := index . 1 -}}
-  {{- $minVersion := include "cluster.posture_ocp_resources_min_version" $ctx -}}
-  {{- if and (include "common.semver.is_valid" $ctx.Values.cluster.image.tag) (semverCompare (printf ">= %s" $minVersion) $ctx.Values.cluster.image.tag) -}}
-    {{- $ocpResources := dig "kspm_collector" "ocp_resources" (list) $ctx.Values.cluster.additional_settings -}}
-    {{- if and (include "cluster.posture_enabled" $ctx) (has $resource ($ocpResources | default (list))) -}}
-      {{- true -}}
-    {{- end -}}
-  {{- end -}}
-{{- end }}
-
-{{/*
-  Checks if posture is enabled and OCP Route collection is enabled, either
-  through ocp_resources or through the deprecated ocp_route_enabled flag.
-*/}}
-{{- define "cluster.posture_ocp_routes_enabled" -}}
-  {{- if or (include "cluster.posture_ocp_resource_enabled" (list . "route")) (and (include "cluster.posture_enabled" .) (dig "kspm_collector" "ocp_route_enabled" false .Values.cluster.additional_settings)) -}}
+{{- define "cluster.posture_ocp_enabled" -}}
+  {{- if and (eq (include "cluster.posture_enabled" .) "true") (eq (include "common.is_openshift" .) "true") -}}
     {{- true -}}
   {{- end -}}
 {{- end }}
 
 {{/*
-  Checks if posture is enabled and OCP DeploymentConfig collection is enabled,
-  either through ocp_resources or through the deprecated
-  ocp_deploymentconfig_enabled flag.
+  Checks if posture is enabled, the cluster is OpenShift, and the cluster image
+  is new enough to read the ocp_resources setting. An older image ignores the
+  setting, so granting the permissions would give the collector access it
+  cannot use.
+
+  KNOWN RISK (SSPROD-70155, flag in PR description): the min-version constant
+  below (1.26.0-0) may already be stale. cluster-shield 1.26.0-rc1/rc2 pin
+  collector pseudo-version v1.39.23-0.20260914111959-f72cfbe9c657, which does
+  NOT yet include the MachineConfig/MachineConfigPool collector support merged
+  later in secure-iac PR #10083. Semver treats 1.26.0-0 as satisfied by any
+  1.26.0-rcN, so a cluster-shield 1.26.0 final cut before the MachineConfig
+  collector PR ships would get Phase-2 RBAC for 3 of 9 resources its binary
+  can't yet use. Kept as-is per explicit decision; whoever merges this should
+  confirm the real minimum version once the full collector set has a tag.
 */}}
-{{- define "cluster.posture_ocp_deploymentconfig_enabled" -}}
-  {{- if or (include "cluster.posture_ocp_resource_enabled" (list . "deploymentconfig")) (and (include "cluster.posture_enabled" .) (dig "kspm_collector" "ocp_deploymentconfig_enabled" false .Values.cluster.additional_settings)) -}}
+{{- define "cluster.posture_ocp_phase2_enabled" -}}
+  {{- $minVersion := include "cluster.posture_ocp_resources_min_version" . -}}
+  {{- if and (eq (include "cluster.posture_ocp_enabled" .) "true") (include "common.semver.is_valid" .Values.cluster.image.tag) (semverCompare (printf ">= %s" $minVersion) .Values.cluster.image.tag) -}}
     {{- true -}}
   {{- end -}}
 {{- end }}

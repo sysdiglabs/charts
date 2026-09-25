@@ -190,7 +190,7 @@ rules:
     - list
     - watch
 {{- end }}
-{{- if (include "cluster.posture_ocp_routes_enabled" .) }}
+{{- if (include "cluster.posture_ocp_enabled" .) }}
 - apiGroups:
     - route.openshift.io
   resources:
@@ -199,8 +199,6 @@ rules:
     - get
     - list
     - watch
-{{- end }}
-{{- if (include "cluster.posture_ocp_deploymentconfig_enabled" .) }}
 - apiGroups:
     - apps.openshift.io
   resources:
@@ -210,7 +208,7 @@ rules:
     - list
     - watch
 {{- end }}
-{{- if (include "cluster.posture_ocp_resource_enabled" (list . "securitycontextconstraints")) }}
+{{- if (include "cluster.posture_ocp_phase2_enabled" .) }}
 - apiGroups:
     - security.openshift.io
   resources:
@@ -219,8 +217,6 @@ rules:
     - get
     - list
     - watch
-{{- end }}
-{{- if (include "cluster.posture_ocp_resource_enabled" (list . "machineconfig")) }}
 - apiGroups:
     - machineconfiguration.openshift.io
   resources:
@@ -229,8 +225,6 @@ rules:
     - get
     - list
     - watch
-{{- end }}
-{{- if (include "cluster.posture_ocp_resource_enabled" (list . "machineconfigpool")) }}
 - apiGroups:
     - machineconfiguration.openshift.io
   resources:
@@ -239,8 +233,6 @@ rules:
     - get
     - list
     - watch
-{{- end }}
-{{- if (include "cluster.posture_ocp_resource_enabled" (list . "machineset")) }}
 - apiGroups:
     - machine.openshift.io
   resources:
@@ -249,8 +241,6 @@ rules:
     - get
     - list
     - watch
-{{- end }}
-{{- if (include "cluster.posture_ocp_resource_enabled" (list . "buildconfig")) }}
 - apiGroups:
     - build.openshift.io
   resources:
@@ -259,8 +249,6 @@ rules:
     - get
     - list
     - watch
-{{- end }}
-{{- if (include "cluster.posture_ocp_resource_enabled" (list . "imagestream")) }}
 - apiGroups:
     - image.openshift.io
   resources:
@@ -269,8 +257,6 @@ rules:
     - get
     - list
     - watch
-{{- end }}
-{{- if (include "cluster.posture_ocp_resource_enabled" (list . "template")) }}
 - apiGroups:
     - template.openshift.io
   resources:
@@ -279,8 +265,6 @@ rules:
     - get
     - list
     - watch
-{{- end }}
-{{- if (include "cluster.posture_ocp_resource_enabled" (list . "clusteroperator")) }}
 - apiGroups:
     - config.openshift.io
   resources:
@@ -289,8 +273,6 @@ rules:
     - get
     - list
     - watch
-{{- end }}
-{{- if (include "cluster.posture_ocp_resource_enabled" (list . "clusterresourcequota")) }}
 - apiGroups:
     - quota.openshift.io
   resources:
