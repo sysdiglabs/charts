@@ -24,7 +24,7 @@ jobs:
 
     steps:
       - name: "🛎️ Checkout"
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
 
@@ -39,7 +39,7 @@ jobs:
 
       - name: "🛠️ Setup Pluto"
         # Pluto in the docs suggest to use master but would be better to tag a release version
-        uses: FairwindsOps/pluto/github-action@v5.24.3
+        uses: FairwindsOps/pluto/github-action@ac2c42d55d5ff46a1af0f4b15faf3555119eea23 # v5.24.4
 
       - name: "🔍 Inspecting ${{ matrix.charts_name }} against k8s ${{ matrix.k8s_version }}"
         id: inspecting

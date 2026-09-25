@@ -164,6 +164,9 @@ features:
     activity_audit:
       enabled: false
     live_logs:
+      # Enable the live logs feature.
+      # Grants the host shield read access to container logs on the kubelet: the
+      # `nodes/log` subresource for host shield 14.8.0 and newer, `nodes/proxy` for older ones.
       enabled: false
     network_security:
       # Enable the network security feature
@@ -301,7 +304,7 @@ host:
     # The image name for the host shield
     shield_name: agent-slim
     # The tag for the host shield images
-    tag: 14.7.4
+    tag: 14.8.0
     # The pull policy for the host shield images
     pull_policy: IfNotPresent
     # The pull secrets for the host shield images
@@ -451,7 +454,7 @@ cluster:
     # The repository where the cluster shield image is stored
     repository: sysdig/cluster-shield
     # The tag for the cluster shield image
-    tag: 1.25.1
+    tag: 1.26.0
     # The pull policy for the cluster shield image
     pull_policy: IfNotPresent
     # The pull secrets for the cluster shield image
