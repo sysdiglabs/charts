@@ -977,16 +977,110 @@ tests:
               - watch
               - patch
 
-  - it: Posture OCP routes enabled
+  - it: Routes and deploymentconfigs enabled on OpenShift
+    capabilities:
+      apiVersions:
+        - security.openshift.io/v1
+    set:
+      features:
+        posture:
+          cluster_posture:
+            enabled: true
+    asserts:
+      - containsDocument:
+          kind: ClusterRole
+          apiVersion: rbac.authorization.k8s.io/v1
+          name: release-name-shield-cluster
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - route.openshift.io
+            resources:
+              - routes
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - apps.openshift.io
+            resources:
+              - deploymentconfigs
+            verbs:
+              - get
+              - list
+              - watch
+
+  - it: Routes and deploymentconfigs not granted when posture disabled
+    capabilities:
+      apiVersions:
+        - security.openshift.io/v1
+    set:
+      features:
+        posture:
+          cluster_posture:
+            enabled: false
+    asserts:
+      - containsDocument:
+          kind: ClusterRole
+          apiVersion: rbac.authorization.k8s.io/v1
+          name: release-name-shield-cluster
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - route.openshift.io
+            resources:
+              - routes
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - apps.openshift.io
+            resources:
+              - deploymentconfigs
+
+  - it: Routes and deploymentconfigs not granted when not OpenShift
+    set:
+      features:
+        posture:
+          cluster_posture:
+            enabled: true
+    asserts:
+      - containsDocument:
+          kind: ClusterRole
+          apiVersion: rbac.authorization.k8s.io/v1
+          name: release-name-shield-cluster
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - route.openshift.io
+            resources:
+              - routes
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - apps.openshift.io
+            resources:
+              - deploymentconfigs
+
+  - it: All Phase 2 OCP resources granted on OpenShift with a supported image tag
+    capabilities:
+      apiVersions:
+        - security.openshift.io/v1
     set:
       features:
         posture:
           cluster_posture:
             enabled: true
       cluster:
-        additional_settings:
-          kspm_collector:
-            ocp_route_enabled: true
+        image:
+          tag: 1.26.0
     asserts:
       - containsDocument:
           kind: ClusterRole
@@ -996,88 +1090,192 @@ tests:
           path: rules
           content:
             apiGroups:
-              - route.openshift.io
+              - security.openshift.io
             resources:
-              - routes
+              - securitycontextconstraints
             verbs:
               - get
               - list
               - watch
-      - notContains:
+      - contains:
           path: rules
           content:
             apiGroups:
-              - apps.openshift.io
+              - machineconfiguration.openshift.io
             resources:
-              - deploymentconfigs
-
-  - it: Posture OCP routes not granted when posture disabled
-    set:
-      features:
-        posture:
-          cluster_posture:
-            enabled: false
-      cluster:
-        additional_settings:
-          kspm_collector:
-            ocp_route_enabled: true
-    asserts:
-      - containsDocument:
-          kind: ClusterRole
-          apiVersion: rbac.authorization.k8s.io/v1
-          name: release-name-shield-cluster
-      - notContains:
+              - machineconfigs
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
           path: rules
           content:
             apiGroups:
-              - route.openshift.io
+              - machineconfiguration.openshift.io
             resources:
-              - routes
+              - machineconfigpools
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - machine.openshift.io
+            resources:
+              - machinesets
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - build.openshift.io
+            resources:
+              - buildconfigs
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - image.openshift.io
+            resources:
+              - imagestreams
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - template.openshift.io
+            resources:
+              - templates
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - config.openshift.io
+            resources:
+              - clusteroperators
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - quota.openshift.io
+            resources:
+              - clusterresourcequotas
+            verbs:
+              - get
+              - list
+              - watch
 
-  - it: Posture OCP deploymentconfigs enabled
+  - it: No Phase 2 OCP resource granted when not OpenShift
     set:
       features:
         posture:
           cluster_posture:
             enabled: true
       cluster:
-        additional_settings:
-          kspm_collector:
-            ocp_deploymentconfig_enabled: true
+        image:
+          tag: 1.26.0
     asserts:
       - containsDocument:
           kind: ClusterRole
           apiVersion: rbac.authorization.k8s.io/v1
           name: release-name-shield-cluster
-      - contains:
-          path: rules
-          content:
-            apiGroups:
-              - apps.openshift.io
-            resources:
-              - deploymentconfigs
-            verbs:
-              - get
-              - list
-              - watch
       - notContains:
           path: rules
           content:
             apiGroups:
-              - route.openshift.io
+              - security.openshift.io
             resources:
-              - routes
+              - securitycontextconstraints
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - machineconfiguration.openshift.io
+            resources:
+              - machineconfigs
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - machineconfiguration.openshift.io
+            resources:
+              - machineconfigpools
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - machine.openshift.io
+            resources:
+              - machinesets
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - build.openshift.io
+            resources:
+              - buildconfigs
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - image.openshift.io
+            resources:
+              - imagestreams
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - template.openshift.io
+            resources:
+              - templates
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - config.openshift.io
+            resources:
+              - clusteroperators
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - quota.openshift.io
+            resources:
+              - clusterresourcequotas
 
-  - it: Posture OCP deploymentconfigs not granted when posture disabled
+  - it: No Phase 2 OCP resource granted when posture disabled
+    capabilities:
+      apiVersions:
+        - security.openshift.io/v1
     set:
       features:
         posture:
           cluster_posture:
             enabled: false
       cluster:
-        additional_settings:
-          kspm_collector:
-            ocp_deploymentconfig_enabled: true
+        image:
+          tag: 1.26.0
     asserts:
       - containsDocument:
           kind: ClusterRole
@@ -1087,76 +1285,204 @@ tests:
           path: rules
           content:
             apiGroups:
-              - apps.openshift.io
+              - security.openshift.io
             resources:
-              - deploymentconfigs
+              - securitycontextconstraints
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - machineconfiguration.openshift.io
+            resources:
+              - machineconfigs
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - machineconfiguration.openshift.io
+            resources:
+              - machineconfigpools
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - machine.openshift.io
+            resources:
+              - machinesets
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - build.openshift.io
+            resources:
+              - buildconfigs
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - image.openshift.io
+            resources:
+              - imagestreams
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - template.openshift.io
+            resources:
+              - templates
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - config.openshift.io
+            resources:
+              - clusteroperators
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - quota.openshift.io
+            resources:
+              - clusterresourcequotas
 
-  - it: Posture OCP routes and deploymentconfigs both enabled
+  - it: No Phase 2 OCP resource granted on an older cluster image
+    capabilities:
+      apiVersions:
+        - security.openshift.io/v1
     set:
       features:
         posture:
           cluster_posture:
             enabled: true
       cluster:
-        additional_settings:
-          kspm_collector:
-            ocp_route_enabled: true
-            ocp_deploymentconfig_enabled: true
+        image:
+          tag: 1.25.1
     asserts:
       - containsDocument:
           kind: ClusterRole
           apiVersion: rbac.authorization.k8s.io/v1
           name: release-name-shield-cluster
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - security.openshift.io
+            resources:
+              - securitycontextconstraints
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - machineconfiguration.openshift.io
+            resources:
+              - machineconfigs
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - machineconfiguration.openshift.io
+            resources:
+              - machineconfigpools
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - machine.openshift.io
+            resources:
+              - machinesets
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - build.openshift.io
+            resources:
+              - buildconfigs
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - image.openshift.io
+            resources:
+              - imagestreams
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - template.openshift.io
+            resources:
+              - templates
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - config.openshift.io
+            resources:
+              - clusteroperators
+      - notContains:
+          path: rules
+          content:
+            apiGroups:
+              - quota.openshift.io
+            resources:
+              - clusterresourcequotas
+
+  - it: Phase 2 resources granted on a release-candidate image
+    capabilities:
+      apiVersions:
+        - security.openshift.io/v1
+    set:
+      features:
+        posture:
+          cluster_posture:
+            enabled: true
+      cluster:
+        image:
+          tag: 1.26.0-rc1
+    asserts:
       - contains:
           path: rules
           content:
             apiGroups:
-              - route.openshift.io
+              - security.openshift.io
             resources:
-              - routes
-            verbs:
-              - get
-              - list
-              - watch
-      - contains:
-          path: rules
-          content:
-            apiGroups:
-              - apps.openshift.io
-            resources:
-              - deploymentconfigs
+              - securitycontextconstraints
             verbs:
               - get
               - list
               - watch
 
-  - it: When posture is disabled OCP routes and deploymentconfigs both disabled
+  - it: Phase 1 routes and deploymentconfigs still granted on an older cluster image than 1.26.0-0
+    capabilities:
+      apiVersions:
+        - security.openshift.io/v1
     set:
       features:
         posture:
           cluster_posture:
-            enabled: false
+            enabled: true
       cluster:
-        additional_settings:
-          kspm_collector:
-            ocp_route_enabled: true
-            ocp_deploymentconfig_enabled: true
+        image:
+          tag: 1.25.1
     asserts:
-      - containsDocument:
-          kind: ClusterRole
-          apiVersion: rbac.authorization.k8s.io/v1
-          name: release-name-shield-cluster
-      - notContains:
+      - contains:
           path: rules
           content:
             apiGroups:
               - route.openshift.io
             resources:
               - routes
-      - notContains:
+            verbs:
+              - get
+              - list
+              - watch
+      - contains:
           path: rules
           content:
             apiGroups:
               - apps.openshift.io
             resources:
               - deploymentconfigs
+            verbs:
+              - get
+              - list
+              - watch
