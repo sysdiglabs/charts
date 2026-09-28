@@ -6,10 +6,7 @@
 {{- end -}}
 
 {{- define "host.windows.workload_annotations" -}}
-  {{- $workloadAnnotations := merge (dict) .Values.host_windows.workload_annotations .Values.workload_annotations (include "host_windows.annotations" . | fromYaml) -}}
-  {{- with $workloadAnnotations -}}
-    {{- . | toYaml -}}
-  {{- end -}}
+  {{- include "shield.override_metadata" (dict "base" (include "host_windows.annotations" .) "override" (list .Values.host_windows.workload_annotations .Values.workload_annotations)) -}}
 {{- end -}}
 
 {{- define "host.windows.pod_annotations" -}}
