@@ -26,7 +26,7 @@ spec:
                Autopilot block this Pod on the very allowlist it is waiting to
                load. */}}
         {{- include "shield.labels" . | nindent 8 }}
-      {{- $podAnnotations := merge (dict) (include "host.annotations" . | fromYaml) .Values.pod_annotations }}
+      {{- $podAnnotations := merge (dict) .Values.host.pod_annotations .Values.pod_annotations ($shieldAnnotations | fromYaml) }}
       {{- if $podAnnotations }}
       annotations:
         {{- toYaml $podAnnotations | nindent 8 }}
