@@ -54,3 +54,10 @@ Selector labels
     {{- . | toYaml -}}
   {{- end -}}
 {{- end -}}
+
+{{- define "host.priorityclass_labels" -}}
+  {{- $priorityClassLabels := merge (dict) .Values.host.priority_class.labels (include "host.labels" . | fromYaml) }}
+  {{- with $priorityClassLabels -}}
+    {{- . | toYaml -}}
+  {{- end -}}
+{{- end -}}
