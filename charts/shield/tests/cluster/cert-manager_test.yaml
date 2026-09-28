@@ -437,3 +437,41 @@ tests:
           value: "true"
         documentIndex: 1
         template: templates/cluster/cert-manager-self-generate.yaml
+
+  - it: Global annotations reach cert-manager Certificate and Issuer resources
+    set:
+      annotations:
+        global-key: global-value
+      features:
+        detections:
+          kubernetes_audit:
+            enabled: true
+      cluster:
+        tls_certificates:
+          create: true
+          cert_manager:
+            enabled: true
+            ca:
+              create: true
+            issuer:
+              create: true
+    asserts:
+      - equal:
+          path: metadata.annotations["global-key"]
+          value: global-value
+        documentIndex: 0
+        template: templates/cluster/cert-manager-self-generate.yaml
+      - equal:
+          path: metadata.annotations["global-key"]
+          value: global-value
+        documentIndex: 1
+        template: templates/cluster/cert-manager-self-generate.yaml
+      - equal:
+          path: metadata.annotations["global-key"]
+          value: global-value
+        documentIndex: 2
+        template: templates/cluster/cert-manager-self-generate.yaml
+      - equal:
+          path: metadata.annotations["global-key"]
+          value: global-value
+        template: templates/cluster/cert-manager-certificate.yaml
