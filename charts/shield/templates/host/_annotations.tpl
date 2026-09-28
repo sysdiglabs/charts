@@ -6,10 +6,7 @@
 {{- end -}}
 
 {{- define "host.workload_annotations" -}}
-  {{- $workloadAnnotations := merge (dict) .Values.host.workload_annotations .Values.workload_annotations (include "host.annotations" . | fromYaml) -}}
-  {{- with $workloadAnnotations -}}
-    {{- . | toYaml -}}
-  {{- end -}}
+  {{- include "shield.override_metadata" (dict "base" (include "host.annotations" .) "override" (list .Values.host.workload_annotations .Values.workload_annotations)) -}}
 {{- end -}}
 
 {{- define "host.pod_annotations" -}}
@@ -24,15 +21,9 @@
 {{- end -}}
 
 {{- define "host.rbac_annotations" -}}
-  {{- $rbacAnnotations := merge (dict) .Values.host.rbac.annotations (include "host.annotations" . | fromYaml) -}}
-  {{- with $rbacAnnotations -}}
-    {{- . | toYaml -}}
-  {{- end -}}
+  {{- include "shield.override_metadata" (dict "base" (include "host.annotations" .) "override" .Values.host.rbac.annotations) -}}
 {{- end -}}
 
 {{- define "host.priorityclass_annotations" -}}
-  {{- $priorityClassAnnotations := merge (dict) .Values.host.priority_class.annotations (include "host.annotations" . | fromYaml) -}}
-  {{- with $priorityClassAnnotations -}}
-    {{- . | toYaml -}}
-  {{- end -}}
+  {{- include "shield.override_metadata" (dict "base" (include "host.annotations" .) "override" .Values.host.priority_class.annotations) -}}
 {{- end -}}

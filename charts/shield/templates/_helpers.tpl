@@ -76,6 +76,28 @@ Common annotations
   {{- end -}}
 {{- end -}}
 
+{{/*
+Merge one or more resource-specific override dicts on top of a rendered
+component base (annotations or labels). First override wins on key
+collision; overrides are applied in list order (first = highest priority),
+base fills only keys left unset by every override.
+Args: dict "base" <YAML string from a *.annotations/*.labels include> "override" <dict, or list of dicts>
+*/}}
+{{- define "shield.override_metadata" -}}
+  {{- $overrides := .override -}}
+  {{- if not (kindIs "slice" $overrides) -}}
+    {{- $overrides = list $overrides -}}
+  {{- end -}}
+  {{- $merged := dict -}}
+  {{- range $overrides -}}
+    {{- $merged = merge $merged . -}}
+  {{- end -}}
+  {{- $merged = merge $merged (.base | fromYaml) -}}
+  {{- with $merged -}}
+    {{- . | toYaml -}}
+  {{- end -}}
+{{- end -}}
+
 {{- define "shield.component_name_label" -}}
 sysdig/component
 {{- end }}

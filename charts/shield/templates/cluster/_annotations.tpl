@@ -6,36 +6,21 @@
 {{- end -}}
 
 {{- define "cluster.workload_annotations" -}}
-  {{- $workloadAnnotations := merge (dict) .Values.cluster.workload_annotations .Values.workload_annotations (include "cluster.annotations" . | fromYaml) -}}
-  {{- with $workloadAnnotations -}}
-    {{- . | toYaml -}}
-  {{- end -}}
+  {{- include "shield.override_metadata" (dict "base" (include "cluster.annotations" .) "override" (list .Values.cluster.workload_annotations .Values.workload_annotations)) -}}
 {{- end -}}
 
 {{- define "cluster.pod_annotations" -}}
-  {{- $podAnnotations := merge (dict) .Values.cluster.pod_annotations .Values.pod_annotations (include "cluster.annotations" . | fromYaml) -}}
-  {{- with $podAnnotations -}}
-    {{- . | toYaml -}}
-  {{- end -}}
+  {{- include "shield.override_metadata" (dict "base" (include "cluster.annotations" .) "override" (list .Values.cluster.pod_annotations .Values.pod_annotations)) -}}
 {{- end -}}
 
 {{- define "cluster.rbac_annotations" -}}
-  {{- $rbacAnnotations := merge (dict) .Values.cluster.rbac.annotations (include "cluster.annotations" . | fromYaml) -}}
-  {{- with $rbacAnnotations -}}
-    {{- . | toYaml -}}
-  {{- end -}}
+  {{- include "shield.override_metadata" (dict "base" (include "cluster.annotations" .) "override" .Values.cluster.rbac.annotations) -}}
 {{- end -}}
 
 {{- define "cluster.service_annotations" -}}
-  {{- $serviceAnnotations := merge (dict) .Values.cluster.service.annotations (include "cluster.annotations" . | fromYaml) -}}
-  {{- with $serviceAnnotations -}}
-    {{- . | toYaml -}}
-  {{- end -}}
+  {{- include "shield.override_metadata" (dict "base" (include "cluster.annotations" .) "override" .Values.cluster.service.annotations) -}}
 {{- end -}}
 
 {{- define "cluster.priorityclass_annotations" -}}
-  {{- $priorityClassAnnotations := merge (dict) .Values.cluster.priority_class.annotations (include "cluster.annotations" . | fromYaml) -}}
-  {{- with $priorityClassAnnotations -}}
-    {{- . | toYaml -}}
-  {{- end -}}
+  {{- include "shield.override_metadata" (dict "base" (include "cluster.annotations" .) "override" .Values.cluster.priority_class.annotations) -}}
 {{- end -}}
