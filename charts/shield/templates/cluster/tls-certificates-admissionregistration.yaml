@@ -51,9 +51,9 @@ metadata:
   {{- $annotations := (include "cluster.annotations" . | fromYaml) }}
   {{- if (include "cluster.tls_certificates.use_cert_manager" .) }}
     {{- if (include "cluster.tls_certificates.cm_use_ca_secret" .) }}
-    {{- $annotations = merge $annotations (dict "cert-manager.io/inject-ca-from-secret" (printf "%s/%s" (include "cluster.tls_certificates.cm_issuer_namespace" .) (include "cluster.tls_certificates.cm_ca_secret_name" .))) }}
+    {{- $annotations = merge (dict "cert-manager.io/inject-ca-from-secret" (printf "%s/%s" (include "cluster.tls_certificates.cm_issuer_namespace" .) (include "cluster.tls_certificates.cm_ca_secret_name" .))) $annotations }}
     {{- else }}
-    {{- $annotations = merge $annotations (dict "cert-manager.io/inject-ca-from" (printf "%s/%s" .Release.Namespace (include "cluster.tls_certificates.cm_certificate_name" .))) }}
+    {{- $annotations = merge (dict "cert-manager.io/inject-ca-from" (printf "%s/%s" .Release.Namespace (include "cluster.tls_certificates.cm_certificate_name" .))) $annotations }}
     {{- end }}
   {{- end }}
   {{- with $annotations }}
@@ -102,9 +102,9 @@ metadata:
   {{- $annotations := (include "cluster.annotations" . | fromYaml) }}
   {{- if (include "cluster.tls_certificates.use_cert_manager" .) }}
     {{- if (include "cluster.tls_certificates.cm_use_ca_secret" .) }}
-    {{- $annotations = merge $annotations (dict "cert-manager.io/inject-ca-from-secret" (printf "%s/%s" (include "cluster.tls_certificates.cm_issuer_namespace" .) (include "cluster.tls_certificates.cm_ca_secret_name" .))) }}
+    {{- $annotations = merge (dict "cert-manager.io/inject-ca-from-secret" (printf "%s/%s" (include "cluster.tls_certificates.cm_issuer_namespace" .) (include "cluster.tls_certificates.cm_ca_secret_name" .))) $annotations }}
     {{- else }}
-    {{- $annotations = merge $annotations (dict "cert-manager.io/inject-ca-from" (printf "%s/%s" .Release.Namespace (include "cluster.tls_certificates.cm_certificate_name" .))) }}
+    {{- $annotations = merge (dict "cert-manager.io/inject-ca-from" (printf "%s/%s" .Release.Namespace (include "cluster.tls_certificates.cm_certificate_name" .))) $annotations }}
     {{- end }}
   {{- end }}
   {{- with $annotations }}
