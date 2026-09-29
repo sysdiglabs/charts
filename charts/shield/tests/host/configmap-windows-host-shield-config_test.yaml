@@ -556,3 +556,18 @@ tests:
             tags:
               environment: test
               team: devops
+
+  - it: host_windows.labels applied to Windows ConfigMap, host.labels not
+    set:
+      host:
+        labels:
+          linux-key: linux-value
+      host_windows:
+        labels:
+          windows-key: windows-value
+    asserts:
+      - equal:
+          path: metadata.labels["windows-key"]
+          value: windows-value
+      - notExists:
+          path: metadata.labels["linux-key"]
