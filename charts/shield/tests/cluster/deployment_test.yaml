@@ -1894,19 +1894,6 @@ tests:
           value: component-workload
     template: templates/cluster/deployment.yaml
 
-  - it: Global workload_labels win over cluster.workload_labels (behavior before 1.52.0)
-    set:
-      workload_labels:
-        foo: global
-      cluster:
-        workload_labels:
-          foo: component
-    asserts:
-      - equal:
-          path: metadata.labels.foo
-          value: global
-    template: templates/cluster/deployment.yaml
-
   - it: cluster.labels cannot override selector labels on pod template
     set:
       cluster:

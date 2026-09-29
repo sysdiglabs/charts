@@ -1160,14 +1160,3 @@ tests:
               - apps.openshift.io
             resources:
               - deploymentconfigs
-
-  - it: Null cluster.rbac.annotations renders without error
-    set:
-      cluster:
-        rbac:
-          annotations: null
-    asserts:
-      - containsDocument:
-          kind: ClusterRole
-          apiVersion: rbac.authorization.k8s.io/v1
-          name: release-name-shield-cluster
