@@ -1,6 +1,8 @@
 suite: Host - DaemonSet
 templates:
   - templates/host/daemonset.yaml
+chart:
+  version: 1.2.3-helmtest
 release:
   name: release-name
   namespace: shield-namespace
@@ -341,12 +343,23 @@ tests:
       - isSubset:
           path: metadata.labels
           content:
+            helm.sh/chart: shield-1.2.3-helmtest
             app.kubernetes.io/instance: release-name
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: shield
             app.kubernetes.io/version: 1.0.0
             sysdig/component: host
             sysdig/component-version: 11.11.11
+
+  - it: No global annotations do not add workload annotations
+    asserts:
+      - containsDocument:
+          kind: DaemonSet
+          apiVersion: apps/v1
+          name: release-name-shield-host
+          namespace: shield-namespace
+      - isNullOrEmpty:
+          path: metadata.annotations
 
   - it: Default pod labels
     set:
@@ -1057,3 +1070,305 @@ tests:
             mountPath: /opt/draios/etc/local_forwarder_config.yaml
             subPath: local_forwarder_config.yaml
         template: host/daemonset.yaml
+
+  - it: Global labels applied to DaemonSet workload metadata
+    set:
+      labels:
+        global-label-key: global-label-value
+    asserts:
+      - equal:
+          path: metadata.labels["global-label-key"]
+          value: global-label-value
+
+  - it: Global labels applied to DaemonSet pod metadata
+    set:
+      labels:
+        global-label-key: global-label-value
+    asserts:
+      - equal:
+          path: spec.template.metadata.labels["global-label-key"]
+          value: global-label-value
+
+  - it: Global labels merged with component workload and pod labels
+    set:
+      labels:
+        global-key: global-value
+      workload_labels:
+        global-workload-key: global-workload-value
+      pod_labels:
+        global-pod-key: global-pod-value
+      host:
+        workload_labels:
+          component-workload-key: component-workload-value
+        pod_labels:
+          component-pod-key: component-pod-value
+    asserts:
+      - equal:
+          path: metadata.labels["global-key"]
+          value: global-value
+      - equal:
+          path: metadata.labels["global-workload-key"]
+          value: global-workload-value
+      - equal:
+          path: metadata.labels["component-workload-key"]
+          value: component-workload-value
+      - equal:
+          path: spec.template.metadata.labels["global-key"]
+          value: global-value
+      - equal:
+          path: spec.template.metadata.labels["global-pod-key"]
+          value: global-pod-value
+      - equal:
+          path: spec.template.metadata.labels["component-pod-key"]
+          value: component-pod-value
+
+  - it: Global annotations applied to DaemonSet workload metadata
+    set:
+      annotations:
+        global-annotation-key: global-annotation-value
+    asserts:
+      - equal:
+          path: metadata.annotations["global-annotation-key"]
+          value: global-annotation-value
+
+  - it: Global annotations applied to DaemonSet pod metadata
+    set:
+      annotations:
+        global-annotation-key: global-annotation-value
+    asserts:
+      - equal:
+          path: spec.template.metadata.annotations["global-annotation-key"]
+          value: global-annotation-value
+
+  - it: Global annotations merged with component workload and pod annotations
+    set:
+      annotations:
+        global-key: global-value
+      workload_annotations:
+        global-workload-key: global-workload-value
+      pod_annotations:
+        global-pod-key: global-pod-value
+      host:
+        workload_annotations:
+          component-workload-key: component-workload-value
+        pod_annotations:
+          component-pod-key: component-pod-value
+    asserts:
+      - equal:
+          path: metadata.annotations["global-key"]
+          value: global-value
+      - equal:
+          path: metadata.annotations["global-workload-key"]
+          value: global-workload-value
+      - equal:
+          path: metadata.annotations["component-workload-key"]
+          value: component-workload-value
+      - equal:
+          path: spec.template.metadata.annotations["global-key"]
+          value: global-value
+      - equal:
+          path: spec.template.metadata.annotations["global-pod-key"]
+          value: global-pod-value
+      - equal:
+          path: spec.template.metadata.annotations["component-pod-key"]
+          value: component-pod-value
+
+  - it: host.annotations applied to DaemonSet workload metadata
+    set:
+      host:
+        annotations:
+          host-annotation-key: host-annotation-value
+    asserts:
+      - equal:
+          path: metadata.annotations["host-annotation-key"]
+          value: host-annotation-value
+
+  - it: host.annotations applied to DaemonSet pod metadata
+    set:
+      host:
+        annotations:
+          host-annotation-key: host-annotation-value
+    asserts:
+      - equal:
+          path: spec.template.metadata.annotations["host-annotation-key"]
+          value: host-annotation-value
+
+  - it: host.annotations merged with global annotations and workload annotations
+    set:
+      annotations:
+        global-key: global-value
+      host:
+        annotations:
+          host-key: host-value
+        workload_annotations:
+          workload-key: workload-value
+    asserts:
+      - equal:
+          path: metadata.annotations["global-key"]
+          value: global-value
+      - equal:
+          path: metadata.annotations["host-key"]
+          value: host-value
+      - equal:
+          path: metadata.annotations["workload-key"]
+          value: workload-value
+
+  - it: host.labels applied to DaemonSet workload metadata
+    set:
+      host:
+        labels:
+          host-label-key: host-label-value
+    asserts:
+      - equal:
+          path: metadata.labels["host-label-key"]
+          value: host-label-value
+
+  - it: host.labels applied to DaemonSet pod metadata
+    set:
+      host:
+        labels:
+          host-label-key: host-label-value
+    asserts:
+      - equal:
+          path: spec.template.metadata.labels["host-label-key"]
+          value: host-label-value
+
+  - it: host.labels merged with global and workload labels
+    set:
+      labels:
+        global-key: global-value
+      host:
+        labels:
+          host-key: host-value
+        workload_labels:
+          workload-key: workload-value
+    asserts:
+      - equal:
+          path: metadata.labels["global-key"]
+          value: global-value
+      - equal:
+          path: metadata.labels["host-key"]
+          value: host-value
+      - equal:
+          path: metadata.labels["workload-key"]
+          value: workload-value
+
+  - it: host.annotations overrides global annotations on DaemonSet workload
+    set:
+      annotations:
+        env: global
+      host:
+        annotations:
+          env: host
+    asserts:
+      - equal:
+          path: metadata.annotations["env"]
+          value: host
+
+  - it: host.annotations overrides global annotations on DaemonSet pod
+    set:
+      annotations:
+        env: global
+      host:
+        annotations:
+          env: host
+    asserts:
+      - equal:
+          path: spec.template.metadata.annotations["env"]
+          value: host
+
+  - it: host.workload_annotations overrides host.annotations on DaemonSet workload
+    set:
+      host:
+        annotations:
+          env: component
+        workload_annotations:
+          env: workload
+    asserts:
+      - equal:
+          path: metadata.annotations["env"]
+          value: workload
+
+  - it: host.pod_annotations overrides host.annotations on DaemonSet pod
+    set:
+      host:
+        annotations:
+          env: component
+        pod_annotations:
+          env: pod
+    asserts:
+      - equal:
+          path: spec.template.metadata.annotations["env"]
+          value: pod
+
+  - it: host.workload_annotations overrides global workload_annotations on DaemonSet
+    set:
+      workload_annotations:
+        env: global-workload
+      host:
+        workload_annotations:
+          env: component-workload
+    asserts:
+      - equal:
+          path: metadata.annotations["env"]
+          value: component-workload
+
+  - it: host.labels overrides global labels on DaemonSet workload
+    set:
+      labels:
+        env: global
+      host:
+        labels:
+          env: host
+    asserts:
+      - equal:
+          path: metadata.labels["env"]
+          value: host
+
+  - it: host.labels overrides global labels on DaemonSet pod
+    set:
+      labels:
+        env: global
+      host:
+        labels:
+          env: host
+    asserts:
+      - equal:
+          path: spec.template.metadata.labels["env"]
+          value: host
+
+  - it: host.workload_labels overrides host.labels on DaemonSet workload
+    set:
+      host:
+        labels:
+          env: component
+        workload_labels:
+          env: workload
+    asserts:
+      - equal:
+          path: metadata.labels["env"]
+          value: workload
+
+  - it: host.pod_labels overrides host.labels on DaemonSet pod
+    set:
+      host:
+        labels:
+          env: component
+        pod_labels:
+          env: pod
+    asserts:
+      - equal:
+          path: spec.template.metadata.labels["env"]
+          value: pod
+
+  - it: host.workload_labels overrides global workload_labels on DaemonSet
+    set:
+      workload_labels:
+        env: global-workload
+      host:
+        workload_labels:
+          env: component-workload
+    asserts:
+      - equal:
+          path: metadata.labels["env"]
+          value: component-workload

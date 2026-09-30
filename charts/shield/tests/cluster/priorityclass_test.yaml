@@ -1,6 +1,6 @@
-suite: Host - PriorityClass
+suite: Cluster - PriorityClass
 templates:
-  - templates/host/priorityclass.yaml
+  - templates/cluster/priorityclass.yaml
 release:
   name: release-name
   namespace: shield-namespace
@@ -9,7 +9,7 @@ values:
 tests:
   - it: Create the the PriorityClass when requested
     set:
-      host:
+      cluster:
         priority_class:
           create: true
           name: my-fancy-priority-class
@@ -27,7 +27,7 @@ tests:
 
   - it: Ensure the PriorityClass is not created when not requested
     set:
-      host:
+      cluster:
         priority_class:
           create: false
     asserts:
@@ -39,13 +39,13 @@ tests:
       - hasDocuments:
         count: 0
 
-  - it: host.priority_class.labels and annotations override global on the same key
+  - it: cluster.priority_class.labels and annotations override global on the same key
     set:
       labels:
         env: global
       annotations:
         env: global
-      host:
+      cluster:
         priority_class:
           create: true
           labels:

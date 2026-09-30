@@ -4,13 +4,11 @@ metadata:
   name: {{ include "cluster.service_name" . }}
   namespace: {{ .Release.Namespace }}
   labels:
-    {{- include "cluster.labels" . | nindent 4 }}
-    {{- if and .Values.cluster.service .Values.cluster.service.labels }}
-      {{- toYaml .Values.cluster.service.labels | nindent 4 }}
-    {{- end }}
-  {{- if and .Values.cluster.service .Values.cluster.service.annotations }}
+    {{- include "cluster.service_labels" . | nindent 4 }}
+  {{- $serviceAnnotations := (include "cluster.service_annotations" .) }}
+  {{- if $serviceAnnotations }}
   annotations:
-    {{- toYaml .Values.cluster.service.annotations | nindent 4 }}
+    {{- $serviceAnnotations | nindent 4 }}
   {{- end }}
 spec:
   {{- if and .Values.cluster.service .Values.cluster.service.type }}
