@@ -19,6 +19,27 @@ tests:
           kind: RoleBinding
         template: templates/rolebinding.yaml
 
+  - it: Role can delete leases, so the agent can set owner references on existing ones
+    set:
+      rbac:
+        create: true
+    asserts:
+      - equal:
+          path: rules
+          value:
+            - apiGroups:
+                - coordination.k8s.io
+              resources:
+                - leases
+              verbs:
+                - create
+                - get
+                - list
+                - update
+                - watch
+                - delete
+    template: templates/role.yaml
+
   - it: RoleBinding linked with Role and ServiceAccount
     set:
       rbac:
