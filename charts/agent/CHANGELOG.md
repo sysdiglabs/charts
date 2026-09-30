@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v2.11.1
+### Bug Fixes
+* **agent,sysdig-deploy** [3946567d](https://github.com/sysdiglabs/charts/commit/3946567d1370adaa77750b2d7791420ef29ef49d): allow the agent to delete leases ([#2758](https://github.com/sysdiglabs/charts/issues/2758))
 # v2.11.0
 ### New Features
 * **agent,shield,sysdig-deploy** [02f20278](https://github.com/sysdiglabs/charts/commit/02f20278d70da6e4f8e946dbb93a6aa2864dc440): grant nodes/log for Live Logs on host shield 14.8.0+ ([#2742](https://github.com/sysdiglabs/charts/issues/2742))
