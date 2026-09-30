@@ -1372,3 +1372,29 @@ tests:
       - equal:
           path: metadata.labels["env"]
           value: component-workload
+
+  - it: host.labels cannot override the built-in sysdig/component label
+    set:
+      host:
+        labels:
+          sysdig/component: override
+    asserts:
+      - equal:
+          path: metadata.labels["sysdig/component"]
+          value: host
+
+  - it: host.labels cannot override the GKE Autopilot labels
+    values:
+      - ../values/gke-autopilot.yaml
+    set:
+      gke_autopilot_allowlist: sysdig-agent-v2.0.0
+      host:
+        labels:
+          autopilot.gke.io/no-connect: "false"
+          cloud.google.com/matching-allowlist: override
+    asserts:
+      - isSubset:
+          path: metadata.labels
+          content:
+            autopilot.gke.io/no-connect: "true"
+            cloud.google.com/matching-allowlist: sysdig-agent-v2.0.0
