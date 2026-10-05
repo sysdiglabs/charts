@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.120.2
+### Chores
+* **sysdig-deploy** [4b664535](https://github.com/sysdiglabs/charts/commit/4b664535caa9217abc6dbab654cb4ec8ceeeaea5): Automatic version bump due to updated dependencies ([#2762](https://github.com/sysdiglabs/charts/issues/2762))
 # v1.120.1
 ### Bug Fixes
 * **agent,sysdig-deploy** [3946567d](https://github.com/sysdiglabs/charts/commit/3946567d1370adaa77750b2d7791420ef29ef49d): allow the agent to delete leases ([#2758](https://github.com/sysdiglabs/charts/issues/2758))
