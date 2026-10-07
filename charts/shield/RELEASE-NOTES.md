@@ -1,5 +1,5 @@
 # What's Changed
 
 ### New Features
-- **shield** [ea02d2da](https://github.com/sysdiglabs/charts/commit/ea02d2da1dc6b0d50886e84f203451a7bf4c4f0b): Add generic labels and annotations  ([#2756](https://github.com/sysdiglabs/charts/issues/2756))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.52.0...shield-1.53.0
+- **agent,shield** [9b1d6bda](https://github.com/sysdiglabs/charts/commit/9b1d6bda03e797841e4a3ae7632b422923c13d1e): release agent 14.8.1 ([#2764](https://github.com/sysdiglabs/charts/issues/2764))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.53.0...shield-1.53.1
