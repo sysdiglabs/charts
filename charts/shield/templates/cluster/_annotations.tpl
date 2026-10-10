@@ -10,7 +10,13 @@
 {{- end -}}
 
 {{- define "cluster.pod_annotations" -}}
-  {{- include "shield.override_metadata" (dict "base" (include "cluster.annotations" .) "override" (list .Values.cluster.pod_annotations .Values.pod_annotations)) -}}
+  {{- $podAnnotations := include "shield.override_metadata" (dict "base" (include "cluster.annotations" .) "override" (list .Values.cluster.pod_annotations .Values.pod_annotations)) | fromYaml -}}
+  {{- if and (include "common.is_openshift" .) (not (hasKey $podAnnotations "openshift.io/required-scc")) -}}
+    {{- $_ := set $podAnnotations "openshift.io/required-scc" (include "cluster.fullname" .) -}}
+  {{- end -}}
+  {{- with $podAnnotations -}}
+    {{- . | toYaml -}}
+  {{- end -}}
 {{- end -}}
 
 {{- define "cluster.rbac_annotations" -}}
