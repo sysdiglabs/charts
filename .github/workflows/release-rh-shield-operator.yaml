@@ -190,7 +190,7 @@ jobs:
           IMAGE_TAG_BASE: ${{ needs.validate-prerequisites.outputs.image_tag_base }}
 
       - name: Set Labels and Annotations required for Certification on the Bundle
-        uses: mikefarah/yq@c14f446382944492701b16c1ddb48bb9dbe683e3 # v4.53.6
+        uses: mikefarah/yq@504fc38780cc46be8444ea1b72fb55919fc0bfb0 # v4.54.1
         with:
           cmd: |
             yq e -i '.metadata.name |= sub("rh-shield-operator", "sysdig-shield-operator")' rh-shield-operator/bundle/manifests/rh-shield-operator.clusterserviceversion.yaml
