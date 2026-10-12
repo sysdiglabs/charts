@@ -1,5 +1,5 @@
 # What's Changed
 
 ### New Features
-- **shield** [66d92cff](https://github.com/sysdiglabs/charts/commit/66d92cffb17b14cc8b529afb5dbcf5b6802caee8): release cluster-shield 1.26.1 ([#2766](https://github.com/sysdiglabs/charts/issues/2766))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.53.1...shield-1.53.2
+- **shield** [5daf51fb](https://github.com/sysdiglabs/charts/commit/5daf51fb41416b1319f9113a8b5e69225b35978c): allow projected volumes in OpenShift SCC and set required-scc annotation ([#2767](https://github.com/sysdiglabs/charts/issues/2767))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.53.2...shield-1.54.0

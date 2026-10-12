@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.54.0
+### New Features
+* **shield** [5daf51fb](https://github.com/sysdiglabs/charts/commit/5daf51fb41416b1319f9113a8b5e69225b35978c): allow projected volumes in OpenShift SCC and set required-scc annotation ([#2767](https://github.com/sysdiglabs/charts/issues/2767))
 # v1.53.2
 ### New Features
 * **shield** [66d92cff](https://github.com/sysdiglabs/charts/commit/66d92cffb17b14cc8b529afb5dbcf5b6802caee8): release cluster-shield 1.26.1 ([#2766](https://github.com/sysdiglabs/charts/issues/2766))
