@@ -47,5 +47,6 @@ volumes:
 - downwardAPI
 - emptyDir
 - hostPath
+- projected
 - secret
 {{- end }}

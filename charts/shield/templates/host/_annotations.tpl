@@ -14,6 +14,9 @@
   {{- if (include "common.cluster_type.is_gke_autopilot" . ) -}}
     {{- $_ := set $podAnnotations "autopilot.gke.io/no-connect" "true" -}}
   {{- end -}}
+  {{- if and (include "common.is_openshift" .) (not (hasKey $podAnnotations "openshift.io/required-scc")) -}}
+    {{- $_ := set $podAnnotations "openshift.io/required-scc" (include "host.fullname" .) -}}
+  {{- end -}}
   {{- if not .Values.host.privileged -}}
     {{- $_ := set $podAnnotations "container.apparmor.security.beta.kubernetes.io/sysdig-host-shield" "unconfined" -}}
   {{- end -}}

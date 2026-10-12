@@ -1,0 +1,49 @@
+suite: Cluster - OpenShift required-scc pod annotation
+templates:
+  - templates/cluster/deployment.yaml
+  - templates/cluster/tls-certificates-admissionregistration.yaml
+release:
+  name: release-name
+  namespace: shield-namespace
+values:
+  - ../values/base.yaml
+tests:
+  - it: Doesn't set openshift.io/required-scc outside OpenShift
+    template: templates/cluster/deployment.yaml
+    asserts:
+      - notExists:
+          path: spec.template.metadata.annotations["openshift.io/required-scc"]
+
+  - it: Sets openshift.io/required-scc to the SCC name on OpenShift
+    capabilities:
+      apiVersions:
+        - security.openshift.io/v1
+    template: templates/cluster/deployment.yaml
+    asserts:
+      - equal:
+          path: spec.template.metadata.annotations["openshift.io/required-scc"]
+          value: release-name-shield-cluster
+
+  - it: Sets openshift.io/required-scc when extra_capabilities_api_versions declares OpenShift
+    set:
+      extra_capabilities_api_versions:
+        - security.openshift.io/v1
+    template: templates/cluster/deployment.yaml
+    asserts:
+      - equal:
+          path: spec.template.metadata.annotations["openshift.io/required-scc"]
+          value: release-name-shield-cluster
+
+  - it: A user provided openshift.io/required-scc pod annotation takes precedence
+    capabilities:
+      apiVersions:
+        - security.openshift.io/v1
+    set:
+      cluster:
+        pod_annotations:
+          openshift.io/required-scc: custom-scc
+    template: templates/cluster/deployment.yaml
+    asserts:
+      - equal:
+          path: spec.template.metadata.annotations["openshift.io/required-scc"]
+          value: custom-scc
