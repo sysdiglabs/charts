@@ -80,6 +80,20 @@ tests:
               - get
               - list
 
+  - it: Grants endpointslices for network topology
+    asserts:
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - discovery.k8s.io
+            resources:
+              - endpointslices
+            verbs:
+              - get
+              - list
+              - watch
+
   - it: Do not add RBAC rules when host_posture is enabled and OpenShift API is not detected
     set:
       features:
@@ -372,7 +386,7 @@ tests:
     asserts:
       - lengthEqual:
           path: rules
-          count: 11
+          count: 12
 
   - it: live_logs enabled on a host shield < 14.8.0 grants nodes/proxy only
     set:
@@ -397,7 +411,7 @@ tests:
               - watch
       - lengthEqual:
           path: rules
-          count: 12
+          count: 13
 
   - it: live_logs enabled on host shield 14.8.0 grants nodes/log only
     set:
@@ -420,7 +434,7 @@ tests:
               - get
       - lengthEqual:
           path: rules
-          count: 12
+          count: 13
 
   - it: live_logs enabled on a host shield newer than 14.8.0 grants nodes/log only
     set:
@@ -443,7 +457,7 @@ tests:
               - get
       - lengthEqual:
           path: rules
-          count: 12
+          count: 13
 
   - it: live_logs enabled on a 14.8.0 prerelease host shield grants nodes/log only
     set:
@@ -466,7 +480,7 @@ tests:
               - get
       - lengthEqual:
           path: rules
-          count: 12
+          count: 13
 
   - it: live_logs enabled with a non-semver host shield tag grants nodes/log only
     set:
@@ -489,7 +503,7 @@ tests:
               - get
       - lengthEqual:
           path: rules
-          count: 12
+          count: 13
 
   - it: live_logs enabled with a digest-pinned host shield grants nodes/log only
     set:
@@ -513,7 +527,7 @@ tests:
               - get
       - lengthEqual:
           path: rules
-          count: 12
+          count: 13
 
   - it: live_logs disabled grants neither subresource even on host shield 14.8.0
     set:
@@ -527,7 +541,7 @@ tests:
     asserts:
       - lengthEqual:
           path: rules
-          count: 11
+          count: 12
 
   - it: host.rbac.cluster_role.create false renders no kubelet log grant
     set:
