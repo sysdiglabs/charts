@@ -1,0 +1,63 @@
+suite: Cluster - PriorityClass
+templates:
+  - templates/cluster/priorityclass.yaml
+release:
+  name: release-name
+  namespace: shield-namespace
+values:
+  - ../values/base.yaml
+tests:
+  - it: Create the the PriorityClass when requested
+    set:
+      cluster:
+        priority_class:
+          create: true
+          name: my-fancy-priority-class
+          value: 1000
+    asserts:
+      - isKind:
+          of: PriorityClass
+          count: 1
+      - equal:
+          path: metadata.name
+          value: my-fancy-priority-class
+      - equal:
+          path: value
+          value: 1000
+
+  - it: Ensure the PriorityClass is not created when not requested
+    set:
+      cluster:
+        priority_class:
+          create: false
+    asserts:
+      - hasDocuments:
+        count: 0
+
+  - it: Ensure we do not create a PriorityClass with the default chart values
+    asserts:
+      - hasDocuments:
+        count: 0
+
+  - it: cluster.priority_class.labels and annotations override global on the same key
+    set:
+      labels:
+        env: global
+      annotations:
+        env: global
+      cluster:
+        priority_class:
+          create: true
+          labels:
+            env: priority-class
+          annotations:
+            env: priority-class
+    asserts:
+      - isKind:
+          of: PriorityClass
+      - equal:
+          path: metadata.labels["env"]
+          value: priority-class
+      - equal:
+          path: metadata.annotations["env"]
+          value: priority-class

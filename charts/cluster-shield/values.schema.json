@@ -662,6 +662,11 @@
               },
               "type": "array"
             },
+            "gke_pub_sub_subscription": {
+              "default": "k8s-audit",
+              "description": "Name of the GCP Pub/Sub subscription used to ingest GKE audit logs",
+              "type": "string"
+            },
             "http_port": {
               "default": 6443,
               "description": "HTTP Server port used to expose the webhook web server.",
@@ -1098,6 +1103,21 @@
               "examples": [
                 true
               ],
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "enabled"
+          ],
+          "type": "object"
+        },
+        "Discoverer": {
+          "additionalProperties": false,
+          "description": "Configuration for the discoverer component",
+          "properties": {
+            "enabled": {
+              "default": false,
+              "description": "Specify if the Discoverer component is enabled",
               "type": "boolean"
             }
           },

@@ -845,6 +845,73 @@ tests:
           path: .webhooks[0].clientConfig.caBundle
         template: templates/cluster/tls-certificates-admissionregistration.yaml
 
+  - it: Audit webhook merges global annotations with cert-manager annotation
+    set:
+      annotations:
+        global-key: global-value
+      features:
+        detections:
+          kubernetes_audit:
+            enabled: true
+      cluster:
+        tls_certificates:
+          create: true
+          cert_manager:
+            enabled: true
+            ca:
+              create: false
+              secret_name: external-ca-secret
+              secret_namespace: cert-manager
+            issuer:
+              create: true
+    asserts:
+      - containsDocument:
+          kind: ValidatingWebhookConfiguration
+          apiVersion: admissionregistration.k8s.io/v1
+          name: shield-release-cluster-audit
+        template: templates/cluster/tls-certificates-admissionregistration.yaml
+      - equal:
+          path: metadata.annotations["cert-manager.io/inject-ca-from-secret"]
+          value: cert-manager/external-ca-secret
+        template: templates/cluster/tls-certificates-admissionregistration.yaml
+      - equal:
+          path: metadata.annotations["global-key"]
+          value: global-value
+        template: templates/cluster/tls-certificates-admissionregistration.yaml
+
+  - it: Admission control webhook merges global annotations with cert-manager annotation
+    set:
+      annotations:
+        global-key: global-value
+      features:
+        admission_control:
+          enabled: true
+      cluster:
+        tls_certificates:
+          create: true
+          cert_manager:
+            enabled: true
+            ca:
+              create: false
+              secret_name: external-ca-secret
+              secret_namespace: cert-manager
+            issuer:
+              create: true
+    asserts:
+      - containsDocument:
+          kind: ValidatingWebhookConfiguration
+          apiVersion: admissionregistration.k8s.io/v1
+          name: shield-release-cluster-admission-control
+        template: templates/cluster/tls-certificates-admissionregistration.yaml
+      - equal:
+          path: metadata.annotations["cert-manager.io/inject-ca-from-secret"]
+          value: cert-manager/external-ca-secret
+        template: templates/cluster/tls-certificates-admissionregistration.yaml
+      - equal:
+          path: metadata.annotations["global-key"]
+          value: global-value
+        template: templates/cluster/tls-certificates-admissionregistration.yaml
+
   - it: Admission Control AdmissionRegistration (Webhook creation disabled)
     set:
       cluster:

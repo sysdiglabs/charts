@@ -18,7 +18,6 @@ rules:
       - namespaces
       - nodes
       - nodes/metrics
-      - nodes/proxy
       - resourcequotas
       - persistentvolumes
       - persistentvolumeclaims
@@ -118,5 +117,22 @@ rules:
       - "{{ template "agent.fullname" . }}"
     verbs:
       - "use"
+{{- end }}
+{{- if (include "agent.kubelet_log_access.is_fine_grained" .) }}
+  - apiGroups:
+      - ""
+    resources:
+      - nodes/log
+    verbs:
+      - get
+  {{- else }}
+  - apiGroups:
+      - ""
+    resources:
+      - nodes/proxy
+    verbs:
+      - get
+      - list
+      - watch
 {{- end }}
 {{- end }}

@@ -5,6 +5,11 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "host.labels" . | nindent 4 }}
+  {{- $annotations := (include "host.annotations" .) }}
+  {{- if $annotations }}
+  annotations:
+    {{- $annotations | nindent 4 }}
+  {{- end }}
 data:
   host-shield.yaml: |
     {{- include "host.host_shield_config" . | nindent 4 }}

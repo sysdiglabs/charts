@@ -2,7 +2,7 @@
 Common labels
 */}}
 {{- define "cluster.labels" -}}
-  {{- $labels := merge (dict) (include "cluster.self_labels" . | fromYaml) (include "shield.labels" . | fromYaml) }}
+  {{- $labels := merge (dict) .Values.cluster.labels (include "cluster.self_labels" . | fromYaml) (include "shield.labels" . | fromYaml) }}
   {{- with $labels -}}
     {{- . | toYaml -}}
   {{- end -}}
@@ -24,22 +24,21 @@ Selector labels
 {{- end }}
 
 {{- define "cluster.workload_labels" -}}
-  {{- $workloadLabels := merge (dict) (dict) .Values.workload_labels .Values.cluster.workload_labels (include "cluster.labels" . | fromYaml) }}
-  {{- with $workloadLabels -}}
-    {{- . | toYaml -}}
-  {{- end -}}
+  {{- include "shield.override_metadata" (dict "base" (include "cluster.labels" .) "override" (list .Values.cluster.workload_labels .Values.workload_labels)) -}}
 {{- end -}}
 
 {{- define "cluster.pod_labels" -}}
-  {{- $podLabels := merge (dict) .Values.pod_labels .Values.cluster.pod_labels (include "cluster.labels" . | fromYaml) }}
-  {{- with $podLabels -}}
-    {{- . | toYaml -}}
-  {{- end -}}
+  {{- include "shield.override_metadata" (dict "base" (include "cluster.labels" .) "override" (list .Values.cluster.pod_labels .Values.pod_labels)) -}}
 {{- end -}}
 
 {{- define "cluster.rbac_labels" -}}
-  {{- $rbacLabels := merge (dict) .Values.cluster.rbac.labels (include "cluster.labels" . | fromYaml) }}
-  {{- with $rbacLabels -}}
-    {{- . | toYaml -}}
-  {{- end -}}
+  {{- include "shield.override_metadata" (dict "base" (include "cluster.labels" .) "override" .Values.cluster.rbac.labels) -}}
+{{- end -}}
+
+{{- define "cluster.priorityclass_labels" -}}
+  {{- include "shield.override_metadata" (dict "base" (include "cluster.labels" .) "override" .Values.cluster.priority_class.labels) -}}
+{{- end -}}
+
+{{- define "cluster.service_labels" -}}
+  {{- include "shield.override_metadata" (dict "base" (include "cluster.labels" .) "override" .Values.cluster.service.labels) -}}
 {{- end -}}

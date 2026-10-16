@@ -10,6 +10,27 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.121.0
+### Chores
+* **node-analyzer** [1515f275](https://github.com/sysdiglabs/charts/commit/1515f275104bd6c91bb443e8f4b3a2ffa5285a1d): bump sysdig/kspm-analyzer to 1.49.7 and host-scanner to v0.18.1 ([#2773](https://github.com/sysdiglabs/charts/issues/2773))
+# v1.120.4
+### Chores
+* **sysdig-deploy** [49e5575d](https://github.com/sysdiglabs/charts/commit/49e5575d563f6a10757b0f31673a4843abe54896): Automatic version bump due to updated dependencies ([#2772](https://github.com/sysdiglabs/charts/issues/2772))
+# v1.120.3
+### Chores
+* **sysdig-deploy** [5aacd295](https://github.com/sysdiglabs/charts/commit/5aacd29568eb5a81b421e64f89ebe5b84ec36b07): Automatic version bump due to updated dependencies ([#2765](https://github.com/sysdiglabs/charts/issues/2765))
+# v1.120.2
+### Chores
+* **sysdig-deploy** [4b664535](https://github.com/sysdiglabs/charts/commit/4b664535caa9217abc6dbab654cb4ec8ceeeaea5): Automatic version bump due to updated dependencies ([#2762](https://github.com/sysdiglabs/charts/issues/2762))
+# v1.120.1
+### Bug Fixes
+* **agent,sysdig-deploy** [3946567d](https://github.com/sysdiglabs/charts/commit/3946567d1370adaa77750b2d7791420ef29ef49d): allow the agent to delete leases ([#2758](https://github.com/sysdiglabs/charts/issues/2758))
+# v1.120.0
+### Chores
+* **cluster-shield** [8a2d2de4](https://github.com/sysdiglabs/charts/commit/8a2d2de423c80616f765b7e003e86db61b8e6098): Automatic bump to version 1.26.0 ([#2754](https://github.com/sysdiglabs/charts/issues/2754))
+# v1.119.0
+### New Features
+* **agent,shield,sysdig-deploy** [02f20278](https://github.com/sysdiglabs/charts/commit/02f20278d70da6e4f8e946dbb93a6aa2864dc440): grant nodes/log for Live Logs on host shield 14.8.0+ ([#2742](https://github.com/sysdiglabs/charts/issues/2742))
 # v1.118.1
 ### Chores
 * **sysdig-deploy** [fd9ffef8](https://github.com/sysdiglabs/charts/commit/fd9ffef8809f3e92b5b2dfb31affe57fdb255042): Automatic version bump due to updated dependencies ([#2737](https://github.com/sysdiglabs/charts/issues/2737))

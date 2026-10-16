@@ -115,3 +115,12 @@ tests:
       - equal:
           path: allowPrivilegedContainer
           value: false
+
+  - it: SecurityContextConstraints - allows the projected volume type
+    capabilities:
+      apiVersions:
+        - security.openshift.io/v1
+    asserts:
+      - contains:
+          path: volumes
+          content: projected

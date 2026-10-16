@@ -164,6 +164,9 @@ features:
     activity_audit:
       enabled: false
     live_logs:
+      # Enable the live logs feature.
+      # Grants the host shield read access to container logs on the kubelet: the
+      # `nodes/log` subresource for host shield 14.8.0 and newer, `nodes/proxy` for older ones.
       enabled: false
     network_security:
       # Enable the network security feature
@@ -225,7 +228,7 @@ host_windows:
     # The image name for the host shield
     name: host-shield
     # The tag for the host shield images
-    tag: 0.19.0
+    tag: 0.20.0
     # The pull policy for the host shield images
     pull_policy: IfNotPresent
     # The pull secrets for the host shield images
@@ -243,6 +246,10 @@ host_windows:
       memory: 384Mi
   # The host aliases for the windows host shield workloads
   host_aliases: []
+  # Additional annotations for all host_windows resources (metadata.annotations)
+  annotations: {}
+  # Additional labels for all host_windows resources (metadata.labels)
+  labels: {}
   # The annotations for the host shield workloads (metadata.annotations)
   workload_annotations: {}
   # The labels for the host shield workloads (metadata.labels)
@@ -301,7 +308,7 @@ host:
     # The image name for the host shield
     shield_name: agent-slim
     # The tag for the host shield images
-    tag: 14.7.4
+    tag: 14.8.1
     # The pull policy for the host shield images
     pull_policy: IfNotPresent
     # The pull secrets for the host shield images
@@ -372,6 +379,10 @@ host:
         memory: 384Mi
   # The host aliases for the linux host shield workloads
   host_aliases: []
+  # Additional annotations for all host resources (metadata.annotations)
+  annotations: {}
+  # Additional labels for all host resources (metadata.labels)
+  labels: {}
   # The annotations for the host shield workloads (metadata.annotations)
   workload_annotations: {}
   # The labels for the host shield workloads (metadata.labels)
@@ -451,7 +462,7 @@ cluster:
     # The repository where the cluster shield image is stored
     repository: sysdig/cluster-shield
     # The tag for the cluster shield image
-    tag: 1.25.1
+    tag: 1.26.1
     # The pull policy for the cluster shield image
     pull_policy: IfNotPresent
     # The pull secrets for the cluster shield image
@@ -551,6 +562,10 @@ cluster:
       memory: 1536Mi
   # The host aliases for the cluster shield workloads
   host_aliases: []
+  # Additional annotations for all cluster resources (metadata.annotations)
+  annotations: {}
+  # Additional labels for all cluster resources (metadata.labels)
+  labels: {}
   # The annotations for the cluster shield workloads (metadata.annotations)
   workload_annotations: {}
   # The labels for the cluster shield workloads (metadata.labels)
@@ -660,6 +675,10 @@ proxy:
 # Additional .APIVersions in .Capabilities, e.g. "security.openshift.io/v1"
 extra_capabilities_api_versions: []
 
+# Additional annotations for all resources (metadata.annotations)
+annotations: {}
+# Additional labels for all resources (metadata.labels)
+labels: {}
 # Additional annotations for the all the workloads (metadata.annotations)
 workload_annotations: {}
 # Additional labels for the all the workloads (metadata.labels)

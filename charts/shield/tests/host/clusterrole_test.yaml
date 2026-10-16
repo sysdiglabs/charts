@@ -368,26 +368,21 @@ tests:
             verbs:
               - list
 
-  - it: Default values do not grant nodes/proxy
+  - it: Default values grant neither nodes/proxy nor nodes/log
     asserts:
-      - notContains:
+      - lengthEqual:
           path: rules
-          content:
-            apiGroups:
-              - ""
-            resources:
-              - nodes/proxy
-            verbs:
-              - get
-              - list
-              - watch
+          count: 11
 
-  - it: live_logs enabled grants nodes/proxy
+  - it: live_logs enabled on a host shield < 14.8.0 grants nodes/proxy only
     set:
       features:
         investigations:
           live_logs:
             enabled: true
+      host:
+        image:
+          tag: 14.7.4
     asserts:
       - contains:
           path: rules
@@ -400,25 +395,155 @@ tests:
               - get
               - list
               - watch
+      - lengthEqual:
+          path: rules
+          count: 12
 
-  - it: live_logs disabled does not grant nodes/proxy
+  - it: live_logs enabled on host shield 14.8.0 grants nodes/log only
     set:
       features:
         investigations:
           live_logs:
-            enabled: false
+            enabled: true
+      host:
+        image:
+          tag: 14.8.0
     asserts:
-      - notContains:
+      - contains:
           path: rules
           content:
             apiGroups:
               - ""
             resources:
-              - nodes/proxy
+              - nodes/log
             verbs:
               - get
-              - list
-              - watch
+      - lengthEqual:
+          path: rules
+          count: 12
+
+  - it: live_logs enabled on a host shield newer than 14.8.0 grants nodes/log only
+    set:
+      features:
+        investigations:
+          live_logs:
+            enabled: true
+      host:
+        image:
+          tag: 15.0.1
+    asserts:
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - nodes/log
+            verbs:
+              - get
+      - lengthEqual:
+          path: rules
+          count: 12
+
+  - it: live_logs enabled on a 14.8.0 prerelease host shield grants nodes/log only
+    set:
+      features:
+        investigations:
+          live_logs:
+            enabled: true
+      host:
+        image:
+          tag: 14.8.0-rc1
+    asserts:
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - nodes/log
+            verbs:
+              - get
+      - lengthEqual:
+          path: rules
+          count: 12
+
+  - it: live_logs enabled with a non-semver host shield tag grants nodes/log only
+    set:
+      features:
+        investigations:
+          live_logs:
+            enabled: true
+      host:
+        image:
+          tag: latest-local
+    asserts:
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - nodes/log
+            verbs:
+              - get
+      - lengthEqual:
+          path: rules
+          count: 12
+
+  - it: live_logs enabled with a digest-pinned host shield grants nodes/log only
+    set:
+      features:
+        investigations:
+          live_logs:
+            enabled: true
+      host:
+        driver: universal_ebpf
+        image:
+          tag: sha256:3b1a4f2e5c6d7089a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60718
+    asserts:
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - nodes/log
+            verbs:
+              - get
+      - lengthEqual:
+          path: rules
+          count: 12
+
+  - it: live_logs disabled grants neither subresource even on host shield 14.8.0
+    set:
+      features:
+        investigations:
+          live_logs:
+            enabled: false
+      host:
+        image:
+          tag: 14.8.0
+    asserts:
+      - lengthEqual:
+          path: rules
+          count: 11
+
+  - it: host.rbac.cluster_role.create false renders no kubelet log grant
+    set:
+      features:
+        investigations:
+          live_logs:
+            enabled: true
+      host:
+        image:
+          tag: 14.8.0
+        rbac:
+          cluster_role:
+            create: false
+    asserts:
+      - hasDocuments:
+          count: 0
 
   - it: Propagates custom labels and annotations onto the ClusterRole
     set:

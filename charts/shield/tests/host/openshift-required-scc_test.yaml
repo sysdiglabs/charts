@@ -1,0 +1,44 @@
+suite: Host - OpenShift required-scc pod annotation
+templates:
+  - templates/host/daemonset.yaml
+release:
+  name: release-name
+  namespace: shield-namespace
+values:
+  - ../values/base.yaml
+tests:
+  - it: Doesn't set openshift.io/required-scc outside OpenShift
+    asserts:
+      - notExists:
+          path: spec.template.metadata.annotations["openshift.io/required-scc"]
+
+  - it: Sets openshift.io/required-scc to the SCC name on OpenShift
+    capabilities:
+      apiVersions:
+        - security.openshift.io/v1
+    asserts:
+      - equal:
+          path: spec.template.metadata.annotations["openshift.io/required-scc"]
+          value: release-name-shield-host
+
+  - it: Sets openshift.io/required-scc when extra_capabilities_api_versions declares OpenShift
+    set:
+      extra_capabilities_api_versions:
+        - security.openshift.io/v1
+    asserts:
+      - equal:
+          path: spec.template.metadata.annotations["openshift.io/required-scc"]
+          value: release-name-shield-host
+
+  - it: A user provided openshift.io/required-scc pod annotation takes precedence
+    capabilities:
+      apiVersions:
+        - security.openshift.io/v1
+    set:
+      host:
+        pod_annotations:
+          openshift.io/required-scc: custom-scc
+    asserts:
+      - equal:
+          path: spec.template.metadata.annotations["openshift.io/required-scc"]
+          value: custom-scc

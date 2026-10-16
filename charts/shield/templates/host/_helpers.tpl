@@ -151,6 +151,24 @@ true
 {{- end }}
 {{- end }}
 
+{{- /*
+Whether the host shield reads Live Logs container logs through the kubelet's
+fine-grained log endpoint.
+
+Host shield >= 14.8.0 reads container logs from the kubelet `/logs/` endpoint, which the
+kubelet authorizes with the `nodes/log` subresource. Earlier versions use
+`/containerLogs/`, which maps to the broad `nodes/proxy` subresource.
+
+Only a tag that parses as semver and is < 14.8.0 is treated as legacy; anything else
+(digest pins, dev tags) is assumed to be a current image.
+*/ -}}
+{{- define "host.kubelet_log_access.is_fine_grained" -}}
+{{- if and (include "common.semver.is_valid" .Values.host.image.tag) (semverCompare "< 14.8.0" .Values.host.image.tag) -}}
+{{- else -}}
+true
+{{- end -}}
+{{- end -}}
+
 {{- define "host.shield_image" }}
 {{- .Values.host.image.registry -}} / {{- .Values.host.image.repository -}} / {{- .Values.host.image.shield_name -}} {{- include "host.tag_separator" . -}} {{- .Values.host.image.tag }}
 {{- end }}

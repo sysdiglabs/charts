@@ -10,6 +10,30 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.54.0
+### New Features
+* **shield** [5daf51fb](https://github.com/sysdiglabs/charts/commit/5daf51fb41416b1319f9113a8b5e69225b35978c): allow projected volumes in OpenShift SCC and set required-scc annotation ([#2767](https://github.com/sysdiglabs/charts/issues/2767))
+# v1.53.2
+### New Features
+* **shield** [66d92cff](https://github.com/sysdiglabs/charts/commit/66d92cffb17b14cc8b529afb5dbcf5b6802caee8): release cluster-shield 1.26.1 ([#2766](https://github.com/sysdiglabs/charts/issues/2766))
+# v1.53.1
+### New Features
+* **agent,shield** [9b1d6bda](https://github.com/sysdiglabs/charts/commit/9b1d6bda03e797841e4a3ae7632b422923c13d1e): release agent 14.8.1 ([#2764](https://github.com/sysdiglabs/charts/issues/2764))
+# v1.53.0
+### New Features
+* **shield** [ea02d2da](https://github.com/sysdiglabs/charts/commit/ea02d2da1dc6b0d50886e84f203451a7bf4c4f0b): Add generic labels and annotations  ([#2756](https://github.com/sysdiglabs/charts/issues/2756))
+# v1.52.0
+### New Features
+* **shield** [22b83a76](https://github.com/sysdiglabs/charts/commit/22b83a76a1a552426e56f318509f9dbfa74046b7): release host-shield windows 0.20.0 ([#2757](https://github.com/sysdiglabs/charts/issues/2757))
+# v1.51.0
+### New Features
+* **shield** [974a76f0](https://github.com/sysdiglabs/charts/commit/974a76f0b871a8feab10e9059f0b81019ee2b4b2): release cluster-shield 1.26.0 ([#2753](https://github.com/sysdiglabs/charts/issues/2753))
+# v1.50.0
+### New Features
+* **agent,shield,sysdig-deploy** [02f20278](https://github.com/sysdiglabs/charts/commit/02f20278d70da6e4f8e946dbb93a6aa2864dc440): grant nodes/log for Live Logs on host shield 14.8.0+ ([#2742](https://github.com/sysdiglabs/charts/issues/2742))
+# v1.49.6
+### New Features
+* **shield** [bd769629](https://github.com/sysdiglabs/charts/commit/bd76962963a506364535175b8b5ab428afbb78ef): release cluster-shield 1.25.2 ([#2747](https://github.com/sysdiglabs/charts/issues/2747))
 # v1.49.5
 ### New Features
 * **shield** [0db971cc](https://github.com/sysdiglabs/charts/commit/0db971cc033acd61f4d93f968c4e32b54326ef02): release cluster-shield 1.25.1 ([#2727](https://github.com/sysdiglabs/charts/issues/2727))

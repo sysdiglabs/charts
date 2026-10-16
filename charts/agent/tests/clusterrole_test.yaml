@@ -88,3 +88,80 @@ tests:
       - contains:
           path: rules[0].resources
           content: configmaps
+
+  - it: Default values grant nodes/logs
+    asserts:
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - nodes/log
+            verbs:
+              - get
+
+  - it: On a host shield < 14.8.0 grants nodes/proxy only
+    set:
+      image:
+        tag: 14.7.4
+    asserts:
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - nodes/proxy
+            verbs:
+              - get
+              - list
+              - watch
+      - lengthEqual:
+          path: rules
+          count: 12
+
+  - it: on host shield 14.8.0+ grants nodes/log only
+    set:
+      image:
+        tag: 14.8.0
+    asserts:
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - nodes/log
+            verbs:
+              - get
+
+  - it: on host shield 14.8.0+ grants nodes/log only
+    set:
+      image:
+        tag: 14.9.0
+    asserts:
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - nodes/log
+            verbs:
+              - get
+
+  - it: on host shield without semver grants nodes/log only
+    set:
+      image:
+        tag: test-tag
+    asserts:
+      - contains:
+          path: rules
+          content:
+            apiGroups:
+              - ""
+            resources:
+              - nodes/log
+            verbs:
+              - get

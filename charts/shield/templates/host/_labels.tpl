@@ -13,7 +13,7 @@ GKE Autopilot labels
 Common labels
 */}}
 {{- define "host.labels" -}}
-  {{- $labels := merge (dict) (include "host.gke_autopilot_labels" . | fromYaml) (include "host.self_labels" . | fromYaml) (include "shield.labels" . | fromYaml) }}
+  {{- $labels := merge (dict) .Values.host.labels (include "host.gke_autopilot_labels" . | fromYaml) (include "host.self_labels" . | fromYaml) (include "shield.labels" . | fromYaml) }}
   {{- with $labels -}}
     {{- . | toYaml -}}
   {{- end -}}
@@ -35,22 +35,17 @@ Selector labels
 {{- end }}
 
 {{- define "host.workload_labels" -}}
-  {{- $workloadLabels := merge (dict) .Values.workload_labels .Values.host.workload_labels (include "host.labels" . | fromYaml) }}
-  {{- with $workloadLabels -}}
-    {{- . | toYaml -}}
-  {{- end -}}
+  {{- include "shield.override_metadata" (dict "base" (include "host.labels" .) "override" (list .Values.host.workload_labels .Values.workload_labels)) -}}
 {{- end -}}
 
 {{- define "host.pod_labels" -}}
-  {{- $podLabels := merge (dict) .Values.pod_labels .Values.host.pod_labels (include "host.labels" . | fromYaml) }}
-  {{- with $podLabels -}}
-    {{- . | toYaml -}}
-  {{- end -}}
+  {{- include "shield.override_metadata" (dict "base" (include "host.labels" .) "override" (list .Values.host.pod_labels .Values.pod_labels)) -}}
 {{- end -}}
 
 {{- define "host.rbac_labels" -}}
-  {{- $rbacLabels := merge (dict) .Values.host.rbac.labels (include "host.labels" . | fromYaml) }}
-  {{- with $rbacLabels -}}
-    {{- . | toYaml -}}
-  {{- end -}}
+  {{- include "shield.override_metadata" (dict "base" (include "host.labels" .) "override" .Values.host.rbac.labels) -}}
+{{- end -}}
+
+{{- define "host.priorityclass_labels" -}}
+  {{- include "shield.override_metadata" (dict "base" (include "host.labels" .) "override" .Values.host.priority_class.labels) -}}
 {{- end -}}

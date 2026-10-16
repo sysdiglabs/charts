@@ -38,3 +38,26 @@ tests:
     asserts:
       - hasDocuments:
         count: 0
+
+  - it: host.priority_class.labels and annotations override global on the same key
+    set:
+      labels:
+        env: global
+      annotations:
+        env: global
+      host:
+        priority_class:
+          create: true
+          labels:
+            env: priority-class
+          annotations:
+            env: priority-class
+    asserts:
+      - isKind:
+          of: PriorityClass
+      - equal:
+          path: metadata.labels["env"]
+          value: priority-class
+      - equal:
+          path: metadata.annotations["env"]
+          value: priority-class

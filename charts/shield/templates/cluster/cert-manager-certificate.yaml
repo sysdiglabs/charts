@@ -8,6 +8,11 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "cluster.labels" . | nindent 4 }}
+  {{- $annotations := (include "cluster.annotations" .) }}
+  {{- if $annotations }}
+  annotations:
+    {{- $annotations | nindent 4 }}
+  {{- end }}
 spec:
   secretName: {{ include "cluster.tls_certificates.cm_certificate_name" . }}
   privateKey:

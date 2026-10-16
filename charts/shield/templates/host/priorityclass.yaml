@@ -3,6 +3,13 @@ apiVersion: scheduling.k8s.io/v1
 kind: PriorityClass
 metadata:
   name: {{ include "host.priority_class_name" . }}
+  labels:
+    {{- include "host.priorityclass_labels" . | nindent 4 }}
+  {{- $priorityClassAnnotations := (include "host.priorityclass_annotations" .) }}
+  {{- if $priorityClassAnnotations }}
+  annotations:
+    {{- $priorityClassAnnotations | nindent 4 }}
+  {{- end }}
 value: {{ .Values.host.priority_class.value }}
 preemptionPolicy: PreemptLowerPriority
 globalDefault: false

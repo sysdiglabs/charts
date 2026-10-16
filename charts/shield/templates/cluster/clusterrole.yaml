@@ -5,9 +5,10 @@ metadata:
   name: {{ include "cluster.fullname" . }}
   labels:
     {{- include "cluster.rbac_labels" . | nindent 4 }}
-  {{- with .Values.cluster.rbac.annotations }}
+  {{- $rbacAnnotations := (include "cluster.rbac_annotations" .) }}
+  {{- if $rbacAnnotations }}
   annotations:
-    {{- toYaml . | nindent 4 }}
+    {{- $rbacAnnotations | nindent 4 }}
   {{- end }}
 rules:
 {{- if (include "cluster.audit_enabled" .) }}
