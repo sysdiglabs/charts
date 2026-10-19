@@ -261,6 +261,32 @@ tests:
               - "leases"
             verbs: ["create"]
 
+  - it: Discoverer lease name can be overridden via additional_settings
+    set:
+      cluster:
+        additional_settings:
+          discoverer:
+            enabled: true
+            leader_election_lock_name: my-discoverer-lease
+    asserts:
+      - contains:
+          path: rules
+          content:
+            apiGroups: ["coordination.k8s.io"]
+            resources:
+              - "leases"
+            resourceNames:
+              - "my-discoverer-lease"
+            verbs:
+              - create
+              - delete
+              - deletecollection
+              - get
+              - list
+              - patch
+              - update
+              - watch
+
   - it: Discoverer lease is not granted by default
     set:
       features:

@@ -44,10 +44,10 @@ the inheritance logic lives in a single place.
 {{- end }}
 
 {{/*
-  The discoverer lease name is fixed in cluster-shield and not configurable.
+  The default is the lease name cluster-shield currently uses for the discoverer.
 */}}
 {{- define "cluster.discoverer_lease_name" -}}
-  cluster-shield-discoverer-leader
+  {{- default "cluster-shield-discoverer-leader" (dig "discoverer" "leader_election_lock_name" nil .Values.cluster.additional_settings) -}}
 {{- end }}
 
 {{- define "cluster.admission_control_service_port" -}}
