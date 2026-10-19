@@ -223,3 +223,65 @@ tests:
             resources:
               - "leases"
             verbs: ["create"]
+
+  - it: Discoverer lease is granted when enabled via additional_settings
+    set:
+      cluster:
+        additional_settings:
+          discoverer:
+            enabled: true
+    asserts:
+      - containsDocument:
+          kind: Role
+          apiVersion: rbac.authorization.k8s.io/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - contains:
+          path: rules
+          content:
+            apiGroups: ["coordination.k8s.io"]
+            resources:
+              - "leases"
+            resourceNames:
+              - "cluster-shield-discoverer-leader"
+            verbs:
+              - create
+              - delete
+              - deletecollection
+              - get
+              - list
+              - patch
+              - update
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups: ["coordination.k8s.io"]
+            resources:
+              - "leases"
+            verbs: ["create"]
+
+  - it: Discoverer lease is not granted by default
+    set:
+      features:
+        posture:
+          cluster_posture:
+            enabled: true
+    asserts:
+      - notContains:
+          path: rules
+          content:
+            apiGroups: ["coordination.k8s.io"]
+            resources:
+              - "leases"
+            resourceNames:
+              - "cluster-shield-discoverer-leader"
+            verbs:
+              - create
+              - delete
+              - deletecollection
+              - get
+              - list
+              - patch
+              - update
+              - watch

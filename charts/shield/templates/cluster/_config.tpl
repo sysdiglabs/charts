@@ -212,6 +212,16 @@
 {{- end }}
 
 {{/*
+  Checks if the discoverer is enabled.
+  (only by additional settings)
+*/}}
+{{- define "cluster.discoverer_enabled" -}}
+  {{- if dig "discoverer" "enabled" false .Values.cluster.additional_settings -}}
+    {{- true -}}
+  {{- end -}}
+{{- end }}
+
+{{/*
   Checks if posture is enabled and OCP Route collection is enabled.
 */}}
 {{- define "cluster.posture_ocp_routes_enabled" -}}

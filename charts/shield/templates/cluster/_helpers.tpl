@@ -43,6 +43,13 @@ the inheritance logic lives in a single place.
   {{- default (printf "%s-posture" (include "cluster.fullname" .)) (dig "kspm_collector" "leader_election_lock_name" nil .Values.cluster.additional_settings) -}}
 {{- end }}
 
+{{/*
+  The discoverer lease name is fixed in cluster-shield and not configurable.
+*/}}
+{{- define "cluster.discoverer_lease_name" -}}
+  cluster-shield-discoverer-leader
+{{- end }}
+
 {{- define "cluster.admission_control_service_port" -}}
   {{ .Values.features.admission_control.http_port }}
 {{- end }}
