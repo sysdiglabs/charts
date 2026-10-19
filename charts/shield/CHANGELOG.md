@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.54.2
+### New Features
+* **shield** [f422c8ca](https://github.com/sysdiglabs/charts/commit/f422c8ca88d4769aa261bb43bedab01efbec7690): release host-shield windows 0.20.1 ([#2775](https://github.com/sysdiglabs/charts/issues/2775))
 # v1.54.1
 ### Chores
 * **shield** [5f08b3ed](https://github.com/sysdiglabs/charts/commit/5f08b3edc26ba27c2e450ada24b6a5591a6a8d12): improve test naming for consistency ([#2719](https://github.com/sysdiglabs/charts/issues/2719))
