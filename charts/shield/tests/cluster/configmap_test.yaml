@@ -1144,3 +1144,71 @@ tests:
       - equal:
           path: metadata.labels["env"]
           value: cluster
+
+  - it: Sets the discoverer lease name under components when the discoverer is enabled
+    set:
+      cluster_config:
+        name: shield-cluster
+      sysdig_endpoint:
+        api_url: https://fake.api.url.com
+        collector:
+          host: fake.collector.host
+          port: 6443
+        access_key: fake-access-key
+      cluster:
+        additional_settings:
+          discoverer:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: |
+            components:
+              discoverer:
+                leader_election_lock_name: cluster-shield-discoverer-leader
+      - notMatchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: |
+            discoverer:
+              enabled: true
+              leader_election_lock_name: .*
+
+  - it: Uses the overridden discoverer lease name in the config
+    set:
+      cluster_config:
+        name: shield-cluster
+      sysdig_endpoint:
+        api_url: https://fake.api.url.com
+        collector:
+          host: fake.collector.host
+          port: 6443
+        access_key: fake-access-key
+      cluster:
+        additional_settings:
+          discoverer:
+            enabled: true
+          components:
+            discoverer:
+              leader_election_lock_name: my-discoverer-lease
+    asserts:
+      - matchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: |
+            components:
+              discoverer:
+                leader_election_lock_name: my-discoverer-lease
+
+  - it: Does not set the discoverer lease name when the discoverer is disabled
+    set:
+      cluster_config:
+        name: shield-cluster
+      sysdig_endpoint:
+        api_url: https://fake.api.url.com
+        collector:
+          host: fake.collector.host
+          port: 6443
+        access_key: fake-access-key
+    asserts:
+      - notMatchRegex:
+          path: data['cluster-shield.yaml']
+          pattern: "leader_election_lock_name: cluster-shield-discoverer-leader"

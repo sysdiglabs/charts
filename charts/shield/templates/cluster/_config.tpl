@@ -103,6 +103,13 @@
       {{- end -}}
       {{- $_ := set $config "kspm_collector" $kspmCollectorConfig -}}
     {{- end -}}
+    {{- if (include "cluster.discoverer_enabled" .) -}}
+      {{- $componentsConfig := dig "components" (dict) $config -}}
+      {{- $discovererConfig := dig "discoverer" (dict) $componentsConfig -}}
+      {{- $_ := set $discovererConfig "leader_election_lock_name" (include "cluster.discoverer_lease_name" .) -}}
+      {{- $_ := set $componentsConfig "discoverer" $discovererConfig -}}
+      {{- $_ := set $config "components" $componentsConfig -}}
+    {{- end -}}
     {{- $_ := set $config "ssl" (dict "verify" .Values.ssl.verify) -}}
     {{- $_ := mergeOverwrite $config .Values.cluster.additional_settings -}}
     {{- if dig "cluster_scanner" "runtime_status_integrator" "nats_server" "password" nil $config -}}

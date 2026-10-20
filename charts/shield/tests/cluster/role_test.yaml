@@ -267,7 +267,9 @@ tests:
         additional_settings:
           discoverer:
             enabled: true
-            leader_election_lock_name: my-discoverer-lease
+          components:
+            discoverer:
+              leader_election_lock_name: my-discoverer-lease
     asserts:
       - contains:
           path: rules
