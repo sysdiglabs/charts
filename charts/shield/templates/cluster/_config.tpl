@@ -103,6 +103,13 @@
       {{- end -}}
       {{- $_ := set $config "kspm_collector" $kspmCollectorConfig -}}
     {{- end -}}
+    {{- if (include "cluster.discoverer_enabled" .) -}}
+      {{- $componentsConfig := dig "components" (dict) $config -}}
+      {{- $discovererConfig := dig "discoverer" (dict) $componentsConfig -}}
+      {{- $_ := set $discovererConfig "leader_election_lock_name" (include "cluster.discoverer_lease_name" .) -}}
+      {{- $_ := set $componentsConfig "discoverer" $discovererConfig -}}
+      {{- $_ := set $config "components" $componentsConfig -}}
+    {{- end -}}
     {{- $_ := set $config "ssl" (dict "verify" .Values.ssl.verify) -}}
     {{- $_ := mergeOverwrite $config .Values.cluster.additional_settings -}}
     {{- if dig "cluster_scanner" "runtime_status_integrator" "nats_server" "password" nil $config -}}
@@ -207,6 +214,16 @@
 */}}
 {{- define "cluster.need_posture_lease" -}}
   {{- if and (eq (include "cluster.posture_enabled" .) "true") (eq (dig "kspm_collector" "transport_layer" "http" .Values.cluster.additional_settings) "http") -}}
+    {{- true -}}
+  {{- end -}}
+{{- end }}
+
+{{/*
+  Checks if the discoverer is enabled.
+  (only by additional settings)
+*/}}
+{{- define "cluster.discoverer_enabled" -}}
+  {{- if dig "discoverer" "enabled" false .Values.cluster.additional_settings -}}
     {{- true -}}
   {{- end -}}
 {{- end }}

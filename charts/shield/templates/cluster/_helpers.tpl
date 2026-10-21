@@ -43,6 +43,14 @@ the inheritance logic lives in a single place.
   {{- default (printf "%s-posture" (include "cluster.fullname" .)) (dig "kspm_collector" "leader_election_lock_name" nil .Values.cluster.additional_settings) -}}
 {{- end }}
 
+{{/*
+  The override is read from components.discoverer, not the top-level discoverer: the latter
+  rejects unknown keys, so older cluster-shield versions would fail to parse it.
+*/}}
+{{- define "cluster.discoverer_lease_name" -}}
+  {{- default (printf "%s-discoverer" (include "cluster.fullname" .)) (dig "components" "discoverer" "leader_election_lock_name" nil .Values.cluster.additional_settings) -}}
+{{- end }}
+
 {{- define "cluster.admission_control_service_port" -}}
   {{ .Values.features.admission_control.http_port }}
 {{- end }}

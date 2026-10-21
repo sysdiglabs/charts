@@ -223,3 +223,93 @@ tests:
             resources:
               - "leases"
             verbs: ["create"]
+
+  - it: Discoverer lease is granted when enabled via additional_settings
+    set:
+      cluster:
+        additional_settings:
+          discoverer:
+            enabled: true
+    asserts:
+      - containsDocument:
+          kind: Role
+          apiVersion: rbac.authorization.k8s.io/v1
+          name: release-name-shield-cluster
+          namespace: shield-namespace
+      - contains:
+          path: rules
+          content:
+            apiGroups: ["coordination.k8s.io"]
+            resources:
+              - "leases"
+            resourceNames:
+              - "release-name-shield-cluster-discoverer"
+            verbs:
+              - create
+              - delete
+              - deletecollection
+              - get
+              - list
+              - patch
+              - update
+              - watch
+      - contains:
+          path: rules
+          content:
+            apiGroups: ["coordination.k8s.io"]
+            resources:
+              - "leases"
+            verbs: ["create"]
+
+  - it: Discoverer lease name can be overridden via additional_settings
+    set:
+      cluster:
+        additional_settings:
+          discoverer:
+            enabled: true
+          components:
+            discoverer:
+              leader_election_lock_name: my-discoverer-lease
+    asserts:
+      - contains:
+          path: rules
+          content:
+            apiGroups: ["coordination.k8s.io"]
+            resources:
+              - "leases"
+            resourceNames:
+              - "my-discoverer-lease"
+            verbs:
+              - create
+              - delete
+              - deletecollection
+              - get
+              - list
+              - patch
+              - update
+              - watch
+
+  - it: Discoverer lease is not granted by default
+    set:
+      features:
+        posture:
+          cluster_posture:
+            enabled: true
+    asserts:
+      - notContains:
+          path: rules
+          content:
+            apiGroups: ["coordination.k8s.io"]
+            resources:
+              - "leases"
+            resourceNames:
+              - "release-name-shield-cluster-discoverer"
+            verbs:
+              - create
+              - delete
+              - deletecollection
+              - get
+              - list
+              - patch
+              - update
+              - watch
