@@ -44,12 +44,11 @@ the inheritance logic lives in a single place.
 {{- end }}
 
 {{/*
-  The default is the lease name cluster-shield currently uses for the discoverer.
-  It is read from components.discoverer, not the top-level discoverer: the latter rejects
-  unknown keys, so older cluster-shield versions would fail to parse it.
+  The override is read from components.discoverer, not the top-level discoverer: the latter
+  rejects unknown keys, so older cluster-shield versions would fail to parse it.
 */}}
 {{- define "cluster.discoverer_lease_name" -}}
-  {{- default "cluster-shield-discoverer-leader" (dig "components" "discoverer" "leader_election_lock_name" nil .Values.cluster.additional_settings) -}}
+  {{- default (printf "%s-discoverer" (include "cluster.fullname" .)) (dig "components" "discoverer" "leader_election_lock_name" nil .Values.cluster.additional_settings) -}}
 {{- end }}
 
 {{- define "cluster.admission_control_service_port" -}}

@@ -1165,7 +1165,7 @@ tests:
           pattern: |
             components:
               discoverer:
-                leader_election_lock_name: cluster-shield-discoverer-leader
+                leader_election_lock_name: release-name-shield-cluster-discoverer
       - notMatchRegex:
           path: data['cluster-shield.yaml']
           pattern: |
@@ -1211,4 +1211,4 @@ tests:
     asserts:
       - notMatchRegex:
           path: data['cluster-shield.yaml']
-          pattern: "leader_election_lock_name: cluster-shield-discoverer-leader"
+          pattern: "leader_election_lock_name: release-name-shield-cluster-discoverer"
