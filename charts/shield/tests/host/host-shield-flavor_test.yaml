@@ -1,0 +1,409 @@
+suite: Host - host-shield image flavor
+templates:
+  - templates/host/daemonset.yaml
+  - templates/host/configmap.yaml
+  - templates/host/clusterrole.yaml
+release:
+  name: release-name
+  namespace: shield-namespace
+kubernetesProvider:
+  scheme:
+    "v1/Secret":
+      gvr:
+        version: "v1"
+        resource: "secrets"
+      namespaced: true
+  objects:
+    - apiVersion: v1
+      kind: Secret
+      metadata:
+        name: proxy-secret
+        namespace: shield-namespace
+      data:
+        http_proxy: aHR0cDovL3Byb3h5LWV4aXN0aW5nLmV4YW1wbGUuY29tOjgwODA= # http://proxy-existing.example.com:8080
+        https_proxy: aHR0cHM6Ly9wcm94eS1leGlzdGluZy5leGFtcGxlLmNvbTo4MDgw # https://proxy-existing.example.com:8080
+        no_proxy: ZXhhbXBsZS5jb20K # example.com
+values:
+  - ../values/base.yaml
+set:
+  host:
+    driver: universal_ebpf
+    image:
+      shield_name: host-shield
+      tag: 0.20.0
+tests:
+  - it: renders host-shield.yaml only in the ConfigMap
+    asserts:
+      - containsDocument:
+          kind: ConfigMap
+          apiVersion: v1
+          name: release-name-shield-host
+          namespace: shield-namespace
+      - exists:
+          path: data['host-shield.yaml']
+      - notExists:
+          path: data['dragent.yaml']
+    template: templates/host/configmap.yaml
+
+  - it: agent-slim still renders dragent.yaml
+    set:
+      host:
+        driver: kmod
+        image:
+          shield_name: agent-slim
+    asserts:
+      - exists:
+          path: data['dragent.yaml']
+    template: templates/host/configmap.yaml
+
+  - it: maps sysdig_endpoint without credentials
+    asserts:
+      - matchRegex:
+          path: data['host-shield.yaml']
+          pattern: |
+            sysdig_endpoint:
+              api_url: https://www.example.com
+              collector:
+                host: example.com
+                port: 6443
+              region: custom
+      - notMatchRegex:
+          path: data['host-shield.yaml']
+          pattern: access_key|secure_api_token
+    template: templates/host/configmap.yaml
+
+  - it: passes alt regions through unchanged
+    set:
+      sysdig_endpoint:
+        region: us1-alt
+        api_url:
+        collector:
+          host:
+          port:
+    asserts:
+      - matchRegex:
+          path: data['host-shield.yaml']
+          pattern: |
+            sysdig_endpoint:
+              region: us1-alt
+    template: templates/host/configmap.yaml
+
+  - it: maps cluster name and tags
+    set:
+      cluster_config:
+        tags:
+          team: security
+    asserts:
+      - matchRegex:
+          path: data['host-shield.yaml']
+          pattern: |
+            cluster_config:
+              name: test-cluster
+      - matchRegex:
+          path: data['host-shield.yaml']
+          pattern: |
+            tags:
+              team: security
+    template: templates/host/configmap.yaml
+
+  - it: maps ssl verify false
+    set:
+      ssl:
+        verify: false
+    asserts:
+      - matchRegex:
+          path: data['host-shield.yaml']
+          pattern: |
+            ssl:
+              verify: false
+    template: templates/host/configmap.yaml
+
+  - it: maps custom CA to cert_path
+    set:
+      ssl:
+        ca:
+          key_name: ca.crt
+          certs:
+            - "-----BEGIN CERTIFICATE-----\nabc\n-----END CERTIFICATE-----"
+    asserts:
+      - matchRegex:
+          path: data['host-shield.yaml']
+          pattern: 'cert_path: /opt/draios/certificates/ca.crt'
+    template: templates/host/configmap.yaml
+
+  - it: maps plain proxy values
+    set:
+      proxy:
+        http_proxy: http://proxy.example.com:8080
+        https_proxy: https://proxy.example.com:8080
+        no_proxy: example.org
+    asserts:
+      - matchRegex:
+          path: data['host-shield.yaml']
+          pattern: 'proxy:\n  http_proxy: http://proxy.example.com:8080\n  https_proxy: https://proxy.example.com:8080\n  no_proxy: example.org'
+    template: templates/host/configmap.yaml
+
+  - it: maps proxy from existing secret
+    set:
+      proxy:
+        http_proxy_existing_secret: proxy-secret
+        https_proxy_existing_secret: proxy-secret
+        no_proxy_existing_secret: proxy-secret
+    asserts:
+      - matchRegex:
+          path: data['host-shield.yaml']
+          pattern: |
+            proxy:
+              http_proxy: http://proxy-existing.example.com:8080
+              https_proxy: https://proxy-existing.example.com:8080
+    template: templates/host/configmap.yaml
+
+  - it: sets driver type and host root path
+    asserts:
+      - matchRegex:
+          path: data['host-shield.yaml']
+          pattern: |
+            system:
+              driver_type: universal_ebpf
+    template: templates/host/configmap.yaml
+
+  - it: maps respond without unsupported keys and without password
+    set:
+      features:
+        respond:
+          rapid_response:
+            enabled: true
+            password: secret-pass
+          response_actions:
+            enabled: true
+            queue_length: 10
+            timeout: 5
+            kill_process:
+              trigger: all
+    asserts:
+      - matchRegex:
+          path: data['host-shield.yaml']
+          pattern: 'respond:\n\s+rapid_response:\n\s+enabled: true\n\s+response_actions:\n\s+kill_process:\n\s+trigger: all'
+      - notMatchRegex:
+          path: data['host-shield.yaml']
+          pattern: queue_length|timeout|secret-pass|password
+    template: templates/host/configmap.yaml
+
+  - it: maps event forwarder integrations and message types
+    set:
+      features:
+        investigations:
+          event_forwarder:
+            enabled: true
+            transmit_message_types:
+              - POLICY_EVENTS
+            integrations:
+              - type: LOCAL
+                channels:
+                  - ACTIVITY_AUDIT
+                configuration:
+                  output: stdout
+    asserts:
+      - matchRegex:
+          path: data['host-shield.yaml']
+          pattern: 'event_forwarder:\n\s+enabled: true\n\s+integrations:\n\s*- channels:\n\s*- ACTIVITY_AUDIT\n\s+configuration:\n\s+output: stdout\n\s+type: LOCAL\n\s+transmit_message_types:\n\s*- POLICY_EVENTS'
+    template: templates/host/configmap.yaml
+
+  - it: omits empty event forwarder lists
+    set:
+      features:
+        investigations:
+          event_forwarder:
+            enabled: true
+    asserts:
+      - notMatchRegex:
+          path: data['host-shield.yaml']
+          pattern: integrations|transmit_message_types
+    template: templates/host/configmap.yaml
+
+  - it: maps legacy responding and monitoring keys
+    set:
+      features:
+        respond: null
+        monitor: null
+        responding:
+          response_actions:
+            kill_process:
+              trigger: all
+        monitoring:
+          statsd:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: data['host-shield.yaml']
+          pattern: 'monitor:(\n\s+\w+:\n\s+enabled: false)*\n\s+statsd:\n\s+enabled: true'
+      - matchRegex:
+          path: data['host-shield.yaml']
+          pattern: 'respond:\n\s+response_actions:\n\s+kill_process:\n\s+trigger: all'
+      - notMatchRegex:
+          path: data['host-shield.yaml']
+          pattern: responding|monitoring
+    template: templates/host/configmap.yaml
+
+  - it: drops keys without hostconfig equivalent
+    asserts:
+      - notMatchRegex:
+          path: data['host-shield.yaml']
+          pattern: file_integrity_monitoring|audit_tap|integration_enabled|prometheus_yaml|kube_state_metrics
+    template: templates/host/configmap.yaml
+
+  - it: additional_settings override generated values
+    set:
+      host:
+        additional_settings:
+          log_level: debug
+          monitoring_port: 9090
+    asserts:
+      - matchRegex:
+          path: data['host-shield.yaml']
+          pattern: 'log_level: debug'
+      - matchRegex:
+          path: data['host-shield.yaml']
+          pattern: 'monitoring_port: 9090'
+    template: templates/host/configmap.yaml
+
+  - it: DaemonSet has no init containers and no driver or password env
+    set:
+      features:
+        respond:
+          rapid_response:
+            enabled: true
+            password: x
+    asserts:
+      - notExists:
+          path: spec.template.spec.initContainers
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SYSDIG_AGENT_DRIVER
+            value: universal_ebpf
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          any: true
+          content:
+            name: PASSWORD
+    template: templates/host/daemonset.yaml
+
+  - it: DaemonSet mounts config and secrets for host-shield
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            mountPath: /opt/draios/etc/host-shield.yaml
+            name: host-shield-config
+            subPath: host-shield.yaml
+            readOnly: true
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            mountPath: /etc/sysdig/secret-files
+            name: host-shield-secrets
+            readOnly: true
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: host-shield-config
+            configMap:
+              name: release-name-shield-host
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: host-shield-secrets
+            secret:
+              secretName: release-name-shield-common-access-key
+              items:
+                - key: access-key
+                  path: access-key
+    template: templates/host/daemonset.yaml
+
+  - it: DaemonSet readiness port defaults to 8080 and follows monitoring_port
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].readinessProbe.httpGet.port
+          value: 8080
+    template: templates/host/daemonset.yaml
+
+  - it: DaemonSet readiness port follows additional_settings.monitoring_port
+    set:
+      host:
+        additional_settings:
+          monitoring_port: 9090
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].readinessProbe.httpGet.port
+          value: 9090
+    template: templates/host/daemonset.yaml
+
+  - it: DaemonSet mounts the rapid response password file when enabled
+    set:
+      features:
+        respond:
+          rapid_response:
+            enabled: true
+            password_existing_secret: rr-secret
+            password_existing_secret_key: custom-key
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            mountPath: /opt/sysdig/shield/etc/kubernetes/secrets/rapid-response
+            name: rapid-response-password
+            readOnly: true
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: rapid-response-password
+            secret:
+              secretName: rr-secret
+              items:
+                - key: custom-key
+                  path: password
+    template: templates/host/daemonset.yaml
+
+  - it: DaemonSet omits rapid response mount when disabled
+    asserts:
+      - notContains:
+          path: spec.template.spec.containers[0].volumeMounts
+          any: true
+          content:
+            name: rapid-response-password
+            mountPath: /opt/sysdig/shield/etc/kubernetes/secrets/rapid-response
+            readOnly: true
+    template: templates/host/daemonset.yaml
+
+  - it: DaemonSet has no local-forwarder mount and no metrics port
+    set:
+      features:
+        investigations:
+          event_forwarder:
+            enabled: true
+      host:
+        additional_settings:
+          prometheus_exporter:
+            enabled: true
+    asserts:
+      - notContains:
+          path: spec.template.spec.containers[0].volumeMounts
+          any: true
+          content:
+            name: local-forwarder-config
+      - isNullOrEmpty:
+          path: spec.template.spec.containers[0].ports
+    template: templates/host/daemonset.yaml
+
+  - it: ClusterRole grants nodes/log for live logs
+    set:
+      features:
+        investigations:
+          live_logs:
+            enabled: true
+    asserts:
+      - matchRegex:
+          path: rules[?(@.resources[0]=='nodes/log')].resources[0]
+          pattern: nodes/log
+    template: templates/host/clusterrole.yaml

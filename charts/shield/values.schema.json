@@ -65,6 +65,47 @@
     "cluster_config",
     "sysdig_endpoint"
   ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "host": {
+            "properties": {
+              "image": {
+                "properties": {
+                  "shield_name": {
+                    "const": "host-shield"
+                  }
+                },
+                "required": [
+                  "shield_name"
+                ]
+              }
+            },
+            "required": [
+              "image"
+            ]
+          }
+        },
+        "required": [
+          "host"
+        ]
+      },
+      "then": {
+        "properties": {
+          "cluster_config": {
+            "properties": {
+              "cluster_type": {
+                "not": {
+                  "const": "gke-autopilot"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
   "$defs": {
     "ClusterConfig": {
       "type": "object",
@@ -445,6 +486,16 @@
             ]
           }
         },
+        "image": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "shield_name": {
+              "type": "string",
+              "description": "Host shield image name (agent-slim or host-shield)"
+            }
+          }
+        },
         "env": {
           "$ref": "#/$defs/EnvVars"
         },
@@ -475,6 +526,34 @@
           }
         }
       },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "image": {
+                "properties": {
+                  "shield_name": {
+                    "const": "host-shield"
+                  }
+                },
+                "required": [
+                  "shield_name"
+                ]
+              }
+            },
+            "required": [
+              "image"
+            ]
+          },
+          "then": {
+            "properties": {
+              "driver": {
+                "const": "universal_ebpf"
+              }
+            }
+          }
+        }
+      ],
       "required": [
         "driver"
       ]

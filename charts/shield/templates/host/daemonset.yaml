@@ -40,7 +40,7 @@ spec:
         {{- include "host.node_selector" . | nindent 8 }}
       imagePullSecrets:
         {{- toYaml .Values.host.image.pull_secrets | nindent 8 }}
-      {{- if not (include "host.driver.is_universal_ebpf" .) }}
+      {{- if not (or (include "host.driver.is_universal_ebpf" .) (include "host.is_host_shield" .)) }}
       initContainers:
         - name: sysdig-host-shield-kmodule
           image: {{ include "host.kmodule_image" . }}
@@ -110,6 +110,7 @@ spec:
         - name: sysdig-host-shield
           image: {{ include "host.shield_image" . }}
           imagePullPolicy: {{ .Values.host.image.pull_policy }}
+          args: ["run-all-namespaced"]
           resources:
             {{- (include "host.resources" .) | nindent 12 }}
           securityContext:
@@ -127,11 +128,12 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
-            {{- if and (include "host.driver.is_ebpf" .) (not (include "host.driver.is_universal_ebpf" .)) }}
+            {{- if and (include "host.driver.is_ebpf" .) (not (include "host.driver.is_universal_ebpf" .)) (not (include "host.is_host_shield" .)) }}
             - name: SYSDIG_BPF_PROBE
               value:
             {{- end }}
-            {{- if (include "host.driver.is_universal_ebpf" .) }}
+            {{- if (include "host.is_host_shield" .) }}
+            {{- else if (include "host.driver.is_universal_ebpf" .) }}
             - name: SYSDIG_AGENT_DRIVER
               value: universal_ebpf
             {{- else if and (include "host.driver.is_legacy_ebpf" .) (not (include "common.cluster_type.is_gke_autopilot" .)) }}
@@ -142,7 +144,7 @@ spec:
             {{- include "common.proxy.envs" . | nindent 12 }}
             {{- end }}
             {{- include "common.custom_ca.envs" (merge (dict) . (dict "CACertsPath" "/opt/draios/certificates/")) | nindent 12 }}
-            {{- if (include "host.rapid_response_enabled" .) }}
+            {{- if and (include "host.rapid_response_enabled" .) (not (include "host.is_host_shield" .)) }}
             - name: PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -161,7 +163,7 @@ spec:
             - containerPort: {{ dig "kspm_analyzer" "port" 12000 .Values.host.additional_settings }}
               name: kspm-analyzer
             {{- end }}
-            {{- if (dig "prometheus_exporter" "enabled" false .Values.host.additional_settings) }}
+            {{- if and (dig "prometheus_exporter" "enabled" false .Values.host.additional_settings) (not (include "host.is_host_shield" .)) }}
             - containerPort: {{ regexFind "[0-9]+$" (dig "prometheus_exporter" "listen_url" "0.0.0.0:9544" .Values.host.additional_settings) }}
               name: metrics
             {{- end }}
@@ -169,7 +171,7 @@ spec:
             httpGet:
               host: 127.0.0.1
               path: /healthz
-              port: 24483
+              port: {{ if (include "host.is_host_shield" .) }}{{ dig "monitoring_port" 8080 .Values.host.additional_settings }}{{ else }}24483{{ end }}
             initialDelaySeconds: 90
             periodSeconds: 10
             failureThreshold: 9
@@ -189,10 +191,25 @@ spec:
               name: run-vol
             - mountPath: /dev/shm
               name: dshm
+            {{- if (include "host.is_host_shield" .) }}
+            - mountPath: /opt/draios/etc/host-shield.yaml
+              name: host-shield-config
+              subPath: host-shield.yaml
+              readOnly: true
+            - mountPath: /etc/sysdig/secret-files
+              name: host-shield-secrets
+              readOnly: true
+            {{- if (include "host.rapid_response_enabled" .) }}
+            - mountPath: /opt/sysdig/shield/etc/kubernetes/secrets/rapid-response
+              name: rapid-response-password
+              readOnly: true
+            {{- end }}
+            {{- else }}
             - mountPath: /opt/draios/etc/kubernetes/config
               name: host-shield-config
             - mountPath: /opt/draios/etc/kubernetes/secrets
               name: host-shield-secrets
+            {{- end }}
             - mountPath: /etc/podinfo
               name: podinfo
           {{- /* Autopilot = false */}}
@@ -235,7 +252,7 @@ spec:
               name: host-tmp
           {{- end }}
           {{- end }}
-          {{- if .Values.features.investigations.event_forwarder.enabled }}
+          {{- if and .Values.features.investigations.event_forwarder.enabled (not (include "host.is_host_shield" .)) }}
             - mountPath: /opt/draios/etc/local_forwarder_config.yaml
               name: local-forwarder-config
               subPath: local_forwarder_config.yaml
@@ -258,12 +275,32 @@ spec:
         - name: dshm
           emptyDir:
             medium: Memory
+        {{- if (include "host.is_host_shield" .) }}
         - name: host-shield-config
           configMap:
             name: {{ include "host.fullname" . }}
         - name: host-shield-secrets
           secret:
             secretName: {{ include "common.credentials.access_key_secret_name" . }}
+            items:
+              - key: access-key
+                path: access-key
+        {{- if (include "host.rapid_response_enabled" .) }}
+        - name: rapid-response-password
+          secret:
+            secretName: {{ include "host.rapid_response_password_secret" . }}
+            items:
+              - key: {{ include "host.rapid_response_password_secret_key" . }}
+                path: password
+        {{- end }}
+        {{- else }}
+        - name: host-shield-config
+          configMap:
+            name: {{ include "host.fullname" . }}
+        - name: host-shield-secrets
+          secret:
+            secretName: {{ include "common.credentials.access_key_secret_name" . }}
+        {{- end }}
         - name: podinfo
           downwardAPI:
             defaultMode: 420
@@ -336,7 +373,7 @@ spec:
             path: /tmp
       {{- end }}
       {{- end }}
-      {{- if .Values.features.investigations.event_forwarder.enabled }}
+      {{- if and .Values.features.investigations.event_forwarder.enabled (not (include "host.is_host_shield" .)) }}
         - name: local-forwarder-config
           secret:
             {{- if eq .Values.features.investigations.event_forwarder.existing_secret "" }}

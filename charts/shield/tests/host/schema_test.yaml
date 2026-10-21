@@ -1,0 +1,62 @@
+suite: Host - JSON Schema Test
+values:
+  - ../values/base.yaml
+release:
+  name: release-name
+  namespace: shield-namespace
+templates:
+  - templates/host/daemonset.yaml
+tests:
+  - it: host-shield with kmod driver fails
+    set:
+      host:
+        driver: kmod
+        image:
+          shield_name: host-shield
+          tag: 0.20.0
+    asserts:
+      - failedTemplate:
+          errorPattern: "values don't meet the specifications"
+
+  - it: host-shield with legacy_ebpf driver fails
+    set:
+      host:
+        driver: legacy_ebpf
+        image:
+          shield_name: host-shield
+          tag: 0.20.0
+    asserts:
+      - failedTemplate:
+          errorPattern: "values don't meet the specifications"
+
+  - it: host-shield with universal_ebpf driver passes
+    set:
+      host:
+        driver: universal_ebpf
+        image:
+          shield_name: host-shield
+          tag: 0.20.0
+    asserts:
+      - notFailedTemplate: {}
+
+  - it: agent-slim with kmod driver passes
+    set:
+      host:
+        driver: kmod
+        image:
+          shield_name: agent-slim
+    asserts:
+      - notFailedTemplate: {}
+
+  - it: host-shield on gke-autopilot fails
+    set:
+      cluster_config:
+        cluster_type: gke-autopilot
+      host:
+        driver: universal_ebpf
+        image:
+          shield_name: host-shield
+          tag: 0.20.0
+    asserts:
+      - failedTemplate:
+          errorPattern: "values don't meet the specifications"
