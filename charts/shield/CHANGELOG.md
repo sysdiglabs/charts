@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.54.4
+### New Features
+* **shield** [0ee09129](https://github.com/sysdiglabs/charts/commit/0ee0912979d1867a889ac529918f1cd0382eee0c): grant cluster-shield discoverer its leader-election lease ([#2777](https://github.com/sysdiglabs/charts/issues/2777))
 # v1.54.3
 ### New Features
 * **shield** [aab48aae](https://github.com/sysdiglabs/charts/commit/aab48aae4da0e20e0461e8258fb6b6119fa13934): release cluster-shield 1.26.2 ([#2778](https://github.com/sysdiglabs/charts/issues/2778))
