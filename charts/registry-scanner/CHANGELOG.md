@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.11.5
+### Chores
+* **registry-scanner** [5c3609ea](https://github.com/sysdiglabs/charts/commit/5c3609eaa6240f399875189c063d18873ed22a39): Update to v0.13.0 ([#2781](https://github.com/sysdiglabs/charts/issues/2781))
 # v1.11.3
 ### Documentation
 * **registry-scanner** [f42ebfa2](https://github.com/sysdiglabs/charts/commit/f42ebfa2f9c6dfabac0e1e4855c24f8583abff96): clarify config.parallelGoRoutines ([#2728](https://github.com/sysdiglabs/charts/issues/2728))
