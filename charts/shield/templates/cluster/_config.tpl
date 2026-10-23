@@ -211,9 +211,11 @@
 {{/*
   Checks if the cluster requires the lease configuration for the posture feature.
   (either by the feature config or additional settings)
+  The lease is granted regardless of kspm_collector.transport_layer: the HTTP transport
+  relies on leader election, and a collector using NATS simply does not use it.
 */}}
 {{- define "cluster.need_posture_lease" -}}
-  {{- if and (eq (include "cluster.posture_enabled" .) "true") (eq (dig "kspm_collector" "transport_layer" "http" .Values.cluster.additional_settings) "http") -}}
+  {{- if eq (include "cluster.posture_enabled" .) "true" -}}
     {{- true -}}
   {{- end -}}
 {{- end }}
