@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **agent,shield** [9284e5a3](https://github.com/sysdiglabs/charts/commit/9284e5a38cbae112826ea139483291b877a3ec6b): release agent 14.8.2 ([#2779](https://github.com/sysdiglabs/charts/issues/2779))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-2.11.2...agent-2.11.3
+### Chores
+- **charts** [1c8cc2e8](https://github.com/sysdiglabs/charts/commit/1c8cc2e88c4a1fd26eae7f78e2b3a5c9ea22a3a7): mark standalone charts as deprecated ([#2784](https://github.com/sysdiglabs/charts/issues/2784))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-2.11.3...agent-2.11.4
