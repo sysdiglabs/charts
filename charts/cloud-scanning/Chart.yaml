@@ -3,12 +3,7 @@ name: cloud-scanning
 description: Sysdig Cloud Scanning
 
 type: application
-version: 0.4.1
+version: 0.4.2
+deprecated: true
 appVersion: 0.11.3
 home: https://sysdiglabs.github.io/cloud-connector
-
-maintainers:
-  - name: airadier
-    email: alvaro.iradier@sysdig.com
-  - name: nestorsalceda
-    email: nestor.salceda@sysdig.com

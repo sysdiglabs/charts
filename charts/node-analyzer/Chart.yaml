@@ -2,7 +2,8 @@ apiVersion: v2
 name: node-analyzer
 description: Sysdig Node Analyzer
 # currently matching Sysdig's appVersion 1.14.34
-version: 1.47.1
+version: 1.47.2
+deprecated: true
 appVersion: 12.9.2
 keywords:
   - monitoring
@@ -16,10 +17,6 @@ icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
 sources:
   - https://app.sysdigcloud.com/#/settings/user
   - https://github.com/draios/sysdig
-maintainers:
-  - name: chen-shmilovich-sysdig
-    email: chen.shmilovich@sysdig.com
-  - name: sysdiglabs
 dependencies:
   - name: common
     # repository: https://charts.sysdig.com

@@ -3,12 +3,11 @@ name: cluster-scanner
 description: Sysdig Cluster Scanner
 
 type: application
-version: 0.16.0
+version: 0.16.1
+deprecated: true
 appVersion: "0.1.0"
 home: https://www.sysdig.com/
 
-maintainers:
-  - name: sysdiglabs
 dependencies:
   - name: common
     # repository: https://charts.sysdig.com

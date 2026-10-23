@@ -2,31 +2,21 @@ apiVersion: v2
 name: sysdig-deploy
 description: A chart with various Sysdig components for Kubernetes
 type: application
-version: 1.121.4
-maintainers:
-  - name: AlbertoBarba
-    email: alberto.barba@sysdig.com
-  - name: aroberts87
-    email: adam.roberts@sysdig.com
-  - name: francesco-furlan
-    email: francesco.furlan@sysdig.com
-  - name: iurly
-    email: gerlando.falauto@sysdig.com
-  - name: mavimo
-    email: marcovito.moscaritolo@sysdig.com
+version: 1.121.5
+deprecated: true
 home: https://www.sysdig.com/
 icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
 dependencies:
   - name: admission-controller
     # repository: https://charts.sysdig.com
     repository: file://../admission-controller
-    version: ~0.18.2
+    version: ~0.18.3
     alias: admissionController
     condition: admissionController.enabled
   - name: agent
     # repository: https://charts.sysdig.com
     repository: file://../agent
-    version: ~2.11.3
+    version: ~2.11.4
     alias: agent
     condition: agent.enabled
   - name: common
@@ -36,30 +26,30 @@ dependencies:
   - name: node-analyzer
     # repository: https://charts.sysdig.com
     repository: file://../node-analyzer
-    version: ~1.47.1
+    version: ~1.47.2
     alias: nodeAnalyzer
     condition: nodeAnalyzer.enabled
   - name: cluster-scanner
     # repository: https://charts.sysdig.com
     repository: file://../cluster-scanner
-    version: ~0.16.0
+    version: ~0.16.1
     alias: clusterScanner
     condition: clusterScanner.enabled
   - name: kspm-collector
     # repository: https://charts.sysdig.com
     repository: file://../kspm-collector
-    version: ~0.20.2
+    version: ~0.20.3
     alias: kspmCollector
     condition: kspmCollector.enabled,global.kspm.deploy
   - name: rapid-response
     # repository: https://charts.sysdig.com
     repository: file://../rapid-response
-    version: ~0.11.3
+    version: ~0.11.4
     alias: rapidResponse
     condition: rapidResponse.enabled
   - name: cluster-shield
     # repository: https://charts.sysdig.com
     repository: file://../cluster-shield
-    version: ~1.26.3
+    version: ~1.26.4
     alias: clusterShield
     condition: clusterShield.enabled
