@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.121.5
+### Chores
+* **charts** [1c8cc2e8](https://github.com/sysdiglabs/charts/commit/1c8cc2e88c4a1fd26eae7f78e2b3a5c9ea22a3a7): mark standalone charts as deprecated ([#2784](https://github.com/sysdiglabs/charts/issues/2784))
 # v1.121.4
 ### Chores
 * **sysdig-deploy** [b9d2d223](https://github.com/sysdiglabs/charts/commit/b9d2d22340c09d50c0d7af0edac70d903d0657ff): Automatic version bump due to updated dependencies ([#2786](https://github.com/sysdiglabs/charts/issues/2786))
