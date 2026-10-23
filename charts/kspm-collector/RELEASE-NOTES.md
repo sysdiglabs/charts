@@ -1,5 +1,5 @@
 # What's Changed
 
 ### Chores
-- **kspm-collector** [791571f9](https://github.com/sysdiglabs/charts/commit/791571f983b96fd375f78100331af4b4507ae86c): bumped kspm-collector to 1.39.22 ([#2735](https://github.com/sysdiglabs/charts/issues/2735))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.20.1...kspm-collector-0.20.2
+- **charts** [1c8cc2e8](https://github.com/sysdiglabs/charts/commit/1c8cc2e88c4a1fd26eae7f78e2b3a5c9ea22a3a7): mark standalone charts as deprecated ([#2784](https://github.com/sysdiglabs/charts/issues/2784))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/kspm-collector-0.20.2...kspm-collector-0.20.3
