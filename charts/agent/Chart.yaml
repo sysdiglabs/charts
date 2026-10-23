@@ -14,17 +14,6 @@ keywords:
 - metric
 - troubleshooting
 - run-time
-maintainers:
-- email: alberto.barba@sysdig.com
-  name: AlbertoBarba
-- email: adam.roberts@sysdig.com
-  name: aroberts87
-- email: francesco.furlan@sysdig.com
-  name: francesco-furlan
-- email: gerlando.falauto@sysdig.com
-  name: iurly
-- email: marcovito.moscaritolo@sysdig.com
-  name: mavimo
 name: agent
 sources:
 - https://app.sysdigcloud.com/#/settings/user

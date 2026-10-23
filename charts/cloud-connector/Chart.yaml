@@ -7,6 +7,3 @@ version: 0.8.9
 deprecated: true
 appVersion: 0.16.48
 home: https://sysdiglabs.github.io/cloud-connector
-
-maintainers:
-  - name: sysdiglabs
