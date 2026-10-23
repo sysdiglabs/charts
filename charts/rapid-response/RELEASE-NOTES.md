@@ -1,5 +1,5 @@
 # What's Changed
 
 ### Chores
-- **rapid-response** [f4a3d126](https://github.com/sysdiglabs/charts/commit/f4a3d126a2ad7e3a5bbc9f46cabe84d123a98c2a): bump rapid-response version to latest ([#2771](https://github.com/sysdiglabs/charts/issues/2771))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/rapid-response-0.11.2...rapid-response-0.11.3
+- **charts** [1c8cc2e8](https://github.com/sysdiglabs/charts/commit/1c8cc2e88c4a1fd26eae7f78e2b3a5c9ea22a3a7): mark standalone charts as deprecated ([#2784](https://github.com/sysdiglabs/charts/issues/2784))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/rapid-response-0.11.3...rapid-response-0.11.4
