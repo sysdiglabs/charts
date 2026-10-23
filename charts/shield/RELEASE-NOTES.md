@@ -1,5 +1,5 @@
 # What's Changed
 
 ### New Features
-- **agent,shield** [9284e5a3](https://github.com/sysdiglabs/charts/commit/9284e5a38cbae112826ea139483291b877a3ec6b): release agent 14.8.2 ([#2779](https://github.com/sysdiglabs/charts/issues/2779))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.54.4...shield-1.54.5
+- **shield,cluster-shield** [6df3338a](https://github.com/sysdiglabs/charts/commit/6df3338adf522136a8b7aebb086379c115d9c22d): release cluster-shield 1.26.3 ([#2785](https://github.com/sysdiglabs/charts/issues/2785))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/shield-1.54.5...shield-1.54.6
