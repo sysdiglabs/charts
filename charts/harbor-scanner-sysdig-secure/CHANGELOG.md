@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.9.1
+### Chores
+* **charts** [1c8cc2e8](https://github.com/sysdiglabs/charts/commit/1c8cc2e88c4a1fd26eae7f78e2b3a5c9ea22a3a7): mark standalone charts as deprecated ([#2784](https://github.com/sysdiglabs/charts/issues/2784))
 # v0.8.0
 ### New Features
 * **harbor-scanner-sysdig-secure** [79e4c75a](https://github.com/sysdiglabs/charts/commit/79e4c75a2b891425fe63ca98707798fdb6983d53): Pump Harbor scanner version ([#1751](https://github.com/sysdiglabs/charts/issues/1751)) ([#1752](https://github.com/sysdiglabs/charts/issues/1752))
