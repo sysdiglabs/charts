@@ -201,9 +201,13 @@ ACR with an Azure identity auth method (managedIdentity or workloadIdentity): no
 {{- end }}
 
 {{/*
-Fail if static registry credentials are set together with an Azure identity auth method
+Fail on an unknown ACR auth method, or static registry credentials set together with an Azure identity auth method
 */}}
 {{- define "registry-scanner.validateAzure" -}}
+  {{- $authMethods := list "password" "managedIdentity" "workloadIdentity" }}
+  {{- if and (eq .Values.config.registryType "acr") (not (has .Values.config.azure.authMethod $authMethods)) }}
+    {{- fail (printf "config.azure.authMethod %q is invalid: use one of %s" (toString .Values.config.azure.authMethod) (join ", " $authMethods)) }}
+  {{- end }}
   {{- if and (include "registry-scanner.acrIdentity" .) (or .Values.config.registryUser .Values.config.registryPassword) }}
     {{- fail (printf "config.registryUser and config.registryPassword must be empty when config.azure.authMethod is %s" .Values.config.azure.authMethod) }}
   {{- end }}

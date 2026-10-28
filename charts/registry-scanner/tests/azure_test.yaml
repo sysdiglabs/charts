@@ -88,7 +88,7 @@ tests:
           content:
             name: REGISTRYSCANNER_REGISTRY_PASSWORD
   - it: fails when registryUser is set with an identity auth method
-    template: templates/cronjob.yaml
+    template: templates/secret.yaml
     set:
       config:
         registryType: acr
@@ -98,9 +98,10 @@ tests:
     asserts:
       - failedTemplate:
           errorMessage: "config.registryUser and config.registryPassword must be empty when config.azure.authMethod is managedIdentity"
-  - it: fails when registryPassword is set with an identity auth method
+  - it: fails when registryPassword is set with an identity auth method and an existing secret
     template: templates/cronjob.yaml
     set:
+      existingSecretName: my-secret
       config:
         registryType: acr
         registryPassword: pass
@@ -176,3 +177,13 @@ tests:
           any: true
           content:
             name: REGISTRYSCANNER_REGISTRY_PASSWORD
+  - it: fails on an unknown authMethod for acr
+    template: templates/secret.yaml
+    set:
+      config:
+        registryType: acr
+        azure:
+          authMethod: managedIdentitiy
+    asserts:
+      - failedTemplate:
+          errorMessage: "config.azure.authMethod \"managedIdentitiy\" is invalid: use one of password, managedIdentity, workloadIdentity"
