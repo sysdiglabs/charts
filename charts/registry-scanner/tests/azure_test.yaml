@@ -1,0 +1,178 @@
+suite: Registry Scanner - Azure ACR identity auth
+templates:
+  - templates/configmap.yaml
+  - templates/secret.yaml
+  - templates/cronjob.yaml
+  - templates/job.yaml
+set:
+  config.secureAPIToken: token
+  scanOnStart.enabled: true
+tests:
+  - it: renders acrAuth into the configmap for managedIdentity
+    template: templates/configmap.yaml
+    set:
+      config:
+        registryType: acr
+        azure:
+          authMethod: managedIdentity
+    asserts:
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: "\\n\\s+acrAuth: managedIdentity\\n"
+  - it: renders acrClientId into the configmap when set
+    template: templates/configmap.yaml
+    set:
+      config:
+        registryType: acr
+        azure:
+          authMethod: workloadIdentity
+          clientId: 00000000-0000-0000-0000-000000000001
+    asserts:
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: "\\n\\s+acrClientId: \"00000000-0000-0000-0000-000000000001\"\\n"
+  - it: renders acrResourceId into the configmap when set
+    template: templates/configmap.yaml
+    set:
+      config:
+        registryType: acr
+        azure:
+          authMethod: managedIdentity
+          resourceId: /subscriptions/sub/resourceGroups/rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id
+    asserts:
+      - matchRegex:
+          path: data['config.yaml']
+          pattern: "\\n\\s+acrResourceId: \"/subscriptions/sub/resourceGroups/rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id\"\\n"
+  - it: does not render the registry user/pass placeholders in the configmap for identity auth
+    template: templates/configmap.yaml
+    set:
+      config:
+        registryType: acr
+        azure:
+          authMethod: managedIdentity
+    asserts:
+      - notMatchRegex:
+          path: data['config.yaml']
+          pattern: "from-secret\\n\\s+pass:|user: from-secret|pass: from-secret"
+  - it: omits registry user/password from the secret for identity auth
+    template: templates/secret.yaml
+    set:
+      config:
+        registryType: acr
+        azure:
+          authMethod: workloadIdentity
+    asserts:
+      - isNotEmpty:
+          path: data.secureAPIToken
+      - notExists:
+          path: data.registryUser
+      - notExists:
+          path: data.registryPassword
+  - it: does not render registry user/password env vars on the controller for identity auth
+    template: templates/cronjob.yaml
+    set:
+      existingSecretName: my-secret
+      config:
+        registryType: acr
+        azure:
+          authMethod: managedIdentity
+    asserts:
+      - notContains:
+          path: spec.jobTemplate.spec.template.spec.containers[0].env
+          any: true
+          content:
+            name: REGISTRYSCANNER_REGISTRY_USER
+      - notContains:
+          path: spec.jobTemplate.spec.template.spec.containers[0].env
+          any: true
+          content:
+            name: REGISTRYSCANNER_REGISTRY_PASSWORD
+  - it: fails when registryUser is set with an identity auth method
+    template: templates/cronjob.yaml
+    set:
+      config:
+        registryType: acr
+        registryUser: user
+        azure:
+          authMethod: managedIdentity
+    asserts:
+      - failedTemplate:
+          errorMessage: "config.registryUser and config.registryPassword must be empty when config.azure.authMethod is managedIdentity"
+  - it: fails when registryPassword is set with an identity auth method
+    template: templates/cronjob.yaml
+    set:
+      config:
+        registryType: acr
+        registryPassword: pass
+        azure:
+          authMethod: workloadIdentity
+    asserts:
+      - failedTemplate:
+          errorMessage: "config.registryUser and config.registryPassword must be empty when config.azure.authMethod is workloadIdentity"
+  - it: adds the workload identity label to the controller pod for workloadIdentity
+    template: templates/cronjob.yaml
+    set:
+      config:
+        registryType: acr
+        azure:
+          authMethod: workloadIdentity
+    asserts:
+      - equal:
+          path: spec.jobTemplate.spec.template.metadata.labels["azure.workload.identity/use"]
+          value: "true"
+  - it: adds the workload identity label to the scanOnStart job pod for workloadIdentity
+    template: templates/job.yaml
+    set:
+      config:
+        registryType: acr
+        azure:
+          authMethod: workloadIdentity
+    asserts:
+      - equal:
+          path: spec.template.metadata.labels["azure.workload.identity/use"]
+          value: "true"
+  - it: does not pass the workload identity label to scan-job pods
+    template: templates/configmap.yaml
+    set:
+      config:
+        registryType: acr
+        azure:
+          authMethod: workloadIdentity
+    asserts:
+      - notMatchRegex:
+          path: data['config.yaml']
+          pattern: azure.workload.identity
+  - it: does not add the workload identity label for managedIdentity
+    template: templates/cronjob.yaml
+    set:
+      config:
+        registryType: acr
+        azure:
+          authMethod: managedIdentity
+    asserts:
+      - notExists:
+          path: spec.jobTemplate.spec.template.metadata.labels["azure.workload.identity/use"]
+  - it: keeps password auth for acr by default
+    set:
+      config:
+        registryType: acr
+        registryUser: user
+        registryPassword: pass
+    asserts:
+      - template: templates/secret.yaml
+        isNotEmpty:
+          path: data.registryUser
+      - template: templates/configmap.yaml
+        matchRegex:
+          path: data['config.yaml']
+          pattern: "user: from-secret"
+      - template: templates/configmap.yaml
+        notMatchRegex:
+          path: data['config.yaml']
+          pattern: acrAuth
+      - template: templates/cronjob.yaml
+        contains:
+          path: spec.jobTemplate.spec.template.spec.containers[0].env
+          any: true
+          content:
+            name: REGISTRYSCANNER_REGISTRY_PASSWORD
