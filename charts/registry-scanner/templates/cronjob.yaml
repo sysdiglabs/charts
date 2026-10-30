@@ -1,5 +1,6 @@
 {{- include "registry-scanner.checkCronSchedule" . }}
 {{- include "registry-scanner.validateTimeZone" . }}
+{{- include "registry-scanner.validateAzure" . }}
 {{- if (include "registry-scanner.kubeVersionLessThan" (dict "root" . "major" 1 "minor" 21)) }}
 apiVersion: batch/v1beta1
 {{- else }}
