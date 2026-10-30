@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.55.0
+### New Features
+* **shield** [5cebe611](https://github.com/sysdiglabs/charts/commit/5cebe6119d67ed5b32f71fb10931b7979c9ab2c2): release cluster-shield 1.27.0 ([#2796](https://github.com/sysdiglabs/charts/issues/2796))
 # v1.54.7
 ### New Features
 * **agent,shield** [99f6f6c8](https://github.com/sysdiglabs/charts/commit/99f6f6c809ef76b38042f18e93c67cda623e5206): release agent 14.8.3 ([#2788](https://github.com/sysdiglabs/charts/issues/2788))
