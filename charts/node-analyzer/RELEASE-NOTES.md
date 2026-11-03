@@ -1,5 +1,5 @@
 # What's Changed
 
 ### Chores
-- **charts** [1c8cc2e8](https://github.com/sysdiglabs/charts/commit/1c8cc2e88c4a1fd26eae7f78e2b3a5c9ea22a3a7): mark standalone charts as deprecated ([#2784](https://github.com/sysdiglabs/charts/issues/2784))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.47.1...node-analyzer-1.47.2
+- **node-analyzer** [049304b6](https://github.com/sysdiglabs/charts/commit/049304b669bb7c222fdb4ab8aa92c30bd705a6d5): bump sysdig/vuln-runtime-scanner to v1.8.12 ([#2800](https://github.com/sysdiglabs/charts/issues/2800))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.47.2...node-analyzer-1.47.3

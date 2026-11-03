@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.47.3
+### Chores
+* **node-analyzer** [049304b6](https://github.com/sysdiglabs/charts/commit/049304b669bb7c222fdb4ab8aa92c30bd705a6d5): bump sysdig/vuln-runtime-scanner to v1.8.12 ([#2800](https://github.com/sysdiglabs/charts/issues/2800))
 # v1.47.2
 ### Chores
 * **charts** [1c8cc2e8](https://github.com/sysdiglabs/charts/commit/1c8cc2e88c4a1fd26eae7f78e2b3a5c9ea22a3a7): mark standalone charts as deprecated ([#2784](https://github.com/sysdiglabs/charts/issues/2784))
