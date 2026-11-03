@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.55.1
+### Bug Fixes
+* **shield** [2008d234](https://github.com/sysdiglabs/charts/commit/2008d2341a34e70b5d519963a9c4620277136ddc): protect component and GKE Autopilot labels ([#2799](https://github.com/sysdiglabs/charts/issues/2799))
 # v1.55.0
 ### New Features
 * **shield** [5cebe611](https://github.com/sysdiglabs/charts/commit/5cebe6119d67ed5b32f71fb10931b7979c9ab2c2): release cluster-shield 1.27.0 ([#2796](https://github.com/sysdiglabs/charts/issues/2796))
