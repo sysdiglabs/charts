@@ -32,6 +32,22 @@ If release name contains chart name it will be used as a full name.
   {{- $proxy | toYaml -}}
 {{- end -}}
 
+{{- /* Shared host-shield.yaml sysdig_endpoint copy. No credentials. */ -}}
+{{- define "host.shield_config.sysdig_endpoint" -}}
+{{- $ep := pick (deepCopy .Values.sysdig_endpoint) "region" "api_url" "collector" -}}
+{{- $ep | toYaml -}}
+{{- end -}}
+
+{{- /* Shared host-shield.yaml ssl. Input: dict "ctx" <root> "CACertsPath" <path> */ -}}
+{{- define "host.shield_config.ssl" -}}
+{{- $ssl := dict "verify" .ctx.Values.ssl.verify -}}
+{{- if (include "common.custom_ca.enabled" .ctx) -}}
+  {{- $path := include "common.custom_ca.path" (merge (dict) .ctx (dict "CACertsPath" .CACertsPath)) -}}
+  {{- $_ := set $ssl "ca" (dict "cert_path" $path) -}}
+{{- end -}}
+{{- $ssl | toYaml -}}
+{{- end -}}
+
 {{- define "host.dragent_proxy_config" -}}
 {{- if (include "common.proxy.enabled" . ) -}}
     {{- $proxyConfig := dict -}}
@@ -151,6 +167,12 @@ true
 {{- end }}
 {{- end }}
 
+{{- define "host.is_host_shield" -}}
+{{- if eq .Values.host.image.shield_name "host-shield" -}}
+true
+{{- end -}}
+{{- end -}}
+
 {{- /*
 Whether the host shield reads Live Logs container logs through the kubelet's
 fine-grained log endpoint.
@@ -163,7 +185,9 @@ Only a tag that parses as semver and is < 14.8.0 is treated as legacy; anything 
 (digest pins, dev tags) is assumed to be a current image.
 */ -}}
 {{- define "host.kubelet_log_access.is_fine_grained" -}}
-{{- if and (include "common.semver.is_valid" .Values.host.image.tag) (semverCompare "< 14.8.0" .Values.host.image.tag) -}}
+{{- if (include "host.is_host_shield" .) -}}
+true
+{{- else if and (include "common.semver.is_valid" .Values.host.image.tag) (semverCompare "< 14.8.0" .Values.host.image.tag) -}}
 {{- else -}}
 true
 {{- end -}}

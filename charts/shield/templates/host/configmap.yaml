@@ -11,6 +11,10 @@ metadata:
     {{- $annotations | nindent 4 }}
   {{- end }}
 data:
+  {{- if (include "host.is_host_shield" .) }}
+  host-shield.yaml: |
+    {{- include "host.host_shield.linux_config" . | nindent 4 }}
+  {{- else }}
   host-shield.yaml: |
     {{- include "host.host_shield_config" . | nindent 4 }}
   dragent.yaml: |
@@ -20,4 +24,5 @@ data:
     {{- with .Values.features }}
     {{- toYaml (dig (include "host.monitor_key" .) "prometheus" "prometheus_yaml" list .) | nindent 4 }}
     {{- end }}
+  {{- end }}
   {{- end }}
