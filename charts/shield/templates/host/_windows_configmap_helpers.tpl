@@ -30,17 +30,7 @@
 {{- define "host.windows.host_shield_config" }}
 {{- $config := dict }}
 {{- $featuresConfig := dict -}}
-{{- $sysdigEndpointWhitelist := list
-    "region"
-    "api_url"
-    "collector"
--}}
-{{- $sysdigEndpointConfig := dict -}}
-{{- range $k, $v := .Values.sysdig_endpoint -}}
-    {{- if has $k $sysdigEndpointWhitelist -}}
-        {{- $_ := set $sysdigEndpointConfig $k $v -}}
-    {{- end -}}
-{{- end -}}
+{{- $sysdigEndpointConfig := include "host.shield_config.sysdig_endpoint" . | fromYaml -}}
 {{- if (include "common.is_alt_region" .) -}}
   {{- if not (include "host.windows.supports_alt_regions" .) -}}
     {{- $_ := set $sysdigEndpointConfig "region" "custom" -}}
@@ -69,11 +59,7 @@
 {{- end -}}
 {{- $_ := set $config "cluster_config" $clusterConfig -}}
 
-{{- $sslConfig := dict "verify" .Values.ssl.verify -}}
-{{- if (include "common.custom_ca.enabled" .) }}
-  {{- $path := (include "common.custom_ca.path" (merge (dict) . (dict "CACertsPath" "certificates/"))) }}
-  {{- $_ := set $sslConfig "ca" (dict "cert_path" $path) }}
-{{- end -}}
+{{- $sslConfig := include "host.shield_config.ssl" (dict "ctx" . "CACertsPath" "certificates/") | fromYaml -}}
 
 {{- $_ := set $config "ssl" $sslConfig -}}
 
