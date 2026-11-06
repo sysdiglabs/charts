@@ -1,5 +1,5 @@
 # What's Changed
 
 ### Chores
-- **node-analyzer** [049304b6](https://github.com/sysdiglabs/charts/commit/049304b669bb7c222fdb4ab8aa92c30bd705a6d5): bump sysdig/vuln-runtime-scanner to v1.8.12 ([#2800](https://github.com/sysdiglabs/charts/issues/2800))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.47.2...node-analyzer-1.47.3
+- **sysdig-deploy, node-analyzer** [24a499aa](https://github.com/sysdiglabs/charts/commit/24a499aa3b49fecffc27ba1581e2acf2ae9c17b9): bump host-scanner to v0.19.0 ([#2801](https://github.com/sysdiglabs/charts/issues/2801))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.47.3...node-analyzer-1.48.0
