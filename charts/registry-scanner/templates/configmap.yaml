@@ -11,8 +11,10 @@ data:
     # Registry configuration
     registry:
       url: {{ .Values.config.registryURL }}
+      {{- if not (include "registry-scanner.acrIdentity" .) }}
       user: from-secret
       pass: from-secret
+      {{- end }}
       type: {{ .Values.config.registryType }}
       {{- if .Values.config.registryAccountId }}
       accountId: {{ .Values.config.registryAccountId }}
@@ -45,6 +47,15 @@ data:
       {{- end }}
       {{- if .Values.config.registryApiUrl }}
       api: {{ .Values.config.registryApiUrl }}
+      {{- end }}
+      {{- if include "registry-scanner.acrIdentity" . }}
+      acrAuth: {{ .Values.config.azure.authMethod }}
+      {{- with .Values.config.azure.clientId }}
+      acrClientId: {{ . | quote }}
+      {{- end }}
+      {{- with .Values.config.azure.resourceId }}
+      acrResourceId: {{ . | quote }}
+      {{- end }}
       {{- end }}
       {{- if .Values.config.aws.managementAccountRoleARN }}
       managementAccountRoleARN: {{ .Values.config.aws.managementAccountRoleARN }}
