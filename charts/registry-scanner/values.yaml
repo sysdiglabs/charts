@@ -37,9 +37,9 @@ config:
   # Ignore TLS certificate for IAM API. Applicable only for ICR registry type.
   icrIamApiSkipTLS: false
   aws:
-    # The AWS credentials: `AccessKeyId`.
+    # The AWS credentials: `AccessKeyId`. Leave empty to use an IAM role for the service account (EKS, ROSA).
     accessKeyId: ""
-    # The AWS credentials: `SecretAccessKey`.
+    # The AWS credentials: `SecretAccessKey`. Leave empty to use an IAM role for the service account (EKS, ROSA).
     secretAccessKey: ""
     # For single account. It is the region where the registry is located.
     region: "us-east-1"
@@ -193,6 +193,7 @@ serviceAccount:
   create: true
   # The additional annotations to add to the service account.
   # For `config.azure.authMethod: workloadIdentity`, set `azure.workload.identity/client-id` here.
+  # For ECR with an IAM role for the service account (EKS, ROSA), set `eks.amazonaws.com/role-arn` here.
   annotations: {}
   # The name of the service account to use.
   # If the value is not set and create is set to `true`, a name is generated using the fullname template.
@@ -206,7 +207,7 @@ nameOverride: ""
 fullnameOverride: ""
 
 # Specify the name of a Kubernetes secret containing 'secureAPIToken', 'registryUser', and 'registryPassword' entries.
-# If you are using `ecr` as `registryType`, ensure that you add 'accessKeyId', 'secretAccessKey', and 'region' entries.
+# If you are using `ecr` as `registryType`, ensure that you add an 'aws_region' entry, plus 'aws_access_key_id' and 'aws_secret_access_key' unless you use an IAM role for the service account.
 existingSecretName: ""
 
 # Pod annotations for the Registry scanner.
