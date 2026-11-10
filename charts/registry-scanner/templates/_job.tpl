@@ -88,6 +88,8 @@
                 name: {{ .Values.existingSecretName }}
                 {{- end }}
                 key: aws_access_key_id
+                {{- /* absent when the service account is annotated outside the chart */}}
+                optional: true
             {{- end }}
           - name: AWS_SECRET_ACCESS_KEY
             {{- if contains "true" (include "registry-scanner.eksWithSA" .)}}
@@ -101,6 +103,7 @@
                 name: {{ .Values.existingSecretName }}
                 {{- end }}
                 key: aws_secret_access_key
+                optional: true
             {{- end }}
           - name: AWS_REGION
             valueFrom:
