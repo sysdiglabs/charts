@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.12.1
+### Bug Fixes
+* **registry-scanner** [83737428](https://github.com/sysdiglabs/charts/commit/83737428a5b8ae9b8e8a69ec11ea42f1127b634c): don't require ECR access keys when the service account is annotated outside the chart ([#2808](https://github.com/sysdiglabs/charts/issues/2808))
 # v1.11.5
 ### Chores
 * **registry-scanner** [5c3609ea](https://github.com/sysdiglabs/charts/commit/5c3609eaa6240f399875189c063d18873ed22a39): Update to v0.13.0 ([#2781](https://github.com/sysdiglabs/charts/issues/2781))
