@@ -210,11 +210,20 @@ jobs:
             }' rh-shield-operator/bundle/manifests/rh-shield-operator.clusterserviceversion.yaml
             yq e -i '.annotations."com.redhat.openshift.versions" = "v4.8-v4.20"' rh-shield-operator/bundle/metadata/annotations.yaml
 
+      - name: Generate GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          app-id: ${{ secrets.SYSDIGLABS_GHA_APP_ID }}
+          private-key: ${{ secrets.SYSDIGLABS_GHA_APP_PRIVATE_KEY }}
+          permission-contents: write
+          permission-pull-requests: write
+
       - name: Open Pull Request for Bundle update
         uses: peter-evans/create-pull-request@15733dbdfeedb4f7fdb73d13c6f5ac83b710fab8 # v8.1.2
         id: open-pr
         with:
-          token: ${{ secrets.TOOLS_JENKINS_ADMIN_ACCESS_GITHUB_TOKEN }}
+          token: ${{ steps.app-token.outputs.token }}
           add-paths: |
             rh-shield-operator/bundle/
             rh-shield-operator/config/
