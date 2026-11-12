@@ -19,7 +19,16 @@ jobs:
       - name: Install Updatecli in the runner
         uses: updatecli/updatecli-action@93ae2608256484ef8598e902aa675bbc9e278e4e # v3.10.0
 
+      - name: Generate GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          app-id: ${{ secrets.SYSDIGLABS_GHA_APP_ID }}
+          private-key: ${{ secrets.SYSDIGLABS_GHA_APP_PRIVATE_KEY }}
+          permission-contents: write
+          permission-pull-requests: write
+
       - name: Run Updatecli
         run: "updatecli apply --config .github/updatecli.d/config-update-kubectl-image.yaml"
         env:
-          GITHUB_TOKEN: "${{ secrets.TOOLS_JENKINS_ADMIN_ACCESS_GITHUB_TOKEN }}"
+          GITHUB_TOKEN: "${{ steps.app-token.outputs.token }}"
