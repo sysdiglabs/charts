@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.20.4
+### Chores
+* **kspm-collector** [14aed6aa](https://github.com/sysdiglabs/charts/commit/14aed6aa6b4f8841708f0c3e146c150d00be9d7f): bump kspm-collector to 1.39.23 ([#2813](https://github.com/sysdiglabs/charts/issues/2813))
 # v0.20.3
 ### Chores
 * **charts** [1c8cc2e8](https://github.com/sysdiglabs/charts/commit/1c8cc2e88c4a1fd26eae7f78e2b3a5c9ea22a3a7): mark standalone charts as deprecated ([#2784](https://github.com/sysdiglabs/charts/issues/2784))
