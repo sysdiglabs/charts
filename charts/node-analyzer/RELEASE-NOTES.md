@@ -1,5 +1,5 @@
 # What's Changed
 
 ### Chores
-- **sysdig-deploy, node-analyzer** [24a499aa](https://github.com/sysdiglabs/charts/commit/24a499aa3b49fecffc27ba1581e2acf2ae9c17b9): bump host-scanner to v0.19.0 ([#2801](https://github.com/sysdiglabs/charts/issues/2801))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.47.3...node-analyzer-1.48.0
+- **sysdig-deploy, node-analyzer** [585e3e52](https://github.com/sysdiglabs/charts/commit/585e3e522974f3908129327b601dcba322e6bd4e): bump host-scanner to v0.19.1 ([#2815](https://github.com/sysdiglabs/charts/issues/2815))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/node-analyzer-1.48.0...node-analyzer-1.48.1
