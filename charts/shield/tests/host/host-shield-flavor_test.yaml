@@ -221,22 +221,40 @@ tests:
           pattern: integrations|transmit_message_types
     template: templates/host/configmap.yaml
 
-  - it: maps legacy responding and monitoring keys
+  - it: does not render the monitor block, which hostconfig rejects
     set:
       features:
-        respond: null
+        monitor:
+          statsd:
+            enabled: true
+    asserts:
+      - notMatchRegex:
+          path: data['host-shield.yaml']
+          pattern: '(^|\n)\s*monitor:'
+    template: templates/host/configmap.yaml
+
+  - it: does not render the monitor block for legacy monitoring keys
+    set:
+      features:
         monitor: null
-        responding:
-          response_actions:
-            kill_process:
-              trigger: all
         monitoring:
           statsd:
             enabled: true
     asserts:
-      - matchRegex:
+      - notMatchRegex:
           path: data['host-shield.yaml']
-          pattern: 'monitor:(\n\s+\w+:\n\s+enabled: false)*\n\s+statsd:\n\s+enabled: true'
+          pattern: '(^|\n)\s*monitor:'
+    template: templates/host/configmap.yaml
+
+  - it: maps legacy responding keys
+    set:
+      features:
+        respond: null
+        responding:
+          response_actions:
+            kill_process:
+              trigger: all
+    asserts:
       - matchRegex:
           path: data['host-shield.yaml']
           pattern: 'respond:\n\s+response_actions:\n\s+kill_process:\n\s+trigger: all'

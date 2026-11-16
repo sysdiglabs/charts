@@ -64,16 +64,6 @@
   {{- end }}
   {{- $_ := set $out "respond" $respond }}
 {{- end }}
-{{- with (get $features (include "host.monitor_key" $features)) }}
-  {{- $src := . }}
-  {{- $mon := dict }}
-  {{- range $k := list "app_checks" "java_management_extensions" "prometheus" "statsd" }}
-    {{- if hasKey $src $k }}
-      {{- $_ := set $mon $k (pick (get $src $k) "enabled") }}
-    {{- end }}
-  {{- end }}
-  {{- $_ := set $out "monitor" $mon }}
-{{- end }}
 {{- $out | toYaml }}
 {{- end }}
 
