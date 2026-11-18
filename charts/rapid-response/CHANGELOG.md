@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v0.11.6
+### Chores
+* **shield,registry-scanner,cloud-bench,common,sysdig-deploy,admission-controller,agent,node-analyzer,cluster-scanner,kspm-collector,rapid-response,cluster-shield** [caa53f0b](https://github.com/sysdiglabs/charts/commit/caa53f0b48852e93280bbc105a624e4fba698a95): re-release charts signed with the new GPG key ([#2823](https://github.com/sysdiglabs/charts/issues/2823))
 # v0.11.5
 ### Chores
 * **rapid-response** [4cc93c21](https://github.com/sysdiglabs/charts/commit/4cc93c218f6f677e9eb13932ae95e46962eab6d0): bump rapid-response version to latest ([#2811](https://github.com/sysdiglabs/charts/issues/2811))
