@@ -41,14 +41,24 @@ jobs:
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
+      - name: Generate GitHub App token
+        if: steps.dependent_files.outputs.any_changed == 'true'
+        id: app-token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          app-id: ${{ secrets.SYSDIGLABS_GHA_APP_ID }}
+          private-key: ${{ secrets.SYSDIGLABS_GHA_APP_PRIVATE_KEY }}
+          permission-contents: write
+          permission-pull-requests: write
+
       - name: Create Pull Request
         if: steps.dependent_files.outputs.any_changed == 'true'
-        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
+        uses: peter-evans/create-pull-request@15733dbdfeedb4f7fdb73d13c6f5ac83b710fab8 # v8.1.2
         with:
           title: "chore(sysdig-deploy): Automatic version bump due to updated dependencies"
           base: main
           delete-branch: true
           labels: automated PR
-          token: ${{ secrets.TOOLS_JENKINS_ADMIN_ACCESS_GITHUB_TOKEN }}
+          token: ${{ steps.app-token.outputs.token }}
           add-paths: charts/sysdig-deploy/Chart.yaml
           commit-message: "chore: Updating sysdig-deploy version"

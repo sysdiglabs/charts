@@ -1,5 +1,5 @@
 # What's Changed
 
-### New Features
-- **shield,sysdig-deploy** [75d740ba](https://github.com/sysdiglabs/charts/commit/75d740ba943acc21ab118f2402609e52bb5cca5a): add jp1 region codes support ([#2684](https://github.com/sysdiglabs/charts/issues/2684))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/common-1.5.1...common-1.6.0
+### Chores
+- **shield,registry-scanner,cloud-bench,common,sysdig-deploy,admission-controller,agent,node-analyzer,cluster-scanner,kspm-collector,rapid-response,cluster-shield** [caa53f0b](https://github.com/sysdiglabs/charts/commit/caa53f0b48852e93280bbc105a624e4fba698a95): re-release charts signed with the new GPG key ([#2823](https://github.com/sysdiglabs/charts/issues/2823))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/common-1.6.0...common-1.6.1

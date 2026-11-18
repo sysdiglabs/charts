@@ -615,3 +615,13 @@ tests:
       - equal:
           path: metadata.labels["env"]
           value: component-workload
+
+  - it: host_windows.labels cannot override the built-in sysdig/component label
+    set:
+      host_windows:
+        labels:
+          sysdig/component: override
+    asserts:
+      - equal:
+          path: metadata.labels["sysdig/component"]
+          value: host

@@ -9,7 +9,7 @@ scms:
       owner: "sysdiglabs"
       repository: "charts"
       token: '{{ requiredEnv "GITHUB_TOKEN" }}'
-      username: draios-jenkins
+      username: "x-access-token"
       branch: "main"
       hidecredit: true
 

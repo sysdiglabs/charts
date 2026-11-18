@@ -10,6 +10,30 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.123.1
+### Chores
+* **shield,registry-scanner,cloud-bench,common,sysdig-deploy,admission-controller,agent,node-analyzer,cluster-scanner,kspm-collector,rapid-response,cluster-shield** [caa53f0b](https://github.com/sysdiglabs/charts/commit/caa53f0b48852e93280bbc105a624e4fba698a95): re-release charts signed with the new GPG key ([#2823](https://github.com/sysdiglabs/charts/issues/2823))
+# v1.123.0
+### Chores
+* **sysdig-deploy, node-analyzer** [5cb5958e](https://github.com/sysdiglabs/charts/commit/5cb5958e054374e44ccd4c9173a34aee6e91d75a): bump sysdig/kspm-analyzer to 1.51.0 ([#2816](https://github.com/sysdiglabs/charts/issues/2816))
+# v1.122.3
+### Chores
+* **sysdig-deploy, node-analyzer** [585e3e52](https://github.com/sysdiglabs/charts/commit/585e3e522974f3908129327b601dcba322e6bd4e): bump host-scanner to v0.19.1 ([#2815](https://github.com/sysdiglabs/charts/issues/2815))
+# v1.122.2
+### Chores
+* **sysdig-deploy** [3d937c71](https://github.com/sysdiglabs/charts/commit/3d937c710983130f9ce42d04ca0a06d2474fade2): Automatic version bump due to updated dependencies ([#2814](https://github.com/sysdiglabs/charts/issues/2814))
+# v1.122.1
+### Chores
+* **sysdig-deploy** [58c9748d](https://github.com/sysdiglabs/charts/commit/58c9748d955fe6e990b416eef4b61b33ce03468b): Automatic version bump due to updated dependencies ([#2812](https://github.com/sysdiglabs/charts/issues/2812))
+# v1.122.0
+### Chores
+* **sysdig-deploy, node-analyzer** [24a499aa](https://github.com/sysdiglabs/charts/commit/24a499aa3b49fecffc27ba1581e2acf2ae9c17b9): bump host-scanner to v0.19.0 ([#2801](https://github.com/sysdiglabs/charts/issues/2801))
+# v1.121.7
+### Chores
+* **node-analyzer** [049304b6](https://github.com/sysdiglabs/charts/commit/049304b669bb7c222fdb4ab8aa92c30bd705a6d5): bump sysdig/vuln-runtime-scanner to v1.8.12 ([#2800](https://github.com/sysdiglabs/charts/issues/2800))
+# v1.121.6
+### Chores
+* **sysdig-deploy** [b3646731](https://github.com/sysdiglabs/charts/commit/b36467310281553e3e3197a558016d0d9fd17646): Automatic version bump due to updated dependencies ([#2789](https://github.com/sysdiglabs/charts/issues/2789))
 # v1.121.5
 ### Chores
 * **charts** [1c8cc2e8](https://github.com/sysdiglabs/charts/commit/1c8cc2e88c4a1fd26eae7f78e2b3a5c9ea22a3a7): mark standalone charts as deprecated ([#2784](https://github.com/sysdiglabs/charts/issues/2784))

@@ -9,6 +9,9 @@
       labels:
         {{- include "registry-scanner.labels" . | nindent 12 }}
         {{- include "registry-scanner.customLabels" . | nindent 12 }}
+        {{- if and (eq .Values.config.registryType "acr") (eq .Values.config.azure.authMethod "workloadIdentity") }}
+            azure.workload.identity/use: "true"
+        {{- end }}
       {{- with .Values.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 12 }}
@@ -85,6 +88,8 @@
                 name: {{ .Values.existingSecretName }}
                 {{- end }}
                 key: aws_access_key_id
+                {{- /* absent when the service account is annotated outside the chart */}}
+                optional: true
             {{- end }}
           - name: AWS_SECRET_ACCESS_KEY
             {{- if contains "true" (include "registry-scanner.eksWithSA" .)}}
@@ -98,6 +103,7 @@
                 name: {{ .Values.existingSecretName }}
                 {{- end }}
                 key: aws_secret_access_key
+                optional: true
             {{- end }}
           - name: AWS_REGION
             valueFrom:
@@ -108,7 +114,7 @@
                 name: {{ .Values.existingSecretName }}
                 {{- end }}
                 key: aws_region
-          {{- else }}
+          {{- else if not (include "registry-scanner.acrIdentity" .) }}
           - name: REGISTRYSCANNER_REGISTRY_USER
             valueFrom:
               secretKeyRef:

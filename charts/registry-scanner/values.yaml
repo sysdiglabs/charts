@@ -37,9 +37,9 @@ config:
   # Ignore TLS certificate for IAM API. Applicable only for ICR registry type.
   icrIamApiSkipTLS: false
   aws:
-    # The AWS credentials: `AccessKeyId`.
+    # The AWS credentials: `AccessKeyId`. Leave empty to use an IAM role for the service account (EKS, ROSA).
     accessKeyId: ""
-    # The AWS credentials: `SecretAccessKey`.
+    # The AWS credentials: `SecretAccessKey`. Leave empty to use an IAM role for the service account (EKS, ROSA).
     secretAccessKey: ""
     # For single account. It is the region where the registry is located.
     region: "us-east-1"
@@ -51,6 +51,13 @@ config:
     allowListMemberAccountIDs: []
     # For organizational accounts. It is the AWS regions where the registries are located. If not configured, the scan will be performed in all available regions.
     allowListRegions: []
+  azure:
+    # The ACR auth method: `password`, `managedIdentity` or `workloadIdentity`. Identity methods need empty registryUser/registryPassword. `workloadIdentity` labels the controller pod; see serviceAccount.annotations.
+    authMethod: "password"
+    # The client ID of the user-assigned identity for ACR identity auth. With `workloadIdentity`, it overrides the injected client ID. Can't be combined with `resourceId`.
+    clientId: ""
+    # The resource ID of the user-assigned identity for ACR `managedIdentity` auth. Can't be combined with `clientId`.
+    resourceId: ""
   # Ignore registry TLS certificate errors (self-signed, etc.).
   registrySkipTLS: false
   # Max number of retries to call the registtry APIs in case of failure or 409.
@@ -185,6 +192,8 @@ serviceAccount:
   # Specifies whether a service account should be created.
   create: true
   # The additional annotations to add to the service account.
+  # For `config.azure.authMethod: workloadIdentity`, set `azure.workload.identity/client-id` here.
+  # For ECR with an IAM role for the service account (EKS, ROSA), set `eks.amazonaws.com/role-arn` here.
   annotations: {}
   # The name of the service account to use.
   # If the value is not set and create is set to `true`, a name is generated using the fullname template.
@@ -198,7 +207,7 @@ nameOverride: ""
 fullnameOverride: ""
 
 # Specify the name of a Kubernetes secret containing 'secureAPIToken', 'registryUser', and 'registryPassword' entries.
-# If you are using `ecr` as `registryType`, ensure that you add 'accessKeyId', 'secretAccessKey', and 'region' entries.
+# If you are using `ecr` as `registryType`, ensure that you add an 'aws_region' entry, plus 'aws_access_key_id' and 'aws_secret_access_key' unless you use an IAM role for the service account.
 existingSecretName: ""
 
 # Pod annotations for the Registry scanner.

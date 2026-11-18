@@ -125,6 +125,7 @@ tests:
               secretKeyRef:
                 name: RELEASE-NAME-registry-scanner
                 key: aws_secret_access_key
+                optional: true
       - contains:
           path: spec.template.spec.containers[0].env
           content:
@@ -147,6 +148,7 @@ tests:
               secretKeyRef:
                 name: my-existing-secret
                 key: aws_secret_access_key
+                optional: true
       - contains:
           path: spec.template.spec.containers[0].env
           content:
@@ -175,4 +177,39 @@ tests:
             valueFrom:
               secretKeyRef:
                 name: RELEASE-NAME-registry-scanner
+                key: aws_region
+  - it: makes the AWS keys optional when the service account is annotated outside the chart
+    set:
+      config.registryType: "ecr"
+      scanOnStart.enabled: true
+      existingSecretName: my-existing-secret
+      serviceAccount:
+        create: false
+        name: my-sa
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: AWS_ACCESS_KEY_ID
+            valueFrom:
+              secretKeyRef:
+                name: my-existing-secret
+                key: aws_access_key_id
+                optional: true
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: AWS_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: my-existing-secret
+                key: aws_secret_access_key
+                optional: true
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: AWS_REGION
+            valueFrom:
+              secretKeyRef:
+                name: my-existing-secret
                 key: aws_region

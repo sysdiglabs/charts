@@ -1,5 +1,5 @@
 # What's Changed
 
 ### Chores
-- **charts** [1c8cc2e8](https://github.com/sysdiglabs/charts/commit/1c8cc2e88c4a1fd26eae7f78e2b3a5c9ea22a3a7): mark standalone charts as deprecated ([#2784](https://github.com/sysdiglabs/charts/issues/2784))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-2.11.3...agent-2.11.4
+- **shield,registry-scanner,cloud-bench,common,sysdig-deploy,admission-controller,agent,node-analyzer,cluster-scanner,kspm-collector,rapid-response,cluster-shield** [caa53f0b](https://github.com/sysdiglabs/charts/commit/caa53f0b48852e93280bbc105a624e4fba698a95): re-release charts signed with the new GPG key ([#2823](https://github.com/sysdiglabs/charts/issues/2823))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-2.11.5...agent-2.11.6

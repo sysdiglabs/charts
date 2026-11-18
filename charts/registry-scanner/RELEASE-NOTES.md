@@ -1,5 +1,5 @@
 # What's Changed
 
 ### Chores
-- **registry-scanner** [5c3609ea](https://github.com/sysdiglabs/charts/commit/5c3609eaa6240f399875189c063d18873ed22a39): Update to v0.13.0 ([#2781](https://github.com/sysdiglabs/charts/issues/2781))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-1.11.4...registry-scanner-1.11.5
+- **shield,registry-scanner,cloud-bench,common,sysdig-deploy,admission-controller,agent,node-analyzer,cluster-scanner,kspm-collector,rapid-response,cluster-shield** [caa53f0b](https://github.com/sysdiglabs/charts/commit/caa53f0b48852e93280bbc105a624e4fba698a95): re-release charts signed with the new GPG key ([#2823](https://github.com/sysdiglabs/charts/issues/2823))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/registry-scanner-1.12.1...registry-scanner-1.12.2

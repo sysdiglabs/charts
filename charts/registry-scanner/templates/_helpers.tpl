@@ -190,3 +190,25 @@ EKS with AWS Service Account
      true
   {{- end }}
 {{- end }}
+
+{{/*
+ACR with an Azure identity auth method (managedIdentity or workloadIdentity): no static registry credentials
+*/}}
+{{- define "registry-scanner.acrIdentity" -}}
+  {{- if and (eq .Values.config.registryType "acr") (has .Values.config.azure.authMethod (list "managedIdentity" "workloadIdentity")) }}
+     true
+  {{- end }}
+{{- end }}
+
+{{/*
+Fail on an unknown ACR auth method, or static registry credentials set together with an Azure identity auth method
+*/}}
+{{- define "registry-scanner.validateAzure" -}}
+  {{- $authMethods := list "password" "managedIdentity" "workloadIdentity" }}
+  {{- if and (eq .Values.config.registryType "acr") (not (has .Values.config.azure.authMethod $authMethods)) }}
+    {{- fail (printf "config.azure.authMethod %q is invalid: use one of %s" (toString .Values.config.azure.authMethod) (join ", " $authMethods)) }}
+  {{- end }}
+  {{- if and (include "registry-scanner.acrIdentity" .) (or .Values.config.registryUser .Values.config.registryPassword) }}
+    {{- fail (printf "config.registryUser and config.registryPassword must be empty when config.azure.authMethod is %s" .Values.config.azure.authMethod) }}
+  {{- end }}
+{{- end }}
