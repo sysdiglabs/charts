@@ -224,6 +224,35 @@ tests:
               - "leases"
             verbs: ["create"]
 
+  - it: Posture lease is granted when transport_layer is set to nats
+    set:
+      features:
+        posture:
+          cluster_posture:
+            enabled: true
+      cluster:
+        additional_settings:
+          kspm_collector:
+            transport_layer: nats
+    asserts:
+      - contains:
+          path: rules
+          content:
+            apiGroups: ["coordination.k8s.io"]
+            resources:
+              - "leases"
+            resourceNames:
+              - "release-name-shield-cluster-posture"
+            verbs:
+              - create
+              - delete
+              - deletecollection
+              - get
+              - list
+              - patch
+              - update
+              - watch
+
   - it: Discoverer lease is granted when enabled via additional_settings
     set:
       cluster:

@@ -656,7 +656,7 @@ tests:
               leader_election_lock_name: release-name-shield-cluster-posture
               transport_layer: http
 
-  - it: Does not set Lock Name when Posture is enabled and transport_layer is set to nats
+  - it: Sets Lock Name when Posture is enabled and transport_layer is set to nats
     set:
       cluster_config:
         name: shield-cluster
@@ -687,15 +687,11 @@ tests:
           value: shield-namespace
       - exists:
           path: data["cluster-shield.yaml"]
-      - notMatchRegex:
-          path: data['cluster-shield.yaml']
-          pattern: |
-            kspm_collector:
-              leader_election_lock_name: .*
       - matchRegex:
           path: data['cluster-shield.yaml']
           pattern: |
             kspm_collector:
+              leader_election_lock_name: release-name-shield-cluster-posture
               transport_layer: nats
 
   - it: Sets Lock Name when Posture is enabled
