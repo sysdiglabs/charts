@@ -55,7 +55,19 @@ tests:
         lockName: ""
     asserts:
       - failedTemplate:
-          errorMessage: A valid lock name for the leader election is required when transport is http
+          errorMessage: A valid lock name for the leader election is required
+
+  - it: check that leader_election_lease_lock_name is required even when transport is nats
+    set:
+      sysdig:
+        accessKey: AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE
+      clusterName: test-cluster
+      transportLayer: nats
+      leaderElection:
+        lockName: ""
+    asserts:
+      - failedTemplate:
+          errorMessage: A valid lock name for the leader election is required
 
   - it: check that leader_election_lease_lock_namespace is equal to release namespace
     set:

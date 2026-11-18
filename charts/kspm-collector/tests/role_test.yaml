@@ -12,12 +12,33 @@ tests:
           kind: Role
         not: true
 
-  - it: Should not create rules if transportLayer is not http
+  - it: Should grant permissions to create lease even if transportLayer is nats
     set:
       transportLayer: nats
     asserts:
-      - isNullOrEmpty:
+      - contains:
           path: rules
+          content:
+            apiGroups: ["", "coordination.k8s.io"]
+            resources:
+              - "leases"
+            verbs: ["create"]
+
+  - it: Should grant all permissions on specific lease even if transportLayer is nats
+    set:
+      transportLayer: nats
+      leaderElection:
+        lockName: test-lock-name
+    asserts:
+      - contains:
+          path: rules
+          content:
+            apiGroups: ["", "coordination.k8s.io"]
+            resources:
+              - "leases"
+            resourceNames:
+              - "test-lock-name"
+            verbs: ["*"]
 
   - it: Should grant permissions to create lease if transport is http
     set:
