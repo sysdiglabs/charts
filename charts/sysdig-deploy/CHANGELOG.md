@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.123.1
+### Chores
+* **shield,registry-scanner,cloud-bench,common,sysdig-deploy,admission-controller,agent,node-analyzer,cluster-scanner,kspm-collector,rapid-response,cluster-shield** [caa53f0b](https://github.com/sysdiglabs/charts/commit/caa53f0b48852e93280bbc105a624e4fba698a95): re-release charts signed with the new GPG key ([#2823](https://github.com/sysdiglabs/charts/issues/2823))
 # v1.123.0
 ### Chores
 * **sysdig-deploy, node-analyzer** [5cb5958e](https://github.com/sysdiglabs/charts/commit/5cb5958e054374e44ccd4c9173a34aee6e91d75a): bump sysdig/kspm-analyzer to 1.51.0 ([#2816](https://github.com/sysdiglabs/charts/issues/2816))
