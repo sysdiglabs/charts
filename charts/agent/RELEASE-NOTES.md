@@ -1,5 +1,5 @@
 # What's Changed
 
-### Chores
-- **shield,registry-scanner,cloud-bench,common,sysdig-deploy,admission-controller,agent,node-analyzer,cluster-scanner,kspm-collector,rapid-response,cluster-shield** [caa53f0b](https://github.com/sysdiglabs/charts/commit/caa53f0b48852e93280bbc105a624e4fba698a95): re-release charts signed with the new GPG key ([#2823](https://github.com/sysdiglabs/charts/issues/2823))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-2.11.5...agent-2.11.6
+### New Features
+- **agent,shield** [b6aaa544](https://github.com/sysdiglabs/charts/commit/b6aaa54451ad5dacd3b61ddeef2c26a7c7a7fe35): release agent 14.8.4 ([#2827](https://github.com/sysdiglabs/charts/issues/2827))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/agent-2.11.6...agent-2.11.7
