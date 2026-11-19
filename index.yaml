@@ -4625,6 +4625,33 @@ entries:
     version: 0.1.0
   agent:
   - apiVersion: v2
+    appVersion: 14.8.4
+    created: "2026-11-19T18:29:29.26571587Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      version: ~1.6.0
+    deprecated: true
+    description: Sysdig Monitor and Secure agent
+    digest: a73027f2a1898bbbcdc7d60e3cdf33be078f45f8c682d6fb702caeabd10f828d
+    home: https://www.sysdig.com/
+    icon: https://avatars.githubusercontent.com/u/5068817?s=200&v=4
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    - metric
+    - troubleshooting
+    - run-time
+    name: agent
+    sources:
+    - https://app.sysdigcloud.com/#/settings/user
+    - https://github.com/draios/sysdig
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/agent-2.11.7/agent-2.11.7.tgz
+    version: 2.11.7
+  - apiVersion: v2
     appVersion: 14.8.3
     created: "2026-11-18T10:13:33.408376249Z"
     dependencies:
@@ -40113,6 +40140,27 @@ entries:
     - https://github.com/sysdiglabs/charts/releases/download/registry-scanner-0.0.1/registry-scanner-0.0.1.tgz
     version: 0.0.1
   shield:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2026-11-19T18:29:29.426277086Z"
+    description: A chart with various Sysdig components for Kubernetes
+    digest: f86bb96b5b5b7897c637c6a6c3aa414931b94cf389479d2b209026e848162887
+    maintainers:
+    - email: alberto.barba@sysdig.com
+      name: AlbertoBarba
+    - email: adam.roberts@sysdig.com
+      name: aroberts87
+    - email: francesco.furlan@sysdig.com
+      name: francesco-furlan
+    - email: gerlando.falauto@sysdig.com
+      name: iurly
+    - email: marcovito.moscaritolo@sysdig.com
+      name: mavimo
+    name: shield
+    type: application
+    urls:
+    - https://github.com/sysdiglabs/charts/releases/download/shield-1.56.2/shield-1.56.2.tgz
+    version: 1.56.2
   - apiVersion: v2
     appVersion: 1.0.0
     created: "2026-11-18T10:13:35.913200669Z"
@@ -92811,4 +92859,4 @@ entries:
     urls:
     - https://github.com/sysdiglabs/charts/releases/download/sysdig-stackdriver-bridge-1.0.0/sysdig-stackdriver-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2026-11-18T21:15:50.81480104Z"
+generated: "2026-11-19T18:29:29.4296549Z"
