@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.123.2
+### Chores
+* **sysdig-deploy** [2306735d](https://github.com/sysdiglabs/charts/commit/2306735de928a126679a99ecda28941bf76ec687): Automatic version bump due to updated dependencies ([#2826](https://github.com/sysdiglabs/charts/issues/2826))
 # v1.123.1
 ### Chores
 * **shield,registry-scanner,cloud-bench,common,sysdig-deploy,admission-controller,agent,node-analyzer,cluster-scanner,kspm-collector,rapid-response,cluster-shield** [caa53f0b](https://github.com/sysdiglabs/charts/commit/caa53f0b48852e93280bbc105a624e4fba698a95): re-release charts signed with the new GPG key ([#2823](https://github.com/sysdiglabs/charts/issues/2823))
