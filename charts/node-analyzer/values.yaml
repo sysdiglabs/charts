@@ -294,7 +294,7 @@ nodeAnalyzer:
     probesPort: 7002
     image:
       repository: sysdig/vuln-runtime-scanner
-      tag: "1.8.12"
+      tag: "1.8.13"
       digest: null
       pullPolicy: null
     # Proxy configuration variables
