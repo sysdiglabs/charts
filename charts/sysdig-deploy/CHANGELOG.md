@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.123.4
+### Chores
+* **sysdig-deploy** [a35b5b2e](https://github.com/sysdiglabs/charts/commit/a35b5b2e051b14f3c3907ed43dcdca20d4509110): Automatic version bump due to updated dependencies ([#2831](https://github.com/sysdiglabs/charts/issues/2831))
 # v1.123.3
 ### Chores
 * **node-analyzer** [1bd4f237](https://github.com/sysdiglabs/charts/commit/1bd4f2371a317385404410f701b38d2cac3120dc): bump sysdig/vuln-runtime-scanner to v1.8.13 ([#2828](https://github.com/sysdiglabs/charts/issues/2828))
