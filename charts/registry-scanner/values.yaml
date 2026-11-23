@@ -22,13 +22,13 @@ config:
   logging: "info"
   # The URL of the registry to scan.
   registryURL: ""
-  # The API URL of the registry to scan. This is required if your registry type is Artifactory.
+  # The API URL of the registry to scan. Required for Artifactory and GitLab (the GitLab instance URL).
   registryApiUrl: ""
   # The username for registry authentication.
   registryUser: ""
   # The password for registry authentication.
   registryPassword: ""
-  # **required**<br/>The registry Type. Supported types: artifactory, ecr, icr, acr, quay, harbor, gar, gcr, nexus, ocp and dockerv2.
+  # **required**<br/>The registry Type. Supported types: artifactory, ecr, icr, acr, quay, harbor, gar, gcr, nexus, ocp, gitlab and dockerv2.
   registryType: ""
   # The account ID. Applicable only for ICR registry type.
   registryAccountId: ""
@@ -58,6 +58,9 @@ config:
     clientId: ""
     # The resource ID of the user-assigned identity for ACR `managedIdentity` auth. Can't be combined with `clientId`.
     resourceId: ""
+  gitlab:
+    # The GitLab groups to discover repositories in, as full paths (e.g. `acme`, `acme/team-a`); subgroups are included. The token must be a Reporter member of each group. If empty, every repository the token can see is discovered.
+    groups: []
   # Ignore registry TLS certificate errors (self-signed, etc.).
   registrySkipTLS: false
   # Max number of retries to call the registtry APIs in case of failure or 409.

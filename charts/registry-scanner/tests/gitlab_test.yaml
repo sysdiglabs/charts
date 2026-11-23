@@ -1,0 +1,75 @@
+suite: Registry Scanner - GitLab
+templates:
+  - templates/cronjob.yaml
+  - templates/job.yaml
+  - templates/configmap.yaml
+set:
+  config.secureAPIToken: token
+  config.registryType: gitlab
+  config.registryURL: registry.gitlab.example.com
+  config.registryApiUrl: https://gitlab.example.com
+  config.registryPassword: glpat-token
+  scanOnStart.enabled: true
+tests:
+  - it: renders the comma-joined groups into the controller env
+    template: templates/cronjob.yaml
+    set:
+      config.gitlab.groups:
+        - acme
+        - acme/team-a
+    asserts:
+      - contains:
+          path: spec.jobTemplate.spec.template.spec.containers[0].env
+          content:
+            name: REGISTRYSCANNER_REGISTRY_GITLABGROUPS
+            value: acme,acme/team-a
+  - it: renders the groups into the scanOnStart job env
+    template: templates/job.yaml
+    set:
+      config.gitlab.groups:
+        - acme
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: REGISTRYSCANNER_REGISTRY_GITLABGROUPS
+            value: acme
+  - it: renders no groups env var when the list is empty
+    template: templates/cronjob.yaml
+    set:
+      config.gitlab.groups: []
+    asserts:
+      - notContains:
+          path: spec.jobTemplate.spec.template.spec.containers[0].env
+          any: true
+          content:
+            name: REGISTRYSCANNER_REGISTRY_GITLABGROUPS
+  - it: renders no groups env var by default
+    template: templates/cronjob.yaml
+    asserts:
+      - notContains:
+          path: spec.jobTemplate.spec.template.spec.containers[0].env
+          any: true
+          content:
+            name: REGISTRYSCANNER_REGISTRY_GITLABGROUPS
+  - it: does not pass the groups to scan jobs
+    template: templates/configmap.yaml
+    set:
+      config.gitlab.groups:
+        - acme
+        - acme/team-a
+    asserts:
+      - notMatchRegex:
+          path: data['config.yaml']
+          pattern: "(?i)groups|acme"
+  - it: uses the generic registry user/password secret keys for gitlab
+    template: templates/cronjob.yaml
+    asserts:
+      - contains:
+          path: spec.jobTemplate.spec.template.spec.containers[0].env
+          content:
+            name: REGISTRYSCANNER_REGISTRY_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: RELEASE-NAME-registry-scanner
+                key: registryPassword

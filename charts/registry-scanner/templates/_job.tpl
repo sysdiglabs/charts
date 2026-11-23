@@ -136,6 +136,10 @@
                 key: registryPassword
           {{- end }}
           {{- end }}
+          {{- with .Values.config.gitlab.groups }}
+          - name: REGISTRYSCANNER_REGISTRY_GITLABGROUPS
+            value: {{ join "," . | quote }}
+          {{- end }}
           {{ if .Values.config.parallelGoRoutines }}
           - name: GROUP_LIMIT
             value: "{{ .Values.config.parallelGoRoutines }}"
