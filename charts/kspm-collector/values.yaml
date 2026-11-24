@@ -5,9 +5,7 @@ httpProxy: null
 httpsProxy: null
 noProxy: null
 sslVerifyCertificate: null
-# DEPRECATED: the NATS transport is being removed, the collector will use HTTP only.
 natsMaxReconnect: 0
-# DEPRECATED: the NATS transport is being removed, the collector will use HTTP only.
 natsMaxReconnectFailures: 60
 # Namespace to deploy to (Optional: Will default to release namespace)
 namespace: null
@@ -69,7 +67,6 @@ sysdig:
 apiEndpoint: ""
 
 # Override value for the NATS service endpoint
-# DEPRECATED: the NATS transport is being removed, the collector will use HTTP only.
 natsUrl: ""
 
 # Setting a cluster name allows you to filter events from this cluster using kubernetes.cluster.name
@@ -77,12 +74,11 @@ clusterName: ""
 
 # Determine the transport used by the collector to receive tasks from the backend and send results back to it.
 # Valid values are "nats" and "http".
-# DEPRECATED: the NATS transport is being removed, the collector will use HTTP only.
 transportLayer: http
 
 # Provide values required to acquire a lease from the k8s api for the leader election mechanism
 # used to prevent multiple instances of the collector to run simultaneously.
-# This is done to reduce the load on the k8s api with the http transport. Required whatever transportLayer is set to.
+# This is done to reduce the load on the k8s api in case of http transport.
 leaderElection:
   lockName: kspm-collector-leader-election
 

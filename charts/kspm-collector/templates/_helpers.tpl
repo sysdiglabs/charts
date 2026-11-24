@@ -159,7 +159,11 @@ Returns the namespace for installing components
 Returns the name of the lock for the leader election lease
 */}}
 {{- define "kspmCollector.leaderElectionLeaseLockName" -}}
-    {{- required "A valid lock name for the leader election is required" .Values.leaderElection.lockName -}}
+    {{- if eq (.Values.transportLayer | default "") "http" -}}
+        {{- required "A valid lock name for the leader election is required when transport is http" .Values.leaderElection.lockName -}}
+    {{- else -}}
+        {{- .Values.leaderElection.lockName -}}
+    {{- end -}}
 {{- end -}}
 
 {{/*

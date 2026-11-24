@@ -7,8 +7,6 @@ metadata:
   labels:
 {{ include "kspmCollector.labels" . | indent 4 }}
 rules:
-# Leader election lease, needed by the HTTP transport. Granted regardless of transportLayer:
-# a collector using NATS simply does not use it.
 - apiGroups: ["", "coordination.k8s.io"]
   resources:
     - "leases"
