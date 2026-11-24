@@ -1,5 +1,5 @@
 # What's Changed
 
 ### Chores
-- **shield,registry-scanner,cloud-bench,common,sysdig-deploy,admission-controller,agent,node-analyzer,cluster-scanner,kspm-collector,rapid-response,cluster-shield** [caa53f0b](https://github.com/sysdiglabs/charts/commit/caa53f0b48852e93280bbc105a624e4fba698a95): re-release charts signed with the new GPG key ([#2823](https://github.com/sysdiglabs/charts/issues/2823))
-#### Full diff: https://github.com/sysdiglabs/charts/compare/admission-controller-0.18.3...admission-controller-0.18.4
+- **admission-controller** [1e25ef61](https://github.com/sysdiglabs/charts/commit/1e25ef614a961fb159a04423784be9406312e32f): Update to v3.9.63 ([#2825](https://github.com/sysdiglabs/charts/issues/2825))
+#### Full diff: https://github.com/sysdiglabs/charts/compare/admission-controller-0.18.4...admission-controller-0.18.5

@@ -88,7 +88,7 @@ leaderElection:
 
 image:
   repository: sysdig/kspm-collector
-  tag: 1.39.23
+  tag: 1.39.24
   digest: null
   registry: quay.io
   pullPolicy: null

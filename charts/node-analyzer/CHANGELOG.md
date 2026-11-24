@@ -10,6 +10,15 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.49.4
+### Chores
+* **node-analyzer** [5b176aee](https://github.com/sysdiglabs/charts/commit/5b176aeeb59616017f21a88222976eda8381f412): bump sysdig/vuln-host-scanner to v0.19.2 ([#2836](https://github.com/sysdiglabs/charts/issues/2836))
+# v1.49.3
+### Chores
+* **node-analyzer** [c98fc587](https://github.com/sysdiglabs/charts/commit/c98fc58728c6be6edb5fb95e29eb0bab7a16ba34): bump sysdig/kspm-analyzer to 1.51.1 ([#2830](https://github.com/sysdiglabs/charts/issues/2830))
+# v1.49.2
+### Chores
+* **node-analyzer** [1bd4f237](https://github.com/sysdiglabs/charts/commit/1bd4f2371a317385404410f701b38d2cac3120dc): bump sysdig/vuln-runtime-scanner to v1.8.13 ([#2828](https://github.com/sysdiglabs/charts/issues/2828))
 # v1.49.1
 ### Chores
 * **shield,registry-scanner,cloud-bench,common,sysdig-deploy,admission-controller,agent,node-analyzer,cluster-scanner,kspm-collector,rapid-response,cluster-shield** [caa53f0b](https://github.com/sysdiglabs/charts/commit/caa53f0b48852e93280bbc105a624e4fba698a95): re-release charts signed with the new GPG key ([#2823](https://github.com/sysdiglabs/charts/issues/2823))
