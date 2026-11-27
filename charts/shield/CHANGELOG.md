@@ -10,6 +10,9 @@ Manual edits are supported only below '## Change Log' and should be used
 exclusively to fix incorrect entries and not to add new ones.
 
 ## Change Log
+# v1.58.1
+### New Features
+* **shield** [b5207f65](https://github.com/sysdiglabs/charts/commit/b5207f659edd5c741dfb576f25198ad5fe2ff610): always grant the posture lease when posture is enabled ([#2787](https://github.com/sysdiglabs/charts/issues/2787))
 # v1.58.0
 ### New Features
 * **shield** [743ae19b](https://github.com/sysdiglabs/charts/commit/743ae19be6190e8fff23983e2fad5bbbb116f140): release cluster-shield 1.28.0 ([#2840](https://github.com/sysdiglabs/charts/issues/2840))
