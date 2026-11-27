@@ -1428,3 +1428,16 @@ tests:
             mountPath: /sys/kernel/debug
             name: sys-kernel-debug
             readOnly: true
+
+  - it: Do not mount debugfs and tracefs on GKE Autopilot
+    values:
+      - ../values/gke-autopilot.yaml
+    asserts:
+      - isNull:
+          path: spec.template.spec.volumes[?(@.name == "sys-kernel-debug")]
+      - isNull:
+          path: spec.template.spec.volumes[?(@.name == "sys-kernel-tracing")]
+      - isNull:
+          path: spec.template.spec.containers[*].volumeMounts[?(@.mountPath == "/sys/kernel/debug")]
+      - isNull:
+          path: spec.template.spec.containers[*].volumeMounts[?(@.mountPath == "/sys/kernel/tracing")]
