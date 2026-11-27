@@ -7,7 +7,6 @@ metadata:
   labels:
 {{ include "kspmCollector.labels" . | indent 4 }}
 rules:
-{{- if eq (include "kspmCollector.transportLayer" .) "http" }}
 - apiGroups: ["", "coordination.k8s.io"]
   resources:
     - "leases"
@@ -18,5 +17,4 @@ rules:
   resources:
     - "leases"
   verbs: ["create"]
-{{- end }}
 {{- end }}
