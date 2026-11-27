@@ -315,6 +315,9 @@ spec:
             - mountPath: /sys/kernel/debug
               name: sys-tracing
               readOnly: true
+            - mountPath: /sys/kernel/tracing
+              name: sys-kernel-tracing
+              readOnly: true
             {{- end }}
           {{- end }}
 
@@ -337,6 +340,9 @@ spec:
               name: bpf-probes
             - mountPath: /sys/kernel/debug
               name: sys-tracing
+              readOnly: true
+            - mountPath: /sys/kernel/tracing
+              name: sys-kernel-tracing
               readOnly: true
             {{- end }}
           {{- end }}
@@ -470,6 +476,9 @@ spec:
         - name: sys-tracing
           hostPath:
             path: /sys/kernel/debug
+        - name: sys-kernel-tracing
+          hostPath:
+            path: /sys/kernel/tracing
         {{- end }}
       {{- end }}
 
@@ -505,6 +514,9 @@ spec:
         - name: sys-tracing
           hostPath:
             path: /sys/kernel/debug
+        - name: sys-kernel-tracing
+          hostPath:
+            path: /sys/kernel/tracing
         {{- end }}
       {{- end }}
 
