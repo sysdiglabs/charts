@@ -1,0 +1,109 @@
+suite: eBPF debugfs/tracefs mounts
+templates:
+  - templates/daemonset.yaml
+  - templates/deployment.yaml
+kubernetesProvider:
+  scheme:
+    "v1/Node":
+      gvr:
+        version: "v1"
+        resource: "nodes"
+      namespaced: false
+  objects:
+  - apiVersion: v1
+    kind: Node
+    metadata:
+      name: fakenode
+    status:
+      nodeInfo:
+        osImage: fake-os-image
+tests:
+  - it: DaemonSet mounts debugfs and tracefs read-only in every container referencing them, with no dangling volume names
+    template: templates/daemonset.yaml
+    set:
+      ebpf:
+        enabled: true
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: sys-kernel-debug
+            hostPath:
+              path: /sys/kernel/debug
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: sys-kernel-tracing
+            hostPath:
+              path: /sys/kernel/tracing
+      - notContains:
+          path: spec.template.spec.volumes
+          content:
+            name: sys-tracing
+            hostPath:
+              path: /sys/kernel/debug
+      - notMatchRegex:
+          path: spec.template.spec.containers[0].volumeMounts[*].name
+          pattern: sys-tracing
+
+  - it: DaemonSet containers use the renamed debugfs mount
+    template: templates/daemonset.yaml
+    set:
+      ebpf:
+        enabled: true
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            mountPath: /sys/kernel/debug
+            name: sys-kernel-debug
+            readOnly: true
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            mountPath: /sys/kernel/tracing
+            name: sys-kernel-tracing
+            readOnly: true
+
+  - it: DaemonSet does not mount tracing paths when eBPF is disabled
+    template: templates/daemonset.yaml
+    asserts:
+      - notContains:
+          path: spec.template.spec.volumes
+          content:
+            name: sys-kernel-tracing
+            hostPath:
+              path: /sys/kernel/tracing
+      - notContains:
+          path: spec.template.spec.volumes
+          content:
+            name: sys-kernel-debug
+            hostPath:
+              path: /sys/kernel/debug
+
+  - it: Delegated Deployment mounts debugfs and tracefs when eBPF is enabled
+    template: templates/deployment.yaml
+    set:
+      delegatedAgentDeployment:
+        enabled: true
+      ebpf:
+        enabled: true
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: sys-kernel-debug
+            hostPath:
+              path: /sys/kernel/debug
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: sys-kernel-tracing
+            hostPath:
+              path: /sys/kernel/tracing
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            mountPath: /sys/kernel/tracing
+            name: sys-kernel-tracing
+            readOnly: true

@@ -76,6 +76,22 @@ tests:
           path: spec.template.spec.containers[*].env[?(@.name == "SYSDIG_AGENT_DRIVER")].value
           value: universal_ebpf
 
+  - it: Mount the host kernel tracing filesystem read-only for the universal eBPF driver
+    set:
+      ebpf:
+        enabled: true
+        kind: universal_ebpf
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[*].volumeMounts[?(@.name == "sys-kernel-tracing")].mountPath
+          value: /sys/kernel/tracing
+      - equal:
+          path: spec.template.spec.containers[*].volumeMounts[?(@.name == "sys-kernel-tracing")].readOnly
+          value: true
+      - equal:
+          path: spec.template.spec.volumes[?(@.name == "sys-kernel-tracing")].hostPath.path
+          value: /sys/kernel/tracing
+
   - it: Ensure that when the eBPF is enabled and we specify to use the "universal_ebpf" driver we don't create the init container
     set:
       ebpf:

@@ -1398,3 +1398,46 @@ tests:
           content:
             autopilot.gke.io/no-connect: "true"
             cloud.google.com/matching-allowlist: sysdig-agent-v2.0.0
+
+  - it: Mount debugfs and tracefs read-only when the driver is eBPF
+    set:
+      host:
+        driver: universal_ebpf
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: sys-kernel-debug
+            hostPath:
+              path: /sys/kernel/debug
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: sys-kernel-tracing
+            hostPath:
+              path: /sys/kernel/tracing
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].volumeMounts
+          content:
+            mountPath: /sys/kernel/tracing
+            name: sys-kernel-tracing
+            readOnly: true
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "sysdig-host-shield")].volumeMounts
+          content:
+            mountPath: /sys/kernel/debug
+            name: sys-kernel-debug
+            readOnly: true
+
+  - it: Do not mount debugfs and tracefs on GKE Autopilot
+    values:
+      - ../values/gke-autopilot.yaml
+    asserts:
+      - isNull:
+          path: spec.template.spec.volumes[?(@.name == "sys-kernel-debug")]
+      - isNull:
+          path: spec.template.spec.volumes[?(@.name == "sys-kernel-tracing")]
+      - isNull:
+          path: spec.template.spec.containers[*].volumeMounts[?(@.mountPath == "/sys/kernel/debug")]
+      - isNull:
+          path: spec.template.spec.containers[*].volumeMounts[?(@.mountPath == "/sys/kernel/tracing")]

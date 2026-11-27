@@ -92,7 +92,10 @@ spec:
             - mountPath: /root/.sysdig
               name: bpf-probes
             - mountPath: /sys/kernel/debug
-              name: sys-tracing
+              name: sys-kernel-debug
+              readOnly: true
+            - mountPath: /sys/kernel/tracing
+              name: sys-kernel-tracing
               readOnly: true
             {{- end }}
             {{- end }}
@@ -210,7 +213,10 @@ spec:
             - mountPath: /root/.sysdig
               name: bpf-probes
             - mountPath: /sys/kernel/debug
-              name: sys-tracing
+              name: sys-kernel-debug
+              readOnly: true
+            - mountPath: /sys/kernel/tracing
+              name: sys-kernel-tracing
               readOnly: true
             {{- end }}
           {{- end }}
@@ -307,9 +313,12 @@ spec:
         {{- if (include "host.driver.is_ebpf" .) }}
         - name: bpf-probes
           emptyDir: {}
-        - name: sys-tracing
+        - name: sys-kernel-debug
           hostPath:
             path: /sys/kernel/debug
+        - name: sys-kernel-tracing
+          hostPath:
+            path: /sys/kernel/tracing
         {{- end }}
       {{- end }}
 
