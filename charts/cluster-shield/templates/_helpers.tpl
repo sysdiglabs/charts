@@ -409,7 +409,7 @@ Check if Posture is enabled
 Check if Kspm Collector needs to acquire leases from k8s
 */}}
 {{- define "cluster-shield.postureNeedsLease" -}}
-    {{- and (eq (include "cluster-shield.postureEnabled" .) "true") (not (eq (.Values.cluster_shield | dig "kspm_collector" "transport_layer" "" ) "nats")) -}}
+    {{- eq (include "cluster-shield.postureEnabled" .) "true" -}}
 {{- end -}}
 
 {{/*

@@ -36,23 +36,6 @@ tests:
       - isNullOrEmpty:
           path: rules
 
-  - it: Should not grant any permissions if posture is enabled without http transport
-    set:
-      cluster_shield:
-        log_level: info
-        features:
-          admission_control:
-            enabled: false
-          container_vulnerability_management:
-            enabled: false
-          posture:
-            enabled: true
-        kspm_collector:
-          transport_layer: nats
-    asserts:
-      - isNullOrEmpty:
-          path: rules
-
   - it: Should grant required permissions if VM is enabled
     set:
       cluster_shield:
@@ -153,7 +136,7 @@ tests:
               verbs:
                 - '*'
 
-  - it: Should grant required permissions if posture is enabled without specifying a transport
+  - it: Should grant required permissions if posture is enabled
     set:
       cluster_shield:
         log_level: info
@@ -164,40 +147,6 @@ tests:
             enabled: false
           posture:
             enabled: true
-    asserts:
-      - equal:
-          path: rules
-          value:
-            - apiGroups:
-                - ""
-                - coordination.k8s.io
-              resources:
-                - leases
-              verbs:
-                - create
-            - apiGroups:
-                - ""
-                - coordination.k8s.io
-              resourceNames:
-                - release-name-cluster-shield-kspm-collector
-              resources:
-                - leases
-              verbs:
-                - '*'
-
-  - it: Should grant required permissions if posture is enabled with http transport
-    set:
-      cluster_shield:
-        log_level: info
-        features:
-          admission_control:
-            enabled: false
-          container_vulnerability_management:
-            enabled: false
-          posture:
-            enabled: true
-        kspm_collector:
-          transport_layer: http
     asserts:
       - equal:
           path: rules
