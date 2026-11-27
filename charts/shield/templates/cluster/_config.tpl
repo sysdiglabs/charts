@@ -213,7 +213,7 @@
   (either by the feature config or additional settings)
 */}}
 {{- define "cluster.need_posture_lease" -}}
-  {{- if and (eq (include "cluster.posture_enabled" .) "true") (eq (dig "kspm_collector" "transport_layer" "http" .Values.cluster.additional_settings) "http") -}}
+  {{- if eq (include "cluster.posture_enabled" .) "true" -}}
     {{- true -}}
   {{- end -}}
 {{- end }}
